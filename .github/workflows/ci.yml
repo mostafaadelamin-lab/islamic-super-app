@@ -44,7 +44,7 @@ jobs:
       - run: python scripts/export_openapi.py --check
       - run: pytest -p no:warnings --cov --cov-report=xml --cov-fail-under=90 --junitxml=junit.xml
       - run: pip-audit -r requirements.txt
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with: { name: backend-reports, path: "services/api/junit.xml\nservices/api/coverage.xml" }
 
@@ -70,7 +70,7 @@ jobs:
         env: { E2E_BROWSERS: "chromium,firefox,webkit", API_PYTHON: python }
         run: npm run test:e2e
       - run: npm audit --omit=dev --audit-level=high
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with: { name: web-reports, path: "tests/evidence/web\napps/web/test-results" }
 
@@ -89,7 +89,7 @@ jobs:
       - run: flutter analyze
       - run: flutter test --coverage
       - run: flutter build apk --debug
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with: { name: android-debug-apk, path: apps/mobile/build/app/outputs/flutter-apk/app-debug.apk }
       - name: Enable KVM
         run: |
