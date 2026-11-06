@@ -1,0 +1,5924 @@
+[
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "البحث",
+  "href": "/ar/search/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "العلامات",
+  "href": "/ar/bookmarks/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "الإعدادات",
+  "href": "/ar/settings/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "كل مواقيت الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "السورالقرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحفصفحة ١",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "البحث في القرآناكتب كلمة",
+  "href": "/ar/search/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "مواقيت الصلاةاتجاه القبلة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "العلاماتالعلامات",
+  "href": "/ar/bookmarks/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "الإعداداتالمظهر",
+  "href": "/ar/settings/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "البحث",
+  "href": "/ar/search/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "العلامات",
+  "href": "/ar/bookmarks/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "الإعدادات",
+  "href": "/ar/settings/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "افتح المصحف (الصفحة ١)",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "input",
+  "type": "text",
+  "name": "اذهب إلى صفحة",
+  "href": null
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "button",
+  "type": "submit",
+  "name": "اذهب",
+  "href": null
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "input",
+  "type": "search",
+  "name": "تصفية السور",
+  "href": null
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١الفاتحةAl-Fatihah · The Opener٧ آيةمكية",
+  "href": "/ar/surah/1/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢البقرةAl-Baqarah · The Cow٢٨٦ آيةمدنية",
+  "href": "/ar/surah/2/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣آل عمرانAli 'Imran · Family of Imran٢٠٠ آيةمدنية",
+  "href": "/ar/surah/3/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤النساءAn-Nisa · The Women١٧٦ آيةمدنية",
+  "href": "/ar/surah/4/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥المائدةAl-Ma'idah · The Table Spread١٢٠ آيةمدنية",
+  "href": "/ar/surah/5/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦الأنعامAl-An'am · The Cattle١٦٥ آيةمكية",
+  "href": "/ar/surah/6/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧الأعرافAl-A'raf · The Heights٢٠٦ آيةمكية",
+  "href": "/ar/surah/7/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨الأنفالAl-Anfal · The Spoils of War٧٥ آيةمدنية",
+  "href": "/ar/surah/8/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩التوبةAt-Tawbah · The Repentance١٢٩ آيةمدنية",
+  "href": "/ar/surah/9/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠يونسYunus · Jonah١٠٩ آيةمكية",
+  "href": "/ar/surah/10/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١١هودHud · Hud١٢٣ آيةمكية",
+  "href": "/ar/surah/11/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٢يوسفYusuf · Joseph١١١ آيةمكية",
+  "href": "/ar/surah/12/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٣الرعدAr-Ra'd · The Thunder٤٣ آيةمدنية",
+  "href": "/ar/surah/13/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٤ابراهيمIbrahim · Abraham٥٢ آيةمكية",
+  "href": "/ar/surah/14/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٥الحجرAl-Hijr · The Rocky Tract٩٩ آيةمكية",
+  "href": "/ar/surah/15/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٦النحلAn-Nahl · The Bee١٢٨ آيةمكية",
+  "href": "/ar/surah/16/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٧الإسراءAl-Isra · The Night Journey١١١ آيةمكية",
+  "href": "/ar/surah/17/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٨الكهفAl-Kahf · The Cave١١٠ آيةمكية",
+  "href": "/ar/surah/18/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٩مريمMaryam · Mary٩٨ آيةمكية",
+  "href": "/ar/surah/19/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٠طهTaha · Ta-Ha١٣٥ آيةمكية",
+  "href": "/ar/surah/20/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢١الأنبياءAl-Anbya · The Prophets١١٢ آيةمكية",
+  "href": "/ar/surah/21/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٢الحجAl-Hajj · The Pilgrimage٧٨ آيةمدنية",
+  "href": "/ar/surah/22/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٣المؤمنونAl-Mu'minun · The Believers١١٨ آيةمكية",
+  "href": "/ar/surah/23/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٤النورAn-Nur · The Light٦٤ آيةمدنية",
+  "href": "/ar/surah/24/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٥الفرقانAl-Furqan · The Criterion٧٧ آيةمكية",
+  "href": "/ar/surah/25/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٦الشعراءAsh-Shu'ara · The Poets٢٢٧ آيةمكية",
+  "href": "/ar/surah/26/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٧النملAn-Naml · The Ant٩٣ آيةمكية",
+  "href": "/ar/surah/27/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٨القصصAl-Qasas · The Stories٨٨ آيةمكية",
+  "href": "/ar/surah/28/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٩العنكبوتAl-'Ankabut · The Spider٦٩ آيةمكية",
+  "href": "/ar/surah/29/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٠الرومAr-Rum · The Romans٦٠ آيةمكية",
+  "href": "/ar/surah/30/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣١لقمانLuqman · Luqman٣٤ آيةمكية",
+  "href": "/ar/surah/31/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٢السجدةAs-Sajdah · The Prostration٣٠ آيةمكية",
+  "href": "/ar/surah/32/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٣الأحزابAl-Ahzab · The Combined Forces٧٣ آيةمدنية",
+  "href": "/ar/surah/33/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٤سبإSaba · Sheba٥٤ آيةمكية",
+  "href": "/ar/surah/34/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٥فاطرFatir · Originator٤٥ آيةمكية",
+  "href": "/ar/surah/35/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٦يسYa-Sin · Ya Sin٨٣ آيةمكية",
+  "href": "/ar/surah/36/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٧الصافاتAs-Saffat · Those who set the Ranks١٨٢ آيةمكية",
+  "href": "/ar/surah/37/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٨صSad · The Letter \"Saad\"٨٨ آيةمكية",
+  "href": "/ar/surah/38/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٩الزمرAz-Zumar · The Troops٧٥ آيةمكية",
+  "href": "/ar/surah/39/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٠غافرGhafir · The Forgiver٨٥ آيةمكية",
+  "href": "/ar/surah/40/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤١فصلتFussilat · Explained in Detail٥٤ آيةمكية",
+  "href": "/ar/surah/41/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٢الشورىAsh-Shuraa · The Consultation٥٣ آيةمكية",
+  "href": "/ar/surah/42/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٣الزخرفAz-Zukhruf · The Ornaments of Gold٨٩ آيةمكية",
+  "href": "/ar/surah/43/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٤الدخانAd-Dukhan · The Smoke٥٩ آيةمكية",
+  "href": "/ar/surah/44/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٥الجاثيةAl-Jathiyah · The Crouching٣٧ آيةمكية",
+  "href": "/ar/surah/45/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٦الأحقافAl-Ahqaf · The Wind-Curved Sandhills٣٥ آيةمكية",
+  "href": "/ar/surah/46/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٧محمدMuhammad · Muhammad٣٨ آيةمدنية",
+  "href": "/ar/surah/47/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٨الفتحAl-Fath · The Victory٢٩ آيةمدنية",
+  "href": "/ar/surah/48/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٩الحجراتAl-Hujurat · The Rooms١٨ آيةمدنية",
+  "href": "/ar/surah/49/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٠قQaf · The Letter \"Qaf\"٤٥ آيةمكية",
+  "href": "/ar/surah/50/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥١الذارياتAdh-Dhariyat · The Winnowing Winds٦٠ آيةمكية",
+  "href": "/ar/surah/51/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٢الطورAt-Tur · The Mount٤٩ آيةمكية",
+  "href": "/ar/surah/52/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٣النجمAn-Najm · The Star٦٢ آيةمكية",
+  "href": "/ar/surah/53/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٤القمرAl-Qamar · The Moon٥٥ آيةمكية",
+  "href": "/ar/surah/54/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٥الرحمنAr-Rahman · The Beneficent٧٨ آيةمدنية",
+  "href": "/ar/surah/55/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٦الواقعةAl-Waqi'ah · The Inevitable٩٦ آيةمكية",
+  "href": "/ar/surah/56/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٧الحديدAl-Hadid · The Iron٢٩ آيةمدنية",
+  "href": "/ar/surah/57/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٨المجادلةAl-Mujadila · The Pleading Woman٢٢ آيةمدنية",
+  "href": "/ar/surah/58/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٩الحشرAl-Hashr · The Exile٢٤ آيةمدنية",
+  "href": "/ar/surah/59/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٠الممتحنةAl-Mumtahanah · She that is to be examined١٣ آيةمدنية",
+  "href": "/ar/surah/60/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦١الصفAs-Saf · The Ranks١٤ آيةمدنية",
+  "href": "/ar/surah/61/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٢الجمعةAl-Jumu'ah · The Congregation, Friday١١ آيةمدنية",
+  "href": "/ar/surah/62/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٣المنافقونAl-Munafiqun · The Hypocrites١١ آيةمدنية",
+  "href": "/ar/surah/63/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٤التغابنAt-Taghabun · The Mutual Disillusion١٨ آيةمدنية",
+  "href": "/ar/surah/64/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٥الطلاقAt-Talaq · The Divorce١٢ آيةمدنية",
+  "href": "/ar/surah/65/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٦التحريمAt-Tahrim · The Prohibition١٢ آيةمدنية",
+  "href": "/ar/surah/66/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٧الملكAl-Mulk · The Sovereignty٣٠ آيةمكية",
+  "href": "/ar/surah/67/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٨القلمAl-Qalam · The Pen٥٢ آيةمكية",
+  "href": "/ar/surah/68/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٩الحاقةAl-Haqqah · The Reality٥٢ آيةمكية",
+  "href": "/ar/surah/69/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٠المعارجAl-Ma'arij · The Ascending Stairways٤٤ آيةمكية",
+  "href": "/ar/surah/70/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧١نوحNuh · Noah٢٨ آيةمكية",
+  "href": "/ar/surah/71/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٢الجنAl-Jinn · The Jinn٢٨ آيةمكية",
+  "href": "/ar/surah/72/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٣المزملAl-Muzzammil · The Enshrouded One٢٠ آيةمكية",
+  "href": "/ar/surah/73/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٤المدثرAl-Muddaththir · The Cloaked One٥٦ آيةمكية",
+  "href": "/ar/surah/74/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٥القيامةAl-Qiyamah · The Resurrection٤٠ آيةمكية",
+  "href": "/ar/surah/75/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٦الانسانAl-Insan · The Man٣١ آيةمدنية",
+  "href": "/ar/surah/76/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٧المرسلاتAl-Mursalat · The Emissaries٥٠ آيةمكية",
+  "href": "/ar/surah/77/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٨النبإAn-Naba · The Tidings٤٠ آيةمكية",
+  "href": "/ar/surah/78/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٩النازعاتAn-Nazi'at · Those who drag forth٤٦ آيةمكية",
+  "href": "/ar/surah/79/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٠عبس'Abasa · He Frowned٤٢ آيةمكية",
+  "href": "/ar/surah/80/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨١التكويرAt-Takwir · The Overthrowing٢٩ آيةمكية",
+  "href": "/ar/surah/81/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٢الإنفطارAl-Infitar · The Cleaving١٩ آيةمكية",
+  "href": "/ar/surah/82/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٣المطففينAl-Mutaffifin · The Defrauding٣٦ آيةمكية",
+  "href": "/ar/surah/83/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٤الإنشقاقAl-Inshiqaq · The Sundering٢٥ آيةمكية",
+  "href": "/ar/surah/84/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٥البروجAl-Buruj · The Mansions of the Stars٢٢ آيةمكية",
+  "href": "/ar/surah/85/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٦الطارقAt-Tariq · The Nightcommer١٧ آيةمكية",
+  "href": "/ar/surah/86/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٧الأعلىAl-A'la · The Most High١٩ آيةمكية",
+  "href": "/ar/surah/87/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٨الغاشيةAl-Ghashiyah · The Overwhelming٢٦ آيةمكية",
+  "href": "/ar/surah/88/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٩الفجرAl-Fajr · The Dawn٣٠ آيةمكية",
+  "href": "/ar/surah/89/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٠البلدAl-Balad · The City٢٠ آيةمكية",
+  "href": "/ar/surah/90/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩١الشمسAsh-Shams · The Sun١٥ آيةمكية",
+  "href": "/ar/surah/91/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٢الليلAl-Layl · The Night٢١ آيةمكية",
+  "href": "/ar/surah/92/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٣الضحىAd-Duhaa · The Morning Hours١١ آيةمكية",
+  "href": "/ar/surah/93/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٤الشرحAsh-Sharh · The Relief٨ آيةمكية",
+  "href": "/ar/surah/94/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٥التينAt-Tin · The Fig٨ آيةمكية",
+  "href": "/ar/surah/95/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٦العلقAl-'Alaq · The Clot١٩ آيةمكية",
+  "href": "/ar/surah/96/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٧القدرAl-Qadr · The Power٥ آيةمكية",
+  "href": "/ar/surah/97/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٨البينةAl-Bayyinah · The Clear Proof٨ آيةمدنية",
+  "href": "/ar/surah/98/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٩الزلزلةAz-Zalzalah · The Earthquake٨ آيةمدنية",
+  "href": "/ar/surah/99/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٠العادياتAl-'Adiyat · The Courser١١ آيةمكية",
+  "href": "/ar/surah/100/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠١القارعةAl-Qari'ah · The Calamity١١ آيةمكية",
+  "href": "/ar/surah/101/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٢التكاثرAt-Takathur · The Rivalry in world increase٨ آيةمكية",
+  "href": "/ar/surah/102/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٣العصرAl-'Asr · The Declining Day٣ آيةمكية",
+  "href": "/ar/surah/103/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٤الهمزةAl-Humazah · The Traducer٩ آيةمكية",
+  "href": "/ar/surah/104/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٥الفيلAl-Fil · The Elephant٥ آيةمكية",
+  "href": "/ar/surah/105/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٦قريشQuraysh · Quraysh٤ آيةمكية",
+  "href": "/ar/surah/106/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٧الماعونAl-Ma'un · The Small kindnesses٧ آيةمكية",
+  "href": "/ar/surah/107/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٨الكوثرAl-Kawthar · The Abundance٣ آيةمكية",
+  "href": "/ar/surah/108/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٩الكافرونAl-Kafirun · The Disbelievers٦ آيةمكية",
+  "href": "/ar/surah/109/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١١٠النصرAn-Nasr · The Divine Support٣ آيةمدنية",
+  "href": "/ar/surah/110/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١١١المسدAl-Masad · The Palm Fiber٥ آيةمكية",
+  "href": "/ar/surah/111/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١١٢الإخلاصAl-Ikhlas · The Sincerity٤ آيةمكية",
+  "href": "/ar/surah/112/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١١٣الفلقAl-Falaq · The Daybreak٥ آيةمكية",
+  "href": "/ar/surah/113/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١١٤الناسAn-Nas · Mankind٦ آيةمكية",
+  "href": "/ar/surah/114/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "البحث",
+  "href": "/ar/search/"
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "العلامات",
+  "href": "/ar/bookmarks/"
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "الإعدادات",
+  "href": "/ar/settings/"
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/surah/1/"
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "اقرأ في المصحف (الصفحة ١)",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "إظهار الترجمة الإنجليزية",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٢",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٣",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٤",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٥",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٦",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٧",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "السورة التالية: البقرة",
+  "href": "/ar/surah/2/"
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "البحث",
+  "href": "/ar/search/"
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "العلامات",
+  "href": "/ar/bookmarks/"
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "الإعدادات",
+  "href": "/ar/settings/"
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/surah/18/"
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "اقرأ في المصحف (الصفحة ٢٩٣)",
+  "href": "/ar/page/293/"
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "إظهار الترجمة الإنجليزية",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٢",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٣",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٤",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٥",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٦",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٧",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٨",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٩",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٠",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١١",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٢",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٣",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٤",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٥",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٦",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٧",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٨",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٩",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٢٠",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٢١",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٢٢",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٢٣",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٢٤",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٢٥",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٢٦",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٢٧",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٢٨",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٢٩",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٣٠",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٣١",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٣٢",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٣٣",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٣٤",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٣٥",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٣٦",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٣٧",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٣٨",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٣٩",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٤٠",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٤١",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٤٢",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٤٣",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٤٤",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٤٥",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٤٦",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٤٧",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٤٨",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٤٩",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٥٠",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٥١",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٥٢",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٥٣",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٥٤",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٥٥",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٥٦",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٥٧",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٥٨",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٥٩",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٦٠",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٦١",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٦٢",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٦٣",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٦٤",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٦٥",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٦٦",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٦٧",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٦٨",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٦٩",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٧٠",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٧١",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٧٢",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٧٣",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٧٤",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٧٥",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٧٦",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٧٧",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٧٨",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٧٩",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٨٠",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٨١",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٨٢",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٨٣",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٨٤",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٨٥",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٨٦",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٨٧",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٨٨",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٨٩",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٩٠",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٩١",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٩٢",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٩٣",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٩٤",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٩٥",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٩٦",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٩٧",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٩٨",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ٩٩",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٠٠",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٠١",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٠٢",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٠٣",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٠٤",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٠٥",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٠٦",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٠٧",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٠٨",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١٠٩",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "حفظ علامة على الآية — الآية ١١٠",
+  "href": null
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "السورة السابقة: الإسراء",
+  "href": "/ar/surah/17/"
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "السورة التالية: مريم",
+  "href": "/ar/surah/19/"
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "البحث",
+  "href": "/ar/search/"
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "العلامات",
+  "href": "/ar/bookmarks/"
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "الإعدادات",
+  "href": "/ar/settings/"
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "الصفحة التالية",
+  "href": "/ar/page/2/"
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "input",
+  "type": "text",
+  "name": "اذهب إلى صفحة",
+  "href": null
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "button",
+  "type": "submit",
+  "name": "اذهب",
+  "href": null
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "الفاتحة، الآية ١",
+  "href": "/ar/surah/1/#a-1"
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "البحث",
+  "href": "/ar/search/"
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "العلامات",
+  "href": "/ar/bookmarks/"
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "الإعدادات",
+  "href": "/ar/settings/"
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/page/604/"
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "الصفحة السابقة",
+  "href": "/ar/page/603/"
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "input",
+  "type": "text",
+  "name": "اذهب إلى صفحة",
+  "href": null
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "button",
+  "type": "submit",
+  "name": "اذهب",
+  "href": null
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "الإخلاص، الآية ١",
+  "href": "/ar/surah/112/#a-1"
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/search/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/search/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/search/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/search/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/search/",
+  "tag": "a",
+  "type": null,
+  "name": "البحث",
+  "href": "/ar/search/"
+ },
+ {
+  "page": "/ar/search/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/search/",
+  "tag": "a",
+  "type": null,
+  "name": "العلامات",
+  "href": "/ar/bookmarks/"
+ },
+ {
+  "page": "/ar/search/",
+  "tag": "a",
+  "type": null,
+  "name": "الإعدادات",
+  "href": "/ar/settings/"
+ },
+ {
+  "page": "/ar/search/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/search/"
+ },
+ {
+  "page": "/ar/search/",
+  "tag": "input",
+  "type": "search",
+  "name": "البحث في القرآن",
+  "href": null
+ },
+ {
+  "page": "/ar/search/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/search/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "البحث",
+  "href": "/ar/search/"
+ },
+ {
+  "page": "/ar/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "العلامات",
+  "href": "/ar/bookmarks/"
+ },
+ {
+  "page": "/ar/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "الإعدادات",
+  "href": "/ar/settings/"
+ },
+ {
+  "page": "/ar/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/bookmarks/"
+ },
+ {
+  "page": "/ar/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "الإخلاص، الآية ١",
+  "href": "/ar/surah/112/#a-1"
+ },
+ {
+  "page": "/ar/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحة ٦٠٤",
+  "href": "/ar/page/604/"
+ },
+ {
+  "page": "/ar/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "البحث",
+  "href": "/ar/search/"
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "العلامات",
+  "href": "/ar/bookmarks/"
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "الإعدادات",
+  "href": "/ar/settings/"
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "select",
+  "type": null,
+  "name": "المدينة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "استخدم موقعي",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "select",
+  "type": null,
+  "name": "طريقة الحساب",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "select",
+  "type": null,
+  "name": "مذهب العصر",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "إنقاص الفجر دقيقة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "input",
+  "type": "number",
+  "name": "الفجر",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "زيادة الفجر دقيقة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "إنقاص الشروق دقيقة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "input",
+  "type": "number",
+  "name": "الشروق",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "زيادة الشروق دقيقة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "إنقاص الظهر دقيقة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "input",
+  "type": "number",
+  "name": "الظهر",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "زيادة الظهر دقيقة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "إنقاص العصر دقيقة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "input",
+  "type": "number",
+  "name": "العصر",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "زيادة العصر دقيقة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "إنقاص المغرب دقيقة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "input",
+  "type": "number",
+  "name": "المغرب",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "زيادة المغرب دقيقة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "إنقاص العشاء دقيقة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "input",
+  "type": "number",
+  "name": "العشاء",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "زيادة العشاء دقيقة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "إعادة ضبط التعديلات",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "البحث",
+  "href": "/ar/search/"
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "العلامات",
+  "href": "/ar/bookmarks/"
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "الإعدادات",
+  "href": "/ar/settings/"
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/settings/"
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "select",
+  "type": null,
+  "name": "اللغة",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "input",
+  "type": "radio",
+  "name": "حسب الجهاز",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "input",
+  "type": "radio",
+  "name": "فاتح",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "input",
+  "type": "radio",
+  "name": "داكن",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "button",
+  "type": "button",
+  "name": "حجم خط المصحف −",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "input",
+  "type": "range",
+  "name": "حجم خط المصحف: ٢٦",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "button",
+  "type": "button",
+  "name": "حجم خط المصحف +",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "إظهار الترجمة الإنجليزية في قارئ السورة",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "input",
+  "type": "url",
+  "name": "عنوان الخادم (API)",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "button",
+  "type": "submit",
+  "name": "حفظ العنوان",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "input",
+  "type": "email",
+  "name": "البريد الإلكتروني",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "input",
+  "type": "password",
+  "name": "كلمة المرور (١٠ أحرف على الأقل)",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "button",
+  "type": "submit",
+  "name": "تسجيل الدخول",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "button",
+  "type": "button",
+  "name": "إنشاء حساب",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "عن التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/about/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/about/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/about/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/about/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/about/",
+  "tag": "a",
+  "type": null,
+  "name": "البحث",
+  "href": "/ar/search/"
+ },
+ {
+  "page": "/ar/about/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/about/",
+  "tag": "a",
+  "type": null,
+  "name": "العلامات",
+  "href": "/ar/bookmarks/"
+ },
+ {
+  "page": "/ar/about/",
+  "tag": "a",
+  "type": null,
+  "name": "الإعدادات",
+  "href": "/ar/settings/"
+ },
+ {
+  "page": "/ar/about/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/ar/about/",
+  "tag": "a",
+  "type": null,
+  "name": "Amiri Quran — OFL",
+  "href": "/fonts/OFL.txt"
+ },
+ {
+  "page": "/ar/about/",
+  "tag": "a",
+  "type": null,
+  "name": "IBM Plex Sans Arabic — OFL",
+  "href": "/fonts/OFL-IBMPlexSansArabic.txt"
+ },
+ {
+  "page": "/ar/about/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/about/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Search",
+  "href": "/en/search/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Bookmarks",
+  "href": "/en/bookmarks/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Settings",
+  "href": "/en/settings/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Al-Ikhlas, ayah 1",
+  "href": "/en/surah/112/#a-1"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Page 604",
+  "href": "/en/page/604/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "All prayer times",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "SurahsQuran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pagesPage 1",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Search the QuranType an Arabic word",
+  "href": "/en/search/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer timesQibla direction",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "BookmarksBookmarks",
+  "href": "/en/bookmarks/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "SettingsTheme",
+  "href": "/en/settings/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "Search",
+  "href": "/en/search/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "Bookmarks",
+  "href": "/en/bookmarks/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "Settings",
+  "href": "/en/settings/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "Al-Ikhlas, ayah 1",
+  "href": "/en/surah/112/#a-1"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "Page 604",
+  "href": "/en/page/604/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "Open the Mushaf (page 1)",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "input",
+  "type": "text",
+  "name": "Go to page",
+  "href": null
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "button",
+  "type": "submit",
+  "name": "Go",
+  "href": null
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "input",
+  "type": "search",
+  "name": "Filter surahs",
+  "href": null
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "1الفاتحةAl-Fatihah · The Opener7 ayahsMeccan",
+  "href": "/en/surah/1/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "2البقرةAl-Baqarah · The Cow286 ayahsMedinan",
+  "href": "/en/surah/2/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "3آل عمرانAli 'Imran · Family of Imran200 ayahsMedinan",
+  "href": "/en/surah/3/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "4النساءAn-Nisa · The Women176 ayahsMedinan",
+  "href": "/en/surah/4/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "5المائدةAl-Ma'idah · The Table Spread120 ayahsMedinan",
+  "href": "/en/surah/5/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "6الأنعامAl-An'am · The Cattle165 ayahsMeccan",
+  "href": "/en/surah/6/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "7الأعرافAl-A'raf · The Heights206 ayahsMeccan",
+  "href": "/en/surah/7/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "8الأنفالAl-Anfal · The Spoils of War75 ayahsMedinan",
+  "href": "/en/surah/8/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "9التوبةAt-Tawbah · The Repentance129 ayahsMedinan",
+  "href": "/en/surah/9/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "10يونسYunus · Jonah109 ayahsMeccan",
+  "href": "/en/surah/10/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "11هودHud · Hud123 ayahsMeccan",
+  "href": "/en/surah/11/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "12يوسفYusuf · Joseph111 ayahsMeccan",
+  "href": "/en/surah/12/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "13الرعدAr-Ra'd · The Thunder43 ayahsMedinan",
+  "href": "/en/surah/13/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "14ابراهيمIbrahim · Abraham52 ayahsMeccan",
+  "href": "/en/surah/14/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "15الحجرAl-Hijr · The Rocky Tract99 ayahsMeccan",
+  "href": "/en/surah/15/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "16النحلAn-Nahl · The Bee128 ayahsMeccan",
+  "href": "/en/surah/16/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "17الإسراءAl-Isra · The Night Journey111 ayahsMeccan",
+  "href": "/en/surah/17/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "18الكهفAl-Kahf · The Cave110 ayahsMeccan",
+  "href": "/en/surah/18/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "19مريمMaryam · Mary98 ayahsMeccan",
+  "href": "/en/surah/19/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "20طهTaha · Ta-Ha135 ayahsMeccan",
+  "href": "/en/surah/20/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "21الأنبياءAl-Anbya · The Prophets112 ayahsMeccan",
+  "href": "/en/surah/21/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "22الحجAl-Hajj · The Pilgrimage78 ayahsMedinan",
+  "href": "/en/surah/22/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "23المؤمنونAl-Mu'minun · The Believers118 ayahsMeccan",
+  "href": "/en/surah/23/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "24النورAn-Nur · The Light64 ayahsMedinan",
+  "href": "/en/surah/24/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "25الفرقانAl-Furqan · The Criterion77 ayahsMeccan",
+  "href": "/en/surah/25/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "26الشعراءAsh-Shu'ara · The Poets227 ayahsMeccan",
+  "href": "/en/surah/26/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "27النملAn-Naml · The Ant93 ayahsMeccan",
+  "href": "/en/surah/27/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "28القصصAl-Qasas · The Stories88 ayahsMeccan",
+  "href": "/en/surah/28/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "29العنكبوتAl-'Ankabut · The Spider69 ayahsMeccan",
+  "href": "/en/surah/29/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "30الرومAr-Rum · The Romans60 ayahsMeccan",
+  "href": "/en/surah/30/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "31لقمانLuqman · Luqman34 ayahsMeccan",
+  "href": "/en/surah/31/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "32السجدةAs-Sajdah · The Prostration30 ayahsMeccan",
+  "href": "/en/surah/32/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "33الأحزابAl-Ahzab · The Combined Forces73 ayahsMedinan",
+  "href": "/en/surah/33/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "34سبإSaba · Sheba54 ayahsMeccan",
+  "href": "/en/surah/34/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "35فاطرFatir · Originator45 ayahsMeccan",
+  "href": "/en/surah/35/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "36يسYa-Sin · Ya Sin83 ayahsMeccan",
+  "href": "/en/surah/36/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "37الصافاتAs-Saffat · Those who set the Ranks182 ayahsMeccan",
+  "href": "/en/surah/37/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "38صSad · The Letter \"Saad\"88 ayahsMeccan",
+  "href": "/en/surah/38/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "39الزمرAz-Zumar · The Troops75 ayahsMeccan",
+  "href": "/en/surah/39/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "40غافرGhafir · The Forgiver85 ayahsMeccan",
+  "href": "/en/surah/40/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "41فصلتFussilat · Explained in Detail54 ayahsMeccan",
+  "href": "/en/surah/41/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "42الشورىAsh-Shuraa · The Consultation53 ayahsMeccan",
+  "href": "/en/surah/42/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "43الزخرفAz-Zukhruf · The Ornaments of Gold89 ayahsMeccan",
+  "href": "/en/surah/43/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "44الدخانAd-Dukhan · The Smoke59 ayahsMeccan",
+  "href": "/en/surah/44/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "45الجاثيةAl-Jathiyah · The Crouching37 ayahsMeccan",
+  "href": "/en/surah/45/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "46الأحقافAl-Ahqaf · The Wind-Curved Sandhills35 ayahsMeccan",
+  "href": "/en/surah/46/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "47محمدMuhammad · Muhammad38 ayahsMedinan",
+  "href": "/en/surah/47/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "48الفتحAl-Fath · The Victory29 ayahsMedinan",
+  "href": "/en/surah/48/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "49الحجراتAl-Hujurat · The Rooms18 ayahsMedinan",
+  "href": "/en/surah/49/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "50قQaf · The Letter \"Qaf\"45 ayahsMeccan",
+  "href": "/en/surah/50/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "51الذارياتAdh-Dhariyat · The Winnowing Winds60 ayahsMeccan",
+  "href": "/en/surah/51/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "52الطورAt-Tur · The Mount49 ayahsMeccan",
+  "href": "/en/surah/52/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "53النجمAn-Najm · The Star62 ayahsMeccan",
+  "href": "/en/surah/53/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "54القمرAl-Qamar · The Moon55 ayahsMeccan",
+  "href": "/en/surah/54/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "55الرحمنAr-Rahman · The Beneficent78 ayahsMedinan",
+  "href": "/en/surah/55/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "56الواقعةAl-Waqi'ah · The Inevitable96 ayahsMeccan",
+  "href": "/en/surah/56/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "57الحديدAl-Hadid · The Iron29 ayahsMedinan",
+  "href": "/en/surah/57/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "58المجادلةAl-Mujadila · The Pleading Woman22 ayahsMedinan",
+  "href": "/en/surah/58/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "59الحشرAl-Hashr · The Exile24 ayahsMedinan",
+  "href": "/en/surah/59/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "60الممتحنةAl-Mumtahanah · She that is to be examined13 ayahsMedinan",
+  "href": "/en/surah/60/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "61الصفAs-Saf · The Ranks14 ayahsMedinan",
+  "href": "/en/surah/61/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "62الجمعةAl-Jumu'ah · The Congregation, Friday11 ayahsMedinan",
+  "href": "/en/surah/62/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "63المنافقونAl-Munafiqun · The Hypocrites11 ayahsMedinan",
+  "href": "/en/surah/63/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "64التغابنAt-Taghabun · The Mutual Disillusion18 ayahsMedinan",
+  "href": "/en/surah/64/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "65الطلاقAt-Talaq · The Divorce12 ayahsMedinan",
+  "href": "/en/surah/65/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "66التحريمAt-Tahrim · The Prohibition12 ayahsMedinan",
+  "href": "/en/surah/66/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "67الملكAl-Mulk · The Sovereignty30 ayahsMeccan",
+  "href": "/en/surah/67/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "68القلمAl-Qalam · The Pen52 ayahsMeccan",
+  "href": "/en/surah/68/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "69الحاقةAl-Haqqah · The Reality52 ayahsMeccan",
+  "href": "/en/surah/69/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "70المعارجAl-Ma'arij · The Ascending Stairways44 ayahsMeccan",
+  "href": "/en/surah/70/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "71نوحNuh · Noah28 ayahsMeccan",
+  "href": "/en/surah/71/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "72الجنAl-Jinn · The Jinn28 ayahsMeccan",
+  "href": "/en/surah/72/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "73المزملAl-Muzzammil · The Enshrouded One20 ayahsMeccan",
+  "href": "/en/surah/73/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "74المدثرAl-Muddaththir · The Cloaked One56 ayahsMeccan",
+  "href": "/en/surah/74/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "75القيامةAl-Qiyamah · The Resurrection40 ayahsMeccan",
+  "href": "/en/surah/75/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "76الانسانAl-Insan · The Man31 ayahsMedinan",
+  "href": "/en/surah/76/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "77المرسلاتAl-Mursalat · The Emissaries50 ayahsMeccan",
+  "href": "/en/surah/77/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "78النبإAn-Naba · The Tidings40 ayahsMeccan",
+  "href": "/en/surah/78/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "79النازعاتAn-Nazi'at · Those who drag forth46 ayahsMeccan",
+  "href": "/en/surah/79/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "80عبس'Abasa · He Frowned42 ayahsMeccan",
+  "href": "/en/surah/80/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "81التكويرAt-Takwir · The Overthrowing29 ayahsMeccan",
+  "href": "/en/surah/81/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "82الإنفطارAl-Infitar · The Cleaving19 ayahsMeccan",
+  "href": "/en/surah/82/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "83المطففينAl-Mutaffifin · The Defrauding36 ayahsMeccan",
+  "href": "/en/surah/83/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "84الإنشقاقAl-Inshiqaq · The Sundering25 ayahsMeccan",
+  "href": "/en/surah/84/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "85البروجAl-Buruj · The Mansions of the Stars22 ayahsMeccan",
+  "href": "/en/surah/85/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "86الطارقAt-Tariq · The Nightcommer17 ayahsMeccan",
+  "href": "/en/surah/86/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "87الأعلىAl-A'la · The Most High19 ayahsMeccan",
+  "href": "/en/surah/87/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "88الغاشيةAl-Ghashiyah · The Overwhelming26 ayahsMeccan",
+  "href": "/en/surah/88/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "89الفجرAl-Fajr · The Dawn30 ayahsMeccan",
+  "href": "/en/surah/89/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "90البلدAl-Balad · The City20 ayahsMeccan",
+  "href": "/en/surah/90/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "91الشمسAsh-Shams · The Sun15 ayahsMeccan",
+  "href": "/en/surah/91/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "92الليلAl-Layl · The Night21 ayahsMeccan",
+  "href": "/en/surah/92/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "93الضحىAd-Duhaa · The Morning Hours11 ayahsMeccan",
+  "href": "/en/surah/93/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "94الشرحAsh-Sharh · The Relief8 ayahsMeccan",
+  "href": "/en/surah/94/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "95التينAt-Tin · The Fig8 ayahsMeccan",
+  "href": "/en/surah/95/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "96العلقAl-'Alaq · The Clot19 ayahsMeccan",
+  "href": "/en/surah/96/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "97القدرAl-Qadr · The Power5 ayahsMeccan",
+  "href": "/en/surah/97/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "98البينةAl-Bayyinah · The Clear Proof8 ayahsMedinan",
+  "href": "/en/surah/98/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "99الزلزلةAz-Zalzalah · The Earthquake8 ayahsMedinan",
+  "href": "/en/surah/99/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "100العادياتAl-'Adiyat · The Courser11 ayahsMeccan",
+  "href": "/en/surah/100/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "101القارعةAl-Qari'ah · The Calamity11 ayahsMeccan",
+  "href": "/en/surah/101/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "102التكاثرAt-Takathur · The Rivalry in world increase8 ayahsMeccan",
+  "href": "/en/surah/102/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "103العصرAl-'Asr · The Declining Day3 ayahsMeccan",
+  "href": "/en/surah/103/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "104الهمزةAl-Humazah · The Traducer9 ayahsMeccan",
+  "href": "/en/surah/104/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "105الفيلAl-Fil · The Elephant5 ayahsMeccan",
+  "href": "/en/surah/105/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "106قريشQuraysh · Quraysh4 ayahsMeccan",
+  "href": "/en/surah/106/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "107الماعونAl-Ma'un · The Small kindnesses7 ayahsMeccan",
+  "href": "/en/surah/107/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "108الكوثرAl-Kawthar · The Abundance3 ayahsMeccan",
+  "href": "/en/surah/108/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "109الكافرونAl-Kafirun · The Disbelievers6 ayahsMeccan",
+  "href": "/en/surah/109/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "110النصرAn-Nasr · The Divine Support3 ayahsMedinan",
+  "href": "/en/surah/110/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "111المسدAl-Masad · The Palm Fiber5 ayahsMeccan",
+  "href": "/en/surah/111/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "112الإخلاصAl-Ikhlas · The Sincerity4 ayahsMeccan",
+  "href": "/en/surah/112/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "113الفلقAl-Falaq · The Daybreak5 ayahsMeccan",
+  "href": "/en/surah/113/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "114الناسAn-Nas · Mankind6 ayahsMeccan",
+  "href": "/en/surah/114/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Search",
+  "href": "/en/search/"
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Bookmarks",
+  "href": "/en/bookmarks/"
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Settings",
+  "href": "/en/settings/"
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/surah/1/"
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Read in the Mushaf (page 1)",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "Show English translation",
+  "href": null
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 1",
+  "href": null
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 2",
+  "href": null
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 3",
+  "href": null
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 4",
+  "href": null
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 5",
+  "href": null
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 6",
+  "href": null
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 7",
+  "href": null
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Next surah: Al-Baqarah",
+  "href": "/en/surah/2/"
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/surah/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "Search",
+  "href": "/en/search/"
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "Bookmarks",
+  "href": "/en/bookmarks/"
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "Settings",
+  "href": "/en/settings/"
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/surah/18/"
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "Read in the Mushaf (page 293)",
+  "href": "/en/page/293/"
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "Show English translation",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 1",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 2",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 3",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 4",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 5",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 6",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 7",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 8",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 9",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 10",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 11",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 12",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 13",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 14",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 15",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 16",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 17",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 18",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 19",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 20",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 21",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 22",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 23",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 24",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 25",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 26",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 27",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 28",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 29",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 30",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 31",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 32",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 33",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 34",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 35",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 36",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 37",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 38",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 39",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 40",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 41",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 42",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 43",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 44",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 45",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 46",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 47",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 48",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 49",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 50",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 51",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 52",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 53",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 54",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 55",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 56",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 57",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 58",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 59",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 60",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 61",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 62",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 63",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 64",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 65",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 66",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 67",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 68",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 69",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 70",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 71",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 72",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 73",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 74",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 75",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 76",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 77",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 78",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 79",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 80",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 81",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 82",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 83",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 84",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 85",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 86",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 87",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 88",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 89",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 90",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 91",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 92",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 93",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 94",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 95",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 96",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 97",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 98",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 99",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 100",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 101",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 102",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 103",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 104",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 105",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 106",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 107",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 108",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 109",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "button",
+  "type": "button",
+  "name": "Bookmark ayah — Ayah 110",
+  "href": null
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "Previous surah: Al-Isra",
+  "href": "/en/surah/17/"
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "Next surah: Maryam",
+  "href": "/en/surah/19/"
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/surah/18/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Search",
+  "href": "/en/search/"
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Bookmarks",
+  "href": "/en/bookmarks/"
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Settings",
+  "href": "/en/settings/"
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Next page",
+  "href": "/en/page/2/"
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "input",
+  "type": "text",
+  "name": "Go to page",
+  "href": null
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "button",
+  "type": "submit",
+  "name": "Go",
+  "href": null
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Al-Fatihah, ayah 1",
+  "href": "/en/surah/1/#a-1"
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "Search",
+  "href": "/en/search/"
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "Bookmarks",
+  "href": "/en/bookmarks/"
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "Settings",
+  "href": "/en/settings/"
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/page/604/"
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "Previous page",
+  "href": "/en/page/603/"
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "input",
+  "type": "text",
+  "name": "Go to page",
+  "href": null
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "button",
+  "type": "submit",
+  "name": "Go",
+  "href": null
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "Al-Ikhlas, ayah 1",
+  "href": "/en/surah/112/#a-1"
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/search/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/search/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/search/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/search/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/search/",
+  "tag": "a",
+  "type": null,
+  "name": "Search",
+  "href": "/en/search/"
+ },
+ {
+  "page": "/en/search/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/search/",
+  "tag": "a",
+  "type": null,
+  "name": "Bookmarks",
+  "href": "/en/bookmarks/"
+ },
+ {
+  "page": "/en/search/",
+  "tag": "a",
+  "type": null,
+  "name": "Settings",
+  "href": "/en/settings/"
+ },
+ {
+  "page": "/en/search/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/search/"
+ },
+ {
+  "page": "/en/search/",
+  "tag": "input",
+  "type": "search",
+  "name": "Search the Quran",
+  "href": null
+ },
+ {
+  "page": "/en/search/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/search/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "Search",
+  "href": "/en/search/"
+ },
+ {
+  "page": "/en/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "Bookmarks",
+  "href": "/en/bookmarks/"
+ },
+ {
+  "page": "/en/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "Settings",
+  "href": "/en/settings/"
+ },
+ {
+  "page": "/en/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/bookmarks/"
+ },
+ {
+  "page": "/en/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "Al-Ikhlas, ayah 1",
+  "href": "/en/surah/112/#a-1"
+ },
+ {
+  "page": "/en/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "Page 604",
+  "href": "/en/page/604/"
+ },
+ {
+  "page": "/en/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/bookmarks/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "Search",
+  "href": "/en/search/"
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "Bookmarks",
+  "href": "/en/bookmarks/"
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "Settings",
+  "href": "/en/settings/"
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "select",
+  "type": null,
+  "name": "City",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Use my location",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "select",
+  "type": null,
+  "name": "Calculation method",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "select",
+  "type": null,
+  "name": "Asr method",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Decrease Fajr by one minute",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "input",
+  "type": "number",
+  "name": "Fajr",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Increase Fajr by one minute",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Decrease Sunrise by one minute",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "input",
+  "type": "number",
+  "name": "Sunrise",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Increase Sunrise by one minute",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Decrease Dhuhr by one minute",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "input",
+  "type": "number",
+  "name": "Dhuhr",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Increase Dhuhr by one minute",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Decrease Asr by one minute",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "input",
+  "type": "number",
+  "name": "Asr",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Increase Asr by one minute",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Decrease Maghrib by one minute",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "input",
+  "type": "number",
+  "name": "Maghrib",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Increase Maghrib by one minute",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Decrease Isha by one minute",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "input",
+  "type": "number",
+  "name": "Isha",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Increase Isha by one minute",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Reset adjustments",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "Search",
+  "href": "/en/search/"
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "Bookmarks",
+  "href": "/en/bookmarks/"
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "Settings",
+  "href": "/en/settings/"
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/settings/"
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "select",
+  "type": null,
+  "name": "Language",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "input",
+  "type": "radio",
+  "name": "System",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "input",
+  "type": "radio",
+  "name": "Light",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "input",
+  "type": "radio",
+  "name": "Dark",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "button",
+  "type": "button",
+  "name": "Quran font size −",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "input",
+  "type": "range",
+  "name": "Quran font size: 26",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "button",
+  "type": "button",
+  "name": "Quran font size +",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "Show the English translation in the surah reader",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "input",
+  "type": "url",
+  "name": "API base URL",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "button",
+  "type": "submit",
+  "name": "Save URL",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "input",
+  "type": "email",
+  "name": "Email",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "input",
+  "type": "password",
+  "name": "Password (at least 10 characters)",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "button",
+  "type": "submit",
+  "name": "Sign in",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "button",
+  "type": "button",
+  "name": "Create account",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/about/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/about/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/about/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/about/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/about/",
+  "tag": "a",
+  "type": null,
+  "name": "Search",
+  "href": "/en/search/"
+ },
+ {
+  "page": "/en/about/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/about/",
+  "tag": "a",
+  "type": null,
+  "name": "Bookmarks",
+  "href": "/en/bookmarks/"
+ },
+ {
+  "page": "/en/about/",
+  "tag": "a",
+  "type": null,
+  "name": "Settings",
+  "href": "/en/settings/"
+ },
+ {
+  "page": "/en/about/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/en/about/",
+  "tag": "a",
+  "type": null,
+  "name": "Amiri Quran — OFL",
+  "href": "/fonts/OFL.txt"
+ },
+ {
+  "page": "/en/about/",
+  "tag": "a",
+  "type": null,
+  "name": "IBM Plex Sans Arabic — OFL",
+  "href": "/fonts/OFL-IBMPlexSansArabic.txt"
+ },
+ {
+  "page": "/en/about/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/about/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ }
+]

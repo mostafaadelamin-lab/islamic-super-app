@@ -1,0 +1,70 @@
+
+> @rattil/web@0.1.0 build
+> npm run content && next build && node scripts/generate-sw.mjs
+
+
+> @rattil/web@0.1.0 content
+> node scripts/prepare-content.mjs
+
+content prepared: 114 surahs
+   ▲ Next.js 15.5.29
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 2.3s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/1455) ...
+   Generating static pages (363/1455) 
+   Generating static pages (727/1455) 
+   Generating static pages (1091/1455) 
+ ✓ Generating static pages (1455/1455)
+   Finalizing page optimization ...
+   Collecting build traces ...
+   Exporting (0/2) ...
+ ✓ Exporting (2/2)
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                      320 B         116 kB
+├ ○ /_not-found                            186 B         103 kB
+├ ● /[locale]                            3.68 kB         129 kB
+├   ├ /ar
+├   └ /en
+├ ● /[locale]/about                        127 B         103 kB
+├   ├ /ar/about
+├   └ /en/about
+├ ● /[locale]/bookmarks                  1.71 kB         127 kB
+├   ├ /ar/bookmarks
+├   └ /en/bookmarks
+├ ● /[locale]/page/[p]                   2.07 kB         127 kB
+├   ├ /ar/page/1
+├   ├ /ar/page/2
+├   ├ /ar/page/3
+├   └ [+1205 more paths]
+├ ● /[locale]/prayer                     5.48 kB         118 kB
+├   ├ /ar/prayer
+├   └ /en/prayer
+├ ● /[locale]/quran                      2.69 kB         128 kB
+├   ├ /ar/quran
+├   └ /en/quran
+├ ● /[locale]/search                     8.27 kB         124 kB
+├   ├ /ar/search
+├   └ /en/search
+├ ● /[locale]/settings                   4.94 kB         121 kB
+├   ├ /ar/settings
+├   └ /en/settings
+├ ● /[locale]/surah/[n]                  2.76 kB         128 kB
+├   ├ /ar/surah/1
+├   ├ /ar/surah/2
+├   ├ /ar/surah/3
+├   └ [+225 more paths]
+└ ○ /manifest.webmanifest                  127 B         103 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/255-0e5ac6cd71b0e266.js       46.7 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.93 kB
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+sw.js: version 07ac702da9086a60, 186 core + 1436/1436 ar/en route files, 53.2 MB total

@@ -1,0 +1,18 @@
+{
+  "appName": "Rattil",
+  "tagline": "Quran, prayer and remembrance — free, no ads",
+  "nav.home": "Home", "nav.quran": "Quran", "nav.prayer": "Prayer", "nav.settings": "Settings", "nav.bookmarks": "Bookmarks",
+  "quran.surahs": "Surahs", "quran.pages": "Mushaf pages", "quran.search": "Search the Quran", "quran.searchHint": "Type an Arabic word", "quran.noResults": "No results",
+  "quran.ayahCount": "{count} ayahs", "quran.meccan": "Meccan", "quran.medinan": "Medinan", "quran.page": "Page {page}", "quran.juz": "Juz {juz}",
+  "quran.goToPage": "Go to page", "quran.prevPage": "Previous page", "quran.nextPage": "Next page", "quran.showTranslation": "Show English translation",
+  "quran.bookmark": "Bookmark ayah", "quran.bookmarked": "Bookmarked", "quran.removeBookmark": "Remove bookmark", "quran.continueReading": "Continue reading",
+  "quran.surahN": "Surah {n}",
+  "prayer.title": "Prayer times", "prayer.fajr": "Fajr", "prayer.sunrise": "Sunrise", "prayer.dhuhr": "Dhuhr", "prayer.asr": "Asr", "prayer.maghrib": "Maghrib", "prayer.isha": "Isha",
+  "prayer.next": "Next prayer: {name}", "prayer.in": "in {time}", "prayer.city": "City", "prayer.method": "Calculation method", "prayer.asrMethod": "Asr method",
+  "prayer.asrStandard": "Standard (Shafi'i, Maliki, Hanbali)", "prayer.asrHanafi": "Hanafi", "prayer.qibla": "Qibla direction", "prayer.qiblaDeg": "{deg}° from true north",
+  "prayer.highLat": "High-latitude rule applied to: {list}", "prayer.adjust": "Manual adjustment (minutes)",
+  "settings.language": "Language", "settings.theme": "Theme", "settings.themeSystem": "System", "settings.themeLight": "Light", "settings.themeDark": "Dark",
+  "settings.fontSize": "Quran font size", "settings.about": "About", "settings.free": "This app is completely free: no ads, no subscriptions, no purchases.",
+  "settings.sources": "Content sources", "bookmarks.empty": "No bookmarks yet",
+  "common.retry": "Retry", "common.offline": "You are offline — showing saved content", "common.error": "Something went wrong"
+}

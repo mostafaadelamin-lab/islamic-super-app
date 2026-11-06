@@ -1,0 +1,12 @@
+{
+  "schema": "search-normalization.v1",
+  "_doc": "Arabic search normalisation shared by API, web and mobile. Applied to BOTH the query and an in-memory index copy of each ayah; results always return the original, unmodified ayah text. Steps in order: (1) remove every code point in removeRanges (inclusive, hex); (2) replace characters per 'map'; (3) collapse whitespace to single spaces and trim.",
+  "removeRanges": [["0610", "061A"], ["064B", "065F"], ["0670", "0670"], ["06D6", "06ED"], ["08D3", "08FF"], ["0640", "0640"]],
+  "map": {"ٱ": "ا", "أ": "ا", "إ": "ا", "آ": "ا", "ٰ": "", "ى": "ي", "ئ": "ي", "ؤ": "و", "ة": "ه", "ۥ": "", "ۦ": ""},
+  "vectors": [
+    {"in": "ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ", "out": "الحمد لله رب العلمين"},
+    {"in": "  إِيَّاكَ   نَعۡبُدُ ", "out": "اياك نعبد"},
+    {"in": "هُدٗى", "out": "هدي"},
+    {"in": "رحمة", "out": "رحمه"}
+  ]
+}

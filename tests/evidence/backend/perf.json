@@ -1,0 +1,44 @@
+{
+ "env": {
+  "cpu": 4,
+  "python": "3.13.18",
+  "server": "uvicorn 1 worker, sqlite",
+  "requests_per_endpoint": 200
+ },
+ "health": {
+  "p50_ms": 1.14,
+  "p95_ms": 1.64,
+  "max_ms": 5.46,
+  "bytes": 33
+ },
+ "surahs": {
+  "p50_ms": 2.15,
+  "p95_ms": 2.56,
+  "max_ms": 3.16,
+  "bytes": 13301
+ },
+ "surah-2": {
+  "p50_ms": 2.88,
+  "p95_ms": 4.6,
+  "max_ms": 28.72,
+  "bytes": 111515
+ },
+ "page-300": {
+  "p50_ms": 1.28,
+  "p95_ms": 1.56,
+  "max_ms": 2.9,
+  "bytes": 2524
+ },
+ "search": {
+  "p50_ms": 2.24,
+  "p95_ms": 3.11,
+  "max_ms": 4.52,
+  "bytes": 4542
+ },
+ "prayer": {
+  "p50_ms": 1.39,
+  "p95_ms": 1.64,
+  "max_ms": 1.91,
+  "bytes": 383
+ }
+}

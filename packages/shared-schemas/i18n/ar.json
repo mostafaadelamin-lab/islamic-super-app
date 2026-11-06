@@ -1,0 +1,18 @@
+{
+  "appName": "رتّل",
+  "tagline": "القرآن والصلاة والذكر — مجاني بلا إعلانات",
+  "nav.home": "الرئيسية", "nav.quran": "القرآن", "nav.prayer": "الصلاة", "nav.settings": "الإعدادات", "nav.bookmarks": "العلامات",
+  "quran.surahs": "السور", "quran.pages": "صفحات المصحف", "quran.search": "البحث في القرآن", "quran.searchHint": "اكتب كلمة", "quran.noResults": "لا توجد نتائج",
+  "quran.ayahCount": "{count} آية", "quran.meccan": "مكية", "quran.medinan": "مدنية", "quran.page": "صفحة {page}", "quran.juz": "الجزء {juz}",
+  "quran.goToPage": "اذهب إلى صفحة", "quran.prevPage": "الصفحة السابقة", "quran.nextPage": "الصفحة التالية", "quran.showTranslation": "إظهار الترجمة الإنجليزية",
+  "quran.bookmark": "حفظ علامة على الآية", "quran.bookmarked": "تم حفظ العلامة", "quran.removeBookmark": "حذف العلامة", "quran.continueReading": "متابعة القراءة",
+  "quran.surahN": "سورة {n}",
+  "prayer.title": "مواقيت الصلاة", "prayer.fajr": "الفجر", "prayer.sunrise": "الشروق", "prayer.dhuhr": "الظهر", "prayer.asr": "العصر", "prayer.maghrib": "المغرب", "prayer.isha": "العشاء",
+  "prayer.next": "الصلاة القادمة: {name}", "prayer.in": "بعد {time}", "prayer.city": "المدينة", "prayer.method": "طريقة الحساب", "prayer.asrMethod": "مذهب العصر",
+  "prayer.asrStandard": "الجمهور (الشافعي والمالكي والحنبلي)", "prayer.asrHanafi": "الحنفي", "prayer.qibla": "اتجاه القبلة", "prayer.qiblaDeg": "{deg}° من الشمال الجغرافي",
+  "prayer.highLat": "طُبّقت قاعدة خطوط العرض العليا على: {list}", "prayer.adjust": "تعديل يدوي (بالدقائق)",
+  "settings.language": "اللغة", "settings.theme": "المظهر", "settings.themeSystem": "حسب الجهاز", "settings.themeLight": "فاتح", "settings.themeDark": "داكن",
+  "settings.fontSize": "حجم خط المصحف", "settings.about": "عن التطبيق", "settings.free": "التطبيق مجاني بالكامل: بلا إعلانات ولا اشتراكات ولا مشتريات.",
+  "settings.sources": "مصادر المحتوى", "bookmarks.empty": "لا توجد علامات بعد",
+  "common.retry": "إعادة المحاولة", "common.offline": "أنت غير متصل — يُعرض المحتوى المحفوظ", "common.error": "حدث خطأ"
+}

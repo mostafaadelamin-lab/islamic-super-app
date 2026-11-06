@@ -1,0 +1,2 @@
+/** Runs before first paint: applies saved theme and Quran font size (never throws). */
+export const THEME_SCRIPT = `(function(){try{var p=JSON.parse(localStorage.getItem('rattil.prefs')||'{}');var d=document.documentElement;if(p.theme==='light'||p.theme==='dark'){d.setAttribute('data-theme',p.theme)}var f=Number(p.fontSize);if(f>=18&&f<=40){d.style.setProperty('--quran-size',f+'px')}}catch(e){}})();`;

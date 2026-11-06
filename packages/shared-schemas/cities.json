@@ -1,0 +1,395 @@
+{
+"schema": "cities.v1",
+"cities": [
+{
+"id": "c1",
+"nameAr": "القاهرة",
+"nameEn": "Cairo",
+"countryAr": "مصر",
+"lat": 30.0444,
+"lng": 31.2357,
+"tz": "Africa/Cairo",
+"method": "egypt"
+},
+{
+"id": "c2",
+"nameAr": "الجيزة",
+"nameEn": "Giza",
+"countryAr": "مصر",
+"lat": 30.0131,
+"lng": 31.2089,
+"tz": "Africa/Cairo",
+"method": "egypt"
+},
+{
+"id": "c3",
+"nameAr": "الإسكندرية",
+"nameEn": "Alexandria",
+"countryAr": "مصر",
+"lat": 31.2001,
+"lng": 29.9187,
+"tz": "Africa/Cairo",
+"method": "egypt"
+},
+{
+"id": "c21",
+"nameAr": "الأقصر",
+"nameEn": "Luxor",
+"countryAr": "مصر",
+"lat": 25.6872,
+"lng": 32.6396,
+"tz": "Africa/Cairo",
+"method": "egypt"
+},
+{
+"id": "c22",
+"nameAr": "أسوان",
+"nameEn": "Aswan",
+"countryAr": "مصر",
+"lat": 24.0889,
+"lng": 32.8998,
+"tz": "Africa/Cairo",
+"method": "egypt"
+},
+{
+"id": "c26",
+"nameAr": "مكة المكرمة",
+"nameEn": "Makkah",
+"countryAr": "السعودية",
+"lat": 21.3891,
+"lng": 39.8579,
+"tz": "Asia/Riyadh",
+"method": "makkah"
+},
+{
+"id": "c27",
+"nameAr": "المدينة المنورة",
+"nameEn": "Madinah",
+"countryAr": "السعودية",
+"lat": 24.5247,
+"lng": 39.5692,
+"tz": "Asia/Riyadh",
+"method": "makkah"
+},
+{
+"id": "c28",
+"nameAr": "الرياض",
+"nameEn": "Riyadh",
+"countryAr": "السعودية",
+"lat": 24.7136,
+"lng": 46.6753,
+"tz": "Asia/Riyadh",
+"method": "makkah"
+},
+{
+"id": "c29",
+"nameAr": "جدة",
+"nameEn": "Jeddah",
+"countryAr": "السعودية",
+"lat": 21.4858,
+"lng": 39.1925,
+"tz": "Asia/Riyadh",
+"method": "makkah"
+},
+{
+"id": "c30",
+"nameAr": "الدمام",
+"nameEn": "Dammam",
+"countryAr": "السعودية",
+"lat": 26.4207,
+"lng": 50.0888,
+"tz": "Asia/Riyadh",
+"method": "makkah"
+},
+{
+"id": "c31",
+"nameAr": "دبي",
+"nameEn": "Dubai",
+"countryAr": "الإمارات",
+"lat": 25.2048,
+"lng": 55.2708,
+"tz": "Asia/Dubai",
+"method": "dubai"
+},
+{
+"id": "c32",
+"nameAr": "أبوظبي",
+"nameEn": "Abu Dhabi",
+"countryAr": "الإمارات",
+"lat": 24.4539,
+"lng": 54.3773,
+"tz": "Asia/Dubai",
+"method": "dubai"
+},
+{
+"id": "c33",
+"nameAr": "الدوحة",
+"nameEn": "Doha",
+"countryAr": "قطر",
+"lat": 25.2854,
+"lng": 51.531,
+"tz": "Asia/Qatar",
+"method": "qatar"
+},
+{
+"id": "c34",
+"nameAr": "الكويت",
+"nameEn": "Kuwait City",
+"countryAr": "الكويت",
+"lat": 29.3759,
+"lng": 47.9774,
+"tz": "Asia/Kuwait",
+"method": "kuwait"
+},
+{
+"id": "c35",
+"nameAr": "المنامة",
+"nameEn": "Manama",
+"countryAr": "البحرين",
+"lat": 26.2285,
+"lng": 50.586,
+"tz": "Asia/Bahrain",
+"method": "mwl"
+},
+{
+"id": "c36",
+"nameAr": "مسقط",
+"nameEn": "Muscat",
+"countryAr": "عُمان",
+"lat": 23.588,
+"lng": 58.3829,
+"tz": "Asia/Muscat",
+"method": "mwl"
+},
+{
+"id": "c37",
+"nameAr": "عمّان",
+"nameEn": "Amman",
+"countryAr": "الأردن",
+"lat": 31.9454,
+"lng": 35.9284,
+"tz": "Asia/Amman",
+"method": "mwl"
+},
+{
+"id": "c38",
+"nameAr": "القدس",
+"nameEn": "Jerusalem",
+"countryAr": "فلسطين",
+"lat": 31.7683,
+"lng": 35.2137,
+"tz": "Asia/Jerusalem",
+"method": "mwl"
+},
+{
+"id": "c39",
+"nameAr": "غزة",
+"nameEn": "Gaza",
+"countryAr": "فلسطين",
+"lat": 31.5017,
+"lng": 34.4668,
+"tz": "Asia/Gaza",
+"method": "mwl"
+},
+{
+"id": "c40",
+"nameAr": "بيروت",
+"nameEn": "Beirut",
+"countryAr": "لبنان",
+"lat": 33.8938,
+"lng": 35.5018,
+"tz": "Asia/Beirut",
+"method": "mwl"
+},
+{
+"id": "c41",
+"nameAr": "دمشق",
+"nameEn": "Damascus",
+"countryAr": "سوريا",
+"lat": 33.5138,
+"lng": 36.2765,
+"tz": "Asia/Damascus",
+"method": "mwl"
+},
+{
+"id": "c42",
+"nameAr": "بغداد",
+"nameEn": "Baghdad",
+"countryAr": "العراق",
+"lat": 33.3152,
+"lng": 44.3661,
+"tz": "Asia/Baghdad",
+"method": "mwl"
+},
+{
+"id": "c43",
+"nameAr": "الخرطوم",
+"nameEn": "Khartoum",
+"countryAr": "السودان",
+"lat": 15.5007,
+"lng": 32.5599,
+"tz": "Africa/Khartoum",
+"method": "egypt"
+},
+{
+"id": "c44",
+"nameAr": "طرابلس",
+"nameEn": "Tripoli",
+"countryAr": "ليبيا",
+"lat": 32.8872,
+"lng": 13.1913,
+"tz": "Africa/Tripoli",
+"method": "egypt"
+},
+{
+"id": "c45",
+"nameAr": "تونس",
+"nameEn": "Tunis",
+"countryAr": "تونس",
+"lat": 36.8065,
+"lng": 10.1815,
+"tz": "Africa/Tunis",
+"method": "mwl"
+},
+{
+"id": "c46",
+"nameAr": "الجزائر",
+"nameEn": "Algiers",
+"countryAr": "الجزائر",
+"lat": 36.7538,
+"lng": 3.0588,
+"tz": "Africa/Algiers",
+"method": "mwl"
+},
+{
+"id": "c47",
+"nameAr": "الرباط",
+"nameEn": "Rabat",
+"countryAr": "المغرب",
+"lat": 34.0209,
+"lng": -6.8416,
+"tz": "Africa/Casablanca",
+"method": "mwl"
+},
+{
+"id": "c48",
+"nameAr": "الدار البيضاء",
+"nameEn": "Casablanca",
+"countryAr": "المغرب",
+"lat": 33.5731,
+"lng": -7.5898,
+"tz": "Africa/Casablanca",
+"method": "mwl"
+},
+{
+"id": "c49",
+"nameAr": "صنعاء",
+"nameEn": "Sanaa",
+"countryAr": "اليمن",
+"lat": 15.3694,
+"lng": 44.191,
+"tz": "Asia/Aden",
+"method": "makkah"
+},
+{
+"id": "c50",
+"nameAr": "إسطنبول",
+"nameEn": "Istanbul",
+"countryAr": "تركيا",
+"lat": 41.0082,
+"lng": 28.9784,
+"tz": "Europe/Istanbul",
+"method": "mwl"
+},
+{
+"id": "c51",
+"nameAr": "كراتشي",
+"nameEn": "Karachi",
+"countryAr": "باكستان",
+"lat": 24.8607,
+"lng": 67.0011,
+"tz": "Asia/Karachi",
+"method": "karachi"
+},
+{
+"id": "c52",
+"nameAr": "كوالالمبور",
+"nameEn": "Kuala Lumpur",
+"countryAr": "ماليزيا",
+"lat": 3.139,
+"lng": 101.6869,
+"tz": "Asia/Kuala_Lumpur",
+"method": "mwl"
+},
+{
+"id": "c53",
+"nameAr": "جاكرتا",
+"nameEn": "Jakarta",
+"countryAr": "إندونيسيا",
+"lat": -6.2088,
+"lng": 106.8456,
+"tz": "Asia/Jakarta",
+"method": "mwl"
+},
+{
+"id": "c54",
+"nameAr": "لندن",
+"nameEn": "London",
+"countryAr": "المملكة المتحدة",
+"lat": 51.5074,
+"lng": -0.1278,
+"tz": "Europe/London",
+"method": "mwl"
+},
+{
+"id": "c55",
+"nameAr": "باريس",
+"nameEn": "Paris",
+"countryAr": "فرنسا",
+"lat": 48.8566,
+"lng": 2.3522,
+"tz": "Europe/Paris",
+"method": "france"
+},
+{
+"id": "c56",
+"nameAr": "برلين",
+"nameEn": "Berlin",
+"countryAr": "ألمانيا",
+"lat": 52.52,
+"lng": 13.405,
+"tz": "Europe/Berlin",
+"method": "mwl"
+},
+{
+"id": "c57",
+"nameAr": "نيويورك",
+"nameEn": "New York",
+"countryAr": "الولايات المتحدة",
+"lat": 40.7128,
+"lng": -74.006,
+"tz": "America/New_York",
+"method": "isna"
+},
+{
+"id": "c58",
+"nameAr": "تورونتو",
+"nameEn": "Toronto",
+"countryAr": "كندا",
+"lat": 43.6532,
+"lng": -79.3832,
+"tz": "America/Toronto",
+"method": "isna"
+},
+{
+"id": "c59",
+"nameAr": "سيدني",
+"nameEn": "Sydney",
+"countryAr": "أستراليا",
+"lat": -33.8688,
+"lng": 151.2093,
+"tz": "Australia/Sydney",
+"method": "mwl"
+}
+]
+}

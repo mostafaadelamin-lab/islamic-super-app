@@ -1,0 +1,617 @@
+{
+  "@@locale": "en",
+  "aboutFonts": "Fonts: Amiri Quran and IBM Plex Sans Arabic — SIL Open Font License 1.1.",
+  "@aboutFonts": {
+    "description": "shared key \"about.fonts\""
+  },
+  "aboutOpenSource": "Open source and free forever. No tracking, no ads, no in-app purchases.",
+  "@aboutOpenSource": {
+    "description": "shared key \"about.openSource\""
+  },
+  "aboutPages": "Mushaf page boundaries: Madinah Mushaf 1405H (KFGQPC) via QuranMeHelp manifest — Waqf General Public License 2.0.",
+  "@aboutPages": {
+    "description": "shared key \"about.pages\""
+  },
+  "aboutPrayerAlgo": "Prayer times are calculated on the device with standard astronomical formulas (Meeus / USNO) and checked against the independent adhan-js library.",
+  "@aboutPrayerAlgo": {
+    "description": "shared key \"about.prayerAlgo\""
+  },
+  "aboutQuranText": "Quran text: The Noble Qur'an Encyclopedia (quranenc.com) Uthmani text, Hafs an Asim, via quran-json 3.1.2 — CC BY 4.0. Bundled unchanged; verified by SHA-256.",
+  "@aboutQuranText": {
+    "description": "shared key \"about.quranText\""
+  },
+  "aboutTranslation": "English translation: Saheeh International, via quran-json 3.1.2 (licence review pending).",
+  "@aboutTranslation": {
+    "description": "shared key \"about.translation\""
+  },
+  "aboutTzdb": "Time zones: IANA tz database (public domain) via the timezone package.",
+  "@aboutTzdb": {
+    "description": "shared key \"about.tzdb\""
+  },
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "description": "shared key \"about.version\"",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "accountEmail": "Email",
+  "@accountEmail": {
+    "description": "shared key \"account.email\""
+  },
+  "accountErrAuth": "Incorrect email or password",
+  "@accountErrAuth": {
+    "description": "shared key \"account.errAuth\""
+  },
+  "accountErrEmail": "Enter a valid email address",
+  "@accountErrEmail": {
+    "description": "shared key \"account.errEmail\""
+  },
+  "accountErrOffline": "Cannot reach the server. Check your internet connection and the server address.",
+  "@accountErrOffline": {
+    "description": "shared key \"account.errOffline\""
+  },
+  "accountErrPassword": "Password must be at least 10 characters",
+  "@accountErrPassword": {
+    "description": "shared key \"account.errPassword\""
+  },
+  "accountErrRateLimit": "Too many attempts. Wait a minute and try again.",
+  "@accountErrRateLimit": {
+    "description": "shared key \"account.errRateLimit\""
+  },
+  "accountErrServer": "Server error ({code})",
+  "@accountErrServer": {
+    "description": "shared key \"account.errServer\"",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "accountErrSession": "Your session has expired. Please sign in again.",
+  "@accountErrSession": {
+    "description": "shared key \"account.errSession\""
+  },
+  "accountErrTaken": "This email is already registered",
+  "@accountErrTaken": {
+    "description": "shared key \"account.errTaken\""
+  },
+  "accountLastSync": "Last sync: {time}",
+  "@accountLastSync": {
+    "description": "shared key \"account.lastSync\"",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "accountLogin": "Sign in",
+  "@accountLogin": {
+    "description": "shared key \"account.login\""
+  },
+  "accountLogout": "Sign out",
+  "@accountLogout": {
+    "description": "shared key \"account.logout\""
+  },
+  "accountOptional": "An account is optional. Everything works offline without one.",
+  "@accountOptional": {
+    "description": "shared key \"account.optional\""
+  },
+  "accountPassword": "Password",
+  "@accountPassword": {
+    "description": "shared key \"account.password\""
+  },
+  "accountRegister": "Create account",
+  "@accountRegister": {
+    "description": "shared key \"account.register\""
+  },
+  "accountRegistered": "Account created. You can sign in now.",
+  "@accountRegistered": {
+    "description": "shared key \"account.registered\""
+  },
+  "accountSaveServer": "Save address",
+  "@accountSaveServer": {
+    "description": "shared key \"account.saveServer\""
+  },
+  "accountServerInvalid": "Enter an http:// or https:// address",
+  "@accountServerInvalid": {
+    "description": "shared key \"account.serverInvalid\""
+  },
+  "accountServerSaved": "Server address saved",
+  "@accountServerSaved": {
+    "description": "shared key \"account.serverSaved\""
+  },
+  "accountServerUrl": "Server address",
+  "@accountServerUrl": {
+    "description": "shared key \"account.serverUrl\""
+  },
+  "accountSignedInAs": "Signed in as {email}",
+  "@accountSignedInAs": {
+    "description": "shared key \"account.signedInAs\"",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "accountSyncDone": "Sync complete: {count} bookmarks",
+  "@accountSyncDone": {
+    "description": "shared key \"account.syncDone\"",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "accountSyncNow": "Sync now",
+  "@accountSyncNow": {
+    "description": "shared key \"account.syncNow\""
+  },
+  "appName": "Rattil",
+  "@appName": {
+    "description": "shared key \"appName\""
+  },
+  "bookmarksDelete": "Delete bookmark for {label}",
+  "@bookmarksDelete": {
+    "description": "shared key \"bookmarks.delete\"",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "bookmarksEmpty": "No bookmarks yet",
+  "@bookmarksEmpty": {
+    "description": "shared key \"bookmarks.empty\""
+  },
+  "commonClose": "Close",
+  "@commonClose": {
+    "description": "shared key \"common.close\""
+  },
+  "commonError": "Something went wrong",
+  "@commonError": {
+    "description": "shared key \"common.error\""
+  },
+  "commonOffline": "You are offline — showing saved content",
+  "@commonOffline": {
+    "description": "shared key \"common.offline\""
+  },
+  "commonRetry": "Retry",
+  "@commonRetry": {
+    "description": "shared key \"common.retry\""
+  },
+  "homeNextPrayer": "Next prayer",
+  "@homeNextPrayer": {
+    "description": "shared key \"home.nextPrayer\""
+  },
+  "homeQuickLinks": "Quick links",
+  "@homeQuickLinks": {
+    "description": "shared key \"home.quickLinks\""
+  },
+  "homeWelcome": "Peace be upon you",
+  "@homeWelcome": {
+    "description": "shared key \"home.welcome\""
+  },
+  "navBookmarks": "Bookmarks",
+  "@navBookmarks": {
+    "description": "shared key \"nav.bookmarks\""
+  },
+  "navHome": "Home",
+  "@navHome": {
+    "description": "shared key \"nav.home\""
+  },
+  "navPrayer": "Prayer",
+  "@navPrayer": {
+    "description": "shared key \"nav.prayer\""
+  },
+  "navQuran": "Quran",
+  "@navQuran": {
+    "description": "shared key \"nav.quran\""
+  },
+  "navSettings": "Settings",
+  "@navSettings": {
+    "description": "shared key \"nav.settings\""
+  },
+  "prayerAdjust": "Manual adjustment (minutes)",
+  "@prayerAdjust": {
+    "description": "shared key \"prayer.adjust\""
+  },
+  "prayerAsr": "Asr",
+  "@prayerAsr": {
+    "description": "shared key \"prayer.asr\""
+  },
+  "prayerAsrHanafi": "Hanafi",
+  "@prayerAsrHanafi": {
+    "description": "shared key \"prayer.asrHanafi\""
+  },
+  "prayerAsrMethod": "Asr method",
+  "@prayerAsrMethod": {
+    "description": "shared key \"prayer.asrMethod\""
+  },
+  "prayerAsrStandard": "Standard (Shafi'i, Maliki, Hanbali)",
+  "@prayerAsrStandard": {
+    "description": "shared key \"prayer.asrStandard\""
+  },
+  "prayerCity": "City",
+  "@prayerCity": {
+    "description": "shared key \"prayer.city\""
+  },
+  "prayerCompassLabel": "Compass: qibla is {deg}° clockwise from north",
+  "@prayerCompassLabel": {
+    "description": "shared key \"prayer.compassLabel\"",
+    "placeholders": {
+      "deg": {
+        "type": "String"
+      }
+    }
+  },
+  "prayerDate": "Date: {date}",
+  "@prayerDate": {
+    "description": "shared key \"prayer.date\"",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "prayerDecrease": "Subtract a minute from {name}",
+  "@prayerDecrease": {
+    "description": "shared key \"prayer.decrease\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "prayerDhuhr": "Dhuhr",
+  "@prayerDhuhr": {
+    "description": "shared key \"prayer.dhuhr\""
+  },
+  "prayerFajr": "Fajr",
+  "@prayerFajr": {
+    "description": "shared key \"prayer.fajr\""
+  },
+  "prayerHighLat": "High-latitude rule applied to: {list}",
+  "@prayerHighLat": {
+    "description": "shared key \"prayer.highLat\"",
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "prayerIn": "in {time}",
+  "@prayerIn": {
+    "description": "shared key \"prayer.in\"",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "prayerIncrease": "Add a minute to {name}",
+  "@prayerIncrease": {
+    "description": "shared key \"prayer.increase\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "prayerIsha": "Isha",
+  "@prayerIsha": {
+    "description": "shared key \"prayer.isha\""
+  },
+  "prayerMaghrib": "Maghrib",
+  "@prayerMaghrib": {
+    "description": "shared key \"prayer.maghrib\""
+  },
+  "prayerMethod": "Calculation method",
+  "@prayerMethod": {
+    "description": "shared key \"prayer.method\""
+  },
+  "prayerMinutesValue": "{n} min",
+  "@prayerMinutesValue": {
+    "description": "shared key \"prayer.minutesValue\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "prayerNext": "Next prayer: {name}",
+  "@prayerNext": {
+    "description": "shared key \"prayer.next\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "prayerNoPrayerToday": "Prayer times cannot be calculated here today (polar day or night)",
+  "@prayerNoPrayerToday": {
+    "description": "shared key \"prayer.noPrayerToday\""
+  },
+  "prayerNorth": "N",
+  "@prayerNorth": {
+    "description": "shared key \"prayer.north\""
+  },
+  "prayerQibla": "Qibla direction",
+  "@prayerQibla": {
+    "description": "shared key \"prayer.qibla\""
+  },
+  "prayerQiblaDeg": "{deg}° from true north",
+  "@prayerQiblaDeg": {
+    "description": "shared key \"prayer.qiblaDeg\"",
+    "placeholders": {
+      "deg": {
+        "type": "String"
+      }
+    }
+  },
+  "prayerQiblaNote": "Static diagram: hold the phone with the top pointing to true north.",
+  "@prayerQiblaNote": {
+    "description": "shared key \"prayer.qiblaNote\""
+  },
+  "prayerResetAdjust": "Reset adjustments",
+  "@prayerResetAdjust": {
+    "description": "shared key \"prayer.resetAdjust\""
+  },
+  "prayerSearchCity": "Search cities",
+  "@prayerSearchCity": {
+    "description": "shared key \"prayer.searchCity\""
+  },
+  "prayerSelectCity": "Choose city",
+  "@prayerSelectCity": {
+    "description": "shared key \"prayer.selectCity\""
+  },
+  "prayerSunrise": "Sunrise",
+  "@prayerSunrise": {
+    "description": "shared key \"prayer.sunrise\""
+  },
+  "prayerTimezone": "Time zone: {tz}",
+  "@prayerTimezone": {
+    "description": "shared key \"prayer.timezone\"",
+    "placeholders": {
+      "tz": {
+        "type": "String"
+      }
+    }
+  },
+  "prayerTitle": "Prayer times",
+  "@prayerTitle": {
+    "description": "shared key \"prayer.title\""
+  },
+  "quranAyahCount": "{count} ayahs",
+  "@quranAyahCount": {
+    "description": "shared key \"quran.ayahCount\"",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "quranAyahN": "Ayah {n}",
+  "@quranAyahN": {
+    "description": "shared key \"quran.ayahN\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "quranBookmark": "Bookmark ayah",
+  "@quranBookmark": {
+    "description": "shared key \"quran.bookmark\""
+  },
+  "quranBookmarkRemoved": "Bookmark removed",
+  "@quranBookmarkRemoved": {
+    "description": "shared key \"quran.bookmarkRemoved\""
+  },
+  "quranBookmarked": "Bookmarked",
+  "@quranBookmarked": {
+    "description": "shared key \"quran.bookmarked\""
+  },
+  "quranContinueReading": "Continue reading",
+  "@quranContinueReading": {
+    "description": "shared key \"quran.continueReading\""
+  },
+  "quranFilter": "Filter surahs",
+  "@quranFilter": {
+    "description": "shared key \"quran.filter\""
+  },
+  "quranFilterHint": "Name or number",
+  "@quranFilterHint": {
+    "description": "shared key \"quran.filterHint\""
+  },
+  "quranGo": "Go",
+  "@quranGo": {
+    "description": "shared key \"quran.go\""
+  },
+  "quranGoToPage": "Go to page",
+  "@quranGoToPage": {
+    "description": "shared key \"quran.goToPage\""
+  },
+  "quranJuz": "Juz {juz}",
+  "@quranJuz": {
+    "description": "shared key \"quran.juz\"",
+    "placeholders": {
+      "juz": {
+        "type": "String"
+      }
+    }
+  },
+  "quranMeccan": "Meccan",
+  "@quranMeccan": {
+    "description": "shared key \"quran.meccan\""
+  },
+  "quranMedinan": "Medinan",
+  "@quranMedinan": {
+    "description": "shared key \"quran.medinan\""
+  },
+  "quranNextPage": "Next page",
+  "@quranNextPage": {
+    "description": "shared key \"quran.nextPage\""
+  },
+  "quranNoResults": "No results",
+  "@quranNoResults": {
+    "description": "shared key \"quran.noResults\""
+  },
+  "quranOpenMushaf": "Open Mushaf pages",
+  "@quranOpenMushaf": {
+    "description": "shared key \"quran.openMushaf\""
+  },
+  "quranPage": "Page {page}",
+  "@quranPage": {
+    "description": "shared key \"quran.page\"",
+    "placeholders": {
+      "page": {
+        "type": "String"
+      }
+    }
+  },
+  "quranPageInvalid": "Enter a whole number from 1 to 604",
+  "@quranPageInvalid": {
+    "description": "shared key \"quran.pageInvalid\""
+  },
+  "quranPageNumberHint": "1–604",
+  "@quranPageNumberHint": {
+    "description": "shared key \"quran.pageNumberHint\""
+  },
+  "quranPages": "Mushaf pages",
+  "@quranPages": {
+    "description": "shared key \"quran.pages\""
+  },
+  "quranPrevPage": "Previous page",
+  "@quranPrevPage": {
+    "description": "shared key \"quran.prevPage\""
+  },
+  "quranRemoveBookmark": "Remove bookmark",
+  "@quranRemoveBookmark": {
+    "description": "shared key \"quran.removeBookmark\""
+  },
+  "quranResultsCount": "{count} results",
+  "@quranResultsCount": {
+    "description": "shared key \"quran.resultsCount\"",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "quranSearch": "Search the Quran",
+  "@quranSearch": {
+    "description": "shared key \"quran.search\""
+  },
+  "quranSearchAction": "Search",
+  "@quranSearchAction": {
+    "description": "shared key \"quran.searchAction\""
+  },
+  "quranSearchHint": "Type an Arabic word",
+  "@quranSearchHint": {
+    "description": "shared key \"quran.searchHint\""
+  },
+  "quranSearchPrompt": "Search ignores diacritics (tashkeel)",
+  "@quranSearchPrompt": {
+    "description": "shared key \"quran.searchPrompt\""
+  },
+  "quranSearchTooShort": "Type at least 2 Arabic letters",
+  "@quranSearchTooShort": {
+    "description": "shared key \"quran.searchTooShort\""
+  },
+  "quranShowTranslation": "Show English translation",
+  "@quranShowTranslation": {
+    "description": "shared key \"quran.showTranslation\""
+  },
+  "quranStartReading": "Start reading",
+  "@quranStartReading": {
+    "description": "shared key \"quran.startReading\""
+  },
+  "quranSurahAyah": "{surah} : {ayah}",
+  "@quranSurahAyah": {
+    "description": "shared key \"quran.surahAyah\"",
+    "placeholders": {
+      "surah": {
+        "type": "String"
+      },
+      "ayah": {
+        "type": "String"
+      }
+    }
+  },
+  "quranSurahN": "Surah {n}",
+  "@quranSurahN": {
+    "description": "shared key \"quran.surahN\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "quranSurahs": "Surahs",
+  "@quranSurahs": {
+    "description": "shared key \"quran.surahs\""
+  },
+  "settingsAbout": "About",
+  "@settingsAbout": {
+    "description": "shared key \"settings.about\""
+  },
+  "settingsAccount": "Account & sync",
+  "@settingsAccount": {
+    "description": "shared key \"settings.account\""
+  },
+  "settingsAccountHint": "Optional — sync bookmarks between devices",
+  "@settingsAccountHint": {
+    "description": "shared key \"settings.accountHint\""
+  },
+  "settingsFontPreview": "Preview",
+  "@settingsFontPreview": {
+    "description": "shared key \"settings.fontPreview\""
+  },
+  "settingsFontSize": "Quran font size",
+  "@settingsFontSize": {
+    "description": "shared key \"settings.fontSize\""
+  },
+  "settingsFree": "This app is completely free: no ads, no subscriptions, no purchases.",
+  "@settingsFree": {
+    "description": "shared key \"settings.free\""
+  },
+  "settingsLanguage": "Language",
+  "@settingsLanguage": {
+    "description": "shared key \"settings.language\""
+  },
+  "settingsLanguageAr": "العربية",
+  "@settingsLanguageAr": {
+    "description": "shared key \"settings.languageAr\""
+  },
+  "settingsLanguageEn": "English",
+  "@settingsLanguageEn": {
+    "description": "shared key \"settings.languageEn\""
+  },
+  "settingsSources": "Content sources",
+  "@settingsSources": {
+    "description": "shared key \"settings.sources\""
+  },
+  "settingsTheme": "Theme",
+  "@settingsTheme": {
+    "description": "shared key \"settings.theme\""
+  },
+  "settingsThemeDark": "Dark",
+  "@settingsThemeDark": {
+    "description": "shared key \"settings.themeDark\""
+  },
+  "settingsThemeLight": "Light",
+  "@settingsThemeLight": {
+    "description": "shared key \"settings.themeLight\""
+  },
+  "settingsThemeSystem": "System",
+  "@settingsThemeSystem": {
+    "description": "shared key \"settings.themeSystem\""
+  },
+  "tagline": "Quran, prayer and remembrance — free, no ads",
+  "@tagline": {
+    "description": "shared key \"tagline\""
+  }
+}

@@ -1,0 +1,7 @@
+# Probes run 2026-11-06 from the build host (same egress policy as the docker build)
+maven.google.com -> 301 https://dl.google.com/dl/android/maven2/com/android/application/com.android.application.gradle.plugin/8.11.1/com.android.application.gradle.plugin-8.11.1.pom
+curl: (56) CONNECT tunnel failed, response 403
+dl.google.com -> 000
+repo1.maven.org (AGP) -> 404
+# gradle wrapper (services.gradle.org) downloaded OK; Maven Central and the Gradle plugin portal are reachable;
+# the Android Gradle Plugin is only published on Google Maven (dl.google.com), which the egress proxy refuses (CONNECT 403).

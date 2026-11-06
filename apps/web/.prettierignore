@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+coverage
+src/generated
+public/fonts
+public/data
+test-results
+playwright-report
+package-lock.json

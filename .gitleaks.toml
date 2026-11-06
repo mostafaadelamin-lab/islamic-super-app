@@ -1,0 +1,5 @@
+[extend]
+useDefault = true
+[allowlist]
+description = "content hashes and test fixtures"
+paths = ['''content/.*''', '''tests/vectors/.*''', '''tests/evidence/.*''', '''apps/mobile/assets/content/.*''', '''apps/web/src/generated/.*''']

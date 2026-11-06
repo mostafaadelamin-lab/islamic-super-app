@@ -1,0 +1,11 @@
+00:00 +0: loading /w/apps/mobile/test_contract/api_contract_test.dart
+00:00 +0: register -> 201, duplicate -> 409 conflict
+00:00 +1: login: wrong password -> 401, right password -> bearer token
+00:00 +2: bad token -> unauthorized
+00:00 +3: PUT body is accepted by the server and round-trips
+00:00 +4: server rejects an ayah beyond the surah length (validation)
+00:00 +5: server keeps the newer copy (LWW) and returns it
+00:00 +6: two devices converge through SyncService (LWW + tombstones)
+00:00 +7: AccountController end to end with the real client
+00:00 +8: unreachable server -> offline error
+00:00 +9: All tests passed!

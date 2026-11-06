@@ -1,0 +1,73 @@
+// generated from tokens.json — do not edit
+export const tokens = {
+ "schema": "design-tokens.v1",
+ "name": "Rattil Islamic Design System",
+ "color": {
+  "light": {
+   "bg": "#EDF1F4",
+   "surface": "#FFFFFF",
+   "surface2": "#F4F7F9",
+   "ink": "#132131",
+   "muted": "#5B6B7B",
+   "line": "#D7DFE6",
+   "primary": "#1E4D78",
+   "onPrimary": "#FFFFFF",
+   "accent": "#B97A1E",
+   "accentSoft": "#F6E8D2",
+   "success": "#2F7D55",
+   "danger": "#B4472F",
+   "verseHighlight": "#E3EDF7",
+   "paper": "#FFFEF8",
+   "paperInk": "#111111",
+   "frame": "#3B7FB8"
+  },
+  "dark": {
+   "bg": "#0B1520",
+   "surface": "#122131",
+   "surface2": "#172A3D",
+   "ink": "#E5ECF2",
+   "muted": "#93A4B5",
+   "line": "#24384C",
+   "primary": "#78A9DA",
+   "onPrimary": "#0B1520",
+   "accent": "#E2A84B",
+   "accentSoft": "#3A2D18",
+   "success": "#6CC596",
+   "danger": "#E98A72",
+   "verseHighlight": "#1D3550",
+   "paper": "#0F1923",
+   "paperInk": "#E8E4D8",
+   "frame": "#3D6E99"
+  }
+ },
+ "font": {
+  "quran": "Amiri Quran",
+  "uiArabic": "IBM Plex Sans Arabic",
+  "uiLatin": "IBM Plex Sans"
+ },
+ "fontSize": {
+  "xs": 12,
+  "sm": 14,
+  "md": 16,
+  "lg": 20,
+  "xl": 24,
+  "quran": 26,
+  "quranMin": 18,
+  "quranMax": 40
+ },
+ "space": {
+  "xs": 4,
+  "sm": 8,
+  "md": 12,
+  "lg": 16,
+  "xl": 24,
+  "xxl": 32
+ },
+ "radius": {
+  "sm": 8,
+  "md": 14,
+  "lg": 20,
+  "pill": 999
+ },
+ "minTouchTarget": 48
+} as const;

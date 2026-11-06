@@ -1,0 +1,68 @@
+
+> @rattil/web@0.1.0 test:coverage
+> npm run content && vitest run --coverage
+
+
+> @rattil/web@0.1.0 content
+> node scripts/prepare-content.mjs
+
+content prepared: 114 surahs
+
+ RUN  v5.1.0 /home/user/isa/apps/web
+      Coverage enabled with v8
+
+ ✓ tests/components/prayer.test.tsx (13 tests) 1681ms
+   ✓ PrayerView (11)
+     ✓ changes city, method and asr, and persists them 384ms
+     ✓ manual adjustments: buttons, input, limits and reset 302ms
+ ✓ tests/components/settings.test.tsx (17 tests) 1758ms
+   ✓ AccountSync (6)
+     ✓ registers, signs in, syncs and signs out 343ms
+ ✓ tests/unit/prayer.test.ts (114 tests) 122ms
+ ✓ tests/components/navigation.test.tsx (7 tests) 295ms
+ ✓ tests/unit/text.test.ts (22 tests) 100ms
+ ✓ tests/unit/quran.test.ts (25 tests) 65ms
+ ✓ tests/components/quran.test.tsx (21 tests) 4537ms
+   ✓ SurahIndex (3)
+     ✓ lists 114 surahs and filters by name, number and Arabic 964ms
+     ✓ uses Arabic-Indic digits in Arabic 760ms
+   ✓ SurahReader (6)
+     ✓ adds and removes a bookmark 328ms
+     ✓ records the last-read position from the IntersectionObserver 476ms
+   ✓ SearchView (3)
+     ✓ searches diacritic-insensitively and links to ayahs 901ms
+     ✓ shows how many results are displayed when there are many 302ms
+ ✓ tests/unit/sync.test.ts (21 tests) 35ms
+ ✓ tests/unit/store.test.ts (10 tests) 24ms
+
+ Test Files  9 passed (9)
+      Tests  250 passed (250)
+   Start at  06:19:51
+   Duration  6.95s (tests 51%, environment 28%, setup 11%, import 6%, transform 2%, worker 2%)
+
+Environment  jsdom was created 9 times · 4.74s total, 28% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+JSON report written to /home/user/isa/tests/evidence/web/vitest-results.json
+JUNIT report written to /home/user/isa/tests/evidence/web/vitest-junit.xml
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-----------------|---------|----------|---------|---------|-------------------
+File             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-----------------|---------|----------|---------|---------|-------------------
+All files        |   98.55 |    95.94 |   97.52 |   99.27 |                   
+ bookmarks.ts    |   96.22 |       96 |     100 |     100 | 24,75             
+ cities.ts       |     100 |       90 |     100 |     100 | 36                
+ locale-path.ts  |     100 |    88.88 |     100 |     100 | 7                 
+ prayer.ts       |     100 |     98.8 |     100 |     100 | 42                
+ storage.ts      |   94.73 |     62.5 |     100 |     100 | 4-22              
+ sw-client.ts    |   94.28 |      100 |      80 |   96.29 | 65                
+ sync.ts         |   96.87 |    88.88 |     100 |   96.49 | 137-138           
+-----------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 98.55% ( 477/484 )
+Branches     : 95.94% ( 355/370 )
+Functions    : 97.52% ( 118/121 )
+Lines        : 99.27% ( 410/413 )
+================================================================================

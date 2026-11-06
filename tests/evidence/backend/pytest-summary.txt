@@ -1,0 +1,22 @@
+---------- coverage: platform linux, python 3.13.18-final-0 ----------
+Name                      Stmts   Miss  Cover
+---------------------------------------------
+app/__init__.py               0      0   100%
+app/config.py                17      0   100%
+app/db/__init__.py            0      0   100%
+app/db/models.py             31      0   100%
+app/db/session.py            23      0   100%
+app/deps.py                  18      0   100%
+app/domain/__init__.py        0      0   100%
+app/domain/prayer.py        115      1    99%
+app/domain/quran.py          61      1    98%
+app/main.py                  41      0   100%
+app/routers/__init__.py       0      0   100%
+app/routers/account.py       75      3    96%
+app/routers/content.py       60      0   100%
+app/schemas.py               31      0   100%
+app/security.py              44      3    93%
+---------------------------------------------
+TOTAL                       516      8    98%
+Coverage XML written to file ../../tests/evidence/backend/coverage.xml
+

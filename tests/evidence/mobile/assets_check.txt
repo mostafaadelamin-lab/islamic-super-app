@@ -1,0 +1,2 @@
+all bundled assets match their sources
+exit=0

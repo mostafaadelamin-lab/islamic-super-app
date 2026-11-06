@@ -1,0 +1,210 @@
+<testsuites id="" name="" tests="98" failures="0" skipped="0" errors="0" time="67.980803">
+<testsuite name="a11y.spec.ts" timestamp="2026-11-06T06:20:41.156Z" hostname="chromium" tests="44" failures="0" skipped="0" time="110.809" errors="0">
+<testcase name="axe light /ar/" classname="a11y.spec.ts" time="3.29">
+</testcase>
+<testcase name="axe light /ar/quran/" classname="a11y.spec.ts" time="5.634">
+</testcase>
+<testcase name="axe light /ar/surah/1/" classname="a11y.spec.ts" time="2.789">
+</testcase>
+<testcase name="axe light /ar/surah/18/" classname="a11y.spec.ts" time="5.792">
+</testcase>
+<testcase name="axe light /ar/page/1/" classname="a11y.spec.ts" time="2.354">
+</testcase>
+<testcase name="axe light /ar/page/604/" classname="a11y.spec.ts" time="2.608">
+</testcase>
+<testcase name="axe light /ar/search/" classname="a11y.spec.ts" time="2.199">
+</testcase>
+<testcase name="axe light /ar/bookmarks/" classname="a11y.spec.ts" time="2.558">
+</testcase>
+<testcase name="axe light /ar/prayer/" classname="a11y.spec.ts" time="2.862">
+</testcase>
+<testcase name="axe light /ar/settings/" classname="a11y.spec.ts" time="2.441">
+</testcase>
+<testcase name="axe light /ar/about/" classname="a11y.spec.ts" time="2.408">
+</testcase>
+<testcase name="axe light /en/" classname="a11y.spec.ts" time="2.791">
+</testcase>
+<testcase name="axe light /en/quran/" classname="a11y.spec.ts" time="4.179">
+</testcase>
+<testcase name="axe light /en/surah/1/" classname="a11y.spec.ts" time="2.718">
+</testcase>
+<testcase name="axe light /en/surah/18/" classname="a11y.spec.ts" time="4.072">
+</testcase>
+<testcase name="axe light /en/page/1/" classname="a11y.spec.ts" time="1.993">
+</testcase>
+<testcase name="axe light /en/page/604/" classname="a11y.spec.ts" time="2.146">
+</testcase>
+<testcase name="axe light /en/search/" classname="a11y.spec.ts" time="1.808">
+</testcase>
+<testcase name="axe light /en/bookmarks/" classname="a11y.spec.ts" time="1.777">
+</testcase>
+<testcase name="axe light /en/prayer/" classname="a11y.spec.ts" time="2.048">
+</testcase>
+<testcase name="axe light /en/settings/" classname="a11y.spec.ts" time="1.809">
+</testcase>
+<testcase name="axe light /en/about/" classname="a11y.spec.ts" time="1.823">
+</testcase>
+<testcase name="axe dark /ar/" classname="a11y.spec.ts" time="1.731">
+</testcase>
+<testcase name="axe dark /ar/quran/" classname="a11y.spec.ts" time="3.045">
+</testcase>
+<testcase name="axe dark /ar/surah/1/" classname="a11y.spec.ts" time="1.996">
+</testcase>
+<testcase name="axe dark /ar/surah/18/" classname="a11y.spec.ts" time="3.453">
+</testcase>
+<testcase name="axe dark /ar/page/1/" classname="a11y.spec.ts" time="1.894">
+</testcase>
+<testcase name="axe dark /ar/page/604/" classname="a11y.spec.ts" time="1.882">
+</testcase>
+<testcase name="axe dark /ar/search/" classname="a11y.spec.ts" time="1.851">
+</testcase>
+<testcase name="axe dark /ar/bookmarks/" classname="a11y.spec.ts" time="1.801">
+</testcase>
+<testcase name="axe dark /ar/prayer/" classname="a11y.spec.ts" time="1.931">
+</testcase>
+<testcase name="axe dark /ar/settings/" classname="a11y.spec.ts" time="1.871">
+</testcase>
+<testcase name="axe dark /ar/about/" classname="a11y.spec.ts" time="1.859">
+</testcase>
+<testcase name="axe dark /en/" classname="a11y.spec.ts" time="1.833">
+</testcase>
+<testcase name="axe dark /en/quran/" classname="a11y.spec.ts" time="3.366">
+</testcase>
+<testcase name="axe dark /en/surah/1/" classname="a11y.spec.ts" time="1.816">
+</testcase>
+<testcase name="axe dark /en/surah/18/" classname="a11y.spec.ts" time="3.687">
+</testcase>
+<testcase name="axe dark /en/page/1/" classname="a11y.spec.ts" time="1.81">
+</testcase>
+<testcase name="axe dark /en/page/604/" classname="a11y.spec.ts" time="1.917">
+</testcase>
+<testcase name="axe dark /en/search/" classname="a11y.spec.ts" time="1.85">
+</testcase>
+<testcase name="axe dark /en/bookmarks/" classname="a11y.spec.ts" time="1.876">
+</testcase>
+<testcase name="axe dark /en/prayer/" classname="a11y.spec.ts" time="2.757">
+</testcase>
+<testcase name="axe dark /en/settings/" classname="a11y.spec.ts" time="2.427">
+</testcase>
+<testcase name="axe dark /en/about/" classname="a11y.spec.ts" time="2.057">
+</testcase>
+</testsuite>
+<testsuite name="features.spec.ts" timestamp="2026-11-06T06:20:41.156Z" hostname="chromium" tests="21" failures="0" skipped="0" time="31.855" errors="0">
+<testcase name="navigation &amp; language › main nav reaches every section in both languages" classname="features.spec.ts" time="2.094">
+</testcase>
+<testcase name="navigation &amp; language › language switch keeps the page, flips direction and persists" classname="features.spec.ts" time="1.774">
+</testcase>
+<testcase name="navigation &amp; language › home quick links and tiles" classname="features.spec.ts" time="0.93">
+</testcase>
+<testcase name="theme &amp; font size › dark theme applies token colours and persists across reloads" classname="features.spec.ts" time="1.499">
+</testcase>
+<testcase name="theme &amp; font size › system theme follows prefers-color-scheme" classname="features.spec.ts" time="0.853">
+</testcase>
+<testcase name="theme &amp; font size › Quran font size (18–40) applies to the reader and persists" classname="features.spec.ts" time="1.804">
+</testcase>
+<testcase name="Quran › surah index has 114 surahs and filters" classname="features.spec.ts" time="1.264">
+</testcase>
+<testcase name="Quran › surah reader: translation toggle, neighbours and Mushaf link" classname="features.spec.ts" time="1.986">
+</testcase>
+<testcase name="Quran › display map is applied only to rendered text" classname="features.spec.ts" time="1.12">
+</testcase>
+<testcase name="Quran › Mushaf page reader: header, prev/next, arrow keys and go-to-page validation" classname="features.spec.ts" time="2.671">
+</testcase>
+<testcase name="Quran › English Mushaf: right arrow = next" classname="features.spec.ts" time="0.995">
+</testcase>
+<testcase name="Quran › search is diacritic-insensitive and links to the ayah" classname="features.spec.ts" time="2.65">
+</testcase>
+<testcase name="Quran › bookmarks: add in reader, survive reload, list, remove; continue reading" classname="features.spec.ts" time="4.131">
+</testcase>
+<testcase name="prayer › city, method, asr, adjustments, countdown and qibla" classname="features.spec.ts" time="1.776">
+</testcase>
+<testcase name="prayer › use my location (granted)" classname="features.spec.ts" time="1.086">
+</testcase>
+<testcase name="prayer › use my location (denied) shows an error" classname="features.spec.ts" time="0.941">
+</testcase>
+<testcase name="prayer › high-latitude note (London, midsummer)" classname="features.spec.ts" time="0.854">
+</testcase>
+<testcase name="prayer › home shows the next prayer countdown" classname="features.spec.ts" time="0.739">
+</testcase>
+<testcase name="account (no server) › unreachable API shows a visible network/CORS error" classname="features.spec.ts" time="0.911">
+</testcase>
+<testcase name="account (no server) › offline sign-in attempt says so" classname="features.spec.ts" time="0.832">
+</testcase>
+<testcase name="about page: free-forever statement and sources" classname="features.spec.ts" time="0.945">
+</testcase>
+</testsuite>
+<testsuite name="offline.spec.ts" timestamp="2026-11-06T06:20:41.156Z" hostname="chromium" tests="1" failures="0" skipped="0" time="12.636" errors="0">
+<testcase name="service worker precaches the app; it works offline after first load" classname="offline.spec.ts" time="12.636">
+</testcase>
+</testsuite>
+<testsuite name="pages.spec.ts" timestamp="2026-11-06T06:20:41.156Z" hostname="chromium" tests="25" failures="0" skipped="0" time="42.585" errors="0">
+<testcase name="ar pages › /ar/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.96">
+</testcase>
+<testcase name="ar pages › /ar/quran/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="3.756">
+</testcase>
+<testcase name="ar pages › /ar/surah/1/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.922">
+</testcase>
+<testcase name="ar pages › /ar/surah/18/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="1.157">
+</testcase>
+<testcase name="ar pages › /ar/page/1/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.914">
+</testcase>
+<testcase name="ar pages › /ar/page/604/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.786">
+</testcase>
+<testcase name="ar pages › /ar/search/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.738">
+</testcase>
+<testcase name="ar pages › /ar/bookmarks/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.689">
+</testcase>
+<testcase name="ar pages › /ar/prayer/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.843">
+</testcase>
+<testcase name="ar pages › /ar/settings/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.879">
+</testcase>
+<testcase name="ar pages › /ar/about/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.794">
+</testcase>
+<testcase name="en pages › /en/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.891">
+</testcase>
+<testcase name="en pages › /en/quran/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="3.29">
+</testcase>
+<testcase name="en pages › /en/surah/1/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.933">
+</testcase>
+<testcase name="en pages › /en/surah/18/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="1.086">
+</testcase>
+<testcase name="en pages › /en/page/1/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.653">
+</testcase>
+<testcase name="en pages › /en/page/604/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.977">
+</testcase>
+<testcase name="en pages › /en/search/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.982">
+</testcase>
+<testcase name="en pages › /en/bookmarks/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.548">
+</testcase>
+<testcase name="en pages › /en/prayer/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.844">
+</testcase>
+<testcase name="en pages › /en/settings/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="0.908">
+</testcase>
+<testcase name="en pages › /en/about/ renders with correct lang/dir and working links" classname="pages.spec.ts" time="1.028">
+</testcase>
+<testcase name="root redirects to /ar/ by default and to the saved language" classname="pages.spec.ts" time="1.066">
+</testcase>
+<testcase name="unknown routes return the 404 page" classname="pages.spec.ts" time="0.585">
+</testcase>
+<testcase name="functionality inventory: every control is enabled, labelled and handled" classname="pages.spec.ts" time="16.356">
+</testcase>
+</testsuite>
+<testsuite name="responsive.spec.ts" timestamp="2026-11-06T06:20:41.156Z" hostname="chromium" tests="6" failures="0" skipped="0" time="50.632" errors="0">
+<testcase name="ar @ 360px: no horizontal overflow, nav reachable" classname="responsive.spec.ts" time="8.442">
+</testcase>
+<testcase name="en @ 360px: no horizontal overflow, nav reachable" classname="responsive.spec.ts" time="8.667">
+</testcase>
+<testcase name="ar @ 768px: no horizontal overflow, nav reachable" classname="responsive.spec.ts" time="8.011">
+</testcase>
+<testcase name="en @ 768px: no horizontal overflow, nav reachable" classname="responsive.spec.ts" time="8.092">
+</testcase>
+<testcase name="ar @ 1280px: no horizontal overflow, nav reachable" classname="responsive.spec.ts" time="8.806">
+</testcase>
+<testcase name="en @ 1280px: no horizontal overflow, nav reachable" classname="responsive.spec.ts" time="8.614">
+</testcase>
+</testsuite>
+<testsuite name="sync.spec.ts" timestamp="2026-11-06T06:20:41.156Z" hostname="chromium" tests="1" failures="0" skipped="0" time="3.739" errors="0">
+<testcase name="bookmark sync against the real FastAPI backend (LWW + tombstones across two devices)" classname="sync.spec.ts" time="3.739">
+</testcase>
+</testsuite>
+</testsuites>

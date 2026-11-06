@@ -1,0 +1,21 @@
+{
+  "schema": "prayer-methods.v1",
+  "_doc": "Single source of truth for prayer calculation methods. Loaded by services/api, apps/web and apps/mobile. Angles in degrees below the horizon; ishaMinutes means Isha = Maghrib + N minutes.",
+  "dhuhrOffsetMinutes": 1,
+  "sunAltitudeForSunriseSunset": -0.833,
+  "methods": {
+    "mwl":     {"nameAr": "رابطة العالم الإسلامي", "nameEn": "Muslim World League", "fajr": 18, "isha": 17},
+    "egypt":   {"nameAr": "الهيئة المصرية العامة للمساحة", "nameEn": "Egyptian General Authority of Survey", "fajr": 19.5, "isha": 17.5},
+    "makkah":  {"nameAr": "أم القرى (مكة المكرمة)", "nameEn": "Umm al-Qura, Makkah", "fajr": 18.5, "ishaMinutes": 90},
+    "karachi": {"nameAr": "جامعة العلوم الإسلامية بكراتشي", "nameEn": "University of Islamic Sciences, Karachi", "fajr": 18, "isha": 18},
+    "isna":    {"nameAr": "الجمعية الإسلامية لأمريكا الشمالية", "nameEn": "Islamic Society of North America", "fajr": 15, "isha": 15},
+    "dubai":   {"nameAr": "الإمارات (دبي)", "nameEn": "Dubai", "fajr": 18.2, "isha": 18.2},
+    "kuwait":  {"nameAr": "الكويت", "nameEn": "Kuwait", "fajr": 18, "isha": 17.5},
+    "qatar":   {"nameAr": "قطر", "nameEn": "Qatar", "fajr": 18, "ishaMinutes": 90},
+    "france":  {"nameAr": "اتحاد المنظمات الإسلامية بفرنسا", "nameEn": "UOIF (France)", "fajr": 12, "isha": 12}
+  },
+  "asr": {"standard": 1, "hanafi": 2},
+  "highLatitudeRule": "twilightAngle",
+  "_highLatitudeDoc": "If Fajr/Isha is undefined or further from sunrise/sunset than (angle/60) of the night, use that fraction of the night (night = sunset to next sunrise).",
+  "kaaba": {"lat": 21.4225, "lng": 39.8262}
+}
