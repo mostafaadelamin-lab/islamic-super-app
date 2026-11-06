@@ -22,6 +22,9 @@ export function ClientEffects({ locale }: { locale: Locale }) {
   }, [locale]);
   useEffect(() => {
     registerServiceWorker();
+    // Marks the page as interactive (React has hydrated); used by e2e tests to
+    // avoid interacting with server-rendered controls before handlers exist.
+    document.documentElement.dataset.hydrated = "true";
   }, []);
   return null;
 }

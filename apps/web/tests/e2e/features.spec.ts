@@ -35,6 +35,7 @@ test.describe("navigation & language", () => {
     await page.goto("/");
     await expect(page).toHaveURL("/en/");
     await page.goto("/en/settings/");
+    await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
     await page.getByLabel("Language").selectOption("ar");
     await expect(page).toHaveURL("/ar/settings/");
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
@@ -285,6 +286,8 @@ test.describe("prayer", () => {
   test("high-latitude note (London, midsummer)", async ({ page }) => {
     await page.clock.setFixedTime(new Date("2026-06-21T10:00:00Z"));
     await page.goto("/en/prayer/");
+    // Wait for hydration: selecting before React attaches handlers is lost (seen once on WebKit in CI).
+    await expect(page.getByTestId("times").locator("tbody tr")).toHaveCount(6);
     await page.getByLabel("City").selectOption({ label: "London" });
     await expect(page.getByTestId("highlat-note")).toContainText("Fajr, Isha");
   });
