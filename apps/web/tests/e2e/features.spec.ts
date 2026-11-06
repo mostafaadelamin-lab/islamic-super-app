@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, withHydration } from "./fixtures";
 import { watchErrors } from "./helpers";
 
 test.describe("navigation & language", () => {
@@ -76,7 +76,7 @@ test.describe("theme & font size", () => {
 
   test("system theme follows prefers-color-scheme", async ({ browser }) => {
     const ctx = await browser.newContext({ colorScheme: "dark" });
-    const page = await ctx.newPage();
+    const page = withHydration(await ctx.newPage());
     await page.goto("/ar/");
     expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(
       "rgb(11, 21, 32)",
@@ -265,7 +265,7 @@ test.describe("prayer", () => {
       permissions: ["geolocation"],
       timezoneId: "Europe/London",
     });
-    const page = await ctx.newPage();
+    const page = withHydration(await ctx.newPage());
     await page.goto("/en/prayer/");
     await page.getByRole("button", { name: "Use my location" }).click();
     await expect(page.getByLabel("City")).toHaveValue("__custom");
@@ -276,7 +276,7 @@ test.describe("prayer", () => {
 
   test("use my location (denied) shows an error", async ({ browser }) => {
     const ctx = await browser.newContext({ permissions: [] });
-    const page = await ctx.newPage();
+    const page = withHydration(await ctx.newPage());
     await page.goto("/ar/prayer/");
     await page.getByRole("button", { name: "استخدم موقعي" }).click();
     await expect(page.getByTestId("geo-error")).toContainText("رُفض إذن الموقع");

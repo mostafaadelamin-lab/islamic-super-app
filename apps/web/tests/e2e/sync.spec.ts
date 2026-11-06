@@ -1,4 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
+import { expect, test, withHydration } from "./fixtures";
 
 const API = "http://127.0.0.1:8000";
 
@@ -27,7 +28,7 @@ test("bookmark sync against the real FastAPI backend (LWW + tombstones across tw
 
   // Device A: bookmark two ayahs, register, sync.
   const a = await browser.newContext();
-  const pa = await a.newPage();
+  const pa = withHydration(await a.newPage());
   await pa.goto("/en/surah/2/");
   await pa.getByTestId("bookmark-255").click();
   await pa.getByTestId("bookmark-286").click();
@@ -37,7 +38,7 @@ test("bookmark sync against the real FastAPI backend (LWW + tombstones across tw
 
   // Device B: sign in, sync, sees both; delete one (tombstone) and sync.
   const b = await browser.newContext();
-  const pb = await b.newPage();
+  const pb = withHydration(await b.newPage());
   await signIn(pb, email, false);
   await pb.getByRole("button", { name: "Sync now" }).click();
   await expect(pb.getByTestId("account-status")).toContainText("Sync complete: 2 received");
@@ -64,7 +65,7 @@ test("bookmark sync against the real FastAPI backend (LWW + tombstones across tw
 
   // Wrong password is reported.
   const c = await browser.newContext();
-  const pc = await c.newPage();
+  const pc = withHydration(await c.newPage());
   await pc.goto("/en/settings/");
   await pc.getByLabel("Email").fill(email);
   await pc.getByLabel(/^Password/).fill("wrong-password-123");
