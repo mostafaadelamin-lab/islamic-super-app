@@ -23,7 +23,7 @@ jobs:
     name: Content integrity (Quran hashes, pages, tokens)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with: { python-version: "${{ env.PYTHON_VERSION }}" }
       - run: python tools/build_content.py
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: services/api } }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with: { python-version: "${{ env.PYTHON_VERSION }}", cache: pip, cache-dependency-path: services/api/requirements-dev.txt }
       - run: pip install -r requirements-dev.txt pip-audit
@@ -54,7 +54,7 @@ jobs:
     needs: backend
     defaults: { run: { working-directory: apps/web } }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with: { node-version: "${{ env.NODE_VERSION }}", cache: npm, cache-dependency-path: apps/web/package-lock.json }
       - uses: actions/setup-python@v5
@@ -79,7 +79,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: apps/mobile } }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: "17" }
       - uses: subosito/flutter-action@v2
@@ -109,7 +109,7 @@ jobs:
     runs-on: macos-15
     defaults: { run: { working-directory: apps/mobile } }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2
         with: { flutter-version: "${{ env.FLUTTER_VERSION }}", channel: stable, cache: true }
       - run: flutter pub get
@@ -128,7 +128,7 @@ jobs:
     runs-on: ubuntu-latest
     container: { image: semgrep/semgrep }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with: { fetch-depth: 0 }
       - run: semgrep scan --config p/default --config p/python --config p/typescript --config p/secrets --metrics=off --error --exclude content --exclude tests/evidence
 
@@ -136,7 +136,7 @@ jobs:
     name: Secret scanning (gitleaks)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with: { fetch-depth: 0 }
       - uses: gitleaks/gitleaks-action@v2
         env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
