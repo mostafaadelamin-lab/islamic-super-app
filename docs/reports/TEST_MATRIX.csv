@@ -1,0 +1,37 @@
+feature_id,function,android,ios,web,backend,offline,covered_by_device_integration_flow,evidence,ci_run
+F-QURAN-01,Surah index list + filter + open,PASS,PASS,PASS,PASS,PASS,yes,widget surah_list_test; e2e pages/features; pytest test_surah_list,42305310075
+F-QURAN-02,Surah reader text + ayah numbers,PASS,PASS,PASS,PASS,PASS,yes,widget surah_reader_test; e2e features; pytest test_surah_detail,42305310075
+F-QURAN-02,English translation toggle (persisted),PASS,PASS,PASS,PASS,PASS,no,widget surah_reader_test; e2e features,42305310075
+F-QURAN-02,Quran font size 18-40 (persisted),PASS,PASS,PASS,NOT APPLICABLE,PASS,no,widget settings_test; e2e features,42305310075
+F-QURAN-02,"Basmala before surahs (not 1, 9)",PASS,PASS,PASS,NOT APPLICABLE,PASS,no,widget basmala_test; web unit/e2e,42305310075
+F-QURAN-03,Madinah page reader prev/next/swipe/keys,PASS,PASS,PASS,PASS,PASS,no,widget page_reader_test; e2e features; pytest test_page,42305310075
+F-QURAN-03,Go to page with validation,PASS,PASS,PASS,NOT APPLICABLE,PASS,yes,widget page_reader_test (incl. DEF-008); integration_test; e2e features,42305310075
+F-QURAN-04,Diacritic-insensitive search + open result,PASS,PASS,PASS,PASS,PASS,no,unit text_test; widget search_test; e2e features; pytest test_search_*,42305310075
+F-QURAN-05,Bookmark add/remove + list + persistence,PASS,PASS,PASS,PASS,PASS,yes,widget bookmarks_test; integration_test; e2e features; pytest test_sync,42305310075
+F-QURAN-05,Continue reading,PASS,PASS,PASS,NOT APPLICABLE,PASS,no,widget home_test; e2e features,42305310075
+F-QURAN-06,Quran integrity (114/6236/hashes/pages),PASS,PASS,PASS,PASS,PASS,no,QURAN_INTEGRITY_REPORT.md,42305310075
+F-PRAYER-01,Prayer times vs 38 independent vectors,PASS,PASS,PASS,PASS,PASS,no,unit prayer_test; vitest prayer.test; pytest test_prayer,42305310075
+F-PRAYER-01,City picker,PASS,PASS,PASS,NOT APPLICABLE,PASS,yes,widget prayer_screen_test; integration_test; e2e features,42305310075
+F-PRAYER-01,Use my location (browser geolocation),NOT APPLICABLE,NOT APPLICABLE,PASS,NOT APPLICABLE,PASS,no,e2e features (granted + denied); mobile: not in M1,42305310075
+F-PRAYER-01,Method + Asr selectors,PASS,PASS,PASS,PASS,PASS,no,widget prayer_screen_test; e2e features; pytest,42305310075
+F-PRAYER-01,DST transitions (5 zones),PASS,PASS,PASS,PASS,PASS,no,vectors London/NY/Sydney/Cairo/Oslo,42305310075
+F-PRAYER-01,High-latitude rule + polar message,PASS,PASS,PASS,PASS,PASS,no,unit + widget + e2e + pytest,42305310075
+F-PRAYER-02,Manual adjustments -30..+30,PASS,PASS,PASS,PASS,PASS,no,widget prayer_screen_test; e2e features; pytest test_manual_adjustments,42305310075
+F-PRAYER-03,Next prayer countdown,PASS,PASS,PASS,NOT APPLICABLE,PASS,no,widget home/prayer tests; e2e features,42305310075
+F-PRAYER-04,Qibla bearing + static compass,PASS,PASS,PASS,PASS,PASS,no,unit qibla vectors; widget; e2e; pytest test_qibla,42305310075
+F-PRAYER-04,Live compass (sensor),NOT TESTED,NOT TESTED,NOT TESTED,NOT APPLICABLE,NOT TESTED,no,not implemented in M1,42305310075
+F-I18N-01,Arabic RTL / English LTR + switch,PASS,PASS,PASS,NOT APPLICABLE,PASS,no,widget shell/settings tests; e2e features,42305310075
+F-UI-01,Themes light/dark/system + tokens,PASS,PASS,PASS,NOT APPLICABLE,PASS,no,widget settings_test; e2e features; screenshots,42305310075
+NFR-A11Y,"Accessibility (labels, tap targets, contrast)",PASS,PASS,PASS,NOT APPLICABLE,NOT APPLICABLE,no,widget a11y_test; axe 44 scans 0 violations,42305310075
+NFR-RESP,"Responsive layouts 360/768/1280, text scale 1.5/2.0",PASS,PASS,PASS,NOT APPLICABLE,NOT APPLICABLE,no,widget text-scale tests; e2e responsive,42305310075
+F-SYNC-01,Register / sign in / sign out,PASS,PASS,PASS,PASS,NOT APPLICABLE,no,widget account_test (fake HTTP) + live API run; e2e sync; pytest test_auth,42305310075
+F-SYNC-01,Bookmark sync LWW + tombstones,PASS,PASS,PASS,PASS,PASS,no,unit sync tests; e2e sync vs real API; pytest test_sync,42305310075
+F-SYNC-01,Settings sync,NOT TESTED,NOT TESTED,NOT TESTED,PASS,NOT APPLICABLE,no,API only; clients not wired (LIM-03),42305310075
+NFR-OFF,Offline after first load,PASS,PASS,PASS,NOT APPLICABLE,PASS,no,"mobile: bundled assets, no network calls except sync; web: e2e offline (server stopped) 3 browsers",42305310075
+F-ABOUT-01,About + free policy + sources,PASS,PASS,PASS,NOT APPLICABLE,PASS,no,widget about; e2e features,42305310075
+F-API-01,API validation/auth/rate-limit/headers/migrations,NOT APPLICABLE,NOT APPLICABLE,NOT APPLICABLE,PASS,NOT APPLICABLE,no,pytest 128,42305310075
+M2,Quran audio,NOT TESTED,NOT TESTED,NOT TESTED,NOT APPLICABLE,NOT TESTED,no,not implemented in M1,42305310075
+M2,Adhkar,NOT TESTED,NOT TESTED,NOT TESTED,NOT APPLICABLE,NOT TESTED,no,"content stored, not shown in M1",42305310075
+M2,Hajj guide,NOT TESTED,NOT TESTED,NOT TESTED,NOT APPLICABLE,NOT TESTED,no,not ported in M1,42305310075
+M2,Adhan notifications,NOT TESTED,NOT TESTED,NOT TESTED,NOT APPLICABLE,NOT TESTED,no,not implemented in M1,42305310075
+M3+,AI assistant,NOT TESTED,NOT TESTED,NOT TESTED,NOT TESTED,NOT TESTED,no,not started,42305310075

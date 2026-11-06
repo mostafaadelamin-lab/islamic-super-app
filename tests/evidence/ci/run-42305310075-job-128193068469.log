@@ -1,0 +1,178 @@
+Current runner version: '2.338.2'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20261028.624
+Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+Build Date: 2026-10-28T21:51:42Z
+Worker ID: {53638870-35c6-4ff0-83c9-ec025a739458}
+Region: centralus
+Cloud: Azure
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.5
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20261101.360.1
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: Actions
+Cache mode: write
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+Download action repository 'gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7' (SHA:ff98106e4c7b2bc287b24eaf42907196329070c7)
+Complete job name: Secret scanning (gitleaks)
+##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+with:
+  fetch-depth: 0
+  repository: mostafaadelamin-lab/islamic-super-app
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  persist-credentials: true
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+##[endgroup]
+Syncing repository: mostafaadelamin-lab/islamic-super-app
+##[group]Getting Git version info
+Working directory is '/home/runner/work/islamic-super-app/islamic-super-app'
+[command]/usr/bin/git version
+git version 2.56.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/5b5d55df-6403-4d7e-b88c-fc80c0bd2805' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/islamic-super-app/islamic-super-app
+Deleting the contents of '/home/runner/work/islamic-super-app/islamic-super-app'
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/islamic-super-app/islamic-super-app
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/islamic-super-app/islamic-super-app/.git/
+[command]/usr/bin/git remote add origin https://github.com/mostafaadelamin-lab/islamic-super-app
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+From https://github.com/mostafaadelamin-lab/islamic-super-app
+ * [new branch]      dependabot/npm_and_yarn/apps/web/playwright/test-1.64.1 -> origin/dependabot/npm_and_yarn/apps/web/playwright/test-1.64.1
+ * [new branch]      main       -> origin/main
+[command]/usr/bin/git branch --list --remote origin/main
+  origin/main
+[command]/usr/bin/git rev-parse refs/remotes/origin/main
+e986194f336632267c54dc36329ceab1aea2c84d
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Switched to a new branch 'main'
+branch 'main' set up to track 'origin/main'.
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+e986194f336632267c54dc36329ceab1aea2c84d
+##[group]Run gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+  GITHUB_TOKEN: ***
+##[endgroup]
+(node:2120) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:2120) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+[mostafaadelamin-lab] is an individual user. No license key is required.
+gitleaks version: 8.24.3
+Version to install: 8.24.3 (target directory: /tmp/gitleaks-8.24.3)
+Cache hit for: gitleaks-cache-8.24.3-linux-x64
+Received 5713645 of 5713645 (100.0%), 12.7 MBs/sec
+Cache Size: ~5 MB (5713645 B)
+[command]/usr/bin/tar -xf /home/runner/work/_temp/3b78535d-2c66-4be1-bf4b-c17a3495eaac/cache.tzst -P -C /home/runner/work/islamic-super-app/islamic-super-app --use-compress-program unzstd
+Cache restored successfully
+Gitleaks restored from cache
+event type: push
+gitleaks cmd: gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=-1
+[command]/tmp/gitleaks-8.24.3/gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=-1
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m10:31PM[0m DBG using github.com/wasilibs/go-re2 regex engine
+[90m10:31PM[0m DBG using existing gitleaks config .gitleaks.toml from `(--source)/.gitleaks.toml`
+[90m10:31PM[0m DBG extending config with default config
+[90m10:31PM[0m DBG executing: /usr/bin/git -C . log -p -U0 -1
+[90m10:31PM[0m DBG SCM platform parsed from host [36mhost=[0mgithub.com [36mplatform=[0mgithub
+[90m10:31PM[0m [32mINF[0m [1m1 commits scanned.[0m
+[90m10:31PM[0m DBG Note: this number might be smaller than expected due to commits with no additions
+[90m10:31PM[0m [32mINF[0m [1mscanned ~6675 bytes (6.68 KB) in 87.5ms[0m
+[90m10:31PM[0m [32mINF[0m [1mno leaks found[0m
+Artifact name is valid!
+Root directory input is valid!
+Beginning upload of artifact content to blob storage
+Uploaded bytes 6800
+Finished uploading artifact content to blob storage!
+SHA256 digest of uploaded artifact zip is bcac6527d599dbda061f7108a0f56cf8795576aef89304d933b50b1249a3163c
+Finalizing artifact upload
+Artifact gitleaks-results.sarif.zip successfully finalized. Artifact ID 13546591344
+✅ No leaks detected
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.56.0
+Temporarily overriding HOME='/home/runner/work/_temp/d05786e3-94c9-4362-8a65-1c730eddd7a6' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/islamic-super-app/islamic-super-app
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+http.https://github.com/.extraheader
+[command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Cleaning up orphan processes
+##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

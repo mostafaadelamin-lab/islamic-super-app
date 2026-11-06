@@ -1,0 +1,301 @@
+Current runner version: '2.338.2'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20261028.624
+Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+Build Date: 2026-10-28T21:51:42Z
+Worker ID: {64eef26a-160a-4c36-b038-1797d1eb38b2}
+Region: eastus2
+Cloud: Azure
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.5
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20261101.360.1
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: Actions
+Cache mode: write
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+Complete job name: Security scans (Semgrep, secrets, dependencies)
+##[group]Checking docker version
+##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+'1.48'
+Docker daemon API version: '1.48'
+##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+'1.48'
+Docker client API version: '1.48'
+##[endgroup]
+##[group]Clean up resources from previous jobs
+##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=bfbb84"
+##[command]/usr/bin/docker network prune --force --filter "label=bfbb84"
+##[endgroup]
+##[group]Create local container network
+##[command]/usr/bin/docker network create --label bfbb84 github_network_f5e0e19f152245a28e87125b1b6e883a
+117fe54b9e85a25708d1f151358c5b3f8a06bc68d68eaa622976f87f85d81089
+##[endgroup]
+##[group]Starting job container
+##[command]/usr/bin/docker pull semgrep/semgrep
+Using default tag: latest
+latest: Pulling from semgrep/semgrep
+5e9b4a97f639: Pulling fs layer
+21495a98d08f: Pulling fs layer
+b34662260da9: Pulling fs layer
+35de23eebc97: Pulling fs layer
+bd9ddc54bea9: Pulling fs layer
+1f3704e5c90a: Pulling fs layer
+501899fa0473: Pulling fs layer
+1f6d9604b7b6: Pulling fs layer
+1fab3f0a341e: Pulling fs layer
+e27403d7ab04: Pulling fs layer
+1912aa0a9c6a: Pulling fs layer
+6d096fb1ac30: Pulling fs layer
+e6db061c8902: Pulling fs layer
+3737d556ebfa: Pulling fs layer
+9dbdd7529b11: Pulling fs layer
+35de23eebc97: Waiting
+bd9ddc54bea9: Waiting
+1f3704e5c90a: Waiting
+501899fa0473: Waiting
+1f6d9604b7b6: Waiting
+1fab3f0a341e: Waiting
+e27403d7ab04: Waiting
+1912aa0a9c6a: Waiting
+6d096fb1ac30: Waiting
+e6db061c8902: Waiting
+3737d556ebfa: Waiting
+9dbdd7529b11: Waiting
+21495a98d08f: Verifying Checksum
+21495a98d08f: Download complete
+5e9b4a97f639: Verifying Checksum
+5e9b4a97f639: Download complete
+35de23eebc97: Verifying Checksum
+35de23eebc97: Download complete
+bd9ddc54bea9: Verifying Checksum
+bd9ddc54bea9: Download complete
+b34662260da9: Verifying Checksum
+b34662260da9: Download complete
+1f3704e5c90a: Verifying Checksum
+1f3704e5c90a: Download complete
+5e9b4a97f639: Pull complete
+1fab3f0a341e: Verifying Checksum
+1fab3f0a341e: Download complete
+e27403d7ab04: Download complete
+1912aa0a9c6a: Verifying Checksum
+1912aa0a9c6a: Download complete
+6d096fb1ac30: Verifying Checksum
+6d096fb1ac30: Download complete
+e6db061c8902: Verifying Checksum
+e6db061c8902: Download complete
+3737d556ebfa: Verifying Checksum
+3737d556ebfa: Download complete
+9dbdd7529b11: Download complete
+501899fa0473: Verifying Checksum
+501899fa0473: Download complete
+1f6d9604b7b6: Verifying Checksum
+1f6d9604b7b6: Download complete
+21495a98d08f: Pull complete
+b34662260da9: Pull complete
+35de23eebc97: Pull complete
+bd9ddc54bea9: Pull complete
+1f3704e5c90a: Pull complete
+501899fa0473: Pull complete
+1f6d9604b7b6: Pull complete
+1fab3f0a341e: Pull complete
+e27403d7ab04: Pull complete
+1912aa0a9c6a: Pull complete
+6d096fb1ac30: Pull complete
+e6db061c8902: Pull complete
+3737d556ebfa: Pull complete
+9dbdd7529b11: Pull complete
+Digest: sha256:2e45517a85e13a9cca14a2a00df6bb48affd66b8ebfae1b0991cd57578362fb0
+Status: Downloaded newer image for semgrep/semgrep:latest
+docker.io/semgrep/semgrep:latest
+##[command]/usr/bin/docker create --name f229409351e54e3084da1aac9cc934d7_semgrepsemgrep_e6eb34 --label bfbb84 --workdir /__w/islamic-super-app/islamic-super-app --network github_network_f5e0e19f152245a28e87125b1b6e883a  -e "HOME=/github/home" -e GITHUB_ACTIONS=true -e CI=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work":"/__w" -v "/home/runner/actions-runner/cached/2.338.2/externals":"/__e":ro -v "/home/runner/work/_temp":"/__w/_temp" -v "/home/runner/work/_actions":"/__w/_actions" -v "/opt/hostedtoolcache":"/__t" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" --entrypoint "tail" semgrep/semgrep "-f" "/dev/null"
+a8ded2a5aa1a9c29cf9583746be7d71ec2e0c4766042c5b401aec19822da0449
+##[command]/usr/bin/docker start a8ded2a5aa1a9c29cf9583746be7d71ec2e0c4766042c5b401aec19822da0449
+a8ded2a5aa1a9c29cf9583746be7d71ec2e0c4766042c5b401aec19822da0449
+##[command]/usr/bin/docker ps --all --filter id=a8ded2a5aa1a9c29cf9583746be7d71ec2e0c4766042c5b401aec19822da0449 --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+a8ded2a5aa1a9c29cf9583746be7d71ec2e0c4766042c5b401aec19822da0449 Up Less than a second
+##[command]/usr/bin/docker inspect --format "{{range .Config.Env}}{{println .}}{{end}}" a8ded2a5aa1a9c29cf9583746be7d71ec2e0c4766042c5b401aec19822da0449
+HOME=/github/home
+GITHUB_ACTIONS=true
+CI=true
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+SEMGREP_IN_DOCKER=1
+SEMGREP_USER_AGENT_APPEND=Docker
+PYTHONIOENCODING=utf8
+PYTHONUNBUFFERED=1
+DOCKER_OTEL_RESOURCE_ATTRIBUTES=vcs.ref.head.name=release-1.183.0,vcs.ref.head.revision=08c107344d9fcd43c8febfcabd6c68abeb1b19f4,vcs.repository.url.full=github.com/semgrep/semgrep-proprietary,docker.base_image=alpine:3.23
+DD_SERVICE=semgrep-core
+TSAN_OPTIONS=exitcode=0 report_signal_unsafe=0
+##[endgroup]
+##[group]Waiting for all services to be ready
+##[endgroup]
+##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+with:
+  fetch-depth: 0
+  repository: mostafaadelamin-lab/islamic-super-app
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  persist-credentials: true
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+##[endgroup]
+##[command]/usr/bin/docker exec  a8ded2a5aa1a9c29cf9583746be7d71ec2e0c4766042c5b401aec19822da0449 sh -c "cat /etc/*release | grep ^ID"
+Syncing repository: mostafaadelamin-lab/islamic-super-app
+##[group]Getting Git version info
+Working directory is '/__w/islamic-super-app/islamic-super-app'
+[command]/usr/bin/git version
+git version 2.52.0
+##[endgroup]
+Temporarily overriding HOME='/__w/_temp/8fd57033-5e43-4a93-8220-077a3ff83f33' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /__w/islamic-super-app/islamic-super-app
+Deleting the contents of '/__w/islamic-super-app/islamic-super-app'
+##[group]Initializing the repository
+[command]/usr/bin/git init /__w/islamic-super-app/islamic-super-app
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /__w/islamic-super-app/islamic-super-app/.git/
+[command]/usr/bin/git remote add origin https://github.com/mostafaadelamin-lab/islamic-super-app
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+From https://github.com/mostafaadelamin-lab/islamic-super-app
+ * [new branch]      dependabot/npm_and_yarn/apps/web/playwright/test-1.64.1 -> origin/dependabot/npm_and_yarn/apps/web/playwright/test-1.64.1
+ * [new branch]      main       -> origin/main
+[command]/usr/bin/git branch --list --remote origin/main
+  origin/main
+[command]/usr/bin/git rev-parse refs/remotes/origin/main
+e986194f336632267c54dc36329ceab1aea2c84d
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+branch 'main' set up to track 'origin/main'.
+Switched to a new branch 'main'
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+e986194f336632267c54dc36329ceab1aea2c84d
+##[group]Run semgrep scan --config p/default --config p/python --config p/typescript --config p/secrets --metrics=off --error --exclude content --exclude tests/evidence
+[36;1msemgrep scan --config p/default --config p/python --config p/typescript --config p/secrets --metrics=off --error --exclude content --exclude tests/evidence[0m
+shell: sh -e {0}
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+##[endgroup]
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 232 files tracked by git with 1108 Code rules:
+                                                                                                                        
+  Language      Rules   Files          Origin      Rules                                                                
+ ─────────────────────────────        ───────────────────                                                               
+  <multilang>      52     232          Community    1108                                                                
+  ts              164      60                                                                                           
+  json              4      24                                                                                           
+  python          273      23                                                                                           
+  js              154       8                                                                                           
+  yaml             37       5                                                                                           
+  kotlin           18       4                                                                                           
+  bash              4       3                                                                                           
+  swift             2       3                                                                                           
+  c                 5       1                                                                                           
+                                                                                                                        
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 0 (0 blocking)
+ • Rules run: 553
+ • Targets scanned: 232
+ • Parsed lines: ~99.9%
+ • Scan skipped: 
+   ◦ Matching --exclude patterns: 26
+   ◦ Files matching .semgrepignore patterns: 186
+ • Scan was limited to files tracked by git
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 553 rules on 232 files: 0 findings.
+(need more rules? `semgrep login` for additional free Semgrep Registry rules)
+
+If Semgrep missed a finding, please send us feedback to let us know!
+See https://semgrep.dev/docs/reporting-false-negatives/
+Post job cleanup.
+##[command]/usr/bin/docker exec  a8ded2a5aa1a9c29cf9583746be7d71ec2e0c4766042c5b401aec19822da0449 sh -c "cat /etc/*release | grep ^ID"
+[command]/usr/bin/git version
+git version 2.52.0
+Copying '/github/home/.gitconfig' to '/__w/_temp/15a278c0-b7ed-413c-8aa5-763279d66c3c/.gitconfig'
+Temporarily overriding HOME='/__w/_temp/15a278c0-b7ed-413c-8aa5-763279d66c3c' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /__w/islamic-super-app/islamic-super-app
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+http.https://github.com/.extraheader
+[command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Stop and remove container: f229409351e54e3084da1aac9cc934d7_semgrepsemgrep_e6eb34
+##[command]/usr/bin/docker rm --force a8ded2a5aa1a9c29cf9583746be7d71ec2e0c4766042c5b401aec19822da0449
+a8ded2a5aa1a9c29cf9583746be7d71ec2e0c4766042c5b401aec19822da0449
+Remove container network: github_network_f5e0e19f152245a28e87125b1b6e883a
+##[command]/usr/bin/docker network rm github_network_f5e0e19f152245a28e87125b1b6e883a
+github_network_f5e0e19f152245a28e87125b1b6e883a
+Cleaning up orphan processes
+##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

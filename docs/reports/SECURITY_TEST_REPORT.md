@@ -7,10 +7,10 @@ Automated checks only. **They do not replace a specialist security review**, whi
 |---|---|---|---|---|
 | Python dependency CVEs | pip-audit | services/api/requirements.txt | 0 known vulnerabilities (after DEF-004 upgrade) | CI `backend` job |
 | Python static analysis | ruff `S` (bandit rules) + bandit 1.x | services/api/app | 0 findings | tests/evidence/security/bandit-backend.json |
-| Multi-language SAST | Semgrep (p/default, p/python, p/typescript, p/secrets) | repo (excl. content, evidence) | first CI run: 23 findings, all supply-chain (mutable action tags, Dependabot cooldown) → fixed (DEF-007) | CI `security` job |
+| Multi-language SAST | Semgrep (p/default, p/python, p/typescript, p/secrets) | repo (excl. content, evidence) | first CI run: 23 findings, all supply-chain (mutable action tags, Dependabot cooldown) → fixed (DEF-007); final run 42305310075: **0 findings** | CI `security` job |
 | Secret scanning | gitleaks (CI, full history) | repo | PASS (0 leaks) | CI `secrets` job |
 | Secret scanning | detect-secrets (local, all files) | repo | only false positives: content hashes, the word "password" in UI strings, test passwords | tests/evidence/security/detect-secrets.json |
-| npm dependency audit | `npm audit --omit=dev --audit-level=high` | apps/web | CI `web` job | CI |
+| npm dependency audit | `npm audit --omit=dev --audit-level=high` | apps/web | found postcss advisories via Next 15 → fixed with override (DEF-010); final: 0 vulnerabilities | CI `web` job |
 | Dependency updates | Dependabot | pip, npm, pub, actions | enabled with 7-day cooldown | .github/dependabot.yml |
 
 ## Security acceptance scenarios (backend, all executed — pytest)

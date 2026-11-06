@@ -1,0 +1,693 @@
+Current runner version: '2.338.2'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20261103.629
+Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+Build Date: 2026-11-03T17:26:59Z
+Worker ID: {0a7e5381-016f-4a3b-a6b1-ef7d755770fc}
+Region: westus
+Cloud: MacCloud
+##[endgroup]
+##[group]Operating System
+macOS
+15.8.2
+24H232
+##[endgroup]
+##[group]Runner Image
+Image: macos-15-arm64
+Version: 20261104.0514.1
+Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20261104.0514/images/macos/macos-15-arm64-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20261104.0514
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: Actions
+Cache mode: write
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+Download action repository 'subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2' (SHA:1a449444c387b1966244ae4d4f8c696479add0b2)
+Getting action download info
+Download action repository 'actions/cache@v5' (SHA:caa296126883cff596d87d8935842f9db880ef25)
+Complete job name: Flutter iOS — build + simulator integration tests
+##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+with:
+  repository: mostafaadelamin-lab/islamic-super-app
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  persist-credentials: true
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+##[endgroup]
+Syncing repository: mostafaadelamin-lab/islamic-super-app
+##[group]Getting Git version info
+Working directory is '/Users/runner/work/islamic-super-app/islamic-super-app'
+[command]/opt/homebrew/bin/git version
+git version 2.56.0
+##[endgroup]
+Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/c3bf7187-0c08-42e8-a420-e91f513bb21d/.gitconfig'
+Temporarily overriding HOME='/Users/runner/work/_temp/c3bf7187-0c08-42e8-a420-e91f513bb21d' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/islamic-super-app/islamic-super-app
+Deleting the contents of '/Users/runner/work/islamic-super-app/islamic-super-app'
+##[group]Initializing the repository
+[command]/opt/homebrew/bin/git init /Users/runner/work/islamic-super-app/islamic-super-app
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /Users/runner/work/islamic-super-app/islamic-super-app/.git/
+[command]/opt/homebrew/bin/git remote add origin https://github.com/mostafaadelamin-lab/islamic-super-app
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/opt/homebrew/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+[command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+[command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+[command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+##[endgroup]
+##[group]Fetching the repository
+[command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +e986194f336632267c54dc36329ceab1aea2c84d:refs/remotes/origin/main
+From https://github.com/mostafaadelamin-lab/islamic-super-app
+ * [new ref]         e986194f336632267c54dc36329ceab1aea2c84d -> origin/main
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/opt/homebrew/bin/git sparse-checkout disable
+[command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/opt/homebrew/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Switched to a new branch 'main'
+branch 'main' set up to track 'origin/main'.
+##[endgroup]
+[command]/opt/homebrew/bin/git log -1 --format=%H
+e986194f336632267c54dc36329ceab1aea2c84d
+##[group]Run subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+with:
+  flutter-version: 3.41.6
+  channel: stable
+  cache: true
+  architecture: ARM64
+  pub-cache-path: default
+  dry-run: false
+  git-source: https://github.com/flutter/flutter.git
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+##[endgroup]
+##[start-action display=Make yq tool available on Windows runners;id=__subosito_flutter-action.__run]
+##[end-action id=__subosito_flutter-action.__run;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[start-action display=Make setup script executable;id=__subosito_flutter-action.__run_2]
+##[group]Run chmod +x "$GITHUB_ACTION_PATH/setup.sh"
+[36;1mchmod +x "$GITHUB_ACTION_PATH/setup.sh"[0m
+shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+##[endgroup]
+##[end-action id=__subosito_flutter-action.__run_2;outcome=success;conclusion=success;duration_ms=67]
+##[start-action display=Set action inputs;id=__subosito_flutter-action.flutter-action]
+##[group]Run $GITHUB_ACTION_PATH/setup.sh -p \
+[36;1m$GITHUB_ACTION_PATH/setup.sh -p \[0m
+[36;1m  -n '3.41.6' \[0m
+[36;1m  -f '' \[0m
+[36;1m  -a 'ARM64' \[0m
+[36;1m  -k '' \[0m
+[36;1m  -c '' \[0m
+[36;1m  -l '' \[0m
+[36;1m  -d 'default' \[0m
+[36;1m  -g 'https://github.com/flutter/flutter.git' \[0m
+[36;1m  stable[0m
+shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+##[endgroup]
+##[end-action id=__subosito_flutter-action.flutter-action;outcome=success;conclusion=success;duration_ms=908]
+##[start-action display=Cache Flutter;id=__subosito_flutter-action.cache-flutter]
+##[group]Run actions/cache@v5
+with:
+  path: /Users/runner/hostedtoolcache/flutter/stable-3.41.6-arm64
+  key: flutter-macos-stable-3.41.6-arm64-db50e20168db8fee486b9abf32fc912de3bc5b6a
+  enableCrossOsArchive: false
+  fail-on-cache-miss: false
+  lookup-only: false
+  save-always: false
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+##[endgroup]
+Cache hit for: flutter-macos-stable-3.41.6-arm64-db50e20168db8fee486b9abf32fc912de3bc5b6a
+Received 0 of 2109794705 (0.0%), 0.0 MBs/sec
+Received 50331648 of 2109794705 (2.4%), 23.9 MBs/sec
+Received 134217728 of 2109794705 (6.4%), 42.5 MBs/sec
+Received 205520896 of 2109794705 (9.7%), 48.8 MBs/sec
+Received 268435456 of 2109794705 (12.7%), 51.0 MBs/sec
+Received 335544320 of 2109794705 (15.9%), 53.1 MBs/sec
+Received 402653184 of 2109794705 (19.1%), 54.6 MBs/sec
+Received 478150656 of 2109794705 (22.7%), 56.8 MBs/sec
+Received 536870912 of 2109794705 (25.4%), 56.7 MBs/sec
+Received 603979776 of 2109794705 (28.6%), 57.4 MBs/sec
+Received 666894336 of 2109794705 (31.6%), 57.7 MBs/sec
+Received 700448768 of 2109794705 (33.2%), 55.5 MBs/sec
+Received 763363328 of 2109794705 (36.2%), 55.9 MBs/sec
+Received 805306368 of 2109794705 (38.2%), 54.7 MBs/sec
+Received 872415232 of 2109794705 (41.4%), 55.3 MBs/sec
+Received 939524096 of 2109794705 (44.5%), 55.3 MBs/sec
+Received 985661440 of 2109794705 (46.7%), 54.6 MBs/sec
+Received 1048576000 of 2109794705 (49.7%), 54.9 MBs/sec
+Received 1073741824 of 2109794705 (50.9%), 53.3 MBs/sec
+Received 1153433600 of 2109794705 (54.7%), 54.4 MBs/sec
+Received 1207959552 of 2109794705 (57.3%), 54.2 MBs/sec
+Received 1262485504 of 2109794705 (59.8%), 54.1 MBs/sec
+Received 1325400064 of 2109794705 (62.8%), 54.4 MBs/sec
+Received 1371537408 of 2109794705 (65.0%), 53.9 MBs/sec
+Received 1438646272 of 2109794705 (68.2%), 54.3 MBs/sec
+Received 1476395008 of 2109794705 (70.0%), 53.6 MBs/sec
+Received 1539309568 of 2109794705 (73.0%), 53.9 MBs/sec
+Received 1602224128 of 2109794705 (75.9%), 54.1 MBs/sec
+Received 1639972864 of 2109794705 (77.7%), 53.5 MBs/sec
+Received 1707081728 of 2109794705 (80.9%), 53.8 MBs/sec
+Received 1744830464 of 2109794705 (82.7%), 53.2 MBs/sec
+Received 1807745024 of 2109794705 (85.7%), 53.4 MBs/sec
+Received 1866465280 of 2109794705 (88.5%), 53.5 MBs/sec
+Received 1912602624 of 2109794705 (90.7%), 53.2 MBs/sec
+Received 1975517184 of 2109794705 (93.6%), 53.4 MBs/sec
+Received 2013265920 of 2109794705 (95.4%), 52.9 MBs/sec
+Received 2088763392 of 2109794705 (99.0%), 53.5 MBs/sec
+Received 2109794705 of 2109794705 (100.0%), 52.9 MBs/sec
+Cache Size: ~2012 MB (2109794705 B)
+[command]/opt/homebrew/bin/gtar -xf /Users/runner/work/_temp/7b7449ed-4ef4-45b4-9407-27b1eeff1d81/cache.tzst -P -C /Users/runner/work/islamic-super-app/islamic-super-app --delay-directory-restore --use-compress-program unzstd
+Cache restored successfully
+Cache restored from key: flutter-macos-stable-3.41.6-arm64-db50e20168db8fee486b9abf32fc912de3bc5b6a
+##[end-action id=__subosito_flutter-action.cache-flutter;outcome=success;conclusion=success;duration_ms=56780]
+##[start-action display=Cache pub dependencies;id=__subosito_flutter-action.cache-pub]
+##[group]Run actions/cache@v5
+with:
+  path: /Users/runner/.pub-cache
+  key: flutter-pub-macos-stable-3.41.6-arm64-db50e20168db8fee486b9abf32fc912de3bc5b6a-efe4ed3c78d68dc53ab60e52c1dc97abff64c78ddb61491a46b61808c0df2493
+  enableCrossOsArchive: false
+  fail-on-cache-miss: false
+  lookup-only: false
+  save-always: false
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+##[endgroup]
+Cache hit for: flutter-pub-macos-stable-3.41.6-arm64-db50e20168db8fee486b9abf32fc912de3bc5b6a-efe4ed3c78d68dc53ab60e52c1dc97abff64c78ddb61491a46b61808c0df2493
+Received 0 of 35629392 (0.0%), 0.0 MBs/sec
+Received 35629392 of 35629392 (100.0%), 21.3 MBs/sec
+Cache Size: ~34 MB (35629392 B)
+[command]/opt/homebrew/bin/gtar -xf /Users/runner/work/_temp/f2d92fb4-1721-4441-809b-09ae507dede7/cache.tzst -P -C /Users/runner/work/islamic-super-app/islamic-super-app --delay-directory-restore --use-compress-program unzstd
+Cache restored successfully
+Cache restored from key: flutter-pub-macos-stable-3.41.6-arm64-db50e20168db8fee486b9abf32fc912de3bc5b6a-efe4ed3c78d68dc53ab60e52c1dc97abff64c78ddb61491a46b61808c0df2493
+##[end-action id=__subosito_flutter-action.cache-pub;outcome=success;conclusion=success;duration_ms=5118]
+##[start-action display=Run setup script;id=__subosito_flutter-action.__run_3]
+##[group]Run $GITHUB_ACTION_PATH/setup.sh \
+[36;1m$GITHUB_ACTION_PATH/setup.sh \[0m
+[36;1m  -n '3.41.6' \[0m
+[36;1m  -a 'arm64' \[0m
+[36;1m  -c '/Users/runner/hostedtoolcache/flutter/stable-3.41.6-arm64' \[0m
+[36;1m  -d '/Users/runner/.pub-cache' \[0m
+[36;1m  stable[0m
+shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+##[endgroup]
+##[end-action id=__subosito_flutter-action.__run_3;outcome=success;conclusion=success;duration_ms=874]
+##[group]Run flutter pub get
+[36;1mflutter pub get[0m
+shell: /bin/bash -e {0}
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+  FLUTTER_ROOT: /Users/runner/hostedtoolcache/flutter/stable-3.41.6-arm64/flutter
+  PUB_CACHE: /Users/runner/.pub-cache
+##[endgroup]
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.17.0 (1.19.0 available)
+  platform 3.1.6 (3.2.0 available)
+  shared_preferences_android 2.4.23 (2.5.4 available)
+  shared_preferences_foundation 2.5.7 (2.6.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  test_api 0.7.10 (0.7.15 available)
+  vector_math 2.2.0 (2.4.4 available)
+  web 1.1.1 (1.1.2 available)
+Got dependencies!
+12 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+##[group]Run flutter test
+[36;1mflutter test[0m
+shell: /bin/bash -e {0}
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+  FLUTTER_ROOT: /Users/runner/hostedtoolcache/flutter/stable-3.41.6-arm64/flutter
+  PUB_CACHE: /Users/runner/.pub-cache
+##[endgroup]
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.17.0 (1.19.0 available)
+  platform 3.1.6 (3.2.0 available)
+  shared_preferences_android 2.4.23 (2.5.4 available)
+  shared_preferences_foundation 2.5.7 (2.6.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  test_api 0.7.10 (0.7.15 available)
+  vector_math 2.2.0 (2.4.4 available)
+  web 1.1.1 (1.1.2 available)
+Got dependencies!
+12 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: bundled methods.json is identical to the shared schema
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: there are 38 adhan-js vectors
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Cairo-2026-01-15-egypt-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Cairo-2026-04-30-egypt-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Cairo-2026-07-01-egypt-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Cairo-2026-10-29-egypt-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Cairo-2026-10-30-egypt-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Makkah-2026-03-20-makkah-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Makkah-2026-06-21-makkah-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Makkah-2026-12-21-makkah-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Riyadh-2026-09-01-makkah-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Dubai-2026-05-10-dubai-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Doha-2026-08-15-qatar-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Kuwait-2026-02-01-kuwait-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Karachi-2026-11-06-karachi-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Karachi-2026-11-06-karachi-hanafi
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Istanbul-2026-06-01-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Istanbul-2026-06-01-mwl-hanafi
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Jakarta-2026-03-01-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Nairobi-2026-07-20-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Johannesburg-2026-06-21-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Sydney-2026-04-04-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Sydney-2026-04-05-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Sydney-2026-10-04-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) London-2026-03-28-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) London-2026-03-29-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) London-2026-06-21-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) London-2026-10-25-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) London-2026-12-21-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Paris-2026-09-10-france-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) NewYork-2026-03-07-isna-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) NewYork-2026-03-08-isna-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) NewYork-2026-11-01-isna-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) NewYork-2026-12-25-isna-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Toronto-2026-07-04-isna-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Oslo-2026-06-21-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Oslo-2026-12-21-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Reykjavik-2026-06-21-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Reykjavik-2026-12-21-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Stockholm-2026-05-20-isna-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Cairo-2026-01-15-egypt-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Cairo-2026-04-30-egypt-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Cairo-2026-07-01-egypt-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Cairo-2026-10-29-egypt-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Cairo-2026-10-30-egypt-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Makkah-2026-03-20-makkah-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Makkah-2026-06-21-makkah-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Makkah-2026-12-21-makkah-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Riyadh-2026-09-01-makkah-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Dubai-2026-05-10-dubai-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Doha-2026-08-15-qatar-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Kuwait-2026-02-01-kuwait-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Karachi-2026-11-06-karachi-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Karachi-2026-11-06-karachi-hanafi
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Istanbul-2026-06-01-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Istanbul-2026-06-01-mwl-hanafi
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Jakarta-2026-03-01-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Nairobi-2026-07-20-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Johannesburg-2026-06-21-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Sydney-2026-04-04-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Sydney-2026-04-05-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Sydney-2026-10-04-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-03-28-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-03-29-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-06-21-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-10-25-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-12-21-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Paris-2026-09-10-france-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) NewYork-2026-03-07-isna-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) NewYork-2026-03-08-isna-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) NewYork-2026-11-01-isna-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) NewYork-2026-12-25-isna-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Toronto-2026-07-04-isna-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Oslo-2026-06-21-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Oslo-2026-12-21-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Reykjavik-2026-06-21-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Reykjavik-2026-12-21-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Stockholm-2026-05-20-isna-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) extra-cairo-adjusted
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) extra-oslo-makkah-summer
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) extra-sydney-qatar
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) extra-dubai-leap
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: qibla Cairo within 0.5°
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: qibla London within 0.5°
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: qibla New York within 0.5°
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: qibla Jakarta within 0.5°
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: qibla Sydney within 0.5°
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: qibla Madinah within 0.5°
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: qibla matches the Python reference to 1e-9°
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: qibla bearing is always in [0, 360)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: DST transitions London-2026-03-28-mwl-standard -> London-2026-03-29-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: DST transitions NewYork-2026-03-07-isna-standard -> NewYork-2026-03-08-isna-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: DST transitions Sydney-2026-04-04-mwl-standard -> Sydney-2026-04-05-mwl-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: DST transitions Cairo-2026-10-29-egypt-standard -> Cairo-2026-10-30-egypt-standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: DST transitions local date is taken in the city time zone (Sydney is a day ahead of UTC)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: invalid input latitude out of range
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: invalid input longitude out of range
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: invalid input NaN coordinates
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: invalid input unknown method and asr
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: invalid input impossible dates
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: invalid input polar night (Tromsø, 21 Dec) is reported, not silently wrong
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: invalid input unsupported high-latitude rule in config is rejected
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: rules Dhuhr includes the configured offset
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: rules ishaMinutes methods put Isha a fixed time after Maghrib
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: rules Hanafi Asr is later than standard
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: rules twilight-angle rule caps Fajr/Isha at high latitudes
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: rules manual adjustments shift each time by exactly that many minutes
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: rules times are whole minutes and in chronological order
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: rules roundHalfEven matches Python round()
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: rules julian day of J2000.0
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: schedule helpers next prayer is the first obligatory prayer after now
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: schedule helpers countdown format
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/prayer_test.dart: schedule helpers adjustments clamp to -30..+30
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/theme_contrast_test.dart: design tokens are copied verbatim (generated file untouched)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/theme_contrast_test.dart: dark: every text/background pair the UI uses is >= 4.5:1
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/theme_contrast_test.dart: light: every text/background pair the UI uses is >= 4.5:1
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: bundled schema copies are identical to packages/shared-schemas
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: search normalisation vectors "ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ" -> "الحمد لله رب العلمين"
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: search normalisation vectors "  إِيَّاكَ   نَعۡبُدُ " -> "اياك نعبد"
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: search normalisation vectors "هُدٗى" -> "هدي"
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: search normalisation vectors "رحمة" -> "رحمه"
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: search normalisation vectors is idempotent and strips every code point in removeRanges
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: search normalisation vectors maps alef forms, ya, ta marbuta; collapses whitespace
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: search normalisation vectors rejects multi-code-point map keys
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: render map (display only) maps KFGQPC open tanween code points to the Amiri Quran ones
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: render map (display only) does not touch stored, searched or hashed text
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: render map (display only) search results carry the original text, not the display text
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: Quran search diacritic-insensitive: plain and vocalised queries match the same ayahs
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: Quran search fewer than 2 letters is rejected
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: Quran search no match gives zero total
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: Quran search limit caps hits but not total
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: digits and page input Arabic-Indic digits
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: digits and page input parsePageNumber validates 1..604
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/text_test.dart: cities load with valid time zones and methods
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/quran_integrity_test.dart: bundled Quran assets are byte-identical to content/quran/dist
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/quran_integrity_test.dart: 114 surahs and 6236 ayahs
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/quran_integrity_test.dart: ayah counts equal the independent reference (quran-reference.json)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/quran_integrity_test.dart: allAyahsSha256 of the bundled text matches integrity.v1.json
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/quran_integrity_test.dart: every surahSha256 matches integrity.v1.json
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/quran_integrity_test.dart: hash is sensitive to a single changed code point
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/quran_integrity_test.dart: every ayah has non-empty text and an English translation
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/quran_integrity_test.dart: 604 Madinah pages, contiguous, covering 1:1..114:6
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/quran_integrity_test.dart: page spot checks from quran-reference.json
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/quran_integrity_test.dart: pageOf is the inverse of ayahsOnPage for all 6236 ayahs
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/quran_integrity_test.dart: 30 juz, juz 30 starts on page 582 at 78:1
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/quran_integrity_test.dart: text spot checks
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/quran_integrity_test.dart: integrity.v1.json is the copy bundled with the app
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: Bookmark model json round trip and validation
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: Bookmark model last-write-wins picks the greater updatedAt; ties keep local
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: BookmarksController add, toggle, remove (tombstone) and persistence
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: BookmarksController updatedAt strictly increases even if the clock does not move
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: BookmarksController markPushed keeps items that changed after the push started
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client pushes local changes and pulls remote ones
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client conflict: remote newer wins locally, local newer wins on the server
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client server keeps its newer copy on PUT and the client adopts it
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client second sync sends since=<serverTime> and pushes nothing new
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client offline: SocketException becomes ApiErrorKind.offline and nothing is lost
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client timeouts and client exceptions are offline errors too
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client server-shaped responses (note: null) parse
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client HTTP status codes map to error kinds
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client malformed payloads are server errors
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client invalid base URL is rejected before any request
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: AccountController default server address is the Android emulator host
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: AccountController client-side validation
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: AccountController register, duplicate register, bad login, login, sync, logout
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: AccountController offline sync shows a clear offline error and keeps the session
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: AccountController a rejected token signs out with a session-expired message
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: AccountController an expired token is not used
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: AccountController rate limiting and server errors
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/unit/bookmarks_sync_test.dart: AccountController server address is validated and saved
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (ar, light)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (ar, dark)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, light)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, dark)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/shell_test.dart: Arabic is the default locale and the layout is RTL
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/shell_test.dart: English is LTR
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/shell_test.dart: bottom navigation reaches every tab (ar)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/shell_test.dart: every tab lays out without overflow at text scale 1.5 (ar)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/shell_test.dart: every tab lays out without overflow at text scale 2.0 (ar)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/shell_test.dart: bottom navigation reaches every tab (en)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/shell_test.dart: every tab lays out without overflow at text scale 1.5 (en)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/shell_test.dart: every tab lays out without overflow at text scale 2.0 (en)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/shell_test.dart: a small phone (320x568) renders every tab
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/home_test.dart: shows greeting and the free tagline
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/home_test.dart: "Start reading" opens Al-Fatihah and records the position
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/home_test.dart: "Continue reading" reopens the last ayah
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/home_test.dart: next prayer card shows the computed time and opens the prayer tab
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/home_test.dart: quick links: surahs, Mushaf, search, bookmarks
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/home_test.dart: home shows the polar message when no times exist
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/a11y_test.dart: en/light: tap targets, labels and text contrast on all screens
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/a11y_test.dart: ar/light: tap targets and labels on all screens
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/a11y_test.dart: en/dark: tap targets, labels and text contrast on all screens
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/a11y_test.dart: ar/dark: tap targets and labels on all screens
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/a11y_test.dart: bookmarked ayah and adjustment rows meet the guidelines (en)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/surah_list_test.dart: lists all 114 surahs with Arabic and English names, ayah count, revelation
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/surah_list_test.dart: Arabic UI shows Arabic-Indic numbers
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/surah_list_test.dart: filter by Arabic name (diacritic-insensitive), number, and English
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/surah_list_test.dart: tapping a surah opens the reader
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/surah_list_test.dart: app bar actions open search and Mushaf page 1
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/settings_test.dart: language switch: ar -> en -> ar, direction follows, choice persists
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/settings_test.dart: settings persist across an app restart (same storage)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/settings_test.dart: theme selector: light, dark, system
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/settings_test.dart: system theme follows the platform brightness
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/settings_test.dart: Quran font size slider: 18..40, persists, updates preview
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/settings_test.dart: slider supports accessibility increase/decrease actions
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/settings_test.dart: out-of-range stored font size is clamped
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/settings_test.dart: translation switch persists
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/settings_test.dart: account and about entries open their screens
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/settings_test.dart: about: free-forever statement and content sources/licences
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/settings_test.dart: about in Arabic
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/page_reader_test.dart: page 1 shows Al-Fatihah with page/juz header
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/page_reader_test.dart: next/previous buttons move one page and disable at the ends
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/page_reader_test.dart: last page has next disabled and shows 112..114
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/page_reader_test.dart: swiping changes the page (RTL: drag right for the next page)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/page_reader_test.dart: swiping in English UI follows LTR (drag left for the next page)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/page_reader_test.dart: go to page: valid numbers in Latin and Arabic-Indic digits
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/page_reader_test.dart: go to page rejects "0" with a validation message
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/page_reader_test.dart: go to page rejects "605" with a validation message
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/page_reader_test.dart: go to page rejects "abc" with a validation message
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/page_reader_test.dart: go to page rejects "" with a validation message
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/page_reader_test.dart: go to page rejects "-1" with a validation message
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/page_reader_test.dart: go to page rejects "2.5" with a validation message
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/page_reader_test.dart: a leftover snackbar is cleared so the Go button is tappable (DEF-008)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/search_test.dart: initial hint, then too-short query message
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/search_test.dart: no results
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/search_test.dart: vocalised and plain queries give the same results; original text shown
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/search_test.dart: tapping a result opens the ayah in the reader
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/basmala_test.dart: surah reader: surah 2 starts with the basmala line
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/basmala_test.dart: surah reader: surah 112 starts with the basmala line
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/basmala_test.dart: surah reader: surah 1 has no separate basmala line
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/basmala_test.dart: surah reader: surah 9 has no separate basmala line
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/basmala_test.dart: surah reader opened mid-surah shows the basmala when scrolled to the start
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/basmala_test.dart: page 604: three banners and three basmalas (112, 113, 114)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/basmala_test.dart: page 1: Al-Fatihah banner only, no extra basmala line
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/basmala_test.dart: page where surah 9 starts: banner without basmala
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/basmala_test.dart: page 2 (start of Al-Baqarah): banner then basmala then 2:1
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/bookmarks_test.dart: empty state
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/bookmarks_test.dart: lists live bookmarks newest first; tombstones hidden
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/bookmarks_test.dart: delete button removes the bookmark (kept as a tombstone for sync)
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/bookmarks_test.dart: tapping a bookmark opens the reader at that ayah
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/bookmarks_test.dart: bookmark added in the reader appears in the list
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/bookmarks_test.dart: continue-reading tile is on the bookmarks screen
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/prayer_screen_test.dart: shows today's six times for the default city (Cairo) in its time zone
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/prayer_screen_test.dart: Arabic UI uses Arabic-Indic digits and RTL
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/prayer_screen_test.dart: countdown ticks every second
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/prayer_screen_test.dart: after Isha the next prayer is tomorrow's Fajr
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/prayer_screen_test.dart: city picker: search and choose London; method follows the city
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/prayer_screen_test.dart: city picker: Arabic search and no-results
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/prayer_screen_test.dart: method selector changes the calculation and persists
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/prayer_screen_test.dart: Asr selector switches to Hanafi and persists
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/prayer_screen_test.dart: manual adjustment: +/- buttons, clamp at ±30, reset
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/prayer_screen_test.dart: adjustment minimum is -30
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/prayer_screen_test.dart: high-latitude note appears for London at midsummer
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/prayer_screen_test.dart: polar night shows an explanation instead of times
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/prayer_screen_test.dart: qibla bearing text and compass semantics
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/prayer_screen_test.dart: DST: New York before/after the March change shows local clock times
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/surah_reader_test.dart: shows ayah text through the render map with Arabic-Indic ayah numbers
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/surah_reader_test.dart: font size setting is applied to Quran text
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/surah_reader_test.dart: translation toggle shows/hides English and persists
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/surah_reader_test.dart: bookmark button adds and removes a bookmark
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/surah_reader_test.dart: opening at an ayah scrolls to it, highlights it and records it
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/surah_reader_test.dart: tapping an ayah makes it the reading position
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/surah_reader_test.dart: "open in Mushaf" goes to the page of the current ayah
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/surah_reader_test.dart: invalid initial ayah falls back to the first ayah
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/surah_reader_test.dart: reader is RTL in Arabic UI and English UI keeps Quran text RTL
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/account_test.dart: shows default server address and the optional-account note
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/account_test.dart: save server address: invalid then valid
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/account_test.dart: validation messages for email and password
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/account_test.dart: register, then duplicate, then wrong password, then sign in, sync, sign out
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/account_test.dart: offline: clear error message, nothing lost
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/account_test.dart: offline sign-in in Arabic shows the Arabic message
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/account_test.dart: expired session during sync signs out
+✅ /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/test/widget/account_test.dart: buttons are disabled and a spinner shows while busy
+
+🎉 274 tests passed.
+##[group]Run flutter build ios --simulator --debug --no-codesign
+[36;1mflutter build ios --simulator --debug --no-codesign[0m
+shell: /bin/bash -e {0}
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+  FLUTTER_ROOT: /Users/runner/hostedtoolcache/flutter/stable-3.41.6-arm64/flutter
+  PUB_CACHE: /Users/runner/.pub-cache
+##[endgroup]
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.17.0 (1.19.0 available)
+  platform 3.1.6 (3.2.0 available)
+  shared_preferences_android 2.4.23 (2.5.4 available)
+  shared_preferences_foundation 2.5.7 (2.6.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  test_api 0.7.10 (0.7.15 available)
+  vector_math 2.2.0 (2.4.4 available)
+  web 1.1.1 (1.1.2 available)
+Got dependencies!
+12 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Building org.rattil.app for simulator (ios)...
+Running pod install...                                           2,548ms
+Running Xcode build...                                          
+Xcode build done.                                           167.7s
+✓ Built build/ios/iphonesimulator/Runner.app
+##[group]Run UDID=$(xcrun simctl list devices available -j | python3 -c "import json,sys;d=json.load(sys.stdin)['devices'];print(next(x['udid'] for k,v in d.items() if 'iOS' in k for x in v if x['name'].startswith('iPhone')))")
+[36;1mUDID=$(xcrun simctl list devices available -j | python3 -c "import json,sys;d=json.load(sys.stdin)['devices'];print(next(x['udid'] for k,v in d.items() if 'iOS' in k for x in v if x['name'].startswith('iPhone')))")[0m
+[36;1mxcrun simctl boot "$UDID"[0m
+[36;1mecho "udid=$UDID" >> "$GITHUB_OUTPUT"[0m
+shell: /bin/bash -e {0}
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+  FLUTTER_ROOT: /Users/runner/hostedtoolcache/flutter/stable-3.41.6-arm64/flutter
+  PUB_CACHE: /Users/runner/.pub-cache
+##[endgroup]
+##[group]Run ./tool/run_integration.sh -d 4A57FB15-6E7C-49CC-BE93-450B18BD286E
+[36;1m./tool/run_integration.sh -d 4A57FB15-6E7C-49CC-BE93-450B18BD286E[0m
+shell: /bin/bash -e {0}
+env:
+  FLUTTER_VERSION: 3.41.6
+  NODE_VERSION: 22
+  PYTHON_VERSION: 3.13
+  FLUTTER_ROOT: /Users/runner/hostedtoolcache/flutter/stable-3.41.6-arm64/flutter
+  PUB_CACHE: /Users/runner/.pub-cache
+##[endgroup]
+##[group]integration_test attempt 1
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.17.0 (1.19.0 available)
+  platform 3.1.6 (3.2.0 available)
+  shared_preferences_android 2.4.23 (2.5.4 available)
+  shared_preferences_foundation 2.5.7 (2.6.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  test_api 0.7.10 (0.7.15 available)
+  vector_math 2.2.0 (2.4.4 available)
+  web 1.1.1 (1.1.2 available)
+Got dependencies!
+12 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading /Users/runner/work/islamic-super-app/islamic-super-app/apps/mobile/integration_test/app_test.dart
+Running Xcode build...                                          
+Xcode build done.                                           94.6s
+00:00 +0: open surah, bookmark, go to page, change city
+00:17 +1: (tearDownAll)
+00:36 +1: All tests passed!
+##[endgroup]
+integration tests passed on attempt 1
+Post job cleanup.
+##[start-action display=Cache pub dependencies;id=__1bec17f1-ef13-4f75-9065-9cb6db8abd36.cache-pub]
+Post job cleanup.
+Cache hit occurred on the primary key flutter-pub-macos-stable-3.41.6-arm64-db50e20168db8fee486b9abf32fc912de3bc5b6a-efe4ed3c78d68dc53ab60e52c1dc97abff64c78ddb61491a46b61808c0df2493, not saving cache.
+##[end-action id=__1bec17f1-ef13-4f75-9065-9cb6db8abd36.cache-pub;outcome=success;conclusion=success;duration_ms=2503]
+##[start-action display=Cache Flutter;id=__1bec17f1-ef13-4f75-9065-9cb6db8abd36.cache-flutter]
+Post job cleanup.
+Cache hit occurred on the primary key flutter-macos-stable-3.41.6-arm64-db50e20168db8fee486b9abf32fc912de3bc5b6a, not saving cache.
+##[end-action id=__1bec17f1-ef13-4f75-9065-9cb6db8abd36.cache-flutter;outcome=success;conclusion=success;duration_ms=336]
+Post job cleanup.
+[command]/opt/homebrew/bin/git version
+git version 2.56.0
+Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/a51b18ae-7ea9-4144-901a-05f36932292e/.gitconfig'
+Temporarily overriding HOME='/Users/runner/work/_temp/a51b18ae-7ea9-4144-901a-05f36932292e' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/islamic-super-app/islamic-super-app
+[command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+[command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+http.https://github.com/.extraheader
+[command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+[command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+[command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Cleaning up orphan processes
+Terminate orphan process: pid (14107) (ibtoold)
+Terminate orphan process: pid (9399) (adb)
+Terminate orphan process: pid (8808) (sleep)
+##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -18,5 +18,9 @@
 - DEF-005 Android emulator integration test tapped before the keyboard settled.
 - DEF-006 WebKit offline e2e: Playwright setOffline + service worker.
 - DEF-007 Semgrep: mutable action tags, Dependabot without cooldown.
+- DEF-008 leftover snackbar covered the Mushaf page reader's Go button on small Android screens.
+- DEF-009 web inputs lost if used before hydration (tests now wait; marker added).
+- DEF-010 postcss advisories via Next 15 (npm override).
+- DEF-011 CI device-test hangs (portable time limit).
 ### Changed vs the Rattil prototype
 - The stored Quran text no longer contains the font-workaround code points; the substitution is display-only.
