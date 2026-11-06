@@ -109,4 +109,18 @@ void main() {
       expect(page(tester), 8);
     });
   }
+
+  testWidgets('a leftover snackbar is cleared so the Go button is tappable (DEF-008)', (tester) async {
+    await pumpApp(tester, locale: 'en');
+    final messenger = ScaffoldMessenger.of(tester.element(find.byType(Navigator).first));
+    messenger.showSnackBar(const SnackBar(content: Text('Bookmarked'), duration: Duration(minutes: 1)));
+    await tester.pumpAndSettle();
+    expect(find.text('Bookmarked'), findsOneWidget);
+    await pushScreen(tester, const PageReaderScreen(initialPage: 1));
+    expect(find.text('Bookmarked'), findsNothing);
+    await tester.enterText(find.byKey(const Key('goToPageField')), '50');
+    await tester.tap(find.byKey(const Key('goToPageButton')), warnIfMissed: true);
+    await tester.pumpAndSettle();
+    expect(page(tester), 50);
+  });
 }

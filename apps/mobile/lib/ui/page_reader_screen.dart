@@ -28,6 +28,11 @@ class PageReaderScreenState extends State<PageReaderScreen> {
     super.initState();
     _page = widget.initialPage.clamp(1, 604);
     _controller = PageController(initialPage: _page - 1);
+    // A message left over from the previous screen (e.g. "Bookmarked") floats over
+    // this screen's bottom controls on small phones; clear it when the reader opens.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) ScaffoldMessenger.maybeOf(context)?.removeCurrentSnackBar();
+    });
   }
 
   @override
