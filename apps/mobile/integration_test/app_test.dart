@@ -54,6 +54,11 @@ void main() {
     await tester.tap(find.byTooltip('Open Mushaf pages'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byKey(const Key('goToPageField')), '50');
+    // On a real device the soft keyboard animates in and re-lays out the page,
+    // so wait for it to settle before locating the button.
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('goToPageButton')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('goToPageButton')));
     await tester.pumpAndSettle();
     expect(tester.state<PageReaderScreenState>(find.byType(PageReaderScreen)).page, 50);
