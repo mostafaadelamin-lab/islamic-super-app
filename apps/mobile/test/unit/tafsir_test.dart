@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/data/content.dart';
+import 'package:rattil/data/settings.dart';
 import 'package:rattil/data/tafsir.dart';
 import 'package:rattil/domain/quran.dart';
 import 'package:rattil/domain/tafsir.dart';
 import 'package:rattil/ui/ayah_sheet.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers.dart';
 
@@ -103,6 +105,21 @@ void main() {
     expect(stepAyah(q, const AyahRef(2, 1), -1), const AyahRef(1, 7));
     expect(stepAyah(q, const AyahRef(1, 1), -1), isNull);
     expect(stepAyah(q, const AyahRef(114, 6), 1), isNull);
+  });
+
+  test('"tafsir with recitation" is off by default and persisted', () async {
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+    final a = SettingsController(prefs, defaultCityId: 'c1');
+    expect(a.tafsirWithRecitation, isFalse);
+    var notified = 0;
+    a.addListener(() => notified++);
+    await a.setTafsirWithRecitation(true);
+    expect(notified, 1);
+    expect(prefs.getBool('audio.tafsir'), isTrue);
+    expect(SettingsController(prefs, defaultCityId: 'c1').tafsirWithRecitation, isTrue);
+    await a.setTafsirWithRecitation(false);
+    expect(SettingsController(prefs, defaultCityId: 'c1').tafsirWithRecitation, isFalse);
   });
 }
 

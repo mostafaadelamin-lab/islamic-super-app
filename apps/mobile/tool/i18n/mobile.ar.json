@@ -146,5 +146,6 @@
   "tafsir.prev": "الآية السابقة",
   "tafsir.next": "الآية التالية",
   "tafsir.loading": "جارٍ تحميل التفسير…",
-  "tafsir.error": "تعذّر تحميل التفسير."
+  "tafsir.error": "تعذّر تحميل التفسير.",
+  "audio.tafsirToggle": "التفسير مع التلاوة"
 }

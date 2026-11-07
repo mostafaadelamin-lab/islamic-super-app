@@ -239,6 +239,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get audioStreamNote => 'تُبثّ التلاوات من موقع everyayah.com وتحتاج إلى اتصال بالإنترنت.';
 
   @override
+  String get audioTafsirToggle => 'التفسير مع التلاوة';
+
+  @override
   String get audioTitle => 'التلاوة';
 
   @override

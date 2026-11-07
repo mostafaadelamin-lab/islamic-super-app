@@ -239,6 +239,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get audioStreamNote => 'Recitations are streamed from everyayah.com and need an internet connection.';
 
   @override
+  String get audioTafsirToggle => 'Tafsir with recitation';
+
+  @override
   String get audioTitle => 'Recitation';
 
   @override

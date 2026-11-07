@@ -67,6 +67,7 @@
   "audioRepeatN": "{n}×",
   "audioStop": "إيقاف",
   "audioStreamNote": "تُبثّ التلاوات من موقع everyayah.com وتحتاج إلى اتصال بالإنترنت.",
+  "audioTafsirToggle": "التفسير مع التلاوة",
   "audioTitle": "التلاوة",
   "bookmarksDelete": "حذف علامة {label}",
   "bookmarksEmpty": "لا توجد علامات بعد",

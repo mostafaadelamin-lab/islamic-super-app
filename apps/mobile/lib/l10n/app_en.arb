@@ -334,6 +334,10 @@
   "@audioStreamNote": {
     "description": "shared key \"audio.streamNote\""
   },
+  "audioTafsirToggle": "Tafsir with recitation",
+  "@audioTafsirToggle": {
+    "description": "shared key \"audio.tafsirToggle\""
+  },
   "audioTitle": "Recitation",
   "@audioTitle": {
     "description": "shared key \"audio.title\""

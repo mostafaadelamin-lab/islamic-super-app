@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import '../app_services.dart';
 import '../data/recitation.dart';
 import '../data/settings.dart';
+import '../domain/quran.dart';
+import '../domain/tafsir.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
+import 'review_notice.dart';
 import 'widgets.dart';
 
 /// Mini player shown while a recitation is active: what is playing, previous /
@@ -15,10 +18,12 @@ class MiniPlayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rec = context.services.recitation;
+    final settings = context.services.settings;
     return ListenableBuilder(
-      listenable: rec,
+      listenable: Listenable.merge([rec, settings]),
       builder: (context, _) {
         if (!rec.isActive) return const SizedBox.shrink();
+        final withTafsir = settings.tafsirWithRecitation;
         final l = context.l10n;
         final scheme = Theme.of(context).colorScheme;
         final item = rec.current!;
@@ -26,7 +31,7 @@ class MiniPlayer extends StatelessWidget {
             ? '${l.audioBasmala} · ${surahName(context, context.services.content.quran.surah(item.ref.surah))}'
             : ayahLabel(context, item.ref);
         final error = rec.state == RecitationState.error;
-        return Material(
+        final player = Material(
           key: const Key('miniPlayer'),
           color: scheme.surfaceContainer,
           child: SafeArea(
@@ -39,8 +44,15 @@ class MiniPlayer extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm, vertical: DesignTokens.spaceXs),
               child: Row(
                 children: [
-                  Icon(error ? Icons.wifi_off : Icons.graphic_eq, color: error ? scheme.error : scheme.primary),
-                  const SizedBox(width: DesignTokens.spaceSm),
+                  IconButton(
+                    key: const Key('audioTafsirToggle'),
+                    tooltip: l.audioTafsirToggle,
+                    isSelected: withTafsir,
+                    icon: Icon(Icons.menu_book_outlined, color: scheme.primary),
+                    selectedIcon: Icon(Icons.menu_book, color: scheme.onPrimary),
+                    style: IconButton.styleFrom(backgroundColor: withTafsir ? scheme.primary : null),
+                    onPressed: () => settings.setTafsirWithRecitation(!withTafsir),
+                  ),
                   Expanded(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -99,7 +111,107 @@ class MiniPlayer extends StatelessWidget {
             ),
           ),
         );
+        if (!withTafsir || rec.current == null) return player;
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            RecitationTafsirPanel(ref: rec.current!.ref),
+            player,
+          ],
+        );
       },
+    );
+  }
+}
+
+/// Docked above the mini player while "Tafsir with recitation" is on: the
+/// Tafsir al-Muyassar of the ayah being recited, exactly as stored. It follows
+/// the recitation ayah by ayah (and so across page turns).
+class RecitationTafsirPanel extends StatefulWidget {
+  const RecitationTafsirPanel({super.key, required this.ref});
+  final AyahRef ref;
+
+  @override
+  State<RecitationTafsirPanel> createState() => _RecitationTafsirPanelState();
+}
+
+class _RecitationTafsirPanelState extends State<RecitationTafsirPanel> {
+  Future<TafsirContent>? _tafsir;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _tafsir ??= context.services.tafsir.load();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final r = widget.ref;
+    final maxH = (MediaQuery.sizeOf(context).height * 0.22).clamp(96.0, 220.0);
+    return Material(
+      key: const Key('recitationTafsir'),
+      color: scheme.surfaceContainerLow,
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border(top: BorderSide(color: scheme.outlineVariant)),
+        ),
+        padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, DesignTokens.spaceSm, DesignTokens.spaceMd, 0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              '${l.audioTafsirToggle} · ${ayahLabel(context, r)}',
+              key: const Key('recitationTafsirTitle'),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.labelLarge?.copyWith(color: scheme.primary),
+            ),
+            if (!context.isArabic)
+              Text(
+                l.tafsirArabicOnly,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
+              ),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: maxH),
+              child: FutureBuilder<TafsirContent>(
+                future: _tafsir,
+                initialData: context.services.tafsir.loaded,
+                builder: (context, snap) {
+                  final text = snap.data?.text(r.surah, r.ayah);
+                  if (text == null) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
+                      child: Text(
+                        snap.hasError ? l.tafsirError : l.tafsirLoading,
+                        key: const Key('recitationTafsirStatus'),
+                        style: theme.textTheme.bodySmall?.copyWith(color: snap.hasError ? scheme.error : null),
+                      ),
+                    );
+                  }
+                  return SingleChildScrollView(
+                    // A new scroll position for every ayah: each entry starts at its top.
+                    key: ValueKey('recitationTafsirScroll-${r.surah}-${r.ayah}'),
+                    padding: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
+                    child: Text(
+                      text,
+                      key: const Key('recitationTafsirText'),
+                      textDirection: TextDirection.rtl,
+                      style: duaStyle(context, size: 15),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

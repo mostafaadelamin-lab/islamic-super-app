@@ -146,5 +146,6 @@
   "tafsir.prev": "Previous ayah",
   "tafsir.next": "Next ayah",
   "tafsir.loading": "Loading the tafsir…",
-  "tafsir.error": "The tafsir could not be loaded."
+  "tafsir.error": "The tafsir could not be loaded.",
+  "audio.tafsirToggle": "Tafsir with recitation"
 }

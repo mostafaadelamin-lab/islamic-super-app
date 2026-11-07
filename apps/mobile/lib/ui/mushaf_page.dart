@@ -96,6 +96,9 @@ class MushafPageView extends StatelessWidget {
   static const outerPad = 6.0;
   static const framePad = 10.0;
 
+  /// Opacity of the selected / playing ayah highlight (drawn behind the text).
+  static const highlightAlpha = 0.75;
+
   @override
   Widget build(BuildContext context) {
     final s = context.services;
@@ -133,30 +136,44 @@ class MushafPageView extends StatelessWidget {
           if (layout.centered) font *= 0.94;
           final firstKeyed = <AyahRef>{};
 
-          Widget textLine(int i) {
+          Color? highlightOf(AyahRef r) => r == playing
+              ? AppTheme.of(context, 'verseHighlight').withValues(alpha: highlightAlpha)
+              : (r == selected ? AppTheme.of(context, 'accentSoft').withValues(alpha: highlightAlpha) : null);
+
+          // A text line is laid out twice with identical widgets: once as the
+          // highlight layer (transparent glyphs, translucent boxes exactly one
+          // line tall) and once as the text. The highlight layer of the whole
+          // page is painted first, so a highlight never covers a letter or a
+          // mark of this or a neighbouring line.
+          Widget textLine(int i, {bool background = false}) {
             final ws = words[i];
             final children = <Widget>[];
+            final style = MushafMetrics.style(font, background ? const Color(0x00000000) : ink);
             for (var k = 0; k < ws.length; k++) {
               final w = ws[k];
-              final isFirst = firstKeyed.add(w.ref);
-              final hl = w.ref == playing
-                  ? AppTheme.of(context, 'verseHighlight')
-                  : (w.ref == selected ? AppTheme.of(context, 'accentSoft') : null);
+              final isFirst = !background && firstKeyed.add(w.ref);
               Widget word = Text(
                 display[i][k],
                 key: isFirst ? Key('pageAyah-${w.ref.surah}-${w.ref.ayah}') : null,
                 textDirection: TextDirection.rtl,
                 maxLines: 1,
                 softWrap: false,
-                style: MushafMetrics.style(font, ink),
+                style: style,
               );
-              if (hl != null) {
-                word = DecoratedBox(
-                  decoration: BoxDecoration(color: hl, borderRadius: BorderRadius.circular(4)),
-                  child: word,
-                );
+              if (background) {
+                final hl = highlightOf(w.ref);
+                word = hl == null
+                    ? Opacity(opacity: 0, child: word)
+                    : Container(
+                        key: Key('highlight-${w.ref.surah}-${w.ref.ayah}-$i-$k'),
+                        height: lineH,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(color: hl, borderRadius: BorderRadius.circular(4)),
+                        child: word,
+                      );
+              } else {
+                word = MetaData(metaData: w.ref, behavior: HitTestBehavior.opaque, child: word);
               }
-              word = MetaData(metaData: w.ref, behavior: HitTestBehavior.opaque, child: word);
               if (layout.centered) {
                 word = Padding(
                   padding: EdgeInsets.symmetric(horizontal: font * 0.15),
@@ -165,28 +182,30 @@ class MushafPageView extends StatelessWidget {
               }
               children.add(word);
               if (w.endsAyah) {
+                final marker = AyahMarker(
+                  number: w.ref.ayah,
+                  size: font * MushafMetrics.markerEm,
+                  color: frame,
+                  ink: ink,
+                );
                 children.add(
-                  MetaData(
-                    metaData: w.ref,
-                    behavior: HitTestBehavior.opaque,
-                    child: AyahMarker(number: w.ref.ayah, size: font * MushafMetrics.markerEm, color: frame, ink: ink),
-                  ),
+                  background
+                      ? Opacity(opacity: 0, child: marker)
+                      : MetaData(metaData: w.ref, behavior: HitTestBehavior.opaque, child: marker),
                 );
               }
             }
             if (layout.centered || ws.length < 2) {
-              return MergeSemantics(
-                child: Center(
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Row(mainAxisSize: MainAxisSize.min, children: children),
-                  ),
+              final row = Center(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(mainAxisSize: MainAxisSize.min, children: children),
                 ),
               );
+              return background ? row : MergeSemantics(child: row);
             }
-            return MergeSemantics(
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: children),
-            );
+            final row = Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: children);
+            return background ? row : MergeSemantics(child: row);
           }
 
           Widget line(int i) {
@@ -213,6 +232,21 @@ class MushafPageView extends StatelessWidget {
             for (var i = 0; i < layout.lines.length; i++)
               SizedBox(key: Key('mushafLine-$page-$i'), height: lineH, child: line(i)),
           ];
+          final highlighted = [for (final ws in words) ws.any((w) => highlightOf(w.ref) != null)];
+          final highlightLayer = highlighted.contains(true)
+              ? IgnorePointer(
+                  child: ExcludeSemantics(
+                    child: Column(
+                      key: const Key('mushafHighlightLayer'),
+                      mainAxisAlignment: layout.centered ? MainAxisAlignment.center : MainAxisAlignment.start,
+                      children: [
+                        for (var i = 0; i < layout.lines.length; i++)
+                          SizedBox(height: lineH, child: highlighted[i] ? textLine(i, background: true) : null),
+                      ],
+                    ),
+                  ),
+                )
+              : null;
 
           final pageBody = Directionality(
             textDirection: TextDirection.rtl,
@@ -260,9 +294,15 @@ class MushafPageView extends StatelessWidget {
                           border: Border.all(color: frame.withValues(alpha: 0.6), width: 0.8),
                           borderRadius: BorderRadius.circular(3),
                         ),
-                        child: Column(
-                          mainAxisAlignment: layout.centered ? MainAxisAlignment.center : MainAxisAlignment.start,
-                          children: lines,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            ?highlightLayer,
+                            Column(
+                              mainAxisAlignment: layout.centered ? MainAxisAlignment.center : MainAxisAlignment.start,
+                              children: lines,
+                            ),
+                          ],
                         ),
                       ),
                     ),

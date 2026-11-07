@@ -121,6 +121,13 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Whether the mini player shows the tafsir of the ayah being recited (default off).
+  bool get tafsirWithRecitation => _prefs.getBool('audio.tafsir') ?? false;
+  Future<void> setTafsirWithRecitation(bool on) async {
+    await _prefs.setBool('audio.tafsir', on);
+    notifyListeners();
+  }
+
   // --- Adhan notifications --------------------------------------------------------
   bool get adhanEnabled => _prefs.getBool('adhan.enabled') ?? false;
 

@@ -494,6 +494,12 @@ abstract class AppLocalizations {
   /// **'Recitations are streamed from everyayah.com and need an internet connection.'**
   String get audioStreamNote;
 
+  /// shared key "audio.tafsirToggle"
+  ///
+  /// In en, this message translates to:
+  /// **'Tafsir with recitation'**
+  String get audioTafsirToggle;
+
   /// shared key "audio.title"
   ///
   /// In en, this message translates to:

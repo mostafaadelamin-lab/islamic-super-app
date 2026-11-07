@@ -7,6 +7,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rattil/domain/quran.dart';
 import 'package:rattil/ui/hajj_screen.dart';
 import 'package:rattil/ui/page_reader_screen.dart';
 import 'package:rattil/ui/surah_reader_screen.dart';
@@ -111,6 +112,29 @@ void main() {
       await goBack(tester);
       await pushScreen(tester, const HajjScreen());
       await shot(tester, '${locale}_m2_hajj');
+    });
+
+    testWidgets('M2 screenshots ($locale): recitation highlight and tafsir with recitation', (tester) async {
+      tester.view.devicePixelRatio = 1;
+      for (final theme in ['light', 'dark']) {
+        final app = await pumpApp(
+          tester,
+          locale: locale,
+          size: const Size(390, 844),
+          prefs: {'theme': theme},
+          audio: FakeAudioBackend(),
+        );
+        await pushScreen(tester, const PageReaderScreen(initialPage: 2));
+        await app.services.recitation.playFrom(const AyahRef(2, 3));
+        await tester.pumpAndSettle();
+        final suffix = theme == 'dark' ? '_dark' : '';
+        await shot(tester, '${locale}_m2_recitation_highlight$suffix', overlay: true);
+        await app.services.settings.setTafsirWithRecitation(true);
+        await tester.pumpAndSettle();
+        await shot(tester, '${locale}_m2_recitation_tafsir$suffix', overlay: true);
+        await app.services.recitation.stop();
+        await tester.pumpAndSettle();
+      }
     });
 
     testWidgets('M2 screenshots ($locale, dark): Mushaf page 50, home', (tester) async {

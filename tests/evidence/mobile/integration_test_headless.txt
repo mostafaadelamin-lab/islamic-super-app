@@ -1,10 +1,11 @@
 # Headless run of integration_test/app_test.dart on the flutter-tester device (NOT an emulator/simulator).
-# Run as a temporary copy under test/ with SharedPreferences.setMockInitialValues({}) inserted, because flutter test has no platform plugins.
-# Command: sed ... integration_test/app_test.dart > test/zz_e2e_headless_copy_test.dart && flutter test --reporter expanded test/zz_e2e_headless_copy_test.dart
-# Date: 2026-11-07T08:30:12Z (Milestone 2 + Tafsir al-Muyassar)
+# Run as a temporary copy under test/ because flutter-tester has no platform plugins: SharedPreferences.setMockInitialValues({}) inserted,
+# and bootstrap(audioBackend: _SilentAudio.new) - a silent player that accepts every file - instead of just_audio.
+# Command: sh mkcopy.sh (sed + appended _SilentAudio class) && flutter test --reporter expanded test/zz_e2e_headless_copy_test.dart
+# Date: 2026-11-07T17:39:47Z (Milestone 2 + tafsir + tafsir with recitation)
 00:00 +0: loading /work/apps/mobile/test/zz_e2e_headless_copy_test.dart
-00:00 +0: open surah, bookmark, Mushaf (go to page, swipe, tap ayah, tafsir), adhkar, tasbih, change city
-00:30 +1: (tearDownAll)
+00:00 +0: open surah, bookmark, Mushaf (go to page, swipe, tap ayah, tafsir, recitation with tafsir), adhkar, tasbih, change city
+00:28 +1: (tearDownAll)
 Warning: integration_test plugin was not detected.
 
 If you're running the tests with `flutter drive`, please make sure your tests
@@ -17,4 +18,4 @@ how to set up the integration_test plugin:
 
 https://docs.flutter.dev/testing/integration-tests
 
-00:30 +1: All tests passed!
+00:28 +1: All tests passed!

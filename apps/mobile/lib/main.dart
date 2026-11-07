@@ -7,13 +7,20 @@ import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'app.dart';
 import 'app_services.dart';
 import 'data/content.dart';
+import 'data/recitation.dart';
 
-Future<AppServices> bootstrap({http.Client? httpClient}) async {
+/// [audioBackend] replaces the audio player (the headless test device has no audio plugin).
+Future<AppServices> bootstrap({http.Client? httpClient, AudioBackend Function()? audioBackend}) async {
   WidgetsFlutterBinding.ensureInitialized();
   tzdata.initializeTimeZones();
   final content = await AppContent.load(rootBundle);
   final prefs = await SharedPreferences.getInstance();
-  return AppServices.create(content: content, prefs: prefs, httpClient: httpClient ?? http.Client());
+  return AppServices.create(
+    content: content,
+    prefs: prefs,
+    httpClient: httpClient ?? http.Client(),
+    audioBackend: audioBackend,
+  );
 }
 
 Future<void> main() async {
