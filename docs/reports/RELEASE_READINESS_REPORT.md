@@ -19,7 +19,7 @@ Milestone 1 meets its engineering acceptance criteria on Android (emulator), iOS
 1. Qualified religious review of Quran text display, Madinah page map and prayer-method parameters.
 2. Licence confirmation for the English translation (or remove it).
 3. Move mobile token storage to Keychain/Keystore; release signing keys.
-4. Store accounts: Google Play (one-time USD 25) and Apple Developer Program (USD 99/year) — **paid, requires owner approval**. Web hosting can be free (e.g. GitHub Pages / Cloudflare Pages); the API needs a host — free tiers exist but must be chosen and approved.
+4. Store accounts: Google Play — the owner already has a paid developer account (confirmed 2026-11-07), no new cost. Apple Developer Program (USD 99/year) — **paid, requires owner approval**. Web hosting can be free (e.g. GitHub Pages / Cloudflare Pages); the API needs a host — free tiers exist but must be chosen and approved.
 5. Physical-device smoke test on at least one Android phone and one iPhone.
 6. Specialist security review and a DAST (OWASP ZAP) scan against a staging deployment.
 
