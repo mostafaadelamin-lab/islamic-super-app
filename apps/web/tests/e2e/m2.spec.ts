@@ -9,6 +9,8 @@ import { noHorizontalOverflow, watchErrors } from "./helpers";
  *
  * Audio: everyayah.com is NOT contacted in these tests. Every request to it is answered by a local silent
  * MP3 (tests/e2e/fixtures/silence.mp3) — tests that rely on this say "mocked network" in their names.
+ * Tests of how the player advances use a fake media element instead (see fakeMedia) and say so in their names;
+ * one Chromium-only test checks that a real MP3 is decoded and played through before the next ayah starts.
  */
 const SILENCE = readFileSync(new URL("./fixtures/silence.mp3", import.meta.url));
 const AUDIO_HOST = "https://everyayah.com/**";
@@ -190,56 +192,200 @@ test.describe("Mushaf reader (15-line Madinah layout)", () => {
   });
 });
 
-test.describe("recitation (mocked network: everyayah.com answered by a local silent MP3)", () => {
-  test("play page: basmala first, then each ayah; highlight; stop (mocked network)", async ({ page }) => {
-    const urls = await mockAudio(page);
+/**
+ * A controllable stand-in for the app's single `new Audio()` element. Media timing differs between browsers
+ * (Playwright Firefox fires 'ended' almost at once for route-fulfilled audio), so tests that check how the
+ * player advances replace the element: play() records the source and reports 'playing', and only the test
+ * ends an item, by dispatching 'ended' itself. Nothing is decoded and no request is made.
+ */
+interface FakeMediaHandle {
+  played: string[];
+  src: string;
+  paused: boolean;
+  end(): void;
+}
+async function fakeMedia(page: Page): Promise<void> {
+  await page.addInitScript(() => {
+    const played: string[] = [];
+    const elements: FakeMedia[] = []; // the app creates exactly one
+    class FakeMedia extends EventTarget {
+      preload = "";
+      paused = true;
+      private source = "";
+      constructor() {
+        super();
+        elements.push(this);
+      }
+      get src(): string {
+        return this.source;
+      }
+      set src(v: string) {
+        this.source = v;
+        this.paused = true;
+      }
+      getAttribute(k: string): string | null {
+        return k === "src" && this.source ? this.source : null;
+      }
+      removeAttribute(k: string): void {
+        if (k === "src") this.source = "";
+      }
+      load(): void {}
+      pause(): void {
+        this.paused = true;
+      }
+      play(): Promise<void> {
+        const src = this.source;
+        played.push(src);
+        this.paused = false;
+        setTimeout(() => {
+          if (!this.paused && this.source === src) this.dispatchEvent(new Event("playing"));
+        }, 0);
+        return Promise.resolve();
+      }
+    }
+    const current = (): FakeMedia | undefined => elements.at(-1);
+    const handle: FakeMediaHandle = {
+      played,
+      get src() {
+        return current()?.src ?? "";
+      },
+      get paused() {
+        return current()?.paused ?? true;
+      },
+      end() {
+        const el = current();
+        if (!el) throw new Error("no media element");
+        el.paused = true;
+        el.dispatchEvent(new Event("ended"));
+      },
+    };
+    (window as unknown as { __media: FakeMediaHandle }).__media = handle;
+    (window as unknown as { Audio: unknown }).Audio = FakeMedia;
+  });
+}
+const media = (page: Page): Promise<{ played: string[]; src: string; paused: boolean }> =>
+  page.evaluate(() => {
+    const m = (window as unknown as { __media: FakeMediaHandle }).__media;
+    return { played: m.played.map((u) => u.split("/").slice(-2).join("/")), src: m.src, paused: m.paused };
+  });
+const played = async (page: Page): Promise<string[]> => (await media(page)).played;
+/** Ends the current item, as the real element does at the end of an ayah. */
+const endItem = (page: Page): Promise<void> =>
+  page.evaluate(() => (window as unknown as { __media: FakeMediaHandle }).__media.end());
+const isPlaying = (page: Page): Promise<void> =>
+  expect(page.getByTestId("player-toggle")).toHaveAttribute("data-state", "playing");
+
+test.describe("recitation player logic (fake media element: the test dispatches 'ended')", () => {
+  test("play page: basmala first, then each ayah in order with none skipped; highlight; stop (fake media element)", async ({
+    page,
+  }) => {
+    const requests = await mockAudio(page); // safety net: nothing may reach the network
+    await fakeMedia(page);
     await readyMushaf(page, "/ar/page/2/");
     await expect(page.getByTestId("player")).toBeHidden();
     await page.getByTestId("play-page").click();
     await expect(page.getByTestId("player")).toBeVisible();
     await expect(page.getByTestId("player-status")).toContainText("اتصال");
-    await expect.poll(() => urls.map(file)).toContain("Alafasy_128kbps/002001.mp3");
-    expect(file(urls[0]!)).toBe("Alafasy_128kbps/001001.mp3"); // basmala before al-Baqarah 1
-    await expect(page.locator(".seg.playing").first()).toHaveAttribute("data-ayah", /^2:/);
-    await expect.poll(() => urls.map(file), { timeout: 15_000 }).toContain("Alafasy_128kbps/002003.mp3");
+    await isPlaying(page);
+    expect(await played(page)).toEqual(["Alafasy_128kbps/001001.mp3"]); // basmala before al-Baqarah 1
+    await expect(page.getByTestId("player-now")).toHaveText("البسملة — البقرة");
+    await expect(page.locator(".seg.playing")).toHaveCount(1); // the basmala line of al-Baqarah
+    await expect(page.getByTestId("basmala")).toHaveClass(/playing/);
+    await endItem(page);
+    await expect(page.getByTestId("player-now")).toHaveText("البقرة، الآية ١");
+    await expect(page.getByTestId("basmala")).not.toHaveClass(/playing/);
+    await expect(page.locator(".seg.playing").first()).toHaveAttribute("data-ayah", "2:1");
+    await expect(page.locator('.seg.playing:not([data-ayah="2:1"])')).toHaveCount(0);
+    await endItem(page);
+    await expect(page.getByTestId("player-now")).toHaveText("البقرة، الآية ٢");
+    await expect(page.locator(".seg.playing").first()).toHaveAttribute("data-ayah", "2:2");
+    await endItem(page);
+    await expect(page.getByTestId("player-now")).toHaveText("البقرة، الآية ٣");
+    await isPlaying(page);
+    expect(await played(page)).toEqual([
+      "Alafasy_128kbps/001001.mp3",
+      "Alafasy_128kbps/002001.mp3",
+      "Alafasy_128kbps/002002.mp3",
+      "Alafasy_128kbps/002003.mp3",
+    ]);
     await page.getByTestId("player-stop").click();
     await expect(page.getByTestId("player")).toBeHidden();
     await expect(page.locator(".seg.playing")).toHaveCount(0);
+    expect(await media(page)).toMatchObject({ src: "", paused: true });
+    expect(requests).toEqual([]);
   });
 
-  test("play from a selected ayah continues across pages and turns the page (mocked network)", async ({
+  test("play from a selected ayah continues across pages and turns the page (fake media element)", async ({
     page,
   }) => {
-    const urls = await mockAudio(page);
+    const requests = await mockAudio(page);
+    await fakeMedia(page);
     await readyMushaf(page, "/ar/page/2/");
     await page.getByRole("button", { name: "البقرة، الآية ٥ — خيارات الآية" }).click();
     await page.getByTestId("act-play").click();
     await expect(page.getByTestId("player-now")).toHaveText("البقرة، الآية ٥");
-    expect(file(urls[0]!)).toBe("Alafasy_128kbps/002005.mp3"); // no basmala in the middle of a surah
+    await isPlaying(page);
+    expect(await played(page)).toEqual(["Alafasy_128kbps/002005.mp3"]); // no basmala in the middle of a surah
+    await expect(page.locator('.seg.playing[data-ayah="2:5"]').first()).toBeVisible();
+    await expect(page).toHaveURL("/ar/page/2/");
     // 2:6 is on page 3: the reader follows
-    await expect(page).toHaveURL("/ar/page/3/", { timeout: 15_000 });
+    await endItem(page);
+    await expect(page).toHaveURL("/ar/page/3/");
     await expect(page.locator('.seg.playing[data-ayah="2:6"]').first()).toBeVisible();
     await expect(page.getByTestId("player-now")).toHaveText("البقرة، الآية ٦");
+    expect(await played(page)).toEqual(["Alafasy_128kbps/002005.mp3", "Alafasy_128kbps/002006.mp3"]);
     await page.getByTestId("player-stop").click();
+    await expect(page.getByTestId("player")).toBeHidden();
+    expect(requests).toEqual([]);
   });
 
-  test("controls: pause/resume, next/previous ayah, repeat, reciter choice is saved (mocked network)", async ({
+  test("controls: pause/resume, next/previous ayah, repeat, reciter choice is saved (fake media element)", async ({
     page,
   }) => {
-    const urls = await mockAudio(page);
+    const requests = await mockAudio(page);
+    await fakeMedia(page);
     await readyMushaf(page, "/en/page/604/");
     await page.getByTestId("play-surah").click(); // the first surah on the page: al-Ikhlas
     await expect(page.getByTestId("player-now")).toHaveText(/Al-Ikhlas/);
+    await isPlaying(page);
     await page.getByTestId("player-toggle").click();
     await expect(page.getByTestId("player-toggle")).toHaveAttribute("data-state", "paused");
+    expect((await media(page)).paused).toBe(true);
+    await page.getByTestId("player-toggle").click(); // resume the same item
+    await isPlaying(page);
+    expect(await played(page)).toEqual(["Alafasy_128kbps/001001.mp3", "Alafasy_128kbps/001001.mp3"]);
+    await page.getByTestId("player-next").click(); // skips past the basmala to ayah 1
+    await expect(page.getByTestId("player-now")).toHaveText(/Al-Ikhlas, ayah 1$/);
+    await isPlaying(page);
+    await page.getByTestId("player-reciter").selectOption("Husary_128kbps"); // reloads the current ayah
+    await expect.poll(async () => (await played(page)).at(-1)).toBe("Husary_128kbps/112001.mp3");
     await page.getByTestId("player-next").click();
-    await expect(page.getByTestId("player-now")).toHaveText(/Al-Ikhlas, ayah [12]/);
-    await page.getByTestId("player-reciter").selectOption("Husary_128kbps");
-    await page.getByTestId("player-next").click();
-    await expect.poll(() => urls.at(-1)).toMatch(/Husary_128kbps\/11200[23]\.mp3$/);
+    await expect(page.getByTestId("player-now")).toHaveText(/Al-Ikhlas, ayah 2$/);
     await page.getByTestId("player-prev").click();
+    await expect(page.getByTestId("player-now")).toHaveText(/Al-Ikhlas, ayah 1$/);
+    await isPlaying(page);
+    expect((await played(page)).slice(-3)).toEqual([
+      "Husary_128kbps/112001.mp3",
+      "Husary_128kbps/112002.mp3",
+      "Husary_128kbps/112001.mp3",
+    ]);
+    // repeat 3: the ayah is played three times, then the next one starts
     await page.getByTestId("player-repeat").selectOption("3");
+    await endItem(page);
+    await isPlaying(page);
+    await endItem(page);
+    await isPlaying(page);
+    await expect(page.getByTestId("player-now")).toHaveText(/Al-Ikhlas, ayah 1$/);
+    await endItem(page);
+    await expect(page.getByTestId("player-now")).toHaveText(/Al-Ikhlas, ayah 2$/);
+    expect((await played(page)).slice(-4)).toEqual([
+      "Husary_128kbps/112001.mp3",
+      "Husary_128kbps/112001.mp3",
+      "Husary_128kbps/112001.mp3",
+      "Husary_128kbps/112002.mp3",
+    ]);
     await page.getByTestId("player-stop").click();
+    await expect(page.getByTestId("player")).toBeHidden();
     // the choice is persisted and shown in Settings
     await page.goto("/en/settings/");
     await expect(page.getByLabel("Reciter")).toHaveValue("Husary_128kbps");
@@ -247,8 +393,41 @@ test.describe("recitation (mocked network: everyayah.com answered by a local sil
     await page.getByLabel("Reciter").selectOption("Maher_AlMuaiqly_64kbps");
     await readyMushaf(page, "/en/page/604/");
     await page.getByTestId("play-page").click();
-    await expect.poll(() => urls.at(-1)).toBe("https://everyayah.com/data/Maher_AlMuaiqly_64kbps/001001.mp3");
+    await isPlaying(page);
+    expect(await played(page)).toEqual(["Maher_AlMuaiqly_64kbps/001001.mp3"]); // fresh page: a new log
     await page.getByTestId("player-stop").click();
+    expect(requests).toEqual([]);
+  });
+});
+
+test.describe("recitation (mocked network: everyayah.com answered by a local silent MP3)", () => {
+  test("a real routed MP3 is decoded, plays, and the next ayah starts only after it ends (mocked network)", async ({
+    page,
+    browserName,
+  }) => {
+    test.skip(
+      browserName !== "chromium",
+      "Chromium only: Playwright Firefox ends route-fulfilled audio almost at once, and WebKit's media timing " +
+        "in CI is not reliable enough to measure; the player logic itself is covered in every browser above",
+    );
+    const seen = new Map<string, number>();
+    const urls = await mockAudio(page);
+    page.on("request", (r) => {
+      if (r.url().startsWith("https://everyayah.com/") && !seen.has(file(r.url())))
+        seen.set(file(r.url()), Date.now());
+    });
+    await readyMushaf(page, "/ar/page/2/");
+    await page.getByTestId("play-page").click();
+    expect(file(urls[0]!)).toBe("Alafasy_128kbps/001001.mp3");
+    // 'playing' is only reported by a real element once it has decoded data and started
+    await expect(page.getByTestId("player-toggle")).toHaveAttribute("data-state", "playing");
+    await expect.poll(() => [...seen.keys()], { timeout: 15_000 }).toContain("Alafasy_128kbps/002001.mp3");
+    await expect(page.locator('.seg.playing[data-ayah="2:1"]').first()).toBeVisible();
+    // the fixture lasts 2.0 s: the next ayah must not be requested before the basmala has played through
+    const gap = seen.get("Alafasy_128kbps/002001.mp3")! - seen.get("Alafasy_128kbps/001001.mp3")!;
+    expect(gap).toBeGreaterThanOrEqual(1_500);
+    await page.getByTestId("player-stop").click();
+    await expect(page.getByTestId("player")).toBeHidden();
   });
 
   test("a failed audio request shows a clear error (mocked network returning 404)", async ({ page }) => {

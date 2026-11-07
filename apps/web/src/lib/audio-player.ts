@@ -100,6 +100,9 @@ function element(): HTMLAudioElement {
     if (state.status === "playing") setState({ status: "loading" });
   });
   el.addEventListener("ended", () => {
+    // Advance only at the genuine end of the item being played: never while paused, stopped or failed, and
+    // never for a late event of an earlier source, so the cursor cannot skip ayahs.
+    if ((state.status !== "playing" && state.status !== "loading") || el.src !== state.src) return;
     const next = afterEnded(state.queue, state.cursor, audioStore.get().repeat);
     if (!next) {
       setState(IDLE);
@@ -129,7 +132,8 @@ async function resume(): Promise<void> {
   } catch (e: unknown) {
     const name = e instanceof DOMException ? e.name : "";
     if (name === "AbortError") return; // superseded by a newer load
-    fail(name === "NotAllowedError" ? "blocked" : navigator.onLine === false ? "offline" : "network");
+    if (name === "NotAllowedError") fail("blocked");
+    else fail(navigator.onLine === false ? "offline" : "network");
   }
 }
 

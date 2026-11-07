@@ -97,6 +97,26 @@ describe("recitation player", () => {
     expect(player.get()).toMatchObject({ status: "idle", queue: [] });
   });
 
+  it("ignores 'ended' that is not the end of the current item (paused, stopped, stale source)", () => {
+    player.play({ kind: "page", page: 2 });
+    const a = FakeAudio.last!;
+    a.dispatchEvent(new Event("playing"));
+    player.toggle(); // pause
+    a.dispatchEvent(new Event("ended"));
+    expect(player.get()).toMatchObject({ status: "paused", src: URL_OF("001001"), cursor: { index: 0 } });
+    player.toggle(); // resume
+    a.src = URL_OF("002004"); // a late event from some other source
+    a.dispatchEvent(new Event("ended"));
+    expect(player.get().cursor.index).toBe(0);
+    a.src = URL_OF("001001");
+    a.dispatchEvent(new Event("ended"));
+    expect(player.get().src).toBe(URL_OF("002001"));
+    player.stop();
+    a.dispatchEvent(new Event("ended"));
+    expect(player.get()).toMatchObject({ status: "idle", queue: [] });
+    expect(a.played).toEqual(["001001", "001001", "002001"].map(URL_OF));
+  });
+
   it("reports network errors and offline state clearly", async () => {
     player.play({ kind: "surah", surah: 1 });
     FakeAudio.last!.dispatchEvent(new Event("error"));
