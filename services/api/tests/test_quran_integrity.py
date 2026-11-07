@@ -134,3 +134,26 @@ def test_mushaf_lines_printed_page_spot_checks():
     assert first[3][:2] == [2, 6]  # p3 begins "إن الذين كفروا سواء عليهم"
     assert first[50][:2] == [3, 1]
     assert first[604][:2] == [112, 1]
+
+
+# --- Tafsir al-Muyassar --------------------------------------------------------
+TAFSIR = json.loads((REPO / "content/tafsir/dist/muyassar.v1.json").read_text(encoding="utf-8"))
+TAFSIR_UP = REPO / "content/tafsir/upstream/muslimjs-ar.muyassar-1.0.0.json"
+
+
+def test_tafsir_upstream_pinned():
+    digest = hashlib.sha256(TAFSIR_UP.read_bytes()).hexdigest()
+    assert digest == "0d0441ae058d5d36cd450d8e9f768a2c5f918e30048316553bc873fb75770da3"
+    assert TAFSIR["upstreamSha256"] == digest
+
+
+def test_tafsir_one_entry_per_ayah_unmodified():
+    up = json.loads(TAFSIR_UP.read_text(encoding="utf-8"))["surahs"]
+    assert [len(s) for s in TAFSIR["surahs"]] == INTEG["ayahCounts"]
+    assert TAFSIR["surahs"] == [[a["text"] for a in s["ayahs"]] for s in up]
+    assert all(t.strip() for s in TAFSIR["surahs"] for t in s)
+
+
+def test_tafsir_spot_checks():
+    assert "الكرسي" in TAFSIR["surahs"][1][254]  # 2:255 Ayat al-Kursi
+    assert "أحد" in TAFSIR["surahs"][111][0]  # 112:1

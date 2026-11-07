@@ -116,7 +116,28 @@ def main() -> int:
     adhkar_src = json.loads((C / "adhkar/adhkar.json").read_text(encoding="utf-8"))
     dump(C / "adhkar/dist/adhkar.v1.json", {"schema": "adhkar.v1", "source": "Kazi Shariar adhkar dataset (CC BY 4.0)", "items": adhkar_src})
 
-    dump(C / "VERSIONS.json", {"quran": QURAN_VERSION, "pages": "1405H-1", "adhkar": "1.0.0"})
+    # --- Tafsir al-Muyassar (King Fahd Complex), Arabic, one entry per ayah -------
+    muy_src = json.loads((C / "tafsir/upstream/muslimjs-ar.muyassar-1.0.0.json").read_text(encoding="utf-8"))
+    muy = [[a["text"] for a in s["ayahs"]] for s in muy_src["surahs"]]
+    if [s["number"] for s in muy_src["surahs"]] != list(range(1, 115)):
+        print("tafsir: surah order", file=sys.stderr)
+        return 1
+    for s in muy_src["surahs"]:
+        if [a["numberInSurah"] for a in s["ayahs"]] != list(range(1, len(s["ayahs"]) + 1)):
+            print(f"tafsir: ayah numbering in surah {s['number']}", file=sys.stderr)
+            return 1
+    dump(C / "tafsir/dist/muyassar.v1.json", {
+        "schema": "tafsir.v1",
+        "id": "muyassar",
+        "nameAr": "التفسير الميسر",
+        "nameEn": "Al-Tafsir al-Muyassar",
+        "author": "King Fahd Glorious Quran Printing Complex (Madinah)",
+        "source": "npm @muslimjs/ar.muyassar@1.0.0 Data/ar.muyassar.json (alquran.cloud / Tanzil edition ar.muyassar); text copied unmodified",
+        "upstreamSha256": hashlib.sha256((C / "tafsir/upstream/muslimjs-ar.muyassar-1.0.0.json").read_bytes()).hexdigest(),
+        "surahs": muy,
+    })
+
+    dump(C / "VERSIONS.json", {"quran": QURAN_VERSION, "pages": "1405H-1", "adhkar": "1.0.0", "tafsir": "muyassar-1"})
 
     # Independent cross-checks against reference data (not derived from the source).
     problems = list(line_problems)
@@ -126,6 +147,10 @@ def main() -> int:
         problems.append("totals wrong")
     if integrity["upstreamFileSha256"] != ref["upstreamFileSha256"]:
         problems.append("upstream file hash changed")
+    if [len(x) for x in muy] != counts:
+        problems.append("tafsir ayah counts differ from the Quran")
+    if any(not t.strip() for x in muy for t in x):
+        problems.append("empty tafsir entry")
     if len(pages) != 604:
         problems.append("page count")
     for p, q in zip(pages, pages[1:]):
