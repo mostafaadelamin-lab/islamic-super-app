@@ -5,6 +5,7 @@ import 'package:rattil/app.dart';
 import 'package:rattil/app_services.dart';
 import 'package:rattil/ui/about_screen.dart';
 import 'package:rattil/ui/account_screen.dart';
+import 'package:rattil/theme/design_tokens.dart';
 import 'package:rattil/ui/settings_screen.dart';
 
 import '../helpers.dart';
@@ -14,7 +15,7 @@ void main() {
 
   Future<TestApp> open(WidgetTester tester, {String locale = 'ar', Map<String, Object> prefs = const {}}) async {
     final app = await pumpApp(tester, locale: locale, prefs: prefs, size: tallPhone);
-    await goToTab(tester, 4);
+    await openSettings(tester);
     return app;
   }
 
@@ -64,11 +65,11 @@ void main() {
     expect(app.prefs.getString('theme'), 'dark');
     expect(Theme.of(tester.element(find.byType(SettingsScreen))).brightness, Brightness.dark);
     final bg = Theme.of(tester.element(find.byType(SettingsScreen))).scaffoldBackgroundColor;
-    expect(bg, const Color(0xFF0B1520), reason: 'dark bg token');
+    expect(bg, DesignTokens.dark['bg'], reason: 'dark bg token (emerald palette: 0xFF0C1714)');
     await tester.tap(find.text('Light'));
     await tester.pumpAndSettle();
     expect(mat().themeMode, ThemeMode.light);
-    expect(Theme.of(tester.element(find.byType(SettingsScreen))).scaffoldBackgroundColor, const Color(0xFFEDF1F4));
+    expect(Theme.of(tester.element(find.byType(SettingsScreen))).scaffoldBackgroundColor, DesignTokens.light['bg']);
     await tester.tap(find.text('System'));
     await tester.pumpAndSettle();
     expect(mat().themeMode, ThemeMode.system);

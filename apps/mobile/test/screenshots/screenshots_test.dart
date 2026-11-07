@@ -7,8 +7,10 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rattil/ui/hajj_screen.dart';
 import 'package:rattil/ui/page_reader_screen.dart';
 import 'package:rattil/ui/surah_reader_screen.dart';
+import 'package:rattil/ui/tasbih_screen.dart';
 
 import '../helpers.dart';
 
@@ -61,10 +63,51 @@ void main() {
       await goBack(tester);
       await goToTab(tester, 2);
       await shot(tester, '${locale}_05_prayer');
-      await goToTab(tester, 3);
+      await openBookmarks(tester);
       await shot(tester, '${locale}_06_bookmarks');
-      await goToTab(tester, 4);
+      await goBack(tester);
+      await tester.tap(find.byKey(const Key('more.settings')));
+      await tester.pumpAndSettle();
       await shot(tester, '${locale}_07_settings');
+    });
+
+    testWidgets('M2 screenshots ($locale): home, Mushaf page 3, adhkar, tasbih, hajj', (tester) async {
+      tester.view.devicePixelRatio = 1;
+      await pumpApp(
+        tester,
+        locale: locale,
+        size: const Size(390, 844),
+        prefs: {
+          'theme': 'light',
+          'lastRead.surah': 2,
+          'lastRead.ayah': 6,
+          'tasbih.v1': '{"count":12,"total":45,"rounds":1,"target":33}',
+        },
+      );
+      await shot(tester, '${locale}_m2_home');
+      await pushScreen(tester, const PageReaderScreen(initialPage: 3));
+      await shot(tester, '${locale}_m2_mushaf_page_3');
+      await goBack(tester);
+      await pushScreen(tester, const PageReaderScreen(initialPage: 1));
+      await shot(tester, '${locale}_m2_mushaf_page_1');
+      await goBack(tester);
+      await goToTab(tester, 3);
+      await shot(tester, '${locale}_m2_adhkar');
+      await goToTab(tester, 4);
+      await shot(tester, '${locale}_m2_more');
+      await pushScreen(tester, const TasbihScreen());
+      await shot(tester, '${locale}_m2_tasbih');
+      await goBack(tester);
+      await pushScreen(tester, const HajjScreen());
+      await shot(tester, '${locale}_m2_hajj');
+    });
+
+    testWidgets('M2 screenshots ($locale, dark): Mushaf page 50, home', (tester) async {
+      tester.view.devicePixelRatio = 1;
+      await pumpApp(tester, locale: locale, size: const Size(390, 844), prefs: {'theme': 'dark'});
+      await shot(tester, '${locale}_m2_home_dark');
+      await pushScreen(tester, const PageReaderScreen(initialPage: 50));
+      await shot(tester, '${locale}_m2_mushaf_page_50_dark');
     });
 
     testWidgets('screenshots ($locale, dark)', (tester) async {

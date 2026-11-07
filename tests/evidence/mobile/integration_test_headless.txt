@@ -1,6 +1,15 @@
 # Headless run of integration_test/app_test.dart on the flutter-tester device (NOT an emulator/simulator).
 # Run as a temporary copy under test/ with SharedPreferences.setMockInitialValues({}) inserted, because flutter test has no platform plugins.
 # Command: sed ... integration_test/app_test.dart > test/zz_e2e_headless_copy_test.dart && flutter test --reporter expanded test/zz_e2e_headless_copy_test.dart
+# Date: 2026-11-07T05:32:14Z (Milestone 2)
+00:00 +0: loading /work/apps/mobile/test/zz_e2e_headless_copy_test.dart
+00:00 +0: open surah, bookmark, Mushaf (go to page, swipe, tap ayah), adhkar, tasbih, change city
+00:25 +1: (tearDownAll)
+Warning: integration_test plugin was not detected.
+
+If you're running the tests with `flutter drive`, please make sure your tests
+are in the `integration_test/` directory of your package and use
+`flutter test $path_to_test` to run it instead.
 
 If you're running the tests with Android instrumentation or XCTest, this means
 that you are not capturing test results properly! See the following link for
@@ -8,4 +17,4 @@ how to set up the integration_test plugin:
 
 https://docs.flutter.dev/testing/integration-tests
 
-00:09 +1: All tests passed!
+00:25 +1: All tests passed!

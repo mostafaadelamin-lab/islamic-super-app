@@ -1,8 +1,9 @@
 // End-to-end flow on a real device/emulator/simulator:
 //   flutter test integration_test/app_test.dart -d <device>
 // Opens a surah, bookmarks an ayah, checks the bookmark list, goes to a Mushaf
-// page by number and changes the prayer city — with the real bundled assets
-// and real shared_preferences storage.
+// page by number, turns a page by swiping, taps an ayah and bookmarks it from
+// the ayah sheet, counts adhkar and tasbih, and changes the prayer city — with
+// the real bundled assets and real shared_preferences storage.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -26,7 +27,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('open surah, bookmark, go to page, change city', (tester) async {
+  testWidgets('open surah, bookmark, Mushaf (go to page, swipe, tap ayah), adhkar, tasbih, change city', (
+    tester,
+  ) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
     await prefs.setString('locale', 'en');
@@ -45,9 +48,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(services.bookmarks.active.map((b) => b.id), contains('b-2-2'));
     await back(tester);
-    await tab(tester, 3);
+    await tab(tester, 4);
+    await tester.tap(find.byKey(const Key('more.bookmarks')));
+    await tester.pumpAndSettle();
     expect(find.byKey(const Key('bm-b-2-2')), findsOneWidget);
     expect(prefs.getString('bookmarks.v1'), contains('b-2-2'));
+    await back(tester);
 
     // 3. Go to Mushaf page 50 by number.
     await tab(tester, 1);
@@ -64,9 +70,46 @@ void main() {
     expect(tester.state<PageReaderScreenState>(find.byType(PageReaderScreen)).page, 50);
     expect(find.text('Page 50'), findsOneWidget);
     expect(find.byKey(const Key('pageAyah-3-1')), findsOneWidget);
+
+    // 4. Swipe to the next page (English UI: LTR, drag left), tap its first ayah, bookmark it.
+    FocusManager.instance.primaryFocus?.unfocus();
+    await tester.pumpAndSettle();
+    // Drag past the middle of the page so the turn completes on any screen size and binding.
+    final pageView = find.byKey(const Key('mushafPageView'));
+    await tester.drag(pageView, Offset(-tester.getSize(pageView).width * 0.6, 0));
+    await tester.pumpAndSettle();
+    expect(tester.state<PageReaderScreenState>(find.byType(PageReaderScreen)).page, 51);
+    expect(find.text('Page 51'), findsOneWidget);
+    final first = services.content.quran.page(51).start;
+    await tester.tap(find.byKey(Key('pageAyah-${first.surah}-${first.ayah}')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('ayahSheet')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('ayahBookmark')));
+    await tester.pumpAndSettle();
+    expect(services.bookmarks.isBookmarked(first), isTrue);
     await back(tester);
 
-    // 4. Change the prayer city to London.
+    // 5. Morning/evening adhkar: count one item.
+    await tab(tester, 3);
+    expect(find.byKey(const Key('adhkarNotice')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('dhikrTap-0')));
+    await tester.pumpAndSettle();
+    expect(find.text('Done'), findsWidgets);
+
+    // 6. Tasbih: five taps, saved.
+    await tab(tester, 4);
+    await tester.tap(find.byKey(const Key('more.tasbih')));
+    await tester.pumpAndSettle();
+    for (var i = 0; i < 5; i++) {
+      await tester.tap(find.byKey(const Key('tasbihButton')));
+      await tester.pumpAndSettle();
+    }
+    expect(find.byKey(const Key('tasbihCount')), findsOneWidget);
+    expect(tester.widget<Text>(find.byKey(const Key('tasbihCount'))).data, '5');
+    expect(prefs.getString('tasbih.v1'), contains('"count":5'));
+    await back(tester);
+
+    // 7. Change the prayer city to London.
     await tab(tester, 2);
     await tester.tap(find.byKey(const Key('cityTile')));
     await tester.pumpAndSettle();

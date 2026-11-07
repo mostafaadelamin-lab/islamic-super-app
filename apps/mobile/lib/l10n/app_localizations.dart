@@ -278,11 +278,227 @@ abstract class AppLocalizations {
   /// **'Sync now'**
   String get accountSyncNow;
 
+  /// shared key "adhan.body"
+  ///
+  /// In en, this message translates to:
+  /// **'{name} prayer time in {city}'**
+  String adhanBody(String name, String city);
+
+  /// shared key "adhan.denied"
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are not allowed. Turn them on in the system settings.'**
+  String get adhanDenied;
+
+  /// shared key "adhan.enable"
+  ///
+  /// In en, this message translates to:
+  /// **'Notify me at prayer times'**
+  String get adhanEnable;
+
+  /// shared key "adhan.note"
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled on this device for the next 7 days; opening the app renews them.'**
+  String get adhanNote;
+
+  /// shared key "adhan.settings"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhan notifications'**
+  String get adhanSettings;
+
+  /// shared key "adhan.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Time for {name}'**
+  String adhanTitle(String name);
+
+  /// shared key "adhkar.arabicOnly"
+  ///
+  /// In en, this message translates to:
+  /// **'This content is available in Arabic only.'**
+  String get adhkarArabicOnly;
+
+  /// shared key "adhkar.copied"
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get adhkarCopied;
+
+  /// shared key "adhkar.copy"
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get adhkarCopy;
+
+  /// shared key "adhkar.done"
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get adhkarDone;
+
+  /// shared key "adhkar.evening"
+  ///
+  /// In en, this message translates to:
+  /// **'Evening'**
+  String get adhkarEvening;
+
+  /// shared key "adhkar.eveningTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Evening adhkar'**
+  String get adhkarEveningTitle;
+
+  /// shared key "adhkar.hisn"
+  ///
+  /// In en, this message translates to:
+  /// **'Hisn al-Muslim'**
+  String get adhkarHisn;
+
+  /// shared key "adhkar.hisnCount"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} entries'**
+  String adhkarHisnCount(String n);
+
+  /// shared key "adhkar.hisnSearch"
+  ///
+  /// In en, this message translates to:
+  /// **'Search chapters'**
+  String get adhkarHisnSearch;
+
+  /// shared key "adhkar.morning"
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get adhkarMorning;
+
+  /// shared key "adhkar.morningTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Morning adhkar'**
+  String get adhkarMorningTitle;
+
+  /// shared key "adhkar.progress"
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} completed'**
+  String adhkarProgress(String done, String total);
+
+  /// shared key "adhkar.remaining"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} left'**
+  String adhkarRemaining(String n);
+
+  /// shared key "adhkar.repeat"
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat {n}'**
+  String adhkarRepeat(String n);
+
+  /// shared key "adhkar.reset"
+  ///
+  /// In en, this message translates to:
+  /// **'Start again'**
+  String get adhkarReset;
+
+  /// shared key "adhkar.reviewNotice"
+  ///
+  /// In en, this message translates to:
+  /// **'Pending religious review. Texts: Kazi Shariar adhkar dataset (CC BY 4.0) and Hisn al-Muslim; repetition counts follow Hisn al-Muslim.'**
+  String get adhkarReviewNotice;
+
+  /// shared key "adhkar.tapToCount"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a card to count it'**
+  String get adhkarTapToCount;
+
   /// shared key "appName"
   ///
   /// In en, this message translates to:
   /// **'Rattil'**
   String get appName;
+
+  /// shared key "audio.basmala"
+  ///
+  /// In en, this message translates to:
+  /// **'Basmala'**
+  String get audioBasmala;
+
+  /// shared key "audio.loading"
+  ///
+  /// In en, this message translates to:
+  /// **'Loading…'**
+  String get audioLoading;
+
+  /// shared key "audio.next"
+  ///
+  /// In en, this message translates to:
+  /// **'Next ayah'**
+  String get audioNext;
+
+  /// shared key "audio.offline"
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the recitation. Check your internet connection and try again.'**
+  String get audioOffline;
+
+  /// shared key "audio.pause"
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get audioPause;
+
+  /// shared key "audio.play"
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get audioPlay;
+
+  /// shared key "audio.previous"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous ayah'**
+  String get audioPrevious;
+
+  /// shared key "audio.reciter"
+  ///
+  /// In en, this message translates to:
+  /// **'Reciter'**
+  String get audioReciter;
+
+  /// shared key "audio.repeat"
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat each ayah'**
+  String get audioRepeat;
+
+  /// shared key "audio.repeatN"
+  ///
+  /// In en, this message translates to:
+  /// **'{n}×'**
+  String audioRepeatN(String n);
+
+  /// shared key "audio.stop"
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get audioStop;
+
+  /// shared key "audio.streamNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Recitations are streamed from everyayah.com and need an internet connection.'**
+  String get audioStreamNote;
+
+  /// shared key "audio.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Recitation'**
+  String get audioTitle;
 
   /// shared key "bookmarks.delete"
   ///
@@ -320,11 +536,59 @@ abstract class AppLocalizations {
   /// **'Retry'**
   String get commonRetry;
 
+  /// shared key "hajj.hajj"
+  ///
+  /// In en, this message translates to:
+  /// **'Hajj'**
+  String get hajjHajj;
+
+  /// shared key "hajj.ihram"
+  ///
+  /// In en, this message translates to:
+  /// **'Ihram'**
+  String get hajjIhram;
+
+  /// shared key "hajj.reviewNotice"
+  ///
+  /// In en, this message translates to:
+  /// **'Pending religious review: this guide has not yet been reviewed by a qualified scholar. Check with a trusted scholar before relying on it.'**
+  String get hajjReviewNotice;
+
+  /// shared key "hajj.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Hajj & Umrah'**
+  String get hajjTitle;
+
+  /// shared key "hajj.umrah"
+  ///
+  /// In en, this message translates to:
+  /// **'Umrah'**
+  String get hajjUmrah;
+
+  /// shared key "home.hijriDate"
+  ///
+  /// In en, this message translates to:
+  /// **'{day} {month} {year} AH'**
+  String homeHijriDate(String day, String month, String year);
+
+  /// shared key "home.lastPage"
+  ///
+  /// In en, this message translates to:
+  /// **'Last page: {page}'**
+  String homeLastPage(String page);
+
   /// shared key "home.nextPrayer"
   ///
   /// In en, this message translates to:
   /// **'Next prayer'**
   String get homeNextPrayer;
+
+  /// shared key "home.openMushaf"
+  ///
+  /// In en, this message translates to:
+  /// **'Open the Mushaf'**
+  String get homeOpenMushaf;
 
   /// shared key "home.quickLinks"
   ///
@@ -332,11 +596,89 @@ abstract class AppLocalizations {
   /// **'Quick links'**
   String get homeQuickLinks;
 
+  /// shared key "home.sections"
+  ///
+  /// In en, this message translates to:
+  /// **'Sections'**
+  String get homeSections;
+
+  /// shared key "home.todayTimes"
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s prayer times'**
+  String get homeTodayTimes;
+
   /// shared key "home.welcome"
   ///
   /// In en, this message translates to:
   /// **'Peace be upon you'**
   String get homeWelcome;
+
+  /// shared key "more.title"
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get moreTitle;
+
+  /// shared key "mushaf.copied"
+  ///
+  /// In en, this message translates to:
+  /// **'Ayah copied'**
+  String get mushafCopied;
+
+  /// shared key "mushaf.copy"
+  ///
+  /// In en, this message translates to:
+  /// **'Copy ayah'**
+  String get mushafCopy;
+
+  /// shared key "mushaf.playFromHere"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen from here'**
+  String get mushafPlayFromHere;
+
+  /// shared key "mushaf.playPage"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to this page'**
+  String get mushafPlayPage;
+
+  /// shared key "mushaf.playSurah"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to the surah'**
+  String get mushafPlaySurah;
+
+  /// shared key "mushaf.readAsList"
+  ///
+  /// In en, this message translates to:
+  /// **'Read as a list'**
+  String get mushafReadAsList;
+
+  /// shared key "mushaf.slider"
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page} of 604'**
+  String mushafSlider(String page);
+
+  /// shared key "mushaf.tapHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap an ayah for listening, bookmark and copy'**
+  String get mushafTapHint;
+
+  /// shared key "mushaf.toggleControls"
+  ///
+  /// In en, this message translates to:
+  /// **'Show or hide controls'**
+  String get mushafToggleControls;
+
+  /// shared key "nav.adhkar"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhkar'**
+  String get navAdhkar;
 
   /// shared key "nav.bookmarks"
   ///
@@ -349,6 +691,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home'**
   String get navHome;
+
+  /// shared key "nav.more"
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get navMore;
 
   /// shared key "nav.prayer"
   ///
@@ -547,6 +895,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Prayer times'**
   String get prayerTitle;
+
+  /// shared key "qibla.facing"
+  ///
+  /// In en, this message translates to:
+  /// **'You are facing the qibla'**
+  String get qiblaFacing;
+
+  /// shared key "qibla.heading"
+  ///
+  /// In en, this message translates to:
+  /// **'Phone heading: {deg}°'**
+  String qiblaHeading(String deg);
+
+  /// shared key "qibla.liveNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The compass measures magnetic north, so it can differ from true north by a few degrees.'**
+  String get qiblaLiveNote;
+
+  /// shared key "qibla.static"
+  ///
+  /// In en, this message translates to:
+  /// **'No compass reading on this device: the diagram shows the qibla from true north.'**
+  String get qiblaStatic;
+
+  /// shared key "qibla.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Qibla'**
+  String get qiblaTitle;
+
+  /// shared key "qibla.turnLeft"
+  ///
+  /// In en, this message translates to:
+  /// **'Turn left {deg}°'**
+  String qiblaTurnLeft(String deg);
+
+  /// shared key "qibla.turnRight"
+  ///
+  /// In en, this message translates to:
+  /// **'Turn right {deg}°'**
+  String qiblaTurnRight(String deg);
+
+  /// shared key "qibla.waiting"
+  ///
+  /// In en, this message translates to:
+  /// **'Reading the compass…'**
+  String get qiblaWaiting;
 
   /// shared key "quran.ayahCount"
   ///
@@ -835,6 +1231,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Quran, prayer and remembrance — free, no ads'**
   String get tagline;
+
+  /// shared key "tasbih.counter"
+  ///
+  /// In en, this message translates to:
+  /// **'Count {count} of {target}'**
+  String tasbihCounter(String count, String target);
+
+  /// shared key "tasbih.reset"
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get tasbihReset;
+
+  /// shared key "tasbih.rounds"
+  ///
+  /// In en, this message translates to:
+  /// **'Rounds: {n}'**
+  String tasbihRounds(String n);
+
+  /// shared key "tasbih.tap"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to count'**
+  String get tasbihTap;
+
+  /// shared key "tasbih.target"
+  ///
+  /// In en, this message translates to:
+  /// **'Target'**
+  String get tasbihTarget;
+
+  /// shared key "tasbih.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Tasbih'**
+  String get tasbihTitle;
+
+  /// shared key "tasbih.total"
+  ///
+  /// In en, this message translates to:
+  /// **'Total: {n}'**
+  String tasbihTotal(String n);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -16,7 +16,7 @@ void main() {
 
   testWidgets('empty state', (tester) async {
     await pumpApp(tester);
-    await goToTab(tester, 3);
+    await openBookmarks(tester);
     expect(find.byKey(const Key('bookmarksEmpty')), findsOneWidget);
     expect(find.text('لا توجد علامات بعد'), findsOneWidget);
   });
@@ -33,7 +33,7 @@ void main() {
         ]),
       },
     );
-    await goToTab(tester, 3);
+    await openBookmarks(tester);
     final tiles = tester.widgetList<ListTile>(
       find.descendant(of: find.byKey(const Key('bookmarkList')), matching: find.byType(ListTile)),
     );
@@ -52,7 +52,7 @@ void main() {
         ]),
       },
     );
-    await goToTab(tester, 3);
+    await openBookmarks(tester);
     expect(find.byTooltip('حذف علامة الفاتحة : ١'), findsOneWidget);
     await tester.tap(find.byKey(const Key('bmDelete-b-1-1')));
     await tester.pumpAndSettle();
@@ -71,7 +71,7 @@ void main() {
         ]),
       },
     );
-    await goToTab(tester, 3);
+    await openBookmarks(tester);
     await tester.tap(find.byKey(const Key('bm-b-18-10')));
     await tester.pumpAndSettle();
     final r = tester.widget<SurahReaderScreen>(find.byType(SurahReaderScreen));
@@ -86,13 +86,13 @@ void main() {
     await tester.tap(find.byKey(const Key('bookmark-1-5')));
     await tester.pumpAndSettle();
     await goBack(tester);
-    await goToTab(tester, 3);
+    await openBookmarks(tester);
     expect(find.byKey(const Key('bm-b-1-5')), findsOneWidget);
   });
 
   testWidgets('continue-reading tile is on the bookmarks screen', (tester) async {
     await pumpApp(tester, prefs: {'lastRead.surah': 36, 'lastRead.ayah': 5});
-    await goToTab(tester, 3);
+    await openBookmarks(tester);
     await tester.tap(find.text('متابعة القراءة'));
     await tester.pumpAndSettle();
     final r = tester.widget<SurahReaderScreen>(find.byType(SurahReaderScreen));

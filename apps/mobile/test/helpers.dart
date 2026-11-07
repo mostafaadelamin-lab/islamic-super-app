@@ -10,6 +10,10 @@ import 'package:mocktail/mocktail.dart';
 import 'package:rattil/app.dart';
 import 'package:rattil/app_services.dart';
 import 'package:rattil/data/content.dart';
+import 'package:rattil/data/notifications.dart';
+import 'package:rattil/data/recitation.dart';
+import 'package:rattil/data/sensors.dart';
+import 'package:rattil/domain/qibla.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest_all.dart' as tzdata;
 
@@ -74,6 +78,9 @@ Future<TestApp> pumpApp(
   AppContent? content,
   double textScale = 1.0,
   Size? size,
+  FakeAudioBackend? audio,
+  FakeNotifications? notifications,
+  CompassSensors? sensors,
 }) async {
   final c = content ?? _content!;
   SharedPreferences.setMockInitialValues({'locale': locale, ...prefs});
@@ -83,6 +90,9 @@ Future<TestApp> pumpApp(
     prefs: p,
     httpClient: httpClient ?? MockHttpClient(),
     clock: clock ?? () => fixedNow,
+    audioBackend: () => audio ?? FakeAudioBackend(),
+    notifications: notifications ?? FakeNotifications(),
+    sensors: sensors ?? FakeSensors.none(),
   );
   if (size != null) {
     tester.view.physicalSize = size * tester.view.devicePixelRatio;
@@ -134,6 +144,10 @@ Future<void> goBack(WidgetTester tester) async {
 /// Content with an extra city inside the Arctic circle (Tromsø), for polar tests.
 AppContent withPolarCity(AppContent c) => AppContent(
   quran: c.quran,
+  mushaf: c.mushaf,
+  reciters: c.reciters,
+  adhkar: c.adhkar,
+  hajj: c.hajj,
   integrity: c.integrity,
   prayerConfig: c.prayerConfig,
   cities: [
@@ -161,4 +175,99 @@ Future<void> pushScreen(WidgetTester tester, Widget screen) async {
     tester.state<NavigatorState>(find.byType(Navigator).first).push(MaterialPageRoute<void>(builder: (_) => screen)),
   );
   await tester.pumpAndSettle();
+}
+
+/// Opens Settings (More tab → Settings) — the M2 navigation moved Settings
+/// from the 5th tab into "More".
+Future<void> openSettings(WidgetTester tester) async {
+  await goToTab(tester, 4);
+  await tester.tap(find.byKey(const Key('more.settings')));
+  await tester.pumpAndSettle();
+}
+
+/// Opens Bookmarks (More tab → Bookmarks) — formerly the 4th tab.
+Future<void> openBookmarks(WidgetTester tester) async {
+  await goToTab(tester, 4);
+  await tester.tap(find.byKey(const Key('more.bookmarks')));
+  await tester.pumpAndSettle();
+}
+
+/// Records what the recitation controller asks the audio engine to do. Tests
+/// end a file with [finish] and make loading fail with [failNext].
+class FakeAudioBackend implements AudioBackend {
+  final loaded = <String>[];
+  final calls = <String>[];
+  final _completed = StreamController<void>.broadcast();
+  bool failNext = false;
+
+  @override
+  Future<void> load(String url) async {
+    calls.add('load');
+    if (failNext) {
+      failNext = false;
+      throw Exception('offline');
+    }
+    loaded.add(url);
+  }
+
+  @override
+  Future<void> play() async => calls.add('play');
+
+  @override
+  Future<void> pause() async => calls.add('pause');
+
+  @override
+  Future<void> stop() async => calls.add('stop');
+
+  /// The current file played to its end.
+  void finish() => _completed.add(null);
+
+  @override
+  Stream<void> get completed => _completed.stream;
+
+  @override
+  Future<void> dispose() => _completed.close();
+}
+
+class FakeNotifications implements NotificationsBackend {
+  FakeNotifications({this.grant = true});
+  bool grant;
+  final scheduled = <({int id, String title, String body, DateTime at})>[];
+  int cancels = 0;
+  int permissionRequests = 0;
+
+  @override
+  Future<void> init() async {}
+
+  @override
+  Future<bool> requestPermission() async {
+    permissionRequests++;
+    return grant;
+  }
+
+  @override
+  Future<void> cancelAll() async {
+    cancels++;
+    scheduled.clear();
+  }
+
+  @override
+  Future<void> schedule({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime atUtc,
+  }) async => scheduled.add((id: id, title: title, body: body, at: atUtc));
+}
+
+class FakeSensors implements CompassSensors {
+  FakeSensors(this.accelerometer, this.magnetometer);
+
+  /// A device without sensors: both streams stay silent.
+  factory FakeSensors.none() => FakeSensors(const Stream.empty(), const Stream.empty());
+
+  @override
+  final Stream<Vec3> accelerometer;
+  @override
+  final Stream<Vec3> magnetometer;
 }

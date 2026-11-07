@@ -4,6 +4,8 @@
 #   apps/mobile/tool/sync_assets.sh          # copy
 #   apps/mobile/tool/sync_assets.sh --check  # fail if any copy is stale
 # The Quran files are copied byte-for-byte (cp); nothing here edits content.
+# assets/content/hajj.v1.json is extracted (not copied) from content/pilgrimage/source-hajj.js by
+# tool/extract_hajj.mjs (node); test/unit/hajj_content_test.dart checks every string against the source.
 set -euo pipefail
 
 APP="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -15,11 +17,15 @@ PAIRS=(
   "content/quran/dist/quran.v1.json:assets/content/quran.v1.json"
   "content/quran/dist/pages.v1.json:assets/content/pages.v1.json"
   "content/quran/dist/integrity.v1.json:assets/content/integrity.v1.json"
+  "content/quran/dist/mushaf-lines.v1.json:assets/content/mushaf-lines.v1.json"
+  "content/adhkar/dist/adhkar.v1.json:assets/content/adhkar.v1.json"
+  "content/adhkar/hisn.json:assets/content/hisn.json"
   "content/VERSIONS.json:assets/content/VERSIONS.json"
   "packages/shared-schemas/prayer/methods.json:assets/schemas/methods.json"
   "packages/shared-schemas/cities.json:assets/schemas/cities.json"
   "packages/shared-schemas/quran-render.json:assets/schemas/quran-render.json"
   "packages/shared-schemas/search-normalization.json:assets/schemas/search-normalization.json"
+  "packages/shared-schemas/audio/reciters.json:assets/schemas/reciters.json"
   "content/fonts/AmiriQuran-Regular.ttf:assets/fonts/AmiriQuran-Regular.ttf"
   "content/fonts/IBMPlexSansArabic-Regular.ttf:assets/fonts/IBMPlexSansArabic-Regular.ttf"
   "content/fonts/IBMPlexSansArabic-SemiBold.ttf:assets/fonts/IBMPlexSansArabic-SemiBold.ttf"

@@ -52,9 +52,15 @@ class _SurahListScreenState extends State<SurahListScreen> {
           IconButton(
             tooltip: l.quranOpenMushaf,
             icon: const Icon(Icons.chrome_reader_mode),
-            onPressed: () => Navigator.of(
-              context,
-            ).push(MaterialPageRoute<void>(builder: (_) => const PageReaderScreen(initialPage: 1))),
+            onPressed: () {
+              final s = context.services;
+              final r = s.settings.lastRead;
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => PageReaderScreen(initialPage: r == null ? 1 : s.content.quran.pageOf(r)),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -105,6 +111,12 @@ class _SurahTile extends StatelessWidget {
       title: Text(s.nameAr, textDirection: TextDirection.rtl),
       subtitle: Text('${s.translit} — ${s.nameEn} · ${l.quranAyahCount(context.num(s.ayahCount))} · $kind'),
       onTap: () => openSurah(context, s.n),
+      trailing: IconButton(
+        key: Key('surahMushaf-${s.n}'),
+        tooltip: '${l.homeOpenMushaf}: ${surahName(context, s)}',
+        icon: const Icon(Icons.chrome_reader_mode_outlined),
+        onPressed: () => openMushafAt(context, AyahRef(s.n, 1)),
+      ),
     );
   }
 }

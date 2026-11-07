@@ -1,0 +1,49 @@
+{
+  "schema": "reciters.v1",
+  "source": "everyayah.com per-ayah MP3 (free; streamed, not bundled)",
+  "urlTemplate": "https://everyayah.com/data/{folder}/{sss}{aaa}.mp3",
+  "note": "sss and aaa are the 3-digit zero-padded surah and ayah numbers. Ayah 1:1 file is the basmala of al-Fatihah. For other surahs (except 9) clients may play 001001 as the basmala before ayah 1.",
+  "default": "Alafasy_128kbps",
+  "reciters": [
+    {
+      "folder": "Alafasy_128kbps",
+      "ar": "مشاري راشد العفاسي",
+      "en": "Mishary Rashid Alafasy"
+    },
+    {
+      "folder": "Husary_128kbps",
+      "ar": "محمود خليل الحصري",
+      "en": "Mahmoud Khalil Al-Husary"
+    },
+    {
+      "folder": "Husary_Muallim_128kbps",
+      "ar": "الحصري (المصحف المعلّم)",
+      "en": "Al-Husary (teaching)"
+    },
+    {
+      "folder": "Abdul_Basit_Murattal_192kbps",
+      "ar": "عبد الباسط عبد الصمد (مرتّل)",
+      "en": "Abdul Basit (Murattal)"
+    },
+    {
+      "folder": "Minshawy_Murattal_128kbps",
+      "ar": "محمد صديق المنشاوي (مرتّل)",
+      "en": "Al-Minshawy (Murattal)"
+    },
+    {
+      "folder": "Minshawy_Teacher_128kbps",
+      "ar": "المنشاوي (المصحف المعلّم)",
+      "en": "Al-Minshawy (teaching)"
+    },
+    {
+      "folder": "Abdurrahmaan_As-Sudais_192kbps",
+      "ar": "عبد الرحمن السديس",
+      "en": "Abdurrahman As-Sudais"
+    },
+    {
+      "folder": "Maher_AlMuaiqly_64kbps",
+      "ar": "ماهر المعيقلي",
+      "en": "Maher Al-Muaiqly"
+    }
+  ]
+}

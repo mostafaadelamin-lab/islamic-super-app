@@ -11,6 +11,7 @@ import '../theme/design_tokens.dart';
 import 'city_picker_screen.dart';
 import 'l10n_ext.dart';
 import 'prayer_model.dart';
+import 'qibla_screen.dart';
 import 'widgets.dart';
 
 class PrayerScreen extends StatefulWidget {
@@ -177,6 +178,17 @@ class _PrayerScreenState extends State<PrayerScreen> {
                   Center(child: QiblaCompass(bearing: pv.qibla)),
                   const SizedBox(height: DesignTokens.spaceSm),
                   Text(l.prayerQiblaNote, style: Theme.of(context).textTheme.bodySmall),
+                  const SizedBox(height: DesignTokens.spaceSm),
+                  Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: FilledButton.tonalIcon(
+                      key: const Key('openLiveQibla'),
+                      onPressed: () =>
+                          Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const QiblaScreen())),
+                      icon: const Icon(Icons.explore),
+                      label: Text(l.qiblaTitle),
+                    ),
+                  ),
                 ],
               ),
             ],

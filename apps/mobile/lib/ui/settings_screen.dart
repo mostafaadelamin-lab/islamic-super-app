@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../app_services.dart';
 import '../data/settings.dart';
+import '../domain/prayer_schedule.dart';
 import '../domain/quran.dart';
 import 'about_screen.dart';
 import 'account_screen.dart';
+import 'audio_widgets.dart';
 import 'l10n_ext.dart';
 import 'widgets.dart';
 
@@ -87,6 +89,8 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ],
             ),
+            SectionCard(title: l.audioTitle, children: const [RecitationSettings()]),
+            const AdhanSettingsCard(),
             SectionCard(
               children: [
                 ListTile(
@@ -112,6 +116,51 @@ class SettingsScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Adhan notifications: master switch (asks for permission) and one switch
+/// per prayer.
+class AdhanSettingsCard extends StatelessWidget {
+  const AdhanSettingsCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final s = context.services;
+    final settings = s.settings;
+    final l = context.l10n;
+    return SectionCard(
+      title: l.adhanSettings,
+      children: [
+        SwitchListTile(
+          key: const Key('adhanSwitch'),
+          contentPadding: EdgeInsets.zero,
+          title: Text(l.adhanEnable),
+          value: settings.adhanEnabled,
+          onChanged: (v) async {
+            final messenger = ScaffoldMessenger.of(context);
+            if (v) {
+              final ok = await s.adhan.backend.requestPermission();
+              if (!ok) {
+                messenger.showSnackBar(SnackBar(content: Text(l.adhanDenied)));
+                return;
+              }
+            }
+            await settings.setAdhanEnabled(v);
+          },
+        ),
+        if (settings.adhanEnabled)
+          for (final p in obligatoryPrayers)
+            SwitchListTile(
+              key: Key('adhanSwitch-$p'),
+              contentPadding: const EdgeInsetsDirectional.only(start: 16),
+              title: Text(context.prayerName(p)),
+              value: settings.adhanFor(p),
+              onChanged: (v) => settings.setAdhanFor(p, v),
+            ),
+        Text(l.adhanNote, style: Theme.of(context).textTheme.bodySmall),
+      ],
     );
   }
 }

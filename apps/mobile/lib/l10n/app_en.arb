@@ -149,9 +149,194 @@
   "@accountSyncNow": {
     "description": "shared key \"account.syncNow\""
   },
+  "adhanBody": "{name} prayer time in {city}",
+  "@adhanBody": {
+    "description": "shared key \"adhan.body\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "adhanDenied": "Notifications are not allowed. Turn them on in the system settings.",
+  "@adhanDenied": {
+    "description": "shared key \"adhan.denied\""
+  },
+  "adhanEnable": "Notify me at prayer times",
+  "@adhanEnable": {
+    "description": "shared key \"adhan.enable\""
+  },
+  "adhanNote": "Scheduled on this device for the next 7 days; opening the app renews them.",
+  "@adhanNote": {
+    "description": "shared key \"adhan.note\""
+  },
+  "adhanSettings": "Adhan notifications",
+  "@adhanSettings": {
+    "description": "shared key \"adhan.settings\""
+  },
+  "adhanTitle": "Time for {name}",
+  "@adhanTitle": {
+    "description": "shared key \"adhan.title\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adhkarArabicOnly": "This content is available in Arabic only.",
+  "@adhkarArabicOnly": {
+    "description": "shared key \"adhkar.arabicOnly\""
+  },
+  "adhkarCopied": "Copied",
+  "@adhkarCopied": {
+    "description": "shared key \"adhkar.copied\""
+  },
+  "adhkarCopy": "Copy",
+  "@adhkarCopy": {
+    "description": "shared key \"adhkar.copy\""
+  },
+  "adhkarDone": "Done",
+  "@adhkarDone": {
+    "description": "shared key \"adhkar.done\""
+  },
+  "adhkarEvening": "Evening",
+  "@adhkarEvening": {
+    "description": "shared key \"adhkar.evening\""
+  },
+  "adhkarEveningTitle": "Evening adhkar",
+  "@adhkarEveningTitle": {
+    "description": "shared key \"adhkar.eveningTitle\""
+  },
+  "adhkarHisn": "Hisn al-Muslim",
+  "@adhkarHisn": {
+    "description": "shared key \"adhkar.hisn\""
+  },
+  "adhkarHisnCount": "{n} entries",
+  "@adhkarHisnCount": {
+    "description": "shared key \"adhkar.hisnCount\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "adhkarHisnSearch": "Search chapters",
+  "@adhkarHisnSearch": {
+    "description": "shared key \"adhkar.hisnSearch\""
+  },
+  "adhkarMorning": "Morning",
+  "@adhkarMorning": {
+    "description": "shared key \"adhkar.morning\""
+  },
+  "adhkarMorningTitle": "Morning adhkar",
+  "@adhkarMorningTitle": {
+    "description": "shared key \"adhkar.morningTitle\""
+  },
+  "adhkarProgress": "{done} of {total} completed",
+  "@adhkarProgress": {
+    "description": "shared key \"adhkar.progress\"",
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "adhkarRemaining": "{n} left",
+  "@adhkarRemaining": {
+    "description": "shared key \"adhkar.remaining\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "adhkarRepeat": "Repeat {n}",
+  "@adhkarRepeat": {
+    "description": "shared key \"adhkar.repeat\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "adhkarReset": "Start again",
+  "@adhkarReset": {
+    "description": "shared key \"adhkar.reset\""
+  },
+  "adhkarReviewNotice": "Pending religious review. Texts: Kazi Shariar adhkar dataset (CC BY 4.0) and Hisn al-Muslim; repetition counts follow Hisn al-Muslim.",
+  "@adhkarReviewNotice": {
+    "description": "shared key \"adhkar.reviewNotice\""
+  },
+  "adhkarTapToCount": "Tap a card to count it",
+  "@adhkarTapToCount": {
+    "description": "shared key \"adhkar.tapToCount\""
+  },
   "appName": "Rattil",
   "@appName": {
     "description": "shared key \"appName\""
+  },
+  "audioBasmala": "Basmala",
+  "@audioBasmala": {
+    "description": "shared key \"audio.basmala\""
+  },
+  "audioLoading": "Loading…",
+  "@audioLoading": {
+    "description": "shared key \"audio.loading\""
+  },
+  "audioNext": "Next ayah",
+  "@audioNext": {
+    "description": "shared key \"audio.next\""
+  },
+  "audioOffline": "Couldn't load the recitation. Check your internet connection and try again.",
+  "@audioOffline": {
+    "description": "shared key \"audio.offline\""
+  },
+  "audioPause": "Pause",
+  "@audioPause": {
+    "description": "shared key \"audio.pause\""
+  },
+  "audioPlay": "Play",
+  "@audioPlay": {
+    "description": "shared key \"audio.play\""
+  },
+  "audioPrevious": "Previous ayah",
+  "@audioPrevious": {
+    "description": "shared key \"audio.previous\""
+  },
+  "audioReciter": "Reciter",
+  "@audioReciter": {
+    "description": "shared key \"audio.reciter\""
+  },
+  "audioRepeat": "Repeat each ayah",
+  "@audioRepeat": {
+    "description": "shared key \"audio.repeat\""
+  },
+  "audioRepeatN": "{n}×",
+  "@audioRepeatN": {
+    "description": "shared key \"audio.repeatN\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "audioStop": "Stop",
+  "@audioStop": {
+    "description": "shared key \"audio.stop\""
+  },
+  "audioStreamNote": "Recitations are streamed from everyayah.com and need an internet connection.",
+  "@audioStreamNote": {
+    "description": "shared key \"audio.streamNote\""
+  },
+  "audioTitle": "Recitation",
+  "@audioTitle": {
+    "description": "shared key \"audio.title\""
   },
   "bookmarksDelete": "Delete bookmark for {label}",
   "@bookmarksDelete": {
@@ -182,17 +367,122 @@
   "@commonRetry": {
     "description": "shared key \"common.retry\""
   },
+  "hajjHajj": "Hajj",
+  "@hajjHajj": {
+    "description": "shared key \"hajj.hajj\""
+  },
+  "hajjIhram": "Ihram",
+  "@hajjIhram": {
+    "description": "shared key \"hajj.ihram\""
+  },
+  "hajjReviewNotice": "Pending religious review: this guide has not yet been reviewed by a qualified scholar. Check with a trusted scholar before relying on it.",
+  "@hajjReviewNotice": {
+    "description": "shared key \"hajj.reviewNotice\""
+  },
+  "hajjTitle": "Hajj & Umrah",
+  "@hajjTitle": {
+    "description": "shared key \"hajj.title\""
+  },
+  "hajjUmrah": "Umrah",
+  "@hajjUmrah": {
+    "description": "shared key \"hajj.umrah\""
+  },
+  "homeHijriDate": "{day} {month} {year} AH",
+  "@homeHijriDate": {
+    "description": "shared key \"home.hijriDate\"",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "homeLastPage": "Last page: {page}",
+  "@homeLastPage": {
+    "description": "shared key \"home.lastPage\"",
+    "placeholders": {
+      "page": {
+        "type": "String"
+      }
+    }
+  },
   "homeNextPrayer": "Next prayer",
   "@homeNextPrayer": {
     "description": "shared key \"home.nextPrayer\""
+  },
+  "homeOpenMushaf": "Open the Mushaf",
+  "@homeOpenMushaf": {
+    "description": "shared key \"home.openMushaf\""
   },
   "homeQuickLinks": "Quick links",
   "@homeQuickLinks": {
     "description": "shared key \"home.quickLinks\""
   },
+  "homeSections": "Sections",
+  "@homeSections": {
+    "description": "shared key \"home.sections\""
+  },
+  "homeTodayTimes": "Today's prayer times",
+  "@homeTodayTimes": {
+    "description": "shared key \"home.todayTimes\""
+  },
   "homeWelcome": "Peace be upon you",
   "@homeWelcome": {
     "description": "shared key \"home.welcome\""
+  },
+  "moreTitle": "More",
+  "@moreTitle": {
+    "description": "shared key \"more.title\""
+  },
+  "mushafCopied": "Ayah copied",
+  "@mushafCopied": {
+    "description": "shared key \"mushaf.copied\""
+  },
+  "mushafCopy": "Copy ayah",
+  "@mushafCopy": {
+    "description": "shared key \"mushaf.copy\""
+  },
+  "mushafPlayFromHere": "Listen from here",
+  "@mushafPlayFromHere": {
+    "description": "shared key \"mushaf.playFromHere\""
+  },
+  "mushafPlayPage": "Listen to this page",
+  "@mushafPlayPage": {
+    "description": "shared key \"mushaf.playPage\""
+  },
+  "mushafPlaySurah": "Listen to the surah",
+  "@mushafPlaySurah": {
+    "description": "shared key \"mushaf.playSurah\""
+  },
+  "mushafReadAsList": "Read as a list",
+  "@mushafReadAsList": {
+    "description": "shared key \"mushaf.readAsList\""
+  },
+  "mushafSlider": "Page {page} of 604",
+  "@mushafSlider": {
+    "description": "shared key \"mushaf.slider\"",
+    "placeholders": {
+      "page": {
+        "type": "String"
+      }
+    }
+  },
+  "mushafTapHint": "Tap an ayah for listening, bookmark and copy",
+  "@mushafTapHint": {
+    "description": "shared key \"mushaf.tapHint\""
+  },
+  "mushafToggleControls": "Show or hide controls",
+  "@mushafToggleControls": {
+    "description": "shared key \"mushaf.toggleControls\""
+  },
+  "navAdhkar": "Adhkar",
+  "@navAdhkar": {
+    "description": "shared key \"nav.adhkar\""
   },
   "navBookmarks": "Bookmarks",
   "@navBookmarks": {
@@ -201,6 +491,10 @@
   "navHome": "Home",
   "@navHome": {
     "description": "shared key \"nav.home\""
+  },
+  "navMore": "More",
+  "@navMore": {
+    "description": "shared key \"nav.more\""
   },
   "navPrayer": "Prayer",
   "@navPrayer": {
@@ -383,6 +677,53 @@
   "prayerTitle": "Prayer times",
   "@prayerTitle": {
     "description": "shared key \"prayer.title\""
+  },
+  "qiblaFacing": "You are facing the qibla",
+  "@qiblaFacing": {
+    "description": "shared key \"qibla.facing\""
+  },
+  "qiblaHeading": "Phone heading: {deg}°",
+  "@qiblaHeading": {
+    "description": "shared key \"qibla.heading\"",
+    "placeholders": {
+      "deg": {
+        "type": "String"
+      }
+    }
+  },
+  "qiblaLiveNote": "Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The compass measures magnetic north, so it can differ from true north by a few degrees.",
+  "@qiblaLiveNote": {
+    "description": "shared key \"qibla.liveNote\""
+  },
+  "qiblaStatic": "No compass reading on this device: the diagram shows the qibla from true north.",
+  "@qiblaStatic": {
+    "description": "shared key \"qibla.static\""
+  },
+  "qiblaTitle": "Qibla",
+  "@qiblaTitle": {
+    "description": "shared key \"qibla.title\""
+  },
+  "qiblaTurnLeft": "Turn left {deg}°",
+  "@qiblaTurnLeft": {
+    "description": "shared key \"qibla.turnLeft\"",
+    "placeholders": {
+      "deg": {
+        "type": "String"
+      }
+    }
+  },
+  "qiblaTurnRight": "Turn right {deg}°",
+  "@qiblaTurnRight": {
+    "description": "shared key \"qibla.turnRight\"",
+    "placeholders": {
+      "deg": {
+        "type": "String"
+      }
+    }
+  },
+  "qiblaWaiting": "Reading the compass…",
+  "@qiblaWaiting": {
+    "description": "shared key \"qibla.waiting\""
   },
   "quranAyahCount": "{count} ayahs",
   "@quranAyahCount": {
@@ -613,5 +954,51 @@
   "tagline": "Quran, prayer and remembrance — free, no ads",
   "@tagline": {
     "description": "shared key \"tagline\""
+  },
+  "tasbihCounter": "Count {count} of {target}",
+  "@tasbihCounter": {
+    "description": "shared key \"tasbih.counter\"",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "tasbihReset": "Reset",
+  "@tasbihReset": {
+    "description": "shared key \"tasbih.reset\""
+  },
+  "tasbihRounds": "Rounds: {n}",
+  "@tasbihRounds": {
+    "description": "shared key \"tasbih.rounds\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "tasbihTap": "Tap to count",
+  "@tasbihTap": {
+    "description": "shared key \"tasbih.tap\""
+  },
+  "tasbihTarget": "Target",
+  "@tasbihTarget": {
+    "description": "shared key \"tasbih.target\""
+  },
+  "tasbihTitle": "Tasbih",
+  "@tasbihTitle": {
+    "description": "shared key \"tasbih.title\""
+  },
+  "tasbihTotal": "Total: {n}",
+  "@tasbihTotal": {
+    "description": "shared key \"tasbih.total\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
   }
 }

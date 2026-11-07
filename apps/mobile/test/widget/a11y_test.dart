@@ -36,7 +36,7 @@ void main() {
     await tester.pumpAndSettle();
     await expectAccessible(tester, contrast: contrast);
     await goBack(tester);
-    await goToTab(tester, 4);
+    await openSettings(tester);
     await tester.tap(find.byKey(const Key('accountTile')));
     await tester.pumpAndSettle();
     await expectAccessible(tester, contrast: contrast);
@@ -64,8 +64,9 @@ void main() {
       size: tallPhone,
       prefs: {'bookmarks.v1': '[{"id":"b-1-1","surah":1,"ayah":1,"updatedAt":1,"deleted":false}]'},
     );
-    await goToTab(tester, 3);
+    await openBookmarks(tester);
     await expectAccessible(tester, contrast: true);
+    await goBack(tester);
     await goToTab(tester, 2);
     await tester.tap(find.byKey(const Key('adjustTile')));
     await tester.pumpAndSettle();

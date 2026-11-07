@@ -1,290 +1,384 @@
-00:00 +0: loading /w/apps/mobile/test/unit/theme_contrast_test.dart
-00:00 +0: /w/apps/mobile/test/unit/theme_contrast_test.dart: design tokens are copied verbatim (generated file untouched)
-00:00 +1: /w/apps/mobile/test/unit/theme_contrast_test.dart: dark: every text/background pair the UI uses is >= 4.5:1
-00:00 +2: /w/apps/mobile/test/unit/theme_contrast_test.dart: light: every text/background pair the UI uses is >= 4.5:1
-00:00 +3: /w/apps/mobile/test/unit/quran_integrity_test.dart: (setUpAll)
-00:00 +3: /w/apps/mobile/test/unit/quran_integrity_test.dart: bundled Quran assets are byte-identical to content/quran/dist
-00:00 +4: /w/apps/mobile/test/unit/quran_integrity_test.dart: 114 surahs and 6236 ayahs
-00:00 +5: /w/apps/mobile/test/unit/quran_integrity_test.dart: ayah counts equal the independent reference (quran-reference.json)
-00:00 +6: /w/apps/mobile/test/unit/quran_integrity_test.dart: allAyahsSha256 of the bundled text matches integrity.v1.json
-00:00 +7: /w/apps/mobile/test/unit/quran_integrity_test.dart: every surahSha256 matches integrity.v1.json
-00:00 +8: /w/apps/mobile/test/unit/prayer_test.dart: bundled methods.json is identical to the shared schema
-00:00 +9: /w/apps/mobile/test/unit/quran_integrity_test.dart: hash is sensitive to a single changed code point
-00:00 +10: /w/apps/mobile/test/unit/quran_integrity_test.dart: hash is sensitive to a single changed code point
-00:00 +11: /w/apps/mobile/test/unit/quran_integrity_test.dart: hash is sensitive to a single changed code point
-00:00 +12: /w/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Cairo-2026-04-30-egypt-standard
-00:00 +13: /w/apps/mobile/test/unit/quran_integrity_test.dart: every ayah has non-empty text and an English translation
-00:00 +14: /w/apps/mobile/test/unit/quran_integrity_test.dart: every ayah has non-empty text and an English translation
-00:00 +15: /w/apps/mobile/test/unit/quran_integrity_test.dart: every ayah has non-empty text and an English translation
-00:00 +16: /w/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Cairo-2026-10-30-egypt-standard
-00:00 +17: /w/apps/mobile/test/unit/quran_integrity_test.dart: 604 Madinah pages, contiguous, covering 1:1..114:6
-00:00 +18: /w/apps/mobile/test/unit/quran_integrity_test.dart: 604 Madinah pages, contiguous, covering 1:1..114:6
-00:00 +19: /w/apps/mobile/test/unit/quran_integrity_test.dart: 604 Madinah pages, contiguous, covering 1:1..114:6
-00:00 +20: /w/apps/mobile/test/unit/quran_integrity_test.dart: 604 Madinah pages, contiguous, covering 1:1..114:6
-00:00 +21: /w/apps/mobile/test/unit/quran_integrity_test.dart: 604 Madinah pages, contiguous, covering 1:1..114:6
-00:00 +22: /w/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Dubai-2026-05-10-dubai-standard
-00:00 +23: /w/apps/mobile/test/unit/quran_integrity_test.dart: page spot checks from quran-reference.json
-00:00 +24: /w/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Doha-2026-08-15-qatar-standard
-00:00 +25: /w/apps/mobile/test/unit/quran_integrity_test.dart: pageOf is the inverse of ayahsOnPage for all 6236 ayahs
-00:00 +26: /w/apps/mobile/test/unit/quran_integrity_test.dart: pageOf is the inverse of ayahsOnPage for all 6236 ayahs
-00:00 +27: /w/apps/mobile/test/unit/quran_integrity_test.dart: pageOf is the inverse of ayahsOnPage for all 6236 ayahs
-00:00 +28: /w/apps/mobile/test/unit/quran_integrity_test.dart: pageOf is the inverse of ayahsOnPage for all 6236 ayahs
-00:00 +29: /w/apps/mobile/test/unit/quran_integrity_test.dart: pageOf is the inverse of ayahsOnPage for all 6236 ayahs
-00:00 +30: /w/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Istanbul-2026-06-01-mwl-hanafi
-00:00 +31: /w/apps/mobile/test/unit/quran_integrity_test.dart: 30 juz, juz 30 starts on page 582 at 78:1
-00:00 +32: /w/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Jakarta-2026-03-01-mwl-standard
-00:00 +33: /w/apps/mobile/test/unit/quran_integrity_test.dart: text spot checks
-00:00 +34: /w/apps/mobile/test/unit/quran_integrity_test.dart: text spot checks
-00:00 +35: /w/apps/mobile/test/unit/quran_integrity_test.dart: text spot checks
-00:00 +36: /w/apps/mobile/test/unit/quran_integrity_test.dart: text spot checks
-00:00 +37: /w/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Sydney-2026-04-05-mwl-standard
-00:00 +38: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +39: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +40: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +41: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +42: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +43: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +44: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +45: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +46: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +47: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +48: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +49: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +50: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +51: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +52: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +53: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +54: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +55: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +56: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +57: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +58: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +59: /w/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
-00:00 +60: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Cairo-2026-10-30-egypt-standard
-00:00 +61: /w/apps/mobile/test/unit/quran_integrity_test.dart: integrity.v1.json is the copy bundled with the app
-00:00 +62: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Makkah-2026-03-20-makkah-standard
-00:00 +63: /w/apps/mobile/test/unit/quran_integrity_test.dart: (tearDownAll)
-00:00 +63: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Makkah-2026-06-21-makkah-standard
-00:00 +64: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Makkah-2026-12-21-makkah-standard
-00:00 +65: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Riyadh-2026-09-01-makkah-standard
-00:00 +66: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Dubai-2026-05-10-dubai-standard
-00:00 +67: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Doha-2026-08-15-qatar-standard
-00:00 +68: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Kuwait-2026-02-01-kuwait-standard
-00:00 +69: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Karachi-2026-11-06-karachi-standard
-00:00 +70: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Karachi-2026-11-06-karachi-hanafi
-00:00 +71: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Istanbul-2026-06-01-mwl-standard
-00:00 +72: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Istanbul-2026-06-01-mwl-hanafi
-00:00 +73: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Jakarta-2026-03-01-mwl-standard
-00:00 +74: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Nairobi-2026-07-20-mwl-standard
-00:00 +75: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Johannesburg-2026-06-21-mwl-standard
-00:00 +76: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Sydney-2026-04-04-mwl-standard
-00:00 +77: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Sydney-2026-04-05-mwl-standard
-00:00 +78: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Sydney-2026-10-04-mwl-standard
-00:00 +79: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-03-28-mwl-standard
-00:00 +80: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-03-29-mwl-standard
-00:00 +81: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-06-21-mwl-standard
-00:00 +82: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-10-25-mwl-standard
-00:00 +83: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-12-21-mwl-standard
-00:00 +84: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Paris-2026-09-10-france-standard
-00:00 +85: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) NewYork-2026-03-07-isna-standard
-00:00 +86: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) NewYork-2026-03-08-isna-standard
-00:00 +87: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) NewYork-2026-11-01-isna-standard
-00:00 +88: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) NewYork-2026-12-25-isna-standard
-00:00 +89: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Toronto-2026-07-04-isna-standard
-00:00 +90: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Oslo-2026-06-21-mwl-standard
-00:00 +91: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Oslo-2026-12-21-mwl-standard
-00:00 +92: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Reykjavik-2026-06-21-mwl-standard
-00:00 +93: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Reykjavik-2026-12-21-mwl-standard
-00:00 +94: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Stockholm-2026-05-20-isna-standard
-00:00 +95: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) extra-cairo-adjusted
-00:00 +96: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) extra-oslo-makkah-summer
-00:00 +97: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) extra-sydney-qatar
-00:00 +98: /w/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) extra-dubai-leap
-00:00 +99: /w/apps/mobile/test/unit/prayer_test.dart: qibla Cairo within 0.5°
-00:00 +100: /w/apps/mobile/test/unit/prayer_test.dart: qibla London within 0.5°
-00:00 +101: /w/apps/mobile/test/unit/prayer_test.dart: qibla New York within 0.5°
-00:00 +102: /w/apps/mobile/test/unit/prayer_test.dart: qibla Jakarta within 0.5°
-00:00 +103: /w/apps/mobile/test/unit/prayer_test.dart: qibla Sydney within 0.5°
-00:00 +104: /w/apps/mobile/test/unit/prayer_test.dart: qibla Madinah within 0.5°
-00:00 +105: /w/apps/mobile/test/unit/prayer_test.dart: qibla matches the Python reference to 1e-9°
-00:00 +106: /w/apps/mobile/test/unit/prayer_test.dart: qibla bearing is always in [0, 360)
-00:00 +107: /w/apps/mobile/test/unit/prayer_test.dart: DST transitions London-2026-03-28-mwl-standard -> London-2026-03-29-mwl-standard
-00:00 +108: /w/apps/mobile/test/unit/prayer_test.dart: DST transitions NewYork-2026-03-07-isna-standard -> NewYork-2026-03-08-isna-standard
-00:00 +109: /w/apps/mobile/test/unit/prayer_test.dart: DST transitions Sydney-2026-04-04-mwl-standard -> Sydney-2026-04-05-mwl-standard
-00:00 +110: /w/apps/mobile/test/unit/prayer_test.dart: DST transitions Cairo-2026-10-29-egypt-standard -> Cairo-2026-10-30-egypt-standard
-00:00 +111: /w/apps/mobile/test/unit/prayer_test.dart: DST transitions local date is taken in the city time zone (Sydney is a day ahead of UTC)
-00:00 +112: /w/apps/mobile/test/unit/prayer_test.dart: invalid input latitude out of range
-00:00 +113: /w/apps/mobile/test/unit/prayer_test.dart: invalid input longitude out of range
-00:00 +114: /w/apps/mobile/test/unit/prayer_test.dart: invalid input NaN coordinates
-00:00 +115: /w/apps/mobile/test/unit/prayer_test.dart: invalid input unknown method and asr
-00:00 +116: /w/apps/mobile/test/unit/prayer_test.dart: invalid input impossible dates
-00:00 +117: /w/apps/mobile/test/unit/prayer_test.dart: invalid input polar night (Tromsø, 21 Dec) is reported, not silently wrong
-00:00 +118: /w/apps/mobile/test/unit/prayer_test.dart: invalid input unsupported high-latitude rule in config is rejected
-00:00 +119: /w/apps/mobile/test/unit/prayer_test.dart: rules Dhuhr includes the configured offset
-00:00 +120: /w/apps/mobile/test/unit/prayer_test.dart: rules ishaMinutes methods put Isha a fixed time after Maghrib
-00:00 +121: /w/apps/mobile/test/unit/prayer_test.dart: rules Hanafi Asr is later than standard
-00:00 +122: /w/apps/mobile/test/unit/prayer_test.dart: rules twilight-angle rule caps Fajr/Isha at high latitudes
-00:00 +123: /w/apps/mobile/test/unit/prayer_test.dart: rules manual adjustments shift each time by exactly that many minutes
-00:00 +124: /w/apps/mobile/test/unit/prayer_test.dart: rules times are whole minutes and in chronological order
-00:00 +125: /w/apps/mobile/test/unit/prayer_test.dart: rules roundHalfEven matches Python round()
-00:00 +126: /w/apps/mobile/test/unit/prayer_test.dart: rules julian day of J2000.0
-00:00 +127: /w/apps/mobile/test/unit/prayer_test.dart: schedule helpers next prayer is the first obligatory prayer after now
-00:01 +128: /w/apps/mobile/test/unit/prayer_test.dart: schedule helpers countdown format
-00:01 +129: /w/apps/mobile/test/unit/prayer_test.dart: schedule helpers adjustments clamp to -30..+30
-00:01 +130: /w/apps/mobile/test/unit/bookmarks_sync_test.dart: (setUpAll)
-00:01 +130: /w/apps/mobile/test/unit/bookmarks_sync_test.dart: Bookmark model json round trip and validation
-00:01 +131: /w/apps/mobile/test/unit/bookmarks_sync_test.dart: Bookmark model last-write-wins picks the greater updatedAt; ties keep local
-00:01 +132: /w/apps/mobile/test/unit/bookmarks_sync_test.dart: BookmarksController add, toggle, remove (tombstone) and persistence
-00:01 +133: /w/apps/mobile/test/unit/bookmarks_sync_test.dart: BookmarksController updatedAt strictly increases even if the clock does not move
-00:01 +134: /w/apps/mobile/test/unit/bookmarks_sync_test.dart: BookmarksController markPushed keeps items that changed after the push started
-00:01 +135: /w/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client pushes local changes and pulls remote ones
-00:01 +136: /w/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client conflict: remote newer wins locally, local newer wins on the server
-00:01 +137: /w/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client server keeps its newer copy on PUT and the client adopts it
-00:01 +138: /w/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client second sync sends since=<serverTime> and pushes nothing new
-00:01 +139: /w/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client offline: SocketException becomes ApiErrorKind.offline and nothing is lost
-00:01 +140: /w/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client timeouts and client exceptions are offline errors too
-00:01 +141: /w/apps/mobile/test/unit/text_test.dart: (setUpAll)
-00:01 +142: /w/apps/mobile/test/unit/text_test.dart: (setUpAll)
-00:01 +143: /w/apps/mobile/test/unit/text_test.dart: (setUpAll)
-00:01 +144: /w/apps/mobile/test/unit/text_test.dart: (setUpAll)
-00:01 +145: /w/apps/mobile/test/unit/text_test.dart: (setUpAll)
-00:01 +146: /w/apps/mobile/test/unit/text_test.dart: (setUpAll)
-00:01 +147: /w/apps/mobile/test/unit/text_test.dart: (setUpAll)
-00:01 +148: /w/apps/mobile/test/unit/text_test.dart: (setUpAll)
-00:01 +149: /w/apps/mobile/test/unit/text_test.dart: (setUpAll)
-00:01 +150: /w/apps/mobile/test/unit/text_test.dart: (setUpAll)
-00:01 +151: /w/apps/mobile/test/unit/text_test.dart: (setUpAll)
-00:01 +152: /w/apps/mobile/test/unit/text_test.dart: (setUpAll)
-00:01 +153: /w/apps/mobile/test/unit/text_test.dart: (setUpAll)
-00:01 +153: /w/apps/mobile/test/unit/text_test.dart: bundled schema copies are identical to packages/shared-schemas
-00:01 +154: /w/apps/mobile/test/unit/text_test.dart: search normalisation vectors "ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ" -> "الحمد لله رب العلمين"
-00:01 +155: /w/apps/mobile/test/unit/text_test.dart: search normalisation vectors "  إِيَّاكَ   نَعۡبُدُ " -> "اياك نعبد"
-00:01 +156: /w/apps/mobile/test/unit/text_test.dart: search normalisation vectors "هُدٗى" -> "هدي"
-00:01 +157: /w/apps/mobile/test/unit/text_test.dart: search normalisation vectors "رحمة" -> "رحمه"
-00:01 +158: /w/apps/mobile/test/unit/text_test.dart: search normalisation vectors is idempotent and strips every code point in removeRanges
-00:01 +159: /w/apps/mobile/test/unit/text_test.dart: search normalisation vectors maps alef forms, ya, ta marbuta; collapses whitespace
-00:01 +160: /w/apps/mobile/test/unit/text_test.dart: search normalisation vectors rejects multi-code-point map keys
-00:01 +161: /w/apps/mobile/test/unit/text_test.dart: render map (display only) maps KFGQPC open tanween code points to the Amiri Quran ones
-00:01 +162: /w/apps/mobile/test/unit/text_test.dart: render map (display only) does not touch stored, searched or hashed text
-00:01 +163: /w/apps/mobile/test/unit/text_test.dart: render map (display only) search results carry the original text, not the display text
-00:02 +164: /w/apps/mobile/test/unit/text_test.dart: Quran search diacritic-insensitive: plain and vocalised queries match the same ayahs
-00:02 +165: /w/apps/mobile/test/unit/text_test.dart: Quran search fewer than 2 letters is rejected
-00:02 +166: /w/apps/mobile/test/unit/text_test.dart: Quran search no match gives zero total
-00:02 +167: /w/apps/mobile/test/unit/text_test.dart: Quran search limit caps hits but not total
-00:02 +168: /w/apps/mobile/test/unit/text_test.dart: digits and page input Arabic-Indic digits
-00:02 +169: /w/apps/mobile/test/unit/text_test.dart: digits and page input parsePageNumber validates 1..604
-00:02 +170: /w/apps/mobile/test/unit/text_test.dart: cities load with valid time zones and methods
-00:02 +171: /w/apps/mobile/test/unit/text_test.dart: (tearDownAll)
-00:02 +171: /w/apps/mobile/test/screenshots/screenshots_test.dart: (setUpAll)
-00:02 +171: /w/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (ar, light)
-00:03 +172: /w/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (ar, light)
-00:04 +173: /w/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (ar, light)
-00:04 +174: /w/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (ar, light)
-00:04 +175: /w/apps/mobile/test/widget/page_reader_test.dart: swiping changes the page (RTL: drag right for the next page)
-00:04 +176: /w/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (ar, dark)
-00:04 +177: /w/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (ar, dark)
-00:05 +178: /w/apps/mobile/test/widget/page_reader_test.dart: go to page: valid numbers in Latin and Arabic-Indic digits
-00:05 +179: /w/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, light)
-00:05 +180: /w/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, light)
-00:05 +181: /w/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, light)
-00:05 +182: /w/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, light)
-00:06 +183: /w/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, light)
-00:06 +184: /w/apps/mobile/test/widget/page_reader_test.dart: go to page rejects "-1" with a validation message
-00:06 +185: /w/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, dark)
-00:06 +186: /w/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, dark)
-00:06 +187: /w/apps/mobile/test/screenshots/screenshots_test.dart: (tearDownAll)
-00:07 +187: /w/apps/mobile/test/widget/prayer_screen_test.dart: (setUpAll)
-00:07 +187: /w/apps/mobile/test/widget/prayer_screen_test.dart: shows today's six times for the default city (Cairo) in its time zone
-00:08 +188: /w/apps/mobile/test/widget/settings_test.dart: language switch: ar -> en -> ar, direction follows, choice persists
-00:08 +189: /w/apps/mobile/test/widget/settings_test.dart: language switch: ar -> en -> ar, direction follows, choice persists
-00:08 +190: /w/apps/mobile/test/widget/settings_test.dart: language switch: ar -> en -> ar, direction follows, choice persists
-00:08 +191: /w/apps/mobile/test/widget/prayer_screen_test.dart: after Isha the next prayer is tomorrow's Fajr
-00:08 +192: /w/apps/mobile/test/widget/settings_test.dart: settings persist across an app restart (same storage)
-00:09 +193: /w/apps/mobile/test/widget/prayer_screen_test.dart: city picker: search and choose London; method follows the city
-00:09 +194: /w/apps/mobile/test/widget/settings_test.dart: theme selector: light, dark, system
-00:09 +195: /w/apps/mobile/test/widget/prayer_screen_test.dart: city picker: Arabic search and no-results
-00:09 +196: /w/apps/mobile/test/widget/prayer_screen_test.dart: city picker: Arabic search and no-results
-00:09 +197: /w/apps/mobile/test/widget/settings_test.dart: Quran font size slider: 18..40, persists, updates preview
-00:09 +198: /w/apps/mobile/test/widget/prayer_screen_test.dart: method selector changes the calculation and persists
-00:09 +199: /w/apps/mobile/test/widget/prayer_screen_test.dart: method selector changes the calculation and persists
-00:09 +200: /w/apps/mobile/test/widget/settings_test.dart: out-of-range stored font size is clamped
-00:10 +201: /w/apps/mobile/test/widget/prayer_screen_test.dart: Asr selector switches to Hanafi and persists
-00:10 +202: /w/apps/mobile/test/widget/settings_test.dart: translation switch persists
-00:10 +203: /w/apps/mobile/test/widget/prayer_screen_test.dart: manual adjustment: +/- buttons, clamp at ±30, reset
-00:10 +204: /w/apps/mobile/test/widget/prayer_screen_test.dart: manual adjustment: +/- buttons, clamp at ±30, reset
-00:10 +205: /w/apps/mobile/test/widget/prayer_screen_test.dart: manual adjustment: +/- buttons, clamp at ±30, reset
-00:11 +206: /w/apps/mobile/test/widget/prayer_screen_test.dart: manual adjustment: +/- buttons, clamp at ±30, reset
-00:11 +207: /w/apps/mobile/test/widget/account_test.dart: shows default server address and the optional-account note
-00:11 +208: /w/apps/mobile/test/widget/account_test.dart: shows default server address and the optional-account note
-00:12 +209: /w/apps/mobile/test/widget/account_test.dart: shows default server address and the optional-account note
-00:12 +210: /w/apps/mobile/test/widget/account_test.dart: shows default server address and the optional-account note
-00:12 +211: /w/apps/mobile/test/widget/account_test.dart: shows default server address and the optional-account note
-00:12 +212: /w/apps/mobile/test/widget/account_test.dart: shows default server address and the optional-account note
-00:13 +213: /w/apps/mobile/test/widget/home_test.dart: (setUpAll)
-00:13 +213: /w/apps/mobile/test/widget/account_test.dart: save server address: invalid then valid
-00:13 +214: /w/apps/mobile/test/widget/home_test.dart: shows greeting and the free tagline
-00:13 +215: /w/apps/mobile/test/widget/account_test.dart: validation messages for email and password
-00:13 +216: /w/apps/mobile/test/widget/home_test.dart: "Start reading" opens Al-Fatihah and records the position
-00:14 +217: /w/apps/mobile/test/widget/account_test.dart: register, then duplicate, then wrong password, then sign in, sync, sign out
-00:14 +218: /w/apps/mobile/test/widget/home_test.dart: "Continue reading" reopens the last ayah
-00:14 +219: /w/apps/mobile/test/widget/home_test.dart: "Continue reading" reopens the last ayah
-00:14 +220: /w/apps/mobile/test/widget/account_test.dart: offline sign-in in Arabic shows the Arabic message
-00:14 +221: /w/apps/mobile/test/widget/account_test.dart: offline sign-in in Arabic shows the Arabic message
-00:14 +222: /w/apps/mobile/test/widget/home_test.dart: quick links: surahs, Mushaf, search, bookmarks
-00:15 +223: /w/apps/mobile/test/widget/home_test.dart: quick links: surahs, Mushaf, search, bookmarks
-00:15 +224: /w/apps/mobile/test/widget/home_test.dart: quick links: surahs, Mushaf, search, bookmarks
-00:15 +225: /w/apps/mobile/test/widget/home_test.dart: home shows the polar message when no times exist
-00:15 +226: /w/apps/mobile/test/widget/home_test.dart: (tearDownAll)
-00:15 +226: /w/apps/mobile/test/widget/a11y_test.dart: (setUpAll)
-00:15 +226: /w/apps/mobile/test/widget/a11y_test.dart: en/light: tap targets, labels and text contrast on all screens
-00:17 +227: /w/apps/mobile/test/widget/a11y_test.dart: en/light: tap targets, labels and text contrast on all screens
-00:18 +228: /w/apps/mobile/test/widget/a11y_test.dart: en/light: tap targets, labels and text contrast on all screens
-00:18 +229: /w/apps/mobile/test/widget/a11y_test.dart: en/light: tap targets, labels and text contrast on all screens
-00:18 +230: /w/apps/mobile/test/widget/a11y_test.dart: en/light: tap targets, labels and text contrast on all screens
-00:19 +231: /w/apps/mobile/test/widget/a11y_test.dart: en/light: tap targets, labels and text contrast on all screens
-00:19 +232: /w/apps/mobile/test/widget/a11y_test.dart: ar/light: tap targets and labels on all screens
-00:20 +233: /w/apps/mobile/test/widget/bookmarks_test.dart: empty state
-00:20 +234: /w/apps/mobile/test/widget/a11y_test.dart: en/dark: tap targets, labels and text contrast on all screens
-00:20 +235: /w/apps/mobile/test/widget/a11y_test.dart: en/dark: tap targets, labels and text contrast on all screens
-00:21 +236: /w/apps/mobile/test/widget/a11y_test.dart: en/dark: tap targets, labels and text contrast on all screens
-00:21 +237: /w/apps/mobile/test/widget/a11y_test.dart: en/dark: tap targets, labels and text contrast on all screens
-00:22 +238: /w/apps/mobile/test/widget/bookmarks_test.dart: bookmark added in the reader appears in the list
-00:22 +239: /w/apps/mobile/test/widget/a11y_test.dart: ar/dark: tap targets and labels on all screens
-00:22 +240: /w/apps/mobile/test/widget/a11y_test.dart: ar/dark: tap targets and labels on all screens
-00:23 +241: /w/apps/mobile/test/widget/basmala_test.dart: surah reader: surah 2 starts with the basmala line
-00:23 +242: /w/apps/mobile/test/widget/basmala_test.dart: surah reader: surah 2 starts with the basmala line
-00:23 +243: /w/apps/mobile/test/widget/surah_reader_test.dart: (setUpAll)
-00:23 +243: /w/apps/mobile/test/widget/basmala_test.dart: surah reader: surah 112 starts with the basmala line
-00:24 +244: /w/apps/mobile/test/widget/surah_reader_test.dart: shows ayah text through the render map with Arabic-Indic ayah numbers
-00:24 +245: /w/apps/mobile/test/widget/surah_reader_test.dart: shows ayah text through the render map with Arabic-Indic ayah numbers
-00:24 +246: /w/apps/mobile/test/widget/surah_reader_test.dart: shows ayah text through the render map with Arabic-Indic ayah numbers
-00:24 +247: /w/apps/mobile/test/widget/surah_reader_test.dart: shows ayah text through the render map with Arabic-Indic ayah numbers
-00:25 +248: /w/apps/mobile/test/widget/basmala_test.dart: page 604: three banners and three basmalas (112, 113, 114)
-00:25 +249: /w/apps/mobile/test/widget/surah_reader_test.dart: font size setting is applied to Quran text
-00:25 +250: /w/apps/mobile/test/widget/surah_reader_test.dart: font size setting is applied to Quran text
-00:25 +251: /w/apps/mobile/test/widget/basmala_test.dart: page where surah 9 starts: banner without basmala
-00:25 +252: /w/apps/mobile/test/widget/surah_reader_test.dart: translation toggle shows/hides English and persists
-00:25 +253: /w/apps/mobile/test/widget/surah_reader_test.dart: translation toggle shows/hides English and persists
-00:25 +254: /w/apps/mobile/test/widget/surah_reader_test.dart: bookmark button adds and removes a bookmark
-00:25 +255: /w/apps/mobile/test/widget/shell_test.dart: (setUpAll)
-00:26 +255: /w/apps/mobile/test/widget/surah_reader_test.dart: opening at an ayah scrolls to it, highlights it and records it
-00:26 +256: /w/apps/mobile/test/widget/shell_test.dart: Arabic is the default locale and the layout is RTL
-00:26 +257: /w/apps/mobile/test/widget/shell_test.dart: Arabic is the default locale and the layout is RTL
-00:26 +258: /w/apps/mobile/test/widget/shell_test.dart: Arabic is the default locale and the layout is RTL
-00:26 +259: /w/apps/mobile/test/widget/surah_reader_test.dart: invalid initial ayah falls back to the first ayah
-00:26 +260: /w/apps/mobile/test/widget/surah_reader_test.dart: invalid initial ayah falls back to the first ayah
-00:26 +261: /w/apps/mobile/test/widget/shell_test.dart: bottom navigation reaches every tab (ar)
-00:27 +262: /w/apps/mobile/test/widget/shell_test.dart: bottom navigation reaches every tab (ar)
-00:27 +263: /w/apps/mobile/test/widget/search_test.dart: initial hint, then too-short query message
-00:28 +264: /w/apps/mobile/test/widget/search_test.dart: initial hint, then too-short query message
-00:28 +265: /w/apps/mobile/test/widget/search_test.dart: initial hint, then too-short query message
-00:28 +266: /w/apps/mobile/test/widget/shell_test.dart: bottom navigation reaches every tab (en)
-00:28 +267: /w/apps/mobile/test/widget/search_test.dart: no results
-00:29 +268: /w/apps/mobile/test/widget/shell_test.dart: every tab lays out without overflow at text scale 1.5 (en)
-00:29 +269: /w/apps/mobile/test/widget/search_test.dart: vocalised and plain queries give the same results; original text shown
-00:29 +270: /w/apps/mobile/test/widget/shell_test.dart: every tab lays out without overflow at text scale 2.0 (en)
-00:29 +271: /w/apps/mobile/test/widget/search_test.dart: tapping a result opens the ayah in the reader
-00:29 +272: /w/apps/mobile/test/widget/shell_test.dart: a small phone (320x568) renders every tab
-00:29 +273: /w/apps/mobile/test/widget/shell_test.dart: (tearDownAll)
-00:29 +273: All tests passed!
+00:00 +0: loading /work/apps/mobile/test/unit/theme_contrast_test.dart
+00:00 +0: /work/apps/mobile/test/unit/theme_contrast_test.dart: design tokens are copied verbatim (generated file untouched)
+00:00 +1: /work/apps/mobile/test/unit/theme_contrast_test.dart: dark: every text/background pair the UI uses is >= 4.5:1
+00:00 +2: /work/apps/mobile/test/unit/theme_contrast_test.dart: light: every text/background pair the UI uses is >= 4.5:1
+00:00 +3: /work/apps/mobile/test/unit/hajj_content_test.dart: (setUpAll)
+00:01 +3: /work/apps/mobile/test/unit/hajj_content_test.dart: three sections with the prototype's cards; review status recorded
+00:01 +4: /work/apps/mobile/test/unit/hajj_content_test.dart: every string is verbatim from content/pilgrimage/source-hajj.js
+00:01 +5: /work/apps/mobile/test/unit/hajj_content_test.dart: (tearDownAll)
+00:01 +5: /work/apps/mobile/test/unit/quran_integrity_test.dart: (setUpAll)
+00:01 +5: /work/apps/mobile/test/unit/quran_integrity_test.dart: bundled Quran assets are byte-identical to content/quran/dist
+00:02 +6: /work/apps/mobile/test/unit/quran_integrity_test.dart: 114 surahs and 6236 ayahs
+00:02 +7: /work/apps/mobile/test/unit/quran_integrity_test.dart: ayah counts equal the independent reference (quran-reference.json)
+00:02 +8: /work/apps/mobile/test/unit/quran_integrity_test.dart: allAyahsSha256 of the bundled text matches integrity.v1.json
+00:02 +9: /work/apps/mobile/test/unit/quran_integrity_test.dart: every surahSha256 matches integrity.v1.json
+00:02 +10: /work/apps/mobile/test/unit/prayer_test.dart: bundled methods.json is identical to the shared schema
+00:02 +11: /work/apps/mobile/test/unit/quran_integrity_test.dart: hash is sensitive to a single changed code point
+00:02 +12: /work/apps/mobile/test/unit/quran_integrity_test.dart: hash is sensitive to a single changed code point
+00:02 +13: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Cairo-2026-01-15-egypt-standard
+00:02 +14: /work/apps/mobile/test/unit/quran_integrity_test.dart: every ayah has non-empty text and an English translation
+00:02 +15: /work/apps/mobile/test/unit/quran_integrity_test.dart: every ayah has non-empty text and an English translation
+00:02 +16: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Cairo-2026-07-01-egypt-standard
+00:02 +17: /work/apps/mobile/test/unit/quran_integrity_test.dart: 604 Madinah pages, contiguous, covering 1:1..114:6
+00:02 +18: /work/apps/mobile/test/unit/quran_integrity_test.dart: 604 Madinah pages, contiguous, covering 1:1..114:6
+00:02 +19: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Cairo-2026-10-30-egypt-standard
+00:02 +20: /work/apps/mobile/test/unit/quran_integrity_test.dart: page spot checks from quran-reference.json
+00:02 +21: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Makkah-2026-03-20-makkah-standard
+00:02 +22: /work/apps/mobile/test/unit/quran_integrity_test.dart: pageOf is the inverse of ayahsOnPage for all 6236 ayahs
+00:02 +23: /work/apps/mobile/test/unit/quran_integrity_test.dart: pageOf is the inverse of ayahsOnPage for all 6236 ayahs
+00:02 +24: /work/apps/mobile/test/unit/quran_integrity_test.dart: pageOf is the inverse of ayahsOnPage for all 6236 ayahs
+00:02 +25: /work/apps/mobile/test/unit/quran_integrity_test.dart: pageOf is the inverse of ayahsOnPage for all 6236 ayahs
+00:02 +26: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Dubai-2026-05-10-dubai-standard
+00:02 +27: /work/apps/mobile/test/unit/quran_integrity_test.dart: 30 juz, juz 30 starts on page 582 at 78:1
+00:02 +28: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Doha-2026-08-15-qatar-standard
+00:02 +29: /work/apps/mobile/test/unit/quran_integrity_test.dart: text spot checks
+00:02 +30: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Kuwait-2026-02-01-kuwait-standard
+00:02 +31: /work/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+00:02 +32: /work/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+00:02 +33: /work/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+00:02 +34: /work/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+00:02 +35: /work/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+00:02 +36: /work/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+00:02 +37: /work/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+00:02 +38: /work/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+00:02 +39: /work/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+00:02 +40: /work/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+00:02 +41: /work/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+00:02 +42: /work/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+00:02 +43: /work/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+00:02 +44: /work/apps/mobile/test/unit/quran_integrity_test.dart: every bundled ayah equals the pinned upstream quran-json 3.1.2 text
+00:02 +45: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) London-2026-10-25-mwl-standard
+00:02 +46: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) London-2026-10-25-mwl-standard
+00:02 +47: /work/apps/mobile/test/unit/quran_integrity_test.dart: (tearDownAll)
+00:02 +47: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) London-2026-12-21-mwl-standard
+00:02 +48: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Paris-2026-09-10-france-standard
+00:02 +49: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) NewYork-2026-03-07-isna-standard
+00:02 +50: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) NewYork-2026-03-08-isna-standard
+00:02 +51: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) NewYork-2026-11-01-isna-standard
+00:02 +52: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) NewYork-2026-12-25-isna-standard
+00:02 +53: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Toronto-2026-07-04-isna-standard
+00:02 +54: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Oslo-2026-06-21-mwl-standard
+00:02 +55: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Oslo-2026-12-21-mwl-standard
+00:02 +56: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Reykjavik-2026-06-21-mwl-standard
+00:02 +57: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Reykjavik-2026-12-21-mwl-standard
+00:02 +58: /work/apps/mobile/test/unit/prayer_test.dart: adhan-js vectors (tolerance 2 min) Stockholm-2026-05-20-isna-standard
+00:02 +59: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Cairo-2026-01-15-egypt-standard
+00:02 +60: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Cairo-2026-04-30-egypt-standard
+00:02 +61: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Cairo-2026-07-01-egypt-standard
+00:02 +62: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Cairo-2026-10-29-egypt-standard
+00:02 +63: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Cairo-2026-10-30-egypt-standard
+00:02 +64: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Makkah-2026-03-20-makkah-standard
+00:02 +65: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Makkah-2026-06-21-makkah-standard
+00:02 +66: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Makkah-2026-12-21-makkah-standard
+00:02 +67: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Riyadh-2026-09-01-makkah-standard
+00:02 +68: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Dubai-2026-05-10-dubai-standard
+00:02 +69: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Doha-2026-08-15-qatar-standard
+00:02 +70: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Kuwait-2026-02-01-kuwait-standard
+00:02 +71: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Karachi-2026-11-06-karachi-standard
+00:02 +72: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Karachi-2026-11-06-karachi-hanafi
+00:02 +73: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Istanbul-2026-06-01-mwl-standard
+00:02 +74: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Istanbul-2026-06-01-mwl-hanafi
+00:02 +75: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Jakarta-2026-03-01-mwl-standard
+00:02 +76: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Nairobi-2026-07-20-mwl-standard
+00:02 +77: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Johannesburg-2026-06-21-mwl-standard
+00:02 +78: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Sydney-2026-04-04-mwl-standard
+00:02 +79: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Sydney-2026-04-05-mwl-standard
+00:02 +80: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Sydney-2026-10-04-mwl-standard
+00:02 +81: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-03-28-mwl-standard
+00:02 +82: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-03-29-mwl-standard
+00:02 +83: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-06-21-mwl-standard
+00:02 +84: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-10-25-mwl-standard
+00:02 +85: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) London-2026-12-21-mwl-standard
+00:02 +86: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Paris-2026-09-10-france-standard
+00:02 +87: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) NewYork-2026-03-07-isna-standard
+00:02 +88: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) NewYork-2026-03-08-isna-standard
+00:02 +89: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) NewYork-2026-11-01-isna-standard
+00:02 +90: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) NewYork-2026-12-25-isna-standard
+00:02 +91: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Toronto-2026-07-04-isna-standard
+00:02 +92: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Oslo-2026-06-21-mwl-standard
+00:02 +93: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Oslo-2026-12-21-mwl-standard
+00:02 +94: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Reykjavik-2026-06-21-mwl-standard
+00:02 +95: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Reykjavik-2026-12-21-mwl-standard
+00:02 +96: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) Stockholm-2026-05-20-isna-standard
+00:02 +97: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) extra-cairo-adjusted
+00:02 +98: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) extra-oslo-makkah-summer
+00:02 +99: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) extra-sydney-qatar
+00:02 +100: /work/apps/mobile/test/unit/prayer_test.dart: exact match with the Python reference (services/api) extra-dubai-leap
+00:02 +101: /work/apps/mobile/test/unit/prayer_test.dart: qibla Cairo within 0.5°
+00:02 +102: /work/apps/mobile/test/unit/prayer_test.dart: qibla London within 0.5°
+00:02 +103: /work/apps/mobile/test/unit/prayer_test.dart: qibla New York within 0.5°
+00:03 +104: /work/apps/mobile/test/unit/prayer_test.dart: qibla Jakarta within 0.5°
+00:03 +105: /work/apps/mobile/test/unit/prayer_test.dart: qibla Sydney within 0.5°
+00:03 +106: /work/apps/mobile/test/unit/prayer_test.dart: qibla Madinah within 0.5°
+00:03 +107: /work/apps/mobile/test/unit/prayer_test.dart: qibla matches the Python reference to 1e-9°
+00:03 +108: /work/apps/mobile/test/unit/prayer_test.dart: qibla bearing is always in [0, 360)
+00:03 +109: /work/apps/mobile/test/unit/prayer_test.dart: DST transitions London-2026-03-28-mwl-standard -> London-2026-03-29-mwl-standard
+00:03 +110: /work/apps/mobile/test/unit/prayer_test.dart: DST transitions NewYork-2026-03-07-isna-standard -> NewYork-2026-03-08-isna-standard
+00:03 +111: /work/apps/mobile/test/unit/prayer_test.dart: DST transitions Sydney-2026-04-04-mwl-standard -> Sydney-2026-04-05-mwl-standard
+00:03 +112: /work/apps/mobile/test/unit/prayer_test.dart: DST transitions Cairo-2026-10-29-egypt-standard -> Cairo-2026-10-30-egypt-standard
+00:03 +113: /work/apps/mobile/test/unit/prayer_test.dart: DST transitions local date is taken in the city time zone (Sydney is a day ahead of UTC)
+00:03 +114: /work/apps/mobile/test/unit/prayer_test.dart: invalid input latitude out of range
+00:03 +115: /work/apps/mobile/test/unit/prayer_test.dart: invalid input longitude out of range
+00:03 +116: /work/apps/mobile/test/unit/prayer_test.dart: invalid input NaN coordinates
+00:03 +117: /work/apps/mobile/test/unit/prayer_test.dart: invalid input unknown method and asr
+00:03 +118: /work/apps/mobile/test/unit/prayer_test.dart: invalid input impossible dates
+00:03 +119: /work/apps/mobile/test/unit/prayer_test.dart: invalid input polar night (Tromsø, 21 Dec) is reported, not silently wrong
+00:03 +120: /work/apps/mobile/test/unit/prayer_test.dart: invalid input unsupported high-latitude rule in config is rejected
+00:03 +121: /work/apps/mobile/test/unit/prayer_test.dart: rules Dhuhr includes the configured offset
+00:03 +122: /work/apps/mobile/test/unit/prayer_test.dart: rules ishaMinutes methods put Isha a fixed time after Maghrib
+00:03 +123: /work/apps/mobile/test/unit/prayer_test.dart: rules Hanafi Asr is later than standard
+00:03 +124: /work/apps/mobile/test/unit/prayer_test.dart: rules twilight-angle rule caps Fajr/Isha at high latitudes
+00:03 +125: /work/apps/mobile/test/unit/prayer_test.dart: rules manual adjustments shift each time by exactly that many minutes
+00:03 +126: /work/apps/mobile/test/unit/prayer_test.dart: rules times are whole minutes and in chronological order
+00:03 +127: /work/apps/mobile/test/unit/prayer_test.dart: rules roundHalfEven matches Python round()
+00:03 +128: /work/apps/mobile/test/unit/prayer_test.dart: rules julian day of J2000.0
+00:03 +129: /work/apps/mobile/test/unit/prayer_test.dart: schedule helpers next prayer is the first obligatory prayer after now
+00:03 +130: /work/apps/mobile/test/unit/prayer_test.dart: schedule helpers countdown format
+00:03 +131: /work/apps/mobile/test/unit/prayer_test.dart: schedule helpers adjustments clamp to -30..+30
+00:03 +132: /work/apps/mobile/test/unit/audio_queue_test.dart: (setUpAll)
+00:04 +132: /work/apps/mobile/test/unit/adhan_schedule_test.dart: (setUpAll)
+00:04 +133: /work/apps/mobile/test/unit/adhan_schedule_test.dart: (setUpAll)
+00:04 +134: /work/apps/mobile/test/unit/adhan_schedule_test.dart: (setUpAll)
+00:04 +135: /work/apps/mobile/test/unit/adhan_schedule_test.dart: (setUpAll)
+00:04 +136: /work/apps/mobile/test/unit/adhan_schedule_test.dart: (setUpAll)
+00:04 +137: /work/apps/mobile/test/unit/adhan_schedule_test.dart: (setUpAll)
+00:04 +138: /work/apps/mobile/test/unit/adhan_schedule_test.dart: (setUpAll)
+00:04 +139: /work/apps/mobile/test/unit/adhan_schedule_test.dart: (setUpAll)
+00:04 +140: /work/apps/mobile/test/unit/adhan_schedule_test.dart: (setUpAll)
+00:04 +141: /work/apps/mobile/test/unit/adhan_schedule_test.dart: (setUpAll)
+00:04 +141: /work/apps/mobile/test/unit/adhan_schedule_test.dart: only prayers strictly after now; 7 days of five prayers otherwise
+00:04 +142: /work/apps/mobile/test/unit/adhan_schedule_test.dart: per-prayer switches
+00:04 +143: /work/apps/mobile/test/unit/adhan_schedule_test.dart: ids are stable for a date and prayer, so re-planning replaces rather than duplicates
+00:04 +144: /work/apps/mobile/test/unit/adhan_schedule_test.dart: days without times (polar) are skipped; the iOS limit caps the list
+00:04 +145: /work/apps/mobile/test/unit/adhan_schedule_test.dart: AdhanScheduler never enabled: the plugin is not touched
+00:04 +146: /work/apps/mobile/test/unit/adhan_schedule_test.dart: AdhanScheduler enabled: schedules the selected city's next 7 days with localised text
+00:04 +147: /work/apps/mobile/test/unit/adhan_schedule_test.dart: (tearDownAll)
+00:05 +147: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: (setUpAll)
+00:05 +147: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: Bookmark model json round trip and validation
+00:05 +148: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: Bookmark model last-write-wins picks the greater updatedAt; ties keep local
+00:05 +149: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: BookmarksController add, toggle, remove (tombstone) and persistence
+00:05 +150: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: BookmarksController updatedAt strictly increases even if the clock does not move
+00:05 +151: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: BookmarksController markPushed keeps items that changed after the push started
+00:05 +152: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client pushes local changes and pulls remote ones
+00:05 +153: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client conflict: remote newer wins locally, local newer wins on the server
+00:05 +154: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client server keeps its newer copy on PUT and the client adopts it
+00:05 +155: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client second sync sends since=<serverTime> and pushes nothing new
+00:05 +156: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client offline: SocketException becomes ApiErrorKind.offline and nothing is lost
+00:05 +157: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client timeouts and client exceptions are offline errors too
+00:05 +158: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client server-shaped responses (note: null) parse
+00:05 +159: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client HTTP status codes map to error kinds
+00:05 +160: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client malformed payloads are server errors
+00:05 +161: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: SyncService with a fake HTTP client invalid base URL is rejected before any request
+00:05 +162: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: AccountController default server address is the Android emulator host
+00:05 +163: /work/apps/mobile/test/unit/tasbih_test.dart: counts to the target, then completes a round and starts again
+00:05 +164: /work/apps/mobile/test/unit/tasbih_test.dart: counts to the target, then completes a round and starts again
+00:05 +165: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: AccountController register, duplicate register, bad login, login, sync, logout
+00:05 +166: /work/apps/mobile/test/unit/tasbih_test.dart: changing the target keeps a count below it and resets one above it
+00:05 +167: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: AccountController offline sync shows a clear offline error and keeps the session
+00:05 +168: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: AccountController offline sync shows a clear offline error and keeps the session
+00:05 +169: /work/apps/mobile/test/unit/tasbih_test.dart: controller persists every tap and restores after restart
+00:05 +170: /work/apps/mobile/test/unit/tasbih_test.dart: controller persists every tap and restores after restart
+00:05 +171: /work/apps/mobile/test/unit/tasbih_test.dart: controller persists every tap and restores after restart
+00:05 +172: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: AccountController rate limiting and server errors
+00:05 +173: /work/apps/mobile/test/unit/tasbih_test.dart: corrupt storage falls back to a fresh counter
+00:05 +174: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: AccountController server address is validated and saved
+00:05 +175: /work/apps/mobile/test/unit/bookmarks_sync_test.dart: (tearDownAll)
+00:05 +175: loading /work/apps/mobile/test/unit/recitation_controller_test.dart
+00:06 +175: /work/apps/mobile/test/unit/recitation_controller_test.dart: (setUpAll)
+00:06 +176: /work/apps/mobile/test/unit/recitation_controller_test.dart: (setUpAll)
+00:06 +177: /work/apps/mobile/test/unit/recitation_controller_test.dart: (setUpAll)
+00:06 +178: /work/apps/mobile/test/unit/recitation_controller_test.dart: (setUpAll)
+00:06 +179: /work/apps/mobile/test/unit/recitation_controller_test.dart: (setUpAll)
+00:06 +180: /work/apps/mobile/test/unit/recitation_controller_test.dart: (setUpAll)
+00:06 +181: /work/apps/mobile/test/unit/recitation_controller_test.dart: (setUpAll)
+00:06 +181: /work/apps/mobile/test/unit/recitation_controller_test.dart: plays the basmala (001001) before 2:1, highlighting 2:1, then 2:1
+00:06 +182: /work/apps/mobile/test/unit/recitation_controller_test.dart: continues across pages: page 2 ends with 2:5, then 2:6 on page 3
+00:06 +183: /work/apps/mobile/test/unit/recitation_controller_test.dart: page scope stops at the end of the page
+00:06 +184: /work/apps/mobile/test/unit/recitation_controller_test.dart: surah scope plays the whole surah (al-Ikhlas: basmala + 4 ayahs)
+00:06 +185: /work/apps/mobile/test/unit/recitation_controller_test.dart: chosen reciter and repeat count are used
+00:06 +186: /work/apps/mobile/test/unit/recitation_controller_test.dart: offline: a failed load is an error state; resume retries the same ayah
+00:06 +187: /work/apps/mobile/test/unit/recitation_controller_test.dart: pause / resume / next / previous / stop
+00:06 +188: /work/apps/mobile/test/unit/recitation_controller_test.dart: (tearDownAll)
+00:07 +188: /work/apps/mobile/test/unit/adhkar_test.dart: (setUpAll)
+00:07 +188: /work/apps/mobile/test/unit/text_test.dart: (setUpAll)
+00:07 +189: /work/apps/mobile/test/unit/text_test.dart: (setUpAll)
+00:07 +190: /work/apps/mobile/test/unit/text_test.dart: (setUpAll)
+00:07 +191: /work/apps/mobile/test/unit/text_test.dart: (setUpAll)
+00:07 +192: /work/apps/mobile/test/unit/text_test.dart: (setUpAll)
+00:07 +193: /work/apps/mobile/test/unit/text_test.dart: (setUpAll)
+00:07 +194: /work/apps/mobile/test/unit/text_test.dart: (setUpAll)
+00:07 +195: /work/apps/mobile/test/unit/text_test.dart: (setUpAll)
+00:07 +196: /work/apps/mobile/test/unit/text_test.dart: (setUpAll)
+00:07 +196: /work/apps/mobile/test/unit/text_test.dart: bundled schema copies are identical to packages/shared-schemas
+00:07 +197: /work/apps/mobile/test/unit/text_test.dart: search normalisation vectors "ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ" -> "الحمد لله رب العلمين"
+00:07 +198: /work/apps/mobile/test/unit/text_test.dart: search normalisation vectors "  إِيَّاكَ   نَعۡبُدُ " -> "اياك نعبد"
+00:07 +199: /work/apps/mobile/test/unit/text_test.dart: search normalisation vectors "هُدٗى" -> "هدي"
+00:07 +200: /work/apps/mobile/test/unit/text_test.dart: search normalisation vectors "رحمة" -> "رحمه"
+00:07 +201: /work/apps/mobile/test/unit/text_test.dart: search normalisation vectors is idempotent and strips every code point in removeRanges
+00:07 +202: /work/apps/mobile/test/unit/text_test.dart: search normalisation vectors maps alef forms, ya, ta marbuta; collapses whitespace
+00:07 +203: /work/apps/mobile/test/unit/text_test.dart: search normalisation vectors rejects multi-code-point map keys
+00:07 +204: /work/apps/mobile/test/unit/text_test.dart: render map (display only) maps KFGQPC open tanween code points to the Amiri Quran ones
+00:07 +205: /work/apps/mobile/test/unit/text_test.dart: render map (display only) does not touch stored, searched or hashed text
+00:08 +206: /work/apps/mobile/test/unit/text_test.dart: render map (display only) search results carry the original text, not the display text
+00:08 +207: /work/apps/mobile/test/unit/text_test.dart: Quran search diacritic-insensitive: plain and vocalised queries match the same ayahs
+00:08 +208: /work/apps/mobile/test/unit/text_test.dart: Quran search fewer than 2 letters is rejected
+00:08 +209: /work/apps/mobile/test/unit/text_test.dart: Quran search no match gives zero total
+00:08 +210: /work/apps/mobile/test/unit/text_test.dart: Quran search limit caps hits but not total
+00:08 +211: /work/apps/mobile/test/unit/text_test.dart: digits and page input Arabic-Indic digits
+00:08 +212: /work/apps/mobile/test/unit/text_test.dart: digits and page input parsePageNumber validates 1..604
+00:08 +213: /work/apps/mobile/test/unit/text_test.dart: cities load with valid time zones and methods
+00:08 +214: /work/apps/mobile/test/unit/text_test.dart: (tearDownAll)
+00:08 +214: /work/apps/mobile/test/unit/mushaf_layout_test.dart: (setUpAll)
+00:08 +214: /work/apps/mobile/test/unit/mushaf_layout_test.dart: bundled mushaf-lines.v1.json is the content/quran/dist file, byte for byte
+00:08 +215: /work/apps/mobile/test/unit/mushaf_layout_test.dart: 604 pages; pages 1-2 have 8 lines, every other page 15
+00:08 +216: /work/apps/mobile/test/unit/mushaf_layout_test.dart: every word comes from the canonical text: each ayah is rebuilt exactly, once, in order
+00:08 +217: /work/apps/mobile/test/unit/mushaf_layout_test.dart: every word comes from the canonical text: each ayah is rebuilt exactly, once, in order
+00:08 +218: /work/apps/mobile/test/unit/mushaf_layout_test.dart: the ayahs on each layout page are exactly the pages.v1.json range
+00:08 +219: /work/apps/mobile/test/unit/mushaf_layout_test.dart: 114 surah title lines; basmala lines for every surah except 1 and 9, before ayah 1
+00:08 +220: /work/apps/mobile/test/unit/mushaf_layout_test.dart: lineWords rejects a segment outside the ayah
+00:08 +221: /work/apps/mobile/test/unit/mushaf_layout_test.dart: the display glyph map is never applied to layout words
+00:09 +222: /work/apps/mobile/test/unit/mushaf_layout_test.dart: (tearDownAll)
+00:09 +222: /work/apps/mobile/test/screenshots/screenshots_test.dart: (setUpAll)
+00:09 +222: /work/apps/mobile/test/widget/page_reader_test.dart: (setUpAll)
+00:09 +222: /work/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (ar, light)
+00:11 +223: /work/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (ar, light)
+00:11 +224: /work/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (ar, light)
+00:12 +225: /work/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (ar, light)
+00:13 +226: /work/apps/mobile/test/widget/page_reader_test.dart: swiping changes the page (RTL: drag right for the next page)
+00:13 +227: /work/apps/mobile/test/screenshots/screenshots_test.dart: M2 screenshots (ar): home, Mushaf page 3, adhkar, tasbih, hajj
+00:13 +228: /work/apps/mobile/test/screenshots/screenshots_test.dart: M2 screenshots (ar): home, Mushaf page 3, adhkar, tasbih, hajj
+00:14 +229: /work/apps/mobile/test/screenshots/screenshots_test.dart: M2 screenshots (ar): home, Mushaf page 3, adhkar, tasbih, hajj
+00:14 +230: /work/apps/mobile/test/widget/page_reader_test.dart: go to page rejects "0" with a validation message
+00:15 +231: /work/apps/mobile/test/screenshots/screenshots_test.dart: M2 screenshots (ar, dark): Mushaf page 50, home
+00:15 +232: /work/apps/mobile/test/widget/page_reader_test.dart: go to page rejects "605" with a validation message
+00:15 +233: /work/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (ar, dark)
+00:15 +234: /work/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (ar, dark)
+00:16 +235: /work/apps/mobile/test/widget/page_reader_test.dart: go to page rejects "" with a validation message
+00:16 +236: /work/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, light)
+00:16 +237: /work/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, light)
+00:17 +238: /work/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, light)
+00:17 +239: /work/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, light)
+00:17 +240: /work/apps/mobile/test/screenshots/screenshots_test.dart: M2 screenshots (en): home, Mushaf page 3, adhkar, tasbih, hajj
+00:18 +241: /work/apps/mobile/test/widget/prayer_screen_test.dart: shows today's six times for the default city (Cairo) in its time zone
+00:19 +242: /work/apps/mobile/test/widget/prayer_screen_test.dart: shows today's six times for the default city (Cairo) in its time zone
+00:19 +243: /work/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, dark)
+00:19 +244: /work/apps/mobile/test/screenshots/screenshots_test.dart: screenshots (en, dark)
+00:19 +245: /work/apps/mobile/test/widget/prayer_screen_test.dart: countdown ticks every second
+00:20 +246: /work/apps/mobile/test/widget/prayer_screen_test.dart: after Isha the next prayer is tomorrow's Fajr
+00:20 +247: /work/apps/mobile/test/widget/prayer_screen_test.dart: city picker: search and choose London; method follows the city
+00:21 +248: /work/apps/mobile/test/widget/settings_test.dart: language switch: ar -> en -> ar, direction follows, choice persists
+00:21 +249: /work/apps/mobile/test/widget/settings_test.dart: language switch: ar -> en -> ar, direction follows, choice persists
+00:22 +250: /work/apps/mobile/test/widget/settings_test.dart: language switch: ar -> en -> ar, direction follows, choice persists
+00:22 +251: /work/apps/mobile/test/widget/settings_test.dart: language switch: ar -> en -> ar, direction follows, choice persists
+00:23 +252: /work/apps/mobile/test/widget/prayer_screen_test.dart: manual adjustment: +/- buttons, clamp at ±30, reset
+00:24 +253: /work/apps/mobile/test/widget/prayer_screen_test.dart: manual adjustment: +/- buttons, clamp at ±30, reset
+00:24 +254: /work/apps/mobile/test/widget/settings_test.dart: theme selector: light, dark, system
+00:24 +255: /work/apps/mobile/test/widget/settings_test.dart: theme selector: light, dark, system
+00:25 +256: /work/apps/mobile/test/widget/settings_test.dart: theme selector: light, dark, system
+00:25 +257: /work/apps/mobile/test/widget/prayer_screen_test.dart: polar night shows an explanation instead of times
+00:25 +258: /work/apps/mobile/test/widget/settings_test.dart: system theme follows the platform brightness
+00:25 +259: /work/apps/mobile/test/widget/settings_test.dart: system theme follows the platform brightness
+00:25 +260: /work/apps/mobile/test/widget/prayer_screen_test.dart: DST: New York before/after the March change shows local clock times
+00:25 +261: /work/apps/mobile/test/widget/settings_test.dart: Quran font size slider: 18..40, persists, updates preview
+00:25 +262: /work/apps/mobile/test/widget/settings_test.dart: slider supports accessibility increase/decrease actions
+00:26 +263: /work/apps/mobile/test/widget/account_test.dart: (setUpAll)
+00:26 +263: /work/apps/mobile/test/widget/settings_test.dart: out-of-range stored font size is clamped
+00:26 +264: /work/apps/mobile/test/widget/account_test.dart: shows default server address and the optional-account note
+00:26 +265: /work/apps/mobile/test/widget/account_test.dart: shows default server address and the optional-account note
+00:27 +266: /work/apps/mobile/test/widget/account_test.dart: shows default server address and the optional-account note
+00:27 +267: /work/apps/mobile/test/widget/account_test.dart: shows default server address and the optional-account note
+00:27 +268: /work/apps/mobile/test/widget/account_test.dart: shows default server address and the optional-account note
+00:28 +269: /work/apps/mobile/test/widget/account_test.dart: save server address: invalid then valid
+00:29 +270: /work/apps/mobile/test/widget/home_test.dart: shows greeting and the free tagline
+00:29 +271: /work/apps/mobile/test/widget/home_test.dart: shows greeting and the free tagline
+00:29 +272: /work/apps/mobile/test/widget/account_test.dart: register, then duplicate, then wrong password, then sign in, sync, sign out
+00:30 +273: /work/apps/mobile/test/widget/home_test.dart: "Start reading" opens Al-Fatihah and records the position
+00:30 +274: /work/apps/mobile/test/widget/account_test.dart: offline: clear error message, nothing lost
+00:30 +275: /work/apps/mobile/test/widget/home_test.dart: "Continue reading" reopens the last ayah
+00:30 +276: /work/apps/mobile/test/widget/account_test.dart: offline sign-in in Arabic shows the Arabic message
+00:30 +277: /work/apps/mobile/test/widget/account_test.dart: offline sign-in in Arabic shows the Arabic message
+00:30 +278: /work/apps/mobile/test/widget/home_test.dart: quick links: surahs, Mushaf, search, bookmarks
+00:31 +279: /work/apps/mobile/test/widget/home_test.dart: quick links: surahs, Mushaf, search, bookmarks
+00:31 +280: /work/apps/mobile/test/widget/home_test.dart: quick links: surahs, Mushaf, search, bookmarks
+00:32 +281: /work/apps/mobile/test/widget/home_test.dart: home shows the polar message when no times exist
+00:32 +282: /work/apps/mobile/test/widget/home_test.dart: (tearDownAll)
+00:32 +282: /work/apps/mobile/test/widget/a11y_test.dart: (setUpAll)
+00:32 +282: /work/apps/mobile/test/widget/a11y_test.dart: en/light: tap targets, labels and text contrast on all screens
+00:35 +283: /work/apps/mobile/test/widget/a11y_test.dart: en/light: tap targets, labels and text contrast on all screens
+00:35 +284: /work/apps/mobile/test/widget/a11y_test.dart: en/light: tap targets, labels and text contrast on all screens
+00:36 +285: /work/apps/mobile/test/widget/a11y_test.dart: en/light: tap targets, labels and text contrast on all screens
+00:36 +286: /work/apps/mobile/test/widget/a11y_test.dart: en/light: tap targets, labels and text contrast on all screens
+00:37 +287: /work/apps/mobile/test/widget/surah_list_test.dart: app bar actions open search and Mushaf page 1
+00:37 +288: /work/apps/mobile/test/widget/a11y_test.dart: ar/light: tap targets and labels on all screens
+00:39 +289: /work/apps/mobile/test/widget/bookmarks_test.dart: empty state
+00:39 +290: /work/apps/mobile/test/widget/a11y_test.dart: en/dark: tap targets, labels and text contrast on all screens
+00:39 +291: /work/apps/mobile/test/widget/a11y_test.dart: en/dark: tap targets, labels and text contrast on all screens
+00:39 +292: /work/apps/mobile/test/widget/a11y_test.dart: en/dark: tap targets, labels and text contrast on all screens
+00:40 +293: /work/apps/mobile/test/widget/a11y_test.dart: en/dark: tap targets, labels and text contrast on all screens
+00:41 +294: /work/apps/mobile/test/widget/bookmarks_test.dart: bookmark added in the reader appears in the list
+00:41 +295: /work/apps/mobile/test/widget/a11y_test.dart: ar/dark: tap targets and labels on all screens
+00:41 +296: /work/apps/mobile/test/widget/a11y_test.dart: ar/dark: tap targets and labels on all screens
+00:42 +297: /work/apps/mobile/test/widget/basmala_test.dart: surah reader: surah 2 starts with the basmala line
+00:43 +298: /work/apps/mobile/test/widget/basmala_test.dart: surah reader: surah 2 starts with the basmala line
+00:44 +299: /work/apps/mobile/test/widget/sections_test.dart: Adhkar morning by default before Asr, with the review notice and per-item counters
+00:44 +300: /work/apps/mobile/test/widget/sections_test.dart: Adhkar morning by default before Asr, with the review notice and per-item counters
+00:45 +301: /work/apps/mobile/test/widget/sections_test.dart: Adhkar morning by default before Asr, with the review notice and per-item counters
+00:45 +302: /work/apps/mobile/test/widget/sections_test.dart: Adhkar morning by default before Asr, with the review notice and per-item counters
+00:45 +303: /work/apps/mobile/test/widget/basmala_test.dart: surah reader opened mid-surah shows the basmala when scrolled to the start
+00:45 +304: /work/apps/mobile/test/widget/sections_test.dart: Adhkar evening after Asr; switching sessions; reset
+00:46 +305: /work/apps/mobile/test/widget/basmala_test.dart: page 604: three banners and three basmalas (112, 113, 114)
+00:46 +306: /work/apps/mobile/test/widget/sections_test.dart: Adhkar Hisn al-Muslim: 134 chapters, filter, chapter with copy
+00:46 +307: /work/apps/mobile/test/widget/sections_test.dart: Adhkar Hisn al-Muslim: 134 chapters, filter, chapter with copy
+00:46 +308: /work/apps/mobile/test/widget/sections_test.dart: Adhkar Hisn al-Muslim: 134 chapters, filter, chapter with copy
+00:46 +309: /work/apps/mobile/test/widget/sections_test.dart: Adhkar Hisn al-Muslim: 134 chapters, filter, chapter with copy
+00:46 +310: /work/apps/mobile/test/widget/sections_test.dart: Tasbih counts, completes a round at 33, changes target, resets; survives a restart
+00:47 +311: /work/apps/mobile/test/widget/mushaf_test.dart: page 3: 15 lines, each drawn only from canonical words with the display map applied
+00:47 +312: /work/apps/mobile/test/widget/mushaf_test.dart: page 3: 15 lines, each drawn only from canonical words with the display map applied
+00:48 +313: /work/apps/mobile/test/widget/mushaf_test.dart: page 3: 15 lines, each drawn only from canonical words with the display map applied
+00:48 +314: /work/apps/mobile/test/widget/mushaf_test.dart: page 3: 15 lines, each drawn only from canonical words with the display map applied
+00:48 +315: /work/apps/mobile/test/widget/mushaf_test.dart: page 3: 15 lines, each drawn only from canonical words with the display map applied
+00:48 +316: /work/apps/mobile/test/widget/mushaf_test.dart: page 3: 15 lines, each drawn only from canonical words with the display map applied
+00:49 +317: /work/apps/mobile/test/widget/sections_test.dart: Hajj & Umrah English UI says the guide is Arabic only
+00:49 +318: /work/apps/mobile/test/widget/mushaf_test.dart: display glyph map is applied to the drawn string only (stored text untouched)
+00:49 +319: /work/apps/mobile/test/widget/mushaf_test.dart: display glyph map is applied to the drawn string only (stored text untouched)
+00:49 +320: /work/apps/mobile/test/widget/sections_test.dart: Home section tiles open Adhkar, Tasbih, Qibla, Hajj, Hisn and Bookmarks
+00:50 +321: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+00:50 +322: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+00:50 +323: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+00:51 +324: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+00:53 +325: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+00:54 +326: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+00:55 +327: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+00:55 +328: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+00:56 +329: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+00:56 +330: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+00:57 +331: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+00:57 +332: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+00:57 +333: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+00:59 +334: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+00:59 +335: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+01:00 +336: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+01:01 +337: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+01:01 +338: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+01:02 +339: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+01:02 +340: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+01:03 +341: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+01:03 +342: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+01:05 +343: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+01:06 +344: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+01:06 +345: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+01:07 +346: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 390x844 without overflow; 15 lines fit
+01:16 +347: /work/apps/mobile/test/widget/mushaf_test.dart: all 604 pages build at 320x568 without overflow; 15 lines fit
+01:38 +348: /work/apps/mobile/test/widget/mushaf_test.dart: pages 1 and 2 are centred 8-line pages with a surah band
+01:38 +349: /work/apps/mobile/test/widget/mushaf_test.dart: a drag turns the page like a book (the leaf rotates about the spine)
+01:38 +350: /work/apps/mobile/test/widget/mushaf_test.dart: page slider jumps to a page
+01:39 +351: /work/apps/mobile/test/widget/mushaf_test.dart: tapping the margin hides and shows the controls
+01:39 +352: /work/apps/mobile/test/widget/mushaf_test.dart: tap an ayah: highlight + actions; bookmark and copy the canonical text
+01:39 +353: /work/apps/mobile/test/widget/mushaf_test.dart: play from an ayah: the playing ayah is highlighted and pages turn automatically
+01:40 +354: /work/apps/mobile/test/widget/mushaf_test.dart: offline: the mini player says so and offers a retry
+01:40 +355: /work/apps/mobile/test/widget/mushaf_test.dart: recitation settings sheet: reciter and repeat are saved
+01:41 +356: /work/apps/mobile/test/widget/mushaf_test.dart: the last page is remembered and reopened from home
+01:42 +357: /work/apps/mobile/test/widget/mushaf_test.dart: surah list and search open the right Mushaf page
+01:42 +358: /work/apps/mobile/test/widget/mushaf_test.dart: (tearDownAll)
+01:42 +358: All tests passed!
 exit=0

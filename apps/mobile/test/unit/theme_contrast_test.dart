@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/theme/app_theme.dart';
 import 'package:rattil/theme/design_tokens.dart';
+import 'package:rattil/ui/home_screen.dart';
 
 double _lum(Color c) {
   double ch(double v) => v <= 0.03928 ? v / 12.92 : math.pow((v + 0.055) / 1.055, 2.4).toDouble();
@@ -44,6 +45,13 @@ void main() {
         'onInverseSurface/inverseSurface': (s.onInverseSurface, s.inverseSurface),
         'paperInk/paper': (AppTheme.token(b, 'paperInk'), AppTheme.token(b, 'paper')),
         'onSurface/paper': (s.onSurface, AppTheme.token(b, 'paper')),
+        'paperInk/surface2 (Mushaf header)': (AppTheme.token(b, 'paperInk'), AppTheme.token(b, 'surface2')),
+        'paperInk/accentSoft (surah band)': (AppTheme.token(b, 'paperInk'), AppTheme.token(b, 'accentSoft')),
+        'paperInk/verseHighlight (playing ayah)': (AppTheme.token(b, 'paperInk'), AppTheme.token(b, 'verseHighlight')),
+        'primary/accentSoft (nav label)': (s.primary, AppTheme.token(b, 'accentSoft')),
+        'hero text/top': (HeroColors.text, HeroColors.top),
+        'hero text/bottom': (HeroColors.text, HeroColors.bottom),
+        'hero accent/top': (HeroColors.accent, HeroColors.top),
       };
       for (final e in pairs.entries) {
         expect(contrast(e.value.$1, e.value.$2), greaterThanOrEqualTo(4.5), reason: e.key);

@@ -28,7 +28,7 @@ void main() {
 
   Future<TestApp> open(WidgetTester tester, {String locale = 'en', Map<String, Object> prefs = const {}}) async {
     final app = await pumpApp(tester, locale: locale, prefs: prefs, httpClient: client, size: tallPhone);
-    await goToTab(tester, 4);
+    await openSettings(tester);
     await tester.tap(find.byKey(const Key('accountTile')));
     await tester.pumpAndSettle();
     return app;

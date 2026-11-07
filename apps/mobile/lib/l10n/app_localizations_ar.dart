@@ -116,7 +116,130 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accountSyncNow => 'زامن الآن';
 
   @override
+  String adhanBody(String name, String city) {
+    return 'دخل وقت صلاة $name حسب توقيت $city';
+  }
+
+  @override
+  String get adhanDenied => 'الإشعارات غير مسموح بها. فعّلها من إعدادات النظام.';
+
+  @override
+  String get adhanEnable => 'نبّهني عند دخول وقت الصلاة';
+
+  @override
+  String get adhanNote => 'تُجدول على هذا الجهاز للأيام السبعة القادمة، ويجدّدها فتح التطبيق.';
+
+  @override
+  String get adhanSettings => 'تنبيهات الأذان';
+
+  @override
+  String adhanTitle(String name) {
+    return 'حان وقت صلاة $name';
+  }
+
+  @override
+  String get adhkarArabicOnly => 'هذا المحتوى متاح بالعربية فقط.';
+
+  @override
+  String get adhkarCopied => 'تم النسخ';
+
+  @override
+  String get adhkarCopy => 'نسخ';
+
+  @override
+  String get adhkarDone => 'تمّ';
+
+  @override
+  String get adhkarEvening => 'المساء';
+
+  @override
+  String get adhkarEveningTitle => 'أذكار المساء';
+
+  @override
+  String get adhkarHisn => 'حصن المسلم';
+
+  @override
+  String adhkarHisnCount(String n) {
+    return 'عدد الأذكار: $n';
+  }
+
+  @override
+  String get adhkarHisnSearch => 'ابحث في الأبواب';
+
+  @override
+  String get adhkarMorning => 'الصباح';
+
+  @override
+  String get adhkarMorningTitle => 'أذكار الصباح';
+
+  @override
+  String adhkarProgress(String done, String total) {
+    return 'أُنجز $done من $total';
+  }
+
+  @override
+  String adhkarRemaining(String n) {
+    return 'متبقٍّ $n';
+  }
+
+  @override
+  String adhkarRepeat(String n) {
+    return 'التكرار $n';
+  }
+
+  @override
+  String get adhkarReset => 'البدء من جديد';
+
+  @override
+  String get adhkarReviewNotice =>
+      'بانتظار المراجعة الشرعية. النصوص من مجموعة أذكار Kazi Shariar (CC BY 4.0) ومن حصن المسلم، وأعداد التكرار وفق حصن المسلم.';
+
+  @override
+  String get adhkarTapToCount => 'اضغط على البطاقة للعدّ';
+
+  @override
   String get appName => 'رتّل';
+
+  @override
+  String get audioBasmala => 'البسملة';
+
+  @override
+  String get audioLoading => 'جارٍ التحميل…';
+
+  @override
+  String get audioNext => 'الآية التالية';
+
+  @override
+  String get audioOffline => 'تعذّر تحميل التلاوة. تحقّق من اتصالك بالإنترنت ثم أعد المحاولة.';
+
+  @override
+  String get audioPause => 'إيقاف مؤقت';
+
+  @override
+  String get audioPlay => 'تشغيل';
+
+  @override
+  String get audioPrevious => 'الآية السابقة';
+
+  @override
+  String get audioReciter => 'القارئ';
+
+  @override
+  String get audioRepeat => 'تكرار كل آية';
+
+  @override
+  String audioRepeatN(String n) {
+    return '$n×';
+  }
+
+  @override
+  String get audioStop => 'إيقاف';
+
+  @override
+  String get audioStreamNote => 'تُبثّ التلاوات من موقع everyayah.com وتحتاج إلى اتصال بالإنترنت.';
+
+  @override
+  String get audioTitle => 'التلاوة';
 
   @override
   String bookmarksDelete(String label) {
@@ -139,19 +262,92 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonRetry => 'إعادة المحاولة';
 
   @override
+  String get hajjHajj => 'الحج';
+
+  @override
+  String get hajjIhram => 'الإحرام';
+
+  @override
+  String get hajjReviewNotice =>
+      'بانتظار المراجعة الشرعية: لم يراجع هذا الدليلَ عالمٌ مختص بعد. تحقّق من عالم موثوق قبل الاعتماد عليه.';
+
+  @override
+  String get hajjTitle => 'الحج والعمرة';
+
+  @override
+  String get hajjUmrah => 'العمرة';
+
+  @override
+  String homeHijriDate(String day, String month, String year) {
+    return '$day $month $year هـ';
+  }
+
+  @override
+  String homeLastPage(String page) {
+    return 'آخر صفحة: $page';
+  }
+
+  @override
   String get homeNextPrayer => 'الصلاة القادمة';
+
+  @override
+  String get homeOpenMushaf => 'افتح المصحف';
 
   @override
   String get homeQuickLinks => 'روابط سريعة';
 
   @override
+  String get homeSections => 'الأقسام';
+
+  @override
+  String get homeTodayTimes => 'مواقيت اليوم';
+
+  @override
   String get homeWelcome => 'السلام عليكم';
+
+  @override
+  String get moreTitle => 'المزيد';
+
+  @override
+  String get mushafCopied => 'نُسخت الآية';
+
+  @override
+  String get mushafCopy => 'نسخ الآية';
+
+  @override
+  String get mushafPlayFromHere => 'استمع من هنا';
+
+  @override
+  String get mushafPlayPage => 'استمع إلى الصفحة';
+
+  @override
+  String get mushafPlaySurah => 'استمع إلى السورة';
+
+  @override
+  String get mushafReadAsList => 'اقرأ السورة آيةً آية';
+
+  @override
+  String mushafSlider(String page) {
+    return 'الصفحة $page من ٦٠٤';
+  }
+
+  @override
+  String get mushafTapHint => 'اضغط على آية للاستماع أو الحفظ أو النسخ';
+
+  @override
+  String get mushafToggleControls => 'إظهار عناصر التحكم أو إخفاؤها';
+
+  @override
+  String get navAdhkar => 'الأذكار';
 
   @override
   String get navBookmarks => 'العلامات';
 
   @override
   String get navHome => 'الرئيسية';
+
+  @override
+  String get navMore => 'المزيد';
 
   @override
   String get navPrayer => 'الصلاة';
@@ -271,6 +467,38 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get prayerTitle => 'مواقيت الصلاة';
+
+  @override
+  String get qiblaFacing => 'أنت متجه نحو القبلة';
+
+  @override
+  String qiblaHeading(String deg) {
+    return 'اتجاه الهاتف: $deg°';
+  }
+
+  @override
+  String get qiblaLiveNote =>
+      'أمسك الهاتف أفقيًا بعيدًا عن المعادن والمغناطيس، وإن اضطربت القراءة فحرّكه على شكل الرقم ٨. تقيس البوصلة الشمال المغناطيسي، وقد يختلف عن الشمال الحقيقي بضع درجات.';
+
+  @override
+  String get qiblaStatic =>
+      'لا تتوفر قراءة للبوصلة على هذا الجهاز: يبيّن الرسم اتجاه القبلة بالنسبة إلى الشمال الحقيقي.';
+
+  @override
+  String get qiblaTitle => 'القبلة';
+
+  @override
+  String qiblaTurnLeft(String deg) {
+    return 'استدر يسارًا $deg°';
+  }
+
+  @override
+  String qiblaTurnRight(String deg) {
+    return 'استدر يمينًا $deg°';
+  }
+
+  @override
+  String get qiblaWaiting => 'جارٍ قراءة البوصلة…';
 
   @override
   String quranAyahCount(String count) {
@@ -429,4 +657,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tagline => 'القرآن والصلاة والذكر — مجاني بلا إعلانات';
+
+  @override
+  String tasbihCounter(String count, String target) {
+    return 'العدد $count من $target';
+  }
+
+  @override
+  String get tasbihReset => 'تصفير';
+
+  @override
+  String tasbihRounds(String n) {
+    return 'الدورات: $n';
+  }
+
+  @override
+  String get tasbihTap => 'اضغط للتسبيح';
+
+  @override
+  String get tasbihTarget => 'العدد المستهدف';
+
+  @override
+  String get tasbihTitle => 'المسبحة';
+
+  @override
+  String tasbihTotal(String n) {
+    return 'الإجمالي: $n';
+  }
 }

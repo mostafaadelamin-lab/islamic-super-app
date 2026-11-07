@@ -63,6 +63,13 @@ class _SearchScreenState extends State<SearchScreen> {
             title: QuranText(h.text, ayahNumber: h.ref.ayah, size: 22),
             subtitle: Text(l.quranSurahAyah(surahName(context, q.surah(h.ref.surah)), context.num(h.ref.ayah))),
             onTap: () => openSurah(context, h.ref.surah, ayah: h.ref.ayah),
+            trailing: IconButton(
+              key: Key('hitMushaf-${h.ref.surah}-${h.ref.ayah}'),
+              tooltip:
+                  '${l.homeOpenMushaf}: ${l.quranSurahAyah(surahName(context, q.surah(h.ref.surah)), context.num(h.ref.ayah))}',
+              icon: const Icon(Icons.chrome_reader_mode_outlined),
+              onPressed: () => openMushafAt(context, h.ref),
+            ),
           );
         },
       );

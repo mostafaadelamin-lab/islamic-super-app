@@ -116,7 +116,130 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountSyncNow => 'Sync now';
 
   @override
+  String adhanBody(String name, String city) {
+    return '$name prayer time in $city';
+  }
+
+  @override
+  String get adhanDenied => 'Notifications are not allowed. Turn them on in the system settings.';
+
+  @override
+  String get adhanEnable => 'Notify me at prayer times';
+
+  @override
+  String get adhanNote => 'Scheduled on this device for the next 7 days; opening the app renews them.';
+
+  @override
+  String get adhanSettings => 'Adhan notifications';
+
+  @override
+  String adhanTitle(String name) {
+    return 'Time for $name';
+  }
+
+  @override
+  String get adhkarArabicOnly => 'This content is available in Arabic only.';
+
+  @override
+  String get adhkarCopied => 'Copied';
+
+  @override
+  String get adhkarCopy => 'Copy';
+
+  @override
+  String get adhkarDone => 'Done';
+
+  @override
+  String get adhkarEvening => 'Evening';
+
+  @override
+  String get adhkarEveningTitle => 'Evening adhkar';
+
+  @override
+  String get adhkarHisn => 'Hisn al-Muslim';
+
+  @override
+  String adhkarHisnCount(String n) {
+    return '$n entries';
+  }
+
+  @override
+  String get adhkarHisnSearch => 'Search chapters';
+
+  @override
+  String get adhkarMorning => 'Morning';
+
+  @override
+  String get adhkarMorningTitle => 'Morning adhkar';
+
+  @override
+  String adhkarProgress(String done, String total) {
+    return '$done of $total completed';
+  }
+
+  @override
+  String adhkarRemaining(String n) {
+    return '$n left';
+  }
+
+  @override
+  String adhkarRepeat(String n) {
+    return 'Repeat $n';
+  }
+
+  @override
+  String get adhkarReset => 'Start again';
+
+  @override
+  String get adhkarReviewNotice =>
+      'Pending religious review. Texts: Kazi Shariar adhkar dataset (CC BY 4.0) and Hisn al-Muslim; repetition counts follow Hisn al-Muslim.';
+
+  @override
+  String get adhkarTapToCount => 'Tap a card to count it';
+
+  @override
   String get appName => 'Rattil';
+
+  @override
+  String get audioBasmala => 'Basmala';
+
+  @override
+  String get audioLoading => 'Loading…';
+
+  @override
+  String get audioNext => 'Next ayah';
+
+  @override
+  String get audioOffline => 'Couldn\'t load the recitation. Check your internet connection and try again.';
+
+  @override
+  String get audioPause => 'Pause';
+
+  @override
+  String get audioPlay => 'Play';
+
+  @override
+  String get audioPrevious => 'Previous ayah';
+
+  @override
+  String get audioReciter => 'Reciter';
+
+  @override
+  String get audioRepeat => 'Repeat each ayah';
+
+  @override
+  String audioRepeatN(String n) {
+    return '$n×';
+  }
+
+  @override
+  String get audioStop => 'Stop';
+
+  @override
+  String get audioStreamNote => 'Recitations are streamed from everyayah.com and need an internet connection.';
+
+  @override
+  String get audioTitle => 'Recitation';
 
   @override
   String bookmarksDelete(String label) {
@@ -139,19 +262,92 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonRetry => 'Retry';
 
   @override
+  String get hajjHajj => 'Hajj';
+
+  @override
+  String get hajjIhram => 'Ihram';
+
+  @override
+  String get hajjReviewNotice =>
+      'Pending religious review: this guide has not yet been reviewed by a qualified scholar. Check with a trusted scholar before relying on it.';
+
+  @override
+  String get hajjTitle => 'Hajj & Umrah';
+
+  @override
+  String get hajjUmrah => 'Umrah';
+
+  @override
+  String homeHijriDate(String day, String month, String year) {
+    return '$day $month $year AH';
+  }
+
+  @override
+  String homeLastPage(String page) {
+    return 'Last page: $page';
+  }
+
+  @override
   String get homeNextPrayer => 'Next prayer';
+
+  @override
+  String get homeOpenMushaf => 'Open the Mushaf';
 
   @override
   String get homeQuickLinks => 'Quick links';
 
   @override
+  String get homeSections => 'Sections';
+
+  @override
+  String get homeTodayTimes => 'Today\'s prayer times';
+
+  @override
   String get homeWelcome => 'Peace be upon you';
+
+  @override
+  String get moreTitle => 'More';
+
+  @override
+  String get mushafCopied => 'Ayah copied';
+
+  @override
+  String get mushafCopy => 'Copy ayah';
+
+  @override
+  String get mushafPlayFromHere => 'Listen from here';
+
+  @override
+  String get mushafPlayPage => 'Listen to this page';
+
+  @override
+  String get mushafPlaySurah => 'Listen to the surah';
+
+  @override
+  String get mushafReadAsList => 'Read as a list';
+
+  @override
+  String mushafSlider(String page) {
+    return 'Page $page of 604';
+  }
+
+  @override
+  String get mushafTapHint => 'Tap an ayah for listening, bookmark and copy';
+
+  @override
+  String get mushafToggleControls => 'Show or hide controls';
+
+  @override
+  String get navAdhkar => 'Adhkar';
 
   @override
   String get navBookmarks => 'Bookmarks';
 
   @override
   String get navHome => 'Home';
+
+  @override
+  String get navMore => 'More';
 
   @override
   String get navPrayer => 'Prayer';
@@ -271,6 +467,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prayerTitle => 'Prayer times';
+
+  @override
+  String get qiblaFacing => 'You are facing the qibla';
+
+  @override
+  String qiblaHeading(String deg) {
+    return 'Phone heading: $deg°';
+  }
+
+  @override
+  String get qiblaLiveNote =>
+      'Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The compass measures magnetic north, so it can differ from true north by a few degrees.';
+
+  @override
+  String get qiblaStatic => 'No compass reading on this device: the diagram shows the qibla from true north.';
+
+  @override
+  String get qiblaTitle => 'Qibla';
+
+  @override
+  String qiblaTurnLeft(String deg) {
+    return 'Turn left $deg°';
+  }
+
+  @override
+  String qiblaTurnRight(String deg) {
+    return 'Turn right $deg°';
+  }
+
+  @override
+  String get qiblaWaiting => 'Reading the compass…';
 
   @override
   String quranAyahCount(String count) {
@@ -429,4 +656,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tagline => 'Quran, prayer and remembrance — free, no ads';
+
+  @override
+  String tasbihCounter(String count, String target) {
+    return 'Count $count of $target';
+  }
+
+  @override
+  String get tasbihReset => 'Reset';
+
+  @override
+  String tasbihRounds(String n) {
+    return 'Rounds: $n';
+  }
+
+  @override
+  String get tasbihTap => 'Tap to count';
+
+  @override
+  String get tasbihTarget => 'Target';
+
+  @override
+  String get tasbihTitle => 'Tasbih';
+
+  @override
+  String tasbihTotal(String n) {
+    return 'Total: $n';
+  }
 }

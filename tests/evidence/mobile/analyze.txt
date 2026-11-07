@@ -1,3 +1,3 @@
 Analyzing mobile...                                             
-No issues found! (ran in 15.1s)
+No issues found! (ran in 39.9s)
 exit=0

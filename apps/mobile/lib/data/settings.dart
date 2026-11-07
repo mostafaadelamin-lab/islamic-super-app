@@ -104,6 +104,52 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  // --- Recitation ---------------------------------------------------------------
+  /// everyayah.com folder of the chosen reciter (null = catalogue default).
+  String? get reciter => _prefs.getString('audio.reciter');
+  Future<void> setReciter(String folder) async {
+    await _prefs.setString('audio.reciter', folder);
+    notifyListeners();
+  }
+
+  static const repeatChoices = [1, 2, 3, 5, 10];
+
+  /// How many times each ayah is played.
+  int get repeat => (_prefs.getInt('audio.repeat') ?? 1).clamp(1, 10);
+  Future<void> setRepeat(int n) async {
+    await _prefs.setInt('audio.repeat', n.clamp(1, 10));
+    notifyListeners();
+  }
+
+  // --- Adhan notifications --------------------------------------------------------
+  bool get adhanEnabled => _prefs.getBool('adhan.enabled') ?? false;
+
+  /// False until the user has touched the adhan switch (nothing to cancel then).
+  bool get adhanConfigured => _prefs.containsKey('adhan.enabled');
+  Future<void> setAdhanEnabled(bool v) async {
+    await _prefs.setBool('adhan.enabled', v);
+    notifyListeners();
+  }
+
+  /// Per-prayer switch (all five on by default once notifications are enabled).
+  bool adhanFor(String prayer) => _prefs.getBool('adhan.$prayer') ?? true;
+  Future<void> setAdhanFor(String prayer, bool v) async {
+    await _prefs.setBool('adhan.$prayer', v);
+    notifyListeners();
+  }
+
+  /// Prayers that should get a notification right now.
+  Set<String> get adhanPrayers => adhanEnabled
+      ? {
+          for (final p in obligatoryPrayers)
+            if (adhanFor(p)) p,
+        }
+      : const {};
+
+  // --- Tasbih and adhkar progress (raw JSON, owned by their controllers) --------
+  String? rawJson(String key) => _prefs.getString(key);
+  Future<void> setRawJson(String key, String value) => _prefs.setString(key, value);
+
   // --- Account ----------------------------------------------------------------
   String get apiBaseUrl => _prefs.getString('apiBaseUrl') ?? defaultApiBaseUrl;
   Future<void> setApiBaseUrl(String url) async {

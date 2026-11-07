@@ -2,6 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
+import '../domain/adhkar.dart';
+import '../domain/audio_queue.dart';
+import '../domain/hajj.dart';
+import '../domain/mushaf_layout.dart';
 import '../domain/prayer.dart';
 import '../domain/quran.dart';
 import '../domain/search.dart';
@@ -42,10 +46,15 @@ class City {
   String name(bool arabic) => arabic ? nameAr : nameEn;
 }
 
-/// Everything the app bundles: Quran, pages, prayer config, cities, maps.
+/// Everything the app bundles: Quran, pages, 15-line layout, prayer config,
+/// cities, maps, reciters, adhkar, Hisn al-Muslim and the Hajj guide.
 class AppContent {
   AppContent({
     required this.quran,
+    required this.mushaf,
+    required this.reciters,
+    required this.adhkar,
+    required this.hajj,
     required this.integrity,
     required this.prayerConfig,
     required this.cities,
@@ -57,6 +66,11 @@ class AppContent {
   static const quranAsset = 'assets/content/quran.v1.json';
   static const pagesAsset = 'assets/content/pages.v1.json';
   static const integrityAsset = 'assets/content/integrity.v1.json';
+  static const mushafLinesAsset = 'assets/content/mushaf-lines.v1.json';
+  static const adhkarAsset = 'assets/content/adhkar.v1.json';
+  static const hisnAsset = 'assets/content/hisn.json';
+  static const hajjAsset = 'assets/content/hajj.v1.json';
+  static const recitersAsset = 'assets/schemas/reciters.json';
   static const versionsAsset = 'assets/content/VERSIONS.json';
   static const methodsAsset = 'assets/schemas/methods.json';
   static const citiesAsset = 'assets/schemas/cities.json';
@@ -64,6 +78,10 @@ class AppContent {
   static const normalizationAsset = 'assets/schemas/search-normalization.json';
 
   final QuranContent quran;
+  final MushafLayout mushaf;
+  final ReciterCatalog reciters;
+  final AdhkarContent adhkar;
+  final HajjGuide hajj;
   final Map<String, dynamic> integrity;
   final PrayerConfig prayerConfig;
   final List<City> cities;
@@ -89,6 +107,13 @@ class AppContent {
     final citiesJson = await j(citiesAsset);
     return AppContent(
       quran: QuranContent.fromJson(quranJson, pagesJson),
+      mushaf: MushafLayout.fromJson(await j(mushafLinesAsset)),
+      reciters: ReciterCatalog.fromJson(await j(recitersAsset)),
+      adhkar: AdhkarContent.fromJson(
+        await j(adhkarAsset),
+        jsonDecode(await bundle.loadString(hisnAsset)) as List<dynamic>,
+      ),
+      hajj: HajjGuide.fromJson(await j(hajjAsset)),
       integrity: await j(integrityAsset),
       prayerConfig: PrayerConfig.fromJson(await j(methodsAsset)),
       cities: List.unmodifiable([
