@@ -97,6 +97,10 @@ What the tests cover:
   size per page so every line fits), book-like RTL page turn, tap an ayah to play / bookmark / copy.
 - Recitation: per-ayah MP3 streamed from everyayah.com (basmala before ayah 1 except surahs 1 and 9),
   repeat count and reciter saved in settings, automatic page turn while playing.
+- Tafsir: tapping an ayah (Mushaf or surah reader) shows its Tafsir al-Muyassar (King Fahd Complex,
+  `content/tafsir/dist/muyassar.v1.json`, copied byte-for-byte to `assets/content/tafsir-muyassar.v1.json`) with
+  previous / next ayah. The 2.5 MB file is read on first use and decoded in a background isolate
+  (`lib/data/tafsir.dart`). Arabic only; the English UI says so.
 - Adhkar counts and sessions (`lib/domain/adhkar.dart`) are re-derived in tests from the Hisn chapter
   "أذكار الصباح والمساء"; adhkar and the Hajj guide show a "pending religious review" notice.
 - Adhan notifications are scheduled for the next 7 days (at most 60 pending) through

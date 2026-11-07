@@ -1226,6 +1226,48 @@ abstract class AppLocalizations {
   /// **'System'**
   String get settingsThemeSystem;
 
+  /// shared key "tafsir.arabicOnly"
+  ///
+  /// In en, this message translates to:
+  /// **'This tafsir is available in Arabic only.'**
+  String get tafsirArabicOnly;
+
+  /// shared key "tafsir.error"
+  ///
+  /// In en, this message translates to:
+  /// **'The tafsir could not be loaded.'**
+  String get tafsirError;
+
+  /// shared key "tafsir.loading"
+  ///
+  /// In en, this message translates to:
+  /// **'Loading the tafsir…'**
+  String get tafsirLoading;
+
+  /// shared key "tafsir.next"
+  ///
+  /// In en, this message translates to:
+  /// **'Next ayah'**
+  String get tafsirNext;
+
+  /// shared key "tafsir.prev"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous ayah'**
+  String get tafsirPrev;
+
+  /// shared key "tafsir.source"
+  ///
+  /// In en, this message translates to:
+  /// **'King Fahd Glorious Quran Printing Complex'**
+  String get tafsirSource;
+
+  /// shared key "tafsir.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Al-Tafsir al-Muyassar'**
+  String get tafsirTitle;
+
   /// shared key "tagline"
   ///
   /// In en, this message translates to:

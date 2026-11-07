@@ -656,6 +656,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsThemeSystem => 'حسب الجهاز';
 
   @override
+  String get tafsirArabicOnly => 'هذا التفسير متاح بالعربية فقط.';
+
+  @override
+  String get tafsirError => 'تعذّر تحميل التفسير.';
+
+  @override
+  String get tafsirLoading => 'جارٍ تحميل التفسير…';
+
+  @override
+  String get tafsirNext => 'الآية التالية';
+
+  @override
+  String get tafsirPrev => 'الآية السابقة';
+
+  @override
+  String get tafsirSource => 'مجمع الملك فهد لطباعة المصحف الشريف';
+
+  @override
+  String get tafsirTitle => 'التفسير الميسر';
+
+  @override
   String get tagline => 'القرآن والصلاة والذكر — مجاني بلا إعلانات';
 
   @override

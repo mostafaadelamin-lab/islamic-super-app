@@ -2,12 +2,12 @@
  "tests": {
   "byCategory": {
    "unit": {
-    "passed": 222,
+    "passed": 230,
     "failed": 0,
     "skipped": 0
    },
    "widget": {
-    "passed": 128,
+    "passed": 138,
     "failed": 0,
     "skipped": 0
    },
@@ -18,31 +18,31 @@
    }
   },
   "total": {
-   "passed": 358,
+   "passed": 376,
    "failed": 0,
    "skipped": 0
   }
  },
  "coverage": {
   "lib/domain": {
-   "linesFound": 596,
-   "linesHit": 581,
-   "percent": 97.48
+   "linesFound": 614,
+   "linesHit": 599,
+   "percent": 97.56
   },
   "lib/data": {
-   "linesFound": 560,
-   "linesHit": 498,
-   "percent": 88.93
+   "linesFound": 570,
+   "linesHit": 508,
+   "percent": 89.12
   },
   "lib/ui": {
-   "linesFound": 1943,
-   "linesHit": 1924,
-   "percent": 99.02
+   "linesFound": 2033,
+   "linesHit": 2016,
+   "percent": 99.16
   },
   "lib (excluding generated l10n)": {
-   "linesFound": 3225,
-   "linesHit": 3125,
-   "percent": 96.9
+   "linesFound": 3344,
+   "linesHit": 3246,
+   "percent": 97.07
   },
   "perFile": {
    "lib/app.dart": {
@@ -51,8 +51,8 @@
     "percent": 92.6
    },
    "lib/app_services.dart": {
-    "lines": 19,
-    "hit": 19,
+    "lines": 20,
+    "hit": 20,
     "percent": 100.0
    },
    "lib/data/account.dart": {
@@ -104,6 +104,11 @@
     "lines": 14,
     "hit": 13,
     "percent": 92.9
+   },
+   "lib/data/tafsir.dart": {
+    "lines": 10,
+    "hit": 10,
+    "percent": 100.0
    },
    "lib/domain/adhan_schedule.dart": {
     "lines": 21,
@@ -165,6 +170,11 @@
     "hit": 15,
     "percent": 100.0
    },
+   "lib/domain/tafsir.dart": {
+    "lines": 18,
+    "hit": 18,
+    "percent": 100.0
+   },
    "lib/domain/tasbih.dart": {
     "lines": 17,
     "hit": 17,
@@ -181,14 +191,14 @@
     "percent": 93.8
    },
    "lib/l10n/app_localizations_ar.dart": {
-    "lines": 237,
-    "hit": 181,
-    "percent": 76.4
+    "lines": 244,
+    "hit": 187,
+    "percent": 76.6
    },
    "lib/l10n/app_localizations_en.dart": {
-    "lines": 237,
-    "hit": 198,
-    "percent": 83.5
+    "lines": 244,
+    "hit": 207,
+    "percent": 84.8
    },
    "lib/theme/app_theme.dart": {
     "lines": 79,
@@ -219,6 +229,11 @@
     "lines": 85,
     "hit": 84,
     "percent": 98.8
+   },
+   "lib/ui/ayah_sheet.dart": {
+    "lines": 133,
+    "hit": 128,
+    "percent": 96.2
    },
    "lib/ui/bookmarks_screen.dart": {
     "lines": 30,
@@ -266,9 +281,9 @@
     "percent": 99.6
    },
    "lib/ui/page_reader_screen.dart": {
-    "lines": 167,
-    "hit": 159,
-    "percent": 95.2
+    "lines": 121,
+    "hit": 120,
+    "percent": 99.2
    },
    "lib/ui/prayer_model.dart": {
     "lines": 33,
@@ -306,8 +321,8 @@
     "percent": 100.0
    },
    "lib/ui/surah_reader_screen.dart": {
-    "lines": 95,
-    "hit": 95,
+    "lines": 98,
+    "hit": 98,
     "percent": 100.0
    },
    "lib/ui/tasbih_screen.dart": {

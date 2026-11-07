@@ -139,5 +139,12 @@
   "adhan.enable": "Notify me at prayer times",
   "adhan.denied": "Notifications are not allowed. Turn them on in the system settings.",
   "adhan.note": "Scheduled on this device for the next 7 days; opening the app renews them.",
-  "more.title": "More"
+  "more.title": "More",
+  "tafsir.title": "Al-Tafsir al-Muyassar",
+  "tafsir.source": "King Fahd Glorious Quran Printing Complex",
+  "tafsir.arabicOnly": "This tafsir is available in Arabic only.",
+  "tafsir.prev": "Previous ayah",
+  "tafsir.next": "Next ayah",
+  "tafsir.loading": "Loading the tafsir…",
+  "tafsir.error": "The tafsir could not be loaded."
 }

@@ -951,6 +951,34 @@
   "@settingsThemeSystem": {
     "description": "shared key \"settings.themeSystem\""
   },
+  "tafsirArabicOnly": "This tafsir is available in Arabic only.",
+  "@tafsirArabicOnly": {
+    "description": "shared key \"tafsir.arabicOnly\""
+  },
+  "tafsirError": "The tafsir could not be loaded.",
+  "@tafsirError": {
+    "description": "shared key \"tafsir.error\""
+  },
+  "tafsirLoading": "Loading the tafsir…",
+  "@tafsirLoading": {
+    "description": "shared key \"tafsir.loading\""
+  },
+  "tafsirNext": "Next ayah",
+  "@tafsirNext": {
+    "description": "shared key \"tafsir.next\""
+  },
+  "tafsirPrev": "Previous ayah",
+  "@tafsirPrev": {
+    "description": "shared key \"tafsir.prev\""
+  },
+  "tafsirSource": "King Fahd Glorious Quran Printing Complex",
+  "@tafsirSource": {
+    "description": "shared key \"tafsir.source\""
+  },
+  "tafsirTitle": "Al-Tafsir al-Muyassar",
+  "@tafsirTitle": {
+    "description": "shared key \"tafsir.title\""
+  },
   "tagline": "Quran, prayer and remembrance — free, no ads",
   "@tagline": {
     "description": "shared key \"tagline\""

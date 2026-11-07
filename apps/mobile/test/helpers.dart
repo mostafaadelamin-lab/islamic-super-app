@@ -13,7 +13,9 @@ import 'package:rattil/data/content.dart';
 import 'package:rattil/data/notifications.dart';
 import 'package:rattil/data/recitation.dart';
 import 'package:rattil/data/sensors.dart';
+import 'package:rattil/data/tafsir.dart';
 import 'package:rattil/domain/qibla.dart';
+import 'package:rattil/domain/tafsir.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest_all.dart' as tzdata;
 
@@ -32,8 +34,14 @@ Future<AppContent> loadContent({bool realFonts = true}) async {
   TestWidgetsFlutterBinding.ensureInitialized();
   tzdata.initializeTimeZones();
   if (realFonts) await loadRealFonts();
+  _tafsir ??= TafsirContent.parse(await rootBundle.loadString(TafsirStore.assetKey, cache: false));
   return _content ??= await AppContent.load(rootBundle);
 }
+
+TafsirContent? _tafsir;
+
+/// The bundled Tafsir al-Muyassar, decoded by [loadContent].
+TafsirContent get testTafsir => _tafsir!;
 
 bool _fontsLoaded = false;
 
@@ -81,6 +89,7 @@ Future<TestApp> pumpApp(
   FakeAudioBackend? audio,
   FakeNotifications? notifications,
   CompassSensors? sensors,
+  TafsirStore? tafsir,
 }) async {
   final c = content ?? _content!;
   SharedPreferences.setMockInitialValues({'locale': locale, ...prefs});
@@ -93,6 +102,7 @@ Future<TestApp> pumpApp(
     audioBackend: () => audio ?? FakeAudioBackend(),
     notifications: notifications ?? FakeNotifications(),
     sensors: sensors ?? FakeSensors.none(),
+    tafsir: tafsir ?? TafsirStore.preloaded(_tafsir!),
   );
   if (size != null) {
     tester.view.physicalSize = size * tester.view.devicePixelRatio;

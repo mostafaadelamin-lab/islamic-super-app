@@ -655,6 +655,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsThemeSystem => 'System';
 
   @override
+  String get tafsirArabicOnly => 'This tafsir is available in Arabic only.';
+
+  @override
+  String get tafsirError => 'The tafsir could not be loaded.';
+
+  @override
+  String get tafsirLoading => 'Loading the tafsir…';
+
+  @override
+  String get tafsirNext => 'Next ayah';
+
+  @override
+  String get tafsirPrev => 'Previous ayah';
+
+  @override
+  String get tafsirSource => 'King Fahd Glorious Quran Printing Complex';
+
+  @override
+  String get tafsirTitle => 'Al-Tafsir al-Muyassar';
+
+  @override
   String get tagline => 'Quran, prayer and remembrance — free, no ads';
 
   @override

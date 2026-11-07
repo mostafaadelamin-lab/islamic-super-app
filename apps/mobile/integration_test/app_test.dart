@@ -1,8 +1,8 @@
 // End-to-end flow on a real device/emulator/simulator:
 //   flutter test integration_test/app_test.dart -d <device>
 // Opens a surah, bookmarks an ayah, checks the bookmark list, goes to a Mushaf
-// page by number, turns a page by swiping, taps an ayah and bookmarks it from
-// the ayah sheet, counts adhkar and tasbih, and changes the prayer city — with
+// page by number, turns a page by swiping, taps an ayah, reads its tafsir
+// (next / previous) and bookmarks it from the ayah sheet, counts adhkar and tasbih, and changes the prayer city — with
 // the real bundled assets and real shared_preferences storage.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -27,7 +27,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('open surah, bookmark, Mushaf (go to page, swipe, tap ayah), adhkar, tasbih, change city', (
+  testWidgets('open surah, bookmark, Mushaf (go to page, swipe, tap ayah, tafsir), adhkar, tasbih, change city', (
     tester,
   ) async {
     final prefs = await SharedPreferences.getInstance();
@@ -82,8 +82,20 @@ void main() {
     expect(find.text('Page 51'), findsOneWidget);
     final first = services.content.quran.page(51).start;
     await tester.tap(find.byKey(Key('pageAyah-${first.surah}-${first.ayah}')));
-    await tester.pumpAndSettle();
+    await tester.pump();
     expect(find.byKey(const Key('ayahSheet')), findsOneWidget);
+    // The sheet starts loading Tafsir al-Muyassar in a background isolate; wait for it in real time.
+    final tafsir = (await tester.runAsync(() => services.tafsir.load()))!;
+    await tester.pumpAndSettle();
+    String shownTafsir() => tester.widget<Text>(find.byKey(const Key('tafsirText'))).data!;
+    expect(shownTafsir(), tafsir.text(first.surah, first.ayah));
+    expect(find.byKey(const Key('tafsirArabicOnly')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('tafsirNext')));
+    await tester.pumpAndSettle();
+    expect(shownTafsir(), tafsir.text(first.surah, first.ayah + 1));
+    await tester.tap(find.byKey(const Key('tafsirPrev')));
+    await tester.pumpAndSettle();
+    expect(shownTafsir(), tafsir.text(first.surah, first.ayah));
     await tester.tap(find.byKey(const Key('ayahBookmark')));
     await tester.pumpAndSettle();
     expect(services.bookmarks.isBookmarked(first), isTrue);

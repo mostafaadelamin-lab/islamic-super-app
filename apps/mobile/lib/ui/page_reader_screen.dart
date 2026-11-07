@@ -1,19 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../app_services.dart';
 import '../data/recitation.dart';
-import '../domain/audio_queue.dart';
-import '../domain/bookmark.dart';
 import '../domain/quran.dart';
 import '../domain/text.dart';
 import '../theme/design_tokens.dart';
 import 'audio_widgets.dart';
+import 'ayah_sheet.dart';
 import 'l10n_ext.dart';
 import 'mushaf_page.dart';
-import 'widgets.dart';
 
 /// Madinah Mushaf (1405H) reader: 604 pages of 15 lines, turned like a book
 /// (RTL: swipe right for the next page), page slider and go-to-page, ayah
@@ -114,9 +111,15 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   Future<void> _onAyahTap(AyahRef r) async {
     setState(() => _selected = r);
     unawaited(context.services.settings.setLastRead(r));
-    await showModalBottomSheet<void>(
-      context: context,
-      builder: (_) => _AyahSheet(ref: r),
+    await showAyahSheet(
+      context,
+      r,
+      onAyahChanged: (next) {
+        if (!mounted) return;
+        setState(() => _selected = next);
+        final p = context.services.content.quran.pageOf(next);
+        if (p != _page) _jump(p);
+      },
     );
   }
 
@@ -240,100 +243,6 @@ class PageReaderScreenState extends State<PageReaderScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-/// Actions for a tapped ayah: listen from here, bookmark, copy, read as list.
-class _AyahSheet extends StatelessWidget {
-  const _AyahSheet({required this.ref});
-  final AyahRef ref;
-
-  @override
-  Widget build(BuildContext context) {
-    final s = context.services;
-    final l = context.l10n;
-    return ListenableBuilder(
-      listenable: s.bookmarks,
-      builder: (context, _) {
-        final marked = s.bookmarks.isBookmarked(ref);
-        return SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              key: const Key('ayahSheet'),
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg),
-                  child: Text(ayahLabel(context, ref), style: Theme.of(context).textTheme.titleMedium),
-                ),
-                ListTile(
-                  key: const Key('ayahPlay'),
-                  leading: const Icon(Icons.play_arrow),
-                  title: Text(l.mushafPlayFromHere),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    s.recitation.playFrom(ref);
-                  },
-                ),
-                ListTile(
-                  key: const Key('ayahPlaySurah'),
-                  leading: const Icon(Icons.queue_music),
-                  title: Text(l.mushafPlaySurah),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    s.recitation.playFrom(AyahRef(ref.surah, 1), scope: PlayScope.surah);
-                  },
-                ),
-                ListTile(
-                  key: const Key('ayahBookmark'),
-                  leading: Icon(marked ? Icons.bookmark : Icons.bookmark_border),
-                  title: Text(marked ? l.quranRemoveBookmark : l.quranBookmark),
-                  onTap: () async {
-                    final messenger = ScaffoldMessenger.of(context);
-                    final nav = Navigator.of(context);
-                    if (marked) {
-                      await s.bookmarks.remove(Bookmark.idFor(ref.surah, ref.ayah));
-                    } else {
-                      await s.bookmarks.add(ref);
-                    }
-                    nav.pop();
-                    messenger.showSnackBar(
-                      SnackBar(content: Text(marked ? l.quranBookmarkRemoved : l.quranBookmarked)),
-                    );
-                  },
-                ),
-                ListTile(
-                  key: const Key('ayahCopy'),
-                  leading: const Icon(Icons.copy),
-                  title: Text(l.mushafCopy),
-                  onTap: () async {
-                    final messenger = ScaffoldMessenger.of(context);
-                    final nav = Navigator.of(context);
-                    final q = s.content.quran;
-                    // The canonical stored text (no display glyph map) and its reference.
-                    await Clipboard.setData(
-                      ClipboardData(text: '${q.text(ref)} ﴿${q.surah(ref.surah).nameAr}: ${toArabicIndic(ref.ayah)}﴾'),
-                    );
-                    nav.pop();
-                    messenger.showSnackBar(SnackBar(content: Text(l.mushafCopied)));
-                  },
-                ),
-                ListTile(
-                  key: const Key('ayahReadList'),
-                  leading: const Icon(Icons.view_agenda_outlined),
-                  title: Text(l.mushafReadAsList),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    openSurah(context, ref.surah, ayah: ref.ayah);
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }

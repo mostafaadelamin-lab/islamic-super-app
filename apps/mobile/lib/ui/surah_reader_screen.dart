@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../app_services.dart';
 import '../domain/quran.dart';
 import '../theme/design_tokens.dart';
+import 'ayah_sheet.dart';
 import 'l10n_ext.dart';
 import 'page_reader_screen.dart';
 import 'widgets.dart';
@@ -43,6 +44,12 @@ class _SurahReaderScreenState extends State<SurahReaderScreen> {
     context.services.settings.setLastRead(r);
   }
 
+  /// Selects the tapped ayah and opens its sheet (tafsir and actions).
+  Future<void> _onAyahTap(AyahRef r) async {
+    _select(r);
+    await showAyahSheet(context, r, readAsList: false);
+  }
+
   @override
   Widget build(BuildContext context) {
     final services = context.services;
@@ -57,7 +64,7 @@ class _SurahReaderScreenState extends State<SurahReaderScreen> {
           text: s.ayahs[i],
           translation: showEn ? s.en[i] : null,
           highlighted: widget.initialAyah != null && i + 1 == _current.ayah,
-          onTap: () => _select(AyahRef(s.n, i + 1)),
+          onTap: () => _onAyahTap(AyahRef(s.n, i + 1)),
         );
 
         Widget tile(int i) {

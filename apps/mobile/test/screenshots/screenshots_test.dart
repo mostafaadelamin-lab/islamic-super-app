@@ -19,12 +19,16 @@ void main() {
   final outDir = Directory(Platform.environment['RATTIL_SCREENSHOT_DIR'] ?? 'build/screenshots');
   const phone = Size(412, 915);
 
-  Future<void> shot(WidgetTester tester, String name) async {
+  /// [overlay]: capture the whole view, including modal sheets drawn above the current route.
+  Future<void> shot(WidgetTester tester, String name, {bool overlay = false}) async {
     final boundary = tester.renderObject<RenderRepaintBoundary>(
       find.descendant(of: find.byType(MaterialApp), matching: find.byType(RepaintBoundary)).first,
     );
+    final view = tester.binding.renderViews.first;
     final bytes = await tester.runAsync(() async {
-      final ui.Image image = await boundary.toImage(pixelRatio: 2);
+      final ui.Image image = overlay
+          ? await (view.debugLayer! as OffsetLayer).toImage(Offset.zero & view.size, pixelRatio: 2)
+          : await boundary.toImage(pixelRatio: 2);
       final data = await image.toByteData(format: ui.ImageByteFormat.png);
       image.dispose();
       return data!.buffer.asUint8List();
@@ -71,7 +75,7 @@ void main() {
       await shot(tester, '${locale}_07_settings');
     });
 
-    testWidgets('M2 screenshots ($locale): home, Mushaf page 3, adhkar, tasbih, hajj', (tester) async {
+    testWidgets('M2 screenshots ($locale): home, Mushaf page 3, tafsir, adhkar, tasbih, hajj', (tester) async {
       tester.view.devicePixelRatio = 1;
       await pumpApp(
         tester,
@@ -90,6 +94,13 @@ void main() {
       await goBack(tester);
       await pushScreen(tester, const PageReaderScreen(initialPage: 1));
       await shot(tester, '${locale}_m2_mushaf_page_1');
+      await goBack(tester);
+      await pushScreen(tester, const PageReaderScreen(initialPage: 42));
+      await tester.tap(find.byKey(const Key('pageAyah-2-255')));
+      await tester.pumpAndSettle();
+      await shot(tester, '${locale}_m2_tafsir', overlay: true);
+      await tester.tapAt(const Offset(195, 40)); // dismiss the sheet
+      await tester.pumpAndSettle();
       await goBack(tester);
       await goToTab(tester, 3);
       await shot(tester, '${locale}_m2_adhkar');

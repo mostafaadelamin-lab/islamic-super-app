@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +12,7 @@ import 'data/notifications.dart';
 import 'data/recitation.dart';
 import 'data/sensors.dart';
 import 'data/settings.dart';
+import 'data/tafsir.dart';
 import 'domain/prayer_schedule.dart';
 
 /// Everything screens need, created once in main() (or in a test).
@@ -26,6 +28,7 @@ class AppServices {
     required this.tasbih,
     required this.adhkar,
     required this.sensors,
+    required this.tafsir,
   });
 
   factory AppServices.create({
@@ -36,6 +39,7 @@ class AppServices {
     AudioBackend Function()? audioBackend,
     NotificationsBackend? notifications,
     CompassSensors? sensors,
+    TafsirStore? tafsir,
   }) {
     final c = clock ?? DateTime.now;
     final settings = SettingsController(prefs, defaultCityId: content.cities.first.id);
@@ -65,6 +69,7 @@ class AppServices {
       tasbih: TasbihController(settings),
       adhkar: AdhkarController(content, settings, localToday),
       sensors: sensors ?? const DeviceCompassSensors(),
+      tafsir: tafsir ?? TafsirStore.asset(rootBundle),
     );
   }
 
@@ -78,6 +83,9 @@ class AppServices {
   final TasbihController tasbih;
   final AdhkarController adhkar;
   final CompassSensors sensors;
+
+  /// Tafsir al-Muyassar, loaded on first use.
+  final TafsirStore tafsir;
 }
 
 class AppScope extends InheritedWidget {
