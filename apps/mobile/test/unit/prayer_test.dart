@@ -308,4 +308,20 @@ void main() {
       expect(clampAdjustment(5), 5);
     });
   });
+
+  group('Umm al-Qura Ramadan rule', () {
+    int gap(int y, int m, int d, [String method = 'makkah']) {
+      final t = calc.times(year: y, month: m, day: d, lat: 21.4225, lng: 39.8262, method: method).utc;
+      return t['isha']!.difference(t['maghrib']!).inMinutes;
+    }
+
+    test('Isha is 120 minutes after Maghrib in Ramadan and 90 otherwise (same as the Python reference)', () {
+      // Ramadan 1447 by the Umm al-Qura calendar: 2026-02-18 .. 2026-03-19.
+      expect(gap(2026, 2, 17), 90);
+      expect(gap(2026, 2, 18), 120);
+      expect(gap(2026, 3, 19), 120);
+      expect(gap(2026, 3, 20), 90);
+      expect(gap(2026, 3, 1, 'qatar'), 90);
+    });
+  });
 }

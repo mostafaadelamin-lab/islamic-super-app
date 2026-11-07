@@ -15,6 +15,8 @@ export interface MethodDef {
   fajr: number;
   isha?: number;
   ishaMinutes?: number;
+  /** Umm al-Qura: Isha interval during Ramadan (120 instead of 90). */
+  ishaMinutesRamadan?: number;
 }
 export interface MethodsConfig {
   dhuhrOffsetMinutes: number;
@@ -22,6 +24,8 @@ export interface MethodsConfig {
   methods: Record<string, MethodDef>;
   asr: Record<string, number>;
   kaaba: { lat: number; lng: number };
+  /** Hijri year → [first, last] Gregorian day of Ramadan (ISO, inclusive) by the Umm al-Qura calendar. */
+  ramadanUmmAlQura?: Record<string, readonly string[]>;
 }
 
 export const methodsConfig: MethodsConfig = methodsJson as MethodsConfig;
@@ -73,6 +77,24 @@ export function sunPosition(jd: number): [number, number] {
   const ra = fix(r2d(Math.atan2(Math.cos(d2r(e)) * Math.sin(d2r(lam)), Math.cos(d2r(lam)))) / 15, 24);
   const decl = r2d(Math.asin(Math.sin(d2r(e)) * Math.sin(d2r(lam))));
   return [decl, q / 15 - ra];
+}
+
+/** True if the Gregorian date falls in Ramadan by the Umm al-Qura calendar (table in methods.json). */
+export function inRamadan(y: number, m: number, d: number, cfg: MethodsConfig = methodsConfig): boolean {
+  const iso = `${String(y).padStart(4, "0")}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+  return Object.values(cfg.ramadanUmmAlQura ?? {}).some(([a = "", b = ""]) => a <= iso && iso <= b);
+}
+
+/** Fixed Isha interval after Maghrib; Umm al-Qura uses 120 minutes instead of 90 during Ramadan. */
+export function ishaMinutes(
+  mt: MethodDef,
+  y: number,
+  m: number,
+  d: number,
+  cfg: MethodsConfig = methodsConfig,
+): number {
+  if (mt.ishaMinutesRamadan !== undefined && inRamadan(y, m, d, cfg)) return mt.ishaMinutesRamadan;
+  return mt.ishaMinutes as number;
 }
 
 export type PrayerHours = Record<PrayerKey, number>;
@@ -141,7 +163,7 @@ export function computeHours(
     throw new InvalidInput("the sun does not rise or set at this location on this date (polar day/night)");
   }
   const adjusted: PrayerKey[] = [];
-  if (hasIshaMinutes) t.isha = t.maghrib + (mt.ishaMinutes as number) / 60;
+  if (hasIshaMinutes) t.isha = t.maghrib + ishaMinutes(mt, y, m, d, cfg) / 60;
   const night = fix(t.sunrise - t.maghrib, 24);
   let portion = (mt.fajr / 60) * night;
   if (Number.isNaN(t.fajr) || fix(t.sunrise - t.fajr, 24) > portion) {

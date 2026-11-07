@@ -80,6 +80,19 @@ class InvalidInput(ValueError):
     pass
 
 
+def in_ramadan(y: int, m: int, d: int) -> bool:
+    """True if the Gregorian date falls in Ramadan by the Umm al-Qura calendar (table in methods.json)."""
+    iso = f"{y:04d}-{m:02d}-{d:02d}"
+    return any(a <= iso <= b for a, b in methods().get("ramadanUmmAlQura", {}).values())
+
+
+def isha_minutes(mt: dict, y: int, m: int, d: int) -> float:
+    """Fixed Isha interval after Maghrib; Umm al-Qura uses 120 minutes instead of 90 during Ramadan."""
+    if "ishaMinutesRamadan" in mt and in_ramadan(y, m, d):
+        return mt["ishaMinutesRamadan"]
+    return mt["ishaMinutes"]
+
+
 def compute_hours(y: int, m: int, d: int, lat: float, lng: float, method: str, asr_factor: int) -> tuple[dict[str, float], list[str]]:
     """Return UTC fractional hours (may be <0 or >=24) for the local date y-m-d."""
     if not (-90 < lat < 90) or not (-180 <= lng <= 180):
@@ -125,7 +138,7 @@ def compute_hours(y: int, m: int, d: int, lat: float, lng: float, method: str, a
         raise InvalidInput("the sun does not rise or set at this location on this date (polar day/night)")
     adjusted: list[str] = []
     if "ishaMinutes" in mt:
-        t["isha"] = t["maghrib"] + mt["ishaMinutes"] / 60
+        t["isha"] = t["maghrib"] + isha_minutes(mt, y, m, d) / 60
     night = _fix(t["sunrise"] - t["maghrib"], 24)
     portion = mt["fajr"] / 60 * night
     if math.isnan(t["fajr"]) or _fix(t["sunrise"] - t["fajr"], 24) > portion:
