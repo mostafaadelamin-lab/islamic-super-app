@@ -9,6 +9,7 @@ import { THEME_SCRIPT } from "../theme-script";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ClientEffects } from "@/components/ClientEffects";
+import { withBase } from "@/lib/base-path";
 
 export const dynamicParams = false;
 
@@ -26,8 +27,8 @@ export async function generateMetadata({
   return {
     title: { default: t(l, "appName"), template: `%s — ${t(l, "appName")}` },
     description: t(l, "tagline"),
-    manifest: "/manifest.webmanifest",
-    icons: { icon: "/icon.svg", apple: "/icon-192.png" },
+    manifest: withBase("/manifest.webmanifest"),
+    icons: { icon: withBase("/icon.svg"), apple: withBase("/icon-192.png") },
   };
 }
 

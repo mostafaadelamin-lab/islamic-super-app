@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { withBase } from "@/lib/base-path";
 
 const cache = new Map<number, string[]>();
 
@@ -24,7 +25,7 @@ export function useTranslation(surah: number, enabled: boolean, reloadKey = 0): 
     }
     let cancelled = false;
     setState({ status: "loading" });
-    fetch(`/data/en/${surah}.json`)
+    fetch(withBase(`/data/en/${surah}.json`))
       .then((r) => {
         if (!r.ok) throw new Error(String(r.status));
         return r.json() as Promise<string[]>;

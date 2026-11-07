@@ -7,13 +7,14 @@ import { localizeDigits } from "@/lib/digits";
 import { renderQuranText } from "@/lib/quran-render";
 import { queryLength, SearchIndex } from "@/lib/search";
 import { surahMeta } from "@/lib/pages";
+import { withBase } from "@/lib/base-path";
 
 const LIMIT = 50;
 let indexPromise: Promise<SearchIndex> | null = null;
 
 export function loadIndex(fetchImpl: typeof fetch = fetch): Promise<SearchIndex> {
   if (!indexPromise) {
-    indexPromise = fetchImpl("/data/quran-text.json")
+    indexPromise = fetchImpl(withBase("/data/quran-text.json"))
       .then((r) => {
         if (!r.ok) throw new Error(String(r.status));
         return r.json() as Promise<string[][]>;

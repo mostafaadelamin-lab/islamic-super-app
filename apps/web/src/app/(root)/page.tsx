@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { RootRedirect } from "@/components/RootRedirect";
+import { withBase } from "@/lib/base-path";
 
 export default function RootPage() {
   return (
     <main id="main">
       <noscript>
-        <meta httpEquiv="refresh" content="0; url=/ar/" />
+        <meta httpEquiv="refresh" content={`0; url=${withBase("/ar/")}`} />
       </noscript>
       <RootRedirect />
       <p>

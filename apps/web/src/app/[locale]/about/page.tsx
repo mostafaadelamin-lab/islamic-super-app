@@ -3,6 +3,7 @@ import info from "@/generated/quran-info.json";
 import pages from "@/generated/pages.json";
 import { isLocale, t } from "@/lib/i18n";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
+import { withBase } from "@/lib/base-path";
 
 export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
   const { locale } = await params;
@@ -49,8 +50,8 @@ export default async function AboutPage({ params }: { params: LocaleParams }) {
             <strong>{t(locale, "about.fonts")}</strong>
           </dt>
           <dd>
-            {t(locale, "about.fontsBody")} <a href="/fonts/OFL.txt">Amiri Quran — OFL</a> ·{" "}
-            <a href="/fonts/OFL-IBMPlexSansArabic.txt">IBM Plex Sans Arabic — OFL</a>
+            {t(locale, "about.fontsBody")} <a href={withBase("/fonts/OFL.txt")}>Amiri Quran — OFL</a> ·{" "}
+            <a href={withBase("/fonts/OFL-IBMPlexSansArabic.txt")}>IBM Plex Sans Arabic — OFL</a>
           </dd>
           <dt>
             <strong>{t(locale, "about.prayerAlgo")}</strong>

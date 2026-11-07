@@ -120,7 +120,7 @@ self.addEventListener("fetch", (event) => {
         return res;
       } catch (err) {
         if (req.mode === "navigate") {
-          const fallback = (await cache.match("/404.html")) || (await cache.match("/"));
+          const fallback = (await cache.match("__BASE__/404.html")) || (await cache.match("__BASE__/"));
           if (fallback) return fallback;
         }
         return new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain" } });

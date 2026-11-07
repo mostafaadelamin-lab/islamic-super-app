@@ -1,3 +1,5 @@
+import { withBase } from "@/lib/base-path";
+
 /** Service-worker registration and offline-precache progress reporting. */
 export interface OfflineStatus {
   supported: boolean;
@@ -47,7 +49,7 @@ export function registerServiceWorker(nav: Navigator | undefined = globalThis.na
   }
   const sw = nav.serviceWorker;
   sw.addEventListener("message", (e: MessageEvent) => handleSwMessage(e.data));
-  sw.register("/sw.js", { scope: "/" })
+  sw.register(withBase("/sw.js"), { scope: withBase("/") })
     .then(() => sw.ready)
     .then((reg) => {
       reg.active?.postMessage({ type: "precache-all", locale: pageLocale() });

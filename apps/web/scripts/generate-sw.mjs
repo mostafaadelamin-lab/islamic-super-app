@@ -6,6 +6,16 @@ import { fileURLToPath } from "node:url";
 
 const app = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const out = join(app, "out");
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+// CSS url("/fonts/...") is not rewritten by Next's basePath; prefix it here.
+if (BASE) {
+  const cssDir = join(out, "_next/static/css");
+  for (const name of readdirSync(cssDir)) {
+    const p = join(cssDir, name);
+    writeFileSync(p, readFileSync(p, "utf8").replace(/url\((["']?)\/fonts\//g, `url($1${BASE}/fonts/`));
+  }
+}
 
 function walk(dir) {
   const files = [];
@@ -30,13 +40,14 @@ for (const file of walk(out).sort()) {
   // Directory URLs for pages (trailingSlash export): /ar/quran/index.html -> /ar/quran/
   const url = rel.endsWith("/index.html") ? rel.slice(0, -"index.html".length) : rel;
   const heavy = /^\/(ar|en)\/(surah|page)\//.exec(url);
-  if (heavy) rest[heavy[1]].push(url);
-  else core.push(url);
+  if (heavy) rest[heavy[1]].push(BASE + url);
+  else core.push(BASE + url);
 }
 const version = hash.digest("hex").slice(0, 16);
 const template = readFileSync(join(app, "scripts/sw-template.js"), "utf8");
 const sw = template
   .replace("__VERSION__", version)
+  .replaceAll("__BASE__", BASE)
   .replace("__CORE__", JSON.stringify(core))
   .replace("__REST__", JSON.stringify(rest));
 writeFileSync(join(out, "sw.js"), sw);
