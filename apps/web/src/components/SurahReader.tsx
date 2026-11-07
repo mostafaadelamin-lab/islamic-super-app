@@ -11,6 +11,7 @@ import { lastReadStore, prefsStore } from "@/lib/settings";
 import { useStore } from "@/hooks/useStore";
 import { useTranslation } from "@/hooks/useTranslation";
 import { AyahMarker } from "./AyahMarker";
+import { TafsirPanel } from "./TafsirPanel";
 
 export interface SurahReaderProps {
   locale: Locale;
@@ -23,6 +24,7 @@ export function SurahReader({ locale, meta, ayahs, basmala }: SurahReaderProps) 
   const prefs = useStore(prefsStore);
   const bookmarks = useStore(bookmarksStore);
   const [retry, setRetry] = useState(0);
+  const [tafsirFor, setTafsirFor] = useState<number | null>(null);
   const tr = useTranslation(meta.n, prefs.translation, retry);
   const listRef = useRef<HTMLDivElement>(null);
   const prev = surahMeta(meta.n - 1);
@@ -125,7 +127,18 @@ export function SurahReader({ locale, meta, ayahs, basmala }: SurahReaderProps) 
                 >
                   {marked ? t(locale, "quran.removeBookmark") : t(locale, "quran.bookmark")}
                 </button>
+                <button
+                  type="button"
+                  className="btn"
+                  aria-expanded={tafsirFor === a}
+                  data-testid={`tafsir-toggle-${a}`}
+                  aria-label={t(locale, "tafsir.showOf", { n: localizeDigits(a, locale) })}
+                  onClick={() => setTafsirFor((cur) => (cur === a ? null : a))}
+                >
+                  {t(locale, "tafsir.show")}
+                </button>
               </div>
+              {tafsirFor === a ? <TafsirPanel locale={locale} surah={meta.n} ayah={a} /> : null}
             </article>
           );
         })}

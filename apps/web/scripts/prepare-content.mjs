@@ -73,6 +73,23 @@ writeJson(
 // 15-line Madinah Mushaf layout (word ranges into quran.v1.json); fetched once by the Mushaf reader and
 // resolved against /data/quran-text.json on the device. The canonical text itself is never rewritten.
 copyFileSync(join(repo, "content/quran/dist/mushaf-lines.v1.json"), join(pub, "data/mushaf-lines.json"));
+// Tafsir al-Muyassar: one file per surah (an array, one entry per ayah), fetched on demand by the ayah panel
+// and kept by the service worker once used (not precached). Entries are copied verbatim.
+const tafsir = readJson("content/tafsir/dist/muyassar.v1.json");
+if (
+  tafsir.schema !== "tafsir.v1" ||
+  tafsir.id !== "muyassar" ||
+  tafsir.surahs.length !== quran.surahs.length
+) {
+  throw new Error("muyassar.v1.json: unexpected schema");
+}
+tafsir.surahs.forEach((entries, i) => {
+  const s = quran.surahs[i];
+  if (entries.length !== s.ayahs.length || !entries.every((e) => typeof e === "string" && e.length > 0)) {
+    throw new Error(`muyassar.v1.json: surah ${s.n} does not match the Quran's ayah count`);
+  }
+  writeJson(join(pub, "data/tafsir/muyassar", `${s.n}.json`), entries);
+});
 writeJson(
   join(gen, "hajj.json"),
   extractHajj(readFileSync(join(repo, "content/pilgrimage/source-hajj.js"), "utf8")),

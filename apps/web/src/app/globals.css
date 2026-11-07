@@ -946,16 +946,22 @@ input[type="radio"] {
   font-size: var(--font-size-xs);
   color: var(--color-muted);
 }
-.ayah-actions {
+/* The selected ayah's sheet: actions and its tafsir, docked above the tab bar / player. */
+.ayah-sheet {
   position: sticky;
   bottom: calc(var(--tabbar-h) + var(--player-h) + var(--space-sm));
   z-index: 15;
   margin-top: var(--space-md);
+  max-height: min(62vh, 560px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--color-surface);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   padding: var(--space-sm) var(--space-md);
+}
+.ayah-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -977,6 +983,63 @@ input[type="radio"] {
 }
 .aa-notice:empty {
   display: none;
+}
+
+/* ---- tafsir (UI font, never the Quran font) ---- */
+.tafsir {
+  margin-top: var(--space-sm);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  border-inline-start: 4px solid var(--color-accent);
+  font-family: var(--font-ui);
+}
+.tafsir-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-xs) var(--space-md);
+}
+.tafsir-title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  color: var(--color-primary);
+}
+.tafsir-ref {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+.tafsir-note {
+  margin: var(--space-xs) 0 0;
+}
+.tafsir-body {
+  margin-top: var(--space-sm);
+}
+.tafsir-text {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 18px;
+  line-height: 1.9;
+  color: var(--color-ink);
+  text-align: start;
+  white-space: pre-line;
+}
+.tafsir-body .alert p {
+  margin: 0 0 var(--space-sm);
+}
+.tafsir-source {
+  margin: var(--space-sm) 0 0;
+}
+.tafsir-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+.ayah .tafsir {
+  margin-top: var(--space-md);
 }
 .page-slider {
   flex: 1;

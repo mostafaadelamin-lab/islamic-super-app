@@ -216,5 +216,17 @@
   "hajj.counter.done": "Complete — may Allah accept it",
   "hajj.counter.add": "Add one",
   "hajj.counter.undo": "Undo",
-  "hajj.counter.reset": "Reset"
+  "hajj.counter.reset": "Reset",
+  "tafsir.title": "Al-Tafsir al-Muyassar",
+  "tafsir.source": "King Fahd Glorious Quran Printing Complex",
+  "tafsir.of": "Tafsir of {ref}",
+  "tafsir.loading": "Loading the tafsir…",
+  "tafsir.error": "The tafsir could not be loaded. Check your internet connection and try again.",
+  "tafsir.offline": "You are offline, and the tafsir of this surah is not saved on this device yet. Each surah's tafsir is saved after it is opened once.",
+  "tafsir.retry": "Try again",
+  "tafsir.prev": "Previous ayah's tafsir",
+  "tafsir.next": "Next ayah's tafsir",
+  "tafsir.show": "Tafsir",
+  "tafsir.showOf": "Tafsir — ayah {n}",
+  "tafsir.arabicOnly": "This simplified tafsir is available in Arabic only."
 }

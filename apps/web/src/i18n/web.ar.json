@@ -216,5 +216,17 @@
   "hajj.counter.done": "اكتمل العدد — تقبّل الله",
   "hajj.counter.add": "أتممت شوطًا",
   "hajj.counter.undo": "تراجع",
-  "hajj.counter.reset": "تصفير"
+  "hajj.counter.reset": "تصفير",
+  "tafsir.title": "التفسير الميسر",
+  "tafsir.source": "مجمع الملك فهد لطباعة المصحف الشريف",
+  "tafsir.of": "تفسير {ref}",
+  "tafsir.loading": "جارٍ تحميل التفسير…",
+  "tafsir.error": "تعذّر تحميل التفسير. تحقّق من الاتصال بالإنترنت ثم أعد المحاولة.",
+  "tafsir.offline": "أنت غير متصل، وتفسير هذه السورة لم يُحفظ بعد على جهازك. يُحفظ تفسير كل سورة بعد فتحه مرة واحدة.",
+  "tafsir.retry": "أعد المحاولة",
+  "tafsir.prev": "تفسير الآية السابقة",
+  "tafsir.next": "تفسير الآية التالية",
+  "tafsir.show": "التفسير",
+  "tafsir.showOf": "التفسير — الآية {n}",
+  "tafsir.arabicOnly": "هذا التفسير متاح بالعربية فقط."
 }

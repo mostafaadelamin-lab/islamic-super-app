@@ -15,7 +15,7 @@ import { dirOf, t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
 import { withBase } from "@/lib/base-path";
-import { PAGE_COUNT, juzForPage, surahMeta } from "@/lib/pages";
+import { PAGE_COUNT, juzForPage, pageForAyah, surahMeta, type Ref } from "@/lib/pages";
 import {
   clampPage,
   fitFontSize,
@@ -34,6 +34,7 @@ import { useStore } from "@/hooks/useStore";
 import { MushafPage } from "./MushafPage";
 import { GoToPage } from "./GoToPage";
 import { Icon } from "./Icon";
+import { TafsirPanel } from "./TafsirPanel";
 
 export interface PageReaderProps {
   locale: Locale;
@@ -309,6 +310,17 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const selBookmarked = sel ? isBookmarked(bookmarks, sel[0], sel[1]) : false;
   const surahToPlay = (sel ?? first)?.[0];
 
+  // Previous/next ayah from the tafsir panel: move the selection, turning the page when the ayah is on another.
+  const selectRef = ([s, a]: Ref): void => {
+    const p = pageForAyah(s, a);
+    if (p !== page && !data?.page(p)) {
+      router.push(`${href(locale, `page/${p}`)}#a-${s}-${a}`);
+      return;
+    }
+    if (p !== page) goTo(p);
+    setSelected(`${s}:${a}`);
+  };
+
   const copySelected = async (): Promise<void> => {
     if (!sel) return;
     try {
@@ -393,53 +405,56 @@ export function PageReader({ locale, initial }: PageReaderProps) {
       </div>
 
       {sel ? (
-        <div
-          className="ayah-actions"
-          role="toolbar"
-          aria-label={t(locale, "mushaf.actions")}
-          data-testid="ayah-actions"
-        >
-          <strong className="aa-ref">{ref(sel[0], sel[1])}</strong>
-          <div className="aa-buttons">
-            <button
-              type="button"
-              className="btn btn-primary btn-sm"
-              data-testid="act-play"
-              onClick={() => player.play({ kind: "from", surah: sel[0], ayah: sel[1] })}
-            >
-              <Icon name="play" size={16} /> {t(locale, "audio.playFromHere")}
-            </button>
-            <button
-              type="button"
-              className="btn btn-sm"
-              data-testid="act-bookmark"
-              data-bookmarked={selBookmarked}
-              onClick={() => bookmarksStore.set((s) => toggleBookmark(s, sel[0], sel[1], Date.now()))}
-            >
-              <Icon name="bookmark" size={16} />{" "}
-              {selBookmarked ? t(locale, "quran.removeBookmark") : t(locale, "quran.bookmark")}
-            </button>
-            <button
-              type="button"
-              className="btn btn-sm"
-              data-testid="act-copy"
-              onClick={() => void copySelected()}
-            >
-              <Icon name="copy" size={16} /> {t(locale, "mushaf.copy")}
-            </button>
-            <button
-              type="button"
-              className="btn btn-sm btn-icon"
-              data-testid="act-close"
-              aria-label={t(locale, "common.close")}
-              onClick={() => setSelected(null)}
-            >
-              <Icon name="close" size={16} />
-            </button>
+        <div className="ayah-sheet" data-testid="ayah-sheet">
+          <div
+            className="ayah-actions"
+            role="toolbar"
+            aria-label={t(locale, "mushaf.actions")}
+            data-testid="ayah-actions"
+          >
+            <strong className="aa-ref">{ref(sel[0], sel[1])}</strong>
+            <div className="aa-buttons">
+              <button
+                type="button"
+                className="btn btn-primary btn-sm"
+                data-testid="act-play"
+                onClick={() => player.play({ kind: "from", surah: sel[0], ayah: sel[1] })}
+              >
+                <Icon name="play" size={16} /> {t(locale, "audio.playFromHere")}
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm"
+                data-testid="act-bookmark"
+                data-bookmarked={selBookmarked}
+                onClick={() => bookmarksStore.set((s) => toggleBookmark(s, sel[0], sel[1], Date.now()))}
+              >
+                <Icon name="bookmark" size={16} />{" "}
+                {selBookmarked ? t(locale, "quran.removeBookmark") : t(locale, "quran.bookmark")}
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm"
+                data-testid="act-copy"
+                onClick={() => void copySelected()}
+              >
+                <Icon name="copy" size={16} /> {t(locale, "mushaf.copy")}
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm btn-icon"
+                data-testid="act-close"
+                aria-label={t(locale, "common.close")}
+                onClick={() => setSelected(null)}
+              >
+                <Icon name="close" size={16} />
+              </button>
+            </div>
+            <p className="aa-notice" role="status" data-testid="mushaf-notice">
+              {notice}
+            </p>
           </div>
-          <p className="aa-notice" role="status" data-testid="mushaf-notice">
-            {notice}
-          </p>
+          <TafsirPanel locale={locale} surah={sel[0]} ayah={sel[1]} onStep={selectRef} />
         </div>
       ) : null}
 

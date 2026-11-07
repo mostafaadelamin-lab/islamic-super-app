@@ -39,6 +39,8 @@ for (const file of walk(out).sort()) {
   hash.update(rel).update(readFileSync(file));
   // Directory URLs for pages (trailingSlash export): /ar/quran/index.html -> /ar/quran/
   const url = rel.endsWith("/index.html") ? rel.slice(0, -"index.html".length) : rel;
+  // Tafsir files (~2.7 MB) are not precached: the worker keeps each surah's file once it is first read.
+  if (url.startsWith("/data/tafsir/")) continue;
   const heavy = /^\/(ar|en)\/(surah|page|hisn\/\d+)\//.exec(url);
   if (heavy) rest[heavy[1]].push(BASE + url);
   else core.push(BASE + url);

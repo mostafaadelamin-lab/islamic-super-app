@@ -15,16 +15,17 @@ npm run serve      # serves out/ on http://127.0.0.1:4173 (gzip, trailing-slash 
 
 `npm run content` (run automatically by dev/build/test/typecheck) copies the shared sources into the app:
 
-| Source (read-only)                                                                    | Copied to                                                                                 |
-| ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `packages/shared-schemas/*` (methods, cities, i18n, render map, search normalisation) | `src/generated/`                                                                          |
-| `packages/design-tokens/dist/tokens.{css,ts}`                                         | `src/generated/` (all colours/sizes come from these)                                      |
-| `content/fonts/*.ttf` + OFL licences                                                  | `public/fonts/` (self-hosted, no CDN)                                                     |
-| `content/quran/dist/quran.v1.json`                                                    | `public/data/en/<n>.json` (translation per surah), `public/data/quran-text.json` (search) |
-| `content/quran/dist/mushaf-lines.v1.json`                                             | `public/data/mushaf-lines.json` (15-line layout, fetched once by the Mushaf reader)       |
-| `packages/shared-schemas/audio/reciters.json`                                         | `src/generated/reciters.json`                                                             |
-| `content/adhkar/dist/adhkar.v1.json`, `content/adhkar/hisn.json`                      | `src/generated/` (rendered at build time)                                                 |
-| `content/pilgrimage/source-hajj.js`                                                   | `src/generated/hajj.json` (data constants evaluated in an empty VM context)               |
+| Source (read-only)                                                                    | Copied to                                                                                  |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `packages/shared-schemas/*` (methods, cities, i18n, render map, search normalisation) | `src/generated/`                                                                           |
+| `packages/design-tokens/dist/tokens.{css,ts}`                                         | `src/generated/` (all colours/sizes come from these)                                       |
+| `content/fonts/*.ttf` + OFL licences                                                  | `public/fonts/` (self-hosted, no CDN)                                                      |
+| `content/quran/dist/quran.v1.json`                                                    | `public/data/en/<n>.json` (translation per surah), `public/data/quran-text.json` (search)  |
+| `content/quran/dist/mushaf-lines.v1.json`                                             | `public/data/mushaf-lines.json` (15-line layout, fetched once by the Mushaf reader)        |
+| `content/tafsir/dist/muyassar.v1.json`                                                | `public/data/tafsir/muyassar/1…114.json` (one file per surah, verbatim; fetched on demand) |
+| `packages/shared-schemas/audio/reciters.json`                                         | `src/generated/reciters.json`                                                              |
+| `content/adhkar/dist/adhkar.v1.json`, `content/adhkar/hisn.json`                      | `src/generated/` (rendered at build time)                                                  |
+| `content/pilgrimage/source-hajj.js`                                                   | `src/generated/hajj.json` (data constants evaluated in an empty VM context)                |
 
 These generated paths are git-ignored. Surah and Mushaf-page routes read `quran.v1.json` **at build time**
 and inline only that route's ayahs; the 2.2 MB file is never shipped to the browser as a whole (the search
@@ -56,6 +57,10 @@ bottom tab bar on phone widths (≤ 720 px).
   and turns pages on the device: swipe/drag like a book (Arabic: drag right = next), arrow keys, buttons, page
   slider, go-to-page. Last page is remembered. Tapping an ayah selects it: play from here, bookmark, copy
   (canonical text). Surah list and search results open the Mushaf at the right page (`#a-S-A` selects).
+- Tafsir al-Muyassar (King Fahd Complex, Arabic only): the selected ayah's sheet shows its tafsir verbatim in
+  the UI font, with previous/next ayah (the selection follows and the page turns); the surah list view has a
+  "Tafsir" button per ayah. Files are not precached; the service worker keeps each surah's file once read,
+  and a clear message is shown offline before that.
 - Recitation (online only): player bar with play/pause, stop, next/previous ayah, reciter (8, saved in
   Settings) and repeat count. Plays the page, the surah or from an ayah to the end of the surah; the basmala
   (001001) is played before ayah 1 of every surah except 1 and 9; the reader highlights the recited ayah and

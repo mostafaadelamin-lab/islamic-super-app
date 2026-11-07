@@ -63,10 +63,20 @@ test("service worker precaches the app; it works offline after first load", asyn
         "/ar/hisn/29/",
         "/ar/qibla/",
       ].map((p) => paths.includes(p)),
+      tafsir: paths.filter((p) => p.startsWith("/data/tafsir/")).length,
     };
   });
   expect(cached.has).toEqual([true, true, true, true, true, true, true, true]);
   expect(cached.count).toBeGreaterThan(1400);
+  // Tafsir files are not precached; a surah's file is kept once it has been read.
+  expect(cached.tafsir).toBe(0);
+  await goto("/ar/page/500/");
+  await expect(page.getByTestId("mushaf-stage")).toHaveAttribute("data-ready", "true");
+  const tafsirAyah = (await page.locator(".seg").first().getAttribute("data-ayah"))!;
+  await page.locator(".seg").first().click();
+  await expect(page.getByTestId("tafsir-text")).toBeVisible();
+  const tafsirOnline = (await page.getByTestId("tafsir-text").textContent())!;
+  expect(tafsirOnline.length).toBeGreaterThan(20);
 
   server?.kill();
   await expect
@@ -93,6 +103,9 @@ test("service worker precaches the app; it works offline after first load", asyn
   await expect(page.locator("h1")).toHaveText("الصفحة ٥٠٠ من ٦٠٤");
   // the Mushaf data comes from the cache, so pages turn on the device while offline
   await expect(page.getByTestId("mushaf-stage")).toHaveAttribute("data-ready", "true");
+  // the tafsir read earlier is served from the cache
+  await page.locator(`.seg[data-ayah="${tafsirAyah}"]`).first().click();
+  await expect(page.getByTestId("tafsir-text")).toHaveText(tafsirOnline);
   await page.getByTestId("next-page").click();
   await expect(page.locator("h1")).toHaveText("الصفحة ٥٠١ من ٦٠٤");
   await expect(page.locator(".m-line")).toHaveCount(15);
