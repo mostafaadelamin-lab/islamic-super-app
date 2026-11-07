@@ -53,12 +53,19 @@ test("service worker precaches the app; it works offline after first load", asyn
     const paths = (await cache.keys()).map((r) => new URL(r.url).pathname);
     return {
       count: paths.length,
-      has: ["/ar/surah/36/", "/ar/page/604/", "/fonts/AmiriQuran-Regular.ttf", "/data/quran-text.json"].map(
-        (p) => paths.includes(p),
-      ),
+      has: [
+        "/ar/surah/36/",
+        "/ar/page/604/",
+        "/fonts/AmiriQuran-Regular.ttf",
+        "/data/quran-text.json",
+        "/data/mushaf-lines.json",
+        "/ar/adhkar/",
+        "/ar/hisn/29/",
+        "/ar/qibla/",
+      ].map((p) => paths.includes(p)),
     };
   });
-  expect(cached.has).toEqual([true, true, true, true]);
+  expect(cached.has).toEqual([true, true, true, true, true, true, true, true]);
   expect(cached.count).toBeGreaterThan(1400);
 
   server?.kill();
@@ -78,12 +85,17 @@ test("service worker precaches the app; it works offline after first load", asyn
   // client-side navigation to a surah while offline
   await page.getByRole("navigation").getByRole("link", { name: "القرآن", exact: true }).click();
   await expect(page).toHaveURL(`${base}/ar/quran/`);
-  await page.getByTestId("surah-list").getByRole("link", { name: /يس/ }).click();
+  await page.getByTestId("surah-list").getByRole("link", { name: "عرض كقائمة — يس" }).click();
   await expect(page).toHaveURL(`${base}/ar/surah/36/`);
   await expect(page.locator("article.ayah")).toHaveCount(83);
   // full navigation (document request) to an uncommon page while offline
   await goto("/ar/page/500/");
   await expect(page.locator("h1")).toHaveText("الصفحة ٥٠٠ من ٦٠٤");
+  // the Mushaf data comes from the cache, so pages turn on the device while offline
+  await expect(page.getByTestId("mushaf-stage")).toHaveAttribute("data-ready", "true");
+  await page.getByTestId("next-page").click();
+  await expect(page.locator("h1")).toHaveText("الصفحة ٥٠١ من ٦٠٤");
+  await expect(page.locator(".m-line")).toHaveCount(15);
   // Quran font is served from cache
   const fontOk = await page.evaluate(async () => {
     await document.fonts.ready;
@@ -93,6 +105,9 @@ test("service worker precaches the app; it works offline after first load", asyn
   // search works offline (index JSON cached)
   await goto("/ar/search/?q=الرحمن");
   await expect(page.getByTestId("search-results").locator("li").first()).toBeVisible();
+  // adhkar work offline
+  await goto("/ar/adhkar/");
+  await expect(page.getByTestId("dhikr").first()).toBeVisible();
   // prayer times are computed on-device
   await goto("/ar/prayer/");
   await expect(page.getByTestId("times").locator("tbody tr")).toHaveCount(6);

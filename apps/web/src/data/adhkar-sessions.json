@@ -1,0 +1,175 @@
+{
+  "_doc": "Per item of content/adhkar/dist/adhkar.v1.json (by index): session (morning/evening/both), repetition count, and the index of the item in content/adhkar/hisn.json chapter 'أذكار الصباح والمساء' whose annotation gives the count (null: no annotation, counted once). Religious review pending.",
+  "items": [
+    {
+      "when": "both",
+      "count": 1,
+      "hisn": 0
+    },
+    {
+      "when": "both",
+      "count": 1,
+      "hisn": 1
+    },
+    {
+      "when": "both",
+      "count": 1,
+      "hisn": null
+    },
+    {
+      "when": "both",
+      "count": 3,
+      "hisn": 2
+    },
+    {
+      "when": "both",
+      "count": 3,
+      "hisn": 2
+    },
+    {
+      "when": "both",
+      "count": 3,
+      "hisn": 2
+    },
+    {
+      "when": "morning",
+      "count": 1,
+      "hisn": 3
+    },
+    {
+      "when": "evening",
+      "count": 1,
+      "hisn": 3
+    },
+    {
+      "when": "morning",
+      "count": 1,
+      "hisn": 4
+    },
+    {
+      "when": "evening",
+      "count": 1,
+      "hisn": 4
+    },
+    {
+      "when": "both",
+      "count": 1,
+      "hisn": 5
+    },
+    {
+      "when": "morning",
+      "count": 4,
+      "hisn": 6
+    },
+    {
+      "when": "evening",
+      "count": 4,
+      "hisn": 6
+    },
+    {
+      "when": "morning",
+      "count": 1,
+      "hisn": 7
+    },
+    {
+      "when": "evening",
+      "count": 1,
+      "hisn": 7
+    },
+    {
+      "when": "both",
+      "count": 3,
+      "hisn": 8
+    },
+    {
+      "when": "both",
+      "count": 7,
+      "hisn": 9
+    },
+    {
+      "when": "both",
+      "count": 1,
+      "hisn": 10
+    },
+    {
+      "when": "both",
+      "count": 1,
+      "hisn": 11
+    },
+    {
+      "when": "both",
+      "count": 3,
+      "hisn": 12
+    },
+    {
+      "when": "both",
+      "count": 3,
+      "hisn": 13
+    },
+    {
+      "when": "both",
+      "count": 1,
+      "hisn": 14
+    },
+    {
+      "when": "morning",
+      "count": 1,
+      "hisn": 15
+    },
+    {
+      "when": "evening",
+      "count": 1,
+      "hisn": 15
+    },
+    {
+      "when": "morning",
+      "count": 1,
+      "hisn": 16
+    },
+    {
+      "when": "evening",
+      "count": 1,
+      "hisn": 16
+    },
+    {
+      "when": "morning",
+      "count": 1,
+      "hisn": 21
+    },
+    {
+      "when": "both",
+      "count": 10,
+      "hisn": 18
+    },
+    {
+      "when": "both",
+      "count": 10,
+      "hisn": 24
+    },
+    {
+      "when": "evening",
+      "count": 3,
+      "hisn": 23
+    },
+    {
+      "when": "morning",
+      "count": 3,
+      "hisn": 20
+    },
+    {
+      "when": "morning",
+      "count": 100,
+      "hisn": 19
+    },
+    {
+      "when": "both",
+      "count": 100,
+      "hisn": 22
+    },
+    {
+      "when": "both",
+      "count": 100,
+      "hisn": 17
+    }
+  ]
+}

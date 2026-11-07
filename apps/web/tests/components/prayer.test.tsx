@@ -166,8 +166,14 @@ describe("NextPrayerCard", () => {
   it("shows next prayer and countdown in Arabic digits", async () => {
     render(<NextPrayerCard locale="ar" />);
     expect(await screen.findByTestId("home-countdown")).toHaveTextContent(/^[٠-٩]+:[٠-٩]{2}:[٠-٩]{2}$/);
-    expect(screen.getByText(/الظهر/)).toBeInTheDocument();
-    expect(screen.getByText("مكة المكرمة")).toBeInTheDocument();
+    expect(screen.getByTestId("home-next-name")).toHaveTextContent(/^الظهر/);
+    // today's five prayers + sunrise, the next one marked
+    const times = screen.getByTestId("home-times").querySelectorAll("li");
+    expect(times).toHaveLength(6);
+    expect(screen.getByTestId("home-times").querySelector("li.next")).toHaveAttribute("data-prayer", "dhuhr");
+    expect(screen.getByTestId("home-place")).toHaveTextContent("مكة المكرمة");
+    expect(screen.getByTestId("home-hijri")).toHaveTextContent(/١٤٤٧ هـ/);
+    expect(screen.getByTestId("home-gregorian")).toHaveTextContent(/٢٠٢٦/);
     expect(screen.getByRole("link", { name: "كل مواقيت الصلاة" })).toHaveAttribute("href", "/ar/prayer/");
   });
   it("shows an error for impossible locations", async () => {

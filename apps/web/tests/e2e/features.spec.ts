@@ -8,17 +8,35 @@ test.describe("navigation & language", () => {
     const nav = page.getByRole("navigation", { name: "Main navigation" });
     for (const [name, url, h1] of [
       ["Quran", "/en/quran/", "Surahs"],
-      ["Search", "/en/search/", "Search the Quran"],
       ["Prayer", "/en/prayer/", "Prayer times"],
-      ["Bookmarks", "/en/bookmarks/", "Bookmarks"],
-      ["Settings", "/en/settings/", "Settings"],
+      ["Adhkar", "/en/adhkar/", "Morning & evening adhkar"],
+      ["More", "/en/more/", "All sections"],
       ["Home", "/en/", "Peace be upon you"],
     ] as const) {
       await nav.getByRole("link", { name, exact: true }).click();
       await expect(page).toHaveURL(url);
       await expect(page.locator("h1")).toHaveText(h1);
+      await expect(nav.getByRole("link", { name, exact: true })).toHaveAttribute("aria-current", "page");
     }
-    await page.getByRole("link", { name: "About" }).click();
+    // Search, bookmarks and settings live under "More"
+    for (const [name, url, h1] of [
+      ["Search the Quran", "/en/search/", "Search the Quran"],
+      ["Bookmarks", "/en/bookmarks/", "Bookmarks"],
+      ["Settings", "/en/settings/", "Settings"],
+    ] as const) {
+      await nav.getByRole("link", { name: "More", exact: true }).click();
+      await page
+        .getByTestId("section-tiles")
+        .getByRole("link", { name: new RegExp(`^${name}`) })
+        .click();
+      await expect(page).toHaveURL(url);
+      await expect(page.locator("h1")).toHaveText(h1);
+      await expect(nav.getByRole("link", { name: "More", exact: true })).toHaveAttribute(
+        "aria-current",
+        "page",
+      );
+    }
+    await page.getByRole("contentinfo").getByRole("link", { name: "About" }).click();
     await expect(page.locator("h1")).toHaveText("About");
     await page.getByRole("contentinfo").getByRole("link", { name: "Mushaf pages" }).click();
     await expect(page).toHaveURL("/en/page/1/");
@@ -43,18 +61,20 @@ test.describe("navigation & language", () => {
 
   test("home quick links and tiles", async ({ page }) => {
     await page.goto("/ar/");
-    const tiles = page.locator("a.tile");
-    await expect(tiles).toHaveCount(6);
+    const tiles = page.getByTestId("section-tiles").getByRole("link");
+    await expect(tiles).toHaveCount(8);
     const hrefs = await tiles.evaluateAll((as) => as.map((a) => a.getAttribute("href")));
     expect(hrefs).toEqual([
-      "/ar/quran/",
       "/ar/page/1/",
+      "/ar/quran/",
+      "/ar/adhkar/",
+      "/ar/hisn/",
+      "/ar/tasbih/",
+      "/ar/qibla/",
+      "/ar/hajj/",
       "/ar/search/",
-      "/ar/prayer/",
-      "/ar/bookmarks/",
-      "/ar/settings/",
     ]);
-    await tiles.nth(1).click();
+    await tiles.nth(0).click();
     await expect(page).toHaveURL("/ar/page/1/");
   });
 });
@@ -64,10 +84,10 @@ test.describe("theme & font size", () => {
     await page.goto("/en/settings/");
     const bg = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
     await page.getByRole("radio", { name: "Light" }).check();
-    expect(await bg()).toBe("rgb(237, 241, 244)"); // --color-bg light #EDF1F4
+    expect(await bg()).toBe("rgb(245, 242, 234)"); // --color-bg light #F5F2EA (emerald + gold palette)
     await page.getByRole("radio", { name: "Dark" }).check();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
-    expect(await bg()).toBe("rgb(11, 21, 32)"); // --color-bg dark #0B1520
+    expect(await bg()).toBe("rgb(12, 23, 20)"); // --color-bg dark #0C1714
     await page.reload();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
     await page.getByRole("radio", { name: "System" }).check();
@@ -79,7 +99,7 @@ test.describe("theme & font size", () => {
     const page = withHydration(await ctx.newPage());
     await page.goto("/ar/");
     expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(
-      "rgb(11, 21, 32)",
+      "rgb(12, 23, 20)",
     );
     await ctx.close();
   });
@@ -110,7 +130,16 @@ test.describe("Quran", () => {
     await expect(page.getByTestId("surah-list").locator("li")).toHaveCount(114);
     await page.getByLabel("تصفية السور").fill("الكهف");
     await expect(page.getByTestId("surah-list").locator("li")).toHaveCount(1);
-    await page.getByTestId("surah-list").getByRole("link").click();
+    // a surah opens in the Mushaf at its first page
+    await page.getByTestId("surah-list").getByTestId("surah-open").click();
+    await expect(page).toHaveURL("/ar/page/293/");
+    await expect(page.getByTestId("page-surahs")).toContainText("سورة الكهف");
+    await expect(page.getByTestId("sura-band")).toHaveText("سورة الكهف");
+    await expect(page.getByTestId("ayah-marker").first()).toHaveText(/۝/);
+    // the list view is still one tap away
+    await page.goto("/ar/quran/");
+    await page.getByLabel("تصفية السور").fill("الكهف");
+    await page.getByTestId("surah-list").getByTestId("surah-list-view").click();
     await expect(page).toHaveURL("/ar/surah/18/");
     await expect(page.locator("article.ayah")).toHaveCount(110);
     await expect(page.getByTestId("ayah-marker").first()).toHaveText("۝١");
@@ -188,7 +217,10 @@ test.describe("Quran", () => {
     await expect(results.locator("p.quran")).toHaveText(text[0]![4]!); // original 1:5, unmodified
     await expect(page).toHaveURL(/\?q=/);
     await results.getByRole("link").click();
-    await expect(page).toHaveURL("/en/surah/1/#a-5");
+    // results open the Mushaf page with the ayah selected
+    await expect(page).toHaveURL("/en/page/1/#a-1-5");
+    await expect(page.getByTestId("ayah-actions")).toContainText("Al-Fatihah, ayah 5");
+    await expect(page.locator('.seg[data-ayah="1:5"]').first()).toHaveClass(/selected/);
     await page.goto("/en/search/?q=ق");
     await expect(page.getByText("Type at least 2 Arabic letters.")).toBeVisible();
     await page.getByLabel("Search the Quran").fill("الرحمة");

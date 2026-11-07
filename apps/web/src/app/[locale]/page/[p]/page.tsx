@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PreloadQuranFont } from "@/components/PreloadQuranFont";
 import { isLocale, t } from "@/lib/i18n";
-import { ayahsOnPage, juzForPage, PAGES, isValidPage } from "@/lib/pages";
-import { ayahText, surahAyahs } from "@/lib/server/content";
+import { PAGES, isValidPage } from "@/lib/pages";
+import { mushafPage } from "@/lib/server/content";
 import { PageReader } from "@/components/PageReader";
 
 export const dynamicParams = false;
@@ -19,21 +19,15 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return { title: t(isLocale(locale) ? locale : "ar", "quran.page", { page: p }) };
 }
 
-export default async function MushafPage({ params }: { params: Params }) {
+/** Madinah Mushaf page (15 lines), rendered at build time from the canonical text and the line layout. */
+export default async function MushafRoute({ params }: { params: Params }) {
   const { locale, p } = await params;
   const page = Number(p);
   if (!isLocale(locale) || !isValidPage(page) || String(page) !== p) notFound();
-  const ayahs = ayahsOnPage(page).map(([s, a]) => ({ s, a, text: ayahText(s, a) }));
   return (
     <>
       <PreloadQuranFont />
-      <PageReader
-        locale={locale}
-        page={page}
-        juz={juzForPage(page)}
-        ayahs={ayahs}
-        basmala={surahAyahs(1)[0] as string}
-      />
+      <PageReader key={page} locale={locale} initial={mushafPage(page)} />
     </>
   );
 }

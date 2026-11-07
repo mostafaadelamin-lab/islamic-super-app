@@ -5,13 +5,14 @@ import { filterSurahs, SurahIndex } from "@/components/SurahIndex";
 import { GoToPage } from "@/components/GoToPage";
 import { SurahReader } from "@/components/SurahReader";
 import { arrowTarget, PageReader } from "@/components/PageReader";
+import { lookupFrom, resolvePage, type MushafLinesFile } from "@/lib/mushaf";
 import { SearchView, resetSearchIndexForTests, loadIndex } from "@/components/SearchView";
 import { BookmarksView } from "@/components/BookmarksView";
 import { ContinueReading } from "@/components/ContinueReading";
 import { AyahMarker } from "@/components/AyahMarker";
 import { bookmarksStore, addBookmark } from "@/lib/bookmarks";
 import { lastReadStore, prefsStore } from "@/lib/settings";
-import { surahMeta, ayahsOnPage } from "@/lib/pages";
+import { surahMeta } from "@/lib/pages";
 import { renderQuranText } from "@/lib/quran-render";
 import { routerPush } from "../setup";
 import { resetStores } from "./reset";
@@ -33,7 +34,13 @@ describe("SurahIndex", () => {
     const box = screen.getByLabelText("Filter surahs");
     await userEvent.type(box, "kahf");
     expect(screen.getByTestId("surah-list").querySelectorAll("li")).toHaveLength(1);
-    expect(screen.getByRole("link", { name: /Al-Kahf/ })).toHaveAttribute("href", "/en/surah/18/");
+    // The surah opens in the Mushaf at its first page; a secondary link opens the list view.
+    expect(screen.getByTestId("surah-open")).toHaveAttribute("href", "/en/page/293/");
+    expect(screen.getByTestId("surah-open")).toHaveTextContent("Al-Kahf");
+    expect(screen.getByRole("link", { name: "List view — Al-Kahf" })).toHaveAttribute(
+      "href",
+      "/en/surah/18/",
+    );
     await userEvent.clear(box);
     await userEvent.type(box, "zzzz");
     expect(screen.getByText("No surah matches your filter")).toBeInTheDocument();
@@ -48,7 +55,8 @@ describe("SurahIndex", () => {
   });
   it("uses Arabic-Indic digits in Arabic", () => {
     render(<SurahIndex locale="ar" />);
-    expect(screen.getByRole("link", { name: /البقرة/ })).toHaveTextContent("٢٨٦ آية");
+    expect(screen.getAllByTestId("surah-open")[1]).toHaveTextContent("٢٨٦ آية");
+    expect(screen.getAllByTestId("surah-open")[1]).toHaveAttribute("href", "/ar/page/2/");
   });
 });
 
@@ -158,24 +166,26 @@ describe("SurahReader", () => {
   });
 });
 
-describe("PageReader", () => {
-  const props = (page: number) => ({
-    page,
-    juz: 1,
-    basmala: ayahs(1)[0]!,
-    ayahs: ayahsOnPage(page).map(([s, a]) => ({ s, a, text: quran.surahs[s - 1]!.ayahs[a - 1]! })),
-  });
-  it("renders the page header, ayahs, surah banners and saves position", () => {
-    render(<PageReader locale="ar" {...props(604)} />);
+describe("PageReader (15-line Mushaf)", () => {
+  const lines = readRepoJson<MushafLinesFile>("content/quran/dist/mushaf-lines.v1.json");
+  const lookup = lookupFrom(quran.surahs.map((x) => x.ayahs));
+  const initial = (page: number) => resolvePage(lines.pages[page - 1]!, lookup);
+  it("renders the page header, 15 lines, surah bands and saves position", () => {
+    render(<PageReader locale="ar" initial={initial(604)} />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("الصفحة ٦٠٤ من ٦٠٤");
-    expect(screen.getByTestId("mushaf-page").querySelectorAll(".ayah-inline")).toHaveLength(15);
+    const page = screen.getByTestId("mushaf-page");
+    expect(page.querySelectorAll(".m-line")).toHaveLength(15);
+    const ayahKeys = new Set([...page.querySelectorAll<HTMLElement>(".seg")].map((e) => e.dataset.ayah));
+    expect(ayahKeys.size).toBe(15); // 112:1–4, 113:1–5, 114:1–6
     expect(screen.getByText("سورة الناس")).toBeInTheDocument();
-    expect(screen.queryByTestId("next-page")).toBeNull();
-    expect(screen.getByTestId("prev-page")).toHaveAttribute("href", "/ar/page/603/");
+    expect(screen.getAllByTestId("basmala")).toHaveLength(3);
+    expect(screen.getByTestId("next-page")).toBeDisabled();
+    expect(screen.getByTestId("prev-page")).toBeEnabled();
+    expect(screen.getByTestId("juz")).toHaveTextContent("الجزء ٣٠");
     expect(lastReadStore.get()).toMatchObject({ surah: 112, ayah: 1, page: 604 });
   });
-  it("arrow keys turn pages (RTL: left = next) but not while typing", () => {
-    render(<PageReader locale="ar" {...props(2)} />);
+  it("prev/next buttons and arrow keys turn pages (RTL: left = next) but not while typing", async () => {
+    render(<PageReader locale="ar" initial={initial(2)} />);
     fireEvent.keyDown(window, { key: "ArrowLeft" });
     expect(routerPush).toHaveBeenLastCalledWith("/ar/page/3/");
     fireEvent.keyDown(window, { key: "ArrowRight" });
@@ -185,6 +195,10 @@ describe("PageReader", () => {
     fireEvent.keyDown(window, { key: "ArrowLeft", ctrlKey: true });
     fireEvent.keyDown(window, { key: "Enter" });
     expect(routerPush).not.toHaveBeenCalled();
+    await userEvent.click(screen.getByTestId("prev-page"));
+    expect(routerPush).toHaveBeenLastCalledWith("/ar/page/1/");
+    await userEvent.click(screen.getByTestId("next-page"));
+    expect(routerPush).toHaveBeenLastCalledWith("/ar/page/3/");
   });
   it("arrowTarget", () => {
     expect(arrowTarget("ArrowRight", 5, "ltr")).toBe(6);
@@ -193,14 +207,32 @@ describe("PageReader", () => {
     expect(arrowTarget("ArrowRight", 1, "rtl")).toBeNull();
     expect(arrowTarget("ArrowUp", 5, "rtl")).toBeNull();
   });
-  it("first page has only next", () => {
-    render(<PageReader locale="en" {...props(1)} />);
-    expect(screen.queryByTestId("prev-page")).toBeNull();
-    expect(screen.getByTestId("next-page")).toHaveAttribute("href", "/en/page/2/");
+  it("first page: centred, previous disabled, list-view link", () => {
+    render(<PageReader locale="en" initial={initial(1)} />);
+    expect(screen.getByTestId("mushaf-page")).toHaveClass("centred");
+    expect(screen.getByTestId("prev-page")).toBeDisabled();
+    expect(screen.getByTestId("next-page")).toBeEnabled();
     expect(screen.getByRole("link", { name: /Al-Fatihah, ayah 1/ })).toHaveAttribute(
       "href",
       "/en/surah/1/#a-1",
     );
+  });
+  it("tapping an ayah selects it; bookmark and close actions", async () => {
+    render(<PageReader locale="en" initial={initial(3)} />);
+    await userEvent.click(screen.getByRole("button", { name: "Al-Baqarah, ayah 7 — ayah options" }));
+    const bar = screen.getByTestId("ayah-actions");
+    expect(bar).toHaveTextContent("Al-Baqarah, ayah 7");
+    const segs = document.querySelectorAll('.seg[data-ayah="2:7"]');
+    expect(segs.length).toBeGreaterThan(0);
+    segs.forEach((e) => expect(e).toHaveClass("selected"));
+    await userEvent.click(screen.getByTestId("act-bookmark"));
+    expect(bookmarksStore.get()["s2-a7"]).toMatchObject({ deleted: false });
+    expect(screen.getByTestId("act-bookmark")).toHaveAttribute("data-bookmarked", "true");
+    await userEvent.click(screen.getByTestId("act-close"));
+    expect(screen.queryByTestId("ayah-actions")).toBeNull();
+    // tapping words of an ayah selects it too
+    fireEvent.click(document.querySelector('.seg[data-ayah="2:10"]')!);
+    expect(screen.getByTestId("ayah-actions")).toHaveTextContent("Al-Baqarah, ayah 10");
   });
 });
 
@@ -215,7 +247,7 @@ describe("SearchView", () => {
     await userEvent.type(box, "اياك نعبد");
     const results = await screen.findByTestId("search-results");
     const link = results.querySelector("a")!;
-    expect(link).toHaveAttribute("href", "/en/surah/1/#a-5");
+    expect(link).toHaveAttribute("href", "/en/page/1/#a-1-5"); // opens the Mushaf page, ayah selected
     expect(results.querySelector("p.quran")!.textContent).toBe(renderQuranText(ayahs(1)[4]!));
     expect(screen.getByText(/1 results/)).toBeInTheDocument();
     await userEvent.clear(box);

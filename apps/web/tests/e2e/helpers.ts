@@ -15,6 +15,15 @@ export const MAIN_PAGES = [
   "prayer/",
   "settings/",
   "about/",
+  // Milestone 2
+  "page/3/",
+  "more/",
+  "adhkar/",
+  "hisn/",
+  "hisn/29/",
+  "tasbih/",
+  "qibla/",
+  "hajj/",
 ] as const;
 
 /** Collects uncaught page errors and console errors; call `assertClean()` at the end. */

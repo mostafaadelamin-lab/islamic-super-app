@@ -19,10 +19,9 @@ describe("MainNav", () => {
     expect(links.map((l) => l.getAttribute("href"))).toEqual([
       "/en/",
       "/en/quran/",
-      "/en/search/",
       "/en/prayer/",
-      "/en/bookmarks/",
-      "/en/settings/",
+      "/en/adhkar/",
+      "/en/more/",
     ]);
     expect(screen.getByRole("link", { name: "Quran" })).toHaveAttribute("aria-current", "page");
     expect(screen.getByRole("link", { name: "Home" })).not.toHaveAttribute("aria-current");
@@ -37,6 +36,22 @@ describe("MainNav", () => {
     setPath("/ar/prayer/");
     render(<MainNav locale="ar" />);
     expect(screen.getByRole("link", { name: "الصلاة" })).toHaveAttribute("aria-current", "page");
+  });
+  it("sub-sections mark their tab (Mushaf page → Quran, Hisn → Adhkar, Settings → More)", () => {
+    for (const [path, name] of [
+      ["/en/page/3/", "Quran"],
+      ["/en/hisn/4/", "Adhkar"],
+      ["/en/tasbih/", "Adhkar"],
+      ["/en/qibla/", "Prayer"],
+      ["/en/settings/", "More"],
+      ["/en/hajj/", "More"],
+    ] as const) {
+      setPath(path);
+      const { unmount } = render(<MainNav locale="en" />);
+      expect(screen.getByRole("link", { name })).toHaveAttribute("aria-current", "page");
+      expect(screen.getAllByRole("link").filter((l) => l.getAttribute("aria-current"))).toHaveLength(1);
+      unmount();
+    }
   });
 });
 

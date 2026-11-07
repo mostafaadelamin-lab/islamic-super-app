@@ -7,6 +7,7 @@ import { surahAyahs } from "@/lib/server/content";
 import { DisplaySettings } from "@/components/DisplaySettings";
 import { AccountSync } from "@/components/AccountSync";
 import { OfflineStatus } from "@/components/OfflineStatus";
+import { AudioSettings } from "@/components/AudioSettings";
 
 export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
   const { locale } = await params;
@@ -19,6 +20,7 @@ export default async function SettingsPage({ params }: { params: LocaleParams })
     <>
       <h1>{t(locale, "settings.title")}</h1>
       <DisplaySettings locale={locale} preview={surahAyahs(1)[1] as string} />
+      <AudioSettings locale={locale} />
       <AccountSync locale={locale} />
       <OfflineStatus locale={locale} />
       <p>

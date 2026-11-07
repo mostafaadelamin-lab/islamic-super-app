@@ -5,7 +5,7 @@ import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
 import { normalizeArabic } from "@/lib/search";
-import { SURAHS, type SurahMeta } from "@/lib/pages";
+import { pageForAyah, SURAHS, type SurahMeta } from "@/lib/pages";
 
 export function filterSurahs(query: string, list: readonly SurahMeta[] = SURAHS): SurahMeta[] {
   const raw = query.trim();
@@ -50,23 +50,37 @@ export function SurahIndex({ locale }: { locale: Locale }) {
       ) : null}
       <ul className="surah-list grid" aria-label={t(locale, "quran.surahList")} data-testid="surah-list">
         {list.map((s) => (
-          <li key={s.n}>
-            <Link className="tile surah-link" href={href(locale, `surah/${s.n}`)} prefetch={false}>
+          <li key={s.n} className="surah-item">
+            <Link
+              className="tile surah-link"
+              href={href(locale, `page/${pageForAyah(s.n, 1)}`)}
+              prefetch={false}
+              data-testid="surah-open"
+            >
               <span className="surah-num">{localizeDigits(s.n, locale)}</span>
               <span>
                 <strong lang="ar" className="surah-name-ar">
                   {s.nameAr}
                 </strong>
                 <br />
-                <span className="muted">
+                <span className="muted small">
                   {s.translit} · {s.nameEn}
                 </span>
               </span>
-              <span className="muted">
+              <span className="muted small surah-meta">
                 {t(locale, "quran.ayahCount", { count: localizeDigits(s.ayahCount, locale) })}
                 <br />
                 {t(locale, s.revelation === "meccan" ? "quran.meccan" : "quran.medinan")}
               </span>
+            </Link>
+            <Link
+              className="surah-list-view"
+              href={href(locale, `surah/${s.n}`)}
+              prefetch={false}
+              aria-label={t(locale, "quran.listViewOf", { surah: locale === "ar" ? s.nameAr : s.translit })}
+              data-testid="surah-list-view"
+            >
+              {t(locale, "quran.listView")}
             </Link>
           </li>
         ))}

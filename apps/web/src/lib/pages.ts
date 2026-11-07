@@ -88,3 +88,10 @@ export function isValidAyah(surah: number, ayah: number): boolean {
   const m = SURAHS[surah - 1];
   return !!m && Number.isInteger(ayah) && ayah >= 1 && ayah <= m.ayahCount;
 }
+
+/** Surah name for the UI: Arabic name in Arabic, transliteration in English. */
+export function surahName(n: number, locale: string): string {
+  const m = SURAHS[n - 1];
+  if (!m) return String(n);
+  return locale === "ar" ? m.nameAr : m.translit;
+}

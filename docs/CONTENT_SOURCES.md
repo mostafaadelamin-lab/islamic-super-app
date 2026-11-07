@@ -6,8 +6,10 @@
 | Madinah Mushaf page boundaries (1405H, 604 pages) | `quran-madina-html` manifest (KFGQPC 1405H layout, DigitalKhatt) | Waqf Public License 2.0 / GPL (see `content/quran/QMH_LICENSE.md`) | contiguity + coverage tests, 5 printed-page spot checks | pending human spot check of more pages |
 | English meaning translation | Saheeh International via `quran-json@3.1.2` | **Licence review pending** — the translation's own copyright terms must be confirmed before public release | shown only as an optional aid; never used as Quran text | pending |
 | Prayer method parameters | Published parameters of each authority (MWL, Egyptian Survey, Umm al-Qura, Karachi, ISNA, Dubai, Kuwait, Qatar, UOIF) | facts | cross-checked against adhan-js 4.4.6 (MIT) | Official timetable comparison for Cairo/Makkah: pending |
-| Morning/evening adhkar, Hisn al-Muslim, Nawawi 40 | Kazi Shariar datasets | CC BY 4.0 | stored, not yet shown in M1 apps | religious review pending |
-| Hajj/Umrah guide | Rattil prototype text | project-owned | not yet shown in M1 apps | religious review required |
+| Morning/evening adhkar, Hisn al-Muslim, Nawawi 40 | Kazi Shariar datasets | CC BY 4.0 | shown from Milestone 2 (morning/evening split and repeat counts taken from Hisn al-Muslim chapter notes) | religious review pending |
+| Hajj/Umrah guide | Rattil prototype text | project-owned | shown from Milestone 2 with a visible "pending religious review" notice | religious review required |
+| Madinah Mushaf 15-line layout | npm `quran-madina-html@2.2.2` Madina-1405H database (shasum `127c4dee6218f0128138e3e9f14d43af664a10aa`, per-file SHA-256 in `content/quran/upstream/quran-madina-html-2.2.2/SHA256SUMS`) | Waqf GPL 2.0 | upstream text used only to locate line breaks; `mushaf-lines.v1.json` stores word ranges of the canonical text; build + tests assert every word appears once in order | pending human comparison with printed pages |
+| Recitation audio | everyayah.com per-ayah MP3, streamed (not bundled) | free to stream; reciters' rights with their publishers | online only | — |
 | Fonts | Amiri Quran, IBM Plex Sans Arabic (Google Fonts repository) | SIL OFL 1.1 | files committed with licence | — |
 
 ## Display glyph map

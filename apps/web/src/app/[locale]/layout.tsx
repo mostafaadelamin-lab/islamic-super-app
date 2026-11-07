@@ -9,6 +9,7 @@ import { THEME_SCRIPT } from "../theme-script";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ClientEffects } from "@/components/ClientEffects";
+import { PlayerBar } from "@/components/PlayerBar";
 import { withBase } from "@/lib/base-path";
 
 export const dynamicParams = false;
@@ -64,6 +65,7 @@ export default async function LocaleLayout({
           {children}
         </main>
         <Footer locale={locale} />
+        <PlayerBar locale={locale} />
         <ClientEffects locale={locale} />
       </body>
     </html>

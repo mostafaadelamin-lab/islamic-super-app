@@ -16,6 +16,14 @@ const PAGES = [
   "prayer/",
   "settings/",
   "about/",
+  "page/1/",
+  "more/",
+  "adhkar/",
+  "hisn/",
+  "hisn/29/",
+  "tasbih/",
+  "qibla/",
+  "hajj/",
 ];
 
 for (const vp of VIEWPORTS) {
@@ -26,9 +34,9 @@ for (const vp of VIEWPORTS) {
         await page.goto(`/${locale}/${p}`);
         await page.waitForLoadState("networkidle");
         await noHorizontalOverflow(page);
-        // all six main nav links are visible without scrolling sideways
+        // all five main tabs are visible without scrolling sideways (bottom tab bar on phones)
         const links = page.getByRole("navigation").first().getByRole("link");
-        await expect(links).toHaveCount(6);
+        await expect(links).toHaveCount(5);
         for (const l of await links.all()) await expect(l).toBeInViewport();
         if (
           vp.name !== "tablet" &&

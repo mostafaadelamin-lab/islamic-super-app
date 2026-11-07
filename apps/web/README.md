@@ -21,6 +21,10 @@ npm run serve      # serves out/ on http://127.0.0.1:4173 (gzip, trailing-slash 
 | `packages/design-tokens/dist/tokens.{css,ts}`                                         | `src/generated/` (all colours/sizes come from these)                                      |
 | `content/fonts/*.ttf` + OFL licences                                                  | `public/fonts/` (self-hosted, no CDN)                                                     |
 | `content/quran/dist/quran.v1.json`                                                    | `public/data/en/<n>.json` (translation per surah), `public/data/quran-text.json` (search) |
+| `content/quran/dist/mushaf-lines.v1.json`                                             | `public/data/mushaf-lines.json` (15-line layout, fetched once by the Mushaf reader)       |
+| `packages/shared-schemas/audio/reciters.json`                                         | `src/generated/reciters.json`                                                             |
+| `content/adhkar/dist/adhkar.v1.json`, `content/adhkar/hisn.json`                      | `src/generated/` (rendered at build time)                                                 |
+| `content/pilgrimage/source-hajj.js`                                                   | `src/generated/hajj.json` (data constants evaluated in an empty VM context)               |
 
 These generated paths are git-ignored. Surah and Mushaf-page routes read `quran.v1.json` **at build time**
 and inline only that route's ayahs; the 2.2 MB file is never shipped to the browser as a whole (the search
@@ -29,8 +33,12 @@ page lazily loads the 1.3 MB Arabic-only index).
 ## Routes
 
 `/` redirects to the saved language (default `/ar/`). Every page exists as `/ar/…` (RTL) and `/en/…` (LTR):
-home, `quran/` (114-surah index with filter + go-to-page), `surah/1…114/`, `page/1…604/` (Madinah 1405H
-boundaries from `pages.v1.json`), `search/`, `bookmarks/`, `prayer/`, `settings/`, `about/`.
+home, `quran/` (114-surah index with filter + go-to-page), `surah/1…114/` (list view with translation),
+`page/1…604/` (the 15-line Madinah Mushaf), `search/`, `bookmarks/`, `prayer/`, `settings/`, `about/`, and
+since Milestone 2 `more/`, `adhkar/`, `hisn/` + `hisn/1…134/`, `tasbih/`, `qibla/`, `hajj/`.
+
+Navigation: five tabs — Home / Quran / Prayer / Adhkar / More — in the top bar on wide screens and as a
+bottom tab bar on phone widths (≤ 720 px).
 
 ## Features
 
@@ -40,8 +48,27 @@ boundaries from `pages.v1.json`), `search/`, `bookmarks/`, `prayer/`, `settings/
   (every access wrapped in try/catch; the app works with storage blocked).
 - Surah reader: Arabic-Indic ayah numbers in Arabic (U+06DD + digits), optional English translation
   (fetched per surah), bookmarks, last-read position (IntersectionObserver), previous/next surah.
-- Mushaf page reader: page/juz header, previous/next, arrow keys (RTL: ← = next), go-to-page with
-  validation (accepts Arabic-Indic digits).
+- Mushaf (`page/N/`): each page is drawn from `mushaf-lines.v1.json` with Amiri Quran — surah title bands,
+  basmala lines, 15 lines justified edge to edge (8 centred lines on pages 1–2), ayah-end markers with
+  Arabic-Indic digits, paper background and gold frame. The font size is measured so the widest line exactly
+  fills the frame (and the page fits the screen height on wide screens). The route's page is rendered at
+  build time; the reader then fetches the line layout and the Arabic text once (cached by the service worker)
+  and turns pages on the device: swipe/drag like a book (Arabic: drag right = next), arrow keys, buttons, page
+  slider, go-to-page. Last page is remembered. Tapping an ayah selects it: play from here, bookmark, copy
+  (canonical text). Surah list and search results open the Mushaf at the right page (`#a-S-A` selects).
+- Recitation (online only): player bar with play/pause, stop, next/previous ayah, reciter (8, saved in
+  Settings) and repeat count. Plays the page, the surah or from an ayah to the end of the surah; the basmala
+  (001001) is played before ayah 1 of every surah except 1 and 9; the reader highlights the recited ayah and
+  turns the page as the recitation crosses it. Per-ayah MP3s stream from everyayah.com (`reciters.json`);
+  offline and network failures are shown in the player.
+- Home: next prayer with a live countdown, today's five prayers + sunrise, Hijri (Umm al-Qura via `Intl`) and
+  Gregorian dates, city, continue reading, section tiles.
+- Adhkar: morning/evening lists with a counter per item (counts as annotated in Hisn al-Muslim; mapping in
+  `src/data/adhkar-sessions.json`), daily progress kept on the device. Hisn al-Muslim: 134 chapters with a
+  filter. Tasbih: counter with targets 33/99/100/1000, rounds, undo, reset (persisted). Qibla: live compass
+  from `DeviceOrientation` (`deviceorientationabsolute`, iOS `webkitCompassHeading` after
+  `requestPermission()`), falling back to the static bearing compass. Hajj & Umrah guide from the prototype
+  text with a visible "pending religious review" notice and Tawaf/Sa'i/Jamarat round counters.
 - Search: diacritic-insensitive per `search-normalization.json`; results show the original text.
 - `quran-render.json` is applied **only** to strings handed to the renderer (`renderQuranText`); stored,
   searched, synced and hashed text is never altered.
@@ -54,9 +81,10 @@ boundaries from `pages.v1.json`), `search/`, `bookmarks/`, `prayer/`, `settings/
   (server wins ties), tombstones (`deleted: true`), then push dirty items. Offline, network and CORS
   failures and HTTP errors are shown in the page.
 - PWA: `manifest.webmanifest`, `out/sw.js` generated from `scripts/sw-template.js`. Install precaches the
-  shell (all non-surah/page routes of both languages, JS/CSS, fonts, JSON data); after activation the worker
-  precaches every surah and Mushaf page of the language being used and reports progress (Settings →
-  Offline availability).
+  shell (all routes except surah, Mushaf-page and Hisn-chapter pages, of both languages, JS/CSS, fonts, JSON
+  data including `mushaf-lines.json`); after activation the worker precaches every surah, Mushaf page and
+  Hisn chapter of the language being used and reports progress (Settings → Offline availability). Audio is
+  cross-origin and never cached.
 
 ## Test
 
@@ -82,10 +110,14 @@ npm run serve & npm run lighthouse
   language starts a second background download. The first offline-ready moment is therefore some time
   after the first visit, not instant.
 - "Use my location" uses the device time zone for the computed times (no offline tz lookup by
-  coordinates); the Qibla compass is static (no device-orientation sensor).
+  coordinates). The live Qibla compass needs a magnetometer and a browser that exposes an absolute heading.
+- Recitation needs an internet connection (streamed from everyayah.com). The container used for development
+  blocks that host, so real-audio playback is only exercised in CI/on devices; e2e tests answer audio
+  requests with a local silent MP3 and say "mocked network" in their names.
 - Fonts are shipped as TTF (no WOFF2 subsetting); UI fonts use `font-display: optional` to avoid layout
   shift, so a first visit on a slow connection may show the system font.
-- The Mushaf view uses the Madinah page boundaries but flows text with Amiri Quran; it is not a
-  line-by-line facsimile of the printed page.
+- The Mushaf follows the printed Madinah line breaks, but is drawn with the Amiri Quran font (not the KFGQPC
+  page fonts), so letter shapes and spacing differ from the print; Chrome justifies by widening spaces
+  (no kashida).
 - Only Chromium is available in this environment; Firefox/WebKit were not tested.
 - Only bookmarks sync; `/v1/me/settings` sync is not wired yet.

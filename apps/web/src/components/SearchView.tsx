@@ -6,7 +6,7 @@ import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
 import { renderQuranText } from "@/lib/quran-render";
 import { queryLength, SearchIndex } from "@/lib/search";
-import { surahMeta } from "@/lib/pages";
+import { pageForAyah, surahMeta } from "@/lib/pages";
 import { withBase } from "@/lib/base-path";
 
 const LIMIT = 50;
@@ -128,7 +128,7 @@ export function SearchView({ locale }: { locale: Locale }) {
                 <p className="quran" lang="ar" dir="rtl" style={{ margin: 0 }}>
                   {renderQuranText(r.text)}
                 </p>
-                <Link href={`${href(locale, `surah/${r.s}`)}#a-${r.a}`}>
+                <Link href={`${href(locale, `page/${pageForAyah(r.s, r.a)}`)}#a-${r.s}-${r.a}`}>
                   {t(locale, "quran.ayahRef", {
                     surah: m ? (locale === "ar" ? m.nameAr : m.translit) : String(r.s),
                     ayah: localizeDigits(r.a, locale),
