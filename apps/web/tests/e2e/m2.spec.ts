@@ -436,7 +436,14 @@ test.describe("qibla compass", () => {
     // A device whose top points east (heading 90°): alpha = 360 − 90.
     await page.evaluate(() =>
       window.dispatchEvent(
-        new DeviceOrientationEvent("deviceorientationabsolute", { alpha: 270, absolute: true }),
+        ((type: string, init: { alpha: number; absolute: boolean }) => {
+          // WebKit has no public DeviceOrientationEvent constructor; fall back to a plain Event with the same fields.
+          try {
+            return new DeviceOrientationEvent(type, init);
+          } catch {
+            return Object.assign(new Event(type), init);
+          }
+        })("deviceorientationabsolute", { alpha: 270, absolute: true }),
       ),
     );
     await expect(page.getByTestId("live-compass")).toHaveAttribute("data-mode", "live");
@@ -448,7 +455,13 @@ test.describe("qibla compass", () => {
     await page.evaluate(
       (b) =>
         window.dispatchEvent(
-          new DeviceOrientationEvent("deviceorientationabsolute", { alpha: 360 - b, absolute: true }),
+          ((type: string, init: { alpha: number; absolute: boolean }) => {
+            try {
+              return new DeviceOrientationEvent(type, init);
+            } catch {
+              return Object.assign(new Event(type), init);
+            }
+          })("deviceorientationabsolute", { alpha: 360 - b, absolute: true }),
         ),
       bearing,
     );
