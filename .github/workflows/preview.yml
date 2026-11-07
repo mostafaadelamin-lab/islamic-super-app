@@ -3,6 +3,15 @@
 name: Preview build
 on:
   workflow_dispatch:
+    inputs:
+      android:
+        description: Also rebuild the Android APK
+        type: boolean
+        default: true
+      cancel_pages_deployment:
+        description: Commit SHA of a stuck GitHub Pages deployment to cancel first (optional)
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -37,6 +46,16 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
       - run: touch out/.nojekyll
+      - name: Cancel a stuck Pages deployment
+        if: ${{ inputs.cancel_pages_deployment != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ inputs.cancel_pages_deployment }}
+          REPO: ${{ github.repository }}
+        run: |
+          [[ "$SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "not a commit SHA"; exit 1; }
+          gh api -X POST "repos/$REPO/pages/deployments/$SHA/cancel" || true
+          sleep 15
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with: { path: apps/web/out }
       - id: deploy
@@ -46,6 +65,7 @@ jobs:
 
   android:
     name: Android preview APK
+    if: ${{ inputs.android }}
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     permissions:
