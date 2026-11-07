@@ -440,7 +440,7 @@ test.describe("adhkar", () => {
     await page.goto("/ar/adhkar/#morning");
     await expect(page.getByTestId("session-morning")).toHaveAttribute("aria-pressed", "true");
     const items = page.getByTestId("dhikr");
-    await expect(items).toHaveCount(27);
+    await expect(items).toHaveCount(26);
     await expect(page.getByTestId("adhkar-progress")).toHaveText("أتممت ٠ من ٢٧");
     const first = items.nth(0).getByTestId("dhikr-count");
     await first.click();

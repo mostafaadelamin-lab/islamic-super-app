@@ -38,8 +38,11 @@ describe("adhkar sessions", () => {
     const evening = sessionItems(adhkar, "evening");
     expect(morning.map((d) => d.id)).not.toContain(7);
     expect(evening.map((d) => d.id)).toContain(7);
-    expect(morning.length).toBe(27); // 18 for both + 9 morning-only
-    expect(evening.length).toBe(25); // 18 for both + 7 evening-only
+    expect(morning.length).toBe(26); // 17 for both + 9 morning-only
+    expect(evening.length).toBe(25); // 17 for both + 8 evening-only
+    // The last two ayahs of al-Baqarah are read at night ("من قرأ بالآيتين من آخر سورة البقرة في ليلة كفتاه",
+    // al-Bukhari and Muslim); the mobile app already lists them in the evening only.
+    expect(SESSIONS[2]?.when).toBe("evening");
   });
   it("repetition counts are the ones annotated in Hisn al-Muslim (chapter أذكار الصباح والمساء)", () => {
     const chapter = hisn.find(([t]) => t === "أذكار الصباح والمساء")![1];

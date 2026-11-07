@@ -103,3 +103,26 @@ def test_methods_file_is_complete():
     for key, cfg in m["methods"].items():
         assert {"nameAr", "nameEn", "fajr"} <= cfg.keys(), key
         assert ("isha" in cfg) != ("ishaMinutes" in cfg), key
+
+
+def _isha_gap(day: date, method: str = "makkah") -> int:
+    t = P.prayer_times(day, 21.4225, 39.8262, method)
+    return round((t.isha - t.maghrib).total_seconds() / 60)
+
+
+def test_umm_al_qura_isha_is_120_minutes_in_ramadan_and_90_otherwise():
+    # Ramadan 1447 by the Umm al-Qura calendar: 2026-02-18 .. 2026-03-19.
+    assert _isha_gap(date(2026, 2, 17)) == 90
+    assert _isha_gap(date(2026, 2, 18)) == 120
+    assert _isha_gap(date(2026, 3, 19)) == 120
+    assert _isha_gap(date(2026, 3, 20)) == 90
+    # Qatar keeps 90 minutes all year.
+    assert _isha_gap(date(2026, 3, 1), "qatar") == 90
+
+
+def test_ramadan_table_is_contiguous_and_one_month_long():
+    rows = P.methods()["ramadanUmmAlQura"]
+    assert len(rows) >= 50
+    for start, end in rows.values():
+        n = (date.fromisoformat(end) - date.fromisoformat(start)).days + 1
+        assert n in (29, 30), (start, end)

@@ -5,6 +5,7 @@ import {
   clampAdjustment,
   computeHours,
   fix,
+  inRamadan,
   InvalidInput,
   julianDay,
   methodsConfig,
@@ -169,8 +170,8 @@ describe("algorithm details", () => {
       prayerTimes({ year: 2026, month: 6, day: 21 }, 21.3891, 39.8579, "makkah").highLatitudeAdjusted,
     ).toEqual([]);
   });
-  it("ishaMinutes methods put Isha 90 minutes after Maghrib", () => {
-    const day = prayerTimes({ year: 2026, month: 3, day: 1 }, 21.3891, 39.8579, "makkah");
+  it("ishaMinutes methods put Isha 90 minutes after Maghrib (outside Ramadan)", () => {
+    const day = prayerTimes({ year: 2026, month: 4, day: 1 }, 21.3891, 39.8579, "makkah");
     expect(day.times.isha.getTime() - day.times.maghrib.getTime()).toBeGreaterThanOrEqual(89 * 60000);
     expect(day.times.isha.getTime() - day.times.maghrib.getTime()).toBeLessThanOrEqual(91 * 60000);
   });
@@ -258,5 +259,29 @@ describe("cities", () => {
     const custom = resolveLocation({ ...DEFAULT_PRAYER, custom: { lat: 1, lng: 2, tz: "UTC" } });
     expect(custom).toMatchObject({ lat: 1, lng: 2, tz: "UTC", method: "mwl", city: null });
     expect(cityById("c1")?.nameEn).toBe("Cairo");
+  });
+});
+
+describe("Umm al-Qura Ramadan rule", () => {
+  const gap = (year: number, month: number, day: number, method = "makkah"): number => {
+    const t = prayerTimes({ year, month, day }, 21.4225, 39.8262, method).times;
+    return Math.round((t.isha.getTime() - t.maghrib.getTime()) / 60_000);
+  };
+  it("uses 120 minutes for Isha during Ramadan and 90 otherwise (same as the Python reference)", () => {
+    // Ramadan 1447 by the Umm al-Qura calendar: 2026-02-18 .. 2026-03-19.
+    expect(gap(2026, 2, 17)).toBe(90);
+    expect(gap(2026, 2, 18)).toBe(120);
+    expect(gap(2026, 3, 19)).toBe(120);
+    expect(gap(2026, 3, 20)).toBe(90);
+    expect(gap(2026, 3, 1, "qatar")).toBe(90);
+  });
+  it("agrees with the engine's Umm al-Qura calendar on every day of 2025-2030", () => {
+    const f = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura", { timeZone: "UTC", month: "numeric" });
+    if (!f.resolvedOptions().calendar.startsWith("islamic")) return;
+    for (let d = Date.UTC(2025, 0, 1); d < Date.UTC(2031, 0, 1); d += 86_400_000) {
+      const x = new Date(d);
+      const month = f.formatToParts(x).find((p) => p.type === "month")?.value;
+      expect(inRamadan(x.getUTCFullYear(), x.getUTCMonth() + 1, x.getUTCDate())).toBe(month === "9");
+    }
   });
 });
