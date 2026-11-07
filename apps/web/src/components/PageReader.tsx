@@ -216,6 +216,18 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- runs per recited item, not per page turn
   }, [currentKey]);
 
+  // With the recitation's tafsir docked at the bottom, keep the line being read above the sheet.
+  useEffect(() => {
+    if (!audioPrefs.tafsir || !playingKey || selected) return; // the reader's own selection wins
+    const id = requestAnimationFrame(() => {
+      // last line of the ayah first, then its first line, so a long ayah shows from its start
+      const segs = document.querySelectorAll<HTMLElement>(".mushaf-page .seg.playing");
+      segs[segs.length - 1]?.scrollIntoView?.({ block: "nearest" });
+      segs[0]?.scrollIntoView?.({ block: "nearest" });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [audioPrefs.tafsir, playingKey, page, selected]);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent): void => {
       if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
@@ -309,6 +321,9 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const sel = selected ? (selected.split(":").map(Number) as [number, number]) : null;
   const selBookmarked = sel ? isBookmarked(bookmarks, sel[0], sel[1]) : false;
   const surahToPlay = (sel ?? first)?.[0];
+  // "Tafsir with recitation": the recited ayah's tafsir, unless the reader has selected an ayah themselves.
+  const recitedTafsir: Ref | null =
+    !sel && audioPrefs.tafsir && current?.kind === "ayah" ? [current.s, current.a] : null;
 
   // Previous/next ayah from the tafsir panel: move the selection, turning the page when the ayah is on another.
   const selectRef = ([s, a]: Ref): void => {
@@ -334,7 +349,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
 
   const tilt = drag.dx / TILT_DIVISOR;
   return (
-    <div className="mushaf-reader">
+    <div className={recitedTafsir ? "mushaf-reader with-rtafsir" : "mushaf-reader"}>
       <header className="mushaf-head">
         <span className="mh-surah" data-testid="page-surahs">
           <span className="sr-only">{t(locale, "quran.surahsOnPage")}: </span>
@@ -455,6 +470,17 @@ export function PageReader({ locale, initial }: PageReaderProps) {
             </p>
           </div>
           <TafsirPanel locale={locale} surah={sel[0]} ayah={sel[1]} onStep={selectRef} />
+        </div>
+      ) : null}
+      {recitedTafsir ? (
+        <div
+          className="ayah-sheet recitation-sheet"
+          role="region"
+          aria-label={t(locale, "tafsir.recitation")}
+          data-testid="recitation-tafsir"
+          tabIndex={0} // scrollable: reachable by keyboard
+        >
+          <TafsirPanel locale={locale} surah={recitedTafsir[0]} ayah={recitedTafsir[1]} showNav={false} />
         </div>
       ) : null}
 

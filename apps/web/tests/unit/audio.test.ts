@@ -131,12 +131,21 @@ describe("audio settings", () => {
     audioStore.reload();
   });
   it("sanitizes stored values", () => {
-    expect(sanitizeAudio(null)).toEqual({ reciter: "Alafasy_128kbps", repeat: 1, follow: true });
-    expect(sanitizeAudio({ reciter: "Husary_128kbps", repeat: 3, follow: false })).toEqual({
+    expect(sanitizeAudio(null)).toEqual({
+      reciter: "Alafasy_128kbps",
+      repeat: 1,
+      follow: true,
+      tafsir: false,
+    });
+    expect(sanitizeAudio({ reciter: "Husary_128kbps", repeat: 3, follow: false, tafsir: true })).toEqual({
       reciter: "Husary_128kbps",
       repeat: 3,
       follow: false,
+      tafsir: true,
     });
+    // "tafsir with recitation" is off unless explicitly true
+    expect(sanitizeAudio({ tafsir: "yes" }).tafsir).toBe(false);
+    expect(sanitizeAudio({ tafsir: 1 }).tafsir).toBe(false);
     expect(sanitizeAudio({ reciter: "nope", repeat: 4 })).toMatchObject({
       reciter: DEFAULT_RECITER,
       repeat: 1,
@@ -149,5 +158,12 @@ describe("audio settings", () => {
     });
     audioStore.reload();
     expect(audioStore.get().reciter).toBe("Minshawy_Murattal_128kbps");
+  });
+  it("persists 'tafsir with recitation' (default off)", () => {
+    expect(audioStore.get().tafsir).toBe(false);
+    audioStore.set((p) => ({ ...p, tafsir: true }));
+    expect(JSON.parse(localStorage.getItem("rattil.audio")!)).toMatchObject({ tafsir: true });
+    audioStore.reload();
+    expect(audioStore.get().tafsir).toBe(true);
   });
 });

@@ -47,6 +47,15 @@ export function AudioSettings({ locale }: { locale: Locale }) {
         />
         {t(locale, "audio.follow")}
       </label>
+      <label className="check">
+        <input
+          type="checkbox"
+          checked={prefs.tafsir}
+          data-testid="settings-recitation-tafsir"
+          onChange={(e) => audioStore.set((p) => ({ ...p, tafsir: e.target.checked }))}
+        />
+        {t(locale, "audio.withTafsir")}
+      </label>
       <p className="muted small">{t(locale, "audio.onlineNote")}</p>
     </section>
   );

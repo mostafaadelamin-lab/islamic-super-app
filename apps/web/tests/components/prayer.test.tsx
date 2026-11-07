@@ -176,6 +176,21 @@ describe("NextPrayerCard", () => {
     expect(screen.getByTestId("home-gregorian")).toHaveTextContent(/٢٠٢٦/);
     expect(screen.getByRole("link", { name: "كل مواقيت الصلاة" })).toHaveAttribute("href", "/ar/prayer/");
   });
+  it("after Isha: tomorrow's times are listed with Fajr marked as next", async () => {
+    vi.setSystemTime(new Date("2026-11-07T17:43:00Z")); // 20:43 in Makkah, after Isha
+    render(<NextPrayerCard locale="en" />);
+    expect(await screen.findByTestId("home-next-name")).toHaveTextContent(/^Fajr/);
+    const list = screen.getByTestId("home-times");
+    expect(list).toHaveAttribute("data-day", "tomorrow");
+    expect(list).toHaveAccessibleName("Tomorrow's times");
+    expect(screen.getByTestId("home-times-day")).toHaveTextContent("Tomorrow's times");
+    const marked = list.querySelector("li.next")!;
+    expect(marked).toHaveAttribute("data-prayer", "fajr");
+    // the marked time is the time shown as next in the hero
+    expect(screen.getByTestId("home-next-name")).toHaveTextContent(
+      marked.querySelector("strong")!.textContent!,
+    );
+  });
   it("shows an error for impossible locations", async () => {
     vi.setSystemTime(new Date("2026-12-21T10:00:00Z"));
     act(() =>

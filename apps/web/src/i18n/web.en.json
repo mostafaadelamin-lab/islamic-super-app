@@ -228,5 +228,8 @@
   "tafsir.next": "Next ayah's tafsir",
   "tafsir.show": "Tafsir",
   "tafsir.showOf": "Tafsir — ayah {n}",
-  "tafsir.arabicOnly": "This simplified tafsir is available in Arabic only."
+  "tafsir.arabicOnly": "This simplified tafsir is available in Arabic only.",
+  "audio.withTafsir": "Tafsir with recitation",
+  "tafsir.recitation": "Tafsir of the ayah being recited",
+  "home.tomorrowTimes": "Tomorrow's times"
 }

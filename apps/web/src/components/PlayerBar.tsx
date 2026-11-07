@@ -1,5 +1,5 @@
 "use client";
-import { useSyncExternalStore } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import { surahName } from "@/lib/pages";
@@ -14,7 +14,24 @@ const ERROR_KEYS = { offline: "audio.errOffline", network: "audio.errNetwork", b
 export function PlayerBar({ locale }: { locale: Locale }) {
   const ps = useSyncExternalStore(player.subscribe, player.get, player.getServer);
   const prefs = useStore(audioStore);
-  if (ps.status === "idle") return null;
+  const barRef = useRef<HTMLElement>(null);
+  const shown = ps.status !== "idle";
+  // Docked sheets and the page's bottom padding sit above the player: publish its real height (it wraps on
+  // narrow phones) as --player-h.
+  useEffect(() => {
+    const el = barRef.current;
+    if (!shown || !el) return;
+    const body = document.body;
+    const publish = (): void => body.style.setProperty("--player-h", `${Math.ceil(el.offsetHeight)}px`);
+    publish();
+    const ro = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(publish);
+    ro?.observe(el);
+    return () => {
+      ro?.disconnect();
+      body.style.removeProperty("--player-h");
+    };
+  }, [shown]);
+  if (!shown) return null;
   const item = ps.queue[ps.cursor.index];
   const surah = item ? surahName(item.s, locale) : "";
   const label =
@@ -23,7 +40,7 @@ export function PlayerBar({ locale }: { locale: Locale }) {
       : t(locale, "quran.ayahRef", { surah, ayah: localizeDigits(item?.a ?? 0, locale) });
   const playing = ps.status === "playing" || ps.status === "loading";
   return (
-    <section className="player" aria-label={t(locale, "audio.player")} data-testid="player">
+    <section ref={barRef} className="player" aria-label={t(locale, "audio.player")} data-testid="player">
       <div className="player-row">
         <div className="player-now">
           <strong data-testid="player-now">{label}</strong>
@@ -103,6 +120,18 @@ export function PlayerBar({ locale }: { locale: Locale }) {
               </option>
             ))}
           </select>
+        </label>
+        <label className="inline-field player-check">
+          <input
+            type="checkbox"
+            checked={prefs.tafsir}
+            data-testid="player-tafsir"
+            onChange={(e) => {
+              const tafsir = e.target.checked;
+              audioStore.set((p) => ({ ...p, tafsir }));
+            }}
+          />
+          <span>{t(locale, "audio.withTafsir")}</span>
         </label>
       </div>
       {ps.status === "error" && ps.error ? (

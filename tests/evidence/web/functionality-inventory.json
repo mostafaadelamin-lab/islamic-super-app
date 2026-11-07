@@ -4587,6 +4587,13 @@
  {
   "page": "/ar/settings/",
   "tag": "input",
+  "type": "checkbox",
+  "name": "التفسير مع التلاوة",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "input",
   "type": "url",
   "name": "عنوان الخادم (API)",
   "href": null
@@ -5323,7 +5330,7 @@
   "page": "/ar/adhkar/",
   "tag": "button",
   "type": "button",
-  "name": "عدّ الذكر ٢١: ٠ من ١٠ / ١",
+  "name": "عدّ الذكر ٢١: ٠ من ١٠٠ / ١٠",
   "href": null
  },
  {
@@ -5337,14 +5344,14 @@
   "page": "/ar/adhkar/",
   "tag": "button",
   "type": "button",
-  "name": "عدّ الذكر ٢٣: ٠ من ١٠٠ / ١٠",
+  "name": "عدّ الذكر ٢٣: ٠ من ٣٠ / ٣",
   "href": null
  },
  {
   "page": "/ar/adhkar/",
   "tag": "button",
   "type": "button",
-  "name": "عدّ الذكر ٢٤: ٠ من ٣٠ / ٣",
+  "name": "عدّ الذكر ٢٤: ٠ من ١٠٠٠ / ١٠٠",
   "href": null
  },
  {
@@ -5352,20 +5359,6 @@
   "tag": "button",
   "type": "button",
   "name": "عدّ الذكر ٢٥: ٠ من ١٠٠٠ / ١٠٠",
-  "href": null
- },
- {
-  "page": "/ar/adhkar/",
-  "tag": "button",
-  "type": "button",
-  "name": "عدّ الذكر ٢٦: ٠ من ١٠٠٠ / ١٠٠",
-  "href": null
- },
- {
-  "page": "/ar/adhkar/",
-  "tag": "button",
-  "type": "button",
-  "name": "عدّ الذكر ٢٧: ٠ من ١٠٠٠ / ١٠٠",
   "href": null
  },
  {
@@ -11468,6 +11461,13 @@
  {
   "page": "/en/settings/",
   "tag": "input",
+  "type": "checkbox",
+  "name": "Tafsir with recitation",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "input",
   "type": "url",
   "name": "API base URL",
   "href": null
@@ -12204,7 +12204,7 @@
   "page": "/en/adhkar/",
   "tag": "button",
   "type": "button",
-  "name": "Count dhikr 21: 0 of 10 / 1",
+  "name": "Count dhikr 21: 0 of 100 / 10",
   "href": null
  },
  {
@@ -12218,14 +12218,14 @@
   "page": "/en/adhkar/",
   "tag": "button",
   "type": "button",
-  "name": "Count dhikr 23: 0 of 100 / 10",
+  "name": "Count dhikr 23: 0 of 30 / 3",
   "href": null
  },
  {
   "page": "/en/adhkar/",
   "tag": "button",
   "type": "button",
-  "name": "Count dhikr 24: 0 of 30 / 3",
+  "name": "Count dhikr 24: 0 of 1000 / 100",
   "href": null
  },
  {
@@ -12233,20 +12233,6 @@
   "tag": "button",
   "type": "button",
   "name": "Count dhikr 25: 0 of 1000 / 100",
-  "href": null
- },
- {
-  "page": "/en/adhkar/",
-  "tag": "button",
-  "type": "button",
-  "name": "Count dhikr 26: 0 of 1000 / 100",
-  "href": null
- },
- {
-  "page": "/en/adhkar/",
-  "tag": "button",
-  "type": "button",
-  "name": "Count dhikr 27: 0 of 1000 / 100",
   "href": null
  },
  {

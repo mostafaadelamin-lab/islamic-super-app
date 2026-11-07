@@ -127,8 +127,10 @@ export interface AudioPrefs {
   repeat: number;
   /** Turn the Mushaf page to follow the recitation. */
   follow: boolean;
+  /** Show the tafsir of the ayah being recited (off by default). */
+  tafsir: boolean;
 }
-export const DEFAULT_AUDIO: AudioPrefs = { reciter: DEFAULT_RECITER, repeat: 1, follow: true };
+export const DEFAULT_AUDIO: AudioPrefs = { reciter: DEFAULT_RECITER, repeat: 1, follow: true, tafsir: false };
 
 export function sanitizeAudio(raw: unknown): AudioPrefs {
   const r = typeof raw === "object" && raw !== null ? (raw as Record<string, unknown>) : {};
@@ -136,6 +138,7 @@ export function sanitizeAudio(raw: unknown): AudioPrefs {
     reciter: isReciter(r.reciter) ? r.reciter : DEFAULT_RECITER,
     repeat: typeof r.repeat === "number" && REPEAT_CHOICES.includes(r.repeat) ? r.repeat : 1,
     follow: r.follow !== false,
+    tafsir: r.tafsir === true,
   };
 }
 

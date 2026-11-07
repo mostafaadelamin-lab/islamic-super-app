@@ -37,6 +37,9 @@ export function NextPrayerCard({ locale }: { locale: Locale }) {
     }
   }
   const next = computed?.next ?? null;
+  // After Isha the next prayer is tomorrow's Fajr: the list then shows tomorrow's times, with Fajr marked.
+  const tomorrow = !!computed && !!next && next.at.getTime() !== computed.today.times[next.key].getTime();
+  const listed = computed && next && tomorrow ? todayTimes(next.at, q) : (computed?.today ?? null);
 
   return (
     <section className="hero" aria-labelledby="next-prayer-h" data-testid="prayer-hero">
@@ -70,10 +73,20 @@ export function NextPrayerCard({ locale }: { locale: Locale }) {
           </p>
         </>
       ) : null}
-      {computed ? (
-        <ol className="hero-times" data-testid="home-times" aria-label={t(locale, "prayer.timesTable")}>
+      {tomorrow ? (
+        <p className="hero-day" data-testid="home-times-day">
+          {t(locale, "home.tomorrowTimes")}
+        </p>
+      ) : null}
+      {listed ? (
+        <ol
+          className="hero-times"
+          data-testid="home-times"
+          data-day={tomorrow ? "tomorrow" : "today"}
+          aria-label={tomorrow ? t(locale, "home.tomorrowTimes") : t(locale, "prayer.timesTable")}
+        >
           {PRAYER_KEYS.map((k) => {
-            const at = computed.today.times[k];
+            const at = listed.times[k];
             const isNext = next?.key === k && next.at.getTime() === at.getTime();
             return (
               <li key={k} className={isNext ? "next" : undefined} data-prayer={k}>

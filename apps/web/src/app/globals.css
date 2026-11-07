@@ -31,6 +31,10 @@
   --header-ink: var(--color-on-primary);
   --marker-ink: color-mix(in srgb, var(--color-frame) 62%, var(--color-paper-ink));
   --warn-bg: var(--color-accent-soft);
+  /* Mushaf highlights: translucent tints blended into the paper, so they can never hide a glyph or mark. */
+  --hl-selected: rgb(15 92 74 / 16%);
+  --hl-playing: rgb(196 140 30 / 30%);
+  --hl-blend: multiply;
 }
 :root[data-theme="dark"] {
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
@@ -40,6 +44,9 @@
   --hero-soft: var(--color-accent);
   --header-bg: var(--color-surface);
   --header-ink: var(--color-ink);
+  --hl-selected: rgb(95 195 166 / 18%);
+  --hl-playing: rgb(224 189 106 / 24%);
+  --hl-blend: screen;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -50,6 +57,9 @@
     --hero-soft: var(--color-accent);
     --header-bg: var(--color-surface);
     --header-ink: var(--color-ink);
+    --hl-selected: rgb(95 195 166 / 18%);
+    --hl-playing: rgb(224 189 106 / 24%);
+    --hl-blend: screen;
   }
 }
 
@@ -592,6 +602,15 @@ input[type="radio"] {
   line-height: 1.2;
   letter-spacing: 0.5px;
 }
+.hero-day {
+  margin: var(--space-md) 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--hero-ink);
+  opacity: 0.9;
+}
+.hero-day + .hero-times {
+  margin-top: var(--space-xs);
+}
 .hero-times {
   list-style: none;
   margin: var(--space-md) 0 var(--space-sm);
@@ -911,18 +930,36 @@ input[type="radio"] {
 .sura-band span {
   padding-inline: 0.8em;
 }
+/*
+ * Ayah highlights. An inline box's background covers the font's whole content area, which for Amiri Quran
+ * (~2.45em) is taller than the 1.92em line: an opaque box of a later line used to paint over the marks of
+ * the line above. So the tint (1) is drawn only inside the segment's own line box (the gradient leaves the
+ * 0.32em overhang at the top and bottom transparent), (2) is translucent and blended into the paper
+ * (multiply in light, screen in dark), so glyphs underneath always show, and (3) has no shadow spread.
+ */
 .seg {
-  border-radius: 6px;
+  --hl: transparent;
   cursor: pointer;
-  transition: background 0.15s;
+  border-radius: 4px;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0.32em,
+    var(--hl) 0.32em,
+    var(--hl) calc(100% - 0.32em),
+    transparent calc(100% - 0.32em)
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.seg.selected,
+.seg.playing {
+  mix-blend-mode: var(--hl-blend);
 }
 .seg.selected {
-  background: var(--color-verse-highlight);
-  box-shadow: 0 0 0 2px var(--color-verse-highlight);
+  --hl: var(--hl-selected);
 }
 .seg.playing {
-  background: var(--color-accent-soft);
-  box-shadow: 0 0 0 2px var(--color-accent-soft);
+  --hl: var(--hl-playing);
 }
 .ayah-end {
   font: inherit;
@@ -936,7 +973,8 @@ input[type="radio"] {
   border-radius: 50%;
 }
 .ayah-end.selected {
-  background: var(--color-verse-highlight);
+  background: var(--hl-selected);
+  mix-blend-mode: var(--hl-blend);
 }
 .mushaf-folio {
   position: absolute;
@@ -983,6 +1021,23 @@ input[type="radio"] {
 }
 .aa-notice:empty {
   display: none;
+}
+
+/* "Tafsir with recitation": a smaller docked sheet, so the lines being recited stay in view above it. */
+.recitation-sheet {
+  max-height: min(34vh, 300px);
+  padding: var(--space-xs);
+}
+.recitation-sheet .tafsir {
+  margin-top: 0;
+}
+.recitation-sheet .tafsir-text {
+  font-size: 17px;
+  line-height: 1.8;
+}
+.mushaf-reader.with-rtafsir .seg {
+  scroll-margin-top: 72px;
+  scroll-margin-bottom: calc(var(--tabbar-h) + var(--player-h) + min(34vh, 300px) + 24px);
 }
 
 /* ---- tafsir (UI font, never the Quran font) ---- */
@@ -1117,6 +1172,11 @@ body:has(.player) {
   align-items: center;
   gap: var(--space-xs);
   font-size: var(--font-size-xs);
+}
+.player-check input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
 }
 .inline-field select {
   min-height: 36px;

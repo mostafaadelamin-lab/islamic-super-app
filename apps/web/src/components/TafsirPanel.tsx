@@ -17,10 +17,12 @@ export interface TafsirPanelProps {
   ayah: number;
   /** Called by the previous/next buttons; without it the panel moves on its own. */
   onStep?: (ref: Ref) => void;
+  /** Previous/next ayah buttons (hidden while following the recitation: the player has its own). */
+  showNav?: boolean;
 }
 
 /** Tafsir al-Muyassar for one ayah, shown verbatim (Arabic, UI font) with previous/next ayah buttons. */
-export function TafsirPanel({ locale, surah, ayah, onStep }: TafsirPanelProps) {
+export function TafsirPanel({ locale, surah, ayah, onStep, showNav = true }: TafsirPanelProps) {
   const [own, setOwn] = useState<Ref>([surah, ayah]);
   const [retry, setRetry] = useState(0);
   const headingId = useId();
@@ -106,26 +108,28 @@ export function TafsirPanel({ locale, surah, ayah, onStep }: TafsirPanelProps) {
       <p className="tafsir-source muted small" data-testid="tafsir-source">
         {t(locale, "tafsir.source")}
       </p>
-      <div className="tafsir-nav">
-        <button
-          type="button"
-          className="btn btn-sm"
-          data-testid="tafsir-prev"
-          disabled={!stepRef(s, a, -1)}
-          onClick={() => move(-1)}
-        >
-          <Icon name={locale === "ar" ? "next" : "prev"} size={16} /> {t(locale, "tafsir.prev")}
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm"
-          data-testid="tafsir-next"
-          disabled={!stepRef(s, a, 1)}
-          onClick={() => move(1)}
-        >
-          {t(locale, "tafsir.next")} <Icon name={locale === "ar" ? "prev" : "next"} size={16} />
-        </button>
-      </div>
+      {showNav ? (
+        <div className="tafsir-nav">
+          <button
+            type="button"
+            className="btn btn-sm"
+            data-testid="tafsir-prev"
+            disabled={!stepRef(s, a, -1)}
+            onClick={() => move(-1)}
+          >
+            <Icon name={locale === "ar" ? "next" : "prev"} size={16} /> {t(locale, "tafsir.prev")}
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm"
+            data-testid="tafsir-next"
+            disabled={!stepRef(s, a, 1)}
+            onClick={() => move(1)}
+          >
+            {t(locale, "tafsir.next")} <Icon name={locale === "ar" ? "prev" : "next"} size={16} />
+          </button>
+        </div>
+      ) : null}
     </section>
   );
 }

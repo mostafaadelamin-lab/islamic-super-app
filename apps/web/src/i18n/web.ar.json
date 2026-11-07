@@ -228,5 +228,8 @@
   "tafsir.next": "تفسير الآية التالية",
   "tafsir.show": "التفسير",
   "tafsir.showOf": "التفسير — الآية {n}",
-  "tafsir.arabicOnly": "هذا التفسير متاح بالعربية فقط."
+  "tafsir.arabicOnly": "هذا التفسير متاح بالعربية فقط.",
+  "audio.withTafsir": "التفسير مع التلاوة",
+  "tafsir.recitation": "تفسير الآية المتلوّة",
+  "home.tomorrowTimes": "مواقيت الغد"
 }
