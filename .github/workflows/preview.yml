@@ -19,7 +19,7 @@ jobs:
   web:
     name: Web preview (GitHub Pages)
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 60
     permissions:
       contents: read
       pages: write
@@ -41,6 +41,8 @@ jobs:
         with: { path: apps/web/out }
       - id: deploy
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        # ~3,000 pre-rendered files: the first sync can exceed the 10-minute default.
+        with: { timeout: 2400000 }
 
   android:
     name: Android preview APK
