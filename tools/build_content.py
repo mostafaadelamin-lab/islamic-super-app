@@ -9,6 +9,7 @@ Outputs (all deterministic, sorted keys, UTF-8):
   content/quran/dist/quran.v1.json       surahs + ayah text (+ English translation)
   content/quran/dist/pages.v1.json       Madinah Mushaf 1405H page boundaries (604)
   content/quran/dist/integrity.v1.json   SHA-256 hashes used by every platform's tests
+  content/quran/dist/mushaf-lines.v1.json  15-line Madinah page layout as word ranges of the canonical text
   content/adhkar/dist/adhkar.v1.json     morning/evening adhkar
   content/VERSIONS.json                  content version registry
 """
@@ -18,6 +19,9 @@ import hashlib
 import json
 import pathlib
 import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import mushaf_lines  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 C = ROOT / "content"
@@ -103,6 +107,9 @@ def main() -> int:
         "upstreamFileSha256": bundle["source"]["upstreamSha256"],
         "pageCount": len(pages),
     }
+    lines_bundle, line_problems = mushaf_lines.build(C, surahs, pages)
+    dump(C / "quran/dist/mushaf-lines.v1.json", lines_bundle)
+    integrity["mushafLinesSha256"] = sha(json.dumps(lines_bundle["pages"], ensure_ascii=False, separators=(",", ":"), sort_keys=True))
     dump(C / "quran/dist/integrity.v1.json", integrity)
 
     # --- Adhkar ---------------------------------------------------------------
@@ -112,7 +119,7 @@ def main() -> int:
     dump(C / "VERSIONS.json", {"quran": QURAN_VERSION, "pages": "1405H-1", "adhkar": "1.0.0"})
 
     # Independent cross-checks against reference data (not derived from the source).
-    problems = []
+    problems = list(line_problems)
     if counts != ref["ayahCounts"]:
         problems.append("ayah counts differ from reference")
     if sum(counts) != 6236 or len(surahs) != 114:

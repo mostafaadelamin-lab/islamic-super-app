@@ -1,0 +1,68 @@
+{
+  "name": "quran-madina-html",
+  "version": "2.2.2",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "jshint": "^2.13.6",
+    "release-it": "^21.1.1"
+  },
+  "description": "A Madina Quran HTML Renderer without images.",
+  "main": "dist/quran-madina-html.js",
+  "files": [
+    "dist/quran-madina-html.js",
+    "dist/quran-madina-html.css",
+    "dist/quran-madina-html.min.js",
+    "dist/quran-madina-html.min.css",
+    "assets/img",
+    "assets/db/v2/**/*.json",
+    "assets/db/v2/*.woff2"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build-db": "python src/db/build_all.py",
+    "start": "http-server -a localhost -p 8000 -c-1",
+    "test": "python -m pytest",
+    "release": "release-it",
+    "lint": "node scripts/build.mjs --lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tarekeldeeb/quran-madina-html.git"
+  },
+  "keywords": [
+    "quran",
+    "html",
+    "madina"
+  ],
+  "author": "Tarek Eldeeb",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/tarekeldeeb/quran-madina-html/issues"
+  },
+  "homepage": "https://github.com/tarekeldeeb/quran-madina-html#readme",
+  "release-it": {
+    "github": {
+      "release": true
+    },
+    "hooks": {
+      "after:bump": [
+        "npm run build",
+        "node scripts/sync-wrapper-version.mjs ${version}",
+        "git add react/package.json react/package-lock.json react-native/package.json react-native/package-lock.json flutter/pubspec.yaml flutter/CHANGELOG.md flutter/lib/src/version.dart wordpress/quran-madina-html/quran-madina-html.php wordpress/quran-madina-html/readme.txt"
+      ],
+      "after:release": [
+        "node scripts/publish-wrapper.mjs ${version}"
+      ]
+    }
+  },
+  "overrides": {
+    "brace-expansion": "1.1.21",
+    "minimatch": "3.1.5",
+    "lodash": "4.18.1",
+    "follow-redirects": "1.16.1",
+    "qs": "6.16.1",
+    "undici": "^7.29.1",
+    "ip-address": "^10.7.4",
+    "basic-ftp": "^6.2.3"
+  }
+}

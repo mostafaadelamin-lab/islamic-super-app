@@ -81,3 +81,56 @@ def test_page_spot_checks_match_printed_mushaf():
     for sc in REF["madinahPageSpotChecks"]:
         p = PAGES[sc["page"] - 1]
         assert p["start"] == sc["start"] and p["end"] == sc["end"], sc
+
+
+# --- 15-line Madinah layout (content/quran/dist/mushaf-lines.v1.json) ---------
+LINES = json.loads((DIST / "mushaf-lines.v1.json").read_text(encoding="utf-8"))
+QMH = REPO / "content/quran/upstream/quran-madina-html-2.2.2"
+
+
+def test_mushaf_lines_upstream_files_pinned():
+    for row in (QMH / "SHA256SUMS").read_text(encoding="utf-8").splitlines():
+        digest, name = row.split()
+        assert hashlib.sha256((QMH / name).read_bytes()).hexdigest() == digest, name
+
+
+def test_mushaf_lines_hash_recorded():
+    blob = json.dumps(LINES["pages"], ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+    assert hashlib.sha256(blob.encode("utf-8")).hexdigest() == INTEG["mushafLinesSha256"]
+
+
+def test_mushaf_lines_604_pages_15_lines():
+    pages = LINES["pages"]
+    assert [p["page"] for p in pages] == list(range(1, 605))
+    assert [len(p["lines"]) for p in pages[:2]] == [8, 8]
+    assert all(len(p["lines"]) == 15 for p in pages[2:])
+
+
+def test_mushaf_lines_cover_every_canonical_word_once_in_order():
+    surahs = BUNDLE["surahs"]
+    flat = [(g[0], g[1], w) for p in LINES["pages"] for line in p["lines"] if line["k"] == "text" for g in line["g"] for w in range(g[2], g[3])]
+    expected = [(s["n"], a, w) for s in surahs for a, t in enumerate(s["ayahs"], start=1) for w in range(len(t.split(" ")))]
+    assert flat == expected
+    ends = [(g[0], g[1]) for p in LINES["pages"] for line in p["lines"] if line["k"] == "text" for g in line["g"] if g[4]]
+    assert len(ends) == 6236
+
+
+def test_mushaf_lines_page_ends_agree_with_page_map():
+    for p, meta in zip(LINES["pages"], PAGES, strict=True):
+        ends = [[g[0], g[1]] for line in p["lines"] if line["k"] == "text" for g in line["g"] if g[4]]
+        assert ends[-1] == meta["end"], p["page"]
+
+
+def test_mushaf_lines_surah_bands_and_basmala():
+    bands = [line["s"] for p in LINES["pages"] for line in p["lines"] if line["k"] == "sura"]
+    assert bands == list(range(1, 115))
+    basmala = [line["s"] for p in LINES["pages"] for line in p["lines"] if line["k"] == "basmala"]
+    # Al-Fatihah's basmala is ayah 1 (a text line); at-Tawbah has none.
+    assert basmala == [s for s in range(2, 115) if s != 9]
+
+
+def test_mushaf_lines_printed_page_spot_checks():
+    first = {p["page"]: next(g for line in p["lines"] if line["k"] == "text" for g in line["g"]) for p in LINES["pages"]}
+    assert first[3][:2] == [2, 6]  # p3 begins "إن الذين كفروا سواء عليهم"
+    assert first[50][:2] == [3, 1]
+    assert first[604][:2] == [112, 1]
