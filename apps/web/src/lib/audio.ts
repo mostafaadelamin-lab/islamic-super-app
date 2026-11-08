@@ -71,7 +71,18 @@ function surahRefs(s: number, from: number): [number, number][] {
 export type PlayScope =
   | { kind: "page"; page: number }
   | { kind: "surah"; surah: number }
-  | { kind: "from"; surah: number; ayah: number };
+  | { kind: "from"; surah: number; ayah: number }
+  /** Verse ranges [surah, from, to] played in order (audio Quranic stories). */
+  | { kind: "ranges"; ranges: readonly (readonly [number, number, number])[] };
+
+/** Every ayah of the given ranges, in order; invalid ranges are skipped. */
+export function rangeRefs(ranges: readonly (readonly [number, number, number])[]): [number, number][] {
+  return ranges.flatMap(([s, from, to]): [number, number][] =>
+    isValidAyah(s, from) && isValidAyah(s, to) && from <= to
+      ? Array.from({ length: to - from + 1 }, (_, i): [number, number] => [s, from + i])
+      : [],
+  );
+}
 
 /**
  * Builds the queue for a scope: the ayahs of one Mushaf page; a whole surah; or from an ayah to the end of
@@ -80,6 +91,7 @@ export type PlayScope =
 export function buildQueue(scope: PlayScope): QueueItem[] {
   if (scope.kind === "page") return withBasmala(ayahsOnPage(scope.page));
   if (scope.kind === "surah") return withBasmala(surahRefs(scope.surah, 1));
+  if (scope.kind === "ranges") return withBasmala(rangeRefs(scope.ranges));
   if (!isValidAyah(scope.surah, scope.ayah)) return [];
   return withBasmala(surahRefs(scope.surah, scope.ayah));
 }

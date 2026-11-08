@@ -1028,6 +1028,199 @@
   "@settingsThemeSystem": {
     "description": "shared key \"settings.themeSystem\""
   },
+  "storiesAyahs": "{count} ayahs",
+  "@storiesAyahs": {
+    "description": "shared key \"stories.ayahs\"",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "storiesBack": "All stories",
+  "@storiesBack": {
+    "description": "shared key \"stories.back\""
+  },
+  "storiesCatOthers": "Stories and lessons from the Quran",
+  "@storiesCatOthers": {
+    "description": "shared key \"stories.cat.others\""
+  },
+  "storiesCatProphets": "Stories of the prophets in the Quran",
+  "@storiesCatProphets": {
+    "description": "shared key \"stories.cat.prophets\""
+  },
+  "storiesEpisodeError": "The episode could not be played. Check your internet connection.",
+  "@storiesEpisodeError": {
+    "description": "shared key \"stories.episodeError\""
+  },
+  "storiesEpisodePending": "This episode has not been religiously reviewed yet — shown because reviewer mode is on",
+  "@storiesEpisodePending": {
+    "description": "shared key \"stories.episodePending\""
+  },
+  "storiesEpisodes": "{count} episodes",
+  "@storiesEpisodes": {
+    "description": "shared key \"stories.episodes\"",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "storiesForward": "Forward 30 seconds",
+  "@storiesForward": {
+    "description": "shared key \"stories.forward\""
+  },
+  "storiesFrom": "Surah {surah}, ayahs {from}–{to}",
+  "@storiesFrom": {
+    "description": "shared key \"stories.from\"",
+    "placeholders": {
+      "surah": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "storiesIntro": "Listen to the stories of the prophets in a calm voice before sleep, or read each story's verses from the Mushaf with Tafsir al-Muyassar.",
+  "@storiesIntro": {
+    "description": "shared key \"stories.intro\""
+  },
+  "storiesListen": "Listen to the story's verses",
+  "@storiesListen": {
+    "description": "shared key \"stories.listen\""
+  },
+  "storiesMinutes": "{n} min",
+  "@storiesMinutes": {
+    "description": "shared key \"stories.minutes\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "storiesNowPlaying": "Now playing",
+  "@storiesNowPlaying": {
+    "description": "shared key \"stories.nowPlaying\""
+  },
+  "storiesOnlineOnly": "Episodes are streamed over the internet",
+  "@storiesOnlineOnly": {
+    "description": "shared key \"stories.onlineOnly\""
+  },
+  "storiesPause": "Pause",
+  "@storiesPause": {
+    "description": "shared key \"stories.pause\""
+  },
+  "storiesPlay": "Listen",
+  "@storiesPlay": {
+    "description": "shared key \"stories.play\""
+  },
+  "storiesReadVerses": "Read the story's verses",
+  "@storiesReadVerses": {
+    "description": "shared key \"stories.readVerses\""
+  },
+  "storiesReciter": "Reciter",
+  "@storiesReciter": {
+    "description": "shared key \"stories.reciter\""
+  },
+  "storiesReviewedBy": "Reviewed by: {name}",
+  "@storiesReviewedBy": {
+    "description": "shared key \"stories.reviewedBy\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "storiesReviewerMode": "Reviewer mode (show unreviewed episodes)",
+  "@storiesReviewerMode": {
+    "description": "shared key \"stories.reviewerMode\""
+  },
+  "storiesRewind": "Back 30 seconds",
+  "@storiesRewind": {
+    "description": "shared key \"stories.rewind\""
+  },
+  "storiesSeriesHidden": "The episodes of “{title}” by {narrator} appear here once they have been religiously reviewed.",
+  "@storiesSeriesHidden": {
+    "description": "shared key \"stories.seriesHidden\"",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "narrator": {
+        "type": "String"
+      }
+    }
+  },
+  "storiesSeriesSource": "Source: {source}. {licence}",
+  "@storiesSeriesSource": {
+    "description": "shared key \"stories.seriesSource\"",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "licence": {
+        "type": "String"
+      }
+    }
+  },
+  "storiesSleep": "Sleep timer",
+  "@storiesSleep": {
+    "description": "shared key \"stories.sleep\""
+  },
+  "storiesSleepLeft": "Audio stops in {time} min",
+  "@storiesSleepLeft": {
+    "description": "shared key \"stories.sleepLeft\"",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "storiesSleepMin": "After {n} min",
+  "@storiesSleepMin": {
+    "description": "shared key \"stories.sleepMin\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "storiesSleepOff": "Off",
+  "@storiesSleepOff": {
+    "description": "shared key \"stories.sleepOff\""
+  },
+  "storiesSource": "Source: the Madinah Mushaf text and Tafsir al-Muyassar (King Fahd Glorious Quran Printing Complex).",
+  "@storiesSource": {
+    "description": "shared key \"stories.source\""
+  },
+  "storiesStop": "Stop",
+  "@storiesStop": {
+    "description": "shared key \"stories.stop\""
+  },
+  "storiesSub": "Stories of the prophets, in audio and in their verses",
+  "@storiesSub": {
+    "description": "shared key \"stories.sub\""
+  },
+  "storiesTafsirHint": "Tap any ayah to see its Tafsir al-Muyassar.",
+  "@storiesTafsirHint": {
+    "description": "shared key \"stories.tafsirHint\""
+  },
+  "storiesTitle": "Quranic stories (audio)",
+  "@storiesTitle": {
+    "description": "shared key \"stories.title\""
+  },
+  "storiesVersesIntro": "Each story here is its own Quranic verses (Madinah Mushaf), recited by the reciter you choose, with Tafsir al-Muyassar for every ayah.",
+  "@storiesVersesIntro": {
+    "description": "shared key \"stories.versesIntro\""
+  },
+  "storiesVersesTitle": "The stories' verses from the Mushaf",
+  "@storiesVersesTitle": {
+    "description": "shared key \"stories.versesTitle\""
+  },
   "tafsirArabicOnly": "This tafsir is available in Arabic only.",
   "@tafsirArabicOnly": {
     "description": "shared key \"tafsir.arabicOnly\""

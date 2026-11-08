@@ -73,7 +73,8 @@ class QueueItem {
 /// every surah except al-Fatihah (where 1:1 IS the basmala) and at-Tawbah.
 bool basmalaBeforeSurah(int surah) => surah != 1 && surah != 9;
 
-enum PlayScope { ayah, page, surah, toEnd }
+/// [ranges]: the verse ranges of a Quranic story, played in order.
+enum PlayScope { ayah, page, surah, toEnd, ranges }
 
 /// Builds the play list from [from] to [to] inclusive (reading order), adding
 /// the basmala before ayah 1 of each surah where [basmalaBeforeSurah] holds.
@@ -104,7 +105,7 @@ AyahRef? nextAyah(QuranContent q, AyahRef r) {
 
 /// End of the range for a play [scope] starting at [from].
 AyahRef scopeEnd(QuranContent q, AyahRef from, PlayScope scope) => switch (scope) {
-  PlayScope.ayah => from,
+  PlayScope.ayah || PlayScope.ranges => from,
   PlayScope.page => q.page(q.pageOf(from)).end,
   PlayScope.surah => AyahRef(from.surah, q.surah(from.surah).ayahCount),
   PlayScope.toEnd => AyahRef(q.surahs.length, q.surahs.last.ayahCount),

@@ -29,6 +29,8 @@ class AppServices {
     required this.adhkar,
     required this.sensors,
     required this.tafsir,
+    required this.narration,
+    required this.sleepTimer,
   });
 
   factory AppServices.create({
@@ -37,6 +39,7 @@ class AppServices {
     required http.Client httpClient,
     Clock? clock,
     AudioBackend Function()? audioBackend,
+    NarrationBackend Function()? narrationBackend,
     NotificationsBackend? notifications,
     CompassSensors? sensors,
     TafsirStore? tafsir,
@@ -49,16 +52,30 @@ class AppServices {
       return PrayerSchedule.localDate(tz.getLocation(city.tz), c().toUtc());
     }
 
+    final recitation = RecitationController(
+      content: content,
+      settings: settings,
+      backendFactory: audioBackend ?? JustAudioBackend.new,
+    );
+    final narration = NarrationController(
+      settings: settings,
+      recitation: recitation,
+      backendFactory: narrationBackend ?? JustAudioNarrationBackend.new,
+    );
     return AppServices(
       content: content,
       settings: settings,
       bookmarks: bookmarks,
       account: AccountController(prefs, settings, bookmarks, httpClient, clock: c),
       clock: c,
-      recitation: RecitationController(
-        content: content,
-        settings: settings,
-        backendFactory: audioBackend ?? JustAudioBackend.new,
+      recitation: recitation,
+      narration: narration,
+      sleepTimer: SleepTimerController(
+        clock: c,
+        onFire: () async {
+          await recitation.stop();
+          await narration.pause();
+        },
       ),
       adhan: AdhanScheduler(
         content: content,
@@ -86,6 +103,10 @@ class AppServices {
 
   /// Tafsir al-Muyassar, loaded on first use.
   final TafsirStore tafsir;
+
+  /// Narrated story episodes (audio only) and the sleep timer.
+  final NarrationController narration;
+  final SleepTimerController sleepTimer;
 }
 
 class AppScope extends InheritedWidget {

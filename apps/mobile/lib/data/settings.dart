@@ -33,6 +33,16 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Where the listener stopped in a narrated episode (seconds), keyed "series/episode".
+  int storyPosition(String key) => _prefs.getInt('storyPos.$key') ?? 0;
+  Future<void> setStoryPosition(String key, int seconds) async {
+    if (seconds > 5) {
+      await _prefs.setInt('storyPos.$key', seconds);
+    } else {
+      await _prefs.remove('storyPos.$key');
+    }
+  }
+
   ThemeMode get themeMode => switch (_prefs.getString('theme')) {
     'light' => ThemeMode.light,
     'dark' => ThemeMode.dark,

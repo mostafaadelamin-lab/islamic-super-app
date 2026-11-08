@@ -708,6 +708,130 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsThemeSystem => 'System';
 
   @override
+  String storiesAyahs(String count) {
+    return '$count ayahs';
+  }
+
+  @override
+  String get storiesBack => 'All stories';
+
+  @override
+  String get storiesCatOthers => 'Stories and lessons from the Quran';
+
+  @override
+  String get storiesCatProphets => 'Stories of the prophets in the Quran';
+
+  @override
+  String get storiesEpisodeError => 'The episode could not be played. Check your internet connection.';
+
+  @override
+  String get storiesEpisodePending =>
+      'This episode has not been religiously reviewed yet — shown because reviewer mode is on';
+
+  @override
+  String storiesEpisodes(String count) {
+    return '$count episodes';
+  }
+
+  @override
+  String get storiesForward => 'Forward 30 seconds';
+
+  @override
+  String storiesFrom(String surah, String from, String to) {
+    return 'Surah $surah, ayahs $from–$to';
+  }
+
+  @override
+  String get storiesIntro =>
+      'Listen to the stories of the prophets in a calm voice before sleep, or read each story\'s verses from the Mushaf with Tafsir al-Muyassar.';
+
+  @override
+  String get storiesListen => 'Listen to the story\'s verses';
+
+  @override
+  String storiesMinutes(String n) {
+    return '$n min';
+  }
+
+  @override
+  String get storiesNowPlaying => 'Now playing';
+
+  @override
+  String get storiesOnlineOnly => 'Episodes are streamed over the internet';
+
+  @override
+  String get storiesPause => 'Pause';
+
+  @override
+  String get storiesPlay => 'Listen';
+
+  @override
+  String get storiesReadVerses => 'Read the story\'s verses';
+
+  @override
+  String get storiesReciter => 'Reciter';
+
+  @override
+  String storiesReviewedBy(String name) {
+    return 'Reviewed by: $name';
+  }
+
+  @override
+  String get storiesReviewerMode => 'Reviewer mode (show unreviewed episodes)';
+
+  @override
+  String get storiesRewind => 'Back 30 seconds';
+
+  @override
+  String storiesSeriesHidden(String title, String narrator) {
+    return 'The episodes of “$title” by $narrator appear here once they have been religiously reviewed.';
+  }
+
+  @override
+  String storiesSeriesSource(String source, String licence) {
+    return 'Source: $source. $licence';
+  }
+
+  @override
+  String get storiesSleep => 'Sleep timer';
+
+  @override
+  String storiesSleepLeft(String time) {
+    return 'Audio stops in $time min';
+  }
+
+  @override
+  String storiesSleepMin(String n) {
+    return 'After $n min';
+  }
+
+  @override
+  String get storiesSleepOff => 'Off';
+
+  @override
+  String get storiesSource =>
+      'Source: the Madinah Mushaf text and Tafsir al-Muyassar (King Fahd Glorious Quran Printing Complex).';
+
+  @override
+  String get storiesStop => 'Stop';
+
+  @override
+  String get storiesSub => 'Stories of the prophets, in audio and in their verses';
+
+  @override
+  String get storiesTafsirHint => 'Tap any ayah to see its Tafsir al-Muyassar.';
+
+  @override
+  String get storiesTitle => 'Quranic stories (audio)';
+
+  @override
+  String get storiesVersesIntro =>
+      'Each story here is its own Quranic verses (Madinah Mushaf), recited by the reciter you choose, with Tafsir al-Muyassar for every ayah.';
+
+  @override
+  String get storiesVersesTitle => 'The stories\' verses from the Mushaf';
+
+  @override
   String get tafsirArabicOnly => 'This tafsir is available in Arabic only.';
 
   @override

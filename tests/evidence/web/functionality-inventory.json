@@ -5050,6 +5050,13 @@
   "page": "/ar/more/",
   "tag": "a",
   "type": null,
+  "name": "قصص قرآنية مسموعةآيات القصص بصوت القارئ",
+  "href": "/ar/stories/"
+ },
+ {
+  "page": "/ar/more/",
+  "tag": "a",
+  "type": null,
   "name": "ريلز إسلاميةتلاوات خاشعة ودروس مختصرة",
   "href": "/ar/reels/"
  },
@@ -6924,6 +6931,1042 @@
  },
  {
   "page": "/ar/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "الأذكار",
+  "href": "/ar/adhkar/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "المزيد",
+  "href": "/ar/more/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/stories/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "وضع المراجعة (عرض الحلقات غير المراجَعة)",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "آدم عليه السلام وخلافة الأرضالبقرة · ١٠ آية",
+  "href": "/ar/stories/adam/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "نوح عليه السلام والطوفانهود · ٢٥ آية",
+  "href": "/ar/stories/nuh/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "هود عليه السلام وقوم عادهود · ١١ آية",
+  "href": "/ar/stories/hud/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "صالح عليه السلام وناقة اللههود · ٨ آية",
+  "href": "/ar/stories/salih/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "إبراهيم عليه السلام: تحطيم الأصنام والذبيحالأنبياء، الصافات · ٣٣ آية",
+  "href": "/ar/stories/ibrahim/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "ضيف إبراهيم ولوط عليهما السلامهود · ١٥ آية",
+  "href": "/ar/stories/lut/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "يوسف عليه السلاميوسف · ٩٨ آية",
+  "href": "/ar/stories/yusuf/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "شعيب عليه السلام وأهل مدينهود · ١٢ آية",
+  "href": "/ar/stories/shuayb/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "موسى عليه السلام وفرعونالقصص · ٤٠ آية",
+  "href": "/ar/stories/musa/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "أيوب عليه السلام وصبرهالأنبياء، ص · ٦ آية",
+  "href": "/ar/stories/ayyub/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "يونس عليه السلامالصافات، الأنبياء · ١٢ آية",
+  "href": "/ar/stories/yunus/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "سليمان عليه السلام وملكة سبأالنمل · ٣٠ آية",
+  "href": "/ar/stories/dawud-sulayman/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "زكريا ويحيى عليهما السلاممريم · ١٤ آية",
+  "href": "/ar/stories/zakariya-yahya/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "مريم وعيسى عليهما السلاممريم · ٢١ آية",
+  "href": "/ar/stories/maryam-isa/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "موسى والعبد الصالحالكهف · ٢٣ آية",
+  "href": "/ar/stories/musa-khidr/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "ابنا آدمالمائدة · ٥ آية",
+  "href": "/ar/stories/sons-of-adam/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "بقرة بني إسرائيلالبقرة · ٧ آية",
+  "href": "/ar/stories/cow/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "طالوت وجالوت وداود عليه السلامالبقرة · ٦ آية",
+  "href": "/ar/stories/talut/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "أصحاب الكهفالكهف · ١٨ آية",
+  "href": "/ar/stories/kahf/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "ذو القرنينالكهف · ١٦ آية",
+  "href": "/ar/stories/dhul-qarnayn/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "قارونالقصص · ٧ آية",
+  "href": "/ar/stories/qarun/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "وصايا لقمان لابنهلقمان · ٨ آية",
+  "href": "/ar/stories/luqman/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "أصحاب الجنةالقلم · ١٧ آية",
+  "href": "/ar/stories/garden-owners/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "أصحاب الأخدودالبروج · ٧ آية",
+  "href": "/ar/stories/ukhdud/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "أصحاب الفيلالفيل · ٥ آية",
+  "href": "/ar/stories/fil/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "الأذكار",
+  "href": "/ar/adhkar/"
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "المزيد",
+  "href": "/ar/more/"
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/stories/yusuf/"
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "كل القصص",
+  "href": "/ar/stories/"
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "استمع إلى آيات القصة",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "select",
+  "type": null,
+  "name": "القارئمشاري راشد العفاسيمحمود خليل الحصريالحصري (المصحف المعلّم)عبد الباسط عبد ا",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "select",
+  "type": null,
+  "name": "مؤقت النومبدونبعد ١٥ دقيقةبعد ٣٠ دقيقةبعد ٤٥ دقيقةبعد ٦٠ دقيقة",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/stories/yusuf/",
   "tag": "a",
   "type": null,
   "name": "صفحات المصحف",
@@ -12008,6 +13051,13 @@
   "page": "/en/more/",
   "tag": "a",
   "type": null,
+  "name": "Quranic stories (audio)Story verses, recited",
+  "href": "/en/stories/"
+ },
+ {
+  "page": "/en/more/",
+  "tag": "a",
+  "type": null,
   "name": "Islamic reelsRecitations and short lessons",
   "href": "/en/reels/"
  },
@@ -13882,6 +14932,1042 @@
  },
  {
   "page": "/en/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Adhkar",
+  "href": "/en/adhkar/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "More",
+  "href": "/en/more/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/stories/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "Reviewer mode (show unreviewed episodes)",
+  "href": null
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Adam and the succession on earthAl-Baqarah · 10 ayahs",
+  "href": "/en/stories/adam/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Noah and the floodHud · 25 ayahs",
+  "href": "/en/stories/nuh/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Hud and the people of 'AdHud · 11 ayahs",
+  "href": "/en/stories/hud/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Salih and the she-camel of GodHud · 8 ayahs",
+  "href": "/en/stories/salih/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Abraham: the idols and the sacrificeAl-Anbya, As-Saffat · 33 ayahs",
+  "href": "/en/stories/ibrahim/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Abraham's guests and LotHud · 15 ayahs",
+  "href": "/en/stories/lut/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "JosephYusuf · 98 ayahs",
+  "href": "/en/stories/yusuf/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Shu'ayb and the people of MidianHud · 12 ayahs",
+  "href": "/en/stories/shuayb/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Moses and PharaohAl-Qasas · 40 ayahs",
+  "href": "/en/stories/musa/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Job and his patienceAl-Anbya, Sad · 6 ayahs",
+  "href": "/en/stories/ayyub/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "JonahAs-Saffat, Al-Anbya · 12 ayahs",
+  "href": "/en/stories/yunus/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Solomon and the Queen of ShebaAn-Naml · 30 ayahs",
+  "href": "/en/stories/dawud-sulayman/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Zechariah and JohnMaryam · 14 ayahs",
+  "href": "/en/stories/zakariya-yahya/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Mary and JesusMaryam · 21 ayahs",
+  "href": "/en/stories/maryam-isa/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Moses and the righteous servantAl-Kahf · 23 ayahs",
+  "href": "/en/stories/musa-khidr/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "The two sons of AdamAl-Ma'idah · 5 ayahs",
+  "href": "/en/stories/sons-of-adam/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "The cow of the Children of IsraelAl-Baqarah · 7 ayahs",
+  "href": "/en/stories/cow/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Talut, Goliath and DavidAl-Baqarah · 6 ayahs",
+  "href": "/en/stories/talut/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "The people of the caveAl-Kahf · 18 ayahs",
+  "href": "/en/stories/kahf/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Dhul-QarnaynAl-Kahf · 16 ayahs",
+  "href": "/en/stories/dhul-qarnayn/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "QarunAl-Qasas · 7 ayahs",
+  "href": "/en/stories/qarun/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Luqman's advice to his sonLuqman · 8 ayahs",
+  "href": "/en/stories/luqman/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "The owners of the gardenAl-Qalam · 17 ayahs",
+  "href": "/en/stories/garden-owners/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "The people of the trenchAl-Buruj · 7 ayahs",
+  "href": "/en/stories/ukhdud/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "The people of the elephantAl-Fil · 5 ayahs",
+  "href": "/en/stories/fil/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/stories/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "Adhkar",
+  "href": "/en/adhkar/"
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "More",
+  "href": "/en/more/"
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/stories/yusuf/"
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "All stories",
+  "href": "/en/stories/"
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Listen to the story's verses",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "select",
+  "type": null,
+  "name": "ReciterMishary Rashid AlafasyMahmoud Khalil Al-HusaryAl-Husary (teaching)Abdul B",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "select",
+  "type": null,
+  "name": "Sleep timerOffAfter 15 minAfter 30 minAfter 45 minAfter 60 min",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/stories/yusuf/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/stories/yusuf/",
   "tag": "a",
   "type": null,
   "name": "Mushaf pages",

@@ -1322,6 +1322,210 @@ abstract class AppLocalizations {
   /// **'System'**
   String get settingsThemeSystem;
 
+  /// shared key "stories.ayahs"
+  ///
+  /// In en, this message translates to:
+  /// **'{count} ayahs'**
+  String storiesAyahs(String count);
+
+  /// shared key "stories.back"
+  ///
+  /// In en, this message translates to:
+  /// **'All stories'**
+  String get storiesBack;
+
+  /// shared key "stories.cat.others"
+  ///
+  /// In en, this message translates to:
+  /// **'Stories and lessons from the Quran'**
+  String get storiesCatOthers;
+
+  /// shared key "stories.cat.prophets"
+  ///
+  /// In en, this message translates to:
+  /// **'Stories of the prophets in the Quran'**
+  String get storiesCatProphets;
+
+  /// shared key "stories.episodeError"
+  ///
+  /// In en, this message translates to:
+  /// **'The episode could not be played. Check your internet connection.'**
+  String get storiesEpisodeError;
+
+  /// shared key "stories.episodePending"
+  ///
+  /// In en, this message translates to:
+  /// **'This episode has not been religiously reviewed yet — shown because reviewer mode is on'**
+  String get storiesEpisodePending;
+
+  /// shared key "stories.episodes"
+  ///
+  /// In en, this message translates to:
+  /// **'{count} episodes'**
+  String storiesEpisodes(String count);
+
+  /// shared key "stories.forward"
+  ///
+  /// In en, this message translates to:
+  /// **'Forward 30 seconds'**
+  String get storiesForward;
+
+  /// shared key "stories.from"
+  ///
+  /// In en, this message translates to:
+  /// **'Surah {surah}, ayahs {from}–{to}'**
+  String storiesFrom(String surah, String from, String to);
+
+  /// shared key "stories.intro"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to the stories of the prophets in a calm voice before sleep, or read each story\'s verses from the Mushaf with Tafsir al-Muyassar.'**
+  String get storiesIntro;
+
+  /// shared key "stories.listen"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to the story\'s verses'**
+  String get storiesListen;
+
+  /// shared key "stories.minutes"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min'**
+  String storiesMinutes(String n);
+
+  /// shared key "stories.nowPlaying"
+  ///
+  /// In en, this message translates to:
+  /// **'Now playing'**
+  String get storiesNowPlaying;
+
+  /// shared key "stories.onlineOnly"
+  ///
+  /// In en, this message translates to:
+  /// **'Episodes are streamed over the internet'**
+  String get storiesOnlineOnly;
+
+  /// shared key "stories.pause"
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get storiesPause;
+
+  /// shared key "stories.play"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen'**
+  String get storiesPlay;
+
+  /// shared key "stories.readVerses"
+  ///
+  /// In en, this message translates to:
+  /// **'Read the story\'s verses'**
+  String get storiesReadVerses;
+
+  /// shared key "stories.reciter"
+  ///
+  /// In en, this message translates to:
+  /// **'Reciter'**
+  String get storiesReciter;
+
+  /// shared key "stories.reviewedBy"
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewed by: {name}'**
+  String storiesReviewedBy(String name);
+
+  /// shared key "stories.reviewerMode"
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewer mode (show unreviewed episodes)'**
+  String get storiesReviewerMode;
+
+  /// shared key "stories.rewind"
+  ///
+  /// In en, this message translates to:
+  /// **'Back 30 seconds'**
+  String get storiesRewind;
+
+  /// shared key "stories.seriesHidden"
+  ///
+  /// In en, this message translates to:
+  /// **'The episodes of “{title}” by {narrator} appear here once they have been religiously reviewed.'**
+  String storiesSeriesHidden(String title, String narrator);
+
+  /// shared key "stories.seriesSource"
+  ///
+  /// In en, this message translates to:
+  /// **'Source: {source}. {licence}'**
+  String storiesSeriesSource(String source, String licence);
+
+  /// shared key "stories.sleep"
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep timer'**
+  String get storiesSleep;
+
+  /// shared key "stories.sleepLeft"
+  ///
+  /// In en, this message translates to:
+  /// **'Audio stops in {time} min'**
+  String storiesSleepLeft(String time);
+
+  /// shared key "stories.sleepMin"
+  ///
+  /// In en, this message translates to:
+  /// **'After {n} min'**
+  String storiesSleepMin(String n);
+
+  /// shared key "stories.sleepOff"
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get storiesSleepOff;
+
+  /// shared key "stories.source"
+  ///
+  /// In en, this message translates to:
+  /// **'Source: the Madinah Mushaf text and Tafsir al-Muyassar (King Fahd Glorious Quran Printing Complex).'**
+  String get storiesSource;
+
+  /// shared key "stories.stop"
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get storiesStop;
+
+  /// shared key "stories.sub"
+  ///
+  /// In en, this message translates to:
+  /// **'Stories of the prophets, in audio and in their verses'**
+  String get storiesSub;
+
+  /// shared key "stories.tafsirHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap any ayah to see its Tafsir al-Muyassar.'**
+  String get storiesTafsirHint;
+
+  /// shared key "stories.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Quranic stories (audio)'**
+  String get storiesTitle;
+
+  /// shared key "stories.versesIntro"
+  ///
+  /// In en, this message translates to:
+  /// **'Each story here is its own Quranic verses (Madinah Mushaf), recited by the reciter you choose, with Tafsir al-Muyassar for every ayah.'**
+  String get storiesVersesIntro;
+
+  /// shared key "stories.versesTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'The stories\' verses from the Mushaf'**
+  String get storiesVersesTitle;
+
   /// shared key "tafsir.arabicOnly"
   ///
   /// In en, this message translates to:

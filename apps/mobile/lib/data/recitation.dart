@@ -5,6 +5,7 @@ import 'package:just_audio/just_audio.dart';
 
 import '../domain/audio_queue.dart';
 import '../domain/quran.dart';
+import '../domain/stories.dart';
 import 'content.dart';
 import 'settings.dart';
 
@@ -132,6 +133,16 @@ class RecitationController extends ChangeNotifier {
 
   Future<void> playSurah(int surah) => playFrom(AyahRef(surah, 1), scope: PlayScope.surah);
 
+  /// Plays the verse ranges of a Quranic story one after the other (with the
+  /// basmala before an ayah 1, as everywhere).
+  Future<void> playRanges(List<StoryRange> ranges) {
+    final q = _content.quran;
+    _scope = PlayScope.ranges;
+    final queue = [for (final r in ranges) ...buildQueue(q, r.start, r.end, repeat: _settings.repeat)];
+    if (queue.isEmpty) return Future.value();
+    return _start(queue);
+  }
+
   Future<void> _start(List<QueueItem> queue) async {
     _queue = queue;
     _index = 0;
@@ -235,6 +246,255 @@ class RecitationController extends ChangeNotifier {
     _generation++;
     unawaited(_completedSub?.cancel());
     unawaited(_backend?.dispose());
+    super.dispose();
+  }
+}
+
+/// Long narrated episodes (streamed): needs seeking and progress on top of
+/// [AudioBackend]. Implemented with just_audio in the app and a fake in tests.
+abstract class NarrationBackend {
+  Future<Duration?> load(String url);
+  Future<void> play();
+  Future<void> pause();
+  Future<void> seek(Duration to);
+  Future<void> stop();
+  Stream<Duration> get position;
+  Stream<void> get completed;
+  Future<void> dispose();
+}
+
+class JustAudioNarrationBackend implements NarrationBackend {
+  JustAudioNarrationBackend() {
+    _sub = _player.processingStateStream.listen((s) {
+      if (s == ProcessingState.completed) _completed.add(null);
+    });
+  }
+
+  final _player = AudioPlayer();
+  final _completed = StreamController<void>.broadcast();
+  late final StreamSubscription<ProcessingState> _sub;
+
+  @override
+  Future<Duration?> load(String url) => _player.setUrl(url).timeout(const Duration(seconds: 30));
+
+  @override
+  Future<void> play() async => unawaited(_player.play());
+
+  @override
+  Future<void> pause() => _player.pause();
+
+  @override
+  Future<void> seek(Duration to) => _player.seek(to);
+
+  @override
+  Future<void> stop() => _player.stop();
+
+  @override
+  Stream<Duration> get position => _player.positionStream;
+
+  @override
+  Stream<void> get completed => _completed.stream;
+
+  @override
+  Future<void> dispose() async {
+    await _sub.cancel();
+    await _completed.close();
+    await _player.dispose();
+  }
+}
+
+/// Plays one narrated episode at a time, resumes where the listener stopped
+/// (saved every few seconds), and never plays together with the recitation.
+class NarrationController extends ChangeNotifier {
+  NarrationController({
+    required SettingsController settings,
+    required RecitationController recitation,
+    required NarrationBackend Function() backendFactory,
+  }) : _settings = settings,
+       _recitation = recitation,
+       _factory = backendFactory {
+    _recitation.addListener(_onRecitation);
+  }
+
+  final SettingsController _settings;
+  final RecitationController _recitation;
+  final NarrationBackend Function() _factory;
+  NarrationBackend? _backend;
+  StreamSubscription<Duration>? _posSub;
+  StreamSubscription<void>? _doneSub;
+
+  String? _seriesId;
+  Episode? _episode;
+  RecitationState _state = RecitationState.idle;
+  Duration _position = Duration.zero;
+  Duration? _duration;
+  int _generation = 0;
+  DateTime _lastSave = DateTime.fromMillisecondsSinceEpoch(0);
+
+  Episode? get episode => _episode;
+  RecitationState get state => _state;
+  Duration get position => _position;
+  Duration? get duration => _duration;
+  bool get isActive => _state != RecitationState.idle;
+  bool get isPlaying => _state == RecitationState.playing || _state == RecitationState.loading;
+
+  String _key(String series, Episode e) => '$series/${e.id}';
+
+  NarrationBackend _ensure() {
+    final b = _backend;
+    if (b != null) return b;
+    final nb = _factory();
+    _posSub = nb.position.listen(_onPosition);
+    _doneSub = nb.completed.listen((_) => _onDone());
+    return _backend = nb;
+  }
+
+  void _onRecitation() {
+    // One voice at a time: starting the recitation pauses the narrator.
+    if (_recitation.isPlaying && isPlaying) unawaited(pause());
+  }
+
+  Future<void> playEpisode(String seriesId, Episode e) async {
+    final gen = ++_generation;
+    if (_recitation.isActive) await _recitation.stop();
+    _seriesId = seriesId;
+    _episode = e;
+    _state = RecitationState.loading;
+    _position = Duration.zero;
+    _duration = null;
+    notifyListeners();
+    final b = _ensure();
+    try {
+      await b.stop();
+      _duration = await b.load(e.url);
+      if (gen != _generation) return;
+      final resume = _settings.storyPosition(_key(seriesId, e));
+      if (resume > 5 && (_duration == null || resume < _duration!.inSeconds - 10)) {
+        await b.seek(Duration(seconds: resume));
+        _position = Duration(seconds: resume);
+      }
+      await b.play();
+      if (gen != _generation) return;
+      _state = RecitationState.playing;
+    } catch (_) {
+      if (gen != _generation) return;
+      _state = RecitationState.error;
+    }
+    notifyListeners();
+  }
+
+  void _onPosition(Duration p) {
+    if (_episode == null) return;
+    _position = p;
+    final now = DateTime.now();
+    if (now.difference(_lastSave).inSeconds >= 5) {
+      _lastSave = now;
+      unawaited(_settings.setStoryPosition(_key(_seriesId!, _episode!), p.inSeconds));
+    }
+    notifyListeners();
+  }
+
+  void _onDone() {
+    if (_episode == null || _state != RecitationState.playing) return;
+    unawaited(_settings.setStoryPosition(_key(_seriesId!, _episode!), 0));
+    _state = RecitationState.paused;
+    _position = Duration.zero;
+    notifyListeners();
+  }
+
+  Future<void> pause() async {
+    if (!isPlaying) return;
+    _state = RecitationState.paused;
+    notifyListeners();
+    await _backend?.pause();
+    if (_episode != null) await _settings.setStoryPosition(_key(_seriesId!, _episode!), _position.inSeconds);
+  }
+
+  Future<void> resume() async {
+    final e = _episode;
+    if (e == null) return;
+    if (_state == RecitationState.error) return playEpisode(_seriesId!, e);
+    if (_state != RecitationState.paused) return;
+    if (_recitation.isActive) await _recitation.stop();
+    _state = RecitationState.playing;
+    notifyListeners();
+    await _backend?.play();
+  }
+
+  Future<void> seekBy(Duration d) async {
+    if (_episode == null || _backend == null) return;
+    var to = _position + d;
+    if (to < Duration.zero) to = Duration.zero;
+    if (_duration != null && to > _duration!) to = _duration!;
+    _position = to;
+    notifyListeners();
+    await _backend!.seek(to);
+  }
+
+  Future<void> stop() async {
+    _generation++;
+    final e = _episode;
+    if (e != null) await _settings.setStoryPosition(_key(_seriesId!, e), _position.inSeconds);
+    _episode = null;
+    _state = RecitationState.idle;
+    notifyListeners();
+    await _backend?.stop();
+  }
+
+  @override
+  void dispose() {
+    _generation++;
+    _recitation.removeListener(_onRecitation);
+    unawaited(_posSub?.cancel());
+    unawaited(_doneSub?.cancel());
+    unawaited(_backend?.dispose());
+    super.dispose();
+  }
+}
+
+/// "Stop the audio after N minutes" for listening before sleep: stops the
+/// recitation and pauses the narrator when it fires.
+class SleepTimerController extends ChangeNotifier {
+  SleepTimerController({required this.onFire, DateTime Function()? clock}) : _clock = clock ?? DateTime.now;
+
+  static const choices = [15, 30, 45, 60];
+
+  final Future<void> Function() onFire;
+  final DateTime Function() _clock;
+  Timer? _timer;
+  DateTime? _endsAt;
+
+  DateTime? get endsAt => _endsAt;
+  bool get isOn => _endsAt != null;
+
+  /// Whole minutes left (rounded up), null when off.
+  int? get minutesLeft {
+    final e = _endsAt;
+    if (e == null) return null;
+    final s = e.difference(_clock()).inSeconds;
+    return s <= 0 ? 0 : (s / 60).ceil();
+  }
+
+  /// Starts (or replaces) the timer; null cancels it.
+  void set(int? minutes) {
+    _timer?.cancel();
+    _timer = null;
+    _endsAt = null;
+    if (minutes != null && minutes > 0) {
+      _endsAt = _clock().add(Duration(minutes: minutes));
+      _timer = Timer(Duration(minutes: minutes), () {
+        _timer = null;
+        _endsAt = null;
+        notifyListeners();
+        unawaited(onFire());
+      });
+    }
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
     super.dispose();
   }
 }

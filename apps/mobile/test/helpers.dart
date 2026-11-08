@@ -87,6 +87,7 @@ Future<TestApp> pumpApp(
   double textScale = 1.0,
   Size? size,
   FakeAudioBackend? audio,
+  FakeNarrationBackend? narration,
   FakeNotifications? notifications,
   CompassSensors? sensors,
   TafsirStore? tafsir,
@@ -100,6 +101,7 @@ Future<TestApp> pumpApp(
     httpClient: httpClient ?? MockHttpClient(),
     clock: clock ?? () => fixedNow,
     audioBackend: () => audio ?? FakeAudioBackend(),
+    narrationBackend: () => narration ?? FakeNarrationBackend(),
     notifications: notifications ?? FakeNotifications(),
     sensors: sensors ?? FakeSensors.none(),
     tafsir: tafsir ?? TafsirStore.preloaded(_tafsir!),
@@ -177,6 +179,7 @@ AppContent withPolarCity(AppContent c) => AppContent(
   normalizer: c.normalizer,
   versions: c.versions,
   reels: c.reels,
+  stories: c.stories,
 );
 
 /// Pushes [screen] on the app's navigator (the route future is not awaited:
@@ -238,6 +241,56 @@ class FakeAudioBackend implements AudioBackend {
 
   @override
   Future<void> dispose() => _completed.close();
+}
+
+/// Narrated-episode engine for tests: records calls; [emit] moves the position,
+/// [finish] ends the file, [failNext] makes the next load fail.
+class FakeNarrationBackend implements NarrationBackend {
+  FakeNarrationBackend({this.length = const Duration(minutes: 25)});
+  final Duration length;
+  final loaded = <String>[];
+  final calls = <String>[];
+  final _pos = StreamController<Duration>.broadcast();
+  final _done = StreamController<void>.broadcast();
+  bool failNext = false;
+
+  @override
+  Future<Duration?> load(String url) async {
+    calls.add('load');
+    if (failNext) {
+      failNext = false;
+      throw Exception('offline');
+    }
+    loaded.add(url);
+    return length;
+  }
+
+  @override
+  Future<void> play() async => calls.add('play');
+
+  @override
+  Future<void> pause() async => calls.add('pause');
+
+  @override
+  Future<void> seek(Duration to) async => calls.add('seek:${to.inSeconds}');
+
+  @override
+  Future<void> stop() async => calls.add('stop');
+
+  void emit(Duration p) => _pos.add(p);
+  void finish() => _done.add(null);
+
+  @override
+  Stream<Duration> get position => _pos.stream;
+
+  @override
+  Stream<void> get completed => _done.stream;
+
+  @override
+  Future<void> dispose() async {
+    await _pos.close();
+    await _done.close();
+  }
 }
 
 class FakeNotifications implements NotificationsBackend {

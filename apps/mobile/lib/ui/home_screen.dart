@@ -15,6 +15,7 @@ import 'page_reader_screen.dart';
 import 'prayer_model.dart';
 import 'qibla_screen.dart';
 import 'reels_screen.dart';
+import 'stories_screen.dart';
 import 'search_screen.dart';
 import 'tasbih_screen.dart';
 import 'widgets.dart';
@@ -120,6 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       _Tile('tasbih', Icons.touch_app_outlined, l.tasbihTitle, () => _push(const TasbihScreen())),
                       _Tile('qibla', Icons.explore_outlined, l.qiblaTitle, () => _push(const QiblaScreen())),
                       _Tile('hajj', Icons.mosque_outlined, l.hajjTitle, () => _push(const HajjScreen())),
+                      _Tile('stories', Icons.headphones_outlined, l.storiesTitle, () => _push(const StoriesScreen())),
                       _Tile('reels', Icons.smart_display_outlined, l.reelsTitle, () => _push(const ReelsScreen())),
                       _Tile(
                         'bookmarks',

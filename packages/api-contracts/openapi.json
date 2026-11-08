@@ -989,6 +989,45 @@
     },
     "summary": "Reels"
    }
+  },
+  "/v1/stories": {
+   "get": {
+    "description": "Audio Quranic stories: verse ranges played with the app's reciters. Every non-rejected story is\nreturned (they are only Quranic verses). Narrated series (audio only) list only episodes that passed\nreligious review, unless include_pending=true, which reviewer mode uses.",
+    "operationId": "stories_v1_stories_get",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "include_pending",
+      "required": false,
+      "schema": {
+       "default": false,
+       "title": "Include Pending",
+       "type": "boolean"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Stories"
+   }
   }
  }
 }

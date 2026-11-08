@@ -31,6 +31,23 @@ def reels(request: Request, include_pending: bool = Query(default=False)):
     return {"schema": bundle["schema"], "version": bundle["version"], "items": items}
 
 
+@router.get("/stories")
+def stories(request: Request, include_pending: bool = Query(default=False)):
+    """Audio Quranic stories: verse ranges played with the app's reciters. Every non-rejected story is
+    returned (they are only Quranic verses). Narrated series (audio only) list only episodes that passed
+    religious review, unless include_pending=true, which reviewer mode uses."""
+    import json
+
+    path = request.app.state.settings.content_dir / "stories/dist/stories.v1.json"
+    bundle = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"schema": "stories.v1", "version": 0, "items": []}
+    series = []
+    for se in bundle.get("series", []):
+        eps = [e for e in se["episodes"] if e["status"] == "approved" or include_pending]
+        if eps:
+            series.append({**se, "episodes": eps})
+    return {"schema": bundle["schema"], "version": bundle["version"], "items": bundle["items"], "series": series}
+
+
 @router.get("/quran/surahs")
 def surahs(request: Request):
     return [{k: s[k] for k in ("n", "nameAr", "nameEn", "translit", "revelation", "ayahCount")} for s in _q(request).surahs]

@@ -709,6 +709,128 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsThemeSystem => 'حسب الجهاز';
 
   @override
+  String storiesAyahs(String count) {
+    return '$count آية';
+  }
+
+  @override
+  String get storiesBack => 'كل القصص';
+
+  @override
+  String get storiesCatOthers => 'قصص وعِبَر من القرآن';
+
+  @override
+  String get storiesCatProphets => 'قصص الأنبياء في القرآن';
+
+  @override
+  String get storiesEpisodeError => 'تعذّر تشغيل الحلقة. تأكد من اتصالك بالإنترنت.';
+
+  @override
+  String get storiesEpisodePending => 'لم تتم مراجعة هذه الحلقة شرعياً بعد — تظهر لك لأن وضع المراجعة مفعّل';
+
+  @override
+  String storiesEpisodes(String count) {
+    return '$count حلقة';
+  }
+
+  @override
+  String get storiesForward => 'تقديم ٣٠ ثانية';
+
+  @override
+  String storiesFrom(String surah, String from, String to) {
+    return 'سورة $surah، الآيات $from–$to';
+  }
+
+  @override
+  String get storiesIntro =>
+      'استمع إلى قصص الأنبياء بصوت هادئ قبل النوم، أو اقرأ آيات كل قصة من المصحف مع التفسير الميسّر.';
+
+  @override
+  String get storiesListen => 'استمع إلى آيات القصة';
+
+  @override
+  String storiesMinutes(String n) {
+    return '$n دقيقة';
+  }
+
+  @override
+  String get storiesNowPlaying => 'تُسمع الآن';
+
+  @override
+  String get storiesOnlineOnly => 'الحلقات تُسمع عبر الإنترنت';
+
+  @override
+  String get storiesPause => 'إيقاف مؤقت';
+
+  @override
+  String get storiesPlay => 'استمع';
+
+  @override
+  String get storiesReadVerses => 'اقرأ آيات القصة';
+
+  @override
+  String get storiesReciter => 'القارئ';
+
+  @override
+  String storiesReviewedBy(String name) {
+    return 'راجعها: $name';
+  }
+
+  @override
+  String get storiesReviewerMode => 'وضع المراجعة (عرض الحلقات غير المراجَعة)';
+
+  @override
+  String get storiesRewind => 'رجوع ٣٠ ثانية';
+
+  @override
+  String storiesSeriesHidden(String title, String narrator) {
+    return 'حلقات «$title» للشيخ $narrator تظهر هنا بعد مراجعتها شرعياً.';
+  }
+
+  @override
+  String storiesSeriesSource(String source, String licence) {
+    return 'المصدر: $source. $licence';
+  }
+
+  @override
+  String get storiesSleep => 'مؤقت النوم';
+
+  @override
+  String storiesSleepLeft(String time) {
+    return 'يتوقف الصوت بعد $time دقيقة';
+  }
+
+  @override
+  String storiesSleepMin(String n) {
+    return 'بعد $n دقيقة';
+  }
+
+  @override
+  String get storiesSleepOff => 'بدون';
+
+  @override
+  String get storiesSource => 'المصدر: نص مصحف المدينة، والتفسير الميسّر (مجمع الملك فهد لطباعة المصحف الشريف).';
+
+  @override
+  String get storiesStop => 'إيقاف';
+
+  @override
+  String get storiesSub => 'قصص الأنبياء صوتياً وآياتها';
+
+  @override
+  String get storiesTafsirHint => 'اضغط على أي آية لعرض تفسيرها الميسّر.';
+
+  @override
+  String get storiesTitle => 'قصص قرآنية مسموعة';
+
+  @override
+  String get storiesVersesIntro =>
+      'كل قصة هنا هي آياتها من القرآن الكريم (مصحف المدينة)، تُتلى بصوت القارئ الذي تختاره، مع التفسير الميسّر لكل آية.';
+
+  @override
+  String get storiesVersesTitle => 'آيات القصص من المصحف';
+
+  @override
   String get tafsirArabicOnly => 'هذا التفسير متاح بالعربية فقط.';
 
   @override

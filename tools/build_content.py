@@ -12,6 +12,7 @@ Outputs (all deterministic, sorted keys, UTF-8):
   content/quran/dist/mushaf-lines.v1.json  15-line Madinah page layout as word ranges of the canonical text
   content/adhkar/dist/adhkar.v1.json     morning/evening adhkar
   content/reels/dist/reels.v1.json       curated reels that passed validation (see tools/reels.py)
+  content/stories/dist/stories.v1.json   audio Quranic stories: verse ranges + reviewed summaries (see tools/stories.py)
   content/VERSIONS.json                  content version registry
 """
 from __future__ import annotations
@@ -24,6 +25,7 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import mushaf_lines  # noqa: E402
 import reels  # noqa: E402
+import stories  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 C = ROOT / "content"
@@ -146,6 +148,9 @@ def main() -> int:
     # --- Curated reels (YouTube/Instagram embeds, religious review status) -------
     _, reel_problems = reels.build()
     problems += [f"reels: {x}" for x in reel_problems]
+    # --- Audio Quranic stories (verse ranges checked against the ayah counts) ----
+    _, story_problems = stories.build()
+    problems += [f"stories: {x}" for x in story_problems]
     if counts != ref["ayahCounts"]:
         problems.append("ayah counts differ from reference")
     if sum(counts) != 6236 or len(surahs) != 114:

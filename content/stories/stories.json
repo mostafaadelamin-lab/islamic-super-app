@@ -1,0 +1,913 @@
+{
+  "schema": "stories-catalogue.v1",
+  "version": 1,
+  "note": "Edit with tools/stories.py. A story is only its Quranic verses (Madinah Mushaf text, recited by the app's reciters from everyayah.com) with Tafsir al-Muyassar per ayah: no text written by us. 'series' holds audio-only narrated series (e.g. Sheikh Nabil al-Awadi's Stories of the Prophets), streamed from their source with the stated licence; an episode is heard by users only after a named reviewer approves it (pending ones in reviewer mode only). review on a story records the check of its verse ranges.",
+  "items": [
+    {
+      "id": "adam",
+      "category": "prophets",
+      "title": {
+        "ar": "آدم عليه السلام وخلافة الأرض",
+        "en": "Adam and the succession on earth"
+      },
+      "segments": [
+        {
+          "surah": 2,
+          "from": 30,
+          "to": 39
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "sons-of-adam",
+      "category": "others",
+      "title": {
+        "ar": "ابنا آدم",
+        "en": "The two sons of Adam"
+      },
+      "segments": [
+        {
+          "surah": 5,
+          "from": 27,
+          "to": 31
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "nuh",
+      "category": "prophets",
+      "title": {
+        "ar": "نوح عليه السلام والطوفان",
+        "en": "Noah and the flood"
+      },
+      "segments": [
+        {
+          "surah": 11,
+          "from": 25,
+          "to": 49
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "hud",
+      "category": "prophets",
+      "title": {
+        "ar": "هود عليه السلام وقوم عاد",
+        "en": "Hud and the people of 'Ad"
+      },
+      "segments": [
+        {
+          "surah": 11,
+          "from": 50,
+          "to": 60
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "salih",
+      "category": "prophets",
+      "title": {
+        "ar": "صالح عليه السلام وناقة الله",
+        "en": "Salih and the she-camel of God"
+      },
+      "segments": [
+        {
+          "surah": 11,
+          "from": 61,
+          "to": 68
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "ibrahim",
+      "category": "prophets",
+      "title": {
+        "ar": "إبراهيم عليه السلام: تحطيم الأصنام والذبيح",
+        "en": "Abraham: the idols and the sacrifice"
+      },
+      "segments": [
+        {
+          "surah": 21,
+          "from": 51,
+          "to": 70
+        },
+        {
+          "surah": 37,
+          "from": 99,
+          "to": 111
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "lut",
+      "category": "prophets",
+      "title": {
+        "ar": "ضيف إبراهيم ولوط عليهما السلام",
+        "en": "Abraham's guests and Lot"
+      },
+      "segments": [
+        {
+          "surah": 11,
+          "from": 69,
+          "to": 83
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "yusuf",
+      "category": "prophets",
+      "title": {
+        "ar": "يوسف عليه السلام",
+        "en": "Joseph"
+      },
+      "segments": [
+        {
+          "surah": 12,
+          "from": 4,
+          "to": 101
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "shuayb",
+      "category": "prophets",
+      "title": {
+        "ar": "شعيب عليه السلام وأهل مدين",
+        "en": "Shu'ayb and the people of Midian"
+      },
+      "segments": [
+        {
+          "surah": 11,
+          "from": 84,
+          "to": 95
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "musa",
+      "category": "prophets",
+      "title": {
+        "ar": "موسى عليه السلام وفرعون",
+        "en": "Moses and Pharaoh"
+      },
+      "segments": [
+        {
+          "surah": 28,
+          "from": 3,
+          "to": 42
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "cow",
+      "category": "others",
+      "title": {
+        "ar": "بقرة بني إسرائيل",
+        "en": "The cow of the Children of Israel"
+      },
+      "segments": [
+        {
+          "surah": 2,
+          "from": 67,
+          "to": 73
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "talut",
+      "category": "others",
+      "title": {
+        "ar": "طالوت وجالوت وداود عليه السلام",
+        "en": "Talut, Goliath and David"
+      },
+      "segments": [
+        {
+          "surah": 2,
+          "from": 246,
+          "to": 251
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "ayyub",
+      "category": "prophets",
+      "title": {
+        "ar": "أيوب عليه السلام وصبره",
+        "en": "Job and his patience"
+      },
+      "segments": [
+        {
+          "surah": 21,
+          "from": 83,
+          "to": 84
+        },
+        {
+          "surah": 38,
+          "from": 41,
+          "to": 44
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "yunus",
+      "category": "prophets",
+      "title": {
+        "ar": "يونس عليه السلام",
+        "en": "Jonah"
+      },
+      "segments": [
+        {
+          "surah": 37,
+          "from": 139,
+          "to": 148
+        },
+        {
+          "surah": 21,
+          "from": 87,
+          "to": 88
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "dawud-sulayman",
+      "category": "prophets",
+      "title": {
+        "ar": "سليمان عليه السلام وملكة سبأ",
+        "en": "Solomon and the Queen of Sheba"
+      },
+      "segments": [
+        {
+          "surah": 27,
+          "from": 15,
+          "to": 44
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "zakariya-yahya",
+      "category": "prophets",
+      "title": {
+        "ar": "زكريا ويحيى عليهما السلام",
+        "en": "Zechariah and John"
+      },
+      "segments": [
+        {
+          "surah": 19,
+          "from": 2,
+          "to": 15
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "maryam-isa",
+      "category": "prophets",
+      "title": {
+        "ar": "مريم وعيسى عليهما السلام",
+        "en": "Mary and Jesus"
+      },
+      "segments": [
+        {
+          "surah": 19,
+          "from": 16,
+          "to": 36
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "kahf",
+      "category": "others",
+      "title": {
+        "ar": "أصحاب الكهف",
+        "en": "The people of the cave"
+      },
+      "segments": [
+        {
+          "surah": 18,
+          "from": 9,
+          "to": 26
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "musa-khidr",
+      "category": "prophets",
+      "title": {
+        "ar": "موسى والعبد الصالح",
+        "en": "Moses and the righteous servant"
+      },
+      "segments": [
+        {
+          "surah": 18,
+          "from": 60,
+          "to": 82
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "dhul-qarnayn",
+      "category": "others",
+      "title": {
+        "ar": "ذو القرنين",
+        "en": "Dhul-Qarnayn"
+      },
+      "segments": [
+        {
+          "surah": 18,
+          "from": 83,
+          "to": 98
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "qarun",
+      "category": "others",
+      "title": {
+        "ar": "قارون",
+        "en": "Qarun"
+      },
+      "segments": [
+        {
+          "surah": 28,
+          "from": 76,
+          "to": 82
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "luqman",
+      "category": "others",
+      "title": {
+        "ar": "وصايا لقمان لابنه",
+        "en": "Luqman's advice to his son"
+      },
+      "segments": [
+        {
+          "surah": 31,
+          "from": 12,
+          "to": 19
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "garden-owners",
+      "category": "others",
+      "title": {
+        "ar": "أصحاب الجنة",
+        "en": "The owners of the garden"
+      },
+      "segments": [
+        {
+          "surah": 68,
+          "from": 17,
+          "to": 33
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "ukhdud",
+      "category": "others",
+      "title": {
+        "ar": "أصحاب الأخدود",
+        "en": "The people of the trench"
+      },
+      "segments": [
+        {
+          "surah": 85,
+          "from": 4,
+          "to": 10
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    },
+    {
+      "id": "fil",
+      "category": "others",
+      "title": {
+        "ar": "أصحاب الفيل",
+        "en": "The people of the elephant"
+      },
+      "segments": [
+        {
+          "surah": 105,
+          "from": 1,
+          "to": 5
+        }
+      ],
+      "addedAt": "2026-11-08",
+      "review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "notes": "Verse ranges proposed by the assistant; awaiting check by a qualified reviewer."
+      }
+    }
+  ],
+  "series": [
+    {
+      "id": "awadi-prophets",
+      "title": {
+        "ar": "قصص الأنبياء",
+        "en": "Stories of the Prophets"
+      },
+      "narrator": {
+        "ar": "الشيخ نبيل العوضي",
+        "en": "Sheikh Nabil Al-Awadi"
+      },
+      "source": "Internet Archive: prophets_stories_Nabel-ElAwadde (uploaded from koonoz.blogspot.com)",
+      "sourceUrl": "https://archive.org/details/prophets_stories_Nabel-ElAwadde",
+      "licence": "Upload notice: الحقوق متاحة لكل مسلم بشرط عدم الإستخدام تجاريا (free for every Muslim, non-commercial use only). The app is free with no ads. Written confirmation from the sheikh's office is advised before a store release.",
+      "episodes": [
+        {
+          "id": "adam",
+          "title": {
+            "ar": "قصة آدم عليه السلام",
+            "en": "The story of Adam"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%A2%D8%AF%D9%85%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 3082,
+          "story": "adam",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "idris-nuh",
+          "title": {
+            "ar": "قصة ادريس ونوح عليهما السلام",
+            "en": "The story of Idris and Noah"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%A7%D8%AF%D8%B1%D9%8A%D8%B3%20%D9%88%D9%86%D9%88%D8%AD%20%D8%B9%D9%84%D9%8A%D9%87%D9%85%D8%A7%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 3136,
+          "story": "nuh",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "hud",
+          "title": {
+            "ar": "قصة هود عليه السلام",
+            "en": "The story of Hud"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%87%D9%88%D8%AF%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 1518,
+          "story": "hud",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "salih",
+          "title": {
+            "ar": "قصة صالح عليه السلام",
+            "en": "The story of Salih"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%B5%D8%A7%D9%84%D8%AD%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 1463,
+          "story": "salih",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "ibrahim",
+          "title": {
+            "ar": "قصة إبراهيم عليه السلام",
+            "en": "The story of Abraham"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%A5%D8%A8%D8%B1%D8%A7%D9%87%D9%8A%D9%85%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 4566,
+          "story": "ibrahim",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "lut",
+          "title": {
+            "ar": "قصة لوط عليه السلام",
+            "en": "The story of Lot"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%84%D9%88%D8%B7%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 1533,
+          "story": "lut",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "shuayb",
+          "title": {
+            "ar": "قصة شعيب عليه السلام",
+            "en": "The story of Shu'ayb"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%B4%D8%B9%D9%8A%D8%A8%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 1415,
+          "story": "shuayb",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "yusuf",
+          "title": {
+            "ar": "قصة يوسف عليه السلام",
+            "en": "The story of Joseph"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%8A%D9%88%D8%B3%D9%81%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 4459,
+          "story": "yusuf",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "ayyub",
+          "title": {
+            "ar": "قصة أيوب عليه السلام",
+            "en": "The story of Job"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%A3%D9%8A%D9%88%D8%A8%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 1504,
+          "story": "ayyub",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "yunus",
+          "title": {
+            "ar": "قصة يونس عليه السلام",
+            "en": "The story of Jonah"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%8A%D9%88%D9%86%D8%B3%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": null,
+          "story": "yunus",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "musa",
+          "title": {
+            "ar": "قصة موسى عليه السلام",
+            "en": "The story of Moses"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%85%D9%88%D8%B3%D9%89%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 5941,
+          "story": "musa",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "khidr",
+          "title": {
+            "ar": "قصة الخضر عليه السلام",
+            "en": "The story of Al-Khidr"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%A7%D9%84%D8%AE%D8%B6%D8%B1%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 1498,
+          "story": "musa-khidr",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "yusha",
+          "title": {
+            "ar": "قصة يوشع بن نون عليه السلام",
+            "en": "The story of Joshua son of Nun"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%8A%D9%88%D8%B4%D8%B9%20%D8%A8%D9%86%20%D9%86%D9%88%D9%86%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": null,
+          "story": null,
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "dawud",
+          "title": {
+            "ar": "قصة داوود عليه السلام",
+            "en": "The story of David"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%AF%D8%A7%D9%88%D9%88%D8%AF%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 1519,
+          "story": "talut",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "sulayman-uzair",
+          "title": {
+            "ar": "قصة سليمان و العزير عليهما السلام",
+            "en": "The story of Solomon and Uzair"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%B3%D9%84%D9%8A%D9%85%D8%A7%D9%86%20%D9%88%20%D8%A7%D9%84%D8%B9%D8%B2%D9%8A%D8%B1%20%D8%B9%D9%84%D9%8A%D9%87%D9%85%D8%A7%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 3017,
+          "story": "dawud-sulayman",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "zakariya-yahya",
+          "title": {
+            "ar": "قصة زكريا و يحي عليهما السلام",
+            "en": "The story of Zechariah and John"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%B2%D9%83%D8%B1%D9%8A%D8%A7%20%D9%88%20%D9%8A%D8%AD%D9%8A%20%D8%B9%D9%84%D9%8A%D9%87%D9%85%D8%A7%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 1513,
+          "story": "zakariya-yahya",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "maryam",
+          "title": {
+            "ar": "قصة مريم بنت عمران عليها السلام",
+            "en": "The story of Mary daughter of Imran"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%85%D8%B1%D9%8A%D9%85%20%D8%A8%D9%86%D8%AA%20%D8%B9%D9%85%D8%B1%D8%A7%D9%86%20%D8%B9%D9%84%D9%8A%D9%87%D8%A7%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 1356,
+          "story": "maryam-isa",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "isa",
+          "title": {
+            "ar": "قصة عيسى عليه السلام",
+            "en": "The story of Jesus"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%B9%D9%8A%D8%B3%D9%89%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
+          "durationSec": 1480,
+          "story": "maryam-isa",
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        },
+        {
+          "id": "muhammad",
+          "title": {
+            "ar": "قصة محمد ﷺ",
+            "en": "The story of Muhammad ﷺ"
+          },
+          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%85%D8%AD%D9%85%D8%AF%20%D8%B5%D9%84%D9%91%20%D8%A7%D9%84%D9%84%D9%87%20%D8%B9%D9%84%D9%8A%D9%87%20%D9%88%20%D8%B3%D9%84%D9%85.mp3",
+          "durationSec": 1579,
+          "story": null,
+          "addedAt": "2026-11-08",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+          }
+        }
+      ]
+    }
+  ]
+}

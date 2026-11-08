@@ -147,5 +147,10 @@
   "tafsir.next": "الآية التالية",
   "tafsir.loading": "جارٍ تحميل التفسير…",
   "tafsir.error": "تعذّر تحميل التفسير.",
-  "audio.tafsirToggle": "التفسير مع التلاوة"
+  "audio.tafsirToggle": "التفسير مع التلاوة",
+  "stories.rewind": "رجوع ٣٠ ثانية",
+  "stories.forward": "تقديم ٣٠ ثانية",
+  "stories.pause": "إيقاف مؤقت",
+  "stories.stop": "إيقاف",
+  "stories.tafsirHint": "اضغط على أي آية لعرض تفسيرها الميسّر."
 }

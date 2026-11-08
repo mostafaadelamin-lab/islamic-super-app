@@ -10,6 +10,7 @@ import '../domain/prayer.dart';
 import '../domain/quran.dart';
 import '../domain/reels.dart';
 import '../domain/search.dart';
+import '../domain/stories.dart';
 import '../domain/text.dart';
 
 class City {
@@ -63,6 +64,7 @@ class AppContent {
     required this.normalizer,
     required this.versions,
     this.reels = ReelCatalog.empty,
+    this.stories = StoryCatalog.empty,
   }) : search = QuranSearch(quran, normalizer);
 
   static const quranAsset = 'assets/content/quran.v1.json';
@@ -75,6 +77,7 @@ class AppContent {
   static const recitersAsset = 'assets/schemas/reciters.json';
   static const versionsAsset = 'assets/content/VERSIONS.json';
   static const reelsAsset = 'assets/content/reels.v1.json';
+  static const storiesAsset = 'assets/content/stories.v1.json';
   static const methodsAsset = 'assets/schemas/methods.json';
   static const citiesAsset = 'assets/schemas/cities.json';
   static const renderAsset = 'assets/schemas/quran-render.json';
@@ -94,6 +97,9 @@ class AppContent {
 
   /// Curated YouTube reels (approved + pending; screens filter by review status).
   final ReelCatalog reels;
+
+  /// Quranic stories (verse ranges) and narrated series (audio only).
+  final StoryCatalog stories;
   final QuranSearch search;
 
   PrayerCalculator get calculator => PrayerCalculator(prayerConfig);
@@ -111,8 +117,9 @@ class AppContent {
     final quranJson = await j(quranAsset);
     final pagesJson = await j(pagesAsset);
     final citiesJson = await j(citiesAsset);
+    final quran = QuranContent.fromJson(quranJson, pagesJson);
     return AppContent(
-      quran: QuranContent.fromJson(quranJson, pagesJson),
+      quran: quran,
       mushaf: MushafLayout.fromJson(await j(mushafLinesAsset)),
       reciters: ReciterCatalog.fromJson(await j(recitersAsset)),
       adhkar: AdhkarContent.fromJson(
@@ -129,6 +136,7 @@ class AppContent {
       normalizer: SearchNormalizer.fromJson(await j(normalizationAsset)),
       versions: await j(versionsAsset),
       reels: ReelCatalog.fromJson(await j(reelsAsset)),
+      stories: StoryCatalog.fromJson(await j(storiesAsset), [for (final s in quran.surahs) s.ayahCount]),
     );
   }
 }
