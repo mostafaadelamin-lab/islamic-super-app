@@ -16,6 +16,7 @@ The API is used for account sync (bookmarks, settings) and as a cross-check for 
 | GET | `/v1/quran/ayahs/{s}/{a}` | – | `{s,a,text,page,en}` |
 | GET | `/v1/quran/pages/{p}` | – | Madinah 1405H page: `{page,start:[s,a],end:[s,a],ayahs:[{s,a,text}]}`; 404 if p∉1..604 |
 | GET | `/v1/quran/search?q=…&limit=20` | – | diacritic-insensitive Arabic search: `{q,total,results:[{s,a,text}]}`; 422 if q shorter than 2 letters |
+| GET | `/v1/reels?include_pending=false` | – | curated YouTube reels `{schema:"reels.v1",version,items:[{id,platform:"youtube",ref,url,title:{ar,en},speaker,category:"recitation"|"lesson",source,status,reviewer,reviewedAt}]}`. Only `status:"approved"` by default; `include_pending=true` (reviewer mode) adds pending ones. Rejected reels are never served |
 | GET | `/v1/prayer/methods` | – | contents of `packages/shared-schemas/prayer/methods.json` |
 | GET | `/v1/prayer/times?lat&lng&date=YYYY-MM-DD&tz=Area/City&method=mwl&asr=standard` | – | `{date,tz,method,asr,local:{fajr:"HH:MM",…},utc:{fajr:"…Z",…},highLatitudeAdjusted:[…]}` |
 | GET | `/v1/qibla?lat&lng` | – | `{bearing}` degrees clockwise from true north |

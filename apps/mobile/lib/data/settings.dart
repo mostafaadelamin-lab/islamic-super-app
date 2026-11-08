@@ -26,6 +26,13 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Reels reviewer mode: also show reels that have not been religiously reviewed yet.
+  bool get reelsReviewer => _prefs.getBool('reelsReviewer') ?? false;
+  Future<void> setReelsReviewer(bool v) async {
+    await _prefs.setBool('reelsReviewer', v);
+    notifyListeners();
+  }
+
   ThemeMode get themeMode => switch (_prefs.getString('theme')) {
     'light' => ThemeMode.light,
     'dark' => ThemeMode.dark,

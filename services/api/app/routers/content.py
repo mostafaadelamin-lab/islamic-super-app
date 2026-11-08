@@ -19,6 +19,18 @@ def versions(request: Request):
     return {**q.versions, "quranSha256": q.integrity["allAyahsSha256"]}
 
 
+@router.get("/reels")
+def reels(request: Request, include_pending: bool = Query(default=False)):
+    """Curated Islamic reels (YouTube/Instagram embeds). Only religiously reviewed reels are returned
+    unless include_pending=true, which reviewer mode uses; pending items carry status "pending"."""
+    import json
+
+    path = request.app.state.settings.content_dir / "reels/dist/reels.v1.json"
+    bundle = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"schema": "reels.v1", "version": 0, "items": []}
+    items = [r for r in bundle["items"] if r["status"] == "approved" or (include_pending and r["status"] == "pending")]
+    return {"schema": bundle["schema"], "version": bundle["version"], "items": items}
+
+
 @router.get("/quran/surahs")
 def surahs(request: Request):
     return [{k: s[k] for k in ("n", "nameAr", "nameEn", "translit", "revelation", "ayahCount")} for s in _q(request).surahs]

@@ -11,6 +11,7 @@
 | Hajj/Umrah guide | Rattil prototype text | project-owned | shown from Milestone 2 with a visible "pending religious review" notice | religious review required |
 | Madinah Mushaf 15-line layout | npm `quran-madina-html@2.2.2` Madina-1405H database (shasum `127c4dee6218f0128138e3e9f14d43af664a10aa`, per-file SHA-256 in `content/quran/upstream/quran-madina-html-2.2.2/SHA256SUMS`) | Waqf GPL 2.0 | upstream text used only to locate line breaks; `mushaf-lines.v1.json` stores word ranges of the canonical text; build + tests assert every word appears once in order | pending human comparison with printed pages |
 | Recitation audio | everyayah.com per-ayah MP3, streamed (not bundled) | free to stream; reciters' rights with their publishers | online only | — |
+| Islamic reels (short videos) | Curated YouTube links in `content/reels/reels.json`, played through YouTube's official privacy-enhanced embed (`youtube-nocookie.com`); nothing downloaded or re-hosted | rights stay with each channel; embedding per YouTube's terms | `tools/reels.py` validates every link/id; only `approved` reels with a named reviewer and date are shown | **Every reel needs a religious review before it is shown.** Allowed: humble Quran recitation, short lessons per the Quran and Sunnah. Instagram not enabled yet |
 | Fonts | Amiri Quran, IBM Plex Sans Arabic (Google Fonts repository) | SIL OFL 1.1 | files committed with licence | — |
 
 ## Display glyph map

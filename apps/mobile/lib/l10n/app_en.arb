@@ -899,6 +899,79 @@
   "@quranSurahs": {
     "description": "shared key \"quran.surahs\""
   },
+  "reelsCatLesson": "Short lesson",
+  "@reelsCatLesson": {
+    "description": "shared key \"reels.cat.lesson\""
+  },
+  "reelsCatRecitation": "Moving recitation",
+  "@reelsCatRecitation": {
+    "description": "shared key \"reels.cat.recitation\""
+  },
+  "reelsEmpty": "No reviewed reels yet. Reels are added after a religious review.",
+  "@reelsEmpty": {
+    "description": "shared key \"reels.empty\""
+  },
+  "reelsFeed": "reels",
+  "@reelsFeed": {
+    "description": "shared key \"reels.feed\""
+  },
+  "reelsNext": "Next reel",
+  "@reelsNext": {
+    "description": "shared key \"reels.next\""
+  },
+  "reelsNote": "Reels play from YouTube through its official player. They are limited to moving Quran recitations and short religious lessons in line with the Quran and Sunnah, and only reviewed reels are shown.",
+  "@reelsNote": {
+    "description": "shared key \"reels.note\""
+  },
+  "reelsOpen": "Open on YouTube",
+  "@reelsOpen": {
+    "description": "shared key \"reels.open\""
+  },
+  "reelsPending": "This reel has not been religiously reviewed yet — you see it because reviewer mode is on",
+  "@reelsPending": {
+    "description": "shared key \"reels.pending\""
+  },
+  "reelsPosition": "Reel {n} of {total}",
+  "@reelsPosition": {
+    "description": "shared key \"reels.position\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "reelsPrev": "Previous reel",
+  "@reelsPrev": {
+    "description": "shared key \"reels.prev\""
+  },
+  "reelsReviewedBy": "Reviewed by {name}",
+  "@reelsReviewedBy": {
+    "description": "shared key \"reels.reviewedBy\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reelsReviewerHint": "show reels that are not reviewed yet",
+  "@reelsReviewerHint": {
+    "description": "shared key \"reels.reviewerHint\""
+  },
+  "reelsReviewerMode": "Reviewer mode",
+  "@reelsReviewerMode": {
+    "description": "shared key \"reels.reviewerMode\""
+  },
+  "reelsSub": "Reviewed short videos",
+  "@reelsSub": {
+    "description": "shared key \"reels.sub\""
+  },
+  "reelsTitle": "Islamic reels",
+  "@reelsTitle": {
+    "description": "shared key \"reels.title\""
+  },
   "settingsAbout": "About",
   "@settingsAbout": {
     "description": "shared key \"settings.about\""

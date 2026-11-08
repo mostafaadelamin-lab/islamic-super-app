@@ -5050,6 +5050,13 @@
   "page": "/ar/more/",
   "tag": "a",
   "type": null,
+  "name": "ريلز إسلاميةتلاوات خاشعة ودروس مختصرة",
+  "href": "/ar/reels/"
+ },
+ {
+  "page": "/ar/more/",
+  "tag": "a",
+  "type": null,
   "name": "مواقيت الصلاةالمواقيت والإعدادات",
   "href": "/ar/prayer/"
  },
@@ -6840,6 +6847,83 @@
  },
  {
   "page": "/ar/hajj/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "الأذكار",
+  "href": "/ar/adhkar/"
+ },
+ {
+  "page": "/ar/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "المزيد",
+  "href": "/ar/more/"
+ },
+ {
+  "page": "/ar/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/reels/"
+ },
+ {
+  "page": "/ar/reels/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "وضع المراجعة — لعرض المقاطع التي لم تُراجع بعد",
+  "href": null
+ },
+ {
+  "page": "/ar/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/reels/",
   "tag": "a",
   "type": null,
   "name": "صفحات المصحف",
@@ -11924,6 +12008,13 @@
   "page": "/en/more/",
   "tag": "a",
   "type": null,
+  "name": "Islamic reelsRecitations and short lessons",
+  "href": "/en/reels/"
+ },
+ {
+  "page": "/en/more/",
+  "tag": "a",
+  "type": null,
   "name": "Prayer timesTimes & settings",
   "href": "/en/prayer/"
  },
@@ -13714,6 +13805,83 @@
  },
  {
   "page": "/en/hajj/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "Adhkar",
+  "href": "/en/adhkar/"
+ },
+ {
+  "page": "/en/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "More",
+  "href": "/en/more/"
+ },
+ {
+  "page": "/en/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/reels/"
+ },
+ {
+  "page": "/en/reels/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "Reviewer mode — show reels that are not reviewed yet",
+  "href": null
+ },
+ {
+  "page": "/en/reels/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/reels/",
   "tag": "a",
   "type": null,
   "name": "Mushaf pages",

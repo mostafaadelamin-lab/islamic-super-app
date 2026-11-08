@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased] — Islamic reels — 2026-11-08
+### Added
+- Islamic reels: a vertical, swipeable short-video feed on Android, iOS and the web (`/reels`), reachable from Home and More.
+- Source: curated YouTube links only (Instagram not enabled yet), played with YouTube's official privacy-enhanced embed; no video is downloaded, re-hosted or stored, so there is no hosting cost.
+- Content policy: two categories only, "humble Quran recitation" and "short religious lesson per the Quran and Sunnah".
+- Religious review gate: each reel is `pending`, `approved` (reviewer + date required) or `rejected` (reason required). Users see approved reels only; "reviewer mode" shows pending ones with a red "not reviewed" banner.
+- `tools/reels.py` (add / approve / reject / list / build), build step in `tools/build_content.py`, API `GET /v1/reels`.
+- Only the reel in view has a live player; the others show the poster image.
+
 ## [0.1.0] — Milestone 1 — 2026-11-06
 ### Added
 - Monorepo layout (apps, services, packages, content, tests, docs, infrastructure).

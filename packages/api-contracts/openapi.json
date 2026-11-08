@@ -950,6 +950,45 @@
     },
     "summary": "Surah"
    }
+  },
+  "/v1/reels": {
+   "get": {
+    "description": "Curated Islamic reels (YouTube/Instagram embeds). Only religiously reviewed reels are returned\nunless include_pending=true, which reviewer mode uses; pending items carry status \"pending\".",
+    "operationId": "reels_v1_reels_get",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "include_pending",
+      "required": false,
+      "schema": {
+       "default": false,
+       "title": "Include Pending",
+       "type": "boolean"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Reels"
+   }
   }
  }
 }

@@ -8,6 +8,7 @@ const PATHS = {
     "M12 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm-5.5 3.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm11 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM5 13a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm14 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm-7 4v4",
   more: "M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z",
   play: "M8 5v14l11-7z",
+  reels: "M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2ZM10 9v6l5-3z",
   pause: "M7 5h4v14H7zM13 5h4v14h-4z",
   stop: "M6 6h12v12H6z",
   next: "M6 6v12l8.5-6zM16 6h2v12h-2z",

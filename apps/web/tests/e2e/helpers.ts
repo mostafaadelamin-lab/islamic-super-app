@@ -24,6 +24,8 @@ export const MAIN_PAGES = [
   "tasbih/",
   "qibla/",
   "hajj/",
+  // Reels
+  "reels/",
 ] as const;
 
 /** Collects uncaught page errors and console errors; call `assertClean()` at the end. */

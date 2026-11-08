@@ -617,6 +617,56 @@ class AppLocalizationsAr extends AppLocalizations {
   String get quranSurahs => 'السور';
 
   @override
+  String get reelsCatLesson => 'درس ديني مختصر';
+
+  @override
+  String get reelsCatRecitation => 'تلاوة خاشعة';
+
+  @override
+  String get reelsEmpty => 'لا توجد مقاطع مراجَعة بعد. تُضاف المقاطع بعد مراجعتها شرعياً.';
+
+  @override
+  String get reelsFeed => 'مقاطع';
+
+  @override
+  String get reelsNext => 'المقطع التالي';
+
+  @override
+  String get reelsNote =>
+      'المقاطع معروضة من يوتيوب بمشغّله الرسمي، وتقتصر على التلاوات الخاشعة والدروس الدينية المختصرة الموافقة للكتاب والسنة، ولا يُعرض إلا ما راجعه مختص.';
+
+  @override
+  String get reelsOpen => 'افتح على يوتيوب';
+
+  @override
+  String get reelsPending => 'لم تتم مراجعة هذا المقطع شرعياً بعد — يظهر لك لأن وضع المراجعة مفعّل';
+
+  @override
+  String reelsPosition(String n, String total) {
+    return 'المقطع $n من $total';
+  }
+
+  @override
+  String get reelsPrev => 'المقطع السابق';
+
+  @override
+  String reelsReviewedBy(String name) {
+    return 'راجعه: $name';
+  }
+
+  @override
+  String get reelsReviewerHint => 'لعرض المقاطع التي لم تُراجع بعد';
+
+  @override
+  String get reelsReviewerMode => 'وضع المراجعة';
+
+  @override
+  String get reelsSub => 'مقاطع قصيرة مراجَعة';
+
+  @override
+  String get reelsTitle => 'ريلز إسلامية';
+
+  @override
   String get settingsAbout => 'عن التطبيق';
 
   @override

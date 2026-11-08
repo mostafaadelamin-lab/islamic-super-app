@@ -8,6 +8,7 @@ import '../domain/hajj.dart';
 import '../domain/mushaf_layout.dart';
 import '../domain/prayer.dart';
 import '../domain/quran.dart';
+import '../domain/reels.dart';
 import '../domain/search.dart';
 import '../domain/text.dart';
 
@@ -47,7 +48,7 @@ class City {
 }
 
 /// Everything the app bundles: Quran, pages, 15-line layout, prayer config,
-/// cities, maps, reciters, adhkar, Hisn al-Muslim and the Hajj guide.
+/// cities, maps, reciters, adhkar, Hisn al-Muslim, the Hajj guide and the reels list.
 class AppContent {
   AppContent({
     required this.quran,
@@ -61,6 +62,7 @@ class AppContent {
     required this.renderMap,
     required this.normalizer,
     required this.versions,
+    this.reels = ReelCatalog.empty,
   }) : search = QuranSearch(quran, normalizer);
 
   static const quranAsset = 'assets/content/quran.v1.json';
@@ -72,6 +74,7 @@ class AppContent {
   static const hajjAsset = 'assets/content/hajj.v1.json';
   static const recitersAsset = 'assets/schemas/reciters.json';
   static const versionsAsset = 'assets/content/VERSIONS.json';
+  static const reelsAsset = 'assets/content/reels.v1.json';
   static const methodsAsset = 'assets/schemas/methods.json';
   static const citiesAsset = 'assets/schemas/cities.json';
   static const renderAsset = 'assets/schemas/quran-render.json';
@@ -88,6 +91,9 @@ class AppContent {
   final QuranRenderMap renderMap;
   final SearchNormalizer normalizer;
   final Map<String, dynamic> versions;
+
+  /// Curated YouTube reels (approved + pending; screens filter by review status).
+  final ReelCatalog reels;
   final QuranSearch search;
 
   PrayerCalculator get calculator => PrayerCalculator(prayerConfig);
@@ -122,6 +128,7 @@ class AppContent {
       renderMap: QuranRenderMap.fromJson(await j(renderAsset)),
       normalizer: SearchNormalizer.fromJson(await j(normalizationAsset)),
       versions: await j(versionsAsset),
+      reels: ReelCatalog.fromJson(await j(reelsAsset)),
     );
   }
 }

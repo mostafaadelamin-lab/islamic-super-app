@@ -35,6 +35,7 @@ const copies = {
   "packages/shared-schemas/audio/reciters.json": "reciters.json",
   "content/adhkar/dist/adhkar.v1.json": "adhkar.json",
   "content/adhkar/hisn.json": "hisn.json",
+  "content/reels/dist/reels.v1.json": "reels.json",
 };
 for (const [from, to] of Object.entries(copies)) copyFileSync(join(repo, from), join(gen, to));
 

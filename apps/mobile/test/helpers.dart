@@ -176,6 +176,7 @@ AppContent withPolarCity(AppContent c) => AppContent(
   renderMap: c.renderMap,
   normalizer: c.normalizer,
   versions: c.versions,
+  reels: c.reels,
 );
 
 /// Pushes [screen] on the app's navigator (the route future is not awaited:

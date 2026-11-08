@@ -14,5 +14,20 @@
   "settings.language": "اللغة", "settings.theme": "المظهر", "settings.themeSystem": "حسب الجهاز", "settings.themeLight": "فاتح", "settings.themeDark": "داكن",
   "settings.fontSize": "حجم خط المصحف", "settings.about": "عن التطبيق", "settings.free": "التطبيق مجاني بالكامل: بلا إعلانات ولا اشتراكات ولا مشتريات.",
   "settings.sources": "مصادر المحتوى", "bookmarks.empty": "لا توجد علامات بعد",
-  "common.retry": "إعادة المحاولة", "common.offline": "أنت غير متصل — يُعرض المحتوى المحفوظ", "common.error": "حدث خطأ"
+  "common.retry": "إعادة المحاولة", "common.offline": "أنت غير متصل — يُعرض المحتوى المحفوظ", "common.error": "حدث خطأ",
+  "reels.title": "ريلز إسلامية",
+  "reels.sub": "مقاطع قصيرة مراجَعة",
+  "reels.feed": "مقاطع",
+  "reels.empty": "لا توجد مقاطع مراجَعة بعد. تُضاف المقاطع بعد مراجعتها شرعياً.",
+  "reels.pending": "لم تتم مراجعة هذا المقطع شرعياً بعد — يظهر لك لأن وضع المراجعة مفعّل",
+  "reels.reviewedBy": "راجعه: {name}",
+  "reels.position": "المقطع {n} من {total}",
+  "reels.prev": "المقطع السابق",
+  "reels.next": "المقطع التالي",
+  "reels.note": "المقاطع معروضة من يوتيوب بمشغّله الرسمي، وتقتصر على التلاوات الخاشعة والدروس الدينية المختصرة الموافقة للكتاب والسنة، ولا يُعرض إلا ما راجعه مختص.",
+  "reels.reviewerMode": "وضع المراجعة",
+  "reels.reviewerHint": "لعرض المقاطع التي لم تُراجع بعد",
+  "reels.cat.recitation": "تلاوة خاشعة",
+  "reels.open": "افتح على يوتيوب",
+  "reels.cat.lesson": "درس ديني مختصر"
 }

@@ -1148,6 +1148,96 @@ abstract class AppLocalizations {
   /// **'Surahs'**
   String get quranSurahs;
 
+  /// shared key "reels.cat.lesson"
+  ///
+  /// In en, this message translates to:
+  /// **'Short lesson'**
+  String get reelsCatLesson;
+
+  /// shared key "reels.cat.recitation"
+  ///
+  /// In en, this message translates to:
+  /// **'Moving recitation'**
+  String get reelsCatRecitation;
+
+  /// shared key "reels.empty"
+  ///
+  /// In en, this message translates to:
+  /// **'No reviewed reels yet. Reels are added after a religious review.'**
+  String get reelsEmpty;
+
+  /// shared key "reels.feed"
+  ///
+  /// In en, this message translates to:
+  /// **'reels'**
+  String get reelsFeed;
+
+  /// shared key "reels.next"
+  ///
+  /// In en, this message translates to:
+  /// **'Next reel'**
+  String get reelsNext;
+
+  /// shared key "reels.note"
+  ///
+  /// In en, this message translates to:
+  /// **'Reels play from YouTube through its official player. They are limited to moving Quran recitations and short religious lessons in line with the Quran and Sunnah, and only reviewed reels are shown.'**
+  String get reelsNote;
+
+  /// shared key "reels.open"
+  ///
+  /// In en, this message translates to:
+  /// **'Open on YouTube'**
+  String get reelsOpen;
+
+  /// shared key "reels.pending"
+  ///
+  /// In en, this message translates to:
+  /// **'This reel has not been religiously reviewed yet — you see it because reviewer mode is on'**
+  String get reelsPending;
+
+  /// shared key "reels.position"
+  ///
+  /// In en, this message translates to:
+  /// **'Reel {n} of {total}'**
+  String reelsPosition(String n, String total);
+
+  /// shared key "reels.prev"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous reel'**
+  String get reelsPrev;
+
+  /// shared key "reels.reviewedBy"
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewed by {name}'**
+  String reelsReviewedBy(String name);
+
+  /// shared key "reels.reviewerHint"
+  ///
+  /// In en, this message translates to:
+  /// **'show reels that are not reviewed yet'**
+  String get reelsReviewerHint;
+
+  /// shared key "reels.reviewerMode"
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewer mode'**
+  String get reelsReviewerMode;
+
+  /// shared key "reels.sub"
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewed short videos'**
+  String get reelsSub;
+
+  /// shared key "reels.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Islamic reels'**
+  String get reelsTitle;
+
   /// shared key "settings.about"
   ///
   /// In en, this message translates to:

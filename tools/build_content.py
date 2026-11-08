@@ -11,6 +11,7 @@ Outputs (all deterministic, sorted keys, UTF-8):
   content/quran/dist/integrity.v1.json   SHA-256 hashes used by every platform's tests
   content/quran/dist/mushaf-lines.v1.json  15-line Madinah page layout as word ranges of the canonical text
   content/adhkar/dist/adhkar.v1.json     morning/evening adhkar
+  content/reels/dist/reels.v1.json       curated reels that passed validation (see tools/reels.py)
   content/VERSIONS.json                  content version registry
 """
 from __future__ import annotations
@@ -22,6 +23,7 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import mushaf_lines  # noqa: E402
+import reels  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 C = ROOT / "content"
@@ -141,6 +143,9 @@ def main() -> int:
 
     # Independent cross-checks against reference data (not derived from the source).
     problems = list(line_problems)
+    # --- Curated reels (YouTube/Instagram embeds, religious review status) -------
+    _, reel_problems = reels.build()
+    problems += [f"reels: {x}" for x in reel_problems]
     if counts != ref["ayahCounts"]:
         problems.append("ayah counts differ from reference")
     if sum(counts) != 6236 or len(surahs) != 114:

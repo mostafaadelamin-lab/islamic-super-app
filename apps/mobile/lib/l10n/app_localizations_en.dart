@@ -616,6 +616,56 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quranSurahs => 'Surahs';
 
   @override
+  String get reelsCatLesson => 'Short lesson';
+
+  @override
+  String get reelsCatRecitation => 'Moving recitation';
+
+  @override
+  String get reelsEmpty => 'No reviewed reels yet. Reels are added after a religious review.';
+
+  @override
+  String get reelsFeed => 'reels';
+
+  @override
+  String get reelsNext => 'Next reel';
+
+  @override
+  String get reelsNote =>
+      'Reels play from YouTube through its official player. They are limited to moving Quran recitations and short religious lessons in line with the Quran and Sunnah, and only reviewed reels are shown.';
+
+  @override
+  String get reelsOpen => 'Open on YouTube';
+
+  @override
+  String get reelsPending => 'This reel has not been religiously reviewed yet — you see it because reviewer mode is on';
+
+  @override
+  String reelsPosition(String n, String total) {
+    return 'Reel $n of $total';
+  }
+
+  @override
+  String get reelsPrev => 'Previous reel';
+
+  @override
+  String reelsReviewedBy(String name) {
+    return 'Reviewed by $name';
+  }
+
+  @override
+  String get reelsReviewerHint => 'show reels that are not reviewed yet';
+
+  @override
+  String get reelsReviewerMode => 'Reviewer mode';
+
+  @override
+  String get reelsSub => 'Reviewed short videos';
+
+  @override
+  String get reelsTitle => 'Islamic reels';
+
+  @override
   String get settingsAbout => 'About';
 
   @override

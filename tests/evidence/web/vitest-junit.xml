@@ -1,85 +1,85 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="316" failures="0" errors="0" time="10.949710962">
-    <testsuite name="tests/components/navigation.test.tsx" timestamp="2026-11-07T17:48:58.280Z" hostname="vm" tests="8" failures="0" errors="0" skipped="0" time="0.529997429">
-        <testcase classname="tests/components/navigation.test.tsx" name="MainNav &gt; renders all destinations and marks the current one" time="0.139518873">
+<testsuites name="vitest tests" tests="324" failures="0" errors="0" time="7.285346716">
+    <testsuite name="tests/components/navigation.test.tsx" timestamp="2026-11-08T21:49:38.347Z" hostname="vm" tests="8" failures="0" errors="0" skipped="0" time="0.307356075">
+        <testcase classname="tests/components/navigation.test.tsx" name="MainNav &gt; renders all destinations and marks the current one" time="0.117382991">
         </testcase>
-        <testcase classname="tests/components/navigation.test.tsx" name="MainNav &gt; home is current only on the home path" time="0.036886989">
+        <testcase classname="tests/components/navigation.test.tsx" name="MainNav &gt; home is current only on the home path" time="0.020386799">
         </testcase>
-        <testcase classname="tests/components/navigation.test.tsx" name="MainNav &gt; prayer page marks prayer" time="0.022173706">
+        <testcase classname="tests/components/navigation.test.tsx" name="MainNav &gt; prayer page marks prayer" time="0.00763763">
         </testcase>
-        <testcase classname="tests/components/navigation.test.tsx" name="MainNav &gt; sub-sections mark their tab (Mushaf page → Quran, Hisn → Adhkar, Settings → More)" time="0.18705254">
+        <testcase classname="tests/components/navigation.test.tsx" name="MainNav &gt; sub-sections mark their tab (Mushaf page → Quran, Hisn → Adhkar, Settings → More)" time="0.092664538">
         </testcase>
-        <testcase classname="tests/components/navigation.test.tsx" name="LanguageSwitch &gt; links to the same page in the other language and persists the choice" time="0.042233422">
+        <testcase classname="tests/components/navigation.test.tsx" name="LanguageSwitch &gt; links to the same page in the other language and persists the choice" time="0.037500249">
         </testcase>
-        <testcase classname="tests/components/navigation.test.tsx" name="Header/Footer &gt; header has brand, nav and switch" time="0.038905093">
+        <testcase classname="tests/components/navigation.test.tsx" name="Header/Footer &gt; header has brand, nav and switch" time="0.01230413">
         </testcase>
-        <testcase classname="tests/components/navigation.test.tsx" name="Header/Footer &gt; footer states the app is free and links to about" time="0.031112211">
+        <testcase classname="tests/components/navigation.test.tsx" name="Header/Footer &gt; footer states the app is free and links to about" time="0.008659441">
         </testcase>
-        <testcase classname="tests/components/navigation.test.tsx" name="Compass &gt; rotates the needle to the bearing and is labelled" time="0.027572607">
-        </testcase>
-    </testsuite>
-    <testsuite name="tests/components/prayer.test.tsx" timestamp="2026-11-07T17:48:58.287Z" hostname="vm" tests="14" failures="0" errors="0" skipped="0" time="1.613433288">
-        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows today&apos;s six times for the default city (Makkah) and the next prayer" time="0.247093181">
-        </testcase>
-        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; changes city, method and asr, and persists them" time="0.300892677">
-        </testcase>
-        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; manual adjustments: buttons, input, limits and reset" time="0.340945715">
-        </testcase>
-        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows the qibla bearing and compass" time="0.063120126">
-        </testcase>
-        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows the high-latitude note for London in midsummer" time="0.110530232">
-        </testcase>
-        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; use my location: success" time="0.19895273">
-        </testcase>
-        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; use my location: permission denied is reported" time="0.119192139">
-        </testcase>
-        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; use my location: no geolocation API" time="0.048007799">
-        </testcase>
-        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; geoErrorKey" time="0.000814501">
-        </testcase>
-        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows an error for a polar location" time="0.041906868">
-        </testcase>
-        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; countdown ticks every second" time="0.04971037">
-        </testcase>
-        <testcase classname="tests/components/prayer.test.tsx" name="NextPrayerCard &gt; shows next prayer and countdown in Arabic digits" time="0.034346229">
-        </testcase>
-        <testcase classname="tests/components/prayer.test.tsx" name="NextPrayerCard &gt; after Isha: tomorrow&apos;s times are listed with Fajr marked as next" time="0.029056563">
-        </testcase>
-        <testcase classname="tests/components/prayer.test.tsx" name="NextPrayerCard &gt; shows an error for impossible locations" time="0.022346393">
+        <testcase classname="tests/components/navigation.test.tsx" name="Compass &gt; rotates the needle to the bearing and is labelled" time="0.007291391">
         </testcase>
     </testsuite>
-    <testsuite name="tests/components/quran.test.tsx" timestamp="2026-11-07T17:48:58.294Z" hostname="vm" tests="22" failures="0" errors="0" skipped="0" time="4.685027363">
-        <testcase classname="tests/components/quran.test.tsx" name="SurahIndex &gt; lists 114 surahs and filters by name, number and Arabic" time="0.769949137">
+    <testsuite name="tests/components/prayer.test.tsx" timestamp="2026-11-08T21:49:38.351Z" hostname="vm" tests="14" failures="0" errors="0" skipped="0" time="1.016987158">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows today&apos;s six times for the default city (Makkah) and the next prayer" time="0.178673938">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="SurahIndex &gt; filter helper" time="0.009428118">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; changes city, method and asr, and persists them" time="0.209660489">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="SurahIndex &gt; uses Arabic-Indic digits in Arabic" time="0.225224752">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; manual adjustments: buttons, input, limits and reset" time="0.187420592">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="GoToPage &gt; validates and navigates" time="0.134418456">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows the qibla bearing and compass" time="0.037786778">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="AyahMarker &gt; Arabic-Indic for ar, western for en" time="0.009995406">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows the high-latitude note for London in midsummer" time="0.082276173">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="SurahReader &gt; renders every ayah with the display map applied and the canonical text unchanged" time="0.394201638">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; use my location: success" time="0.104479011">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="SurahReader &gt; adds and removes a bookmark" time="0.364282227">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; use my location: permission denied is reported" time="0.0344088">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="SurahReader &gt; loads the English translation when toggled and persists the toggle" time="0.097358489">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; use my location: no geolocation API" time="0.049601801">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="SurahReader &gt; shows a retry button when the translation fails to load" time="0.098347262">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; geoErrorKey" time="0.001775975">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="SurahReader &gt; first and last surahs have only one neighbour link" time="0.038685775">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows an error for a polar location" time="0.023381452">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="SurahReader &gt; records the last-read position from the IntersectionObserver" time="0.437385822">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; countdown ticks every second" time="0.032956608">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="PageReader (15-line Mushaf) &gt; renders the page header, 15 lines, surah bands and saves position" time="0.046155921">
+        <testcase classname="tests/components/prayer.test.tsx" name="NextPrayerCard &gt; shows next prayer and countdown in Arabic digits" time="0.026328525">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="PageReader (15-line Mushaf) &gt; prev/next buttons and arrow keys turn pages (RTL: left = next) but not while typing" time="0.084785615">
+        <testcase classname="tests/components/prayer.test.tsx" name="NextPrayerCard &gt; after Isha: tomorrow&apos;s times are listed with Fajr marked as next" time="0.023039996">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="PageReader (15-line Mushaf) &gt; arrowTarget" time="0.000502904">
+        <testcase classname="tests/components/prayer.test.tsx" name="NextPrayerCard &gt; shows an error for impossible locations" time="0.020738848">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="PageReader (15-line Mushaf) &gt; first page: centred, previous disabled, list-view link" time="0.02966426">
+    </testsuite>
+    <testsuite name="tests/components/quran.test.tsx" timestamp="2026-11-08T21:49:38.356Z" hostname="vm" tests="22" failures="0" errors="0" skipped="0" time="2.860094741">
+        <testcase classname="tests/components/quran.test.tsx" name="SurahIndex &gt; lists 114 surahs and filters by name, number and Arabic" time="0.529618267">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="PageReader (15-line Mushaf) &gt; tapping an ayah selects it; bookmark and close actions" time="0.203124899">
+        <testcase classname="tests/components/quran.test.tsx" name="SurahIndex &gt; filter helper" time="0.002331493">
+        </testcase>
+        <testcase classname="tests/components/quran.test.tsx" name="SurahIndex &gt; uses Arabic-Indic digits in Arabic" time="0.131397901">
+        </testcase>
+        <testcase classname="tests/components/quran.test.tsx" name="GoToPage &gt; validates and navigates" time="0.107616521">
+        </testcase>
+        <testcase classname="tests/components/quran.test.tsx" name="AyahMarker &gt; Arabic-Indic for ar, western for en" time="0.005062173">
+        </testcase>
+        <testcase classname="tests/components/quran.test.tsx" name="SurahReader &gt; renders every ayah with the display map applied and the canonical text unchanged" time="0.194519644">
+        </testcase>
+        <testcase classname="tests/components/quran.test.tsx" name="SurahReader &gt; adds and removes a bookmark" time="0.195672035">
+        </testcase>
+        <testcase classname="tests/components/quran.test.tsx" name="SurahReader &gt; loads the English translation when toggled and persists the toggle" time="0.043139038">
+        </testcase>
+        <testcase classname="tests/components/quran.test.tsx" name="SurahReader &gt; shows a retry button when the translation fails to load" time="0.056093966">
+        </testcase>
+        <testcase classname="tests/components/quran.test.tsx" name="SurahReader &gt; first and last surahs have only one neighbour link" time="0.021700765">
+        </testcase>
+        <testcase classname="tests/components/quran.test.tsx" name="SurahReader &gt; records the last-read position from the IntersectionObserver" time="0.260585821">
+        </testcase>
+        <testcase classname="tests/components/quran.test.tsx" name="PageReader (15-line Mushaf) &gt; renders the page header, 15 lines, surah bands and saves position" time="0.04447619">
+        </testcase>
+        <testcase classname="tests/components/quran.test.tsx" name="PageReader (15-line Mushaf) &gt; prev/next buttons and arrow keys turn pages (RTL: left = next) but not while typing" time="0.062551739">
+        </testcase>
+        <testcase classname="tests/components/quran.test.tsx" name="PageReader (15-line Mushaf) &gt; arrowTarget" time="0.000447874">
+        </testcase>
+        <testcase classname="tests/components/quran.test.tsx" name="PageReader (15-line Mushaf) &gt; first page: centred, previous disabled, list-view link" time="0.020402249">
+        </testcase>
+        <testcase classname="tests/components/quran.test.tsx" name="PageReader (15-line Mushaf) &gt; tapping an ayah selects it; bookmark and close actions" time="0.121841188">
             <system-err>
 An update to TafsirPanel inside a test was not wrapped in act(...).
 
@@ -94,69 +94,79 @@ This ensures that you&apos;re testing the behavior the user would see in the bro
 
             </system-err>
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="SearchView &gt; searches diacritic-insensitively and links to ayahs" time="1.033246965">
+        <testcase classname="tests/components/quran.test.tsx" name="SearchView &gt; searches diacritic-insensitively and links to ayahs" time="0.851817923">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="SearchView &gt; shows how many results are displayed when there are many" time="0.589032946">
+        <testcase classname="tests/components/quran.test.tsx" name="SearchView &gt; shows how many results are displayed when there are many" time="0.162232091">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="SearchView &gt; reports load errors with retry" time="0.050667964">
+        <testcase classname="tests/components/quran.test.tsx" name="SearchView &gt; reports load errors with retry" time="0.021150562">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="BookmarksView and ContinueReading &gt; empty state" time="0.005897456">
+        <testcase classname="tests/components/quran.test.tsx" name="BookmarksView and ContinueReading &gt; empty state" time="0.001689025">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="BookmarksView and ContinueReading &gt; lists and removes bookmarks" time="0.032158766">
+        <testcase classname="tests/components/quran.test.tsx" name="BookmarksView and ContinueReading &gt; lists and removes bookmarks" time="0.016461922">
         </testcase>
-        <testcase classname="tests/components/quran.test.tsx" name="BookmarksView and ContinueReading &gt; continue reading shows last position or a hint" time="0.024893444">
-        </testcase>
-    </testsuite>
-    <testsuite name="tests/components/settings.test.tsx" timestamp="2026-11-07T17:48:58.301Z" hostname="vm" tests="17" failures="0" errors="0" skipped="0" time="1.476073942">
-        <testcase classname="tests/components/settings.test.tsx" name="DisplaySettings &gt; switches language" time="0.167539865">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="DisplaySettings &gt; theme radio buttons persist and apply" time="0.10304826">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="DisplaySettings &gt; font size buttons and slider are clamped to 18–40" time="0.092181895">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="DisplaySettings &gt; translation checkbox persists" time="0.037587923">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="DisplaySettings &gt; preview uses the display map" time="0.00817291">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="ClientEffects / RootRedirect &gt; remembers the current locale" time="0.001784511">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="ClientEffects / RootRedirect &gt; applyPrefs" time="0.000821754">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="ClientEffects / RootRedirect &gt; redirects to the saved locale" time="0.001940031">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="ClientEffects / RootRedirect &gt; redirects to Arabic by default" time="0.00143228">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="AccountSync &gt; validates input before calling the server" time="0.181473588">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="AccountSync &gt; registers, signs in, syncs and signs out" time="0.266518768">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="AccountSync &gt; shows server errors (409, 401) and network/CORS errors visibly" time="0.274775942">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="AccountSync &gt; offline sync is reported; an expired token signs the user out" time="0.050245145">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="AccountSync &gt; saves a valid API URL and rejects an invalid one" time="0.256041044">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="AccountSync &gt; errorMessage covers every kind" time="0.00131017">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="OfflineStatus &gt; reports unsupported browsers" time="0.009875667">
-        </testcase>
-        <testcase classname="tests/components/settings.test.tsx" name="OfflineStatus &gt; shows progress and completion from the service worker" time="0.013557549">
+        <testcase classname="tests/components/quran.test.tsx" name="BookmarksView and ContinueReading &gt; continue reading shows last position or a hint" time="0.005059474">
         </testcase>
     </testsuite>
-    <testsuite name="tests/components/tafsir.test.tsx" timestamp="2026-11-07T17:48:58.304Z" hostname="vm" tests="8" failures="0" errors="0" skipped="0" time="1.072841907">
-        <testcase classname="tests/components/tafsir.test.tsx" name="TafsirPanel &gt; Arabic: title, source, the stored text verbatim, previous/next across surahs" time="0.246847832">
+    <testsuite name="tests/components/reels.test.tsx" timestamp="2026-11-08T21:49:38.365Z" hostname="vm" tests="4" failures="0" errors="0" skipped="0" time="0.202991613">
+        <testcase classname="tests/components/reels.test.tsx" name="ReelsFeed &gt; shows an empty state when nothing is reviewed" time="0.029563198">
         </testcase>
-        <testcase classname="tests/components/tafsir.test.tsx" name="TafsirPanel &gt; English: Arabic-only note; the text stays Arabic (lang/dir); bounds disable the buttons" time="0.021974516">
+        <testcase classname="tests/components/reels.test.tsx" name="ReelsFeed &gt; plays only the reel in view, through the official embed" time="0.085821324">
         </testcase>
-        <testcase classname="tests/components/tafsir.test.tsx" name="TafsirPanel &gt; offline: explains that the tafsir is not saved yet, and retries" time="0.05445326">
+        <testcase classname="tests/components/reels.test.tsx" name="ReelsFeed &gt; reviewer mode reveals pending reels with a warning banner" time="0.044437206">
         </testcase>
-        <testcase classname="tests/components/tafsir.test.tsx" name="TafsirPanel &gt; controlled: previous/next call onStep instead of moving on their own" time="0.062109883">
+        <testcase classname="tests/components/reels.test.tsx" name="ReelsFeed &gt; arrow keys move between reels" time="0.039060379">
         </testcase>
-        <testcase classname="tests/components/tafsir.test.tsx" name="tafsir in the readers &gt; Mushaf: selecting an ayah shows its tafsir; next moves the selection and turns the page" time="0.208203545">
+    </testsuite>
+    <testsuite name="tests/components/settings.test.tsx" timestamp="2026-11-08T21:49:38.366Z" hostname="vm" tests="17" failures="0" errors="0" skipped="0" time="1.151484665">
+        <testcase classname="tests/components/settings.test.tsx" name="DisplaySettings &gt; switches language" time="0.148404953">
         </testcase>
-        <testcase classname="tests/components/tafsir.test.tsx" name="tafsir in the readers &gt; list view: a Tafsir button per ayah opens the panel under it" time="0.065053233">
+        <testcase classname="tests/components/settings.test.tsx" name="DisplaySettings &gt; theme radio buttons persist and apply" time="0.089924898">
         </testcase>
-        <testcase classname="tests/components/tafsir.test.tsx" name="tafsir with recitation &gt; off by default: recitation shows no tafsir" time="0.048219152">
+        <testcase classname="tests/components/settings.test.tsx" name="DisplaySettings &gt; font size buttons and slider are clamped to 18–40" time="0.064494065">
+        </testcase>
+        <testcase classname="tests/components/settings.test.tsx" name="DisplaySettings &gt; translation checkbox persists" time="0.033654512">
+        </testcase>
+        <testcase classname="tests/components/settings.test.tsx" name="DisplaySettings &gt; preview uses the display map" time="0.010707719">
+        </testcase>
+        <testcase classname="tests/components/settings.test.tsx" name="ClientEffects / RootRedirect &gt; remembers the current locale" time="0.002889858">
+        </testcase>
+        <testcase classname="tests/components/settings.test.tsx" name="ClientEffects / RootRedirect &gt; applyPrefs" time="0.001624706">
+        </testcase>
+        <testcase classname="tests/components/settings.test.tsx" name="ClientEffects / RootRedirect &gt; redirects to the saved locale" time="0.002864594">
+        </testcase>
+        <testcase classname="tests/components/settings.test.tsx" name="ClientEffects / RootRedirect &gt; redirects to Arabic by default" time="0.001789556">
+        </testcase>
+        <testcase classname="tests/components/settings.test.tsx" name="AccountSync &gt; validates input before calling the server" time="0.164069536">
+        </testcase>
+        <testcase classname="tests/components/settings.test.tsx" name="AccountSync &gt; registers, signs in, syncs and signs out" time="0.206949319">
+        </testcase>
+        <testcase classname="tests/components/settings.test.tsx" name="AccountSync &gt; shows server errors (409, 401) and network/CORS errors visibly" time="0.163751304">
+        </testcase>
+        <testcase classname="tests/components/settings.test.tsx" name="AccountSync &gt; offline sync is reported; an expired token signs the user out" time="0.041374935">
+        </testcase>
+        <testcase classname="tests/components/settings.test.tsx" name="AccountSync &gt; saves a valid API URL and rejects an invalid one" time="0.203230362">
+        </testcase>
+        <testcase classname="tests/components/settings.test.tsx" name="AccountSync &gt; errorMessage covers every kind" time="0.00052792">
+        </testcase>
+        <testcase classname="tests/components/settings.test.tsx" name="OfflineStatus &gt; reports unsupported browsers" time="0.002930741">
+        </testcase>
+        <testcase classname="tests/components/settings.test.tsx" name="OfflineStatus &gt; shows progress and completion from the service worker" time="0.006512195">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/components/tafsir.test.tsx" timestamp="2026-11-08T21:49:38.372Z" hostname="vm" tests="8" failures="0" errors="0" skipped="0" time="0.676491865">
+        <testcase classname="tests/components/tafsir.test.tsx" name="TafsirPanel &gt; Arabic: title, source, the stored text verbatim, previous/next across surahs" time="0.15719513">
+        </testcase>
+        <testcase classname="tests/components/tafsir.test.tsx" name="TafsirPanel &gt; English: Arabic-only note; the text stays Arabic (lang/dir); bounds disable the buttons" time="0.011589051">
+        </testcase>
+        <testcase classname="tests/components/tafsir.test.tsx" name="TafsirPanel &gt; offline: explains that the tafsir is not saved yet, and retries" time="0.037414873">
+        </testcase>
+        <testcase classname="tests/components/tafsir.test.tsx" name="TafsirPanel &gt; controlled: previous/next call onStep instead of moving on their own" time="0.042010438">
+        </testcase>
+        <testcase classname="tests/components/tafsir.test.tsx" name="tafsir in the readers &gt; Mushaf: selecting an ayah shows its tafsir; next moves the selection and turns the page" time="0.14737402">
+        </testcase>
+        <testcase classname="tests/components/tafsir.test.tsx" name="tafsir in the readers &gt; list view: a Tafsir button per ayah opens the panel under it" time="0.056421494">
+        </testcase>
+        <testcase classname="tests/components/tafsir.test.tsx" name="tafsir with recitation &gt; off by default: recitation shows no tafsir" time="0.035033269">
             <system-err>
 An update to PageReader inside a test was not wrapped in act(...).
 
@@ -181,521 +191,531 @@ This ensures that you&apos;re testing the behavior the user would see in the bro
 
             </system-err>
         </testcase>
-        <testcase classname="tests/components/tafsir.test.tsx" name="tafsir with recitation &gt; on: follows the recited ayah (none for the basmala); a selection takes precedence; can be turned off" time="0.360896956">
+        <testcase classname="tests/components/tafsir.test.tsx" name="tafsir with recitation &gt; on: follows the recited ayah (none for the basmala); a selection takes precedence; can be turned off" time="0.185995934">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/audio.test.ts" timestamp="2026-11-07T17:48:58.307Z" hostname="vm" tests="13" failures="0" errors="0" skipped="0" time="0.029931778">
-        <testcase classname="tests/unit/audio.test.ts" name="reciters and URLs &gt; uses the shared reciters list and default" time="0.006745653">
+    <testsuite name="tests/unit/audio.test.ts" timestamp="2026-11-08T21:49:38.374Z" hostname="vm" tests="13" failures="0" errors="0" skipped="0" time="0.013279019">
+        <testcase classname="tests/unit/audio.test.ts" name="reciters and URLs &gt; uses the shared reciters list and default" time="0.002768244">
         </testcase>
-        <testcase classname="tests/unit/audio.test.ts" name="reciters and URLs &gt; builds everyayah per-ayah URLs with 3-digit padding" time="0.001042202">
+        <testcase classname="tests/unit/audio.test.ts" name="reciters and URLs &gt; builds everyayah per-ayah URLs with 3-digit padding" time="0.000650784">
         </testcase>
-        <testcase classname="tests/unit/audio.test.ts" name="reciters and URLs &gt; rejects unknown reciters and ayahs" time="0.00105867">
+        <testcase classname="tests/unit/audio.test.ts" name="reciters and URLs &gt; rejects unknown reciters and ayahs" time="0.000785746">
         </testcase>
-        <testcase classname="tests/unit/audio.test.ts" name="queue and the basmala rule &gt; basmala before ayah 1 of every surah except al-Fatihah (1) and at-Tawbah (9)" time="0.001333792">
+        <testcase classname="tests/unit/audio.test.ts" name="queue and the basmala rule &gt; basmala before ayah 1 of every surah except al-Fatihah (1) and at-Tawbah (9)" time="0.000590073">
         </testcase>
-        <testcase classname="tests/unit/audio.test.ts" name="queue and the basmala rule &gt; surah scope" time="0.001609879">
+        <testcase classname="tests/unit/audio.test.ts" name="queue and the basmala rule &gt; surah scope" time="0.000782433">
         </testcase>
-        <testcase classname="tests/unit/audio.test.ts" name="queue and the basmala rule &gt; page scope (with the basmala of surahs that start on the page)" time="0.001095005">
+        <testcase classname="tests/unit/audio.test.ts" name="queue and the basmala rule &gt; page scope (with the basmala of surahs that start on the page)" time="0.000502654">
         </testcase>
-        <testcase classname="tests/unit/audio.test.ts" name="queue and the basmala rule &gt; from-ayah scope continues to the end of the surah" time="0.001099366">
+        <testcase classname="tests/unit/audio.test.ts" name="queue and the basmala rule &gt; from-ayah scope continues to the end of the surah" time="0.000277938">
         </testcase>
-        <testcase classname="tests/unit/audio.test.ts" name="queue and the basmala rule &gt; item URLs: the basmala plays 001001 with the chosen reciter; pages follow the item" time="0.001095599">
+        <testcase classname="tests/unit/audio.test.ts" name="queue and the basmala rule &gt; item URLs: the basmala plays 001001 with the chosen reciter; pages follow the item" time="0.000531839">
         </testcase>
-        <testcase classname="tests/unit/audio.test.ts" name="playback cursor &gt; advances, never repeats the basmala, repeats ayahs `repeat` times, ends at the last item" time="0.001504536">
+        <testcase classname="tests/unit/audio.test.ts" name="playback cursor &gt; advances, never repeats the basmala, repeats ayahs `repeat` times, ends at the last item" time="0.000758811">
         </testcase>
-        <testcase classname="tests/unit/audio.test.ts" name="playback cursor &gt; next/previous ayah skip the basmala" time="0.00110188">
+        <testcase classname="tests/unit/audio.test.ts" name="playback cursor &gt; next/previous ayah skip the basmala" time="0.000480011">
         </testcase>
-        <testcase classname="tests/unit/audio.test.ts" name="audio settings &gt; sanitizes stored values" time="0.003308359">
+        <testcase classname="tests/unit/audio.test.ts" name="audio settings &gt; sanitizes stored values" time="0.001023747">
         </testcase>
-        <testcase classname="tests/unit/audio.test.ts" name="audio settings &gt; persists the chosen reciter" time="0.001560526">
+        <testcase classname="tests/unit/audio.test.ts" name="audio settings &gt; persists the chosen reciter" time="0.000519563">
         </testcase>
-        <testcase classname="tests/unit/audio.test.ts" name="audio settings &gt; persists &apos;tafsir with recitation&apos; (default off)" time="0.000918645">
-        </testcase>
-    </testsuite>
-    <testsuite name="tests/unit/mushaf.test.ts" timestamp="2026-11-07T17:48:58.311Z" hostname="vm" tests="13" failures="0" errors="0" skipped="0" time="0.906980133">
-        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; has 604 pages: pages 1–2 with 8 lines, every other page with 15" time="0.042436182">
-        </testcase>
-        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; every ayah is rebuilt exactly from its segments — only canonical words, in order, nothing else" time="0.195196482">
-        </testcase>
-        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; each rendered segment is the display map applied to canonical words w0..w1, and nothing else" time="0.451538002">
-        </testcase>
-        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; applies the display glyph map only to the rendered string (open tanween)" time="0.000793056">
-        </testcase>
-        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; ayah-end markers: exactly one per ayah, on its last segment" time="0.123909794">
-        </testcase>
-        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; basmala lines show al-Fatihah 1:1 (display-mapped) and precede ayah 1 of every surah but 1 and 9" time="0.011459675">
-        </testcase>
-        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; the ayahs on each page match the Madinah page boundaries (pages.v1.json)" time="0.073022749">
-        </testcase>
-        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; rejects word ranges outside the ayah and unknown ayahs" time="0.001455609">
-        </testcase>
-        <testcase classname="tests/unit/mushaf.test.ts" name="page turning &gt; RTL (Arabic): swiping right turns forward, left goes back" time="0.000466191">
-        </testcase>
-        <testcase classname="tests/unit/mushaf.test.ts" name="page turning &gt; LTR (English): swiping left turns forward" time="0.000230146">
-        </testcase>
-        <testcase classname="tests/unit/mushaf.test.ts" name="page turning &gt; short drags snap back unless they are a fast fling" time="0.000267605">
-        </testcase>
-        <testcase classname="tests/unit/mushaf.test.ts" name="page turning &gt; stays within 1..604" time="0.000364144">
-        </testcase>
-        <testcase classname="tests/unit/mushaf.test.ts" name="page turning &gt; clampPage and fitFontSize" time="0.000521505">
+        <testcase classname="tests/unit/audio.test.ts" name="audio settings &gt; persists &apos;tafsir with recitation&apos; (default off)" time="0.000308442">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/player.test.ts" timestamp="2026-11-07T17:48:58.317Z" hostname="vm" tests="5" failures="0" errors="0" skipped="0" time="0.036041362">
-        <testcase classname="tests/unit/player.test.ts" name="recitation player &gt; plays the basmala then the ayahs, advancing on &apos;ended&apos;, and stops at the end" time="0.014476425">
+    <testsuite name="tests/unit/mushaf.test.ts" timestamp="2026-11-08T21:49:38.378Z" hostname="vm" tests="13" failures="0" errors="0" skipped="0" time="0.59196071">
+        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; has 604 pages: pages 1–2 with 8 lines, every other page with 15" time="0.02418462">
         </testcase>
-        <testcase classname="tests/unit/player.test.ts" name="recitation player &gt; repeats each ayah and uses the saved reciter" time="0.002106982">
+        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; every ayah is rebuilt exactly from its segments — only canonical words, in order, nothing else" time="0.185893317">
         </testcase>
-        <testcase classname="tests/unit/player.test.ts" name="recitation player &gt; next/previous ayah, pause/resume and stop" time="0.002892882">
+        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; each rendered segment is the display map applied to canonical words w0..w1, and nothing else" time="0.271262149">
         </testcase>
-        <testcase classname="tests/unit/player.test.ts" name="recitation player &gt; ignores &apos;ended&apos; that is not the end of the current item (paused, stopped, stale source)" time="0.00254871">
+        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; applies the display glyph map only to the rendered string (open tanween)" time="0.000707728">
         </testcase>
-        <testcase classname="tests/unit/player.test.ts" name="recitation player &gt; reports network errors and offline state clearly" time="0.005831214">
+        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; ayah-end markers: exactly one per ayah, on its last segment" time="0.068930693">
+        </testcase>
+        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; basmala lines show al-Fatihah 1:1 (display-mapped) and precede ayah 1 of every surah but 1 and 9" time="0.004466235">
+        </testcase>
+        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; the ayahs on each page match the Madinah page boundaries (pages.v1.json)" time="0.030542677">
+        </testcase>
+        <testcase classname="tests/unit/mushaf.test.ts" name="Mushaf line layout (15-line Madinah) &gt; rejects word ranges outside the ayah and unknown ayahs" time="0.000621473">
+        </testcase>
+        <testcase classname="tests/unit/mushaf.test.ts" name="page turning &gt; RTL (Arabic): swiping right turns forward, left goes back" time="0.000676889">
+        </testcase>
+        <testcase classname="tests/unit/mushaf.test.ts" name="page turning &gt; LTR (English): swiping left turns forward" time="0.000355917">
+        </testcase>
+        <testcase classname="tests/unit/mushaf.test.ts" name="page turning &gt; short drags snap back unless they are a fast fling" time="0.000281231">
+        </testcase>
+        <testcase classname="tests/unit/mushaf.test.ts" name="page turning &gt; stays within 1..604" time="0.000129242">
+        </testcase>
+        <testcase classname="tests/unit/mushaf.test.ts" name="page turning &gt; clampPage and fitFontSize" time="0.000239169">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/prayer.test.ts" timestamp="2026-11-07T17:48:58.320Z" hostname="vm" tests="114" failures="0" errors="0" skipped="0" time="0.133676986">
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; has 38 cases and the shared tolerance" time="0.007105952">
+    <testsuite name="tests/unit/player.test.ts" timestamp="2026-11-08T21:49:38.382Z" hostname="vm" tests="5" failures="0" errors="0" skipped="0" time="0.031170051">
+        <testcase classname="tests/unit/player.test.ts" name="recitation player &gt; plays the basmala then the ayahs, advancing on &apos;ended&apos;, and stops at the end" time="0.008518619">
         </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Cairo-2026-01-15-egypt-standard" time="0.018806968">
+        <testcase classname="tests/unit/player.test.ts" name="recitation player &gt; repeats each ayah and uses the saved reciter" time="0.00776945">
         </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Cairo-2026-04-30-egypt-standard" time="0.002038945">
+        <testcase classname="tests/unit/player.test.ts" name="recitation player &gt; next/previous ayah, pause/resume and stop" time="0.001838325">
         </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Cairo-2026-07-01-egypt-standard" time="0.001807706">
+        <testcase classname="tests/unit/player.test.ts" name="recitation player &gt; ignores &apos;ended&apos; that is not the end of the current item (paused, stopped, stale source)" time="0.005229573">
         </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Cairo-2026-10-29-egypt-standard" time="0.001905284">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Cairo-2026-10-30-egypt-standard" time="0.001352638">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Makkah-2026-03-20-makkah-standard" time="0.001953973">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Makkah-2026-06-21-makkah-standard" time="0.001457459">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Makkah-2026-12-21-makkah-standard" time="0.006717235">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Riyadh-2026-09-01-makkah-standard" time="0.001822041">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Dubai-2026-05-10-dubai-standard" time="0.001336498">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Doha-2026-08-15-qatar-standard" time="0.00247871">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Kuwait-2026-02-01-kuwait-standard" time="0.001324186">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Karachi-2026-11-06-karachi-standard" time="0.001263328">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Karachi-2026-11-06-karachi-hanafi" time="0.00118434">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Istanbul-2026-06-01-mwl-standard" time="0.001244906">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Istanbul-2026-06-01-mwl-hanafi" time="0.001587115">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Jakarta-2026-03-01-mwl-standard" time="0.002250226">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Nairobi-2026-07-20-mwl-standard" time="0.001354808">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Johannesburg-2026-06-21-mwl-standard" time="0.0012524">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Sydney-2026-04-04-mwl-standard" time="0.003208341">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Sydney-2026-04-05-mwl-standard" time="0.001549927">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Sydney-2026-10-04-mwl-standard" time="0.001131694">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; London-2026-03-28-mwl-standard" time="0.000888206">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; London-2026-03-29-mwl-standard" time="0.000898693">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; London-2026-06-21-mwl-standard" time="0.001135971">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; London-2026-10-25-mwl-standard" time="0.001267373">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; London-2026-12-21-mwl-standard" time="0.001370915">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Paris-2026-09-10-france-standard" time="0.001408391">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; NewYork-2026-03-07-isna-standard" time="0.001314661">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; NewYork-2026-03-08-isna-standard" time="0.001228313">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; NewYork-2026-11-01-isna-standard" time="0.001277938">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; NewYork-2026-12-25-isna-standard" time="0.001178453">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Toronto-2026-07-04-isna-standard" time="0.002573949">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Oslo-2026-06-21-mwl-standard" time="0.000916425">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Oslo-2026-12-21-mwl-standard" time="0.001134521">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Reykjavik-2026-06-21-mwl-standard" time="0.003541807">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Reykjavik-2026-12-21-mwl-standard" time="0.001002525">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Stockholm-2026-05-20-isna-standard" time="0.001033131">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Cairo within 0.5°" time="0.000473422">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Giza within 0.5°" time="0.000327719">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Alexandria within 0.5°" time="0.00014037">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Luxor within 0.5°" time="0.000144618">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Aswan within 0.5°" time="0.000132231">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Makkah within 0.5°" time="0.000120153">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Madinah within 0.5°" time="0.000128455">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Riyadh within 0.5°" time="0.000175653">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Jeddah within 0.5°" time="0.000135584">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Dammam within 0.5°" time="0.000125471">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Dubai within 0.5°" time="0.000126272">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Abu Dhabi within 0.5°" time="0.000122138">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Doha within 0.5°" time="0.000125271">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Kuwait City within 0.5°" time="0.000128158">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Manama within 0.5°" time="0.000185317">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Muscat within 0.5°" time="0.000129785">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Amman within 0.5°" time="0.000121104">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Jerusalem within 0.5°" time="0.000113659">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Gaza within 0.5°" time="0.000126563">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Beirut within 0.5°" time="0.000125628">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Damascus within 0.5°" time="0.000123513">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Baghdad within 0.5°" time="0.000210789">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Khartoum within 0.5°" time="0.000157902">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Tripoli within 0.5°" time="0.00011911">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Tunis within 0.5°" time="0.000138406">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Algiers within 0.5°" time="0.000124482">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Rabat within 0.5°" time="0.000120848">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Casablanca within 0.5°" time="0.00012718">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Sanaa within 0.5°" time="0.000148776">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Istanbul within 0.5°" time="0.000119563">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Karachi within 0.5°" time="0.000113009">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Kuala Lumpur within 0.5°" time="0.000119983">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Jakarta within 0.5°" time="0.002574194">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; London within 0.5°" time="0.000270944">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Paris within 0.5°" time="0.000189517">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Berlin within 0.5°" time="0.000153462">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; New York within 0.5°" time="0.00021038">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Toronto within 0.5°" time="0.000164909">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Sydney within 0.5°" time="0.000164853">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; matches published values for New York and London" time="0.0003908">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; is within [0, 360)" time="0.000376076">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; rejects invalid coordinates" time="0.000553764">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="DST and time zones &gt; London Dhuhr moves by one hour across the March 2026 DST change" time="0.000903303">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="DST and time zones &gt; New York local date/time across the November DST end" time="0.001118099">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="DST and time zones &gt; localDateInTz uses the zone&apos;s calendar date" time="0.001848325">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="DST and time zones &gt; formatHHMM uses 24h clock" time="0.00059087">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="DST and time zones &gt; validates time zones" time="0.000806125">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="DST and time zones &gt; date helpers" time="0.000568532">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; latitude 90 throws InvalidInput" time="0.000302942">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; latitude -90 throws InvalidInput" time="0.000203235">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; longitude 181 throws InvalidInput" time="0.000171214">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; NaN latitude throws InvalidInput" time="0.000179335">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; unknown method throws InvalidInput" time="0.000181633">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; prototype method name throws InvalidInput" time="0.000225685">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; bad asr throws InvalidInput" time="0.000181291">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; bad asr factor throws InvalidInput" time="0.000202594">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; Feb 30 throws InvalidInput" time="0.000186791">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; month 13 throws InvalidInput" time="0.000172845">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; fractional day throws InvalidInput" time="0.000236362">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; polar night (Tromsø, December) throws InvalidInput" time="0.000236895">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; polar day (Tromsø, June) throws InvalidInput" time="0.000236856">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; applies the high-latitude rule in Oslo in June and reports it" time="0.000380011">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; no adjustment needed in Makkah" time="0.000312222">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; ishaMinutes methods put Isha 90 minutes after Maghrib" time="0.00032691">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; hanafi Asr is later than standard" time="0.000482362">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; manual adjustments shift times by whole minutes" time="0.000421253">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; times are whole minutes" time="0.000435716">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; all methods from methods.json compute" time="0.003517397">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; pyRound matches Python round-half-even" time="0.000286953">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; julianDay and fix" time="0.000248238">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; clampAdjustment" time="0.000254561">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="next prayer &gt; returns the next obligatory prayer of the day (skips sunrise)" time="0.00132501">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="next prayer &gt; rolls over to tomorrow&apos;s Fajr after Isha" time="0.001570809">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="cities &gt; every city has a known method and valid tz" time="0.007451784">
-        </testcase>
-        <testcase classname="tests/unit/prayer.test.ts" name="cities &gt; resolveLocation uses city defaults, overrides and custom locations" time="0.001504934">
+        <testcase classname="tests/unit/player.test.ts" name="recitation player &gt; reports network errors and offline state clearly" time="0.00423518">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/quran.test.ts" timestamp="2026-11-07T17:48:58.355Z" hostname="vm" tests="25" failures="0" errors="0" skipped="0" time="0.081029421">
-        <testcase classname="tests/unit/quran.test.ts" name="Quran integrity &gt; has 114 surahs and 6236 ayahs" time="0.003677583">
+    <testsuite name="tests/unit/prayer.test.ts" timestamp="2026-11-08T21:49:38.383Z" hostname="vm" tests="114" failures="0" errors="0" skipped="0" time="0.099933849">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; has 38 cases and the shared tolerance" time="0.002106072">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Quran integrity &gt; ayah counts match the independent reference" time="0.002207843">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Cairo-2026-01-15-egypt-standard" time="0.015585031">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Quran integrity &gt; allAyahsSha256 matches" time="0.008993886">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Cairo-2026-04-30-egypt-standard" time="0.002473431">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Quran integrity &gt; every surahSha256 matches" time="0.00890346">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Cairo-2026-07-01-egypt-standard" time="0.001916824">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Quran integrity &gt; surah metadata used by the web app mirrors the content file" time="0.005543739">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Cairo-2026-10-29-egypt-standard" time="0.001732583">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; has 604 pages and 30 juz" time="0.00069381">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Cairo-2026-10-30-egypt-standard" time="0.001474807">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; pages are contiguous and cover all 6236 ayahs exactly once" time="0.03210814">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Makkah-2026-03-20-makkah-standard" time="0.001464959">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; spot check page 1" time="0.00304712">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Makkah-2026-06-21-makkah-standard" time="0.001494366">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; spot check page 2" time="0.000383986">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Makkah-2026-12-21-makkah-standard" time="0.001845176">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; spot check page 3" time="0.000265922">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Riyadh-2026-09-01-makkah-standard" time="0.001723824">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; spot check page 50" time="0.000200977">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Dubai-2026-05-10-dubai-standard" time="0.001416668">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; spot check page 604" time="0.000200371">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Doha-2026-08-15-qatar-standard" time="0.001092402">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; pageForAyah finds the page for every ayah" time="0.001062843">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Kuwait-2026-02-01-kuwait-standard" time="0.001484872">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; juzForPage" time="0.000471908">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Karachi-2026-11-06-karachi-standard" time="0.001153439">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; validates pages and ayahs" time="0.005022647">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Karachi-2026-11-06-karachi-hanafi" time="0.001106856">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;1&quot;) = 1" time="0.000398237">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Istanbul-2026-06-01-mwl-standard" time="0.001224845">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot; 604 &quot;) = 604" time="0.000208216">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Istanbul-2026-06-01-mwl-hanafi" time="0.000843117">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;٣٠٠&quot;) = 300" time="0.0002986">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Jakarta-2026-03-01-mwl-standard" time="0.003224785">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;0&quot;) = null" time="0.000161574">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Nairobi-2026-07-20-mwl-standard" time="0.000896195">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;605&quot;) = null" time="0.000141664">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Johannesburg-2026-06-21-mwl-standard" time="0.000790593">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;-1&quot;) = null" time="0.00015351">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Sydney-2026-04-04-mwl-standard" time="0.001231634">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;1.5&quot;) = null" time="0.000138972">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Sydney-2026-04-05-mwl-standard" time="0.001349744">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;abc&quot;) = null" time="0.000115132">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Sydney-2026-10-04-mwl-standard" time="0.001096944">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;&quot;) = null" time="0.000143598">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; London-2026-03-28-mwl-standard" time="0.005654526">
         </testcase>
-        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;1e2&quot;) = null" time="0.000166141">
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; London-2026-03-29-mwl-standard" time="0.00112295">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; London-2026-06-21-mwl-standard" time="0.000991856">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; London-2026-10-25-mwl-standard" time="0.001037266">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; London-2026-12-21-mwl-standard" time="0.00093395">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Paris-2026-09-10-france-standard" time="0.00097843">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; NewYork-2026-03-07-isna-standard" time="0.00099658">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; NewYork-2026-03-08-isna-standard" time="0.000810345">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; NewYork-2026-11-01-isna-standard" time="0.000778654">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; NewYork-2026-12-25-isna-standard" time="0.000898466">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Toronto-2026-07-04-isna-standard" time="0.002450186">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Oslo-2026-06-21-mwl-standard" time="0.000866393">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Oslo-2026-12-21-mwl-standard" time="0.000836415">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Reykjavik-2026-06-21-mwl-standard" time="0.000760178">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Reykjavik-2026-12-21-mwl-standard" time="0.000762661">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="prayer times vs adhan-js vectors &gt; Stockholm-2026-05-20-isna-standard" time="0.000789198">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Cairo within 0.5°" time="0.000303592">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Giza within 0.5°" time="0.000073864">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Alexandria within 0.5°" time="0.00013012">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Luxor within 0.5°" time="0.000054588">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Aswan within 0.5°" time="0.000070793">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Makkah within 0.5°" time="0.000065705">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Madinah within 0.5°" time="0.000094637">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Riyadh within 0.5°" time="0.000079527">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Jeddah within 0.5°" time="0.000180118">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Dammam within 0.5°" time="0.000100896">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Dubai within 0.5°" time="0.000064439">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Abu Dhabi within 0.5°" time="0.000058245">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Doha within 0.5°" time="0.000055941">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Kuwait City within 0.5°" time="0.000080495">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Manama within 0.5°" time="0.000052738">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Muscat within 0.5°" time="0.000054727">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Amman within 0.5°" time="0.000051039">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Jerusalem within 0.5°" time="0.000050403">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Gaza within 0.5°" time="0.00005192">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Beirut within 0.5°" time="0.000107162">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Damascus within 0.5°" time="0.000064999">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Baghdad within 0.5°" time="0.000072151">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Khartoum within 0.5°" time="0.000068133">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Tripoli within 0.5°" time="0.000052151">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Tunis within 0.5°" time="0.000053897">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Algiers within 0.5°" time="0.0000563">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Rabat within 0.5°" time="0.000055658">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Casablanca within 0.5°" time="0.000052396">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Sanaa within 0.5°" time="0.000068977">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Istanbul within 0.5°" time="0.000059264">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Karachi within 0.5°" time="0.000052811">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Kuala Lumpur within 0.5°" time="0.000056927">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Jakarta within 0.5°" time="0.00005945">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; London within 0.5°" time="0.000054889">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Paris within 0.5°" time="0.000102589">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Berlin within 0.5°" time="0.000061599">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; New York within 0.5°" time="0.000063499">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Toronto within 0.5°" time="0.000070291">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; Sydney within 0.5°" time="0.000073094">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; matches published values for New York and London" time="0.000242251">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; is within [0, 360)" time="0.000321826">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="qibla bearing (independent reference: adhan-js Qibla) &gt; rejects invalid coordinates" time="0.000500113">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="DST and time zones &gt; London Dhuhr moves by one hour across the March 2026 DST change" time="0.000791075">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="DST and time zones &gt; New York local date/time across the November DST end" time="0.000807861">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="DST and time zones &gt; localDateInTz uses the zone&apos;s calendar date" time="0.001886194">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="DST and time zones &gt; formatHHMM uses 24h clock" time="0.000588539">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="DST and time zones &gt; validates time zones" time="0.000628056">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="DST and time zones &gt; date helpers" time="0.000533496">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; latitude 90 throws InvalidInput" time="0.000202774">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; latitude -90 throws InvalidInput" time="0.000090649">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; longitude 181 throws InvalidInput" time="0.000070624">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; NaN latitude throws InvalidInput" time="0.000078127">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; unknown method throws InvalidInput" time="0.00014035">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; prototype method name throws InvalidInput" time="0.000106225">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; bad asr throws InvalidInput" time="0.000105536">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; bad asr factor throws InvalidInput" time="0.000182739">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; Feb 30 throws InvalidInput" time="0.000139344">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; month 13 throws InvalidInput" time="0.000141412">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; fractional day throws InvalidInput" time="0.000125234">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; polar night (Tromsø, December) throws InvalidInput" time="0.00022604">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="invalid input &gt; polar day (Tromsø, June) throws InvalidInput" time="0.000231622">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; applies the high-latitude rule in Oslo in June and reports it" time="0.000291888">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; no adjustment needed in Makkah" time="0.000315455">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; ishaMinutes methods put Isha 90 minutes after Maghrib" time="0.000340731">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; hanafi Asr is later than standard" time="0.00036723">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; manual adjustments shift times by whole minutes" time="0.000379438">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; times are whole minutes" time="0.000328841">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; all methods from methods.json compute" time="0.00291738">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; pyRound matches Python round-half-even" time="0.000234551">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; julianDay and fix" time="0.000128814">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="algorithm details &gt; clampAdjustment" time="0.000129796">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="next prayer &gt; returns the next obligatory prayer of the day (skips sunrise)" time="0.001040258">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="next prayer &gt; rolls over to tomorrow&apos;s Fajr after Isha" time="0.000722595">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="cities &gt; every city has a known method and valid tz" time="0.006385976">
+        </testcase>
+        <testcase classname="tests/unit/prayer.test.ts" name="cities &gt; resolveLocation uses city defaults, overrides and custom locations" time="0.001004932">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/sections.test.ts" timestamp="2026-11-07T17:48:58.363Z" hostname="vm" tests="16" failures="0" errors="0" skipped="0" time="0.060015977">
-        <testcase classname="tests/unit/sections.test.ts" name="adhkar sessions &gt; covers every dataset item exactly once" time="0.008427219">
+    <testsuite name="tests/unit/quran.test.ts" timestamp="2026-11-08T21:49:38.425Z" hostname="vm" tests="25" failures="0" errors="0" skipped="0" time="0.04399955">
+        <testcase classname="tests/unit/quran.test.ts" name="Quran integrity &gt; has 114 surahs and 6236 ayahs" time="0.002773981">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="adhkar sessions &gt; morning wording only in the morning, evening wording only in the evening" time="0.003190952">
+        <testcase classname="tests/unit/quran.test.ts" name="Quran integrity &gt; ayah counts match the independent reference" time="0.001844257">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="adhkar sessions &gt; repetition counts are the ones annotated in Hisn al-Muslim (chapter أذكار الصباح والمساء)" time="0.00176436">
+        <testcase classname="tests/unit/quran.test.ts" name="Quran integrity &gt; allAyahsSha256 matches" time="0.006493494">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="adhkar sessions &gt; counter: counts up to the item&apos;s count, then stops; resets on a new day" time="0.001878933">
+        <testcase classname="tests/unit/quran.test.ts" name="Quran integrity &gt; every surahSha256 matches" time="0.006468746">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="adhkar sessions &gt; sanitizes stored progress and picks a default session" time="0.000858245">
+        <testcase classname="tests/unit/quran.test.ts" name="Quran integrity &gt; surah metadata used by the web app mirrors the content file" time="0.002493141">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="tasbih &gt; counts to the target, completes a round and starts again" time="0.002174245">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; has 604 pages and 30 juz" time="0.000394597">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="tasbih &gt; undo, reset and target change" time="0.000934327">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; pages are contiguous and cover all 6236 ayahs exactly once" time="0.011942257">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="tasbih &gt; sanitizes and persists" time="0.001345839">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; spot check page 1" time="0.00032466">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="qibla compass math &gt; normalises angles and differences" time="0.00062356">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; spot check page 2" time="0.00044882">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="qibla compass math &gt; heading from iOS webkitCompassHeading and from absolute alpha" time="0.000935199">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; spot check page 3" time="0.000203977">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="qibla compass math &gt; needle rotation and facing" time="0.000893376">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; spot check page 50" time="0.000156181">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="qibla compass math &gt; detects the iOS permission API" time="0.000438307">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; spot check page 604" time="0.000246548">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="hajj round counters &gt; counts 0..7 per tool" time="0.000966988">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; pageForAyah finds the page for every ayah" time="0.000601654">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="Hisn al-Muslim &gt; keeps the source chapters and items in order" time="0.0008325">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; juzForPage" time="0.000212924">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="Hisn al-Muslim &gt; filters chapter titles ignoring diacritics" time="0.006603829">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; validates pages and ayahs" time="0.000338741">
         </testcase>
-        <testcase classname="tests/unit/sections.test.ts" name="dates &gt; formats Hijri (Umm al-Qura) and Gregorian dates" time="0.0221488">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;1&quot;) = 1" time="0.000290554">
         </testcase>
-    </testsuite>
-    <testsuite name="tests/unit/store.test.ts" timestamp="2026-11-07T17:48:58.369Z" hostname="vm" tests="10" failures="0" errors="0" skipped="0" time="0.027753644">
-        <testcase classname="tests/unit/store.test.ts" name="storage helpers never throw &gt; round-trips values" time="0.004885795">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot; 604 &quot;) = 604" time="0.000120427">
         </testcase>
-        <testcase classname="tests/unit/store.test.ts" name="storage helpers never throw &gt; survives a throwing localStorage (private mode / blocked)" time="0.003135767">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;٣٠٠&quot;) = 300" time="0.00011124">
         </testcase>
-        <testcase classname="tests/unit/store.test.ts" name="createStore &gt; persists, notifies and reloads on cross-tab storage events" time="0.002348344">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;0&quot;) = null" time="0.000063397">
         </testcase>
-        <testcase classname="tests/unit/store.test.ts" name="settings sanitisers &gt; prefs" time="0.00155436">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;605&quot;) = null" time="0.00004814">
         </testcase>
-        <testcase classname="tests/unit/store.test.ts" name="settings sanitisers &gt; font size clamps to 18..40" time="0.000440017">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;-1&quot;) = null" time="0.000037734">
         </testcase>
-        <testcase classname="tests/unit/store.test.ts" name="settings sanitisers &gt; prayer prefs" time="0.000954049">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;1.5&quot;) = null" time="0.000037415">
         </testcase>
-        <testcase classname="tests/unit/store.test.ts" name="settings sanitisers &gt; last read" time="0.000650317">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;abc&quot;) = null" time="0.000035002">
         </testcase>
-        <testcase classname="tests/unit/store.test.ts" name="service worker client &gt; tracks progress messages" time="0.000998993">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;&quot;) = null" time="0.00014208">
         </testcase>
-        <testcase classname="tests/unit/store.test.ts" name="service worker client &gt; registers the worker and requests a full precache for the page locale" time="0.003000912">
-        </testcase>
-        <testcase classname="tests/unit/store.test.ts" name="resolveLocale &gt; accepts ar/en and 404s otherwise" time="0.005159067">
+        <testcase classname="tests/unit/quran.test.ts" name="Madinah page boundaries &gt; parsePageInput(&quot;1e2&quot;) = null" time="0.000059448">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/sync.test.ts" timestamp="2026-11-07T17:48:58.372Z" hostname="vm" tests="21" failures="0" errors="0" skipped="0" time="0.042763216">
-        <testcase classname="tests/unit/sync.test.ts" name="bookmark store logic &gt; adds, toggles and removes with tombstones" time="0.00381925">
+    <testsuite name="tests/unit/reels.test.ts" timestamp="2026-11-08T21:49:38.439Z" hostname="vm" tests="4" failures="0" errors="0" skipped="0" time="0.006961621">
+        <testcase classname="tests/unit/reels.test.ts" name="reels &gt; bundles exactly the built catalogue (rejected ones never reach the app)" time="0.002630153">
         </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="bookmark store logic &gt; updatedAt strictly increases even if the clock goes backwards" time="0.000309705">
+        <testcase classname="tests/unit/reels.test.ts" name="reels &gt; shows only approved reels unless reviewer mode is on" time="0.000577913">
         </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="bookmark store logic &gt; sorts active bookmarks and lists dirty ones" time="0.00126905">
+        <testcase classname="tests/unit/reels.test.ts" name="reels &gt; drops malformed or unknown items instead of embedding them" time="0.000465612">
         </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="bookmark store logic &gt; ids are valid per the API contract" time="0.000441064">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="bookmark store logic &gt; sanitises persisted data" time="0.000870217">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="bookmark store logic &gt; mergeRemote applies last-write-wins" time="0.000752879">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="bookmark store logic &gt; stripLocal and markAllDirty" time="0.000496346">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; first sync uploads local items and downloads remote ones" time="0.009584381">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; remote newer wins; local newer is pushed (LWW both ways)" time="0.001808166">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; adopts the server copy when the server kept a newer version during push" time="0.00124169">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; incremental sync passes since" time="0.000760643">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; offline: fails fast without calling fetch, state untouched" time="0.002596605">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; network/CORS failure becomes ApiError(network)" time="0.000716445">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; 401 is reported with status and detail" time="0.00117217">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; a failed push leaves the item dirty for the next sync" time="0.001469304">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="ApiClient &gt; register/login/me send the right requests" time="0.001771654">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="ApiClient &gt; maps HTTP errors (detail string, detail object, no body)" time="0.001547198">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="ApiClient &gt; rejects invalid base URLs" time="0.000674305">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="ApiClient &gt; uses navigator.onLine and global fetch by default" time="0.003232274">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="ApiClient &gt; network errors that are not Error instances" time="0.000658139">
-        </testcase>
-        <testcase classname="tests/unit/sync.test.ts" name="account sanitising &gt; falls back to defaults" time="0.000666404">
+        <testcase classname="tests/unit/reels.test.ts" name="reels &gt; builds official embed URLs" time="0.000715984">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/tafsir.test.ts" timestamp="2026-11-07T17:48:58.377Z" hostname="vm" tests="8" failures="0" errors="0" skipped="0" time="0.089560135">
-        <testcase classname="tests/unit/tafsir.test.ts" name="Tafsir al-Muyassar data &gt; the source has one entry per ayah of every surah" time="0.005238952">
+    <testsuite name="tests/unit/sections.test.ts" timestamp="2026-11-08T21:49:38.441Z" hostname="vm" tests="16" failures="0" errors="0" skipped="0" time="0.039169332">
+        <testcase classname="tests/unit/sections.test.ts" name="adhkar sessions &gt; covers every dataset item exactly once" time="0.00303849">
         </testcase>
-        <testcase classname="tests/unit/tafsir.test.ts" name="Tafsir al-Muyassar data &gt; per-surah files are the stored entries, unmodified" time="0.058520187">
+        <testcase classname="tests/unit/sections.test.ts" name="adhkar sessions &gt; morning wording only in the morning, evening wording only in the evening" time="0.002671553">
         </testcase>
-        <testcase classname="tests/unit/tafsir.test.ts" name="Tafsir al-Muyassar data &gt; maps s:a to the stored text (2:255, 112:1, 113:1, 114:6)" time="0.002563879">
+        <testcase classname="tests/unit/sections.test.ts" name="adhkar sessions &gt; repetition counts are the ones annotated in Hisn al-Muslim (chapter أذكار الصباح والمساء)" time="0.000923097">
         </testcase>
-        <testcase classname="tests/unit/tafsir.test.ts" name="Tafsir al-Muyassar data &gt; rejects out-of-range ayahs, unknown surahs and files that do not match the Quran" time="0.003988528">
+        <testcase classname="tests/unit/sections.test.ts" name="adhkar sessions &gt; counter: counts up to the item&apos;s count, then stops; resets on a new day" time="0.001421554">
         </testcase>
-        <testcase classname="tests/unit/tafsir.test.ts" name="Tafsir al-Muyassar data &gt; previous/next ayah across surah boundaries" time="0.000618153">
+        <testcase classname="tests/unit/sections.test.ts" name="adhkar sessions &gt; sanitizes stored progress and picks a default session" time="0.000976136">
         </testcase>
-        <testcase classname="tests/unit/tafsir.test.ts" name="loading tafsir files &gt; fetches a surah once and returns verbatim entries" time="0.010836719">
+        <testcase classname="tests/unit/sections.test.ts" name="tasbih &gt; counts to the target, completes a round and starts again" time="0.00287182">
         </testcase>
-        <testcase classname="tests/unit/tafsir.test.ts" name="loading tafsir files &gt; forgets failures so that a retry fetches again" time="0.002143366">
+        <testcase classname="tests/unit/sections.test.ts" name="tasbih &gt; undo, reset and target change" time="0.000535778">
         </testcase>
-        <testcase classname="tests/unit/tafsir.test.ts" name="loading tafsir files &gt; rejects unknown surahs and ayahs without fetching" time="0.00127057">
+        <testcase classname="tests/unit/sections.test.ts" name="tasbih &gt; sanitizes and persists" time="0.001023321">
+        </testcase>
+        <testcase classname="tests/unit/sections.test.ts" name="qibla compass math &gt; normalises angles and differences" time="0.000542773">
+        </testcase>
+        <testcase classname="tests/unit/sections.test.ts" name="qibla compass math &gt; heading from iOS webkitCompassHeading and from absolute alpha" time="0.00048961">
+        </testcase>
+        <testcase classname="tests/unit/sections.test.ts" name="qibla compass math &gt; needle rotation and facing" time="0.000371671">
+        </testcase>
+        <testcase classname="tests/unit/sections.test.ts" name="qibla compass math &gt; detects the iOS permission API" time="0.000201573">
+        </testcase>
+        <testcase classname="tests/unit/sections.test.ts" name="hajj round counters &gt; counts 0..7 per tool" time="0.001359187">
+        </testcase>
+        <testcase classname="tests/unit/sections.test.ts" name="Hisn al-Muslim &gt; keeps the source chapters and items in order" time="0.000433678">
+        </testcase>
+        <testcase classname="tests/unit/sections.test.ts" name="Hisn al-Muslim &gt; filters chapter titles ignoring diacritics" time="0.004273825">
+        </testcase>
+        <testcase classname="tests/unit/sections.test.ts" name="dates &gt; formats Hijri (Umm al-Qura) and Gregorian dates" time="0.014479491">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/text.test.ts" timestamp="2026-11-07T17:48:58.380Z" hostname="vm" tests="22" failures="0" errors="0" skipped="0" time="0.164584381">
-        <testcase classname="tests/unit/text.test.ts" name="search normalisation &gt; vector &quot;ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ&quot;" time="0.003055338">
+    <testsuite name="tests/unit/store.test.ts" timestamp="2026-11-08T21:49:38.446Z" hostname="vm" tests="10" failures="0" errors="0" skipped="0" time="0.02506269">
+        <testcase classname="tests/unit/store.test.ts" name="storage helpers never throw &gt; round-trips values" time="0.003267626">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="search normalisation &gt; vector &quot;  إِيَّاكَ   نَعۡبُدُ &quot;" time="0.000371211">
+        <testcase classname="tests/unit/store.test.ts" name="storage helpers never throw &gt; survives a throwing localStorage (private mode / blocked)" time="0.002386299">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="search normalisation &gt; vector &quot;هُدٗى&quot;" time="0.000156062">
+        <testcase classname="tests/unit/store.test.ts" name="createStore &gt; persists, notifies and reloads on cross-tab storage events" time="0.001991582">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="search normalisation &gt; vector &quot;رحمة&quot;" time="0.000392187">
+        <testcase classname="tests/unit/store.test.ts" name="settings sanitisers &gt; prefs" time="0.001316052">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="search normalisation &gt; counts letters after normalisation" time="0.000419318">
+        <testcase classname="tests/unit/store.test.ts" name="settings sanitisers &gt; font size clamps to 18..40" time="0.000395778">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="SearchIndex &gt; indexes all 6236 ayahs" time="0.00035018">
+        <testcase classname="tests/unit/store.test.ts" name="settings sanitisers &gt; prayer prefs" time="0.000671185">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="SearchIndex &gt; is diacritic-insensitive and returns original text" time="0.009512349">
+        <testcase classname="tests/unit/store.test.ts" name="settings sanitisers &gt; last read" time="0.000415782">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="SearchIndex &gt; ta marbuta / hamza variants match" time="0.009613662">
+        <testcase classname="tests/unit/store.test.ts" name="service worker client &gt; tracks progress messages" time="0.001096374">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="SearchIndex &gt; limits results but reports the total" time="0.001979892">
+        <testcase classname="tests/unit/store.test.ts" name="service worker client &gt; registers the worker and requests a full precache for the page locale" time="0.005427636">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="SearchIndex &gt; rejects queries shorter than 2 letters" time="0.000474129">
+        <testcase classname="tests/unit/store.test.ts" name="resolveLocale &gt; accepts ar/en and 404s otherwise" time="0.004579042">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="SearchIndex &gt; returns nothing for unknown words" time="0.000587011">
+    </testsuite>
+    <testsuite name="tests/unit/sync.test.ts" timestamp="2026-11-08T21:49:38.449Z" hostname="vm" tests="21" failures="0" errors="0" skipped="0" time="0.034393242">
+        <testcase classname="tests/unit/sync.test.ts" name="bookmark store logic &gt; adds, toggles and removes with tombstones" time="0.003698425">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="display-only render map &gt; uses the shared map" time="0.008828738">
+        <testcase classname="tests/unit/sync.test.ts" name="bookmark store logic &gt; updatedAt strictly increases even if the clock goes backwards" time="0.00068522">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="display-only render map &gt; maps KFGQPC open-tanween code points to Amiri Quran ones and nothing else" time="0.000554394">
+        <testcase classname="tests/unit/sync.test.ts" name="bookmark store logic &gt; sorts active bookmarks and lists dirty ones" time="0.001653067">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="display-only render map &gt; is a pure function (canonical text stays unchanged)" time="0.000537111">
+        <testcase classname="tests/unit/sync.test.ts" name="bookmark store logic &gt; ids are valid per the API contract" time="0.000553317">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="display-only render map &gt; canonical content never contains the display code points" time="0.113535154">
+        <testcase classname="tests/unit/sync.test.ts" name="bookmark store logic &gt; sanitises persisted data" time="0.000956011">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="display-only render map &gt; search normalisation of rendered and canonical text agrees" time="0.000445492">
+        <testcase classname="tests/unit/sync.test.ts" name="bookmark store logic &gt; mergeRemote applies last-write-wins" time="0.000667087">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="digits &gt; converts to Arabic-Indic" time="0.001719643">
+        <testcase classname="tests/unit/sync.test.ts" name="bookmark store logic &gt; stripLocal and markAllDirty" time="0.00048234">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="i18n &gt; ar and en have identical key sets" time="0.000982266">
+        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; first sync uploads local items and downloads remote ones" time="0.005689264">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="i18n &gt; placeholders are the same in both languages" time="0.004107363">
+        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; remote newer wins; local newer is pushed (LWW both ways)" time="0.001824879">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="i18n &gt; translates with interpolation and falls back to the key" time="0.000634382">
+        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; adopts the server copy when the server kept a newer version during push" time="0.001113504">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="i18n &gt; locale helpers" time="0.000308976">
+        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; incremental sync passes since" time="0.000530908">
         </testcase>
-        <testcase classname="tests/unit/text.test.ts" name="i18n &gt; switches locale paths" time="0.000609707">
+        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; offline: fails fast without calling fetch, state untouched" time="0.001732741">
+        </testcase>
+        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; network/CORS failure becomes ApiError(network)" time="0.000440991">
+        </testcase>
+        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; 401 is reported with status and detail" time="0.001589507">
+        </testcase>
+        <testcase classname="tests/unit/sync.test.ts" name="syncBookmarks (mocked fetch) &gt; a failed push leaves the item dirty for the next sync" time="0.001212204">
+        </testcase>
+        <testcase classname="tests/unit/sync.test.ts" name="ApiClient &gt; register/login/me send the right requests" time="0.001717134">
+        </testcase>
+        <testcase classname="tests/unit/sync.test.ts" name="ApiClient &gt; maps HTTP errors (detail string, detail object, no body)" time="0.001303229">
+        </testcase>
+        <testcase classname="tests/unit/sync.test.ts" name="ApiClient &gt; rejects invalid base URLs" time="0.000628556">
+        </testcase>
+        <testcase classname="tests/unit/sync.test.ts" name="ApiClient &gt; uses navigator.onLine and global fetch by default" time="0.001951443">
+        </testcase>
+        <testcase classname="tests/unit/sync.test.ts" name="ApiClient &gt; network errors that are not Error instances" time="0.000596014">
+        </testcase>
+        <testcase classname="tests/unit/sync.test.ts" name="account sanitising &gt; falls back to defaults" time="0.000436588">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/tafsir.test.ts" timestamp="2026-11-08T21:49:38.457Z" hostname="vm" tests="8" failures="0" errors="0" skipped="0" time="0.068465631">
+        <testcase classname="tests/unit/tafsir.test.ts" name="Tafsir al-Muyassar data &gt; the source has one entry per ayah of every surah" time="0.003331347">
+        </testcase>
+        <testcase classname="tests/unit/tafsir.test.ts" name="Tafsir al-Muyassar data &gt; per-surah files are the stored entries, unmodified" time="0.045261747">
+        </testcase>
+        <testcase classname="tests/unit/tafsir.test.ts" name="Tafsir al-Muyassar data &gt; maps s:a to the stored text (2:255, 112:1, 113:1, 114:6)" time="0.002694557">
+        </testcase>
+        <testcase classname="tests/unit/tafsir.test.ts" name="Tafsir al-Muyassar data &gt; rejects out-of-range ayahs, unknown surahs and files that do not match the Quran" time="0.003746066">
+        </testcase>
+        <testcase classname="tests/unit/tafsir.test.ts" name="Tafsir al-Muyassar data &gt; previous/next ayah across surah boundaries" time="0.00073166">
+        </testcase>
+        <testcase classname="tests/unit/tafsir.test.ts" name="loading tafsir files &gt; fetches a surah once and returns verbatim entries" time="0.005657624">
+        </testcase>
+        <testcase classname="tests/unit/tafsir.test.ts" name="loading tafsir files &gt; forgets failures so that a retry fetches again" time="0.002211014">
+        </testcase>
+        <testcase classname="tests/unit/tafsir.test.ts" name="loading tafsir files &gt; rejects unknown surahs and ayahs without fetching" time="0.001389899">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/text.test.ts" timestamp="2026-11-08T21:49:38.461Z" hostname="vm" tests="22" failures="0" errors="0" skipped="0" time="0.115544904">
+        <testcase classname="tests/unit/text.test.ts" name="search normalisation &gt; vector &quot;ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ&quot;" time="0.002288787">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="search normalisation &gt; vector &quot;  إِيَّاكَ   نَعۡبُدُ &quot;" time="0.000600144">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="search normalisation &gt; vector &quot;هُدٗى&quot;" time="0.000429498">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="search normalisation &gt; vector &quot;رحمة&quot;" time="0.000372091">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="search normalisation &gt; counts letters after normalisation" time="0.000441892">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="SearchIndex &gt; indexes all 6236 ayahs" time="0.000319838">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="SearchIndex &gt; is diacritic-insensitive and returns original text" time="0.009970503">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="SearchIndex &gt; ta marbuta / hamza variants match" time="0.012387699">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="SearchIndex &gt; limits results but reports the total" time="0.006843488">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="SearchIndex &gt; rejects queries shorter than 2 letters" time="0.000801661">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="SearchIndex &gt; returns nothing for unknown words" time="0.001110593">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="display-only render map &gt; uses the shared map" time="0.000564873">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="display-only render map &gt; maps KFGQPC open-tanween code points to Amiri Quran ones and nothing else" time="0.000868236">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="display-only render map &gt; is a pure function (canonical text stays unchanged)" time="0.000287943">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="display-only render map &gt; canonical content never contains the display code points" time="0.067348883">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="display-only render map &gt; search normalisation of rendered and canonical text agrees" time="0.000422383">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="digits &gt; converts to Arabic-Indic" time="0.000291546">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="i18n &gt; ar and en have identical key sets" time="0.000612182">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="i18n &gt; placeholders are the same in both languages" time="0.004084361">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="i18n &gt; translates with interpolation and falls back to the key" time="0.000394558">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="i18n &gt; locale helpers" time="0.00012128">
+        </testcase>
+        <testcase classname="tests/unit/text.test.ts" name="i18n &gt; switches locale paths" time="0.00035421">
         </testcase>
     </testsuite>
 </testsuites>

@@ -1,0 +1,304 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart';
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
+
+import '../app_services.dart';
+import '../domain/reels.dart';
+import '../theme/design_tokens.dart';
+import 'l10n_ext.dart';
+
+typedef ReelPlayerBuilder = Widget Function(BuildContext context, Reel reel);
+
+/// Vertical, swipeable reels feed (one full-screen video per page). Only the
+/// reel in view gets a live player; the others show YouTube's poster image,
+/// so at most one video loads or plays at a time.
+class ReelsScreen extends StatefulWidget {
+  const ReelsScreen({super.key, this.playerBuilder, this.showPosters = true});
+
+  /// Replaced in tests (a WebView cannot run in widget tests).
+  final ReelPlayerBuilder? playerBuilder;
+  final bool showPosters;
+
+  @override
+  State<ReelsScreen> createState() => _ReelsScreenState();
+}
+
+class _ReelsScreenState extends State<ReelsScreen> {
+  final _pages = PageController();
+  int _current = 0;
+
+  @override
+  void dispose() {
+    _pages.dispose();
+    super.dispose();
+  }
+
+  Future<void> _open(Reel r) async {
+    await launchUrl(Uri.parse(r.url), mode: LaunchMode.externalApplication);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final settings = context.services.settings;
+    return ListenableBuilder(
+      listenable: settings,
+      builder: (context, _) {
+        final reviewer = settings.reelsReviewer;
+        final reels = context.services.content.reels.visible(reviewer: reviewer);
+        if (_current >= reels.length && reels.isNotEmpty) _current = reels.length - 1;
+        return Scaffold(
+          backgroundColor: Colors.black,
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            foregroundColor: Colors.white,
+            title: Text(l.reelsTitle),
+            actions: [
+              IconButton(
+                key: const Key('reels.reviewer'),
+                tooltip: '${l.reelsReviewerMode} — ${l.reelsReviewerHint}',
+                isSelected: reviewer,
+                icon: const Icon(Icons.fact_check_outlined),
+                selectedIcon: const Icon(Icons.fact_check, color: Colors.amber),
+                onPressed: () async {
+                  await settings.setReelsReviewer(!reviewer);
+                  if (_pages.hasClients) _pages.jumpToPage(0);
+                  setState(() => _current = 0);
+                },
+              ),
+            ],
+          ),
+          body: reels.isEmpty
+              ? _Empty(text: l.reelsEmpty, note: l.reelsNote)
+              : PageView.builder(
+                  key: const Key('reels.feed'),
+                  controller: _pages,
+                  scrollDirection: Axis.vertical,
+                  itemCount: reels.length,
+                  onPageChanged: (i) => setState(() => _current = i),
+                  itemBuilder: (context, i) => _ReelPage(
+                    reel: reels[i],
+                    index: i,
+                    total: reels.length,
+                    active: i == _current,
+                    player: widget.playerBuilder ?? (context, r) => YoutubeReelPlayer(key: ValueKey(r.id), reel: r),
+                    showPoster: widget.showPosters,
+                    onOpen: () => _open(reels[i]),
+                  ),
+                ),
+        );
+      },
+    );
+  }
+}
+
+class _Empty extends StatelessWidget {
+  const _Empty({required this.text, required this.note});
+  final String text;
+  final String note;
+
+  @override
+  Widget build(BuildContext context) => Center(
+    child: Padding(
+      padding: const EdgeInsets.all(DesignTokens.spaceXl),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.smart_display_outlined, color: Colors.white70, size: 56),
+          const SizedBox(height: DesignTokens.spaceMd),
+          Text(
+            text,
+            key: const Key('reels.empty'),
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: Colors.white, fontSize: 18),
+          ),
+          const SizedBox(height: DesignTokens.spaceMd),
+          Text(
+            note,
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: Colors.white70),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+class _ReelPage extends StatelessWidget {
+  const _ReelPage({
+    required this.reel,
+    required this.index,
+    required this.total,
+    required this.active,
+    required this.player,
+    required this.showPoster,
+    required this.onOpen,
+  });
+
+  final Reel reel;
+  final int index;
+  final int total;
+  final bool active;
+  final ReelPlayerBuilder player;
+  final bool showPoster;
+  final VoidCallback onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final ar = context.services.settings.isArabic;
+    final speaker = reel.speaker(ar);
+    final category = reel.category == 'recitation' ? l.reelsCatRecitation : l.reelsCatLesson;
+    final top = MediaQuery.paddingOf(context).top + kToolbarHeight;
+    return Semantics(
+      container: true,
+      label: l.reelsPosition(context.num(index + 1), context.num(total)),
+      child: Stack(
+        key: Key('reel.${reel.id}'),
+        fit: StackFit.expand,
+        children: [
+          if (active)
+            player(context, reel)
+          else if (showPoster)
+            Image.network(
+              reel.posterUrl,
+              fit: BoxFit.cover,
+              opacity: const AlwaysStoppedAnimation(0.6),
+              errorBuilder: (_, _, _) => const ColoredBox(color: Colors.black),
+            ),
+          if (reel.isPending)
+            Positioned(
+              top: top + DesignTokens.spaceSm,
+              left: DesignTokens.spaceSm,
+              right: DesignTokens.spaceSm,
+              child: Container(
+                key: Key('reel.pending.${reel.id}'),
+                padding: const EdgeInsets.all(DesignTokens.spaceSm),
+                decoration: BoxDecoration(color: const Color(0xFFB3261E), borderRadius: BorderRadius.circular(8)),
+                child: Text(l.reelsPending, style: const TextStyle(color: Colors.white)),
+              ),
+            ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: DecoratedBox(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.transparent, Color(0xD9000000)],
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  DesignTokens.spaceMd,
+                  DesignTokens.spaceXl,
+                  DesignTokens.spaceMd,
+                  DesignTokens.spaceSm,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      reel.title(ar),
+                      style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w600),
+                    ),
+                    if (speaker != null) Text(speaker, style: const TextStyle(color: Colors.white70)),
+                    const SizedBox(height: DesignTokens.spaceXs),
+                    Wrap(
+                      spacing: DesignTokens.spaceXs,
+                      runSpacing: DesignTokens.spaceXs,
+                      children: [
+                        _Chip(category),
+                        if (reel.reviewer != null) _Chip(l.reelsReviewedBy(reel.reviewer!), green: true),
+                        _Chip(context.numLtr('${index + 1} / $total')),
+                      ],
+                    ),
+                    TextButton.icon(
+                      key: Key('reel.open.${reel.id}'),
+                      style: TextButton.styleFrom(foregroundColor: Colors.white, padding: EdgeInsets.zero),
+                      onPressed: onOpen,
+                      icon: const Icon(Icons.open_in_new, size: 18),
+                      label: Text(l.reelsOpen),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Chip extends StatelessWidget {
+  const _Chip(this.text, {this.green = false});
+  final String text;
+  final bool green;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm, vertical: 2),
+    decoration: BoxDecoration(
+      color: green ? const Color(0x8C2EA06E) : const Color(0x2EFFFFFF),
+      borderRadius: BorderRadius.circular(999),
+    ),
+    child: Text(text, style: const TextStyle(color: Colors.white, fontSize: 13)),
+  );
+}
+
+/// YouTube's official embed in a WebView: autoplays muted and inline (YouTube's
+/// own controls unmute). Navigation away from the embed (the YouTube logo,
+/// related links) opens in the YouTube app or browser instead of inside the feed.
+class YoutubeReelPlayer extends StatefulWidget {
+  const YoutubeReelPlayer({super.key, required this.reel});
+  final Reel reel;
+
+  @override
+  State<YoutubeReelPlayer> createState() => _YoutubeReelPlayerState();
+}
+
+class _YoutubeReelPlayerState extends State<YoutubeReelPlayer> {
+  late final WebViewController _c;
+
+  static bool isAllowedInFeed(Uri u) =>
+      u.scheme == 'about' ||
+      (u.scheme == 'https' && u.host == 'www.youtube-nocookie.com' && (u.path == '/' || u.path.startsWith('/embed/')));
+
+  @override
+  void initState() {
+    super.initState();
+    final PlatformWebViewControllerCreationParams params = defaultTargetPlatform == TargetPlatform.iOS
+        ? WebKitWebViewControllerCreationParams(
+            allowsInlineMediaPlayback: true,
+            mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
+          )
+        : const PlatformWebViewControllerCreationParams();
+    _c = WebViewController.fromPlatformCreationParams(params)
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(Colors.black)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onNavigationRequest: (req) {
+            final u = Uri.tryParse(req.url);
+            if (u != null && isAllowedInFeed(u)) return NavigationDecision.navigate;
+            if (u != null && u.scheme == 'https') launchUrl(u, mode: LaunchMode.externalApplication);
+            return NavigationDecision.prevent;
+          },
+        ),
+      );
+    final p = _c.platform;
+    if (p is AndroidWebViewController) p.setMediaPlaybackRequiresUserGesture(false);
+    _c.loadHtmlString(widget.reel.embedHtml(), baseUrl: ReelCatalog.embedOrigin);
+  }
+
+  @override
+  Widget build(BuildContext context) => WebViewWidget(controller: _c);
+}

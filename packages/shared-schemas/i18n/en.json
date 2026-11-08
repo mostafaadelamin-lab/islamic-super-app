@@ -14,5 +14,20 @@
   "settings.language": "Language", "settings.theme": "Theme", "settings.themeSystem": "System", "settings.themeLight": "Light", "settings.themeDark": "Dark",
   "settings.fontSize": "Quran font size", "settings.about": "About", "settings.free": "This app is completely free: no ads, no subscriptions, no purchases.",
   "settings.sources": "Content sources", "bookmarks.empty": "No bookmarks yet",
-  "common.retry": "Retry", "common.offline": "You are offline — showing saved content", "common.error": "Something went wrong"
+  "common.retry": "Retry", "common.offline": "You are offline — showing saved content", "common.error": "Something went wrong",
+  "reels.title": "Islamic reels",
+  "reels.sub": "Reviewed short videos",
+  "reels.feed": "reels",
+  "reels.empty": "No reviewed reels yet. Reels are added after a religious review.",
+  "reels.pending": "This reel has not been religiously reviewed yet — you see it because reviewer mode is on",
+  "reels.reviewedBy": "Reviewed by {name}",
+  "reels.position": "Reel {n} of {total}",
+  "reels.prev": "Previous reel",
+  "reels.next": "Next reel",
+  "reels.note": "Reels play from YouTube through its official player. They are limited to moving Quran recitations and short religious lessons in line with the Quran and Sunnah, and only reviewed reels are shown.",
+  "reels.reviewerMode": "Reviewer mode",
+  "reels.reviewerHint": "show reels that are not reviewed yet",
+  "reels.cat.recitation": "Moving recitation",
+  "reels.open": "Open on YouTube",
+  "reels.cat.lesson": "Short lesson"
 }
