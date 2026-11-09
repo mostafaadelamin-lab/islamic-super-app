@@ -3,6 +3,7 @@
  * the player bar and the Mushaf reader (highlight, auto page turn) stay in sync across client navigations.
  */
 import { surahName } from "./pages";
+import { downloadsStore, isSaved, savedSource } from "./audio-offline";
 import {
   afterEnded,
   audioStore,
@@ -39,6 +40,10 @@ let state: PlayerState = IDLE;
 const listeners = new Set<() => void>();
 let audio: HTMLAudioElement | null = null;
 let unsubscribeSpeed: (() => void) | null = null;
+/** blob: URL of the saved file being played, revoked when the next item loads. */
+let blobUrl: string | null = null;
+/** What the element was given for the current item (the stream URL, or a blob: URL of a saved copy). */
+let elementSrc: string | null = null;
 
 const ICON_SIZES = ["192", "512"] as const;
 
@@ -154,7 +159,7 @@ function element(): HTMLAudioElement {
   el.addEventListener("ended", () => {
     // Advance only at the genuine end of the item being played: never while paused, stopped or failed, and
     // never for a late event of an earlier source, so the cursor cannot skip ayahs.
-    if ((state.status !== "playing" && state.status !== "loading") || el.src !== state.src) return;
+    if ((state.status !== "playing" && state.status !== "loading") || el.src !== elementSrc) return;
     const next = afterEnded(state.queue, state.cursor, audioStore.get().repeat);
     if (!next) {
       setState(IDLE);
@@ -199,22 +204,45 @@ async function resume(): Promise<void> {
   }
 }
 
+function start(el: HTMLAudioElement, from: string): void {
+  if (blobUrl && blobUrl !== from) URL.revokeObjectURL(blobUrl);
+  blobUrl = from.startsWith("blob:") ? from : null;
+  elementSrc = from;
+  el.src = from;
+  void resume();
+}
+
 function load(): void {
   const item = state.queue[state.cursor.index];
   if (!item) return;
-  if (typeof navigator !== "undefined" && navigator.onLine === false) {
+  const { reciter } = audioStore.get();
+  const src = itemUrl(item, reciter);
+  const offline = typeof navigator !== "undefined" && navigator.onLine === false;
+  if (isSaved(downloadsStore.get(), reciter, item.s)) {
+    const el = element();
+    setState({ src, status: "loading", error: null });
+    void savedSource(src)
+      .catch(() => null)
+      .then((local) => {
+        if (state.src !== src) return; // superseded while looking in the cache
+        if (!local && offline) setState({ status: "error", error: "offline", src: null });
+        else start(el, local ?? src);
+      });
+    return;
+  }
+  if (offline) {
     setState({ status: "error", error: "offline", src: null });
     return;
   }
   const el = element();
-  const src = itemUrl(item, audioStore.get().reciter);
   setState({ src });
-  el.src = src;
-  void resume();
+  start(el, src);
 }
 
 /** Test hook: forget the audio element and state. */
 export function resetPlayerForTests(): void {
+  blobUrl = null;
+  elementSrc = null;
   unsubscribeSpeed?.();
   unsubscribeSpeed = null;
   audio = null;

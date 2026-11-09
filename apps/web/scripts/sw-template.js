@@ -4,6 +4,8 @@ const VERSION = "__VERSION__";
 const CORE = __CORE__;
 const REST = __REST__;
 const CACHE = "rattil-" + VERSION;
+// Recitations the user saved for offline listening (src/lib/audio-offline.ts); kept across versions.
+const AUDIO_CACHE = "rattil-audio";
 // Surah and Mushaf-page routes are precached for the locale the user reads in.
 let locale = "ar";
 let ALL = CORE.concat(REST.ar);
@@ -53,7 +55,7 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
-      for (const k of await caches.keys()) if (k !== CACHE && k.startsWith("rattil-")) await caches.delete(k);
+      for (const k of await caches.keys()) if (k !== CACHE && k !== AUDIO_CACHE && k.startsWith("rattil-")) await caches.delete(k);
       await self.clients.claim();
     })(),
   );
@@ -107,7 +109,17 @@ self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET") return;
   const url = new URL(req.url);
-  if (url.origin !== self.location.origin) return;
+  if (url.origin !== self.location.origin) {
+    // A saved recitation plays without the network; anything else cross-origin goes straight out.
+    if (!url.pathname.endsWith(".mp3")) return;
+    event.respondWith(
+      (async () => {
+        const hit = await (await caches.open(AUDIO_CACHE)).match(url.href);
+        return hit || fetch(req);
+      })(),
+    );
+    return;
+  }
   event.respondWith(
     (async () => {
       const cache = await caches.open(CACHE);

@@ -5,6 +5,8 @@ import { adhanStore } from "@/lib/adhan-alerts";
 import { khatmaStore } from "@/lib/khatma";
 import { worshipStore } from "@/lib/worship";
 import { reelsFeedStore, reelsPrefsStore } from "@/lib/reels";
+import { audioStore } from "@/lib/audio";
+import { downloadsStore } from "@/lib/audio-offline";
 
 export function resetStores(): void {
   localStorage.clear();
@@ -19,6 +21,8 @@ export function resetStores(): void {
     worshipStore,
     reelsPrefsStore,
     reelsFeedStore,
+    audioStore,
+    downloadsStore,
   ])
     s.reload();
 }

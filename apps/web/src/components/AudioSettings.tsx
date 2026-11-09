@@ -1,7 +1,7 @@
 "use client";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
-import { audioStore, RECITERS, REPEAT_CHOICES } from "@/lib/audio";
+import { audioStore, RECITERS, REPEAT_CHOICES, SPEED_CHOICES } from "@/lib/audio";
 import { useStore } from "@/hooks/useStore";
 
 export function AudioSettings({ locale }: { locale: Locale }) {
@@ -35,6 +35,20 @@ export function AudioSettings({ locale }: { locale: Locale }) {
           {REPEAT_CHOICES.map((n) => (
             <option key={n} value={n}>
               {t(locale, "audio.times", { n: localizeDigits(n, locale) })}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="field">
+        <label htmlFor="speed">{t(locale, "audio.speed")}</label>
+        <select
+          id="speed"
+          value={prefs.speed}
+          onChange={(e) => audioStore.set((p) => ({ ...p, speed: Number(e.target.value) }))}
+        >
+          {SPEED_CHOICES.map((n) => (
+            <option key={n} value={n}>
+              {localizeDigits(`${n}×`, locale)}
             </option>
           ))}
         </select>
