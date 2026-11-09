@@ -6,11 +6,166 @@
       "id": "yt-UCYuUcfXvsHapABTcPRWCEoQ",
       "platform": "youtube",
       "channelId": "UCYuUcfXvsHapABTcPRWCEoQ",
-      "name": {"ar": "الشيخ ياسر الدوسري", "en": "Sheikh Yasser Al-Dosari"},
+      "name": {
+        "ar": "الشيخ ياسر الدوسري",
+        "en": "Sheikh Yasser Al-Dosari"
+      },
       "category": "recitation",
       "addedAt": "2026-11-09",
       "approvedBy": "mostafa amin (named by the owner on 2026-11-09)",
       "note": "Channel id taken from a public channel listing ('القناة الرسمية للشيخ ياسر الدوسري بث مباشر'); confirm it is the channel the owner means."
+    },
+    {
+      "id": "yt-@samirmoustafa",
+      "platform": "youtube",
+      "handle": "samirmoustafa",
+      "name": {
+        "ar": "الشيخ سمير مصطفى",
+        "en": "Sheikh Samir Mostafa"
+      },
+      "category": "lesson",
+      "addedAt": "2026-11-09",
+      "approvedBy": "mostafa amin (sent by the owner on 2026-11-09)"
+    },
+    {
+      "id": "yt-@إسلاميات123",
+      "platform": "youtube",
+      "handle": "إسلاميات123",
+      "name": {
+        "ar": "إسلاميات",
+        "en": "Islamiyat"
+      },
+      "category": "admonition",
+      "addedAt": "2026-11-09",
+      "approvedBy": "mostafa amin (sent by the owner on 2026-11-09)"
+    },
+    {
+      "id": "yt-@Mazamer.For8an",
+      "platform": "youtube",
+      "handle": "Mazamer.For8an",
+      "name": {
+        "ar": "مزامير قرآن",
+        "en": "Mazamer Quran"
+      },
+      "category": "recitation",
+      "addedAt": "2026-11-09",
+      "approvedBy": "mostafa amin (sent by the owner on 2026-11-09)"
+    },
+    {
+      "id": "yt-@Mihraabe",
+      "platform": "youtube",
+      "handle": "Mihraabe",
+      "name": {
+        "ar": "محراب",
+        "en": "Mihraab"
+      },
+      "category": "admonition",
+      "addedAt": "2026-11-09",
+      "approvedBy": "mostafa amin (sent by the owner on 2026-11-09)"
+    },
+    {
+      "id": "yt-UCn8lMRYDANs_1yAL3iuw7_g",
+      "platform": "youtube",
+      "channelId": "UCn8lMRYDANs_1yAL3iuw7_g",
+      "name": {
+        "ar": "قناة القرآن الكريم من الشارقة",
+        "en": "Sharjah Quran"
+      },
+      "category": "recitation",
+      "addedAt": "2026-11-09",
+      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)"
+    },
+    {
+      "id": "yt-@islam_sobhi",
+      "platform": "youtube",
+      "handle": "islam_sobhi",
+      "name": {
+        "ar": "القارئ إسلام صبحي",
+        "en": "Islam Sobhi"
+      },
+      "category": "recitation",
+      "addedAt": "2026-11-09",
+      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)"
+    },
+    {
+      "id": "yt-UCRxAvmQLbRORKJTtfhqFY9Q",
+      "platform": "youtube",
+      "channelId": "UCRxAvmQLbRORKJTtfhqFY9Q",
+      "name": {
+        "ar": "الشيخ وديع اليمني",
+        "en": "Sheikh Wadie Al-Yamani"
+      },
+      "category": "recitation",
+      "addedAt": "2026-11-09",
+      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)"
+    },
+    {
+      "id": "yt-UCKUOmGXE9Ytlc2EzpGqimtw",
+      "platform": "youtube",
+      "channelId": "UCKUOmGXE9Ytlc2EzpGqimtw",
+      "name": {
+        "ar": "د. عمر عبد الكافي",
+        "en": "Dr. Omar Abdelkafy"
+      },
+      "category": "admonition",
+      "addedAt": "2026-11-09",
+      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)"
+    },
+    {
+      "id": "yt-@nabulsi1",
+      "platform": "youtube",
+      "handle": "nabulsi1",
+      "name": {
+        "ar": "د. محمد راتب النابلسي",
+        "en": "Dr. Mohammed Rateb Al-Nabulsi"
+      },
+      "category": "lesson",
+      "addedAt": "2026-11-09",
+      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)"
+    },
+    {
+      "id": "yt-UCpPZKwayH_pWPF20Ls0hgVw",
+      "platform": "youtube",
+      "channelId": "UCpPZKwayH_pWPF20Ls0hgVw",
+      "name": {
+        "ar": "الشيخ نبيل العوضي",
+        "en": "Sheikh Nabil Al-Awadi"
+      },
+      "category": "admonition",
+      "addedAt": "2026-11-09",
+      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)"
+    }
+  ],
+  "instagramPages": [
+    {
+      "url": "https://www.instagram.com/mehrab_story13/",
+      "addedAt": "2026-11-09",
+      "note": "Sent by the owner as an example of trusted pages. Instagram can't be pulled automatically without a Meta Business account + Business Discovery app review; kept here for when that exists. Single reels from it can be added by hand with tools/reels.py add."
+    },
+    {
+      "url": "https://www.instagram.com/zadquranapp/",
+      "addedAt": "2026-11-09",
+      "note": "Sent by the owner; same Instagram limits as above."
+    },
+    {
+      "url": "https://www.instagram.com/khair.talk/",
+      "addedAt": "2026-11-09",
+      "note": "Sent by the owner; same Instagram limits as above."
+    },
+    {
+      "url": "https://www.instagram.com/ia.beforetomorrow/",
+      "addedAt": "2026-11-09",
+      "note": "Sent by the owner; same Instagram limits as above."
+    },
+    {
+      "url": "https://www.instagram.com/dosary75/",
+      "addedAt": "2026-11-09",
+      "note": "Sent by the owner; same Instagram limits as above."
+    },
+    {
+      "url": "https://www.instagram.com/abdo.bell99/",
+      "addedAt": "2026-11-09",
+      "note": "Sent by the owner; same Instagram limits as above."
     }
   ]
 }

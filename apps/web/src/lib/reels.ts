@@ -24,7 +24,9 @@ export interface Reel {
 
 export interface ReelSource {
   id: string;
-  channelId: string;
+  /** UC… id, or absent when the owner gave an @handle (resolved by the API). */
+  channelId?: string;
+  handle?: string;
   name: { ar: string; en: string };
   category: (typeof REEL_CATEGORIES)[number];
 }
@@ -138,7 +140,7 @@ export function sanitizeSources(raw: unknown): ReelSource[] {
     const x = s as Partial<ReelSource> | null;
     return (
       typeof x?.id === "string" &&
-      typeof x.channelId === "string" &&
+      (typeof x.channelId === "string" || typeof x.handle === "string") &&
       typeof x.name?.ar === "string" &&
       REEL_CATEGORIES.includes(x.category as never)
     );

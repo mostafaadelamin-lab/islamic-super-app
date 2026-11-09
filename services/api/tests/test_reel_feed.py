@@ -83,6 +83,35 @@ def test_sources_catalogue_rules():
     probs = " ".join(R.validate_sources(bad))
     for word in ("channelId", "name", "category", "approvedBy", "addedAt"):
         assert word in probs
-    assert R.parse_channel("https://www.youtube.com/channel/" + YASSER) == YASSER
-    with pytest.raises(R.ReelError):
-        R.parse_channel("https://www.youtube.com/@someone")
+    assert R.parse_channel("https://www.youtube.com/channel/" + YASSER) == {"channelId": YASSER}
+    assert R.parse_channel("https://www.youtube.com/@%D8%A5%D8%B3%D9%84%D8%A7%D9%85%D9%8A%D8%A7%D8%AA123") == {"handle": "إسلاميات123"}
+    assert R.parse_channel("@Mazamer.For8an") == {"handle": "Mazamer.For8an"}
+    for bad in ("https://www.youtube.com/@x", "https://example.com/@someone", "someone"):
+        with pytest.raises(R.ReelError):
+            R.parse_channel(bad)
+    both = {**cat["sources"][0], "handle": "abc"}
+    assert any("exactly one" in p for p in R.validate_sources({**cat, "sources": [both]}))
+
+
+def test_handle_sources_resolve_once(tmp_path):
+    (tmp_path / "reels/dist").mkdir(parents=True)
+    (tmp_path / "reels/dist/reel-sources.v1.json").write_text(
+        '{"schema":"reel-sources.v1","sources":[{"id":"yt-@samirmoustafa","platform":"youtube","handle":"samirmoustafa",'
+        '"name":{"ar":"سمير","en":"Samir"},"category":"lesson"}]}',
+        encoding="utf-8",
+    )
+    calls = []
+
+    def fetch(u):
+        calls.append(u)
+        if "/@samirmoustafa" in u:
+            return '<link rel="canonical" href="https://www.youtube.com/channel/UCch6Y4YgssEzMa4Q5zw4xjw">'
+        assert "UUSHch6Y4YgssEzMa4Q5zw4xjw" in u
+        return FIXTURE
+
+    feed = F.ReelFeed(tmp_path, fetch=fetch)
+    out = feed.build()
+    assert len(out["items"]) == 3 and out["sources"][0]["handle"] == "samirmoustafa"
+    assert calls[0] == "https://www.youtube.com/@samirmoustafa"
+    assert F.channel_id_from_page("nothing") is None
+    assert F.ReelFeed(tmp_path, fetch=lambda u: None).build()["items"] == []

@@ -98,6 +98,10 @@ void main() {
   group('automatic reels from trusted channels', () {
     // Newest first: BBBBBBBBBB2 (9 Nov) leads the feed.
     final fixture = File('test/fixtures/youtube-feed.xml').readAsStringSync();
+    // Only the first shipped channel (Sheikh Yasser Al-Dosari) answers; the others are unreachable.
+    http.Response yasserOnly(http.BaseRequest req) => req.url.toString().contains('YuUcfXvsHapABTcPRWCEoQ')
+        ? http.Response.bytes(utf8.encode(fixture), 200)
+        : http.Response('', 404);
 
     testWidgets('pulls the newest Shorts of the trusted channel and plays them with no review banner', (tester) async {
       final calls = <Uri>[];
@@ -106,7 +110,7 @@ void main() {
         size: tallPhone,
         httpClient: MockClient((req) async {
           calls.add(req.url);
-          return http.Response.bytes(utf8.encode(fixture), 200);
+          return yasserOnly(req);
         }),
       );
       expect(app.services.content.reelSources, isNotEmpty, reason: 'the shipped list has the owner-approved channel');
@@ -122,11 +126,7 @@ void main() {
     });
 
     testWidgets('hiding the channel empties its reels, with undo', (tester) async {
-      final app = await pumpApp(
-        tester,
-        size: tallPhone,
-        httpClient: MockClient((_) async => http.Response.bytes(utf8.encode(fixture), 200)),
-      );
+      final app = await pumpApp(tester, size: tallPhone, httpClient: MockClient((req) async => yasserOnly(req)));
       await pushScreen(tester, const ReelsScreen(playerBuilder: fakePlayer, showPosters: false));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const Key('reel.hide.yt-BBBBBBBBBB2')));
@@ -146,9 +146,9 @@ void main() {
       await pumpApp(
         tester,
         size: tallPhone,
-        httpClient: MockClient((_) async {
+        httpClient: MockClient((req) async {
           if (!online) throw const SocketException('offline');
-          return http.Response.bytes(utf8.encode(fixture), 200);
+          return yasserOnly(req);
         }),
       );
       await pushScreen(tester, const ReelsScreen(playerBuilder: fakePlayer, showPosters: false));

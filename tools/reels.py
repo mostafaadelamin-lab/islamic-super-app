@@ -26,7 +26,7 @@ CLI (run from anywhere):
   python tools/reels.py build
 
 Trusted channels for automatic reels (the apps pull each channel's newest Shorts):
-  python tools/reels.py sources-add <youtube.com/channel/UC… or UC…> --name-ar "…" --category recitation --approved-by "name"
+  python tools/reels.py sources-add <youtube.com/@handle, youtube.com/channel/UC… or UC…> --name-ar "…" --category recitation --approved-by "name"
   python tools/reels.py sources-remove yt-UC…
 """
 from __future__ import annotations
@@ -45,6 +45,12 @@ DIST = ROOT / "content/reels/dist/reels.v1.json"
 SOURCES = ROOT / "content/reels/sources.json"
 SOURCES_DIST = ROOT / "content/reels/dist/reel-sources.v1.json"
 YT_CHANNEL = re.compile(r"^UC[A-Za-z0-9_-]{22}$")
+# YouTube handles: 3-30 letters (any script), digits, "_", "-" or "."; stored without the "@".
+YT_HANDLE = re.compile(r"^[\w.-]{3,30}$")
+
+
+def source_id(s: dict) -> str:
+    return f"yt-{s['channelId']}" if s.get("channelId") else f"yt-@{s.get('handle', '')}"
 
 PLATFORMS = ("youtube", "instagram")
 CATEGORIES = ("recitation", "lesson", "admonition")
@@ -185,11 +191,15 @@ def validate_sources(cat: dict) -> list[str]:
         if s.get("platform") != "youtube":
             problems.append(f"{where}: only YouTube channels can be pulled automatically")
             continue
-        cid = s.get("channelId", "")
-        if not YT_CHANNEL.match(cid):
+        cid, handle = s.get("channelId"), s.get("handle")
+        if bool(cid) == bool(handle):
+            problems.append(f"{where}: give exactly one of channelId (UC…) or handle (@name)")
+        elif cid and not YT_CHANNEL.match(cid):
             problems.append(f"{where}: channelId must look like UC + 22 characters")
-        if s.get("id") != f"yt-{cid}":
-            problems.append(f"{where}: id must be yt-{cid}")
+        elif handle and not YT_HANDLE.match(handle):
+            problems.append(f"{where}: handle must be 3-30 letters, digits, _ - or . (without @)")
+        if s.get("id") != source_id(s):
+            problems.append(f"{where}: id must be {source_id(s)}")
         if s.get("id") in seen:
             problems.append(f"{where}: duplicate")
         seen.add(s.get("id"))
@@ -211,7 +221,7 @@ def build_sources_bundle(cat: dict) -> dict:
             {
                 "id": s["id"],
                 "platform": s["platform"],
-                "channelId": s["channelId"],
+                **({"channelId": s["channelId"]} if s.get("channelId") else {"handle": s["handle"]}),
                 "name": {"ar": s["name"]["ar"], "en": s["name"].get("en") or s["name"]["ar"]},
                 "category": s["category"],
             }
@@ -242,16 +252,25 @@ def build(write: bool = True) -> tuple[dict, list[str]]:
     return bundle, problems
 
 
-def parse_channel(text: str) -> str:
-    """UC… channel id from a youtube.com/channel/UC… link or a bare id. @handles need the channel id (see About → Share → Copy channel ID)."""
-    t = text.strip()
+def parse_channel(text: str) -> dict:
+    """{"channelId": "UC…"} or {"handle": "name"} from a channel link, a bare UC… id or an @handle.
+    Handles are turned into channel ids by the apps / API at run time (YouTube's channel page)."""
+    import unicodedata
+    from urllib.parse import unquote
+
+    t = unicodedata.normalize("NFC", unquote(text.strip()))
     if YT_CHANNEL.match(t):
-        return t
+        return {"channelId": t}
+    if t.startswith("@") and YT_HANDLE.match(t[1:]):
+        return {"handle": t[1:]}
     u = urlparse(t)
     parts = [p for p in u.path.split("/") if p]
-    if (u.hostname or "").lower() in YT_HOSTS and len(parts) >= 2 and parts[0] == "channel" and YT_CHANNEL.match(parts[1]):
-        return parts[1]
-    raise ReelError("need a channel id (UC…) or a youtube.com/channel/UC… link; @handles can't be resolved offline")
+    if (u.hostname or "").lower() in YT_HOSTS and parts:
+        if len(parts) >= 2 and parts[0] == "channel" and YT_CHANNEL.match(parts[1]):
+            return {"channelId": parts[1]}
+        if parts[0].startswith("@") and YT_HANDLE.match(parts[0][1:]):
+            return {"handle": parts[0][1:]}
+    raise ReelError("need a YouTube channel: youtube.com/@name, youtube.com/channel/UC… or UC…")
 
 
 def _find(cat: dict, rid: str) -> dict:
@@ -295,11 +314,12 @@ def main(argv: list[str] | None = None) -> int:
         if args.cmd in ("sources-add", "sources-remove"):
             srcs = json.loads(SOURCES.read_text(encoding="utf-8"))
             if args.cmd == "sources-add":
-                cid = parse_channel(args.channel)
-                if any(x["channelId"] == cid for x in srcs["sources"]):
-                    raise ReelError(f"yt-{cid} is already a source")
+                ch = parse_channel(args.channel)
+                sid = source_id(ch)
+                if any(x["id"].lower() == sid.lower() for x in srcs["sources"]):
+                    raise ReelError(f"{sid} is already a source")
                 srcs["sources"].append({
-                    "id": f"yt-{cid}", "platform": "youtube", "channelId": cid,
+                    "id": sid, "platform": "youtube", **ch,
                     "name": {"ar": args.name_ar, "en": args.name_en or args.name_ar},
                     "category": args.category, "addedAt": today, "approvedBy": args.approved_by,
                 })
