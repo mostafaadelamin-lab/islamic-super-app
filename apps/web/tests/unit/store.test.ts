@@ -87,6 +87,7 @@ describe("settings sanitisers", () => {
       theme: "dark",
       fontSize: FONT_MAX,
       translation: true,
+      hijriOffset: 0,
     });
     expect(sanitizePrefs({ locale: "fr", theme: "neon", fontSize: 2 })).toMatchObject({
       locale: null,

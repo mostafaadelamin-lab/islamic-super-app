@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
+import '../domain/declination.dart';
 import '../domain/adhkar.dart';
 import '../domain/audio_queue.dart';
 import '../domain/hajj.dart';
@@ -65,6 +66,7 @@ class AppContent {
     required this.versions,
     this.reels = ReelCatalog.empty,
     this.stories = StoryCatalog.empty,
+    this.magneticModel,
   }) : search = QuranSearch(quran, normalizer);
 
   static const quranAsset = 'assets/content/quran.v1.json';
@@ -79,6 +81,7 @@ class AppContent {
   static const reelsAsset = 'assets/content/reels.v1.json';
   static const storiesAsset = 'assets/content/stories.v1.json';
   static const methodsAsset = 'assets/schemas/methods.json';
+  static const wmmAsset = 'assets/schemas/wmm2025.json';
   static const citiesAsset = 'assets/schemas/cities.json';
   static const renderAsset = 'assets/schemas/quran-render.json';
   static const normalizationAsset = 'assets/schemas/search-normalization.json';
@@ -100,6 +103,9 @@ class AppContent {
 
   /// Quranic stories (verse ranges) and narrated series (audio only).
   final StoryCatalog stories;
+
+  /// World Magnetic Model for the qibla compass (magnetic -> true north).
+  final WorldMagneticModel? magneticModel;
   final QuranSearch search;
 
   PrayerCalculator get calculator => PrayerCalculator(prayerConfig);
@@ -137,6 +143,7 @@ class AppContent {
       versions: await j(versionsAsset),
       reels: ReelCatalog.fromJson(await j(reelsAsset)),
       stories: StoryCatalog.fromJson(await j(storiesAsset), [for (final s in quran.surahs) s.ayahCount]),
+      magneticModel: WorldMagneticModel.fromJson(await j(wmmAsset)),
     );
   }
 }

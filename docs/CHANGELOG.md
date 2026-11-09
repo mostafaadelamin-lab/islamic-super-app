@@ -1,5 +1,15 @@
 # Changelog
 
+## [Unreleased] — Owner's reference guidelines: audit and fixes — 2026-11-09
+See docs/reports/GUIDELINES_AUDIT.md.
+### Added
+- Hijri date: manual adjustment of the Umm al-Qura date (−2..+2 days) in Settings on mobile and web, with a live preview, so the date can follow the moon sighting announced locally. Used everywhere a Hijri date is shown.
+- Qibla compass (mobile): reads the phone's own compass heading (iOS CLLocationManager, Android rotation-vector sensor) and falls back to the raw accelerometer + magnetometer. Mobile and web now correct magnetic north to true north with the World Magnetic Model 2025 (Cairo ≈ +4.8°, New York ≈ −12.5°); before this the needle could be off by the local declination.
+- Android: the adhan plays in full at prayer time through an exact AlarmManager alarm and a media-playback foreground service (Stop button, stops on a phone call, notification only on silent/vibrate, alarms restored after reboot / update / clock change). Tone and silent alerts are unchanged.
+### Fixed (re-applied from the religious content review of 2026-11-07, which was lost with the GitHub suspension)
+- Umm al-Qura method: Isha is 120 min after Maghrib during Ramadan (90 min otherwise), on server, web and mobile. Ramadan dates come from the Umm al-Qura calendar table in methods.json (1440–1499 AH).
+- Web adhkar: the last two verses of al-Baqarah are in the evening list only (as on mobile).
+
 ## [Unreleased] — Quran index: surahs and quarters — 2026-11-09
 ### Added
 - New Quran index ("فهرس السور") on the Quran tab (mobile) and /quran (web): a Surahs / Quarters toggle, a search box with a clear button, and lists grouped under juz headers (الجزء الأول، الثاني …).

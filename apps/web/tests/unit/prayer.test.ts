@@ -4,6 +4,7 @@ import { readRepoJson } from "../repo";
 import {
   clampAdjustment,
   computeHours,
+  inRamadan,
   fix,
   InvalidInput,
   julianDay,
@@ -170,7 +171,7 @@ describe("algorithm details", () => {
     ).toEqual([]);
   });
   it("ishaMinutes methods put Isha 90 minutes after Maghrib", () => {
-    const day = prayerTimes({ year: 2026, month: 3, day: 1 }, 21.3891, 39.8579, "makkah");
+    const day = prayerTimes({ year: 2026, month: 3, day: 25 }, 21.3891, 39.8579, "makkah");
     expect(day.times.isha.getTime() - day.times.maghrib.getTime()).toBeGreaterThanOrEqual(89 * 60000);
     expect(day.times.isha.getTime() - day.times.maghrib.getTime()).toBeLessThanOrEqual(91 * 60000);
   });
@@ -258,5 +259,34 @@ describe("cities", () => {
     const custom = resolveLocation({ ...DEFAULT_PRAYER, custom: { lat: 1, lng: 2, tz: "UTC" } });
     expect(custom).toMatchObject({ lat: 1, lng: 2, tz: "UTC", method: "mwl", city: null });
     expect(cityById("c1")?.nameEn).toBe("Cairo");
+  });
+});
+
+describe("Umm al-Qura Ramadan rule", () => {
+  it("knows Ramadan 1447 AH (2026-02-18 .. 2026-03-19)", () => {
+    expect(inRamadan(2026, 2, 18)).toBe(true);
+    expect(inRamadan(2026, 3, 19)).toBe(true);
+    expect(inRamadan(2026, 2, 17)).toBe(false);
+    expect(inRamadan(2026, 3, 20)).toBe(false);
+  });
+  it("puts Isha 120 min after Maghrib in Ramadan, 90 otherwise (Qatar stays 90)", () => {
+    const gap = (y: number, m: number, d: number, method: string, lat: number, lng: number): number => {
+      const h = computeHours(y, m, d, lat, lng, method, 1).hours;
+      return Math.round((h.isha - h.maghrib) * 60);
+    };
+    expect(gap(2026, 3, 1, "makkah", 21.3891, 39.8579)).toBe(120);
+    expect(gap(2026, 3, 20, "makkah", 21.3891, 39.8579)).toBe(90);
+    expect(gap(2026, 3, 1, "qatar", 25.2854, 51.531)).toBe(90);
+  });
+  it("matches the ICU Umm al-Qura calendar for every listed Ramadan", () => {
+    const f = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura", { timeZone: "UTC", month: "numeric" });
+    for (const [a, b] of methodsConfig.ramadanUmmAlQura) {
+      const first = new Date(`${a}T12:00:00Z`);
+      const last = new Date(`${b}T12:00:00Z`);
+      expect(f.format(first)).toBe("9");
+      expect(f.format(last)).toBe("9");
+      expect(f.format(new Date(first.getTime() - 864e5))).toBe("8");
+      expect(f.format(new Date(last.getTime() + 864e5))).toBe("10");
+    }
   });
 });

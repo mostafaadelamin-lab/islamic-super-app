@@ -20,7 +20,7 @@ export function QiblaView({ locale }: { locale: Locale }) {
       <p className="countdown" data-testid="qibla-bearing">
         {t(locale, "prayer.qiblaDeg", { deg: localizeDigits(bearing.toFixed(1), locale) })}
       </p>
-      <LiveCompass locale={locale} bearing={bearing} />
+      <LiveCompass locale={locale} bearing={bearing} lat={loc.lat} lng={loc.lng} />
       <p className="muted small">{t(locale, "qibla.note")}</p>
     </section>
   );

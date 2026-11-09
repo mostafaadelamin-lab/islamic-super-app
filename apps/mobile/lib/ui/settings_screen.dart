@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app_services.dart';
 import '../data/settings.dart';
+import '../domain/hijri.dart';
 import '../domain/prayer_schedule.dart';
 import '../domain/quran.dart';
 import '../theme/design_tokens.dart';
@@ -88,6 +89,50 @@ class SettingsScreen extends StatelessWidget {
                   value: settings.showTranslation,
                   onChanged: settings.setShowTranslation,
                 ),
+              ],
+            ),
+            SectionCard(
+              title: l.settingsHijriOffset,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      key: const Key('hijriOffsetMinus'),
+                      tooltip: '${l.settingsHijriOffset} −',
+                      icon: const Icon(Icons.remove),
+                      onPressed: settings.hijriOffset > -hijriOffsetMax
+                          ? () => settings.setHijriOffset(settings.hijriOffset - 1)
+                          : null,
+                    ),
+                    Expanded(
+                      child: Builder(
+                        builder: (context) {
+                          final h = hijriFor(
+                            DateTime.now(),
+                            arabic: context.isArabic,
+                            offsetDays: settings.hijriOffset,
+                          );
+                          final o = settings.hijriOffset;
+                          return Text(
+                            '${l.homeHijriDate(context.num(h.day), h.monthName, context.num(h.year))}'
+                            '  (${o > 0 ? '+' : ''}${context.num(o)})',
+                            key: const Key('hijriOffsetPreview'),
+                            textAlign: TextAlign.center,
+                          );
+                        },
+                      ),
+                    ),
+                    IconButton(
+                      key: const Key('hijriOffsetPlus'),
+                      tooltip: '${l.settingsHijriOffset} +',
+                      icon: const Icon(Icons.add),
+                      onPressed: settings.hijriOffset < hijriOffsetMax
+                          ? () => settings.setHijriOffset(settings.hijriOffset + 1)
+                          : null,
+                    ),
+                  ],
+                ),
+                Text(l.settingsHijriOffsetHint, style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
             SectionCard(title: l.audioTitle, children: const [RecitationSettings()]),

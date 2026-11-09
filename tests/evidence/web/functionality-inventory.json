@@ -190,6 +190,1630 @@
  },
  {
   "page": "/ar/quran/",
+  "tag": "button",
+  "type": "button",
+  "name": "السور",
+  "href": null
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "button",
+  "type": "button",
+  "name": "الأرباع",
+  "href": null
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "input",
+  "type": "search",
+  "name": "تصفية السور",
+  "href": null
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "button",
+  "type": "button",
+  "name": "مسح البحث",
+  "href": null
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١سورة الفاتحةالصفحة ١ - آياتها ٧ - مكية",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الفاتحة",
+  "href": "/ar/surah/1/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢سورة البقرةالصفحة ٢ - آياتها ٢٨٦ - مدنية",
+  "href": "/ar/page/2/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — البقرة",
+  "href": "/ar/surah/2/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣سورة آل عمرانالصفحة ٥٠ - آياتها ٢٠٠ - مدنية",
+  "href": "/ar/page/50/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — آل عمران",
+  "href": "/ar/surah/3/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤سورة النساءالصفحة ٧٧ - آياتها ١٧٦ - مدنية",
+  "href": "/ar/page/77/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — النساء",
+  "href": "/ar/surah/4/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥سورة المائدةالصفحة ١٠٦ - آياتها ١٢٠ - مدنية",
+  "href": "/ar/page/106/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — المائدة",
+  "href": "/ar/surah/5/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦سورة الأنعامالصفحة ١٢٨ - آياتها ١٦٥ - مكية",
+  "href": "/ar/page/128/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الأنعام",
+  "href": "/ar/surah/6/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧سورة الأعرافالصفحة ١٥١ - آياتها ٢٠٦ - مكية",
+  "href": "/ar/page/151/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الأعراف",
+  "href": "/ar/surah/7/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨سورة الأنفالالصفحة ١٧٧ - آياتها ٧٥ - مدنية",
+  "href": "/ar/page/177/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الأنفال",
+  "href": "/ar/surah/8/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩سورة التوبةالصفحة ١٨٧ - آياتها ١٢٩ - مدنية",
+  "href": "/ar/page/187/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — التوبة",
+  "href": "/ar/surah/9/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠سورة يونسالصفحة ٢٠٨ - آياتها ١٠٩ - مكية",
+  "href": "/ar/page/208/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — يونس",
+  "href": "/ar/surah/10/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١١سورة هودالصفحة ٢٢١ - آياتها ١٢٣ - مكية",
+  "href": "/ar/page/221/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — هود",
+  "href": "/ar/surah/11/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٢سورة يوسفالصفحة ٢٣٥ - آياتها ١١١ - مكية",
+  "href": "/ar/page/235/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — يوسف",
+  "href": "/ar/surah/12/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٣سورة الرعدالصفحة ٢٤٩ - آياتها ٤٣ - مدنية",
+  "href": "/ar/page/249/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الرعد",
+  "href": "/ar/surah/13/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٤سورة ابراهيمالصفحة ٢٥٥ - آياتها ٥٢ - مكية",
+  "href": "/ar/page/255/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — ابراهيم",
+  "href": "/ar/surah/14/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٥سورة الحجرالصفحة ٢٦٢ - آياتها ٩٩ - مكية",
+  "href": "/ar/page/262/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الحجر",
+  "href": "/ar/surah/15/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٦سورة النحلالصفحة ٢٦٧ - آياتها ١٢٨ - مكية",
+  "href": "/ar/page/267/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — النحل",
+  "href": "/ar/surah/16/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٧سورة الإسراءالصفحة ٢٨٢ - آياتها ١١١ - مكية",
+  "href": "/ar/page/282/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الإسراء",
+  "href": "/ar/surah/17/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٨سورة الكهفالصفحة ٢٩٣ - آياتها ١١٠ - مكية",
+  "href": "/ar/page/293/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الكهف",
+  "href": "/ar/surah/18/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٩سورة مريمالصفحة ٣٠٥ - آياتها ٩٨ - مكية",
+  "href": "/ar/page/305/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — مريم",
+  "href": "/ar/surah/19/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٠سورة طهالصفحة ٣١٢ - آياتها ١٣٥ - مكية",
+  "href": "/ar/page/312/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — طه",
+  "href": "/ar/surah/20/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢١سورة الأنبياءالصفحة ٣٢٢ - آياتها ١١٢ - مكية",
+  "href": "/ar/page/322/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الأنبياء",
+  "href": "/ar/surah/21/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٢سورة الحجالصفحة ٣٣٢ - آياتها ٧٨ - مدنية",
+  "href": "/ar/page/332/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الحج",
+  "href": "/ar/surah/22/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٣سورة المؤمنونالصفحة ٣٤٢ - آياتها ١١٨ - مكية",
+  "href": "/ar/page/342/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — المؤمنون",
+  "href": "/ar/surah/23/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٤سورة النورالصفحة ٣٥٠ - آياتها ٦٤ - مدنية",
+  "href": "/ar/page/350/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — النور",
+  "href": "/ar/surah/24/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٥سورة الفرقانالصفحة ٣٥٩ - آياتها ٧٧ - مكية",
+  "href": "/ar/page/359/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الفرقان",
+  "href": "/ar/surah/25/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٦سورة الشعراءالصفحة ٣٦٧ - آياتها ٢٢٧ - مكية",
+  "href": "/ar/page/367/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الشعراء",
+  "href": "/ar/surah/26/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٧سورة النملالصفحة ٣٧٧ - آياتها ٩٣ - مكية",
+  "href": "/ar/page/377/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — النمل",
+  "href": "/ar/surah/27/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٨سورة القصصالصفحة ٣٨٥ - آياتها ٨٨ - مكية",
+  "href": "/ar/page/385/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — القصص",
+  "href": "/ar/surah/28/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٢٩سورة العنكبوتالصفحة ٣٩٦ - آياتها ٦٩ - مكية",
+  "href": "/ar/page/396/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — العنكبوت",
+  "href": "/ar/surah/29/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٠سورة الرومالصفحة ٤٠٤ - آياتها ٦٠ - مكية",
+  "href": "/ar/page/404/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الروم",
+  "href": "/ar/surah/30/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣١سورة لقمانالصفحة ٤١١ - آياتها ٣٤ - مكية",
+  "href": "/ar/page/411/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — لقمان",
+  "href": "/ar/surah/31/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٢سورة السجدةالصفحة ٤١٥ - آياتها ٣٠ - مكية",
+  "href": "/ar/page/415/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — السجدة",
+  "href": "/ar/surah/32/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٣سورة الأحزابالصفحة ٤١٨ - آياتها ٧٣ - مدنية",
+  "href": "/ar/page/418/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الأحزاب",
+  "href": "/ar/surah/33/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٤سورة سبإالصفحة ٤٢٨ - آياتها ٥٤ - مكية",
+  "href": "/ar/page/428/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — سبإ",
+  "href": "/ar/surah/34/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٥سورة فاطرالصفحة ٤٣٤ - آياتها ٤٥ - مكية",
+  "href": "/ar/page/434/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — فاطر",
+  "href": "/ar/surah/35/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٦سورة يسالصفحة ٤٤٠ - آياتها ٨٣ - مكية",
+  "href": "/ar/page/440/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — يس",
+  "href": "/ar/surah/36/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٧سورة الصافاتالصفحة ٤٤٦ - آياتها ١٨٢ - مكية",
+  "href": "/ar/page/446/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الصافات",
+  "href": "/ar/surah/37/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٨سورة صالصفحة ٤٥٣ - آياتها ٨٨ - مكية",
+  "href": "/ar/page/453/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — ص",
+  "href": "/ar/surah/38/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٣٩سورة الزمرالصفحة ٤٥٨ - آياتها ٧٥ - مكية",
+  "href": "/ar/page/458/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الزمر",
+  "href": "/ar/surah/39/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٠سورة غافرالصفحة ٤٦٧ - آياتها ٨٥ - مكية",
+  "href": "/ar/page/467/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — غافر",
+  "href": "/ar/surah/40/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤١سورة فصلتالصفحة ٤٧٧ - آياتها ٥٤ - مكية",
+  "href": "/ar/page/477/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — فصلت",
+  "href": "/ar/surah/41/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٢سورة الشورىالصفحة ٤٨٣ - آياتها ٥٣ - مكية",
+  "href": "/ar/page/483/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الشورى",
+  "href": "/ar/surah/42/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٣سورة الزخرفالصفحة ٤٨٩ - آياتها ٨٩ - مكية",
+  "href": "/ar/page/489/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الزخرف",
+  "href": "/ar/surah/43/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٤سورة الدخانالصفحة ٤٩٦ - آياتها ٥٩ - مكية",
+  "href": "/ar/page/496/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الدخان",
+  "href": "/ar/surah/44/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٥سورة الجاثيةالصفحة ٤٩٩ - آياتها ٣٧ - مكية",
+  "href": "/ar/page/499/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الجاثية",
+  "href": "/ar/surah/45/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٦سورة الأحقافالصفحة ٥٠٢ - آياتها ٣٥ - مكية",
+  "href": "/ar/page/502/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الأحقاف",
+  "href": "/ar/surah/46/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٧سورة محمدالصفحة ٥٠٧ - آياتها ٣٨ - مدنية",
+  "href": "/ar/page/507/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — محمد",
+  "href": "/ar/surah/47/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٨سورة الفتحالصفحة ٥١١ - آياتها ٢٩ - مدنية",
+  "href": "/ar/page/511/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الفتح",
+  "href": "/ar/surah/48/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٤٩سورة الحجراتالصفحة ٥١٥ - آياتها ١٨ - مدنية",
+  "href": "/ar/page/515/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الحجرات",
+  "href": "/ar/surah/49/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٠سورة قالصفحة ٥١٨ - آياتها ٤٥ - مكية",
+  "href": "/ar/page/518/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — ق",
+  "href": "/ar/surah/50/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥١سورة الذارياتالصفحة ٥٢٠ - آياتها ٦٠ - مكية",
+  "href": "/ar/page/520/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الذاريات",
+  "href": "/ar/surah/51/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٢سورة الطورالصفحة ٥٢٣ - آياتها ٤٩ - مكية",
+  "href": "/ar/page/523/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الطور",
+  "href": "/ar/surah/52/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٣سورة النجمالصفحة ٥٢٦ - آياتها ٦٢ - مكية",
+  "href": "/ar/page/526/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — النجم",
+  "href": "/ar/surah/53/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٤سورة القمرالصفحة ٥٢٨ - آياتها ٥٥ - مكية",
+  "href": "/ar/page/528/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — القمر",
+  "href": "/ar/surah/54/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٥سورة الرحمنالصفحة ٥٣١ - آياتها ٧٨ - مدنية",
+  "href": "/ar/page/531/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الرحمن",
+  "href": "/ar/surah/55/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٦سورة الواقعةالصفحة ٥٣٤ - آياتها ٩٦ - مكية",
+  "href": "/ar/page/534/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الواقعة",
+  "href": "/ar/surah/56/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٧سورة الحديدالصفحة ٥٣٧ - آياتها ٢٩ - مدنية",
+  "href": "/ar/page/537/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الحديد",
+  "href": "/ar/surah/57/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٨سورة المجادلةالصفحة ٥٤٢ - آياتها ٢٢ - مدنية",
+  "href": "/ar/page/542/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — المجادلة",
+  "href": "/ar/surah/58/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٥٩سورة الحشرالصفحة ٥٤٥ - آياتها ٢٤ - مدنية",
+  "href": "/ar/page/545/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الحشر",
+  "href": "/ar/surah/59/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٠سورة الممتحنةالصفحة ٥٤٩ - آياتها ١٣ - مدنية",
+  "href": "/ar/page/549/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الممتحنة",
+  "href": "/ar/surah/60/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦١سورة الصفالصفحة ٥٥١ - آياتها ١٤ - مدنية",
+  "href": "/ar/page/551/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الصف",
+  "href": "/ar/surah/61/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٢سورة الجمعةالصفحة ٥٥٣ - آياتها ١١ - مدنية",
+  "href": "/ar/page/553/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الجمعة",
+  "href": "/ar/surah/62/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٣سورة المنافقونالصفحة ٥٥٤ - آياتها ١١ - مدنية",
+  "href": "/ar/page/554/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — المنافقون",
+  "href": "/ar/surah/63/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٤سورة التغابنالصفحة ٥٥٦ - آياتها ١٨ - مدنية",
+  "href": "/ar/page/556/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — التغابن",
+  "href": "/ar/surah/64/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٥سورة الطلاقالصفحة ٥٥٨ - آياتها ١٢ - مدنية",
+  "href": "/ar/page/558/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الطلاق",
+  "href": "/ar/surah/65/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٦سورة التحريمالصفحة ٥٦٠ - آياتها ١٢ - مدنية",
+  "href": "/ar/page/560/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — التحريم",
+  "href": "/ar/surah/66/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٧سورة الملكالصفحة ٥٦٢ - آياتها ٣٠ - مكية",
+  "href": "/ar/page/562/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الملك",
+  "href": "/ar/surah/67/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٨سورة القلمالصفحة ٥٦٤ - آياتها ٥٢ - مكية",
+  "href": "/ar/page/564/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — القلم",
+  "href": "/ar/surah/68/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٦٩سورة الحاقةالصفحة ٥٦٦ - آياتها ٥٢ - مكية",
+  "href": "/ar/page/566/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الحاقة",
+  "href": "/ar/surah/69/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٠سورة المعارجالصفحة ٥٦٨ - آياتها ٤٤ - مكية",
+  "href": "/ar/page/568/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — المعارج",
+  "href": "/ar/surah/70/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧١سورة نوحالصفحة ٥٧٠ - آياتها ٢٨ - مكية",
+  "href": "/ar/page/570/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — نوح",
+  "href": "/ar/surah/71/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٢سورة الجنالصفحة ٥٧٢ - آياتها ٢٨ - مكية",
+  "href": "/ar/page/572/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الجن",
+  "href": "/ar/surah/72/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٣سورة المزملالصفحة ٥٧٤ - آياتها ٢٠ - مكية",
+  "href": "/ar/page/574/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — المزمل",
+  "href": "/ar/surah/73/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٤سورة المدثرالصفحة ٥٧٥ - آياتها ٥٦ - مكية",
+  "href": "/ar/page/575/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — المدثر",
+  "href": "/ar/surah/74/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٥سورة القيامةالصفحة ٥٧٧ - آياتها ٤٠ - مكية",
+  "href": "/ar/page/577/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — القيامة",
+  "href": "/ar/surah/75/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٦سورة الانسانالصفحة ٥٧٨ - آياتها ٣١ - مدنية",
+  "href": "/ar/page/578/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الانسان",
+  "href": "/ar/surah/76/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٧سورة المرسلاتالصفحة ٥٨٠ - آياتها ٥٠ - مكية",
+  "href": "/ar/page/580/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — المرسلات",
+  "href": "/ar/surah/77/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٨سورة النبإالصفحة ٥٨٢ - آياتها ٤٠ - مكية",
+  "href": "/ar/page/582/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — النبإ",
+  "href": "/ar/surah/78/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٧٩سورة النازعاتالصفحة ٥٨٣ - آياتها ٤٦ - مكية",
+  "href": "/ar/page/583/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — النازعات",
+  "href": "/ar/surah/79/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٠سورة عبسالصفحة ٥٨٥ - آياتها ٤٢ - مكية",
+  "href": "/ar/page/585/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — عبس",
+  "href": "/ar/surah/80/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨١سورة التكويرالصفحة ٥٨٦ - آياتها ٢٩ - مكية",
+  "href": "/ar/page/586/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — التكوير",
+  "href": "/ar/surah/81/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٢سورة الإنفطارالصفحة ٥٨٧ - آياتها ١٩ - مكية",
+  "href": "/ar/page/587/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الإنفطار",
+  "href": "/ar/surah/82/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٣سورة المطففينالصفحة ٥٨٧ - آياتها ٣٦ - مكية",
+  "href": "/ar/page/587/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — المطففين",
+  "href": "/ar/surah/83/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٤سورة الإنشقاقالصفحة ٥٨٩ - آياتها ٢٥ - مكية",
+  "href": "/ar/page/589/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الإنشقاق",
+  "href": "/ar/surah/84/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٥سورة البروجالصفحة ٥٩٠ - آياتها ٢٢ - مكية",
+  "href": "/ar/page/590/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — البروج",
+  "href": "/ar/surah/85/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٦سورة الطارقالصفحة ٥٩١ - آياتها ١٧ - مكية",
+  "href": "/ar/page/591/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الطارق",
+  "href": "/ar/surah/86/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٧سورة الأعلىالصفحة ٥٩١ - آياتها ١٩ - مكية",
+  "href": "/ar/page/591/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الأعلى",
+  "href": "/ar/surah/87/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٨سورة الغاشيةالصفحة ٥٩٢ - آياتها ٢٦ - مكية",
+  "href": "/ar/page/592/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الغاشية",
+  "href": "/ar/surah/88/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٨٩سورة الفجرالصفحة ٥٩٣ - آياتها ٣٠ - مكية",
+  "href": "/ar/page/593/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الفجر",
+  "href": "/ar/surah/89/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٠سورة البلدالصفحة ٥٩٤ - آياتها ٢٠ - مكية",
+  "href": "/ar/page/594/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — البلد",
+  "href": "/ar/surah/90/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩١سورة الشمسالصفحة ٥٩٥ - آياتها ١٥ - مكية",
+  "href": "/ar/page/595/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الشمس",
+  "href": "/ar/surah/91/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٢سورة الليلالصفحة ٥٩٥ - آياتها ٢١ - مكية",
+  "href": "/ar/page/595/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الليل",
+  "href": "/ar/surah/92/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٣سورة الضحىالصفحة ٥٩٦ - آياتها ١١ - مكية",
+  "href": "/ar/page/596/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الضحى",
+  "href": "/ar/surah/93/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٤سورة الشرحالصفحة ٥٩٦ - آياتها ٨ - مكية",
+  "href": "/ar/page/596/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الشرح",
+  "href": "/ar/surah/94/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٥سورة التينالصفحة ٥٩٧ - آياتها ٨ - مكية",
+  "href": "/ar/page/597/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — التين",
+  "href": "/ar/surah/95/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٦سورة العلقالصفحة ٥٩٧ - آياتها ١٩ - مكية",
+  "href": "/ar/page/597/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — العلق",
+  "href": "/ar/surah/96/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٧سورة القدرالصفحة ٥٩٨ - آياتها ٥ - مكية",
+  "href": "/ar/page/598/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — القدر",
+  "href": "/ar/surah/97/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٨سورة البينةالصفحة ٥٩٨ - آياتها ٨ - مدنية",
+  "href": "/ar/page/598/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — البينة",
+  "href": "/ar/surah/98/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "٩٩سورة الزلزلةالصفحة ٥٩٩ - آياتها ٨ - مدنية",
+  "href": "/ar/page/599/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الزلزلة",
+  "href": "/ar/surah/99/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٠سورة العادياتالصفحة ٥٩٩ - آياتها ١١ - مكية",
+  "href": "/ar/page/599/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — العاديات",
+  "href": "/ar/surah/100/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠١سورة القارعةالصفحة ٦٠٠ - آياتها ١١ - مكية",
+  "href": "/ar/page/600/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — القارعة",
+  "href": "/ar/surah/101/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٢سورة التكاثرالصفحة ٦٠٠ - آياتها ٨ - مكية",
+  "href": "/ar/page/600/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — التكاثر",
+  "href": "/ar/surah/102/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٣سورة العصرالصفحة ٦٠١ - آياتها ٣ - مكية",
+  "href": "/ar/page/601/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — العصر",
+  "href": "/ar/surah/103/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٤سورة الهمزةالصفحة ٦٠١ - آياتها ٩ - مكية",
+  "href": "/ar/page/601/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الهمزة",
+  "href": "/ar/surah/104/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٥سورة الفيلالصفحة ٦٠١ - آياتها ٥ - مكية",
+  "href": "/ar/page/601/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الفيل",
+  "href": "/ar/surah/105/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٦سورة قريشالصفحة ٦٠٢ - آياتها ٤ - مكية",
+  "href": "/ar/page/602/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — قريش",
+  "href": "/ar/surah/106/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٧سورة الماعونالصفحة ٦٠٢ - آياتها ٧ - مكية",
+  "href": "/ar/page/602/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الماعون",
+  "href": "/ar/surah/107/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٨سورة الكوثرالصفحة ٦٠٢ - آياتها ٣ - مكية",
+  "href": "/ar/page/602/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الكوثر",
+  "href": "/ar/surah/108/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١٠٩سورة الكافرونالصفحة ٦٠٣ - آياتها ٦ - مكية",
+  "href": "/ar/page/603/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الكافرون",
+  "href": "/ar/surah/109/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١١٠سورة النصرالصفحة ٦٠٣ - آياتها ٣ - مدنية",
+  "href": "/ar/page/603/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — النصر",
+  "href": "/ar/surah/110/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١١١سورة المسدالصفحة ٦٠٣ - آياتها ٥ - مكية",
+  "href": "/ar/page/603/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — المسد",
+  "href": "/ar/surah/111/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١١٢سورة الإخلاصالصفحة ٦٠٤ - آياتها ٤ - مكية",
+  "href": "/ar/page/604/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الإخلاص",
+  "href": "/ar/surah/112/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١١٣سورة الفلقالصفحة ٦٠٤ - آياتها ٥ - مكية",
+  "href": "/ar/page/604/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الفلق",
+  "href": "/ar/surah/113/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "١١٤سورة الناسالصفحة ٦٠٤ - آياتها ٦ - مكية",
+  "href": "/ar/page/604/"
+ },
+ {
+  "page": "/ar/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "عرض كقائمة — الناس",
+  "href": "/ar/surah/114/"
+ },
+ {
+  "page": "/ar/quran/",
   "tag": "a",
   "type": null,
   "name": "افتح المصحف (الصفحة ١)",
@@ -208,1609 +1832,6 @@
   "type": "submit",
   "name": "اذهب",
   "href": null
- },
- {
-  "page": "/ar/quran/",
-  "tag": "input",
-  "type": "search",
-  "name": "تصفية السور",
-  "href": null
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١الفاتحةAl-Fatihah · The Opener٧ آيةمكية",
-  "href": "/ar/page/1/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الفاتحة",
-  "href": "/ar/surah/1/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٢البقرةAl-Baqarah · The Cow٢٨٦ آيةمدنية",
-  "href": "/ar/page/2/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — البقرة",
-  "href": "/ar/surah/2/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٣آل عمرانAli 'Imran · Family of Imran٢٠٠ آيةمدنية",
-  "href": "/ar/page/50/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — آل عمران",
-  "href": "/ar/surah/3/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٤النساءAn-Nisa · The Women١٧٦ آيةمدنية",
-  "href": "/ar/page/77/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — النساء",
-  "href": "/ar/surah/4/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٥المائدةAl-Ma'idah · The Table Spread١٢٠ آيةمدنية",
-  "href": "/ar/page/106/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — المائدة",
-  "href": "/ar/surah/5/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٦الأنعامAl-An'am · The Cattle١٦٥ آيةمكية",
-  "href": "/ar/page/128/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الأنعام",
-  "href": "/ar/surah/6/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٧الأعرافAl-A'raf · The Heights٢٠٦ آيةمكية",
-  "href": "/ar/page/151/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الأعراف",
-  "href": "/ar/surah/7/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٨الأنفالAl-Anfal · The Spoils of War٧٥ آيةمدنية",
-  "href": "/ar/page/177/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الأنفال",
-  "href": "/ar/surah/8/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٩التوبةAt-Tawbah · The Repentance١٢٩ آيةمدنية",
-  "href": "/ar/page/187/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — التوبة",
-  "href": "/ar/surah/9/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٠يونسYunus · Jonah١٠٩ آيةمكية",
-  "href": "/ar/page/208/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — يونس",
-  "href": "/ar/surah/10/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١١هودHud · Hud١٢٣ آيةمكية",
-  "href": "/ar/page/221/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — هود",
-  "href": "/ar/surah/11/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٢يوسفYusuf · Joseph١١١ آيةمكية",
-  "href": "/ar/page/235/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — يوسف",
-  "href": "/ar/surah/12/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٣الرعدAr-Ra'd · The Thunder٤٣ آيةمدنية",
-  "href": "/ar/page/249/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الرعد",
-  "href": "/ar/surah/13/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٤ابراهيمIbrahim · Abraham٥٢ آيةمكية",
-  "href": "/ar/page/255/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — ابراهيم",
-  "href": "/ar/surah/14/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٥الحجرAl-Hijr · The Rocky Tract٩٩ آيةمكية",
-  "href": "/ar/page/262/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الحجر",
-  "href": "/ar/surah/15/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٦النحلAn-Nahl · The Bee١٢٨ آيةمكية",
-  "href": "/ar/page/267/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — النحل",
-  "href": "/ar/surah/16/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٧الإسراءAl-Isra · The Night Journey١١١ آيةمكية",
-  "href": "/ar/page/282/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الإسراء",
-  "href": "/ar/surah/17/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٨الكهفAl-Kahf · The Cave١١٠ آيةمكية",
-  "href": "/ar/page/293/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الكهف",
-  "href": "/ar/surah/18/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٩مريمMaryam · Mary٩٨ آيةمكية",
-  "href": "/ar/page/305/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — مريم",
-  "href": "/ar/surah/19/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٢٠طهTaha · Ta-Ha١٣٥ آيةمكية",
-  "href": "/ar/page/312/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — طه",
-  "href": "/ar/surah/20/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٢١الأنبياءAl-Anbya · The Prophets١١٢ آيةمكية",
-  "href": "/ar/page/322/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الأنبياء",
-  "href": "/ar/surah/21/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٢٢الحجAl-Hajj · The Pilgrimage٧٨ آيةمدنية",
-  "href": "/ar/page/332/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الحج",
-  "href": "/ar/surah/22/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٢٣المؤمنونAl-Mu'minun · The Believers١١٨ آيةمكية",
-  "href": "/ar/page/342/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — المؤمنون",
-  "href": "/ar/surah/23/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٢٤النورAn-Nur · The Light٦٤ آيةمدنية",
-  "href": "/ar/page/350/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — النور",
-  "href": "/ar/surah/24/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٢٥الفرقانAl-Furqan · The Criterion٧٧ آيةمكية",
-  "href": "/ar/page/359/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الفرقان",
-  "href": "/ar/surah/25/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٢٦الشعراءAsh-Shu'ara · The Poets٢٢٧ آيةمكية",
-  "href": "/ar/page/367/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الشعراء",
-  "href": "/ar/surah/26/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٢٧النملAn-Naml · The Ant٩٣ آيةمكية",
-  "href": "/ar/page/377/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — النمل",
-  "href": "/ar/surah/27/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٢٨القصصAl-Qasas · The Stories٨٨ آيةمكية",
-  "href": "/ar/page/385/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — القصص",
-  "href": "/ar/surah/28/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٢٩العنكبوتAl-'Ankabut · The Spider٦٩ آيةمكية",
-  "href": "/ar/page/396/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — العنكبوت",
-  "href": "/ar/surah/29/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٣٠الرومAr-Rum · The Romans٦٠ آيةمكية",
-  "href": "/ar/page/404/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الروم",
-  "href": "/ar/surah/30/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٣١لقمانLuqman · Luqman٣٤ آيةمكية",
-  "href": "/ar/page/411/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — لقمان",
-  "href": "/ar/surah/31/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٣٢السجدةAs-Sajdah · The Prostration٣٠ آيةمكية",
-  "href": "/ar/page/415/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — السجدة",
-  "href": "/ar/surah/32/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٣٣الأحزابAl-Ahzab · The Combined Forces٧٣ آيةمدنية",
-  "href": "/ar/page/418/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الأحزاب",
-  "href": "/ar/surah/33/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٣٤سبإSaba · Sheba٥٤ آيةمكية",
-  "href": "/ar/page/428/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — سبإ",
-  "href": "/ar/surah/34/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٣٥فاطرFatir · Originator٤٥ آيةمكية",
-  "href": "/ar/page/434/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — فاطر",
-  "href": "/ar/surah/35/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٣٦يسYa-Sin · Ya Sin٨٣ آيةمكية",
-  "href": "/ar/page/440/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — يس",
-  "href": "/ar/surah/36/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٣٧الصافاتAs-Saffat · Those who set the Ranks١٨٢ آيةمكية",
-  "href": "/ar/page/446/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الصافات",
-  "href": "/ar/surah/37/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٣٨صSad · The Letter \"Saad\"٨٨ آيةمكية",
-  "href": "/ar/page/453/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — ص",
-  "href": "/ar/surah/38/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٣٩الزمرAz-Zumar · The Troops٧٥ آيةمكية",
-  "href": "/ar/page/458/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الزمر",
-  "href": "/ar/surah/39/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٤٠غافرGhafir · The Forgiver٨٥ آيةمكية",
-  "href": "/ar/page/467/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — غافر",
-  "href": "/ar/surah/40/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٤١فصلتFussilat · Explained in Detail٥٤ آيةمكية",
-  "href": "/ar/page/477/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — فصلت",
-  "href": "/ar/surah/41/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٤٢الشورىAsh-Shuraa · The Consultation٥٣ آيةمكية",
-  "href": "/ar/page/483/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الشورى",
-  "href": "/ar/surah/42/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٤٣الزخرفAz-Zukhruf · The Ornaments of Gold٨٩ آيةمكية",
-  "href": "/ar/page/489/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الزخرف",
-  "href": "/ar/surah/43/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٤٤الدخانAd-Dukhan · The Smoke٥٩ آيةمكية",
-  "href": "/ar/page/496/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الدخان",
-  "href": "/ar/surah/44/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٤٥الجاثيةAl-Jathiyah · The Crouching٣٧ آيةمكية",
-  "href": "/ar/page/499/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الجاثية",
-  "href": "/ar/surah/45/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٤٦الأحقافAl-Ahqaf · The Wind-Curved Sandhills٣٥ آيةمكية",
-  "href": "/ar/page/502/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الأحقاف",
-  "href": "/ar/surah/46/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٤٧محمدMuhammad · Muhammad٣٨ آيةمدنية",
-  "href": "/ar/page/507/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — محمد",
-  "href": "/ar/surah/47/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٤٨الفتحAl-Fath · The Victory٢٩ آيةمدنية",
-  "href": "/ar/page/511/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الفتح",
-  "href": "/ar/surah/48/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٤٩الحجراتAl-Hujurat · The Rooms١٨ آيةمدنية",
-  "href": "/ar/page/515/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الحجرات",
-  "href": "/ar/surah/49/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٥٠قQaf · The Letter \"Qaf\"٤٥ آيةمكية",
-  "href": "/ar/page/518/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — ق",
-  "href": "/ar/surah/50/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٥١الذارياتAdh-Dhariyat · The Winnowing Winds٦٠ آيةمكية",
-  "href": "/ar/page/520/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الذاريات",
-  "href": "/ar/surah/51/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٥٢الطورAt-Tur · The Mount٤٩ آيةمكية",
-  "href": "/ar/page/523/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الطور",
-  "href": "/ar/surah/52/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٥٣النجمAn-Najm · The Star٦٢ آيةمكية",
-  "href": "/ar/page/526/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — النجم",
-  "href": "/ar/surah/53/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٥٤القمرAl-Qamar · The Moon٥٥ آيةمكية",
-  "href": "/ar/page/528/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — القمر",
-  "href": "/ar/surah/54/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٥٥الرحمنAr-Rahman · The Beneficent٧٨ آيةمدنية",
-  "href": "/ar/page/531/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الرحمن",
-  "href": "/ar/surah/55/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٥٦الواقعةAl-Waqi'ah · The Inevitable٩٦ آيةمكية",
-  "href": "/ar/page/534/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الواقعة",
-  "href": "/ar/surah/56/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٥٧الحديدAl-Hadid · The Iron٢٩ آيةمدنية",
-  "href": "/ar/page/537/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الحديد",
-  "href": "/ar/surah/57/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٥٨المجادلةAl-Mujadila · The Pleading Woman٢٢ آيةمدنية",
-  "href": "/ar/page/542/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — المجادلة",
-  "href": "/ar/surah/58/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٥٩الحشرAl-Hashr · The Exile٢٤ آيةمدنية",
-  "href": "/ar/page/545/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الحشر",
-  "href": "/ar/surah/59/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٦٠الممتحنةAl-Mumtahanah · She that is to be examined١٣ آيةمدنية",
-  "href": "/ar/page/549/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الممتحنة",
-  "href": "/ar/surah/60/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٦١الصفAs-Saf · The Ranks١٤ آيةمدنية",
-  "href": "/ar/page/551/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الصف",
-  "href": "/ar/surah/61/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٦٢الجمعةAl-Jumu'ah · The Congregation, Friday١١ آيةمدنية",
-  "href": "/ar/page/553/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الجمعة",
-  "href": "/ar/surah/62/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٦٣المنافقونAl-Munafiqun · The Hypocrites١١ آيةمدنية",
-  "href": "/ar/page/554/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — المنافقون",
-  "href": "/ar/surah/63/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٦٤التغابنAt-Taghabun · The Mutual Disillusion١٨ آيةمدنية",
-  "href": "/ar/page/556/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — التغابن",
-  "href": "/ar/surah/64/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٦٥الطلاقAt-Talaq · The Divorce١٢ آيةمدنية",
-  "href": "/ar/page/558/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الطلاق",
-  "href": "/ar/surah/65/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٦٦التحريمAt-Tahrim · The Prohibition١٢ آيةمدنية",
-  "href": "/ar/page/560/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — التحريم",
-  "href": "/ar/surah/66/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٦٧الملكAl-Mulk · The Sovereignty٣٠ آيةمكية",
-  "href": "/ar/page/562/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الملك",
-  "href": "/ar/surah/67/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٦٨القلمAl-Qalam · The Pen٥٢ آيةمكية",
-  "href": "/ar/page/564/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — القلم",
-  "href": "/ar/surah/68/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٦٩الحاقةAl-Haqqah · The Reality٥٢ آيةمكية",
-  "href": "/ar/page/566/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الحاقة",
-  "href": "/ar/surah/69/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٧٠المعارجAl-Ma'arij · The Ascending Stairways٤٤ آيةمكية",
-  "href": "/ar/page/568/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — المعارج",
-  "href": "/ar/surah/70/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٧١نوحNuh · Noah٢٨ آيةمكية",
-  "href": "/ar/page/570/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — نوح",
-  "href": "/ar/surah/71/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٧٢الجنAl-Jinn · The Jinn٢٨ آيةمكية",
-  "href": "/ar/page/572/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الجن",
-  "href": "/ar/surah/72/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٧٣المزملAl-Muzzammil · The Enshrouded One٢٠ آيةمكية",
-  "href": "/ar/page/574/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — المزمل",
-  "href": "/ar/surah/73/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٧٤المدثرAl-Muddaththir · The Cloaked One٥٦ آيةمكية",
-  "href": "/ar/page/575/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — المدثر",
-  "href": "/ar/surah/74/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٧٥القيامةAl-Qiyamah · The Resurrection٤٠ آيةمكية",
-  "href": "/ar/page/577/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — القيامة",
-  "href": "/ar/surah/75/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٧٦الانسانAl-Insan · The Man٣١ آيةمدنية",
-  "href": "/ar/page/578/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الانسان",
-  "href": "/ar/surah/76/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٧٧المرسلاتAl-Mursalat · The Emissaries٥٠ آيةمكية",
-  "href": "/ar/page/580/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — المرسلات",
-  "href": "/ar/surah/77/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٧٨النبإAn-Naba · The Tidings٤٠ آيةمكية",
-  "href": "/ar/page/582/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — النبإ",
-  "href": "/ar/surah/78/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٧٩النازعاتAn-Nazi'at · Those who drag forth٤٦ آيةمكية",
-  "href": "/ar/page/583/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — النازعات",
-  "href": "/ar/surah/79/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٨٠عبس'Abasa · He Frowned٤٢ آيةمكية",
-  "href": "/ar/page/585/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — عبس",
-  "href": "/ar/surah/80/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٨١التكويرAt-Takwir · The Overthrowing٢٩ آيةمكية",
-  "href": "/ar/page/586/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — التكوير",
-  "href": "/ar/surah/81/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٨٢الإنفطارAl-Infitar · The Cleaving١٩ آيةمكية",
-  "href": "/ar/page/587/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الإنفطار",
-  "href": "/ar/surah/82/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٨٣المطففينAl-Mutaffifin · The Defrauding٣٦ آيةمكية",
-  "href": "/ar/page/587/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — المطففين",
-  "href": "/ar/surah/83/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٨٤الإنشقاقAl-Inshiqaq · The Sundering٢٥ آيةمكية",
-  "href": "/ar/page/589/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الإنشقاق",
-  "href": "/ar/surah/84/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٨٥البروجAl-Buruj · The Mansions of the Stars٢٢ آيةمكية",
-  "href": "/ar/page/590/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — البروج",
-  "href": "/ar/surah/85/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٨٦الطارقAt-Tariq · The Nightcommer١٧ آيةمكية",
-  "href": "/ar/page/591/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الطارق",
-  "href": "/ar/surah/86/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٨٧الأعلىAl-A'la · The Most High١٩ آيةمكية",
-  "href": "/ar/page/591/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الأعلى",
-  "href": "/ar/surah/87/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٨٨الغاشيةAl-Ghashiyah · The Overwhelming٢٦ آيةمكية",
-  "href": "/ar/page/592/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الغاشية",
-  "href": "/ar/surah/88/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٨٩الفجرAl-Fajr · The Dawn٣٠ آيةمكية",
-  "href": "/ar/page/593/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الفجر",
-  "href": "/ar/surah/89/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٩٠البلدAl-Balad · The City٢٠ آيةمكية",
-  "href": "/ar/page/594/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — البلد",
-  "href": "/ar/surah/90/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٩١الشمسAsh-Shams · The Sun١٥ آيةمكية",
-  "href": "/ar/page/595/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الشمس",
-  "href": "/ar/surah/91/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٩٢الليلAl-Layl · The Night٢١ آيةمكية",
-  "href": "/ar/page/595/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الليل",
-  "href": "/ar/surah/92/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٩٣الضحىAd-Duhaa · The Morning Hours١١ آيةمكية",
-  "href": "/ar/page/596/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الضحى",
-  "href": "/ar/surah/93/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٩٤الشرحAsh-Sharh · The Relief٨ آيةمكية",
-  "href": "/ar/page/596/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الشرح",
-  "href": "/ar/surah/94/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٩٥التينAt-Tin · The Fig٨ آيةمكية",
-  "href": "/ar/page/597/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — التين",
-  "href": "/ar/surah/95/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٩٦العلقAl-'Alaq · The Clot١٩ آيةمكية",
-  "href": "/ar/page/597/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — العلق",
-  "href": "/ar/surah/96/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٩٧القدرAl-Qadr · The Power٥ آيةمكية",
-  "href": "/ar/page/598/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — القدر",
-  "href": "/ar/surah/97/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٩٨البينةAl-Bayyinah · The Clear Proof٨ آيةمدنية",
-  "href": "/ar/page/598/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — البينة",
-  "href": "/ar/surah/98/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "٩٩الزلزلةAz-Zalzalah · The Earthquake٨ آيةمدنية",
-  "href": "/ar/page/599/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الزلزلة",
-  "href": "/ar/surah/99/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٠٠العادياتAl-'Adiyat · The Courser١١ آيةمكية",
-  "href": "/ar/page/599/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — العاديات",
-  "href": "/ar/surah/100/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٠١القارعةAl-Qari'ah · The Calamity١١ آيةمكية",
-  "href": "/ar/page/600/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — القارعة",
-  "href": "/ar/surah/101/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٠٢التكاثرAt-Takathur · The Rivalry in world increase٨ آيةمكية",
-  "href": "/ar/page/600/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — التكاثر",
-  "href": "/ar/surah/102/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٠٣العصرAl-'Asr · The Declining Day٣ آيةمكية",
-  "href": "/ar/page/601/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — العصر",
-  "href": "/ar/surah/103/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٠٤الهمزةAl-Humazah · The Traducer٩ آيةمكية",
-  "href": "/ar/page/601/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الهمزة",
-  "href": "/ar/surah/104/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٠٥الفيلAl-Fil · The Elephant٥ آيةمكية",
-  "href": "/ar/page/601/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الفيل",
-  "href": "/ar/surah/105/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٠٦قريشQuraysh · Quraysh٤ آيةمكية",
-  "href": "/ar/page/602/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — قريش",
-  "href": "/ar/surah/106/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٠٧الماعونAl-Ma'un · The Small kindnesses٧ آيةمكية",
-  "href": "/ar/page/602/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الماعون",
-  "href": "/ar/surah/107/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٠٨الكوثرAl-Kawthar · The Abundance٣ آيةمكية",
-  "href": "/ar/page/602/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الكوثر",
-  "href": "/ar/surah/108/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١٠٩الكافرونAl-Kafirun · The Disbelievers٦ آيةمكية",
-  "href": "/ar/page/603/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الكافرون",
-  "href": "/ar/surah/109/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١١٠النصرAn-Nasr · The Divine Support٣ آيةمدنية",
-  "href": "/ar/page/603/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — النصر",
-  "href": "/ar/surah/110/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١١١المسدAl-Masad · The Palm Fiber٥ آيةمكية",
-  "href": "/ar/page/603/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — المسد",
-  "href": "/ar/surah/111/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١١٢الإخلاصAl-Ikhlas · The Sincerity٤ آيةمكية",
-  "href": "/ar/page/604/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الإخلاص",
-  "href": "/ar/surah/112/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١١٣الفلقAl-Falaq · The Daybreak٥ آيةمكية",
-  "href": "/ar/page/604/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الفلق",
-  "href": "/ar/surah/113/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "١١٤الناسAn-Nas · Mankind٦ آيةمكية",
-  "href": "/ar/page/604/"
- },
- {
-  "page": "/ar/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "عرض كقائمة — الناس",
-  "href": "/ar/surah/114/"
  },
  {
   "page": "/ar/quran/",
@@ -4306,6 +4327,20 @@
  },
  {
   "page": "/ar/prayer/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "نبّهني بالأذان عند دخول وقت الصلاة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "اسمع الأذان",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
   "tag": "button",
   "type": "button",
   "name": "إنقاص الفجر دقيقة",
@@ -4561,6 +4596,20 @@
   "tag": "input",
   "type": "checkbox",
   "name": "إظهار الترجمة الإنجليزية في قارئ السورة",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "button",
+  "type": "button",
+  "name": "تعديل التاريخ الهجري −",
+  "href": null
+ },
+ {
+  "page": "/ar/settings/",
+  "tag": "button",
+  "type": "button",
+  "name": "تعديل التاريخ الهجري +",
   "href": null
  },
  {
@@ -7262,7 +7311,7 @@
   "page": "/ar/stories/yusuf/",
   "tag": "select",
   "type": null,
-  "name": "القارئمشاري راشد العفاسيمحمود خليل الحصريالحصري (المصحف المعلّم)عبد الباسط عبد ا",
+  "name": "القارئمشاري راشد العفاسيياسر الدوسريعبد الرحمن السديسماهر المعيقليمحمد صديق المن",
   "href": null
  },
  {
@@ -8177,6 +8226,1630 @@
  },
  {
   "page": "/en/quran/",
+  "tag": "button",
+  "type": "button",
+  "name": "Surahs",
+  "href": null
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "button",
+  "type": "button",
+  "name": "Quarters",
+  "href": null
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "input",
+  "type": "search",
+  "name": "Filter surahs",
+  "href": null
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "button",
+  "type": "button",
+  "name": "Clear search",
+  "href": null
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "1Al-Fatihah · The OpenerPage 1 · 7 ayahs · Meccan",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Fatihah",
+  "href": "/en/surah/1/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "2Al-Baqarah · The CowPage 2 · 286 ayahs · Medinan",
+  "href": "/en/page/2/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Baqarah",
+  "href": "/en/surah/2/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "3Ali 'Imran · Family of ImranPage 50 · 200 ayahs · Medinan",
+  "href": "/en/page/50/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Ali 'Imran",
+  "href": "/en/surah/3/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "4An-Nisa · The WomenPage 77 · 176 ayahs · Medinan",
+  "href": "/en/page/77/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — An-Nisa",
+  "href": "/en/surah/4/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "5Al-Ma'idah · The Table SpreadPage 106 · 120 ayahs · Medinan",
+  "href": "/en/page/106/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Ma'idah",
+  "href": "/en/surah/5/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "6Al-An'am · The CattlePage 128 · 165 ayahs · Meccan",
+  "href": "/en/page/128/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-An'am",
+  "href": "/en/surah/6/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "7Al-A'raf · The HeightsPage 151 · 206 ayahs · Meccan",
+  "href": "/en/page/151/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-A'raf",
+  "href": "/en/surah/7/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "8Al-Anfal · The Spoils of WarPage 177 · 75 ayahs · Medinan",
+  "href": "/en/page/177/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Anfal",
+  "href": "/en/surah/8/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "9At-Tawbah · The RepentancePage 187 · 129 ayahs · Medinan",
+  "href": "/en/page/187/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — At-Tawbah",
+  "href": "/en/surah/9/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "10Yunus · JonahPage 208 · 109 ayahs · Meccan",
+  "href": "/en/page/208/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Yunus",
+  "href": "/en/surah/10/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "11Hud · HudPage 221 · 123 ayahs · Meccan",
+  "href": "/en/page/221/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Hud",
+  "href": "/en/surah/11/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "12Yusuf · JosephPage 235 · 111 ayahs · Meccan",
+  "href": "/en/page/235/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Yusuf",
+  "href": "/en/surah/12/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "13Ar-Ra'd · The ThunderPage 249 · 43 ayahs · Medinan",
+  "href": "/en/page/249/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Ar-Ra'd",
+  "href": "/en/surah/13/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "14Ibrahim · AbrahamPage 255 · 52 ayahs · Meccan",
+  "href": "/en/page/255/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Ibrahim",
+  "href": "/en/surah/14/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "15Al-Hijr · The Rocky TractPage 262 · 99 ayahs · Meccan",
+  "href": "/en/page/262/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Hijr",
+  "href": "/en/surah/15/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "16An-Nahl · The BeePage 267 · 128 ayahs · Meccan",
+  "href": "/en/page/267/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — An-Nahl",
+  "href": "/en/surah/16/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "17Al-Isra · The Night JourneyPage 282 · 111 ayahs · Meccan",
+  "href": "/en/page/282/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Isra",
+  "href": "/en/surah/17/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "18Al-Kahf · The CavePage 293 · 110 ayahs · Meccan",
+  "href": "/en/page/293/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Kahf",
+  "href": "/en/surah/18/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "19Maryam · MaryPage 305 · 98 ayahs · Meccan",
+  "href": "/en/page/305/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Maryam",
+  "href": "/en/surah/19/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "20Taha · Ta-HaPage 312 · 135 ayahs · Meccan",
+  "href": "/en/page/312/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Taha",
+  "href": "/en/surah/20/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "21Al-Anbya · The ProphetsPage 322 · 112 ayahs · Meccan",
+  "href": "/en/page/322/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Anbya",
+  "href": "/en/surah/21/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "22Al-Hajj · The PilgrimagePage 332 · 78 ayahs · Medinan",
+  "href": "/en/page/332/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Hajj",
+  "href": "/en/surah/22/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "23Al-Mu'minun · The BelieversPage 342 · 118 ayahs · Meccan",
+  "href": "/en/page/342/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Mu'minun",
+  "href": "/en/surah/23/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "24An-Nur · The LightPage 350 · 64 ayahs · Medinan",
+  "href": "/en/page/350/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — An-Nur",
+  "href": "/en/surah/24/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "25Al-Furqan · The CriterionPage 359 · 77 ayahs · Meccan",
+  "href": "/en/page/359/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Furqan",
+  "href": "/en/surah/25/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "26Ash-Shu'ara · The PoetsPage 367 · 227 ayahs · Meccan",
+  "href": "/en/page/367/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Ash-Shu'ara",
+  "href": "/en/surah/26/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "27An-Naml · The AntPage 377 · 93 ayahs · Meccan",
+  "href": "/en/page/377/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — An-Naml",
+  "href": "/en/surah/27/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "28Al-Qasas · The StoriesPage 385 · 88 ayahs · Meccan",
+  "href": "/en/page/385/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Qasas",
+  "href": "/en/surah/28/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "29Al-'Ankabut · The SpiderPage 396 · 69 ayahs · Meccan",
+  "href": "/en/page/396/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-'Ankabut",
+  "href": "/en/surah/29/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "30Ar-Rum · The RomansPage 404 · 60 ayahs · Meccan",
+  "href": "/en/page/404/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Ar-Rum",
+  "href": "/en/surah/30/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "31Luqman · LuqmanPage 411 · 34 ayahs · Meccan",
+  "href": "/en/page/411/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Luqman",
+  "href": "/en/surah/31/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "32As-Sajdah · The ProstrationPage 415 · 30 ayahs · Meccan",
+  "href": "/en/page/415/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — As-Sajdah",
+  "href": "/en/surah/32/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "33Al-Ahzab · The Combined ForcesPage 418 · 73 ayahs · Medinan",
+  "href": "/en/page/418/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Ahzab",
+  "href": "/en/surah/33/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "34Saba · ShebaPage 428 · 54 ayahs · Meccan",
+  "href": "/en/page/428/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Saba",
+  "href": "/en/surah/34/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "35Fatir · OriginatorPage 434 · 45 ayahs · Meccan",
+  "href": "/en/page/434/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Fatir",
+  "href": "/en/surah/35/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "36Ya-Sin · Ya SinPage 440 · 83 ayahs · Meccan",
+  "href": "/en/page/440/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Ya-Sin",
+  "href": "/en/surah/36/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "37As-Saffat · Those who set the RanksPage 446 · 182 ayahs · Meccan",
+  "href": "/en/page/446/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — As-Saffat",
+  "href": "/en/surah/37/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "38Sad · The Letter \"Saad\"Page 453 · 88 ayahs · Meccan",
+  "href": "/en/page/453/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Sad",
+  "href": "/en/surah/38/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "39Az-Zumar · The TroopsPage 458 · 75 ayahs · Meccan",
+  "href": "/en/page/458/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Az-Zumar",
+  "href": "/en/surah/39/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "40Ghafir · The ForgiverPage 467 · 85 ayahs · Meccan",
+  "href": "/en/page/467/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Ghafir",
+  "href": "/en/surah/40/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "41Fussilat · Explained in DetailPage 477 · 54 ayahs · Meccan",
+  "href": "/en/page/477/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Fussilat",
+  "href": "/en/surah/41/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "42Ash-Shuraa · The ConsultationPage 483 · 53 ayahs · Meccan",
+  "href": "/en/page/483/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Ash-Shuraa",
+  "href": "/en/surah/42/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "43Az-Zukhruf · The Ornaments of GoldPage 489 · 89 ayahs · Meccan",
+  "href": "/en/page/489/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Az-Zukhruf",
+  "href": "/en/surah/43/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "44Ad-Dukhan · The SmokePage 496 · 59 ayahs · Meccan",
+  "href": "/en/page/496/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Ad-Dukhan",
+  "href": "/en/surah/44/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "45Al-Jathiyah · The CrouchingPage 499 · 37 ayahs · Meccan",
+  "href": "/en/page/499/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Jathiyah",
+  "href": "/en/surah/45/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "46Al-Ahqaf · The Wind-Curved SandhillsPage 502 · 35 ayahs · Meccan",
+  "href": "/en/page/502/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Ahqaf",
+  "href": "/en/surah/46/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "47Muhammad · MuhammadPage 507 · 38 ayahs · Medinan",
+  "href": "/en/page/507/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Muhammad",
+  "href": "/en/surah/47/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "48Al-Fath · The VictoryPage 511 · 29 ayahs · Medinan",
+  "href": "/en/page/511/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Fath",
+  "href": "/en/surah/48/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "49Al-Hujurat · The RoomsPage 515 · 18 ayahs · Medinan",
+  "href": "/en/page/515/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Hujurat",
+  "href": "/en/surah/49/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "50Qaf · The Letter \"Qaf\"Page 518 · 45 ayahs · Meccan",
+  "href": "/en/page/518/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Qaf",
+  "href": "/en/surah/50/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "51Adh-Dhariyat · The Winnowing WindsPage 520 · 60 ayahs · Meccan",
+  "href": "/en/page/520/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Adh-Dhariyat",
+  "href": "/en/surah/51/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "52At-Tur · The MountPage 523 · 49 ayahs · Meccan",
+  "href": "/en/page/523/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — At-Tur",
+  "href": "/en/surah/52/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "53An-Najm · The StarPage 526 · 62 ayahs · Meccan",
+  "href": "/en/page/526/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — An-Najm",
+  "href": "/en/surah/53/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "54Al-Qamar · The MoonPage 528 · 55 ayahs · Meccan",
+  "href": "/en/page/528/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Qamar",
+  "href": "/en/surah/54/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "55Ar-Rahman · The BeneficentPage 531 · 78 ayahs · Medinan",
+  "href": "/en/page/531/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Ar-Rahman",
+  "href": "/en/surah/55/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "56Al-Waqi'ah · The InevitablePage 534 · 96 ayahs · Meccan",
+  "href": "/en/page/534/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Waqi'ah",
+  "href": "/en/surah/56/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "57Al-Hadid · The IronPage 537 · 29 ayahs · Medinan",
+  "href": "/en/page/537/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Hadid",
+  "href": "/en/surah/57/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "58Al-Mujadila · The Pleading WomanPage 542 · 22 ayahs · Medinan",
+  "href": "/en/page/542/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Mujadila",
+  "href": "/en/surah/58/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "59Al-Hashr · The ExilePage 545 · 24 ayahs · Medinan",
+  "href": "/en/page/545/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Hashr",
+  "href": "/en/surah/59/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "60Al-Mumtahanah · She that is to be examinedPage 549 · 13 ayahs · Medinan",
+  "href": "/en/page/549/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Mumtahanah",
+  "href": "/en/surah/60/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "61As-Saf · The RanksPage 551 · 14 ayahs · Medinan",
+  "href": "/en/page/551/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — As-Saf",
+  "href": "/en/surah/61/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "62Al-Jumu'ah · The Congregation, FridayPage 553 · 11 ayahs · Medinan",
+  "href": "/en/page/553/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Jumu'ah",
+  "href": "/en/surah/62/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "63Al-Munafiqun · The HypocritesPage 554 · 11 ayahs · Medinan",
+  "href": "/en/page/554/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Munafiqun",
+  "href": "/en/surah/63/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "64At-Taghabun · The Mutual DisillusionPage 556 · 18 ayahs · Medinan",
+  "href": "/en/page/556/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — At-Taghabun",
+  "href": "/en/surah/64/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "65At-Talaq · The DivorcePage 558 · 12 ayahs · Medinan",
+  "href": "/en/page/558/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — At-Talaq",
+  "href": "/en/surah/65/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "66At-Tahrim · The ProhibitionPage 560 · 12 ayahs · Medinan",
+  "href": "/en/page/560/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — At-Tahrim",
+  "href": "/en/surah/66/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "67Al-Mulk · The SovereigntyPage 562 · 30 ayahs · Meccan",
+  "href": "/en/page/562/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Mulk",
+  "href": "/en/surah/67/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "68Al-Qalam · The PenPage 564 · 52 ayahs · Meccan",
+  "href": "/en/page/564/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Qalam",
+  "href": "/en/surah/68/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "69Al-Haqqah · The RealityPage 566 · 52 ayahs · Meccan",
+  "href": "/en/page/566/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Haqqah",
+  "href": "/en/surah/69/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "70Al-Ma'arij · The Ascending StairwaysPage 568 · 44 ayahs · Meccan",
+  "href": "/en/page/568/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Ma'arij",
+  "href": "/en/surah/70/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "71Nuh · NoahPage 570 · 28 ayahs · Meccan",
+  "href": "/en/page/570/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Nuh",
+  "href": "/en/surah/71/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "72Al-Jinn · The JinnPage 572 · 28 ayahs · Meccan",
+  "href": "/en/page/572/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Jinn",
+  "href": "/en/surah/72/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "73Al-Muzzammil · The Enshrouded OnePage 574 · 20 ayahs · Meccan",
+  "href": "/en/page/574/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Muzzammil",
+  "href": "/en/surah/73/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "74Al-Muddaththir · The Cloaked OnePage 575 · 56 ayahs · Meccan",
+  "href": "/en/page/575/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Muddaththir",
+  "href": "/en/surah/74/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "75Al-Qiyamah · The ResurrectionPage 577 · 40 ayahs · Meccan",
+  "href": "/en/page/577/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Qiyamah",
+  "href": "/en/surah/75/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "76Al-Insan · The ManPage 578 · 31 ayahs · Medinan",
+  "href": "/en/page/578/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Insan",
+  "href": "/en/surah/76/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "77Al-Mursalat · The EmissariesPage 580 · 50 ayahs · Meccan",
+  "href": "/en/page/580/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Mursalat",
+  "href": "/en/surah/77/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "78An-Naba · The TidingsPage 582 · 40 ayahs · Meccan",
+  "href": "/en/page/582/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — An-Naba",
+  "href": "/en/surah/78/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "79An-Nazi'at · Those who drag forthPage 583 · 46 ayahs · Meccan",
+  "href": "/en/page/583/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — An-Nazi'at",
+  "href": "/en/surah/79/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "80'Abasa · He FrownedPage 585 · 42 ayahs · Meccan",
+  "href": "/en/page/585/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — 'Abasa",
+  "href": "/en/surah/80/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "81At-Takwir · The OverthrowingPage 586 · 29 ayahs · Meccan",
+  "href": "/en/page/586/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — At-Takwir",
+  "href": "/en/surah/81/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "82Al-Infitar · The CleavingPage 587 · 19 ayahs · Meccan",
+  "href": "/en/page/587/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Infitar",
+  "href": "/en/surah/82/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "83Al-Mutaffifin · The DefraudingPage 587 · 36 ayahs · Meccan",
+  "href": "/en/page/587/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Mutaffifin",
+  "href": "/en/surah/83/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "84Al-Inshiqaq · The SunderingPage 589 · 25 ayahs · Meccan",
+  "href": "/en/page/589/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Inshiqaq",
+  "href": "/en/surah/84/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "85Al-Buruj · The Mansions of the StarsPage 590 · 22 ayahs · Meccan",
+  "href": "/en/page/590/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Buruj",
+  "href": "/en/surah/85/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "86At-Tariq · The NightcommerPage 591 · 17 ayahs · Meccan",
+  "href": "/en/page/591/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — At-Tariq",
+  "href": "/en/surah/86/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "87Al-A'la · The Most HighPage 591 · 19 ayahs · Meccan",
+  "href": "/en/page/591/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-A'la",
+  "href": "/en/surah/87/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "88Al-Ghashiyah · The OverwhelmingPage 592 · 26 ayahs · Meccan",
+  "href": "/en/page/592/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Ghashiyah",
+  "href": "/en/surah/88/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "89Al-Fajr · The DawnPage 593 · 30 ayahs · Meccan",
+  "href": "/en/page/593/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Fajr",
+  "href": "/en/surah/89/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "90Al-Balad · The CityPage 594 · 20 ayahs · Meccan",
+  "href": "/en/page/594/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Balad",
+  "href": "/en/surah/90/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "91Ash-Shams · The SunPage 595 · 15 ayahs · Meccan",
+  "href": "/en/page/595/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Ash-Shams",
+  "href": "/en/surah/91/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "92Al-Layl · The NightPage 595 · 21 ayahs · Meccan",
+  "href": "/en/page/595/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Layl",
+  "href": "/en/surah/92/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "93Ad-Duhaa · The Morning HoursPage 596 · 11 ayahs · Meccan",
+  "href": "/en/page/596/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Ad-Duhaa",
+  "href": "/en/surah/93/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "94Ash-Sharh · The ReliefPage 596 · 8 ayahs · Meccan",
+  "href": "/en/page/596/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Ash-Sharh",
+  "href": "/en/surah/94/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "95At-Tin · The FigPage 597 · 8 ayahs · Meccan",
+  "href": "/en/page/597/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — At-Tin",
+  "href": "/en/surah/95/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "96Al-'Alaq · The ClotPage 597 · 19 ayahs · Meccan",
+  "href": "/en/page/597/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-'Alaq",
+  "href": "/en/surah/96/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "97Al-Qadr · The PowerPage 598 · 5 ayahs · Meccan",
+  "href": "/en/page/598/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Qadr",
+  "href": "/en/surah/97/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "98Al-Bayyinah · The Clear ProofPage 598 · 8 ayahs · Medinan",
+  "href": "/en/page/598/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Bayyinah",
+  "href": "/en/surah/98/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "99Az-Zalzalah · The EarthquakePage 599 · 8 ayahs · Medinan",
+  "href": "/en/page/599/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Az-Zalzalah",
+  "href": "/en/surah/99/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "100Al-'Adiyat · The CourserPage 599 · 11 ayahs · Meccan",
+  "href": "/en/page/599/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-'Adiyat",
+  "href": "/en/surah/100/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "101Al-Qari'ah · The CalamityPage 600 · 11 ayahs · Meccan",
+  "href": "/en/page/600/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Qari'ah",
+  "href": "/en/surah/101/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "102At-Takathur · The Rivalry in world increasePage 600 · 8 ayahs · Meccan",
+  "href": "/en/page/600/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — At-Takathur",
+  "href": "/en/surah/102/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "103Al-'Asr · The Declining DayPage 601 · 3 ayahs · Meccan",
+  "href": "/en/page/601/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-'Asr",
+  "href": "/en/surah/103/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "104Al-Humazah · The TraducerPage 601 · 9 ayahs · Meccan",
+  "href": "/en/page/601/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Humazah",
+  "href": "/en/surah/104/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "105Al-Fil · The ElephantPage 601 · 5 ayahs · Meccan",
+  "href": "/en/page/601/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Fil",
+  "href": "/en/surah/105/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "106Quraysh · QurayshPage 602 · 4 ayahs · Meccan",
+  "href": "/en/page/602/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Quraysh",
+  "href": "/en/surah/106/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "107Al-Ma'un · The Small kindnessesPage 602 · 7 ayahs · Meccan",
+  "href": "/en/page/602/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Ma'un",
+  "href": "/en/surah/107/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "108Al-Kawthar · The AbundancePage 602 · 3 ayahs · Meccan",
+  "href": "/en/page/602/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Kawthar",
+  "href": "/en/surah/108/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "109Al-Kafirun · The DisbelieversPage 603 · 6 ayahs · Meccan",
+  "href": "/en/page/603/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Kafirun",
+  "href": "/en/surah/109/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "110An-Nasr · The Divine SupportPage 603 · 3 ayahs · Medinan",
+  "href": "/en/page/603/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — An-Nasr",
+  "href": "/en/surah/110/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "111Al-Masad · The Palm FiberPage 603 · 5 ayahs · Meccan",
+  "href": "/en/page/603/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Masad",
+  "href": "/en/surah/111/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "112Al-Ikhlas · The SincerityPage 604 · 4 ayahs · Meccan",
+  "href": "/en/page/604/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Ikhlas",
+  "href": "/en/surah/112/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "113Al-Falaq · The DaybreakPage 604 · 5 ayahs · Meccan",
+  "href": "/en/page/604/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — Al-Falaq",
+  "href": "/en/surah/113/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "114An-Nas · MankindPage 604 · 6 ayahs · Meccan",
+  "href": "/en/page/604/"
+ },
+ {
+  "page": "/en/quran/",
+  "tag": "a",
+  "type": null,
+  "name": "List view — An-Nas",
+  "href": "/en/surah/114/"
+ },
+ {
+  "page": "/en/quran/",
   "tag": "a",
   "type": null,
   "name": "Page 3",
@@ -8209,1609 +9882,6 @@
   "type": "submit",
   "name": "Go",
   "href": null
- },
- {
-  "page": "/en/quran/",
-  "tag": "input",
-  "type": "search",
-  "name": "Filter surahs",
-  "href": null
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "1الفاتحةAl-Fatihah · The Opener7 ayahsMeccan",
-  "href": "/en/page/1/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Fatihah",
-  "href": "/en/surah/1/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "2البقرةAl-Baqarah · The Cow286 ayahsMedinan",
-  "href": "/en/page/2/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Baqarah",
-  "href": "/en/surah/2/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "3آل عمرانAli 'Imran · Family of Imran200 ayahsMedinan",
-  "href": "/en/page/50/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Ali 'Imran",
-  "href": "/en/surah/3/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "4النساءAn-Nisa · The Women176 ayahsMedinan",
-  "href": "/en/page/77/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — An-Nisa",
-  "href": "/en/surah/4/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "5المائدةAl-Ma'idah · The Table Spread120 ayahsMedinan",
-  "href": "/en/page/106/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Ma'idah",
-  "href": "/en/surah/5/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "6الأنعامAl-An'am · The Cattle165 ayahsMeccan",
-  "href": "/en/page/128/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-An'am",
-  "href": "/en/surah/6/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "7الأعرافAl-A'raf · The Heights206 ayahsMeccan",
-  "href": "/en/page/151/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-A'raf",
-  "href": "/en/surah/7/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "8الأنفالAl-Anfal · The Spoils of War75 ayahsMedinan",
-  "href": "/en/page/177/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Anfal",
-  "href": "/en/surah/8/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "9التوبةAt-Tawbah · The Repentance129 ayahsMedinan",
-  "href": "/en/page/187/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — At-Tawbah",
-  "href": "/en/surah/9/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "10يونسYunus · Jonah109 ayahsMeccan",
-  "href": "/en/page/208/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Yunus",
-  "href": "/en/surah/10/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "11هودHud · Hud123 ayahsMeccan",
-  "href": "/en/page/221/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Hud",
-  "href": "/en/surah/11/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "12يوسفYusuf · Joseph111 ayahsMeccan",
-  "href": "/en/page/235/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Yusuf",
-  "href": "/en/surah/12/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "13الرعدAr-Ra'd · The Thunder43 ayahsMedinan",
-  "href": "/en/page/249/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Ar-Ra'd",
-  "href": "/en/surah/13/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "14ابراهيمIbrahim · Abraham52 ayahsMeccan",
-  "href": "/en/page/255/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Ibrahim",
-  "href": "/en/surah/14/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "15الحجرAl-Hijr · The Rocky Tract99 ayahsMeccan",
-  "href": "/en/page/262/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Hijr",
-  "href": "/en/surah/15/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "16النحلAn-Nahl · The Bee128 ayahsMeccan",
-  "href": "/en/page/267/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — An-Nahl",
-  "href": "/en/surah/16/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "17الإسراءAl-Isra · The Night Journey111 ayahsMeccan",
-  "href": "/en/page/282/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Isra",
-  "href": "/en/surah/17/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "18الكهفAl-Kahf · The Cave110 ayahsMeccan",
-  "href": "/en/page/293/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Kahf",
-  "href": "/en/surah/18/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "19مريمMaryam · Mary98 ayahsMeccan",
-  "href": "/en/page/305/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Maryam",
-  "href": "/en/surah/19/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "20طهTaha · Ta-Ha135 ayahsMeccan",
-  "href": "/en/page/312/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Taha",
-  "href": "/en/surah/20/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "21الأنبياءAl-Anbya · The Prophets112 ayahsMeccan",
-  "href": "/en/page/322/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Anbya",
-  "href": "/en/surah/21/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "22الحجAl-Hajj · The Pilgrimage78 ayahsMedinan",
-  "href": "/en/page/332/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Hajj",
-  "href": "/en/surah/22/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "23المؤمنونAl-Mu'minun · The Believers118 ayahsMeccan",
-  "href": "/en/page/342/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Mu'minun",
-  "href": "/en/surah/23/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "24النورAn-Nur · The Light64 ayahsMedinan",
-  "href": "/en/page/350/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — An-Nur",
-  "href": "/en/surah/24/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "25الفرقانAl-Furqan · The Criterion77 ayahsMeccan",
-  "href": "/en/page/359/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Furqan",
-  "href": "/en/surah/25/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "26الشعراءAsh-Shu'ara · The Poets227 ayahsMeccan",
-  "href": "/en/page/367/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Ash-Shu'ara",
-  "href": "/en/surah/26/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "27النملAn-Naml · The Ant93 ayahsMeccan",
-  "href": "/en/page/377/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — An-Naml",
-  "href": "/en/surah/27/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "28القصصAl-Qasas · The Stories88 ayahsMeccan",
-  "href": "/en/page/385/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Qasas",
-  "href": "/en/surah/28/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "29العنكبوتAl-'Ankabut · The Spider69 ayahsMeccan",
-  "href": "/en/page/396/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-'Ankabut",
-  "href": "/en/surah/29/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "30الرومAr-Rum · The Romans60 ayahsMeccan",
-  "href": "/en/page/404/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Ar-Rum",
-  "href": "/en/surah/30/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "31لقمانLuqman · Luqman34 ayahsMeccan",
-  "href": "/en/page/411/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Luqman",
-  "href": "/en/surah/31/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "32السجدةAs-Sajdah · The Prostration30 ayahsMeccan",
-  "href": "/en/page/415/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — As-Sajdah",
-  "href": "/en/surah/32/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "33الأحزابAl-Ahzab · The Combined Forces73 ayahsMedinan",
-  "href": "/en/page/418/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Ahzab",
-  "href": "/en/surah/33/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "34سبإSaba · Sheba54 ayahsMeccan",
-  "href": "/en/page/428/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Saba",
-  "href": "/en/surah/34/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "35فاطرFatir · Originator45 ayahsMeccan",
-  "href": "/en/page/434/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Fatir",
-  "href": "/en/surah/35/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "36يسYa-Sin · Ya Sin83 ayahsMeccan",
-  "href": "/en/page/440/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Ya-Sin",
-  "href": "/en/surah/36/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "37الصافاتAs-Saffat · Those who set the Ranks182 ayahsMeccan",
-  "href": "/en/page/446/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — As-Saffat",
-  "href": "/en/surah/37/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "38صSad · The Letter \"Saad\"88 ayahsMeccan",
-  "href": "/en/page/453/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Sad",
-  "href": "/en/surah/38/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "39الزمرAz-Zumar · The Troops75 ayahsMeccan",
-  "href": "/en/page/458/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Az-Zumar",
-  "href": "/en/surah/39/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "40غافرGhafir · The Forgiver85 ayahsMeccan",
-  "href": "/en/page/467/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Ghafir",
-  "href": "/en/surah/40/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "41فصلتFussilat · Explained in Detail54 ayahsMeccan",
-  "href": "/en/page/477/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Fussilat",
-  "href": "/en/surah/41/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "42الشورىAsh-Shuraa · The Consultation53 ayahsMeccan",
-  "href": "/en/page/483/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Ash-Shuraa",
-  "href": "/en/surah/42/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "43الزخرفAz-Zukhruf · The Ornaments of Gold89 ayahsMeccan",
-  "href": "/en/page/489/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Az-Zukhruf",
-  "href": "/en/surah/43/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "44الدخانAd-Dukhan · The Smoke59 ayahsMeccan",
-  "href": "/en/page/496/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Ad-Dukhan",
-  "href": "/en/surah/44/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "45الجاثيةAl-Jathiyah · The Crouching37 ayahsMeccan",
-  "href": "/en/page/499/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Jathiyah",
-  "href": "/en/surah/45/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "46الأحقافAl-Ahqaf · The Wind-Curved Sandhills35 ayahsMeccan",
-  "href": "/en/page/502/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Ahqaf",
-  "href": "/en/surah/46/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "47محمدMuhammad · Muhammad38 ayahsMedinan",
-  "href": "/en/page/507/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Muhammad",
-  "href": "/en/surah/47/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "48الفتحAl-Fath · The Victory29 ayahsMedinan",
-  "href": "/en/page/511/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Fath",
-  "href": "/en/surah/48/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "49الحجراتAl-Hujurat · The Rooms18 ayahsMedinan",
-  "href": "/en/page/515/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Hujurat",
-  "href": "/en/surah/49/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "50قQaf · The Letter \"Qaf\"45 ayahsMeccan",
-  "href": "/en/page/518/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Qaf",
-  "href": "/en/surah/50/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "51الذارياتAdh-Dhariyat · The Winnowing Winds60 ayahsMeccan",
-  "href": "/en/page/520/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Adh-Dhariyat",
-  "href": "/en/surah/51/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "52الطورAt-Tur · The Mount49 ayahsMeccan",
-  "href": "/en/page/523/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — At-Tur",
-  "href": "/en/surah/52/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "53النجمAn-Najm · The Star62 ayahsMeccan",
-  "href": "/en/page/526/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — An-Najm",
-  "href": "/en/surah/53/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "54القمرAl-Qamar · The Moon55 ayahsMeccan",
-  "href": "/en/page/528/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Qamar",
-  "href": "/en/surah/54/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "55الرحمنAr-Rahman · The Beneficent78 ayahsMedinan",
-  "href": "/en/page/531/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Ar-Rahman",
-  "href": "/en/surah/55/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "56الواقعةAl-Waqi'ah · The Inevitable96 ayahsMeccan",
-  "href": "/en/page/534/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Waqi'ah",
-  "href": "/en/surah/56/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "57الحديدAl-Hadid · The Iron29 ayahsMedinan",
-  "href": "/en/page/537/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Hadid",
-  "href": "/en/surah/57/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "58المجادلةAl-Mujadila · The Pleading Woman22 ayahsMedinan",
-  "href": "/en/page/542/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Mujadila",
-  "href": "/en/surah/58/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "59الحشرAl-Hashr · The Exile24 ayahsMedinan",
-  "href": "/en/page/545/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Hashr",
-  "href": "/en/surah/59/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "60الممتحنةAl-Mumtahanah · She that is to be examined13 ayahsMedinan",
-  "href": "/en/page/549/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Mumtahanah",
-  "href": "/en/surah/60/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "61الصفAs-Saf · The Ranks14 ayahsMedinan",
-  "href": "/en/page/551/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — As-Saf",
-  "href": "/en/surah/61/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "62الجمعةAl-Jumu'ah · The Congregation, Friday11 ayahsMedinan",
-  "href": "/en/page/553/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Jumu'ah",
-  "href": "/en/surah/62/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "63المنافقونAl-Munafiqun · The Hypocrites11 ayahsMedinan",
-  "href": "/en/page/554/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Munafiqun",
-  "href": "/en/surah/63/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "64التغابنAt-Taghabun · The Mutual Disillusion18 ayahsMedinan",
-  "href": "/en/page/556/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — At-Taghabun",
-  "href": "/en/surah/64/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "65الطلاقAt-Talaq · The Divorce12 ayahsMedinan",
-  "href": "/en/page/558/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — At-Talaq",
-  "href": "/en/surah/65/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "66التحريمAt-Tahrim · The Prohibition12 ayahsMedinan",
-  "href": "/en/page/560/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — At-Tahrim",
-  "href": "/en/surah/66/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "67الملكAl-Mulk · The Sovereignty30 ayahsMeccan",
-  "href": "/en/page/562/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Mulk",
-  "href": "/en/surah/67/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "68القلمAl-Qalam · The Pen52 ayahsMeccan",
-  "href": "/en/page/564/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Qalam",
-  "href": "/en/surah/68/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "69الحاقةAl-Haqqah · The Reality52 ayahsMeccan",
-  "href": "/en/page/566/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Haqqah",
-  "href": "/en/surah/69/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "70المعارجAl-Ma'arij · The Ascending Stairways44 ayahsMeccan",
-  "href": "/en/page/568/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Ma'arij",
-  "href": "/en/surah/70/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "71نوحNuh · Noah28 ayahsMeccan",
-  "href": "/en/page/570/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Nuh",
-  "href": "/en/surah/71/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "72الجنAl-Jinn · The Jinn28 ayahsMeccan",
-  "href": "/en/page/572/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Jinn",
-  "href": "/en/surah/72/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "73المزملAl-Muzzammil · The Enshrouded One20 ayahsMeccan",
-  "href": "/en/page/574/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Muzzammil",
-  "href": "/en/surah/73/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "74المدثرAl-Muddaththir · The Cloaked One56 ayahsMeccan",
-  "href": "/en/page/575/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Muddaththir",
-  "href": "/en/surah/74/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "75القيامةAl-Qiyamah · The Resurrection40 ayahsMeccan",
-  "href": "/en/page/577/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Qiyamah",
-  "href": "/en/surah/75/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "76الانسانAl-Insan · The Man31 ayahsMedinan",
-  "href": "/en/page/578/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Insan",
-  "href": "/en/surah/76/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "77المرسلاتAl-Mursalat · The Emissaries50 ayahsMeccan",
-  "href": "/en/page/580/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Mursalat",
-  "href": "/en/surah/77/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "78النبإAn-Naba · The Tidings40 ayahsMeccan",
-  "href": "/en/page/582/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — An-Naba",
-  "href": "/en/surah/78/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "79النازعاتAn-Nazi'at · Those who drag forth46 ayahsMeccan",
-  "href": "/en/page/583/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — An-Nazi'at",
-  "href": "/en/surah/79/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "80عبس'Abasa · He Frowned42 ayahsMeccan",
-  "href": "/en/page/585/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — 'Abasa",
-  "href": "/en/surah/80/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "81التكويرAt-Takwir · The Overthrowing29 ayahsMeccan",
-  "href": "/en/page/586/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — At-Takwir",
-  "href": "/en/surah/81/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "82الإنفطارAl-Infitar · The Cleaving19 ayahsMeccan",
-  "href": "/en/page/587/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Infitar",
-  "href": "/en/surah/82/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "83المطففينAl-Mutaffifin · The Defrauding36 ayahsMeccan",
-  "href": "/en/page/587/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Mutaffifin",
-  "href": "/en/surah/83/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "84الإنشقاقAl-Inshiqaq · The Sundering25 ayahsMeccan",
-  "href": "/en/page/589/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Inshiqaq",
-  "href": "/en/surah/84/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "85البروجAl-Buruj · The Mansions of the Stars22 ayahsMeccan",
-  "href": "/en/page/590/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Buruj",
-  "href": "/en/surah/85/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "86الطارقAt-Tariq · The Nightcommer17 ayahsMeccan",
-  "href": "/en/page/591/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — At-Tariq",
-  "href": "/en/surah/86/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "87الأعلىAl-A'la · The Most High19 ayahsMeccan",
-  "href": "/en/page/591/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-A'la",
-  "href": "/en/surah/87/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "88الغاشيةAl-Ghashiyah · The Overwhelming26 ayahsMeccan",
-  "href": "/en/page/592/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Ghashiyah",
-  "href": "/en/surah/88/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "89الفجرAl-Fajr · The Dawn30 ayahsMeccan",
-  "href": "/en/page/593/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Fajr",
-  "href": "/en/surah/89/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "90البلدAl-Balad · The City20 ayahsMeccan",
-  "href": "/en/page/594/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Balad",
-  "href": "/en/surah/90/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "91الشمسAsh-Shams · The Sun15 ayahsMeccan",
-  "href": "/en/page/595/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Ash-Shams",
-  "href": "/en/surah/91/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "92الليلAl-Layl · The Night21 ayahsMeccan",
-  "href": "/en/page/595/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Layl",
-  "href": "/en/surah/92/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "93الضحىAd-Duhaa · The Morning Hours11 ayahsMeccan",
-  "href": "/en/page/596/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Ad-Duhaa",
-  "href": "/en/surah/93/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "94الشرحAsh-Sharh · The Relief8 ayahsMeccan",
-  "href": "/en/page/596/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Ash-Sharh",
-  "href": "/en/surah/94/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "95التينAt-Tin · The Fig8 ayahsMeccan",
-  "href": "/en/page/597/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — At-Tin",
-  "href": "/en/surah/95/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "96العلقAl-'Alaq · The Clot19 ayahsMeccan",
-  "href": "/en/page/597/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-'Alaq",
-  "href": "/en/surah/96/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "97القدرAl-Qadr · The Power5 ayahsMeccan",
-  "href": "/en/page/598/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Qadr",
-  "href": "/en/surah/97/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "98البينةAl-Bayyinah · The Clear Proof8 ayahsMedinan",
-  "href": "/en/page/598/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Bayyinah",
-  "href": "/en/surah/98/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "99الزلزلةAz-Zalzalah · The Earthquake8 ayahsMedinan",
-  "href": "/en/page/599/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Az-Zalzalah",
-  "href": "/en/surah/99/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "100العادياتAl-'Adiyat · The Courser11 ayahsMeccan",
-  "href": "/en/page/599/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-'Adiyat",
-  "href": "/en/surah/100/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "101القارعةAl-Qari'ah · The Calamity11 ayahsMeccan",
-  "href": "/en/page/600/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Qari'ah",
-  "href": "/en/surah/101/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "102التكاثرAt-Takathur · The Rivalry in world increase8 ayahsMeccan",
-  "href": "/en/page/600/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — At-Takathur",
-  "href": "/en/surah/102/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "103العصرAl-'Asr · The Declining Day3 ayahsMeccan",
-  "href": "/en/page/601/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-'Asr",
-  "href": "/en/surah/103/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "104الهمزةAl-Humazah · The Traducer9 ayahsMeccan",
-  "href": "/en/page/601/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Humazah",
-  "href": "/en/surah/104/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "105الفيلAl-Fil · The Elephant5 ayahsMeccan",
-  "href": "/en/page/601/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Fil",
-  "href": "/en/surah/105/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "106قريشQuraysh · Quraysh4 ayahsMeccan",
-  "href": "/en/page/602/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Quraysh",
-  "href": "/en/surah/106/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "107الماعونAl-Ma'un · The Small kindnesses7 ayahsMeccan",
-  "href": "/en/page/602/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Ma'un",
-  "href": "/en/surah/107/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "108الكوثرAl-Kawthar · The Abundance3 ayahsMeccan",
-  "href": "/en/page/602/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Kawthar",
-  "href": "/en/surah/108/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "109الكافرونAl-Kafirun · The Disbelievers6 ayahsMeccan",
-  "href": "/en/page/603/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Kafirun",
-  "href": "/en/surah/109/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "110النصرAn-Nasr · The Divine Support3 ayahsMedinan",
-  "href": "/en/page/603/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — An-Nasr",
-  "href": "/en/surah/110/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "111المسدAl-Masad · The Palm Fiber5 ayahsMeccan",
-  "href": "/en/page/603/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Masad",
-  "href": "/en/surah/111/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "112الإخلاصAl-Ikhlas · The Sincerity4 ayahsMeccan",
-  "href": "/en/page/604/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Ikhlas",
-  "href": "/en/surah/112/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "113الفلقAl-Falaq · The Daybreak5 ayahsMeccan",
-  "href": "/en/page/604/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — Al-Falaq",
-  "href": "/en/surah/113/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "114الناسAn-Nas · Mankind6 ayahsMeccan",
-  "href": "/en/page/604/"
- },
- {
-  "page": "/en/quran/",
-  "tag": "a",
-  "type": null,
-  "name": "List view — An-Nas",
-  "href": "/en/surah/114/"
  },
  {
   "page": "/en/quran/",
@@ -12307,6 +12377,20 @@
  },
  {
   "page": "/en/prayer/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "Alert me with the adhan at prayer times",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Listen to the adhan",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
   "tag": "button",
   "type": "button",
   "name": "Decrease Fajr by one minute",
@@ -12562,6 +12646,20 @@
   "tag": "input",
   "type": "checkbox",
   "name": "Show the English translation in the surah reader",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "button",
+  "type": "button",
+  "name": "Hijri date adjustment −",
+  "href": null
+ },
+ {
+  "page": "/en/settings/",
+  "tag": "button",
+  "type": "button",
+  "name": "Hijri date adjustment +",
   "href": null
  },
  {
@@ -15263,7 +15361,7 @@
   "page": "/en/stories/yusuf/",
   "tag": "select",
   "type": null,
-  "name": "ReciterMishary Rashid AlafasyMahmoud Khalil Al-HusaryAl-Husary (teaching)Abdul B",
+  "name": "ReciterMishary Rashid AlafasyYasser Al-DosariAbdurrahman As-SudaisMaher Al-Muaiq",
   "href": null
  },
  {

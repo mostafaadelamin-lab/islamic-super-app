@@ -103,3 +103,13 @@ def test_methods_file_is_complete():
     for key, cfg in m["methods"].items():
         assert {"nameAr", "nameEn", "fajr"} <= cfg.keys(), key
         assert ("isha" in cfg) != ("ishaMinutes" in cfg), key
+
+
+def test_umm_al_qura_isha_is_120_minutes_in_ramadan():
+    # Ramadan 1447 AH = 2026-02-18 .. 2026-03-19 (Umm al-Qura calendar).
+    assert P.in_ramadan(2026, 2, 18) and P.in_ramadan(2026, 3, 19)
+    assert not P.in_ramadan(2026, 2, 17) and not P.in_ramadan(2026, 3, 20)
+    r = P.prayer_times(date(2026, 3, 1), 21.3891, 39.8579, "makkah")
+    assert (r.isha - r.maghrib).total_seconds() == pytest.approx(120 * 60, abs=60)
+    q = P.prayer_times(date(2026, 3, 1), 25.2854, 51.531, "qatar")  # Qatar keeps 90 all year
+    assert (q.isha - q.maghrib).total_seconds() == pytest.approx(90 * 60, abs=60)

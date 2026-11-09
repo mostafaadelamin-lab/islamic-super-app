@@ -13,13 +13,23 @@ export interface Preferences {
   theme: ThemePref;
   fontSize: number;
   translation: boolean;
+  /** Days added to the Umm al-Qura Hijri date to match the locally announced date (moon sighting). */
+  hijriOffset: number;
 }
 export const DEFAULT_PREFS: Preferences = {
   locale: null,
   theme: "system",
   fontSize: FONT_DEFAULT,
   translation: false,
+  hijriOffset: 0,
 };
+
+export const HIJRI_OFFSET_MAX = 2;
+export function clampHijriOffset(v: unknown): number {
+  const n = typeof v === "number" ? v : Number(v);
+  if (!Number.isFinite(n)) return 0;
+  return Math.min(HIJRI_OFFSET_MAX, Math.max(-HIJRI_OFFSET_MAX, Math.round(n)));
+}
 
 export function clampFontSize(v: unknown): number {
   const n = typeof v === "number" ? v : Number(v);
@@ -36,6 +46,7 @@ export function sanitizePrefs(raw: unknown): Preferences {
     theme: r.theme === "light" || r.theme === "dark" ? r.theme : "system",
     fontSize: r.fontSize === undefined ? FONT_DEFAULT : clampFontSize(r.fontSize),
     translation: r.translation === true,
+    hijriOffset: clampHijriOffset(r.hijriOffset ?? 0),
   };
 }
 

@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../domain/hijri.dart';
 import '../domain/prayer_schedule.dart';
 import '../domain/quran.dart';
 
 /// User preferences, persisted in shared_preferences.
 class SettingsController extends ChangeNotifier {
-  SettingsController(this._prefs, {String defaultCityId = 'c1'}) : _defaultCityId = defaultCityId;
+  SettingsController(this._prefs, {String defaultCityId = 'c1'}) : _defaultCityId = defaultCityId {
+    hijriOffsetDays = hijriOffset;
+  }
 
   static const defaultApiBaseUrl = 'http://10.0.2.2:8000';
   static const minFontSize = 18.0;
@@ -62,6 +65,15 @@ class SettingsController extends ChangeNotifier {
   bool get showTranslation => _prefs.getBool('showTranslation') ?? false;
   Future<void> setShowTranslation(bool v) async {
     await _prefs.setBool('showTranslation', v);
+    notifyListeners();
+  }
+
+  /// Days added to the Umm al-Qura Hijri date (-2..+2) to match the local moon sighting.
+  int get hijriOffset => clampHijriOffset(_prefs.getInt('hijriOffset') ?? 0);
+  Future<void> setHijriOffset(int v) async {
+    final c = clampHijriOffset(v);
+    await _prefs.setInt('hijriOffset', c);
+    hijriOffsetDays = c;
     notifyListeners();
   }
 

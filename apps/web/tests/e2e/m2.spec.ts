@@ -440,8 +440,8 @@ test.describe("adhkar", () => {
     await page.goto("/ar/adhkar/#morning");
     await expect(page.getByTestId("session-morning")).toHaveAttribute("aria-pressed", "true");
     const items = page.getByTestId("dhikr");
-    await expect(items).toHaveCount(27);
-    await expect(page.getByTestId("adhkar-progress")).toHaveText("أتممت ٠ من ٢٧");
+    await expect(items).toHaveCount(26);
+    await expect(page.getByTestId("adhkar-progress")).toHaveText("أتممت ٠ من ٢٦");
     const first = items.nth(0).getByTestId("dhikr-count");
     await first.click();
     await expect(first).toBeDisabled();
@@ -453,9 +453,9 @@ test.describe("adhkar", () => {
     for (let i = 0; i < 3; i++) await ikhlas.click();
     await expect(ikhlasShown).toHaveText("٣ / ٣");
     await expect(ikhlas).toBeDisabled();
-    await expect(page.getByTestId("adhkar-progress")).toHaveText("أتممت ٢ من ٢٧");
+    await expect(page.getByTestId("adhkar-progress")).toHaveText("أتممت ٢ من ٢٦");
     await page.reload();
-    await expect(page.getByTestId("adhkar-progress")).toHaveText("أتممت ٢ من ٢٧");
+    await expect(page.getByTestId("adhkar-progress")).toHaveText("أتممت ٢ من ٢٦");
     await page.getByTestId("session-evening").click();
     await expect(page).toHaveURL(/#evening$/);
     await expect(items).toHaveCount(25);
@@ -463,7 +463,7 @@ test.describe("adhkar", () => {
     await expect(items.nth(6)).toContainText("أمسينا");
     await page.getByTestId("session-morning").click();
     await page.getByTestId("adhkar-reset").click();
-    await expect(page.getByTestId("adhkar-progress")).toHaveText("أتممت ٠ من ٢٧");
+    await expect(page.getByTestId("adhkar-progress")).toHaveText("أتممت ٠ من ٢٦");
     w.assertClean();
   });
 
@@ -544,8 +544,16 @@ test.describe("qibla compass", () => {
       ),
     );
     await expect(page.getByTestId("live-compass")).toHaveAttribute("data-mode", "live");
-    await expect(page.getByTestId("compass-heading")).toHaveText("Device heading: 90°");
-    await expect(page.getByTestId("compass-dial")).toHaveAttribute("transform", "rotate(-90.00 100 100)");
+    // The magnetic heading is corrected to true north with the local declination (WMM2025).
+    const decl = Number(await page.getByTestId("live-compass").getAttribute("data-declination"));
+    expect(Math.abs(decl)).toBeLessThan(30);
+    const trueH = (((90 + decl) % 360) + 360) % 360;
+    await expect(page.getByTestId("compass-heading")).toContainText(`Device heading: ${Math.round(trueH)}°`);
+    await expect(page.getByTestId("compass-heading")).toContainText("corrected from magnetic to true north");
+    await expect(page.getByTestId("compass-dial")).toHaveAttribute(
+      "transform",
+      `rotate(${(-trueH).toFixed(2)} 100 100)`,
+    );
     await expect(page.getByTestId("compass-status")).toHaveText(
       "Turn the device until the gold arrow points up",
     );
@@ -558,9 +566,9 @@ test.describe("qibla compass", () => {
             } catch {
               return Object.assign(new Event(type), init);
             }
-          })("deviceorientationabsolute", { alpha: 360 - b, absolute: true }),
+          })("deviceorientationabsolute", { alpha: 360 - (b.bearing - b.decl), absolute: true }),
         ),
-      bearing,
+      { bearing, decl },
     );
     await expect(page.getByTestId("compass-status")).toHaveText("You are facing the Qibla");
   });
@@ -580,7 +588,11 @@ test.describe("qibla compass", () => {
       Object.assign(e, { alpha: 0, webkitCompassHeading: 45 });
       window.dispatchEvent(e);
     });
-    await expect(page.getByTestId("compass-heading")).toHaveText("اتجاه الجهاز: ٤٥°");
+    const decl = Number(await page.getByTestId("live-compass").getAttribute("data-declination"));
+    const ar = (n: number): string => String(n).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[Number(d)]!);
+    await expect(page.getByTestId("compass-heading")).toContainText(
+      `اتجاه الجهاز: ${ar(Math.round(45 + decl))}°`,
+    );
     await page.evaluate(() => localStorage.setItem("test.perm", "denied"));
     await page.reload();
     await page.getByTestId("compass-enable").click();

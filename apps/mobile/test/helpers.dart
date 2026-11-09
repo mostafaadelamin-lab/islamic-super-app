@@ -346,10 +346,13 @@ class FakeAdhanPlayer implements AdhanPlayer {
 }
 
 class FakeSensors implements CompassSensors {
-  FakeSensors(this.accelerometer, this.magnetometer);
+  FakeSensors(this.accelerometer, this.magnetometer, {this.systemHeading});
 
   /// A device without sensors: both streams stay silent.
   factory FakeSensors.none() => FakeSensors(const Stream.empty(), const Stream.empty());
+
+  @override
+  final Stream<double>? systemHeading;
 
   @override
   final Stream<Vec3> accelerometer;
