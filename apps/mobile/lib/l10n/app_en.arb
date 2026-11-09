@@ -1355,11 +1355,15 @@
   "@readerTabTafsir": {
     "description": "shared key \"reader.tabTafsir\""
   },
-  "reelsCatLesson": "Short lesson",
+  "reelsCatAdmonition": "Advice & admonition",
+  "@reelsCatAdmonition": {
+    "description": "shared key \"reels.cat.admonition\""
+  },
+  "reelsCatLesson": "Religious lesson",
   "@reelsCatLesson": {
     "description": "shared key \"reels.cat.lesson\""
   },
-  "reelsCatRecitation": "Moving recitation",
+  "reelsCatRecitation": "Quran recitation",
   "@reelsCatRecitation": {
     "description": "shared key \"reels.cat.recitation\""
   },
@@ -1375,17 +1379,29 @@
   "@reelsNext": {
     "description": "shared key \"reels.next\""
   },
-  "reelsNote": "Reels play from YouTube through its official player. They are limited to moving Quran recitations and short religious lessons in line with the Quran and Sunnah, and only reviewed reels are shown.",
+  "reelsNote": "Reels play from YouTube and Instagram through their official players. They are limited to Quran recitations, religious lessons, and advice and admonitions in line with the Quran and Sunnah, and only reviewed reels are shown.",
   "@reelsNote": {
     "description": "shared key \"reels.note\""
   },
-  "reelsOpen": "Open on YouTube",
-  "@reelsOpen": {
-    "description": "shared key \"reels.open\""
+  "reelsOpenInstagram": "Open on Instagram",
+  "@reelsOpenInstagram": {
+    "description": "shared key \"reels.open.instagram\""
+  },
+  "reelsOpenYoutube": "Open on YouTube",
+  "@reelsOpenYoutube": {
+    "description": "shared key \"reels.open.youtube\""
   },
   "reelsPending": "This reel has not been religiously reviewed yet — you see it because reviewer mode is on",
   "@reelsPending": {
     "description": "shared key \"reels.pending\""
+  },
+  "reelsPlatformInstagram": "Instagram",
+  "@reelsPlatformInstagram": {
+    "description": "shared key \"reels.platform.instagram\""
+  },
+  "reelsPlatformYoutube": "YouTube",
+  "@reelsPlatformYoutube": {
+    "description": "shared key \"reels.platform.youtube\""
   },
   "reelsPosition": "Reel {n} of {total}",
   "@reelsPosition": {
@@ -1423,6 +1439,10 @@
   "reelsSub": "Reviewed short videos",
   "@reelsSub": {
     "description": "shared key \"reels.sub\""
+  },
+  "reelsTapToPlay": "Tap to play",
+  "@reelsTapToPlay": {
+    "description": "shared key \"reels.tapToPlay\""
   },
   "reelsTitle": "Islamic reels",
   "@reelsTitle": {

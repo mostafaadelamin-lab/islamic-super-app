@@ -182,7 +182,9 @@ describe("tafsir with recitation", () => {
     expect(half).toHaveAccessibleName("Short tafsir");
     expect((await screen.findByText(entry(2, 1))).dataset.testid).toBe("tafsir-text");
     expect(screen.getByTestId("split-ayah")).toHaveAttribute("data-ayah", "2:1");
-    expect((await screen.findByTestId("split-ayah-text")).textContent).toContain(renderQuranText(lookup(2, 1)));
+    expect((await screen.findByTestId("split-ayah-text")).textContent).toContain(
+      renderQuranText(lookup(2, 1)),
+    );
     expect(screen.queryByTestId("tafsir-next")).toBeNull(); // the player has its own next/previous
     end();
     expect((await screen.findByText(entry(2, 2))).dataset.testid).toBe("tafsir-text");
@@ -208,5 +210,4 @@ describe("tafsir with recitation", () => {
     expect(screen.getByTestId("split-ayah")).toHaveAttribute("data-ayah", "2:7");
     expect((await screen.findByText(entry(2, 7))).dataset.testid).toBe("tafsir-text");
   });
-
 });

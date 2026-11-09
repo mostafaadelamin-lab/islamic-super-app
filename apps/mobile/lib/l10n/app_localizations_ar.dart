@@ -916,10 +916,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerTabTafsir => 'التفسير';
 
   @override
-  String get reelsCatLesson => 'درس ديني مختصر';
+  String get reelsCatAdmonition => 'نصائح ومواعظ';
 
   @override
-  String get reelsCatRecitation => 'تلاوة خاشعة';
+  String get reelsCatLesson => 'درس ديني';
+
+  @override
+  String get reelsCatRecitation => 'تلاوة قرآنية';
 
   @override
   String get reelsEmpty => 'لا توجد مقاطع مراجَعة بعد. تُضاف المقاطع بعد مراجعتها شرعياً.';
@@ -932,13 +935,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get reelsNote =>
-      'المقاطع معروضة من يوتيوب بمشغّله الرسمي، وتقتصر على التلاوات الخاشعة والدروس الدينية المختصرة الموافقة للكتاب والسنة، ولا يُعرض إلا ما راجعه مختص.';
+      'المقاطع معروضة من يوتيوب وإنستجرام بمشغّلاتها الرسمية، وتقتصر على تلاوات القرآن الكريم والدروس الدينية والنصائح والمواعظ الموافقة للكتاب والسنة، ولا يُعرض إلا ما راجعه مختص.';
 
   @override
-  String get reelsOpen => 'افتح على يوتيوب';
+  String get reelsOpenInstagram => 'افتح على إنستجرام';
+
+  @override
+  String get reelsOpenYoutube => 'افتح على يوتيوب';
 
   @override
   String get reelsPending => 'لم تتم مراجعة هذا المقطع شرعياً بعد — يظهر لك لأن وضع المراجعة مفعّل';
+
+  @override
+  String get reelsPlatformInstagram => 'إنستجرام';
+
+  @override
+  String get reelsPlatformYoutube => 'يوتيوب';
 
   @override
   String reelsPosition(String n, String total) {
@@ -961,6 +973,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get reelsSub => 'مقاطع قصيرة مراجَعة';
+
+  @override
+  String get reelsTapToPlay => 'اضغط للتشغيل';
 
   @override
   String get reelsTitle => 'ريلز إسلامية';

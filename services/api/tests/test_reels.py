@@ -18,6 +18,10 @@ spec.loader.exec_module(reels)
         ("https://youtu.be/26dRG7OeL6Q?si=abc", ("youtube", "26dRG7OeL6Q")),
         ("https://www.youtube.com/watch?v=26dRG7OeL6Q&t=10s", ("youtube", "26dRG7OeL6Q")),
         ("https://m.youtube.com/embed/26dRG7OeL6Q", ("youtube", "26dRG7OeL6Q")),
+        ("https://www.instagram.com/reel/C1a2B3c4D5e/", ("instagram", "C1a2B3c4D5e")),
+        ("https://instagram.com/reels/C1a2B3c4D5e?igsh=xyz", ("instagram", "C1a2B3c4D5e")),
+        ("https://www.instagram.com/p/C1a2B3c4D5e/", ("instagram", "C1a2B3c4D5e")),
+        ("https://www.instagram.com/someuser/reel/C1a2B3c4D5e/", ("instagram", "C1a2B3c4D5e")),
     ],
 )
 def test_parse_url(url, expected):
@@ -31,7 +35,8 @@ def test_parse_url(url, expected):
         "javascript:alert(1)",
         "https://www.youtube.com/watch?v=short",
         "https://www.youtube.com/@channel",
-        "https://www.instagram.com/reel/C1a2B3c4D5e/",  # Instagram not enabled yet
+        "https://www.instagram.com/someuser/",  # a profile, not a reel
+        "https://www.instagram.com/reel/a.b/",
         "https://evil.example/youtube.com/shorts/hTtlD-u4_HI",
         "https://www.youtube.com/shorts/<script>xx",
     ],
@@ -65,12 +70,15 @@ def test_validate_rejects_bad_ids_and_duplicates():
     assert any(": ref" in p for p in probs)
 
 
-def test_validate_only_allows_recitation_and_lessons():
-    assert reels.CATEGORIES == ("recitation", "lesson")
+def test_validate_only_allows_owner_categories_and_platforms():
+    assert reels.CATEGORIES == ("recitation", "lesson", "admonition")
+    assert reels.PLATFORMS == ("youtube", "instagram")
     cat = {"schema": "reels-catalogue.v1", "items": [_item(category="music")]}
     assert any("category" in p for p in reels.validate(cat))
-    ig = _item(id="ig-C1a2B3c4D5e", platform="instagram", ref="C1a2B3c4D5e", url="https://www.instagram.com/reel/C1a2B3c4D5e/")
-    assert any("platform" in p for p in reels.validate({"schema": "reels-catalogue.v1", "items": [ig]}))
+    ig = _item(id="ig-C1a2B3c4D5e", platform="instagram", ref="C1a2B3c4D5e", url="https://www.instagram.com/reel/C1a2B3c4D5e/", category="admonition")
+    assert reels.validate({"schema": "reels-catalogue.v1", "items": [ig]}) == []
+    tt = _item(id="tt-1", platform="tiktok", ref="12345")
+    assert any("platform" in p for p in reels.validate({"schema": "reels-catalogue.v1", "items": [tt]}))
 
 
 def test_bundle_drops_rejected_and_orders_approved_first():

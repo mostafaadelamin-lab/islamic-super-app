@@ -1817,6 +1817,18 @@ dd {
   object-fit: cover;
   opacity: 0.6;
 }
+.reel-poster-blank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  background: linear-gradient(160deg, var(--color-primary), #06140f);
+  color: #fff;
+}
+.reel-poster-blank svg {
+  width: 56px;
+  height: 56px;
+}
 .reel-banner {
   position: absolute;
   inset-inline: var(--space-sm);

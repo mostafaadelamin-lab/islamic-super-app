@@ -161,7 +161,9 @@ class _PrayerScreenState extends State<PrayerScreen> {
                                     ? l.adhanBellOn(context.prayerName(k))
                                     : l.adhanBellOff(context.prayerName(k)),
                                 icon: Icon(
-                                  s.settings.adhanFor(k) ? Icons.notifications_active : Icons.notifications_off_outlined,
+                                  s.settings.adhanFor(k)
+                                      ? Icons.notifications_active
+                                      : Icons.notifications_off_outlined,
                                   color: s.settings.adhanFor(k) ? Theme.of(context).colorScheme.primary : null,
                                 ),
                                 onPressed: () => s.settings.setAdhanFor(k, !s.settings.adhanFor(k)),

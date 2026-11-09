@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased] — Reels: Instagram + admonitions — 2026-11-09
+### Added
+- Reels now accept Instagram as well as YouTube (owner decision 2026-11-09). Instagram reels play through Instagram's official embed page (no Meta app, token or account); they need a tap to play.
+- Third reels category "advice and admonitions" (نصائح ومواعظ). Categories are now: Quran recitation, religious lesson, advice and admonitions.
+- Reels show a platform chip (YouTube / Instagram) and an "Open on YouTube / Instagram" button; Instagram reels show a placeholder instead of a poster off-screen.
+- Mobile: only the official embed pages may load inside the feed; any other link opens the YouTube/Instagram app or the browser.
+### Unchanged
+- Religious review gate (pending / approved / rejected): users still see approved reels only.
+
 ## [Unreleased] — Mushaf reader redesign + listen with tafsir — 2026-11-09
 ### Changed
 - Mushaf page reader redesigned on the website and the mobile app after the owner's mockup (layout only; our own icons and ornaments): tabs Mushaf / Ayat / Tafsir at the top, an ornate surah band, a floating recitation card (reciter drop-down, previous / play-pause / next, repeat count, "Listen with tafsir"), a page slider and a bottom bar (Index, Bookmarks, Khatma, Search). On phones the reader is full-screen.

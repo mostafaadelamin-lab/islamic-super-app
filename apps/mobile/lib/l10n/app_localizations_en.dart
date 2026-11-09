@@ -917,10 +917,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerTabTafsir => 'Tafsir';
 
   @override
-  String get reelsCatLesson => 'Short lesson';
+  String get reelsCatAdmonition => 'Advice & admonition';
 
   @override
-  String get reelsCatRecitation => 'Moving recitation';
+  String get reelsCatLesson => 'Religious lesson';
+
+  @override
+  String get reelsCatRecitation => 'Quran recitation';
 
   @override
   String get reelsEmpty => 'No reviewed reels yet. Reels are added after a religious review.';
@@ -933,13 +936,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reelsNote =>
-      'Reels play from YouTube through its official player. They are limited to moving Quran recitations and short religious lessons in line with the Quran and Sunnah, and only reviewed reels are shown.';
+      'Reels play from YouTube and Instagram through their official players. They are limited to Quran recitations, religious lessons, and advice and admonitions in line with the Quran and Sunnah, and only reviewed reels are shown.';
 
   @override
-  String get reelsOpen => 'Open on YouTube';
+  String get reelsOpenInstagram => 'Open on Instagram';
+
+  @override
+  String get reelsOpenYoutube => 'Open on YouTube';
 
   @override
   String get reelsPending => 'This reel has not been religiously reviewed yet — you see it because reviewer mode is on';
+
+  @override
+  String get reelsPlatformInstagram => 'Instagram';
+
+  @override
+  String get reelsPlatformYoutube => 'YouTube';
 
   @override
   String reelsPosition(String n, String total) {
@@ -962,6 +974,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reelsSub => 'Reviewed short videos';
+
+  @override
+  String get reelsTapToPlay => 'Tap to play';
 
   @override
   String get reelsTitle => 'Islamic reels';

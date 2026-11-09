@@ -15,6 +15,14 @@ const yt: Reel = {
   reviewedAt: "2026-11-09",
 };
 const pend: Reel = { ...yt, id: "yt-26dRG7OeL6Q", ref: "26dRG7OeL6Q", category: "lesson", status: "pending" };
+const ig: Reel = {
+  ...yt,
+  id: "ig-C1a2B3c4D5e",
+  platform: "instagram",
+  ref: "C1a2B3c4D5e",
+  url: "https://www.instagram.com/reel/C1a2B3c4D5e/",
+  category: "admonition",
+};
 
 describe("reels", () => {
   it("bundles exactly the built catalogue (rejected ones never reach the app)", () => {
@@ -32,11 +40,11 @@ describe("reels", () => {
       { ...yt, platform: "tiktok" },
       { ...yt, status: "rejected" },
       { ...pend, ref: "../../evil" },
-      { ...yt, platform: "instagram" },
+      { ...ig, ref: "a/b" },
       { ...yt, category: "music" },
       null,
     ];
-    expect(sanitizeReels({ items: [yt, ...bad, pend] })).toEqual([yt, pend]);
+    expect(sanitizeReels({ items: [yt, ...bad, pend, ig] })).toEqual([yt, pend, ig]);
     expect(sanitizeReels({})).toEqual([]);
   });
   it("builds official embed URLs", () => {
@@ -48,5 +56,7 @@ describe("reels", () => {
     expect(u.searchParams.get("playsinline")).toBe("1");
     expect(u.searchParams.get("origin")).toBe("https://app.example");
     expect(posterUrl(yt)).toBe("https://i.ytimg.com/vi/hTtlD-u4_HI/hqdefault.jpg");
+    expect(embedUrl(ig)).toBe("https://www.instagram.com/reel/C1a2B3c4D5e/embed/");
+    expect(posterUrl(ig)).toBeNull();
   });
 });

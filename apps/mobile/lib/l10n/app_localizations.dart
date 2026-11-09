@@ -1670,16 +1670,22 @@ abstract class AppLocalizations {
   /// **'Tafsir'**
   String get readerTabTafsir;
 
+  /// shared key "reels.cat.admonition"
+  ///
+  /// In en, this message translates to:
+  /// **'Advice & admonition'**
+  String get reelsCatAdmonition;
+
   /// shared key "reels.cat.lesson"
   ///
   /// In en, this message translates to:
-  /// **'Short lesson'**
+  /// **'Religious lesson'**
   String get reelsCatLesson;
 
   /// shared key "reels.cat.recitation"
   ///
   /// In en, this message translates to:
-  /// **'Moving recitation'**
+  /// **'Quran recitation'**
   String get reelsCatRecitation;
 
   /// shared key "reels.empty"
@@ -1703,20 +1709,38 @@ abstract class AppLocalizations {
   /// shared key "reels.note"
   ///
   /// In en, this message translates to:
-  /// **'Reels play from YouTube through its official player. They are limited to moving Quran recitations and short religious lessons in line with the Quran and Sunnah, and only reviewed reels are shown.'**
+  /// **'Reels play from YouTube and Instagram through their official players. They are limited to Quran recitations, religious lessons, and advice and admonitions in line with the Quran and Sunnah, and only reviewed reels are shown.'**
   String get reelsNote;
 
-  /// shared key "reels.open"
+  /// shared key "reels.open.instagram"
+  ///
+  /// In en, this message translates to:
+  /// **'Open on Instagram'**
+  String get reelsOpenInstagram;
+
+  /// shared key "reels.open.youtube"
   ///
   /// In en, this message translates to:
   /// **'Open on YouTube'**
-  String get reelsOpen;
+  String get reelsOpenYoutube;
 
   /// shared key "reels.pending"
   ///
   /// In en, this message translates to:
   /// **'This reel has not been religiously reviewed yet — you see it because reviewer mode is on'**
   String get reelsPending;
+
+  /// shared key "reels.platform.instagram"
+  ///
+  /// In en, this message translates to:
+  /// **'Instagram'**
+  String get reelsPlatformInstagram;
+
+  /// shared key "reels.platform.youtube"
+  ///
+  /// In en, this message translates to:
+  /// **'YouTube'**
+  String get reelsPlatformYoutube;
 
   /// shared key "reels.position"
   ///
@@ -1753,6 +1777,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reviewed short videos'**
   String get reelsSub;
+
+  /// shared key "reels.tapToPlay"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to play'**
+  String get reelsTapToPlay;
 
   /// shared key "reels.title"
   ///
