@@ -421,5 +421,8 @@
   "downloads.delete": "حذف {surah}",
   "downloads.total": "المجموع: {mb} ميغابايت",
   "downloads.deleteAll": "حذف الكل",
-  "downloads.deleteAllConfirm": "حذف كل التلاوات المحفوظة من هذا الجهاز؟"
+  "downloads.deleteAllConfirm": "حذف كل التلاوات المحفوظة من هذا الجهاز؟",
+  "mushaf.shareImage": "مشاركة كصورة",
+  "mushaf.imageSaved": "حُفظت الصورة في التنزيلات.",
+  "mushaf.imageFailed": "تعذّر إنشاء الصورة في هذا المتصفح."
 }

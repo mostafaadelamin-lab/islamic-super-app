@@ -180,6 +180,13 @@ test.describe("Mushaf reader (15-line Madinah layout)", () => {
         `${text[1]![6]} — البقرة، الآية ٧`,
       );
     }
+    // share as image: without file sharing (desktop Chromium headless) the PNG is downloaded
+    const [download] = await Promise.all([
+      page.waitForEvent("download"),
+      bar.getByTestId("act-share-image").click(),
+    ]);
+    expect(download.suggestedFilename()).toBe("rattil-2-7.png");
+    await expect(bar.getByTestId("mushaf-notice")).toHaveText("حُفظت الصورة في التنزيلات.");
     await bar.getByTestId("act-close").click();
     await expect(bar).toBeHidden();
     // tapping words selects their ayah too

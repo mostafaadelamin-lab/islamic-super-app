@@ -421,5 +421,8 @@
   "downloads.delete": "Delete {surah}",
   "downloads.total": "Total: {mb} MB",
   "downloads.deleteAll": "Delete all",
-  "downloads.deleteAllConfirm": "Delete every saved recitation from this device?"
+  "downloads.deleteAllConfirm": "Delete every saved recitation from this device?",
+  "mushaf.shareImage": "Share as image",
+  "mushaf.imageSaved": "Image saved to your downloads.",
+  "mushaf.imageFailed": "Could not create the image in this browser."
 }

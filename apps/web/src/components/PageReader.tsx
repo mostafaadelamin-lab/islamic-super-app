@@ -36,6 +36,7 @@ import { KHATMA_DWELL_MS, khatmaStore, markRead } from "@/lib/page-khatma";
 import { MushafPage } from "./MushafPage";
 import { GoToPage } from "./GoToPage";
 import { Icon } from "./Icon";
+import { shareAyahImage } from "@/lib/ayah-image";
 import { TafsirPanel } from "./TafsirPanel";
 import { ReaderPlayer } from "./ReaderPlayer";
 import { ReaderIcon } from "./ReaderIcon";
@@ -401,6 +402,20 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     }
   };
 
+  const shareImage = async (): Promise<void> => {
+    if (!sel) return;
+    try {
+      const d = data ?? (await loadMushafData());
+      const outcome = await shareAyahImage(
+        { text: d.text(sel[0], sel[1]), reference: ref(sel[0], sel[1]), brand: t(locale, "appName") },
+        `rattil-${sel[0]}-${sel[1]}.png`,
+      );
+      if (outcome === "downloaded") setNotice(t(locale, "mushaf.imageSaved"));
+    } catch {
+      setNotice(t(locale, "mushaf.imageFailed"));
+    }
+  };
+
   const tilt = drag.dx / TILT_DIVISOR;
   const refs = pageAyahRefs(view);
   const recitedAyah: Ref | null = current?.kind === "ayah" ? [current.s, current.a] : null;
@@ -662,6 +677,14 @@ export function PageReader({ locale, initial }: PageReaderProps) {
                 onClick={() => void copySelected()}
               >
                 <Icon name="copy" size={16} /> {t(locale, "mushaf.copy")}
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm"
+                data-testid="act-share-image"
+                onClick={() => void shareImage()}
+              >
+                <Icon name="image" size={16} /> {t(locale, "mushaf.shareImage")}
               </button>
               <button
                 type="button"
