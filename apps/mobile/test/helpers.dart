@@ -19,6 +19,7 @@ import 'package:rattil/domain/qibla.dart';
 import 'package:rattil/domain/tafsir.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest_all.dart' as tzdata;
+import 'package:timezone/timezone.dart' as tz;
 
 /// Repo root, resolved from apps/mobile (the cwd of `flutter test`).
 final repoRoot = Directory.current.parent.parent.path;
@@ -326,6 +327,7 @@ class FakeNotifications implements NotificationsBackend {
   Future<void> cancelAll() async {
     cancels++;
     scheduled.clear();
+    repeating.clear();
   }
 
   @override
@@ -336,6 +338,26 @@ class FakeNotifications implements NotificationsBackend {
     required DateTime atUtc,
     String sound = 'adhan',
   }) async => scheduled.add((id: id, title: title, body: body, at: atUtc, sound: sound));
+
+  final repeating = <int, ({String title, String body, int hour, int minute, int? weekday})>{};
+
+  @override
+  Future<void> scheduleRepeating({
+    required int id,
+    required String title,
+    required String body,
+    required int hour,
+    required int minute,
+    required tz.Location location,
+    required DateTime nowUtc,
+    int? weekday,
+  }) async => repeating[id] = (title: title, body: body, hour: hour, minute: minute, weekday: weekday);
+
+  @override
+  Future<void> cancel(int id) async {
+    repeating.remove(id);
+    scheduled.removeWhere((n) => n.id == id);
+  }
 }
 
 class FakeAdhanPlayer implements AdhanPlayer {

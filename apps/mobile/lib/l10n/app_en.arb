@@ -685,6 +685,219 @@
   "@homeWelcome": {
     "description": "shared key \"home.welcome\""
   },
+  "khatmaAhead": "{n} portions ahead of the plan, may Allah bless you.",
+  "@khatmaAhead": {
+    "description": "shared key \"khatma.ahead\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "khatmaBehind": "{n} days behind the plan.",
+  "@khatmaBehind": {
+    "description": "shared key \"khatma.behind\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "khatmaByDays": "Number of days",
+  "@khatmaByDays": {
+    "description": "shared key \"khatma.byDays\""
+  },
+  "khatmaByPages": "Pages per day",
+  "@khatmaByPages": {
+    "description": "shared key \"khatma.byPages\""
+  },
+  "khatmaCurrentWird": "Current portion ({n} of {total})",
+  "@khatmaCurrentWird": {
+    "description": "shared key \"khatma.currentWird\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "khatmaDays": "Finish in (days)",
+  "@khatmaDays": {
+    "description": "shared key \"khatma.days\""
+  },
+  "khatmaDaysN": "{n} days",
+  "@khatmaDaysN": {
+    "description": "shared key \"khatma.daysN\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "khatmaDefaultName": "My khatma",
+  "@khatmaDefaultName": {
+    "description": "shared key \"khatma.defaultName\""
+  },
+  "khatmaDelete": "Delete khatma",
+  "@khatmaDelete": {
+    "description": "shared key \"khatma.delete\""
+  },
+  "khatmaDeleteConfirm": "Delete this khatma? This cannot be undone.",
+  "@khatmaDeleteConfirm": {
+    "description": "shared key \"khatma.deleteConfirm\""
+  },
+  "khatmaEndsOn": "Finishes on: {date}",
+  "@khatmaEndsOn": {
+    "description": "shared key \"khatma.endsOn\"",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "khatmaFinishedOn": "completed on {date} in {days} days",
+  "@khatmaFinishedOn": {
+    "description": "shared key \"khatma.finishedOn\"",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "khatmaHistory": "Completed khatmas",
+  "@khatmaHistory": {
+    "description": "shared key \"khatma.history\""
+  },
+  "khatmaHistoryEmpty": "You have not completed a khatma yet.",
+  "@khatmaHistoryEmpty": {
+    "description": "shared key \"khatma.historyEmpty\""
+  },
+  "khatmaJuz": "Juz {n}",
+  "@khatmaJuz": {
+    "description": "shared key \"khatma.juz\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "khatmaMarkDone": "I have read it",
+  "@khatmaMarkDone": {
+    "description": "shared key \"khatma.markDone\""
+  },
+  "khatmaName": "Khatma name",
+  "@khatmaName": {
+    "description": "shared key \"khatma.name\""
+  },
+  "khatmaNew": "New khatma",
+  "@khatmaNew": {
+    "description": "shared key \"khatma.new\""
+  },
+  "khatmaOpening": "من قوله تعالى:",
+  "@khatmaOpening": {
+    "description": "shared key \"khatma.opening\""
+  },
+  "khatmaPagesPerDay": "Pages each day",
+  "@khatmaPagesPerDay": {
+    "description": "shared key \"khatma.pagesPerDay\""
+  },
+  "khatmaPreview": "{wirds} portions, about {pages} pages a day, finishing on {end}.",
+  "@khatmaPreview": {
+    "description": "shared key \"khatma.preview\"",
+    "placeholders": {
+      "wirds": {
+        "type": "String"
+      },
+      "pages": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "khatmaRange": "From surah {fromSurah} ayah {fromAyah}, page {fromPage} to surah {toSurah} ayah {toAyah}, page {toPage}",
+  "@khatmaRange": {
+    "description": "shared key \"khatma.range\"",
+    "placeholders": {
+      "fromSurah": {
+        "type": "String"
+      },
+      "fromAyah": {
+        "type": "String"
+      },
+      "fromPage": {
+        "type": "String"
+      },
+      "toSurah": {
+        "type": "String"
+      },
+      "toAyah": {
+        "type": "String"
+      },
+      "toPage": {
+        "type": "String"
+      }
+    }
+  },
+  "khatmaRead": "Read the portion",
+  "@khatmaRead": {
+    "description": "shared key \"khatma.read\""
+  },
+  "khatmaRemainingDays": "Days left",
+  "@khatmaRemainingDays": {
+    "description": "shared key \"khatma.remainingDays\""
+  },
+  "khatmaRemainingWirds": "Portions left",
+  "@khatmaRemainingWirds": {
+    "description": "shared key \"khatma.remainingWirds\""
+  },
+  "khatmaReminder": "Daily reminder",
+  "@khatmaReminder": {
+    "description": "shared key \"khatma.reminder\""
+  },
+  "khatmaReminderBody": "Time for today's portion of “{name}”",
+  "@khatmaReminderBody": {
+    "description": "shared key \"khatma.reminderBody\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "khatmaReminderTitle": "Khatma portion",
+  "@khatmaReminderTitle": {
+    "description": "shared key \"khatma.reminderTitle\""
+  },
+  "khatmaRename": "Edit",
+  "@khatmaRename": {
+    "description": "shared key \"khatma.rename\""
+  },
+  "khatmaReschedule": "Spread the rest again",
+  "@khatmaReschedule": {
+    "description": "shared key \"khatma.reschedule\""
+  },
+  "khatmaShowAll": "Show all",
+  "@khatmaShowAll": {
+    "description": "shared key \"khatma.showAll\""
+  },
+  "khatmaStart": "Start the khatma",
+  "@khatmaStart": {
+    "description": "shared key \"khatma.start\""
+  },
+  "khatmaTileSub": "A daily plan to complete the Mushaf",
+  "@khatmaTileSub": {
+    "description": "shared key \"khatma.tileSub\""
+  },
+  "khatmaTitle": "Quran khatma",
+  "@khatmaTitle": {
+    "description": "shared key \"khatma.title\""
+  },
   "moreTitle": "More",
   "@moreTitle": {
     "description": "shared key \"more.title\""

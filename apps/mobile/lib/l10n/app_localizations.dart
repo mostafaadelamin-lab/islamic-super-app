@@ -890,6 +890,210 @@ abstract class AppLocalizations {
   /// **'Peace be upon you'**
   String get homeWelcome;
 
+  /// shared key "khatma.ahead"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} portions ahead of the plan, may Allah bless you.'**
+  String khatmaAhead(String n);
+
+  /// shared key "khatma.behind"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} days behind the plan.'**
+  String khatmaBehind(String n);
+
+  /// shared key "khatma.byDays"
+  ///
+  /// In en, this message translates to:
+  /// **'Number of days'**
+  String get khatmaByDays;
+
+  /// shared key "khatma.byPages"
+  ///
+  /// In en, this message translates to:
+  /// **'Pages per day'**
+  String get khatmaByPages;
+
+  /// shared key "khatma.currentWird"
+  ///
+  /// In en, this message translates to:
+  /// **'Current portion ({n} of {total})'**
+  String khatmaCurrentWird(String n, String total);
+
+  /// shared key "khatma.days"
+  ///
+  /// In en, this message translates to:
+  /// **'Finish in (days)'**
+  String get khatmaDays;
+
+  /// shared key "khatma.daysN"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} days'**
+  String khatmaDaysN(String n);
+
+  /// shared key "khatma.defaultName"
+  ///
+  /// In en, this message translates to:
+  /// **'My khatma'**
+  String get khatmaDefaultName;
+
+  /// shared key "khatma.delete"
+  ///
+  /// In en, this message translates to:
+  /// **'Delete khatma'**
+  String get khatmaDelete;
+
+  /// shared key "khatma.deleteConfirm"
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this khatma? This cannot be undone.'**
+  String get khatmaDeleteConfirm;
+
+  /// shared key "khatma.endsOn"
+  ///
+  /// In en, this message translates to:
+  /// **'Finishes on: {date}'**
+  String khatmaEndsOn(String date);
+
+  /// shared key "khatma.finishedOn"
+  ///
+  /// In en, this message translates to:
+  /// **'completed on {date} in {days} days'**
+  String khatmaFinishedOn(String date, String days);
+
+  /// shared key "khatma.history"
+  ///
+  /// In en, this message translates to:
+  /// **'Completed khatmas'**
+  String get khatmaHistory;
+
+  /// shared key "khatma.historyEmpty"
+  ///
+  /// In en, this message translates to:
+  /// **'You have not completed a khatma yet.'**
+  String get khatmaHistoryEmpty;
+
+  /// shared key "khatma.juz"
+  ///
+  /// In en, this message translates to:
+  /// **'Juz {n}'**
+  String khatmaJuz(String n);
+
+  /// shared key "khatma.markDone"
+  ///
+  /// In en, this message translates to:
+  /// **'I have read it'**
+  String get khatmaMarkDone;
+
+  /// shared key "khatma.name"
+  ///
+  /// In en, this message translates to:
+  /// **'Khatma name'**
+  String get khatmaName;
+
+  /// shared key "khatma.new"
+  ///
+  /// In en, this message translates to:
+  /// **'New khatma'**
+  String get khatmaNew;
+
+  /// shared key "khatma.opening"
+  ///
+  /// In en, this message translates to:
+  /// **'من قوله تعالى:'**
+  String get khatmaOpening;
+
+  /// shared key "khatma.pagesPerDay"
+  ///
+  /// In en, this message translates to:
+  /// **'Pages each day'**
+  String get khatmaPagesPerDay;
+
+  /// shared key "khatma.preview"
+  ///
+  /// In en, this message translates to:
+  /// **'{wirds} portions, about {pages} pages a day, finishing on {end}.'**
+  String khatmaPreview(String wirds, String pages, String end);
+
+  /// shared key "khatma.range"
+  ///
+  /// In en, this message translates to:
+  /// **'From surah {fromSurah} ayah {fromAyah}, page {fromPage} to surah {toSurah} ayah {toAyah}, page {toPage}'**
+  String khatmaRange(String fromSurah, String fromAyah, String fromPage, String toSurah, String toAyah, String toPage);
+
+  /// shared key "khatma.read"
+  ///
+  /// In en, this message translates to:
+  /// **'Read the portion'**
+  String get khatmaRead;
+
+  /// shared key "khatma.remainingDays"
+  ///
+  /// In en, this message translates to:
+  /// **'Days left'**
+  String get khatmaRemainingDays;
+
+  /// shared key "khatma.remainingWirds"
+  ///
+  /// In en, this message translates to:
+  /// **'Portions left'**
+  String get khatmaRemainingWirds;
+
+  /// shared key "khatma.reminder"
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminder'**
+  String get khatmaReminder;
+
+  /// shared key "khatma.reminderBody"
+  ///
+  /// In en, this message translates to:
+  /// **'Time for today\'s portion of “{name}”'**
+  String khatmaReminderBody(String name);
+
+  /// shared key "khatma.reminderTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Khatma portion'**
+  String get khatmaReminderTitle;
+
+  /// shared key "khatma.rename"
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get khatmaRename;
+
+  /// shared key "khatma.reschedule"
+  ///
+  /// In en, this message translates to:
+  /// **'Spread the rest again'**
+  String get khatmaReschedule;
+
+  /// shared key "khatma.showAll"
+  ///
+  /// In en, this message translates to:
+  /// **'Show all'**
+  String get khatmaShowAll;
+
+  /// shared key "khatma.start"
+  ///
+  /// In en, this message translates to:
+  /// **'Start the khatma'**
+  String get khatmaStart;
+
+  /// shared key "khatma.tileSub"
+  ///
+  /// In en, this message translates to:
+  /// **'A daily plan to complete the Mushaf'**
+  String get khatmaTileSub;
+
+  /// shared key "khatma.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Quran khatma'**
+  String get khatmaTitle;
+
   /// shared key "more.title"
   ///
   /// In en, this message translates to:

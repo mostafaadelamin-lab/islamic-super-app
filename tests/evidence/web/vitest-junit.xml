@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="4" failures="0" errors="0" time="0.141400899">
-    <testsuite name="tests/components/radio.test.tsx" timestamp="2026-11-09T19:39:37.834Z" hostname="vm" tests="4" failures="0" errors="0" skipped="0" time="0.141400899">
-        <testcase classname="tests/components/radio.test.tsx" name="radio queue &gt; visits every surah once, starting at the chosen one and wrapping after an-Nas" time="0.00488303">
+<testsuites name="vitest tests" tests="4" failures="0" errors="0" time="0.394165372">
+    <testsuite name="tests/components/khatma.test.tsx" timestamp="2026-11-09T21:03:12.843Z" hostname="vm" tests="4" failures="0" errors="0" skipped="0" time="0.394165372">
+        <testcase classname="tests/components/khatma.test.tsx" name="KhatmaView &gt; creates a 30-day khatma and marks wirds read" time="0.191248375">
         </testcase>
-        <testcase classname="tests/components/radio.test.tsx" name="radio queue &gt; plays all 6236 ayahs plus a basmala before each surah except al-Fatihah and at-Tawbah" time="0.003894946">
+        <testcase classname="tests/components/khatma.test.tsx" name="KhatmaView &gt; pages-per-day mode" time="0.051487143">
         </testcase>
-        <testcase classname="tests/components/radio.test.tsx" name="radio queue &gt; random start is always a valid surah" time="0.000465723">
+        <testcase classname="tests/components/khatma.test.tsx" name="KhatmaView &gt; late: shows how many days behind and reschedules" time="0.044396869">
         </testcase>
-        <testcase classname="tests/components/radio.test.tsx" name="QuranRadio &gt; plays the whole Mushaf with the chosen reciter and stops after the chosen duration" time="0.12950663">
+        <testcase classname="tests/components/khatma.test.tsx" name="KhatmaView &gt; finishing moves it to the history; delete asks first" time="0.104201208">
             <system-err>
-An update to QuranRadio inside a test was not wrapped in act(...).
+An update to KhatmaView inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() =&gt; {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you&apos;re testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to History inside a test was not wrapped in act(...).
 
 When testing, code that causes React state updates should be wrapped into act(...):
 

@@ -469,6 +469,128 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeWelcome => 'السلام عليكم';
 
   @override
+  String khatmaAhead(String n) {
+    return 'متقدم $n ورد على الخطة، بارك الله فيك.';
+  }
+
+  @override
+  String khatmaBehind(String n) {
+    return 'متأخر $n يوم عن الخطة.';
+  }
+
+  @override
+  String get khatmaByDays => 'عدد الأيام';
+
+  @override
+  String get khatmaByPages => 'عدد الصفحات يوميًا';
+
+  @override
+  String khatmaCurrentWird(String n, String total) {
+    return 'الورد الحالي ($n من $total)';
+  }
+
+  @override
+  String get khatmaDays => 'أختم خلال (يوم)';
+
+  @override
+  String khatmaDaysN(String n) {
+    return '$n يومًا';
+  }
+
+  @override
+  String get khatmaDefaultName => 'ختمتي';
+
+  @override
+  String get khatmaDelete => 'حذف الختمة';
+
+  @override
+  String get khatmaDeleteConfirm => 'حذف هذه الختمة؟ لا يمكن التراجع.';
+
+  @override
+  String khatmaEndsOn(String date) {
+    return 'تختم في: $date';
+  }
+
+  @override
+  String khatmaFinishedOn(String date, String days) {
+    return 'خُتمت في $date خلال $days يومًا';
+  }
+
+  @override
+  String get khatmaHistory => 'سجل الختمات';
+
+  @override
+  String get khatmaHistoryEmpty => 'ليس لديك ختمة كاملة بعد.';
+
+  @override
+  String khatmaJuz(String n) {
+    return 'الجزء $n';
+  }
+
+  @override
+  String get khatmaMarkDone => 'أتممت القراءة';
+
+  @override
+  String get khatmaName => 'اسم الختمة';
+
+  @override
+  String get khatmaNew => 'ختمة جديدة';
+
+  @override
+  String get khatmaOpening => 'من قوله تعالى:';
+
+  @override
+  String get khatmaPagesPerDay => 'صفحات كل يوم';
+
+  @override
+  String khatmaPreview(String wirds, String pages, String end) {
+    return '$wirds وردًا، نحو $pages صفحة يوميًا، وتختم يوم $end.';
+  }
+
+  @override
+  String khatmaRange(String fromSurah, String fromAyah, String fromPage, String toSurah, String toAyah, String toPage) {
+    return 'من سورة $fromSurah آية $fromAyah صفحة $fromPage إلى سورة $toSurah آية $toAyah صفحة $toPage';
+  }
+
+  @override
+  String get khatmaRead => 'اقرأ الورد';
+
+  @override
+  String get khatmaRemainingDays => 'الأيام المتبقية';
+
+  @override
+  String get khatmaRemainingWirds => 'الأوراد المتبقية';
+
+  @override
+  String get khatmaReminder => 'تذكير يومي بالورد';
+
+  @override
+  String khatmaReminderBody(String name) {
+    return 'حان وقت وردك اليومي من «$name»';
+  }
+
+  @override
+  String get khatmaReminderTitle => 'ورد الختمة';
+
+  @override
+  String get khatmaRename => 'تعديل';
+
+  @override
+  String get khatmaReschedule => 'أعد توزيع الأوراد';
+
+  @override
+  String get khatmaShowAll => 'عرض الكل';
+
+  @override
+  String get khatmaStart => 'ابدأ الختمة';
+
+  @override
+  String get khatmaTileSub => 'خطة يومية لختم المصحف';
+
+  @override
+  String get khatmaTitle => 'ختمة القرآن';
+
+  @override
   String get moreTitle => 'المزيد';
 
   @override

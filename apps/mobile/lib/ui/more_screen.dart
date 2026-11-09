@@ -7,6 +7,7 @@ import 'hisn_screen.dart';
 import 'l10n_ext.dart';
 import 'qibla_screen.dart';
 import 'reels_screen.dart';
+import 'khatma_screen.dart';
 import 'stories_screen.dart';
 import 'search_screen.dart';
 import 'settings_screen.dart';
@@ -36,6 +37,7 @@ class MoreScreen extends StatelessWidget {
             children: [
               tile('bookmarks', Icons.bookmarks_outlined, l.navBookmarks, () => const BookmarksScreen()),
               tile('search', Icons.search, l.quranSearch, () => const SearchScreen()),
+              tile('khatma', Icons.donut_large_outlined, l.khatmaTitle, () => const KhatmaScreen()),
             ],
           ),
           SectionCard(

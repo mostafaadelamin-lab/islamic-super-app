@@ -9,9 +9,11 @@ import 'data/account.dart';
 import 'data/bookmarks.dart';
 import 'data/content.dart';
 import 'data/devotions.dart';
+import 'data/khatma_store.dart';
 import 'data/location.dart';
 import 'data/notifications.dart';
 import 'data/recitation.dart';
+import 'data/reminders.dart';
 import 'data/sensors.dart';
 import 'data/settings.dart';
 import 'data/tafsir.dart';
@@ -36,6 +38,8 @@ class AppServices {
     required this.narration,
     required this.sleepTimer,
     this.location = const GeolocatorLocation(),
+    required this.khatma,
+    required this.reminders,
   });
 
   factory AppServices.create({
@@ -59,6 +63,15 @@ class AppServices {
       return PrayerSchedule.localDate(tz.getLocation(city.tz), c().toUtc());
     }
 
+    final backend = notifications ?? LocalNotificationsBackend();
+    final reminders = ReminderScheduler(
+      backend: backend,
+      location: () => tz.getLocation(resolveCity(content, settings).tz),
+      clock: c,
+      locale: () => settings.locale,
+    );
+    final khatma = KhatmaController(settings, localToday, onReminderChanged: reminders.sync);
+    reminders.addSource(khatma.reminders);
     final recitation = RecitationController(
       content: content,
       settings: settings,
@@ -87,7 +100,9 @@ class AppServices {
       adhan: AdhanScheduler(
         content: content,
         settings: settings,
-        backend: notifications ?? LocalNotificationsBackend(),
+        backend: backend,
+        reserved: () => reminders.activeCount,
+        afterReset: reminders.scheduleActive,
         clock: c,
         // Android has no small cap on pending alarms, so a month ahead keeps the
         // adhan going even if the app is not opened; iOS keeps at most 64.
@@ -100,6 +115,8 @@ class AppServices {
       sensors: sensors ?? const DeviceCompassSensors(),
       tafsir: tafsir ?? TafsirStore.asset(rootBundle),
       location: location ?? const GeolocatorLocation(),
+      khatma: khatma,
+      reminders: reminders,
     );
   }
 
@@ -126,6 +143,12 @@ class AppServices {
 
   /// Device position for "use my location".
   final LocationProvider location;
+
+  /// Quran khatma plan and history.
+  final KhatmaController khatma;
+
+  /// Repeating reminders (khatma portion, adhkar, Friday).
+  final ReminderScheduler reminders;
 }
 
 class AppScope extends InheritedWidget {

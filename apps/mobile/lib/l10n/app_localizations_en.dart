@@ -472,6 +472,128 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeWelcome => 'Peace be upon you';
 
   @override
+  String khatmaAhead(String n) {
+    return '$n portions ahead of the plan, may Allah bless you.';
+  }
+
+  @override
+  String khatmaBehind(String n) {
+    return '$n days behind the plan.';
+  }
+
+  @override
+  String get khatmaByDays => 'Number of days';
+
+  @override
+  String get khatmaByPages => 'Pages per day';
+
+  @override
+  String khatmaCurrentWird(String n, String total) {
+    return 'Current portion ($n of $total)';
+  }
+
+  @override
+  String get khatmaDays => 'Finish in (days)';
+
+  @override
+  String khatmaDaysN(String n) {
+    return '$n days';
+  }
+
+  @override
+  String get khatmaDefaultName => 'My khatma';
+
+  @override
+  String get khatmaDelete => 'Delete khatma';
+
+  @override
+  String get khatmaDeleteConfirm => 'Delete this khatma? This cannot be undone.';
+
+  @override
+  String khatmaEndsOn(String date) {
+    return 'Finishes on: $date';
+  }
+
+  @override
+  String khatmaFinishedOn(String date, String days) {
+    return 'completed on $date in $days days';
+  }
+
+  @override
+  String get khatmaHistory => 'Completed khatmas';
+
+  @override
+  String get khatmaHistoryEmpty => 'You have not completed a khatma yet.';
+
+  @override
+  String khatmaJuz(String n) {
+    return 'Juz $n';
+  }
+
+  @override
+  String get khatmaMarkDone => 'I have read it';
+
+  @override
+  String get khatmaName => 'Khatma name';
+
+  @override
+  String get khatmaNew => 'New khatma';
+
+  @override
+  String get khatmaOpening => 'من قوله تعالى:';
+
+  @override
+  String get khatmaPagesPerDay => 'Pages each day';
+
+  @override
+  String khatmaPreview(String wirds, String pages, String end) {
+    return '$wirds portions, about $pages pages a day, finishing on $end.';
+  }
+
+  @override
+  String khatmaRange(String fromSurah, String fromAyah, String fromPage, String toSurah, String toAyah, String toPage) {
+    return 'From surah $fromSurah ayah $fromAyah, page $fromPage to surah $toSurah ayah $toAyah, page $toPage';
+  }
+
+  @override
+  String get khatmaRead => 'Read the portion';
+
+  @override
+  String get khatmaRemainingDays => 'Days left';
+
+  @override
+  String get khatmaRemainingWirds => 'Portions left';
+
+  @override
+  String get khatmaReminder => 'Daily reminder';
+
+  @override
+  String khatmaReminderBody(String name) {
+    return 'Time for today\'s portion of “$name”';
+  }
+
+  @override
+  String get khatmaReminderTitle => 'Khatma portion';
+
+  @override
+  String get khatmaRename => 'Edit';
+
+  @override
+  String get khatmaReschedule => 'Spread the rest again';
+
+  @override
+  String get khatmaShowAll => 'Show all';
+
+  @override
+  String get khatmaStart => 'Start the khatma';
+
+  @override
+  String get khatmaTileSub => 'A daily plan to complete the Mushaf';
+
+  @override
+  String get khatmaTitle => 'Quran khatma';
+
+  @override
   String get moreTitle => 'More';
 
   @override

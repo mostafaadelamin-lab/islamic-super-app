@@ -27,6 +27,38 @@ abstract class NotificationsBackend {
     required DateTime atUtc,
     String sound = 'adhan',
   });
+
+  /// A notification repeating every day (or every week on [weekday], 1 = Monday)
+  /// at [hour]:[minute] in [location] (the prayer city's time zone).
+  Future<void> scheduleRepeating({
+    required int id,
+    required String title,
+    required String body,
+    required int hour,
+    required int minute,
+    required tz.Location location,
+    required DateTime nowUtc,
+    int? weekday,
+  });
+
+  Future<void> cancel(int id);
+}
+
+/// The next instant at [hour]:[minute] (on [weekday] when given) in [location]
+/// strictly after [nowUtc].
+tz.TZDateTime nextOccurrence({
+  required int hour,
+  required int minute,
+  required tz.Location location,
+  required DateTime nowUtc,
+  int? weekday,
+}) {
+  final now = tz.TZDateTime.from(nowUtc, location);
+  var t = tz.TZDateTime(location, now.year, now.month, now.day, hour, minute);
+  while (!t.isAfter(now) || (weekday != null && t.weekday != weekday)) {
+    t = tz.TZDateTime(location, t.year, t.month, t.day + 1, hour, minute);
+  }
+  return t;
 }
 
 /// Id of the one-off "try it now" notification (real ids are yyyymmddN).
@@ -142,6 +174,46 @@ class LocalNotificationsBackend implements NotificationsBackend {
       androidScheduleMode: _exact ? AndroidScheduleMode.exactAllowWhileIdle : AndroidScheduleMode.inexactAllowWhileIdle,
     );
   }
+
+  static const _reminderAndroid = AndroidNotificationDetails(
+    'reminders',
+    'تذكيرات (الورد، الأذكار، الجمعة) · Reminders',
+    channelDescription: 'Daily khatma portion, morning/evening adhkar and Friday reminders',
+    importance: Importance.high,
+    priority: Priority.high,
+  );
+
+  @override
+  Future<void> scheduleRepeating({
+    required int id,
+    required String title,
+    required String body,
+    required int hour,
+    required int minute,
+    required tz.Location location,
+    required DateTime nowUtc,
+    int? weekday,
+  }) async {
+    await init();
+    await _plugin.zonedSchedule(
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: nextOccurrence(hour: hour, minute: minute, location: location, nowUtc: nowUtc, weekday: weekday),
+      notificationDetails: const NotificationDetails(
+        android: _reminderAndroid,
+        iOS: DarwinNotificationDetails(presentAlert: true, presentSound: true),
+      ),
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      matchDateTimeComponents: weekday == null ? DateTimeComponents.time : DateTimeComponents.dayOfWeekAndTime,
+    );
+  }
+
+  @override
+  Future<void> cancel(int id) async {
+    await init();
+    await _plugin.cancel(id: id);
+  }
 }
 
 /// Keeps the scheduled adhan notifications in line with the settings: the
@@ -154,7 +226,17 @@ class AdhanScheduler {
     required this.clock,
     this.days = 7,
     this.max = 60,
+    this.reserved,
+    this.afterReset,
   });
+
+  /// Pending slots kept for the repeating reminders (khatma, adhkar, Friday),
+  /// taken from [max] (iOS keeps at most 64 pending notifications in all).
+  final int Function()? reserved;
+
+  /// Runs after every re-plan (which cancels all pending notifications), so
+  /// the repeating reminders are scheduled again.
+  final Future<void> Function()? afterReset;
 
   final AppContent content;
   final SettingsController settings;
@@ -195,7 +277,7 @@ class AdhanScheduler {
       today: PrayerSchedule.localDate(ctx.location, now),
       enabled: enabled,
       days: days,
-      max: max,
+      max: max - (reserved?.call() ?? 0),
       preMinutes: settings.adhanPreMinutes,
       iqama: settings.iqamaPlan,
       dayFor: (d) => ctx.day(schedule, d, settings.adjustments),
@@ -212,6 +294,7 @@ class AdhanScheduler {
       final items = plan();
       _lastPlan = items;
       await backend.cancelAll();
+      await afterReset?.call();
       if (items.isEmpty) return;
       final l = lookupAppLocalizations(Locale(settings.locale.languageCode));
       final b = backend;
