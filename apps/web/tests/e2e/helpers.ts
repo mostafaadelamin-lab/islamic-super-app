@@ -23,6 +23,7 @@ export const MAIN_PAGES = [
   "hisn/29/",
   "tasbih/",
   "tracker/",
+  "help/",
   "khatma/",
   "qibla/",
   "hajj/",

@@ -9,6 +9,7 @@ import { audioStore } from "@/lib/audio";
 import { downloadsStore } from "@/lib/audio-offline";
 import { adhkarStore } from "@/lib/adhkar";
 import { adhkarViewStore } from "@/lib/dhikr-share";
+import { sharePromptStore } from "@/lib/app-links";
 
 export function resetStores(): void {
   localStorage.clear();
@@ -27,6 +28,7 @@ export function resetStores(): void {
     downloadsStore,
     adhkarStore,
     adhkarViewStore,
+    sharePromptStore,
   ])
     s.reload();
 }

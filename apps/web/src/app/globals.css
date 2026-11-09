@@ -2558,3 +2558,17 @@ dd {
   list-style: none;
   padding: 0;
 }
+
+/* Help & contact */
+.faq {
+  border-bottom: 1px solid var(--color-line);
+  padding: var(--space-sm) 0;
+}
+.faq summary {
+  cursor: pointer;
+  font-weight: 600;
+  min-height: 32px;
+}
+.share-prompt {
+  border: 2px solid var(--color-accent);
+}

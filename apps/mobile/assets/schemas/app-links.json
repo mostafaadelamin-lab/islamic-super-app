@@ -1,0 +1,7 @@
+{
+  "_doc": "Public links shown in Help & contact, Share and Rate. null = not set yet: the matching button is hidden. Set by the owner (contact email, website, store listing).",
+  "contactEmail": null,
+  "website": null,
+  "playStore": null,
+  "appStore": null
+}

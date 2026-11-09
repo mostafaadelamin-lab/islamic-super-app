@@ -34,6 +34,7 @@ const copies = {
   "packages/design-tokens/dist/tokens.css": "tokens.css",
   "packages/design-tokens/dist/tokens.ts": "tokens.ts",
   "packages/shared-schemas/audio/reciters.json": "reciters.json",
+  "packages/shared-schemas/app-links.json": "app-links.json",
   "content/adhkar/dist/adhkar.v1.json": "adhkar.json",
   "content/adhkar/hisn.json": "hisn.json",
   "content/adhkar/hisn-sections.json": "hisn-sections.json",

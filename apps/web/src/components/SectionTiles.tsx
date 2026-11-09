@@ -28,6 +28,7 @@ export const SECTIONS: readonly Section[] = [
   { path: "search", title: "quran.search", sub: "quran.searchHint", icon: "search" },
   { path: "bookmarks", title: "bookmarks.title", sub: "home.tile.bookmarksSub", icon: "bookmark" },
   { path: "settings", title: "settings.title", sub: "home.tile.settingsSub", icon: "settings" },
+  { path: "help", title: "help.title", sub: "help.tileSub", icon: "help" },
   { path: "about", title: "about.title", sub: "home.tile.aboutSub", icon: "info" },
 ];
 

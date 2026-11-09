@@ -4,6 +4,7 @@ import { href } from "@/lib/locale-path";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
 import { NextPrayerCard } from "@/components/NextPrayerCard";
 import { QuranRadio } from "@/components/QuranRadio";
+import { SharePrompt } from "@/components/ShareApp";
 import { Icon, type IconName } from "@/components/Icon";
 
 interface HomeTile {
@@ -61,6 +62,7 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
             <Icon name="chevron" size={20} />
           </span>
         </Link>
+        <SharePrompt locale={locale} />
       </div>
     </div>
   );
