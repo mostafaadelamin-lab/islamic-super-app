@@ -1,5 +1,18 @@
 # Changelog
 
+## [Unreleased] — Adhkar, help and sharing (owner's feature list, phases 5–6) — 2026-11-10
+### Added
+- Hisn al-Muslim sections (remembrance, morning and evening, sleep, prayer, home, food, travel, hardship, illness, nature, people, hajj): a grouping of the existing chapters, no text added or changed.
+- Adhkar and Hisn al-Muslim as a list or one card at a time; in cards the morning / evening adhkar move on by themselves when a dhikr's count is complete.
+- Share any dhikr (text unchanged, with its source) and "Report a mistake" (opens email / the share sheet with the chapter, number and the first words).
+- Morning and evening adhkar reminders at a chosen time (mobile notifications ids 2002 / 2003; web while a page is open).
+- Help & contact: frequently asked questions, contact (address pending from the owner), share the app, rate (once the store links are set in packages/shared-schemas/app-links.json).
+- A one-time "Share Rattil?" suggestion after the app has been used on five different days.
+- Home-screen shortcuts: Quran, prayer times, adhkar and tasbih (Android / iOS long-press; installed web app).
+### Not yet
+- Zakat calculator: waits for the owner to choose the published reference, then a shar'i review.
+- Fadl notes and dhikr audio: need a licensed published source.
+
 ## [Unreleased] — Reader and player: speed, lock screen, offline, share as image (owner's feature list, phase 4) — 2026-11-09
 ### Added
 - Playback speed 0.75× to 2× (mobile mini player; web player bar, Mushaf player and Settings), kept between sessions.
