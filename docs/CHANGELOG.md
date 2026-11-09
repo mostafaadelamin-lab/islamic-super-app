@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased] — Reader and player: speed, lock screen, offline, share as image (owner's feature list, phase 4) — 2026-11-09
+### Added
+- Playback speed 0.75× to 2× (mobile mini player; web player bar, Mushaf player and Settings), kept between sessions.
+- Lock-screen / notification controls (play, pause, next and previous ayah, stop) showing the surah, ayah and reciter. Mobile (audio_service) also keeps reciting with the screen off on Android; web uses the browser's Media Session.
+- Listen offline: save whole surahs of the chosen reciter (basmala included) and delete them again; saved surahs play without a connection. Mobile: More → Downloads. Web: Settings → Listen offline (Cache Storage, served by the service worker).
+- Share an ayah as an image: a card in the Rattil colours with the ayah text unchanged, its reference and the app name. Mobile opens a preview then the share sheet; web uses the share sheet where the browser can share files and downloads the PNG otherwise.
+### Fixed
+- Web worship calendar: removed partial grid roles that screen readers could not use (axe).
+
 ## [Unreleased] — Prayer alarms, Quran khatma and tasbih (owner's feature list, phases 1–3) — 2026-11-09
 ### Added
 - Prayer times: move between days (previous / next / today) with the Hijri date; 12 or 24 hour clock; "use my location" (GPS, coarse) with the nearest city's time zone and method; monthly prayer calendar with a Gregorian / Hijri month toggle that follows the Hijri adjustment, shared as an image (mobile) or printed / saved as PDF (web).
