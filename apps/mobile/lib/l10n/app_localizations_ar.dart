@@ -1334,8 +1334,55 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tagline => 'القرآن والصلاة والذكر — مجاني بلا إعلانات';
 
   @override
+  String get tasbihAdd => 'إضافة';
+
+  @override
+  String get tasbihCancel => 'إلغاء';
+
+  @override
+  String get tasbihClear => 'مسح';
+
+  @override
+  String get tasbihClearConfirm => 'مسح سجل التسبيح كله؟';
+
+  @override
+  String get tasbihClearHistory => 'مسح السجل';
+
+  @override
+  String get tasbihColor => 'اللون';
+
+  @override
   String tasbihCounter(String count, String target) {
     return 'العدد $count من $target';
+  }
+
+  @override
+  String get tasbihHistory => 'السجل';
+
+  @override
+  String get tasbihHistoryEmpty => 'لا يوجد تسبيح مسجل بعد.';
+
+  @override
+  String get tasbihMine => 'أذكاري';
+
+  @override
+  String get tasbihMode => 'شكل العداد';
+
+  @override
+  String get tasbihModeBeads => 'خرز السبحة';
+
+  @override
+  String get tasbihModeButton => 'زر كبير';
+
+  @override
+  String get tasbihNewDhikr => 'اكتب ذكرًا تريد عدّه';
+
+  @override
+  String get tasbihPhrase => 'الذكر';
+
+  @override
+  String tasbihRemove(String name) {
+    return 'حذف «$name»';
   }
 
   @override
@@ -1347,6 +1394,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get tasbihSound => 'صوت مع كل تسبيحة';
+
+  @override
   String get tasbihTap => 'اضغط للتسبيح';
 
   @override
@@ -1356,7 +1406,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tasbihTitle => 'المسبحة';
 
   @override
+  String tasbihToday(String n) {
+    return 'اليوم لهذا الذكر: $n';
+  }
+
+  @override
   String tasbihTotal(String n) {
     return 'الإجمالي: $n';
   }
+
+  @override
+  String get tasbihUndo => 'تراجع';
+
+  @override
+  String get tasbihVibrate => 'اهتزاز';
 }

@@ -7,49 +7,63 @@ import '../domain/tasbih.dart';
 import 'content.dart';
 import 'settings.dart';
 
-/// Tasbih counter persisted in shared_preferences ("tasbih.v1").
+/// Tasbih: every dhikr's counter, the user's own adhkar, options and history,
+/// persisted in shared_preferences ("tasbih.v2"; the single counter of
+/// "tasbih.v1" is carried over to the first dhikr).
 class TasbihController extends ChangeNotifier {
-  TasbihController(this._settings) {
-    final raw = _settings.rawJson(_key);
-    if (raw != null) {
-      try {
-        _state = TasbihState.fromJson(jsonDecode(raw) as Map<String, dynamic>);
-      } on FormatException {
-        _state = const TasbihState();
-      } on TypeError {
-        _state = const TasbihState();
+  TasbihController(this._settings, {DateTime Function()? today}) : _today = today ?? DateTime.now {
+    try {
+      final v2 = _settings.rawJson(_key);
+      if (v2 != null) {
+        _book = TasbihBook.fromJson(jsonDecode(v2));
+        return;
       }
+      final v1 = _settings.rawJson(_legacyKey);
+      if (v1 != null) {
+        _book = TasbihBook(counters: {'tasbih': TasbihState.fromJson(jsonDecode(v1) as Map<String, dynamic>)});
+      }
+    } on FormatException {
+      _book = const TasbihBook();
+    } on TypeError {
+      _book = const TasbihBook();
     }
   }
 
-  static const _key = 'tasbih.v1';
+  static const _key = 'tasbih.v2';
+  static const _legacyKey = 'tasbih.v1';
   final SettingsController _settings;
-  TasbihState _state = const TasbihState();
+  final DateTime Function() _today;
+  TasbihBook _book = const TasbihBook();
 
-  TasbihState get state => _state;
+  TasbihBook get book => _book;
+
+  /// The selected dhikr's counter.
+  TasbihState get state => _book.current;
+
+  Future<void> _set(TasbihBook b) async {
+    _book = b;
+    notifyListeners();
+    await _settings.setRawJson(_key, jsonEncode(b.toJson()));
+  }
 
   /// Returns true when this tap completed a round.
   Future<bool> tap() async {
-    final before = _state;
-    _state = _state.tap();
-    notifyListeners();
-    await _save();
-    return _state.completedRoundFrom(before);
+    final (b, round) = _book.tap(_today());
+    await _set(b);
+    return round;
   }
 
-  Future<void> setTarget(int t) async {
-    _state = _state.withTarget(t);
-    notifyListeners();
-    await _save();
-  }
-
-  Future<void> reset() async {
-    _state = _state.reset();
-    notifyListeners();
-    await _save();
-  }
-
-  Future<void> _save() => _settings.setRawJson(_key, jsonEncode(_state.toJson()));
+  Future<void> undo() => _set(_book.undo(_today()));
+  Future<void> setTarget(int t) => _set(_book.withCurrent(state.withTarget(t)));
+  Future<void> reset() => _set(_book.withCurrent(state.reset()));
+  Future<void> select(String id) => _set(_book.ids.contains(id) ? _book.copyWith(phrase: id) : _book);
+  Future<void> addCustom(String text) => _set(_book.addCustom(text));
+  Future<void> removeCustom(String id) => _set(_book.removeCustom(id));
+  Future<void> setMode(TasbihMode m) => _set(_book.copyWith(mode: m));
+  Future<void> setColor(String c) => _set(tasbihColors.containsKey(c) ? _book.copyWith(color: c) : _book);
+  Future<void> setSound(bool on) => _set(_book.copyWith(sound: on));
+  Future<void> setVibrate(bool on) => _set(_book.copyWith(vibrate: on));
+  Future<void> clearHistory() => _set(_book.copyWith(history: const {}));
 }
 
 /// Morning/evening adhkar counters for today, persisted per session and reset

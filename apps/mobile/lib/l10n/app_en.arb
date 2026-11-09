@@ -2014,6 +2014,30 @@
   "@tagline": {
     "description": "shared key \"tagline\""
   },
+  "tasbihAdd": "Add",
+  "@tasbihAdd": {
+    "description": "shared key \"tasbih.add\""
+  },
+  "tasbihCancel": "Cancel",
+  "@tasbihCancel": {
+    "description": "shared key \"tasbih.cancel\""
+  },
+  "tasbihClear": "Clear",
+  "@tasbihClear": {
+    "description": "shared key \"tasbih.clear\""
+  },
+  "tasbihClearConfirm": "Clear the whole tasbih history?",
+  "@tasbihClearConfirm": {
+    "description": "shared key \"tasbih.clearConfirm\""
+  },
+  "tasbihClearHistory": "Clear history",
+  "@tasbihClearHistory": {
+    "description": "shared key \"tasbih.clearHistory\""
+  },
+  "tasbihColor": "Colour",
+  "@tasbihColor": {
+    "description": "shared key \"tasbih.color\""
+  },
   "tasbihCounter": "Count {count} of {target}",
   "@tasbihCounter": {
     "description": "shared key \"tasbih.counter\"",
@@ -2022,6 +2046,47 @@
         "type": "String"
       },
       "target": {
+        "type": "String"
+      }
+    }
+  },
+  "tasbihHistory": "History",
+  "@tasbihHistory": {
+    "description": "shared key \"tasbih.history\""
+  },
+  "tasbihHistoryEmpty": "Nothing counted yet.",
+  "@tasbihHistoryEmpty": {
+    "description": "shared key \"tasbih.historyEmpty\""
+  },
+  "tasbihMine": "My adhkar",
+  "@tasbihMine": {
+    "description": "shared key \"tasbih.mine\""
+  },
+  "tasbihMode": "Counter style",
+  "@tasbihMode": {
+    "description": "shared key \"tasbih.mode\""
+  },
+  "tasbihModeBeads": "Beads",
+  "@tasbihModeBeads": {
+    "description": "shared key \"tasbih.modeBeads\""
+  },
+  "tasbihModeButton": "Big button",
+  "@tasbihModeButton": {
+    "description": "shared key \"tasbih.modeButton\""
+  },
+  "tasbihNewDhikr": "Type a dhikr to count",
+  "@tasbihNewDhikr": {
+    "description": "shared key \"tasbih.newDhikr\""
+  },
+  "tasbihPhrase": "Dhikr",
+  "@tasbihPhrase": {
+    "description": "shared key \"tasbih.phrase\""
+  },
+  "tasbihRemove": "Delete “{name}”",
+  "@tasbihRemove": {
+    "description": "shared key \"tasbih.remove\"",
+    "placeholders": {
+      "name": {
         "type": "String"
       }
     }
@@ -2039,6 +2104,10 @@
       }
     }
   },
+  "tasbihSound": "Sound on each count",
+  "@tasbihSound": {
+    "description": "shared key \"tasbih.sound\""
+  },
   "tasbihTap": "Tap to count",
   "@tasbihTap": {
     "description": "shared key \"tasbih.tap\""
@@ -2051,6 +2120,15 @@
   "@tasbihTitle": {
     "description": "shared key \"tasbih.title\""
   },
+  "tasbihToday": "Today for this dhikr: {n}",
+  "@tasbihToday": {
+    "description": "shared key \"tasbih.today\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
   "tasbihTotal": "Total: {n}",
   "@tasbihTotal": {
     "description": "shared key \"tasbih.total\"",
@@ -2059,5 +2137,13 @@
         "type": "String"
       }
     }
+  },
+  "tasbihUndo": "Undo",
+  "@tasbihUndo": {
+    "description": "shared key \"tasbih.undo\""
+  },
+  "tasbihVibrate": "Vibration",
+  "@tasbihVibrate": {
+    "description": "shared key \"tasbih.vibrate\""
   }
 }

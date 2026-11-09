@@ -2396,11 +2396,101 @@ abstract class AppLocalizations {
   /// **'Quran, prayer and remembrance — free, no ads'**
   String get tagline;
 
+  /// shared key "tasbih.add"
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get tasbihAdd;
+
+  /// shared key "tasbih.cancel"
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get tasbihCancel;
+
+  /// shared key "tasbih.clear"
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get tasbihClear;
+
+  /// shared key "tasbih.clearConfirm"
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the whole tasbih history?'**
+  String get tasbihClearConfirm;
+
+  /// shared key "tasbih.clearHistory"
+  ///
+  /// In en, this message translates to:
+  /// **'Clear history'**
+  String get tasbihClearHistory;
+
+  /// shared key "tasbih.color"
+  ///
+  /// In en, this message translates to:
+  /// **'Colour'**
+  String get tasbihColor;
+
   /// shared key "tasbih.counter"
   ///
   /// In en, this message translates to:
   /// **'Count {count} of {target}'**
   String tasbihCounter(String count, String target);
+
+  /// shared key "tasbih.history"
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get tasbihHistory;
+
+  /// shared key "tasbih.historyEmpty"
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing counted yet.'**
+  String get tasbihHistoryEmpty;
+
+  /// shared key "tasbih.mine"
+  ///
+  /// In en, this message translates to:
+  /// **'My adhkar'**
+  String get tasbihMine;
+
+  /// shared key "tasbih.mode"
+  ///
+  /// In en, this message translates to:
+  /// **'Counter style'**
+  String get tasbihMode;
+
+  /// shared key "tasbih.modeBeads"
+  ///
+  /// In en, this message translates to:
+  /// **'Beads'**
+  String get tasbihModeBeads;
+
+  /// shared key "tasbih.modeButton"
+  ///
+  /// In en, this message translates to:
+  /// **'Big button'**
+  String get tasbihModeButton;
+
+  /// shared key "tasbih.newDhikr"
+  ///
+  /// In en, this message translates to:
+  /// **'Type a dhikr to count'**
+  String get tasbihNewDhikr;
+
+  /// shared key "tasbih.phrase"
+  ///
+  /// In en, this message translates to:
+  /// **'Dhikr'**
+  String get tasbihPhrase;
+
+  /// shared key "tasbih.remove"
+  ///
+  /// In en, this message translates to:
+  /// **'Delete “{name}”'**
+  String tasbihRemove(String name);
 
   /// shared key "tasbih.reset"
   ///
@@ -2413,6 +2503,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rounds: {n}'**
   String tasbihRounds(String n);
+
+  /// shared key "tasbih.sound"
+  ///
+  /// In en, this message translates to:
+  /// **'Sound on each count'**
+  String get tasbihSound;
 
   /// shared key "tasbih.tap"
   ///
@@ -2432,11 +2528,29 @@ abstract class AppLocalizations {
   /// **'Tasbih'**
   String get tasbihTitle;
 
+  /// shared key "tasbih.today"
+  ///
+  /// In en, this message translates to:
+  /// **'Today for this dhikr: {n}'**
+  String tasbihToday(String n);
+
   /// shared key "tasbih.total"
   ///
   /// In en, this message translates to:
   /// **'Total: {n}'**
   String tasbihTotal(String n);
+
+  /// shared key "tasbih.undo"
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get tasbihUndo;
+
+  /// shared key "tasbih.vibrate"
+  ///
+  /// In en, this message translates to:
+  /// **'Vibration'**
+  String get tasbihVibrate;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

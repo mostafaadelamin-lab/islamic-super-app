@@ -508,7 +508,7 @@ test.describe("tasbih", () => {
     await page.getByTestId("tasbih-target-100").click();
     await expect(page.getByTestId("tasbih-target-100")).toHaveAttribute("aria-pressed", "true");
     await expect(tap).toHaveAccessibleName("Count: 0 of 100");
-    await page.getByLabel("Dhikr").selectOption("takbir");
+    await page.getByLabel("Dhikr", { exact: true }).selectOption("takbir");
     await expect(page.locator(".tasbih-phrase")).toHaveText("الله أكبر");
     await page.getByTestId("tasbih-reset").click();
     await expect(page.getByTestId("tasbih-rounds")).toHaveText("Completed rounds: 0");

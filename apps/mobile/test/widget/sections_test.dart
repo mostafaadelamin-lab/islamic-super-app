@@ -129,6 +129,47 @@ void main() {
       await tester.pump();
       expect(find.text('Total: 0'), findsOneWidget);
     });
+
+    testWidgets('beads mode, colour, own dhikr with its own counter, history and clearing it', (tester) async {
+      final app = await pumpApp(tester, size: tallPhone, locale: 'en');
+      await pushScreen(tester, const TasbihScreen());
+      final t = app.services.tasbih;
+      await tester.tap(find.text('Beads'));
+      await tester.pump();
+      expect(find.byKey(const Key('tasbihDial-beads')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('tasbihButton')));
+      await tester.pump();
+      await tester.ensureVisible(find.byKey(const Key('tasbihColor-plum')));
+      await tester.tap(find.byKey(const Key('tasbihColor-plum')));
+      await tester.pump();
+      expect(t.book.color, 'plum');
+      await tester.ensureVisible(find.byKey(const Key('tasbihNew')));
+      await tester.enterText(find.byKey(const Key('tasbihNew')), 'سبحان الله وبحمده');
+      await tester.pump();
+      await tester.tap(find.byKey(const Key('tasbihAdd')));
+      await tester.pumpAndSettle();
+      expect(t.book.phrase, 'c1');
+      expect(t.state.count, 0);
+      await tester.ensureVisible(find.byKey(const Key('tasbihButton')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('tasbihButton')));
+      await tester.pump();
+      expect(t.state.count, 1);
+      expect(t.book.counters['tasbih']!.count, 1);
+      expect(t.book.historyRows().length, 2);
+      await tester.ensureVisible(find.byKey(const Key('tasbihClearHistory')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('tasbihClearHistory')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('tasbihClearOk')));
+      await tester.pumpAndSettle();
+      expect(t.book.history, isEmpty);
+      expect(find.byKey(const Key('tasbihHistoryEmpty')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('tasbihRemove-c1')));
+      await tester.pumpAndSettle();
+      expect(t.book.custom, isEmpty);
+      expect(t.book.phrase, 'tasbih');
+    });
   });
 
   group('Qibla', () {

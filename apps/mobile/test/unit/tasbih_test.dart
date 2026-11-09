@@ -65,4 +65,103 @@ void main() {
     expect(t.state.count, 0);
     expect(t.state.target, 33);
   });
+
+  group('TasbihBook', () {
+    final d1 = DateTime(2026, 11, 9), d2 = DateTime(2026, 11, 10);
+
+    test('a counter per dhikr and a per-day history', () {
+      var b = const TasbihBook();
+      b = b.tap(d1).$1.tap(d1).$1;
+      b = b.copyWith(phrase: 'takbir');
+      expect(b.current.count, 0);
+      b = b.withCurrent(b.current.withTarget(100)).tap(d2).$1;
+      expect(b.counters['tasbih']!.count, 2);
+      expect(b.counters['takbir']!.target, 100);
+      expect(b.historyRows(), [('2026-11-10', 'takbir', 1), ('2026-11-09', 'tasbih', 2)]);
+      b = b.undo(d2);
+      expect(b.current.count, 0);
+      expect(b.history.containsKey('2026-11-10'), isFalse);
+      expect(identical(b.undo(d2), b), isTrue);
+    });
+
+    test('round completion, 60-day history window', () {
+      var b = TasbihBook(counters: {'tasbih': const TasbihState(count: 32)});
+      final (next, round) = b.tap(DateTime(2026, 1, 1));
+      expect(round, isTrue);
+      expect(next.current.rounds, 1);
+      b = next.tap(DateTime(2026, 3, 15)).$1;
+      expect(b.history.keys, ['2026-03-15']);
+    });
+
+    test('custom adhkar: add, limits, remove', () {
+      var b = const TasbihBook().addCustom('  اللهم صل على محمد ');
+      expect(b.custom.single.id, 'c1');
+      expect(b.phrase, 'c1');
+      expect(b.textOf('c1'), 'اللهم صل على محمد');
+      b = b.tap(d1).$1;
+      expect(identical(b.addCustom('  '), b), isTrue);
+      b = b.addCustom('x' * 200);
+      expect(b.custom[1].text.length, maxCustomText);
+      b = b.copyWith(phrase: 'c1').removeCustom('c1');
+      expect(b.phrase, 'tasbih');
+      expect(b.custom.map((c) => c.id), ['c2']);
+      expect(b.history, isEmpty);
+      expect(b.counters.containsKey('c1'), isFalse);
+    });
+
+    test('JSON round trip and repair', () {
+      final b = const TasbihBook(
+        mode: TasbihMode.beads,
+        color: 'plum',
+        sound: true,
+        vibrate: false,
+      ).addCustom('ذكر').tap(d1).$1;
+      final r = TasbihBook.fromJson(b.toJson());
+      expect(r.toJson(), b.toJson());
+      final bad = TasbihBook.fromJson({
+        'phrase': 'zz',
+        'custom': [
+          {'id': 'bad', 'text': 'x'},
+          {'id': 'c2', 'text': ' '},
+        ],
+        'counters': {
+          'nope': {'count': 1},
+        },
+        'mode': 'x',
+        'color': 'neon',
+        'history': {
+          'junk': {'tasbih': 1},
+          '2026-11-09': {'tasbih': -1, 'takbir': 3},
+        },
+      });
+      expect(bad.phrase, 'tasbih');
+      expect(bad.custom, isEmpty);
+      expect(bad.counters, isEmpty);
+      expect(bad.mode, TasbihMode.button);
+      expect(bad.color, 'emerald');
+      expect(bad.history, {
+        '2026-11-09': {'takbir': 3},
+      });
+    });
+
+    test('controller migrates the old single counter and persists options', () async {
+      SharedPreferences.setMockInitialValues({'tasbih.v1': '{"count":12,"total":45,"rounds":1,"target":33}'});
+      final prefs = await SharedPreferences.getInstance();
+      final t = TasbihController(SettingsController(prefs), today: () => d1);
+      expect(t.state.count, 12);
+      await t.addCustom('سبحان الله وبحمده');
+      await t.tap();
+      await t.setMode(TasbihMode.beads);
+      await t.setColor('gold');
+      await t.setColor('neon');
+      final again = TasbihController(SettingsController(prefs), today: () => d1);
+      expect(again.book.phrase, 'c1');
+      expect(again.state.count, 1);
+      expect(again.book.counters['tasbih']!.total, 45);
+      expect(again.book.mode, TasbihMode.beads);
+      expect(again.book.color, 'gold');
+      await again.clearHistory();
+      expect(again.book.history, isEmpty);
+    });
+  });
 }

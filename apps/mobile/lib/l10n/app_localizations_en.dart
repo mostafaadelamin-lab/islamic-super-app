@@ -1338,8 +1338,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tagline => 'Quran, prayer and remembrance — free, no ads';
 
   @override
+  String get tasbihAdd => 'Add';
+
+  @override
+  String get tasbihCancel => 'Cancel';
+
+  @override
+  String get tasbihClear => 'Clear';
+
+  @override
+  String get tasbihClearConfirm => 'Clear the whole tasbih history?';
+
+  @override
+  String get tasbihClearHistory => 'Clear history';
+
+  @override
+  String get tasbihColor => 'Colour';
+
+  @override
   String tasbihCounter(String count, String target) {
     return 'Count $count of $target';
+  }
+
+  @override
+  String get tasbihHistory => 'History';
+
+  @override
+  String get tasbihHistoryEmpty => 'Nothing counted yet.';
+
+  @override
+  String get tasbihMine => 'My adhkar';
+
+  @override
+  String get tasbihMode => 'Counter style';
+
+  @override
+  String get tasbihModeBeads => 'Beads';
+
+  @override
+  String get tasbihModeButton => 'Big button';
+
+  @override
+  String get tasbihNewDhikr => 'Type a dhikr to count';
+
+  @override
+  String get tasbihPhrase => 'Dhikr';
+
+  @override
+  String tasbihRemove(String name) {
+    return 'Delete “$name”';
   }
 
   @override
@@ -1351,6 +1398,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tasbihSound => 'Sound on each count';
+
+  @override
   String get tasbihTap => 'Tap to count';
 
   @override
@@ -1360,7 +1410,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tasbihTitle => 'Tasbih';
 
   @override
+  String tasbihToday(String n) {
+    return 'Today for this dhikr: $n';
+  }
+
+  @override
   String tasbihTotal(String n) {
     return 'Total: $n';
   }
+
+  @override
+  String get tasbihUndo => 'Undo';
+
+  @override
+  String get tasbihVibrate => 'Vibration';
 }
