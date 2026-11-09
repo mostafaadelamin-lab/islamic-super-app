@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased] — New home page (owner's mockup) — 2026-11-09
+### Changed
+- Home page redesigned on the website and the mobile app after the owner's mockup: place ("Egypt - Cairo") with a settings button; mosque drawing; next prayer name, its time in large digits and a live countdown; a day card with the weekday, Gregorian and Hijri dates, a "Prayer calendar" button, the five prayers with icons (next one highlighted) and sunrise / sunset; big tiles for the Quran, Adhkar & Dua and Prayer times; wide tiles for Tasbih, Qibla, Islamic reels and Prophets' stories; "Main sections" opens the full list.
+- Sunset is shown without the user's Maghrib adjustment. After Isha the card shows tomorrow's day and times.
+- "Continue reading" moved off the home page: it stays on the Quran page (web) and the Bookmarks screen (mobile). Hajj, Hisn al-Muslim, search and bookmarks are under "Main sections".
+### Added
+- Quran radio on the home page: continuous recitation of the whole Mushaf by the chosen reciter, starting from a random surah and wrapping round, with a play duration (unlimited, 15, 30, 45 or 60 minutes) that stops it through the sleep timer. Streams per ayah from everyayah.com, like the rest of the recitation.
+
 ## [Unreleased] — Quran index: surahs and quarters — 2026-11-09
 ### Added
 - New Quran index ("فهرس السور") on the Quran tab (mobile) and /quran (web): a Surahs / Quarters toggle, a search box with a clear button, and lists grouped under juz headers (الجزء الأول، الثاني …).

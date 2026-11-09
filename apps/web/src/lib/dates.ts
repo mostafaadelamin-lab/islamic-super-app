@@ -27,3 +27,21 @@ export function hijriDate(d: Date, tz: string, locale: Locale): string | null {
     return null;
   }
 }
+
+/** Day of the week ("الاثنين", "Monday") in the given time zone. */
+export function weekdayName(d: Date, tz: string, locale: Locale): string {
+  return new Intl.DateTimeFormat(locale === "ar" ? "ar-EG-u-nu-arab" : "en-GB", {
+    timeZone: tz,
+    weekday: "long",
+  }).format(d);
+}
+
+/** Gregorian date without the weekday ("٩ نوفمبر ٢٠٢٦", "9 November 2026"). */
+export function gregorianDay(d: Date, tz: string, locale: Locale): string {
+  return new Intl.DateTimeFormat(locale === "ar" ? "ar-EG-u-nu-arab" : "en-GB", {
+    timeZone: tz,
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(d);
+}

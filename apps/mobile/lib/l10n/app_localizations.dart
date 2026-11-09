@@ -674,6 +674,54 @@ abstract class AppLocalizations {
   /// **'Umrah'**
   String get hajjUmrah;
 
+  /// shared key "home.big.adhkar"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhkar & Dua'**
+  String get homeBigAdhkar;
+
+  /// shared key "home.big.prayer"
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer times'**
+  String get homeBigPrayer;
+
+  /// shared key "home.big.qibla"
+  ///
+  /// In en, this message translates to:
+  /// **'Qibla direction'**
+  String get homeBigQibla;
+
+  /// shared key "home.big.quran"
+  ///
+  /// In en, this message translates to:
+  /// **'The Holy Quran'**
+  String get homeBigQuran;
+
+  /// shared key "home.big.reels"
+  ///
+  /// In en, this message translates to:
+  /// **'Islamic reels'**
+  String get homeBigReels;
+
+  /// shared key "home.big.stories"
+  ///
+  /// In en, this message translates to:
+  /// **'Prophets\' stories'**
+  String get homeBigStories;
+
+  /// shared key "home.big.tasbih"
+  ///
+  /// In en, this message translates to:
+  /// **'Tasbih'**
+  String get homeBigTasbih;
+
+  /// shared key "home.calendar"
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer calendar'**
+  String get homeCalendar;
+
   /// shared key "home.hijriDate"
   ///
   /// In en, this message translates to:
@@ -685,6 +733,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Last page: {page}'**
   String homeLastPage(String page);
+
+  /// shared key "home.left"
+  ///
+  /// In en, this message translates to:
+  /// **'Time left {time}'**
+  String homeLeft(String time);
+
+  /// shared key "home.mainSections"
+  ///
+  /// In en, this message translates to:
+  /// **'Main sections'**
+  String get homeMainSections;
 
   /// shared key "home.nextPrayer"
   ///
@@ -698,6 +758,12 @@ abstract class AppLocalizations {
   /// **'Open the Mushaf'**
   String get homeOpenMushaf;
 
+  /// shared key "home.prayerOf"
+  ///
+  /// In en, this message translates to:
+  /// **'{name} prayer'**
+  String homePrayerOf(String name);
+
   /// shared key "home.quickLinks"
   ///
   /// In en, this message translates to:
@@ -710,11 +776,35 @@ abstract class AppLocalizations {
   /// **'Sections'**
   String get homeSections;
 
+  /// shared key "home.sunrise"
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise'**
+  String get homeSunrise;
+
+  /// shared key "home.sunset"
+  ///
+  /// In en, this message translates to:
+  /// **'Sunset'**
+  String get homeSunset;
+
+  /// shared key "home.timingFor"
+  ///
+  /// In en, this message translates to:
+  /// **'Times for'**
+  String get homeTimingFor;
+
   /// shared key "home.todayTimes"
   ///
   /// In en, this message translates to:
   /// **'Today\'s prayer times'**
   String get homeTodayTimes;
+
+  /// shared key "home.tomorrowTimes"
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow\'s times'**
+  String get homeTomorrowTimes;
 
   /// shared key "home.welcome"
   ///
@@ -1082,12 +1172,6 @@ abstract class AppLocalizations {
   /// **'Bookmarked'**
   String get quranBookmarked;
 
-  /// shared key "quran.clearSearch"
-  ///
-  /// In en, this message translates to:
-  /// **'Clear search'**
-  String get quranClearSearch;
-
   /// shared key "quran.continueReading"
   ///
   /// In en, this message translates to:
@@ -1118,47 +1202,11 @@ abstract class AppLocalizations {
   /// **'Go to page'**
   String get quranGoToPage;
 
-  /// shared key "quran.hizbN"
-  ///
-  /// In en, this message translates to:
-  /// **'Hizb {n}'**
-  String quranHizbN(String n);
-
-  /// shared key "quran.index"
-  ///
-  /// In en, this message translates to:
-  /// **'Quran index'**
-  String get quranIndex;
-
-  /// shared key "quran.indexSearch"
-  ///
-  /// In en, this message translates to:
-  /// **'Search'**
-  String get quranIndexSearch;
-
   /// shared key "quran.juz"
   ///
   /// In en, this message translates to:
   /// **'Juz {juz}'**
   String quranJuz(String juz);
-
-  /// shared key "quran.juzOrdinals"
-  ///
-  /// In en, this message translates to:
-  /// **'1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30'**
-  String get quranJuzOrdinals;
-
-  /// shared key "quran.juzTitle"
-  ///
-  /// In en, this message translates to:
-  /// **'Juz {ordinal}'**
-  String quranJuzTitle(String ordinal);
-
-  /// shared key "quran.listView"
-  ///
-  /// In en, this message translates to:
-  /// **'List view'**
-  String get quranListView;
 
   /// shared key "quran.meccan"
   ///
@@ -1220,18 +1268,6 @@ abstract class AppLocalizations {
   /// **'Previous page'**
   String get quranPrevPage;
 
-  /// shared key "quran.quarterLine"
-  ///
-  /// In en, this message translates to:
-  /// **'{surah} {ayah} · Page {page}'**
-  String quranQuarterLine(String surah, String ayah, String page);
-
-  /// shared key "quran.quarterOfHizb"
-  ///
-  /// In en, this message translates to:
-  /// **'Quarter {q} of hizb {n}'**
-  String quranQuarterOfHizb(String q, String n);
-
   /// shared key "quran.removeBookmark"
   ///
   /// In en, this message translates to:
@@ -1292,23 +1328,11 @@ abstract class AppLocalizations {
   /// **'{surah} : {ayah}'**
   String quranSurahAyah(String surah, String ayah);
 
-  /// shared key "quran.surahLine"
-  ///
-  /// In en, this message translates to:
-  /// **'Page {page} · {count} ayahs · {kind}'**
-  String quranSurahLine(String page, String count, String kind);
-
   /// shared key "quran.surahN"
   ///
   /// In en, this message translates to:
   /// **'Surah {n}'**
   String quranSurahN(String n);
-
-  /// shared key "quran.surahTitle"
-  ///
-  /// In en, this message translates to:
-  /// **'{name}'**
-  String quranSurahTitle(String name);
 
   /// shared key "quran.surahs"
   ///
@@ -1316,17 +1340,65 @@ abstract class AppLocalizations {
   /// **'Surahs'**
   String get quranSurahs;
 
-  /// shared key "quran.tabQuarters"
+  /// shared key "radio.duration"
   ///
   /// In en, this message translates to:
-  /// **'Quarters'**
-  String get quranTabQuarters;
+  /// **'Play for'**
+  String get radioDuration;
 
-  /// shared key "quran.tabSurahs"
+  /// shared key "radio.listen"
   ///
   /// In en, this message translates to:
-  /// **'Surahs'**
-  String get quranTabSurahs;
+  /// **'Listen'**
+  String get radioListen;
+
+  /// shared key "radio.longer"
+  ///
+  /// In en, this message translates to:
+  /// **'Longer'**
+  String get radioLonger;
+
+  /// shared key "radio.min"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min'**
+  String radioMin(String n);
+
+  /// shared key "radio.note"
+  ///
+  /// In en, this message translates to:
+  /// **'Continuous recitation of the whole Mushaf, starting from a random surah.'**
+  String get radioNote;
+
+  /// shared key "radio.nowPlaying"
+  ///
+  /// In en, this message translates to:
+  /// **'Surah {surah}'**
+  String radioNowPlaying(String surah);
+
+  /// shared key "radio.pause"
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get radioPause;
+
+  /// shared key "radio.shorter"
+  ///
+  /// In en, this message translates to:
+  /// **'Shorter'**
+  String get radioShorter;
+
+  /// shared key "radio.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Quran radio'**
+  String get radioTitle;
+
+  /// shared key "radio.unlimited"
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited'**
+  String get radioUnlimited;
 
   /// shared key "reels.cat.lesson"
   ///

@@ -73,7 +73,17 @@ export type PlayScope =
   | { kind: "surah"; surah: number }
   | { kind: "from"; surah: number; ayah: number }
   /** Verse ranges [surah, from, to] played in order (audio Quranic stories). */
-  | { kind: "ranges"; ranges: readonly (readonly [number, number, number])[] };
+  | { kind: "ranges"; ranges: readonly (readonly [number, number, number])[] }
+  /** Quran radio: the whole Mushaf, from surah `from` to an-Nas, then al-Fatihah up to `from` - 1. */
+  | { kind: "quran"; from: number };
+
+export const SURAH_COUNT = 114;
+
+/** Surah numbers of the radio cycle that starts at `from` (every surah exactly once). */
+export function radioSurahs(from: number): number[] {
+  const start = Number.isInteger(from) && from >= 1 && from <= SURAH_COUNT ? from : 1;
+  return Array.from({ length: SURAH_COUNT }, (_, i) => ((start - 1 + i) % SURAH_COUNT) + 1);
+}
 
 /** Every ayah of the given ranges, in order; invalid ranges are skipped. */
 export function rangeRefs(ranges: readonly (readonly [number, number, number])[]): [number, number][] {
@@ -92,6 +102,7 @@ export function buildQueue(scope: PlayScope): QueueItem[] {
   if (scope.kind === "page") return withBasmala(ayahsOnPage(scope.page));
   if (scope.kind === "surah") return withBasmala(surahRefs(scope.surah, 1));
   if (scope.kind === "ranges") return withBasmala(rangeRefs(scope.ranges));
+  if (scope.kind === "quran") return withBasmala(radioSurahs(scope.from).flatMap((s) => surahRefs(s, 1)));
   if (!isValidAyah(scope.surah, scope.ayah)) return [];
   return withBasmala(surahRefs(scope.surah, scope.ayah));
 }

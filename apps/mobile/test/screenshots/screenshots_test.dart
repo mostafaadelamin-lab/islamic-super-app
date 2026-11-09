@@ -43,6 +43,14 @@ void main() {
   }
 
   for (final locale in ['ar', 'en']) {
+    testWidgets('home after the owner mockup ($locale): light and dark, whole page', (tester) async {
+      tester.view.devicePixelRatio = 1;
+      for (final theme in ['light', 'dark']) {
+        await pumpApp(tester, locale: locale, size: const Size(390, 1640), prefs: {'theme': theme});
+        await shot(tester, '${locale}_home_mockup${theme == 'dark' ? '_dark' : ''}');
+      }
+    });
+
     testWidgets('screenshots ($locale, light)', (tester) async {
       tester.view.devicePixelRatio = 1;
       await pumpApp(

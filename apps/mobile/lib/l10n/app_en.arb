@@ -469,6 +469,38 @@
   "@hajjUmrah": {
     "description": "shared key \"hajj.umrah\""
   },
+  "homeBigAdhkar": "Adhkar & Dua",
+  "@homeBigAdhkar": {
+    "description": "shared key \"home.big.adhkar\""
+  },
+  "homeBigPrayer": "Prayer times",
+  "@homeBigPrayer": {
+    "description": "shared key \"home.big.prayer\""
+  },
+  "homeBigQibla": "Qibla direction",
+  "@homeBigQibla": {
+    "description": "shared key \"home.big.qibla\""
+  },
+  "homeBigQuran": "The Holy Quran",
+  "@homeBigQuran": {
+    "description": "shared key \"home.big.quran\""
+  },
+  "homeBigReels": "Islamic reels",
+  "@homeBigReels": {
+    "description": "shared key \"home.big.reels\""
+  },
+  "homeBigStories": "Prophets' stories",
+  "@homeBigStories": {
+    "description": "shared key \"home.big.stories\""
+  },
+  "homeBigTasbih": "Tasbih",
+  "@homeBigTasbih": {
+    "description": "shared key \"home.big.tasbih\""
+  },
+  "homeCalendar": "Prayer calendar",
+  "@homeCalendar": {
+    "description": "shared key \"home.calendar\""
+  },
   "homeHijriDate": "{day} {month} {year} AH",
   "@homeHijriDate": {
     "description": "shared key \"home.hijriDate\"",
@@ -493,6 +525,19 @@
       }
     }
   },
+  "homeLeft": "Time left {time}",
+  "@homeLeft": {
+    "description": "shared key \"home.left\"",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeMainSections": "Main sections",
+  "@homeMainSections": {
+    "description": "shared key \"home.mainSections\""
+  },
   "homeNextPrayer": "Next prayer",
   "@homeNextPrayer": {
     "description": "shared key \"home.nextPrayer\""
@@ -500,6 +545,15 @@
   "homeOpenMushaf": "Open the Mushaf",
   "@homeOpenMushaf": {
     "description": "shared key \"home.openMushaf\""
+  },
+  "homePrayerOf": "{name} prayer",
+  "@homePrayerOf": {
+    "description": "shared key \"home.prayerOf\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "homeQuickLinks": "Quick links",
   "@homeQuickLinks": {
@@ -509,9 +563,25 @@
   "@homeSections": {
     "description": "shared key \"home.sections\""
   },
+  "homeSunrise": "Sunrise",
+  "@homeSunrise": {
+    "description": "shared key \"home.sunrise\""
+  },
+  "homeSunset": "Sunset",
+  "@homeSunset": {
+    "description": "shared key \"home.sunset\""
+  },
+  "homeTimingFor": "Times for",
+  "@homeTimingFor": {
+    "description": "shared key \"home.timingFor\""
+  },
   "homeTodayTimes": "Today's prayer times",
   "@homeTodayTimes": {
     "description": "shared key \"home.todayTimes\""
+  },
+  "homeTomorrowTimes": "Tomorrow's times",
+  "@homeTomorrowTimes": {
+    "description": "shared key \"home.tomorrowTimes\""
   },
   "homeWelcome": "Peace be upon you",
   "@homeWelcome": {
@@ -837,10 +907,6 @@
   "@quranBookmarked": {
     "description": "shared key \"quran.bookmarked\""
   },
-  "quranClearSearch": "Clear search",
-  "@quranClearSearch": {
-    "description": "shared key \"quran.clearSearch\""
-  },
   "quranContinueReading": "Continue reading",
   "@quranContinueReading": {
     "description": "shared key \"quran.continueReading\""
@@ -861,23 +927,6 @@
   "@quranGoToPage": {
     "description": "shared key \"quran.goToPage\""
   },
-  "quranHizbN": "Hizb {n}",
-  "@quranHizbN": {
-    "description": "shared key \"quran.hizbN\"",
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "quranIndex": "Quran index",
-  "@quranIndex": {
-    "description": "shared key \"quran.index\""
-  },
-  "quranIndexSearch": "Search",
-  "@quranIndexSearch": {
-    "description": "shared key \"quran.indexSearch\""
-  },
   "quranJuz": "Juz {juz}",
   "@quranJuz": {
     "description": "shared key \"quran.juz\"",
@@ -886,23 +935,6 @@
         "type": "String"
       }
     }
-  },
-  "quranJuzOrdinals": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30",
-  "@quranJuzOrdinals": {
-    "description": "shared key \"quran.juzOrdinals\""
-  },
-  "quranJuzTitle": "Juz {ordinal}",
-  "@quranJuzTitle": {
-    "description": "shared key \"quran.juzTitle\"",
-    "placeholders": {
-      "ordinal": {
-        "type": "String"
-      }
-    }
-  },
-  "quranListView": "List view",
-  "@quranListView": {
-    "description": "shared key \"quran.listView\""
   },
   "quranMeccan": "Meccan",
   "@quranMeccan": {
@@ -948,33 +980,6 @@
   "quranPrevPage": "Previous page",
   "@quranPrevPage": {
     "description": "shared key \"quran.prevPage\""
-  },
-  "quranQuarterLine": "{surah} {ayah} · Page {page}",
-  "@quranQuarterLine": {
-    "description": "shared key \"quran.quarterLine\"",
-    "placeholders": {
-      "surah": {
-        "type": "String"
-      },
-      "ayah": {
-        "type": "String"
-      },
-      "page": {
-        "type": "String"
-      }
-    }
-  },
-  "quranQuarterOfHizb": "Quarter {q} of hizb {n}",
-  "@quranQuarterOfHizb": {
-    "description": "shared key \"quran.quarterOfHizb\"",
-    "placeholders": {
-      "q": {
-        "type": "String"
-      },
-      "n": {
-        "type": "String"
-      }
-    }
   },
   "quranRemoveBookmark": "Remove bookmark",
   "@quranRemoveBookmark": {
@@ -1029,21 +1034,6 @@
       }
     }
   },
-  "quranSurahLine": "Page {page} · {count} ayahs · {kind}",
-  "@quranSurahLine": {
-    "description": "shared key \"quran.surahLine\"",
-    "placeholders": {
-      "page": {
-        "type": "String"
-      },
-      "count": {
-        "type": "String"
-      },
-      "kind": {
-        "type": "String"
-      }
-    }
-  },
   "quranSurahN": "Surah {n}",
   "@quranSurahN": {
     "description": "shared key \"quran.surahN\"",
@@ -1053,26 +1043,59 @@
       }
     }
   },
-  "quranSurahTitle": "{name}",
-  "@quranSurahTitle": {
-    "description": "shared key \"quran.surahTitle\"",
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "quranSurahs": "Surahs",
   "@quranSurahs": {
     "description": "shared key \"quran.surahs\""
   },
-  "quranTabQuarters": "Quarters",
-  "@quranTabQuarters": {
-    "description": "shared key \"quran.tabQuarters\""
+  "radioDuration": "Play for",
+  "@radioDuration": {
+    "description": "shared key \"radio.duration\""
   },
-  "quranTabSurahs": "Surahs",
-  "@quranTabSurahs": {
-    "description": "shared key \"quran.tabSurahs\""
+  "radioListen": "Listen",
+  "@radioListen": {
+    "description": "shared key \"radio.listen\""
+  },
+  "radioLonger": "Longer",
+  "@radioLonger": {
+    "description": "shared key \"radio.longer\""
+  },
+  "radioMin": "{n} min",
+  "@radioMin": {
+    "description": "shared key \"radio.min\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "radioNote": "Continuous recitation of the whole Mushaf, starting from a random surah.",
+  "@radioNote": {
+    "description": "shared key \"radio.note\""
+  },
+  "radioNowPlaying": "Surah {surah}",
+  "@radioNowPlaying": {
+    "description": "shared key \"radio.nowPlaying\"",
+    "placeholders": {
+      "surah": {
+        "type": "String"
+      }
+    }
+  },
+  "radioPause": "Pause",
+  "@radioPause": {
+    "description": "shared key \"radio.pause\""
+  },
+  "radioShorter": "Shorter",
+  "@radioShorter": {
+    "description": "shared key \"radio.shorter\""
+  },
+  "radioTitle": "Quran radio",
+  "@radioTitle": {
+    "description": "shared key \"radio.title\""
+  },
+  "radioUnlimited": "Unlimited",
+  "@radioUnlimited": {
+    "description": "shared key \"radio.unlimited\""
   },
   "reelsCatLesson": "Short lesson",
   "@reelsCatLesson": {

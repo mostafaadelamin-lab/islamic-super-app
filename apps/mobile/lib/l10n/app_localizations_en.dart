@@ -339,6 +339,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hajjUmrah => 'Umrah';
 
   @override
+  String get homeBigAdhkar => 'Adhkar & Dua';
+
+  @override
+  String get homeBigPrayer => 'Prayer times';
+
+  @override
+  String get homeBigQibla => 'Qibla direction';
+
+  @override
+  String get homeBigQuran => 'The Holy Quran';
+
+  @override
+  String get homeBigReels => 'Islamic reels';
+
+  @override
+  String get homeBigStories => 'Prophets\' stories';
+
+  @override
+  String get homeBigTasbih => 'Tasbih';
+
+  @override
+  String get homeCalendar => 'Prayer calendar';
+
+  @override
   String homeHijriDate(String day, String month, String year) {
     return '$day $month $year AH';
   }
@@ -349,10 +373,23 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String homeLeft(String time) {
+    return 'Time left $time';
+  }
+
+  @override
+  String get homeMainSections => 'Main sections';
+
+  @override
   String get homeNextPrayer => 'Next prayer';
 
   @override
   String get homeOpenMushaf => 'Open the Mushaf';
+
+  @override
+  String homePrayerOf(String name) {
+    return '$name prayer';
+  }
 
   @override
   String get homeQuickLinks => 'Quick links';
@@ -361,7 +398,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeSections => 'Sections';
 
   @override
+  String get homeSunrise => 'Sunrise';
+
+  @override
+  String get homeSunset => 'Sunset';
+
+  @override
+  String get homeTimingFor => 'Times for';
+
+  @override
   String get homeTodayTimes => 'Today\'s prayer times';
+
+  @override
+  String get homeTomorrowTimes => 'Tomorrow\'s times';
 
   @override
   String get homeWelcome => 'Peace be upon you';
@@ -580,9 +629,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quranBookmarked => 'Bookmarked';
 
   @override
-  String get quranClearSearch => 'Clear search';
-
-  @override
   String get quranContinueReading => 'Continue reading';
 
   @override
@@ -598,31 +644,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quranGoToPage => 'Go to page';
 
   @override
-  String quranHizbN(String n) {
-    return 'Hizb $n';
-  }
-
-  @override
-  String get quranIndex => 'Quran index';
-
-  @override
-  String get quranIndexSearch => 'Search';
-
-  @override
   String quranJuz(String juz) {
     return 'Juz $juz';
   }
-
-  @override
-  String get quranJuzOrdinals => '1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30';
-
-  @override
-  String quranJuzTitle(String ordinal) {
-    return 'Juz $ordinal';
-  }
-
-  @override
-  String get quranListView => 'List view';
 
   @override
   String get quranMeccan => 'Meccan';
@@ -655,16 +679,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quranPrevPage => 'Previous page';
-
-  @override
-  String quranQuarterLine(String surah, String ayah, String page) {
-    return '$surah $ayah · Page $page';
-  }
-
-  @override
-  String quranQuarterOfHizb(String q, String n) {
-    return 'Quarter $q of hizb $n';
-  }
 
   @override
   String get quranRemoveBookmark => 'Remove bookmark';
@@ -701,28 +715,46 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String quranSurahLine(String page, String count, String kind) {
-    return 'Page $page · $count ayahs · $kind';
-  }
-
-  @override
   String quranSurahN(String n) {
     return 'Surah $n';
-  }
-
-  @override
-  String quranSurahTitle(String name) {
-    return '$name';
   }
 
   @override
   String get quranSurahs => 'Surahs';
 
   @override
-  String get quranTabQuarters => 'Quarters';
+  String get radioDuration => 'Play for';
 
   @override
-  String get quranTabSurahs => 'Surahs';
+  String get radioListen => 'Listen';
+
+  @override
+  String get radioLonger => 'Longer';
+
+  @override
+  String radioMin(String n) {
+    return '$n min';
+  }
+
+  @override
+  String get radioNote => 'Continuous recitation of the whole Mushaf, starting from a random surah.';
+
+  @override
+  String radioNowPlaying(String surah) {
+    return 'Surah $surah';
+  }
+
+  @override
+  String get radioPause => 'Pause';
+
+  @override
+  String get radioShorter => 'Shorter';
+
+  @override
+  String get radioTitle => 'Quran radio';
+
+  @override
+  String get radioUnlimited => 'Unlimited';
 
   @override
   String get reelsCatLesson => 'Short lesson';

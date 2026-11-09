@@ -143,6 +143,12 @@ class RecitationController extends ChangeNotifier {
     return _start(queue);
   }
 
+  /// Quran radio: the whole Mushaf from surah [fromSurah], wrapping round.
+  Future<void> playRadio(int fromSurah) {
+    _scope = PlayScope.radio;
+    return _start(radioQueue(_content.quran, fromSurah));
+  }
+
   Future<void> _start(List<QueueItem> queue) async {
     _queue = queue;
     _index = 0;

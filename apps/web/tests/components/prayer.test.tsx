@@ -166,20 +166,25 @@ describe("NextPrayerCard", () => {
   it("shows next prayer and countdown in Arabic digits", async () => {
     render(<NextPrayerCard locale="ar" />);
     expect(await screen.findByTestId("home-countdown")).toHaveTextContent(/^[٠-٩]+:[٠-٩]{2}:[٠-٩]{2}$/);
-    expect(screen.getByTestId("home-next-name")).toHaveTextContent(/^الظهر/);
-    // today's five prayers + sunrise, the next one marked
+    expect(screen.getByTestId("home-next-name")).toHaveTextContent("صلاة الظهر");
+    expect(screen.getByTestId("home-next-time")).toHaveTextContent(/^[٠-٩]{2}:[٠-٩]{2}$/);
+    // today's five prayers, the next one marked; sunrise and sunset on their own row
     const times = screen.getByTestId("home-times").querySelectorAll("li");
-    expect(times).toHaveLength(6);
+    expect(times).toHaveLength(5);
+    expect(screen.getByTestId("home-sunrise")).toHaveTextContent(/^[٠-٩]{2}:[٠-٩]{2}$/);
+    expect(screen.getByTestId("home-sunset")).toHaveTextContent(/^[٠-٩]{2}:[٠-٩]{2}$/);
+    expect(screen.getByTestId("home-weekday")).not.toBeEmptyDOMElement();
     expect(screen.getByTestId("home-times").querySelector("li.next")).toHaveAttribute("data-prayer", "dhuhr");
     expect(screen.getByTestId("home-place")).toHaveTextContent("مكة المكرمة");
     expect(screen.getByTestId("home-hijri")).toHaveTextContent(/١٤٤٧ هـ/);
     expect(screen.getByTestId("home-gregorian")).toHaveTextContent(/٢٠٢٦/);
-    expect(screen.getByRole("link", { name: "كل مواقيت الصلاة" })).toHaveAttribute("href", "/ar/prayer/");
+    expect(screen.getByRole("link", { name: "تقويم الصلاة" })).toHaveAttribute("href", "/ar/prayer/");
+    expect(screen.getByRole("link", { name: "الإعدادات" })).toHaveAttribute("href", "/ar/settings/");
   });
   it("after Isha: tomorrow's times are listed with Fajr marked as next", async () => {
     vi.setSystemTime(new Date("2026-11-07T17:43:00Z")); // 20:43 in Makkah, after Isha
     render(<NextPrayerCard locale="en" />);
-    expect(await screen.findByTestId("home-next-name")).toHaveTextContent(/^Fajr/);
+    expect(await screen.findByTestId("home-next-name")).toHaveTextContent("Fajr prayer");
     const list = screen.getByTestId("home-times");
     expect(list).toHaveAttribute("data-day", "tomorrow");
     expect(list).toHaveAccessibleName("Tomorrow's times");
@@ -187,7 +192,7 @@ describe("NextPrayerCard", () => {
     const marked = list.querySelector("li.next")!;
     expect(marked).toHaveAttribute("data-prayer", "fajr");
     // the marked time is the time shown as next in the hero
-    expect(screen.getByTestId("home-next-name")).toHaveTextContent(
+    expect(screen.getByTestId("home-next-time")).toHaveTextContent(
       marked.querySelector("strong")!.textContent!,
     );
   });
