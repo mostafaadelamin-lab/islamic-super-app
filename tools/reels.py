@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """Curated Islamic reels: catalogue validation, build and a small editor CLI.
 
-Videos stay on YouTube and are shown with YouTube's official embed player, so
-nothing is downloaded, re-hosted or stored by us. (Instagram is not enabled yet.)
+Videos stay on YouTube / Instagram and are shown with the platforms' official
+embed players, so nothing is downloaded, re-hosted or stored by us. Instagram's
+plain /embed/ page needs no Meta app, token or account.
 
-Only two kinds of reels are accepted, per the owner's content policy:
-  recitation -> a humble, moving Quran recitation (تلاوة قرآنية خاشعة)
-  lesson     -> a short religious lesson in line with the Quran and the Sunnah (درس ديني مختصر)
+Only three kinds of reels are accepted, per the owner's content policy (2026-11-09):
+  recitation -> Quran recitation, from Quran recitation pages/channels (تلاوة قرآنية)
+  lesson     -> a short religious lesson in line with the Quran and the Sunnah (درس ديني)
+  admonition -> advice and admonition (نصائح ومواعظ)
 
 Every reel goes through a religious-accuracy review before any app shows it:
   pending  -> visible only in the apps' reviewer mode, with a "not reviewed" banner
@@ -17,8 +19,8 @@ Catalogue: content/reels/reels.json   Output: content/reels/dist/reels.v1.json
 
 CLI (run from anywhere):
   python tools/reels.py list
-  python tools/reels.py add <youtube-url> --title-ar "…" [--title-en "…"]
-                            [--speaker-ar "…"] [--category recitation|lesson] [--source "channel"]
+  python tools/reels.py add <youtube-or-instagram-url> --title-ar "…" [--title-en "…"]
+                            [--speaker-ar "…"] [--category recitation|lesson|admonition] [--source "channel"]
   python tools/reels.py approve <id> --reviewer "name" [--notes "…"]
   python tools/reels.py reject <id> --reviewer "name" --notes "reason"
   python tools/reels.py build
@@ -37,10 +39,12 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 CATALOGUE = ROOT / "content/reels/reels.json"
 DIST = ROOT / "content/reels/dist/reels.v1.json"
 
-PLATFORMS = ("youtube",)  # Instagram is not enabled yet
-CATEGORIES = ("recitation", "lesson")
+PLATFORMS = ("youtube", "instagram")
+CATEGORIES = ("recitation", "lesson", "admonition")
 STATUSES = ("pending", "approved", "rejected")
 YT_ID = re.compile(r"^[A-Za-z0-9_-]{11}$")
+IG_CODE = re.compile(r"^[A-Za-z0-9_-]{5,40}$")
+IG_HOSTS = {"instagram.com", "www.instagram.com", "m.instagram.com"}
 YT_HOSTS = {"youtube.com", "www.youtube.com", "m.youtube.com", "music.youtube.com", "youtube-nocookie.com", "www.youtube-nocookie.com"}
 
 
@@ -49,7 +53,7 @@ class ReelError(ValueError):
 
 
 def parse_url(url: str) -> tuple[str, str]:
-    """Return ("youtube", video id) for a YouTube video or Short link."""
+    """Return (platform, ref) for a YouTube video/Short or an Instagram reel/post link."""
     u = urlparse(url.strip())
     if u.scheme not in ("http", "https"):
         raise ReelError("link must start with https://")
@@ -65,23 +69,30 @@ def parse_url(url: str) -> tuple[str, str]:
             ref = (parse_qs(u.query).get("v") or [None])[0]
         elif len(parts) >= 2 and parts[0] in ("shorts", "embed", "live", "v"):
             ref = parts[1]
-    elif "instagram.com" in host:
-        raise ReelError("Instagram is not enabled yet: only YouTube links for now")
+    elif host in IG_HOSTS:
+        platform = "instagram"
+        # /reel/CODE, /reels/CODE, /p/CODE, /tv/CODE and /<user>/reel/CODE
+        for i, p in enumerate(parts[:-1]):
+            if p in ("reel", "reels", "p", "tv"):
+                ref = parts[i + 1]
+                break
     else:
-        raise ReelError(f"only YouTube links are supported, got {host or 'nothing'}")
+        raise ReelError(f"only YouTube and Instagram links are supported, got {host or 'nothing'}")
     if not ref:
         raise ReelError("could not find the video in this link")
-    if not YT_ID.match(ref):
+    if platform == "youtube" and not YT_ID.match(ref):
         raise ReelError(f"not a YouTube video id: {ref}")
+    if platform == "instagram" and not IG_CODE.match(ref):
+        raise ReelError(f"not an Instagram reel code: {ref}")
     return platform, ref
 
 
 def canonical_url(platform: str, ref: str) -> str:
-    return f"https://www.youtube.com/watch?v={ref}"
+    return f"https://www.youtube.com/watch?v={ref}" if platform == "youtube" else f"https://www.instagram.com/reel/{ref}/"
 
 
 def reel_id(platform: str, ref: str) -> str:
-    return "yt-" + ref
+    return ("yt-" if platform == "youtube" else "ig-") + ref
 
 
 def _date(s: object) -> bool:
@@ -102,7 +113,7 @@ def validate(cat: dict) -> list[str]:
         p, ref = r.get("platform"), r.get("ref", "")
         if p not in PLATFORMS:
             problems.append(f"{where}: platform"); continue
-        if not YT_ID.match(ref):
+        if not (YT_ID if p == "youtube" else IG_CODE).match(ref):
             problems.append(f"{where}: ref")
         if r.get("id") != reel_id(p, ref):
             problems.append(f"{where}: id must be {reel_id(p, ref)}")

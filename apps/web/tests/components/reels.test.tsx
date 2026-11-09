@@ -60,12 +60,36 @@ describe("ReelsFeed", () => {
     expect(screen.getByTestId("reel-pending")).toHaveTextContent("لم تتم مراجعة");
     expect(reelsPrefsStore.get().reviewer).toBe(true);
   });
+  it("plays Instagram reels through Instagram's official embed, with a blank poster off-screen", async () => {
+    const ig: Reel = {
+      ...base,
+      id: "ig-C1a2B3c4D5e",
+      platform: "instagram",
+      ref: "C1a2B3c4D5e",
+      url: "https://www.instagram.com/reel/C1a2B3c4D5e/",
+      category: "admonition",
+      title: { ar: "موعظة", en: "Admonition" },
+    };
+    render(<ReelsFeed locale="en" reels={[ig, base]} />);
+    expect(screen.getByTestId("reel-player").getAttribute("src")).toBe(
+      "https://www.instagram.com/reel/C1a2B3c4D5e/embed/",
+    );
+    expect(screen.getByText("Advice & admonition")).toBeInTheDocument();
+    expect(screen.getAllByText("Instagram")).toHaveLength(1);
+    expect(screen.getByRole("link", { name: "Open on Instagram" })).toHaveAttribute("href", ig.url);
+    screen.getByTestId("reels-feed").focus();
+    await userEvent.keyboard("{ArrowDown}");
+    expect(screen.getByTestId("reel-player").getAttribute("src")).toContain(
+      "youtube-nocookie.com/embed/hTtlD-u4_HI",
+    );
+    expect(document.querySelector(".reel-poster-blank")).not.toBeNull();
+  });
   it("arrow keys move between reels", async () => {
     render(<ReelsFeed locale="en" reels={[base, { ...pending, status: "approved", reviewer: "B" }]} />);
     screen.getByTestId("reels-feed").focus();
     await userEvent.keyboard("{ArrowDown}");
     expect(screen.getByTestId("reels-position")).toHaveTextContent("2 / 2");
     expect(screen.getByTestId("reel-player").getAttribute("src")).toContain("/embed/26dRG7OeL6Q?");
-    expect(screen.getByText("Short lesson")).toBeInTheDocument();
+    expect(screen.getByText("Religious lesson")).toBeInTheDocument();
   });
 });

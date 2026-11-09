@@ -72,6 +72,8 @@ export type PlayScope =
   | { kind: "page"; page: number }
   | { kind: "surah"; surah: number }
   | { kind: "from"; surah: number; ayah: number }
+  /** One ayah only (tapped in the Mushaf); no basmala before it. */
+  | { kind: "ayah"; surah: number; ayah: number }
   /** Verse ranges [surah, from, to] played in order (audio Quranic stories). */
   | { kind: "ranges"; ranges: readonly (readonly [number, number, number])[] }
   /** Quran radio: the whole Mushaf, from surah `from` to an-Nas, then al-Fatihah up to `from` - 1. */
@@ -103,6 +105,8 @@ export function buildQueue(scope: PlayScope): QueueItem[] {
   if (scope.kind === "surah") return withBasmala(surahRefs(scope.surah, 1));
   if (scope.kind === "ranges") return withBasmala(rangeRefs(scope.ranges));
   if (scope.kind === "quran") return withBasmala(radioSurahs(scope.from).flatMap((s) => surahRefs(s, 1)));
+  if (scope.kind === "ayah")
+    return isValidAyah(scope.surah, scope.ayah) ? [{ kind: "ayah", s: scope.surah, a: scope.ayah }] : [];
   if (!isValidAyah(scope.surah, scope.ayah)) return [];
   return withBasmala(surahRefs(scope.surah, scope.ayah));
 }

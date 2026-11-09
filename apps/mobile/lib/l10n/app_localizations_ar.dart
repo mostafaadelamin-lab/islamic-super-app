@@ -637,6 +637,51 @@ class AppLocalizationsAr extends AppLocalizations {
   String get moreTitle => 'المزيد';
 
   @override
+  String mosquesAround(String place) {
+    return 'المساجد حول $place';
+  }
+
+  @override
+  String mosquesCount(String n) {
+    return '$n مسجد، الأقرب أولًا. اضغط على المسجد لفتح الاتجاهات.';
+  }
+
+  @override
+  String get mosquesError => 'تعذّر الوصول إلى خريطة OpenStreetMap. تأكد من الاتصال بالإنترنت.';
+
+  @override
+  String mosquesKm(String n) {
+    return '$n كم';
+  }
+
+  @override
+  String get mosquesLoading => 'جارٍ البحث عن المساجد…';
+
+  @override
+  String mosquesMeters(String n) {
+    return '$n م';
+  }
+
+  @override
+  String get mosquesNone => 'لا توجد مساجد مسجلة على الخريطة في هذه المسافة. جرّب مسافة أكبر.';
+
+  @override
+  String get mosquesNote =>
+      'المسافة في خط مستقيم حول مدينة المواقيت. البيانات من خريطة OpenStreetMap المفتوحة وقد تكون ناقصة في بعض الأماكن.';
+
+  @override
+  String get mosquesOffline => '(آخر نتيجة محفوظة، أنت غير متصل)';
+
+  @override
+  String get mosquesRetry => 'إعادة المحاولة';
+
+  @override
+  String get mosquesTitle => 'المساجد القريبة';
+
+  @override
+  String get mosquesUnnamed => 'مسجد (بدون اسم على الخريطة)';
+
+  @override
   String get mushafCopied => 'نُسخت الآية';
 
   @override
@@ -1090,10 +1135,121 @@ class AppLocalizationsAr extends AppLocalizations {
   String get radioUnlimited => 'غير محدود';
 
   @override
-  String get reelsCatLesson => 'درس ديني مختصر';
+  String get readerBack => 'رجوع إلى الفهرس';
 
   @override
-  String get reelsCatRecitation => 'تلاوة خاشعة';
+  String get readerBasmalaNow => 'تُتلى البسملة الآن';
+
+  @override
+  String get readerBookmarks => 'إشارات مرجعية';
+
+  @override
+  String get readerFont => 'حجم الخط';
+
+  @override
+  String readerFontSize(String size) {
+    return 'حجم الخط: $size — اضغط للتكبير';
+  }
+
+  @override
+  String get readerHelp => 'مساعدة';
+
+  @override
+  String get readerHelp1 => 'اسحب الصفحة يمينًا للتالية ويسارًا للسابقة، أو استخدم شريط الصفحات.';
+
+  @override
+  String get readerHelp2 => 'المس أي آية لتستمع إليها وترى تفسيرها.';
+
+  @override
+  String get readerHelp3 => 'زر «استماع مع التفسير» يقسم الشاشة نصفين: الآية التي تُتلى الآن، وتحتها تفسيرها المختصر.';
+
+  @override
+  String get readerHelpTitle => 'طريقة الاستخدام';
+
+  @override
+  String get readerIndex => 'الفهرس';
+
+  @override
+  String get readerKhatma => 'الختمة';
+
+  @override
+  String readerKhatmaContinue(String page) {
+    return 'تابع من الصفحة $page';
+  }
+
+  @override
+  String get readerKhatmaDone => 'أتممت الختمة، تقبّل الله منك.';
+
+  @override
+  String readerKhatmaLeft(String left) {
+    return 'بقي $left صفحة';
+  }
+
+  @override
+  String get readerKhatmaNone => 'لم تبدأ ختمة بعد. ابدأ ختمة جديدة وسيُحسب تقدمك من آخر صفحة تقرؤها.';
+
+  @override
+  String readerKhatmaProgress(String done, String pct) {
+    return 'قرأت $done من ٦٠٤ صفحة ($pct٪)';
+  }
+
+  @override
+  String get readerKhatmaReset => 'إلغاء الختمة';
+
+  @override
+  String readerKhatmaSince(String date) {
+    return 'بدأت في $date';
+  }
+
+  @override
+  String get readerKhatmaStart => 'ابدأ ختمة جديدة من الفاتحة';
+
+  @override
+  String get readerKhatmaTitle => 'الختمة';
+
+  @override
+  String get readerListenWithTafsir => 'استماع مع التفسير';
+
+  @override
+  String get readerPlayAyah => 'استمع للآية';
+
+  @override
+  String get readerPlayWithTafsir => 'استماع مع التفسير';
+
+  @override
+  String readerRepeatN(String n) {
+    return 'التكرار: $n';
+  }
+
+  @override
+  String get readerSearch => 'البحث';
+
+  @override
+  String get readerShowPage => 'عرض الصفحة';
+
+  @override
+  String get readerSplitTafsir => 'تفسير مختصر';
+
+  @override
+  String get readerSplitTitle => 'الآية التي تُتلى الآن';
+
+  @override
+  String get readerTabAyat => 'الآيات';
+
+  @override
+  String get readerTabMushaf => 'المصحف';
+
+  @override
+  String get readerTabTafsir => 'التفسير';
+
+  @override
+  String get reelsCatAdmonition => 'نصائح ومواعظ';
+
+  @override
+  String get reelsCatLesson => 'درس ديني';
+
+  @override
+  String get reelsCatRecitation => 'تلاوة قرآنية';
 
   @override
   String get reelsEmpty => 'لا توجد مقاطع مراجَعة بعد. تُضاف المقاطع بعد مراجعتها شرعياً.';
@@ -1106,13 +1262,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get reelsNote =>
-      'المقاطع معروضة من يوتيوب بمشغّله الرسمي، وتقتصر على التلاوات الخاشعة والدروس الدينية المختصرة الموافقة للكتاب والسنة، ولا يُعرض إلا ما راجعه مختص.';
+      'المقاطع معروضة من يوتيوب وإنستجرام بمشغّلاتها الرسمية، وتقتصر على تلاوات القرآن الكريم والدروس الدينية والنصائح والمواعظ الموافقة للكتاب والسنة، ولا يُعرض إلا ما راجعه مختص.';
 
   @override
-  String get reelsOpen => 'افتح على يوتيوب';
+  String get reelsOpenInstagram => 'افتح على إنستجرام';
+
+  @override
+  String get reelsOpenYoutube => 'افتح على يوتيوب';
 
   @override
   String get reelsPending => 'لم تتم مراجعة هذا المقطع شرعياً بعد — يظهر لك لأن وضع المراجعة مفعّل';
+
+  @override
+  String get reelsPlatformInstagram => 'إنستجرام';
+
+  @override
+  String get reelsPlatformYoutube => 'يوتيوب';
 
   @override
   String reelsPosition(String n, String total) {
@@ -1135,6 +1300,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get reelsSub => 'مقاطع قصيرة مراجَعة';
+
+  @override
+  String get reelsTapToPlay => 'اضغط للتشغيل';
 
   @override
   String get reelsTitle => 'ريلز إسلامية';

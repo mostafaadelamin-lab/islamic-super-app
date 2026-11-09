@@ -4,6 +4,7 @@ import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import { embedUrl, posterUrl, REELS, reelsPrefsStore, visibleReels, type Reel } from "@/lib/reels";
 import { useStore } from "@/hooks/useStore";
+import { Icon } from "./Icon";
 
 /**
  * Vertical, snap-scrolling reels feed. Only the reel in view gets a live player (iframe); the others show a
@@ -98,9 +99,13 @@ export function ReelsFeed({ locale, reels = REELS }: { locale: Locale; reels?: r
                       loading="eager"
                       data-testid="reel-player"
                     />
-                  ) : (
+                  ) : poster ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={poster} alt="" loading="lazy" className="reel-poster" />
+                  ) : (
+                    <div className="reel-poster reel-poster-blank" aria-hidden="true">
+                      <Icon name="play" />
+                    </div>
                   )}
                 </div>
                 {r.status === "pending" ? (
@@ -113,6 +118,7 @@ export function ReelsFeed({ locale, reels = REELS }: { locale: Locale; reels?: r
                   {speaker ? <span>{speaker}</span> : null}
                   <span className="reel-tags">
                     <span className="reel-chip">{t(locale, `reels.cat.${r.category}`)}</span>
+                    <span className="reel-chip">{t(locale, `reels.platform.${r.platform}`)}</span>
                     {r.status === "approved" && r.reviewer ? (
                       <span className="reel-chip reel-reviewed">
                         {t(locale, "reels.reviewedBy", { name: r.reviewer })}
@@ -120,7 +126,7 @@ export function ReelsFeed({ locale, reels = REELS }: { locale: Locale; reels?: r
                     ) : null}
                   </span>
                   <a href={r.url} target="_blank" rel="noopener noreferrer" className="reel-open">
-                    {t(locale, "reels.open")}
+                    {t(locale, `reels.open.${r.platform}`)}
                   </a>
                 </div>
               </article>

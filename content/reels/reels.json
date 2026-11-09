@@ -1,7 +1,7 @@
 {
   "schema": "reels-catalogue.v1",
   "version": 1,
-  "note": "Edit with tools/reels.py. YouTube only for now. Categories: 'recitation' (humble, moving Quran recitation) and 'lesson' (short religious lesson per the Quran and Sunnah). Only 'approved' reels are shown to users; 'pending' ones appear only in reviewer mode. Videos stay on YouTube (official embed); nothing is downloaded or re-hosted.",
+  "note": "Edit with tools/reels.py. Sources: YouTube and Instagram (official embeds; nothing downloaded or re-hosted). Categories: 'recitation' (Quran recitation from Quran pages/channels), 'lesson' (religious lesson per the Quran and Sunnah), 'admonition' (advice and admonitions). Only 'approved' reels are shown to users; 'pending' ones appear only in reviewer mode.",
   "items": [
     {
       "id": "yt-hTtlD-u4_HI",

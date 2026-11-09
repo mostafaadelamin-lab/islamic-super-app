@@ -45,6 +45,8 @@ void main() {
     expect(find.byKey(const Key('miniPlayer')), findsOneWidget);
     expect(find.byKey(const Key('audioTafsirToggle')), findsOneWidget);
     expect(find.byKey(const Key('recitationTafsir')), findsNothing);
+    expect(find.byKey(const Key('splitView')), findsNothing);
+    expect(find.byKey(const Key('mushafPageView')), findsOneWidget);
   });
 
   testWidgets('on: shows the playing ayah\'s tafsir, follows it ayah by ayah and across a page turn; off hides it', (
@@ -54,8 +56,16 @@ void main() {
     await tester.tap(find.byKey(const Key('audioTafsirToggle')));
     await tester.pumpAndSettle();
     expect(app.prefs.getBool('audio.tafsir'), isTrue);
+    // the screen splits in two: the recited ayah above, its tafsir below
+    expect(find.byKey(const Key('splitView')), findsOneWidget);
+    expect(find.byKey(const Key('mushafPageView')), findsNothing);
     expect(find.byKey(const Key('recitationTafsir')), findsOneWidget);
-    expect(find.text('التفسير مع التلاوة · البقرة : ٤'), findsOneWidget);
+    expect(find.byKey(const Key('splitAyahText')), findsOneWidget);
+    expect(tester.widget<Text>(find.byKey(const Key('splitAyahLabel'))).data, 'البقرة : ٤');
+    final top = tester.getRect(find.byKey(const Key('splitAyah')));
+    final bottom = tester.getRect(find.byKey(const Key('recitationTafsir')));
+    expect(top.bottom, lessThan(bottom.top));
+    expect((top.height - bottom.height).abs(), lessThan(1), reason: 'two equal halves');
     expect(panelText(tester), source(2, 4));
 
     audio.finish();
@@ -69,12 +79,13 @@ void main() {
     expect(app.services.recitation.currentRef, const AyahRef(2, 6));
     expect(page(tester), 3, reason: 'the Mushaf turned the page');
     expect(panelText(tester), source(2, 6));
-    expect(find.text('التفسير مع التلاوة · البقرة : ٦'), findsOneWidget);
+    expect(tester.widget<Text>(find.byKey(const Key('splitAyahLabel'))).data, 'البقرة : ٦');
 
-    await tester.tap(find.byKey(const Key('audioTafsirToggle')));
+    await tester.tap(find.byKey(const Key('splitShowPage'))); // "Show the page" turns the split off
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('recitationTafsir')), findsNothing);
     expect(app.prefs.getBool('audio.tafsir'), isFalse);
+    expect(find.byKey(const Key('mushafPage-3')), findsOneWidget, reason: 'the page view opens on page 3');
     expect(find.byKey(const Key('miniPlayer')), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('audioStop')));
@@ -88,20 +99,23 @@ void main() {
     expect(panelText(tester), source(1, 2));
   });
 
-  testWidgets(
-    'while the basmala plays before a surah, the panel shows that surah\'s first ayah (the one highlighted)',
-    (tester) async {
-      final (app, _) = await openAndPlay(
-        tester,
-        2,
-        const AyahRef(2, 1),
-        prefs: {'audio.tafsir': true},
-        scope: PlayScope.surah,
-      );
-      expect(app.services.recitation.current!.isBasmala, isTrue);
-      expect(panelText(tester), source(2, 1));
-    },
-  );
+  testWidgets('while the basmala plays before a surah, the top half shows the basmala; the tafsir starts with ayah 1', (
+    tester,
+  ) async {
+    final (app, audio) = await openAndPlay(
+      tester,
+      2,
+      const AyahRef(2, 1),
+      prefs: {'audio.tafsir': true},
+      scope: PlayScope.surah,
+    );
+    expect(app.services.recitation.current!.isBasmala, isTrue);
+    expect(panelText(tester), isNull);
+    expect(tester.widget<Text>(find.byKey(const Key('splitAyahLabel'))).data, 'تُتلى البسملة الآن');
+    audio.finish();
+    await tester.pumpAndSettle();
+    expect(panelText(tester), source(2, 1));
+  });
 
   testWidgets('also shown above the mini player on the home screen', (tester) async {
     final audio = FakeAudioBackend();
@@ -113,14 +127,16 @@ void main() {
   });
 
   for (final locale in ['ar', 'en']) {
-    testWidgets('320 px wide ($locale): the longest entry scrolls in the panel, nothing overflows', (tester) async {
+    testWidgets('320 px wide ($locale): split view: the longest entry scrolls in its half, nothing overflows', (
+      tester,
+    ) async {
       const size = Size(320, 568);
       await openAndPlay(tester, 48, const AyahRef(2, 282), prefs: {'audio.tafsir': true}, size: size, locale: locale);
       expect(tester.takeException(), isNull);
       expect(panelText(tester), source(2, 282));
       if (locale == 'en') expect(find.text('This tafsir is available in Arabic only.'), findsOneWidget);
       final panel = tester.getRect(find.byKey(const Key('recitationTafsir')));
-      expect(panel.height, lessThanOrEqualTo(size.height * 0.3), reason: 'docked, leaves room for the page');
+      expect(panel.height, greaterThan(size.height * 0.1), reason: 'a real half, not a strip');
       for (final k in ['recitationTafsir', 'miniPlayer', 'audioTafsirToggle', 'audioStop', 'audioPlayPause']) {
         final r = tester.getRect(find.byKey(Key(k)));
         expect(r.left, greaterThanOrEqualTo(-0.01), reason: k);

@@ -85,7 +85,7 @@ class _ReelsScreenState extends State<ReelsScreen> {
                     index: i,
                     total: reels.length,
                     active: i == _current,
-                    player: widget.playerBuilder ?? (context, r) => YoutubeReelPlayer(key: ValueKey(r.id), reel: r),
+                    player: widget.playerBuilder ?? (context, r) => ReelPlayer(key: ValueKey(r.id), reel: r),
                     showPoster: widget.showPosters,
                     onOpen: () => _open(reels[i]),
                   ),
@@ -152,7 +152,11 @@ class _ReelPage extends StatelessWidget {
     final l = context.l10n;
     final ar = context.services.settings.isArabic;
     final speaker = reel.speaker(ar);
-    final category = reel.category == 'recitation' ? l.reelsCatRecitation : l.reelsCatLesson;
+    final category = switch (reel.category) {
+      'recitation' => l.reelsCatRecitation,
+      'lesson' => l.reelsCatLesson,
+      _ => l.reelsCatAdmonition,
+    };
     final top = MediaQuery.paddingOf(context).top + kToolbarHeight;
     return Semantics(
       container: true,
@@ -163,12 +167,24 @@ class _ReelPage extends StatelessWidget {
         children: [
           if (active)
             player(context, reel)
-          else if (showPoster)
+          else if (showPoster && reel.posterUrl != null)
             Image.network(
-              reel.posterUrl,
+              reel.posterUrl!,
               fit: BoxFit.cover,
               opacity: const AlwaysStoppedAnimation(0.6),
               errorBuilder: (_, _, _) => const ColoredBox(color: Colors.black),
+            )
+          else
+            DecoratedBox(
+              key: Key('reel.poster.${reel.id}'),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0xFF0F5C4A), Color(0xFF06140F)],
+                ),
+              ),
+              child: const Center(child: Icon(Icons.play_circle_outline, color: Colors.white70, size: 64)),
             ),
           if (reel.isPending)
             Positioned(
@@ -216,6 +232,7 @@ class _ReelPage extends StatelessWidget {
                       runSpacing: DesignTokens.spaceXs,
                       children: [
                         _Chip(category),
+                        _Chip(reel.isInstagram ? l.reelsPlatformInstagram : l.reelsPlatformYoutube),
                         if (reel.reviewer != null) _Chip(l.reelsReviewedBy(reel.reviewer!), green: true),
                         _Chip(context.numLtr('${index + 1} / $total')),
                       ],
@@ -225,7 +242,7 @@ class _ReelPage extends StatelessWidget {
                       style: TextButton.styleFrom(foregroundColor: Colors.white, padding: EdgeInsets.zero),
                       onPressed: onOpen,
                       icon: const Icon(Icons.open_in_new, size: 18),
-                      label: Text(l.reelsOpen),
+                      label: Text(reel.isInstagram ? l.reelsOpenInstagram : l.reelsOpenYoutube),
                     ),
                   ],
                 ),
@@ -254,23 +271,29 @@ class _Chip extends StatelessWidget {
   );
 }
 
-/// YouTube's official embed in a WebView: autoplays muted and inline (YouTube's
-/// own controls unmute). Navigation away from the embed (the YouTube logo,
-/// related links) opens in the YouTube app or browser instead of inside the feed.
-class YoutubeReelPlayer extends StatefulWidget {
-  const YoutubeReelPlayer({super.key, required this.reel});
+final _igEmbedPath = RegExp(r'^/(reel|p|tv)/[A-Za-z0-9_-]{5,40}/embed(/captioned)?/?$');
+
+/// Only the official embed pages may load inside the feed; anything else
+/// (watch pages, profiles, other sites) is handed to the app or browser.
+bool reelNavigationAllowedInFeed(Uri u) =>
+    u.scheme == 'about' ||
+    (u.scheme == 'https' && u.host == 'www.youtube-nocookie.com' && (u.path == '/' || u.path.startsWith('/embed/'))) ||
+    (u.scheme == 'https' && u.host == 'www.instagram.com' && _igEmbedPath.hasMatch(u.path));
+
+/// The platform's official embed in a WebView. YouTube autoplays muted and
+/// inline (its own controls unmute); Instagram's embed shows its play button.
+/// Navigation away from the embed (logos, "view on Instagram", related links)
+/// opens in the YouTube/Instagram app or browser instead of inside the feed.
+class ReelPlayer extends StatefulWidget {
+  const ReelPlayer({super.key, required this.reel});
   final Reel reel;
 
   @override
-  State<YoutubeReelPlayer> createState() => _YoutubeReelPlayerState();
+  State<ReelPlayer> createState() => _ReelPlayerState();
 }
 
-class _YoutubeReelPlayerState extends State<YoutubeReelPlayer> {
+class _ReelPlayerState extends State<ReelPlayer> {
   late final WebViewController _c;
-
-  static bool isAllowedInFeed(Uri u) =>
-      u.scheme == 'about' ||
-      (u.scheme == 'https' && u.host == 'www.youtube-nocookie.com' && (u.path == '/' || u.path.startsWith('/embed/')));
 
   @override
   void initState() {
@@ -288,7 +311,7 @@ class _YoutubeReelPlayerState extends State<YoutubeReelPlayer> {
         NavigationDelegate(
           onNavigationRequest: (req) {
             final u = Uri.tryParse(req.url);
-            if (u != null && isAllowedInFeed(u)) return NavigationDecision.navigate;
+            if (u != null && reelNavigationAllowedInFeed(u)) return NavigationDecision.navigate;
             if (u != null && u.scheme == 'https') launchUrl(u, mode: LaunchMode.externalApplication);
             return NavigationDecision.prevent;
           },
@@ -296,7 +319,11 @@ class _YoutubeReelPlayerState extends State<YoutubeReelPlayer> {
       );
     final p = _c.platform;
     if (p is AndroidWebViewController) p.setMediaPlaybackRequiresUserGesture(false);
-    _c.loadHtmlString(widget.reel.embedHtml(), baseUrl: ReelCatalog.embedOrigin);
+    if (widget.reel.isInstagram) {
+      _c.loadRequest(widget.reel.instagramEmbedUri);
+    } else {
+      _c.loadHtmlString(widget.reel.embedHtml(), baseUrl: ReelCatalog.embedOrigin);
+    }
   }
 
   @override

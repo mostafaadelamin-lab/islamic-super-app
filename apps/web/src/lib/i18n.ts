@@ -2,6 +2,8 @@ import sharedAr from "@/generated/i18n-ar.json";
 import sharedEn from "@/generated/i18n-en.json";
 import webAr from "@/i18n/web.ar.json";
 import webEn from "@/i18n/web.en.json";
+import readerAr from "@/i18n/reader.ar.json";
+import readerEn from "@/i18n/reader.en.json";
 
 export const LOCALES = ["ar", "en"] as const;
 export type Locale = (typeof LOCALES)[number];
@@ -10,8 +12,8 @@ export const DEFAULT_LOCALE: Locale = "ar";
 export type Dict = Record<string, string>;
 
 export const dictionaries: Record<Locale, Dict> = {
-  ar: { ...(sharedAr as Dict), ...(webAr as Dict) },
-  en: { ...(sharedEn as Dict), ...(webEn as Dict) },
+  ar: { ...(sharedAr as Dict), ...(webAr as Dict), ...(readerAr as Dict) },
+  en: { ...(sharedEn as Dict), ...(webEn as Dict), ...(readerEn as Dict) },
 };
 
 export function isLocale(v: unknown): v is Locale {
