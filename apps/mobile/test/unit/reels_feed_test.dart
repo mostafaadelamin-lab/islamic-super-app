@@ -49,6 +49,19 @@ void main() {
             'category': 'recitation',
           },
           {
+            'platform': 'youtube',
+            'handle': 'إسلاميات123',
+            'name': {'ar': 'إسلاميات'},
+            'category': 'admonition',
+          },
+          {
+            'platform': 'youtube',
+            'handle': 'xyz',
+            'channelId': 'UCaaaaaaaaaaaaaaaaaaaaaa',
+            'name': {'ar': 'x'},
+            'category': 'lesson',
+          },
+          {
             'platform': 'instagram',
             'channelId': 'UCYuUcfXvsHapABTcPRWCEoQ',
             'name': {'ar': 'x'},
@@ -62,18 +75,19 @@ void main() {
           },
         ],
       });
-      expect(list.map((s) => s.id), ['yt-UCYuUcfXvsHapABTcPRWCEoQ']);
-      expect(list.single.nameEn, 'ياسر');
+      expect(list.map((s) => s.id), ['yt-UCYuUcfXvsHapABTcPRWCEoQ', 'yt-@إسلاميات123']);
+      expect(list.first.nameEn, 'ياسر');
+      expect(list.last.channelPage.toString(), startsWith('https://www.youtube.com/@'));
       expect(ReelSource.listFromJson({'schema': 'other'}), isEmpty);
     });
 
     test('feed URLs: Shorts playlist (UUSH) and channel fallback', () {
       expect(
-        yasser.shortsFeed.toString(),
+        ReelSource.shortsFeed('UCYuUcfXvsHapABTcPRWCEoQ').toString(),
         'https://www.youtube.com/feeds/videos.xml?playlist_id=UUSHYuUcfXvsHapABTcPRWCEoQ',
       );
       expect(
-        yasser.channelFeed.toString(),
+        ReelSource.channelFeed('UCYuUcfXvsHapABTcPRWCEoQ').toString(),
         'https://www.youtube.com/feeds/videos.xml?channel_id=UCYuUcfXvsHapABTcPRWCEoQ',
       );
     });
@@ -188,5 +202,50 @@ void main() {
       await c.unhide(yasser.id);
       expect(c.items, hasLength(4));
     });
+  });
+
+  test('channel id read from a channel page', () {
+    expect(
+      ReelSource.channelIdFromPage(
+        '<html><link rel="canonical" href="https://www.youtube.com/channel/UCch6Y4YgssEzMa4Q5zw4xjw"></html>',
+      ),
+      'UCch6Y4YgssEzMa4Q5zw4xjw',
+    );
+    expect(ReelSource.channelIdFromPage('{"externalId":"UCch6Y4YgssEzMa4Q5zw4xjw"}'), 'UCch6Y4YgssEzMa4Q5zw4xjw');
+    expect(ReelSource.channelIdFromPage('<html>nothing</html>'), isNull);
+  });
+
+  test('a source given by @handle: looks the id up once, then uses the feeds', () async {
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+    const samir = ReelSource(
+      id: 'yt-@samirmoustafa',
+      handle: 'samirmoustafa',
+      nameAr: 'الشيخ سمير مصطفى',
+      nameEn: 'Sheikh Samir Mostafa',
+      category: 'lesson',
+    );
+    final calls = <Uri>[];
+    ReelsFeedController make() => ReelsFeedController(
+      sources: const [samir],
+      httpClient: MockClient((req) async {
+        calls.add(req.url);
+        if (req.url.path == '/@samirmoustafa') {
+          return http.Response(
+            '<link rel="canonical" href="https://www.youtube.com/channel/UCch6Y4YgssEzMa4Q5zw4xjw">',
+            200,
+          );
+        }
+        expect(req.url.queryParameters['playlist_id'], 'UUSHch6Y4YgssEzMa4Q5zw4xjw');
+        return http.Response.bytes(utf8.encode(fixture), 200);
+      }),
+      prefs: prefs,
+    );
+    await make().refresh();
+    expect(calls.map((u) => u.path), ['/@samirmoustafa', '/feeds/videos.xml']);
+    expect(prefs.getString(ReelsFeedController.handleKey('samirmoustafa')), 'UCch6Y4YgssEzMa4Q5zw4xjw');
+    calls.clear();
+    await make().refresh(force: true);
+    expect(calls.map((u) => u.path), ['/feeds/videos.xml'], reason: 'the id is remembered');
   });
 }

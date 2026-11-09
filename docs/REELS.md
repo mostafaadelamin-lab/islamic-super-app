@@ -18,7 +18,9 @@ python tools/reels.py sources-add "https://www.youtube.com/channel/UC…" --name
 python tools/reels.py sources-remove yt-UC…
 python tools/build_content.py && apps/mobile/tool/sync_assets.sh
 ```
-Only `/channel/UC…` links or bare `UC…` ids are accepted (an `@handle` must be turned into its channel id first, e.g. from the channel page's "Share channel → Copy channel ID").
+Accepted: `youtube.com/@handle` links, `youtube.com/channel/UC…` links or bare `UC…` ids. An `@handle` is turned into the channel id at run time (from the channel page, once, then remembered) by the mobile app and the API.
+
+Instagram pages the owner sent are kept in `sources.json` → `instagramPages` (not shipped): they can only be pulled automatically once a Meta Business account and an approved Meta app exist. Single reels from them can be added by hand (`tools/reels.py add`).
 
 How the newest reels are found (no API key, no account):
 1. YouTube's public Atom feed of the channel's Shorts: `https://www.youtube.com/feeds/videos.xml?playlist_id=UUSH<id without "UC">`.

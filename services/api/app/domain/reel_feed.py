@@ -14,7 +14,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Callable
-from urllib.parse import urlencode
+from urllib.parse import quote, urlencode
 
 ATOM = "{http://www.w3.org/2005/Atom}"
 YT = "{http://www.youtube.com/xml/schemas/2015}"
@@ -42,6 +42,26 @@ def shorts_feed(channel_id: str) -> str:
 
 def channel_feed(channel_id: str) -> str:
     return "https://www.youtube.com/feeds/videos.xml?" + urlencode({"channel_id": channel_id})
+
+
+ID_ON_PAGE = [
+    re.compile(r'<link rel="canonical" href="https://www\.youtube\.com/channel/(UC[A-Za-z0-9_-]{22})"'),
+    re.compile(r'<meta itemprop="identifier" content="(UC[A-Za-z0-9_-]{22})"'),
+    re.compile(r'"externalId":"(UC[A-Za-z0-9_-]{22})"'),
+    re.compile(r'"browseId":"(UC[A-Za-z0-9_-]{22})"'),
+]
+
+
+def handle_page(handle: str) -> str:
+    return "https://www.youtube.com/@" + quote(handle)
+
+
+def channel_id_from_page(html: str) -> str | None:
+    for rx in ID_ON_PAGE:
+        m = rx.search(html)
+        if m:
+            return m.group(1)
+    return None
 
 
 def parse_feed(xml: str, shorts_only: bool = False) -> list[dict]:
@@ -92,6 +112,7 @@ class ReelFeed:
         self.fetch = fetch
         self.clock = clock
         self._cache: dict[str, tuple[float, list[dict]]] = {}
+        self._handles: dict[str, str] = {}
         self._lock = threading.Lock()
 
     def sources(self) -> list[dict]:
@@ -99,8 +120,22 @@ class ReelFeed:
             return []
         return json.loads(self.sources_path.read_text(encoding="utf-8")).get("sources", [])
 
+    def _channel_id(self, src: dict) -> str | None:
+        if src.get("channelId"):
+            return src["channelId"]
+        handle = src.get("handle") or ""
+        if handle not in self._handles:
+            page = self.fetch(handle_page(handle))
+            cid = channel_id_from_page(page) if page else None
+            if cid is None:
+                return None
+            self._handles[handle] = cid
+        return self._handles[handle]
+
     def _items(self, src: dict) -> list[dict]:
-        cid = src["channelId"]
+        cid = self._channel_id(src)
+        if cid is None:
+            return []
         now = self.clock()
         with self._lock:
             hit = self._cache.get(cid)
@@ -134,6 +169,6 @@ class ReelFeed:
         srcs = self.sources()
         return {
             "schema": "reels-feed.v1",
-            "sources": [{k: s[k] for k in ("id", "channelId", "name", "category")} for s in srcs],
+            "sources": [{k: s[k] for k in ("id", "channelId", "handle", "name", "category") if k in s} for s in srcs],
             "items": mix([self._items(s) for s in srcs]),
         }

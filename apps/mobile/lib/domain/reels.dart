@@ -162,42 +162,78 @@ class ReelCatalog {
 class ReelSource {
   const ReelSource({
     required this.id,
-    required this.channelId,
+    this.channelId,
+    this.handle,
     required this.nameAr,
     required this.nameEn,
     required this.category,
   });
 
-  static final _channel = RegExp(r'^UC[A-Za-z0-9_-]{22}$');
+  static final channelPattern = RegExp(r'^UC[A-Za-z0-9_-]{22}$');
+  static final _handle = RegExp(r'^[\p{L}\p{N}\p{M}_.-]{3,30}$', unicode: true);
 
   static ReelSource? tryParse(Object? raw) {
     if (raw is! Map<String, dynamic>) return null;
     final cid = raw['channelId'];
+    final handle = raw['handle'];
     final name = raw['name'];
-    if (raw['platform'] != 'youtube' || cid is! String || !_channel.hasMatch(cid)) return null;
+    if (raw['platform'] != 'youtube') return null;
+    final okId = cid is String && channelPattern.hasMatch(cid);
+    final okHandle = handle is String && _handle.hasMatch(handle);
+    if (okId == okHandle) return null; // exactly one of them
     if (!Reel.categories.contains(raw['category']) || name is! Map<String, dynamic>) return null;
     final ar = name['ar'];
     if (ar is! String || ar.trim().isEmpty) return null;
     final en = name['en'] is String && (name['en'] as String).isNotEmpty ? name['en'] as String : ar;
-    return ReelSource(id: 'yt-$cid', channelId: cid, nameAr: ar, nameEn: en, category: raw['category'] as String);
+    return ReelSource(
+      id: okId ? 'yt-$cid' : 'yt-@$handle',
+      channelId: okId ? cid : null,
+      handle: okHandle ? handle : null,
+      nameAr: ar,
+      nameEn: en,
+      category: raw['category'] as String,
+    );
   }
 
   final String id;
-  final String channelId;
+
+  /// The channel id (UC…), or null when the owner gave an @handle; the
+  /// handle is turned into the id at run time from the channel page.
+  final String? channelId;
+  final String? handle;
   final String nameAr;
   final String nameEn;
   final String category;
 
   String name(bool arabic) => arabic ? nameAr : nameEn;
 
-  /// YouTube's public feed of the channel's Shorts only (the "UUSH" playlist).
-  Uri get shortsFeed =>
+  /// YouTube's public feed of a channel's Shorts only (the "UUSH" playlist).
+  static Uri shortsFeed(String channelId) =>
       Uri.https('www.youtube.com', '/feeds/videos.xml', {'playlist_id': 'UUSH${channelId.substring(2)}'});
 
-  /// The channel's whole upload feed (fallback when the Shorts feed fails).
-  Uri get channelFeed => Uri.https('www.youtube.com', '/feeds/videos.xml', {'channel_id': channelId});
+  /// A channel's whole upload feed (fallback when the Shorts feed fails).
+  static Uri channelFeed(String channelId) =>
+      Uri.https('www.youtube.com', '/feeds/videos.xml', {'channel_id': channelId});
 
-  Uri get channelUrl => Uri.https('www.youtube.com', '/channel/$channelId');
+  /// The channel's page (by @handle when that is what the owner gave).
+  Uri get channelPage =>
+      handle != null ? Uri.https('www.youtube.com', '/@$handle') : Uri.https('www.youtube.com', '/channel/$channelId');
+
+  static final _idOnPage = [
+    RegExp(r'<link rel="canonical" href="https://www\.youtube\.com/channel/(UC[A-Za-z0-9_-]{22})"'),
+    RegExp(r'<meta itemprop="identifier" content="(UC[A-Za-z0-9_-]{22})"'),
+    RegExp(r'"externalId":"(UC[A-Za-z0-9_-]{22})"'),
+    RegExp(r'"browseId":"(UC[A-Za-z0-9_-]{22})"'),
+  ];
+
+  /// Finds the channel's own id on its YouTube page (null if not found).
+  static String? channelIdFromPage(String html) {
+    for (final re in _idOnPage) {
+      final m = re.firstMatch(html);
+      if (m != null) return m.group(1);
+    }
+    return null;
+  }
 
   /// Turns a YouTube Atom feed into reels. With [shortsOnly], only entries
   /// linking to /shorts/ are kept. Malformed XML gives an empty list.

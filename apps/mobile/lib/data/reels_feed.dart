@@ -114,13 +114,30 @@ class ReelsFeedController extends ChangeNotifier {
     notifyListeners();
   }
 
+  static String handleKey(String handle) => 'reels.handle.$handle';
+
+  /// The channel id: given, remembered from an earlier lookup, or read from
+  /// the channel's @handle page (then remembered).
+  Future<String?> _channelId(ReelSource s) async {
+    if (s.channelId != null) return s.channelId;
+    final key = handleKey(s.handle!);
+    final known = _prefs.getString(key);
+    if (known != null && ReelSource.channelPattern.hasMatch(known)) return known;
+    final page = await _get(s.channelPage);
+    final id = page == null ? null : ReelSource.channelIdFromPage(page);
+    if (id != null) await _prefs.setString(key, id);
+    return id;
+  }
+
   /// The Shorts feed first; if it fails or is empty, the channel feed
   /// (Shorts entries only, else every upload). Null when unreachable.
   Future<List<Reel>?> _fetch(ReelSource s) async {
-    final shorts = await _get(s.shortsFeed);
+    final cid = await _channelId(s);
+    if (cid == null) return null;
+    final shorts = await _get(ReelSource.shortsFeed(cid));
     final fromShorts = shorts == null ? const <Reel>[] : s.parseFeed(shorts);
     if (fromShorts.isNotEmpty) return fromShorts;
-    final all = await _get(s.channelFeed);
+    final all = await _get(ReelSource.channelFeed(cid));
     if (all == null) return shorts == null ? null : const [];
     final onlyShorts = s.parseFeed(all, shortsOnly: true);
     return onlyShorts.isNotEmpty ? onlyShorts : s.parseFeed(all);
