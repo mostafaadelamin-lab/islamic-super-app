@@ -1893,7 +1893,7 @@
   "@reelsCatRecitation": {
     "description": "shared key \"reels.cat.recitation\""
   },
-  "reelsEmpty": "No reviewed reels yet. Reels are added after a religious review.",
+  "reelsEmpty": "No reels to show right now.",
   "@reelsEmpty": {
     "description": "shared key \"reels.empty\""
   },
@@ -1901,13 +1901,34 @@
   "@reelsFeed": {
     "description": "shared key \"reels.feed\""
   },
+  "reelsHidden": "{name} hidden",
+  "@reelsHidden": {
+    "description": "shared key \"reels.hidden\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reelsHide": "Hide this channel",
+  "@reelsHide": {
+    "description": "shared key \"reels.hide\""
+  },
+  "reelsLoading": "Fetching the newest reels…",
+  "@reelsLoading": {
+    "description": "shared key \"reels.loading\""
+  },
   "reelsNext": "Next reel",
   "@reelsNext": {
     "description": "shared key \"reels.next\""
   },
-  "reelsNote": "Reels play from YouTube and Instagram through their official players. They are limited to Quran recitations, religious lessons, and advice and admonitions in line with the Quran and Sunnah, and only reviewed reels are shown.",
+  "reelsNote": "Reels play from YouTube and Instagram in their official players, and come automatically from trusted Islamic channels the app approved (Quran recitations, religious lessons, advice and admonitions).",
   "@reelsNote": {
     "description": "shared key \"reels.note\""
+  },
+  "reelsOffline": "Could not reach YouTube. Check your internet connection and try again.",
+  "@reelsOffline": {
+    "description": "shared key \"reels.offline\""
   },
   "reelsOpenInstagram": "Open on Instagram",
   "@reelsOpenInstagram": {
@@ -1945,6 +1966,10 @@
   "@reelsPrev": {
     "description": "shared key \"reels.prev\""
   },
+  "reelsRetry": "Try again",
+  "@reelsRetry": {
+    "description": "shared key \"reels.retry\""
+  },
   "reelsReviewedBy": "Reviewed by {name}",
   "@reelsReviewedBy": {
     "description": "shared key \"reels.reviewedBy\"",
@@ -1962,7 +1987,11 @@
   "@reelsReviewerMode": {
     "description": "shared key \"reels.reviewerMode\""
   },
-  "reelsSub": "Reviewed short videos",
+  "reelsShowHidden": "Show hidden channels",
+  "@reelsShowHidden": {
+    "description": "shared key \"reels.showHidden\""
+  },
+  "reelsSub": "Recitations, lessons and admonitions from trusted channels",
   "@reelsSub": {
     "description": "shared key \"reels.sub\""
   },
@@ -1973,6 +2002,14 @@
   "reelsTitle": "Islamic reels",
   "@reelsTitle": {
     "description": "shared key \"reels.title\""
+  },
+  "reelsTrusted": "Trusted channel",
+  "@reelsTrusted": {
+    "description": "shared key \"reels.trusted\""
+  },
+  "reelsUndo": "Undo",
+  "@reelsUndo": {
+    "description": "shared key \"reels.undo\""
   },
   "settingsAbout": "About",
   "@settingsAbout": {

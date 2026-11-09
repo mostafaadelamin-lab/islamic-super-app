@@ -31,6 +31,41 @@ class _ReelsScreenState extends State<ReelsScreen> {
   int _current = 0;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) context.services.reelsFeed.refresh();
+    });
+  }
+
+  /// Trusted-channel reels first (mixed across channels), then the curated list.
+  static List<Reel> _feed(List<Reel> auto, List<Reel> curated) {
+    final seen = <String>{};
+    return [
+      for (final r in [...auto, ...curated])
+        if (seen.add(r.id)) r,
+    ];
+  }
+
+  Future<void> _hide(Reel r) async {
+    final feed = context.services.reelsFeed;
+    final src = feed.source(r.sourceId);
+    if (src == null) return;
+    final l = context.l10n;
+    final messenger = ScaffoldMessenger.of(context);
+    final name = src.name(context.services.settings.isArabic);
+    await feed.hide(src.id);
+    messenger
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(l.reelsHidden(name)),
+          action: SnackBarAction(label: l.reelsUndo, onPressed: () => feed.unhide(src.id)),
+        ),
+      );
+  }
+
+  @override
   void dispose() {
     _pages.dispose();
     super.dispose();
@@ -44,11 +79,12 @@ class _ReelsScreenState extends State<ReelsScreen> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final settings = context.services.settings;
+    final feed = context.services.reelsFeed;
     return ListenableBuilder(
-      listenable: settings,
+      listenable: Listenable.merge([settings, feed]),
       builder: (context, _) {
         final reviewer = settings.reelsReviewer;
-        final reels = context.services.content.reels.visible(reviewer: reviewer);
+        final reels = _feed(feed.items, context.services.content.reels.visible(reviewer: reviewer));
         if (_current >= reels.length && reels.isNotEmpty) _current = reels.length - 1;
         return Scaffold(
           backgroundColor: Colors.black,
@@ -73,7 +109,35 @@ class _ReelsScreenState extends State<ReelsScreen> {
             ],
           ),
           body: reels.isEmpty
-              ? _Empty(text: l.reelsEmpty, note: l.reelsNote)
+              ? _Empty(
+                  text: feed.loading
+                      ? l.reelsLoading
+                      : feed.failed
+                      ? l.reelsOffline
+                      : l.reelsEmpty,
+                  note: l.reelsNote,
+                  loading: feed.loading,
+                  actions: [
+                    if (!feed.loading && feed.failed)
+                      FilledButton.icon(
+                        key: const Key('reels.retry'),
+                        onPressed: () => feed.refresh(force: true),
+                        icon: const Icon(Icons.refresh),
+                        label: Text(l.reelsRetry),
+                      ),
+                    if (!feed.loading && feed.hidden.isNotEmpty)
+                      TextButton(
+                        key: const Key('reels.showHidden'),
+                        style: TextButton.styleFrom(foregroundColor: Colors.white),
+                        onPressed: () async {
+                          for (final id in feed.hidden) {
+                            await feed.unhide(id);
+                          }
+                        },
+                        child: Text(l.reelsShowHidden),
+                      ),
+                  ],
+                )
               : PageView.builder(
                   key: const Key('reels.feed'),
                   controller: _pages,
@@ -88,6 +152,7 @@ class _ReelsScreenState extends State<ReelsScreen> {
                     player: widget.playerBuilder ?? (context, r) => ReelPlayer(key: ValueKey(r.id), reel: r),
                     showPoster: widget.showPosters,
                     onOpen: () => _open(reels[i]),
+                    onHide: reels[i].isAuto ? () => _hide(reels[i]) : null,
                   ),
                 ),
         );
@@ -97,9 +162,11 @@ class _ReelsScreenState extends State<ReelsScreen> {
 }
 
 class _Empty extends StatelessWidget {
-  const _Empty({required this.text, required this.note});
+  const _Empty({required this.text, required this.note, this.loading = false, this.actions = const []});
   final String text;
   final String note;
+  final bool loading;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) => Center(
@@ -108,7 +175,10 @@ class _Empty extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.smart_display_outlined, color: Colors.white70, size: 56),
+          if (loading)
+            const CircularProgressIndicator(key: Key('reels.loading'), color: Colors.white70)
+          else
+            const Icon(Icons.smart_display_outlined, color: Colors.white70, size: 56),
           const SizedBox(height: DesignTokens.spaceMd),
           Text(
             text,
@@ -122,6 +192,10 @@ class _Empty extends StatelessWidget {
             textAlign: TextAlign.center,
             style: const TextStyle(color: Colors.white70),
           ),
+          if (actions.isNotEmpty) ...[
+            const SizedBox(height: DesignTokens.spaceMd),
+            Wrap(spacing: DesignTokens.spaceSm, alignment: WrapAlignment.center, children: actions),
+          ],
         ],
       ),
     ),
@@ -137,6 +211,7 @@ class _ReelPage extends StatelessWidget {
     required this.player,
     required this.showPoster,
     required this.onOpen,
+    this.onHide,
   });
 
   final Reel reel;
@@ -146,6 +221,9 @@ class _ReelPage extends StatelessWidget {
   final ReelPlayerBuilder player;
   final bool showPoster;
   final VoidCallback onOpen;
+
+  /// Hides the reel's channel (automatic reels only).
+  final VoidCallback? onHide;
 
   @override
   Widget build(BuildContext context) {
@@ -234,15 +312,29 @@ class _ReelPage extends StatelessWidget {
                         _Chip(category),
                         _Chip(reel.isInstagram ? l.reelsPlatformInstagram : l.reelsPlatformYoutube),
                         if (reel.reviewer != null) _Chip(l.reelsReviewedBy(reel.reviewer!), green: true),
+                        if (reel.isAuto) _Chip(l.reelsTrusted, green: true),
                         _Chip(context.numLtr('${index + 1} / $total')),
                       ],
                     ),
-                    TextButton.icon(
-                      key: Key('reel.open.${reel.id}'),
-                      style: TextButton.styleFrom(foregroundColor: Colors.white, padding: EdgeInsets.zero),
-                      onPressed: onOpen,
-                      icon: const Icon(Icons.open_in_new, size: 18),
-                      label: Text(reel.isInstagram ? l.reelsOpenInstagram : l.reelsOpenYoutube),
+                    Wrap(
+                      spacing: DesignTokens.spaceMd,
+                      children: [
+                        TextButton.icon(
+                          key: Key('reel.open.${reel.id}'),
+                          style: TextButton.styleFrom(foregroundColor: Colors.white, padding: EdgeInsets.zero),
+                          onPressed: onOpen,
+                          icon: const Icon(Icons.open_in_new, size: 18),
+                          label: Text(reel.isInstagram ? l.reelsOpenInstagram : l.reelsOpenYoutube),
+                        ),
+                        if (onHide != null)
+                          TextButton.icon(
+                            key: Key('reel.hide.${reel.id}'),
+                            style: TextButton.styleFrom(foregroundColor: Colors.white70, padding: EdgeInsets.zero),
+                            onPressed: onHide,
+                            icon: const Icon(Icons.visibility_off_outlined, size: 18),
+                            label: Text(l.reelsHide),
+                          ),
+                      ],
                     ),
                   ],
                 ),

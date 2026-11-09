@@ -24,6 +24,10 @@ CLI (run from anywhere):
   python tools/reels.py approve <id> --reviewer "name" [--notes "…"]
   python tools/reels.py reject <id> --reviewer "name" --notes "reason"
   python tools/reels.py build
+
+Trusted channels for automatic reels (the apps pull each channel's newest Shorts):
+  python tools/reels.py sources-add <youtube.com/channel/UC… or UC…> --name-ar "…" --category recitation --approved-by "name"
+  python tools/reels.py sources-remove yt-UC…
 """
 from __future__ import annotations
 
@@ -38,6 +42,9 @@ from urllib.parse import parse_qs, urlparse
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CATALOGUE = ROOT / "content/reels/reels.json"
 DIST = ROOT / "content/reels/dist/reels.v1.json"
+SOURCES = ROOT / "content/reels/sources.json"
+SOURCES_DIST = ROOT / "content/reels/dist/reel-sources.v1.json"
+YT_CHANNEL = re.compile(r"^UC[A-Za-z0-9_-]{22}$")
 
 PLATFORMS = ("youtube", "instagram")
 CATEGORIES = ("recitation", "lesson", "admonition")
@@ -167,6 +174,52 @@ def build_bundle(cat: dict) -> dict:
     return {"schema": "reels.v1", "version": cat.get("version", 1), "items": [item(r) for r in approved + pending]}
 
 
+def validate_sources(cat: dict) -> list[str]:
+    """Trusted channels for automatic reels. Each is approved once by the owner (no per-video review)."""
+    problems: list[str] = []
+    if cat.get("schema") != "reel-sources.catalogue.v1":
+        problems.append("sources: schema must be reel-sources.catalogue.v1")
+    seen: set[str] = set()
+    for i, s in enumerate(cat.get("sources", [])):
+        where = f"source {i} ({s.get('id', '?')})"
+        if s.get("platform") != "youtube":
+            problems.append(f"{where}: only YouTube channels can be pulled automatically")
+            continue
+        cid = s.get("channelId", "")
+        if not YT_CHANNEL.match(cid):
+            problems.append(f"{where}: channelId must look like UC + 22 characters")
+        if s.get("id") != f"yt-{cid}":
+            problems.append(f"{where}: id must be yt-{cid}")
+        if s.get("id") in seen:
+            problems.append(f"{where}: duplicate")
+        seen.add(s.get("id"))
+        if not str((s.get("name") or {}).get("ar", "")).strip():
+            problems.append(f"{where}: Arabic name required")
+        if s.get("category") not in CATEGORIES:
+            problems.append(f"{where}: category must be one of {CATEGORIES}")
+        if not str(s.get("approvedBy") or "").strip():
+            problems.append(f"{where}: approvedBy required (who approved this channel)")
+        if not _date(s.get("addedAt")):
+            problems.append(f"{where}: addedAt date")
+    return problems
+
+
+def build_sources_bundle(cat: dict) -> dict:
+    return {
+        "schema": "reel-sources.v1",
+        "sources": [
+            {
+                "id": s["id"],
+                "platform": s["platform"],
+                "channelId": s["channelId"],
+                "name": {"ar": s["name"]["ar"], "en": s["name"].get("en") or s["name"]["ar"]},
+                "category": s["category"],
+            }
+            for s in cat["sources"]
+        ],
+    }
+
+
 def load() -> dict:
     return json.loads(CATALOGUE.read_text(encoding="utf-8"))
 
@@ -177,12 +230,28 @@ def save(cat: dict) -> None:
 
 def build(write: bool = True) -> tuple[dict, list[str]]:
     cat = load()
-    problems = validate(cat)
+    srcs = json.loads(SOURCES.read_text(encoding="utf-8"))
+    problems = validate(cat) + validate_sources(srcs)
     bundle = build_bundle(cat) if not problems else {}
     if write and not problems:
         DIST.parent.mkdir(parents=True, exist_ok=True)
         DIST.write_text(json.dumps(bundle, ensure_ascii=False, separators=(",", ":"), sort_keys=True) + "\n", encoding="utf-8")
+        SOURCES_DIST.write_text(
+            json.dumps(build_sources_bundle(srcs), ensure_ascii=False, separators=(",", ":"), sort_keys=True) + "\n", encoding="utf-8"
+        )
     return bundle, problems
+
+
+def parse_channel(text: str) -> str:
+    """UC… channel id from a youtube.com/channel/UC… link or a bare id. @handles need the channel id (see About → Share → Copy channel ID)."""
+    t = text.strip()
+    if YT_CHANNEL.match(t):
+        return t
+    u = urlparse(t)
+    parts = [p for p in u.path.split("/") if p]
+    if (u.hostname or "").lower() in YT_HOSTS and len(parts) >= 2 and parts[0] == "channel" and YT_CHANNEL.match(parts[1]):
+        return parts[1]
+    raise ReelError("need a channel id (UC…) or a youtube.com/channel/UC… link; @handles can't be resolved offline")
 
 
 def _find(cat: dict, rid: str) -> dict:
@@ -205,6 +274,14 @@ def main(argv: list[str] | None = None) -> int:
     a.add_argument("--speaker-en")
     a.add_argument("--category", required=True, choices=CATEGORIES)
     a.add_argument("--source")
+    sa = sub.add_parser("sources-add")
+    sa.add_argument("channel")
+    sa.add_argument("--name-ar", required=True)
+    sa.add_argument("--name-en")
+    sa.add_argument("--category", required=True, choices=CATEGORIES)
+    sa.add_argument("--approved-by", required=True)
+    sr = sub.add_parser("sources-remove")
+    sr.add_argument("id")
     for name in ("approve", "reject"):
         s = sub.add_parser(name)
         s.add_argument("id")
@@ -215,6 +292,31 @@ def main(argv: list[str] | None = None) -> int:
     try:
         cat = load()
         today = dt.date.today().isoformat()
+        if args.cmd in ("sources-add", "sources-remove"):
+            srcs = json.loads(SOURCES.read_text(encoding="utf-8"))
+            if args.cmd == "sources-add":
+                cid = parse_channel(args.channel)
+                if any(x["channelId"] == cid for x in srcs["sources"]):
+                    raise ReelError(f"yt-{cid} is already a source")
+                srcs["sources"].append({
+                    "id": f"yt-{cid}", "platform": "youtube", "channelId": cid,
+                    "name": {"ar": args.name_ar, "en": args.name_en or args.name_ar},
+                    "category": args.category, "addedAt": today, "approvedBy": args.approved_by,
+                })
+            else:
+                before = len(srcs["sources"])
+                srcs["sources"] = [x for x in srcs["sources"] if x["id"] != args.id]
+                if len(srcs["sources"]) == before:
+                    raise ReelError(f"no source with id {args.id}")
+            problems = validate_sources(srcs)
+            if problems:
+                raise ReelError("; ".join(problems))
+            SOURCES.write_text(json.dumps(srcs, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            _, problems = build()
+            if problems:
+                raise ReelError("; ".join(problems))
+            print(f"{args.cmd}: done — now run apps/mobile/tool/sync_assets.sh")
+            return 0
         if args.cmd == "list":
             for r in cat["items"]:
                 print(f"{r['review']['status']:9} {r['id']:20} {r['title']['ar']}")

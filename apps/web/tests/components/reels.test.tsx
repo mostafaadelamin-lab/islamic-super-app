@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReelsFeed } from "@/components/ReelsFeed";
-import { reelsPrefsStore, type Reel } from "@/lib/reels";
+import { reelsFeedStore, reelsPrefsStore, type Reel } from "@/lib/reels";
 import { resetStores } from "./reset";
 
 const base: Reel = {
@@ -28,10 +28,14 @@ const pending: Reel = {
   reviewer: null,
 };
 
+const offline = (() => Promise.reject(new Error("offline"))) as unknown as typeof fetch;
+
 beforeEach(() => {
   resetStores();
   reelsPrefsStore.reload();
+  vi.stubGlobal("fetch", offline);
 });
+afterEach(() => vi.unstubAllGlobals());
 
 describe("ReelsFeed", () => {
   it("shows an empty state when nothing is reviewed", () => {
@@ -91,5 +95,79 @@ describe("ReelsFeed", () => {
     expect(screen.getByTestId("reels-position")).toHaveTextContent("2 / 2");
     expect(screen.getByTestId("reel-player").getAttribute("src")).toContain("/embed/26dRG7OeL6Q?");
     expect(screen.getByText("Religious lesson")).toBeInTheDocument();
+  });
+});
+
+const yasser = "yt-UCYuUcfXvsHapABTcPRWCEoQ";
+const autoReel = (ref: string, published: string, sourceId = yasser): Reel => ({
+  id: `yt-${ref}`,
+  platform: "youtube",
+  ref,
+  url: `https://www.youtube.com/watch?v=${ref}`,
+  title: { ar: `تلاوة ${ref}`, en: `Recitation ${ref}` },
+  speaker: { ar: "الشيخ ياسر الدوسري", en: "Sheikh Yasser Al-Dosari" },
+  category: "recitation",
+  source: null,
+  status: "auto",
+  reviewer: null,
+  reviewedAt: null,
+  sourceId,
+  published,
+});
+const feedBody = {
+  schema: "reels-feed.v1",
+  sources: [
+    {
+      id: yasser,
+      channelId: "UCYuUcfXvsHapABTcPRWCEoQ",
+      name: { ar: "الشيخ ياسر الدوسري", en: "Sheikh Yasser Al-Dosari" },
+      category: "recitation",
+    },
+  ],
+  items: [autoReel("AAAAAAAAAA1", "2026-11-08T10:00:00Z"), autoReel("BBBBBBBBBB2", "2026-11-09T10:00:00Z")],
+};
+const okFetch = (calls: string[] = []): typeof fetch =>
+  (async (url: string) => {
+    calls.push(url);
+    return new Response(JSON.stringify(feedBody), { status: 200 });
+  }) as unknown as typeof fetch;
+
+describe("ReelsFeed: automatic reels from trusted channels", () => {
+  it("asks the API for the feed and shows the channel's newest reels first, marked trusted", async () => {
+    const calls: string[] = [];
+    render(<ReelsFeed locale="en" reels={[pending]} fetchImpl={okFetch(calls)} />);
+    await waitFor(() => expect(screen.getByTestId("reels-feed")).toBeInTheDocument());
+    expect(calls).toEqual(["http://127.0.0.1:8000/v1/reels/feed"]);
+    expect(screen.getByTestId("reel-player").getAttribute("src")).toContain("/embed/BBBBBBBBBB2?");
+    expect(screen.getAllByText("Trusted channel")).toHaveLength(2);
+    expect(screen.queryByTestId("reel-pending")).toBeNull();
+    // cached: a second mount does not fetch again
+    render(<ReelsFeed locale="en" reels={[]} fetchImpl={okFetch(calls)} />);
+    expect(calls).toHaveLength(1);
+  });
+  it("hides a channel, with undo", async () => {
+    render(<ReelsFeed locale="ar" reels={[]} fetchImpl={okFetch()} />);
+    await waitFor(() => expect(screen.getByTestId("reels-feed")).toBeInTheDocument());
+    await userEvent.click(screen.getByTestId("reel-hide-yt-BBBBBBBBBB2"));
+    expect(screen.queryByTestId("reels-feed")).toBeNull();
+    expect(screen.getByTestId("reels-hidden")).toHaveTextContent("تم إخفاء الشيخ ياسر الدوسري");
+    expect(reelsPrefsStore.get().hidden).toEqual([yasser]);
+    await userEvent.click(screen.getByRole("button", { name: "تراجع" }));
+    expect(screen.getByTestId("reels-feed")).toBeInTheDocument();
+    expect(reelsPrefsStore.get().hidden).toEqual([]);
+  });
+  it("server unreachable: says so and retries", async () => {
+    let online = false;
+    const f = (async (url: string) => {
+      if (!online) throw new Error("offline");
+      return okFetch()(url);
+    }) as unknown as typeof fetch;
+    render(<ReelsFeed locale="en" reels={[]} fetchImpl={f} />);
+    await waitFor(() => expect(screen.getByTestId("reels-retry")).toBeInTheDocument());
+    expect(screen.getByTestId("reels-empty")).toHaveTextContent("Could not reach YouTube");
+    online = true;
+    await userEvent.click(screen.getByTestId("reels-retry"));
+    await waitFor(() => expect(screen.getByTestId("reels-feed")).toBeInTheDocument());
+    expect(reelsFeedStore.get()?.items).toHaveLength(2);
   });
 });

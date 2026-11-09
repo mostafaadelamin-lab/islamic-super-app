@@ -8,6 +8,7 @@ from .config import Settings, get_settings
 from .db.models import Base
 from .db.session import Database
 from .domain.quran import QuranStore
+from .domain.reel_feed import ReelFeed
 from .routers import account, content
 from .security import RateLimiter
 
@@ -20,6 +21,7 @@ def create_app(settings: Settings | None = None, create_tables: bool = True) -> 
     app.state.settings = settings
     app.state.db = Database(settings.database_url)
     app.state.quran = QuranStore(settings.content_dir)
+    app.state.reel_feed = ReelFeed(settings.content_dir)
     app.state.limiter = RateLimiter()
     if create_tables:
         Base.metadata.create_all(app.state.db.engine)

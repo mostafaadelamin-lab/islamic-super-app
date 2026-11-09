@@ -30,7 +30,14 @@ export function withHydration(page: Page): Page {
   return page;
 }
 
+/** The reels page asks the API for automatic reels; tests answer with an empty feed unless they route their own. */
+export const EMPTY_REELS_FEED = { schema: "reels-feed.v1", sources: [], items: [] };
+
 export const test = base.extend({
+  context: async ({ context }, provide) => {
+    await context.route("**/v1/reels/feed", (r) => r.fulfill({ json: EMPTY_REELS_FEED }));
+    await provide(context);
+  },
   page: async ({ page }, provide) => {
     await provide(withHydration(page));
   },

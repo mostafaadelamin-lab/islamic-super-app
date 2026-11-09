@@ -31,6 +31,13 @@ def reels(request: Request, include_pending: bool = Query(default=False)):
     return {"schema": bundle["schema"], "version": bundle["version"], "items": items}
 
 
+@router.get("/reels/feed")
+def reels_feed(request: Request):
+    """Newest Shorts of the trusted channels (content/reels/sources.json), mixed across channels and
+    cached for 3 hours. These need no per-video review: the owner approved each channel once."""
+    return request.app.state.reel_feed.build()
+
+
 @router.get("/stories")
 def stories(request: Request, include_pending: bool = Query(default=False)):
     """Audio Quranic stories: verse ranges played with the app's reciters. Every non-rejected story is

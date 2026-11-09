@@ -8,10 +8,27 @@ A vertical, swipeable feed of short Islamic videos (like Reels / Shorts) in the 
   - `recitation` — Quran recitation (تلاوة قرآنية)
   - `lesson` — a religious lesson in line with the Islamic Sharia and the Sunnah (درس ديني)
   - `admonition` — advice and admonitions (نصائح ومواعظ)
-- **Religious review:** nothing is shown to users until a named reviewer approves it.
+- **Automatic reels (owner decision 2026-11-09 21:31):** the apps pick the videos themselves from trusted Islamic channels. The owner approves a **channel once** (`content/reels/sources.json`); its newest Shorts are shown with **no per-video review**, marked "trusted channel". Viewers can hide a channel ("Hide this channel", with undo).
+- **Hand-picked reels** (`content/reels/reels.json`) still use the review states below. Instagram reels can only be hand-picked: pulling them automatically needs a Meta Business account and app review (owner chose YouTube-automatic for now).
 - **No hosting cost:** videos stay on YouTube/Instagram and are played by their official embeds (`youtube-nocookie.com`, `instagram.com/reel/<code>/embed/`). Nothing is downloaded or re-hosted.
 
-## Review states
+## Trusted channels (automatic)
+```
+python tools/reels.py sources-add "https://www.youtube.com/channel/UC…" --name-ar "…" --name-en "…" --category recitation --approved-by "الاسم"
+python tools/reels.py sources-remove yt-UC…
+python tools/build_content.py && apps/mobile/tool/sync_assets.sh
+```
+Only `/channel/UC…` links or bare `UC…` ids are accepted (an `@handle` must be turned into its channel id first, e.g. from the channel page's "Share channel → Copy channel ID").
+
+How the newest reels are found (no API key, no account):
+1. YouTube's public Atom feed of the channel's Shorts: `https://www.youtube.com/feeds/videos.xml?playlist_id=UUSH<id without "UC">`.
+2. If that fails or is empty, the channel feed `?channel_id=UC…`, keeping `/shorts/` entries (or every upload if none).
+3. Up to 15 per channel, cached 3 hours; when offline the cached ones are shown. Channels are mixed (newest of each in turn), followed by the hand-picked approved reels.
+
+- Mobile reads the feeds directly (`lib/data/reels_feed.dart`).
+- Web: browsers cannot read YouTube's feeds (no CORS), so the site asks the API `GET /v1/reels/feed` (`services/api/app/domain/reel_feed.py`, same steps, cached 3 hours). **The website shows automatic reels only once the API is hosted** and its address is set (Settings → account server); until then it says it could not reach YouTube and shows the hand-picked list.
+
+## Review states (hand-picked reels)
 | State | Who sees it | Required |
 |---|---|---|
 | `pending` | reviewers only (reviewer mode), with a red "not reviewed yet" banner | — |

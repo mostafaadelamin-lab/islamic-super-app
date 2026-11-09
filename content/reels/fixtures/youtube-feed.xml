@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+ <title>Test channel</title>
+ <entry>
+  <id>yt:video:AAAAAAAAAA1</id>
+  <yt:videoId>AAAAAAAAAA1</yt:videoId>
+  <yt:channelId>UCYuUcfXvsHapABTcPRWCEoQ</yt:channelId>
+  <title>تلاوة خاشعة من سورة الملك</title>
+  <link rel="alternate" href="https://www.youtube.com/shorts/AAAAAAAAAA1"/>
+  <published>2026-11-08T10:00:00+00:00</published>
+ </entry>
+ <entry>
+  <id>yt:video:BBBBBBBBBB2</id>
+  <yt:videoId>BBBBBBBBBB2</yt:videoId>
+  <title>بث مباشر صلاة التراويح</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=BBBBBBBBBB2"/>
+  <published>2026-11-09T10:00:00+00:00</published>
+ </entry>
+ <entry>
+  <id>yt:video:CCCCCCCCCC3</id>
+  <yt:videoId>CCCCCCCCCC3</yt:videoId>
+  <title>تلاوة من سورة يس &amp; الرحمن</title>
+  <link rel="alternate" href="https://www.youtube.com/shorts/CCCCCCCCCC3"/>
+  <published>2026-11-07T10:00:00+00:00</published>
+ </entry>
+ <entry>
+  <yt:videoId>bad id</yt:videoId>
+  <title>broken</title>
+  <link rel="alternate" href="https://www.youtube.com/shorts/x"/>
+ </entry>
+</feed>

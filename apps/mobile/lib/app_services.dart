@@ -14,6 +14,7 @@ import 'data/location.dart';
 import 'data/notifications.dart';
 import 'data/recitation.dart';
 import 'data/reminders.dart';
+import 'data/reels_feed.dart';
 import 'data/sensors.dart';
 import 'data/settings.dart';
 import 'data/sharing.dart';
@@ -42,6 +43,7 @@ class AppServices {
     required this.khatma,
     required this.reminders,
     this.sharer = const SystemImageSharer(),
+    required this.reelsFeed,
   });
 
   factory AppServices.create({
@@ -134,6 +136,7 @@ class AppServices {
       khatma: khatma,
       reminders: reminders,
       sharer: sharer ?? const SystemImageSharer(),
+      reelsFeed: ReelsFeedController(sources: content.reelSources, httpClient: httpClient, prefs: prefs, clock: c),
     );
   }
 
@@ -169,6 +172,8 @@ class AppServices {
 
   /// System share sheet for images and text.
   final ImageSharer sharer;
+  /// Newest Shorts from the trusted channels (fetched when the reels open).
+  final ReelsFeedController reelsFeed;
 }
 
 class AppScope extends InheritedWidget {

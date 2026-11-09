@@ -1980,6 +1980,39 @@ dd {
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
 }
+.reel-hide {
+  align-self: flex-start;
+  color: rgb(255 255 255 / 80%);
+  background: none;
+  border: 0;
+  padding: 0 var(--space-sm);
+  min-height: var(--min-touch);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.reels-empty .btn {
+  margin-top: var(--space-sm);
+}
+.reels-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--min-touch);
+  background: none;
+  border: 0;
+  padding: 0 var(--space-sm);
+  font: inherit;
+  color: var(--color-primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.reels-undo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+  margin: 0;
+}
 .reels-reviewer {
   display: flex;
   flex-wrap: wrap;

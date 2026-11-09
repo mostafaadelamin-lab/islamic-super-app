@@ -3,6 +3,7 @@ import { lastReadStore, prayerStore, prefsStore } from "@/lib/settings";
 import { accountStore } from "@/lib/sync";
 import { adhanStore } from "@/lib/adhan-alerts";
 import { khatmaStore } from "@/lib/khatma";
+import { reelsFeedStore, reelsPrefsStore } from "@/lib/reels";
 
 export function resetStores(): void {
   localStorage.clear();
@@ -14,6 +15,8 @@ export function resetStores(): void {
     accountStore,
     adhanStore,
     khatmaStore,
+    reelsPrefsStore,
+    reelsFeedStore,
   ])
     s.reload();
 }
