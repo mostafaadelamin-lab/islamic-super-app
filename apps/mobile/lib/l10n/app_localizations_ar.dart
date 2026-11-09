@@ -518,6 +518,95 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hajjUmrah => 'العمرة';
 
   @override
+  String get helpA1 => 'نعم. لا إعلانات ولا اشتراكات ولا مشتريات، وسيبقى كذلك.';
+
+  @override
+  String get helpA2 =>
+      'نص القرآن والتفسير ومواقيت الصلاة والقبلة والأذكار والسبحة والعلامات كلها تعمل دون اتصال. التلاوات تُبثّ من الإنترنت إلا إذا حفظت السور أولًا (المزيد ← التنزيلات).';
+
+  @override
+  String get helpA3 =>
+      'تختلف المساجد في طريقة الحساب وتضيف دقائق للاحتياط. اختر طريقة بلدك ومذهب العصر من إعدادات الصلاة، وعدّل كل صلاة بالدقائق إن احتجت.';
+
+  @override
+  String get helpA4 => 'من الإعدادات ← التلاوة، أو من المشغّل نفسه أثناء التلاوة.';
+
+  @override
+  String get helpA5 =>
+      'على هذا الهاتف فقط: العلامات والختمة ومتابعة العبادات والإعدادات لا تغادره إلا إذا فعّلت مزامنة الحساب بنفسك.';
+
+  @override
+  String get helpA6 =>
+      'اسمح لرتّل بالإشعارات، وفي أندرويد بـ«المنبهات والتذكيرات». بعض الهواتف توقف التطبيقات في الخلفية لتوفير البطارية: استثنِ رتّل من تحسين البطارية.';
+
+  @override
+  String get helpA7 =>
+      'استخدم «الإبلاغ عن خطأ» تحت الذكر، أو راسلنا بالأسفل. النصوص الدينية مأخوذة من مصادر منشورة وتمر بمراجعة.';
+
+  @override
+  String get helpContact => 'تواصل معنا';
+
+  @override
+  String get helpContactPending => 'سيُضاف عنوان التواصل قريبًا.';
+
+  @override
+  String get helpEmail => 'راسلنا بالبريد';
+
+  @override
+  String get helpFaq => 'الأسئلة الشائعة';
+
+  @override
+  String get helpNotNow => 'ليس الآن';
+
+  @override
+  String get helpPromptBody => 'تستخدم رتّل منذ أيام. إن نفعك فشاركه مع غيرك، فهو مجاني للجميع.';
+
+  @override
+  String get helpPromptTitle => 'تشارك رتّل؟';
+
+  @override
+  String get helpQ1 => 'هل رتّل مجاني فعلًا؟';
+
+  @override
+  String get helpQ2 => 'ما الذي يعمل دون إنترنت؟';
+
+  @override
+  String get helpQ3 => 'لماذا تختلف المواقيت عن مسجدي؟';
+
+  @override
+  String get helpQ4 => 'كيف أغيّر القارئ أو السرعة؟';
+
+  @override
+  String get helpQ5 => 'أين تُحفظ بياناتي؟';
+
+  @override
+  String get helpQ6 => 'لماذا لم يُرفع الأذان؟';
+
+  @override
+  String get helpQ7 => 'وجدت خطأ في نص، ماذا أفعل؟';
+
+  @override
+  String get helpRate => 'قيّم رتّل';
+
+  @override
+  String get helpRatePending => 'التقييم متاح بعد نشر التطبيق في المتاجر.';
+
+  @override
+  String get helpShareApp => 'شارك رتّل';
+
+  @override
+  String get helpShareText => 'رتّل: القرآن ومواقيت الصلاة والأذكار، مجانًا بلا إعلانات.';
+
+  @override
+  String get helpSpread => 'شارك وقيّم';
+
+  @override
+  String get helpSpreadBody => 'إن نفعك رتّل فشاركه مع أهلك وأصدقائك.';
+
+  @override
+  String get helpTitle => 'المساعدة والتواصل';
+
+  @override
   String get hisnSectionFood => 'الطعام والصيام';
 
   @override
@@ -1516,6 +1605,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsThemeSystem => 'حسب الجهاز';
+
+  @override
+  String get shortcutAdhkar => 'الأذكار';
+
+  @override
+  String get shortcutPrayer => 'مواقيت الصلاة';
+
+  @override
+  String get shortcutQuran => 'المصحف';
+
+  @override
+  String get shortcutTasbih => 'السبحة';
 
   @override
   String storiesAyahs(String count) {

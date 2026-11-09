@@ -8,6 +8,8 @@ import 'app.dart';
 import 'app_services.dart';
 import 'data/content.dart';
 import 'data/media_session.dart';
+import 'data/shortcuts.dart';
+import 'l10n/app_localizations.dart';
 import 'data/recitation.dart';
 
 /// [audioBackend] replaces the audio player (the headless test device has no audio plugin).
@@ -41,5 +43,14 @@ Future<MediaSession> _mediaSession() async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final services = await bootstrap(mediaSession: await _mediaSession());
+  final l = lookupAppLocalizations(services.settings.locale);
+  await setUpShortcuts(
+    labels: {
+      'quran': l.shortcutQuran,
+      'prayer': l.shortcutPrayer,
+      'adhkar': l.shortcutAdhkar,
+      'tasbih': l.shortcutTasbih,
+    },
+  );
   runApp(RattilApp(services: services));
 }

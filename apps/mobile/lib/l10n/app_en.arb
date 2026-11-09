@@ -752,6 +752,118 @@
   "@hajjUmrah": {
     "description": "shared key \"hajj.umrah\""
   },
+  "helpA1": "Yes. Rattil has no ads, no subscriptions and no purchases, and it will stay that way.",
+  "@helpA1": {
+    "description": "shared key \"help.a1\""
+  },
+  "helpA2": "The Quran text, tafsir, prayer times, qibla, adhkar, tasbih and your bookmarks all work offline. Recitations stream from the internet unless you save the surahs first (More → Downloads).",
+  "@helpA2": {
+    "description": "shared key \"help.a2\""
+  },
+  "helpA3": "Mosques use different calculation methods and add a few minutes for caution. Choose your country's method and Asr school in the prayer settings, and adjust each prayer by minutes if needed.",
+  "@helpA3": {
+    "description": "shared key \"help.a3\""
+  },
+  "helpA4": "In Settings → Recitation, or from the player itself while a recitation is playing.",
+  "@helpA4": {
+    "description": "shared key \"help.a4\""
+  },
+  "helpA5": "On this phone only: bookmarks, khatma, worship tracker and settings never leave it unless you turn on account sync yourself.",
+  "@helpA5": {
+    "description": "shared key \"help.a5\""
+  },
+  "helpA6": "Allow notifications for Rattil and, on Android, \"alarms and reminders\". Some phones stop apps in the background to save battery: exclude Rattil from battery optimisation.",
+  "@helpA6": {
+    "description": "shared key \"help.a6\""
+  },
+  "helpA7": "Use \"Report a mistake\" under the dhikr, or write to us below. Religious texts come from published sources and go through a review.",
+  "@helpA7": {
+    "description": "shared key \"help.a7\""
+  },
+  "helpContact": "Contact us",
+  "@helpContact": {
+    "description": "shared key \"help.contact\""
+  },
+  "helpContactPending": "The contact address will be added soon.",
+  "@helpContactPending": {
+    "description": "shared key \"help.contactPending\""
+  },
+  "helpEmail": "Send us an email",
+  "@helpEmail": {
+    "description": "shared key \"help.email\""
+  },
+  "helpFaq": "Frequently asked questions",
+  "@helpFaq": {
+    "description": "shared key \"help.faq\""
+  },
+  "helpNotNow": "Not now",
+  "@helpNotNow": {
+    "description": "shared key \"help.notNow\""
+  },
+  "helpPromptBody": "You have been using Rattil for a few days. If it helps you, share it with someone; it is free for everyone.",
+  "@helpPromptBody": {
+    "description": "shared key \"help.promptBody\""
+  },
+  "helpPromptTitle": "Share Rattil?",
+  "@helpPromptTitle": {
+    "description": "shared key \"help.promptTitle\""
+  },
+  "helpQ1": "Is Rattil really free?",
+  "@helpQ1": {
+    "description": "shared key \"help.q1\""
+  },
+  "helpQ2": "What works without the internet?",
+  "@helpQ2": {
+    "description": "shared key \"help.q2\""
+  },
+  "helpQ3": "Why do the prayer times differ from my mosque?",
+  "@helpQ3": {
+    "description": "shared key \"help.q3\""
+  },
+  "helpQ4": "How do I change the reciter or the speed?",
+  "@helpQ4": {
+    "description": "shared key \"help.q4\""
+  },
+  "helpQ5": "Where is my data kept?",
+  "@helpQ5": {
+    "description": "shared key \"help.q5\""
+  },
+  "helpQ6": "Why did the adhan not sound?",
+  "@helpQ6": {
+    "description": "shared key \"help.q6\""
+  },
+  "helpQ7": "I found a mistake in a text. What should I do?",
+  "@helpQ7": {
+    "description": "shared key \"help.q7\""
+  },
+  "helpRate": "Rate Rattil",
+  "@helpRate": {
+    "description": "shared key \"help.rate\""
+  },
+  "helpRatePending": "Rating opens once the app is in the stores.",
+  "@helpRatePending": {
+    "description": "shared key \"help.ratePending\""
+  },
+  "helpShareApp": "Share Rattil",
+  "@helpShareApp": {
+    "description": "shared key \"help.shareApp\""
+  },
+  "helpShareText": "Rattil: Quran, prayer times and adhkar, free with no ads.",
+  "@helpShareText": {
+    "description": "shared key \"help.shareText\""
+  },
+  "helpSpread": "Share and rate",
+  "@helpSpread": {
+    "description": "shared key \"help.spread\""
+  },
+  "helpSpreadBody": "If Rattil helps you, share it with family and friends.",
+  "@helpSpreadBody": {
+    "description": "shared key \"help.spreadBody\""
+  },
+  "helpTitle": "Help & contact",
+  "@helpTitle": {
+    "description": "shared key \"help.title\""
+  },
   "hisnSectionFood": "Food and fasting",
   "@hisnSectionFood": {
     "description": "shared key \"hisn.section.food\""
@@ -2270,6 +2382,22 @@
   "settingsThemeSystem": "System",
   "@settingsThemeSystem": {
     "description": "shared key \"settings.themeSystem\""
+  },
+  "shortcutAdhkar": "Adhkar",
+  "@shortcutAdhkar": {
+    "description": "shared key \"shortcut.adhkar\""
+  },
+  "shortcutPrayer": "Prayer times",
+  "@shortcutPrayer": {
+    "description": "shared key \"shortcut.prayer\""
+  },
+  "shortcutQuran": "Quran",
+  "@shortcutQuran": {
+    "description": "shared key \"shortcut.quran\""
+  },
+  "shortcutTasbih": "Tasbih",
+  "@shortcutTasbih": {
+    "description": "shared key \"shortcut.tasbih\""
   },
   "storiesAyahs": "{count} ayahs",
   "@storiesAyahs": {

@@ -980,6 +980,174 @@ abstract class AppLocalizations {
   /// **'Umrah'**
   String get hajjUmrah;
 
+  /// shared key "help.a1"
+  ///
+  /// In en, this message translates to:
+  /// **'Yes. Rattil has no ads, no subscriptions and no purchases, and it will stay that way.'**
+  String get helpA1;
+
+  /// shared key "help.a2"
+  ///
+  /// In en, this message translates to:
+  /// **'The Quran text, tafsir, prayer times, qibla, adhkar, tasbih and your bookmarks all work offline. Recitations stream from the internet unless you save the surahs first (More → Downloads).'**
+  String get helpA2;
+
+  /// shared key "help.a3"
+  ///
+  /// In en, this message translates to:
+  /// **'Mosques use different calculation methods and add a few minutes for caution. Choose your country\'s method and Asr school in the prayer settings, and adjust each prayer by minutes if needed.'**
+  String get helpA3;
+
+  /// shared key "help.a4"
+  ///
+  /// In en, this message translates to:
+  /// **'In Settings → Recitation, or from the player itself while a recitation is playing.'**
+  String get helpA4;
+
+  /// shared key "help.a5"
+  ///
+  /// In en, this message translates to:
+  /// **'On this phone only: bookmarks, khatma, worship tracker and settings never leave it unless you turn on account sync yourself.'**
+  String get helpA5;
+
+  /// shared key "help.a6"
+  ///
+  /// In en, this message translates to:
+  /// **'Allow notifications for Rattil and, on Android, \"alarms and reminders\". Some phones stop apps in the background to save battery: exclude Rattil from battery optimisation.'**
+  String get helpA6;
+
+  /// shared key "help.a7"
+  ///
+  /// In en, this message translates to:
+  /// **'Use \"Report a mistake\" under the dhikr, or write to us below. Religious texts come from published sources and go through a review.'**
+  String get helpA7;
+
+  /// shared key "help.contact"
+  ///
+  /// In en, this message translates to:
+  /// **'Contact us'**
+  String get helpContact;
+
+  /// shared key "help.contactPending"
+  ///
+  /// In en, this message translates to:
+  /// **'The contact address will be added soon.'**
+  String get helpContactPending;
+
+  /// shared key "help.email"
+  ///
+  /// In en, this message translates to:
+  /// **'Send us an email'**
+  String get helpEmail;
+
+  /// shared key "help.faq"
+  ///
+  /// In en, this message translates to:
+  /// **'Frequently asked questions'**
+  String get helpFaq;
+
+  /// shared key "help.notNow"
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get helpNotNow;
+
+  /// shared key "help.promptBody"
+  ///
+  /// In en, this message translates to:
+  /// **'You have been using Rattil for a few days. If it helps you, share it with someone; it is free for everyone.'**
+  String get helpPromptBody;
+
+  /// shared key "help.promptTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Share Rattil?'**
+  String get helpPromptTitle;
+
+  /// shared key "help.q1"
+  ///
+  /// In en, this message translates to:
+  /// **'Is Rattil really free?'**
+  String get helpQ1;
+
+  /// shared key "help.q2"
+  ///
+  /// In en, this message translates to:
+  /// **'What works without the internet?'**
+  String get helpQ2;
+
+  /// shared key "help.q3"
+  ///
+  /// In en, this message translates to:
+  /// **'Why do the prayer times differ from my mosque?'**
+  String get helpQ3;
+
+  /// shared key "help.q4"
+  ///
+  /// In en, this message translates to:
+  /// **'How do I change the reciter or the speed?'**
+  String get helpQ4;
+
+  /// shared key "help.q5"
+  ///
+  /// In en, this message translates to:
+  /// **'Where is my data kept?'**
+  String get helpQ5;
+
+  /// shared key "help.q6"
+  ///
+  /// In en, this message translates to:
+  /// **'Why did the adhan not sound?'**
+  String get helpQ6;
+
+  /// shared key "help.q7"
+  ///
+  /// In en, this message translates to:
+  /// **'I found a mistake in a text. What should I do?'**
+  String get helpQ7;
+
+  /// shared key "help.rate"
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Rattil'**
+  String get helpRate;
+
+  /// shared key "help.ratePending"
+  ///
+  /// In en, this message translates to:
+  /// **'Rating opens once the app is in the stores.'**
+  String get helpRatePending;
+
+  /// shared key "help.shareApp"
+  ///
+  /// In en, this message translates to:
+  /// **'Share Rattil'**
+  String get helpShareApp;
+
+  /// shared key "help.shareText"
+  ///
+  /// In en, this message translates to:
+  /// **'Rattil: Quran, prayer times and adhkar, free with no ads.'**
+  String get helpShareText;
+
+  /// shared key "help.spread"
+  ///
+  /// In en, this message translates to:
+  /// **'Share and rate'**
+  String get helpSpread;
+
+  /// shared key "help.spreadBody"
+  ///
+  /// In en, this message translates to:
+  /// **'If Rattil helps you, share it with family and friends.'**
+  String get helpSpreadBody;
+
+  /// shared key "help.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Help & contact'**
+  String get helpTitle;
+
   /// shared key "hisn.section.food"
   ///
   /// In en, this message translates to:
@@ -2737,6 +2905,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'System'**
   String get settingsThemeSystem;
+
+  /// shared key "shortcut.adhkar"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhkar'**
+  String get shortcutAdhkar;
+
+  /// shared key "shortcut.prayer"
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer times'**
+  String get shortcutPrayer;
+
+  /// shared key "shortcut.quran"
+  ///
+  /// In en, this message translates to:
+  /// **'Quran'**
+  String get shortcutQuran;
+
+  /// shared key "shortcut.tasbih"
+  ///
+  /// In en, this message translates to:
+  /// **'Tasbih'**
+  String get shortcutTasbih;
 
   /// shared key "stories.ayahs"
   ///

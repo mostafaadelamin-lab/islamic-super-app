@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'about_screen.dart';
 import 'bookmarks_screen.dart';
 import 'hajj_screen.dart';
+import 'help_screen.dart';
 import 'hisn_screen.dart';
 import 'l10n_ext.dart';
 import 'mosques_screen.dart';
@@ -59,6 +60,7 @@ class MoreScreen extends StatelessWidget {
           SectionCard(
             children: [
               tile('settings', Icons.settings_outlined, l.navSettings, () => const SettingsScreen()),
+              tile('help', Icons.help_outline, l.helpTitle, () => const HelpScreen()),
               tile('about', Icons.info_outline, l.settingsAbout, () => const AboutScreen()),
             ],
           ),

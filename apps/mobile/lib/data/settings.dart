@@ -353,6 +353,14 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Days the app was opened, for the one-time "share Rattil" suggestion, and whether it was answered.
+  List<String> get sharePromptDays => _prefs.getStringList('sharePrompt.days') ?? const [];
+  bool get sharePromptDone => _prefs.getBool('sharePrompt.done') ?? false;
+  Future<void> setSharePrompt({List<String>? days, bool? done}) async {
+    if (days != null) await _prefs.setStringList('sharePrompt.days', days);
+    if (done != null) await _prefs.setBool('sharePrompt.done', done);
+  }
+
   /// Prayers that should get a notification right now.
   Set<String> get adhanPrayers => adhanEnabled
       ? {

@@ -522,6 +522,96 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hajjUmrah => 'Umrah';
 
   @override
+  String get helpA1 => 'Yes. Rattil has no ads, no subscriptions and no purchases, and it will stay that way.';
+
+  @override
+  String get helpA2 =>
+      'The Quran text, tafsir, prayer times, qibla, adhkar, tasbih and your bookmarks all work offline. Recitations stream from the internet unless you save the surahs first (More → Downloads).';
+
+  @override
+  String get helpA3 =>
+      'Mosques use different calculation methods and add a few minutes for caution. Choose your country\'s method and Asr school in the prayer settings, and adjust each prayer by minutes if needed.';
+
+  @override
+  String get helpA4 => 'In Settings → Recitation, or from the player itself while a recitation is playing.';
+
+  @override
+  String get helpA5 =>
+      'On this phone only: bookmarks, khatma, worship tracker and settings never leave it unless you turn on account sync yourself.';
+
+  @override
+  String get helpA6 =>
+      'Allow notifications for Rattil and, on Android, \"alarms and reminders\". Some phones stop apps in the background to save battery: exclude Rattil from battery optimisation.';
+
+  @override
+  String get helpA7 =>
+      'Use \"Report a mistake\" under the dhikr, or write to us below. Religious texts come from published sources and go through a review.';
+
+  @override
+  String get helpContact => 'Contact us';
+
+  @override
+  String get helpContactPending => 'The contact address will be added soon.';
+
+  @override
+  String get helpEmail => 'Send us an email';
+
+  @override
+  String get helpFaq => 'Frequently asked questions';
+
+  @override
+  String get helpNotNow => 'Not now';
+
+  @override
+  String get helpPromptBody =>
+      'You have been using Rattil for a few days. If it helps you, share it with someone; it is free for everyone.';
+
+  @override
+  String get helpPromptTitle => 'Share Rattil?';
+
+  @override
+  String get helpQ1 => 'Is Rattil really free?';
+
+  @override
+  String get helpQ2 => 'What works without the internet?';
+
+  @override
+  String get helpQ3 => 'Why do the prayer times differ from my mosque?';
+
+  @override
+  String get helpQ4 => 'How do I change the reciter or the speed?';
+
+  @override
+  String get helpQ5 => 'Where is my data kept?';
+
+  @override
+  String get helpQ6 => 'Why did the adhan not sound?';
+
+  @override
+  String get helpQ7 => 'I found a mistake in a text. What should I do?';
+
+  @override
+  String get helpRate => 'Rate Rattil';
+
+  @override
+  String get helpRatePending => 'Rating opens once the app is in the stores.';
+
+  @override
+  String get helpShareApp => 'Share Rattil';
+
+  @override
+  String get helpShareText => 'Rattil: Quran, prayer times and adhkar, free with no ads.';
+
+  @override
+  String get helpSpread => 'Share and rate';
+
+  @override
+  String get helpSpreadBody => 'If Rattil helps you, share it with family and friends.';
+
+  @override
+  String get helpTitle => 'Help & contact';
+
+  @override
   String get hisnSectionFood => 'Food and fasting';
 
   @override
@@ -1520,6 +1610,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsThemeSystem => 'System';
+
+  @override
+  String get shortcutAdhkar => 'Adhkar';
+
+  @override
+  String get shortcutPrayer => 'Prayer times';
+
+  @override
+  String get shortcutQuran => 'Quran';
+
+  @override
+  String get shortcutTasbih => 'Tasbih';
 
   @override
   String storiesAyahs(String count) {
