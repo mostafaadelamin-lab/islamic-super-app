@@ -1,5 +1,15 @@
 import { readRepoJson } from "../repo";
-import { embedUrl, posterUrl, REELS, sanitizeReels, visibleReels, type Reel } from "@/lib/reels";
+import {
+  embedUrl,
+  fetchReelsFeed,
+  mixReels,
+  posterUrl,
+  REELS,
+  sanitizeReels,
+  sanitizeSources,
+  visibleReels,
+  type Reel,
+} from "@/lib/reels";
 
 const yt: Reel = {
   id: "yt-hTtlD-u4_HI",
@@ -58,5 +68,47 @@ describe("reels", () => {
     expect(posterUrl(yt)).toBe("https://i.ytimg.com/vi/hTtlD-u4_HI/hqdefault.jpg");
     expect(embedUrl(ig)).toBe("https://www.instagram.com/reel/C1a2B3c4D5e/embed/");
     expect(posterUrl(ig)).toBeNull();
+  });
+});
+
+describe("automatic reels", () => {
+  const auto = (ref: string, published: string, sourceId: string): Reel => ({
+    ...yt,
+    id: `yt-${ref}`,
+    ref,
+    status: "auto",
+    reviewer: null,
+    reviewedAt: null,
+    sourceId,
+    published,
+  });
+  it("accepts auto reels only with a source channel", () => {
+    expect(sanitizeReels({ items: [auto("AAAAAAAAAA1", "2026-11-01", "yt-x")] })).toHaveLength(1);
+    expect(
+      sanitizeReels({ items: [{ ...auto("AAAAAAAAAA1", "2026-11-01", "yt-x"), sourceId: null }] }),
+    ).toHaveLength(0);
+  });
+  it("mixes channels newest first, one per channel in turn, without duplicates", () => {
+    const a = [auto("AAAAAAAAAA1", "2026-11-01", "a"), auto("AAAAAAAAAA2", "2026-11-03", "a")];
+    const b = [auto("BBBBBBBBBB1", "2026-11-02", "b")];
+    expect(mixReels([a, b, a]).map((r) => r.ref)).toEqual(["AAAAAAAAAA2", "BBBBBBBBBB1", "AAAAAAAAAA1"]);
+  });
+  it("fetches and validates the API feed", async () => {
+    const body = {
+      schema: "reels-feed.v1",
+      sources: [
+        { id: "yt-a", channelId: "UCa", name: { ar: "أ", en: "A" }, category: "recitation" },
+        { id: 1 },
+      ],
+      items: [auto("AAAAAAAAAA1", "2026-11-01", "yt-a"), yt],
+    };
+    const f = (async () => new Response(JSON.stringify(body))) as unknown as typeof fetch;
+    const out = await fetchReelsFeed("https://api.example/", f, 5);
+    expect(out.items.map((r) => r.ref)).toEqual(["AAAAAAAAAA1"]);
+    expect(out.sources).toHaveLength(1);
+    expect(out.at).toBe(5);
+    const bad = (async () => new Response("{}", { status: 503 })) as unknown as typeof fetch;
+    await expect(fetchReelsFeed("https://api.example", bad, 0)).rejects.toThrow();
+    expect(sanitizeSources("x")).toEqual([]);
   });
 });

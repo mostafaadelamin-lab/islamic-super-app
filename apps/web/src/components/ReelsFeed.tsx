@@ -2,7 +2,19 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
-import { embedUrl, posterUrl, REELS, reelsPrefsStore, visibleReels, type Reel } from "@/lib/reels";
+import {
+  embedUrl,
+  FEED_MAX_AGE_MS,
+  fetchReelsFeed,
+  mixReels,
+  posterUrl,
+  REELS,
+  reelsFeedStore,
+  reelsPrefsStore,
+  visibleReels,
+  type Reel,
+} from "@/lib/reels";
+import { accountStore } from "@/lib/sync";
 import { useStore } from "@/hooks/useStore";
 import { Icon } from "./Icon";
 
@@ -10,9 +22,66 @@ import { Icon } from "./Icon";
  * Vertical, snap-scrolling reels feed. Only the reel in view gets a live player (iframe); the others show a
  * poster, so at most one video loads or plays at a time.
  */
-export function ReelsFeed({ locale, reels = REELS }: { locale: Locale; reels?: readonly Reel[] }) {
+export function ReelsFeed({
+  locale,
+  reels = REELS,
+  fetchImpl,
+}: {
+  locale: Locale;
+  reels?: readonly Reel[];
+  /** Replaced in tests. */
+  fetchImpl?: typeof fetch;
+}) {
   const prefs = useStore(reelsPrefsStore);
-  const list = visibleReels(reels, prefs.reviewer);
+  const cache = useStore(reelsFeedStore);
+  const { apiBase } = useStore(accountStore);
+  const [feedState, setFeedState] = useState<"idle" | "loading" | "failed">("idle");
+  const [undo, setUndo] = useState<{ id: string; name: string } | null>(null);
+
+  const refresh = useCallback(
+    async (force: boolean) => {
+      const c = reelsFeedStore.get();
+      const now = Date.now();
+      if (!force && c && c.base === apiBase && now - c.at < FEED_MAX_AGE_MS) return;
+      const f = fetchImpl ?? (typeof fetch === "function" ? fetch.bind(globalThis) : null);
+      if (!f) return;
+      setFeedState("loading");
+      try {
+        reelsFeedStore.set(await fetchReelsFeed(apiBase, f, now));
+        setFeedState("idle");
+      } catch {
+        setFeedState("failed");
+      }
+    },
+    [apiBase, fetchImpl],
+  );
+  useEffect(() => {
+    void refresh(false);
+  }, [refresh]);
+
+  const hidden = new Set(prefs.hidden);
+  const autoItems = (cache?.items ?? []).filter((r) => !hidden.has(r.sourceId ?? ""));
+  const bySource = new Map<string, Reel[]>();
+  for (const r of autoItems) bySource.set(r.sourceId ?? "", [...(bySource.get(r.sourceId ?? "") ?? []), r]);
+  const seen = new Set<string>();
+  const list = [...mixReels([...bySource.values()]), ...visibleReels(reels, prefs.reviewer)].filter((r) =>
+    seen.has(r.id) ? false : (seen.add(r.id), true),
+  );
+  const sourceName = (id: string | null | undefined): string => {
+    const s = cache?.sources.find((x) => x.id === id);
+    return s ? (locale === "ar" ? s.name.ar : s.name.en) : "";
+  };
+  const hide = (r: Reel): void => {
+    if (!r.sourceId) return;
+    const id = r.sourceId;
+    reelsPrefsStore.set((p) => ({ ...p, hidden: [...new Set([...p.hidden, id])] }));
+    setUndo({ id, name: sourceName(id) });
+    setActive(0);
+  };
+  const unhide = (id: string): void => {
+    reelsPrefsStore.set((p) => ({ ...p, hidden: p.hidden.filter((h) => h !== id) }));
+    setUndo(null);
+  };
   const [active, setActive] = useState(0);
   const feed = useRef<HTMLDivElement>(null);
 
@@ -56,10 +125,47 @@ export function ReelsFeed({ locale, reels = REELS }: { locale: Locale; reels?: r
 
   return (
     <div className="reels">
-      {list.length === 0 ? (
-        <p className="reels-empty" data-testid="reels-empty">
-          {t(locale, "reels.empty")}
+      {undo ? (
+        <p className="reels-undo" role="status" data-testid="reels-hidden">
+          {t(locale, "reels.hidden", { name: undo.name })}{" "}
+          <button type="button" className="reels-link" onClick={() => unhide(undo.id)}>
+            {t(locale, "reels.undo")}
+          </button>
         </p>
+      ) : null}
+      {list.length === 0 ? (
+        <div className="reels-empty" data-testid="reels-empty" aria-busy={feedState === "loading"}>
+          <p>
+            {feedState === "loading"
+              ? t(locale, "reels.loading")
+              : feedState === "failed"
+                ? t(locale, "reels.offline")
+                : t(locale, "reels.empty")}
+          </p>
+          {feedState === "failed" ? (
+            <button
+              type="button"
+              className="btn"
+              onClick={() => void refresh(true)}
+              data-testid="reels-retry"
+            >
+              {t(locale, "reels.retry")}
+            </button>
+          ) : null}
+          {prefs.hidden.length > 0 && feedState !== "loading" ? (
+            <button
+              type="button"
+              className="reels-link"
+              onClick={() => {
+                reelsPrefsStore.set((p) => ({ ...p, hidden: [] }));
+                setUndo(null);
+              }}
+              data-testid="reels-show-hidden"
+            >
+              {t(locale, "reels.showHidden")}
+            </button>
+          ) : null}
+        </div>
       ) : (
         <div
           ref={feed}
@@ -119,6 +225,9 @@ export function ReelsFeed({ locale, reels = REELS }: { locale: Locale; reels?: r
                   <span className="reel-tags">
                     <span className="reel-chip">{t(locale, `reels.cat.${r.category}`)}</span>
                     <span className="reel-chip">{t(locale, `reels.platform.${r.platform}`)}</span>
+                    {r.status === "auto" ? (
+                      <span className="reel-chip reel-reviewed">{t(locale, "reels.trusted")}</span>
+                    ) : null}
                     {r.status === "approved" && r.reviewer ? (
                       <span className="reel-chip reel-reviewed">
                         {t(locale, "reels.reviewedBy", { name: r.reviewer })}
@@ -128,6 +237,16 @@ export function ReelsFeed({ locale, reels = REELS }: { locale: Locale; reels?: r
                   <a href={r.url} target="_blank" rel="noopener noreferrer" className="reel-open">
                     {t(locale, `reels.open.${r.platform}`)}
                   </a>
+                  {r.status === "auto" ? (
+                    <button
+                      type="button"
+                      className="reel-hide"
+                      onClick={() => hide(r)}
+                      data-testid={`reel-hide-${r.id}`}
+                    >
+                      {t(locale, "reels.hide")}
+                    </button>
+                  ) : null}
                 </div>
               </article>
             );
@@ -163,7 +282,7 @@ export function ReelsFeed({ locale, reels = REELS }: { locale: Locale; reels?: r
           type="checkbox"
           checked={prefs.reviewer}
           onChange={(e) => {
-            reelsPrefsStore.set({ reviewer: e.target.checked });
+            reelsPrefsStore.set((p) => ({ ...p, reviewer: e.target.checked }));
             setActive(0);
           }}
           data-testid="reels-reviewer"

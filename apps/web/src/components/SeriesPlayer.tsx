@@ -160,7 +160,7 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
           type="checkbox"
           checked={prefs.reviewer}
           data-testid="stories-reviewer"
-          onChange={(e) => reelsPrefsStore.set({ reviewer: e.target.checked })}
+          onChange={(e) => reelsPrefsStore.set((p) => ({ ...p, reviewer: e.target.checked }))}
         />
         {t(locale, "stories.reviewerMode")}
       </label>
