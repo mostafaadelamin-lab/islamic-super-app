@@ -192,9 +192,15 @@ const recitedTafsir = async (page: Page, s: number, a: number): Promise<void> =>
   expect(await sheet.getByTestId("tafsir-text").textContent()).toBe(stored(s, a));
 };
 
-test.describe("tafsir with recitation (fake media element)", () => {
+const splitShows = async (page: Page, s: number, a: number): Promise<void> => {
+  await expect(page.getByTestId("split-ayah")).toHaveAttribute("data-ayah", `${s}:${a}`);
+  await expect(page.getByTestId("split-ayah-text")).toBeVisible();
+  await recitedTafsir(page, s, a);
+};
+
+test.describe("tafsir with recitation: split screen (fake media element)", () => {
   for (const theme of ["light", "dark"] as const) {
-    test(`Arabic phone (${theme}): off by default; on follows ayah by ayah and across a page turn; persisted; axe (fake media element)`, async ({
+    test(`Arabic phone (${theme}): off by default; on splits the screen and follows ayah by ayah and across a page turn; persisted; axe (fake media element)`, async ({
       page,
     }) => {
       await page.emulateMedia({ colorScheme: theme });
@@ -204,33 +210,40 @@ test.describe("tafsir with recitation (fake media element)", () => {
       await playFrom(page, "البقرة، الآية ٤ — خيارات الآية");
       const toggle = page.getByTestId("player-tafsir");
       await expect(toggle).not.toBeChecked();
-      await expect(page.getByRole("checkbox", { name: "التفسير مع التلاوة" })).toBeVisible();
+      await expect(page.getByRole("checkbox", { name: "استماع مع التفسير" })).toBeVisible();
+      await expect(page.getByTestId("split-view")).toHaveCount(0);
       await expect(page.getByTestId("recitation-tafsir")).toHaveCount(0);
-      await expect(page.getByTestId("tafsir")).toHaveCount(0);
       await toggle.check();
-      await recitedTafsir(page, 2, 4);
-      await expect(page.getByTestId("recitation-tafsir")).toHaveAccessibleName("تفسير الآية المتلوّة");
-      // the line being recited stays above the docked sheet and the player
-      const seg = await page.locator(".mushaf-page .seg.playing").last().boundingBox();
-      const sheet = await page.getByTestId("recitation-tafsir").boundingBox();
-      expect(seg!.y + seg!.height).toBeLessThanOrEqual(sheet!.y + 1);
+      await expect(page.getByTestId("split-view")).toBeVisible();
+      await expect(page.getByTestId("mushaf-stage")).toBeHidden();
+      await splitShows(page, 2, 4);
+      await expect(page.getByTestId("recitation-tafsir")).toHaveAccessibleName("تفسير مختصر");
+      // two halves: the recited ayah above, its tafsir below, both above the player dock
+      const top = await page.getByTestId("split-ayah").boundingBox();
+      const bottom = await page.getByTestId("recitation-tafsir").boundingBox();
+      const dock = await page.locator(".rd-dock").boundingBox();
+      expect(top!.y + top!.height).toBeLessThanOrEqual(bottom!.y + 1);
+      expect(bottom!.y).toBeLessThan(dock!.y);
       await noHorizontalOverflow(page);
       await axe(page, `${theme}-ar-phone`);
       await endItem(page); // 2:5, still page 2
-      await recitedTafsir(page, 2, 5);
-      await endItem(page); // 2:6 is on page 3: the page turns and the tafsir follows
+      await splitShows(page, 2, 5);
+      await endItem(page); // 2:6 is on page 3: the page turns and the split follows
       await expect(page).toHaveURL("/ar/page/3/");
-      await recitedTafsir(page, 2, 6);
-      const seg3 = await page.locator(".mushaf-page .seg.playing").last().boundingBox();
-      const sheet3 = await page.getByTestId("recitation-tafsir").boundingBox();
-      expect(seg3!.y + seg3!.height).toBeLessThanOrEqual(sheet3!.y + 1);
-      // turning it off hides the tafsir while recitation goes on
+      await splitShows(page, 2, 6);
+      // turning it off brings the page back while recitation goes on
       await toggle.uncheck();
-      await expect(page.getByTestId("recitation-tafsir")).toHaveCount(0);
+      await expect(page.getByTestId("split-view")).toHaveCount(0);
+      await expect(page.getByTestId("mushaf-stage")).toBeVisible();
       await isPlaying(page);
       await toggle.check();
+      await expect(page.getByTestId("split-view")).toBeVisible();
+      await page.getByTestId("split-show-page").click();
+      await expect(page.getByTestId("split-view")).toHaveCount(0);
+      await expect(toggle).not.toBeChecked();
+      await toggle.check();
       await page.getByTestId("player-stop").click();
-      await expect(page.getByTestId("recitation-tafsir")).toHaveCount(0);
+      await expect(page.getByTestId("split-view")).toHaveCount(0);
       // persisted, and shown in Settings
       await page.goto("/ar/settings/");
       await expect(page.getByTestId("settings-recitation-tafsir")).toBeChecked();
@@ -238,7 +251,7 @@ test.describe("tafsir with recitation (fake media element)", () => {
     });
   }
 
-  test("English desktop: turned on in Settings; Arabic-only note; a selected ayah takes precedence (fake media element)", async ({
+  test("English desktop: turned on in Settings; side by side; Arabic-only note; a selected ayah takes precedence (fake media element)", async ({
     page,
   }) => {
     await fakeMedia(page);
@@ -246,19 +259,27 @@ test.describe("tafsir with recitation (fake media element)", () => {
     await page.goto("/en/settings/");
     await page.getByLabel("Tafsir with recitation").check();
     await openMushaf(page, "/en/page/604/");
+    await page.getByRole("button", { name: "Al-Ikhlas, ayah 1 — ayah options", exact: true }).click();
     await page.getByTestId("play-surah").click(); // al-Ikhlas: basmala first, which has no tafsir
-    await isPlaying(page);
-    await expect(page.getByTestId("recitation-tafsir")).toHaveCount(0);
-    await endItem(page);
-    await recitedTafsir(page, 112, 1);
-    await expect(page.getByTestId("recitation-tafsir").getByTestId("tafsir-arabic-only")).toBeVisible();
-    await axe(page, "light-en-desktop");
-    await page.getByRole("button", { name: "Al-Falaq, ayah 2 — ayah options", exact: true }).click();
-    await expect(page.getByTestId("recitation-tafsir")).toHaveCount(0);
-    await expect(page.getByTestId("tafsir")).toHaveAttribute("data-ayah", "113:2");
     await page.getByTestId("act-close").click();
+    await isPlaying(page);
+    await expect(page.getByTestId("split-view")).toBeVisible();
+    await expect(page.getByTestId("recitation-tafsir").getByTestId("tafsir")).toHaveCount(0);
     await endItem(page);
-    await recitedTafsir(page, 112, 2);
+    await splitShows(page, 112, 1);
+    await expect(page.getByTestId("recitation-tafsir").getByTestId("tafsir-arabic-only")).toBeVisible();
+    const left = await page.getByTestId("split-ayah").boundingBox();
+    const right = await page.getByTestId("recitation-tafsir").boundingBox();
+    expect(Math.abs(left!.y - right!.y)).toBeLessThan(2); // beside each other on a wide screen
+    await axe(page, "light-en-desktop");
+    await page.getByTestId("tab-ayat").click();
+    await page.locator('[data-testid="ayat-item"][data-ayah="113:2"] button').click();
+    await expect(page.getByTestId("split-view")).toHaveCount(0);
+    await expect(page.getByTestId("ayah-sheet").getByTestId("tafsir")).toHaveAttribute("data-ayah", "113:2");
+    await page.getByTestId("act-close").click();
+    await page.getByTestId("tab-mushaf").click();
+    await endItem(page);
+    await splitShows(page, 112, 2);
     await noHorizontalOverflow(page);
     await page.getByTestId("player-stop").click();
   });

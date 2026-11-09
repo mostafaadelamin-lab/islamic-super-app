@@ -73,7 +73,7 @@ export function ReaderPlayer({ locale, page }: { locale: Locale; page: number })
         >
           <input
             type="checkbox"
-            className="sr-only"
+            className="rdp-hit"
             checked={prefs.tafsir}
             data-testid="player-tafsir"
             onChange={(e) => {

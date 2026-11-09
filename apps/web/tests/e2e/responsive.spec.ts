@@ -35,8 +35,12 @@ for (const vp of VIEWPORTS) {
           await page.waitForLoadState("networkidle");
           await noHorizontalOverflow(page);
           // all five main tabs are visible without scrolling sideways (bottom tab bar on phones)
-          const links = page.getByRole("navigation").first().getByRole("link");
-          await expect(links).toHaveCount(5);
+          // The Mushaf reader is full-screen on phones: its own bottom bar (index, bookmarks, khatma, search).
+          const reader = p.startsWith("page/") && vp.width <= 720;
+          const links = reader
+            ? page.locator(".rd-bar").locator("a, button")
+            : page.getByRole("navigation").first().getByRole("link");
+          await expect(links).toHaveCount(reader ? 4 : 5);
           for (const l of await links.all()) await expect(l).toBeInViewport();
           if (
             vp.name !== "tablet" &&

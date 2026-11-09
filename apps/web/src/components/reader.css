@@ -465,6 +465,20 @@ body:has(.rd) .app-footer {
   outline: 2px solid var(--color-primary);
   outline-offset: 1px;
 }
+/* the real checkbox covers the whole button, so a tap anywhere on it toggles */
+.rdp-tafsir .rdp-hit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.rdp-tafsir:has(.rdp-hit:focus-visible) {
+  outline: 2px solid var(--color-focus, var(--color-primary));
+  outline-offset: 2px;
+}
 .rdp-tafsir[data-on="true"] {
   background: var(--color-primary);
   color: var(--color-on-primary);
@@ -631,4 +645,13 @@ body:has(.rd) .app-footer {
   border-radius: var(--radius-md);
   background: var(--color-surface-2);
   font-size: calc(var(--rd-fs, 26px) * 0.66) !important;
+}
+
+/* While a sheet is open the page can scroll above it, so other ayahs stay reachable. */
+:root:has(.rd .ayah-sheet) main {
+  padding-bottom: calc(var(--rd-dock-h, 220px) + min(56vh, 520px) + var(--space-md));
+}
+.rd .seg,
+.rd .ayah-end {
+  scroll-margin-bottom: calc(var(--rd-dock-h, 220px) + var(--space-md));
 }
