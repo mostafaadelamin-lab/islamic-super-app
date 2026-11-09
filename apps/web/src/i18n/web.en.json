@@ -249,5 +249,22 @@
   "adhan.playNow": "Play adhan",
   "adhan.webNote": "On the website the alert works while a page of the site is open (any tab). For alerts while the device is locked, use the mobile app.",
   "adhan.webDenied": "The browser blocks notifications. The alert and adhan still play inside the page; allow notifications in the browser settings to get a system notification too.",
-  "adhan.credit": "Adhan recording: \"Beautiful adhan\" from Wikimedia Commons (Adam-synagda), public domain CC0."
+  "adhan.credit": "Adhan recording: \"Beautiful adhan\" from Wikimedia Commons (Adam-synagda), public domain CC0.",
+  "mosques.title": "Nearby mosques",
+  "mosques.around": "Mosques around {place}",
+  "mosques.radius": "Distance",
+  "mosques.useMyLocation": "Use my current location",
+  "mosques.myLocation": "your current location",
+  "mosques.geoDenied": "Your location is not available. Showing mosques around the city chosen for prayer times.",
+  "mosques.loading": "Searching for mosques…",
+  "mosques.error": "Could not reach OpenStreetMap. Check your internet connection.",
+  "mosques.retry": "Try again",
+  "mosques.none": "No mosques are mapped within this distance. Try a larger one.",
+  "mosques.count": "{n} mosques, nearest first",
+  "mosques.offline": "(last saved result, you are offline)",
+  "mosques.unnamed": "Mosque (no name on the map)",
+  "mosques.meters": "{n} m",
+  "mosques.km": "{n} km",
+  "mosques.note": "Straight-line distance. Data from the open OpenStreetMap map; it can be incomplete in some places.",
+  "home.tile.mosquesSub": "The mosques closest to you"
 }

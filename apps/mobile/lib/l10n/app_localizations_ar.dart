@@ -368,6 +368,51 @@ class AppLocalizationsAr extends AppLocalizations {
   String get moreTitle => 'المزيد';
 
   @override
+  String mosquesAround(String place) {
+    return 'المساجد حول $place';
+  }
+
+  @override
+  String mosquesCount(String n) {
+    return '$n مسجد، الأقرب أولًا. اضغط على المسجد لفتح الاتجاهات.';
+  }
+
+  @override
+  String get mosquesError => 'تعذّر الوصول إلى خريطة OpenStreetMap. تأكد من الاتصال بالإنترنت.';
+
+  @override
+  String mosquesKm(String n) {
+    return '$n كم';
+  }
+
+  @override
+  String get mosquesLoading => 'جارٍ البحث عن المساجد…';
+
+  @override
+  String mosquesMeters(String n) {
+    return '$n م';
+  }
+
+  @override
+  String get mosquesNone => 'لا توجد مساجد مسجلة على الخريطة في هذه المسافة. جرّب مسافة أكبر.';
+
+  @override
+  String get mosquesNote =>
+      'المسافة في خط مستقيم حول مدينة المواقيت. البيانات من خريطة OpenStreetMap المفتوحة وقد تكون ناقصة في بعض الأماكن.';
+
+  @override
+  String get mosquesOffline => '(آخر نتيجة محفوظة، أنت غير متصل)';
+
+  @override
+  String get mosquesRetry => 'إعادة المحاولة';
+
+  @override
+  String get mosquesTitle => 'المساجد القريبة';
+
+  @override
+  String get mosquesUnnamed => 'مسجد (بدون اسم على الخريطة)';
+
+  @override
   String get mushafCopied => 'نُسخت الآية';
 
   @override

@@ -521,6 +521,74 @@
   "@moreTitle": {
     "description": "shared key \"more.title\""
   },
+  "mosquesAround": "Mosques around {place}",
+  "@mosquesAround": {
+    "description": "shared key \"mosques.around\"",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "mosquesCount": "{n} mosques, nearest first. Tap one for directions.",
+  "@mosquesCount": {
+    "description": "shared key \"mosques.count\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "mosquesError": "Could not reach OpenStreetMap. Check your internet connection.",
+  "@mosquesError": {
+    "description": "shared key \"mosques.error\""
+  },
+  "mosquesKm": "{n} km",
+  "@mosquesKm": {
+    "description": "shared key \"mosques.km\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "mosquesLoading": "Searching for mosques…",
+  "@mosquesLoading": {
+    "description": "shared key \"mosques.loading\""
+  },
+  "mosquesMeters": "{n} m",
+  "@mosquesMeters": {
+    "description": "shared key \"mosques.meters\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "mosquesNone": "No mosques are mapped within this distance. Try a larger one.",
+  "@mosquesNone": {
+    "description": "shared key \"mosques.none\""
+  },
+  "mosquesNote": "Straight-line distance around your prayer-times city. Data from the open OpenStreetMap map; it can be incomplete in some places.",
+  "@mosquesNote": {
+    "description": "shared key \"mosques.note\""
+  },
+  "mosquesOffline": "(last saved result, you are offline)",
+  "@mosquesOffline": {
+    "description": "shared key \"mosques.offline\""
+  },
+  "mosquesRetry": "Try again",
+  "@mosquesRetry": {
+    "description": "shared key \"mosques.retry\""
+  },
+  "mosquesTitle": "Nearby mosques",
+  "@mosquesTitle": {
+    "description": "shared key \"mosques.title\""
+  },
+  "mosquesUnnamed": "Mosque (no name on the map)",
+  "@mosquesUnnamed": {
+    "description": "shared key \"mosques.unnamed\""
+  },
   "mushafCopied": "Ayah copied",
   "@mushafCopied": {
     "description": "shared key \"mushaf.copied\""

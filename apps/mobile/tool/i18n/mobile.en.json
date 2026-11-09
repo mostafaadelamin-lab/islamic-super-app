@@ -173,5 +173,17 @@
   "adhan.bellOff": "{name} alert off",
   "settings.hijriOffset": "Hijri date adjustment",
   "settings.hijriOffsetHint": "Umm al-Qura. Shift by a day or two to match the moon sighting announced in your country.",
-  "qibla.declination": "Corrected from magnetic to true north: {deg}°"
+  "qibla.declination": "Corrected from magnetic to true north: {deg}°",
+  "mosques.title": "Nearby mosques",
+  "mosques.around": "Mosques around {place}",
+  "mosques.loading": "Searching for mosques…",
+  "mosques.error": "Could not reach OpenStreetMap. Check your internet connection.",
+  "mosques.retry": "Try again",
+  "mosques.none": "No mosques are mapped within this distance. Try a larger one.",
+  "mosques.count": "{n} mosques, nearest first. Tap one for directions.",
+  "mosques.offline": "(last saved result, you are offline)",
+  "mosques.unnamed": "Mosque (no name on the map)",
+  "mosques.meters": "{n} m",
+  "mosques.km": "{n} km",
+  "mosques.note": "Straight-line distance around your prayer-times city. Data from the open OpenStreetMap map; it can be incomplete in some places."
 }
