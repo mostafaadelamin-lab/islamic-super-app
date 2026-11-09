@@ -22,6 +22,8 @@ export const MAIN_PAGES = [
   "hisn/",
   "hisn/29/",
   "tasbih/",
+  "tracker/",
+  "khatma/",
   "qibla/",
   "hajj/",
   // Reels

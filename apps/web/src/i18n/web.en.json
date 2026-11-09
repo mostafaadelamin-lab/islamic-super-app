@@ -390,5 +390,19 @@
   "mosques.meters": "{n} m",
   "mosques.km": "{n} km",
   "mosques.note": "Straight-line distance. Data from the open OpenStreetMap map; it can be incomplete in some places.",
-  "home.tile.mosquesSub": "The mosques closest to you"
+  "home.tile.mosquesSub": "The mosques closest to you",
+  "worship.title": "Worship tracker",
+  "worship.tileSub": "Your prayers and fasting day by day",
+  "worship.streak": "Days in a row with all five prayers: {n}",
+  "worship.prayedOf": "{n} of {total} prayers",
+  "worship.fullDays": "Full days: {n}",
+  "worship.fasted": "Fasting days: {n}",
+  "worship.fasting": "Fasting",
+  "worship.today": "Today",
+  "worship.prayers": "Prayers",
+  "worship.note": "Note",
+  "worship.stats": "Statistics",
+  "worship.week": "Last 7 days",
+  "worship.month": "Month",
+  "worship.private": "Kept on this device only."
 }

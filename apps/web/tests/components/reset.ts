@@ -3,6 +3,7 @@ import { lastReadStore, prayerStore, prefsStore } from "@/lib/settings";
 import { accountStore } from "@/lib/sync";
 import { adhanStore } from "@/lib/adhan-alerts";
 import { khatmaStore } from "@/lib/khatma";
+import { worshipStore } from "@/lib/worship";
 import { reelsFeedStore, reelsPrefsStore } from "@/lib/reels";
 
 export function resetStores(): void {
@@ -15,6 +16,7 @@ export function resetStores(): void {
     accountStore,
     adhanStore,
     khatmaStore,
+    worshipStore,
     reelsPrefsStore,
     reelsFeedStore,
   ])

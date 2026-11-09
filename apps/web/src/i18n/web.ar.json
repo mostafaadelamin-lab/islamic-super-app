@@ -390,5 +390,19 @@
   "mosques.meters": "{n} م",
   "mosques.km": "{n} كم",
   "mosques.note": "المسافة في خط مستقيم. البيانات من خريطة OpenStreetMap المفتوحة وقد تكون ناقصة في بعض الأماكن.",
-  "home.tile.mosquesSub": "أقرب المساجد إليك"
+  "home.tile.mosquesSub": "أقرب المساجد إليك",
+  "worship.title": "متابعة العبادات",
+  "worship.tileSub": "صلواتك وصيامك يومًا بيوم",
+  "worship.streak": "أيام متتالية بالصلوات الخمس: {n}",
+  "worship.prayedOf": "{n} من {total} صلاة",
+  "worship.fullDays": "أيام كاملة: {n}",
+  "worship.fasted": "أيام صيام: {n}",
+  "worship.fasting": "صائم",
+  "worship.today": "اليوم",
+  "worship.prayers": "الصلوات",
+  "worship.note": "ملاحظة",
+  "worship.stats": "الإحصاءات",
+  "worship.week": "آخر ٧ أيام",
+  "worship.month": "الشهر",
+  "worship.private": "البيانات محفوظة على جهازك فقط."
 }
