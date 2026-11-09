@@ -1619,4 +1619,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tasbihVibrate => 'Vibration';
+
+  @override
+  String worshipFasted(String n) {
+    return 'Fasting days: $n';
+  }
+
+  @override
+  String get worshipFasting => 'Fasting';
+
+  @override
+  String worshipFullDays(String n) {
+    return 'Full days: $n';
+  }
+
+  @override
+  String get worshipMonth => 'Month';
+
+  @override
+  String get worshipNote => 'Note';
+
+  @override
+  String worshipPrayedOf(String n, String total) {
+    return '$n of $total prayers';
+  }
+
+  @override
+  String get worshipPrayers => 'Prayers';
+
+  @override
+  String get worshipPrivate => 'Kept on this device only.';
+
+  @override
+  String worshipStreak(String n) {
+    return 'Days in a row with all five prayers: $n';
+  }
+
+  @override
+  String get worshipTitle => 'Worship tracker';
+
+  @override
+  String get worshipToday => 'Today';
+
+  @override
+  String get worshipWeek => 'Last 7 days';
 }

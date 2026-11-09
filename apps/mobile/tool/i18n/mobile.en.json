@@ -340,5 +340,17 @@
   "mosques.unnamed": "Mosque (no name on the map)",
   "mosques.meters": "{n} m",
   "mosques.km": "{n} km",
-  "mosques.note": "Straight-line distance around your prayer-times city. Data from the open OpenStreetMap map; it can be incomplete in some places."
+  "mosques.note": "Straight-line distance around your prayer-times city. Data from the open OpenStreetMap map; it can be incomplete in some places.",
+  "worship.title": "Worship tracker",
+  "worship.streak": "Days in a row with all five prayers: {n}",
+  "worship.prayedOf": "{n} of {total} prayers",
+  "worship.fullDays": "Full days: {n}",
+  "worship.fasted": "Fasting days: {n}",
+  "worship.fasting": "Fasting",
+  "worship.today": "Today",
+  "worship.prayers": "Prayers",
+  "worship.note": "Note",
+  "worship.week": "Last 7 days",
+  "worship.month": "Month",
+  "worship.private": "Kept on this device only."
 }

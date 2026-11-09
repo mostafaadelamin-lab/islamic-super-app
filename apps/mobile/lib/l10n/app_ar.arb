@@ -466,5 +466,17 @@
   "tasbihToday": "اليوم لهذا الذكر: {n}",
   "tasbihTotal": "الإجمالي: {n}",
   "tasbihUndo": "تراجع",
-  "tasbihVibrate": "اهتزاز"
+  "tasbihVibrate": "اهتزاز",
+  "worshipFasted": "أيام صيام: {n}",
+  "worshipFasting": "صائم",
+  "worshipFullDays": "أيام كاملة: {n}",
+  "worshipMonth": "الشهر",
+  "worshipNote": "ملاحظة",
+  "worshipPrayedOf": "{n} من {total} صلاة",
+  "worshipPrayers": "الصلوات",
+  "worshipPrivate": "البيانات محفوظة على جهازك فقط.",
+  "worshipStreak": "أيام متتالية بالصلوات الخمس: {n}",
+  "worshipTitle": "متابعة العبادات",
+  "worshipToday": "اليوم",
+  "worshipWeek": "آخر ٧ أيام"
 }

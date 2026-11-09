@@ -2431,5 +2431,76 @@
   "tasbihVibrate": "Vibration",
   "@tasbihVibrate": {
     "description": "shared key \"tasbih.vibrate\""
+  },
+  "worshipFasted": "Fasting days: {n}",
+  "@worshipFasted": {
+    "description": "shared key \"worship.fasted\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "worshipFasting": "Fasting",
+  "@worshipFasting": {
+    "description": "shared key \"worship.fasting\""
+  },
+  "worshipFullDays": "Full days: {n}",
+  "@worshipFullDays": {
+    "description": "shared key \"worship.fullDays\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "worshipMonth": "Month",
+  "@worshipMonth": {
+    "description": "shared key \"worship.month\""
+  },
+  "worshipNote": "Note",
+  "@worshipNote": {
+    "description": "shared key \"worship.note\""
+  },
+  "worshipPrayedOf": "{n} of {total} prayers",
+  "@worshipPrayedOf": {
+    "description": "shared key \"worship.prayedOf\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "worshipPrayers": "Prayers",
+  "@worshipPrayers": {
+    "description": "shared key \"worship.prayers\""
+  },
+  "worshipPrivate": "Kept on this device only.",
+  "@worshipPrivate": {
+    "description": "shared key \"worship.private\""
+  },
+  "worshipStreak": "Days in a row with all five prayers: {n}",
+  "@worshipStreak": {
+    "description": "shared key \"worship.streak\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "worshipTitle": "Worship tracker",
+  "@worshipTitle": {
+    "description": "shared key \"worship.title\""
+  },
+  "worshipToday": "Today",
+  "@worshipToday": {
+    "description": "shared key \"worship.today\""
+  },
+  "worshipWeek": "Last 7 days",
+  "@worshipWeek": {
+    "description": "shared key \"worship.week\""
   }
 }

@@ -2893,6 +2893,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Vibration'**
   String get tasbihVibrate;
+
+  /// shared key "worship.fasted"
+  ///
+  /// In en, this message translates to:
+  /// **'Fasting days: {n}'**
+  String worshipFasted(String n);
+
+  /// shared key "worship.fasting"
+  ///
+  /// In en, this message translates to:
+  /// **'Fasting'**
+  String get worshipFasting;
+
+  /// shared key "worship.fullDays"
+  ///
+  /// In en, this message translates to:
+  /// **'Full days: {n}'**
+  String worshipFullDays(String n);
+
+  /// shared key "worship.month"
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get worshipMonth;
+
+  /// shared key "worship.note"
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get worshipNote;
+
+  /// shared key "worship.prayedOf"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {total} prayers'**
+  String worshipPrayedOf(String n, String total);
+
+  /// shared key "worship.prayers"
+  ///
+  /// In en, this message translates to:
+  /// **'Prayers'**
+  String get worshipPrayers;
+
+  /// shared key "worship.private"
+  ///
+  /// In en, this message translates to:
+  /// **'Kept on this device only.'**
+  String get worshipPrivate;
+
+  /// shared key "worship.streak"
+  ///
+  /// In en, this message translates to:
+  /// **'Days in a row with all five prayers: {n}'**
+  String worshipStreak(String n);
+
+  /// shared key "worship.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Worship tracker'**
+  String get worshipTitle;
+
+  /// shared key "worship.today"
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get worshipToday;
+
+  /// shared key "worship.week"
+  ///
+  /// In en, this message translates to:
+  /// **'Last 7 days'**
+  String get worshipWeek;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

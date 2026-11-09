@@ -340,5 +340,17 @@
   "mosques.unnamed": "مسجد (بدون اسم على الخريطة)",
   "mosques.meters": "{n} م",
   "mosques.km": "{n} كم",
-  "mosques.note": "المسافة في خط مستقيم حول مدينة المواقيت. البيانات من خريطة OpenStreetMap المفتوحة وقد تكون ناقصة في بعض الأماكن."
+  "mosques.note": "المسافة في خط مستقيم حول مدينة المواقيت. البيانات من خريطة OpenStreetMap المفتوحة وقد تكون ناقصة في بعض الأماكن.",
+  "worship.title": "متابعة العبادات",
+  "worship.streak": "أيام متتالية بالصلوات الخمس: {n}",
+  "worship.prayedOf": "{n} من {total} صلاة",
+  "worship.fullDays": "أيام كاملة: {n}",
+  "worship.fasted": "أيام صيام: {n}",
+  "worship.fasting": "صائم",
+  "worship.today": "اليوم",
+  "worship.prayers": "الصلوات",
+  "worship.note": "ملاحظة",
+  "worship.week": "آخر ٧ أيام",
+  "worship.month": "الشهر",
+  "worship.private": "البيانات محفوظة على جهازك فقط."
 }

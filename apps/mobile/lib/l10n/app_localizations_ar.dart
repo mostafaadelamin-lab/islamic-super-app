@@ -1614,4 +1614,48 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tasbihVibrate => 'اهتزاز';
+
+  @override
+  String worshipFasted(String n) {
+    return 'أيام صيام: $n';
+  }
+
+  @override
+  String get worshipFasting => 'صائم';
+
+  @override
+  String worshipFullDays(String n) {
+    return 'أيام كاملة: $n';
+  }
+
+  @override
+  String get worshipMonth => 'الشهر';
+
+  @override
+  String get worshipNote => 'ملاحظة';
+
+  @override
+  String worshipPrayedOf(String n, String total) {
+    return '$n من $total صلاة';
+  }
+
+  @override
+  String get worshipPrayers => 'الصلوات';
+
+  @override
+  String get worshipPrivate => 'البيانات محفوظة على جهازك فقط.';
+
+  @override
+  String worshipStreak(String n) {
+    return 'أيام متتالية بالصلوات الخمس: $n';
+  }
+
+  @override
+  String get worshipTitle => 'متابعة العبادات';
+
+  @override
+  String get worshipToday => 'اليوم';
+
+  @override
+  String get worshipWeek => 'آخر ٧ أيام';
 }

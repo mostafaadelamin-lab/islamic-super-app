@@ -10,6 +10,7 @@ import 'data/bookmarks.dart';
 import 'data/content.dart';
 import 'data/devotions.dart';
 import 'data/khatma_store.dart';
+import 'data/worship_store.dart';
 import 'data/location.dart';
 import 'data/notifications.dart';
 import 'data/recitation.dart';
@@ -41,6 +42,7 @@ class AppServices {
     required this.sleepTimer,
     this.location = const GeolocatorLocation(),
     required this.khatma,
+    required this.worship,
     required this.reminders,
     this.sharer = const SystemImageSharer(),
     required this.reelsFeed,
@@ -134,6 +136,7 @@ class AppServices {
       tafsir: tafsir ?? TafsirStore.asset(rootBundle),
       location: location ?? const GeolocatorLocation(),
       khatma: khatma,
+      worship: WorshipController(settings, localToday),
       reminders: reminders,
       sharer: sharer ?? const SystemImageSharer(),
       reelsFeed: ReelsFeedController(sources: content.reelSources, httpClient: httpClient, prefs: prefs, clock: c),
@@ -167,11 +170,15 @@ class AppServices {
   /// Quran khatma plan and history.
   final KhatmaController khatma;
 
+  /// Worship tracker (prayers, fasting, notes per day).
+  final WorshipController worship;
+
   /// Repeating reminders (khatma portion, adhkar, Friday).
   final ReminderScheduler reminders;
 
   /// System share sheet for images and text.
   final ImageSharer sharer;
+
   /// Newest Shorts from the trusted channels (fetched when the reels open).
   final ReelsFeedController reelsFeed;
 }

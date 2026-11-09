@@ -9,6 +9,7 @@ import 'mosques_screen.dart';
 import 'qibla_screen.dart';
 import 'reels_screen.dart';
 import 'khatma_screen.dart';
+import 'worship_screen.dart';
 import 'stories_screen.dart';
 import 'search_screen.dart';
 import 'settings_screen.dart';
@@ -45,6 +46,7 @@ class MoreScreen extends StatelessWidget {
             children: [
               tile('hisn', Icons.menu_book_outlined, l.adhkarHisn, () => const HisnScreen()),
               tile('tasbih', Icons.touch_app_outlined, l.tasbihTitle, () => const TasbihScreen()),
+              tile('tracker', Icons.event_available_outlined, l.worshipTitle, () => const WorshipScreen()),
               tile('qibla', Icons.explore_outlined, l.qiblaTitle, () => const QiblaScreen()),
               tile('mosques', Icons.place_outlined, l.mosquesTitle, () => const MosquesScreen()),
               tile('hajj', Icons.mosque_outlined, l.hajjTitle, () => const HajjScreen()),
