@@ -1,5 +1,15 @@
 # Changelog
 
+## [Unreleased] — Mushaf reader redesign + listen with tafsir — 2026-11-09
+### Changed
+- Mushaf page reader redesigned on the website and the mobile app after the owner's mockup (layout only; our own icons and ornaments): tabs Mushaf / Ayat / Tafsir at the top, an ornate surah band, a floating recitation card (reciter drop-down, previous / play-pause / next, repeat count, "Listen with tafsir"), a page slider and a bottom bar (Index, Bookmarks, Khatma, Search). On phones the reader is full-screen.
+### Added
+- Tap any ayah: "Play this ayah", "Play from here", "Listen with tafsir", play the surah, bookmark, copy, and its Tafsir al-Muyassar entry.
+- "Listen with tafsir": the screen splits in two — the ayah being recited (highlighted) and its Tafsir al-Muyassar entry (KFGQPC, verbatim) — following the recitation ayah by ayah and across page turns; side by side on wide screens. "Show page" turns it off.
+- Ayat tab (the page's ayahs one by one, large) and Tafsir tab (each ayah followed by its tafsir, with a font-size button); tapping an ayah in either plays it.
+- Khatma tracker: start a khatma, pages read are marked after 4 s on a page, progress and "continue".
+- Integration build: this release merges the new home page, the Quran index and the Mushaf reader (branch integration/reader-home-index).
+
 ## [Unreleased] — New home page (owner's mockup) — 2026-11-09
 ### Changed
 - Home page redesigned on the website and the mobile app after the owner's mockup: place ("Egypt - Cairo") with a settings button; mosque drawing; next prayer name, its time in large digits and a live countdown; a day card with the weekday, Gregorian and Hijri dates, a "Prayer calendar" button, the five prayers with icons (next one highlighted) and sunrise / sunset; big tiles for the Quran, Adhkar & Dua and Prayer times; wide tiles for Tasbih, Qibla, Islamic reels and Prophets' stories; "Main sections" opens the full list.
