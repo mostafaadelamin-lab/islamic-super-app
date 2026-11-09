@@ -343,5 +343,10 @@
   "adhan.fridayTime": "وقت تذكير الجمعة",
   "adhan.fridayTitle": "يوم الجمعة",
   "adhan.fridayBody": "تذكير بقراءة سورة الكهف والإكثار من الصلاة على النبي ﷺ",
-  "home.elapsed": "مضى {n} دقيقة على أذان {name}"
+  "home.elapsed": "مضى {n} دقيقة على أذان {name}",
+  "prayer.calendarKind": "نوع التقويم",
+  "prayer.kind.gregorian": "ميلادي",
+  "prayer.kind.hijri": "هجري",
+  "prayer.gregorianCol": "ميلادي",
+  "prayer.printMonth": "طباعة / حفظ PDF"
 }

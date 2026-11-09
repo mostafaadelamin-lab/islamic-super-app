@@ -343,5 +343,10 @@
   "adhan.fridayTime": "Friday reminder time",
   "adhan.fridayTitle": "Friday",
   "adhan.fridayBody": "A reminder to read Surat al-Kahf and send many blessings upon the Prophet ﷺ",
-  "home.elapsed": "{n} min since the {name} adhan"
+  "home.elapsed": "{n} min since the {name} adhan",
+  "prayer.calendarKind": "Calendar",
+  "prayer.kind.gregorian": "Gregorian",
+  "prayer.kind.hijri": "Hijri",
+  "prayer.gregorianCol": "Gregorian",
+  "prayer.printMonth": "Print / save as PDF"
 }

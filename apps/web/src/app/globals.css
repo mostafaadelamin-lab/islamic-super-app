@@ -2299,3 +2299,40 @@ dd {
 .btn-danger {
   color: var(--color-error, #b3261e);
 }
+
+/* Monthly prayer calendar: tools row and printing only the table ("Print / save as PDF"). */
+.month-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+.print-only {
+  display: none;
+}
+@media print {
+  .print-month body * {
+    visibility: hidden;
+  }
+  .print-month #month,
+  .print-month #month * {
+    visibility: visible;
+  }
+  .print-month #month {
+    position: absolute;
+    inset: 0 0 auto 0;
+    box-shadow: none;
+    border: 0;
+  }
+  .print-month .no-print {
+    display: none !important;
+  }
+  .print-month .print-only {
+    display: block;
+  }
+  .print-month .month-scroll {
+    overflow: visible;
+  }
+}

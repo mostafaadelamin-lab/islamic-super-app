@@ -2,6 +2,7 @@ import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { geoErrorKey, PrayerView } from "@/components/PrayerView";
 import { NextPrayerCard, recentPrayer } from "@/components/NextPrayerCard";
+import { hijriMonthDays, hijriOf } from "@/components/PrayerMonth";
 import { prayerStore } from "@/lib/settings";
 import { prayerTimes, qiblaBearing } from "@/lib/prayer";
 import { formatHHMM } from "@/lib/time";
@@ -196,6 +197,39 @@ describe("PrayerView day navigation, monthly calendar and clock", () => {
     await u.click(screen.getByTestId("month-prev"));
     expect(screen.getByTestId("month-label")).toHaveTextContent("February 2026");
     expect(within(screen.getByTestId("month-table")).getAllByRole("row").slice(1)).toHaveLength(28);
+  });
+  it("Hijri month: the days of the Umm al-Qura month, the user's offset, and printing", async () => {
+    const d = { year: 2026, month: 3, day: 1 };
+    const h = hijriOf(d, 0)!;
+    expect(h).toMatchObject({ year: 1447, month: 9 });
+    expect(hijriOf(d, 1)!.day).toBe(h.day + 1);
+    const ramadan = hijriMonthDays(d, 0, 0);
+    expect([29, 30]).toContain(ramadan.length);
+    expect(ramadan.map((x) => hijriOf(x, 0)!.day)).toEqual(ramadan.map((_, i) => i + 1));
+    expect(hijriOf(hijriMonthDays(d, 1, 0)[0]!, 0)).toMatchObject({ year: 1447, month: 10, day: 1 });
+    expect(hijriOf(hijriMonthDays(d, -9, 0)[0]!, 0)).toMatchObject({ year: 1446, month: 12, day: 1 });
+
+    const print = vi.fn(() => {
+      expect(document.documentElement).toHaveClass("print-month");
+    });
+    vi.stubGlobal("print", print);
+    const u = user();
+    render(<PrayerView locale="en" />);
+    await screen.findByTestId("month-table");
+    await u.click(screen.getByTestId("month-kind-hijri"));
+    expect(screen.getByTestId("month-kind-hijri")).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByTestId("month-label")).toHaveTextContent(/Ramadan 1447/);
+    const rows = within(screen.getByTestId("month-table")).getAllByRole("row").slice(1);
+    expect(rows).toHaveLength(ramadan.length);
+    expect(rows[h.day - 1]!.className).toBe("next");
+    await u.click(screen.getByTestId("month-next"));
+    expect(screen.getByTestId("month-label")).toHaveTextContent(/Shawwal 1447/);
+    await u.click(screen.getByTestId("month-print"));
+    expect(print).toHaveBeenCalledOnce();
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(10);
+    });
+    expect(document.documentElement).not.toHaveClass("print-month");
   });
 
   it("12-hour clock with AM/PM (ص/م in Arabic)", async () => {
