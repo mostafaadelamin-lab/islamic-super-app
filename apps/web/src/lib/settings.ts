@@ -1,6 +1,7 @@
 import { tokens } from "@/generated/tokens";
 import { createStore } from "./store";
 import { isLocale, type Locale } from "./i18n";
+import type { ClockStyle } from "./time";
 import { clampAdjustment, METHOD_IDS, PRAYER_KEYS, type Adjustments } from "./prayer";
 
 export type ThemePref = "system" | "light" | "dark";
@@ -13,12 +14,15 @@ export interface Preferences {
   theme: ThemePref;
   fontSize: number;
   translation: boolean;
+  /** 24 h or 12 h clock for prayer times. */
+  clock: ClockStyle;
 }
 export const DEFAULT_PREFS: Preferences = {
   locale: null,
   theme: "system",
   fontSize: FONT_DEFAULT,
   translation: false,
+  clock: "24",
 };
 
 export function clampFontSize(v: unknown): number {
@@ -36,6 +40,7 @@ export function sanitizePrefs(raw: unknown): Preferences {
     theme: r.theme === "light" || r.theme === "dark" ? r.theme : "system",
     fontSize: r.fontSize === undefined ? FONT_DEFAULT : clampFontSize(r.fontSize),
     translation: r.translation === true,
+    clock: r.clock === "12" ? "12" : "24",
   };
 }
 

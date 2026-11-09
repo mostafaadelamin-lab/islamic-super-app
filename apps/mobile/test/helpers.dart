@@ -10,6 +10,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:rattil/app.dart';
 import 'package:rattil/app_services.dart';
 import 'package:rattil/data/content.dart';
+import 'package:rattil/data/location.dart';
 import 'package:rattil/data/notifications.dart';
 import 'package:rattil/data/recitation.dart';
 import 'package:rattil/data/sensors.dart';
@@ -92,6 +93,7 @@ Future<TestApp> pumpApp(
   FakeAdhanPlayer? adhanPlayer,
   CompassSensors? sensors,
   TafsirStore? tafsir,
+  LocationProvider? location,
 }) async {
   final c = content ?? _content!;
   SharedPreferences.setMockInitialValues({'locale': locale, ...prefs});
@@ -107,6 +109,7 @@ Future<TestApp> pumpApp(
     adhanPlayer: adhanPlayer ?? FakeAdhanPlayer(),
     sensors: sensors ?? FakeSensors.none(),
     tafsir: tafsir ?? TafsirStore.preloaded(_tafsir!),
+    location: location ?? const FakeLocation(LocationUnavailable()),
   );
   if (size != null) {
     tester.view.physicalSize = size * tester.view.devicePixelRatio;
@@ -120,6 +123,14 @@ Future<TestApp> pumpApp(
   );
   await tester.pumpAndSettle();
   return TestApp(services, p);
+}
+
+/// "Use my location" answers [result] without touching the platform.
+class FakeLocation implements LocationProvider {
+  const FakeLocation(this.result);
+  final LocationResult result;
+  @override
+  Future<LocationResult> current() async => result;
 }
 
 /// Taps the bottom-navigation destination with [index] (0..4).

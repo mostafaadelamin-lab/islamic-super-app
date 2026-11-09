@@ -9,12 +9,14 @@ import 'data/account.dart';
 import 'data/bookmarks.dart';
 import 'data/content.dart';
 import 'data/devotions.dart';
+import 'data/location.dart';
 import 'data/notifications.dart';
 import 'data/recitation.dart';
 import 'data/sensors.dart';
 import 'data/settings.dart';
 import 'data/tafsir.dart';
 import 'domain/prayer_schedule.dart';
+import 'ui/prayer_model.dart' show resolveCity;
 
 /// Everything screens need, created once in main() (or in a test).
 class AppServices {
@@ -33,6 +35,7 @@ class AppServices {
     required this.tafsir,
     required this.narration,
     required this.sleepTimer,
+    this.location = const GeolocatorLocation(),
   });
 
   factory AppServices.create({
@@ -46,12 +49,13 @@ class AppServices {
     AdhanPlayer? adhanPlayer,
     CompassSensors? sensors,
     TafsirStore? tafsir,
+    LocationProvider? location,
   }) {
     final c = clock ?? DateTime.now;
     final settings = SettingsController(prefs, defaultCityId: content.cities.first.id);
     final bookmarks = BookmarksController(prefs, clock: c);
     DateTime localToday() {
-      final city = content.city(settings.cityId) ?? content.cities.first;
+      final city = resolveCity(content, settings);
       return PrayerSchedule.localDate(tz.getLocation(city.tz), c().toUtc());
     }
 
@@ -95,6 +99,7 @@ class AppServices {
       adhkar: AdhkarController(content, settings, localToday),
       sensors: sensors ?? const DeviceCompassSensors(),
       tafsir: tafsir ?? TafsirStore.asset(rootBundle),
+      location: location ?? const GeolocatorLocation(),
     );
   }
 
@@ -118,6 +123,9 @@ class AppServices {
   /// Narrated story episodes (audio only) and the sleep timer.
   final NarrationController narration;
   final SleepTimerController sleepTimer;
+
+  /// Device position for "use my location".
+  final LocationProvider location;
 }
 
 class AppScope extends InheritedWidget {

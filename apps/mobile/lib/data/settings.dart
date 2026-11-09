@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../domain/adhan_schedule.dart';
 import '../domain/prayer_schedule.dart';
 import '../domain/quran.dart';
 
@@ -66,7 +67,36 @@ class SettingsController extends ChangeNotifier {
   }
 
   // --- Prayer ---------------------------------------------------------------
+  /// Id used for "my location" (GPS) instead of a listed city.
+  static const gpsCityId = 'gps';
+
   String get cityId => _prefs.getString('cityId') ?? _defaultCityId;
+
+  /// Coordinates from "use my location" (null when never located).
+  ({double lat, double lng, String nearestCityId})? get gpsLocation {
+    final lat = _prefs.getDouble('gps.lat');
+    final lng = _prefs.getDouble('gps.lng');
+    final near = _prefs.getString('gps.near');
+    return lat == null || lng == null || near == null ? null : (lat: lat, lng: lng, nearestCityId: near);
+  }
+
+  /// Uses the device position for prayer times; the time zone and the default
+  /// method come from the nearest listed city.
+  Future<void> setGpsLocation(double lat, double lng, String nearestCityId, String recommendedMethod) async {
+    await _prefs.setDouble('gps.lat', (lat * 10000).roundToDouble() / 10000);
+    await _prefs.setDouble('gps.lng', (lng * 10000).roundToDouble() / 10000);
+    await _prefs.setString('gps.near', nearestCityId);
+    await _prefs.setString('cityId', gpsCityId);
+    await _prefs.setString('method', recommendedMethod);
+    notifyListeners();
+  }
+
+  /// 12-hour clock (with AM/PM, ص/م) instead of 24-hour for prayer times.
+  bool get clock12 => _prefs.getString('clock') == '12';
+  Future<void> setClock12(bool v) async {
+    await _prefs.setString('clock', v ? '12' : '24');
+    notifyListeners();
+  }
 
   /// Selecting a city also selects that city's recommended method.
   Future<void> setCity(String id, String recommendedMethod) async {
@@ -175,6 +205,35 @@ class SettingsController extends ChangeNotifier {
     await _prefs.setString('adhan.sound', v);
     notifyListeners();
   }
+
+  /// Reminder this many minutes before each adhan (0 = off).
+  int get adhanPreMinutes {
+    final v = _prefs.getInt('adhan.pre') ?? 0;
+    return preAdhanChoices.contains(v) ? v : 0;
+  }
+
+  Future<void> setAdhanPreMinutes(int v) async {
+    if (!preAdhanChoices.contains(v)) throw ArgumentError.value(v, 'minutes');
+    await _prefs.setInt('adhan.pre', v);
+    notifyListeners();
+  }
+
+  /// Iqama alert after each enabled adhan.
+  bool get iqamaEnabled => _prefs.getBool('adhan.iqama') ?? false;
+  Future<void> setIqamaEnabled(bool v) async {
+    await _prefs.setBool('adhan.iqama', v);
+    notifyListeners();
+  }
+
+  /// Minutes from the adhan to the iqama for [prayer].
+  int iqamaMinutes(String prayer) => clampIqama(_prefs.getInt('iqama.$prayer') ?? defaultIqamaMinutes[prayer] ?? 15);
+  Future<void> setIqamaMinutes(String prayer, int v) async {
+    await _prefs.setInt('iqama.$prayer', clampIqama(v));
+    notifyListeners();
+  }
+
+  /// Iqama minutes per prayer when the iqama alert is on, else null.
+  Map<String, int>? get iqamaPlan => iqamaEnabled ? {for (final p in obligatoryPrayers) p: iqamaMinutes(p)} : null;
 
   /// Prayers that should get a notification right now.
   Set<String> get adhanPrayers => adhanEnabled

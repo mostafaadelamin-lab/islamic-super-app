@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:timezone/timezone.dart' as tz;
 
 import '../app_services.dart';
@@ -56,13 +58,44 @@ class PrayerView {
   }
 }
 
+/// The selected city, or "my location" (GPS coordinates with the time zone and
+/// default method of the nearest listed city).
+City resolveCity(AppContent content, SettingsController settings) {
+  final gps = settings.gpsLocation;
+  if (settings.cityId == SettingsController.gpsCityId && gps != null) {
+    final near = content.city(gps.nearestCityId) ?? content.cities.first;
+    return City(
+      id: SettingsController.gpsCityId,
+      nameAr: 'موقعي (قرب ${near.nameAr})',
+      nameEn: 'My location (near ${near.nameEn})',
+      countryAr: near.countryAr,
+      lat: gps.lat,
+      lng: gps.lng,
+      tz: near.tz,
+      method: near.method,
+    );
+  }
+  return content.city(settings.cityId) ?? content.cities.first;
+}
+
+/// The listed city nearest to ([lat], [lng]) (great-circle distance).
+City nearestCity(List<City> cities, double lat, double lng) {
+  double d(City c) {
+    final p1 = lat * math.pi / 180, p2 = c.lat * math.pi / 180;
+    final dl = (c.lng - lng) * math.pi / 180;
+    return math.acos((math.sin(p1) * math.sin(p2) + math.cos(p1) * math.cos(p2) * math.cos(dl)).clamp(-1.0, 1.0));
+  }
+
+  return cities.reduce((a, b) => d(a) <= d(b) ? a : b);
+}
+
 /// The selected city, method and Asr rule (falling back to valid values), shared
 /// by the prayer screen, the home screen and the adhan scheduler.
 class PrayerInputs {
   PrayerInputs(this.city, this.method, this.asr, this.location);
 
   factory PrayerInputs.resolve(AppContent content, SettingsController settings) {
-    final city = content.city(settings.cityId) ?? content.cities.first;
+    final city = resolveCity(content, settings);
     final method = settings.method != null && content.prayerConfig.methods.containsKey(settings.method)
         ? settings.method!
         : city.method;

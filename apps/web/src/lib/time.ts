@@ -38,6 +38,28 @@ export function formatHHMM(instant: Date, tz: string): string {
   return `${p.hour}:${p.minute}`;
 }
 
+/** Clock style chosen in the settings: 24 h ("13:05") or 12 h ("1:05 PM" / "1:05 م"). */
+export type ClockStyle = "24" | "12";
+
+/**
+ * Time of `instant` in `tz` in the chosen clock style. Arabic uses ص / م for AM / PM. Digits stay Latin here;
+ * callers localise them.
+ */
+export function formatClock(
+  instant: Date,
+  tz: string,
+  clock: ClockStyle,
+  locale: "ar" | "en" = "en",
+): string {
+  const p = parts(instant, tz);
+  if (clock === "24") return `${p.hour}:${p.minute}`;
+  const h = Number(p.hour);
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  const pm = h >= 12;
+  const suffix = locale === "ar" ? (pm ? "م" : "ص") : pm ? "PM" : "AM";
+  return `${h12}:${p.minute} ${suffix}`;
+}
+
 export function addDays(d: LocalDate, n: number): LocalDate {
   const t = new Date(Date.UTC(d.year, d.month - 1, d.day + n));
   return { year: t.getUTCFullYear(), month: t.getUTCMonth() + 1, day: t.getUTCDate() };

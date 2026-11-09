@@ -6,9 +6,9 @@ import { localizeDigits } from "@/lib/digits";
 import { resolveLocation } from "@/lib/cities";
 import { nextPrayer, OBLIGATORY, todayTimes } from "@/lib/next-prayer";
 import type { PrayerDay, PrayerKey } from "@/lib/prayer";
-import { formatCountdown, formatHHMM } from "@/lib/time";
+import { formatClock, formatCountdown } from "@/lib/time";
 import { gregorianDay, hijriDate, weekdayName } from "@/lib/dates";
-import { prayerStore } from "@/lib/settings";
+import { prayerStore, prefsStore } from "@/lib/settings";
 import { useStore } from "@/hooks/useStore";
 import { useNow } from "@/hooks/useNow";
 import { Icon, type IconName } from "./Icon";
@@ -37,6 +37,7 @@ const PRAYER_ICON: Record<PrayerKey, IconName> = {
  */
 export function NextPrayerCard({ locale }: { locale: Locale }) {
   const prefs = useStore(prayerStore);
+  const display = useStore(prefsStore);
   const now = useNow();
   const loc = resolveLocation(prefs);
   const city = loc.city;
@@ -61,7 +62,7 @@ export function NextPrayerCard({ locale }: { locale: Locale }) {
   const sunset = listed
     ? new Date(listed.times.maghrib.getTime() - Math.trunc(prefs.adjustments?.maghrib ?? 0) * MINUTE_MS)
     : null;
-  const hhmm = (d: Date): string => localizeDigits(formatHHMM(d, loc.tz), locale);
+  const hhmm = (d: Date): string => localizeDigits(formatClock(d, loc.tz, display.clock, locale), locale);
   const hijri = now ? hijriDate(now, loc.tz, locale) : null;
 
   return (
@@ -133,7 +134,7 @@ export function NextPrayerCard({ locale }: { locale: Locale }) {
               </>
             ) : null}
           </div>
-          <Link className="home-calendar" href={href(locale, "prayer")}>
+          <Link className="home-calendar" href={`${href(locale, "prayer")}#month`}>
             <Icon name="calendar" size={20} />
             {t(locale, "home.calendar")}
           </Link>

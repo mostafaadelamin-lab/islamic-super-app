@@ -162,6 +162,53 @@ describe("PrayerView", () => {
   });
 });
 
+describe("PrayerView day navigation, monthly calendar and clock", () => {
+  it("moves between days, shows the Hijri date and returns to today", async () => {
+    const u = user();
+    render(<PrayerView locale="en" />);
+    await screen.findByTestId("times");
+    expect(screen.getByTestId("day-label")).toHaveTextContent("1 March 2026");
+    expect(screen.getByTestId("day-hijri").textContent).toMatch(/1447/);
+    await u.click(screen.getByTestId("day-next"));
+    expect(screen.getByTestId("day-label")).toHaveTextContent("Monday 2 March 2026");
+    expect(screen.queryByTestId("next-prayer")).toBeNull();
+    const d2 = prayerTimes({ year: 2026, month: 3, day: 2 }, 21.3891, 39.8579, "makkah");
+    const rows = within(screen.getByTestId("times")).getAllByRole("row").slice(1);
+    expect(within(rows[0]!).getByRole("cell")).toHaveTextContent(formatHHMM(d2.times.fajr, "Asia/Riyadh"));
+    await u.click(screen.getByTestId("day-today"));
+    expect(screen.getByTestId("day-label")).toHaveTextContent("1 March 2026");
+    await u.click(screen.getByTestId("day-prev"));
+    expect(screen.getByTestId("day-label")).toHaveTextContent("28 February 2026");
+  });
+
+  it("monthly table: every day of the month, today highlighted, month arrows", async () => {
+    const u = user();
+    render(<PrayerView locale="en" />);
+    const table = await screen.findByTestId("month-table");
+    const rows = within(table).getAllByRole("row").slice(1);
+    expect(rows).toHaveLength(31);
+    expect(rows[0]!.className).toBe("next");
+    expect(screen.getByTestId("month-label")).toHaveTextContent("March 2026");
+    await u.click(screen.getByTestId("month-next"));
+    expect(screen.getByTestId("month-label")).toHaveTextContent("April 2026");
+    expect(within(screen.getByTestId("month-table")).getAllByRole("row").slice(1)).toHaveLength(30);
+    await u.click(screen.getByTestId("month-prev"));
+    await u.click(screen.getByTestId("month-prev"));
+    expect(screen.getByTestId("month-label")).toHaveTextContent("February 2026");
+    expect(within(screen.getByTestId("month-table")).getAllByRole("row").slice(1)).toHaveLength(28);
+  });
+
+  it("12-hour clock with AM/PM (ص/م in Arabic)", async () => {
+    const u = user();
+    render(<PrayerView locale="en" />);
+    await screen.findByTestId("times");
+    await u.selectOptions(screen.getByLabelText("Time format"), "12");
+    const rows = within(screen.getByTestId("times")).getAllByRole("row").slice(1);
+    expect(within(rows[0]!).getByRole("cell").textContent).toMatch(/^\d{1,2}:\d\d AM$/);
+    expect(within(rows[4]!).getByRole("cell").textContent).toMatch(/^\d{1,2}:\d\d PM$/);
+  });
+});
+
 describe("NextPrayerCard", () => {
   it("shows next prayer and countdown in Arabic digits", async () => {
     render(<NextPrayerCard locale="ar" />);
@@ -178,7 +225,7 @@ describe("NextPrayerCard", () => {
     expect(screen.getByTestId("home-place")).toHaveTextContent("مكة المكرمة");
     expect(screen.getByTestId("home-hijri")).toHaveTextContent(/١٤٤٧ هـ/);
     expect(screen.getByTestId("home-gregorian")).toHaveTextContent(/٢٠٢٦/);
-    expect(screen.getByRole("link", { name: "تقويم الصلاة" })).toHaveAttribute("href", "/ar/prayer/");
+    expect(screen.getByRole("link", { name: "تقويم الصلاة" })).toHaveAttribute("href", "/ar/prayer/#month");
     expect(screen.getByRole("link", { name: "الإعدادات" })).toHaveAttribute("href", "/ar/settings/");
   });
   it("after Isha: tomorrow's times are listed with Fajr marked as next", async () => {

@@ -25,6 +25,20 @@ class LocalPrayerDay {
     final t = local(key);
     return '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
   }
+
+  /// [key]'s time in the chosen clock style (24 h "13:05", or 12 h "1:05 PM" / "1:05 م").
+  String clock(String key, {bool h12 = false, bool arabic = false}) =>
+      formatClock(local(key), h12: h12, arabic: arabic);
+}
+
+/// Hour and minute of [t] as "13:05" (24 h) or "1:05 PM" / "1:05 م" (12 h). Digits stay Latin.
+String formatClock(DateTime t, {bool h12 = false, bool arabic = false}) {
+  final mm = t.minute.toString().padLeft(2, '0');
+  if (!h12) return '${t.hour.toString().padLeft(2, '0')}:$mm';
+  final h = t.hour % 12 == 0 ? 12 : t.hour % 12;
+  final pm = t.hour >= 12;
+  final suffix = arabic ? (pm ? 'م' : 'ص') : (pm ? 'PM' : 'AM');
+  return '$h:$mm $suffix';
 }
 
 class NextPrayer {

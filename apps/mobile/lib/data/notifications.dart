@@ -172,7 +172,10 @@ class AdhanScheduler {
   String get _signature => [
     settings.adhanPrayers.toList()..sort(),
     settings.adhanSound,
+    settings.adhanPreMinutes,
+    settings.iqamaPlan,
     settings.cityId,
+    settings.gpsLocation,
     settings.method,
     settings.asr,
     settings.adjustments,
@@ -193,6 +196,8 @@ class AdhanScheduler {
       enabled: enabled,
       days: days,
       max: max,
+      preMinutes: settings.adhanPreMinutes,
+      iqama: settings.iqamaPlan,
       dayFor: (d) => ctx.day(schedule, d, settings.adjustments),
     );
   }
@@ -211,15 +216,27 @@ class AdhanScheduler {
       final l = lookupAppLocalizations(Locale(settings.locale.languageCode));
       final b = backend;
       if (b is LocalNotificationsBackend) b.stopLabel = l.adhanStop;
-      final city = (content.city(settings.cityId) ?? content.cities.first).name(settings.isArabic);
+      final city = resolveCity(content, settings).name(settings.isArabic);
       for (final n in items) {
         final name = _prayerName(l, n.prayer);
+        final minutes = n.minutes.toString();
+        // Reminders and iqama alerts use the short phone tone (never the adhan
+        // recording), or stay silent when the user chose silent alerts.
+        final extraSound = settings.adhanSound == 'silent' ? 'silent' : 'tone';
         await backend.schedule(
           id: n.id,
-          title: l.adhanTitle(name),
-          body: l.adhanBody(name, city),
+          title: switch (n.kind) {
+            preAdhanKind => l.adhanPreTitle(minutes, name),
+            iqamaKind => l.adhanIqamaTitle(name),
+            _ => l.adhanTitle(name),
+          },
+          body: switch (n.kind) {
+            preAdhanKind => l.adhanPreBody(name),
+            iqamaKind => l.adhanIqamaBody(name, minutes),
+            _ => l.adhanBody(name, city),
+          },
           atUtc: n.at,
-          sound: settings.adhanSound,
+          sound: n.kind == adhanKind ? settings.adhanSound : extraSound,
         );
       }
     } catch (e) {

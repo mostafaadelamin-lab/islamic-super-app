@@ -14,9 +14,41 @@ export interface AdhanPrefs {
   prayers: Record<string, boolean>;
   /** Play the adhan recording (otherwise only the notification is shown). */
   sound: boolean;
+  /** Reminder this many minutes before each enabled adhan (0 = off). */
+  preMinutes: number;
+  /** Iqama reminder after each enabled adhan. */
+  iqamaEnabled: boolean;
+  /** Minutes from the adhan to the iqama, per prayer. */
+  iqama: Record<string, number>;
 }
 
-export const DEFAULT_ADHAN: AdhanPrefs = { enabled: false, prayers: {}, sound: true };
+/** Choices offered for the reminder before the adhan (minutes; 0 = off). */
+export const PRE_CHOICES = [0, 5, 10, 15, 20, 30] as const;
+export const IQAMA_MIN = 1;
+export const IQAMA_MAX = 60;
+/** Usual waits between adhan and iqama in mosques (minutes); the user changes them to match their mosque. */
+export const DEFAULT_IQAMA: Readonly<Record<string, number>> = {
+  fajr: 20,
+  dhuhr: 15,
+  asr: 15,
+  maghrib: 10,
+  isha: 15,
+};
+
+export const DEFAULT_ADHAN: AdhanPrefs = {
+  enabled: false,
+  prayers: {},
+  sound: true,
+  preMinutes: 0,
+  iqamaEnabled: false,
+  iqama: { ...DEFAULT_IQAMA },
+};
+
+export function clampIqama(v: unknown): number {
+  const n = typeof v === "number" ? v : Number(v);
+  if (!Number.isFinite(n)) return IQAMA_MIN;
+  return Math.min(IQAMA_MAX, Math.max(IQAMA_MIN, Math.round(n)));
+}
 
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null;
 
@@ -26,7 +58,22 @@ export function sanitizeAdhan(raw: unknown): AdhanPrefs {
   if (isObj(r.prayers)) {
     for (const k of OBLIGATORY) if (r.prayers[k] === false) prayers[k] = false;
   }
-  return { enabled: r.enabled === true, prayers, sound: r.sound !== false };
+  const pre =
+    typeof r.preMinutes === "number" && (PRE_CHOICES as readonly number[]).includes(r.preMinutes)
+      ? r.preMinutes
+      : 0;
+  const iq = isObj(r.iqama) ? r.iqama : {};
+  const iqama = Object.fromEntries(
+    OBLIGATORY.map((k) => [k, iq[k] === undefined ? (DEFAULT_IQAMA[k] ?? 15) : clampIqama(iq[k])]),
+  ) as Record<string, number>;
+  return {
+    enabled: r.enabled === true,
+    prayers,
+    sound: r.sound !== false,
+    preMinutes: pre,
+    iqamaEnabled: r.iqamaEnabled === true,
+    iqama,
+  };
 }
 
 export const adhanStore = createStore<AdhanPrefs>("rattil.adhan", DEFAULT_ADHAN, sanitizeAdhan);
@@ -36,6 +83,60 @@ export function adhanFor(p: AdhanPrefs, k: PrayerKey): boolean {
 }
 
 export const ADHAN_AUDIO_PATH = "/audio/adhan.mp3";
+
+export type AlertKind = "adhan" | "pre" | "iqama";
+export interface PlannedAlert {
+  kind: AlertKind;
+  key: PrayerKey;
+  /** When the alert rings. */
+  at: Date;
+  /** The prayer (adhan) time it belongs to. */
+  prayerAt: Date;
+}
+const MINUTE_MS = 60_000;
+const LOOKAHEAD_DAYS = 3;
+
+/**
+ * The next alert of any kind (reminder before the adhan, adhan, iqama) strictly after `now`, for the enabled
+ * prayers of today and the next two days; null when alerts are off or no prayer is enabled.
+ */
+export function nextAlert(now: Date, q: PrayerQuery, prefs: AdhanPrefs): PlannedAlert | null {
+  if (!prefs.enabled) return null;
+  const enabled = OBLIGATORY.filter((k) => adhanFor(prefs, k));
+  if (enabled.length === 0) return null;
+  const today = localDateInTz(now, q.tz);
+  const all = Array.from({ length: LOOKAHEAD_DAYS }, (_, i) => i).flatMap((i): PlannedAlert[] => {
+    let day;
+    try {
+      day = prayerTimes(addDays(today, i), q.lat, q.lng, q.method, q.asr, q.adjustments ?? {});
+    } catch {
+      return []; // polar day/night: no times that day
+    }
+    return enabled.flatMap((k): PlannedAlert[] => {
+      const prayerAt = day.times[k];
+      const out: PlannedAlert[] = [{ kind: "adhan", key: k, at: prayerAt, prayerAt }];
+      if (prefs.preMinutes > 0)
+        out.push({
+          kind: "pre",
+          key: k,
+          at: new Date(prayerAt.getTime() - prefs.preMinutes * MINUTE_MS),
+          prayerAt,
+        });
+      if (prefs.iqamaEnabled)
+        out.push({
+          kind: "iqama",
+          key: k,
+          at: new Date(prayerAt.getTime() + (prefs.iqama[k] ?? DEFAULT_IQAMA[k] ?? 15) * MINUTE_MS),
+          prayerAt,
+        });
+      return out;
+    });
+  });
+  const future = all
+    .filter((a) => a.at.getTime() > now.getTime())
+    .sort((a, b) => a.at.getTime() - b.at.getTime());
+  return future[0] ?? null;
+}
 
 /**
  * The next enabled obligatory prayer strictly after `now` (today or the next

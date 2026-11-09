@@ -1,7 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AdhanAlerts, AdhanSettings } from "@/components/AdhanAlerts";
-import { adhanStore, nextAdhanAlert, sanitizeAdhan } from "@/lib/adhan-alerts";
+import { adhanStore, DEFAULT_ADHAN, nextAdhanAlert, nextAlert, sanitizeAdhan } from "@/lib/adhan-alerts";
 import { prayerTimes } from "@/lib/prayer";
 import { resetStores } from "./reset";
 
@@ -49,7 +49,31 @@ describe("adhan alert planning", () => {
       enabled: false,
       prayers: { fajr: false },
       sound: true,
+      preMinutes: 0,
+      iqamaEnabled: false,
+      iqama: { fajr: 20, dhuhr: 15, asr: 15, maghrib: 10, isha: 15 },
     });
+    const s = sanitizeAdhan({ preMinutes: 7, iqamaEnabled: true, iqama: { fajr: 500, dhuhr: "x", asr: 0 } });
+    expect(s.preMinutes).toBe(0);
+    expect(s.iqama).toMatchObject({ fajr: 60, dhuhr: 1, asr: 1, maghrib: 10 });
+  });
+
+  it("plans the reminder before the adhan and the iqama around each enabled prayer", () => {
+    const on = sanitizeAdhan({ enabled: true, preMinutes: 10, iqamaEnabled: true });
+    const pre = nextAlert(NOW, MAKKAH, on);
+    expect(pre).toMatchObject({ kind: "pre", key: "dhuhr" });
+    expect(pre!.at.getTime()).toBe(today.times.dhuhr.getTime() - 10 * 60_000);
+    const adhan = nextAlert(new Date(pre!.at.getTime() + 1), MAKKAH, on);
+    expect(adhan).toMatchObject({ kind: "adhan", key: "dhuhr", at: today.times.dhuhr });
+    const iqama = nextAlert(new Date(today.times.dhuhr.getTime() + 1), MAKKAH, on);
+    expect(iqama).toMatchObject({ kind: "iqama", key: "dhuhr" });
+    expect(iqama!.at.getTime()).toBe(today.times.dhuhr.getTime() + 15 * 60_000);
+    // Without the extras only adhans are planned (same as before).
+    expect(nextAlert(NOW, MAKKAH, sanitizeAdhan({ enabled: true }))).toMatchObject({
+      kind: "adhan",
+      key: "dhuhr",
+    });
+    expect(nextAlert(NOW, MAKKAH, sanitizeAdhan({}))).toBeNull();
   });
 });
 
@@ -92,7 +116,7 @@ describe("AdhanAlerts", () => {
     vi.stubGlobal("Notification", Object.assign(Notif, { permission: "granted" }));
     const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
     const pause = vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => {});
-    adhanStore.set({ enabled: true, prayers: {}, sound: true });
+    adhanStore.set({ ...DEFAULT_ADHAN, enabled: true });
     const u = user();
     render(<AdhanAlerts locale="en" />);
     expect(screen.queryByTestId("adhan-ringing")).toBeNull();
@@ -116,7 +140,7 @@ describe("AdhanAlerts", () => {
   it("stays silent when the prayer was missed while the computer slept, and when disabled", async () => {
     vi.stubGlobal("Notification", Object.assign(vi.fn(), { permission: "granted" }));
     const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
-    adhanStore.set({ enabled: true, prayers: {}, sound: true });
+    adhanStore.set({ ...DEFAULT_ADHAN, enabled: true });
     render(<AdhanAlerts locale="en" />);
     await act(async () => {
       vi.setSystemTime(new Date(today.times.dhuhr.getTime() + 20 * 60_000));
@@ -129,7 +153,7 @@ describe("AdhanAlerts", () => {
   it("offers a play button when the browser blocks autoplay", async () => {
     vi.stubGlobal("Notification", Object.assign(vi.fn(), { permission: "granted" }));
     vi.spyOn(HTMLMediaElement.prototype, "play").mockRejectedValue(new Error("NotAllowedError"));
-    adhanStore.set({ enabled: true, prayers: {}, sound: true });
+    adhanStore.set({ ...DEFAULT_ADHAN, enabled: true });
     render(<AdhanAlerts locale="ar" />);
     await act(async () => {
       vi.setSystemTime(new Date(today.times.dhuhr.getTime() + 1000));

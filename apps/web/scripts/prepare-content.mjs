@@ -80,6 +80,16 @@ writeJson(
     return { ...q, opening: words.slice(0, QUARTER_WORDS).join(" "), more: words.length > QUARTER_WORDS };
   }),
 );
+// Opening words of the first ayah of each Mushaf page (khatma wirds start on a page), copied verbatim from the
+// canonical text, like the quarters above.
+const PAGE_WORDS = 6;
+writeJson(
+  join(gen, "page-openings.json"),
+  pagesData.pages.map((p) => {
+    const words = quran.surahs[p.start[0] - 1].ayahs[p.start[1] - 1].replace(/^\u06de\s*/, "").split(" ");
+    return words.slice(0, PAGE_WORDS).join(" ") + (words.length > PAGE_WORDS ? " …" : "");
+  }),
+);
 // Arabic text for client-side search (loaded only by the search page).
 writeJson(
   join(pub, "data/quran-text.json"),

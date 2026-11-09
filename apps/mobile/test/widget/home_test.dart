@@ -11,6 +11,8 @@ import 'package:rattil/ui/stories_screen.dart';
 import 'package:rattil/ui/surah_list_screen.dart';
 import 'package:rattil/ui/tasbih_screen.dart';
 
+import 'package:rattil/ui/prayer_calendar_screen.dart';
+
 import '../helpers.dart';
 
 String ltr(String s) => '\u2066$s\u2069';
@@ -45,7 +47,7 @@ void main() {
     expect(find.text('الغروب  '), findsOneWidget);
     await tester.tap(find.byKey(const Key('home.calendar')));
     await tester.pumpAndSettle();
-    expect(tester.state<HomeShellState>(find.byType(HomeShell)).index, 2);
+    expect(find.byType(PrayerCalendarScreen), findsOneWidget);
   });
 
   testWidgets('settings icon opens Settings; main sections opens More', (tester) async {

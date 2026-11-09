@@ -16,12 +16,14 @@ import {
   type PrayerDay,
   type PrayerKey,
 } from "@/lib/prayer";
-import { formatCountdown, formatHHMM, isoDate, localDateInTz } from "@/lib/time";
-import { prayerStore } from "@/lib/settings";
+import { addDays, formatClock, formatCountdown, isoDate, localDateInTz } from "@/lib/time";
+import { gregorianDay, hijriDate, weekdayName } from "@/lib/dates";
+import { prayerStore, prefsStore } from "@/lib/settings";
 import { useStore } from "@/hooks/useStore";
 import { useNow } from "@/hooks/useNow";
 import { Compass } from "./Compass";
 import { AdhanSettings } from "./AdhanAlerts";
+import { PrayerMonth } from "./PrayerMonth";
 
 type GeoState = { kind: "idle" } | { kind: "locating" } | { kind: "error"; key: string };
 
@@ -34,9 +36,13 @@ export function geoErrorKey(code: number | undefined): string {
 export function PrayerView({ locale }: { locale: Locale }) {
   const prefs = useStore(prayerStore);
   const now = useNow();
+  const display = useStore(prefsStore);
   const [geo, setGeo] = useState<GeoState>({ kind: "idle" });
+  /** Days from today shown in the table (arrows move it; 0 = today). */
+  const [dayOffset, setDayOffset] = useState(0);
   const loc = resolveLocation(prefs);
-  const dateKey = now ? isoDate(localDateInTz(now, loc.tz)) : null;
+  const dateKey = now ? isoDate(addDays(localDateInTz(now, loc.tz), dayOffset)) : null;
+  const clock = (d: Date): string => localizeDigits(formatClock(d, loc.tz, display.clock, locale), locale);
   const name = (k: PrayerKey): string => t(locale, `prayer.${k}`);
   const methodName = (id: string): string => {
     const m = methodsConfig.methods[id];
@@ -63,7 +69,7 @@ export function PrayerView({ locale }: { locale: Locale }) {
   }, [dateKey, loc.lat, loc.lng, loc.method, prefs.asr, prefs.adjustments]);
 
   let next: { key: PrayerKey; at: Date } | null = null;
-  if (now && computed && "day" in computed) {
+  if (now && dayOffset === 0 && computed && "day" in computed) {
     try {
       next = nextPrayer(now, { ...loc, asr: prefs.asr, adjustments: prefs.adjustments });
     } catch {
@@ -169,6 +175,19 @@ export function PrayerView({ locale }: { locale: Locale }) {
             </select>
           </div>
           <div className="field">
+            <label htmlFor="clock">{t(locale, "prayer.clock")}</label>
+            <select
+              id="clock"
+              value={display.clock}
+              onChange={(e) =>
+                prefsStore.set((p) => ({ ...p, clock: e.target.value === "12" ? "12" : "24" }))
+              }
+            >
+              <option value="24">{t(locale, "prayer.clock24")}</option>
+              <option value="12">{t(locale, "prayer.clock12")}</option>
+            </select>
+          </div>
+          <div className="field">
             <label htmlFor="asr">{t(locale, "prayer.asrMethod")}</label>
             <select
               id="asr"
@@ -186,9 +205,53 @@ export function PrayerView({ locale }: { locale: Locale }) {
 
       <section className="card" aria-labelledby="times-h">
         <h2 id="times-h" style={{ marginTop: 0 }}>
-          {t(locale, "prayer.timesTable")}
-          {dateKey ? <span className="muted"> — {localizeDigits(dateKey, locale)}</span> : null}
+          {t(locale, dayOffset === 0 ? "prayer.timesTable" : "prayer.timesTableDay")}
         </h2>
+        <div className="day-nav" data-testid="day-nav">
+          <button
+            type="button"
+            className="btn day-nav-btn"
+            aria-label={t(locale, "prayer.prevDay")}
+            onClick={() => setDayOffset((o) => o - 1)}
+            data-testid="day-prev"
+          >
+            {locale === "ar" ? "›" : "‹"}
+          </button>
+          <div className="day-nav-label" data-testid="day-label">
+            {computed && "day" in computed ? (
+              <>
+                <strong>
+                  {weekdayName(computed.day.times.dhuhr, loc.tz, locale)}{" "}
+                  {gregorianDay(computed.day.times.dhuhr, loc.tz, locale)}
+                </strong>
+                <span className="muted" data-testid="day-hijri">
+                  {hijriDate(computed.day.times.dhuhr, loc.tz, locale) ?? ""}
+                </span>
+              </>
+            ) : dateKey ? (
+              localizeDigits(dateKey, locale)
+            ) : null}
+          </div>
+          <button
+            type="button"
+            className="btn day-nav-btn"
+            aria-label={t(locale, "prayer.nextDay")}
+            onClick={() => setDayOffset((o) => o + 1)}
+            data-testid="day-next"
+          >
+            {locale === "ar" ? "‹" : "›"}
+          </button>
+        </div>
+        {dayOffset !== 0 ? (
+          <button
+            type="button"
+            className="btn btn-link"
+            onClick={() => setDayOffset(0)}
+            data-testid="day-today"
+          >
+            {t(locale, "prayer.backToToday")}
+          </button>
+        ) : null}
         {!computed ? <p className="muted">{t(locale, "prayer.loading")}</p> : null}
         {computed && "error" in computed ? (
           <p className="alert alert-error" role="alert">
@@ -219,7 +282,7 @@ export function PrayerView({ locale }: { locale: Locale }) {
                   return (
                     <tr key={k} className={isNext ? "next" : undefined} data-prayer={k}>
                       <th scope="row">{name(k)}</th>
-                      <td className="time">{localizeDigits(formatHHMM(at, loc.tz), locale)}</td>
+                      <td className="time">{clock(at)}</td>
                     </tr>
                   );
                 })}
@@ -303,6 +366,7 @@ export function PrayerView({ locale }: { locale: Locale }) {
           <p className="muted">{t(locale, "prayer.qiblaNote")}</p>
         </section>
       </div>
+      <PrayerMonth locale={locale} />
     </>
   );
 }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/domain/prayer.dart';
 import 'package:rattil/domain/text.dart';
+import 'package:rattil/data/location.dart';
 import 'package:rattil/ui/city_picker_screen.dart';
+import 'package:rattil/ui/prayer_calendar_screen.dart';
 
 import '../helpers.dart';
 
@@ -24,8 +26,9 @@ void main() {
     String locale = 'en',
     Map<String, Object> prefs = const {},
     DateTime Function()? clock,
+    LocationProvider? location,
   }) async {
-    final app = await pumpApp(tester, locale: locale, prefs: prefs, clock: clock, size: tallPhone);
+    final app = await pumpApp(tester, locale: locale, prefs: prefs, clock: clock, size: tallPhone, location: location);
     await goToTab(tester, 2);
     return app;
   }
@@ -236,5 +239,83 @@ void main() {
     expect(app.prefs.getBool('adhan.asr'), isFalse);
     expect(app.services.settings.adhanPrayers, {'fajr', 'dhuhr', 'maghrib', 'isha'});
     expect(find.byTooltip('Asr alert off'), findsOneWidget);
+  });
+
+  testWidgets('day arrows show another day with its Hijri date, then back to today', (tester) async {
+    await open(tester);
+    expect(find.text('Thursday 15 January 2026'), findsOneWidget);
+    expect(find.byKey(const Key('dayHijri')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('dayNext')));
+    await tester.pumpAndSettle();
+    expect(find.text('Friday 16 January 2026'), findsOneWidget);
+    expect(find.text('Date: \u20662026-01-16\u2069'), findsOneWidget);
+    expect(find.text('Next prayer: Dhuhr'), findsNothing);
+    final app = tester.element(find.byKey(const Key('dayLabel')));
+    expect(app, isNotNull);
+    await tester.tap(find.byKey(const Key('dayToday')));
+    await tester.pumpAndSettle();
+    expect(find.text('Thursday 15 January 2026'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('dayPrev')));
+    await tester.pumpAndSettle();
+    expect(find.text('Wednesday 14 January 2026'), findsOneWidget);
+  });
+
+  testWidgets('12-hour clock shows AM/PM (ص/م in Arabic)', (tester) async {
+    final app = await open(tester);
+    await app.services.settings.setClock12(true);
+    await tester.pumpAndSettle();
+    expect(timeText(tester, 'fajr'), endsWith(' AM'));
+    expect(timeText(tester, 'maghrib'), endsWith(' PM'));
+    expect(timeText(tester, 'dhuhr'), matches(RegExp(r'^12:\d\d PM$')));
+  });
+
+  testWidgets('monthly calendar: every day of the month, month arrows', (tester) async {
+    await open(tester);
+    await tester.tap(find.byKey(const Key('openCalendar')));
+    await tester.pumpAndSettle();
+    expect(find.byType(PrayerCalendarScreen), findsOneWidget);
+    expect(find.text('January 2026'), findsOneWidget);
+    final table = tester.widget<DataTable>(find.byKey(const Key('calendar.table')));
+    expect(table.rows, hasLength(31));
+    expect(table.rows[14].selected, isTrue, reason: 'today (15th) highlighted');
+    await tester.tap(find.byKey(const Key('calendar.next')));
+    await tester.pumpAndSettle();
+    expect(find.text('February 2026'), findsOneWidget);
+    expect(tester.widget<DataTable>(find.byKey(const Key('calendar.table'))).rows, hasLength(28));
+    expect(daysInMonth(2028, 2), 29);
+  });
+
+  testWidgets('use my location: GPS position with the nearest city time zone', (tester) async {
+    final app = await open(tester, location: const FakeLocation(LocationFound(30.5, 31.2)));
+    await tester.tap(find.byKey(const Key('useLocation')));
+    await tester.pumpAndSettle();
+    expect(app.services.settings.cityId, 'gps');
+    expect(find.textContaining('My location (near Cairo)'), findsOneWidget);
+    expect(find.text('Time zone: Africa/Cairo'), findsOneWidget);
+  });
+
+  testWidgets('use my location: denied shows a message and keeps the city', (tester) async {
+    final app = await open(tester, location: const FakeLocation(LocationDenied()));
+    await tester.tap(find.byKey(const Key('useLocation')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('geoError')), findsOneWidget);
+    expect(app.services.settings.cityId, isNot('gps'));
+  });
+
+  testWidgets('reminder before the adhan and iqama minutes per prayer', (tester) async {
+    final app = await open(tester, prefs: {'adhan.enabled': true});
+    await tester.scrollUntilVisible(find.byKey(const Key('adhanExtrasTile')), 200);
+    await tester.tap(find.byKey(const Key('adhanExtrasTile')));
+    await tester.pumpAndSettle();
+    await app.services.settings.setAdhanPreMinutes(10);
+    await tester.tap(find.byKey(const Key('iqamaSwitch')));
+    await tester.pumpAndSettle();
+    expect(app.services.settings.iqamaEnabled, isTrue);
+    expect(find.text('20 min after the adhan'), findsOneWidget);
+    await tester.scrollUntilVisible(find.byKey(const Key('iqamaPlus-fajr')), 100);
+    await tester.tap(find.byKey(const Key('iqamaPlus-fajr')));
+    await tester.pumpAndSettle();
+    expect(app.services.settings.iqamaMinutes('fajr'), 21);
+    expect(app.services.settings.iqamaPlan, {'fajr': 21, 'dhuhr': 15, 'asr': 15, 'maghrib': 10, 'isha': 15});
   });
 }

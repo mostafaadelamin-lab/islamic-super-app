@@ -11,6 +11,7 @@ import '../domain/hijri.dart';
 import '../domain/prayer_schedule.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
+import 'prayer_calendar_screen.dart';
 import 'prayer_model.dart';
 import 'qibla_screen.dart';
 import 'reels_screen.dart';
@@ -84,7 +85,11 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 _Hero(pv: pv, onTap: () => widget.onSelectTab(2), onSettings: () => _push(const SettingsScreen())),
                 const SizedBox(height: DesignTokens.spaceMd),
-                _DayCard(pv: pv, onCalendar: () => widget.onSelectTab(2)),
+                _DayCard(
+                  pv: pv,
+                  onCalendar: () =>
+                      Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const PrayerCalendarScreen())),
+                ),
                 const SizedBox(height: DesignTokens.spaceMd),
                 IntrinsicHeight(
                   child: Row(
@@ -256,7 +261,9 @@ class _Hero extends StatelessWidget {
                         fit: BoxFit.scaleDown,
                         alignment: AlignmentDirectional.centerStart,
                         child: Text(
-                          context.num(nextDay?.hhmm(next.key) ?? ''),
+                          context.num(
+                            nextDay?.clock(next.key, h12: s.settings.clock12, arabic: context.isArabic) ?? '',
+                          ),
                           key: const Key('home.nextTime'),
                           textDirection: TextDirection.ltr,
                           style: theme.displayLarge?.copyWith(
@@ -308,11 +315,12 @@ class _DayCard extends StatelessWidget {
     final date = tomorrow ? pv.date.add(const Duration(days: 1)) : pv.date;
     final h = hijriFor(date, arabic: ar);
     final greg = '${context.num(date.day)} ${gregorianMonthName(date.month, arabic: ar)} ${context.num(date.year)}';
-    String hhmm(String k) => context.num(day!.hhmm(k));
+    final h12 = s.settings.clock12;
+    String hhmm(String k) => context.num(day!.clock(k, h12: h12, arabic: ar));
     String sunset() {
       final adj = s.settings.adjustments['maghrib'] ?? 0;
       final t = day!.local('maghrib').subtract(Duration(minutes: adj));
-      return context.num('${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}');
+      return context.num(formatClock(t, h12: h12, arabic: ar));
     }
 
     return _Panel(

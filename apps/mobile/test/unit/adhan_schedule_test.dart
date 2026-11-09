@@ -130,4 +130,48 @@ void main() {
       expect(fake.scheduled, isEmpty);
     });
   });
+
+  test('reminder before the adhan and iqama share one budget, with distinct ids', () {
+    final plan = planAdhanNotifications(
+      nowUtc: fixedNow,
+      today: DateTime.utc(2026, 1, 15),
+      enabled: all,
+      days: 2,
+      dayFor: cairo,
+      preMinutes: 10,
+      iqama: const {'fajr': 20, 'dhuhr': 15, 'asr': 15, 'maghrib': 10, 'isha': 15},
+    );
+    final dhuhr = cairo(DateTime.utc(2026, 1, 15))!.day.utc['dhuhr']!;
+    // 12:00 Cairo: the Dhuhr reminder (11:55) has passed, the Dhuhr adhan and iqama have not.
+    expect(plan.first.kind, adhanKind);
+    expect(plan.first.prayer, 'dhuhr');
+    final iq = plan.firstWhere((n) => n.kind == iqamaKind && n.prayer == 'dhuhr');
+    expect(iq.at, dhuhr.add(const Duration(minutes: 15)));
+    expect(iq.minutes, 15);
+    final pre = plan.firstWhere((n) => n.kind == preAdhanKind && n.prayer == 'asr');
+    expect(pre.at, cairo(DateTime.utc(2026, 1, 15))!.day.utc['asr']!.subtract(const Duration(minutes: 10)));
+    expect(plan.map((n) => n.id).toSet(), hasLength(plan.length), reason: 'unique ids');
+    expect(plan.every((n) => n.id > 0 && n.id < 0x7fffffff), isTrue);
+    // 4 prayers left today + 5 tomorrow, three kinds each, minus the passed Dhuhr reminder.
+    expect(plan, hasLength(9 * 3 - 1));
+    final capped = planAdhanNotifications(
+      nowUtc: fixedNow,
+      today: DateTime.utc(2026, 1, 15),
+      enabled: all,
+      dayFor: cairo,
+      preMinutes: 10,
+      iqama: const {},
+      max: 60,
+    );
+    expect(capped, hasLength(60));
+    expect(capped.last.date.isBefore(DateTime.utc(2026, 1, 21)), isTrue, reason: 'fewer days fit the budget');
+  });
+
+  test('formatClock 12/24 h', () {
+    expect(formatClock(DateTime(2026, 1, 1, 0, 5)), '00:05');
+    expect(formatClock(DateTime(2026, 1, 1, 0, 5), h12: true), '12:05 AM');
+    expect(formatClock(DateTime(2026, 1, 1, 12, 30), h12: true), '12:30 PM');
+    expect(formatClock(DateTime(2026, 1, 1, 13, 5), h12: true, arabic: true), '1:05 م');
+    expect(formatClock(DateTime(2026, 1, 1, 9, 0), h12: true, arabic: true), '9:00 ص');
+  });
 }

@@ -82,12 +82,16 @@ describe("createStore", () => {
 describe("settings sanitisers", () => {
   it("prefs", () => {
     expect(sanitizePrefs(null)).toEqual(DEFAULT_PREFS);
-    expect(sanitizePrefs({ locale: "en", theme: "dark", fontSize: 99, translation: true })).toEqual({
+    expect(
+      sanitizePrefs({ locale: "en", theme: "dark", fontSize: 99, translation: true, clock: "12" }),
+    ).toEqual({
       locale: "en",
       theme: "dark",
       fontSize: FONT_MAX,
       translation: true,
+      clock: "12",
     });
+    expect(sanitizePrefs({ clock: "13" }).clock).toBe("24");
     expect(sanitizePrefs({ locale: "fr", theme: "neon", fontSize: 2 })).toMatchObject({
       locale: null,
       theme: "system",

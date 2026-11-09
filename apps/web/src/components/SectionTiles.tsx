@@ -14,6 +14,7 @@ export interface Section {
 export const SECTIONS: readonly Section[] = [
   { path: "page/1", title: "home.tile.mushaf", sub: "home.tile.mushafSub", icon: "quran" },
   { path: "quran", title: "quran.surahs", sub: "home.tile.surahsSub", icon: "book" },
+  { path: "khatma", title: "khatma.title", sub: "khatma.tileSub", icon: "khatma" },
   { path: "adhkar", title: "adhkar.title", sub: "home.tile.adhkarSub", icon: "sun" },
   { path: "hisn", title: "hisn.title", sub: "home.tile.hisnSub", icon: "book" },
   { path: "tasbih", title: "tasbih.title", sub: "home.tile.tasbihSub", icon: "beads" },

@@ -1738,6 +1738,44 @@ dd {
 .times tr.next {
   background: var(--color-verse-highlight);
 }
+.day-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+.day-nav-btn {
+  min-width: 44px;
+  font-size: var(--font-size-lg);
+}
+.day-nav-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2px;
+}
+.btn-link {
+  background: none;
+  border: 0;
+  color: var(--color-primary);
+  text-decoration: underline;
+  padding: 0;
+  margin-bottom: var(--space-sm);
+}
+.month-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.month-table th,
+.month-table td {
+  padding: var(--space-xs) var(--space-sm);
+  white-space: nowrap;
+}
+.month-table td.time {
+  font-size: var(--font-size-md, 1rem);
+}
 .adjust-grid {
   display: grid;
   gap: var(--space-sm);
@@ -2195,4 +2233,65 @@ dd {
 }
 .qidx-row:only-child {
   padding-inline-end: var(--space-lg);
+}
+
+/* ---- khatma ---- */
+.khatma-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+.khatma-ring {
+  width: 110px;
+  height: 110px;
+  flex: none;
+}
+.khatma-ring .ring-bg {
+  fill: none;
+  stroke: var(--color-line);
+  stroke-width: 10;
+}
+.khatma-ring .ring-fg {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 10;
+  stroke-linecap: round;
+}
+.khatma-ring .ring-text {
+  font-size: 22px;
+  font-weight: 700;
+  fill: currentColor;
+}
+.khatma-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+.khatma-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.khatma-stats progress {
+  width: 100%;
+}
+.khatma-opening {
+  font-family: var(--font-quran, serif);
+  font-size: 1.3em;
+  line-height: 2;
+}
+.khatma-all li.done {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+.khatma-all li.current {
+  font-weight: 700;
+}
+.plain-list {
+  list-style: none;
+  padding: 0;
+}
+.btn-danger {
+  color: var(--color-error, #b3261e);
 }
