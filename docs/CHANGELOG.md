@@ -1,5 +1,15 @@
 # Changelog
 
+## [Unreleased] — Prayer alarms, Quran khatma and tasbih (owner's feature list, phases 1–3) — 2026-11-09
+### Added
+- Prayer times: move between days (previous / next / today) with the Hijri date; 12 or 24 hour clock; "use my location" (GPS, coarse) with the nearest city's time zone and method; monthly prayer calendar with a Gregorian / Hijri month toggle that follows the Hijri adjustment, shared as an image (mobile) or printed / saved as PDF (web).
+- Prayer alerts (mobile notifications; web while a page is open): a reminder 5–30 minutes before the adhan, an iqama alert with minutes per prayer, alerts at sunrise and at the start of the last third of the night, a Friday reminder (Surat al-Kahf) at a chosen time, and a sound per prayer (adhan, short tone or silent). Reminders never use the adhan recording.
+- Home: "N min since the X adhan" during the first half hour after each adhan.
+- Quran khatma (mobile + web): plan by number of days or pages per day, today's portion with its pages and opening words, mark as read, ahead / behind the plan, reschedule the rest over the remaining days, rename, daily reminder, and a history of finished khatmas.
+- Tasbih on the web: a separate counter, target and rounds for each dhikr, a beads mode, nine colours, optional click sound and vibration, the user's own adhkar (up to 20), and a 60-day history that can be cleared.
+### Notes
+- Mobile reminders (khatma, Friday, later adhkar) share the iOS 64-notification budget with the adhan plan.
+
 ## [Unreleased] — Owner's reference guidelines: audit and fixes — 2026-11-09
 See docs/reports/GUIDELINES_AUDIT.md.
 ### Added
