@@ -261,6 +261,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhkarArabicOnly => 'This content is available in Arabic only.';
 
   @override
+  String get adhkarCards => 'One card at a time';
+
+  @override
   String get adhkarCopied => 'Copied';
 
   @override
@@ -287,10 +290,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhkarHisnSearch => 'Search chapters';
 
   @override
+  String get adhkarList => 'Show as a list';
+
+  @override
   String get adhkarMorning => 'Morning';
 
   @override
   String get adhkarMorningTitle => 'Morning adhkar';
+
+  @override
+  String get adhkarNextCard => 'Next';
+
+  @override
+  String get adhkarPrevCard => 'Previous';
 
   @override
   String adhkarProgress(String done, String total) {
@@ -303,9 +315,24 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get adhkarReminderEvening => 'Evening adhkar reminder';
+
+  @override
+  String get adhkarReminderMorning => 'Morning adhkar reminder';
+
+  @override
+  String get adhkarReminders => 'Adhkar reminders';
+
+  @override
   String adhkarRepeat(String n) {
     return 'Repeat $n';
   }
+
+  @override
+  String get adhkarReport => 'Report a mistake';
+
+  @override
+  String get adhkarReportIntro => 'I think there is a mistake in this dhikr (please describe it below):';
 
   @override
   String get adhkarReset => 'Start again';
@@ -315,7 +342,32 @@ class AppLocalizationsEn extends AppLocalizations {
       'Pending religious review. Texts: Kazi Shariar adhkar dataset (CC BY 4.0) and Hisn al-Muslim; repetition counts follow Hisn al-Muslim.';
 
   @override
+  String get adhkarShare => 'Share';
+
+  @override
+  String adhkarShareSourceChapter(String title, String n) {
+    return 'Hisn al-Muslim — $title (chapter $n)';
+  }
+
+  @override
+  String adhkarShareSourceSession(String session) {
+    return 'Hisn al-Muslim — $session adhkar';
+  }
+
+  @override
   String get adhkarTapToCount => 'Tap a card to count it';
+
+  @override
+  String get alertAdhkarEveningBody => 'Time for the evening adhkar';
+
+  @override
+  String get alertAdhkarEveningTitle => 'Evening adhkar';
+
+  @override
+  String get alertAdhkarMorningBody => 'Time for the morning adhkar';
+
+  @override
+  String get alertAdhkarMorningTitle => 'Morning adhkar';
 
   @override
   String get alertFriday => 'Friday reminder (Surat al-Kahf)';
@@ -468,6 +520,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hajjUmrah => 'Umrah';
+
+  @override
+  String get hisnSectionFood => 'Food and fasting';
+
+  @override
+  String get hisnSectionHajj => 'Hajj and umrah';
+
+  @override
+  String get hisnSectionHardship => 'Worry and hardship';
+
+  @override
+  String get hisnSectionHome => 'Home and clothing';
+
+  @override
+  String get hisnSectionIllness => 'Illness and death';
+
+  @override
+  String get hisnSectionMorningEvening => 'Morning and evening';
+
+  @override
+  String get hisnSectionNature => 'Rain, wind and the new moon';
+
+  @override
+  String get hisnSectionPeople => 'Family and people';
+
+  @override
+  String get hisnSectionPrayer => 'Purification, mosque and prayer';
+
+  @override
+  String get hisnSectionRemembrance => 'Remembrance and its virtue';
+
+  @override
+  String get hisnSectionSleep => 'Sleep and waking';
+
+  @override
+  String get hisnSectionTravel => 'Travel';
+
+  @override
+  String get hisnSectionAll => 'All';
 
   @override
   String get homeBigAdhkar => 'Adhkar & Dua';

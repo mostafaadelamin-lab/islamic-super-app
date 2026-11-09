@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../app_services.dart';
 import '../domain/adhkar.dart';
+import '../l10n/app_localizations.dart';
 import '../theme/design_tokens.dart';
 import 'adhkar_screen.dart';
+import 'dhikr_tools.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
 
@@ -17,6 +19,7 @@ class HisnScreen extends StatefulWidget {
 
 class _HisnScreenState extends State<HisnScreen> {
   String _filter = '';
+  String? _section;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +27,13 @@ class _HisnScreenState extends State<HisnScreen> {
     final s = context.services;
     final norm = s.content.normalizer;
     final q = norm.normalize(_filter);
+    final sections = s.content.adhkar.sections;
+    final inSection = sections.where((x) => x.id == _section).firstOrNull?.chapters;
     final chapters = [
       for (final c in s.content.adhkar.hisn)
-        if (q.isEmpty || norm.normalize(c.title).contains(q)) c,
+        if ((inSection == null || inSection.contains(c.index + 1)) &&
+            (q.isEmpty || norm.normalize(c.title).contains(q)))
+          c,
     ];
     return Scaffold(
       appBar: AppBar(title: Text(l.adhkarHisn)),
@@ -40,6 +47,27 @@ class _HisnScreenState extends State<HisnScreen> {
               onChanged: (v) => setState(() => _filter = v),
             ),
           ),
+          if (sections.isNotEmpty)
+            SizedBox(
+              height: 52,
+              child: ListView(
+                key: const Key('hisnSections'),
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
+                children: [
+                  for (final id in [null, ...sections.map((x) => x.id)])
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(end: DesignTokens.spaceXs),
+                      child: ChoiceChip(
+                        key: Key('hisnSection-${id ?? 'all'}'),
+                        label: Text(id == null ? l.hisnSectionAll : hisnSectionName(l, id)),
+                        selected: _section == id,
+                        onSelected: (_) => setState(() => _section = id),
+                      ),
+                    ),
+                ],
+              ),
+            ),
           if (!context.isArabic) ReviewNotice(l.adhkarArabicOnly),
           Expanded(
             child: chapters.isEmpty
@@ -75,36 +103,82 @@ class HisnChapterScreen extends StatelessWidget {
   const HisnChapterScreen({super.key, required this.chapter});
   final HisnChapter chapter;
 
+  Widget _item(BuildContext context, int i) {
+    final l = context.l10n;
+    final source = l.adhkarShareSourceChapter(chapter.title, context.num(chapter.index + 1));
+    return Card(
+      key: Key('hisnItem-$i'),
+      margin: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceLg, DesignTokens.spaceLg, 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(chapter.items[i], textDirection: TextDirection.rtl, style: duaStyle(context)),
+            Wrap(
+              alignment: WrapAlignment.end,
+              children: [
+                CopyButton(text: chapter.items[i]),
+                DhikrActions(
+                  text: chapter.items[i],
+                  source: source,
+                  where: '$source · ${context.num(i + 1)}',
+                  keyPrefix: 'hisn$i',
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final settings = context.services.settings;
     return Scaffold(
-      appBar: AppBar(title: Text(chapter.title, textDirection: TextDirection.rtl)),
-      body: ListView(
-        key: const Key('hisnChapter'),
-        padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-        children: [
-          ReviewNotice(l.adhkarReviewNotice),
-          for (var i = 0; i < chapter.items.length; i++)
-            Card(
-              key: Key('hisnItem-$i'),
-              margin: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceLg, DesignTokens.spaceLg, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(chapter.items[i], textDirection: TextDirection.rtl, style: duaStyle(context)),
-                    Align(
-                      alignment: AlignmentDirectional.centerEnd,
-                      child: CopyButton(text: chapter.items[i]),
-                    ),
-                  ],
-                ),
+      appBar: AppBar(
+        title: Text(chapter.title, textDirection: TextDirection.rtl),
+        actions: const [AdhkarViewToggle()],
+      ),
+      body: ListenableBuilder(
+        listenable: settings,
+        builder: (context, _) => settings.adhkarCards
+            ? Column(
+                children: [
+                  ReviewNotice(l.adhkarReviewNotice),
+                  Expanded(
+                    child: CardPager(count: chapter.items.length, builder: _item),
+                  ),
+                ],
+              )
+            : ListView(
+                key: const Key('hisnChapter'),
+                padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+                children: [
+                  ReviewNotice(l.adhkarReviewNotice),
+                  for (var i = 0; i < chapter.items.length; i++) _item(context, i),
+                ],
               ),
-            ),
-        ],
       ),
     );
   }
 }
+
+/// UI label of a Hisn section id (hisn-sections.json).
+String hisnSectionName(AppLocalizations l, String id) => switch (id) {
+  'remembrance' => l.hisnSectionRemembrance,
+  'morningEvening' => l.hisnSectionMorningEvening,
+  'sleep' => l.hisnSectionSleep,
+  'prayer' => l.hisnSectionPrayer,
+  'home' => l.hisnSectionHome,
+  'food' => l.hisnSectionFood,
+  'travel' => l.hisnSectionTravel,
+  'hardship' => l.hisnSectionHardship,
+  'illness' => l.hisnSectionIllness,
+  'nature' => l.hisnSectionNature,
+  'people' => l.hisnSectionPeople,
+  'hajj' => l.hisnSectionHajj,
+  _ => id,
+};

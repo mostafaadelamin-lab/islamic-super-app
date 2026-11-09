@@ -512,6 +512,12 @@ abstract class AppLocalizations {
   /// **'This content is available in Arabic only.'**
   String get adhkarArabicOnly;
 
+  /// shared key "adhkar.cards"
+  ///
+  /// In en, this message translates to:
+  /// **'One card at a time'**
+  String get adhkarCards;
+
   /// shared key "adhkar.copied"
   ///
   /// In en, this message translates to:
@@ -560,6 +566,12 @@ abstract class AppLocalizations {
   /// **'Search chapters'**
   String get adhkarHisnSearch;
 
+  /// shared key "adhkar.list"
+  ///
+  /// In en, this message translates to:
+  /// **'Show as a list'**
+  String get adhkarList;
+
   /// shared key "adhkar.morning"
   ///
   /// In en, this message translates to:
@@ -571,6 +583,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Morning adhkar'**
   String get adhkarMorningTitle;
+
+  /// shared key "adhkar.nextCard"
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get adhkarNextCard;
+
+  /// shared key "adhkar.prevCard"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get adhkarPrevCard;
 
   /// shared key "adhkar.progress"
   ///
@@ -584,11 +608,41 @@ abstract class AppLocalizations {
   /// **'{n} left'**
   String adhkarRemaining(String n);
 
+  /// shared key "adhkar.reminderEvening"
+  ///
+  /// In en, this message translates to:
+  /// **'Evening adhkar reminder'**
+  String get adhkarReminderEvening;
+
+  /// shared key "adhkar.reminderMorning"
+  ///
+  /// In en, this message translates to:
+  /// **'Morning adhkar reminder'**
+  String get adhkarReminderMorning;
+
+  /// shared key "adhkar.reminders"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhkar reminders'**
+  String get adhkarReminders;
+
   /// shared key "adhkar.repeat"
   ///
   /// In en, this message translates to:
   /// **'Repeat {n}'**
   String adhkarRepeat(String n);
+
+  /// shared key "adhkar.report"
+  ///
+  /// In en, this message translates to:
+  /// **'Report a mistake'**
+  String get adhkarReport;
+
+  /// shared key "adhkar.reportIntro"
+  ///
+  /// In en, this message translates to:
+  /// **'I think there is a mistake in this dhikr (please describe it below):'**
+  String get adhkarReportIntro;
 
   /// shared key "adhkar.reset"
   ///
@@ -602,11 +656,53 @@ abstract class AppLocalizations {
   /// **'Pending religious review. Texts: Kazi Shariar adhkar dataset (CC BY 4.0) and Hisn al-Muslim; repetition counts follow Hisn al-Muslim.'**
   String get adhkarReviewNotice;
 
+  /// shared key "adhkar.share"
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get adhkarShare;
+
+  /// shared key "adhkar.shareSourceChapter"
+  ///
+  /// In en, this message translates to:
+  /// **'Hisn al-Muslim — {title} (chapter {n})'**
+  String adhkarShareSourceChapter(String title, String n);
+
+  /// shared key "adhkar.shareSourceSession"
+  ///
+  /// In en, this message translates to:
+  /// **'Hisn al-Muslim — {session} adhkar'**
+  String adhkarShareSourceSession(String session);
+
   /// shared key "adhkar.tapToCount"
   ///
   /// In en, this message translates to:
   /// **'Tap a card to count it'**
   String get adhkarTapToCount;
+
+  /// shared key "alert.adhkarEveningBody"
+  ///
+  /// In en, this message translates to:
+  /// **'Time for the evening adhkar'**
+  String get alertAdhkarEveningBody;
+
+  /// shared key "alert.adhkarEveningTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Evening adhkar'**
+  String get alertAdhkarEveningTitle;
+
+  /// shared key "alert.adhkarMorningBody"
+  ///
+  /// In en, this message translates to:
+  /// **'Time for the morning adhkar'**
+  String get alertAdhkarMorningBody;
+
+  /// shared key "alert.adhkarMorningTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Morning adhkar'**
+  String get alertAdhkarMorningTitle;
 
   /// shared key "alert.friday"
   ///
@@ -883,6 +979,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Umrah'**
   String get hajjUmrah;
+
+  /// shared key "hisn.section.food"
+  ///
+  /// In en, this message translates to:
+  /// **'Food and fasting'**
+  String get hisnSectionFood;
+
+  /// shared key "hisn.section.hajj"
+  ///
+  /// In en, this message translates to:
+  /// **'Hajj and umrah'**
+  String get hisnSectionHajj;
+
+  /// shared key "hisn.section.hardship"
+  ///
+  /// In en, this message translates to:
+  /// **'Worry and hardship'**
+  String get hisnSectionHardship;
+
+  /// shared key "hisn.section.home"
+  ///
+  /// In en, this message translates to:
+  /// **'Home and clothing'**
+  String get hisnSectionHome;
+
+  /// shared key "hisn.section.illness"
+  ///
+  /// In en, this message translates to:
+  /// **'Illness and death'**
+  String get hisnSectionIllness;
+
+  /// shared key "hisn.section.morningEvening"
+  ///
+  /// In en, this message translates to:
+  /// **'Morning and evening'**
+  String get hisnSectionMorningEvening;
+
+  /// shared key "hisn.section.nature"
+  ///
+  /// In en, this message translates to:
+  /// **'Rain, wind and the new moon'**
+  String get hisnSectionNature;
+
+  /// shared key "hisn.section.people"
+  ///
+  /// In en, this message translates to:
+  /// **'Family and people'**
+  String get hisnSectionPeople;
+
+  /// shared key "hisn.section.prayer"
+  ///
+  /// In en, this message translates to:
+  /// **'Purification, mosque and prayer'**
+  String get hisnSectionPrayer;
+
+  /// shared key "hisn.section.remembrance"
+  ///
+  /// In en, this message translates to:
+  /// **'Remembrance and its virtue'**
+  String get hisnSectionRemembrance;
+
+  /// shared key "hisn.section.sleep"
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep and waking'**
+  String get hisnSectionSleep;
+
+  /// shared key "hisn.section.travel"
+  ///
+  /// In en, this message translates to:
+  /// **'Travel'**
+  String get hisnSectionTravel;
+
+  /// shared key "hisn.sectionAll"
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get hisnSectionAll;
 
   /// shared key "home.big.adhkar"
   ///

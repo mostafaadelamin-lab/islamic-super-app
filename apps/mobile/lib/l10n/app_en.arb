@@ -374,6 +374,10 @@
   "@adhkarArabicOnly": {
     "description": "shared key \"adhkar.arabicOnly\""
   },
+  "adhkarCards": "One card at a time",
+  "@adhkarCards": {
+    "description": "shared key \"adhkar.cards\""
+  },
   "adhkarCopied": "Copied",
   "@adhkarCopied": {
     "description": "shared key \"adhkar.copied\""
@@ -411,6 +415,10 @@
   "@adhkarHisnSearch": {
     "description": "shared key \"adhkar.hisnSearch\""
   },
+  "adhkarList": "Show as a list",
+  "@adhkarList": {
+    "description": "shared key \"adhkar.list\""
+  },
   "adhkarMorning": "Morning",
   "@adhkarMorning": {
     "description": "shared key \"adhkar.morning\""
@@ -418,6 +426,14 @@
   "adhkarMorningTitle": "Morning adhkar",
   "@adhkarMorningTitle": {
     "description": "shared key \"adhkar.morningTitle\""
+  },
+  "adhkarNextCard": "Next",
+  "@adhkarNextCard": {
+    "description": "shared key \"adhkar.nextCard\""
+  },
+  "adhkarPrevCard": "Previous",
+  "@adhkarPrevCard": {
+    "description": "shared key \"adhkar.prevCard\""
   },
   "adhkarProgress": "{done} of {total} completed",
   "@adhkarProgress": {
@@ -440,6 +456,18 @@
       }
     }
   },
+  "adhkarReminderEvening": "Evening adhkar reminder",
+  "@adhkarReminderEvening": {
+    "description": "shared key \"adhkar.reminderEvening\""
+  },
+  "adhkarReminderMorning": "Morning adhkar reminder",
+  "@adhkarReminderMorning": {
+    "description": "shared key \"adhkar.reminderMorning\""
+  },
+  "adhkarReminders": "Adhkar reminders",
+  "@adhkarReminders": {
+    "description": "shared key \"adhkar.reminders\""
+  },
   "adhkarRepeat": "Repeat {n}",
   "@adhkarRepeat": {
     "description": "shared key \"adhkar.repeat\"",
@@ -449,6 +477,14 @@
       }
     }
   },
+  "adhkarReport": "Report a mistake",
+  "@adhkarReport": {
+    "description": "shared key \"adhkar.report\""
+  },
+  "adhkarReportIntro": "I think there is a mistake in this dhikr (please describe it below):",
+  "@adhkarReportIntro": {
+    "description": "shared key \"adhkar.reportIntro\""
+  },
   "adhkarReset": "Start again",
   "@adhkarReset": {
     "description": "shared key \"adhkar.reset\""
@@ -457,9 +493,50 @@
   "@adhkarReviewNotice": {
     "description": "shared key \"adhkar.reviewNotice\""
   },
+  "adhkarShare": "Share",
+  "@adhkarShare": {
+    "description": "shared key \"adhkar.share\""
+  },
+  "adhkarShareSourceChapter": "Hisn al-Muslim — {title} (chapter {n})",
+  "@adhkarShareSourceChapter": {
+    "description": "shared key \"adhkar.shareSourceChapter\"",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "adhkarShareSourceSession": "Hisn al-Muslim — {session} adhkar",
+  "@adhkarShareSourceSession": {
+    "description": "shared key \"adhkar.shareSourceSession\"",
+    "placeholders": {
+      "session": {
+        "type": "String"
+      }
+    }
+  },
   "adhkarTapToCount": "Tap a card to count it",
   "@adhkarTapToCount": {
     "description": "shared key \"adhkar.tapToCount\""
+  },
+  "alertAdhkarEveningBody": "Time for the evening adhkar",
+  "@alertAdhkarEveningBody": {
+    "description": "shared key \"alert.adhkarEveningBody\""
+  },
+  "alertAdhkarEveningTitle": "Evening adhkar",
+  "@alertAdhkarEveningTitle": {
+    "description": "shared key \"alert.adhkarEveningTitle\""
+  },
+  "alertAdhkarMorningBody": "Time for the morning adhkar",
+  "@alertAdhkarMorningBody": {
+    "description": "shared key \"alert.adhkarMorningBody\""
+  },
+  "alertAdhkarMorningTitle": "Morning adhkar",
+  "@alertAdhkarMorningTitle": {
+    "description": "shared key \"alert.adhkarMorningTitle\""
   },
   "alertFriday": "Friday reminder (Surat al-Kahf)",
   "@alertFriday": {
@@ -674,6 +751,58 @@
   "hajjUmrah": "Umrah",
   "@hajjUmrah": {
     "description": "shared key \"hajj.umrah\""
+  },
+  "hisnSectionFood": "Food and fasting",
+  "@hisnSectionFood": {
+    "description": "shared key \"hisn.section.food\""
+  },
+  "hisnSectionHajj": "Hajj and umrah",
+  "@hisnSectionHajj": {
+    "description": "shared key \"hisn.section.hajj\""
+  },
+  "hisnSectionHardship": "Worry and hardship",
+  "@hisnSectionHardship": {
+    "description": "shared key \"hisn.section.hardship\""
+  },
+  "hisnSectionHome": "Home and clothing",
+  "@hisnSectionHome": {
+    "description": "shared key \"hisn.section.home\""
+  },
+  "hisnSectionIllness": "Illness and death",
+  "@hisnSectionIllness": {
+    "description": "shared key \"hisn.section.illness\""
+  },
+  "hisnSectionMorningEvening": "Morning and evening",
+  "@hisnSectionMorningEvening": {
+    "description": "shared key \"hisn.section.morningEvening\""
+  },
+  "hisnSectionNature": "Rain, wind and the new moon",
+  "@hisnSectionNature": {
+    "description": "shared key \"hisn.section.nature\""
+  },
+  "hisnSectionPeople": "Family and people",
+  "@hisnSectionPeople": {
+    "description": "shared key \"hisn.section.people\""
+  },
+  "hisnSectionPrayer": "Purification, mosque and prayer",
+  "@hisnSectionPrayer": {
+    "description": "shared key \"hisn.section.prayer\""
+  },
+  "hisnSectionRemembrance": "Remembrance and its virtue",
+  "@hisnSectionRemembrance": {
+    "description": "shared key \"hisn.section.remembrance\""
+  },
+  "hisnSectionSleep": "Sleep and waking",
+  "@hisnSectionSleep": {
+    "description": "shared key \"hisn.section.sleep\""
+  },
+  "hisnSectionTravel": "Travel",
+  "@hisnSectionTravel": {
+    "description": "shared key \"hisn.section.travel\""
+  },
+  "hisnSectionAll": "All",
+  "@hisnSectionAll": {
+    "description": "shared key \"hisn.sectionAll\""
   },
   "homeBigAdhkar": "Adhkar & Dua",
   "@homeBigAdhkar": {

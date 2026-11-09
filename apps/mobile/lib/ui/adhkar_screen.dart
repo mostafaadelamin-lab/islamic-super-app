@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../app_services.dart';
 import '../domain/adhkar.dart';
 import '../theme/design_tokens.dart';
+import 'dhikr_tools.dart';
 import 'hisn_screen.dart';
 import 'l10n_ext.dart';
 import 'prayer_model.dart';
@@ -49,6 +50,13 @@ class AdhkarScreenState extends State<AdhkarScreen> {
       appBar: AppBar(
         title: Text(l.navAdhkar),
         actions: [
+          const AdhkarViewToggle(),
+          IconButton(
+            key: const Key('adhkarReminders'),
+            tooltip: l.adhkarReminders,
+            icon: const Icon(Icons.alarm),
+            onPressed: () => showModalBottomSheet<void>(context: context, builder: (_) => const AdhkarRemindersSheet()),
+          ),
           IconButton(
             key: const Key('adhkarReset'),
             tooltip: l.adhkarReset,
@@ -64,58 +72,76 @@ class AdhkarScreenState extends State<AdhkarScreen> {
         ],
       ),
       body: ListenableBuilder(
-        listenable: s.adhkar,
+        listenable: Listenable.merge([s.adhkar, s.settings]),
         builder: (context, _) {
           final p = s.adhkar.progress(session);
+          final header = <Widget>[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceSm, DesignTokens.spaceLg, 0),
+              child: SegmentedButton<AdhkarSession>(
+                key: const Key('adhkarSession'),
+                segments: [
+                  ButtonSegment(
+                    value: AdhkarSession.morning,
+                    icon: const Icon(Icons.wb_sunny_outlined),
+                    label: Text(l.adhkarMorning),
+                  ),
+                  ButtonSegment(
+                    value: AdhkarSession.evening,
+                    icon: const Icon(Icons.nights_stay_outlined),
+                    label: Text(l.adhkarEvening),
+                  ),
+                ],
+                selected: {session},
+                onSelectionChanged: (v) => setState(() => _session = v.single),
+              ),
+            ),
+            ReviewNotice(l.adhkarReviewNotice, key: const Key('adhkarNotice')),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: DesignTokens.spaceXs),
+                  Text(
+                    l.adhkarProgress(context.num(p.completedItems), context.num(p.items.length)),
+                    key: const Key('adhkarProgress'),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceXs),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
+                    child: LinearProgressIndicator(value: p.fraction, minHeight: 6),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceXs),
+                  Text(l.adhkarTapToCount, style: Theme.of(context).textTheme.bodySmall),
+                ],
+              ),
+            ),
+          ];
+          if (s.settings.adhkarCards) {
+            return Column(
+              children: [
+                ...header,
+                Expanded(
+                  child: CardPager(
+                    resetKey: session,
+                    count: p.items.length,
+                    isDone: (i) => p.isDone(p.items[i]),
+                    builder: (context, i) => _DhikrCard(dhikr: p.items[i], session: session, progress: p),
+                  ),
+                ),
+              ],
+            );
+          }
           return ListView(
             key: const Key('adhkarList'),
             padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceSm, DesignTokens.spaceLg, 0),
-                child: SegmentedButton<AdhkarSession>(
-                  key: const Key('adhkarSession'),
-                  segments: [
-                    ButtonSegment(
-                      value: AdhkarSession.morning,
-                      icon: const Icon(Icons.wb_sunny_outlined),
-                      label: Text(l.adhkarMorning),
-                    ),
-                    ButtonSegment(
-                      value: AdhkarSession.evening,
-                      icon: const Icon(Icons.nights_stay_outlined),
-                      label: Text(l.adhkarEvening),
-                    ),
-                  ],
-                  selected: {session},
-                  onSelectionChanged: (v) => setState(() => _session = v.single),
-                ),
-              ),
-              ReviewNotice(l.adhkarReviewNotice, key: const Key('adhkarNotice')),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(height: DesignTokens.spaceXs),
-                    Text(
-                      l.adhkarProgress(context.num(p.completedItems), context.num(p.items.length)),
-                      key: const Key('adhkarProgress'),
-                    ),
-                    const SizedBox(height: DesignTokens.spaceXs),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
-                      child: LinearProgressIndicator(value: p.fraction, minHeight: 6),
-                    ),
-                    const SizedBox(height: DesignTokens.spaceXs),
-                    Text(l.adhkarTapToCount, style: Theme.of(context).textTheme.bodySmall),
-                  ],
-                ),
-              ),
+              ...header,
               for (final d in p.items) _DhikrCard(dhikr: d, session: session, progress: p),
             ],
           );
@@ -202,9 +228,24 @@ class _DhikrCard extends StatelessWidget {
               ),
             ),
           ),
-          Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: CopyButton(text: dhikr.text, buttonKey: Key('dhikrCopy-${dhikr.index}')),
+          Builder(
+            builder: (context) {
+              final source = l.adhkarShareSourceSession(
+                session == AdhkarSession.morning ? l.adhkarMorning : l.adhkarEvening,
+              );
+              return Wrap(
+                alignment: WrapAlignment.end,
+                children: [
+                  CopyButton(text: dhikr.text, buttonKey: Key('dhikrCopy-${dhikr.index}')),
+                  DhikrActions(
+                    text: dhikr.text,
+                    source: source,
+                    where: '$source · ${context.num(progress.items.indexOf(dhikr) + 1)}',
+                    keyPrefix: 'dhikr${dhikr.index}',
+                  ),
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -230,6 +271,67 @@ class CopyButton extends StatelessWidget {
       },
       icon: const Icon(Icons.copy, size: 18),
       label: Text(l.adhkarCopy),
+    );
+  }
+}
+
+/// Daily morning / evening adhkar notifications (times are local to the prayer city).
+class AdhkarRemindersSheet extends StatelessWidget {
+  const AdhkarRemindersSheet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final s = context.services;
+    final settings = s.settings;
+    return SafeArea(
+      child: ListenableBuilder(
+        listenable: settings,
+        builder: (context, _) => Padding(
+          padding: const EdgeInsets.all(DesignTokens.spaceLg),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(l.adhkarReminders, style: Theme.of(context).textTheme.titleMedium),
+              for (final morning in [true, false])
+                Builder(
+                  builder: (context) {
+                    final m = settings.adhkarReminder(morning);
+                    return SwitchListTile(
+                      key: Key(morning ? 'reminderMorning' : 'reminderEvening'),
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(morning ? l.adhkarReminderMorning : l.adhkarReminderEvening),
+                      subtitle: m == null
+                          ? null
+                          : Text(
+                              context.num(
+                                '${(m ~/ 60).toString().padLeft(2, '0')}:${(m % 60).toString().padLeft(2, '0')}',
+                              ),
+                            ),
+                      value: m != null,
+                      onChanged: (on) async {
+                        if (!on) {
+                          await settings.setAdhkarReminder(morning, null);
+                        } else {
+                          final t = await showTimePicker(
+                            context: context,
+                            initialTime: morning
+                                ? const TimeOfDay(hour: 6, minute: 30)
+                                : const TimeOfDay(hour: 17, minute: 0),
+                          );
+                          if (t == null) return;
+                          await settings.setAdhkarReminder(morning, t.hour * 60 + t.minute);
+                        }
+                        await s.reminders.sync();
+                      },
+                    );
+                  },
+                ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -101,6 +101,18 @@ class AppServices {
         ),
       ];
     });
+    reminders.addSource(
+      (l) => [
+        for (final morning in [true, false])
+          if (settings.adhkarReminder(morning) case final m?)
+            ReminderSpec(
+              id: morning ? ReminderIds.adhkarMorning : ReminderIds.adhkarEvening,
+              title: morning ? l.alertAdhkarMorningTitle : l.alertAdhkarEveningTitle,
+              body: morning ? l.alertAdhkarMorningBody : l.alertAdhkarEveningBody,
+              minutes: m,
+            ),
+      ],
+    );
     final downloads = RecitationDownloads(
       content: content,
       httpClient: httpClient,

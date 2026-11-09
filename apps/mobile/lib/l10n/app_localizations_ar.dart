@@ -258,6 +258,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhkarArabicOnly => 'هذا المحتوى متاح بالعربية فقط.';
 
   @override
+  String get adhkarCards => 'بطاقة بطاقة';
+
+  @override
   String get adhkarCopied => 'تم النسخ';
 
   @override
@@ -284,10 +287,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhkarHisnSearch => 'ابحث في الأبواب';
 
   @override
+  String get adhkarList => 'عرض كقائمة';
+
+  @override
   String get adhkarMorning => 'الصباح';
 
   @override
   String get adhkarMorningTitle => 'أذكار الصباح';
+
+  @override
+  String get adhkarNextCard => 'التالي';
+
+  @override
+  String get adhkarPrevCard => 'السابق';
 
   @override
   String adhkarProgress(String done, String total) {
@@ -300,9 +312,24 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get adhkarReminderEvening => 'تذكير بأذكار المساء';
+
+  @override
+  String get adhkarReminderMorning => 'تذكير بأذكار الصباح';
+
+  @override
+  String get adhkarReminders => 'تذكير الأذكار';
+
+  @override
   String adhkarRepeat(String n) {
     return 'التكرار $n';
   }
+
+  @override
+  String get adhkarReport => 'الإبلاغ عن خطأ';
+
+  @override
+  String get adhkarReportIntro => 'أظن أن في هذا الذكر خطأ (اكتب التفاصيل بالأسفل):';
 
   @override
   String get adhkarReset => 'البدء من جديد';
@@ -312,7 +339,32 @@ class AppLocalizationsAr extends AppLocalizations {
       'بانتظار المراجعة الشرعية. النصوص من مجموعة أذكار Kazi Shariar (CC BY 4.0) ومن حصن المسلم، وأعداد التكرار وفق حصن المسلم.';
 
   @override
+  String get adhkarShare => 'مشاركة';
+
+  @override
+  String adhkarShareSourceChapter(String title, String n) {
+    return 'حصن المسلم — $title (الباب $n)';
+  }
+
+  @override
+  String adhkarShareSourceSession(String session) {
+    return 'حصن المسلم — أذكار $session';
+  }
+
+  @override
   String get adhkarTapToCount => 'اضغط على البطاقة للعدّ';
+
+  @override
+  String get alertAdhkarEveningBody => 'حان وقت أذكار المساء';
+
+  @override
+  String get alertAdhkarEveningTitle => 'أذكار المساء';
+
+  @override
+  String get alertAdhkarMorningBody => 'حان وقت أذكار الصباح';
+
+  @override
+  String get alertAdhkarMorningTitle => 'أذكار الصباح';
 
   @override
   String get alertFriday => 'تذكير الجمعة (سورة الكهف)';
@@ -464,6 +516,45 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get hajjUmrah => 'العمرة';
+
+  @override
+  String get hisnSectionFood => 'الطعام والصيام';
+
+  @override
+  String get hisnSectionHajj => 'الحج والعمرة';
+
+  @override
+  String get hisnSectionHardship => 'الهم والشدائد';
+
+  @override
+  String get hisnSectionHome => 'البيت واللباس';
+
+  @override
+  String get hisnSectionIllness => 'المرض والموت';
+
+  @override
+  String get hisnSectionMorningEvening => 'الصباح والمساء';
+
+  @override
+  String get hisnSectionNature => 'المطر والريح والهلال';
+
+  @override
+  String get hisnSectionPeople => 'الأهل والناس';
+
+  @override
+  String get hisnSectionPrayer => 'الطهارة والمسجد والصلاة';
+
+  @override
+  String get hisnSectionRemembrance => 'الذكر وفضله';
+
+  @override
+  String get hisnSectionSleep => 'النوم والاستيقاظ';
+
+  @override
+  String get hisnSectionTravel => 'السفر';
+
+  @override
+  String get hisnSectionAll => 'الكل';
 
   @override
   String get homeBigAdhkar => 'الأذكار والدعاء';

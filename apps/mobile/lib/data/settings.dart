@@ -334,6 +334,25 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Morning / evening adhkar reminders as minutes after midnight, or null when off.
+  int? adhkarReminder(bool morning) => _prefs.getInt(morning ? 'alert.adhkarMorning' : 'alert.adhkarEvening');
+  Future<void> setAdhkarReminder(bool morning, int? minutes) async {
+    final key = morning ? 'alert.adhkarMorning' : 'alert.adhkarEvening';
+    if (minutes == null) {
+      await _prefs.remove(key);
+    } else {
+      await _prefs.setInt(key, minutes.clamp(0, 24 * 60 - 1));
+    }
+    notifyListeners();
+  }
+
+  /// Adhkar and Hisn al-Muslim shown one card at a time instead of a list.
+  bool get adhkarCards => _prefs.getBool('adhkar.cards') ?? false;
+  Future<void> setAdhkarCards(bool v) async {
+    await _prefs.setBool('adhkar.cards', v);
+    notifyListeners();
+  }
+
   /// Prayers that should get a notification right now.
   Set<String> get adhanPrayers => adhanEnabled
       ? {

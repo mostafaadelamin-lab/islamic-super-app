@@ -84,10 +84,17 @@ class HisnChapter {
 /// Name of the Hisn chapter the counts come from.
 const hisnMorningEveningTitle = 'أذكار الصباح والمساء';
 
-class AdhkarContent {
-  AdhkarContent({required this.items, required this.hisn});
+/// A browsing section of Hisn al-Muslim: chapter ids (1-based, book order) from hisn-sections.json.
+class HisnSection {
+  const HisnSection(this.id, this.chapters);
+  final String id;
+  final List<int> chapters;
+}
 
-  factory AdhkarContent.fromJson(Map<String, dynamic> adhkar, List<dynamic> hisn) {
+class AdhkarContent {
+  AdhkarContent({required this.items, required this.hisn, this.sections = const []});
+
+  factory AdhkarContent.fromJson(Map<String, dynamic> adhkar, List<dynamic> hisn, [Map<String, dynamic>? sections]) {
     final texts = (adhkar['items'] as List<dynamic>).cast<String>();
     if (texts.length != adhkarMeta.length) {
       throw FormatException('adhkar.v1.json has ${texts.length} items, metadata covers ${adhkarMeta.length}');
@@ -104,11 +111,19 @@ class AdhkarContent {
             List.unmodifiable(((hisn[i] as List<dynamic>)[1] as List<dynamic>).cast<String>()),
           ),
       ]),
+      sections: List.unmodifiable([
+        for (final x in (sections?['sections'] as List<dynamic>? ?? const []))
+          HisnSection(
+            (x as Map<String, dynamic>)['id'] as String,
+            List.unmodifiable((x['chapters'] as List<dynamic>).cast<int>()),
+          ),
+      ]),
     );
   }
 
   final List<Dhikr> items;
   final List<HisnChapter> hisn;
+  final List<HisnSection> sections;
 
   List<Dhikr> forSession(AdhkarSession s) => [
     for (final d in items)

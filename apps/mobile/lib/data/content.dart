@@ -76,6 +76,7 @@ class AppContent {
   static const mushafLinesAsset = 'assets/content/mushaf-lines.v1.json';
   static const adhkarAsset = 'assets/content/adhkar.v1.json';
   static const hisnAsset = 'assets/content/hisn.json';
+  static const hisnSectionsAsset = 'assets/content/hisn-sections.json';
   static const hajjAsset = 'assets/content/hajj.v1.json';
   static const recitersAsset = 'assets/schemas/reciters.json';
   static const versionsAsset = 'assets/content/VERSIONS.json';
@@ -136,6 +137,7 @@ class AppContent {
       adhkar: AdhkarContent.fromJson(
         await j(adhkarAsset),
         jsonDecode(await bundle.loadString(hisnAsset)) as List<dynamic>,
+        await j(hisnSectionsAsset),
       ),
       hajj: HajjGuide.fromJson(await j(hajjAsset)),
       integrity: await j(integrityAsset),
