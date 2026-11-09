@@ -168,7 +168,7 @@ void main() {
     await tester.tap(plus);
     await tester.pumpAndSettle();
     expect(app.prefs.getInt('hijriOffset'), 1);
-    expect(find.textContaining('(+1)'), findsOneWidget);
+    expect(find.textContaining('+1'), findsOneWidget);
     await tester.tap(plus);
     await tester.pumpAndSettle();
     expect(tester.widget<IconButton>(plus).onPressed, isNull);

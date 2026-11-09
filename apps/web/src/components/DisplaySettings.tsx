@@ -121,7 +121,7 @@ export function DisplaySettings({ locale, preview }: { locale: Locale; preview: 
       <div className="field" data-testid="hijri-offset">
         <label htmlFor="hijri-offset">
           {t(locale, "settings.hijriOffset")}:{" "}
-          <output htmlFor="hijri-offset" data-testid="hijri-offset-value">
+          <output htmlFor="hijri-offset" data-testid="hijri-offset-value" dir="ltr">
             {localizeDigits(
               prefs.hijriOffset > 0 ? `+${prefs.hijriOffset}` : String(prefs.hijriOffset),
               locale,

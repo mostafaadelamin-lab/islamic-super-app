@@ -115,7 +115,7 @@ class SettingsScreen extends StatelessWidget {
                           final o = settings.hijriOffset;
                           return Text(
                             '${l.homeHijriDate(context.num(h.day), h.monthName, context.num(h.year))}'
-                            '  (${o > 0 ? '+' : ''}${context.num(o)})',
+                            '  (\u2066${o > 0 ? '+' : ''}${context.num(o)}\u2069)',
                             key: const Key('hijriOffsetPreview'),
                             textAlign: TextAlign.center,
                           );
