@@ -990,6 +990,23 @@
     "summary": "Reels"
    }
   },
+  "/v1/reels/feed": {
+   "get": {
+    "description": "Newest Shorts of the trusted channels (content/reels/sources.json), mixed across channels and\ncached for 3 hours. These need no per-video review: the owner approved each channel once.",
+    "operationId": "reels_feed_v1_reels_feed_get",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "Reels Feed"
+   }
+  },
   "/v1/stories": {
    "get": {
     "description": "Audio Quranic stories: verse ranges played with the app's reciters. Every non-rejected story is\nreturned (they are only Quranic verses). Narrated series (audio only) list only episodes that passed\nreligious review, unless include_pending=true, which reviewer mode uses.",

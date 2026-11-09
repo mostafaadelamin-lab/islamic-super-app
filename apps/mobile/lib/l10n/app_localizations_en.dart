@@ -926,17 +926,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reelsCatRecitation => 'Quran recitation';
 
   @override
-  String get reelsEmpty => 'No reviewed reels yet. Reels are added after a religious review.';
+  String get reelsEmpty => 'No reels to show right now.';
 
   @override
   String get reelsFeed => 'reels';
+
+  @override
+  String reelsHidden(String name) {
+    return '$name hidden';
+  }
+
+  @override
+  String get reelsHide => 'Hide this channel';
+
+  @override
+  String get reelsLoading => 'Fetching the newest reels…';
 
   @override
   String get reelsNext => 'Next reel';
 
   @override
   String get reelsNote =>
-      'Reels play from YouTube and Instagram through their official players. They are limited to Quran recitations, religious lessons, and advice and admonitions in line with the Quran and Sunnah, and only reviewed reels are shown.';
+      'Reels play from YouTube and Instagram in their official players, and come automatically from trusted Islamic channels the app approved (Quran recitations, religious lessons, advice and admonitions).';
+
+  @override
+  String get reelsOffline => 'Could not reach YouTube. Check your internet connection and try again.';
 
   @override
   String get reelsOpenInstagram => 'Open on Instagram';
@@ -962,6 +976,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reelsPrev => 'Previous reel';
 
   @override
+  String get reelsRetry => 'Try again';
+
+  @override
   String reelsReviewedBy(String name) {
     return 'Reviewed by $name';
   }
@@ -973,13 +990,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reelsReviewerMode => 'Reviewer mode';
 
   @override
-  String get reelsSub => 'Reviewed short videos';
+  String get reelsShowHidden => 'Show hidden channels';
+
+  @override
+  String get reelsSub => 'Recitations, lessons and admonitions from trusted channels';
 
   @override
   String get reelsTapToPlay => 'Tap to play';
 
   @override
   String get reelsTitle => 'Islamic reels';
+
+  @override
+  String get reelsTrusted => 'Trusted channel';
+
+  @override
+  String get reelsUndo => 'Undo';
 
   @override
   String get settingsAbout => 'About';

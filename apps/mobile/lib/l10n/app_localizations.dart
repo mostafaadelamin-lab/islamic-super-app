@@ -1691,7 +1691,7 @@ abstract class AppLocalizations {
   /// shared key "reels.empty"
   ///
   /// In en, this message translates to:
-  /// **'No reviewed reels yet. Reels are added after a religious review.'**
+  /// **'No reels to show right now.'**
   String get reelsEmpty;
 
   /// shared key "reels.feed"
@@ -1699,6 +1699,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'reels'**
   String get reelsFeed;
+
+  /// shared key "reels.hidden"
+  ///
+  /// In en, this message translates to:
+  /// **'{name} hidden'**
+  String reelsHidden(String name);
+
+  /// shared key "reels.hide"
+  ///
+  /// In en, this message translates to:
+  /// **'Hide this channel'**
+  String get reelsHide;
+
+  /// shared key "reels.loading"
+  ///
+  /// In en, this message translates to:
+  /// **'Fetching the newest reels…'**
+  String get reelsLoading;
 
   /// shared key "reels.next"
   ///
@@ -1709,8 +1727,14 @@ abstract class AppLocalizations {
   /// shared key "reels.note"
   ///
   /// In en, this message translates to:
-  /// **'Reels play from YouTube and Instagram through their official players. They are limited to Quran recitations, religious lessons, and advice and admonitions in line with the Quran and Sunnah, and only reviewed reels are shown.'**
+  /// **'Reels play from YouTube and Instagram in their official players, and come automatically from trusted Islamic channels the app approved (Quran recitations, religious lessons, advice and admonitions).'**
   String get reelsNote;
+
+  /// shared key "reels.offline"
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach YouTube. Check your internet connection and try again.'**
+  String get reelsOffline;
 
   /// shared key "reels.open.instagram"
   ///
@@ -1754,6 +1778,12 @@ abstract class AppLocalizations {
   /// **'Previous reel'**
   String get reelsPrev;
 
+  /// shared key "reels.retry"
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get reelsRetry;
+
   /// shared key "reels.reviewedBy"
   ///
   /// In en, this message translates to:
@@ -1772,10 +1802,16 @@ abstract class AppLocalizations {
   /// **'Reviewer mode'**
   String get reelsReviewerMode;
 
+  /// shared key "reels.showHidden"
+  ///
+  /// In en, this message translates to:
+  /// **'Show hidden channels'**
+  String get reelsShowHidden;
+
   /// shared key "reels.sub"
   ///
   /// In en, this message translates to:
-  /// **'Reviewed short videos'**
+  /// **'Recitations, lessons and admonitions from trusted channels'**
   String get reelsSub;
 
   /// shared key "reels.tapToPlay"
@@ -1789,6 +1825,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Islamic reels'**
   String get reelsTitle;
+
+  /// shared key "reels.trusted"
+  ///
+  /// In en, this message translates to:
+  /// **'Trusted channel'**
+  String get reelsTrusted;
+
+  /// shared key "reels.undo"
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get reelsUndo;
 
   /// shared key "settings.about"
   ///

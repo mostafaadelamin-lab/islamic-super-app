@@ -11,6 +11,7 @@ import 'data/content.dart';
 import 'data/devotions.dart';
 import 'data/notifications.dart';
 import 'data/recitation.dart';
+import 'data/reels_feed.dart';
 import 'data/sensors.dart';
 import 'data/settings.dart';
 import 'data/tafsir.dart';
@@ -33,6 +34,7 @@ class AppServices {
     required this.tafsir,
     required this.narration,
     required this.sleepTimer,
+    required this.reelsFeed,
   });
 
   factory AppServices.create({
@@ -95,6 +97,7 @@ class AppServices {
       adhkar: AdhkarController(content, settings, localToday),
       sensors: sensors ?? const DeviceCompassSensors(),
       tafsir: tafsir ?? TafsirStore.asset(rootBundle),
+      reelsFeed: ReelsFeedController(sources: content.reelSources, httpClient: httpClient, prefs: prefs, clock: c),
     );
   }
 
@@ -118,6 +121,9 @@ class AppServices {
   /// Narrated story episodes (audio only) and the sleep timer.
   final NarrationController narration;
   final SleepTimerController sleepTimer;
+
+  /// Newest Shorts from the trusted channels (fetched when the reels open).
+  final ReelsFeedController reelsFeed;
 }
 
 class AppScope extends InheritedWidget {

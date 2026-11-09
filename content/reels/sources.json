@@ -1,0 +1,16 @@
+{
+  "schema": "reel-sources.catalogue.v1",
+  "note": "Trusted channels the apps pull reels from automatically (owner decision 2026-11-09: approve the channel once, no per-video review). Edit with tools/reels.py sources-add / sources-remove. Only YouTube channels can be pulled automatically; Instagram needs a Meta Business account.",
+  "sources": [
+    {
+      "id": "yt-UCYuUcfXvsHapABTcPRWCEoQ",
+      "platform": "youtube",
+      "channelId": "UCYuUcfXvsHapABTcPRWCEoQ",
+      "name": {"ar": "الشيخ ياسر الدوسري", "en": "Sheikh Yasser Al-Dosari"},
+      "category": "recitation",
+      "addedAt": "2026-11-09",
+      "approvedBy": "mostafa amin (named by the owner on 2026-11-09)",
+      "note": "Channel id taken from a public channel listing ('القناة الرسمية للشيخ ياسر الدوسري بث مباشر'); confirm it is the channel the owner means."
+    }
+  ]
+}

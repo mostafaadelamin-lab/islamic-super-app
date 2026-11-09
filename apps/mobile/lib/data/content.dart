@@ -64,6 +64,7 @@ class AppContent {
     required this.normalizer,
     required this.versions,
     this.reels = ReelCatalog.empty,
+    this.reelSources = const [],
     this.stories = StoryCatalog.empty,
   }) : search = QuranSearch(quran, normalizer);
 
@@ -77,6 +78,7 @@ class AppContent {
   static const recitersAsset = 'assets/schemas/reciters.json';
   static const versionsAsset = 'assets/content/VERSIONS.json';
   static const reelsAsset = 'assets/content/reels.v1.json';
+  static const reelSourcesAsset = 'assets/content/reel-sources.v1.json';
   static const storiesAsset = 'assets/content/stories.v1.json';
   static const methodsAsset = 'assets/schemas/methods.json';
   static const citiesAsset = 'assets/schemas/cities.json';
@@ -97,6 +99,9 @@ class AppContent {
 
   /// Curated YouTube reels (approved + pending; screens filter by review status).
   final ReelCatalog reels;
+
+  /// Trusted channels whose newest Shorts are shown automatically.
+  final List<ReelSource> reelSources;
 
   /// Quranic stories (verse ranges) and narrated series (audio only).
   final StoryCatalog stories;
@@ -136,6 +141,7 @@ class AppContent {
       normalizer: SearchNormalizer.fromJson(await j(normalizationAsset)),
       versions: await j(versionsAsset),
       reels: ReelCatalog.fromJson(await j(reelsAsset)),
+      reelSources: ReelSource.listFromJson(await j(reelSourcesAsset)),
       stories: StoryCatalog.fromJson(await j(storiesAsset), [for (final s in quran.surahs) s.ayahCount]),
     );
   }

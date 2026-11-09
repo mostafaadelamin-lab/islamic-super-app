@@ -925,17 +925,31 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reelsCatRecitation => 'تلاوة قرآنية';
 
   @override
-  String get reelsEmpty => 'لا توجد مقاطع مراجَعة بعد. تُضاف المقاطع بعد مراجعتها شرعياً.';
+  String get reelsEmpty => 'لا توجد مقاطع لعرضها الآن.';
 
   @override
   String get reelsFeed => 'مقاطع';
+
+  @override
+  String reelsHidden(String name) {
+    return 'تم إخفاء $name';
+  }
+
+  @override
+  String get reelsHide => 'إخفاء هذه القناة';
+
+  @override
+  String get reelsLoading => 'جارٍ جلب أحدث المقاطع…';
 
   @override
   String get reelsNext => 'المقطع التالي';
 
   @override
   String get reelsNote =>
-      'المقاطع معروضة من يوتيوب وإنستجرام بمشغّلاتها الرسمية، وتقتصر على تلاوات القرآن الكريم والدروس الدينية والنصائح والمواعظ الموافقة للكتاب والسنة، ولا يُعرض إلا ما راجعه مختص.';
+      'المقاطع معروضة من يوتيوب وإنستجرام بمشغّلاتها الرسمية، وتأتي تلقائيًا من قنوات إسلامية موثوقة اعتمدها التطبيق (تلاوات القرآن الكريم والدروس الدينية والنصائح والمواعظ).';
+
+  @override
+  String get reelsOffline => 'تعذّر الوصول إلى يوتيوب. تحقّق من الاتصال بالإنترنت ثم أعد المحاولة.';
 
   @override
   String get reelsOpenInstagram => 'افتح على إنستجرام';
@@ -961,6 +975,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reelsPrev => 'المقطع السابق';
 
   @override
+  String get reelsRetry => 'إعادة المحاولة';
+
+  @override
   String reelsReviewedBy(String name) {
     return 'راجعه: $name';
   }
@@ -972,13 +989,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reelsReviewerMode => 'وضع المراجعة';
 
   @override
-  String get reelsSub => 'مقاطع قصيرة مراجَعة';
+  String get reelsShowHidden => 'إظهار القنوات المخفية';
+
+  @override
+  String get reelsSub => 'تلاوات ودروس ومواعظ من قنوات موثوقة';
 
   @override
   String get reelsTapToPlay => 'اضغط للتشغيل';
 
   @override
   String get reelsTitle => 'ريلز إسلامية';
+
+  @override
+  String get reelsTrusted => 'قناة موثوقة';
+
+  @override
+  String get reelsUndo => 'تراجع';
 
   @override
   String get settingsAbout => 'عن التطبيق';
