@@ -2,7 +2,7 @@
   "schema": "reciters.v1",
   "source": "everyayah.com per-ayah MP3 (free; streamed, not bundled)",
   "urlTemplate": "https://everyayah.com/data/{folder}/{sss}{aaa}.mp3",
-  "note": "sss and aaa are the 3-digit zero-padded surah and ayah numbers. Ayah 1:1 file is the basmala of al-Fatihah. For other surahs (except 9) clients may play 001001 as the basmala before ayah 1.",
+  "note": "sss and aaa are the 3-digit zero-padded surah and ayah numbers. Ayah 1:1 file is the basmala of al-Fatihah. For other surahs (except 9) clients may play 001001 as the basmala before ayah 1. Folder names checked against https://everyayah.com/recitations_ayat.html on 2026-11-09.",
   "default": "Alafasy_128kbps",
   "reciters": [
     {
@@ -11,9 +11,39 @@
       "en": "Mishary Rashid Alafasy"
     },
     {
+      "folder": "Yasser_Ad-Dussary_128kbps",
+      "ar": "ياسر الدوسري",
+      "en": "Yasser Al-Dosari"
+    },
+    {
+      "folder": "Abdurrahmaan_As-Sudais_192kbps",
+      "ar": "عبد الرحمن السديس",
+      "en": "Abdurrahman As-Sudais"
+    },
+    {
+      "folder": "MaherAlMuaiqly128kbps",
+      "ar": "ماهر المعيقلي",
+      "en": "Maher Al-Muaiqly"
+    },
+    {
+      "folder": "Minshawy_Murattal_128kbps",
+      "ar": "محمد صديق المنشاوي (مرتّل)",
+      "en": "Al-Minshawy (Murattal)"
+    },
+    {
+      "folder": "Minshawy_Mujawwad_192kbps",
+      "ar": "محمد صديق المنشاوي (مجوّد)",
+      "en": "Al-Minshawy (Mujawwad)"
+    },
+    {
       "folder": "Husary_128kbps",
-      "ar": "محمود خليل الحصري",
-      "en": "Mahmoud Khalil Al-Husary"
+      "ar": "محمود خليل الحصري (مرتّل)",
+      "en": "Al-Husary (Murattal)"
+    },
+    {
+      "folder": "Husary_128kbps_Mujawwad",
+      "ar": "محمود خليل الحصري (مجوّد)",
+      "en": "Al-Husary (Mujawwad)"
     },
     {
       "folder": "Husary_Muallim_128kbps",
@@ -26,24 +56,19 @@
       "en": "Abdul Basit (Murattal)"
     },
     {
-      "folder": "Minshawy_Murattal_128kbps",
-      "ar": "محمد صديق المنشاوي (مرتّل)",
-      "en": "Al-Minshawy (Murattal)"
+      "folder": "Abdul_Basit_Mujawwad_128kbps",
+      "ar": "عبد الباسط عبد الصمد (مجوّد)",
+      "en": "Abdul Basit (Mujawwad)"
     },
     {
-      "folder": "Minshawy_Teacher_128kbps",
-      "ar": "المنشاوي (المصحف المعلّم)",
-      "en": "Al-Minshawy (teaching)"
+      "folder": "Mohammad_al_Tablaway_128kbps",
+      "ar": "محمد محمود الطبلاوي",
+      "en": "Mohammad Al-Tablawi"
     },
     {
-      "folder": "Abdurrahmaan_As-Sudais_192kbps",
-      "ar": "عبد الرحمن السديس",
-      "en": "Abdurrahman As-Sudais"
-    },
-    {
-      "folder": "Maher_AlMuaiqly_64kbps",
-      "ar": "ماهر المعيقلي",
-      "en": "Maher Al-Muaiqly"
+      "folder": "mahmoud_ali_al_banna_32kbps",
+      "ar": "محمود علي البنا",
+      "en": "Mahmoud Ali Al-Banna"
     }
   ]
 }

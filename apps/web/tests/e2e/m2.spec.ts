@@ -308,11 +308,11 @@ test.describe("recitation player logic (fake media element: the test dispatches 
     await page.goto("/en/settings/");
     await expect(page.getByLabel("Reciter")).toHaveValue("Husary_128kbps");
     await expect(page.getByLabel("Repeat each ayah")).toHaveValue("3");
-    await page.getByLabel("Reciter").selectOption("Maher_AlMuaiqly_64kbps");
+    await page.getByLabel("Reciter").selectOption("MaherAlMuaiqly128kbps");
     await readyMushaf(page, "/en/page/604/");
     await page.getByTestId("play-page").click();
     await isPlaying(page);
-    expect(await played(page)).toEqual(["Maher_AlMuaiqly_64kbps/001001.mp3"]); // fresh page: a new log
+    expect(await played(page)).toEqual(["MaherAlMuaiqly128kbps/001001.mp3"]); // fresh page: a new log
     await page.getByTestId("player-stop").click();
     expect(requests).toEqual([]);
   });

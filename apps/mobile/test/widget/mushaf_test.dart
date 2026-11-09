@@ -240,7 +240,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Maher Al-Muaiqly').last);
     await tester.pumpAndSettle();
-    expect(app.prefs.getString('audio.reciter'), 'Maher_AlMuaiqly_64kbps');
+    expect(app.prefs.getString('audio.reciter'), 'MaherAlMuaiqly128kbps');
     expect(app.services.recitation.reciter.nameEn, 'Maher Al-Muaiqly');
   });
 

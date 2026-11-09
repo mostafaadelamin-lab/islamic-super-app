@@ -13,13 +13,13 @@ void main() {
     expect(readAppJson('assets/schemas/reciters.json'), readRepoJson('packages/shared-schemas/audio/reciters.json'));
   });
 
-  test('catalogue: 8 reciters, unique folders, default first-class', () {
+  test('catalogue: 13 reciters, unique folders, default first-class', () {
     final r = c.reciters;
-    expect(r.reciters, hasLength(8));
-    expect(r.reciters.map((x) => x.folder).toSet(), hasLength(8));
+    expect(r.reciters, hasLength(13));
+    expect(r.reciters.map((x) => x.folder).toSet(), hasLength(13));
     expect(r.byFolder(null).folder, 'Alafasy_128kbps');
     expect(r.byFolder('nope').folder, 'Alafasy_128kbps');
-    expect(r.byFolder('Husary_128kbps').nameAr, 'محمود خليل الحصري');
+    expect(r.byFolder('Husary_128kbps').nameAr, 'محمود خليل الحصري (مرتّل)');
   });
 
   test('URL building pads surah and ayah to 3 digits', () {
@@ -27,8 +27,8 @@ void main() {
     expect(r.url('Alafasy_128kbps', const AyahRef(2, 255)), 'https://everyayah.com/data/Alafasy_128kbps/002255.mp3');
     expect(r.url('Husary_128kbps', const AyahRef(1, 1)), 'https://everyayah.com/data/Husary_128kbps/001001.mp3');
     expect(
-      r.url('Maher_AlMuaiqly_64kbps', const AyahRef(114, 6)),
-      'https://everyayah.com/data/Maher_AlMuaiqly_64kbps/114006.mp3',
+      r.url('MaherAlMuaiqly128kbps', const AyahRef(114, 6)),
+      'https://everyayah.com/data/MaherAlMuaiqly128kbps/114006.mp3',
     );
   });
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased] — More Quran reciters — 2026-11-09
+### Changed
+- Reciters list (packages/shared-schemas/audio/reciters.json, mirrored to the mobile app) now has the 13 the owner picked, all per-ayah from everyayah.com: Alafasy (default), Yasser Al-Dosari, As-Sudais, Maher Al-Muaiqly (now 128 kbps), Al-Minshawy murattal and mujawwad, Al-Husary murattal, mujawwad and teaching, Abdul Basit murattal and mujawwad, Al-Tablawi, Mahmoud Ali Al-Banna (32 kbps, the only rate available).
+- Removed "Al-Minshawy (teaching)": its folder is not listed on everyayah.com/recitations_ayat.html. A saved choice that is no longer listed falls back to the default reciter.
+
 ## [Unreleased] — Adhan alerts with the adhan voice — 2026-11-09
 ### Added
 - Mobile: prayer-time notifications now play the adhan recording (Android: the full adhan through its own notification channel, with a "Stop adhan" action; iOS: the opening takbir, as iOS allows at most 30 s). Sound choice: adhan / phone tone / silent.

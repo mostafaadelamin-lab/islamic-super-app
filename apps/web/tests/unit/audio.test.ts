@@ -23,14 +23,14 @@ const refs = (q: QueueItem[]): string[] => q.map((x) => (x.kind === "basmala" ? 
 describe("reciters and URLs", () => {
   it("uses the shared reciters list and default", () => {
     expect(RECITERS.map((r) => r.folder)).toEqual(reciters.reciters.map((r) => r.folder));
-    expect(RECITERS).toHaveLength(8);
+    expect(RECITERS).toHaveLength(13);
     expect(DEFAULT_RECITER).toBe("Alafasy_128kbps");
   });
   it("builds everyayah per-ayah URLs with 3-digit padding", () => {
     expect(audioUrl("Alafasy_128kbps", 2, 255)).toBe("https://everyayah.com/data/Alafasy_128kbps/002255.mp3");
     expect(audioUrl("Husary_128kbps", 1, 1)).toBe("https://everyayah.com/data/Husary_128kbps/001001.mp3");
-    expect(audioUrl("Maher_AlMuaiqly_64kbps", 114, 6)).toBe(
-      "https://everyayah.com/data/Maher_AlMuaiqly_64kbps/114006.mp3",
+    expect(audioUrl("MaherAlMuaiqly128kbps", 114, 6)).toBe(
+      "https://everyayah.com/data/MaherAlMuaiqly128kbps/114006.mp3",
     );
   });
   it("rejects unknown reciters and ayahs", () => {
