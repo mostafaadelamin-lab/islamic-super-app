@@ -3,20 +3,20 @@ import Link from "next/link";
 import { isLocale, t } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
-import { SurahIndex } from "@/components/SurahIndex";
+import { QuranIndex } from "@/components/QuranIndex";
 import { GoToPage } from "@/components/GoToPage";
 import { ContinueReading } from "@/components/ContinueReading";
 
 export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
   const { locale } = await params;
-  return { title: t(isLocale(locale) ? locale : "ar", "quran.surahs") };
+  return { title: t(isLocale(locale) ? locale : "ar", "quran.index") };
 }
 
 export default async function QuranIndexPage({ params }: { params: LocaleParams }) {
   const locale = await resolveLocale(params);
   return (
     <>
-      <h1>{t(locale, "quran.surahs")}</h1>
+      <QuranIndex locale={locale} />
       <ContinueReading locale={locale} />
       <section className="card" aria-label={t(locale, "quran.pages")}>
         <div className="row" style={{ justifyContent: "space-between" }}>
@@ -26,7 +26,6 @@ export default async function QuranIndexPage({ params }: { params: LocaleParams 
           <GoToPage locale={locale} />
         </div>
       </section>
-      <SurahIndex locale={locale} />
     </>
   );
 }

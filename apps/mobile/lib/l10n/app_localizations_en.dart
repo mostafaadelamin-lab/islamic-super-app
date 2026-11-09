@@ -147,12 +147,68 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhanEnable => 'Notify me at prayer times';
 
   @override
+  String get adhanExtras => 'Reminder before the adhan and iqama';
+
+  @override
+  String get adhanExtrasNote =>
+      'The reminder and the iqama alert use the phone\'s short tone, not the adhan recording.';
+
+  @override
   String get adhanIosNote =>
       'On iPhone the notification plays the opening takbir only (the system allows at most 30 seconds).';
 
   @override
+  String get adhanIqama => 'Iqama alert after the adhan';
+
+  @override
+  String adhanIqamaBody(String name, String minutes) {
+    return '$name iqama, $minutes minutes after the adhan';
+  }
+
+  @override
+  String adhanIqamaDecrease(String name) {
+    return 'One minute less before $name iqama';
+  }
+
+  @override
+  String adhanIqamaIncrease(String name) {
+    return 'One minute more before $name iqama';
+  }
+
+  @override
+  String adhanIqamaMinutes(String n) {
+    return '$n min after the adhan';
+  }
+
+  @override
+  String adhanIqamaTitle(String name) {
+    return 'Iqama time for $name';
+  }
+
+  @override
   String get adhanNote =>
       'Scheduled ahead on this device and works even when the app is closed; opening the app renews them. If an alert is late, allow \"Alarms & reminders\" and turn off battery optimisation for the app.';
+
+  @override
+  String get adhanPre => 'Reminder before the adhan';
+
+  @override
+  String adhanPreBody(String name) {
+    return 'Get ready for $name prayer';
+  }
+
+  @override
+  String adhanPreMinutes(String n) {
+    return '$n minutes before';
+  }
+
+  @override
+  String get adhanPreOff => 'Off';
+
+  @override
+  String adhanPreTitle(String minutes, String name) {
+    return '$minutes minutes until the $name adhan';
+  }
 
   @override
   String get adhanPreview => 'Listen to the adhan';
@@ -484,7 +540,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get prayerAsrStandard => 'Standard (Shafi\'i, Maliki, Hanbali)';
 
   @override
+  String get prayerBackToToday => 'Back to today';
+
+  @override
+  String get prayerCalendarTitle => 'Monthly prayer calendar';
+
+  @override
   String get prayerCity => 'City';
+
+  @override
+  String get prayerClock => 'Time format';
+
+  @override
+  String get prayerClock12 => '12-hour (1:05 PM)';
+
+  @override
+  String get prayerClock24 => '24-hour (13:05)';
 
   @override
   String prayerCompassLabel(String deg) {
@@ -495,6 +566,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String prayerDate(String date) {
     return 'Date: $date';
   }
+
+  @override
+  String get prayerDayCol => 'Day';
 
   @override
   String prayerDecrease(String name) {
@@ -508,9 +582,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get prayerFajr => 'Fajr';
 
   @override
+  String get prayerGeoDenied => 'Location permission was denied. Choose a city from the list instead.';
+
+  @override
+  String get prayerGeoUnavailable => 'Could not get your location. Turn on location services or choose a city.';
+
+  @override
   String prayerHighLat(String list) {
     return 'High-latitude rule applied to: $list';
   }
+
+  @override
+  String get prayerHijriCol => 'Hijri';
 
   @override
   String prayerIn(String time) {
@@ -524,6 +607,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prayerIsha => 'Isha';
+
+  @override
+  String get prayerLocating => 'Locating…';
 
   @override
   String get prayerMaghrib => 'Maghrib';
@@ -542,10 +628,25 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get prayerNextDay => 'Next day';
+
+  @override
+  String get prayerNextMonth => 'Next month';
+
+  @override
   String get prayerNoPrayerToday => 'Prayer times cannot be calculated here today (polar day or night)';
 
   @override
   String get prayerNorth => 'N';
+
+  @override
+  String get prayerOpenCalendar => 'Monthly calendar';
+
+  @override
+  String get prayerPrevDay => 'Previous day';
+
+  @override
+  String get prayerPrevMonth => 'Previous month';
 
   @override
   String get prayerQibla => 'Qibla direction';
@@ -577,6 +678,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prayerTitle => 'Prayer times';
+
+  @override
+  String get prayerUseLocation => 'Use my location';
 
   @override
   String get qiblaFacing => 'You are facing the qibla';
@@ -629,6 +733,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quranBookmarked => 'Bookmarked';
 
   @override
+  String get quranClearSearch => 'Clear search';
+
+  @override
   String get quranContinueReading => 'Continue reading';
 
   @override
@@ -644,9 +751,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quranGoToPage => 'Go to page';
 
   @override
+  String quranHizbN(String n) {
+    return 'Hizb $n';
+  }
+
+  @override
+  String get quranIndex => 'Quran index';
+
+  @override
+  String get quranIndexSearch => 'Search';
+
+  @override
   String quranJuz(String juz) {
     return 'Juz $juz';
   }
+
+  @override
+  String get quranJuzOrdinals => '1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30';
+
+  @override
+  String quranJuzTitle(String ordinal) {
+    return 'Juz $ordinal';
+  }
+
+  @override
+  String get quranListView => 'List view';
 
   @override
   String get quranMeccan => 'Meccan';
@@ -679,6 +808,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quranPrevPage => 'Previous page';
+
+  @override
+  String quranQuarterLine(String surah, String ayah, String page) {
+    return '$surah $ayah · Page $page';
+  }
+
+  @override
+  String quranQuarterOfHizb(String q, String n) {
+    return 'Quarter $q of hizb $n';
+  }
 
   @override
   String get quranRemoveBookmark => 'Remove bookmark';
@@ -715,12 +854,28 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String quranSurahLine(String page, String count, String kind) {
+    return 'Page $page · $count ayahs · $kind';
+  }
+
+  @override
   String quranSurahN(String n) {
     return 'Surah $n';
   }
 
   @override
+  String quranSurahTitle(String name) {
+    return '$name';
+  }
+
+  @override
   String get quranSurahs => 'Surahs';
+
+  @override
+  String get quranTabQuarters => 'Quarters';
+
+  @override
+  String get quranTabSurahs => 'Surahs';
 
   @override
   String get radioDuration => 'Play for';

@@ -146,11 +146,66 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhanEnable => 'نبّهني عند دخول وقت الصلاة';
 
   @override
+  String get adhanExtras => 'تنبيهات قبل الأذان والإقامة';
+
+  @override
+  String get adhanExtrasNote => 'يصدر تنبيه قبل الأذان وتنبيه الإقامة بنغمة الهاتف القصيرة، وليس بصوت الأذان.';
+
+  @override
   String get adhanIosNote => 'على الآيفون يُسمع التكبير الأول فقط في الإشعار (النظام يسمح بـ٣٠ ثانية بحد أقصى).';
+
+  @override
+  String get adhanIqama => 'تنبيه الإقامة بعد الأذان';
+
+  @override
+  String adhanIqamaBody(String name, String minutes) {
+    return 'إقامة صلاة $name بعد $minutes دقيقة من الأذان';
+  }
+
+  @override
+  String adhanIqamaDecrease(String name) {
+    return 'إنقاص دقيقة من إقامة $name';
+  }
+
+  @override
+  String adhanIqamaIncrease(String name) {
+    return 'زيادة دقيقة لإقامة $name';
+  }
+
+  @override
+  String adhanIqamaMinutes(String n) {
+    return '$n دقيقة بعد الأذان';
+  }
+
+  @override
+  String adhanIqamaTitle(String name) {
+    return 'حان موعد إقامة صلاة $name';
+  }
 
   @override
   String get adhanNote =>
       'تُجدول على هذا الجهاز مسبقًا وتشتغل حتى لو التطبيق مقفول، ويجدّدها فتح التطبيق. لو التنبيه اتأخر، اسمح للتطبيق بـ«المنبّهات والتذكيرات» وأوقف توفير البطارية له.';
+
+  @override
+  String get adhanPre => 'تنبيه قبل الأذان';
+
+  @override
+  String adhanPreBody(String name) {
+    return 'استعد لصلاة $name';
+  }
+
+  @override
+  String adhanPreMinutes(String n) {
+    return 'قبل $n دقيقة';
+  }
+
+  @override
+  String get adhanPreOff => 'بدون';
+
+  @override
+  String adhanPreTitle(String minutes, String name) {
+    return 'بقي $minutes دقيقة على أذان $name';
+  }
 
   @override
   String get adhanPreview => 'اسمع الأذان';
@@ -482,7 +537,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get prayerAsrStandard => 'الجمهور (الشافعي والمالكي والحنبلي)';
 
   @override
+  String get prayerBackToToday => 'العودة إلى اليوم';
+
+  @override
+  String get prayerCalendarTitle => 'تقويم الصلاة الشهري';
+
+  @override
   String get prayerCity => 'المدينة';
+
+  @override
+  String get prayerClock => 'صيغة الوقت';
+
+  @override
+  String get prayerClock12 => '١٢ ساعة (١:٠٥ م)';
+
+  @override
+  String get prayerClock24 => '٢٤ ساعة (١٣:٠٥)';
 
   @override
   String prayerCompassLabel(String deg) {
@@ -493,6 +563,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String prayerDate(String date) {
     return 'التاريخ: $date';
   }
+
+  @override
+  String get prayerDayCol => 'اليوم';
 
   @override
   String prayerDecrease(String name) {
@@ -506,9 +579,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get prayerFajr => 'الفجر';
 
   @override
+  String get prayerGeoDenied => 'رُفض إذن الموقع. اختر مدينة من القائمة بدلًا من ذلك.';
+
+  @override
+  String get prayerGeoUnavailable => 'تعذّر تحديد الموقع. تأكد من تشغيل خدمة الموقع أو اختر مدينة.';
+
+  @override
   String prayerHighLat(String list) {
     return 'طُبّقت قاعدة خطوط العرض العليا على: $list';
   }
+
+  @override
+  String get prayerHijriCol => 'هجري';
 
   @override
   String prayerIn(String time) {
@@ -522,6 +604,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get prayerIsha => 'العشاء';
+
+  @override
+  String get prayerLocating => 'جارٍ تحديد الموقع…';
 
   @override
   String get prayerMaghrib => 'المغرب';
@@ -540,10 +625,25 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get prayerNextDay => 'اليوم التالي';
+
+  @override
+  String get prayerNextMonth => 'الشهر التالي';
+
+  @override
   String get prayerNoPrayerToday => 'لا يمكن حساب المواقيت هنا اليوم (نهار أو ليل قطبي)';
 
   @override
   String get prayerNorth => 'ش';
+
+  @override
+  String get prayerOpenCalendar => 'التقويم الشهري';
+
+  @override
+  String get prayerPrevDay => 'اليوم السابق';
+
+  @override
+  String get prayerPrevMonth => 'الشهر السابق';
 
   @override
   String get prayerQibla => 'اتجاه القبلة';
@@ -575,6 +675,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get prayerTitle => 'مواقيت الصلاة';
+
+  @override
+  String get prayerUseLocation => 'استخدم موقعي';
 
   @override
   String get qiblaFacing => 'أنت متجه نحو القبلة';
@@ -628,6 +731,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get quranBookmarked => 'تم حفظ العلامة';
 
   @override
+  String get quranClearSearch => 'مسح البحث';
+
+  @override
   String get quranContinueReading => 'متابعة القراءة';
 
   @override
@@ -643,9 +749,32 @@ class AppLocalizationsAr extends AppLocalizations {
   String get quranGoToPage => 'اذهب إلى صفحة';
 
   @override
+  String quranHizbN(String n) {
+    return 'الحزب $n';
+  }
+
+  @override
+  String get quranIndex => 'فهرس السور';
+
+  @override
+  String get quranIndexSearch => 'البحث';
+
+  @override
   String quranJuz(String juz) {
     return 'الجزء $juz';
   }
+
+  @override
+  String get quranJuzOrdinals =>
+      'الأول|الثاني|الثالث|الرابع|الخامس|السادس|السابع|الثامن|التاسع|العاشر|الحادي عشر|الثاني عشر|الثالث عشر|الرابع عشر|الخامس عشر|السادس عشر|السابع عشر|الثامن عشر|التاسع عشر|العشرون|الحادي والعشرون|الثاني والعشرون|الثالث والعشرون|الرابع والعشرون|الخامس والعشرون|السادس والعشرون|السابع والعشرون|الثامن والعشرون|التاسع والعشرون|الثلاثون';
+
+  @override
+  String quranJuzTitle(String ordinal) {
+    return 'الجزء $ordinal';
+  }
+
+  @override
+  String get quranListView => 'عرض كقائمة';
 
   @override
   String get quranMeccan => 'مكية';
@@ -678,6 +807,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get quranPrevPage => 'الصفحة السابقة';
+
+  @override
+  String quranQuarterLine(String surah, String ayah, String page) {
+    return '$surah: $ayah - الصفحة $page';
+  }
+
+  @override
+  String quranQuarterOfHizb(String q, String n) {
+    return 'الربع $q من الحزب $n';
+  }
 
   @override
   String get quranRemoveBookmark => 'حذف العلامة';
@@ -714,12 +853,28 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String quranSurahLine(String page, String count, String kind) {
+    return 'الصفحة $page - آياتها $count - $kind';
+  }
+
+  @override
   String quranSurahN(String n) {
     return 'سورة $n';
   }
 
   @override
+  String quranSurahTitle(String name) {
+    return 'سورة $name';
+  }
+
+  @override
   String get quranSurahs => 'السور';
+
+  @override
+  String get quranTabQuarters => 'الأرباع';
+
+  @override
+  String get quranTabSurahs => 'السور';
 
   @override
   String get radioDuration => 'مدة التشغيل';

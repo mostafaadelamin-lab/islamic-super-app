@@ -199,13 +199,111 @@
   "@adhanEnable": {
     "description": "shared key \"adhan.enable\""
   },
+  "adhanExtras": "Reminder before the adhan and iqama",
+  "@adhanExtras": {
+    "description": "shared key \"adhan.extras\""
+  },
+  "adhanExtrasNote": "The reminder and the iqama alert use the phone's short tone, not the adhan recording.",
+  "@adhanExtrasNote": {
+    "description": "shared key \"adhan.extrasNote\""
+  },
   "adhanIosNote": "On iPhone the notification plays the opening takbir only (the system allows at most 30 seconds).",
   "@adhanIosNote": {
     "description": "shared key \"adhan.iosNote\""
   },
+  "adhanIqama": "Iqama alert after the adhan",
+  "@adhanIqama": {
+    "description": "shared key \"adhan.iqama\""
+  },
+  "adhanIqamaBody": "{name} iqama, {minutes} minutes after the adhan",
+  "@adhanIqamaBody": {
+    "description": "shared key \"adhan.iqamaBody\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "adhanIqamaDecrease": "One minute less before {name} iqama",
+  "@adhanIqamaDecrease": {
+    "description": "shared key \"adhan.iqamaDecrease\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adhanIqamaIncrease": "One minute more before {name} iqama",
+  "@adhanIqamaIncrease": {
+    "description": "shared key \"adhan.iqamaIncrease\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adhanIqamaMinutes": "{n} min after the adhan",
+  "@adhanIqamaMinutes": {
+    "description": "shared key \"adhan.iqamaMinutes\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "adhanIqamaTitle": "Iqama time for {name}",
+  "@adhanIqamaTitle": {
+    "description": "shared key \"adhan.iqamaTitle\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "adhanNote": "Scheduled ahead on this device and works even when the app is closed; opening the app renews them. If an alert is late, allow \"Alarms & reminders\" and turn off battery optimisation for the app.",
   "@adhanNote": {
     "description": "shared key \"adhan.note\""
+  },
+  "adhanPre": "Reminder before the adhan",
+  "@adhanPre": {
+    "description": "shared key \"adhan.pre\""
+  },
+  "adhanPreBody": "Get ready for {name} prayer",
+  "@adhanPreBody": {
+    "description": "shared key \"adhan.preBody\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adhanPreMinutes": "{n} minutes before",
+  "@adhanPreMinutes": {
+    "description": "shared key \"adhan.preMinutes\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "adhanPreOff": "Off",
+  "@adhanPreOff": {
+    "description": "shared key \"adhan.preOff\""
+  },
+  "adhanPreTitle": "{minutes} minutes until the {name} adhan",
+  "@adhanPreTitle": {
+    "description": "shared key \"adhan.preTitle\"",
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "adhanPreview": "Listen to the adhan",
   "@adhanPreview": {
@@ -680,9 +778,29 @@
   "@prayerAsrStandard": {
     "description": "shared key \"prayer.asrStandard\""
   },
+  "prayerBackToToday": "Back to today",
+  "@prayerBackToToday": {
+    "description": "shared key \"prayer.backToToday\""
+  },
+  "prayerCalendarTitle": "Monthly prayer calendar",
+  "@prayerCalendarTitle": {
+    "description": "shared key \"prayer.calendarTitle\""
+  },
   "prayerCity": "City",
   "@prayerCity": {
     "description": "shared key \"prayer.city\""
+  },
+  "prayerClock": "Time format",
+  "@prayerClock": {
+    "description": "shared key \"prayer.clock\""
+  },
+  "prayerClock12": "12-hour (1:05 PM)",
+  "@prayerClock12": {
+    "description": "shared key \"prayer.clock12\""
+  },
+  "prayerClock24": "24-hour (13:05)",
+  "@prayerClock24": {
+    "description": "shared key \"prayer.clock24\""
   },
   "prayerCompassLabel": "Compass: qibla is {deg}° clockwise from north",
   "@prayerCompassLabel": {
@@ -702,6 +820,10 @@
       }
     }
   },
+  "prayerDayCol": "Day",
+  "@prayerDayCol": {
+    "description": "shared key \"prayer.dayCol\""
+  },
   "prayerDecrease": "Subtract a minute from {name}",
   "@prayerDecrease": {
     "description": "shared key \"prayer.decrease\"",
@@ -719,6 +841,14 @@
   "@prayerFajr": {
     "description": "shared key \"prayer.fajr\""
   },
+  "prayerGeoDenied": "Location permission was denied. Choose a city from the list instead.",
+  "@prayerGeoDenied": {
+    "description": "shared key \"prayer.geoDenied\""
+  },
+  "prayerGeoUnavailable": "Could not get your location. Turn on location services or choose a city.",
+  "@prayerGeoUnavailable": {
+    "description": "shared key \"prayer.geoUnavailable\""
+  },
   "prayerHighLat": "High-latitude rule applied to: {list}",
   "@prayerHighLat": {
     "description": "shared key \"prayer.highLat\"",
@@ -727,6 +857,10 @@
         "type": "String"
       }
     }
+  },
+  "prayerHijriCol": "Hijri",
+  "@prayerHijriCol": {
+    "description": "shared key \"prayer.hijriCol\""
   },
   "prayerIn": "in {time}",
   "@prayerIn": {
@@ -749,6 +883,10 @@
   "prayerIsha": "Isha",
   "@prayerIsha": {
     "description": "shared key \"prayer.isha\""
+  },
+  "prayerLocating": "Locating…",
+  "@prayerLocating": {
+    "description": "shared key \"prayer.locating\""
   },
   "prayerMaghrib": "Maghrib",
   "@prayerMaghrib": {
@@ -776,6 +914,14 @@
       }
     }
   },
+  "prayerNextDay": "Next day",
+  "@prayerNextDay": {
+    "description": "shared key \"prayer.nextDay\""
+  },
+  "prayerNextMonth": "Next month",
+  "@prayerNextMonth": {
+    "description": "shared key \"prayer.nextMonth\""
+  },
   "prayerNoPrayerToday": "Prayer times cannot be calculated here today (polar day or night)",
   "@prayerNoPrayerToday": {
     "description": "shared key \"prayer.noPrayerToday\""
@@ -783,6 +929,18 @@
   "prayerNorth": "N",
   "@prayerNorth": {
     "description": "shared key \"prayer.north\""
+  },
+  "prayerOpenCalendar": "Monthly calendar",
+  "@prayerOpenCalendar": {
+    "description": "shared key \"prayer.openCalendar\""
+  },
+  "prayerPrevDay": "Previous day",
+  "@prayerPrevDay": {
+    "description": "shared key \"prayer.prevDay\""
+  },
+  "prayerPrevMonth": "Previous month",
+  "@prayerPrevMonth": {
+    "description": "shared key \"prayer.prevMonth\""
   },
   "prayerQibla": "Qibla direction",
   "@prayerQibla": {
@@ -829,6 +987,10 @@
   "prayerTitle": "Prayer times",
   "@prayerTitle": {
     "description": "shared key \"prayer.title\""
+  },
+  "prayerUseLocation": "Use my location",
+  "@prayerUseLocation": {
+    "description": "shared key \"prayer.useLocation\""
   },
   "qiblaFacing": "You are facing the qibla",
   "@qiblaFacing": {
@@ -907,6 +1069,10 @@
   "@quranBookmarked": {
     "description": "shared key \"quran.bookmarked\""
   },
+  "quranClearSearch": "Clear search",
+  "@quranClearSearch": {
+    "description": "shared key \"quran.clearSearch\""
+  },
   "quranContinueReading": "Continue reading",
   "@quranContinueReading": {
     "description": "shared key \"quran.continueReading\""
@@ -927,6 +1093,23 @@
   "@quranGoToPage": {
     "description": "shared key \"quran.goToPage\""
   },
+  "quranHizbN": "Hizb {n}",
+  "@quranHizbN": {
+    "description": "shared key \"quran.hizbN\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "quranIndex": "Quran index",
+  "@quranIndex": {
+    "description": "shared key \"quran.index\""
+  },
+  "quranIndexSearch": "Search",
+  "@quranIndexSearch": {
+    "description": "shared key \"quran.indexSearch\""
+  },
   "quranJuz": "Juz {juz}",
   "@quranJuz": {
     "description": "shared key \"quran.juz\"",
@@ -935,6 +1118,23 @@
         "type": "String"
       }
     }
+  },
+  "quranJuzOrdinals": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30",
+  "@quranJuzOrdinals": {
+    "description": "shared key \"quran.juzOrdinals\""
+  },
+  "quranJuzTitle": "Juz {ordinal}",
+  "@quranJuzTitle": {
+    "description": "shared key \"quran.juzTitle\"",
+    "placeholders": {
+      "ordinal": {
+        "type": "String"
+      }
+    }
+  },
+  "quranListView": "List view",
+  "@quranListView": {
+    "description": "shared key \"quran.listView\""
   },
   "quranMeccan": "Meccan",
   "@quranMeccan": {
@@ -980,6 +1180,33 @@
   "quranPrevPage": "Previous page",
   "@quranPrevPage": {
     "description": "shared key \"quran.prevPage\""
+  },
+  "quranQuarterLine": "{surah} {ayah} · Page {page}",
+  "@quranQuarterLine": {
+    "description": "shared key \"quran.quarterLine\"",
+    "placeholders": {
+      "surah": {
+        "type": "String"
+      },
+      "ayah": {
+        "type": "String"
+      },
+      "page": {
+        "type": "String"
+      }
+    }
+  },
+  "quranQuarterOfHizb": "Quarter {q} of hizb {n}",
+  "@quranQuarterOfHizb": {
+    "description": "shared key \"quran.quarterOfHizb\"",
+    "placeholders": {
+      "q": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
   },
   "quranRemoveBookmark": "Remove bookmark",
   "@quranRemoveBookmark": {
@@ -1034,6 +1261,21 @@
       }
     }
   },
+  "quranSurahLine": "Page {page} · {count} ayahs · {kind}",
+  "@quranSurahLine": {
+    "description": "shared key \"quran.surahLine\"",
+    "placeholders": {
+      "page": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
   "quranSurahN": "Surah {n}",
   "@quranSurahN": {
     "description": "shared key \"quran.surahN\"",
@@ -1043,9 +1285,26 @@
       }
     }
   },
+  "quranSurahTitle": "{name}",
+  "@quranSurahTitle": {
+    "description": "shared key \"quran.surahTitle\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "quranSurahs": "Surahs",
   "@quranSurahs": {
     "description": "shared key \"quran.surahs\""
+  },
+  "quranTabQuarters": "Quarters",
+  "@quranTabQuarters": {
+    "description": "shared key \"quran.tabQuarters\""
+  },
+  "quranTabSurahs": "Surahs",
+  "@quranTabSurahs": {
+    "description": "shared key \"quran.tabSurahs\""
   },
   "radioDuration": "Play for",
   "@radioDuration": {

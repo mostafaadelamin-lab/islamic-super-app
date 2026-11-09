@@ -326,17 +326,95 @@ abstract class AppLocalizations {
   /// **'Notify me at prayer times'**
   String get adhanEnable;
 
+  /// shared key "adhan.extras"
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder before the adhan and iqama'**
+  String get adhanExtras;
+
+  /// shared key "adhan.extrasNote"
+  ///
+  /// In en, this message translates to:
+  /// **'The reminder and the iqama alert use the phone\'s short tone, not the adhan recording.'**
+  String get adhanExtrasNote;
+
   /// shared key "adhan.iosNote"
   ///
   /// In en, this message translates to:
   /// **'On iPhone the notification plays the opening takbir only (the system allows at most 30 seconds).'**
   String get adhanIosNote;
 
+  /// shared key "adhan.iqama"
+  ///
+  /// In en, this message translates to:
+  /// **'Iqama alert after the adhan'**
+  String get adhanIqama;
+
+  /// shared key "adhan.iqamaBody"
+  ///
+  /// In en, this message translates to:
+  /// **'{name} iqama, {minutes} minutes after the adhan'**
+  String adhanIqamaBody(String name, String minutes);
+
+  /// shared key "adhan.iqamaDecrease"
+  ///
+  /// In en, this message translates to:
+  /// **'One minute less before {name} iqama'**
+  String adhanIqamaDecrease(String name);
+
+  /// shared key "adhan.iqamaIncrease"
+  ///
+  /// In en, this message translates to:
+  /// **'One minute more before {name} iqama'**
+  String adhanIqamaIncrease(String name);
+
+  /// shared key "adhan.iqamaMinutes"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min after the adhan'**
+  String adhanIqamaMinutes(String n);
+
+  /// shared key "adhan.iqamaTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Iqama time for {name}'**
+  String adhanIqamaTitle(String name);
+
   /// shared key "adhan.note"
   ///
   /// In en, this message translates to:
   /// **'Scheduled ahead on this device and works even when the app is closed; opening the app renews them. If an alert is late, allow \"Alarms & reminders\" and turn off battery optimisation for the app.'**
   String get adhanNote;
+
+  /// shared key "adhan.pre"
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder before the adhan'**
+  String get adhanPre;
+
+  /// shared key "adhan.preBody"
+  ///
+  /// In en, this message translates to:
+  /// **'Get ready for {name} prayer'**
+  String adhanPreBody(String name);
+
+  /// shared key "adhan.preMinutes"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} minutes before'**
+  String adhanPreMinutes(String n);
+
+  /// shared key "adhan.preOff"
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get adhanPreOff;
+
+  /// shared key "adhan.preTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} minutes until the {name} adhan'**
+  String adhanPreTitle(String minutes, String name);
 
   /// shared key "adhan.preview"
   ///
@@ -944,11 +1022,41 @@ abstract class AppLocalizations {
   /// **'Standard (Shafi\'i, Maliki, Hanbali)'**
   String get prayerAsrStandard;
 
+  /// shared key "prayer.backToToday"
+  ///
+  /// In en, this message translates to:
+  /// **'Back to today'**
+  String get prayerBackToToday;
+
+  /// shared key "prayer.calendarTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly prayer calendar'**
+  String get prayerCalendarTitle;
+
   /// shared key "prayer.city"
   ///
   /// In en, this message translates to:
   /// **'City'**
   String get prayerCity;
+
+  /// shared key "prayer.clock"
+  ///
+  /// In en, this message translates to:
+  /// **'Time format'**
+  String get prayerClock;
+
+  /// shared key "prayer.clock12"
+  ///
+  /// In en, this message translates to:
+  /// **'12-hour (1:05 PM)'**
+  String get prayerClock12;
+
+  /// shared key "prayer.clock24"
+  ///
+  /// In en, this message translates to:
+  /// **'24-hour (13:05)'**
+  String get prayerClock24;
 
   /// shared key "prayer.compassLabel"
   ///
@@ -961,6 +1069,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Date: {date}'**
   String prayerDate(String date);
+
+  /// shared key "prayer.dayCol"
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get prayerDayCol;
 
   /// shared key "prayer.decrease"
   ///
@@ -980,11 +1094,29 @@ abstract class AppLocalizations {
   /// **'Fajr'**
   String get prayerFajr;
 
+  /// shared key "prayer.geoDenied"
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission was denied. Choose a city from the list instead.'**
+  String get prayerGeoDenied;
+
+  /// shared key "prayer.geoUnavailable"
+  ///
+  /// In en, this message translates to:
+  /// **'Could not get your location. Turn on location services or choose a city.'**
+  String get prayerGeoUnavailable;
+
   /// shared key "prayer.highLat"
   ///
   /// In en, this message translates to:
   /// **'High-latitude rule applied to: {list}'**
   String prayerHighLat(String list);
+
+  /// shared key "prayer.hijriCol"
+  ///
+  /// In en, this message translates to:
+  /// **'Hijri'**
+  String get prayerHijriCol;
 
   /// shared key "prayer.in"
   ///
@@ -1003,6 +1135,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Isha'**
   String get prayerIsha;
+
+  /// shared key "prayer.locating"
+  ///
+  /// In en, this message translates to:
+  /// **'Locating…'**
+  String get prayerLocating;
 
   /// shared key "prayer.maghrib"
   ///
@@ -1028,6 +1166,18 @@ abstract class AppLocalizations {
   /// **'Next prayer: {name}'**
   String prayerNext(String name);
 
+  /// shared key "prayer.nextDay"
+  ///
+  /// In en, this message translates to:
+  /// **'Next day'**
+  String get prayerNextDay;
+
+  /// shared key "prayer.nextMonth"
+  ///
+  /// In en, this message translates to:
+  /// **'Next month'**
+  String get prayerNextMonth;
+
   /// shared key "prayer.noPrayerToday"
   ///
   /// In en, this message translates to:
@@ -1039,6 +1189,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'N'**
   String get prayerNorth;
+
+  /// shared key "prayer.openCalendar"
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly calendar'**
+  String get prayerOpenCalendar;
+
+  /// shared key "prayer.prevDay"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous day'**
+  String get prayerPrevDay;
+
+  /// shared key "prayer.prevMonth"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous month'**
+  String get prayerPrevMonth;
 
   /// shared key "prayer.qibla"
   ///
@@ -1093,6 +1261,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Prayer times'**
   String get prayerTitle;
+
+  /// shared key "prayer.useLocation"
+  ///
+  /// In en, this message translates to:
+  /// **'Use my location'**
+  String get prayerUseLocation;
 
   /// shared key "qibla.facing"
   ///
@@ -1172,6 +1346,12 @@ abstract class AppLocalizations {
   /// **'Bookmarked'**
   String get quranBookmarked;
 
+  /// shared key "quran.clearSearch"
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get quranClearSearch;
+
   /// shared key "quran.continueReading"
   ///
   /// In en, this message translates to:
@@ -1202,11 +1382,47 @@ abstract class AppLocalizations {
   /// **'Go to page'**
   String get quranGoToPage;
 
+  /// shared key "quran.hizbN"
+  ///
+  /// In en, this message translates to:
+  /// **'Hizb {n}'**
+  String quranHizbN(String n);
+
+  /// shared key "quran.index"
+  ///
+  /// In en, this message translates to:
+  /// **'Quran index'**
+  String get quranIndex;
+
+  /// shared key "quran.indexSearch"
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get quranIndexSearch;
+
   /// shared key "quran.juz"
   ///
   /// In en, this message translates to:
   /// **'Juz {juz}'**
   String quranJuz(String juz);
+
+  /// shared key "quran.juzOrdinals"
+  ///
+  /// In en, this message translates to:
+  /// **'1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30'**
+  String get quranJuzOrdinals;
+
+  /// shared key "quran.juzTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Juz {ordinal}'**
+  String quranJuzTitle(String ordinal);
+
+  /// shared key "quran.listView"
+  ///
+  /// In en, this message translates to:
+  /// **'List view'**
+  String get quranListView;
 
   /// shared key "quran.meccan"
   ///
@@ -1268,6 +1484,18 @@ abstract class AppLocalizations {
   /// **'Previous page'**
   String get quranPrevPage;
 
+  /// shared key "quran.quarterLine"
+  ///
+  /// In en, this message translates to:
+  /// **'{surah} {ayah} · Page {page}'**
+  String quranQuarterLine(String surah, String ayah, String page);
+
+  /// shared key "quran.quarterOfHizb"
+  ///
+  /// In en, this message translates to:
+  /// **'Quarter {q} of hizb {n}'**
+  String quranQuarterOfHizb(String q, String n);
+
   /// shared key "quran.removeBookmark"
   ///
   /// In en, this message translates to:
@@ -1328,17 +1556,41 @@ abstract class AppLocalizations {
   /// **'{surah} : {ayah}'**
   String quranSurahAyah(String surah, String ayah);
 
+  /// shared key "quran.surahLine"
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page} · {count} ayahs · {kind}'**
+  String quranSurahLine(String page, String count, String kind);
+
   /// shared key "quran.surahN"
   ///
   /// In en, this message translates to:
   /// **'Surah {n}'**
   String quranSurahN(String n);
 
+  /// shared key "quran.surahTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'{name}'**
+  String quranSurahTitle(String name);
+
   /// shared key "quran.surahs"
   ///
   /// In en, this message translates to:
   /// **'Surahs'**
   String get quranSurahs;
+
+  /// shared key "quran.tabQuarters"
+  ///
+  /// In en, this message translates to:
+  /// **'Quarters'**
+  String get quranTabQuarters;
+
+  /// shared key "quran.tabSurahs"
+  ///
+  /// In en, this message translates to:
+  /// **'Surahs'**
+  String get quranTabSurahs;
 
   /// shared key "radio.duration"
   ///

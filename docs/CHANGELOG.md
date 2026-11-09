@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased] — Quran index: surahs and quarters — 2026-11-09
+### Added
+- New Quran index ("فهرس السور") on the Quran tab (mobile) and /quran (web): a Surahs / Quarters toggle, a search box with a clear button, and lists grouped under juz headers (الجزء الأول، الثاني …).
+- Surahs: star badge with the number, "سورة …", and "الصفحة X - آياتها N - مكية/مدنية". Tapping opens the Mushaf at that page; a small list icon still opens the text (list) view.
+- Quarters: the 240 hizb quarters with badge 1, 1/4, 2/4, 3/4, 2 …, the opening words of the quarter in Uthmani script (taken unchanged from the canonical text), and "سورة X: ayah - الصفحة N".
+- The surah and quarter of the current position are highlighted, and the list opens scrolled to them. Mobile also has `showQuranIndexSheet()` (bottom sheet returning the chosen page) for the Mushaf reader.
+- Data: `pages.v1.json` now carries `quarters` (start ayah, page, juz, hizb). Starts come from npm quran-meta@7.0.0 (MIT, Tanzil metadata) and are checked against the rub' al-hizb sign ۞ in the KFGQPC text; where they differ the Mushaf wins (15:49 instead of Tanzil's 15:50).
+
 ## [Unreleased] — New home page (owner's mockup) — 2026-11-09
 ### Changed
 - Home page redesigned on the website and the mobile app after the owner's mockup: place ("Egypt - Cairo") with a settings button; mosque drawing; next prayer name, its time in large digits and a live countdown; a day card with the weekday, Gregorian and Hijri dates, a "Prayer calendar" button, the five prayers with icons (next one highlighted) and sunrise / sunset; big tiles for the Quran, Adhkar & Dua and Prayer times; wide tiles for Tasbih, Qibla, Islamic reels and Prophets' stories; "Main sections" opens the full list.

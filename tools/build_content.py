@@ -7,7 +7,8 @@ for a particular font happens at render time in the client, never in content.
 
 Outputs (all deterministic, sorted keys, UTF-8):
   content/quran/dist/quran.v1.json       surahs + ayah text (+ English translation)
-  content/quran/dist/pages.v1.json       Madinah Mushaf 1405H page boundaries (604)
+  content/quran/dist/pages.v1.json       Madinah Mushaf 1405H page boundaries (604), juz starts and
+                                         the 240 hizb quarters (rub' al-hizb) with their start ayah and page
   content/quran/dist/integrity.v1.json   SHA-256 hashes used by every platform's tests
   content/quran/dist/mushaf-lines.v1.json  15-line Madinah page layout as word ranges of the canonical text
   content/adhkar/dist/adhkar.v1.json     morning/evening adhkar
@@ -33,6 +34,8 @@ QURAN_SRC = C / "quran/upstream/quran-json-3.1.2.quran.json"
 EN_SRC = C / "translations/upstream/quran-json-3.1.2.quran_en.json"
 MADINA = C / "quran/madina-1405h-manifest.json"
 REF = ROOT / "tests/vectors/quran-reference.json"
+QUARTERS_SRC = C / "quran/upstream/quran-meta-7.0.0-hizb-quarters.json"
+RUB_SIGN = "\u06de"  # ۞ printed in the Mushaf at the start of each hizb quarter
 
 QURAN_VERSION = "1.0.0"
 
@@ -49,6 +52,54 @@ def dump(path: pathlib.Path, obj) -> None:
 def ayah_hash(surahs) -> str:
     # Canonical line format: "<surah>|<ayah>|<text>\n" over all ayahs in order.
     return sha("".join(f"{s['n']}|{i + 1}|{t}\n" for s in surahs for i, t in enumerate(s["ayahs"])))
+
+
+def page_of(pages, ref) -> int:
+    r = list(ref)
+    best = 1
+    for p in pages:
+        if p["start"] <= r:
+            best = p["page"]
+    return best
+
+
+def build_quarters(surahs, pages, juz):
+    """240 hizb quarters. Starts come from quran-meta (Tanzil) and are checked
+    against the ۞ sign in the canonical text; no text is stored here, apps read
+    the opening words from quran.v1.json."""
+    problems = []
+    src = json.loads(QUARTERS_SRC.read_text(encoding="utf-8"))["hizbQuarterList"]
+    flat = [(s["n"], a) for s in surahs for a in range(1, s["ayahCount"] + 1)]
+    marked = {(s["n"], a) for s in surahs for a, t in enumerate(s["ayahs"], 1) if RUB_SIGN in t}
+    starts = []
+    for x in src:
+        if not 1 <= x <= len(flat):
+            continue
+        ref = flat[x - 1]
+        if ref not in marked and ref[1] != 1 and flat[x - 2] in marked:
+            ref = flat[x - 2]  # the Mushaf prints the sign one ayah earlier (only 15:49 vs Tanzil 15:50)
+        starts.append(ref)
+    if len(starts) != 240:
+        problems.append(f"quarters: {len(starts)} starts, expected 240")
+    if sorted(set(starts)) != starts:
+        problems.append("quarters: starts not strictly increasing")
+    if missing := marked - set(starts):
+        problems.append(f"quarters: rub' al-hizb sign without a quarter start at {sorted(missing)}")
+    if odd := [r for r in starts if r not in marked and r[1] != 1]:
+        problems.append(f"quarters: start without the sign and not at a surah start: {odd}")
+    for j in juz:
+        k = (j["juz"] - 1) * 8
+        if k < len(starts) and list(starts[k]) != j["start"]:
+            problems.append(f"quarters: juz {j['juz']} start {j['start']} != quarter {k + 1} {starts[k]}")
+    out = [{
+        "n": i + 1,
+        "hizb": i // 4 + 1,
+        "quarter": i % 4,  # 0 = start of the hizb, 1..3 = 1/4, 2/4, 3/4
+        "juz": i // 8 + 1,
+        "start": list(r),
+        "page": page_of(pages, r),
+    } for i, r in enumerate(starts)]
+    return out, problems
 
 
 def main() -> int:
@@ -84,6 +135,7 @@ def main() -> int:
             end = (s1, counts[s1 - 1])
         pages.append({"page": i + 1, "start": list(start), "end": list(end)})
     juz = [{"juz": k + 1, "page": row[2], "start": [row[0] + 1, max(1, row[1] - 1)]} for k, row in enumerate(m["juz"])]
+    quarters, quarter_problems = build_quarters(surahs, pages, juz)
 
     bundle = {
         "schema": "quran.v1",
@@ -98,7 +150,8 @@ def main() -> int:
         "surahs": surahs,
     }
     dump(C / "quran/dist/quran.v1.json", bundle)
-    dump(C / "quran/dist/pages.v1.json", {"schema": "pages.v1", "layout": "Madinah Mushaf KFGQPC 1405H", "pages": pages, "juz": juz})
+    dump(C / "quran/dist/pages.v1.json", {"schema": "pages.v1", "layout": "Madinah Mushaf KFGQPC 1405H", "pages": pages, "juz": juz, "quarters": quarters,
+         "quartersSource": "starts from npm quran-meta@7.0.0 (Tanzil data), checked against the rub' al-hizb sign in the canonical KFGQPC text; where the two differ the Mushaf text wins (15:49)"})
 
     integrity = {
         "schema": "integrity.v1",
@@ -144,7 +197,7 @@ def main() -> int:
     dump(C / "VERSIONS.json", {"quran": QURAN_VERSION, "pages": "1405H-1", "adhkar": "1.0.0", "tafsir": "muyassar-1"})
 
     # Independent cross-checks against reference data (not derived from the source).
-    problems = list(line_problems)
+    problems = list(line_problems) + quarter_problems
     # --- Curated reels (YouTube/Instagram embeds, religious review status) -------
     _, reel_problems = reels.build()
     problems += [f"reels: {x}" for x in reel_problems]
