@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/domain/reels.dart';
+import 'package:rattil/ui/reels_screen.dart';
 
 import '../helpers.dart';
 
@@ -28,7 +29,8 @@ void main() {
       'items': [
         item({}),
         item({'ref': 'short'}),
-        item({'platform': 'instagram'}),
+        item({'platform': 'tiktok'}),
+        item({'platform': 'instagram', 'ref': 'a/b'}),
         item({'category': 'music'}),
         item({'status': 'rejected'}),
         item({
@@ -91,5 +93,33 @@ void main() {
     expect(bundled, readRepoJson('content/reels/dist/reels.v1.json'));
     final cat = ReelCatalog.fromJson(bundled as Map<String, dynamic>);
     expect(cat.items.length, (bundled['items'] as List).length, reason: 'every shipped reel is valid');
+  });
+
+  test('Instagram reels: official embed page, admonition category, no poster', () {
+    final r = ReelCatalog.fromJson({
+      'schema': 'reels.v1',
+      'items': [
+        item({'platform': 'instagram', 'ref': 'C1a2B3c4D5e', 'category': 'admonition'}),
+      ],
+    }).items.single;
+    expect(r.id, 'ig-C1a2B3c4D5e');
+    expect(r.isInstagram, isTrue);
+    expect(r.url, 'https://www.instagram.com/reel/C1a2B3c4D5e/');
+    expect(r.instagramEmbedUri.toString(), 'https://www.instagram.com/reel/C1a2B3c4D5e/embed/');
+    expect(r.posterUrl, isNull);
+    expect(r.category, 'admonition');
+  });
+
+  test('only official embed pages may load inside the feed', () {
+    bool ok(String s) => reelNavigationAllowedInFeed(Uri.parse(s));
+    expect(ok('https://www.youtube-nocookie.com/embed/hTtlD-u4_HI?autoplay=1'), isTrue);
+    expect(ok('https://www.instagram.com/reel/C1a2B3c4D5e/embed/'), isTrue);
+    expect(ok('https://www.instagram.com/p/C1a2B3c4D5e/embed/captioned/'), isTrue);
+    expect(ok('about:blank'), isTrue);
+    expect(ok('https://www.youtube.com/watch?v=hTtlD-u4_HI'), isFalse);
+    expect(ok('https://www.instagram.com/someuser/'), isFalse);
+    expect(ok('https://www.instagram.com/reel/C1a2B3c4D5e/'), isFalse);
+    expect(ok('http://www.instagram.com/reel/C1a2B3c4D5e/embed/'), isFalse);
+    expect(ok('https://evil.example/embed/'), isFalse);
   });
 }

@@ -200,10 +200,11 @@ test.describe("recitation player logic (fake media element: the test dispatches 
     const requests = await mockAudio(page); // safety net: nothing may reach the network
     await fakeMedia(page);
     await readyMushaf(page, "/ar/page/2/");
-    await expect(page.getByTestId("player")).toBeHidden();
+    // the reader's own player card is always there; while idle its play button plays the page
+    await expect(page.getByTestId("reader-player")).toBeVisible();
+    await expect(page.getByTestId("player-toggle")).toHaveCount(0);
     await page.getByTestId("play-page").click();
-    await expect(page.getByTestId("player")).toBeVisible();
-    await expect(page.getByTestId("player-status")).toContainText("اتصال");
+    await expect(page.getByTestId("player-toggle")).toBeVisible();
     await isPlaying(page);
     expect(await played(page)).toEqual(["Alafasy_128kbps/001001.mp3"]); // basmala before al-Baqarah 1
     await expect(page.getByTestId("player-now")).toHaveText("البسملة — البقرة");
@@ -227,7 +228,7 @@ test.describe("recitation player logic (fake media element: the test dispatches 
       "Alafasy_128kbps/002003.mp3",
     ]);
     await page.getByTestId("player-stop").click();
-    await expect(page.getByTestId("player")).toBeHidden();
+    await expect(page.getByTestId("play-page")).toBeVisible();
     await expect(page.locator(".seg.playing")).toHaveCount(0);
     expect(await media(page)).toMatchObject({ src: "", paused: true });
     expect(requests).toEqual([]);
@@ -253,7 +254,7 @@ test.describe("recitation player logic (fake media element: the test dispatches 
     await expect(page.getByTestId("player-now")).toHaveText("البقرة، الآية ٦");
     expect(await played(page)).toEqual(["Alafasy_128kbps/002005.mp3", "Alafasy_128kbps/002006.mp3"]);
     await page.getByTestId("player-stop").click();
-    await expect(page.getByTestId("player")).toBeHidden();
+    await expect(page.getByTestId("play-page")).toBeVisible();
     expect(requests).toEqual([]);
   });
 
@@ -263,7 +264,9 @@ test.describe("recitation player logic (fake media element: the test dispatches 
     const requests = await mockAudio(page);
     await fakeMedia(page);
     await readyMushaf(page, "/en/page/604/");
-    await page.getByTestId("play-surah").click(); // the first surah on the page: al-Ikhlas
+    await page.getByRole("button", { name: "Al-Ikhlas, ayah 1 — ayah options", exact: true }).click();
+    await page.getByTestId("play-surah").click(); // "Listen to al-Ikhlas" in the ayah's sheet
+    await page.getByTestId("act-close").click();
     await expect(page.getByTestId("player-now")).toHaveText(/Al-Ikhlas/);
     await isPlaying(page);
     await page.getByTestId("player-toggle").click();
@@ -303,7 +306,7 @@ test.describe("recitation player logic (fake media element: the test dispatches 
       "Husary_128kbps/112002.mp3",
     ]);
     await page.getByTestId("player-stop").click();
-    await expect(page.getByTestId("player")).toBeHidden();
+    await expect(page.getByTestId("play-page")).toBeVisible();
     // the choice is persisted and shown in Settings
     await page.goto("/en/settings/");
     await expect(page.getByLabel("Reciter")).toHaveValue("Husary_128kbps");
@@ -345,7 +348,7 @@ test.describe("recitation (mocked network: everyayah.com answered by a local sil
     const gap = seen.get("Alafasy_128kbps/002001.mp3")! - seen.get("Alafasy_128kbps/001001.mp3")!;
     expect(gap).toBeGreaterThanOrEqual(1_500);
     await page.getByTestId("player-stop").click();
-    await expect(page.getByTestId("player")).toBeHidden();
+    await expect(page.getByTestId("play-page")).toBeVisible();
   });
 
   test("a failed audio request shows a clear error (mocked network returning 404)", async ({ page }) => {
@@ -354,7 +357,7 @@ test.describe("recitation (mocked network: everyayah.com answered by a local sil
     await page.getByTestId("play-page").click();
     await expect(page.getByTestId("player-error")).toContainText("تعذّر تحميل التلاوة");
     await page.getByTestId("player-stop").click();
-    await expect(page.getByTestId("player")).toBeHidden();
+    await expect(page.getByTestId("play-page")).toBeVisible();
   });
 
   test("offline: playing says that recitation needs the internet", async ({ page, context, browserName }) => {

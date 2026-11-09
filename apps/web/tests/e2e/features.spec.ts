@@ -192,6 +192,7 @@ test.describe("Quran", () => {
     await expect(page).toHaveURL("/ar/page/2/");
     await page.getByTestId("prev-page").click();
     await expect(page).toHaveURL("/ar/page/1/");
+    await page.getByTestId("reader-help").click(); // go-to-page lives in the help sheet
     const input = page.getByLabel("اذهب إلى صفحة");
     for (const bad of ["0", "605", "abc", "1.5"]) {
       await input.fill(bad);

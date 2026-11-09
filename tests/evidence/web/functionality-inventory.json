@@ -3767,16 +3767,37 @@
  },
  {
   "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "رجوع إلى الفهرس",
+  "href": "/ar/quran/?page=1"
+ },
+ {
+  "page": "/ar/page/1/",
   "tag": "button",
   "type": "button",
-  "name": "استمع للصفحة",
+  "name": "المصحف",
   "href": null
  },
  {
   "page": "/ar/page/1/",
   "tag": "button",
   "type": "button",
-  "name": "استمع لسورة الفاتحة",
+  "name": "الآيات",
+  "href": null
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "مساعدة",
   "href": null
  },
  {
@@ -3830,6 +3851,48 @@
  },
  {
   "page": "/ar/page/1/",
+  "tag": "select",
+  "type": null,
+  "name": "القارئمشاري راشد العفاسيياسر الدوسريعبد الرحمن السديسماهر المعيقليمحمد صديق المن",
+  "href": null
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "استماع مع التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "الآية السابقة",
+  "href": null
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "استمع للصفحة",
+  "href": null
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "الآية التالية",
+  "href": null
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "select",
+  "type": null,
+  "name": "تكرار كل آية١ مرة٢ مرة٣ مرة٥ مرة١٠ مرة",
+  "href": null
+ },
+ {
+  "page": "/ar/page/1/",
   "tag": "button",
   "type": "button",
   "name": "الصفحة السابقة",
@@ -3851,24 +3914,31 @@
  },
  {
   "page": "/ar/page/1/",
-  "tag": "input",
-  "type": "text",
-  "name": "اذهب إلى صفحة",
-  "href": null
+  "tag": "a",
+  "type": null,
+  "name": "الفهرس",
+  "href": "/ar/quran/?page=1"
+ },
+ {
+  "page": "/ar/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "إشارات مرجعية",
+  "href": "/ar/bookmarks/"
  },
  {
   "page": "/ar/page/1/",
   "tag": "button",
-  "type": "submit",
-  "name": "اذهب",
+  "type": "button",
+  "name": "الختمة",
   "href": null
  },
  {
   "page": "/ar/page/1/",
   "tag": "a",
   "type": null,
-  "name": "قراءة الآيات كقائمة مع الترجمة (الفاتحة، الآية ١)",
-  "href": "/ar/surah/1/#a-1"
+  "name": "البحث",
+  "href": "/ar/search/"
  },
  {
   "page": "/ar/page/1/",
@@ -3942,16 +4012,37 @@
  },
  {
   "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "رجوع إلى الفهرس",
+  "href": "/ar/quran/?page=604"
+ },
+ {
+  "page": "/ar/page/604/",
   "tag": "button",
   "type": "button",
-  "name": "استمع للصفحة",
+  "name": "المصحف",
   "href": null
  },
  {
   "page": "/ar/page/604/",
   "tag": "button",
   "type": "button",
-  "name": "استمع لسورة الإخلاص",
+  "name": "الآيات",
+  "href": null
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "button",
+  "type": "button",
+  "name": "مساعدة",
   "href": null
  },
  {
@@ -4061,6 +4152,48 @@
  },
  {
   "page": "/ar/page/604/",
+  "tag": "select",
+  "type": null,
+  "name": "القارئمشاري راشد العفاسيياسر الدوسريعبد الرحمن السديسماهر المعيقليمحمد صديق المن",
+  "href": null
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "استماع مع التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "button",
+  "type": "button",
+  "name": "الآية السابقة",
+  "href": null
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "button",
+  "type": "button",
+  "name": "استمع للصفحة",
+  "href": null
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "button",
+  "type": "button",
+  "name": "الآية التالية",
+  "href": null
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "select",
+  "type": null,
+  "name": "تكرار كل آية١ مرة٢ مرة٣ مرة٥ مرة١٠ مرة",
+  "href": null
+ },
+ {
+  "page": "/ar/page/604/",
   "tag": "button",
   "type": "button",
   "name": "الصفحة السابقة",
@@ -4082,24 +4215,31 @@
  },
  {
   "page": "/ar/page/604/",
-  "tag": "input",
-  "type": "text",
-  "name": "اذهب إلى صفحة",
-  "href": null
+  "tag": "a",
+  "type": null,
+  "name": "الفهرس",
+  "href": "/ar/quran/?page=604"
+ },
+ {
+  "page": "/ar/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "إشارات مرجعية",
+  "href": "/ar/bookmarks/"
  },
  {
   "page": "/ar/page/604/",
   "tag": "button",
-  "type": "submit",
-  "name": "اذهب",
+  "type": "button",
+  "name": "الختمة",
   "href": null
  },
  {
   "page": "/ar/page/604/",
   "tag": "a",
   "type": null,
-  "name": "قراءة الآيات كقائمة مع الترجمة (الإخلاص، الآية ١)",
-  "href": "/ar/surah/112/#a-1"
+  "name": "البحث",
+  "href": "/ar/search/"
  },
  {
   "page": "/ar/page/604/",
@@ -4936,16 +5076,37 @@
  },
  {
   "page": "/ar/page/3/",
+  "tag": "a",
+  "type": null,
+  "name": "رجوع إلى الفهرس",
+  "href": "/ar/quran/?page=3"
+ },
+ {
+  "page": "/ar/page/3/",
   "tag": "button",
   "type": "button",
-  "name": "استمع للصفحة",
+  "name": "المصحف",
   "href": null
  },
  {
   "page": "/ar/page/3/",
   "tag": "button",
   "type": "button",
-  "name": "استمع لسورة البقرة",
+  "name": "الآيات",
+  "href": null
+ },
+ {
+  "page": "/ar/page/3/",
+  "tag": "button",
+  "type": "button",
+  "name": "التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/page/3/",
+  "tag": "button",
+  "type": "button",
+  "name": "مساعدة",
   "href": null
  },
  {
@@ -5027,6 +5188,48 @@
  },
  {
   "page": "/ar/page/3/",
+  "tag": "select",
+  "type": null,
+  "name": "القارئمشاري راشد العفاسيياسر الدوسريعبد الرحمن السديسماهر المعيقليمحمد صديق المن",
+  "href": null
+ },
+ {
+  "page": "/ar/page/3/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "استماع مع التفسير",
+  "href": null
+ },
+ {
+  "page": "/ar/page/3/",
+  "tag": "button",
+  "type": "button",
+  "name": "الآية السابقة",
+  "href": null
+ },
+ {
+  "page": "/ar/page/3/",
+  "tag": "button",
+  "type": "button",
+  "name": "استمع للصفحة",
+  "href": null
+ },
+ {
+  "page": "/ar/page/3/",
+  "tag": "button",
+  "type": "button",
+  "name": "الآية التالية",
+  "href": null
+ },
+ {
+  "page": "/ar/page/3/",
+  "tag": "select",
+  "type": null,
+  "name": "تكرار كل آية١ مرة٢ مرة٣ مرة٥ مرة١٠ مرة",
+  "href": null
+ },
+ {
+  "page": "/ar/page/3/",
   "tag": "button",
   "type": "button",
   "name": "الصفحة السابقة",
@@ -5048,24 +5251,31 @@
  },
  {
   "page": "/ar/page/3/",
-  "tag": "input",
-  "type": "text",
-  "name": "اذهب إلى صفحة",
-  "href": null
+  "tag": "a",
+  "type": null,
+  "name": "الفهرس",
+  "href": "/ar/quran/?page=3"
+ },
+ {
+  "page": "/ar/page/3/",
+  "tag": "a",
+  "type": null,
+  "name": "إشارات مرجعية",
+  "href": "/ar/bookmarks/"
  },
  {
   "page": "/ar/page/3/",
   "tag": "button",
-  "type": "submit",
-  "name": "اذهب",
+  "type": "button",
+  "name": "الختمة",
   "href": null
  },
  {
   "page": "/ar/page/3/",
   "tag": "a",
   "type": null,
-  "name": "قراءة الآيات كقائمة مع الترجمة (البقرة، الآية ٦)",
-  "href": "/ar/surah/2/#a-6"
+  "name": "البحث",
+  "href": "/ar/search/"
  },
  {
   "page": "/ar/page/3/",
@@ -5204,7 +5414,7 @@
   "page": "/ar/more/",
   "tag": "a",
   "type": null,
-  "name": "ريلز إسلاميةتلاوات خاشعة ودروس مختصرة",
+  "name": "ريلز إسلاميةتلاوات ودروس ومواعظ",
   "href": "/ar/reels/"
  },
  {
@@ -11901,16 +12111,37 @@
  },
  {
   "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Back to the index",
+  "href": "/en/quran/?page=1"
+ },
+ {
+  "page": "/en/page/1/",
   "tag": "button",
   "type": "button",
-  "name": "Play page",
+  "name": "Mushaf",
   "href": null
  },
  {
   "page": "/en/page/1/",
   "tag": "button",
   "type": "button",
-  "name": "Play Al-Fatihah",
+  "name": "Verses",
+  "href": null
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "Help",
   "href": null
  },
  {
@@ -11964,6 +12195,48 @@
  },
  {
   "page": "/en/page/1/",
+  "tag": "select",
+  "type": null,
+  "name": "ReciterMishary Rashid AlafasyYasser Al-DosariAbdurrahman As-SudaisMaher Al-Muaiq",
+  "href": null
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "Listen with tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "Previous ayah",
+  "href": null
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "Play page",
+  "href": null
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "button",
+  "type": "button",
+  "name": "Next ayah",
+  "href": null
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "select",
+  "type": null,
+  "name": "Repeat each ayah1×2×3×5×10×",
+  "href": null
+ },
+ {
+  "page": "/en/page/1/",
   "tag": "button",
   "type": "button",
   "name": "Previous page",
@@ -11985,24 +12258,31 @@
  },
  {
   "page": "/en/page/1/",
-  "tag": "input",
-  "type": "text",
-  "name": "Go to page",
-  "href": null
+  "tag": "a",
+  "type": null,
+  "name": "Index",
+  "href": "/en/quran/?page=1"
+ },
+ {
+  "page": "/en/page/1/",
+  "tag": "a",
+  "type": null,
+  "name": "Bookmarks",
+  "href": "/en/bookmarks/"
  },
  {
   "page": "/en/page/1/",
   "tag": "button",
-  "type": "submit",
-  "name": "Go",
+  "type": "button",
+  "name": "Khatma",
   "href": null
  },
  {
   "page": "/en/page/1/",
   "tag": "a",
   "type": null,
-  "name": "Read as a list with translation (Al-Fatihah, ayah 1)",
-  "href": "/en/surah/1/#a-1"
+  "name": "Search",
+  "href": "/en/search/"
  },
  {
   "page": "/en/page/1/",
@@ -12076,16 +12356,37 @@
  },
  {
   "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "Back to the index",
+  "href": "/en/quran/?page=604"
+ },
+ {
+  "page": "/en/page/604/",
   "tag": "button",
   "type": "button",
-  "name": "Play page",
+  "name": "Mushaf",
   "href": null
  },
  {
   "page": "/en/page/604/",
   "tag": "button",
   "type": "button",
-  "name": "Play Al-Ikhlas",
+  "name": "Verses",
+  "href": null
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "button",
+  "type": "button",
+  "name": "Help",
   "href": null
  },
  {
@@ -12195,6 +12496,48 @@
  },
  {
   "page": "/en/page/604/",
+  "tag": "select",
+  "type": null,
+  "name": "ReciterMishary Rashid AlafasyYasser Al-DosariAbdurrahman As-SudaisMaher Al-Muaiq",
+  "href": null
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "Listen with tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "button",
+  "type": "button",
+  "name": "Previous ayah",
+  "href": null
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "button",
+  "type": "button",
+  "name": "Play page",
+  "href": null
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "button",
+  "type": "button",
+  "name": "Next ayah",
+  "href": null
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "select",
+  "type": null,
+  "name": "Repeat each ayah1×2×3×5×10×",
+  "href": null
+ },
+ {
+  "page": "/en/page/604/",
   "tag": "button",
   "type": "button",
   "name": "Previous page",
@@ -12216,24 +12559,31 @@
  },
  {
   "page": "/en/page/604/",
-  "tag": "input",
-  "type": "text",
-  "name": "Go to page",
-  "href": null
+  "tag": "a",
+  "type": null,
+  "name": "Index",
+  "href": "/en/quran/?page=604"
+ },
+ {
+  "page": "/en/page/604/",
+  "tag": "a",
+  "type": null,
+  "name": "Bookmarks",
+  "href": "/en/bookmarks/"
  },
  {
   "page": "/en/page/604/",
   "tag": "button",
-  "type": "submit",
-  "name": "Go",
+  "type": "button",
+  "name": "Khatma",
   "href": null
  },
  {
   "page": "/en/page/604/",
   "tag": "a",
   "type": null,
-  "name": "Read as a list with translation (Al-Ikhlas, ayah 1)",
-  "href": "/en/surah/112/#a-1"
+  "name": "Search",
+  "href": "/en/search/"
  },
  {
   "page": "/en/page/604/",
@@ -13070,16 +13420,37 @@
  },
  {
   "page": "/en/page/3/",
+  "tag": "a",
+  "type": null,
+  "name": "Back to the index",
+  "href": "/en/quran/?page=3"
+ },
+ {
+  "page": "/en/page/3/",
   "tag": "button",
   "type": "button",
-  "name": "Play page",
+  "name": "Mushaf",
   "href": null
  },
  {
   "page": "/en/page/3/",
   "tag": "button",
   "type": "button",
-  "name": "Play Al-Baqarah",
+  "name": "Verses",
+  "href": null
+ },
+ {
+  "page": "/en/page/3/",
+  "tag": "button",
+  "type": "button",
+  "name": "Tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/page/3/",
+  "tag": "button",
+  "type": "button",
+  "name": "Help",
   "href": null
  },
  {
@@ -13161,6 +13532,48 @@
  },
  {
   "page": "/en/page/3/",
+  "tag": "select",
+  "type": null,
+  "name": "ReciterMishary Rashid AlafasyYasser Al-DosariAbdurrahman As-SudaisMaher Al-Muaiq",
+  "href": null
+ },
+ {
+  "page": "/en/page/3/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "Listen with tafsir",
+  "href": null
+ },
+ {
+  "page": "/en/page/3/",
+  "tag": "button",
+  "type": "button",
+  "name": "Previous ayah",
+  "href": null
+ },
+ {
+  "page": "/en/page/3/",
+  "tag": "button",
+  "type": "button",
+  "name": "Play page",
+  "href": null
+ },
+ {
+  "page": "/en/page/3/",
+  "tag": "button",
+  "type": "button",
+  "name": "Next ayah",
+  "href": null
+ },
+ {
+  "page": "/en/page/3/",
+  "tag": "select",
+  "type": null,
+  "name": "Repeat each ayah1×2×3×5×10×",
+  "href": null
+ },
+ {
+  "page": "/en/page/3/",
   "tag": "button",
   "type": "button",
   "name": "Previous page",
@@ -13182,24 +13595,31 @@
  },
  {
   "page": "/en/page/3/",
-  "tag": "input",
-  "type": "text",
-  "name": "Go to page",
-  "href": null
+  "tag": "a",
+  "type": null,
+  "name": "Index",
+  "href": "/en/quran/?page=3"
+ },
+ {
+  "page": "/en/page/3/",
+  "tag": "a",
+  "type": null,
+  "name": "Bookmarks",
+  "href": "/en/bookmarks/"
  },
  {
   "page": "/en/page/3/",
   "tag": "button",
-  "type": "submit",
-  "name": "Go",
+  "type": "button",
+  "name": "Khatma",
   "href": null
  },
  {
   "page": "/en/page/3/",
   "tag": "a",
   "type": null,
-  "name": "Read as a list with translation (Al-Baqarah, ayah 6)",
-  "href": "/en/surah/2/#a-6"
+  "name": "Search",
+  "href": "/en/search/"
  },
  {
   "page": "/en/page/3/",
@@ -13338,7 +13758,7 @@
   "page": "/en/more/",
   "tag": "a",
   "type": null,
-  "name": "Islamic reelsRecitations and short lessons",
+  "name": "Islamic reelsRecitations, lessons and admonitions",
   "href": "/en/reels/"
  },
  {

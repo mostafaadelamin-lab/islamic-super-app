@@ -1958,16 +1958,214 @@ abstract class AppLocalizations {
   /// **'Unlimited'**
   String get radioUnlimited;
 
+  /// shared key "reader.back"
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the index'**
+  String get readerBack;
+
+  /// shared key "reader.basmalaNow"
+  ///
+  /// In en, this message translates to:
+  /// **'Reciting the basmala'**
+  String get readerBasmalaNow;
+
+  /// shared key "reader.bookmarks"
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmarks'**
+  String get readerBookmarks;
+
+  /// shared key "reader.font"
+  ///
+  /// In en, this message translates to:
+  /// **'Text size'**
+  String get readerFont;
+
+  /// shared key "reader.fontSize"
+  ///
+  /// In en, this message translates to:
+  /// **'Text size: {size} — press to enlarge'**
+  String readerFontSize(String size);
+
+  /// shared key "reader.help"
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get readerHelp;
+
+  /// shared key "reader.help1"
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe the page to turn it, or use the page slider.'**
+  String get readerHelp1;
+
+  /// shared key "reader.help2"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap any ayah to listen to it and read its tafsir.'**
+  String get readerHelp2;
+
+  /// shared key "reader.help3"
+  ///
+  /// In en, this message translates to:
+  /// **'“Listen with tafsir” splits the screen in two: the ayah being recited, and its short tafsir below it.'**
+  String get readerHelp3;
+
+  /// shared key "reader.helpTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'How to use'**
+  String get readerHelpTitle;
+
+  /// shared key "reader.index"
+  ///
+  /// In en, this message translates to:
+  /// **'Index'**
+  String get readerIndex;
+
+  /// shared key "reader.khatma"
+  ///
+  /// In en, this message translates to:
+  /// **'Khatma'**
+  String get readerKhatma;
+
+  /// shared key "reader.khatmaContinue"
+  ///
+  /// In en, this message translates to:
+  /// **'Continue from page {page}'**
+  String readerKhatmaContinue(String page);
+
+  /// shared key "reader.khatmaDone"
+  ///
+  /// In en, this message translates to:
+  /// **'Khatma complete. May Allah accept it from you.'**
+  String get readerKhatmaDone;
+
+  /// shared key "reader.khatmaLeft"
+  ///
+  /// In en, this message translates to:
+  /// **'{left} pages left'**
+  String readerKhatmaLeft(String left);
+
+  /// shared key "reader.khatmaNone"
+  ///
+  /// In en, this message translates to:
+  /// **'No khatma yet. Start one and your progress is counted from the last page you read.'**
+  String get readerKhatmaNone;
+
+  /// shared key "reader.khatmaProgress"
+  ///
+  /// In en, this message translates to:
+  /// **'Read {done} of 604 pages ({pct}%)'**
+  String readerKhatmaProgress(String done, String pct);
+
+  /// shared key "reader.khatmaReset"
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the khatma'**
+  String get readerKhatmaReset;
+
+  /// shared key "reader.khatmaSince"
+  ///
+  /// In en, this message translates to:
+  /// **'Started on {date}'**
+  String readerKhatmaSince(String date);
+
+  /// shared key "reader.khatmaStart"
+  ///
+  /// In en, this message translates to:
+  /// **'Start a new khatma from al-Fatihah'**
+  String get readerKhatmaStart;
+
+  /// shared key "reader.khatmaTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Khatma (complete reading)'**
+  String get readerKhatmaTitle;
+
+  /// shared key "reader.listenWithTafsir"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen with tafsir'**
+  String get readerListenWithTafsir;
+
+  /// shared key "reader.playAyah"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to this ayah'**
+  String get readerPlayAyah;
+
+  /// shared key "reader.playWithTafsir"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen with tafsir'**
+  String get readerPlayWithTafsir;
+
+  /// shared key "reader.repeatN"
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat: {n}'**
+  String readerRepeatN(String n);
+
+  /// shared key "reader.search"
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get readerSearch;
+
+  /// shared key "reader.showPage"
+  ///
+  /// In en, this message translates to:
+  /// **'Show the page'**
+  String get readerShowPage;
+
+  /// shared key "reader.splitTafsir"
+  ///
+  /// In en, this message translates to:
+  /// **'Short tafsir'**
+  String get readerSplitTafsir;
+
+  /// shared key "reader.splitTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Now reciting'**
+  String get readerSplitTitle;
+
+  /// shared key "reader.tabAyat"
+  ///
+  /// In en, this message translates to:
+  /// **'Verses'**
+  String get readerTabAyat;
+
+  /// shared key "reader.tabMushaf"
+  ///
+  /// In en, this message translates to:
+  /// **'Mushaf'**
+  String get readerTabMushaf;
+
+  /// shared key "reader.tabTafsir"
+  ///
+  /// In en, this message translates to:
+  /// **'Tafsir'**
+  String get readerTabTafsir;
+
+  /// shared key "reels.cat.admonition"
+  ///
+  /// In en, this message translates to:
+  /// **'Advice & admonition'**
+  String get reelsCatAdmonition;
+
   /// shared key "reels.cat.lesson"
   ///
   /// In en, this message translates to:
-  /// **'Short lesson'**
+  /// **'Religious lesson'**
   String get reelsCatLesson;
 
   /// shared key "reels.cat.recitation"
   ///
   /// In en, this message translates to:
-  /// **'Moving recitation'**
+  /// **'Quran recitation'**
   String get reelsCatRecitation;
 
   /// shared key "reels.empty"
@@ -1991,20 +2189,38 @@ abstract class AppLocalizations {
   /// shared key "reels.note"
   ///
   /// In en, this message translates to:
-  /// **'Reels play from YouTube through its official player. They are limited to moving Quran recitations and short religious lessons in line with the Quran and Sunnah, and only reviewed reels are shown.'**
+  /// **'Reels play from YouTube and Instagram through their official players. They are limited to Quran recitations, religious lessons, and advice and admonitions in line with the Quran and Sunnah, and only reviewed reels are shown.'**
   String get reelsNote;
 
-  /// shared key "reels.open"
+  /// shared key "reels.open.instagram"
+  ///
+  /// In en, this message translates to:
+  /// **'Open on Instagram'**
+  String get reelsOpenInstagram;
+
+  /// shared key "reels.open.youtube"
   ///
   /// In en, this message translates to:
   /// **'Open on YouTube'**
-  String get reelsOpen;
+  String get reelsOpenYoutube;
 
   /// shared key "reels.pending"
   ///
   /// In en, this message translates to:
   /// **'This reel has not been religiously reviewed yet — you see it because reviewer mode is on'**
   String get reelsPending;
+
+  /// shared key "reels.platform.instagram"
+  ///
+  /// In en, this message translates to:
+  /// **'Instagram'**
+  String get reelsPlatformInstagram;
+
+  /// shared key "reels.platform.youtube"
+  ///
+  /// In en, this message translates to:
+  /// **'YouTube'**
+  String get reelsPlatformYoutube;
 
   /// shared key "reels.position"
   ///
@@ -2041,6 +2257,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reviewed short videos'**
   String get reelsSub;
+
+  /// shared key "reels.tapToPlay"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to play'**
+  String get reelsTapToPlay;
 
   /// shared key "reels.title"
   ///

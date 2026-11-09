@@ -235,6 +235,15 @@ class _Actions extends StatelessWidget {
           child: Wrap(
             spacing: DesignTokens.spaceSm,
             children: [
+              action('ayahPlayOne', Icons.play_circle_outline, l.readerPlayAyah, () {
+                Navigator.of(context).pop();
+                s.recitation.playFrom(ref, scope: PlayScope.ayah);
+              }),
+              action('ayahPlayTafsir', Icons.vertical_split_outlined, l.readerPlayWithTafsir, () {
+                Navigator.of(context).pop();
+                s.settings.setTafsirWithRecitation(true);
+                s.recitation.playFrom(ref);
+              }),
               action('ayahPlay', Icons.play_arrow, l.mushafPlayFromHere, () {
                 Navigator.of(context).pop();
                 s.recitation.playFrom(ref);

@@ -19,6 +19,32 @@ See docs/reports/GUIDELINES_AUDIT.md.
 ### Fixed (re-applied from the religious content review of 2026-11-07, which was lost with the GitHub suspension)
 - Umm al-Qura method: Isha is 120 min after Maghrib during Ramadan (90 min otherwise), on server, web and mobile. Ramadan dates come from the Umm al-Qura calendar table in methods.json (1440–1499 AH).
 - Web adhkar: the last two verses of al-Baqarah are in the evening list only (as on mobile).
+## [Unreleased] — Reels: Instagram + admonitions — 2026-11-09
+### Added
+- Reels now accept Instagram as well as YouTube (owner decision 2026-11-09). Instagram reels play through Instagram's official embed page (no Meta app, token or account); they need a tap to play.
+- Third reels category "advice and admonitions" (نصائح ومواعظ). Categories are now: Quran recitation, religious lesson, advice and admonitions.
+- Reels show a platform chip (YouTube / Instagram) and an "Open on YouTube / Instagram" button; Instagram reels show a placeholder instead of a poster off-screen.
+- Mobile: only the official embed pages may load inside the feed; any other link opens the YouTube/Instagram app or the browser.
+### Unchanged
+- Religious review gate (pending / approved / rejected): users still see approved reels only.
+
+## [Unreleased] — Mushaf reader redesign + listen with tafsir — 2026-11-09
+### Changed
+- Mushaf page reader redesigned on the website and the mobile app after the owner's mockup (layout only; our own icons and ornaments): tabs Mushaf / Ayat / Tafsir at the top, an ornate surah band, a floating recitation card (reciter drop-down, previous / play-pause / next, repeat count, "Listen with tafsir"), a page slider and a bottom bar (Index, Bookmarks, Khatma, Search). On phones the reader is full-screen.
+### Added
+- Tap any ayah: "Play this ayah", "Play from here", "Listen with tafsir", play the surah, bookmark, copy, and its Tafsir al-Muyassar entry.
+- "Listen with tafsir": the screen splits in two — the ayah being recited (highlighted) and its Tafsir al-Muyassar entry (KFGQPC, verbatim) — following the recitation ayah by ayah and across page turns; side by side on wide screens. "Show page" turns it off.
+- Ayat tab (the page's ayahs one by one, large) and Tafsir tab (each ayah followed by its tafsir, with a font-size button); tapping an ayah in either plays it.
+- Khatma tracker: start a khatma, pages read are marked after 4 s on a page, progress and "continue".
+- Integration build: this release merges the new home page, the Quran index and the Mushaf reader (branch integration/reader-home-index).
+
+## [Unreleased] — New home page (owner's mockup) — 2026-11-09
+### Changed
+- Home page redesigned on the website and the mobile app after the owner's mockup: place ("Egypt - Cairo") with a settings button; mosque drawing; next prayer name, its time in large digits and a live countdown; a day card with the weekday, Gregorian and Hijri dates, a "Prayer calendar" button, the five prayers with icons (next one highlighted) and sunrise / sunset; big tiles for the Quran, Adhkar & Dua and Prayer times; wide tiles for Tasbih, Qibla, Islamic reels and Prophets' stories; "Main sections" opens the full list.
+- Sunset is shown without the user's Maghrib adjustment. After Isha the card shows tomorrow's day and times.
+- "Continue reading" moved off the home page: it stays on the Quran page (web) and the Bookmarks screen (mobile). Hajj, Hisn al-Muslim, search and bookmarks are under "Main sections".
+### Added
+- Quran radio on the home page: continuous recitation of the whole Mushaf by the chosen reciter, starting from a random surah and wrapping round, with a play duration (unlimited, 15, 30, 45 or 60 minutes) that stops it through the sleep timer. Streams per ayah from everyayah.com, like the rest of the recitation.
 
 ## [Unreleased] — Quran index: surahs and quarters — 2026-11-09
 ### Added
