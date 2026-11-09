@@ -734,6 +734,12 @@ abstract class AppLocalizations {
   /// **'{n}×'**
   String audioRepeatN(String n);
 
+  /// shared key "audio.speed"
+  ///
+  /// In en, this message translates to:
+  /// **'Playback speed: {speed}×'**
+  String audioSpeed(String speed);
+
   /// shared key "audio.stop"
   ///
   /// In en, this message translates to:
@@ -793,6 +799,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Retry'**
   String get commonRetry;
+
+  /// shared key "downloads.cancel"
+  ///
+  /// In en, this message translates to:
+  /// **'Stop download'**
+  String get downloadsCancel;
+
+  /// shared key "downloads.delete"
+  ///
+  /// In en, this message translates to:
+  /// **'Delete download'**
+  String get downloadsDelete;
+
+  /// shared key "downloads.deleteAll"
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all'**
+  String get downloadsDeleteAll;
+
+  /// shared key "downloads.download"
+  ///
+  /// In en, this message translates to:
+  /// **'Download surah'**
+  String get downloadsDownload;
+
+  /// shared key "downloads.failed"
+  ///
+  /// In en, this message translates to:
+  /// **'The download failed. Check the connection and try again; files already saved are kept.'**
+  String get downloadsFailed;
+
+  /// shared key "downloads.note"
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded surahs play without internet. Downloads are for the reciter chosen now.'**
+  String get downloadsNote;
+
+  /// shared key "downloads.reciter"
+  ///
+  /// In en, this message translates to:
+  /// **'Reciter: {name}'**
+  String downloadsReciter(String name);
+
+  /// shared key "downloads.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded recitations'**
+  String get downloadsTitle;
+
+  /// shared key "downloads.used"
+  ///
+  /// In en, this message translates to:
+  /// **'Space used: {mb} MB'**
+  String downloadsUsed(String mb);
 
   /// shared key "hajj.hajj"
   ///

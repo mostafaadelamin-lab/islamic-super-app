@@ -352,5 +352,15 @@
   "worship.note": "Note",
   "worship.week": "Last 7 days",
   "worship.month": "Month",
-  "worship.private": "Kept on this device only."
+  "worship.private": "Kept on this device only.",
+  "audio.speed": "Playback speed: {speed}×",
+  "downloads.title": "Downloaded recitations",
+  "downloads.reciter": "Reciter: {name}",
+  "downloads.used": "Space used: {mb} MB",
+  "downloads.deleteAll": "Delete all",
+  "downloads.note": "Downloaded surahs play without internet. Downloads are for the reciter chosen now.",
+  "downloads.failed": "The download failed. Check the connection and try again; files already saved are kept.",
+  "downloads.cancel": "Stop download",
+  "downloads.delete": "Delete download",
+  "downloads.download": "Download surah"
 }

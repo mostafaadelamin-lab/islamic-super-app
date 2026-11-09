@@ -10,6 +10,9 @@ import 'l10n_ext.dart';
 import 'review_notice.dart';
 import 'widgets.dart';
 
+/// "1", "1.25", "0.75" for a speed.
+String _speedLabel(double s) => s == s.roundToDouble() ? s.toStringAsFixed(0) : s.toString();
+
 /// Mini player shown while a recitation is active: what is playing, previous /
 /// play-pause / next / stop, and a clear message when the audio cannot load.
 class MiniPlayer extends StatelessWidget {
@@ -99,6 +102,20 @@ class MiniPlayer extends StatelessWidget {
                       tooltip: l.audioNext,
                       icon: const Icon(Icons.skip_next),
                       onPressed: rec.next,
+                    ),
+                  if (!error)
+                    TextButton(
+                      key: const Key('audioSpeed'),
+                      style: TextButton.styleFrom(minimumSize: const Size(48, 48), padding: EdgeInsets.zero),
+                      onPressed: () {
+                        const c = SettingsController.speedChoices;
+                        rec.setSpeed(c[(c.indexOf(settings.audioSpeed) + 1) % c.length]);
+                      },
+                      child: Semantics(
+                        label: l.audioSpeed(context.num(_speedLabel(settings.audioSpeed))),
+                        excludeSemantics: true,
+                        child: Text('${context.num(_speedLabel(settings.audioSpeed))}×'),
+                      ),
                     ),
                   IconButton(
                     key: const Key('audioStop'),

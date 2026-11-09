@@ -385,6 +385,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String audioSpeed(String speed) {
+    return 'Playback speed: $speed×';
+  }
+
+  @override
   String get audioStop => 'Stop';
 
   @override
@@ -415,6 +420,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonRetry => 'Retry';
+
+  @override
+  String get downloadsCancel => 'Stop download';
+
+  @override
+  String get downloadsDelete => 'Delete download';
+
+  @override
+  String get downloadsDeleteAll => 'Delete all';
+
+  @override
+  String get downloadsDownload => 'Download surah';
+
+  @override
+  String get downloadsFailed =>
+      'The download failed. Check the connection and try again; files already saved are kept.';
+
+  @override
+  String get downloadsNote => 'Downloaded surahs play without internet. Downloads are for the reciter chosen now.';
+
+  @override
+  String downloadsReciter(String name) {
+    return 'Reciter: $name';
+  }
+
+  @override
+  String get downloadsTitle => 'Downloaded recitations';
+
+  @override
+  String downloadsUsed(String mb) {
+    return 'Space used: $mb MB';
+  }
 
   @override
   String get hajjHajj => 'Hajj';

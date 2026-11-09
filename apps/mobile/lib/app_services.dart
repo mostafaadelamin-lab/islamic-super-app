@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart' show TargetPlatform, defaultTargetPlatform;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -11,6 +14,7 @@ import 'data/content.dart';
 import 'data/devotions.dart';
 import 'data/khatma_store.dart';
 import 'data/worship_store.dart';
+import 'data/downloads.dart';
 import 'data/location.dart';
 import 'data/notifications.dart';
 import 'data/recitation.dart';
@@ -43,6 +47,7 @@ class AppServices {
     this.location = const GeolocatorLocation(),
     required this.khatma,
     required this.worship,
+    required this.downloads,
     required this.reminders,
     this.sharer = const SystemImageSharer(),
     required this.reelsFeed,
@@ -61,6 +66,7 @@ class AppServices {
     TafsirStore? tafsir,
     LocationProvider? location,
     ImageSharer? sharer,
+    Future<Directory> Function()? storageRoot,
   }) {
     final c = clock ?? DateTime.now;
     final settings = SettingsController(prefs, defaultCityId: content.cities.first.id);
@@ -92,10 +98,22 @@ class AppServices {
         ),
       ];
     });
+    final downloads = RecitationDownloads(
+      content: content,
+      httpClient: httpClient,
+      root: storageRoot ?? getApplicationSupportDirectory,
+    );
     final recitation = RecitationController(
       content: content,
       settings: settings,
       backendFactory: audioBackend ?? JustAudioBackend.new,
+      localFile: (reciter, item) async {
+        try {
+          return await downloads.localFile(reciter, item.audioRef, forSurah: item.ref.surah);
+        } catch (_) {
+          return null; // no storage (tests, restricted device): stream instead
+        }
+      },
     );
     final narration = NarrationController(
       settings: settings,
@@ -137,6 +155,7 @@ class AppServices {
       location: location ?? const GeolocatorLocation(),
       khatma: khatma,
       worship: WorshipController(settings, localToday),
+      downloads: downloads,
       reminders: reminders,
       sharer: sharer ?? const SystemImageSharer(),
       reelsFeed: ReelsFeedController(sources: content.reelSources, httpClient: httpClient, prefs: prefs, clock: c),
@@ -172,6 +191,9 @@ class AppServices {
 
   /// Worship tracker (prayers, fasting, notes per day).
   final WorshipController worship;
+
+  /// Recitations saved for listening offline.
+  final RecitationDownloads downloads;
 
   /// Repeating reminders (khatma portion, adhkar, Friday).
   final ReminderScheduler reminders;

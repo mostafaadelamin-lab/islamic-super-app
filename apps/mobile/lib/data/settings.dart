@@ -173,6 +173,18 @@ class SettingsController extends ChangeNotifier {
   }
 
   static const repeatChoices = [1, 2, 3, 5, 10];
+  static const speedChoices = [0.75, 1.0, 1.25, 1.5, 2.0];
+
+  /// Recitation playback speed (one of [speedChoices]; 1.0 = normal).
+  double get audioSpeed {
+    final v = _prefs.getDouble('audio.speed') ?? 1.0;
+    return speedChoices.contains(v) ? v : 1.0;
+  }
+
+  Future<void> setAudioSpeed(double v) async {
+    await _prefs.setDouble('audio.speed', speedChoices.contains(v) ? v : 1.0);
+    notifyListeners();
+  }
 
   /// How many times each ayah is played.
   int get repeat => (_prefs.getInt('audio.repeat') ?? 1).clamp(1, 10);

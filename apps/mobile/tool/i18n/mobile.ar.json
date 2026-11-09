@@ -352,5 +352,15 @@
   "worship.note": "ملاحظة",
   "worship.week": "آخر ٧ أيام",
   "worship.month": "الشهر",
-  "worship.private": "البيانات محفوظة على جهازك فقط."
+  "worship.private": "البيانات محفوظة على جهازك فقط.",
+  "audio.speed": "سرعة التلاوة: {speed}×",
+  "downloads.title": "تحميل التلاوات",
+  "downloads.reciter": "القارئ: {name}",
+  "downloads.used": "المساحة المستخدمة: {mb} ميجابايت",
+  "downloads.deleteAll": "حذف الكل",
+  "downloads.note": "السور المحمّلة تشتغل بدون إنترنت. التحميل للقارئ المختار حاليًا.",
+  "downloads.failed": "تعذّر التحميل. تأكد من الاتصال وحاول مرة أخرى؛ الملفات اللي اتحمّلت محفوظة.",
+  "downloads.cancel": "إيقاف التحميل",
+  "downloads.delete": "حذف التحميل",
+  "downloads.download": "تحميل السورة"
 }

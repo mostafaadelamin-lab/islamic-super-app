@@ -20,6 +20,9 @@ abstract class AudioBackend {
   Future<void> pause();
   Future<void> stop();
 
+  /// Playback speed (1.0 = normal).
+  Future<void> setSpeed(double speed);
+
   /// Fires each time the loaded file has played to its end.
   Stream<void> get completed;
   Future<void> dispose();
@@ -55,6 +58,9 @@ class JustAudioBackend implements AudioBackend {
   Future<void> stop() => _player.stop();
 
   @override
+  Future<void> setSpeed(double speed) => _player.setSpeed(speed);
+
+  @override
   Stream<void> get completed => _completed.stream;
 
   @override
@@ -75,10 +81,14 @@ class RecitationController extends ChangeNotifier {
     required AppContent content,
     required SettingsController settings,
     required AudioBackend Function() backendFactory,
+    Future<String?> Function(String reciter, QueueItem item)? localFile,
   }) : _content = content,
        _settings = settings,
-       _factory = backendFactory;
+       _factory = backendFactory,
+       _localFile = localFile;
 
+  /// A downloaded copy of an item's file, played instead of streaming.
+  final Future<String?> Function(String reciter, QueueItem item)? _localFile;
   final AppContent _content;
   final SettingsController _settings;
   final AudioBackend Function() _factory;
@@ -163,8 +173,11 @@ class RecitationController extends ChangeNotifier {
     final b = _ensureBackend();
     try {
       await b.stop();
-      await b.load(urlFor(item));
+      final local = await _localFile?.call(reciter.folder, item);
       if (gen != _generation) return;
+      await b.load(local != null ? Uri.file(local).toString() : urlFor(item));
+      if (gen != _generation) return;
+      await b.setSpeed(_settings.audioSpeed);
       await b.play();
       if (gen != _generation) return;
       _state = RecitationState.playing;
@@ -190,6 +203,13 @@ class RecitationController extends ChangeNotifier {
     _state = RecitationState.idle;
     _queue = const [];
     _index = 0;
+    notifyListeners();
+  }
+
+  /// Changes the playback speed now and for the next ayahs (kept in settings).
+  Future<void> setSpeed(double speed) async {
+    await _settings.setAudioSpeed(speed);
+    await _backend?.setSpeed(_settings.audioSpeed);
     notifyListeners();
   }
 

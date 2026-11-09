@@ -80,6 +80,9 @@ class TestApp {
   final SharedPreferences prefs;
 }
 
+/// Empty app storage for tests (path_provider has no plugin there).
+Directory? _testStorage;
+
 Future<TestApp> pumpApp(
   WidgetTester tester, {
   Map<String, Object> prefs = const {},
@@ -97,6 +100,7 @@ Future<TestApp> pumpApp(
   TafsirStore? tafsir,
   LocationProvider? location,
   FakeSharer? sharer,
+  Directory? storage,
 }) async {
   final c = content ?? _content!;
   SharedPreferences.setMockInitialValues({'locale': locale, ...prefs});
@@ -107,6 +111,7 @@ Future<TestApp> pumpApp(
     httpClient: httpClient ?? MockHttpClient(),
     clock: clock ?? () => fixedNow,
     audioBackend: () => audio ?? FakeAudioBackend(),
+    storageRoot: () async => storage ?? (_testStorage ??= Directory.systemTemp.createTempSync('rattil-test')),
     narrationBackend: () => narration ?? FakeNarrationBackend(),
     notifications: notifications ?? FakeNotifications(),
     adhanPlayer: adhanPlayer ?? FakeAdhanPlayer(),
@@ -260,6 +265,10 @@ class FakeAudioBackend implements AudioBackend {
 
   @override
   Future<void> stop() async => calls.add('stop');
+
+  double speed = 1.0;
+  @override
+  Future<void> setSpeed(double s) async => speed = s;
 
   /// The current file played to its end.
   void finish() => _completed.add(null);

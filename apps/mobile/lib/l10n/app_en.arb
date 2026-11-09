@@ -555,6 +555,15 @@
       }
     }
   },
+  "audioSpeed": "Playback speed: {speed}×",
+  "@audioSpeed": {
+    "description": "shared key \"audio.speed\"",
+    "placeholders": {
+      "speed": {
+        "type": "String"
+      }
+    }
+  },
   "audioStop": "Stop",
   "@audioStop": {
     "description": "shared key \"audio.stop\""
@@ -599,6 +608,52 @@
   "commonRetry": "Retry",
   "@commonRetry": {
     "description": "shared key \"common.retry\""
+  },
+  "downloadsCancel": "Stop download",
+  "@downloadsCancel": {
+    "description": "shared key \"downloads.cancel\""
+  },
+  "downloadsDelete": "Delete download",
+  "@downloadsDelete": {
+    "description": "shared key \"downloads.delete\""
+  },
+  "downloadsDeleteAll": "Delete all",
+  "@downloadsDeleteAll": {
+    "description": "shared key \"downloads.deleteAll\""
+  },
+  "downloadsDownload": "Download surah",
+  "@downloadsDownload": {
+    "description": "shared key \"downloads.download\""
+  },
+  "downloadsFailed": "The download failed. Check the connection and try again; files already saved are kept.",
+  "@downloadsFailed": {
+    "description": "shared key \"downloads.failed\""
+  },
+  "downloadsNote": "Downloaded surahs play without internet. Downloads are for the reciter chosen now.",
+  "@downloadsNote": {
+    "description": "shared key \"downloads.note\""
+  },
+  "downloadsReciter": "Reciter: {name}",
+  "@downloadsReciter": {
+    "description": "shared key \"downloads.reciter\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "downloadsTitle": "Downloaded recitations",
+  "@downloadsTitle": {
+    "description": "shared key \"downloads.title\""
+  },
+  "downloadsUsed": "Space used: {mb} MB",
+  "@downloadsUsed": {
+    "description": "shared key \"downloads.used\"",
+    "placeholders": {
+      "mb": {
+        "type": "String"
+      }
+    }
   },
   "hajjHajj": "Hajj",
   "@hajjHajj": {

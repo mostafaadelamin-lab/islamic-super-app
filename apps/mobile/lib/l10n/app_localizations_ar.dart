@@ -382,6 +382,11 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String audioSpeed(String speed) {
+    return 'سرعة التلاوة: $speed×';
+  }
+
+  @override
   String get audioStop => 'إيقاف';
 
   @override
@@ -412,6 +417,37 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get commonRetry => 'إعادة المحاولة';
+
+  @override
+  String get downloadsCancel => 'إيقاف التحميل';
+
+  @override
+  String get downloadsDelete => 'حذف التحميل';
+
+  @override
+  String get downloadsDeleteAll => 'حذف الكل';
+
+  @override
+  String get downloadsDownload => 'تحميل السورة';
+
+  @override
+  String get downloadsFailed => 'تعذّر التحميل. تأكد من الاتصال وحاول مرة أخرى؛ الملفات اللي اتحمّلت محفوظة.';
+
+  @override
+  String get downloadsNote => 'السور المحمّلة تشتغل بدون إنترنت. التحميل للقارئ المختار حاليًا.';
+
+  @override
+  String downloadsReciter(String name) {
+    return 'القارئ: $name';
+  }
+
+  @override
+  String get downloadsTitle => 'تحميل التلاوات';
+
+  @override
+  String downloadsUsed(String mb) {
+    return 'المساحة المستخدمة: $mb ميجابايت';
+  }
 
   @override
   String get hajjHajj => 'الحج';
