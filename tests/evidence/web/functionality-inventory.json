@@ -59,64 +59,99 @@
   "page": "/ar/",
   "tag": "a",
   "type": null,
-  "name": "كل مواقيت الصلاة",
+  "name": "الإعدادات",
+  "href": "/ar/settings/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "تقويم الصلاة",
   "href": "/ar/prayer/"
  },
  {
   "page": "/ar/",
   "tag": "a",
   "type": null,
-  "name": "المصحفمصحف المدينة · ١٥ سطرًا",
-  "href": "/ar/page/1/"
- },
- {
-  "page": "/ar/",
-  "tag": "a",
-  "type": null,
-  "name": "السورفهرس السور الـ١١٤",
+  "name": "القرآن الكريم",
   "href": "/ar/quran/"
  },
  {
   "page": "/ar/",
   "tag": "a",
   "type": null,
-  "name": "أذكار الصباح والمساءأذكار الصباح والمساء",
+  "name": "الأذكار والدعاء",
   "href": "/ar/adhkar/"
  },
  {
   "page": "/ar/",
   "tag": "a",
   "type": null,
-  "name": "حصن المسلمأدعية وأذكار اليوم",
-  "href": "/ar/hisn/"
+  "name": "مواقيت الصلاة",
+  "href": "/ar/prayer/"
  },
  {
   "page": "/ar/",
   "tag": "a",
   "type": null,
-  "name": "المسبحةعدّاد التسبيح",
+  "name": "التسبيح",
   "href": "/ar/tasbih/"
  },
  {
   "page": "/ar/",
   "tag": "a",
   "type": null,
-  "name": "اتجاه القبلةبوصلة حيّة",
+  "name": "اتجاه القبلة",
   "href": "/ar/qibla/"
  },
  {
   "page": "/ar/",
   "tag": "a",
   "type": null,
-  "name": "الحج والعمرةدليل المناسك",
-  "href": "/ar/hajj/"
+  "name": "ريلز إسلامية",
+  "href": "/ar/reels/"
  },
  {
   "page": "/ar/",
   "tag": "a",
   "type": null,
-  "name": "البحث في القرآناكتب كلمة",
-  "href": "/ar/search/"
+  "name": "قصص الأنبياء",
+  "href": "/ar/stories/"
+ },
+ {
+  "page": "/ar/",
+  "tag": "select",
+  "type": null,
+  "name": "القارئمشاري راشد العفاسيياسر الدوسريعبد الرحمن السديسماهر المعيقليمحمد صديق المن",
+  "href": null
+ },
+ {
+  "page": "/ar/",
+  "tag": "button",
+  "type": "button",
+  "name": "استماع",
+  "href": null
+ },
+ {
+  "page": "/ar/",
+  "tag": "button",
+  "type": "button",
+  "name": "زيادة المدة",
+  "href": null
+ },
+ {
+  "page": "/ar/",
+  "tag": "button",
+  "type": "button",
+  "name": "تقليل المدة",
+  "href": null
+ },
+ {
+  "page": "/ar/",
+  "tag": "a",
+  "type": null,
+  "name": "الأقسام الرئيسية",
+  "href": "/ar/more/"
  },
  {
   "page": "/ar/",
@@ -4306,6 +4341,20 @@
  },
  {
   "page": "/ar/prayer/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "نبّهني بالأذان عند دخول وقت الصلاة",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "اسمع الأذان",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
   "tag": "button",
   "type": "button",
   "name": "إنقاص الفجر دقيقة",
@@ -7262,7 +7311,7 @@
   "page": "/ar/stories/yusuf/",
   "tag": "select",
   "type": null,
-  "name": "القارئمشاري راشد العفاسيمحمود خليل الحصريالحصري (المصحف المعلّم)عبد الباسط عبد ا",
+  "name": "القارئمشاري راشد العفاسيياسر الدوسريعبد الرحمن السديسماهر المعيقليمحمد صديق المن",
   "href": null
  },
  {
@@ -8032,78 +8081,99 @@
   "page": "/en/",
   "tag": "a",
   "type": null,
-  "name": "All prayer times",
+  "name": "Settings",
+  "href": "/en/settings/"
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer calendar",
   "href": "/en/prayer/"
  },
  {
   "page": "/en/",
   "tag": "a",
   "type": null,
-  "name": "Page 3",
-  "href": "/en/page/3/"
- },
- {
-  "page": "/en/",
-  "tag": "a",
-  "type": null,
-  "name": "Al-Baqarah, ayah 6",
-  "href": "/en/surah/2/#a-6"
- },
- {
-  "page": "/en/",
-  "tag": "a",
-  "type": null,
-  "name": "MushafMadinah Mushaf · 15 lines",
-  "href": "/en/page/1/"
- },
- {
-  "page": "/en/",
-  "tag": "a",
-  "type": null,
-  "name": "SurahsIndex of the 114 surahs",
+  "name": "The Holy Quran",
   "href": "/en/quran/"
  },
  {
   "page": "/en/",
   "tag": "a",
   "type": null,
-  "name": "Morning & evening adhkarMorning & evening",
+  "name": "Adhkar & Dua",
   "href": "/en/adhkar/"
  },
  {
   "page": "/en/",
   "tag": "a",
   "type": null,
-  "name": "Hisn al-MuslimDaily supplications",
-  "href": "/en/hisn/"
+  "name": "Prayer times",
+  "href": "/en/prayer/"
  },
  {
   "page": "/en/",
   "tag": "a",
   "type": null,
-  "name": "TasbihDhikr counter",
+  "name": "Tasbih",
   "href": "/en/tasbih/"
  },
  {
   "page": "/en/",
   "tag": "a",
   "type": null,
-  "name": "Qibla directionLive compass",
+  "name": "Qibla direction",
   "href": "/en/qibla/"
  },
  {
   "page": "/en/",
   "tag": "a",
   "type": null,
-  "name": "Hajj & UmrahStep-by-step guide",
-  "href": "/en/hajj/"
+  "name": "Islamic reels",
+  "href": "/en/reels/"
  },
  {
   "page": "/en/",
   "tag": "a",
   "type": null,
-  "name": "Search the QuranType an Arabic word",
-  "href": "/en/search/"
+  "name": "Prophets' stories",
+  "href": "/en/stories/"
+ },
+ {
+  "page": "/en/",
+  "tag": "select",
+  "type": null,
+  "name": "ReciterMishary Rashid AlafasyYasser Al-DosariAbdurrahman As-SudaisMaher Al-Muaiq",
+  "href": null
+ },
+ {
+  "page": "/en/",
+  "tag": "button",
+  "type": "button",
+  "name": "Listen",
+  "href": null
+ },
+ {
+  "page": "/en/",
+  "tag": "button",
+  "type": "button",
+  "name": "Longer",
+  "href": null
+ },
+ {
+  "page": "/en/",
+  "tag": "button",
+  "type": "button",
+  "name": "Shorter",
+  "href": null
+ },
+ {
+  "page": "/en/",
+  "tag": "a",
+  "type": null,
+  "name": "Main sections",
+  "href": "/en/more/"
  },
  {
   "page": "/en/",
@@ -12307,6 +12377,20 @@
  },
  {
   "page": "/en/prayer/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "Alert me with the adhan at prayer times",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Listen to the adhan",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
   "tag": "button",
   "type": "button",
   "name": "Decrease Fajr by one minute",
@@ -15263,7 +15347,7 @@
   "page": "/en/stories/yusuf/",
   "tag": "select",
   "type": null,
-  "name": "ReciterMishary Rashid AlafasyMahmoud Khalil Al-HusaryAl-Husary (teaching)Abdul B",
+  "name": "ReciterMishary Rashid AlafasyYasser Al-DosariAbdurrahman As-SudaisMaher Al-Muaiq",
   "href": null
  },
  {

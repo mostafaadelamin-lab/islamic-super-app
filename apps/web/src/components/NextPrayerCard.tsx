@@ -4,27 +4,44 @@ import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
 import { resolveLocation } from "@/lib/cities";
-import { nextPrayer, todayTimes } from "@/lib/next-prayer";
-import { PRAYER_KEYS, type PrayerDay } from "@/lib/prayer";
+import { nextPrayer, OBLIGATORY, todayTimes } from "@/lib/next-prayer";
+import type { PrayerDay, PrayerKey } from "@/lib/prayer";
 import { formatCountdown, formatHHMM } from "@/lib/time";
-import { gregorianDate, hijriDate } from "@/lib/dates";
+import { gregorianDay, hijriDate, weekdayName } from "@/lib/dates";
 import { prayerStore } from "@/lib/settings";
 import { useStore } from "@/hooks/useStore";
 import { useNow } from "@/hooks/useNow";
-import { Icon } from "./Icon";
+import { Icon, type IconName } from "./Icon";
+import { MosqueArt } from "./MosqueArt";
+
+const MINUTE_MS = 60_000;
 
 interface Computed {
   today: PrayerDay;
   next: ReturnType<typeof nextPrayer>;
 }
 
-/** Home hero (like the "Adhan" apps): place, dates, next prayer with a live countdown, today's times. */
+const PRAYER_ICON: Record<PrayerKey, IconName> = {
+  fajr: "moon",
+  sunrise: "sunrise",
+  dhuhr: "sunHigh",
+  asr: "sunLow",
+  maghrib: "sunset",
+  isha: "moon",
+};
+
+/**
+ * Home top (owner's mockup, 2026-11-09): place + settings, mosque art, next prayer with its time and a live
+ * countdown; then the day card (weekday, Gregorian + Hijri dates, prayer calendar link), the five prayers and
+ * sunrise / sunset.
+ */
 export function NextPrayerCard({ locale }: { locale: Locale }) {
   const prefs = useStore(prayerStore);
   const now = useNow();
   const loc = resolveLocation(prefs);
-  const cityName = locale === "ar" ? loc.city?.nameAr : loc.city?.nameEn;
-  const place = cityName ?? t(locale, "home.myPlace");
+  const city = loc.city;
+  const cityLabel = locale === "ar" && city ? `${city.countryAr} - ${city.nameAr}` : city?.nameEn;
+  const place = cityLabel ?? t(locale, "home.myPlace");
   const q = { ...loc, asr: prefs.asr, adjustments: prefs.adjustments };
 
   let computed: Computed | null = null;
@@ -40,67 +57,126 @@ export function NextPrayerCard({ locale }: { locale: Locale }) {
   // After Isha the next prayer is tomorrow's Fajr: the list then shows tomorrow's times, with Fajr marked.
   const tomorrow = !!computed && !!next && next.at.getTime() !== computed.today.times[next.key].getTime();
   const listed = computed && next && tomorrow ? todayTimes(next.at, q) : (computed?.today ?? null);
+  // Sunset is the astronomical Maghrib time, without the user's Maghrib adjustment.
+  const sunset = listed
+    ? new Date(listed.times.maghrib.getTime() - Math.trunc(prefs.adjustments?.maghrib ?? 0) * MINUTE_MS)
+    : null;
+  const hhmm = (d: Date): string => localizeDigits(formatHHMM(d, loc.tz), locale);
+  const hijri = now ? hijriDate(now, loc.tz, locale) : null;
 
   return (
-    <section className="hero" aria-labelledby="next-prayer-h" data-testid="prayer-hero">
-      <div className="hero-top">
-        <span className="hero-place" data-testid="home-place">
-          <Icon name="location" size={18} /> {place}
-        </span>
-        {now ? (
-          <span className="hero-dates">
-            <span data-testid="home-hijri">{hijriDate(now, loc.tz, locale)}</span>
-            <span data-testid="home-gregorian">{gregorianDate(now, loc.tz, locale)}</span>
-          </span>
-        ) : null}
-      </div>
-      <h2 id="next-prayer-h" className="hero-label">
-        {t(locale, "home.nextPrayer")}
-      </h2>
-      {!now ? <p className="hero-name">{t(locale, "prayer.loading")}</p> : null}
-      {error ? <p className="alert alert-error">{t(locale, "prayer.error", { msg: error })}</p> : null}
-      {next && now ? (
-        <>
-          <p className="hero-name" data-testid="home-next-name">
-            {t(locale, `prayer.${next.key}`)}{" "}
-            <span className="hero-time">{localizeDigits(formatHHMM(next.at, loc.tz), locale)}</span>
-          </p>
-          <p className="hero-countdown">
-            <span className="sr-only">{t(locale, "home.remaining")} </span>
-            <span className="countdown" data-testid="home-countdown" aria-live="off">
-              {localizeDigits(formatCountdown(next.at.getTime() - now.getTime()), locale)}
+    <>
+      <section className="home-hero" aria-labelledby="next-prayer-h" data-testid="prayer-hero">
+        <div className="home-hero-top">
+          <div className="home-place">
+            <Icon name="location" size={22} />
+            <span>
+              <span className="home-place-label">{t(locale, "home.timingFor")}</span>
+              <strong data-testid="home-place">{place}</strong>
             </span>
+          </div>
+          <Link
+            className="home-settings"
+            href={href(locale, "settings")}
+            aria-label={t(locale, "settings.title")}
+            title={t(locale, "settings.title")}
+          >
+            <Icon name="settings" size={26} />
+          </Link>
+        </div>
+        <div className="home-hero-body">
+          <MosqueArt />
+          <div className="home-next">
+            <h2 id="next-prayer-h" className="sr-only">
+              {t(locale, "home.nextPrayer")}
+            </h2>
+            {!now ? <p className="home-next-name">{t(locale, "prayer.loading")}</p> : null}
+            {error ? <p className="alert alert-error">{t(locale, "prayer.error", { msg: error })}</p> : null}
+            {next && now ? (
+              <>
+                <p className="home-next-name" data-testid="home-next-name">
+                  {t(locale, "home.prayerOf", { name: t(locale, `prayer.${next.key}`) })}
+                </p>
+                <p className="home-next-time" data-testid="home-next-time">
+                  {hhmm(next.at)}
+                </p>
+                <p className="home-left">
+                  <span>{t(locale, "home.left")} </span>
+                  <span className="countdown" data-testid="home-countdown" aria-live="off">
+                    {localizeDigits(formatCountdown(next.at.getTime() - now.getTime()), locale)}
+                  </span>
+                </p>
+              </>
+            ) : null}
+          </div>
+        </div>
+      </section>
+
+      <section className="card home-day" aria-label={t(locale, "prayer.timesTable")}>
+        <div className="home-day-top">
+          <div className="home-dates">
+            {now ? (
+              <>
+                <strong className="home-weekday" data-testid="home-weekday">
+                  {weekdayName(tomorrow && next ? next.at : now, loc.tz, locale)}
+                </strong>
+                <span className="home-date-lines">
+                  <span data-testid="home-gregorian">
+                    {gregorianDay(tomorrow && next ? next.at : now, loc.tz, locale)}
+                  </span>
+                  {hijri ? (
+                    <span className="home-hijri" data-testid="home-hijri">
+                      {hijri}
+                    </span>
+                  ) : null}
+                </span>
+              </>
+            ) : null}
+          </div>
+          <Link className="home-calendar" href={href(locale, "prayer")}>
+            <Icon name="calendar" size={20} />
+            {t(locale, "home.calendar")}
+          </Link>
+        </div>
+        {tomorrow ? (
+          <p className="home-times-day" data-testid="home-times-day">
+            {t(locale, "home.tomorrowTimes")}
           </p>
-        </>
-      ) : null}
-      {tomorrow ? (
-        <p className="hero-day" data-testid="home-times-day">
-          {t(locale, "home.tomorrowTimes")}
-        </p>
-      ) : null}
-      {listed ? (
-        <ol
-          className="hero-times"
-          data-testid="home-times"
-          data-day={tomorrow ? "tomorrow" : "today"}
-          aria-label={tomorrow ? t(locale, "home.tomorrowTimes") : t(locale, "prayer.timesTable")}
-        >
-          {PRAYER_KEYS.map((k) => {
-            const at = listed.times[k];
-            const isNext = next?.key === k && next.at.getTime() === at.getTime();
-            return (
-              <li key={k} className={isNext ? "next" : undefined} data-prayer={k}>
-                <span>{t(locale, `prayer.${k}`)}</span>
-                <strong>{localizeDigits(formatHHMM(at, loc.tz), locale)}</strong>
-                {isNext ? <span className="sr-only"> ({t(locale, "home.upNext")})</span> : null}
-              </li>
-            );
-          })}
-        </ol>
-      ) : null}
-      <Link className="hero-link" href={href(locale, "prayer")}>
-        {t(locale, "home.openPrayer")}
-      </Link>
-    </section>
+        ) : null}
+        {listed ? (
+          <>
+            <ol
+              className="home-times"
+              data-testid="home-times"
+              data-day={tomorrow ? "tomorrow" : "today"}
+              aria-label={tomorrow ? t(locale, "home.tomorrowTimes") : t(locale, "prayer.timesTable")}
+            >
+              {OBLIGATORY.map((k) => {
+                const at = listed.times[k];
+                const isNext = next?.key === k && next.at.getTime() === at.getTime();
+                return (
+                  <li key={k} className={isNext ? "next" : undefined} data-prayer={k}>
+                    <Icon name={PRAYER_ICON[k]} size={22} />
+                    <span>{t(locale, `prayer.${k}`)}</span>
+                    <strong>{hhmm(at)}</strong>
+                    {isNext ? <span className="sr-only"> ({t(locale, "home.upNext")})</span> : null}
+                  </li>
+                );
+              })}
+            </ol>
+            <p className="home-sun" data-testid="home-sun">
+              <span>
+                <Icon name="sunrise" size={18} /> {t(locale, "home.sunrise")}{" "}
+                <strong data-testid="home-sunrise">{hhmm(listed.times.sunrise)}</strong>
+              </span>
+              <span>
+                <Icon name="sunset" size={18} /> {t(locale, "home.sunset")}{" "}
+                <strong data-testid="home-sunset">{sunset ? hhmm(sunset) : ""}</strong>
+              </span>
+            </p>
+          </>
+        ) : null}
+      </section>
+    </>
   );
 }

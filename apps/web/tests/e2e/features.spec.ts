@@ -59,23 +59,28 @@ test.describe("navigation & language", () => {
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
   });
 
-  test("home quick links and tiles", async ({ page }) => {
+  test("home tiles, Quran radio and main sections", async ({ page }) => {
     await page.goto("/ar/");
-    const tiles = page.getByTestId("section-tiles").getByRole("link");
-    await expect(tiles).toHaveCount(8);
+    const tiles = page.getByTestId("home-tiles").locator("a[data-section]");
     const hrefs = await tiles.evaluateAll((as) => as.map((a) => a.getAttribute("href")));
     expect(hrefs).toEqual([
-      "/ar/page/1/",
       "/ar/quran/",
       "/ar/adhkar/",
-      "/ar/hisn/",
+      "/ar/prayer/",
       "/ar/tasbih/",
       "/ar/qibla/",
-      "/ar/hajj/",
-      "/ar/search/",
+      "/ar/reels/",
+      "/ar/stories/",
     ]);
-    await tiles.nth(0).click();
-    await expect(page).toHaveURL("/ar/page/1/");
+    await expect(page.getByTestId("quran-radio")).toBeVisible();
+    await expect(page.getByTestId("radio-duration")).toHaveText("غير محدود");
+    await page.getByTestId("radio-longer").click();
+    await expect(page.getByTestId("radio-duration")).toHaveText("١٥ دقيقة");
+    await page.getByTestId("home-more").click();
+    await expect(page).toHaveURL("/ar/more/");
+    await page.goto("/ar/");
+    await page.getByRole("link", { name: "الإعدادات" }).first().click();
+    await expect(page).toHaveURL("/ar/settings/");
   });
 });
 
@@ -247,12 +252,12 @@ test.describe("Quran", () => {
     await expect(page.locator("#a-255")).toBeInViewport();
     // reading position was recorded; continue reading from home
     await page.waitForTimeout(300);
-    await page.goto("/en/");
+    await page.goto("/en/quran/");
     const cont = page.getByTestId("continue-surah");
     await expect(cont).toContainText("Al-Baqarah");
     await cont.click();
     await expect(page).toHaveURL(/\/en\/surah\/2\/#a-\d+/);
-    await page.goto("/en/");
+    await page.goto("/en/quran/");
     await page.getByTestId("continue-page").click();
     await expect(page).toHaveURL(/\/en\/page\/\d+\//);
     w.assertClean();
