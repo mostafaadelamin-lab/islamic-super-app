@@ -446,6 +446,18 @@ abstract class AppLocalizations {
   /// **'Adhan'**
   String get adhanSoundAdhan;
 
+  /// shared key "adhan.soundGeneral"
+  ///
+  /// In en, this message translates to:
+  /// **'Same as the general setting'**
+  String get adhanSoundGeneral;
+
+  /// shared key "adhan.soundPerPrayer"
+  ///
+  /// In en, this message translates to:
+  /// **'Alert sound per prayer'**
+  String get adhanSoundPerPrayer;
+
   /// shared key "adhan.soundSilent"
   ///
   /// In en, this message translates to:
@@ -595,6 +607,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap a card to count it'**
   String get adhkarTapToCount;
+
+  /// shared key "alert.friday"
+  ///
+  /// In en, this message translates to:
+  /// **'Friday reminder (Surat al-Kahf)'**
+  String get alertFriday;
+
+  /// shared key "alert.fridayBody"
+  ///
+  /// In en, this message translates to:
+  /// **'A reminder to read Surat al-Kahf and send many blessings upon the Prophet ﷺ'**
+  String get alertFridayBody;
+
+  /// shared key "alert.fridayTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Friday'**
+  String get alertFridayTitle;
+
+  /// shared key "alert.lastThird"
+  ///
+  /// In en, this message translates to:
+  /// **'Alert at the last third of the night'**
+  String get alertLastThird;
+
+  /// shared key "alert.lastThirdBody"
+  ///
+  /// In en, this message translates to:
+  /// **'The last third of the night has begun'**
+  String get alertLastThirdBody;
+
+  /// shared key "alert.lastThirdTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Last third of the night'**
+  String get alertLastThirdTitle;
+
+  /// shared key "alert.others"
+  ///
+  /// In en, this message translates to:
+  /// **'Other alerts'**
+  String get alertOthers;
+
+  /// shared key "alert.sunrise"
+  ///
+  /// In en, this message translates to:
+  /// **'Alert at sunrise'**
+  String get alertSunrise;
+
+  /// shared key "alert.sunriseBody"
+  ///
+  /// In en, this message translates to:
+  /// **'The sun has risen in {city}; the Fajr time has ended'**
+  String alertSunriseBody(String city);
+
+  /// shared key "alert.sunriseTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise'**
+  String get alertSunriseTitle;
 
   /// shared key "appName"
   ///
@@ -799,6 +871,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Prayer calendar'**
   String get homeCalendar;
+
+  /// shared key "home.elapsed"
+  ///
+  /// In en, this message translates to:
+  /// **'{time} ago'**
+  String homeElapsed(String time);
 
   /// shared key "home.hijriDate"
   ///
@@ -1310,11 +1388,23 @@ abstract class AppLocalizations {
   /// **'Could not get your location. Turn on location services or choose a city.'**
   String get prayerGeoUnavailable;
 
+  /// shared key "prayer.gregorian"
+  ///
+  /// In en, this message translates to:
+  /// **'Gregorian'**
+  String get prayerGregorian;
+
   /// shared key "prayer.highLat"
   ///
   /// In en, this message translates to:
   /// **'High-latitude rule applied to: {list}'**
   String prayerHighLat(String list);
+
+  /// shared key "prayer.hijri"
+  ///
+  /// In en, this message translates to:
+  /// **'Hijri'**
+  String get prayerHijri;
 
   /// shared key "prayer.hijriCol"
   ///
@@ -1447,6 +1537,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose city'**
   String get prayerSelectCity;
+
+  /// shared key "prayer.shareCalendar"
+  ///
+  /// In en, this message translates to:
+  /// **'Share the calendar'**
+  String get prayerShareCalendar;
 
   /// shared key "prayer.sunrise"
   ///

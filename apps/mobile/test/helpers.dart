@@ -14,6 +14,7 @@ import 'package:rattil/data/location.dart';
 import 'package:rattil/data/notifications.dart';
 import 'package:rattil/data/recitation.dart';
 import 'package:rattil/data/sensors.dart';
+import 'package:rattil/data/sharing.dart';
 import 'package:rattil/data/tafsir.dart';
 import 'package:rattil/domain/qibla.dart';
 import 'package:rattil/domain/tafsir.dart';
@@ -95,6 +96,7 @@ Future<TestApp> pumpApp(
   CompassSensors? sensors,
   TafsirStore? tafsir,
   LocationProvider? location,
+  FakeSharer? sharer,
 }) async {
   final c = content ?? _content!;
   SharedPreferences.setMockInitialValues({'locale': locale, ...prefs});
@@ -111,6 +113,7 @@ Future<TestApp> pumpApp(
     sensors: sensors ?? FakeSensors.none(),
     tafsir: tafsir ?? TafsirStore.preloaded(_tafsir!),
     location: location ?? const FakeLocation(LocationUnavailable()),
+    sharer: sharer ?? FakeSharer(),
   );
   if (size != null) {
     tester.view.physicalSize = size * tester.view.devicePixelRatio;
@@ -124,6 +127,17 @@ Future<TestApp> pumpApp(
   );
   await tester.pumpAndSettle();
   return TestApp(services, p);
+}
+
+/// Records what would be shared instead of opening the share sheet.
+class FakeSharer implements ImageSharer {
+  final images = <({int bytes, String fileName, String? text})>[];
+  final texts = <String>[];
+  @override
+  Future<void> sharePng(Uint8List png, {required String fileName, String? text}) async =>
+      images.add((bytes: png.length, fileName: fileName, text: text));
+  @override
+  Future<void> shareText(String text) async => texts.add(text);
 }
 
 /// "Use my location" answers [result] without touching the platform.

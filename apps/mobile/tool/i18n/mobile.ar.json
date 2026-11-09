@@ -258,5 +258,21 @@
   "khatma.tileSub": "خطة يومية لختم المصحف",
   "khatma.reminder": "تذكير يومي بالورد",
   "khatma.reminderTitle": "ورد الختمة",
-  "khatma.reminderBody": "حان وقت وردك اليومي من «{name}»"
+  "khatma.reminderBody": "حان وقت وردك اليومي من «{name}»",
+  "alert.sunriseTitle": "الشروق",
+  "alert.sunriseBody": "أشرقت الشمس في {city}، وانتهى وقت صلاة الفجر",
+  "alert.lastThirdTitle": "الثلث الأخير من الليل",
+  "alert.lastThirdBody": "بدأ الثلث الأخير من الليل",
+  "alert.fridayTitle": "يوم الجمعة",
+  "alert.fridayBody": "تذكير بقراءة سورة الكهف والإكثار من الصلاة على النبي ﷺ",
+  "alert.others": "تنبيهات أخرى",
+  "alert.sunrise": "تنبيه عند الشروق",
+  "alert.lastThird": "تنبيه الثلث الأخير من الليل",
+  "alert.friday": "تذكير الجمعة (سورة الكهف)",
+  "adhan.soundPerPrayer": "صوت التنبيه لكل صلاة",
+  "adhan.soundGeneral": "حسب الإعداد العام",
+  "home.elapsed": "مضى {time}",
+  "prayer.shareCalendar": "مشاركة التقويم",
+  "prayer.gregorian": "ميلادي",
+  "prayer.hijri": "هجري"
 }

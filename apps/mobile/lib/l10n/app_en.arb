@@ -325,6 +325,14 @@
   "@adhanSoundAdhan": {
     "description": "shared key \"adhan.soundAdhan\""
   },
+  "adhanSoundGeneral": "Same as the general setting",
+  "@adhanSoundGeneral": {
+    "description": "shared key \"adhan.soundGeneral\""
+  },
+  "adhanSoundPerPrayer": "Alert sound per prayer",
+  "@adhanSoundPerPrayer": {
+    "description": "shared key \"adhan.soundPerPrayer\""
+  },
   "adhanSoundSilent": "Silent",
   "@adhanSoundSilent": {
     "description": "shared key \"adhan.soundSilent\""
@@ -452,6 +460,51 @@
   "adhkarTapToCount": "Tap a card to count it",
   "@adhkarTapToCount": {
     "description": "shared key \"adhkar.tapToCount\""
+  },
+  "alertFriday": "Friday reminder (Surat al-Kahf)",
+  "@alertFriday": {
+    "description": "shared key \"alert.friday\""
+  },
+  "alertFridayBody": "A reminder to read Surat al-Kahf and send many blessings upon the Prophet ﷺ",
+  "@alertFridayBody": {
+    "description": "shared key \"alert.fridayBody\""
+  },
+  "alertFridayTitle": "Friday",
+  "@alertFridayTitle": {
+    "description": "shared key \"alert.fridayTitle\""
+  },
+  "alertLastThird": "Alert at the last third of the night",
+  "@alertLastThird": {
+    "description": "shared key \"alert.lastThird\""
+  },
+  "alertLastThirdBody": "The last third of the night has begun",
+  "@alertLastThirdBody": {
+    "description": "shared key \"alert.lastThirdBody\""
+  },
+  "alertLastThirdTitle": "Last third of the night",
+  "@alertLastThirdTitle": {
+    "description": "shared key \"alert.lastThirdTitle\""
+  },
+  "alertOthers": "Other alerts",
+  "@alertOthers": {
+    "description": "shared key \"alert.others\""
+  },
+  "alertSunrise": "Alert at sunrise",
+  "@alertSunrise": {
+    "description": "shared key \"alert.sunrise\""
+  },
+  "alertSunriseBody": "The sun has risen in {city}; the Fajr time has ended",
+  "@alertSunriseBody": {
+    "description": "shared key \"alert.sunriseBody\"",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "alertSunriseTitle": "Sunrise",
+  "@alertSunriseTitle": {
+    "description": "shared key \"alert.sunriseTitle\""
   },
   "appName": "Rattil",
   "@appName": {
@@ -598,6 +651,15 @@
   "homeCalendar": "Prayer calendar",
   "@homeCalendar": {
     "description": "shared key \"home.calendar\""
+  },
+  "homeElapsed": "{time} ago",
+  "@homeElapsed": {
+    "description": "shared key \"home.elapsed\"",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
   },
   "homeHijriDate": "{day} {month} {year} AH",
   "@homeHijriDate": {
@@ -1062,6 +1124,10 @@
   "@prayerGeoUnavailable": {
     "description": "shared key \"prayer.geoUnavailable\""
   },
+  "prayerGregorian": "Gregorian",
+  "@prayerGregorian": {
+    "description": "shared key \"prayer.gregorian\""
+  },
   "prayerHighLat": "High-latitude rule applied to: {list}",
   "@prayerHighLat": {
     "description": "shared key \"prayer.highLat\"",
@@ -1070,6 +1136,10 @@
         "type": "String"
       }
     }
+  },
+  "prayerHijri": "Hijri",
+  "@prayerHijri": {
+    "description": "shared key \"prayer.hijri\""
   },
   "prayerHijriCol": "Hijri",
   "@prayerHijriCol": {
@@ -1183,6 +1253,10 @@
   "prayerSelectCity": "Choose city",
   "@prayerSelectCity": {
     "description": "shared key \"prayer.selectCity\""
+  },
+  "prayerShareCalendar": "Share the calendar",
+  "@prayerShareCalendar": {
+    "description": "shared key \"prayer.shareCalendar\""
   },
   "prayerSunrise": "Sunrise",
   "@prayerSunrise": {

@@ -10,6 +10,7 @@ import {
   sanitizeKhatma,
   wirdPages,
 } from "@/lib/khatma";
+import type { KhatmaState } from "@/lib/khatma";
 
 describe("khatma planning", () => {
   it("splits the 604 pages into contiguous whole-page wirds", () => {
@@ -66,7 +67,7 @@ describe("khatma planning", () => {
   });
 
   it("completing the last wird moves the khatma to the history", () => {
-    let s = { ...DEFAULT_KHATMA_STATE, current: planByDays("Ramadan", "2026-11-01", 2) };
+    let s: KhatmaState = { ...DEFAULT_KHATMA_STATE, current: planByDays("Ramadan", "2026-11-01", 2) };
     s = completeWird(s, "2026-11-01");
     expect(s.current?.done).toBe(1);
     s = completeWird(s, "2026-11-03");

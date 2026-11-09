@@ -318,4 +318,57 @@ void main() {
     expect(app.services.settings.iqamaMinutes('fajr'), 21);
     expect(app.services.settings.iqamaPlan, {'fajr': 21, 'dhuhr': 15, 'asr': 15, 'maghrib': 10, 'isha': 15});
   });
+
+  testWidgets('calendar: Hijri month mode and sharing the table as an image', (tester) async {
+    final sharer = FakeSharer();
+    await pumpApp(tester, locale: 'en', size: tallPhone, sharer: sharer);
+    await goToTab(tester, 2);
+    await tester.tap(find.byKey(const Key('openCalendar')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.descendant(of: find.byKey(const Key('calendar.kind')), matching: find.text('Hijri')));
+    await tester.pumpAndSettle();
+    final rows = tester.widget<DataTable>(find.byKey(const Key('calendar.table'))).rows;
+    expect(rows.length, inInclusiveRange(29, 30));
+    expect(rows.where((r) => r.selected), hasLength(1), reason: 'today is in this Hijri month');
+    expect(find.textContaining('1447'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('calendar.next')));
+    await tester.pumpAndSettle();
+    expect(tester.widget<DataTable>(find.byKey(const Key('calendar.table'))).rows.where((r) => r.selected), isEmpty);
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const Key('calendar.share')));
+      await Future<void>.delayed(const Duration(milliseconds: 500));
+    });
+    await tester.pump();
+    expect(sharer.images.single.fileName, 'prayer-calendar.png');
+    expect(sharer.images.single.bytes, greaterThan(1000));
+  });
+
+  testWidgets('home shows time elapsed for 30 minutes after an adhan', (tester) async {
+    // Cairo Dhuhr on 2026-01-15 is about 10:05 UTC; 10 minutes later.
+    final dhuhr = DateTime.utc(2026, 1, 15, 10, 5);
+    await pumpApp(tester, locale: 'en', size: tallPhone, clock: () => dhuhr.add(const Duration(minutes: 10)));
+    expect(find.textContaining(' ago'), findsOneWidget);
+    expect(find.text('Dhuhr prayer'), findsOneWidget);
+  });
+
+  testWidgets('sunrise / last third / Friday alerts and a sound per prayer', (tester) async {
+    final n = FakeNotifications();
+    final app = await pumpApp(tester, locale: 'en', size: tallPhone, notifications: n, prefs: {'adhan.enabled': true});
+    final st = app.services.settings;
+    await st.setSunriseAlert(true);
+    await st.setLastThirdAlert(true);
+    await st.setAdhanSoundFor('fajr', 'tone');
+    await app.services.adhan.sync(force: true);
+    final plan = app.services.adhan.lastPlan;
+    expect(plan.where((x) => x.kind == 'sunrise'), isNotEmpty);
+    final third = plan.firstWhere((x) => x.kind == 'lastThird');
+    expect(third.at.isAfter(DateTime.utc(2026, 1, 15, 22)), isTrue);
+    expect(n.scheduled.firstWhere((x) => x.title == 'Time for Fajr').sound, 'tone');
+    expect(n.scheduled.firstWhere((x) => x.title == 'Time for Dhuhr').sound, 'adhan');
+    expect(st.hasOwnSound('dhuhr'), isFalse);
+    await st.setFridayReminder(10 * 60);
+    await app.services.reminders.sync();
+    expect(n.repeating[2004]?.weekday, DateTime.friday);
+    expect(app.services.reminders.activeCount, 1);
+  });
 }

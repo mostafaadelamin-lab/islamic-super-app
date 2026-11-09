@@ -15,6 +15,17 @@ import { Icon, type IconName } from "./Icon";
 import { MosqueArt } from "./MosqueArt";
 
 const MINUTE_MS = 60_000;
+/** How long after a prayer's adhan the home card says how much time has passed since it. */
+export const ELAPSED_WINDOW_MIN = 30;
+
+/** The obligatory prayer whose adhan was less than ELAPSED_WINDOW_MIN ago, with the minutes since it. */
+export function recentPrayer(now: Date, today: PrayerDay): { key: PrayerKey; minutes: number } | null {
+  const past = OBLIGATORY.map((key) => ({ key, ms: now.getTime() - today.times[key].getTime() })).filter(
+    (p) => p.ms >= 0 && p.ms < ELAPSED_WINDOW_MIN * MINUTE_MS,
+  );
+  const last = past[past.length - 1];
+  return last ? { key: last.key, minutes: Math.floor(last.ms / MINUTE_MS) } : null;
+}
 
 interface Computed {
   today: PrayerDay;
@@ -64,6 +75,7 @@ export function NextPrayerCard({ locale }: { locale: Locale }) {
     : null;
   const hhmm = (d: Date): string => localizeDigits(formatClock(d, loc.tz, display.clock, locale), locale);
   const hijri = now ? hijriDate(now, loc.tz, locale) : null;
+  const recent = now && computed ? recentPrayer(now, computed.today) : null;
 
   return (
     <>
@@ -107,6 +119,14 @@ export function NextPrayerCard({ locale }: { locale: Locale }) {
                     {localizeDigits(formatCountdown(next.at.getTime() - now.getTime()), locale)}
                   </span>
                 </p>
+                {recent ? (
+                  <p className="home-elapsed" data-testid="home-elapsed">
+                    {t(locale, "home.elapsed", {
+                      name: t(locale, `prayer.${recent.key}`),
+                      n: localizeDigits(recent.minutes, locale),
+                    })}
+                  </p>
+                ) : null}
               </>
             ) : null}
           </div>

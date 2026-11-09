@@ -324,5 +324,21 @@
   "khatma.markDone": "أتممت القراءة",
   "khatma.webReminderNote": "التذكير اليومي بالورد متاح في تطبيق الموبايل.",
   "khatma.delete": "حذف الختمة",
-  "khatma.deleteConfirm": "حذف هذه الختمة؟ لا يمكن التراجع."
+  "khatma.deleteConfirm": "حذف هذه الختمة؟ لا يمكن التراجع.",
+  "adhan.soundOf": "صوت تنبيه {name}",
+  "adhan.sound.adhan": "أذان",
+  "adhan.sound.tone": "نغمة قصيرة",
+  "adhan.sound.silent": "إشعار صامت",
+  "adhan.extras": "تنبيهات أخرى",
+  "adhan.sunrise": "تنبيه عند الشروق",
+  "adhan.sunriseTitle": "الشروق",
+  "adhan.sunriseBody": "أشرقت الشمس، وانتهى وقت صلاة الفجر",
+  "adhan.lastThird": "تنبيه الثلث الأخير من الليل",
+  "adhan.lastThirdTitle": "الثلث الأخير من الليل",
+  "adhan.lastThirdBody": "بدأ الثلث الأخير من الليل",
+  "adhan.friday": "تذكير الجمعة (سورة الكهف)",
+  "adhan.fridayTime": "وقت تذكير الجمعة",
+  "adhan.fridayTitle": "يوم الجمعة",
+  "adhan.fridayBody": "تذكير بقراءة سورة الكهف والإكثار من الصلاة على النبي ﷺ",
+  "home.elapsed": "مضى {n} دقيقة على أذان {name}"
 }

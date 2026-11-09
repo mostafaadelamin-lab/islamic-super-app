@@ -7,6 +7,10 @@ import 'prayer_schedule.dart';
 const adhanKind = 'adhan';
 const preAdhanKind = 'pre';
 const iqamaKind = 'iqama';
+const sunriseKind = 'sunrise';
+
+/// Start of the last third of the night (Maghrib to the next Fajr).
+const lastThirdKind = 'lastThird';
 
 /// Minutes offered for the reminder before the adhan (0 = off).
 const preAdhanChoices = [0, 5, 10, 15, 20, 30];
@@ -39,7 +43,7 @@ class AdhanNotification {
   /// Local calendar date (y/m/d only).
   final DateTime date;
 
-  /// [adhanKind], [preAdhanKind] or [iqamaKind].
+  /// [adhanKind], [preAdhanKind], [iqamaKind], [sunriseKind] or [lastThirdKind].
   final String kind;
 
   /// Minutes before ([preAdhanKind]) or after ([iqamaKind]) the adhan.
@@ -54,13 +58,21 @@ class AdhanNotification {
 /// digits), so the ranges never overlap. All stay below 2^31.
 int adhanNotificationId(DateTime date, String prayer, {String kind = adhanKind}) {
   final i = obligatoryPrayers.indexOf(prayer);
-  if (i < 0) throw ArgumentError('not an obligatory prayer: $prayer');
+  if (i < 0 && kind != sunriseKind && kind != lastThirdKind) throw ArgumentError('not an obligatory prayer: $prayer');
   final ymd = date.year * 10000 + date.month * 100 + date.day;
   return switch (kind) {
+    sunriseKind => (ymd * 100 + 30) % 0x7fffffff,
+    lastThirdKind => (ymd * 100 + 31) % 0x7fffffff,
     preAdhanKind => (ymd * 100 + 10 + i) % 0x7fffffff,
     iqamaKind => (ymd * 100 + 20 + i) % 0x7fffffff,
     _ => (ymd * 10 + i) % 0x7fffffff,
   };
+}
+
+/// Start of the last third of the night between [maghrib] and the next [fajr].
+DateTime lastThirdStart(DateTime maghrib, DateTime fajr) {
+  final night = fajr.difference(maghrib);
+  return maghrib.add(Duration(seconds: night.inSeconds * 2 ~/ 3));
 }
 
 int clampIqama(int v) => v < minIqama ? minIqama : (v > maxIqama ? maxIqama : v);
@@ -83,6 +95,8 @@ List<AdhanNotification> planAdhanNotifications({
   int max = 60,
   int preMinutes = 0,
   Map<String, int>? iqama,
+  bool sunrise = false,
+  bool lastThird = false,
 }) {
   final out = <AdhanNotification>[];
   if (enabled.isEmpty) return out;
@@ -94,6 +108,32 @@ List<AdhanNotification> planAdhanNotifications({
     final date = DateTime.utc(today.year, today.month, today.day + i);
     final d = dayFor(date);
     if (d == null) continue;
+    if (sunrise) {
+      add(
+        AdhanNotification(
+          id: adhanNotificationId(date, 'sunrise', kind: sunriseKind),
+          prayer: 'sunrise',
+          at: d.day.utc['sunrise']!,
+          date: date,
+          kind: sunriseKind,
+        ),
+      );
+    }
+    if (lastThird) {
+      // The night of [date] runs from its Maghrib to the next day's Fajr.
+      final next = dayFor(DateTime.utc(date.year, date.month, date.day + 1));
+      if (next != null) {
+        add(
+          AdhanNotification(
+            id: adhanNotificationId(date, 'isha', kind: lastThirdKind),
+            prayer: 'isha',
+            at: lastThirdStart(d.day.utc['maghrib']!, next.day.utc['fajr']!),
+            date: date,
+            kind: lastThirdKind,
+          ),
+        );
+      }
+    }
     for (final p in obligatoryPrayers) {
       if (!enabled.contains(p)) continue;
       final at = d.day.utc[p]!;

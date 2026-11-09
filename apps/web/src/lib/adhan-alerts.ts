@@ -4,9 +4,9 @@
  * the mobile app schedules real system notifications instead.
  */
 import { createStore } from "./store";
-import { prayerTimes, type PrayerKey } from "./prayer";
+import { prayerTimes, type PrayerDay, type PrayerKey } from "./prayer";
 import { OBLIGATORY, type PrayerQuery } from "./next-prayer";
-import { addDays, localDateInTz } from "./time";
+import { addDays, localDateInTz, zonedInstant } from "./time";
 
 export interface AdhanPrefs {
   enabled: boolean;
@@ -20,7 +20,22 @@ export interface AdhanPrefs {
   iqamaEnabled: boolean;
   /** Minutes from the adhan to the iqama, per prayer. */
   iqama: Record<string, number>;
+  /** A prayer's own sound; prayers not listed follow `sound`. */
+  soundFor: Record<string, AlertSound>;
+  /** Alert at sunrise (end of the Fajr time). */
+  sunrise: boolean;
+  /** Alert at the start of the last third of the night. */
+  lastThird: boolean;
+  /** Friday reminder (Surat al-Kahf) at "HH:MM", or null when off. */
+  friday: string | null;
 }
+
+export type AlertSound = "adhan" | "tone" | "silent";
+export const ALERT_SOUNDS: readonly AlertSound[] = ["adhan", "tone", "silent"];
+/** A time "HH:MM": matches "10:00", rejects "9:5". */
+const HHMM_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
+export const DEFAULT_FRIDAY_TIME = "10:00";
+const FRIDAY = 5;
 
 /** Choices offered for the reminder before the adhan (minutes; 0 = off). */
 export const PRE_CHOICES = [0, 5, 10, 15, 20, 30] as const;
@@ -42,6 +57,10 @@ export const DEFAULT_ADHAN: AdhanPrefs = {
   preMinutes: 0,
   iqamaEnabled: false,
   iqama: { ...DEFAULT_IQAMA },
+  soundFor: {},
+  sunrise: false,
+  lastThird: false,
+  friday: null,
 };
 
 export function clampIqama(v: unknown): number {
@@ -73,6 +92,15 @@ export function sanitizeAdhan(raw: unknown): AdhanPrefs {
     preMinutes: pre,
     iqamaEnabled: r.iqamaEnabled === true,
     iqama,
+    soundFor: Object.fromEntries(
+      OBLIGATORY.flatMap((k) => {
+        const v = isObj(r.soundFor) ? r.soundFor[k] : undefined;
+        return (ALERT_SOUNDS as readonly unknown[]).includes(v) ? [[k, v as AlertSound]] : [];
+      }),
+    ),
+    sunrise: r.sunrise === true,
+    lastThird: r.lastThird === true,
+    friday: typeof r.friday === "string" && HHMM_RE.test(r.friday) ? r.friday : null,
   };
 }
 
@@ -84,7 +112,18 @@ export function adhanFor(p: AdhanPrefs, k: PrayerKey): boolean {
 
 export const ADHAN_AUDIO_PATH = "/audio/adhan.mp3";
 
-export type AlertKind = "adhan" | "pre" | "iqama";
+export type AlertKind = "adhan" | "pre" | "iqama" | "sunrise" | "lastThird" | "friday";
+
+/** Sound of `k`'s adhan alert: its own choice, else the general switch. */
+export function soundFor(p: AdhanPrefs, k: PrayerKey): AlertSound {
+  return p.soundFor[k] ?? (p.sound ? "adhan" : "silent");
+}
+
+/** Start of the last third of the night between `maghrib` and the next `fajr`. */
+export function lastThirdStart(maghrib: Date, fajr: Date): Date {
+  const TWO_THIRDS = 2 / 3;
+  return new Date(maghrib.getTime() + (fajr.getTime() - maghrib.getTime()) * TWO_THIRDS);
+}
 export interface PlannedAlert {
   kind: AlertKind;
   key: PrayerKey;
@@ -105,32 +144,53 @@ export function nextAlert(now: Date, q: PrayerQuery, prefs: AdhanPrefs): Planned
   const enabled = OBLIGATORY.filter((k) => adhanFor(prefs, k));
   if (enabled.length === 0) return null;
   const today = localDateInTz(now, q.tz);
-  const all = Array.from({ length: LOOKAHEAD_DAYS }, (_, i) => i).flatMap((i): PlannedAlert[] => {
-    let day;
+  const dayAt = (i: number): PrayerDay | null => {
     try {
-      day = prayerTimes(addDays(today, i), q.lat, q.lng, q.method, q.asr, q.adjustments ?? {});
+      return prayerTimes(addDays(today, i), q.lat, q.lng, q.method, q.asr, q.adjustments ?? {});
     } catch {
-      return []; // polar day/night: no times that day
+      return null; // polar day/night: no times that day
     }
-    return enabled.flatMap((k): PlannedAlert[] => {
-      const prayerAt = day.times[k];
-      const out: PlannedAlert[] = [{ kind: "adhan", key: k, at: prayerAt, prayerAt }];
-      if (prefs.preMinutes > 0)
-        out.push({
-          kind: "pre",
-          key: k,
-          at: new Date(prayerAt.getTime() - prefs.preMinutes * MINUTE_MS),
-          prayerAt,
-        });
-      if (prefs.iqamaEnabled)
-        out.push({
-          kind: "iqama",
-          key: k,
-          at: new Date(prayerAt.getTime() + (prefs.iqama[k] ?? DEFAULT_IQAMA[k] ?? 15) * MINUTE_MS),
-          prayerAt,
-        });
-      return out;
-    });
+  };
+  const all = Array.from({ length: LOOKAHEAD_DAYS }, (_, i) => i).flatMap((i): PlannedAlert[] => {
+    const day = dayAt(i);
+    if (!day) return [];
+    const date = addDays(today, i);
+    const extras: PlannedAlert[] = [];
+    if (prefs.sunrise)
+      extras.push({ kind: "sunrise", key: "sunrise", at: day.times.sunrise, prayerAt: day.times.sunrise });
+    const tomorrow = prefs.lastThird ? dayAt(i + 1) : null;
+    if (tomorrow) {
+      const at = lastThirdStart(day.times.maghrib, tomorrow.times.fajr);
+      extras.push({ kind: "lastThird", key: "isha", at, prayerAt: at });
+    }
+    const isFriday = new Date(Date.UTC(date.year, date.month - 1, date.day)).getUTCDay() === FRIDAY;
+    if (prefs.friday && isFriday) {
+      const [hh, mm] = prefs.friday.split(":").map(Number) as [number, number];
+      const at = zonedInstant(date, hh, mm, q.tz);
+      extras.push({ kind: "friday", key: "dhuhr", at, prayerAt: at });
+    }
+    return [
+      ...extras,
+      ...enabled.flatMap((k): PlannedAlert[] => {
+        const prayerAt = day.times[k];
+        const out: PlannedAlert[] = [{ kind: "adhan", key: k, at: prayerAt, prayerAt }];
+        if (prefs.preMinutes > 0)
+          out.push({
+            kind: "pre",
+            key: k,
+            at: new Date(prayerAt.getTime() - prefs.preMinutes * MINUTE_MS),
+            prayerAt,
+          });
+        if (prefs.iqamaEnabled)
+          out.push({
+            kind: "iqama",
+            key: k,
+            at: new Date(prayerAt.getTime() + (prefs.iqama[k] ?? DEFAULT_IQAMA[k] ?? 15) * MINUTE_MS),
+            prayerAt,
+          });
+        return out;
+      }),
+    ];
   });
   const future = all
     .filter((a) => a.at.getTime() > now.getTime())

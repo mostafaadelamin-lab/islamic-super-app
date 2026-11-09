@@ -438,6 +438,71 @@ class _AdhanExtrasCard extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
               child: Text(l.adhanExtrasNote, style: Theme.of(context).textTheme.bodySmall),
             ),
+            const Divider(),
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(l.adhanSoundPerPrayer, style: Theme.of(context).textTheme.titleSmall),
+            ),
+            for (final k in obligatoryPrayers)
+              Padding(
+                padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
+                child: LabeledDropdown<String>(
+                  dropdownKey: Key('soundFor-$k'),
+                  label: context.prayerName(k),
+                  value: settings.hasOwnSound(k) ? settings.adhanSoundFor(k) : '',
+                  items: {
+                    '': l.adhanSoundGeneral,
+                    'adhan': l.adhanSoundAdhan,
+                    'tone': l.adhanSoundTone,
+                    'silent': l.adhanSoundSilent,
+                  },
+                  onChanged: (v) => settings.setAdhanSoundFor(k, v.isEmpty ? null : v),
+                ),
+              ),
+            const Divider(),
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(l.alertOthers, style: Theme.of(context).textTheme.titleSmall),
+            ),
+            SwitchListTile(
+              key: const Key('sunriseAlert'),
+              contentPadding: EdgeInsets.zero,
+              title: Text(l.alertSunrise),
+              value: settings.sunriseAlert,
+              onChanged: settings.setSunriseAlert,
+            ),
+            SwitchListTile(
+              key: const Key('lastThirdAlert'),
+              contentPadding: EdgeInsets.zero,
+              title: Text(l.alertLastThird),
+              value: settings.lastThirdAlert,
+              onChanged: settings.setLastThirdAlert,
+            ),
+            SwitchListTile(
+              key: const Key('fridayAlert'),
+              contentPadding: EdgeInsets.zero,
+              title: Text(l.alertFriday),
+              subtitle: settings.fridayReminder == null
+                  ? null
+                  : Text(
+                      context.num(
+                        '${(settings.fridayReminder! ~/ 60).toString().padLeft(2, '0')}:'
+                        '${(settings.fridayReminder! % 60).toString().padLeft(2, '0')}',
+                      ),
+                    ),
+              value: settings.fridayReminder != null,
+              onChanged: (on) async {
+                final s = context.services;
+                if (!on) {
+                  await settings.setFridayReminder(null);
+                } else {
+                  final t = await showTimePicker(context: context, initialTime: const TimeOfDay(hour: 10, minute: 0));
+                  if (t == null) return;
+                  await settings.setFridayReminder(t.hour * 60 + t.minute);
+                }
+                await s.reminders.sync();
+              },
+            ),
           ],
         ),
       ],

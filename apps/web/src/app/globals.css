@@ -615,6 +615,10 @@ input[type="radio"] {
   font-variant-numeric: tabular-nums;
   color: var(--color-ink);
 }
+.home-elapsed {
+  color: var(--color-muted);
+  margin-top: var(--space-xs) !important;
+}
 .home-day {
   padding: var(--space-md);
 }

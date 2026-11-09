@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="4" failures="0" errors="0" time="0.394165372">
-    <testsuite name="tests/components/khatma.test.tsx" timestamp="2026-11-09T21:03:12.843Z" hostname="vm" tests="4" failures="0" errors="0" skipped="0" time="0.394165372">
-        <testcase classname="tests/components/khatma.test.tsx" name="KhatmaView &gt; creates a 30-day khatma and marks wirds read" time="0.191248375">
+<testsuites name="vitest tests" tests="18" failures="0" errors="0" time="2.425854917">
+    <testsuite name="tests/components/prayer.test.tsx" timestamp="2026-11-09T21:18:09.234Z" hostname="vm" tests="18" failures="0" errors="0" skipped="0" time="2.425854917">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows today&apos;s six times for the default city (Makkah) and the next prayer" time="0.216325868">
         </testcase>
-        <testcase classname="tests/components/khatma.test.tsx" name="KhatmaView &gt; pages-per-day mode" time="0.051487143">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; changes city, method and asr, and persists them" time="0.496563905">
         </testcase>
-        <testcase classname="tests/components/khatma.test.tsx" name="KhatmaView &gt; late: shows how many days behind and reschedules" time="0.044396869">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; manual adjustments: buttons, input, limits and reset" time="0.424464355">
         </testcase>
-        <testcase classname="tests/components/khatma.test.tsx" name="KhatmaView &gt; finishing moves it to the history; delete asks first" time="0.104201208">
-            <system-err>
-An update to KhatmaView inside a test was not wrapped in act(...).
-
-When testing, code that causes React state updates should be wrapped into act(...):
-
-act(() =&gt; {
-  /* fire events that update state */
-});
-/* assert on the output */
-
-This ensures that you&apos;re testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
-An update to History inside a test was not wrapped in act(...).
-
-When testing, code that causes React state updates should be wrapped into act(...):
-
-act(() =&gt; {
-  /* fire events that update state */
-});
-/* assert on the output */
-
-This ensures that you&apos;re testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
-
-            </system-err>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows the qibla bearing and compass" time="0.08772592">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows the high-latitude note for London in midsummer" time="0.141616904">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; use my location: success" time="0.175173961">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; use my location: permission denied is reported" time="0.097825615">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; use my location: no geolocation API" time="0.092194277">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; geoErrorKey" time="0.001402572">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows an error for a polar location" time="0.042906763">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; countdown ticks every second" time="0.083989691">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView day navigation, monthly calendar and clock &gt; moves between days, shows the Hijri date and returns to today" time="0.145270294">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView day navigation, monthly calendar and clock &gt; monthly table: every day of the month, today highlighted, month arrows" time="0.219167702">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView day navigation, monthly calendar and clock &gt; 12-hour clock with AM/PM (ص/م in Arabic)" time="0.092487936">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="NextPrayerCard &gt; shows next prayer and countdown in Arabic digits" time="0.038255863">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="NextPrayerCard &gt; after Isha: tomorrow&apos;s times are listed with Fajr marked as next" time="0.023382929">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="NextPrayerCard &gt; says how long ago the last adhan was during the first half hour" time="0.021439038">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="NextPrayerCard &gt; shows an error for impossible locations" time="0.021719222">
         </testcase>
     </testsuite>
 </testsuites>

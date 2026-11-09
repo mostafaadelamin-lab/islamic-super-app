@@ -254,6 +254,9 @@ class AdhanScheduler {
   String get _signature => [
     settings.adhanPrayers.toList()..sort(),
     settings.adhanSound,
+    [for (final p in obligatoryPrayers) settings.adhanSoundFor(p)],
+    settings.sunriseAlert,
+    settings.lastThirdAlert,
     settings.adhanPreMinutes,
     settings.iqamaPlan,
     settings.cityId,
@@ -280,6 +283,8 @@ class AdhanScheduler {
       max: max - (reserved?.call() ?? 0),
       preMinutes: settings.adhanPreMinutes,
       iqama: settings.iqamaPlan,
+      sunrise: settings.sunriseAlert,
+      lastThird: settings.lastThirdAlert,
       dayFor: (d) => ctx.day(schedule, d, settings.adjustments),
     );
   }
@@ -309,17 +314,21 @@ class AdhanScheduler {
         await backend.schedule(
           id: n.id,
           title: switch (n.kind) {
+            sunriseKind => l.alertSunriseTitle,
+            lastThirdKind => l.alertLastThirdTitle,
             preAdhanKind => l.adhanPreTitle(minutes, name),
             iqamaKind => l.adhanIqamaTitle(name),
             _ => l.adhanTitle(name),
           },
           body: switch (n.kind) {
+            sunriseKind => l.alertSunriseBody(city),
+            lastThirdKind => l.alertLastThirdBody,
             preAdhanKind => l.adhanPreBody(name),
             iqamaKind => l.adhanIqamaBody(name, minutes),
             _ => l.adhanBody(name, city),
           },
           atUtc: n.at,
-          sound: n.kind == adhanKind ? settings.adhanSound : extraSound,
+          sound: n.kind == adhanKind ? settings.adhanSoundFor(n.prayer) : extraSound,
         );
       }
     } catch (e) {

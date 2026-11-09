@@ -235,6 +235,51 @@ class SettingsController extends ChangeNotifier {
   /// Iqama minutes per prayer when the iqama alert is on, else null.
   Map<String, int>? get iqamaPlan => iqamaEnabled ? {for (final p in obligatoryPrayers) p: iqamaMinutes(p)} : null;
 
+  /// Sound for [prayer]'s adhan: its own choice, else the general [adhanSound].
+  String adhanSoundFor(String prayer) {
+    final v = _prefs.getString('adhan.sound.$prayer');
+    return adhanSounds.contains(v) ? v! : adhanSound;
+  }
+
+  /// Whether [prayer] has its own sound (otherwise it follows [adhanSound]).
+  bool hasOwnSound(String prayer) => adhanSounds.contains(_prefs.getString('adhan.sound.$prayer'));
+
+  /// Null clears the prayer's own choice (it follows the general sound again).
+  Future<void> setAdhanSoundFor(String prayer, String? v) async {
+    if (v == null) {
+      await _prefs.remove('adhan.sound.$prayer');
+    } else {
+      if (!adhanSounds.contains(v)) throw ArgumentError.value(v, 'sound');
+      await _prefs.setString('adhan.sound.$prayer', v);
+    }
+    notifyListeners();
+  }
+
+  /// Notification at sunrise (end of the Fajr time).
+  bool get sunriseAlert => _prefs.getBool('alert.sunrise') ?? false;
+  Future<void> setSunriseAlert(bool v) async {
+    await _prefs.setBool('alert.sunrise', v);
+    notifyListeners();
+  }
+
+  /// Notification at the start of the last third of the night (qiyam).
+  bool get lastThirdAlert => _prefs.getBool('alert.lastThird') ?? false;
+  Future<void> setLastThirdAlert(bool v) async {
+    await _prefs.setBool('alert.lastThird', v);
+    notifyListeners();
+  }
+
+  /// Friday reminder (Surat al-Kahf) as minutes after midnight, or null when off.
+  int? get fridayReminder => _prefs.getInt('alert.friday');
+  Future<void> setFridayReminder(int? minutes) async {
+    if (minutes == null) {
+      await _prefs.remove('alert.friday');
+    } else {
+      await _prefs.setInt('alert.friday', minutes.clamp(0, 24 * 60 - 1));
+    }
+    notifyListeners();
+  }
+
   /// Prayers that should get a notification right now.
   Set<String> get adhanPrayers => adhanEnabled
       ? {

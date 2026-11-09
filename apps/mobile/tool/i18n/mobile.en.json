@@ -258,5 +258,21 @@
   "khatma.tileSub": "A daily plan to complete the Mushaf",
   "khatma.reminder": "Daily reminder",
   "khatma.reminderTitle": "Khatma portion",
-  "khatma.reminderBody": "Time for today's portion of “{name}”"
+  "khatma.reminderBody": "Time for today's portion of “{name}”",
+  "alert.sunriseTitle": "Sunrise",
+  "alert.sunriseBody": "The sun has risen in {city}; the Fajr time has ended",
+  "alert.lastThirdTitle": "Last third of the night",
+  "alert.lastThirdBody": "The last third of the night has begun",
+  "alert.fridayTitle": "Friday",
+  "alert.fridayBody": "A reminder to read Surat al-Kahf and send many blessings upon the Prophet ﷺ",
+  "alert.others": "Other alerts",
+  "alert.sunrise": "Alert at sunrise",
+  "alert.lastThird": "Alert at the last third of the night",
+  "alert.friday": "Friday reminder (Surat al-Kahf)",
+  "adhan.soundPerPrayer": "Alert sound per prayer",
+  "adhan.soundGeneral": "Same as the general setting",
+  "home.elapsed": "{time} ago",
+  "prayer.shareCalendar": "Share the calendar",
+  "prayer.gregorian": "Gregorian",
+  "prayer.hijri": "Hijri"
 }

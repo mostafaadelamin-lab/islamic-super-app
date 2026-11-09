@@ -92,6 +92,21 @@ class PrayerSchedule {
     return null;
   }
 
+  /// How long after an adhan the home screen counts up ("… ago") instead of
+  /// down to the next prayer.
+  static const elapsedWindow = Duration(minutes: 30);
+
+  /// The obligatory prayer whose time passed less than [window] before
+  /// [nowUtc] (remaining = time elapsed since it), or null.
+  static NextPrayer? recent(DateTime nowUtc, LocalPrayerDay today, {Duration window = elapsedWindow}) {
+    for (final k in obligatoryPrayers.reversed) {
+      final at = today.day.utc[k]!;
+      final ago = nowUtc.difference(at);
+      if (!ago.isNegative) return ago < window ? NextPrayer(k, at, ago) : null;
+    }
+    return null;
+  }
+
   /// "H:MM:SS" for a countdown.
   static String formatCountdown(Duration d) {
     final s = d.inSeconds < 0 ? 0 : d.inSeconds;

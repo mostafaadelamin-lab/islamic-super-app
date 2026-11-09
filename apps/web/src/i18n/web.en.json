@@ -324,5 +324,21 @@
   "khatma.markDone": "I have read it",
   "khatma.webReminderNote": "The daily reminder is available in the mobile app.",
   "khatma.delete": "Delete khatma",
-  "khatma.deleteConfirm": "Delete this khatma? This cannot be undone."
+  "khatma.deleteConfirm": "Delete this khatma? This cannot be undone.",
+  "adhan.soundOf": "{name} alert sound",
+  "adhan.sound.adhan": "Adhan",
+  "adhan.sound.tone": "Short tone",
+  "adhan.sound.silent": "Silent notification",
+  "adhan.extras": "Other alerts",
+  "adhan.sunrise": "Alert at sunrise",
+  "adhan.sunriseTitle": "Sunrise",
+  "adhan.sunriseBody": "The sun has risen; the Fajr time is over",
+  "adhan.lastThird": "Alert at the last third of the night",
+  "adhan.lastThirdTitle": "Last third of the night",
+  "adhan.lastThirdBody": "The last third of the night has begun",
+  "adhan.friday": "Friday reminder (Surat al-Kahf)",
+  "adhan.fridayTime": "Friday reminder time",
+  "adhan.fridayTitle": "Friday",
+  "adhan.fridayBody": "A reminder to read Surat al-Kahf and send many blessings upon the Prophet ﷺ",
+  "home.elapsed": "{n} min since the {name} adhan"
 }

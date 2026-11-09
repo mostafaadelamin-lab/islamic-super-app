@@ -60,6 +60,28 @@ export function formatClock(
   return `${h12}:${p.minute} ${suffix}`;
 }
 
+const MINUTE_MS = 60_000;
+/** Rounds of offset correction (two cover every DST change). */
+const OFFSET_ROUNDS = 2;
+
+/** The instant when the wall clock in `tz` shows `hour:minute` on local date `d`. */
+export function zonedInstant(d: LocalDate, hour: number, minute: number, tz: string): Date {
+  const want = Date.UTC(d.year, d.month - 1, d.day, hour, minute);
+  let guess = want;
+  for (let i = 0; i < OFFSET_ROUNDS; i++) {
+    const p = parts(new Date(guess), tz);
+    const shown = Date.UTC(
+      Number(p.year),
+      Number(p.month) - 1,
+      Number(p.day),
+      Number(p.hour),
+      Number(p.minute),
+    );
+    guess += want - shown;
+  }
+  return new Date(Math.round(guess / MINUTE_MS) * MINUTE_MS);
+}
+
 export function addDays(d: LocalDate, n: number): LocalDate {
   const t = new Date(Date.UTC(d.year, d.month - 1, d.day + n));
   return { year: t.getUTCFullYear(), month: t.getUTCMonth() + 1, day: t.getUTCDate() };

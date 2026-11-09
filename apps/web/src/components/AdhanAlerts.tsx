@@ -7,12 +7,17 @@ import {
   ADHAN_AUDIO_PATH,
   adhanFor,
   adhanStore,
+  ALERT_SOUNDS,
   clampIqama,
+  DEFAULT_FRIDAY_TIME,
   IQAMA_MAX,
   IQAMA_MIN,
   nextAlert,
   PRE_CHOICES,
+  soundFor,
+  type AdhanPrefs,
   type AlertKind,
+  type AlertSound,
 } from "@/lib/adhan-alerts";
 import { localizeDigits } from "@/lib/digits";
 import { OBLIGATORY } from "@/lib/next-prayer";
@@ -119,6 +124,27 @@ async function showNotification(title: string, body: string, tag = "adhan"): Pro
   }
 }
 
+/** Sound of an alert: the adhan's own choice; the other reminders chime unless sound is off. */
+export function alertSound(prefs: AdhanPrefs, kind: AlertKind, key: PrayerKey): AlertSound {
+  if (kind === "adhan") return soundFor(prefs, key);
+  return prefs.sound ? "tone" : "silent";
+}
+
+/** Notification title and body of an alert. */
+export function alertText(
+  locale: Locale,
+  kind: AlertKind,
+  key: PrayerKey,
+  prefs: AdhanPrefs,
+): { title: string; body: string } {
+  const name = t(locale, `prayer.${key}`);
+  if (kind === "adhan")
+    return { title: t(locale, "adhan.title", { name }), body: t(locale, "adhan.webBody", { name }) };
+  const n = kind === "pre" ? prefs.preMinutes : (prefs.iqama[key] ?? 0);
+  const vars = { name, n: localizeDigits(n, locale) };
+  return { title: t(locale, `adhan.${kind}Title`, vars), body: t(locale, `adhan.${kind}Body`, vars) };
+}
+
 /**
  * Mounted once per page: while the site is open, fires the adhan alert at the
  * next enabled prayer (notification + recording + an in-page banner).
@@ -144,37 +170,25 @@ export function AdhanAlerts({ locale }: { locale: Locale }) {
       const fired = target;
       target = nextAlert(new Date(now + 1000), q, prefs);
       if (late) return;
-      const name = t(locale, `prayer.${fired.key}`);
-      if (fired.kind !== "adhan") {
-        const n = fired.kind === "pre" ? prefs.preMinutes : (prefs.iqama[fired.key] ?? 0);
-        const vars = { name, n: localizeDigits(n, locale) };
-        void showNotification(
-          t(locale, `adhan.${fired.kind}Title`, vars),
-          t(locale, `adhan.${fired.kind}Body`, vars),
-          fired.kind,
-        );
-        if (prefs.sound) playTone();
-        setRinging({ key: fired.key, kind: fired.kind, blocked: false });
+      const { title, body } = alertText(locale, fired.kind, fired.key, prefs);
+      void showNotification(title, body, fired.kind);
+      const sound = alertSound(prefs, fired.kind, fired.key);
+      if (sound === "adhan") {
+        void playAdhan().then((ok) => setRinging({ key: fired.key, kind: fired.kind, blocked: !ok }));
         return;
       }
-      void showNotification(t(locale, "adhan.title", { name }), t(locale, "adhan.webBody", { name }));
-      if (prefs.sound) {
-        void playAdhan().then((ok) => setRinging({ key: fired.key, kind: "adhan", blocked: !ok }));
-      } else {
-        setRinging({ key: fired.key, kind: "adhan", blocked: false });
-      }
+      if (sound === "tone") playTone();
+      setRinging({ key: fired.key, kind: fired.kind, blocked: false });
     };
     const id = setInterval(tick, 5000);
     return () => clearInterval(id);
   }, [prefs, prayer, locale]);
 
   if (!ringing) return null;
-  const name = t(locale, `prayer.${ringing.key}`);
-  const n = ringing.kind === "pre" ? prefs.preMinutes : (prefs.iqama[ringing.key] ?? 0);
-  const titleKey = ringing.kind === "adhan" ? "adhan.title" : `adhan.${ringing.kind}Title`;
+  const { title } = alertText(locale, ringing.kind, ringing.key, prefs);
   return (
     <div className="adhan-ringing" role="alert" data-testid="adhan-ringing" data-kind={ringing.kind}>
-      <strong>{t(locale, titleKey, { name, n: localizeDigits(n, locale) })}</strong>
+      <strong>{title}</strong>
       {ringing.blocked && !isPlaying ? (
         <button type="button" className="btn btn-primary" onClick={() => void playAdhan()}>
           {t(locale, "adhan.playNow")}
@@ -250,6 +264,23 @@ export function AdhanSettings({ locale }: { locale: Locale }) {
                   data-testid={`adhan-${k}`}
                 />{" "}
                 {name(k)}
+                <select
+                  aria-label={t(locale, "adhan.soundOf", { name: name(k) })}
+                  value={soundFor(prefs, k)}
+                  onChange={(e) =>
+                    adhanStore.set((p) => ({
+                      ...p,
+                      soundFor: { ...p.soundFor, [k]: e.target.value as AlertSound },
+                    }))
+                  }
+                  data-testid={`sound-${k}`}
+                >
+                  {ALERT_SOUNDS.map((v) => (
+                    <option key={v} value={v}>
+                      {t(locale, `adhan.sound.${v}`)}
+                    </option>
+                  ))}
+                </select>
               </label>
             ))}
           </fieldset>
@@ -312,6 +343,50 @@ export function AdhanSettings({ locale }: { locale: Locale }) {
               ))}
             </div>
           ) : null}
+          <fieldset className="adhan-prayers">
+            <legend className="muted">{t(locale, "adhan.extras")}</legend>
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={prefs.sunrise}
+                onChange={(e) => adhanStore.set((p) => ({ ...p, sunrise: e.target.checked }))}
+                data-testid="alert-sunrise"
+              />{" "}
+              {t(locale, "adhan.sunrise")}
+            </label>
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={prefs.lastThird}
+                onChange={(e) => adhanStore.set((p) => ({ ...p, lastThird: e.target.checked }))}
+                data-testid="alert-lastThird"
+              />{" "}
+              {t(locale, "adhan.lastThird")}
+            </label>
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={prefs.friday !== null}
+                onChange={(e) =>
+                  adhanStore.set((p) => ({ ...p, friday: e.target.checked ? DEFAULT_FRIDAY_TIME : null }))
+                }
+                data-testid="alert-friday"
+              />{" "}
+              {t(locale, "adhan.friday")}
+            </label>
+            {prefs.friday !== null ? (
+              <input
+                type="time"
+                aria-label={t(locale, "adhan.fridayTime")}
+                value={prefs.friday}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  if (v) adhanStore.set((p) => ({ ...p, friday: v }));
+                }}
+                data-testid="alert-friday-time"
+              />
+            ) : null}
+          </fieldset>
         </>
       ) : null}
       <p>

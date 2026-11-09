@@ -16,6 +16,7 @@ import 'data/recitation.dart';
 import 'data/reminders.dart';
 import 'data/sensors.dart';
 import 'data/settings.dart';
+import 'data/sharing.dart';
 import 'data/tafsir.dart';
 import 'domain/prayer_schedule.dart';
 import 'ui/prayer_model.dart' show resolveCity;
@@ -40,6 +41,7 @@ class AppServices {
     this.location = const GeolocatorLocation(),
     required this.khatma,
     required this.reminders,
+    this.sharer = const SystemImageSharer(),
   });
 
   factory AppServices.create({
@@ -54,6 +56,7 @@ class AppServices {
     CompassSensors? sensors,
     TafsirStore? tafsir,
     LocationProvider? location,
+    ImageSharer? sharer,
   }) {
     final c = clock ?? DateTime.now;
     final settings = SettingsController(prefs, defaultCityId: content.cities.first.id);
@@ -72,6 +75,19 @@ class AppServices {
     );
     final khatma = KhatmaController(settings, localToday, onReminderChanged: reminders.sync);
     reminders.addSource(khatma.reminders);
+    reminders.addSource((l) {
+      final m = settings.fridayReminder;
+      if (m == null) return const [];
+      return [
+        ReminderSpec(
+          id: ReminderIds.friday,
+          title: l.alertFridayTitle,
+          body: l.alertFridayBody,
+          minutes: m,
+          weekday: DateTime.friday,
+        ),
+      ];
+    });
     final recitation = RecitationController(
       content: content,
       settings: settings,
@@ -117,6 +133,7 @@ class AppServices {
       location: location ?? const GeolocatorLocation(),
       khatma: khatma,
       reminders: reminders,
+      sharer: sharer ?? const SystemImageSharer(),
     );
   }
 
@@ -149,6 +166,9 @@ class AppServices {
 
   /// Repeating reminders (khatma portion, adhkar, Friday).
   final ReminderScheduler reminders;
+
+  /// System share sheet for images and text.
+  final ImageSharer sharer;
 }
 
 class AppScope extends InheritedWidget {

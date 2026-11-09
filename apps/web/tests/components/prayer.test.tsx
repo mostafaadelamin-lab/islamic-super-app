@@ -1,7 +1,7 @@
 import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { geoErrorKey, PrayerView } from "@/components/PrayerView";
-import { NextPrayerCard } from "@/components/NextPrayerCard";
+import { NextPrayerCard, recentPrayer } from "@/components/NextPrayerCard";
 import { prayerStore } from "@/lib/settings";
 import { prayerTimes, qiblaBearing } from "@/lib/prayer";
 import { formatHHMM } from "@/lib/time";
@@ -242,6 +242,18 @@ describe("NextPrayerCard", () => {
     expect(screen.getByTestId("home-next-time")).toHaveTextContent(
       marked.querySelector("strong")!.textContent!,
     );
+  });
+  it("says how long ago the last adhan was during the first half hour", async () => {
+    const day = prayerTimes({ year: 2026, month: 3, day: 1 }, 21.3891, 39.8579, "makkah");
+    expect(recentPrayer(NOW, day)).toBeNull();
+    expect(recentPrayer(new Date(day.times.asr.getTime() + 12 * 60_000 + 5000), day)).toEqual({
+      key: "asr",
+      minutes: 12,
+    });
+    expect(recentPrayer(new Date(day.times.asr.getTime() + 31 * 60_000), day)).toBeNull();
+    vi.setSystemTime(new Date(day.times.dhuhr.getTime() + 7 * 60_000));
+    render(<NextPrayerCard locale="en" />);
+    expect(await screen.findByTestId("home-elapsed")).toHaveTextContent("7 min since the Dhuhr adhan");
   });
   it("shows an error for impossible locations", async () => {
     vi.setSystemTime(new Date("2026-12-21T10:00:00Z"));

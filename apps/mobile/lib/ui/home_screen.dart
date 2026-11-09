@@ -203,8 +203,12 @@ class _Hero extends StatelessWidget {
     final s = context.services;
     final theme = Theme.of(context).textTheme;
     final primary = Theme.of(context).colorScheme.primary;
-    final next = pv.next;
-    final remaining = next?.at.difference(s.clock().toUtc());
+    final now = s.clock().toUtc();
+    // Shortly after an adhan the hero shows that prayer with the time elapsed
+    // since it; otherwise the next prayer with the time left.
+    final recent = pv.today == null ? null : PrayerSchedule.recent(now, pv.today!);
+    final next = recent ?? pv.next;
+    final remaining = recent?.remaining ?? next?.at.difference(now);
     final city = context.isArabic ? '${pv.city.countryAr} - ${pv.city.nameAr}' : pv.city.nameEn;
     final nextTime = next == null ? null : PrayerSchedule.localDate(pv.location, next.at.toUtc());
     final nextDay = next == null || nextTime == pv.date ? pv.today : pv.tomorrow;
@@ -275,7 +279,9 @@ class _Hero extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        l.homeLeft(context.numLtr(PrayerSchedule.formatCountdown(remaining!))),
+                        recent != null
+                            ? l.homeElapsed(context.numLtr(PrayerSchedule.formatCountdown(remaining!)))
+                            : l.homeLeft(context.numLtr(PrayerSchedule.formatCountdown(remaining!))),
                         key: const Key('home.countdown'),
                         style: theme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
                       ),

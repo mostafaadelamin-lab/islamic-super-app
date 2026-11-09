@@ -226,6 +226,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhanSoundAdhan => 'Adhan';
 
   @override
+  String get adhanSoundGeneral => 'Same as the general setting';
+
+  @override
+  String get adhanSoundPerPrayer => 'Alert sound per prayer';
+
+  @override
   String get adhanSoundSilent => 'Silent';
 
   @override
@@ -310,6 +316,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhkarTapToCount => 'Tap a card to count it';
+
+  @override
+  String get alertFriday => 'Friday reminder (Surat al-Kahf)';
+
+  @override
+  String get alertFridayBody => 'A reminder to read Surat al-Kahf and send many blessings upon the Prophet ﷺ';
+
+  @override
+  String get alertFridayTitle => 'Friday';
+
+  @override
+  String get alertLastThird => 'Alert at the last third of the night';
+
+  @override
+  String get alertLastThirdBody => 'The last third of the night has begun';
+
+  @override
+  String get alertLastThirdTitle => 'Last third of the night';
+
+  @override
+  String get alertOthers => 'Other alerts';
+
+  @override
+  String get alertSunrise => 'Alert at sunrise';
+
+  @override
+  String alertSunriseBody(String city) {
+    return 'The sun has risen in $city; the Fajr time has ended';
+  }
+
+  @override
+  String get alertSunriseTitle => 'Sunrise';
 
   @override
   String get appName => 'Rattil';
@@ -417,6 +455,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeCalendar => 'Prayer calendar';
+
+  @override
+  String homeElapsed(String time) {
+    return '$time ago';
+  }
 
   @override
   String homeHijriDate(String day, String month, String year) {
@@ -710,9 +753,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get prayerGeoUnavailable => 'Could not get your location. Turn on location services or choose a city.';
 
   @override
+  String get prayerGregorian => 'Gregorian';
+
+  @override
   String prayerHighLat(String list) {
     return 'High-latitude rule applied to: $list';
   }
+
+  @override
+  String get prayerHijri => 'Hijri';
 
   @override
   String get prayerHijriCol => 'Hijri';
@@ -789,6 +838,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prayerSelectCity => 'Choose city';
+
+  @override
+  String get prayerShareCalendar => 'Share the calendar';
 
   @override
   String get prayerSunrise => 'Sunrise';

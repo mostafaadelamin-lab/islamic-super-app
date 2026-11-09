@@ -1,7 +1,14 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { AdhanAlerts, AdhanSettings } from "@/components/AdhanAlerts";
-import { adhanStore, DEFAULT_ADHAN, nextAdhanAlert, nextAlert, sanitizeAdhan } from "@/lib/adhan-alerts";
+import { AdhanAlerts, AdhanSettings, alertSound } from "@/components/AdhanAlerts";
+import {
+  adhanStore,
+  DEFAULT_ADHAN,
+  lastThirdStart,
+  nextAdhanAlert,
+  nextAlert,
+  sanitizeAdhan,
+} from "@/lib/adhan-alerts";
 import { prayerTimes } from "@/lib/prayer";
 import { resetStores } from "./reset";
 
@@ -52,7 +59,16 @@ describe("adhan alert planning", () => {
       preMinutes: 0,
       iqamaEnabled: false,
       iqama: { fajr: 20, dhuhr: 15, asr: 15, maghrib: 10, isha: 15 },
+      soundFor: {},
+      sunrise: false,
+      lastThird: false,
+      friday: null,
     });
+    const x = sanitizeAdhan({ soundFor: { fajr: "tone", asr: "loud" }, friday: "25:00", sunrise: true });
+    expect(x.soundFor).toEqual({ fajr: "tone" });
+    expect(x.friday).toBeNull();
+    expect(x.sunrise).toBe(true);
+    expect(sanitizeAdhan({ friday: "09:30" }).friday).toBe("09:30");
     const s = sanitizeAdhan({ preMinutes: 7, iqamaEnabled: true, iqama: { fajr: 500, dhuhr: "x", asr: 0 } });
     expect(s.preMinutes).toBe(0);
     expect(s.iqama).toMatchObject({ fajr: 60, dhuhr: 1, asr: 1, maghrib: 10 });
@@ -77,7 +93,61 @@ describe("adhan alert planning", () => {
   });
 });
 
+describe("extra alerts", () => {
+  it("plans sunrise, the last third of the night and the Friday reminder", () => {
+    const fajrOnly = { fajr: true, dhuhr: false, asr: false, maghrib: false, isha: false };
+    const sunrise = sanitizeAdhan({ enabled: true, prayers: fajrOnly, sunrise: true });
+    const beforeSunrise = new Date(today.times.sunrise.getTime() - 60_000);
+    expect(nextAlert(beforeSunrise, MAKKAH, sunrise)).toMatchObject({
+      kind: "sunrise",
+      at: today.times.sunrise,
+    });
+
+    const night = sanitizeAdhan({ enabled: true, prayers: fajrOnly, lastThird: true });
+    const tomorrow = prayerTimes({ year: 2026, month: 3, day: 2 }, MAKKAH.lat, MAKKAH.lng, "makkah");
+    const third = lastThirdStart(today.times.maghrib, tomorrow.times.fajr);
+    expect(third.getTime()).toBeGreaterThan(today.times.isha.getTime());
+    expect(third.getTime()).toBeLessThan(tomorrow.times.fajr.getTime());
+    expect(nextAlert(new Date(today.times.isha.getTime() + 60_000), MAKKAH, night)).toMatchObject({
+      kind: "lastThird",
+      at: third,
+    });
+
+    // 2026-03-06 is a Friday; 10:00 in Makkah is 07:00 UTC.
+    const ishaOnly = { fajr: false, dhuhr: false, asr: false, maghrib: false, isha: true };
+    const friday = sanitizeAdhan({ enabled: true, prayers: ishaOnly, friday: "10:00" });
+    expect(nextAlert(new Date("2026-03-05T22:00:00Z"), MAKKAH, friday)).toMatchObject({
+      kind: "friday",
+      at: new Date("2026-03-06T07:00:00Z"),
+    });
+  });
+
+  it("follows each prayer's own sound", () => {
+    const p = sanitizeAdhan({ sound: true, soundFor: { fajr: "tone", isha: "silent" } });
+    expect(alertSound(p, "adhan", "fajr")).toBe("tone");
+    expect(alertSound(p, "adhan", "isha")).toBe("silent");
+    expect(alertSound(p, "adhan", "dhuhr")).toBe("adhan");
+    expect(alertSound(p, "sunrise", "sunrise")).toBe("tone");
+    expect(alertSound({ ...p, sound: false }, "iqama", "dhuhr")).toBe("silent");
+  });
+});
+
 describe("AdhanSettings", () => {
+  it("stores the per-prayer sound and the extra alerts", async () => {
+    adhanStore.set({ ...DEFAULT_ADHAN, enabled: true });
+    const u = user();
+    render(<AdhanSettings locale="en" />);
+    await u.selectOptions(screen.getByTestId("sound-fajr"), "tone");
+    expect(adhanStore.get().soundFor).toEqual({ fajr: "tone" });
+    await u.click(screen.getByTestId("alert-sunrise"));
+    await u.click(screen.getByTestId("alert-lastThird"));
+    await u.click(screen.getByTestId("alert-friday"));
+    expect(adhanStore.get()).toMatchObject({ sunrise: true, lastThird: true, friday: "10:00" });
+    expect(screen.getByTestId("alert-friday-time")).toHaveValue("10:00");
+    await u.click(screen.getByTestId("alert-friday"));
+    expect(adhanStore.get().friday).toBeNull();
+  });
+
   it("enables alerts, asks for notification permission and stores per-prayer switches", async () => {
     const requestPermission = vi.fn().mockResolvedValue("granted");
     vi.stubGlobal("Notification", Object.assign(vi.fn(), { permission: "default", requestPermission }));
@@ -160,5 +230,18 @@ describe("AdhanAlerts", () => {
       await vi.advanceTimersByTimeAsync(5000);
     });
     expect(screen.getByRole("button", { name: "شغّل الأذان" })).toBeInTheDocument();
+  });
+
+  it("rings a silent prayer without the recording and announces sunrise", async () => {
+    vi.stubGlobal("Notification", Object.assign(vi.fn(), { permission: "granted" }));
+    const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
+    adhanStore.set({ ...DEFAULT_ADHAN, enabled: true, soundFor: { dhuhr: "silent" } });
+    render(<AdhanAlerts locale="en" />);
+    await act(async () => {
+      vi.setSystemTime(new Date(today.times.dhuhr.getTime() + 1000));
+      await vi.advanceTimersByTimeAsync(5000);
+    });
+    expect(play).not.toHaveBeenCalled();
+    expect(screen.getByTestId("adhan-ringing")).toHaveTextContent("Time for Dhuhr");
   });
 });
