@@ -10,6 +10,8 @@ import {
   ALERT_SOUNDS,
   clampIqama,
   DEFAULT_FRIDAY_TIME,
+  DEFAULT_MORNING_ADHKAR,
+  DEFAULT_EVENING_ADHKAR,
   IQAMA_MAX,
   IQAMA_MIN,
   nextAlert,
@@ -386,6 +388,36 @@ export function AdhanSettings({ locale }: { locale: Locale }) {
                 data-testid="alert-friday-time"
               />
             ) : null}
+            {(
+              [
+                ["adhkarMorning", DEFAULT_MORNING_ADHKAR],
+                ["adhkarEvening", DEFAULT_EVENING_ADHKAR],
+              ] as const
+            ).map(([k, def]) => (
+              <div key={k} className="row">
+                <label className="check">
+                  <input
+                    type="checkbox"
+                    checked={prefs[k] !== null}
+                    onChange={(e) => adhanStore.set((p) => ({ ...p, [k]: e.target.checked ? def : null }))}
+                    data-testid={`alert-${k}`}
+                  />{" "}
+                  {t(locale, `adhan.${k}`)}
+                </label>
+                {prefs[k] !== null ? (
+                  <input
+                    type="time"
+                    aria-label={t(locale, `adhan.${k}Time`)}
+                    value={prefs[k] ?? def}
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      if (v) adhanStore.set((p) => ({ ...p, [k]: v }));
+                    }}
+                    data-testid={`alert-${k}-time`}
+                  />
+                ) : null}
+              </div>
+            ))}
           </fieldset>
         </>
       ) : null}

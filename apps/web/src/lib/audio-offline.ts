@@ -33,7 +33,13 @@ export function sanitizeDownloads(raw: unknown): DownloadsState {
     typeof r.folder === "string" &&
     typeof r.surah === "number" &&
     surahMeta(r.surah) !== undefined
-      ? [{ folder: r.folder, surah: r.surah, bytes: typeof r.bytes === "number" && r.bytes > 0 ? r.bytes : 0 }]
+      ? [
+          {
+            folder: r.folder,
+            surah: r.surah,
+            bytes: typeof r.bytes === "number" && r.bytes > 0 ? r.bytes : 0,
+          },
+        ]
       : [],
   );
   return { saved };
@@ -114,7 +120,11 @@ export async function deleteSurah(folder: string, surah: number): Promise<void> 
   const keep = new Set(rest.filter((d) => d.folder === folder).flatMap((d) => surahFiles(d.folder, d.surah)));
   if (offlineSupported()) {
     const cache = await caches.open(AUDIO_CACHE);
-    await Promise.all(surahFiles(folder, surah).filter((u) => !keep.has(u)).map((u) => cache.delete(u)));
+    await Promise.all(
+      surahFiles(folder, surah)
+        .filter((u) => !keep.has(u))
+        .map((u) => cache.delete(u)),
+    );
   }
   downloadsStore.set(() => ({ saved: rest }));
 }

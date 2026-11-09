@@ -28,6 +28,9 @@ export interface AdhanPrefs {
   lastThird: boolean;
   /** Friday reminder (Surat al-Kahf) at "HH:MM", or null when off. */
   friday: string | null;
+  /** Morning / evening adhkar reminders at "HH:MM", or null when off. */
+  adhkarMorning: string | null;
+  adhkarEvening: string | null;
 }
 
 export type AlertSound = "adhan" | "tone" | "silent";
@@ -35,6 +38,8 @@ export const ALERT_SOUNDS: readonly AlertSound[] = ["adhan", "tone", "silent"];
 /** A time "HH:MM": matches "10:00", rejects "9:5". */
 const HHMM_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
 export const DEFAULT_FRIDAY_TIME = "10:00";
+export const DEFAULT_MORNING_ADHKAR = "06:30";
+export const DEFAULT_EVENING_ADHKAR = "17:00";
 const FRIDAY = 5;
 
 /** Choices offered for the reminder before the adhan (minutes; 0 = off). */
@@ -61,6 +66,8 @@ export const DEFAULT_ADHAN: AdhanPrefs = {
   sunrise: false,
   lastThird: false,
   friday: null,
+  adhkarMorning: null,
+  adhkarEvening: null,
 };
 
 export function clampIqama(v: unknown): number {
@@ -101,6 +108,10 @@ export function sanitizeAdhan(raw: unknown): AdhanPrefs {
     sunrise: r.sunrise === true,
     lastThird: r.lastThird === true,
     friday: typeof r.friday === "string" && HHMM_RE.test(r.friday) ? r.friday : null,
+    adhkarMorning:
+      typeof r.adhkarMorning === "string" && HHMM_RE.test(r.adhkarMorning) ? r.adhkarMorning : null,
+    adhkarEvening:
+      typeof r.adhkarEvening === "string" && HHMM_RE.test(r.adhkarEvening) ? r.adhkarEvening : null,
   };
 }
 
@@ -112,7 +123,8 @@ export function adhanFor(p: AdhanPrefs, k: PrayerKey): boolean {
 
 export const ADHAN_AUDIO_PATH = "/audio/adhan.mp3";
 
-export type AlertKind = "adhan" | "pre" | "iqama" | "sunrise" | "lastThird" | "friday";
+export type AlertKind =
+  "adhan" | "pre" | "iqama" | "sunrise" | "lastThird" | "friday" | "adhkarMorning" | "adhkarEvening";
 
 /** Sound of `k`'s adhan alert: its own choice, else the general switch. */
 export function soundFor(p: AdhanPrefs, k: PrayerKey): AlertSound {
@@ -169,6 +181,16 @@ export function nextAlert(now: Date, q: PrayerQuery, prefs: AdhanPrefs): Planned
       const at = zonedInstant(date, hh, mm, q.tz);
       extras.push({ kind: "friday", key: "dhuhr", at, prayerAt: at });
     }
+    const daily: [AlertKind, string | null, PrayerKey][] = [
+      ["adhkarMorning", prefs.adhkarMorning, "fajr"],
+      ["adhkarEvening", prefs.adhkarEvening, "asr"],
+    ];
+    daily.forEach(([kind, time, key]) => {
+      if (!time) return;
+      const [hh, mm] = time.split(":").map(Number) as [number, number];
+      const at = zonedInstant(date, hh, mm, q.tz);
+      extras.push({ kind, key, at, prayerAt: at });
+    });
     return [
       ...extras,
       ...enabled.flatMap((k): PlannedAlert[] => {

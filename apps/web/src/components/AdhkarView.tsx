@@ -13,8 +13,11 @@ import {
   type Session,
 } from "@/lib/adhkar";
 import { isoDate } from "@/lib/time";
+import { adhkarViewStore } from "@/lib/dhikr-share";
 import { useStore } from "@/hooks/useStore";
 import { Icon } from "./Icon";
+import { CardDeck, ModeSwitch } from "./CardDeck";
+import { DhikrTools } from "./DhikrTools";
 
 const SESSIONS: readonly Session[] = ["morning", "evening"];
 
@@ -28,6 +31,7 @@ export function AdhkarView({ locale, items }: { locale: Locale; items: readonly 
   const [session, setSession] = useState<Session>("morning");
   const [today, setToday] = useState("");
   const stored = useStore(adhkarStore);
+  const { mode } = useStore(adhkarViewStore);
   useEffect(() => {
     const hash = window.location.hash.slice(1);
     setSession(hash === "morning" || hash === "evening" ? hash : defaultSession(new Date().getHours()));
@@ -39,6 +43,51 @@ export function AdhkarView({ locale, items }: { locale: Locale; items: readonly 
   const choose = (s: Session): void => {
     setSession(s);
     window.history.replaceState(window.history.state, "", `#${s}`);
+  };
+
+  const source = t(locale, "adhkar.shareSource", { session: t(locale, `adhkar.${session}`) });
+  const item = (i: number): React.JSX.Element => {
+    const d = list[i]!;
+    const n = progress.done[`${session}:${d.id}`] ?? 0;
+    const done = n >= d.count;
+    return (
+      <li key={`${session}-${d.id}`} className={done ? "dhikr done" : "dhikr"} data-testid="dhikr">
+        <p className="dhikr-text" lang="ar" dir="rtl">
+          {d.text}
+        </p>
+        <div className="dhikr-foot">
+          <span className="muted small">
+            {t(locale, "adhkar.repeat", { n: localizeDigits(d.count, locale) })}
+          </span>
+          <button
+            type="button"
+            className={done ? "counter done" : "counter"}
+            data-testid="dhikr-count"
+            disabled={done}
+            onClick={() => adhkarStore.set((p) => countOne(p, localToday(), session, d))}
+          >
+            {done ? <Icon name="check" size={18} /> : null}
+            <span className="sr-only">
+              {t(locale, "adhkar.countLabel", {
+                i: localizeDigits(i + 1, locale),
+                n: localizeDigits(n, locale),
+                total: localizeDigits(d.count, locale),
+              })}
+            </span>
+            <span aria-hidden="true">
+              {localizeDigits(n, locale)} / {localizeDigits(d.count, locale)}
+            </span>
+          </button>
+        </div>
+        <DhikrTools
+          locale={locale}
+          text={d.text}
+          source={source}
+          where={`${source} · ${localizeDigits(i + 1, locale)}`}
+          testId={`dhikr-${i + 1}`}
+        />
+      </li>
+    );
   };
 
   return (
@@ -73,43 +122,20 @@ export function AdhkarView({ locale, items }: { locale: Locale; items: readonly 
         </button>
       </div>
       {locale !== "ar" ? <p className="alert">{t(locale, "common.arabicOnly")}</p> : null}
-      <ol className="dhikr-list" data-testid="dhikr-list">
-        {list.map((d, i) => {
-          const n = progress.done[`${session}:${d.id}`] ?? 0;
-          const done = n >= d.count;
-          return (
-            <li key={`${session}-${d.id}`} className={done ? "dhikr done" : "dhikr"} data-testid="dhikr">
-              <p className="dhikr-text" lang="ar" dir="rtl">
-                {d.text}
-              </p>
-              <div className="dhikr-foot">
-                <span className="muted small">
-                  {t(locale, "adhkar.repeat", { n: localizeDigits(d.count, locale) })}
-                </span>
-                <button
-                  type="button"
-                  className={done ? "counter done" : "counter"}
-                  data-testid="dhikr-count"
-                  disabled={done}
-                  onClick={() => adhkarStore.set((p) => countOne(p, localToday(), session, d))}
-                >
-                  {done ? <Icon name="check" size={18} /> : null}
-                  <span className="sr-only">
-                    {t(locale, "adhkar.countLabel", {
-                      i: localizeDigits(i + 1, locale),
-                      n: localizeDigits(n, locale),
-                      total: localizeDigits(d.count, locale),
-                    })}
-                  </span>
-                  <span aria-hidden="true">
-                    {localizeDigits(n, locale)} / {localizeDigits(d.count, locale)}
-                  </span>
-                </button>
-              </div>
-            </li>
-          );
-        })}
-      </ol>
+      <ModeSwitch locale={locale} />
+      {mode === "cards" ? (
+        <CardDeck
+          locale={locale}
+          count={list.length}
+          resetKey={`${session}:${today}`}
+          advanceWhen={(i) => (progress.done[`${session}:${list[i]!.id}`] ?? 0) >= list[i]!.count}
+          render={(i) => <ol className="dhikr-list">{item(i)}</ol>}
+        />
+      ) : (
+        <ol className="dhikr-list" data-testid="dhikr-list">
+          {list.map((_, i) => item(i))}
+        </ol>
+      )}
       <p className="muted small">{t(locale, "adhkar.source")}</p>
     </>
   );

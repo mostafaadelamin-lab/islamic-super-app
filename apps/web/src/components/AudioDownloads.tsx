@@ -51,7 +51,12 @@ export function AudioDownloads({ locale }: { locale: Locale }) {
     setFailed(false);
     setBusy({ surah, done: 0, total: 0 });
     try {
-      await downloadSurah(prefs.reciter, surah, (done, total) => setBusy({ surah, done, total }), ctrl.signal);
+      await downloadSurah(
+        prefs.reciter,
+        surah,
+        (done, total) => setBusy({ surah, done, total }),
+        ctrl.signal,
+      );
     } catch {
       if (!ctrl.signal.aborted) setFailed(true);
     } finally {
@@ -95,7 +100,12 @@ export function AudioDownloads({ locale }: { locale: Locale }) {
               <span data-testid="dl-progress">
                 {t(locale, "downloads.progress", { done: n(busy.done), total: n(busy.total) })}
               </span>
-              <button type="button" className="btn" onClick={() => abort.current?.abort()} data-testid="dl-cancel">
+              <button
+                type="button"
+                className="btn"
+                onClick={() => abort.current?.abort()}
+                data-testid="dl-cancel"
+              >
                 {t(locale, "downloads.cancel")}
               </button>
             </div>

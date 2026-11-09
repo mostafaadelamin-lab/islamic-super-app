@@ -70,7 +70,8 @@ function syncMediaSession(): void {
   if (typeof MediaMetadata === "undefined") return;
   const ar = typeof document !== "undefined" && document.documentElement.lang === "ar";
   const reciter = RECITERS.find((r) => r.folder === audioStore.get().reciter);
-  const title = `${surahName(item.s, ar ? "ar" : "en")} ${item.kind === "basmala" ? "" : `${item.s}:${item.a}`}`.trim();
+  const title =
+    `${surahName(item.s, ar ? "ar" : "en")} ${item.kind === "basmala" ? "" : `${item.s}:${item.a}`}`.trim();
   if (ms.metadata?.title === title) return;
   ms.metadata = new MediaMetadata({
     title,

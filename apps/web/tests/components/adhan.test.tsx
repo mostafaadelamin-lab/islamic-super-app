@@ -63,6 +63,8 @@ describe("adhan alert planning", () => {
       sunrise: false,
       lastThird: false,
       friday: null,
+      adhkarMorning: null,
+      adhkarEvening: null,
     });
     const x = sanitizeAdhan({ soundFor: { fajr: "tone", asr: "loud" }, friday: "25:00", sunrise: true });
     expect(x.soundFor).toEqual({ fajr: "tone" });
@@ -120,6 +122,23 @@ describe("extra alerts", () => {
       kind: "friday",
       at: new Date("2026-03-06T07:00:00Z"),
     });
+
+    // Morning adhkar at 06:30 Makkah (03:30 UTC), every day; evening at 17:00 (14:00 UTC).
+    const adhkar = sanitizeAdhan({
+      enabled: true,
+      prayers: ishaOnly,
+      adhkarMorning: "06:30",
+      adhkarEvening: "17:00",
+    });
+    expect(nextAlert(new Date("2026-03-05T22:00:00Z"), MAKKAH, adhkar)).toMatchObject({
+      kind: "adhkarMorning",
+      at: new Date("2026-03-06T03:30:00Z"),
+    });
+    expect(nextAlert(new Date("2026-03-06T12:00:00Z"), MAKKAH, adhkar)).toMatchObject({
+      kind: "adhkarEvening",
+      at: new Date("2026-03-06T14:00:00Z"),
+    });
+    expect(sanitizeAdhan({ adhkarMorning: "6:30" }).adhkarMorning).toBeNull();
   });
 
   it("follows each prayer's own sound", () => {
@@ -146,6 +165,10 @@ describe("AdhanSettings", () => {
     expect(screen.getByTestId("alert-friday-time")).toHaveValue("10:00");
     await u.click(screen.getByTestId("alert-friday"));
     expect(adhanStore.get().friday).toBeNull();
+    await u.click(screen.getByTestId("alert-adhkarMorning"));
+    await u.click(screen.getByTestId("alert-adhkarEvening"));
+    expect(adhanStore.get()).toMatchObject({ adhkarMorning: "06:30", adhkarEvening: "17:00" });
+    expect(screen.getByTestId("alert-adhkarEvening-time")).toHaveValue("17:00");
   });
 
   it("enables alerts, asks for notification permission and stores per-prayer switches", async () => {

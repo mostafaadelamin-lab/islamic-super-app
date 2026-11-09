@@ -36,6 +36,7 @@ const copies = {
   "packages/shared-schemas/audio/reciters.json": "reciters.json",
   "content/adhkar/dist/adhkar.v1.json": "adhkar.json",
   "content/adhkar/hisn.json": "hisn.json",
+  "content/adhkar/hisn-sections.json": "hisn-sections.json",
   "content/reels/dist/reels.v1.json": "reels.json",
   "content/stories/dist/stories.v1.json": "stories.json",
 };
