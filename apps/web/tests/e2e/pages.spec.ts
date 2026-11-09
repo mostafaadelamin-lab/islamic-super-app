@@ -21,7 +21,8 @@ for (const locale of ["ar", "en"] as const) {
           ...new Set(as.map((a) => a.getAttribute("href")!)),
         ]);
         for (const href of hrefs) {
-          if (/^https?:/.test(href)) continue;
+          // external sites and mail links ("Report a mistake") are not part of the static export
+          if (/^(https?|mailto):/.test(href)) continue;
           const url = href.split("#")[0]!;
           if (!url) continue;
           const r = await request.get(url);
@@ -36,6 +37,8 @@ for (const locale of ["ar", "en"] as const) {
 test("root redirects to /ar/ by default and to the saved language", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/ar\/$/);
+  // the switch saves the choice once the page is interactive
+  await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
   await page.getByTestId("lang-switch").click();
   await expect(page).toHaveURL(/\/en\/$/);
   await page.goto("/");
