@@ -19,6 +19,8 @@ dependencies:
   timezone: ^0.11.2
   crypto: ^3.0.8
   just_audio: ^0.10.6
+  # Lock-screen / notification controls and background recitation (Android media service).
+  audio_service: ^0.18.18
   flutter_local_notifications: ^22.3.2
   sensors_plus: ^7.1.1
   hijri: ^3.0.1

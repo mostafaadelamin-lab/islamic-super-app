@@ -192,6 +192,29 @@ void main() {
     expect(clip, endsWith('﴿البقرة: ١١﴾'));
   });
 
+  testWidgets('share an ayah as an image: preview card with the stored text, then the share sheet', (tester) async {
+    final sharer = FakeSharer();
+    final app = await pumpApp(tester, size: const Size(390, 844), sharer: sharer);
+    await pushScreen(tester, const PageReaderScreen(initialPage: 2));
+    await tester.tap(find.byKey(const Key('pageAyah-2-3')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('ayahShareImage')));
+    await tester.tap(find.byKey(const Key('ayahShareImage')));
+    await tester.pumpAndSettle();
+    final q = app.services.content.quran;
+    final shown = tester.widget<Text>(find.byKey(const Key('ayahImage.text'))).data;
+    expect(shown, app.services.content.renderMap.forDisplay(q.text(const AyahRef(2, 3))));
+    expect(find.text('﴿البقرة: ٣﴾'), findsOneWidget);
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const Key('ayahImage.share')));
+      await Future<void>.delayed(const Duration(milliseconds: 500));
+    });
+    await tester.pump();
+    expect(sharer.images.single.fileName, 'rattil-2-3.png');
+    expect(sharer.images.single.bytes, greaterThan(1000));
+    expect(sharer.images.single.text, startsWith(q.text(const AyahRef(2, 3))));
+  });
+
   testWidgets('play from an ayah: the playing ayah is highlighted and pages turn automatically', (tester) async {
     final audio = FakeAudioBackend();
     final app = await open(tester, 2, audio: audio);

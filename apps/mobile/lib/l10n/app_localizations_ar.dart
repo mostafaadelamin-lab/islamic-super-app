@@ -736,6 +736,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get mushafReadAsList => 'اقرأ السورة آيةً آية';
 
   @override
+  String get mushafShareImage => 'مشاركة كصورة';
+
+  @override
+  String get mushafShareImageTitle => 'صورة الآية';
+
+  @override
+  String get mushafShareNow => 'مشاركة';
+
+  @override
   String mushafSlider(String page) {
     return 'الصفحة $page من ٦٠٤';
   }

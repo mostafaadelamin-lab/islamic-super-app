@@ -740,6 +740,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mushafReadAsList => 'Read as a list';
 
   @override
+  String get mushafShareImage => 'Share as image';
+
+  @override
+  String get mushafShareImageTitle => 'Ayah image';
+
+  @override
+  String get mushafShareNow => 'Share';
+
+  @override
   String mushafSlider(String page) {
     return 'Page $page of 604';
   }

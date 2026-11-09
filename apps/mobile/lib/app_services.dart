@@ -16,6 +16,7 @@ import 'data/khatma_store.dart';
 import 'data/worship_store.dart';
 import 'data/downloads.dart';
 import 'data/location.dart';
+import 'data/media_session.dart';
 import 'data/notifications.dart';
 import 'data/recitation.dart';
 import 'data/reminders.dart';
@@ -51,6 +52,7 @@ class AppServices {
     required this.reminders,
     this.sharer = const SystemImageSharer(),
     required this.reelsFeed,
+    this.media,
   });
 
   factory AppServices.create({
@@ -67,6 +69,7 @@ class AppServices {
     LocationProvider? location,
     ImageSharer? sharer,
     Future<Directory> Function()? storageRoot,
+    MediaSession? mediaSession,
   }) {
     final c = clock ?? DateTime.now;
     final settings = SettingsController(prefs, defaultCityId: content.cities.first.id);
@@ -159,6 +162,12 @@ class AppServices {
       reminders: reminders,
       sharer: sharer ?? const SystemImageSharer(),
       reelsFeed: ReelsFeedController(sources: content.reelSources, httpClient: httpClient, prefs: prefs, clock: c),
+      media: RecitationMediaBridge(
+        recitation: recitation,
+        content: content,
+        settings: settings,
+        session: mediaSession ?? const NoMediaSession(),
+      ),
     );
   }
 
@@ -203,6 +212,9 @@ class AppServices {
 
   /// Newest Shorts from the trusted channels (fetched when the reels open).
   final ReelsFeedController reelsFeed;
+
+  /// Lock-screen / notification controls for the recitation (and background playback on Android).
+  final RecitationMediaBridge? media;
 }
 
 class AppScope extends InheritedWidget {

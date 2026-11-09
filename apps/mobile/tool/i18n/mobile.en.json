@@ -362,5 +362,8 @@
   "downloads.failed": "The download failed. Check the connection and try again; files already saved are kept.",
   "downloads.cancel": "Stop download",
   "downloads.delete": "Delete download",
-  "downloads.download": "Download surah"
+  "downloads.download": "Download surah",
+  "mushaf.shareImage": "Share as image",
+  "mushaf.shareImageTitle": "Ayah image",
+  "mushaf.shareNow": "Share"
 }

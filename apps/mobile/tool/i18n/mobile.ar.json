@@ -362,5 +362,8 @@
   "downloads.failed": "تعذّر التحميل. تأكد من الاتصال وحاول مرة أخرى؛ الملفات اللي اتحمّلت محفوظة.",
   "downloads.cancel": "إيقاف التحميل",
   "downloads.delete": "حذف التحميل",
-  "downloads.download": "تحميل السورة"
+  "downloads.download": "تحميل السورة",
+  "mushaf.shareImage": "مشاركة كصورة",
+  "mushaf.shareImageTitle": "صورة الآية",
+  "mushaf.shareNow": "مشاركة"
 }

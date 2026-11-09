@@ -8,6 +8,7 @@ import '../domain/quran.dart';
 import '../domain/tafsir.dart';
 import '../domain/text.dart';
 import '../theme/design_tokens.dart';
+import 'ayah_image_screen.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
 import 'widgets.dart';
@@ -278,6 +279,11 @@ class _Actions extends StatelessWidget {
                 );
                 nav.pop();
                 messenger.showSnackBar(SnackBar(content: Text(l.mushafCopied)));
+              }),
+              action('ayahShareImage', Icons.image_outlined, l.mushafShareImage, () {
+                final nav = Navigator.of(context);
+                nav.pop();
+                nav.push(MaterialPageRoute<void>(builder: (_) => AyahImageScreen(ayah: ref)));
               }),
               if (readAsList)
                 action('ayahReadList', Icons.view_agenda_outlined, l.mushafReadAsList, () {

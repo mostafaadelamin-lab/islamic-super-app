@@ -7,10 +7,15 @@ import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'app.dart';
 import 'app_services.dart';
 import 'data/content.dart';
+import 'data/media_session.dart';
 import 'data/recitation.dart';
 
 /// [audioBackend] replaces the audio player (the headless test device has no audio plugin).
-Future<AppServices> bootstrap({http.Client? httpClient, AudioBackend Function()? audioBackend}) async {
+Future<AppServices> bootstrap({
+  http.Client? httpClient,
+  AudioBackend Function()? audioBackend,
+  MediaSession? mediaSession,
+}) async {
   WidgetsFlutterBinding.ensureInitialized();
   tzdata.initializeTimeZones();
   final content = await AppContent.load(rootBundle);
@@ -20,10 +25,21 @@ Future<AppServices> bootstrap({http.Client? httpClient, AudioBackend Function()?
     prefs: prefs,
     httpClient: httpClient ?? http.Client(),
     audioBackend: audioBackend,
+    mediaSession: mediaSession,
   );
 }
 
+/// System media controls; the app still works (foreground only) if the service cannot start.
+Future<MediaSession> _mediaSession() async {
+  try {
+    return await AudioServiceMediaSession.init(channelName: 'التلاوة · Recitation');
+  } catch (_) {
+    return const NoMediaSession();
+  }
+}
+
 Future<void> main() async {
-  final services = await bootstrap();
+  WidgetsFlutterBinding.ensureInitialized();
+  final services = await bootstrap(mediaSession: await _mediaSession());
   runApp(RattilApp(services: services));
 }

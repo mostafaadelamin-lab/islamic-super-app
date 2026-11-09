@@ -1346,6 +1346,24 @@ abstract class AppLocalizations {
   /// **'Read as a list'**
   String get mushafReadAsList;
 
+  /// shared key "mushaf.shareImage"
+  ///
+  /// In en, this message translates to:
+  /// **'Share as image'**
+  String get mushafShareImage;
+
+  /// shared key "mushaf.shareImageTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Ayah image'**
+  String get mushafShareImageTitle;
+
+  /// shared key "mushaf.shareNow"
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get mushafShareNow;
+
   /// shared key "mushaf.slider"
   ///
   /// In en, this message translates to:

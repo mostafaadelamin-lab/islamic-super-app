@@ -1111,6 +1111,18 @@
   "@mushafReadAsList": {
     "description": "shared key \"mushaf.readAsList\""
   },
+  "mushafShareImage": "Share as image",
+  "@mushafShareImage": {
+    "description": "shared key \"mushaf.shareImage\""
+  },
+  "mushafShareImageTitle": "Ayah image",
+  "@mushafShareImageTitle": {
+    "description": "shared key \"mushaf.shareImageTitle\""
+  },
+  "mushafShareNow": "Share",
+  "@mushafShareNow": {
+    "description": "shared key \"mushaf.shareNow\""
+  },
   "mushafSlider": "Page {page} of 604",
   "@mushafSlider": {
     "description": "shared key \"mushaf.slider\"",
