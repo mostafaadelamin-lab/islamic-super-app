@@ -6919,6 +6919,20 @@
   "page": "/ar/tasbih/",
   "tag": "button",
   "type": "button",
+  "name": "زر كبير",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "خرز السبحة",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "button",
+  "type": "button",
   "name": "سبّح: ٠ من ٣٣٠/ ٣٣",
   "href": null
  },
@@ -6962,6 +6976,97 @@
   "tag": "button",
   "type": "button",
   "name": "١٠٠٠",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "زمردي",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "ذهبي",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "فيروزي",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "أزرق",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "نيلي",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "بنفسجي",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "وردي",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "كهرماني",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "رمادي",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "صوت مع كل تسبيحة",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "اهتزاز",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "input",
+  "type": "text",
+  "name": "اكتب ذكرًا تريد عدّه",
+  "href": null
+ },
+ {
+  "page": "/ar/tasbih/",
+  "tag": "button",
+  "type": "submit",
+  "name": "إضافة",
   "href": null
  },
  {
@@ -15263,6 +15368,20 @@
   "page": "/en/tasbih/",
   "tag": "button",
   "type": "button",
+  "name": "Big button",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "Beads",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "button",
+  "type": "button",
   "name": "Count: 0 of 330/ 33",
   "href": null
  },
@@ -15306,6 +15425,97 @@
   "tag": "button",
   "type": "button",
   "name": "1000",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "Emerald",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "Gold",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "Teal",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "Blue",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "Indigo",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "Plum",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "Rose",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "Amber",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "button",
+  "type": "button",
+  "name": "Slate",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "Sound on each count",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "input",
+  "type": "checkbox",
+  "name": "Vibration",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "input",
+  "type": "text",
+  "name": "Type a dhikr to count",
+  "href": null
+ },
+ {
+  "page": "/en/tasbih/",
+  "tag": "button",
+  "type": "submit",
+  "name": "Add",
   "href": null
  },
  {
