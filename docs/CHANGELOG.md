@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased] — Reels pick themselves from trusted channels — 2026-11-09
+### Added
+- The app now fills the reels by itself (owner decision 2026-11-09): it pulls the newest Shorts of trusted Islamic YouTube channels the owner approved once (`content/reels/sources.json`, first channel: Sheikh Yasser Al-Dosari), mixes the channels and shows them before the hand-picked reels. No per-video review; each such reel shows a "Trusted channel" chip.
+- "Hide this channel" on every automatic reel (with undo, and "Show hidden channels" in the empty state).
+- Mobile reads YouTube's public feeds directly (no key or account), caches 3 hours and works offline from the cache. Website: through the new API endpoint `GET /v1/reels/feed` (needs the API hosted).
+- `tools/reels.py sources-add / sources-remove` to manage the trusted channels.
+### Unchanged
+- Instagram stays hand-picked (owner's choice: automatic YouTube now). Hand-picked reels keep the pending / approved / rejected review.
+
 ## [Unreleased] — Reels: Instagram + admonitions — 2026-11-09
 ### Added
 - Reels now accept Instagram as well as YouTube (owner decision 2026-11-09). Instagram reels play through Instagram's official embed page (no Meta app, token or account); they need a tap to play.
