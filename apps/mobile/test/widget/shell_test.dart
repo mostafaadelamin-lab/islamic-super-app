@@ -15,7 +15,6 @@ void main() {
 
   testWidgets('Arabic is the default locale and the layout is RTL', (tester) async {
     await pumpApp(tester, prefs: const {});
-    expect(find.text('رتّل'), findsWidgets);
     final dir = Directionality.of(tester.element(find.byType(HomeScreen)));
     expect(dir, TextDirection.rtl);
     expect(find.text('الرئيسية'), findsOneWidget);
@@ -24,7 +23,6 @@ void main() {
   testWidgets('English is LTR', (tester) async {
     await pumpApp(tester, locale: 'en');
     expect(Directionality.of(tester.element(find.byType(HomeScreen))), TextDirection.ltr);
-    expect(find.text('Rattil'), findsWidgets);
     expect(find.text('Home'), findsOneWidget);
   });
 

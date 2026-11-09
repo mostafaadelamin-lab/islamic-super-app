@@ -214,22 +214,19 @@ void main() {
     testWidgets('live countdown, Hijri + Gregorian dates, city and today\'s times', (tester) async {
       var now = fixedNow;
       await pumpApp(tester, size: tallPhone, clock: () => now);
-      expect(find.text('بعد ${ltr('٠:٠٥:٠٠')}'), findsOneWidget);
+      expect(find.text('متبقي ${ltr('٠:٠٥:٠٠')}'), findsOneWidget);
       now = now.add(const Duration(seconds: 1));
       await tester.pump(const Duration(seconds: 1));
-      expect(find.text('بعد ${ltr('٠:٠٤:٥٩')}'), findsOneWidget, reason: 'ticks every second');
+      expect(find.text('متبقي ${ltr('٠:٠٤:٥٩')}'), findsOneWidget, reason: 'ticks every second');
       expect(find.text('٢٦ رجب ١٤٤٧ هـ'), findsOneWidget);
-      expect(
-        find.text(ltr('2026-01-15').replaceAllMapped(RegExp('[0-9]'), (m) => '٠١٢٣٤٥٦٧٨٩'[int.parse(m[0]!)])),
-        findsOneWidget,
-      );
-      expect(tester.widget<Text>(find.byKey(const Key('home.city'))).data, 'القاهرة');
+      expect(find.text('١٥ يناير ٢٠٢٦'), findsOneWidget);
+      expect(tester.widget<Text>(find.byKey(const Key('home.city'))).data, 'مصر - القاهرة');
       for (final k in ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha']) {
         expect(find.byKey(Key('home.time-$k')), findsOneWidget);
       }
     });
 
-    testWidgets('section tiles open Adhkar, Tasbih, Qibla, Hajj, Hisn and Bookmarks', (tester) async {
+    testWidgets('home tiles open Adhkar, Tasbih, Qibla; More opens Hajj, Hisn and Bookmarks', (tester) async {
       await pumpApp(tester, size: tallPhone);
       Future<void> tile(String id) async {
         await tester.ensureVisible(find.byKey(Key('home.tile-$id')));
@@ -240,14 +237,15 @@ void main() {
       await tile('adhkar');
       expect(tester.state<HomeShellState>(find.byType(HomeShell)).index, 3);
       await goToTab(tester, 0);
-      for (final (id, type) in [
-        ('tasbih', TasbihScreen),
-        ('qibla', QiblaScreen),
-        ('hajj', HajjScreen),
-        ('hisn', HisnScreen),
-        ('bookmarks', BookmarksScreen),
-      ]) {
+      for (final (id, type) in [('tasbih', TasbihScreen), ('qibla', QiblaScreen)]) {
         await tile(id);
+        expect(find.byType(type), findsOneWidget, reason: id);
+        await goBack(tester);
+      }
+      for (final (id, type) in [('hajj', HajjScreen), ('hisn', HisnScreen), ('bookmarks', BookmarksScreen)]) {
+        await goToTab(tester, 4);
+        await tester.tap(find.byKey(Key('more.$id')));
+        await tester.pumpAndSettle();
         expect(find.byType(type), findsOneWidget, reason: id);
         await goBack(tester);
       }

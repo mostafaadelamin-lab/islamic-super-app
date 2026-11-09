@@ -1,27 +1,26 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
 import '../app_services.dart';
+import '../data/recitation.dart';
+import '../domain/audio_queue.dart';
+import '../domain/gregorian_names.dart';
 import '../domain/hijri.dart';
-import '../domain/prayer.dart';
 import '../domain/prayer_schedule.dart';
 import '../theme/design_tokens.dart';
-import 'bookmarks_screen.dart';
-import 'hajj_screen.dart';
-import 'hisn_screen.dart';
 import 'l10n_ext.dart';
-import 'page_reader_screen.dart';
 import 'prayer_model.dart';
 import 'qibla_screen.dart';
 import 'reels_screen.dart';
+import 'settings_screen.dart';
 import 'stories_screen.dart';
-import 'search_screen.dart';
 import 'tasbih_screen.dart';
 import 'widgets.dart';
 
-/// Hero colours (deep emerald with white text and gold accents) — the same in
-/// light and dark mode; contrast checked in theme_contrast_test.dart.
+/// Hero colours (deep emerald with white text and gold accents), kept for the
+/// banners that still use them; contrast checked in theme_contrast_test.dart.
 class HeroColors {
   HeroColors._();
   static const top = Color(0xFF0F5C4A);
@@ -30,6 +29,13 @@ class HeroColors {
   static const accent = Color(0xFFF4EBD3);
 }
 
+/// The five obligatory prayers shown as cards on the home screen.
+const homePrayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
+
+/// Home screen after the owner's mockup (2026-11-09): place + settings, mosque
+/// art with the next prayer, its time and a live countdown; the day card
+/// (weekday, Gregorian + Hijri dates, prayer calendar, the five prayers,
+/// sunrise and sunset); big tiles; Quran radio; "main sections".
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.onSelectTab});
   final ValueChanged<int> onSelectTab;
@@ -57,292 +63,762 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _push(Widget w) => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => w));
 
-  void _openMushaf() {
-    final s = context.services;
-    final r = s.settings.lastRead;
-    _push(PageReaderScreen(initialPage: r == null ? 1 : s.content.quran.pageOf(r)));
-  }
-
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final s = context.services;
     return Scaffold(
-      appBar: AppBar(title: Text(l.appName)),
-      body: ListenableBuilder(
-        listenable: s.settings,
-        builder: (context, _) {
-          final pv = PrayerView.compute(s);
-          return ListView(
-            key: const Key('homeList'),
-            padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  DesignTokens.spaceLg,
-                  DesignTokens.spaceXs,
-                  DesignTokens.spaceLg,
-                  DesignTokens.spaceSm,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(l.homeWelcome, style: Theme.of(context).textTheme.titleLarge),
-                    Text(l.tagline, style: Theme.of(context).textTheme.bodyMedium),
-                  ],
-                ),
+      body: SafeArea(
+        child: ListenableBuilder(
+          listenable: s.settings,
+          builder: (context, _) {
+            final pv = PrayerView.compute(s);
+            return ListView(
+              key: const Key('homeList'),
+              padding: const EdgeInsets.fromLTRB(
+                DesignTokens.spaceLg,
+                DesignTokens.spaceSm,
+                DesignTokens.spaceLg,
+                DesignTokens.spaceXl,
               ),
-              _NextPrayerHero(pv: pv, onTap: () => widget.onSelectTab(2)),
-              if (pv.today != null) _TodayTimes(pv: pv),
-              SectionCard(
-                children: [
-                  const ContinueReadingTile(),
-                  Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: TextButton.icon(
-                      key: const Key('home.openMushaf'),
-                      onPressed: _openMushaf,
-                      icon: const Icon(Icons.menu_book),
-                      label: Text(l.homeOpenMushaf),
-                    ),
-                  ),
-                ],
-              ),
-              SectionCard(
-                title: l.homeSections,
-                children: [
-                  _TileGrid(
-                    tiles: [
-                      _Tile('surahs', Icons.format_list_numbered, l.quranSurahs, () => widget.onSelectTab(1)),
-                      _Tile('mushaf', Icons.chrome_reader_mode, l.quranPages, _openMushaf),
-                      _Tile('search', Icons.search, l.quranSearch, () => _push(const SearchScreen())),
-                      _Tile('adhkar', Icons.wb_twilight, l.navAdhkar, () => widget.onSelectTab(3)),
-                      _Tile('hisn', Icons.menu_book_outlined, l.adhkarHisn, () => _push(const HisnScreen())),
-                      _Tile('tasbih', Icons.touch_app_outlined, l.tasbihTitle, () => _push(const TasbihScreen())),
-                      _Tile('qibla', Icons.explore_outlined, l.qiblaTitle, () => _push(const QiblaScreen())),
-                      _Tile('hajj', Icons.mosque_outlined, l.hajjTitle, () => _push(const HajjScreen())),
-                      _Tile('stories', Icons.headphones_outlined, l.storiesTitle, () => _push(const StoriesScreen())),
-                      _Tile('reels', Icons.smart_display_outlined, l.reelsTitle, () => _push(const ReelsScreen())),
-                      _Tile(
-                        'bookmarks',
-                        Icons.bookmarks_outlined,
-                        l.navBookmarks,
-                        () => _push(const BookmarksScreen()),
+              children: [
+                _Hero(pv: pv, onTap: () => widget.onSelectTab(2), onSettings: () => _push(const SettingsScreen())),
+                const SizedBox(height: DesignTokens.spaceMd),
+                _DayCard(pv: pv, onCalendar: () => widget.onSelectTab(2)),
+                const SizedBox(height: DesignTokens.spaceMd),
+                IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: _BigTile('quran', Icons.menu_book_outlined, l.homeBigQuran, () => widget.onSelectTab(1)),
+                      ),
+                      const SizedBox(width: DesignTokens.spaceSm),
+                      Expanded(
+                        child: _BigTile(
+                          'adhkar',
+                          Icons.volunteer_activism_outlined,
+                          l.homeBigAdhkar,
+                          () => widget.onSelectTab(3),
+                        ),
+                      ),
+                      const SizedBox(width: DesignTokens.spaceSm),
+                      Expanded(
+                        child: _BigTile(
+                          'prayer',
+                          Icons.schedule_outlined,
+                          l.homeBigPrayer,
+                          () => widget.onSelectTab(2),
+                        ),
                       ),
                     ],
                   ),
-                ],
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _NextPrayerHero extends StatelessWidget {
-  const _NextPrayerHero({required this.pv, required this.onTap});
-  final PrayerView pv;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final s = context.services;
-    final next = pv.next;
-    final h = hijriFor(pv.date, arabic: context.isArabic);
-    final greg =
-        '${pv.date.year}-${pv.date.month.toString().padLeft(2, '0')}-${pv.date.day.toString().padLeft(2, '0')}';
-    // Countdown recomputed from the clock on every tick of the parent's timer.
-    final remaining = next?.at.difference(s.clock().toUtc());
-    const t = TextStyle(color: HeroColors.text);
-    final theme = Theme.of(context).textTheme;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceSm),
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
-        clipBehavior: Clip.antiAlias,
-        child: Ink(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: AlignmentDirectional.topStart,
-              end: AlignmentDirectional.bottomEnd,
-              colors: [HeroColors.top, HeroColors.bottom],
-            ),
-          ),
-          child: InkWell(
-            key: const Key('home.nextPrayer'),
-            onTap: onTap,
-            child: Stack(
-              children: [
-                PositionedDirectional(
-                  end: -18,
-                  bottom: -24,
-                  child: Icon(Icons.mosque, size: 140, color: HeroColors.text.withValues(alpha: 0.08)),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(DesignTokens.spaceLg),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+                const SizedBox(height: DesignTokens.spaceSm),
+                _WideRow(
+                  a: _WideTile('tasbih', Icons.touch_app_outlined, l.homeBigTasbih, () => _push(const TasbihScreen())),
+                  b: _WideTile('qibla', Icons.explore_outlined, l.homeBigQibla, () => _push(const QiblaScreen())),
+                ),
+                const SizedBox(height: DesignTokens.spaceSm),
+                _WideRow(
+                  a: _WideTile('reels', Icons.smart_display_outlined, l.homeBigReels, () => _push(const ReelsScreen())),
+                  b: _WideTile(
+                    'stories',
+                    Icons.headphones_outlined,
+                    l.homeBigStories,
+                    () => _push(const StoriesScreen()),
+                  ),
+                ),
+                const SizedBox(height: DesignTokens.spaceMd),
+                const QuranRadioCard(),
+                const SizedBox(height: DesignTokens.spaceMd),
+                _Panel(
+                  child: InkWell(
+                    key: const Key('home.mainSections'),
+                    borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
+                    onTap: () => widget.onSelectTab(4),
+                    child: Padding(
+                      padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                      child: Row(
                         children: [
-                          const Icon(Icons.location_on_outlined, color: HeroColors.accent, size: 18),
-                          const SizedBox(width: DesignTokens.spaceXs),
+                          Icon(Icons.apps, color: Theme.of(context).colorScheme.primary),
                           Expanded(
                             child: Text(
-                              pv.city.name(context.isArabic),
-                              key: const Key('home.city'),
-                              style: theme.labelLarge?.copyWith(color: HeroColors.accent),
-                              overflow: TextOverflow.ellipsis,
+                              l.homeMainSections,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
                             ),
                           ),
+                          Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
                         ],
                       ),
-                      const SizedBox(height: DesignTokens.spaceXs),
-                      Text(
-                        l.homeHijriDate(context.num(h.day), h.monthName, context.num(h.year)),
-                        key: const Key('home.hijri'),
-                        style: theme.bodyMedium?.merge(t),
-                      ),
-                      Text(context.numLtr(greg), key: const Key('home.gregorian'), style: theme.bodySmall?.merge(t)),
-                      const SizedBox(height: DesignTokens.spaceMd),
-                      if (next == null)
-                        Text(l.prayerNoPrayerToday, style: theme.titleMedium?.merge(t))
-                      else ...[
-                        Text(
-                          l.prayerNext(context.prayerName(next.key)),
-                          style: theme.titleLarge?.merge(t).copyWith(fontWeight: FontWeight.w600),
-                        ),
-                        Text(
-                          l.prayerIn(context.numLtr(PrayerSchedule.formatCountdown(remaining!))),
-                          key: const Key('home.countdown'),
-                          style: theme.headlineSmall?.merge(t).copyWith(fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ],
+                    ),
                   ),
                 ),
               ],
-            ),
-          ),
+            );
+          },
         ),
       ),
     );
   }
 }
 
-class _TodayTimes extends StatelessWidget {
-  const _TodayTimes({required this.pv});
-  final PrayerView pv;
+/// White rounded card with a hairline border, like the mockup's panels.
+class _Panel extends StatelessWidget {
+  const _Panel({required this.child, this.padding = EdgeInsets.zero});
+  final Widget child;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
-    final today = pv.today!;
-    final next = pv.next;
     final scheme = Theme.of(context).colorScheme;
-    return SectionCard(
-      title: context.l10n.homeTodayTimes,
+    return Material(
+      color: scheme.surfaceContainerLowest,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
+        side: BorderSide(color: scheme.outlineVariant),
+      ),
+      elevation: 1,
+      shadowColor: Colors.black26,
+      child: Padding(padding: padding, child: child),
+    );
+  }
+}
+
+class _Hero extends StatelessWidget {
+  const _Hero({required this.pv, required this.onTap, required this.onSettings});
+  final PrayerView pv;
+  final VoidCallback onTap;
+  final VoidCallback onSettings;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final s = context.services;
+    final theme = Theme.of(context).textTheme;
+    final primary = Theme.of(context).colorScheme.primary;
+    final next = pv.next;
+    final remaining = next?.at.difference(s.clock().toUtc());
+    final city = context.isArabic ? '${pv.city.countryAr} - ${pv.city.nameAr}' : pv.city.nameEn;
+    final nextTime = next == null ? null : PrayerSchedule.localDate(pv.location, next.at.toUtc());
+    final nextDay = next == null || nextTime == pv.date ? pv.today : pv.tomorrow;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Wrap(
-          spacing: DesignTokens.spaceSm,
-          runSpacing: DesignTokens.spaceSm,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            for (final k in prayerKeys)
-              () {
-                final isNext = next != null && next.key == k && next.at == today.day.utc[k];
-                return Container(
-                  key: Key('home.time-$k'),
-                  constraints: const BoxConstraints(minWidth: 84),
-                  padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: DesignTokens.spaceSm),
-                  decoration: BoxDecoration(
-                    color: isNext ? scheme.secondaryContainer : scheme.surfaceContainer,
-                    borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-                    border: Border.all(color: isNext ? scheme.secondary : scheme.outline),
+            Icon(Icons.location_on_outlined, color: primary),
+            const SizedBox(width: DesignTokens.spaceXs),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(l.homeTimingFor, style: theme.bodySmall),
+                  Text(
+                    city,
+                    key: const Key('home.city'),
+                    style: theme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(context.prayerName(k), style: Theme.of(context).textTheme.labelMedium),
+                ],
+              ),
+            ),
+            IconButton(
+              key: const Key('home.settings'),
+              tooltip: l.navSettings,
+              onPressed: onSettings,
+              icon: Icon(Icons.settings_outlined, color: primary, size: 28),
+            ),
+          ],
+        ),
+        InkWell(
+          key: const Key('home.nextPrayer'),
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (next == null)
+                      Text(l.prayerNoPrayerToday, style: theme.titleMedium)
+                    else ...[
                       Text(
-                        context.num(today.hhmm(k)),
-                        textDirection: TextDirection.ltr,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                        l.homePrayerOf(context.prayerName(next.key)),
+                        key: const Key('home.nextName'),
+                        style: theme.headlineSmall?.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Text(
+                          context.num(nextDay?.hhmm(next.key) ?? ''),
+                          key: const Key('home.nextTime'),
+                          textDirection: TextDirection.ltr,
+                          style: theme.displayLarge?.copyWith(
+                            color: primary,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 72,
+                            height: 1.1,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        l.homeLeft(context.numLtr(PrayerSchedule.formatCountdown(remaining!))),
+                        key: const Key('home.countdown'),
+                        style: theme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
                       ),
                     ],
-                  ),
-                );
-              }(),
-          ],
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 130,
+                height: 106,
+                child: CustomPaint(painter: MosquePainter(primary.withValues(alpha: 0.85))),
+              ),
+            ],
+          ),
         ),
       ],
     );
   }
 }
 
-class _Tile {
-  const _Tile(this.id, this.icon, this.label, this.onTap);
+class _DayCard extends StatelessWidget {
+  const _DayCard({required this.pv, required this.onCalendar});
+  final PrayerView pv;
+  final VoidCallback onCalendar;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final ar = context.isArabic;
+    final theme = Theme.of(context).textTheme;
+    final scheme = Theme.of(context).colorScheme;
+    final s = context.services;
+    final next = pv.next;
+    // After Isha the next prayer is tomorrow's Fajr: show tomorrow's day.
+    final tomorrow = next != null && pv.today != null && next.at.toUtc() != pv.today!.day.utc[next.key]?.toUtc();
+    final day = tomorrow ? pv.tomorrow : pv.today;
+    final date = tomorrow ? pv.date.add(const Duration(days: 1)) : pv.date;
+    final h = hijriFor(date, arabic: ar);
+    final greg = '${context.num(date.day)} ${gregorianMonthName(date.month, arabic: ar)} ${context.num(date.year)}';
+    String hhmm(String k) => context.num(day!.hhmm(k));
+    String sunset() {
+      final adj = s.settings.adjustments['maghrib'] ?? 0;
+      final t = day!.local('maghrib').subtract(Duration(minutes: adj));
+      return context.num('${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}');
+    }
+
+    return _Panel(
+      padding: const EdgeInsets.all(DesignTokens.spaceMd),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: DesignTokens.spaceSm,
+            runSpacing: DesignTokens.spaceSm,
+            children: [
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: DesignTokens.spaceSm,
+                children: [
+                  Text(
+                    weekdayName(date, arabic: ar),
+                    key: const Key('home.weekday'),
+                    style: theme.titleLarge?.copyWith(color: scheme.primary, fontWeight: FontWeight.w700),
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(greg, key: const Key('home.gregorian'), style: theme.labelLarge),
+                      Text(
+                        l.homeHijriDate(context.num(h.day), h.monthName, context.num(h.year)),
+                        key: const Key('home.hijri'),
+                        style: theme.labelLarge?.copyWith(color: scheme.primary),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              OutlinedButton.icon(
+                key: const Key('home.calendar'),
+                onPressed: onCalendar,
+                icon: const Icon(Icons.calendar_month_outlined, size: 20),
+                label: Text(l.homeCalendar),
+                style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 10)),
+              ),
+            ],
+          ),
+          if (tomorrow)
+            Padding(
+              padding: const EdgeInsets.only(top: DesignTokens.spaceXs),
+              child: Text(l.homeTomorrowTimes, key: const Key('home.tomorrow'), style: theme.bodySmall),
+            ),
+          if (day == null)
+            Padding(
+              padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
+              child: Text(l.prayerNoPrayerToday),
+            )
+          else ...[
+            const SizedBox(height: DesignTokens.spaceMd),
+            Row(
+              children: [
+                for (final (i, k) in homePrayers.indexed) ...[
+                  if (i > 0) const SizedBox(width: 6),
+                  Expanded(
+                    child: _PrayerCell(
+                      k: k,
+                      time: hhmm(k),
+                      isNext: next != null && next.key == k && next.at.toUtc() == day.day.utc[k]?.toUtc(),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+            const Divider(height: DesignTokens.spaceXl),
+            Wrap(
+              alignment: WrapAlignment.spaceAround,
+              spacing: DesignTokens.spaceLg,
+              runSpacing: DesignTokens.spaceXs,
+              children: [
+                _SunItem(
+                  key: const Key('home.time-sunrise'),
+                  icon: Icons.wb_twilight,
+                  label: l.homeSunrise,
+                  time: hhmm('sunrise'),
+                ),
+                _SunItem(
+                  key: const Key('home.sunset'),
+                  icon: Icons.wb_sunny_outlined,
+                  label: l.homeSunset,
+                  time: sunset(),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _PrayerCell extends StatelessWidget {
+  const _PrayerCell({required this.k, required this.time, required this.isNext});
+  final String k;
+  final String time;
+  final bool isNext;
+
+  static const _icons = {
+    'fajr': Icons.nightlight_outlined,
+    'dhuhr': Icons.wb_sunny_outlined,
+    'asr': Icons.wb_cloudy_outlined,
+    'maghrib': Icons.wb_twilight,
+    'isha': Icons.dark_mode_outlined,
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context).textTheme;
+    return Container(
+      key: Key('home.time-$k'),
+      padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
+      decoration: BoxDecoration(
+        color: isNext ? scheme.secondaryContainer : scheme.surfaceContainerLowest,
+        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+        border: Border.all(color: isNext ? scheme.secondary : scheme.outlineVariant),
+      ),
+      child: Column(
+        children: [
+          Icon(_icons[k], size: 22, color: scheme.primary),
+          const SizedBox(height: 2),
+          FittedBox(child: Text(context.prayerName(k), style: theme.labelMedium)),
+          FittedBox(
+            child: Text(
+              time,
+              textDirection: TextDirection.ltr,
+              style: theme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SunItem extends StatelessWidget {
+  const _SunItem({super.key, required this.icon, required this.label, required this.time});
+  final IconData icon;
+  final String label;
+  final String time;
+
+  @override
+  Widget build(BuildContext context) => Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Icon(icon, size: 18, color: Theme.of(context).colorScheme.secondary),
+      const SizedBox(width: 6),
+      Text('$label  '),
+      Text(
+        time,
+        textDirection: TextDirection.ltr,
+        style: const TextStyle(fontWeight: FontWeight.w600),
+      ),
+    ],
+  );
+}
+
+class _BigTile extends StatelessWidget {
+  const _BigTile(this.id, this.icon, this.label, this.onTap);
+  final String id;
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => _Panel(
+    child: InkWell(
+      key: Key('home.tile-$id'),
+      borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
+      onTap: onTap,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 112),
+        child: Padding(
+          padding: const EdgeInsets.all(DesignTokens.spaceSm),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 40, color: Theme.of(context).colorScheme.primary),
+              const SizedBox(height: DesignTokens.spaceSm),
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+class _WideTile {
+  const _WideTile(this.id, this.icon, this.label, this.onTap);
   final String id;
   final IconData icon;
   final String label;
   final VoidCallback onTap;
 }
 
-class _TileGrid extends StatelessWidget {
-  const _TileGrid({required this.tiles});
-  final List<_Tile> tiles;
+class _WideRow extends StatelessWidget {
+  const _WideRow({required this.a, required this.b});
+  final _WideTile a;
+  final _WideTile b;
+
+  Widget _tile(BuildContext context, _WideTile t) => _Panel(
+    child: InkWell(
+      key: Key('home.tile-${t.id}'),
+      borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
+      onTap: t.onTap,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 68),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd),
+          child: Row(
+            children: [
+              Icon(t.icon, size: 30, color: Theme.of(context).colorScheme.secondary),
+              Expanded(
+                child: Text(
+                  t.label,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 
   @override
-  Widget build(BuildContext context) => LayoutBuilder(
-    builder: (context, c) {
-      const gap = DesignTokens.spaceSm;
-      final w = ((c.maxWidth - 2 * gap) / 3).floorToDouble();
-      final scheme = Theme.of(context).colorScheme;
-      return Wrap(
-        spacing: gap,
-        runSpacing: gap,
-        children: [
-          for (final t in tiles)
-            SizedBox(
-              key: Key('home.tile-${t.id}'),
-              width: w,
-              child: Material(
-                color: scheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-                  onTap: t.onTap,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(minHeight: 84),
-                    child: Padding(
-                      padding: const EdgeInsets.all(DesignTokens.spaceSm),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(DesignTokens.spaceSm),
-                            decoration: BoxDecoration(color: scheme.secondaryContainer, shape: BoxShape.circle),
-                            child: Icon(t.icon, color: scheme.primary),
+  Widget build(BuildContext context) => Row(
+    children: [
+      Expanded(child: _tile(context, a)),
+      const SizedBox(width: DesignTokens.spaceSm),
+      Expanded(child: _tile(context, b)),
+    ],
+  );
+}
+
+/// Quran radio: the whole Mushaf recited continuously by the chosen reciter
+/// (streamed per ayah), from a random surah, with a play duration that stops it
+/// through the app's sleep timer.
+class QuranRadioCard extends StatefulWidget {
+  const QuranRadioCard({super.key, this.random});
+
+  /// Injected in tests to fix the first surah.
+  final Random? random;
+
+  /// Play-duration steps, in minutes: 0 = unlimited, then the sleep-timer choices.
+  static const durations = [0, ...SleepTimerController.choices];
+
+  @override
+  State<QuranRadioCard> createState() => _QuranRadioCardState();
+}
+
+class _QuranRadioCardState extends State<QuranRadioCard> {
+  int _chosen = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    final s = context.services;
+    final l = context.l10n;
+    final rec = s.recitation;
+    final theme = Theme.of(context).textTheme;
+    final scheme = Theme.of(context).colorScheme;
+    return ListenableBuilder(
+      listenable: Listenable.merge([rec, s.sleepTimer, s.settings]),
+      builder: (context, _) {
+        final isRadio = rec.isActive && rec.scope == PlayScope.radio;
+        final playing = isRadio && rec.isPlaying;
+        final minutes = _chosen;
+        final step = QuranRadioCard.durations.indexOf(minutes);
+        final cur = isRadio ? rec.current : null;
+        void setDuration(int delta) {
+          final i = ((step < 0 ? 0 : step) + delta).clamp(0, QuranRadioCard.durations.length - 1);
+          final n = QuranRadioCard.durations[i];
+          setState(() => _chosen = n);
+          if (isRadio) s.sleepTimer.set(n == 0 ? null : n);
+        }
+
+        Future<void> onPlay() async {
+          if (isRadio) {
+            if (playing) {
+              await rec.pause();
+            } else {
+              await rec.resume();
+            }
+            return;
+          }
+          final from = (widget.random ?? Random()).nextInt(s.content.quran.surahs.length) + 1;
+          s.sleepTimer.set(_chosen == 0 ? null : _chosen);
+          await rec.playRadio(from);
+        }
+
+        final reciter = s.content.reciters.byFolder(s.settings.reciter);
+        return _Panel(
+          padding: const EdgeInsets.all(DesignTokens.spaceMd),
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(l.radioTitle, style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
+                        const SizedBox(height: 6),
+                        _Box(
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              key: const Key('radio.reciter'),
+                              value: reciter.folder,
+                              isExpanded: true,
+                              icon: const Icon(Icons.expand_more),
+                              items: [
+                                for (final r in s.content.reciters.reciters)
+                                  DropdownMenuItem(
+                                    value: r.folder,
+                                    child: Text(
+                                      r.name(context.isArabic),
+                                      overflow: TextOverflow.ellipsis,
+                                      style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                              ],
+                              onChanged: (v) {
+                                if (v != null) s.settings.setReciter(v);
+                              },
+                            ),
                           ),
-                          const SizedBox(height: DesignTokens.spaceXs),
-                          Text(
-                            t.label,
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: DesignTokens.spaceSm),
+                  Column(
+                    children: [
+                      Text(l.radioListen, style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
+                      const SizedBox(height: 6),
+                      IconButton.filled(
+                        key: const Key('radio.play'),
+                        tooltip: playing ? l.radioPause : l.radioListen,
+                        onPressed: onPlay,
+                        iconSize: 30,
+                        icon: Icon(playing ? Icons.pause : Icons.play_arrow),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: DesignTokens.spaceSm),
+              Row(
+                children: [
+                  Text(l.radioDuration, style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
+                  const SizedBox(width: DesignTokens.spaceSm),
+                  Expanded(
+                    child: _Box(
+                      child: Row(
+                        children: [
+                          IconButton(
+                            key: const Key('radio.longer'),
+                            tooltip: l.radioLonger,
+                            color: scheme.primary,
+                            onPressed: step == QuranRadioCard.durations.length - 1 ? null : () => setDuration(1),
+                            icon: const Icon(Icons.add),
+                          ),
+                          Expanded(
+                            child: Text(
+                              minutes == 0 ? l.radioUnlimited : l.radioMin(context.num(minutes)),
+                              key: const Key('radio.duration'),
+                              textAlign: TextAlign.center,
+                              style: theme.labelMedium?.copyWith(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          IconButton(
+                            key: const Key('radio.shorter'),
+                            tooltip: l.radioShorter,
+                            color: scheme.primary,
+                            onPressed: step <= 0 ? null : () => setDuration(-1),
+                            icon: const Icon(Icons.remove),
                           ),
                         ],
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ),
-        ],
-      );
-    },
+              const SizedBox(height: DesignTokens.spaceSm),
+              Text(
+                cur == null ? l.radioNote : l.radioNowPlaying(surahName(context, s.content.quran.surah(cur.ref.surah))),
+                key: const Key('radio.status'),
+                textAlign: TextAlign.center,
+                style: theme.bodySmall,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _Box extends StatelessWidget {
+  const _Box({required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    constraints: const BoxConstraints(minHeight: 52),
+    padding: const EdgeInsets.symmetric(horizontal: 4),
+    decoration: BoxDecoration(
+      border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+      borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+    ),
+    child: child,
   );
+}
+
+/// Line drawing of a mosque (dome, two minarets with crescents), in a 160×130
+/// box scaled to the canvas — the same drawing as the website's.
+class MosquePainter extends CustomPainter {
+  MosquePainter(this.color);
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.scale(size.width / 160, size.height / 130);
+    final p = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.2
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+    final fill = Paint()..color = color;
+    void poly(List<double> xy) {
+      final path = Path()..moveTo(xy[0], xy[1]);
+      for (var i = 2; i < xy.length; i += 2) {
+        path.lineTo(xy[i], xy[i + 1]);
+      }
+      canvas.drawPath(path, p);
+    }
+
+    void crescent(double cx, double cy, double r) {
+      final outer = Path()..addOval(Rect.fromCircle(center: Offset(cx, cy), radius: r));
+      final inner = Path()..addOval(Rect.fromCircle(center: Offset(cx + r * 0.45, cy - r * 0.2), radius: r * 0.8));
+      canvas.drawPath(Path.combine(PathOperation.difference, outer, inner), fill);
+    }
+
+    // tall minaret
+    poly([22, 128, 22, 52, 30, 42, 38, 52, 38, 128]);
+    poly([20, 66, 40, 66]);
+    poly([20, 92, 40, 92]);
+    poly([26, 66, 30, 72, 34, 66]);
+    poly([26, 92, 30, 98, 34, 92]);
+    poly([30, 42, 30, 30]);
+    crescent(30, 22, 5.5);
+    // dome on its drum
+    poly([58, 128, 58, 88, 128, 88, 128, 128]);
+    canvas.drawPath(
+      Path()
+        ..moveTo(62, 88)
+        ..cubicTo(62, 70, 76, 62, 93, 54)
+        ..cubicTo(110, 62, 124, 70, 124, 88),
+      p,
+    );
+    poly([93, 54, 93, 44]);
+    crescent(93, 36, 5.5);
+    // door and windows
+    canvas.drawPath(
+      Path()
+        ..moveTo(84, 128)
+        ..lineTo(84, 112)
+        ..arcToPoint(const Offset(102, 112), radius: const Radius.circular(9))
+        ..lineTo(102, 128),
+      p,
+    );
+    for (final x in [68.0, 110.0]) {
+      canvas.drawPath(
+        Path()
+          ..moveTo(x, 108)
+          ..lineTo(x, 102)
+          ..arcToPoint(Offset(x + 8, 102), radius: const Radius.circular(4))
+          ..lineTo(x + 8, 108)
+          ..close(),
+        p,
+      );
+    }
+    // small minaret
+    poly([138, 128, 138, 78, 144, 70, 150, 78, 150, 128]);
+    poly([136, 92, 152, 92]);
+    poly([144, 70, 144, 62]);
+    crescent(144, 55, 4.5);
+    poly([6, 128, 156, 128]);
+  }
+
+  @override
+  bool shouldRepaint(MosquePainter old) => old.color != color;
 }

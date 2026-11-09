@@ -469,6 +469,38 @@
   "@hajjUmrah": {
     "description": "shared key \"hajj.umrah\""
   },
+  "homeBigAdhkar": "Adhkar & Dua",
+  "@homeBigAdhkar": {
+    "description": "shared key \"home.big.adhkar\""
+  },
+  "homeBigPrayer": "Prayer times",
+  "@homeBigPrayer": {
+    "description": "shared key \"home.big.prayer\""
+  },
+  "homeBigQibla": "Qibla direction",
+  "@homeBigQibla": {
+    "description": "shared key \"home.big.qibla\""
+  },
+  "homeBigQuran": "The Holy Quran",
+  "@homeBigQuran": {
+    "description": "shared key \"home.big.quran\""
+  },
+  "homeBigReels": "Islamic reels",
+  "@homeBigReels": {
+    "description": "shared key \"home.big.reels\""
+  },
+  "homeBigStories": "Prophets' stories",
+  "@homeBigStories": {
+    "description": "shared key \"home.big.stories\""
+  },
+  "homeBigTasbih": "Tasbih",
+  "@homeBigTasbih": {
+    "description": "shared key \"home.big.tasbih\""
+  },
+  "homeCalendar": "Prayer calendar",
+  "@homeCalendar": {
+    "description": "shared key \"home.calendar\""
+  },
   "homeHijriDate": "{day} {month} {year} AH",
   "@homeHijriDate": {
     "description": "shared key \"home.hijriDate\"",
@@ -493,6 +525,19 @@
       }
     }
   },
+  "homeLeft": "Time left {time}",
+  "@homeLeft": {
+    "description": "shared key \"home.left\"",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeMainSections": "Main sections",
+  "@homeMainSections": {
+    "description": "shared key \"home.mainSections\""
+  },
   "homeNextPrayer": "Next prayer",
   "@homeNextPrayer": {
     "description": "shared key \"home.nextPrayer\""
@@ -500,6 +545,15 @@
   "homeOpenMushaf": "Open the Mushaf",
   "@homeOpenMushaf": {
     "description": "shared key \"home.openMushaf\""
+  },
+  "homePrayerOf": "{name} prayer",
+  "@homePrayerOf": {
+    "description": "shared key \"home.prayerOf\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "homeQuickLinks": "Quick links",
   "@homeQuickLinks": {
@@ -509,9 +563,25 @@
   "@homeSections": {
     "description": "shared key \"home.sections\""
   },
+  "homeSunrise": "Sunrise",
+  "@homeSunrise": {
+    "description": "shared key \"home.sunrise\""
+  },
+  "homeSunset": "Sunset",
+  "@homeSunset": {
+    "description": "shared key \"home.sunset\""
+  },
+  "homeTimingFor": "Times for",
+  "@homeTimingFor": {
+    "description": "shared key \"home.timingFor\""
+  },
   "homeTodayTimes": "Today's prayer times",
   "@homeTodayTimes": {
     "description": "shared key \"home.todayTimes\""
+  },
+  "homeTomorrowTimes": "Tomorrow's times",
+  "@homeTomorrowTimes": {
+    "description": "shared key \"home.tomorrowTimes\""
   },
   "homeWelcome": "Peace be upon you",
   "@homeWelcome": {
@@ -976,6 +1046,56 @@
   "quranSurahs": "Surahs",
   "@quranSurahs": {
     "description": "shared key \"quran.surahs\""
+  },
+  "radioDuration": "Play for",
+  "@radioDuration": {
+    "description": "shared key \"radio.duration\""
+  },
+  "radioListen": "Listen",
+  "@radioListen": {
+    "description": "shared key \"radio.listen\""
+  },
+  "radioLonger": "Longer",
+  "@radioLonger": {
+    "description": "shared key \"radio.longer\""
+  },
+  "radioMin": "{n} min",
+  "@radioMin": {
+    "description": "shared key \"radio.min\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "radioNote": "Continuous recitation of the whole Mushaf, starting from a random surah.",
+  "@radioNote": {
+    "description": "shared key \"radio.note\""
+  },
+  "radioNowPlaying": "Surah {surah}",
+  "@radioNowPlaying": {
+    "description": "shared key \"radio.nowPlaying\"",
+    "placeholders": {
+      "surah": {
+        "type": "String"
+      }
+    }
+  },
+  "radioPause": "Pause",
+  "@radioPause": {
+    "description": "shared key \"radio.pause\""
+  },
+  "radioShorter": "Shorter",
+  "@radioShorter": {
+    "description": "shared key \"radio.shorter\""
+  },
+  "radioTitle": "Quran radio",
+  "@radioTitle": {
+    "description": "shared key \"radio.title\""
+  },
+  "radioUnlimited": "Unlimited",
+  "@radioUnlimited": {
+    "description": "shared key \"radio.unlimited\""
   },
   "reelsCatLesson": "Short lesson",
   "@reelsCatLesson": {

@@ -339,6 +339,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hajjUmrah => 'Umrah';
 
   @override
+  String get homeBigAdhkar => 'Adhkar & Dua';
+
+  @override
+  String get homeBigPrayer => 'Prayer times';
+
+  @override
+  String get homeBigQibla => 'Qibla direction';
+
+  @override
+  String get homeBigQuran => 'The Holy Quran';
+
+  @override
+  String get homeBigReels => 'Islamic reels';
+
+  @override
+  String get homeBigStories => 'Prophets\' stories';
+
+  @override
+  String get homeBigTasbih => 'Tasbih';
+
+  @override
+  String get homeCalendar => 'Prayer calendar';
+
+  @override
   String homeHijriDate(String day, String month, String year) {
     return '$day $month $year AH';
   }
@@ -349,10 +373,23 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String homeLeft(String time) {
+    return 'Time left $time';
+  }
+
+  @override
+  String get homeMainSections => 'Main sections';
+
+  @override
   String get homeNextPrayer => 'Next prayer';
 
   @override
   String get homeOpenMushaf => 'Open the Mushaf';
+
+  @override
+  String homePrayerOf(String name) {
+    return '$name prayer';
+  }
 
   @override
   String get homeQuickLinks => 'Quick links';
@@ -361,7 +398,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeSections => 'Sections';
 
   @override
+  String get homeSunrise => 'Sunrise';
+
+  @override
+  String get homeSunset => 'Sunset';
+
+  @override
+  String get homeTimingFor => 'Times for';
+
+  @override
   String get homeTodayTimes => 'Today\'s prayer times';
+
+  @override
+  String get homeTomorrowTimes => 'Tomorrow\'s times';
 
   @override
   String get homeWelcome => 'Peace be upon you';
@@ -672,6 +721,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quranSurahs => 'Surahs';
+
+  @override
+  String get radioDuration => 'Play for';
+
+  @override
+  String get radioListen => 'Listen';
+
+  @override
+  String get radioLonger => 'Longer';
+
+  @override
+  String radioMin(String n) {
+    return '$n min';
+  }
+
+  @override
+  String get radioNote => 'Continuous recitation of the whole Mushaf, starting from a random surah.';
+
+  @override
+  String radioNowPlaying(String surah) {
+    return 'Surah $surah';
+  }
+
+  @override
+  String get radioPause => 'Pause';
+
+  @override
+  String get radioShorter => 'Shorter';
+
+  @override
+  String get radioTitle => 'Quran radio';
+
+  @override
+  String get radioUnlimited => 'Unlimited';
 
   @override
   String get reelsCatLesson => 'Short lesson';

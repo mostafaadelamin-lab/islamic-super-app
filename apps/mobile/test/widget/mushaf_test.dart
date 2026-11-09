@@ -244,13 +244,14 @@ void main() {
     expect(app.services.recitation.reciter.nameEn, 'Maher Al-Muaiqly');
   });
 
-  testWidgets('the last page is remembered and reopened from home', (tester) async {
+  testWidgets('the last page is remembered and reopened from the Quran tab', (tester) async {
     final app = await open(tester, 1, size: tallPhone);
     reader(tester).jumpTo(77);
     await tester.pumpAndSettle();
     await goBack(tester);
     expect(app.services.content.quran.pageOf(app.services.settings.lastRead!), 77);
-    await tester.tap(find.byKey(const Key('home.openMushaf')));
+    await goToTab(tester, 1);
+    await tester.tap(find.byTooltip('فتح صفحات المصحف'));
     await tester.pumpAndSettle();
     expect(reader(tester).page, 77);
   });

@@ -74,7 +74,7 @@ class QueueItem {
 bool basmalaBeforeSurah(int surah) => surah != 1 && surah != 9;
 
 /// [ranges]: the verse ranges of a Quranic story, played in order.
-enum PlayScope { ayah, page, surah, toEnd, ranges }
+enum PlayScope { ayah, page, surah, toEnd, ranges, radio }
 
 /// Builds the play list from [from] to [to] inclusive (reading order), adding
 /// the basmala before ayah 1 of each surah where [basmalaBeforeSurah] holds.
@@ -103,12 +103,24 @@ AyahRef? nextAyah(QuranContent q, AyahRef r) {
   return null;
 }
 
+/// Quran radio: every ayah of the Mushaf, starting at surah [fromSurah] and
+/// wrapping after an-Nas back to al-Fatihah (each surah once).
+List<QueueItem> radioQueue(QuranContent q, int fromSurah, {int repeat = 1}) {
+  final n = q.surahs.length;
+  final start = fromSurah >= 1 && fromSurah <= n ? fromSurah : 1;
+  return [
+    ...buildQueue(q, AyahRef(start, 1), AyahRef(n, q.surahs.last.ayahCount), repeat: repeat),
+    if (start > 1)
+      ...buildQueue(q, const AyahRef(1, 1), AyahRef(start - 1, q.surah(start - 1).ayahCount), repeat: repeat),
+  ];
+}
+
 /// End of the range for a play [scope] starting at [from].
 AyahRef scopeEnd(QuranContent q, AyahRef from, PlayScope scope) => switch (scope) {
   PlayScope.ayah || PlayScope.ranges => from,
   PlayScope.page => q.page(q.pageOf(from)).end,
   PlayScope.surah => AyahRef(from.surah, q.surah(from.surah).ayahCount),
-  PlayScope.toEnd => AyahRef(q.surahs.length, q.surahs.last.ayahCount),
+  PlayScope.toEnd || PlayScope.radio => AyahRef(q.surahs.length, q.surahs.last.ayahCount),
 };
 
 /// The Mushaf page to show while [item] plays (the page where its ayah starts),

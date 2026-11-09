@@ -337,6 +337,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hajjUmrah => 'العمرة';
 
   @override
+  String get homeBigAdhkar => 'الأذكار والدعاء';
+
+  @override
+  String get homeBigPrayer => 'مواقيت الصلاة';
+
+  @override
+  String get homeBigQibla => 'اتجاه القبلة';
+
+  @override
+  String get homeBigQuran => 'القرآن الكريم';
+
+  @override
+  String get homeBigReels => 'ريلز إسلامية';
+
+  @override
+  String get homeBigStories => 'قصص الأنبياء';
+
+  @override
+  String get homeBigTasbih => 'التسبيح';
+
+  @override
+  String get homeCalendar => 'تقويم الصلاة';
+
+  @override
   String homeHijriDate(String day, String month, String year) {
     return '$day $month $year هـ';
   }
@@ -347,10 +371,23 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String homeLeft(String time) {
+    return 'متبقي $time';
+  }
+
+  @override
+  String get homeMainSections => 'الأقسام الرئيسية';
+
+  @override
   String get homeNextPrayer => 'الصلاة القادمة';
 
   @override
   String get homeOpenMushaf => 'افتح المصحف';
+
+  @override
+  String homePrayerOf(String name) {
+    return 'صلاة $name';
+  }
 
   @override
   String get homeQuickLinks => 'روابط سريعة';
@@ -359,7 +396,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeSections => 'الأقسام';
 
   @override
+  String get homeSunrise => 'الشروق';
+
+  @override
+  String get homeSunset => 'الغروب';
+
+  @override
+  String get homeTimingFor => 'توقيت';
+
+  @override
   String get homeTodayTimes => 'مواقيت اليوم';
+
+  @override
+  String get homeTomorrowTimes => 'مواقيت الغد';
 
   @override
   String get homeWelcome => 'السلام عليكم';
@@ -671,6 +720,40 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get quranSurahs => 'السور';
+
+  @override
+  String get radioDuration => 'مدة التشغيل';
+
+  @override
+  String get radioListen => 'استماع';
+
+  @override
+  String get radioLonger => 'زيادة المدة';
+
+  @override
+  String radioMin(String n) {
+    return '$n دقيقة';
+  }
+
+  @override
+  String get radioNote => 'تلاوة متصلة للمصحف كاملًا تبدأ من سورة عشوائية.';
+
+  @override
+  String radioNowPlaying(String surah) {
+    return 'سورة $surah';
+  }
+
+  @override
+  String get radioPause => 'إيقاف مؤقت';
+
+  @override
+  String get radioShorter => 'تقليل المدة';
+
+  @override
+  String get radioTitle => 'إذاعة القرآن الكريم';
+
+  @override
+  String get radioUnlimited => 'غير محدود';
 
   @override
   String get reelsCatLesson => 'درس ديني مختصر';
