@@ -6,6 +6,8 @@ class FakeAudio extends EventTarget {
   static last: FakeAudio | null = null;
   static playImpl: () => Promise<void> = () => Promise.resolve();
   preload = "";
+  playbackRate = 1;
+  defaultPlaybackRate = 1;
   private attrs = new Map<string, string>();
   played: string[] = [];
   constructor() {
@@ -133,5 +135,54 @@ describe("recitation player", () => {
     player.play({ kind: "surah", surah: 1 });
     await flush();
     expect(player.get().status).toBe("loading");
+  });
+
+  it("plays at the chosen speed and follows speed changes while playing", () => {
+    audioStore.set((p) => ({ ...p, speed: 1.5 }));
+    player.play({ kind: "surah", surah: 112 });
+    const a = FakeAudio.last!;
+    expect(a.playbackRate).toBe(1.5);
+    expect(a.defaultPlaybackRate).toBe(1.5);
+    audioStore.set((p) => ({ ...p, speed: 0.75 }));
+    expect(a.playbackRate).toBe(0.75);
+  });
+
+  it("publishes lock-screen metadata and answers the media keys", () => {
+    const handlers = new Map<string, () => void>();
+    const ms = {
+      metadata: null as { title: string; artist: string } | null,
+      playbackState: "none",
+      setActionHandler: (k: string, fn: () => void) => handlers.set(k, fn),
+    };
+    Object.defineProperty(navigator, "mediaSession", { value: ms, configurable: true });
+    vi.stubGlobal(
+      "MediaMetadata",
+      class {
+        title: string;
+        artist: string;
+        constructor(m: { title: string; artist: string }) {
+          this.title = m.title;
+          this.artist = m.artist;
+        }
+      },
+    );
+    try {
+      player.play({ kind: "from", surah: 114, ayah: 2 });
+      const a = FakeAudio.last!;
+      a.dispatchEvent(new Event("playing"));
+      expect(ms.metadata?.title).toBe("An-Nas 114:2");
+      expect(ms.metadata?.artist).toMatch(/Alafasy/);
+      expect(ms.playbackState).toBe("playing");
+      handlers.get("nexttrack")!();
+      expect(player.get().src).toBe(URL_OF("114003"));
+      handlers.get("pause")!();
+      expect(player.get().status).toBe("paused");
+      expect(ms.playbackState).toBe("paused");
+      handlers.get("stop")!();
+      expect(player.get().status).toBe("idle");
+      expect(ms.metadata).toBeNull();
+    } finally {
+      Reflect.deleteProperty(navigator, "mediaSession");
+    }
   });
 });

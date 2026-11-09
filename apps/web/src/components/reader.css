@@ -492,14 +492,20 @@ body:has(.rd) .app-footer {
     display: none;
   }
 }
-.rdp-repeat select {
+.rdp-repeat select,
+.rdp-speed select {
   position: absolute;
   inset: 0;
   width: 100%;
   opacity: 0;
   cursor: pointer;
 }
-.rdp-repeat[data-on="true"] {
+.rdp-speed {
+  font-weight: 700;
+  font-size: 12px;
+}
+.rdp-repeat[data-on="true"],
+.rdp-speed[data-on="true"] {
   background: var(--color-accent-soft);
 }
 .rdp-badge {

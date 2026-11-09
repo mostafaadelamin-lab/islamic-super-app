@@ -26,6 +26,8 @@ export const NO_BASMALA_BEFORE: readonly number[] = [1, 9];
 /** The basmala recording: al-Fatihah 1:1. */
 export const BASMALA_REF: readonly [number, number] = [1, 1];
 export const REPEAT_CHOICES: readonly number[] = [1, 2, 3, 5, 10];
+/** Playback speeds offered in the player (1 = normal). */
+export const SPEED_CHOICES: readonly number[] = [0.75, 1, 1.25, 1.5, 2];
 
 const PAD = 3;
 const pad3 = (n: number): string => String(n).padStart(PAD, "0");
@@ -156,8 +158,16 @@ export interface AudioPrefs {
   follow: boolean;
   /** Show the tafsir of the ayah being recited (off by default). */
   tafsir: boolean;
+  /** Playback rate, one of SPEED_CHOICES. */
+  speed: number;
 }
-export const DEFAULT_AUDIO: AudioPrefs = { reciter: DEFAULT_RECITER, repeat: 1, follow: true, tafsir: false };
+export const DEFAULT_AUDIO: AudioPrefs = {
+  reciter: DEFAULT_RECITER,
+  repeat: 1,
+  follow: true,
+  tafsir: false,
+  speed: 1,
+};
 
 export function sanitizeAudio(raw: unknown): AudioPrefs {
   const r = typeof raw === "object" && raw !== null ? (raw as Record<string, unknown>) : {};
@@ -166,6 +176,7 @@ export function sanitizeAudio(raw: unknown): AudioPrefs {
     repeat: typeof r.repeat === "number" && REPEAT_CHOICES.includes(r.repeat) ? r.repeat : 1,
     follow: r.follow !== false,
     tafsir: r.tafsir === true,
+    speed: typeof r.speed === "number" && SPEED_CHOICES.includes(r.speed) ? r.speed : 1,
   };
 }
 

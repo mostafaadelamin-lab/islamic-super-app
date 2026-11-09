@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import { surahName } from "@/lib/pages";
-import { audioStore, RECITERS, REPEAT_CHOICES } from "@/lib/audio";
+import { audioStore, RECITERS, REPEAT_CHOICES, SPEED_CHOICES } from "@/lib/audio";
 import { player } from "@/lib/audio-player";
 import { useStore } from "@/hooks/useStore";
 import { Icon } from "./Icon";
@@ -120,6 +120,20 @@ export function PlayerBar({ locale }: { locale: Locale }) {
             {REPEAT_CHOICES.map((n) => (
               <option key={n} value={n}>
                 {t(locale, "audio.times", { n: localizeDigits(n, locale) })}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="inline-field">
+          <span>{t(locale, "audio.speed")}</span>
+          <select
+            value={prefs.speed}
+            data-testid="player-speed"
+            onChange={(e) => audioStore.set((p) => ({ ...p, speed: Number(e.target.value) }))}
+          >
+            {SPEED_CHOICES.map((n) => (
+              <option key={n} value={n}>
+                {localizeDigits(`${n}×`, locale)}
               </option>
             ))}
           </select>

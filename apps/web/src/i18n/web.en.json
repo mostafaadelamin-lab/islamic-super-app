@@ -404,5 +404,6 @@
   "worship.stats": "Statistics",
   "worship.week": "Last 7 days",
   "worship.month": "Month",
-  "worship.private": "Kept on this device only."
+  "worship.private": "Kept on this device only.",
+  "audio.speed": "Speed"
 }
