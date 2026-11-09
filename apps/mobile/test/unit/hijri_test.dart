@@ -14,4 +14,19 @@ void main() {
     expect([c.day, c.month, c.year], [1, 1, 1447]);
     expect(c.monthName, 'محرم');
   });
+
+  test('manual offset shifts the Umm al-Qura date (-2..+2)', () {
+    // 2026-02-18 = 1 Ramadan 1447 by Umm al-Qura.
+    final base = hijriFor(DateTime(2026, 2, 18), arabic: false, offsetDays: 0);
+    expect([base.day, base.month, base.year], [1, 9, 1447]);
+    final minus = hijriFor(DateTime(2026, 2, 18), arabic: false, offsetDays: -1);
+    expect([minus.day, minus.month], [29, 8]);
+    final plus = hijriFor(DateTime(2026, 2, 18), arabic: false, offsetDays: 1);
+    expect([plus.day, plus.month], [2, 9]);
+    final clamped = hijriFor(DateTime(2026, 2, 18), arabic: false, offsetDays: 9);
+    expect([clamped.day, clamped.month], [3, 9]);
+    hijriOffsetDays = 1;
+    expect(hijriFor(DateTime(2026, 2, 18), arabic: false).day, 2);
+    hijriOffsetDays = 0;
+  });
 }

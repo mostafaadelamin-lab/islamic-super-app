@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' show Locale;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:just_audio/just_audio.dart';
@@ -65,7 +66,16 @@ tz.TZDateTime nextOccurrence({
 const adhanTestNotificationId = 1;
 
 class LocalNotificationsBackend implements NotificationsBackend {
+  LocalNotificationsBackend({bool? fullAdhanOnAndroid})
+    : _fullAdhan = fullAdhanOnAndroid ?? (!kIsWeb && defaultTargetPlatform == TargetPlatform.android);
+
   final _plugin = FlutterLocalNotificationsPlugin();
+
+  /// Android plays the whole adhan through an exact alarm + a media foreground
+  /// service (android/.../AdhanAlarms.kt, AdhanService.kt): a notification
+  /// sound alone may be cut short. Tone and silent alerts stay notifications.
+  final bool _fullAdhan;
+  static const _adhanChannel = MethodChannel('org.rattil.app/adhan');
   bool _ready = false;
   bool _exact = false;
 
@@ -151,6 +161,7 @@ class LocalNotificationsBackend implements NotificationsBackend {
   Future<void> cancelAll() async {
     await init();
     await _plugin.cancelAll();
+    if (_fullAdhan) await _adhanChannel.invokeMethod<void>('cancelAll');
   }
 
   /// Label of the Android "stop" action (set by the scheduler from l10n).
@@ -165,6 +176,16 @@ class LocalNotificationsBackend implements NotificationsBackend {
     String sound = 'adhan',
   }) async {
     await init();
+    if (_fullAdhan && sound == 'adhan') {
+      await _adhanChannel.invokeMethod<void>('schedule', {
+        'id': id,
+        'atMillis': atUtc.millisecondsSinceEpoch,
+        'title': title,
+        'body': body,
+        'stopLabel': stopLabel,
+      });
+      return;
+    }
     await _plugin.zonedSchedule(
       id: id,
       title: title,

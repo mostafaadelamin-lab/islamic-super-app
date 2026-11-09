@@ -90,6 +90,7 @@ describe("settings sanitisers", () => {
       fontSize: FONT_MAX,
       translation: true,
       clock: "12",
+      hijriOffset: 0,
     });
     expect(sanitizePrefs({ clock: "13" }).clock).toBe("24");
     expect(sanitizePrefs({ locale: "fr", theme: "neon", fontSize: 2 })).toMatchObject({

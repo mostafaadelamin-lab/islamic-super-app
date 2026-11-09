@@ -1568,6 +1568,12 @@ abstract class AppLocalizations {
   /// **'Use my location'**
   String get prayerUseLocation;
 
+  /// shared key "qibla.declination"
+  ///
+  /// In en, this message translates to:
+  /// **'Corrected from magnetic to true north: {deg}°'**
+  String qiblaDeclination(String deg);
+
   /// shared key "qibla.facing"
   ///
   /// In en, this message translates to:
@@ -1583,7 +1589,7 @@ abstract class AppLocalizations {
   /// shared key "qibla.liveNote"
   ///
   /// In en, this message translates to:
-  /// **'Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The compass measures magnetic north, so it can differ from true north by a few degrees.'**
+  /// **'Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The phone\'s compass points to magnetic north; the app corrects it to true north for your city.'**
   String get qiblaLiveNote;
 
   /// shared key "qibla.static"
@@ -2077,6 +2083,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This app is completely free: no ads, no subscriptions, no purchases.'**
   String get settingsFree;
+
+  /// shared key "settings.hijriOffset"
+  ///
+  /// In en, this message translates to:
+  /// **'Hijri date adjustment'**
+  String get settingsHijriOffset;
+
+  /// shared key "settings.hijriOffsetHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Umm al-Qura. Shift by a day or two to match the moon sighting announced in your country.'**
+  String get settingsHijriOffsetHint;
 
   /// shared key "settings.language"
   ///

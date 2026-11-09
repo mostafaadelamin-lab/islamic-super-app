@@ -16,6 +16,8 @@ export interface Preferences {
   translation: boolean;
   /** 24 h or 12 h clock for prayer times. */
   clock: ClockStyle;
+  /** Days added to the Umm al-Qura Hijri date to match the locally announced date (moon sighting). */
+  hijriOffset: number;
 }
 export const DEFAULT_PREFS: Preferences = {
   locale: null,
@@ -23,7 +25,15 @@ export const DEFAULT_PREFS: Preferences = {
   fontSize: FONT_DEFAULT,
   translation: false,
   clock: "24",
+  hijriOffset: 0,
 };
+
+export const HIJRI_OFFSET_MAX = 2;
+export function clampHijriOffset(v: unknown): number {
+  const n = typeof v === "number" ? v : Number(v);
+  if (!Number.isFinite(n)) return 0;
+  return Math.min(HIJRI_OFFSET_MAX, Math.max(-HIJRI_OFFSET_MAX, Math.round(n)));
+}
 
 export function clampFontSize(v: unknown): number {
   const n = typeof v === "number" ? v : Number(v);
@@ -41,6 +51,7 @@ export function sanitizePrefs(raw: unknown): Preferences {
     fontSize: r.fontSize === undefined ? FONT_DEFAULT : clampFontSize(r.fontSize),
     translation: r.translation === true,
     clock: r.clock === "12" ? "12" : "24",
+    hijriOffset: clampHijriOffset(r.hijriOffset ?? 0),
   };
 }
 

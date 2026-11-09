@@ -1279,6 +1279,15 @@
   "@prayerUseLocation": {
     "description": "shared key \"prayer.useLocation\""
   },
+  "qiblaDeclination": "Corrected from magnetic to true north: {deg}°",
+  "@qiblaDeclination": {
+    "description": "shared key \"qibla.declination\"",
+    "placeholders": {
+      "deg": {
+        "type": "String"
+      }
+    }
+  },
   "qiblaFacing": "You are facing the qibla",
   "@qiblaFacing": {
     "description": "shared key \"qibla.facing\""
@@ -1292,7 +1301,7 @@
       }
     }
   },
-  "qiblaLiveNote": "Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The compass measures magnetic north, so it can differ from true north by a few degrees.",
+  "qiblaLiveNote": "Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The phone's compass points to magnetic north; the app corrects it to true north for your city.",
   "@qiblaLiveNote": {
     "description": "shared key \"qibla.liveNote\""
   },
@@ -1739,6 +1748,14 @@
   "settingsFree": "This app is completely free: no ads, no subscriptions, no purchases.",
   "@settingsFree": {
     "description": "shared key \"settings.free\""
+  },
+  "settingsHijriOffset": "Hijri date adjustment",
+  "@settingsHijriOffset": {
+    "description": "shared key \"settings.hijriOffset\""
+  },
+  "settingsHijriOffsetHint": "Umm al-Qura. Shift by a day or two to match the moon sighting announced in your country.",
+  "@settingsHijriOffsetHint": {
+    "description": "shared key \"settings.hijriOffsetHint\""
   },
   "settingsLanguage": "Language",
   "@settingsLanguage": {

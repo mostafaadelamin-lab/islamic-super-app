@@ -857,6 +857,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get prayerUseLocation => 'Use my location';
 
   @override
+  String qiblaDeclination(String deg) {
+    return 'Corrected from magnetic to true north: $deg°';
+  }
+
+  @override
   String get qiblaFacing => 'You are facing the qibla';
 
   @override
@@ -866,7 +871,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get qiblaLiveNote =>
-      'Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The compass measures magnetic north, so it can differ from true north by a few degrees.';
+      'Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The phone\'s compass points to magnetic north; the app corrects it to true north for your city.';
 
   @override
   String get qiblaStatic => 'No compass reading on this device: the diagram shows the qibla from true north.';
@@ -1152,6 +1157,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsFree => 'This app is completely free: no ads, no subscriptions, no purchases.';
+
+  @override
+  String get settingsHijriOffset => 'Hijri date adjustment';
+
+  @override
+  String get settingsHijriOffsetHint =>
+      'Umm al-Qura. Shift by a day or two to match the moon sighting announced in your country.';
 
   @override
   String get settingsLanguage => 'Language';

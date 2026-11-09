@@ -127,7 +127,7 @@
   "qibla.facing": "You are facing the qibla",
   "qibla.waiting": "Reading the compass…",
   "qibla.static": "No compass reading on this device: the diagram shows the qibla from true north.",
-  "qibla.liveNote": "Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The compass measures magnetic north, so it can differ from true north by a few degrees.",
+  "qibla.liveNote": "Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The phone's compass points to magnetic north; the app corrects it to true north for your city.",
   "qibla.heading": "Phone heading: {deg}°",
   "hajj.title": "Hajj & Umrah",
   "hajj.umrah": "Umrah",
@@ -274,5 +274,8 @@
   "home.elapsed": "{time} ago",
   "prayer.shareCalendar": "Share the calendar",
   "prayer.gregorian": "Gregorian",
-  "prayer.hijri": "Hijri"
+  "prayer.hijri": "Hijri",
+  "settings.hijriOffset": "Hijri date adjustment",
+  "settings.hijriOffsetHint": "Umm al-Qura. Shift by a day or two to match the moon sighting announced in your country.",
+  "qibla.declination": "Corrected from magnetic to true north: {deg}°"
 }

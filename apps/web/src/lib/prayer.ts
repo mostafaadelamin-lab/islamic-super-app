@@ -15,12 +15,16 @@ export interface MethodDef {
   fajr: number;
   isha?: number;
   ishaMinutes?: number;
+  /** Isha = Maghrib + N minutes on the days of Ramadan (Umm al-Qura: 120). */
+  ishaMinutesRamadan?: number;
 }
 export interface MethodsConfig {
   dhuhrOffsetMinutes: number;
   sunAltitudeForSunriseSunset: number;
   methods: Record<string, MethodDef>;
   asr: Record<string, number>;
+  /** [first, last] Gregorian ISO day of each Ramadan by the Umm al-Qura calendar. */
+  ramadanUmmAlQura: string[][];
   kaaba: { lat: number; lng: number };
 }
 
@@ -78,6 +82,12 @@ export function sunPosition(jd: number): [number, number] {
 export type PrayerHours = Record<PrayerKey, number>;
 
 /** UTC fractional hours (may be < 0 or >= 24) for the local calendar date y-m-d. */
+/** True when the Gregorian date falls in Ramadan by the Umm al-Qura table in methods.json. */
+export function inRamadan(y: number, m: number, d: number, cfg: MethodsConfig = methodsConfig): boolean {
+  const iso = `${String(y).padStart(4, "0")}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+  return cfg.ramadanUmmAlQura.some(([a, b]) => a !== undefined && b !== undefined && a <= iso && iso <= b);
+}
+
 export function computeHours(
   y: number,
   m: number,
@@ -141,7 +151,13 @@ export function computeHours(
     throw new InvalidInput("the sun does not rise or set at this location on this date (polar day/night)");
   }
   const adjusted: PrayerKey[] = [];
-  if (hasIshaMinutes) t.isha = t.maghrib + (mt.ishaMinutes as number) / 60;
+  if (hasIshaMinutes) {
+    const ishaMin =
+      mt.ishaMinutesRamadan !== undefined && inRamadan(y, m, d, cfg)
+        ? mt.ishaMinutesRamadan
+        : (mt.ishaMinutes as number);
+    t.isha = t.maghrib + ishaMin / 60;
+  }
   const night = fix(t.sunrise - t.maghrib, 24);
   let portion = (mt.fajr / 60) * night;
   if (Number.isNaN(t.fajr) || fix(t.sunrise - t.fajr, 24) > portion) {

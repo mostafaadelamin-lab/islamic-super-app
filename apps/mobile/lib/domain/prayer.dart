@@ -25,6 +25,7 @@ class PrayerMethod {
     required this.fajr,
     this.isha,
     this.ishaMinutes,
+    this.ishaMinutesRamadan,
   });
 
   factory PrayerMethod.fromJson(String id, Map<String, dynamic> j) => PrayerMethod(
@@ -34,6 +35,7 @@ class PrayerMethod {
     fajr: (j['fajr'] as num).toDouble(),
     isha: (j['isha'] as num?)?.toDouble(),
     ishaMinutes: (j['ishaMinutes'] as num?)?.toDouble(),
+    ishaMinutesRamadan: (j['ishaMinutesRamadan'] as num?)?.toDouble(),
   );
 
   final String id;
@@ -42,6 +44,9 @@ class PrayerMethod {
   final double fajr;
   final double? isha;
   final double? ishaMinutes;
+
+  /// Isha = Maghrib + N minutes on the days of Ramadan (Umm al-Qura: 120).
+  final double? ishaMinutesRamadan;
 }
 
 class PrayerConfig {
@@ -52,6 +57,7 @@ class PrayerConfig {
     required this.asrFactors,
     required this.kaabaLat,
     required this.kaabaLng,
+    this.ramadan = const [],
   });
 
   factory PrayerConfig.fromJson(Map<String, dynamic> j) {
@@ -67,6 +73,10 @@ class PrayerConfig {
       asrFactors: {for (final e in (j['asr'] as Map<String, dynamic>).entries) e.key: (e.value as num).toInt()},
       kaabaLat: (k['lat'] as num).toDouble(),
       kaabaLng: (k['lng'] as num).toDouble(),
+      ramadan: [
+        for (final r in (j['ramadanUmmAlQura'] as List<dynamic>? ?? const []))
+          ((r as List<dynamic>)[0] as String, r[1] as String),
+      ],
     );
   }
 
@@ -76,6 +86,14 @@ class PrayerConfig {
   final Map<String, int> asrFactors;
   final double kaabaLat;
   final double kaabaLng;
+
+  /// First and last Gregorian ISO day of each Ramadan (Umm al-Qura calendar).
+  final List<(String, String)> ramadan;
+
+  bool inRamadan(int y, int m, int d) {
+    final iso = '${y.toString().padLeft(4, '0')}-${m.toString().padLeft(2, '0')}-${d.toString().padLeft(2, '0')}';
+    return ramadan.any((r) => r.$1.compareTo(iso) <= 0 && iso.compareTo(r.$2) <= 0);
+  }
 }
 
 /// Prayer times (UTC instants) for one local calendar date.
@@ -185,7 +203,10 @@ class PrayerCalculator {
     }
     final adjusted = <String>[];
     if (mt.ishaMinutes != null) {
-      t['isha'] = t['maghrib']! + mt.ishaMinutes! / 60;
+      final ishaMin = mt.ishaMinutesRamadan != null && config.inRamadan(y, m, d)
+          ? mt.ishaMinutesRamadan!
+          : mt.ishaMinutes!;
+      t['isha'] = t['maghrib']! + ishaMin / 60;
     }
     final night = _fix(t['sunrise']! - t['maghrib']!, 24);
     var portion = mt.fajr / 60 * night;

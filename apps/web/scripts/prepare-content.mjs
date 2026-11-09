@@ -25,6 +25,7 @@ mkdirSync(join(pub, "fonts"), { recursive: true });
 const copies = {
   "packages/shared-schemas/cities.json": "cities.json",
   "packages/shared-schemas/prayer/methods.json": "methods.json",
+  "packages/shared-schemas/geo/wmm2025.json": "wmm2025.json",
   "packages/shared-schemas/i18n/ar.json": "i18n-ar.json",
   "packages/shared-schemas/i18n/en.json": "i18n-en.json",
   "packages/shared-schemas/quran-render.json": "quran-render.json",

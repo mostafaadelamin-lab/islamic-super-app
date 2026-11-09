@@ -17,6 +17,7 @@ import { addRound, isRoundTool, NO_ROUNDS, sanitizeRounds } from "@/lib/rounds";
 import { HISN, hisnChapter } from "@/lib/hisn";
 import { filterHisn } from "@/lib/hisn-filter";
 import { gregorianDate, hijriDate } from "@/lib/dates";
+import { clampHijriOffset, sanitizePrefs } from "@/lib/settings";
 
 const adhkar = readRepoJson<{ items: string[] }>("content/adhkar/dist/adhkar.v1.json").items;
 const hisn = readRepoJson<[string, string[]][]>("content/adhkar/hisn.json");
@@ -38,8 +39,12 @@ describe("adhkar sessions", () => {
     const evening = sessionItems(adhkar, "evening");
     expect(morning.map((d) => d.id)).not.toContain(7);
     expect(evening.map((d) => d.id)).toContain(7);
-    expect(morning.length).toBe(27); // 18 for both + 9 morning-only
-    expect(evening.length).toBe(25); // 18 for both + 7 evening-only
+    // End of al-Baqarah (item 2) is evening-only: "whoever recites the last two verses of al-Baqarah at night,
+    // they suffice him" (al-Bukhari, Muslim); same as on mobile.
+    expect(SESSIONS[2]!.when).toBe("evening");
+    expect(morning.map((d) => d.id)).not.toContain(2);
+    expect(morning.length).toBe(26); // 17 for both + 9 morning-only
+    expect(evening.length).toBe(25); // 17 for both + 8 evening-only
   });
   it("repetition counts are the ones annotated in Hisn al-Muslim (chapter أذكار الصباح والمساء)", () => {
     const chapter = hisn.find(([t]) => t === "أذكار الصباح والمساء")![1];
@@ -190,5 +195,16 @@ describe("dates", () => {
     expect(hijriDate(d, "Asia/Riyadh", "ar")).toMatch(/١٤٤٨/);
     expect(gregorianDate(d, "Africa/Cairo", "en")).toContain("2026");
     expect(gregorianDate(d, "Africa/Cairo", "ar")).toContain("٢٠٢٦");
+  });
+  it("Hijri date: Umm al-Qura plus the user's manual offset (-2..+2 days)", () => {
+    const d = new Date("2026-02-18T12:00:00Z"); // 1 Ramadan 1447 by Umm al-Qura
+    expect(hijriDate(d, "Asia/Riyadh", "en", 0)).toBe("Ramadan 1, 1447 AH");
+    expect(hijriDate(d, "Asia/Riyadh", "en", -1)).toBe("Shaʻban 29, 1447 AH");
+    expect(hijriDate(d, "Asia/Riyadh", "en", 1)).toBe("Ramadan 2, 1447 AH");
+    expect(clampHijriOffset(5)).toBe(2);
+    expect(clampHijriOffset(-9)).toBe(-2);
+    expect(clampHijriOffset("x")).toBe(0);
+    expect(sanitizePrefs({ hijriOffset: 1 }).hijriOffset).toBe(1);
+    expect(sanitizePrefs({}).hijriOffset).toBe(0);
   });
 });

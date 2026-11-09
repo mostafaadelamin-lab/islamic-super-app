@@ -1,9 +1,19 @@
 "use client";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import { renderQuranText } from "@/lib/quran-render";
-import { clampFontSize, FONT_MAX, FONT_MIN, prefsStore, type ThemePref } from "@/lib/settings";
+import {
+  clampFontSize,
+  clampHijriOffset,
+  FONT_MAX,
+  FONT_MIN,
+  HIJRI_OFFSET_MAX,
+  prefsStore,
+  type ThemePref,
+} from "@/lib/settings";
+import { hijriDate } from "@/lib/dates";
 import { useStore } from "@/hooks/useStore";
 
 const THEMES: { value: ThemePref; key: string }[] = [
@@ -15,6 +25,9 @@ const THEMES: { value: ThemePref; key: string }[] = [
 export function DisplaySettings({ locale, preview }: { locale: Locale; preview: string }) {
   const prefs = useStore(prefsStore);
   const router = useRouter();
+  // The preview uses today's date, so it is rendered on the client only (no hydration mismatch).
+  const [now, setNow] = useState<Date | null>(null);
+  useEffect(() => setNow(new Date()), []);
   return (
     <section className="card" aria-labelledby="display-h">
       <h2 id="display-h" style={{ marginTop: 0 }}>
@@ -105,6 +118,47 @@ export function DisplaySettings({ locale, preview }: { locale: Locale; preview: 
         />
         {t(locale, "settings.translation")}
       </label>
+      <div className="field" data-testid="hijri-offset">
+        <label htmlFor="hijri-offset">
+          {t(locale, "settings.hijriOffset")}:{" "}
+          <output htmlFor="hijri-offset" data-testid="hijri-offset-value" dir="ltr">
+            {localizeDigits(
+              prefs.hijriOffset > 0 ? `+${prefs.hijriOffset}` : String(prefs.hijriOffset),
+              locale,
+            )}
+          </output>
+        </label>
+        <div className="row">
+          <button
+            type="button"
+            className="btn"
+            aria-label={`${t(locale, "settings.hijriOffset")} −`}
+            disabled={prefs.hijriOffset <= -HIJRI_OFFSET_MAX}
+            onClick={() =>
+              prefsStore.set((p) => ({ ...p, hijriOffset: clampHijriOffset(p.hijriOffset - 1) }))
+            }
+          >
+            −
+          </button>
+          <span id="hijri-offset" data-testid="hijri-offset-preview">
+            {now
+              ? hijriDate(now, Intl.DateTimeFormat().resolvedOptions().timeZone, locale, prefs.hijriOffset)
+              : ""}
+          </span>
+          <button
+            type="button"
+            className="btn"
+            aria-label={`${t(locale, "settings.hijriOffset")} +`}
+            disabled={prefs.hijriOffset >= HIJRI_OFFSET_MAX}
+            onClick={() =>
+              prefsStore.set((p) => ({ ...p, hijriOffset: clampHijriOffset(p.hijriOffset + 1) }))
+            }
+          >
+            +
+          </button>
+        </div>
+        <p className="muted">{t(locale, "settings.hijriOffsetHint")}</p>
+      </div>
     </section>
   );
 }

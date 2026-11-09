@@ -117,6 +117,25 @@ void main() {
     });
   });
 
+  group('Umm al-Qura Ramadan rule', () {
+    test('Ramadan 1447 AH is 2026-02-18 .. 2026-03-19', () {
+      expect(config.inRamadan(2026, 2, 18), isTrue);
+      expect(config.inRamadan(2026, 3, 19), isTrue);
+      expect(config.inRamadan(2026, 2, 17), isFalse);
+      expect(config.inRamadan(2026, 3, 20), isFalse);
+    });
+    test('Isha is Maghrib + 120 min in Ramadan, 90 otherwise; Qatar stays 90', () {
+      int gap(int m, int d, String method, double lat, double lng) {
+        final (h, _) = calc.computeHours(2026, m, d, lat, lng, method, 1);
+        return ((h['isha']! - h['maghrib']!) * 60).round();
+      }
+
+      expect(gap(3, 1, 'makkah', 21.3891, 39.8579), 120);
+      expect(gap(3, 20, 'makkah', 21.3891, 39.8579), 90);
+      expect(gap(3, 1, 'qatar', 25.2854, 51.531), 90);
+    });
+  });
+
   group('DST transitions', () {
     // Pairs of consecutive days across a DST change: local clock times jump
     // by an hour while the UTC instants move by at most a few minutes.

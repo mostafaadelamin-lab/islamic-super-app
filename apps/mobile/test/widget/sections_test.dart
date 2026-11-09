@@ -169,12 +169,59 @@ void main() {
       await tester.pump(const Duration(milliseconds: 500));
       final st = tester.state<QiblaScreenState>(find.byType(QiblaScreen));
       expect(st.mode, CompassMode.live);
-      expect(st.heading, closeTo(0, 1e-6));
+      // Magnetic north + the WMM2025 declination for Cairo (about +4.8°) = true heading.
+      expect(st.declination, closeTo(4.8, 0.3));
+      expect(st.heading, closeTo(st.declination!, 1e-6));
       expect(find.byKey(const Key('qiblaMode-live')), findsOneWidget);
-      expect(find.text('Turn right ${qibla.round()}°'), findsOneWidget);
+      expect(find.byKey(const Key('qiblaDeclination')), findsOneWidget);
+      expect(find.text('Turn right ${(qibla - st.declination!).round()}°'), findsOneWidget);
       // After the 3 s timeout the live mode stays.
       await tester.pump(QiblaScreen.timeout);
       expect(st.mode, CompassMode.live);
+      await acc.close();
+      await mag.close();
+    });
+
+    testWidgets('system compass heading is preferred and corrected to true north', (tester) async {
+      final sys = StreamController<double>.broadcast();
+      final app = await pumpApp(
+        tester,
+        size: tallPhone,
+        locale: 'en',
+        sensors: FakeSensors(const Stream.empty(), const Stream.empty(), systemHeading: sys.stream),
+      );
+      unawaited(pushRoute(tester, const QiblaScreen()));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      final st = tester.state<QiblaScreenState>(find.byType(QiblaScreen));
+      final qibla = app.services.content.calculator.qiblaBearing(30.0444, 31.2357);
+      // Magnetic heading that points the phone exactly at the qibla.
+      sys.add(qibla - st.declination!);
+      await tester.pump();
+      expect(st.mode, CompassMode.live);
+      expect(st.heading, closeTo(qibla, 1e-6));
+      expect(find.text('You are facing the qibla'), findsOneWidget);
+      await sys.close();
+    });
+
+    testWidgets('system compass error falls back to the raw sensors', (tester) async {
+      final acc = StreamController<Vec3>.broadcast();
+      final mag = StreamController<Vec3>.broadcast();
+      await pumpApp(
+        tester,
+        size: tallPhone,
+        locale: 'en',
+        sensors: FakeSensors(acc.stream, mag.stream, systemHeading: Stream.error(Exception('no_sensor'))),
+      );
+      unawaited(pushRoute(tester, const QiblaScreen()));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      acc.add(const Vec3(0, 0, 9.81));
+      mag.add(const Vec3(0, 20, -40));
+      await tester.pump();
+      final st = tester.state<QiblaScreenState>(find.byType(QiblaScreen));
+      expect(st.mode, CompassMode.live);
+      expect(st.heading, closeTo(st.declination!, 1e-6));
       await acc.close();
       await mag.close();
     });

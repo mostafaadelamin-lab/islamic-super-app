@@ -4,14 +4,19 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../app_services.dart';
+import '../domain/declination.dart';
 import '../domain/qibla.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'prayer_model.dart';
 import 'prayer_screen.dart';
 
-/// Live qibla compass (accelerometer + magnetometer via sensors_plus), with
-/// the static north-up diagram as a fallback when there is no usable sensor.
+/// Live qibla compass. Uses the phone's own compass heading (iOS
+/// CLLocationManager / Android rotation-vector sensor) and falls back to the
+/// raw accelerometer + magnetometer (sensors_plus); the static north-up diagram
+/// is shown when there is no usable sensor. Headings are from magnetic north,
+/// so the local magnetic declination (WMM2025) is added to get true north,
+/// which is what the qibla bearing is measured from.
 class QiblaScreen extends StatefulWidget {
   const QiblaScreen({super.key});
 
@@ -25,6 +30,11 @@ class QiblaScreenState extends State<QiblaScreen> {
   final _filter = HeadingFilter();
   StreamSubscription<Vec3>? _acc;
   StreamSubscription<Vec3>? _mag;
+  StreamSubscription<double>? _sys;
+  bool _started = false;
+
+  /// Degrees east of true north of magnetic north at the selected city.
+  double? declination;
   Timer? _timeout;
   Vec3? _gravity;
   double? _heading;
@@ -37,6 +47,30 @@ class QiblaScreenState extends State<QiblaScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    if (_started) return;
+    _started = true;
+    final services = context.services;
+    final city = PrayerView.compute(services).city;
+    declination = services.content.magneticModel?.declination(city.lat, city.lng, decimalYear(DateTime.now()));
+    final sys = services.sensors.systemHeading;
+    if (sys != null) {
+      try {
+        _sys = sys.listen(_onHeading, onError: (Object _) => _startRawSensors(), cancelOnError: true);
+      } catch (_) {
+        _startRawSensors();
+      }
+    } else {
+      _startRawSensors();
+    }
+    _timeout = Timer(QiblaScreen.timeout, () {
+      if (mounted) setState(() => _timedOut = true);
+    });
+  }
+
+  /// Raw accelerometer + magnetometer, used when the platform compass is missing.
+  void _startRawSensors() {
+    _sys?.cancel();
+    _sys = null;
     if (_acc != null) return;
     final sensors = context.services.sensors;
     void fail(Object _) {
@@ -49,9 +83,6 @@ class QiblaScreenState extends State<QiblaScreen> {
     } catch (e) {
       _error = true;
     }
-    _timeout = Timer(QiblaScreen.timeout, () {
-      if (mounted) setState(() => _timedOut = true);
-    });
   }
 
   void _onMagnetic(Vec3 m) {
@@ -59,13 +90,20 @@ class QiblaScreenState extends State<QiblaScreen> {
     if (g == null) return;
     final h = headingFromSensors(g, m);
     if (h == null) return;
-    setState(() => _heading = _filter.add(h));
+    _onHeading(h);
+  }
+
+  /// [magnetic]: degrees from magnetic north; stored as degrees from true north.
+  void _onHeading(double magnetic) {
+    if (!mounted || magnetic.isNaN) return;
+    setState(() => _heading = _filter.add(normalizeDegrees(magnetic + (declination ?? 0))));
   }
 
   @override
   void dispose() {
     _acc?.cancel();
     _mag?.cancel();
+    _sys?.cancel();
     _timeout?.cancel();
     super.dispose();
   }
@@ -106,6 +144,13 @@ class QiblaScreenState extends State<QiblaScreen> {
               textAlign: TextAlign.center,
               style: theme.textTheme.bodySmall,
             ),
+            if (declination != null)
+              Text(
+                l.qiblaDeclination(context.num('${declination! >= 0 ? '+' : ''}${declination!.toStringAsFixed(1)}')),
+                key: const Key('qiblaDeclination'),
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodySmall,
+              ),
             const SizedBox(height: DesignTokens.spaceMd),
             Text(l.qiblaLiveNote, style: theme.textTheme.bodySmall),
           ] else ...[

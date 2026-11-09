@@ -854,6 +854,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get prayerUseLocation => 'استخدم موقعي';
 
   @override
+  String qiblaDeclination(String deg) {
+    return 'مع تصحيح فرق الشمال المغناطيسي عن الحقيقي: $deg°';
+  }
+
+  @override
   String get qiblaFacing => 'أنت متجه نحو القبلة';
 
   @override
@@ -863,7 +868,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get qiblaLiveNote =>
-      'أمسك الهاتف أفقيًا بعيدًا عن المعادن والمغناطيس، وإن اضطربت القراءة فحرّكه على شكل الرقم ٨. تقيس البوصلة الشمال المغناطيسي، وقد يختلف عن الشمال الحقيقي بضع درجات.';
+      'أمسك الهاتف أفقيًا بعيدًا عن المعادن والمغناطيس، وإن اضطربت القراءة فحرّكه على شكل الرقم ٨. تشير بوصلة الهاتف إلى الشمال المغناطيسي، ويصحّحها التطبيق إلى الشمال الحقيقي لمدينتك.';
 
   @override
   String get qiblaStatic =>
@@ -1151,6 +1156,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsFree => 'التطبيق مجاني بالكامل: بلا إعلانات ولا اشتراكات ولا مشتريات.';
+
+  @override
+  String get settingsHijriOffset => 'تعديل التاريخ الهجري';
+
+  @override
+  String get settingsHijriOffsetHint => 'أم القرى. عدّله بيوم أو يومين ليطابق الرؤية المعلنة في بلدك.';
 
   @override
   String get settingsLanguage => 'اللغة';

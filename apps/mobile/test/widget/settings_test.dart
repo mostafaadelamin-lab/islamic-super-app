@@ -160,4 +160,25 @@ void main() {
     expect(find.text('مصادر المحتوى'), findsOneWidget);
     expect(find.text('الإصدار ١.٠.٠'), findsOneWidget);
   });
+
+  testWidgets('Hijri date adjustment: +/- within -2..+2, persisted', (tester) async {
+    final app = await open(tester, locale: 'en');
+    final plus = find.byKey(const Key('hijriOffsetPlus'));
+    await tester.ensureVisible(plus);
+    await tester.tap(plus);
+    await tester.pumpAndSettle();
+    expect(app.prefs.getInt('hijriOffset'), 1);
+    expect(find.textContaining('+1'), findsOneWidget);
+    await tester.tap(plus);
+    await tester.pumpAndSettle();
+    expect(tester.widget<IconButton>(plus).onPressed, isNull);
+    final minus = find.byKey(const Key('hijriOffsetMinus'));
+    for (var i = 0; i < 4; i++) {
+      await tester.tap(minus);
+      await tester.pumpAndSettle();
+    }
+    expect(app.prefs.getInt('hijriOffset'), -2);
+    expect(tester.widget<IconButton>(minus).onPressed, isNull);
+    await app.services.settings.setHijriOffset(0);
+  });
 }

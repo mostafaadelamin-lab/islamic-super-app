@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import { headingFromEvent, isFacing, needsPermission, type OrientationLike } from "@/lib/qibla";
+import { magneticDeclination, decimalYear } from "@/lib/declination";
 import { Compass } from "./Compass";
 
 type Mode = "idle" | "waiting" | "live" | "unsupported" | "denied";
@@ -11,8 +12,22 @@ const SENSOR_TIMEOUT_MS = 3000;
 
 type PermissionCtor = { requestPermission: () => Promise<"granted" | "denied"> };
 
-/** Qibla compass that follows the device heading (DeviceOrientation), with the static bearing as fallback. */
-export function LiveCompass({ locale, bearing }: { locale: Locale; bearing: number }) {
+/**
+ * Qibla compass that follows the device heading (DeviceOrientation), with the static bearing as fallback.
+ * Browsers report the heading from magnetic north; the Qibla bearing is from true north, so the local magnetic
+ * declination (WMM2025, lib/declination.ts) is added before comparing them.
+ */
+export function LiveCompass({
+  locale,
+  bearing,
+  lat,
+  lng,
+}: {
+  locale: Locale;
+  bearing: number;
+  lat: number;
+  lng: number;
+}) {
   const [mode, setMode] = useState<Mode>("idle");
   const [heading, setHeading] = useState<number | null>(null);
   const timer = useRef<number | null>(null);
@@ -67,7 +82,8 @@ export function LiveCompass({ locale, bearing }: { locale: Locale; bearing: numb
     }
   };
 
-  const live = mode === "live" ? heading : null;
+  const declination = magneticDeclination(lat, lng, decimalYear(new Date()));
+  const live = mode === "live" && heading !== null ? (((heading + declination) % 360) + 360) % 360 : null;
   const facing = isFacing(bearing, live);
   const deg = localizeDigits(bearing.toFixed(1), locale);
   return (
@@ -75,6 +91,7 @@ export function LiveCompass({ locale, bearing }: { locale: Locale; bearing: numb
       className={facing ? "live-compass facing" : "live-compass"}
       data-testid="live-compass"
       data-mode={mode}
+      data-declination={declination.toFixed(6)}
     >
       <Compass bearing={bearing} heading={live} label={t(locale, "prayer.compass", { deg })} />
       <p className="compass-status" role="status" data-testid="compass-status">
@@ -85,7 +102,12 @@ export function LiveCompass({ locale, bearing }: { locale: Locale; bearing: numb
       </p>
       {live !== null ? (
         <p className="muted small" data-testid="compass-heading">
-          {t(locale, "qibla.heading", { deg: localizeDigits(Math.round(live), locale) })}
+          {t(locale, "qibla.heading", { deg: localizeDigits(Math.round(live), locale) })}{" "}
+          <span data-testid="compass-declination">
+            {t(locale, "qibla.declination", {
+              deg: localizeDigits((declination >= 0 ? "+" : "") + declination.toFixed(1), locale),
+            })}
+          </span>
         </p>
       ) : null}
       {permissionNeeded && mode !== "live" ? (
