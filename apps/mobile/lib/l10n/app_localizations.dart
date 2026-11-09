@@ -278,11 +278,41 @@ abstract class AppLocalizations {
   /// **'Sync now'**
   String get accountSyncNow;
 
+  /// shared key "adhan.banner"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhan alerts are off. Turn them on to hear the adhan at every prayer time.'**
+  String get adhanBanner;
+
+  /// shared key "adhan.bannerAction"
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on'**
+  String get adhanBannerAction;
+
+  /// shared key "adhan.bellOff"
+  ///
+  /// In en, this message translates to:
+  /// **'{name} alert off'**
+  String adhanBellOff(String name);
+
+  /// shared key "adhan.bellOn"
+  ///
+  /// In en, this message translates to:
+  /// **'{name} alert on'**
+  String adhanBellOn(String name);
+
   /// shared key "adhan.body"
   ///
   /// In en, this message translates to:
   /// **'{name} prayer time in {city}'**
   String adhanBody(String name, String city);
+
+  /// shared key "adhan.credit"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhan recording: \"Beautiful adhan\" from Wikimedia Commons (Adam-synagda), public domain CC0.'**
+  String get adhanCredit;
 
   /// shared key "adhan.denied"
   ///
@@ -296,17 +326,89 @@ abstract class AppLocalizations {
   /// **'Notify me at prayer times'**
   String get adhanEnable;
 
+  /// shared key "adhan.iosNote"
+  ///
+  /// In en, this message translates to:
+  /// **'On iPhone the notification plays the opening takbir only (the system allows at most 30 seconds).'**
+  String get adhanIosNote;
+
   /// shared key "adhan.note"
   ///
   /// In en, this message translates to:
-  /// **'Scheduled on this device for the next 7 days; opening the app renews them.'**
+  /// **'Scheduled ahead on this device and works even when the app is closed; opening the app renews them. If an alert is late, allow \"Alarms & reminders\" and turn off battery optimisation for the app.'**
   String get adhanNote;
+
+  /// shared key "adhan.preview"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to the adhan'**
+  String get adhanPreview;
+
+  /// shared key "adhan.previewStop"
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get adhanPreviewStop;
 
   /// shared key "adhan.settings"
   ///
   /// In en, this message translates to:
   /// **'Adhan notifications'**
   String get adhanSettings;
+
+  /// shared key "adhan.sound"
+  ///
+  /// In en, this message translates to:
+  /// **'Alert sound'**
+  String get adhanSound;
+
+  /// shared key "adhan.soundAdhan"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhan'**
+  String get adhanSoundAdhan;
+
+  /// shared key "adhan.soundSilent"
+  ///
+  /// In en, this message translates to:
+  /// **'Silent'**
+  String get adhanSoundSilent;
+
+  /// shared key "adhan.soundTone"
+  ///
+  /// In en, this message translates to:
+  /// **'Notification tone'**
+  String get adhanSoundTone;
+
+  /// shared key "adhan.stop"
+  ///
+  /// In en, this message translates to:
+  /// **'Stop adhan'**
+  String get adhanStop;
+
+  /// shared key "adhan.test"
+  ///
+  /// In en, this message translates to:
+  /// **'Test the alert (in 10 seconds)'**
+  String get adhanTest;
+
+  /// shared key "adhan.testBody"
+  ///
+  /// In en, this message translates to:
+  /// **'If you heard the sound, alerts work on this phone.'**
+  String get adhanTestBody;
+
+  /// shared key "adhan.testScheduled"
+  ///
+  /// In en, this message translates to:
+  /// **'A test alert will arrive in 10 seconds; you can close the app.'**
+  String get adhanTestScheduled;
+
+  /// shared key "adhan.testTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhan alert test'**
+  String get adhanTestTitle;
 
   /// shared key "adhan.title"
   ///

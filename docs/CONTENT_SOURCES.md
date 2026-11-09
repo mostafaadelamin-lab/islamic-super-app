@@ -20,3 +20,9 @@
 The QuranEnc/KFGQPC text encodes open (idgham) tanween as U+0657, U+065E, U+0656. Amiri Quran draws those shapes at U+08F0–U+08F2.
 Clients substitute these three characters **only in the string given to the renderer** (`packages/shared-schemas/quran-render.json`). Stored, searched, synced and hashed text is never changed, and tests on every platform assert this.
 The earlier Rattil prototype had applied this substitution to its stored copy; Milestone 1 returns to the pristine upstream file.
+
+## Adhan recording
+"Beautiful adhan" by Adam-synagda, Wikimedia Commons (https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg),
+CC0 1.0 public-domain dedication, uploaded as own work. Original SHA-256
+35fe06b08fe80505c550c33fed8a783fa9901ddc81ac884958b4be048f5b2a79. Derived files and their formats are listed in
+apps/mobile/assets/audio/ADHAN_AUDIO.md. Religious review (listen-through by a named reviewer): PENDING.

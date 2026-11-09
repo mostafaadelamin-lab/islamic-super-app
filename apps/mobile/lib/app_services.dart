@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show TargetPlatform, defaultTargetPlatform;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -25,6 +26,7 @@ class AppServices {
     required this.clock,
     required this.recitation,
     required this.adhan,
+    required this.adhanPreview,
     required this.tasbih,
     required this.adhkar,
     required this.sensors,
@@ -41,6 +43,7 @@ class AppServices {
     AudioBackend Function()? audioBackend,
     NarrationBackend Function()? narrationBackend,
     NotificationsBackend? notifications,
+    AdhanPlayer? adhanPlayer,
     CompassSensors? sensors,
     TafsirStore? tafsir,
   }) {
@@ -82,7 +85,12 @@ class AppServices {
         settings: settings,
         backend: notifications ?? LocalNotificationsBackend(),
         clock: c,
+        // Android has no small cap on pending alarms, so a month ahead keeps the
+        // adhan going even if the app is not opened; iOS keeps at most 64.
+        days: defaultTargetPlatform == TargetPlatform.android ? 30 : 7,
+        max: defaultTargetPlatform == TargetPlatform.android ? 150 : 60,
       ),
+      adhanPreview: AdhanPreview(adhanPlayer ?? JustAudioAdhanPlayer()),
       tasbih: TasbihController(settings),
       adhkar: AdhkarController(content, settings, localToday),
       sensors: sensors ?? const DeviceCompassSensors(),
@@ -97,6 +105,9 @@ class AppServices {
   final Clock clock;
   final RecitationController recitation;
   final AdhanScheduler adhan;
+
+  /// In-app playback of the adhan recording (settings "listen" button).
+  final AdhanPreview adhanPreview;
   final TasbihController tasbih;
   final AdhkarController adhkar;
   final CompassSensors sensors;

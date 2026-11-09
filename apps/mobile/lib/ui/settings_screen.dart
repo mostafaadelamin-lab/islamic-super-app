@@ -4,6 +4,7 @@ import '../app_services.dart';
 import '../data/settings.dart';
 import '../domain/prayer_schedule.dart';
 import '../domain/quran.dart';
+import '../theme/design_tokens.dart';
 import 'about_screen.dart';
 import 'account_screen.dart';
 import 'audio_widgets.dart';
@@ -120,8 +121,23 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
-/// Adhan notifications: master switch (asks for permission) and one switch
-/// per prayer.
+/// Turns adhan alerts on after asking for the notification permission; shows
+/// a snack bar and returns false when the user refuses.
+Future<bool> enableAdhanAlerts(BuildContext context) async {
+  final s = context.services;
+  final l = context.l10n;
+  final messenger = ScaffoldMessenger.of(context);
+  final ok = await s.adhan.backend.requestPermission();
+  if (!ok) {
+    messenger.showSnackBar(SnackBar(content: Text(l.adhanDenied)));
+    return false;
+  }
+  await s.settings.setAdhanEnabled(true);
+  return true;
+}
+
+/// Adhan notifications: master switch (asks for permission), one switch per
+/// prayer, the sound (adhan / phone tone / silent), listen and test buttons.
 class AdhanSettingsCard extends StatelessWidget {
   const AdhanSettingsCard({super.key});
 
@@ -130,6 +146,7 @@ class AdhanSettingsCard extends StatelessWidget {
     final s = context.services;
     final settings = s.settings;
     final l = context.l10n;
+    final small = Theme.of(context).textTheme.bodySmall;
     return SectionCard(
       title: l.adhanSettings,
       children: [
@@ -139,18 +156,14 @@ class AdhanSettingsCard extends StatelessWidget {
           title: Text(l.adhanEnable),
           value: settings.adhanEnabled,
           onChanged: (v) async {
-            final messenger = ScaffoldMessenger.of(context);
             if (v) {
-              final ok = await s.adhan.backend.requestPermission();
-              if (!ok) {
-                messenger.showSnackBar(SnackBar(content: Text(l.adhanDenied)));
-                return;
-              }
+              await enableAdhanAlerts(context);
+            } else {
+              await settings.setAdhanEnabled(false);
             }
-            await settings.setAdhanEnabled(v);
           },
         ),
-        if (settings.adhanEnabled)
+        if (settings.adhanEnabled) ...[
           for (final p in obligatoryPrayers)
             SwitchListTile(
               key: Key('adhanSwitch-$p'),
@@ -159,7 +172,58 @@ class AdhanSettingsCard extends StatelessWidget {
               value: settings.adhanFor(p),
               onChanged: (v) => settings.setAdhanFor(p, v),
             ),
-        Text(l.adhanNote, style: Theme.of(context).textTheme.bodySmall),
+          const SizedBox(height: DesignTokens.spaceSm),
+          Text(l.adhanSound, style: Theme.of(context).textTheme.titleSmall),
+          const SizedBox(height: DesignTokens.spaceXs),
+          SizedBox(
+            width: double.infinity,
+            child: SegmentedButton<String>(
+              key: const Key('adhanSound'),
+              showSelectedIcon: false,
+              segments: [
+                ButtonSegment(value: 'adhan', label: Text(l.adhanSoundAdhan), icon: const Icon(Icons.mosque)),
+                ButtonSegment(value: 'tone', label: Text(l.adhanSoundTone), icon: const Icon(Icons.notifications)),
+                ButtonSegment(
+                  value: 'silent',
+                  label: Text(l.adhanSoundSilent),
+                  icon: const Icon(Icons.notifications_off),
+                ),
+              ],
+              selected: {settings.adhanSound},
+              onSelectionChanged: (v) => settings.setAdhanSound(v.first),
+            ),
+          ),
+          const SizedBox(height: DesignTokens.spaceSm),
+          Wrap(
+            spacing: DesignTokens.spaceSm,
+            runSpacing: DesignTokens.spaceXs,
+            children: [
+              ListenableBuilder(
+                listenable: s.adhanPreview,
+                builder: (context, _) => FilledButton.tonalIcon(
+                  key: const Key('adhanPreview'),
+                  onPressed: s.adhanPreview.toggle,
+                  icon: Icon(s.adhanPreview.playing ? Icons.stop : Icons.play_arrow),
+                  label: Text(s.adhanPreview.playing ? l.adhanPreviewStop : l.adhanPreview),
+                ),
+              ),
+              OutlinedButton.icon(
+                key: const Key('adhanTest'),
+                onPressed: () async {
+                  final messenger = ScaffoldMessenger.of(context);
+                  await s.adhan.test();
+                  messenger.showSnackBar(SnackBar(content: Text(l.adhanTestScheduled)));
+                },
+                icon: const Icon(Icons.alarm),
+                label: Text(l.adhanTest),
+              ),
+            ],
+          ),
+          if (Theme.of(context).platform == TargetPlatform.iOS) Text(l.adhanIosNote, style: small),
+        ],
+        const SizedBox(height: DesignTokens.spaceXs),
+        Text(l.adhanNote, style: small),
+        Text(l.adhanCredit, key: const Key('adhanCredit'), style: small),
       ],
     );
   }

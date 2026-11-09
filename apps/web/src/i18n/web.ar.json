@@ -233,5 +233,18 @@
   "tafsir.recitation": "تفسير الآية المتلوّة",
   "home.tomorrowTimes": "مواقيت الغد",
   "home.tile.storiesSub": "آيات القصص بصوت القارئ",
-  "home.tile.reelsSub": "تلاوات خاشعة ودروس مختصرة"
+  "home.tile.reelsSub": "تلاوات خاشعة ودروس مختصرة",
+  "adhan.title": "حان وقت صلاة {name}",
+  "adhan.webBody": "دخل وقت صلاة {name}",
+  "adhan.settings": "تنبيه الأذان",
+  "adhan.enable": "نبّهني بالأذان عند دخول وقت الصلاة",
+  "adhan.prayers": "الصلوات",
+  "adhan.webSound": "شغّل صوت الأذان",
+  "adhan.listen": "اسمع الأذان",
+  "adhan.stop": "إيقاف الأذان",
+  "adhan.dismiss": "إغلاق",
+  "adhan.playNow": "شغّل الأذان",
+  "adhan.webNote": "على الموقع يشتغل التنبيه طول ما صفحة من الموقع مفتوحة (ولو في تبويب تاني). للتنبيه حتى والجهاز مقفول استخدم تطبيق الموبايل.",
+  "adhan.webDenied": "المتصفح مانع الإشعارات. هيظهر التنبيه ويشتغل الأذان داخل الصفحة، ولو عايز إشعار اسمح بالإشعارات من إعدادات المتصفح.",
+  "adhan.credit": "تسجيل الأذان: «Beautiful adhan» من ويكيميديا كومنز (Adam-synagda)، ملكية عامة CC0."
 }

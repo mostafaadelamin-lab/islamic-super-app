@@ -15,6 +15,8 @@ import 'package:rattil/ui/qibla_screen.dart';
 import 'package:rattil/ui/settings_screen.dart';
 import 'package:rattil/ui/tasbih_screen.dart';
 
+import 'package:rattil/data/notifications.dart';
+
 import '../helpers.dart';
 
 /// Wraps [s] in the left-to-right isolate used by context.numLtr.
@@ -285,14 +287,65 @@ void main() {
       await tester.tap(find.byKey(const Key('adhanSwitch')));
       await tester.pumpAndSettle();
       expect(app.services.settings.adhanEnabled, isTrue);
-      expect(n.scheduled, hasLength(4 + 6 * 5), reason: '7 days from Dhuhr today');
+      // Android plans a month ahead (iOS: 7 days, at most 60).
+      expect(n.scheduled, hasLength(4 + 29 * 5), reason: '30 days from Dhuhr today');
+      expect(n.scheduled.every((e) => e.sound == 'adhan'), isTrue, reason: 'adhan recording by default');
       expect(n.scheduled.first.title, 'Time for Dhuhr');
       await tester.ensureVisible(find.byKey(const Key('adhanSwitch-fajr')));
       await tester.tap(find.byKey(const Key('adhanSwitch-fajr')));
       await tester.pumpAndSettle();
       expect(app.prefs.getBool('adhan.fajr'), isFalse);
-      expect(n.scheduled, hasLength(4 + 6 * 4));
+      expect(n.scheduled, hasLength(4 + 29 * 4));
       expect(n.scheduled.any((e) => e.title == 'Time for Fajr'), isFalse);
+    });
+
+    testWidgets('adhan: sound choice re-plans, listen plays the recording, test fires in 10 s', (tester) async {
+      final n = FakeNotifications();
+      final player = FakeAdhanPlayer();
+      final app = await pumpApp(
+        tester,
+        size: tallPhone,
+        locale: 'en',
+        notifications: n,
+        adhanPlayer: player,
+        prefs: {'adhan.enabled': true},
+      );
+      await openSettings(tester);
+      await tester.ensureVisible(find.byKey(const Key('adhanSound')));
+      await tester.tap(find.text('Silent'));
+      await tester.pumpAndSettle();
+      expect(app.prefs.getString('adhan.sound'), 'silent');
+      expect(n.scheduled, isNotEmpty);
+      expect(n.scheduled.every((e) => e.sound == 'silent'), isTrue);
+      await tester.tap(find.text('Notification tone'));
+      await tester.pumpAndSettle();
+      expect(n.scheduled.every((e) => e.sound == 'tone'), isTrue);
+
+      await tester.ensureVisible(find.byKey(const Key('adhanPreview')));
+      await tester.tap(find.byKey(const Key('adhanPreview')));
+      await tester.pumpAndSettle();
+      expect(player.plays, 1);
+      expect(find.text('Stop'), findsOneWidget);
+      player.finish();
+      await tester.pumpAndSettle();
+      expect(find.text('Listen to the adhan'), findsOneWidget);
+      await tester.tap(find.byKey(const Key('adhanPreview')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('adhanPreview')));
+      await tester.pumpAndSettle();
+      expect(player.stops, 1);
+
+      final before = n.scheduled.length;
+      await tester.tap(find.byKey(const Key('adhanTest')));
+      await tester.pumpAndSettle();
+      expect(n.scheduled, hasLength(before + 1));
+      final t = n.scheduled.last;
+      expect(t.id, adhanTestNotificationId);
+      expect(t.title, 'Adhan alert test');
+      expect(t.at, fixedNow.add(const Duration(seconds: 10)));
+      expect(t.sound, 'tone');
+      expect(find.text('A test alert will arrive in 10 seconds; you can close the app.'), findsOneWidget);
+      expect(find.byKey(const Key('adhanCredit')), findsOneWidget);
     });
   });
 }

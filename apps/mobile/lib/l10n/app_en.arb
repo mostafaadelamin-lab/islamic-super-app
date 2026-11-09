@@ -149,6 +149,32 @@
   "@accountSyncNow": {
     "description": "shared key \"account.syncNow\""
   },
+  "adhanBanner": "Adhan alerts are off. Turn them on to hear the adhan at every prayer time.",
+  "@adhanBanner": {
+    "description": "shared key \"adhan.banner\""
+  },
+  "adhanBannerAction": "Turn on",
+  "@adhanBannerAction": {
+    "description": "shared key \"adhan.bannerAction\""
+  },
+  "adhanBellOff": "{name} alert off",
+  "@adhanBellOff": {
+    "description": "shared key \"adhan.bellOff\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adhanBellOn": "{name} alert on",
+  "@adhanBellOn": {
+    "description": "shared key \"adhan.bellOn\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "adhanBody": "{name} prayer time in {city}",
   "@adhanBody": {
     "description": "shared key \"adhan.body\"",
@@ -161,6 +187,10 @@
       }
     }
   },
+  "adhanCredit": "Adhan recording: \"Beautiful adhan\" from Wikimedia Commons (Adam-synagda), public domain CC0.",
+  "@adhanCredit": {
+    "description": "shared key \"adhan.credit\""
+  },
   "adhanDenied": "Notifications are not allowed. Turn them on in the system settings.",
   "@adhanDenied": {
     "description": "shared key \"adhan.denied\""
@@ -169,13 +199,61 @@
   "@adhanEnable": {
     "description": "shared key \"adhan.enable\""
   },
-  "adhanNote": "Scheduled on this device for the next 7 days; opening the app renews them.",
+  "adhanIosNote": "On iPhone the notification plays the opening takbir only (the system allows at most 30 seconds).",
+  "@adhanIosNote": {
+    "description": "shared key \"adhan.iosNote\""
+  },
+  "adhanNote": "Scheduled ahead on this device and works even when the app is closed; opening the app renews them. If an alert is late, allow \"Alarms & reminders\" and turn off battery optimisation for the app.",
   "@adhanNote": {
     "description": "shared key \"adhan.note\""
+  },
+  "adhanPreview": "Listen to the adhan",
+  "@adhanPreview": {
+    "description": "shared key \"adhan.preview\""
+  },
+  "adhanPreviewStop": "Stop",
+  "@adhanPreviewStop": {
+    "description": "shared key \"adhan.previewStop\""
   },
   "adhanSettings": "Adhan notifications",
   "@adhanSettings": {
     "description": "shared key \"adhan.settings\""
+  },
+  "adhanSound": "Alert sound",
+  "@adhanSound": {
+    "description": "shared key \"adhan.sound\""
+  },
+  "adhanSoundAdhan": "Adhan",
+  "@adhanSoundAdhan": {
+    "description": "shared key \"adhan.soundAdhan\""
+  },
+  "adhanSoundSilent": "Silent",
+  "@adhanSoundSilent": {
+    "description": "shared key \"adhan.soundSilent\""
+  },
+  "adhanSoundTone": "Notification tone",
+  "@adhanSoundTone": {
+    "description": "shared key \"adhan.soundTone\""
+  },
+  "adhanStop": "Stop adhan",
+  "@adhanStop": {
+    "description": "shared key \"adhan.stop\""
+  },
+  "adhanTest": "Test the alert (in 10 seconds)",
+  "@adhanTest": {
+    "description": "shared key \"adhan.test\""
+  },
+  "adhanTestBody": "If you heard the sound, alerts work on this phone.",
+  "@adhanTestBody": {
+    "description": "shared key \"adhan.testBody\""
+  },
+  "adhanTestScheduled": "A test alert will arrive in 10 seconds; you can close the app.",
+  "@adhanTestScheduled": {
+    "description": "shared key \"adhan.testScheduled\""
+  },
+  "adhanTestTitle": "Adhan alert test",
+  "@adhanTestTitle": {
+    "description": "shared key \"adhan.testTitle\""
   },
   "adhanTitle": "Time for {name}",
   "@adhanTitle": {

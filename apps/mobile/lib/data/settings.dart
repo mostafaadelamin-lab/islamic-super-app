@@ -162,6 +162,20 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Notification sound: 'adhan' (the adhan recording, default), 'tone' (the
+  /// phone's notification sound) or 'silent'.
+  static const adhanSounds = ['adhan', 'tone', 'silent'];
+  String get adhanSound {
+    final v = _prefs.getString('adhan.sound');
+    return adhanSounds.contains(v) ? v! : 'adhan';
+  }
+
+  Future<void> setAdhanSound(String v) async {
+    if (!adhanSounds.contains(v)) throw ArgumentError.value(v, 'sound');
+    await _prefs.setString('adhan.sound', v);
+    notifyListeners();
+  }
+
   /// Prayers that should get a notification right now.
   Set<String> get adhanPrayers => adhanEnabled
       ? {

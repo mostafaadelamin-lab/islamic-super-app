@@ -89,6 +89,7 @@ Future<TestApp> pumpApp(
   FakeAudioBackend? audio,
   FakeNarrationBackend? narration,
   FakeNotifications? notifications,
+  FakeAdhanPlayer? adhanPlayer,
   CompassSensors? sensors,
   TafsirStore? tafsir,
 }) async {
@@ -103,6 +104,7 @@ Future<TestApp> pumpApp(
     audioBackend: () => audio ?? FakeAudioBackend(),
     narrationBackend: () => narration ?? FakeNarrationBackend(),
     notifications: notifications ?? FakeNotifications(),
+    adhanPlayer: adhanPlayer ?? FakeAdhanPlayer(),
     sensors: sensors ?? FakeSensors.none(),
     tafsir: tafsir ?? TafsirStore.preloaded(_tafsir!),
   );
@@ -296,7 +298,7 @@ class FakeNarrationBackend implements NarrationBackend {
 class FakeNotifications implements NotificationsBackend {
   FakeNotifications({this.grant = true});
   bool grant;
-  final scheduled = <({int id, String title, String body, DateTime at})>[];
+  final scheduled = <({int id, String title, String body, DateTime at, String sound})>[];
   int cancels = 0;
   int permissionRequests = 0;
 
@@ -321,7 +323,26 @@ class FakeNotifications implements NotificationsBackend {
     required String title,
     required String body,
     required DateTime atUtc,
-  }) async => scheduled.add((id: id, title: title, body: body, at: atUtc));
+    String sound = 'adhan',
+  }) async => scheduled.add((id: id, title: title, body: body, at: atUtc, sound: sound));
+}
+
+class FakeAdhanPlayer implements AdhanPlayer {
+  int plays = 0;
+  int stops = 0;
+  final _done = StreamController<void>.broadcast();
+
+  /// Simulates the recording reaching its end.
+  void finish() => _done.add(null);
+
+  @override
+  Future<void> play() async => plays++;
+
+  @override
+  Future<void> stop() async => stops++;
+
+  @override
+  Stream<void> get completed => _done.stream;
 }
 
 class FakeSensors implements CompassSensors {

@@ -40,6 +40,7 @@ flutter:
   assets:
     - assets/content/
     - assets/schemas/
+    - assets/audio/
   fonts:
     - family: Amiri Quran
       fonts:

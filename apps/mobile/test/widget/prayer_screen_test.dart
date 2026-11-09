@@ -219,4 +219,22 @@ void main() {
       }
     }
   });
+
+  testWidgets('adhan banner turns alerts on; a bell per prayer switches one off', (tester) async {
+    final app = await open(tester);
+    expect(find.byKey(const Key('adhanBell-dhuhr')), findsNothing);
+    await tester.tap(find.byKey(const Key('adhanBannerEnable')));
+    await tester.pumpAndSettle();
+    expect(app.services.settings.adhanEnabled, isTrue);
+    expect(find.byKey(const Key('adhanBanner')), findsNothing);
+    for (final p in ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha']) {
+      expect(find.byKey(Key('adhanBell-$p')), findsOneWidget);
+    }
+    expect(find.byKey(const Key('adhanBell-sunrise')), findsNothing);
+    await tester.tap(find.byKey(const Key('adhanBell-asr')));
+    await tester.pumpAndSettle();
+    expect(app.prefs.getBool('adhan.asr'), isFalse);
+    expect(app.services.settings.adhanPrayers, {'fajr', 'dhuhr', 'maghrib', 'isha'});
+    expect(find.byTooltip('Asr alert off'), findsOneWidget);
+  });
 }

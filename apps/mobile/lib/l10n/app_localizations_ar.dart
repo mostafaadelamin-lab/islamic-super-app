@@ -116,9 +116,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accountSyncNow => 'زامن الآن';
 
   @override
+  String get adhanBanner => 'تنبيه الأذان مقفول. فعّله عشان يوصلك تنبيه بصوت الأذان في كل صلاة.';
+
+  @override
+  String get adhanBannerAction => 'تفعيل';
+
+  @override
+  String adhanBellOff(String name) {
+    return 'تنبيه $name مقفول';
+  }
+
+  @override
+  String adhanBellOn(String name) {
+    return 'تنبيه $name شغّال';
+  }
+
+  @override
   String adhanBody(String name, String city) {
     return 'دخل وقت صلاة $name حسب توقيت $city';
   }
+
+  @override
+  String get adhanCredit => 'تسجيل الأذان: «Beautiful adhan» من ويكيميديا كومنز (Adam-synagda)، ملكية عامة CC0.';
 
   @override
   String get adhanDenied => 'الإشعارات غير مسموح بها. فعّلها من إعدادات النظام.';
@@ -127,10 +146,47 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhanEnable => 'نبّهني عند دخول وقت الصلاة';
 
   @override
-  String get adhanNote => 'تُجدول على هذا الجهاز للأيام السبعة القادمة، ويجدّدها فتح التطبيق.';
+  String get adhanIosNote => 'على الآيفون يُسمع التكبير الأول فقط في الإشعار (النظام يسمح بـ٣٠ ثانية بحد أقصى).';
+
+  @override
+  String get adhanNote =>
+      'تُجدول على هذا الجهاز مسبقًا وتشتغل حتى لو التطبيق مقفول، ويجدّدها فتح التطبيق. لو التنبيه اتأخر، اسمح للتطبيق بـ«المنبّهات والتذكيرات» وأوقف توفير البطارية له.';
+
+  @override
+  String get adhanPreview => 'اسمع الأذان';
+
+  @override
+  String get adhanPreviewStop => 'إيقاف';
 
   @override
   String get adhanSettings => 'تنبيهات الأذان';
+
+  @override
+  String get adhanSound => 'صوت التنبيه';
+
+  @override
+  String get adhanSoundAdhan => 'الأذان';
+
+  @override
+  String get adhanSoundSilent => 'بدون صوت';
+
+  @override
+  String get adhanSoundTone => 'نغمة الإشعارات';
+
+  @override
+  String get adhanStop => 'إيقاف الأذان';
+
+  @override
+  String get adhanTest => 'جرّب التنبيه (بعد ١٠ ثوانٍ)';
+
+  @override
+  String get adhanTestBody => 'لو سمعت الصوت، فالتنبيه شغّال على جهازك.';
+
+  @override
+  String get adhanTestScheduled => 'هيوصلك تنبيه تجريبي بعد ١٠ ثوانٍ، ممكن تقفل التطبيق.';
+
+  @override
+  String get adhanTestTitle => 'تجربة تنبيه الأذان';
 
   @override
   String adhanTitle(String name) {

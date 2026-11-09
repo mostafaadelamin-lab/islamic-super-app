@@ -21,6 +21,7 @@ import { prayerStore } from "@/lib/settings";
 import { useStore } from "@/hooks/useStore";
 import { useNow } from "@/hooks/useNow";
 import { Compass } from "./Compass";
+import { AdhanSettings } from "./AdhanAlerts";
 
 type GeoState = { kind: "idle" } | { kind: "locating" } | { kind: "error"; key: string };
 
@@ -235,6 +236,8 @@ export function PrayerView({ locale }: { locale: Locale }) {
           </>
         ) : null}
       </section>
+
+      <AdhanSettings locale={locale} />
 
       <div className="two-col">
         <section className="card" aria-labelledby="adj-h">

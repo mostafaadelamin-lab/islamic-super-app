@@ -233,5 +233,18 @@
   "tafsir.recitation": "Tafsir of the ayah being recited",
   "home.tomorrowTimes": "Tomorrow's times",
   "home.tile.storiesSub": "Story verses, recited",
-  "home.tile.reelsSub": "Recitations and short lessons"
+  "home.tile.reelsSub": "Recitations and short lessons",
+  "adhan.title": "Time for {name}",
+  "adhan.webBody": "It is time for {name} prayer",
+  "adhan.settings": "Adhan alert",
+  "adhan.enable": "Alert me with the adhan at prayer times",
+  "adhan.prayers": "Prayers",
+  "adhan.webSound": "Play the adhan recording",
+  "adhan.listen": "Listen to the adhan",
+  "adhan.stop": "Stop adhan",
+  "adhan.dismiss": "Close",
+  "adhan.playNow": "Play adhan",
+  "adhan.webNote": "On the website the alert works while a page of the site is open (any tab). For alerts while the device is locked, use the mobile app.",
+  "adhan.webDenied": "The browser blocks notifications. The alert and adhan still play inside the page; allow notifications in the browser settings to get a system notification too.",
+  "adhan.credit": "Adhan recording: \"Beautiful adhan\" from Wikimedia Commons (Adam-synagda), public domain CC0."
 }

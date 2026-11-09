@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show Locale;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../domain/adhan_schedule.dart';
@@ -19,22 +20,64 @@ abstract class NotificationsBackend {
   /// Asks the user (Android 13+ / iOS); true when notifications are allowed.
   Future<bool> requestPermission();
   Future<void> cancelAll();
-  Future<void> schedule({required int id, required String title, required String body, required DateTime atUtc});
+  Future<void> schedule({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime atUtc,
+    String sound = 'adhan',
+  });
 }
+
+/// Id of the one-off "try it now" notification (real ids are yyyymmddN).
+const adhanTestNotificationId = 1;
 
 class LocalNotificationsBackend implements NotificationsBackend {
   final _plugin = FlutterLocalNotificationsPlugin();
   bool _ready = false;
   bool _exact = false;
 
-  static const _channel = AndroidNotificationDetails(
-    'adhan',
-    'Adhan',
-    channelDescription: 'Prayer time notifications',
-    importance: Importance.high,
-    priority: Priority.high,
-    category: AndroidNotificationCategory.alarm,
-  );
+  // Android ties the sound to the channel, so each sound choice has its own
+  // channel (the user can still fine-tune each one in the system settings).
+  static AndroidNotificationDetails _android(String sound, String stopLabel) => switch (sound) {
+    'tone' => const AndroidNotificationDetails(
+      'adhan_tone',
+      'تنبيه الصلاة (نغمة) · Prayer alert (tone)',
+      channelDescription: 'Prayer time notifications with the phone sound',
+      importance: Importance.high,
+      priority: Priority.high,
+      category: AndroidNotificationCategory.alarm,
+    ),
+    'silent' => const AndroidNotificationDetails(
+      'adhan_silent',
+      'تنبيه الصلاة (صامت) · Prayer alert (silent)',
+      channelDescription: 'Prayer time notifications without sound',
+      importance: Importance.defaultImportance,
+      priority: Priority.defaultPriority,
+      playSound: false,
+      enableVibration: false,
+    ),
+    _ => AndroidNotificationDetails(
+      'adhan_voice',
+      'الأذان · Adhan',
+      channelDescription: 'Prayer time notifications with the adhan recording',
+      importance: Importance.max,
+      priority: Priority.high,
+      category: AndroidNotificationCategory.alarm,
+      // res/raw/adhan.ogg (see assets/audio/ADHAN_AUDIO.md for its licence).
+      sound: const RawResourceAndroidNotificationSound('adhan'),
+      // Tapping "stop" or the notification itself silences the adhan.
+      actions: [AndroidNotificationAction('stop', stopLabel, cancelNotification: true)],
+    ),
+  };
+
+  // iOS plays at most 30 s of a notification sound, so it gets the opening
+  // takbir only (Runner/adhan_short.caf); the full adhan plays inside the app.
+  static DarwinNotificationDetails _darwin(String sound) => switch (sound) {
+    'tone' => const DarwinNotificationDetails(presentAlert: true, presentSound: true),
+    'silent' => const DarwinNotificationDetails(presentAlert: true, presentSound: false),
+    _ => const DarwinNotificationDetails(presentAlert: true, presentSound: true, sound: 'adhan_short.caf'),
+  };
 
   @override
   Future<void> init() async {
@@ -78,18 +121,24 @@ class LocalNotificationsBackend implements NotificationsBackend {
     await _plugin.cancelAll();
   }
 
+  /// Label of the Android "stop" action (set by the scheduler from l10n).
+  String stopLabel = 'إيقاف';
+
   @override
-  Future<void> schedule({required int id, required String title, required String body, required DateTime atUtc}) async {
+  Future<void> schedule({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime atUtc,
+    String sound = 'adhan',
+  }) async {
     await init();
     await _plugin.zonedSchedule(
       id: id,
       title: title,
       body: body,
       scheduledDate: tz.TZDateTime.from(atUtc, tz.UTC),
-      notificationDetails: const NotificationDetails(
-        android: _channel,
-        iOS: DarwinNotificationDetails(presentAlert: true, presentSound: true),
-      ),
+      notificationDetails: NotificationDetails(android: _android(sound, stopLabel), iOS: _darwin(sound)),
       androidScheduleMode: _exact ? AndroidScheduleMode.exactAllowWhileIdle : AndroidScheduleMode.inexactAllowWhileIdle,
     );
   }
@@ -104,6 +153,7 @@ class AdhanScheduler {
     required this.backend,
     required this.clock,
     this.days = 7,
+    this.max = 60,
   });
 
   final AppContent content;
@@ -111,6 +161,9 @@ class AdhanScheduler {
   final NotificationsBackend backend;
   final DateTime Function() clock;
   final int days;
+
+  /// Cap on pending notifications (iOS keeps at most 64 per app).
+  final int max;
   String? _lastSignature;
   List<AdhanNotification> _lastPlan = const [];
 
@@ -118,6 +171,7 @@ class AdhanScheduler {
 
   String get _signature => [
     settings.adhanPrayers.toList()..sort(),
+    settings.adhanSound,
     settings.cityId,
     settings.method,
     settings.asr,
@@ -138,6 +192,7 @@ class AdhanScheduler {
       today: PrayerSchedule.localDate(ctx.location, now),
       enabled: enabled,
       days: days,
+      max: max,
       dayFor: (d) => ctx.day(schedule, d, settings.adjustments),
     );
   }
@@ -154,16 +209,39 @@ class AdhanScheduler {
       await backend.cancelAll();
       if (items.isEmpty) return;
       final l = lookupAppLocalizations(Locale(settings.locale.languageCode));
+      final b = backend;
+      if (b is LocalNotificationsBackend) b.stopLabel = l.adhanStop;
       final city = (content.city(settings.cityId) ?? content.cities.first).name(settings.isArabic);
       for (final n in items) {
         final name = _prayerName(l, n.prayer);
-        await backend.schedule(id: n.id, title: l.adhanTitle(name), body: l.adhanBody(name, city), atUtc: n.at);
+        await backend.schedule(
+          id: n.id,
+          title: l.adhanTitle(name),
+          body: l.adhanBody(name, city),
+          atUtc: n.at,
+          sound: settings.adhanSound,
+        );
       }
     } catch (e) {
       // A plugin failure must never break the app; the next sync retries.
       _lastSignature = null;
       debugPrint('adhan scheduling failed: $e');
     }
+  }
+
+  /// A notification [delay] from now with the chosen sound, so the user can
+  /// check that the adhan really sounds on this phone.
+  Future<void> test({Duration delay = const Duration(seconds: 10)}) async {
+    final l = lookupAppLocalizations(Locale(settings.locale.languageCode));
+    final b = backend;
+    if (b is LocalNotificationsBackend) b.stopLabel = l.adhanStop;
+    await backend.schedule(
+      id: adhanTestNotificationId,
+      title: l.adhanTestTitle,
+      body: l.adhanTestBody,
+      atUtc: clock().toUtc().add(delay),
+      sound: settings.adhanSound,
+    );
   }
 
   static String _prayerName(AppLocalizations l, String key) => switch (key) {
@@ -173,4 +251,80 @@ class AdhanScheduler {
     'maghrib' => l.prayerMaghrib,
     _ => l.prayerIsha,
   };
+}
+
+/// Plays the bundled adhan inside the app (settings "listen" button).
+abstract class AdhanPlayer {
+  Future<void> play();
+  Future<void> stop();
+
+  /// Fires when the recording reaches its end.
+  Stream<void> get completed;
+}
+
+class JustAudioAdhanPlayer implements AdhanPlayer {
+  static const asset = 'assets/audio/adhan.m4a';
+  AudioPlayer? _player;
+  final _completed = StreamController<void>.broadcast();
+
+  AudioPlayer get _p {
+    final existing = _player;
+    if (existing != null) return existing;
+    final p = AudioPlayer();
+    p.processingStateStream.listen((s) {
+      if (s == ProcessingState.completed) _completed.add(null);
+    });
+    return _player = p;
+  }
+
+  @override
+  Future<void> play() async {
+    await _p.setAsset(asset);
+    unawaited(_p.play());
+  }
+
+  @override
+  Future<void> stop() async => _player?.stop();
+
+  @override
+  Stream<void> get completed => _completed.stream;
+}
+
+class AdhanPreview extends ChangeNotifier {
+  AdhanPreview(this._player) {
+    _sub = _player.completed.listen((_) => _set(false));
+  }
+
+  final AdhanPlayer _player;
+  late final StreamSubscription<void> _sub;
+  bool _playing = false;
+  bool get playing => _playing;
+
+  void _set(bool v) {
+    if (_playing == v) return;
+    _playing = v;
+    notifyListeners();
+  }
+
+  Future<void> toggle() async {
+    if (_playing) {
+      _set(false);
+      await _player.stop();
+      return;
+    }
+    _set(true);
+    try {
+      await _player.play();
+    } catch (e) {
+      _set(false);
+      debugPrint('adhan preview failed: $e');
+    }
+  }
+
+  @override
+  void dispose() {
+    _sub.cancel();
+    unawaited(_player.stop());
+    super.dispose();
+  }
 }

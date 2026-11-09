@@ -9,6 +9,7 @@ import { THEME_SCRIPT } from "../theme-script";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ClientEffects } from "@/components/ClientEffects";
+import { AdhanAlerts } from "@/components/AdhanAlerts";
 import { PlayerBar } from "@/components/PlayerBar";
 import { withBase } from "@/lib/base-path";
 
@@ -67,6 +68,7 @@ export default async function LocaleLayout({
         <Footer locale={locale} />
         <PlayerBar locale={locale} />
         <ClientEffects locale={locale} />
+        <AdhanAlerts locale={locale} />
       </body>
     </html>
   );

@@ -116,9 +116,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountSyncNow => 'Sync now';
 
   @override
+  String get adhanBanner => 'Adhan alerts are off. Turn them on to hear the adhan at every prayer time.';
+
+  @override
+  String get adhanBannerAction => 'Turn on';
+
+  @override
+  String adhanBellOff(String name) {
+    return '$name alert off';
+  }
+
+  @override
+  String adhanBellOn(String name) {
+    return '$name alert on';
+  }
+
+  @override
   String adhanBody(String name, String city) {
     return '$name prayer time in $city';
   }
+
+  @override
+  String get adhanCredit =>
+      'Adhan recording: \"Beautiful adhan\" from Wikimedia Commons (Adam-synagda), public domain CC0.';
 
   @override
   String get adhanDenied => 'Notifications are not allowed. Turn them on in the system settings.';
@@ -127,10 +147,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhanEnable => 'Notify me at prayer times';
 
   @override
-  String get adhanNote => 'Scheduled on this device for the next 7 days; opening the app renews them.';
+  String get adhanIosNote =>
+      'On iPhone the notification plays the opening takbir only (the system allows at most 30 seconds).';
+
+  @override
+  String get adhanNote =>
+      'Scheduled ahead on this device and works even when the app is closed; opening the app renews them. If an alert is late, allow \"Alarms & reminders\" and turn off battery optimisation for the app.';
+
+  @override
+  String get adhanPreview => 'Listen to the adhan';
+
+  @override
+  String get adhanPreviewStop => 'Stop';
 
   @override
   String get adhanSettings => 'Adhan notifications';
+
+  @override
+  String get adhanSound => 'Alert sound';
+
+  @override
+  String get adhanSoundAdhan => 'Adhan';
+
+  @override
+  String get adhanSoundSilent => 'Silent';
+
+  @override
+  String get adhanSoundTone => 'Notification tone';
+
+  @override
+  String get adhanStop => 'Stop adhan';
+
+  @override
+  String get adhanTest => 'Test the alert (in 10 seconds)';
+
+  @override
+  String get adhanTestBody => 'If you heard the sound, alerts work on this phone.';
+
+  @override
+  String get adhanTestScheduled => 'A test alert will arrive in 10 seconds; you can close the app.';
+
+  @override
+  String get adhanTestTitle => 'Adhan alert test';
 
   @override
   String adhanTitle(String name) {

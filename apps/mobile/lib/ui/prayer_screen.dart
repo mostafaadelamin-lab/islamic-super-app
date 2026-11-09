@@ -12,6 +12,7 @@ import 'city_picker_screen.dart';
 import 'l10n_ext.dart';
 import 'prayer_model.dart';
 import 'qibla_screen.dart';
+import 'settings_screen.dart' show enableAdhanAlerts;
 import 'widgets.dart';
 
 class PrayerScreen extends StatefulWidget {
@@ -58,6 +59,28 @@ class _PrayerScreenState extends State<PrayerScreen> {
             key: const Key('prayerList'),
             padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
             children: [
+              if (!s.settings.adhanEnabled)
+                SectionCard(
+                  key: const Key('adhanBanner'),
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.notifications_off_outlined, color: Theme.of(context).colorScheme.primary),
+                        const SizedBox(width: DesignTokens.spaceSm),
+                        Expanded(child: Text(l.adhanBanner)),
+                      ],
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: FilledButton.icon(
+                        key: const Key('adhanBannerEnable'),
+                        onPressed: () => enableAdhanAlerts(context),
+                        icon: const Icon(Icons.notifications_active),
+                        label: Text(l.adhanBannerAction),
+                      ),
+                    ),
+                  ],
+                ),
               SectionCard(
                 children: [
                   ListTile(
@@ -129,6 +152,22 @@ class _PrayerScreenState extends State<PrayerScreen> {
                         time: context.num(today.hhmm(k)),
                         isNext: next != null && next.key == k && next.at == today.day.utc[k],
                         rowKey: Key('time-$k'),
+                        // Bell per obligatory prayer once adhan alerts are on.
+                        bell: s.settings.adhanEnabled && obligatoryPrayers.contains(k)
+                            ? IconButton(
+                                key: Key('adhanBell-$k'),
+                                visualDensity: VisualDensity.compact,
+                                tooltip: s.settings.adhanFor(k)
+                                    ? l.adhanBellOn(context.prayerName(k))
+                                    : l.adhanBellOff(context.prayerName(k)),
+                                icon: Icon(
+                                  s.settings.adhanFor(k) ? Icons.notifications_active : Icons.notifications_off_outlined,
+                                  color: s.settings.adhanFor(k) ? Theme.of(context).colorScheme.primary : null,
+                                ),
+                                onPressed: () => s.settings.setAdhanFor(k, !s.settings.adhanFor(k)),
+                              )
+                            // Keeps the times aligned on the sunrise row.
+                            : (s.settings.adhanEnabled ? const SizedBox(width: 40) : null),
                       ),
                     if (today.day.highLatitudeAdjusted.isNotEmpty)
                       Padding(
@@ -203,11 +242,12 @@ class _PrayerScreenState extends State<PrayerScreen> {
 }
 
 class _TimeRow extends StatelessWidget {
-  const _TimeRow({required this.name, required this.time, required this.isNext, required this.rowKey});
+  const _TimeRow({required this.name, required this.time, required this.isNext, required this.rowKey, this.bell});
   final String name;
   final String time;
   final bool isNext;
   final Key rowKey;
+  final Widget? bell;
 
   @override
   Widget build(BuildContext context) {
@@ -221,6 +261,7 @@ class _TimeRow extends StatelessWidget {
         children: [
           Expanded(child: Text(name, style: style)),
           Text(time, style: style, textDirection: TextDirection.ltr),
+          ?bell,
         ],
       ),
     );

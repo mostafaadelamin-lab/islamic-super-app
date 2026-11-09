@@ -117,10 +117,16 @@ void main() {
       // Unchanged settings: no re-planning.
       await sch.sync();
       expect(fake.cancels, 1);
+      // A different sound re-plans with that sound.
+      await settings.setAdhanSound('tone');
+      await sch.sync();
+      expect(fake.cancels, 2);
+      expect(fake.scheduled.every((e) => e.sound == 'tone'), isTrue);
+      expect(() => settings.setAdhanSound('loud'), throwsArgumentError);
       // Turning it off cancels everything.
       await settings.setAdhanEnabled(false);
       await sch.sync();
-      expect(fake.cancels, 2);
+      expect(fake.cancels, 3);
       expect(fake.scheduled, isEmpty);
     });
   });

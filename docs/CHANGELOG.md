@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased] — Adhan alerts with the adhan voice — 2026-11-09
+### Added
+- Mobile: prayer-time notifications now play the adhan recording (Android: the full adhan through its own notification channel, with a "Stop adhan" action; iOS: the opening takbir, as iOS allows at most 30 s). Sound choice: adhan / phone tone / silent.
+- Mobile: "Listen to the adhan" and "Test the alert (in 10 seconds)" buttons in Settings; a banner on the Prayer screen to turn alerts on, and a bell next to each of the five prayers to switch it on or off.
+- Mobile: Android schedules 30 days ahead (iOS stays at 7 days / 60 notifications), so alerts keep coming even if the app is not opened for a while.
+- Web: "Adhan alert" card on the prayer page (on/off, per prayer, sound). While any page of the site is open it shows a notification, plays the adhan and shows a banner with "Stop adhan"; if the browser blocks autoplay the banner offers a play button. A prayer missed while the computer slept (over 5 min late) does not ring.
+- Audio: "Beautiful adhan" (Wikimedia Commons, CC0) — see apps/mobile/assets/audio/ADHAN_AUDIO.md. Pending religious review (listen-through) before a store release.
+
 ## [Unreleased] — Quranic stories (audio) — 2026-11-08
 ### Added
 - Quranic stories on Android, iOS and the web (`/stories`), from Home and More: listen or read. See docs/STORIES.md.
