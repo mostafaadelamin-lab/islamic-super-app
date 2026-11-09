@@ -132,9 +132,9 @@ export function WorshipView({ locale }: { locale: Locale }) {
             {locale === "ar" ? "‹" : "›"}
           </button>
         </div>
-        <div className="worship-grid" role="grid" data-testid="worship-grid">
+        <div className="worship-grid" data-testid="worship-grid">
           {weekdays.map((w) => (
-            <span key={w} className="worship-wd muted" role="columnheader">
+            <span key={w} className="worship-wd muted" aria-hidden="true">
               {w}
             </span>
           ))}

@@ -346,6 +346,8 @@ test.describe("recitation (mocked network: everyayah.com answered by a local sil
     });
     await readyMushaf(page, "/ar/page/2/");
     await page.getByTestId("play-page").click();
+    // the element requests the file asynchronously after play is pressed
+    await expect.poll(() => urls.length).toBeGreaterThan(0);
     expect(file(urls[0]!)).toBe("Alafasy_128kbps/001001.mp3");
     // 'playing' is only reported by a real element once it has decoded data and started
     await expect(page.getByTestId("player-toggle")).toHaveAttribute("data-state", "playing");
