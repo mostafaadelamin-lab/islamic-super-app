@@ -907,6 +907,10 @@
   "@quranBookmarked": {
     "description": "shared key \"quran.bookmarked\""
   },
+  "quranClearSearch": "Clear search",
+  "@quranClearSearch": {
+    "description": "shared key \"quran.clearSearch\""
+  },
   "quranContinueReading": "Continue reading",
   "@quranContinueReading": {
     "description": "shared key \"quran.continueReading\""
@@ -927,6 +931,23 @@
   "@quranGoToPage": {
     "description": "shared key \"quran.goToPage\""
   },
+  "quranHizbN": "Hizb {n}",
+  "@quranHizbN": {
+    "description": "shared key \"quran.hizbN\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "quranIndex": "Quran index",
+  "@quranIndex": {
+    "description": "shared key \"quran.index\""
+  },
+  "quranIndexSearch": "Search",
+  "@quranIndexSearch": {
+    "description": "shared key \"quran.indexSearch\""
+  },
   "quranJuz": "Juz {juz}",
   "@quranJuz": {
     "description": "shared key \"quran.juz\"",
@@ -935,6 +956,23 @@
         "type": "String"
       }
     }
+  },
+  "quranJuzOrdinals": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30",
+  "@quranJuzOrdinals": {
+    "description": "shared key \"quran.juzOrdinals\""
+  },
+  "quranJuzTitle": "Juz {ordinal}",
+  "@quranJuzTitle": {
+    "description": "shared key \"quran.juzTitle\"",
+    "placeholders": {
+      "ordinal": {
+        "type": "String"
+      }
+    }
+  },
+  "quranListView": "List view",
+  "@quranListView": {
+    "description": "shared key \"quran.listView\""
   },
   "quranMeccan": "Meccan",
   "@quranMeccan": {
@@ -980,6 +1018,33 @@
   "quranPrevPage": "Previous page",
   "@quranPrevPage": {
     "description": "shared key \"quran.prevPage\""
+  },
+  "quranQuarterLine": "{surah} {ayah} · Page {page}",
+  "@quranQuarterLine": {
+    "description": "shared key \"quran.quarterLine\"",
+    "placeholders": {
+      "surah": {
+        "type": "String"
+      },
+      "ayah": {
+        "type": "String"
+      },
+      "page": {
+        "type": "String"
+      }
+    }
+  },
+  "quranQuarterOfHizb": "Quarter {q} of hizb {n}",
+  "@quranQuarterOfHizb": {
+    "description": "shared key \"quran.quarterOfHizb\"",
+    "placeholders": {
+      "q": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
   },
   "quranRemoveBookmark": "Remove bookmark",
   "@quranRemoveBookmark": {
@@ -1034,6 +1099,21 @@
       }
     }
   },
+  "quranSurahLine": "Page {page} · {count} ayahs · {kind}",
+  "@quranSurahLine": {
+    "description": "shared key \"quran.surahLine\"",
+    "placeholders": {
+      "page": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
   "quranSurahN": "Surah {n}",
   "@quranSurahN": {
     "description": "shared key \"quran.surahN\"",
@@ -1043,9 +1123,26 @@
       }
     }
   },
+  "quranSurahTitle": "{name}",
+  "@quranSurahTitle": {
+    "description": "shared key \"quran.surahTitle\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "quranSurahs": "Surahs",
   "@quranSurahs": {
     "description": "shared key \"quran.surahs\""
+  },
+  "quranTabQuarters": "Quarters",
+  "@quranTabQuarters": {
+    "description": "shared key \"quran.tabQuarters\""
+  },
+  "quranTabSurahs": "Surahs",
+  "@quranTabSurahs": {
+    "description": "shared key \"quran.tabSurahs\""
   },
   "radioDuration": "Play for",
   "@radioDuration": {
@@ -1096,6 +1193,167 @@
   "radioUnlimited": "Unlimited",
   "@radioUnlimited": {
     "description": "shared key \"radio.unlimited\""
+  },
+  "readerBack": "Back to the index",
+  "@readerBack": {
+    "description": "shared key \"reader.back\""
+  },
+  "readerBasmalaNow": "Reciting the basmala",
+  "@readerBasmalaNow": {
+    "description": "shared key \"reader.basmalaNow\""
+  },
+  "readerBookmarks": "Bookmarks",
+  "@readerBookmarks": {
+    "description": "shared key \"reader.bookmarks\""
+  },
+  "readerFont": "Text size",
+  "@readerFont": {
+    "description": "shared key \"reader.font\""
+  },
+  "readerFontSize": "Text size: {size} — press to enlarge",
+  "@readerFontSize": {
+    "description": "shared key \"reader.fontSize\"",
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "readerHelp": "Help",
+  "@readerHelp": {
+    "description": "shared key \"reader.help\""
+  },
+  "readerHelp1": "Swipe the page to turn it, or use the page slider.",
+  "@readerHelp1": {
+    "description": "shared key \"reader.help1\""
+  },
+  "readerHelp2": "Tap any ayah to listen to it and read its tafsir.",
+  "@readerHelp2": {
+    "description": "shared key \"reader.help2\""
+  },
+  "readerHelp3": "“Listen with tafsir” splits the screen in two: the ayah being recited, and its short tafsir below it.",
+  "@readerHelp3": {
+    "description": "shared key \"reader.help3\""
+  },
+  "readerHelpTitle": "How to use",
+  "@readerHelpTitle": {
+    "description": "shared key \"reader.helpTitle\""
+  },
+  "readerIndex": "Index",
+  "@readerIndex": {
+    "description": "shared key \"reader.index\""
+  },
+  "readerKhatma": "Khatma",
+  "@readerKhatma": {
+    "description": "shared key \"reader.khatma\""
+  },
+  "readerKhatmaContinue": "Continue from page {page}",
+  "@readerKhatmaContinue": {
+    "description": "shared key \"reader.khatmaContinue\"",
+    "placeholders": {
+      "page": {
+        "type": "String"
+      }
+    }
+  },
+  "readerKhatmaDone": "Khatma complete. May Allah accept it from you.",
+  "@readerKhatmaDone": {
+    "description": "shared key \"reader.khatmaDone\""
+  },
+  "readerKhatmaLeft": "{left} pages left",
+  "@readerKhatmaLeft": {
+    "description": "shared key \"reader.khatmaLeft\"",
+    "placeholders": {
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "readerKhatmaNone": "No khatma yet. Start one and your progress is counted from the last page you read.",
+  "@readerKhatmaNone": {
+    "description": "shared key \"reader.khatmaNone\""
+  },
+  "readerKhatmaProgress": "Read {done} of 604 pages ({pct}%)",
+  "@readerKhatmaProgress": {
+    "description": "shared key \"reader.khatmaProgress\"",
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "readerKhatmaReset": "Cancel the khatma",
+  "@readerKhatmaReset": {
+    "description": "shared key \"reader.khatmaReset\""
+  },
+  "readerKhatmaSince": "Started on {date}",
+  "@readerKhatmaSince": {
+    "description": "shared key \"reader.khatmaSince\"",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "readerKhatmaStart": "Start a new khatma from al-Fatihah",
+  "@readerKhatmaStart": {
+    "description": "shared key \"reader.khatmaStart\""
+  },
+  "readerKhatmaTitle": "Khatma (complete reading)",
+  "@readerKhatmaTitle": {
+    "description": "shared key \"reader.khatmaTitle\""
+  },
+  "readerListenWithTafsir": "Listen with tafsir",
+  "@readerListenWithTafsir": {
+    "description": "shared key \"reader.listenWithTafsir\""
+  },
+  "readerPlayAyah": "Listen to this ayah",
+  "@readerPlayAyah": {
+    "description": "shared key \"reader.playAyah\""
+  },
+  "readerPlayWithTafsir": "Listen with tafsir",
+  "@readerPlayWithTafsir": {
+    "description": "shared key \"reader.playWithTafsir\""
+  },
+  "readerRepeatN": "Repeat: {n}",
+  "@readerRepeatN": {
+    "description": "shared key \"reader.repeatN\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "readerSearch": "Search",
+  "@readerSearch": {
+    "description": "shared key \"reader.search\""
+  },
+  "readerShowPage": "Show the page",
+  "@readerShowPage": {
+    "description": "shared key \"reader.showPage\""
+  },
+  "readerSplitTafsir": "Short tafsir",
+  "@readerSplitTafsir": {
+    "description": "shared key \"reader.splitTafsir\""
+  },
+  "readerSplitTitle": "Now reciting",
+  "@readerSplitTitle": {
+    "description": "shared key \"reader.splitTitle\""
+  },
+  "readerTabAyat": "Verses",
+  "@readerTabAyat": {
+    "description": "shared key \"reader.tabAyat\""
+  },
+  "readerTabMushaf": "Mushaf",
+  "@readerTabMushaf": {
+    "description": "shared key \"reader.tabMushaf\""
+  },
+  "readerTabTafsir": "Tafsir",
+  "@readerTabTafsir": {
+    "description": "shared key \"reader.tabTafsir\""
   },
   "reelsCatLesson": "Short lesson",
   "@reelsCatLesson": {

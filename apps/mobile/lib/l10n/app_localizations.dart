@@ -1172,6 +1172,12 @@ abstract class AppLocalizations {
   /// **'Bookmarked'**
   String get quranBookmarked;
 
+  /// shared key "quran.clearSearch"
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get quranClearSearch;
+
   /// shared key "quran.continueReading"
   ///
   /// In en, this message translates to:
@@ -1202,11 +1208,47 @@ abstract class AppLocalizations {
   /// **'Go to page'**
   String get quranGoToPage;
 
+  /// shared key "quran.hizbN"
+  ///
+  /// In en, this message translates to:
+  /// **'Hizb {n}'**
+  String quranHizbN(String n);
+
+  /// shared key "quran.index"
+  ///
+  /// In en, this message translates to:
+  /// **'Quran index'**
+  String get quranIndex;
+
+  /// shared key "quran.indexSearch"
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get quranIndexSearch;
+
   /// shared key "quran.juz"
   ///
   /// In en, this message translates to:
   /// **'Juz {juz}'**
   String quranJuz(String juz);
+
+  /// shared key "quran.juzOrdinals"
+  ///
+  /// In en, this message translates to:
+  /// **'1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30'**
+  String get quranJuzOrdinals;
+
+  /// shared key "quran.juzTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Juz {ordinal}'**
+  String quranJuzTitle(String ordinal);
+
+  /// shared key "quran.listView"
+  ///
+  /// In en, this message translates to:
+  /// **'List view'**
+  String get quranListView;
 
   /// shared key "quran.meccan"
   ///
@@ -1268,6 +1310,18 @@ abstract class AppLocalizations {
   /// **'Previous page'**
   String get quranPrevPage;
 
+  /// shared key "quran.quarterLine"
+  ///
+  /// In en, this message translates to:
+  /// **'{surah} {ayah} · Page {page}'**
+  String quranQuarterLine(String surah, String ayah, String page);
+
+  /// shared key "quran.quarterOfHizb"
+  ///
+  /// In en, this message translates to:
+  /// **'Quarter {q} of hizb {n}'**
+  String quranQuarterOfHizb(String q, String n);
+
   /// shared key "quran.removeBookmark"
   ///
   /// In en, this message translates to:
@@ -1328,17 +1382,41 @@ abstract class AppLocalizations {
   /// **'{surah} : {ayah}'**
   String quranSurahAyah(String surah, String ayah);
 
+  /// shared key "quran.surahLine"
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page} · {count} ayahs · {kind}'**
+  String quranSurahLine(String page, String count, String kind);
+
   /// shared key "quran.surahN"
   ///
   /// In en, this message translates to:
   /// **'Surah {n}'**
   String quranSurahN(String n);
 
+  /// shared key "quran.surahTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'{name}'**
+  String quranSurahTitle(String name);
+
   /// shared key "quran.surahs"
   ///
   /// In en, this message translates to:
   /// **'Surahs'**
   String get quranSurahs;
+
+  /// shared key "quran.tabQuarters"
+  ///
+  /// In en, this message translates to:
+  /// **'Quarters'**
+  String get quranTabQuarters;
+
+  /// shared key "quran.tabSurahs"
+  ///
+  /// In en, this message translates to:
+  /// **'Surahs'**
+  String get quranTabSurahs;
 
   /// shared key "radio.duration"
   ///
@@ -1399,6 +1477,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unlimited'**
   String get radioUnlimited;
+
+  /// shared key "reader.back"
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the index'**
+  String get readerBack;
+
+  /// shared key "reader.basmalaNow"
+  ///
+  /// In en, this message translates to:
+  /// **'Reciting the basmala'**
+  String get readerBasmalaNow;
+
+  /// shared key "reader.bookmarks"
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmarks'**
+  String get readerBookmarks;
+
+  /// shared key "reader.font"
+  ///
+  /// In en, this message translates to:
+  /// **'Text size'**
+  String get readerFont;
+
+  /// shared key "reader.fontSize"
+  ///
+  /// In en, this message translates to:
+  /// **'Text size: {size} — press to enlarge'**
+  String readerFontSize(String size);
+
+  /// shared key "reader.help"
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get readerHelp;
+
+  /// shared key "reader.help1"
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe the page to turn it, or use the page slider.'**
+  String get readerHelp1;
+
+  /// shared key "reader.help2"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap any ayah to listen to it and read its tafsir.'**
+  String get readerHelp2;
+
+  /// shared key "reader.help3"
+  ///
+  /// In en, this message translates to:
+  /// **'“Listen with tafsir” splits the screen in two: the ayah being recited, and its short tafsir below it.'**
+  String get readerHelp3;
+
+  /// shared key "reader.helpTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'How to use'**
+  String get readerHelpTitle;
+
+  /// shared key "reader.index"
+  ///
+  /// In en, this message translates to:
+  /// **'Index'**
+  String get readerIndex;
+
+  /// shared key "reader.khatma"
+  ///
+  /// In en, this message translates to:
+  /// **'Khatma'**
+  String get readerKhatma;
+
+  /// shared key "reader.khatmaContinue"
+  ///
+  /// In en, this message translates to:
+  /// **'Continue from page {page}'**
+  String readerKhatmaContinue(String page);
+
+  /// shared key "reader.khatmaDone"
+  ///
+  /// In en, this message translates to:
+  /// **'Khatma complete. May Allah accept it from you.'**
+  String get readerKhatmaDone;
+
+  /// shared key "reader.khatmaLeft"
+  ///
+  /// In en, this message translates to:
+  /// **'{left} pages left'**
+  String readerKhatmaLeft(String left);
+
+  /// shared key "reader.khatmaNone"
+  ///
+  /// In en, this message translates to:
+  /// **'No khatma yet. Start one and your progress is counted from the last page you read.'**
+  String get readerKhatmaNone;
+
+  /// shared key "reader.khatmaProgress"
+  ///
+  /// In en, this message translates to:
+  /// **'Read {done} of 604 pages ({pct}%)'**
+  String readerKhatmaProgress(String done, String pct);
+
+  /// shared key "reader.khatmaReset"
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the khatma'**
+  String get readerKhatmaReset;
+
+  /// shared key "reader.khatmaSince"
+  ///
+  /// In en, this message translates to:
+  /// **'Started on {date}'**
+  String readerKhatmaSince(String date);
+
+  /// shared key "reader.khatmaStart"
+  ///
+  /// In en, this message translates to:
+  /// **'Start a new khatma from al-Fatihah'**
+  String get readerKhatmaStart;
+
+  /// shared key "reader.khatmaTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Khatma (complete reading)'**
+  String get readerKhatmaTitle;
+
+  /// shared key "reader.listenWithTafsir"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen with tafsir'**
+  String get readerListenWithTafsir;
+
+  /// shared key "reader.playAyah"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to this ayah'**
+  String get readerPlayAyah;
+
+  /// shared key "reader.playWithTafsir"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen with tafsir'**
+  String get readerPlayWithTafsir;
+
+  /// shared key "reader.repeatN"
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat: {n}'**
+  String readerRepeatN(String n);
+
+  /// shared key "reader.search"
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get readerSearch;
+
+  /// shared key "reader.showPage"
+  ///
+  /// In en, this message translates to:
+  /// **'Show the page'**
+  String get readerShowPage;
+
+  /// shared key "reader.splitTafsir"
+  ///
+  /// In en, this message translates to:
+  /// **'Short tafsir'**
+  String get readerSplitTafsir;
+
+  /// shared key "reader.splitTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Now reciting'**
+  String get readerSplitTitle;
+
+  /// shared key "reader.tabAyat"
+  ///
+  /// In en, this message translates to:
+  /// **'Verses'**
+  String get readerTabAyat;
+
+  /// shared key "reader.tabMushaf"
+  ///
+  /// In en, this message translates to:
+  /// **'Mushaf'**
+  String get readerTabMushaf;
+
+  /// shared key "reader.tabTafsir"
+  ///
+  /// In en, this message translates to:
+  /// **'Tafsir'**
+  String get readerTabTafsir;
 
   /// shared key "reels.cat.lesson"
   ///

@@ -629,6 +629,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quranBookmarked => 'Bookmarked';
 
   @override
+  String get quranClearSearch => 'Clear search';
+
+  @override
   String get quranContinueReading => 'Continue reading';
 
   @override
@@ -644,9 +647,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quranGoToPage => 'Go to page';
 
   @override
+  String quranHizbN(String n) {
+    return 'Hizb $n';
+  }
+
+  @override
+  String get quranIndex => 'Quran index';
+
+  @override
+  String get quranIndexSearch => 'Search';
+
+  @override
   String quranJuz(String juz) {
     return 'Juz $juz';
   }
+
+  @override
+  String get quranJuzOrdinals => '1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30';
+
+  @override
+  String quranJuzTitle(String ordinal) {
+    return 'Juz $ordinal';
+  }
+
+  @override
+  String get quranListView => 'List view';
 
   @override
   String get quranMeccan => 'Meccan';
@@ -679,6 +704,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quranPrevPage => 'Previous page';
+
+  @override
+  String quranQuarterLine(String surah, String ayah, String page) {
+    return '$surah $ayah · Page $page';
+  }
+
+  @override
+  String quranQuarterOfHizb(String q, String n) {
+    return 'Quarter $q of hizb $n';
+  }
 
   @override
   String get quranRemoveBookmark => 'Remove bookmark';
@@ -715,12 +750,28 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String quranSurahLine(String page, String count, String kind) {
+    return 'Page $page · $count ayahs · $kind';
+  }
+
+  @override
   String quranSurahN(String n) {
     return 'Surah $n';
   }
 
   @override
+  String quranSurahTitle(String name) {
+    return '$name';
+  }
+
+  @override
   String get quranSurahs => 'Surahs';
+
+  @override
+  String get quranTabQuarters => 'Quarters';
+
+  @override
+  String get quranTabSurahs => 'Surahs';
 
   @override
   String get radioDuration => 'Play for';
@@ -755,6 +806,115 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get radioUnlimited => 'Unlimited';
+
+  @override
+  String get readerBack => 'Back to the index';
+
+  @override
+  String get readerBasmalaNow => 'Reciting the basmala';
+
+  @override
+  String get readerBookmarks => 'Bookmarks';
+
+  @override
+  String get readerFont => 'Text size';
+
+  @override
+  String readerFontSize(String size) {
+    return 'Text size: $size — press to enlarge';
+  }
+
+  @override
+  String get readerHelp => 'Help';
+
+  @override
+  String get readerHelp1 => 'Swipe the page to turn it, or use the page slider.';
+
+  @override
+  String get readerHelp2 => 'Tap any ayah to listen to it and read its tafsir.';
+
+  @override
+  String get readerHelp3 =>
+      '“Listen with tafsir” splits the screen in two: the ayah being recited, and its short tafsir below it.';
+
+  @override
+  String get readerHelpTitle => 'How to use';
+
+  @override
+  String get readerIndex => 'Index';
+
+  @override
+  String get readerKhatma => 'Khatma';
+
+  @override
+  String readerKhatmaContinue(String page) {
+    return 'Continue from page $page';
+  }
+
+  @override
+  String get readerKhatmaDone => 'Khatma complete. May Allah accept it from you.';
+
+  @override
+  String readerKhatmaLeft(String left) {
+    return '$left pages left';
+  }
+
+  @override
+  String get readerKhatmaNone => 'No khatma yet. Start one and your progress is counted from the last page you read.';
+
+  @override
+  String readerKhatmaProgress(String done, String pct) {
+    return 'Read $done of 604 pages ($pct%)';
+  }
+
+  @override
+  String get readerKhatmaReset => 'Cancel the khatma';
+
+  @override
+  String readerKhatmaSince(String date) {
+    return 'Started on $date';
+  }
+
+  @override
+  String get readerKhatmaStart => 'Start a new khatma from al-Fatihah';
+
+  @override
+  String get readerKhatmaTitle => 'Khatma (complete reading)';
+
+  @override
+  String get readerListenWithTafsir => 'Listen with tafsir';
+
+  @override
+  String get readerPlayAyah => 'Listen to this ayah';
+
+  @override
+  String get readerPlayWithTafsir => 'Listen with tafsir';
+
+  @override
+  String readerRepeatN(String n) {
+    return 'Repeat: $n';
+  }
+
+  @override
+  String get readerSearch => 'Search';
+
+  @override
+  String get readerShowPage => 'Show the page';
+
+  @override
+  String get readerSplitTafsir => 'Short tafsir';
+
+  @override
+  String get readerSplitTitle => 'Now reciting';
+
+  @override
+  String get readerTabAyat => 'Verses';
+
+  @override
+  String get readerTabMushaf => 'Mushaf';
+
+  @override
+  String get readerTabTafsir => 'Tafsir';
 
   @override
   String get reelsCatLesson => 'Short lesson';

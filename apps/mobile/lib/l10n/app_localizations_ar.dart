@@ -628,6 +628,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get quranBookmarked => 'تم حفظ العلامة';
 
   @override
+  String get quranClearSearch => 'مسح البحث';
+
+  @override
   String get quranContinueReading => 'متابعة القراءة';
 
   @override
@@ -643,9 +646,32 @@ class AppLocalizationsAr extends AppLocalizations {
   String get quranGoToPage => 'اذهب إلى صفحة';
 
   @override
+  String quranHizbN(String n) {
+    return 'الحزب $n';
+  }
+
+  @override
+  String get quranIndex => 'فهرس السور';
+
+  @override
+  String get quranIndexSearch => 'البحث';
+
+  @override
   String quranJuz(String juz) {
     return 'الجزء $juz';
   }
+
+  @override
+  String get quranJuzOrdinals =>
+      'الأول|الثاني|الثالث|الرابع|الخامس|السادس|السابع|الثامن|التاسع|العاشر|الحادي عشر|الثاني عشر|الثالث عشر|الرابع عشر|الخامس عشر|السادس عشر|السابع عشر|الثامن عشر|التاسع عشر|العشرون|الحادي والعشرون|الثاني والعشرون|الثالث والعشرون|الرابع والعشرون|الخامس والعشرون|السادس والعشرون|السابع والعشرون|الثامن والعشرون|التاسع والعشرون|الثلاثون';
+
+  @override
+  String quranJuzTitle(String ordinal) {
+    return 'الجزء $ordinal';
+  }
+
+  @override
+  String get quranListView => 'عرض كقائمة';
 
   @override
   String get quranMeccan => 'مكية';
@@ -678,6 +704,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get quranPrevPage => 'الصفحة السابقة';
+
+  @override
+  String quranQuarterLine(String surah, String ayah, String page) {
+    return '$surah: $ayah - الصفحة $page';
+  }
+
+  @override
+  String quranQuarterOfHizb(String q, String n) {
+    return 'الربع $q من الحزب $n';
+  }
 
   @override
   String get quranRemoveBookmark => 'حذف العلامة';
@@ -714,12 +750,28 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String quranSurahLine(String page, String count, String kind) {
+    return 'الصفحة $page - آياتها $count - $kind';
+  }
+
+  @override
   String quranSurahN(String n) {
     return 'سورة $n';
   }
 
   @override
+  String quranSurahTitle(String name) {
+    return 'سورة $name';
+  }
+
+  @override
   String get quranSurahs => 'السور';
+
+  @override
+  String get quranTabQuarters => 'الأرباع';
+
+  @override
+  String get quranTabSurahs => 'السور';
 
   @override
   String get radioDuration => 'مدة التشغيل';
@@ -754,6 +806,114 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get radioUnlimited => 'غير محدود';
+
+  @override
+  String get readerBack => 'رجوع إلى الفهرس';
+
+  @override
+  String get readerBasmalaNow => 'تُتلى البسملة الآن';
+
+  @override
+  String get readerBookmarks => 'إشارات مرجعية';
+
+  @override
+  String get readerFont => 'حجم الخط';
+
+  @override
+  String readerFontSize(String size) {
+    return 'حجم الخط: $size — اضغط للتكبير';
+  }
+
+  @override
+  String get readerHelp => 'مساعدة';
+
+  @override
+  String get readerHelp1 => 'اسحب الصفحة يمينًا للتالية ويسارًا للسابقة، أو استخدم شريط الصفحات.';
+
+  @override
+  String get readerHelp2 => 'المس أي آية لتستمع إليها وترى تفسيرها.';
+
+  @override
+  String get readerHelp3 => 'زر «استماع مع التفسير» يقسم الشاشة نصفين: الآية التي تُتلى الآن، وتحتها تفسيرها المختصر.';
+
+  @override
+  String get readerHelpTitle => 'طريقة الاستخدام';
+
+  @override
+  String get readerIndex => 'الفهرس';
+
+  @override
+  String get readerKhatma => 'الختمة';
+
+  @override
+  String readerKhatmaContinue(String page) {
+    return 'تابع من الصفحة $page';
+  }
+
+  @override
+  String get readerKhatmaDone => 'أتممت الختمة، تقبّل الله منك.';
+
+  @override
+  String readerKhatmaLeft(String left) {
+    return 'بقي $left صفحة';
+  }
+
+  @override
+  String get readerKhatmaNone => 'لم تبدأ ختمة بعد. ابدأ ختمة جديدة وسيُحسب تقدمك من آخر صفحة تقرؤها.';
+
+  @override
+  String readerKhatmaProgress(String done, String pct) {
+    return 'قرأت $done من ٦٠٤ صفحة ($pct٪)';
+  }
+
+  @override
+  String get readerKhatmaReset => 'إلغاء الختمة';
+
+  @override
+  String readerKhatmaSince(String date) {
+    return 'بدأت في $date';
+  }
+
+  @override
+  String get readerKhatmaStart => 'ابدأ ختمة جديدة من الفاتحة';
+
+  @override
+  String get readerKhatmaTitle => 'الختمة';
+
+  @override
+  String get readerListenWithTafsir => 'استماع مع التفسير';
+
+  @override
+  String get readerPlayAyah => 'استمع للآية';
+
+  @override
+  String get readerPlayWithTafsir => 'استماع مع التفسير';
+
+  @override
+  String readerRepeatN(String n) {
+    return 'التكرار: $n';
+  }
+
+  @override
+  String get readerSearch => 'البحث';
+
+  @override
+  String get readerShowPage => 'عرض الصفحة';
+
+  @override
+  String get readerSplitTafsir => 'تفسير مختصر';
+
+  @override
+  String get readerSplitTitle => 'الآية التي تُتلى الآن';
+
+  @override
+  String get readerTabAyat => 'الآيات';
+
+  @override
+  String get readerTabMushaf => 'المصحف';
+
+  @override
+  String get readerTabTafsir => 'التفسير';
 
   @override
   String get reelsCatLesson => 'درس ديني مختصر';

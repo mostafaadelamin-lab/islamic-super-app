@@ -1,3 +1,4 @@
+import { renderQuranText } from "@/lib/quran-render";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { readRepoJson } from "../repo";
@@ -166,26 +167,46 @@ describe("tafsir with recitation", () => {
     expect(screen.queryByTestId("tafsir")).toBeNull();
   });
 
-  it("on: follows the recited ayah (none for the basmala); a selection takes precedence; can be turned off", async () => {
+  it("on: the screen splits in two (recited ayah | its tafsir) and follows the recitation; 'Show the page' turns it off", async () => {
     serveTafsir();
     audioStore.set((p) => ({ ...p, tafsir: true }));
     render(<PageReader locale="en" initial={resolvePage(lines.pages[1]!, lookup)} />);
+    expect(screen.queryByTestId("split-view")).toBeNull(); // nothing is playing yet
     act(() => player.play({ kind: "page", page: 2 }));
-    expect(screen.queryByTestId("recitation-tafsir")).toBeNull(); // the basmala has no tafsir entry
+    expect(screen.getByTestId("split-view")).toBeInTheDocument();
+    expect(screen.getByTestId("mushaf-stage")).not.toBeVisible();
+    expect(screen.getByTestId("split-ayah")).toHaveTextContent("Reciting the basmala");
+    expect(screen.queryByTestId("tafsir")).toBeNull(); // the basmala has no tafsir entry
     end();
-    const sheet = await screen.findByTestId("recitation-tafsir");
-    expect(sheet).toHaveAccessibleName("Tafsir of the ayah being recited");
+    const half = screen.getByTestId("recitation-tafsir");
+    expect(half).toHaveAccessibleName("Short tafsir");
     expect((await screen.findByText(entry(2, 1))).dataset.testid).toBe("tafsir-text");
+    expect(screen.getByTestId("split-ayah")).toHaveAttribute("data-ayah", "2:1");
+    expect((await screen.findByTestId("split-ayah-text")).textContent).toContain(renderQuranText(lookup(2, 1)));
     expect(screen.queryByTestId("tafsir-next")).toBeNull(); // the player has its own next/previous
     end();
     expect((await screen.findByText(entry(2, 2))).dataset.testid).toBe("tafsir-text");
     expect(screen.getByTestId("tafsir")).toHaveAttribute("data-ayah", "2:2");
-    await userEvent.click(screen.getByRole("button", { name: "Al-Baqarah, ayah 4 — ayah options" }));
-    expect(screen.queryByTestId("recitation-tafsir")).toBeNull();
-    expect(screen.getByTestId("tafsir")).toHaveAttribute("data-ayah", "2:4");
-    await userEvent.click(screen.getByTestId("act-close"));
-    expect(screen.getByTestId("recitation-tafsir")).toBeInTheDocument();
-    act(() => audioStore.set((p) => ({ ...p, tafsir: false })));
-    expect(screen.queryByTestId("recitation-tafsir")).toBeNull();
+    expect(screen.getByTestId("split-ayah")).toHaveAttribute("data-ayah", "2:2");
+    await userEvent.click(screen.getByTestId("split-show-page"));
+    expect(audioStore.get().tafsir).toBe(false);
+    expect(screen.queryByTestId("split-view")).toBeNull();
+    expect(screen.getByTestId("mushaf-stage")).toBeVisible();
   });
+
+  it("tapping an ayah: listen to it alone, or 'Listen with tafsir' from it (splits the screen)", async () => {
+    serveTafsir();
+    render(<PageReader locale="en" initial={resolvePage(lines.pages[2]!, lookup)} />);
+    await userEvent.click(screen.getByRole("button", { name: "Al-Baqarah, ayah 7 — ayah options" }));
+    expect(await screen.findByText(entry(2, 7))).toBeInTheDocument(); // its tafsir is in the sheet
+    await userEvent.click(screen.getByTestId("act-play-ayah"));
+    expect(player.get().queue).toEqual([{ kind: "ayah", s: 2, a: 7 }]);
+    await userEvent.click(screen.getByTestId("act-play-tafsir"));
+    expect(audioStore.get().tafsir).toBe(true);
+    expect(player.current()).toEqual({ kind: "ayah", s: 2, a: 7 });
+    expect(screen.queryByTestId("ayah-sheet")).toBeNull();
+    expect(screen.getByTestId("split-ayah")).toHaveAttribute("data-ayah", "2:7");
+    expect((await screen.findByText(entry(2, 7))).dataset.testid).toBe("tafsir-text");
+  });
+
 });

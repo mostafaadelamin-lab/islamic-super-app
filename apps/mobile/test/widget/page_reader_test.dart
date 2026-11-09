@@ -78,14 +78,21 @@ void main() {
     expect(find.text('Page 11'), findsOneWidget);
   });
 
-  testWidgets('go to page: valid numbers in Latin and Arabic-Indic digits', (tester) async {
+  Future<void> openHelp(WidgetTester tester) async {
+    await tester.tap(find.byKey(const Key('readerHelp')));
+    await tester.pumpAndSettle();
+  }
+
+  testWidgets('go to page (help sheet): valid numbers in Latin and Arabic-Indic digits', (tester) async {
     await openPage(tester, 1);
+    await openHelp(tester);
     await tester.enterText(find.byKey(const Key('goToPageField')), '604');
     await tester.tap(find.byKey(const Key('goToPageButton')));
     await tester.pumpAndSettle();
     expect(page(tester), 604);
     await scrollTo(tester, 604, const Key('pageAyah-114-6'));
     expect(find.byKey(const Key('pageAyah-114-6')), findsOneWidget);
+    await openHelp(tester);
     await tester.enterText(find.byKey(const Key('goToPageField')), '٥٠');
     await tester.testTextInput.receiveAction(TextInputAction.go);
     await tester.pumpAndSettle();
@@ -97,6 +104,7 @@ void main() {
   for (final bad in ['0', '605', 'abc', '', '-1', '2.5']) {
     testWidgets('go to page rejects "$bad" with a validation message', (tester) async {
       await openPage(tester, 7);
+      await openHelp(tester);
       await tester.enterText(find.byKey(const Key('goToPageField')), bad);
       await tester.tap(find.byKey(const Key('goToPageButton')));
       await tester.pumpAndSettle();
@@ -118,6 +126,7 @@ void main() {
     expect(find.text('Bookmarked'), findsOneWidget);
     await pushScreen(tester, const PageReaderScreen(initialPage: 1));
     expect(find.text('Bookmarked'), findsNothing);
+    await openHelp(tester);
     await tester.enterText(find.byKey(const Key('goToPageField')), '50');
     await tester.tap(find.byKey(const Key('goToPageButton')), warnIfMissed: true);
     await tester.pumpAndSettle();

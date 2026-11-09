@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../domain/khatma.dart';
 import '../domain/prayer_schedule.dart';
 import '../domain/quran.dart';
 
@@ -142,6 +143,35 @@ class SettingsController extends ChangeNotifier {
   bool get tafsirWithRecitation => _prefs.getBool('audio.tafsir') ?? false;
   Future<void> setTafsirWithRecitation(bool on) async {
     await _prefs.setBool('audio.tafsir', on);
+    notifyListeners();
+  }
+
+  // --- Khatma (see domain/khatma.dart) ----------------------------------------------
+  /// The current khatma, or null when none was started.
+  Khatma? get khatma {
+    final at = _prefs.getInt('khatma.startedAt');
+    if (at == null) return null;
+    return Khatma.decode(at, _prefs.getStringList('khatma.read') ?? const []);
+  }
+
+  Future<void> startKhatma(DateTime now) async {
+    await _prefs.setInt('khatma.startedAt', now.millisecondsSinceEpoch);
+    await _prefs.setStringList('khatma.read', const []);
+    notifyListeners();
+  }
+
+  Future<void> markKhatmaPage(int page) async {
+    final k = khatma;
+    if (k == null) return;
+    final next = k.markRead(page);
+    if (identical(next, k)) return;
+    await _prefs.setStringList('khatma.read', next.encoded);
+    notifyListeners();
+  }
+
+  Future<void> clearKhatma() async {
+    await _prefs.remove('khatma.startedAt');
+    await _prefs.remove('khatma.read');
     notifyListeners();
   }
 
