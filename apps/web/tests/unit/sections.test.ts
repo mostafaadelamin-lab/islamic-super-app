@@ -10,7 +10,22 @@ import {
   sessionItems,
   sessionSummary,
 } from "@/lib/adhkar";
-import { DEFAULT_TASBIH, reset, sanitizeTasbih, setTarget, tap, tasbihStore, undo } from "@/lib/tasbih";
+import {
+  addCustom,
+  clearHistory,
+  current,
+  DEFAULT_TASBIH,
+  historyRows,
+  MAX_CUSTOM_TEXT,
+  NEW_COUNTER,
+  removeCustom,
+  reset,
+  sanitizeTasbih,
+  setTarget,
+  tap,
+  tasbihStore,
+  undo,
+} from "@/lib/tasbih";
 import { angleDiff, headingFromEvent, isFacing, needleRotation, needsPermission, norm360 } from "@/lib/qibla";
 import { qiblaBearing } from "@/lib/prayer";
 import { addRound, isRoundTool, NO_ROUNDS, sanitizeRounds } from "@/lib/rounds";
@@ -92,37 +107,104 @@ describe("adhkar sessions", () => {
 });
 
 describe("tasbih", () => {
+  const D1 = "2026-11-09";
+  const D2 = "2026-11-10";
   beforeEach(() => {
     localStorage.clear();
     tasbihStore.reload();
   });
   it("counts to the target, completes a round and starts again", () => {
-    let s = { ...DEFAULT_TASBIH, target: 3 };
-    s = tap(s).next;
-    s = tap(s).next;
-    expect(s.count).toBe(2);
-    const r = tap(s);
+    let s = setTarget(DEFAULT_TASBIH, 3);
+    s = tap(s, D1).next;
+    s = tap(s, D1).next;
+    expect(current(s).count).toBe(2);
+    const r = tap(s, D1);
     expect(r.completed).toBe(true);
-    expect(r.next).toMatchObject({ count: 0, rounds: 1 });
+    expect(current(r.next)).toMatchObject({ count: 0, rounds: 1, target: 3 });
+    expect(r.next.history).toEqual({ [D1]: { tasbih: 3 } });
+  });
+  it("keeps a separate counter per dhikr", () => {
+    let s = tap(DEFAULT_TASBIH, D1).next;
+    s = { ...s, phrase: "takbir" };
+    expect(current(s)).toEqual(NEW_COUNTER);
+    s = tap(setTarget(s, 100), D2).next;
+    expect(s.counters).toEqual({
+      tasbih: { count: 1, target: 33, rounds: 0 },
+      takbir: { count: 1, target: 100, rounds: 0 },
+    });
+    expect(historyRows(s)).toEqual([
+      { day: D2, phrase: "takbir", count: 1 },
+      { day: D1, phrase: "tasbih", count: 1 },
+    ]);
   });
   it("undo, reset and target change", () => {
-    const s = { ...DEFAULT_TASBIH, count: 5, rounds: 2 };
-    expect(undo(s).count).toBe(4);
-    expect(undo({ ...s, count: 0 }).count).toBe(0);
-    expect(reset(s)).toMatchObject({ count: 0, rounds: 0 });
-    expect(setTarget(s, 100)).toMatchObject({ target: 100, count: 0, rounds: 2 });
+    let s = tap(tap(DEFAULT_TASBIH, D1).next, D1).next;
+    s = undo(s, D1);
+    expect(current(s).count).toBe(1);
+    expect(s.history[D1]).toEqual({ tasbih: 1 });
+    s = undo(s, D1);
+    expect(undo(s, D1)).toBe(s);
+    expect(s.history).toEqual({});
+    s = { ...s, counters: { tasbih: { count: 5, target: 33, rounds: 2 } } };
+    expect(current(reset(s))).toMatchObject({ count: 0, rounds: 0 });
+    expect(current(setTarget(s, 100))).toEqual({ target: 100, count: 0, rounds: 2 });
   });
-  it("sanitizes and persists", () => {
-    expect(sanitizeTasbih({ count: 50, target: 33, rounds: -1, phrase: "x" })).toEqual({
-      count: 33,
-      target: 33,
-      rounds: 0,
-      phrase: "tasbih",
+  it("adds and removes the user's own adhkar", () => {
+    let s = addCustom(DEFAULT_TASBIH, "  اللهم صل على محمد  ");
+    expect(s.custom).toEqual([{ id: "c1", text: "اللهم صل على محمد" }]);
+    expect(s.phrase).toBe("c1");
+    s = tap(s, D1).next;
+    expect(addCustom(s, "   ")).toBe(s);
+    s = addCustom(s, "x".repeat(200));
+    expect(s.custom[1]).toEqual({ id: "c2", text: "x".repeat(MAX_CUSTOM_TEXT) });
+    s = removeCustom({ ...s, phrase: "c1" }, "c1");
+    expect(s.phrase).toBe("tasbih");
+    expect(s.custom.map((c) => c.id)).toEqual(["c2"]);
+    expect(s.counters.c1).toBeUndefined();
+    expect(s.history).toEqual({});
+  });
+  it("keeps 60 days of history and can clear it", () => {
+    let s = tap(DEFAULT_TASBIH, "2026-01-01").next;
+    s = tap(s, "2026-03-15").next;
+    expect(Object.keys(s.history)).toEqual(["2026-03-15"]);
+    expect(clearHistory(s).history).toEqual({});
+  });
+  it("sanitizes, migrates the old single counter and persists", () => {
+    expect(sanitizeTasbih({ count: 50, target: 33, rounds: -1, phrase: "takbir" })).toMatchObject({
+      phrase: "takbir",
+      counters: { takbir: { count: 0, target: 33, rounds: 0 } },
     });
-    expect(sanitizeTasbih({ target: 0 })).toMatchObject({ target: 33 });
-    tasbihStore.set((p) => tap(p).next);
+    expect(sanitizeTasbih({ count: 5, target: 99, rounds: 2 }).counters).toEqual({
+      tasbih: { count: 5, target: 99, rounds: 2 },
+    });
+    const x = sanitizeTasbih({
+      phrase: "c9",
+      custom: [
+        { id: "c9", text: "ذكر" },
+        { id: "bad", text: "y" },
+        { id: "c3", text: " " },
+      ],
+      counters: { c9: { count: 1, target: 0 }, nope: { count: 1 } },
+      mode: "beads",
+      color: "plum",
+      sound: true,
+      vibrate: false,
+      history: { "2026-11-09": { c9: 4, tasbih: -1, zz: 2 }, junk: { c9: 1 } },
+    });
+    expect(x).toEqual({
+      phrase: "c9",
+      custom: [{ id: "c9", text: "ذكر" }],
+      counters: { c9: { count: 1, target: 33, rounds: 0 } },
+      mode: "beads",
+      color: "plum",
+      sound: true,
+      vibrate: false,
+      history: { "2026-11-09": { c9: 4 } },
+    });
+    expect(sanitizeTasbih({ mode: "x", color: "neon" })).toMatchObject({ mode: "button", color: "emerald" });
+    tasbihStore.set((p) => tap(p, D1).next);
     tasbihStore.reload();
-    expect(tasbihStore.get().count).toBe(1);
+    expect(current(tasbihStore.get()).count).toBe(1);
   });
 });
 

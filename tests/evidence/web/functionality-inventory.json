@@ -67,7 +67,7 @@
   "tag": "a",
   "type": null,
   "name": "تقويم الصلاة",
-  "href": "/ar/prayer/"
+  "href": "/ar/prayer/#month"
  },
  {
   "page": "/ar/",
@@ -4357,7 +4357,28 @@
   "page": "/ar/prayer/",
   "tag": "select",
   "type": null,
+  "name": "صيغة الوقت",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "select",
+  "type": null,
   "name": "مذهب العصر",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "اليوم السابق",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "اليوم التالي",
   "href": null
  },
  {
@@ -4505,6 +4526,41 @@
   "tag": "button",
   "type": "button",
   "name": "إعادة ضبط التعديلات",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "ميلادي",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "هجري",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "طباعة / حفظ PDF",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "الشهر السابق",
+  "href": null
+ },
+ {
+  "page": "/ar/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "الشهر التالي",
   "href": null
  },
  {
@@ -5094,6 +5150,13 @@
   "type": null,
   "name": "السورفهرس السور الـ١١٤",
   "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/more/",
+  "tag": "a",
+  "type": null,
+  "name": "ختمة القرآنخطة يومية لختم المصحف",
+  "href": "/ar/khatma/"
  },
  {
   "page": "/ar/more/",
@@ -8124,7 +8187,7 @@
   "tag": "a",
   "type": null,
   "name": "Prayer calendar",
-  "href": "/en/prayer/"
+  "href": "/en/prayer/#month"
  },
  {
   "page": "/en/",
@@ -12428,7 +12491,28 @@
   "page": "/en/prayer/",
   "tag": "select",
   "type": null,
+  "name": "Time format",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "select",
+  "type": null,
   "name": "Asr method",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Previous day",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Next day",
   "href": null
  },
  {
@@ -12576,6 +12660,41 @@
   "tag": "button",
   "type": "button",
   "name": "Reset adjustments",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Gregorian",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Hijri",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Print / save as PDF",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Previous month",
+  "href": null
+ },
+ {
+  "page": "/en/prayer/",
+  "tag": "button",
+  "type": "button",
+  "name": "Next month",
   "href": null
  },
  {
@@ -13165,6 +13284,13 @@
   "type": null,
   "name": "SurahsIndex of the 114 surahs",
   "href": "/en/quran/"
+ },
+ {
+  "page": "/en/more/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran khatmaA daily plan to complete the Mushaf",
+  "href": "/en/khatma/"
  },
  {
   "page": "/en/more/",

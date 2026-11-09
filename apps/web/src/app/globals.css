@@ -1595,7 +1595,7 @@ body:has(.player) {
 }
 .ring-fg {
   fill: none;
-  stroke: var(--color-accent);
+  stroke: var(--tasbih-color, var(--color-accent));
   stroke-width: 10;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.2s;
@@ -1619,6 +1619,49 @@ body:has(.player) {
 }
 .tasbih-rounds {
   font-weight: 600;
+  margin-bottom: 0;
+}
+.tasbih .segmented {
+  margin-bottom: var(--space-md);
+}
+.strand-bead {
+  fill: var(--color-surface);
+  stroke: var(--tasbih-color, var(--color-accent));
+  stroke-width: 2;
+  transition: r 0.15s;
+}
+.strand-bead.done {
+  fill: var(--tasbih-color, var(--color-accent));
+}
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+}
+.swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid var(--color-surface);
+  box-shadow: 0 0 0 1px var(--color-line);
+  cursor: pointer;
+}
+.swatch[aria-pressed="true"] {
+  box-shadow: 0 0 0 3px var(--color-ink);
+}
+.tasbih-section {
+  width: 100%;
+  text-align: start;
+  margin-top: var(--space-lg);
+}
+.tasbih-section h2 {
+  margin-top: 0;
+  font-size: var(--font-size-lg);
+}
+.tasbih-section form input {
+  flex: 1;
+  min-width: 0;
 }
 .tasbih-actions {
   justify-content: center;

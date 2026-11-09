@@ -385,7 +385,7 @@ test.describe("home", () => {
     await expect(page.getByTestId("home-hijri")).toHaveText(/\d{4} AH/);
     await expect(page.getByTestId("home-gregorian")).toHaveText(/\d{4}/);
     await page.getByRole("link", { name: "Prayer calendar" }).click();
-    await expect(page).toHaveURL("/en/prayer/");
+    await expect(page).toHaveURL("/en/prayer/#month");
     await page.getByLabel("City").selectOption({ label: "Cairo" });
     await page.goto("/en/");
     await expect(page.getByTestId("home-place")).toHaveText("Cairo");
@@ -412,7 +412,7 @@ test.describe("navigation", () => {
     await expect(page).toHaveURL("/ar/adhkar/");
     await nav.getByRole("link", { name: "المزيد" }).click();
     await expect(page).toHaveURL("/ar/more/");
-    await expect(page.getByTestId("section-tiles").getByRole("link")).toHaveCount(14); // 12 + reels + stories
+    await expect(page.getByTestId("section-tiles").getByRole("link")).toHaveCount(15); // 12 + reels + stories + khatma
     await page.setViewportSize({ width: 1280, height: 900 });
     const top = (await nav.boundingBox())!;
     expect(top.y).toBeLessThan(80);
@@ -425,7 +425,7 @@ test.describe("navigation", () => {
         .getByTestId("section-tiles")
         .getByRole("link")
         .evaluateAll((as) => as.map((a) => a.getAttribute("href")!));
-      expect(hrefs).toHaveLength(14); // 12 + reels + stories
+      expect(hrefs).toHaveLength(15); // 12 + reels + stories + khatma
       for (const h of hrefs) expect((await request.get(h)).status(), h).toBe(200);
     }
   });
