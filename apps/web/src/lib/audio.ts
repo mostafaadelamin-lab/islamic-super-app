@@ -72,6 +72,8 @@ export type PlayScope =
   | { kind: "page"; page: number }
   | { kind: "surah"; surah: number }
   | { kind: "from"; surah: number; ayah: number }
+  /** One ayah only (tapped in the Mushaf); no basmala before it. */
+  | { kind: "ayah"; surah: number; ayah: number }
   /** Verse ranges [surah, from, to] played in order (audio Quranic stories). */
   | { kind: "ranges"; ranges: readonly (readonly [number, number, number])[] };
 
@@ -92,6 +94,8 @@ export function buildQueue(scope: PlayScope): QueueItem[] {
   if (scope.kind === "page") return withBasmala(ayahsOnPage(scope.page));
   if (scope.kind === "surah") return withBasmala(surahRefs(scope.surah, 1));
   if (scope.kind === "ranges") return withBasmala(rangeRefs(scope.ranges));
+  if (scope.kind === "ayah")
+    return isValidAyah(scope.surah, scope.ayah) ? [{ kind: "ayah", s: scope.surah, a: scope.ayah }] : [];
   if (!isValidAyah(scope.surah, scope.ayah)) return [];
   return withBasmala(surahRefs(scope.surah, scope.ayah));
 }

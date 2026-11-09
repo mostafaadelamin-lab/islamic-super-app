@@ -191,6 +191,7 @@ describe("PageReader (15-line Mushaf)", () => {
     fireEvent.keyDown(window, { key: "ArrowRight" });
     expect(routerPush).toHaveBeenLastCalledWith("/ar/page/1/");
     routerPush.mockClear();
+    await userEvent.click(screen.getByTestId("reader-help")); // go-to-page lives in the help sheet
     fireEvent.keyDown(screen.getByRole("textbox"), { key: "ArrowLeft" });
     fireEvent.keyDown(window, { key: "ArrowLeft", ctrlKey: true });
     fireEvent.keyDown(window, { key: "Enter" });
@@ -207,11 +208,15 @@ describe("PageReader (15-line Mushaf)", () => {
     expect(arrowTarget("ArrowRight", 1, "rtl")).toBeNull();
     expect(arrowTarget("ArrowUp", 5, "rtl")).toBeNull();
   });
-  it("first page: centred, previous disabled, list-view link", () => {
+  it("first page: centred, previous disabled, list-view link", async () => {
     render(<PageReader locale="en" initial={initial(1)} />);
     expect(screen.getByTestId("mushaf-page")).toHaveClass("centred");
     expect(screen.getByTestId("prev-page")).toBeDisabled();
     expect(screen.getByTestId("next-page")).toBeEnabled();
+    expect(screen.getByTestId("bar-index")).toHaveAttribute("href", "/en/quran/?page=1");
+    expect(screen.getByTestId("bar-bookmarks")).toHaveAttribute("href", "/en/bookmarks/");
+    expect(screen.getByTestId("bar-search")).toHaveAttribute("href", "/en/search/");
+    await userEvent.click(screen.getByTestId("reader-help"));
     expect(screen.getByRole("link", { name: /Al-Fatihah, ayah 1/ })).toHaveAttribute(
       "href",
       "/en/surah/1/#a-1",

@@ -673,6 +673,114 @@ class AppLocalizationsAr extends AppLocalizations {
   String get quranSurahs => 'السور';
 
   @override
+  String get readerBack => 'رجوع إلى الفهرس';
+
+  @override
+  String get readerBasmalaNow => 'تُتلى البسملة الآن';
+
+  @override
+  String get readerBookmarks => 'إشارات مرجعية';
+
+  @override
+  String get readerFont => 'حجم الخط';
+
+  @override
+  String readerFontSize(String size) {
+    return 'حجم الخط: $size — اضغط للتكبير';
+  }
+
+  @override
+  String get readerHelp => 'مساعدة';
+
+  @override
+  String get readerHelp1 => 'اسحب الصفحة يمينًا للتالية ويسارًا للسابقة، أو استخدم شريط الصفحات.';
+
+  @override
+  String get readerHelp2 => 'المس أي آية لتستمع إليها وترى تفسيرها.';
+
+  @override
+  String get readerHelp3 => 'زر «استماع مع التفسير» يقسم الشاشة نصفين: الآية التي تُتلى الآن، وتحتها تفسيرها المختصر.';
+
+  @override
+  String get readerHelpTitle => 'طريقة الاستخدام';
+
+  @override
+  String get readerIndex => 'الفهرس';
+
+  @override
+  String get readerKhatma => 'الختمة';
+
+  @override
+  String readerKhatmaContinue(String page) {
+    return 'تابع من الصفحة $page';
+  }
+
+  @override
+  String get readerKhatmaDone => 'أتممت الختمة، تقبّل الله منك.';
+
+  @override
+  String readerKhatmaLeft(String left) {
+    return 'بقي $left صفحة';
+  }
+
+  @override
+  String get readerKhatmaNone => 'لم تبدأ ختمة بعد. ابدأ ختمة جديدة وسيُحسب تقدمك من آخر صفحة تقرؤها.';
+
+  @override
+  String readerKhatmaProgress(String done, String pct) {
+    return 'قرأت $done من ٦٠٤ صفحة ($pct٪)';
+  }
+
+  @override
+  String get readerKhatmaReset => 'إلغاء الختمة';
+
+  @override
+  String readerKhatmaSince(String date) {
+    return 'بدأت في $date';
+  }
+
+  @override
+  String get readerKhatmaStart => 'ابدأ ختمة جديدة من الفاتحة';
+
+  @override
+  String get readerKhatmaTitle => 'الختمة';
+
+  @override
+  String get readerListenWithTafsir => 'استماع مع التفسير';
+
+  @override
+  String get readerPlayAyah => 'استمع للآية';
+
+  @override
+  String get readerPlayWithTafsir => 'استماع مع التفسير';
+
+  @override
+  String readerRepeatN(String n) {
+    return 'التكرار: $n';
+  }
+
+  @override
+  String get readerSearch => 'البحث';
+
+  @override
+  String get readerShowPage => 'عرض الصفحة';
+
+  @override
+  String get readerSplitTafsir => 'تفسير مختصر';
+
+  @override
+  String get readerSplitTitle => 'الآية التي تُتلى الآن';
+
+  @override
+  String get readerTabAyat => 'الآيات';
+
+  @override
+  String get readerTabMushaf => 'المصحف';
+
+  @override
+  String get readerTabTafsir => 'التفسير';
+
+  @override
   String get reelsCatLesson => 'درس ديني مختصر';
 
   @override

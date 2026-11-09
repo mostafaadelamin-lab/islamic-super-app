@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useSyncExternalStore } from "react";
+import { usePathname } from "next/navigation";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import { surahName } from "@/lib/pages";
@@ -15,7 +16,9 @@ export function PlayerBar({ locale }: { locale: Locale }) {
   const ps = useSyncExternalStore(player.subscribe, player.get, player.getServer);
   const prefs = useStore(audioStore);
   const barRef = useRef<HTMLElement>(null);
-  const shown = ps.status !== "idle";
+  // The Mushaf reader (/<locale>/page/<n>/) has its own floating player.
+  const inReader = (usePathname() ?? "").split("/").includes("page");
+  const shown = ps.status !== "idle" && !inReader;
   // Docked sheets and the page's bottom padding sit above the player: publish its real height (it wraps on
   // narrow phones) as --player-h.
   useEffect(() => {

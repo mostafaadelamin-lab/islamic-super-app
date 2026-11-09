@@ -213,7 +213,8 @@ void main() {
     );
     await tester.tap(find.byKey(const Key('audioStop')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('miniPlayer')), findsNothing);
+    expect(app.services.recitation.isActive, isFalse);
+    expect(find.byKey(const Key('playPage')), findsOneWidget, reason: 'the card stays, ready to play the page');
   });
 
   testWidgets('offline: the mini player says so and offers a retry', (tester) async {
@@ -229,17 +230,20 @@ void main() {
     expect(audio.loaded.last, endsWith('/001001.mp3'));
   });
 
-  testWidgets('recitation settings sheet: reciter and repeat are saved', (tester) async {
+  testWidgets('player card: reciter and repeat are saved', (tester) async {
     final app = await open(tester, 1, locale: 'en');
-    await tester.tap(find.byKey(const Key('recitationSettings')));
+    // repeat: each tap moves to the next count (1 → 2 → 3)
+    await tester.tap(find.byKey(const Key('audioRepeat')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const Key('repeat-3')));
+    await tester.tap(find.byKey(const Key('audioRepeat')));
     await tester.pumpAndSettle();
     expect(app.prefs.getInt('audio.repeat'), 3);
-    await tester.tap(find.byKey(const Key('reciterDropdown')));
+    // reciter: the name on the player card opens the list
+    await tester.tap(find.byKey(const Key('reciterButton')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Maher Al-Muaiqly').last);
+    await tester.tap(find.byKey(const Key('reciter-MaherAlMuaiqly128kbps')));
     await tester.pumpAndSettle();
+    expect(find.text('Maher Al-Muaiqly'), findsOneWidget, reason: 'shown on the player card');
     expect(app.prefs.getString('audio.reciter'), 'MaherAlMuaiqly128kbps');
     expect(app.services.recitation.reciter.nameEn, 'Maher Al-Muaiqly');
   });
