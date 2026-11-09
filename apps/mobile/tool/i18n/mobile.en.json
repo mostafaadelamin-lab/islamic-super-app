@@ -1,6 +1,7 @@
 {
   "_doc": "Mobile-only UI strings that are not (yet) in packages/shared-schemas/i18n. Keys must be identical in mobile.ar.json and mobile.en.json and must not collide with shared keys. tool/gen_arb.dart merges both sources into lib/l10n/*.arb.",
   "quran.filter": "Filter surahs",
+  "quran.listView": "List view",
   "quran.filterHint": "Name or number",
   "quran.ayahN": "Ayah {n}",
   "quran.pageNumberHint": "1–604",

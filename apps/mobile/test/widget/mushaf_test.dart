@@ -258,7 +258,9 @@ void main() {
   testWidgets('surah list and search open the right Mushaf page', (tester) async {
     final app = await pumpApp(tester, size: tallPhone);
     await goToTab(tester, 1);
-    await tester.tap(find.byKey(const Key('surahMushaf-18')));
+    await tester.enterText(find.byKey(const Key('surahFilter')), '18');
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('surah-18')));
     await tester.pumpAndSettle();
     expect(reader(tester).page, app.services.content.quran.pageOf(const AyahRef(18, 1)));
     expect(reader(tester).page, 293);

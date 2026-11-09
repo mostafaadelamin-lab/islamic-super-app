@@ -7,7 +7,7 @@ test.describe("navigation & language", () => {
     await page.goto("/en/");
     const nav = page.getByRole("navigation", { name: "Main navigation" });
     for (const [name, url, h1] of [
-      ["Quran", "/en/quran/", "Surahs"],
+      ["Quran", "/en/quran/", "Quran index"],
       ["Prayer", "/en/prayer/", "Prayer times"],
       ["Adhkar", "/en/adhkar/", "Morning & evening adhkar"],
       ["More", "/en/more/", "All sections"],
@@ -367,4 +367,24 @@ test("about page: free-forever statement and sources", async ({ page }) => {
     page.getByRole("link", { name: "Amiri Quran — OFL" }).click(),
   ]);
   expect(lic.status()).toBe(200);
+});
+
+test("Quran index: surahs and quarters tabs, search, opens the Mushaf page", async ({ page }) => {
+  const w = watchErrors(page);
+  await page.goto("/ar/quran/");
+  await expect(page.locator("h1")).toHaveText("فهرس السور");
+  await expect(page.getByRole("tab", { name: "السور" })).toHaveAttribute("aria-selected", "true");
+  await expect(page.getByTestId("surah-list").getByRole("heading", { name: "الجزء الأول" })).toBeVisible();
+  await page.getByRole("tab", { name: "الأرباع" }).click();
+  await expect(page.getByTestId("quarter-list").locator("li")).toHaveCount(240);
+  await page.getByTestId("qidx-search").fill("الكهف");
+  const first = page.getByTestId("quarter-open").first();
+  await expect(first).toContainText("سورة الكهف");
+  await page.getByRole("button", { name: "مسح البحث" }).click();
+  await page.getByTestId("quarter-open").nth(1).click();
+  await expect(page).toHaveURL(/\/ar\/page\/5\/$/);
+  // From the reader with ?page=N the matching surah is highlighted.
+  await page.goto("/ar/quran/?page=300");
+  await expect(page.locator(".qidx-item.current")).toContainText("سورة الكهف");
+  w.assertClean();
 });

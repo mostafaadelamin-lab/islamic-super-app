@@ -81,7 +81,7 @@ void main() {
   testWidgets('bookmark added in the reader appears in the list', (tester) async {
     await pumpApp(tester);
     await goToTab(tester, 1);
-    await tester.tap(find.byKey(const Key('surah-1')));
+    await tester.tap(find.byKey(const Key('surahText-1')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('bookmark-1-5')));
     await tester.pumpAndSettle();

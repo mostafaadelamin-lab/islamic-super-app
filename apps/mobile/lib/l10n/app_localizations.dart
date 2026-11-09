@@ -1082,6 +1082,12 @@ abstract class AppLocalizations {
   /// **'Bookmarked'**
   String get quranBookmarked;
 
+  /// shared key "quran.clearSearch"
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get quranClearSearch;
+
   /// shared key "quran.continueReading"
   ///
   /// In en, this message translates to:
@@ -1112,11 +1118,47 @@ abstract class AppLocalizations {
   /// **'Go to page'**
   String get quranGoToPage;
 
+  /// shared key "quran.hizbN"
+  ///
+  /// In en, this message translates to:
+  /// **'Hizb {n}'**
+  String quranHizbN(String n);
+
+  /// shared key "quran.index"
+  ///
+  /// In en, this message translates to:
+  /// **'Quran index'**
+  String get quranIndex;
+
+  /// shared key "quran.indexSearch"
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get quranIndexSearch;
+
   /// shared key "quran.juz"
   ///
   /// In en, this message translates to:
   /// **'Juz {juz}'**
   String quranJuz(String juz);
+
+  /// shared key "quran.juzOrdinals"
+  ///
+  /// In en, this message translates to:
+  /// **'1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30'**
+  String get quranJuzOrdinals;
+
+  /// shared key "quran.juzTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Juz {ordinal}'**
+  String quranJuzTitle(String ordinal);
+
+  /// shared key "quran.listView"
+  ///
+  /// In en, this message translates to:
+  /// **'List view'**
+  String get quranListView;
 
   /// shared key "quran.meccan"
   ///
@@ -1178,6 +1220,18 @@ abstract class AppLocalizations {
   /// **'Previous page'**
   String get quranPrevPage;
 
+  /// shared key "quran.quarterLine"
+  ///
+  /// In en, this message translates to:
+  /// **'{surah} {ayah} · Page {page}'**
+  String quranQuarterLine(String surah, String ayah, String page);
+
+  /// shared key "quran.quarterOfHizb"
+  ///
+  /// In en, this message translates to:
+  /// **'Quarter {q} of hizb {n}'**
+  String quranQuarterOfHizb(String q, String n);
+
   /// shared key "quran.removeBookmark"
   ///
   /// In en, this message translates to:
@@ -1238,17 +1292,41 @@ abstract class AppLocalizations {
   /// **'{surah} : {ayah}'**
   String quranSurahAyah(String surah, String ayah);
 
+  /// shared key "quran.surahLine"
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page} · {count} ayahs · {kind}'**
+  String quranSurahLine(String page, String count, String kind);
+
   /// shared key "quran.surahN"
   ///
   /// In en, this message translates to:
   /// **'Surah {n}'**
   String quranSurahN(String n);
 
+  /// shared key "quran.surahTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'{name}'**
+  String quranSurahTitle(String name);
+
   /// shared key "quran.surahs"
   ///
   /// In en, this message translates to:
   /// **'Surahs'**
   String get quranSurahs;
+
+  /// shared key "quran.tabQuarters"
+  ///
+  /// In en, this message translates to:
+  /// **'Quarters'**
+  String get quranTabQuarters;
+
+  /// shared key "quran.tabSurahs"
+  ///
+  /// In en, this message translates to:
+  /// **'Surahs'**
+  String get quranTabSurahs;
 
   /// shared key "reels.cat.lesson"
   ///

@@ -71,11 +71,32 @@ class JuzStart {
   final AyahRef start;
 }
 
+/// One hizb quarter (rub' al-hizb) of the Madinah Mushaf. [quarter] is 0 at the
+/// start of a hizb, then 1..3 for 1/4, 2/4, 3/4. Starts come from pages.v1.json
+/// (checked at build time against the rub' al-hizb sign in the canonical text).
+class HizbQuarter {
+  const HizbQuarter({
+    required this.n,
+    required this.hizb,
+    required this.quarter,
+    required this.juz,
+    required this.start,
+    required this.page,
+  });
+  final int n;
+  final int hizb;
+  final int quarter;
+  final int juz;
+  final AyahRef start;
+  final int page;
+}
+
 class QuranContent {
   QuranContent({
     required this.surahs,
     required this.pages,
     required this.juz,
+    this.quarters = const [],
     required this.version,
     required this.layout,
   }) {
@@ -100,6 +121,17 @@ class QuranContent {
         for (final j in pagesJson['juz'] as List<dynamic>)
           JuzStart((j as Map<String, dynamic>)['juz'] as int, j['page'] as int, ref(j['start'])),
       ]),
+      quarters: List.unmodifiable([
+        for (final q in (pagesJson['quarters'] as List<dynamic>? ?? const []))
+          HizbQuarter(
+            n: (q as Map<String, dynamic>)['n'] as int,
+            hizb: q['hizb'] as int,
+            quarter: q['quarter'] as int,
+            juz: q['juz'] as int,
+            start: ref(q['start']),
+            page: q['page'] as int,
+          ),
+      ]),
       version: quran['version'] as String? ?? '',
       layout: pagesJson['layout'] as String? ?? '',
     );
@@ -108,6 +140,9 @@ class QuranContent {
   final List<Surah> surahs;
   final List<MushafPage> pages;
   final List<JuzStart> juz;
+
+  /// The 240 hizb quarters in order (empty if the pages file has none).
+  final List<HizbQuarter> quarters;
   final String version;
   final String layout;
   late final List<int> _pageStartIndex;
@@ -177,6 +212,15 @@ class QuranContent {
     var j = 1;
     for (final js in juz) {
       if (js.page <= p) j = js.juz;
+    }
+    return j;
+  }
+
+  /// The juz in which ayah [r] lies (by the juz start ayahs).
+  int juzOf(AyahRef r) {
+    var j = 1;
+    for (final js in juz) {
+      if (js.start.compareTo(r) <= 0) j = js.juz;
     }
     return j;
   }

@@ -67,6 +67,19 @@ writeJson(join(gen, "quran-info.json"), {
   source: quran.source,
 });
 for (const s of quran.surahs) writeJson(join(pub, "data/en", `${s.n}.json`), s.en);
+// Hizb quarters for the Quran index: the opening words of each quarter, copied
+// verbatim from the canonical text (only the leading rub' al-hizb sign ۞ is dropped,
+// the index shows the quarter number in its own badge).
+const QUARTER_WORDS = 10;
+const pagesData = readJson("content/quran/dist/pages.v1.json");
+writeJson(
+  join(gen, "quarters.json"),
+  pagesData.quarters.map((q) => {
+    const text = quran.surahs[q.start[0] - 1].ayahs[q.start[1] - 1].replace(/^\u06de\s*/, "");
+    const words = text.split(" ");
+    return { ...q, opening: words.slice(0, QUARTER_WORDS).join(" "), more: words.length > QUARTER_WORDS };
+  }),
+);
 // Arabic text for client-side search (loaded only by the search page).
 writeJson(
   join(pub, "data/quran-text.json"),

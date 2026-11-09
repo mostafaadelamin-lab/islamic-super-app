@@ -40,7 +40,7 @@ void main() {
 
       // 1. Open Al-Baqarah from the surah list.
       await tab(tester, 1);
-      await tester.tap(find.byKey(const Key('surah-2')));
+      await tester.tap(find.byKey(const Key('surahText-2')));
       await tester.pumpAndSettle();
       expect(find.text('Al-Baqarah (The Cow)'), findsOneWidget);
 

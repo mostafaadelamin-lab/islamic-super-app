@@ -1,6 +1,7 @@
 {
   "_doc": "نصوص واجهة خاصة بتطبيق الجوال. يجب أن تطابق المفاتيح ملف mobile.en.json.",
   "quran.filter": "تصفية السور",
+  "quran.listView": "عرض كقائمة",
   "quran.filterHint": "الاسم أو الرقم",
   "quran.ayahN": "الآية {n}",
   "quran.pageNumberHint": "١–٦٠٤",

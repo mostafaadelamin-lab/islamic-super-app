@@ -16,7 +16,7 @@ void main() {
     }
     // Pushed screens.
     await goToTab(tester, 1);
-    await tester.tap(find.byKey(const Key('surah-1')));
+    await tester.tap(find.byKey(const Key('surahText-1')));
     await tester.pumpAndSettle();
     await expectAccessible(tester, contrast: contrast);
     await tester.tap(find.byKey(const Key('openInMushaf')));

@@ -580,6 +580,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quranBookmarked => 'Bookmarked';
 
   @override
+  String get quranClearSearch => 'Clear search';
+
+  @override
   String get quranContinueReading => 'Continue reading';
 
   @override
@@ -595,9 +598,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quranGoToPage => 'Go to page';
 
   @override
+  String quranHizbN(String n) {
+    return 'Hizb $n';
+  }
+
+  @override
+  String get quranIndex => 'Quran index';
+
+  @override
+  String get quranIndexSearch => 'Search';
+
+  @override
   String quranJuz(String juz) {
     return 'Juz $juz';
   }
+
+  @override
+  String get quranJuzOrdinals => '1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30';
+
+  @override
+  String quranJuzTitle(String ordinal) {
+    return 'Juz $ordinal';
+  }
+
+  @override
+  String get quranListView => 'List view';
 
   @override
   String get quranMeccan => 'Meccan';
@@ -630,6 +655,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quranPrevPage => 'Previous page';
+
+  @override
+  String quranQuarterLine(String surah, String ayah, String page) {
+    return '$surah $ayah · Page $page';
+  }
+
+  @override
+  String quranQuarterOfHizb(String q, String n) {
+    return 'Quarter $q of hizb $n';
+  }
 
   @override
   String get quranRemoveBookmark => 'Remove bookmark';
@@ -666,12 +701,28 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String quranSurahLine(String page, String count, String kind) {
+    return 'Page $page · $count ayahs · $kind';
+  }
+
+  @override
   String quranSurahN(String n) {
     return 'Surah $n';
   }
 
   @override
+  String quranSurahTitle(String name) {
+    return '$name';
+  }
+
+  @override
   String get quranSurahs => 'Surahs';
+
+  @override
+  String get quranTabQuarters => 'Quarters';
+
+  @override
+  String get quranTabSurahs => 'Surahs';
 
   @override
   String get reelsCatLesson => 'Short lesson';

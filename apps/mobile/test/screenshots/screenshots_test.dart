@@ -1,6 +1,7 @@
 // Renders key screens with the real bundled fonts (Amiri Quran, IBM Plex Sans
 // Arabic, Material Icons) and writes PNG screenshots. Output directory:
 // $RATTIL_SCREENSHOT_DIR, or build/screenshots by default.
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -10,6 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/domain/quran.dart';
 import 'package:rattil/ui/hajj_screen.dart';
 import 'package:rattil/ui/page_reader_screen.dart';
+import 'package:rattil/ui/quran_index.dart';
 import 'package:rattil/ui/surah_reader_screen.dart';
 import 'package:rattil/ui/tasbih_screen.dart';
 
@@ -154,6 +156,29 @@ void main() {
       await goBack(tester);
       await goToTab(tester, 2);
       await shot(tester, '${locale}_09_prayer_dark');
+    });
+  }
+
+  for (final theme in ['light', 'dark']) {
+    testWidgets('Quran index screenshots ($theme): surahs and quarters', (tester) async {
+      tester.view.devicePixelRatio = 1;
+      await pumpApp(tester, size: phone, prefs: {'theme': theme, 'lastRead.surah': 1, 'lastRead.ayah': 3});
+      await goToTab(tester, 1);
+      await shot(tester, 'index_${theme}_01_surahs');
+      await tester.tap(find.byKey(const Key('tabQuarters')));
+      await tester.pumpAndSettle();
+      await shot(tester, 'index_${theme}_02_quarters');
+      if (theme == 'light') {
+        await tester.enterText(find.byKey(const Key('surahFilter')), 'الكهف');
+        await tester.pumpAndSettle();
+        await shot(tester, 'index_${theme}_03_quarters_search');
+        await tester.tap(find.byKey(const Key('clearSearch')));
+        await tester.tap(find.byKey(const Key('tabSurahs')));
+        await tester.pumpAndSettle();
+        unawaited(showQuranIndexSheet(tester.element(find.byType(QuranIndexView)), currentPage: 300));
+        await tester.pumpAndSettle();
+        await shot(tester, 'index_${theme}_04_sheet', overlay: true);
+      }
     });
   }
 }
