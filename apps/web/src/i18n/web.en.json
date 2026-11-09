@@ -373,5 +373,22 @@
   "tasbih.colors.plum": "Plum",
   "tasbih.colors.rose": "Rose",
   "tasbih.colors.amber": "Amber",
-  "tasbih.colors.slate": "Slate"
+  "tasbih.colors.slate": "Slate",
+  "mosques.title": "Nearby mosques",
+  "mosques.around": "Mosques around {place}",
+  "mosques.radius": "Distance",
+  "mosques.useMyLocation": "Use my current location",
+  "mosques.myLocation": "your current location",
+  "mosques.geoDenied": "Your location is not available. Showing mosques around the city chosen for prayer times.",
+  "mosques.loading": "Searching for mosques…",
+  "mosques.error": "Could not reach OpenStreetMap. Check your internet connection.",
+  "mosques.retry": "Try again",
+  "mosques.none": "No mosques are mapped within this distance. Try a larger one.",
+  "mosques.count": "{n} mosques, nearest first",
+  "mosques.offline": "(last saved result, you are offline)",
+  "mosques.unnamed": "Mosque (no name on the map)",
+  "mosques.meters": "{n} m",
+  "mosques.km": "{n} km",
+  "mosques.note": "Straight-line distance. Data from the open OpenStreetMap map; it can be incomplete in some places.",
+  "home.tile.mosquesSub": "The mosques closest to you"
 }

@@ -309,5 +309,17 @@
   "reader.khatmaReset": "إلغاء الختمة",
   "reader.font": "حجم الخط",
   "reader.fontSize": "حجم الخط: {size} — اضغط للتكبير",
-  "reader.repeatN": "التكرار: {n}"
+  "reader.repeatN": "التكرار: {n}",
+  "mosques.title": "المساجد القريبة",
+  "mosques.around": "المساجد حول {place}",
+  "mosques.loading": "جارٍ البحث عن المساجد…",
+  "mosques.error": "تعذّر الوصول إلى خريطة OpenStreetMap. تأكد من الاتصال بالإنترنت.",
+  "mosques.retry": "إعادة المحاولة",
+  "mosques.none": "لا توجد مساجد مسجلة على الخريطة في هذه المسافة. جرّب مسافة أكبر.",
+  "mosques.count": "{n} مسجد، الأقرب أولًا. اضغط على المسجد لفتح الاتجاهات.",
+  "mosques.offline": "(آخر نتيجة محفوظة، أنت غير متصل)",
+  "mosques.unnamed": "مسجد (بدون اسم على الخريطة)",
+  "mosques.meters": "{n} م",
+  "mosques.km": "{n} كم",
+  "mosques.note": "المسافة في خط مستقيم حول مدينة المواقيت. البيانات من خريطة OpenStreetMap المفتوحة وقد تكون ناقصة في بعض الأماكن."
 }

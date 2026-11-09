@@ -640,6 +640,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moreTitle => 'More';
 
   @override
+  String mosquesAround(String place) {
+    return 'Mosques around $place';
+  }
+
+  @override
+  String mosquesCount(String n) {
+    return '$n mosques, nearest first. Tap one for directions.';
+  }
+
+  @override
+  String get mosquesError => 'Could not reach OpenStreetMap. Check your internet connection.';
+
+  @override
+  String mosquesKm(String n) {
+    return '$n km';
+  }
+
+  @override
+  String get mosquesLoading => 'Searching for mosques…';
+
+  @override
+  String mosquesMeters(String n) {
+    return '$n m';
+  }
+
+  @override
+  String get mosquesNone => 'No mosques are mapped within this distance. Try a larger one.';
+
+  @override
+  String get mosquesNote =>
+      'Straight-line distance around your prayer-times city. Data from the open OpenStreetMap map; it can be incomplete in some places.';
+
+  @override
+  String get mosquesOffline => '(last saved result, you are offline)';
+
+  @override
+  String get mosquesRetry => 'Try again';
+
+  @override
+  String get mosquesTitle => 'Nearby mosques';
+
+  @override
+  String get mosquesUnnamed => 'Mosque (no name on the map)';
+
+  @override
   String get mushafCopied => 'Ayah copied';
 
   @override

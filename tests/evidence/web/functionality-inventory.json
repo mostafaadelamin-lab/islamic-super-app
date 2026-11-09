@@ -5400,6 +5400,13 @@
   "page": "/ar/more/",
   "tag": "a",
   "type": null,
+  "name": "المساجد القريبةأقرب المساجد إليك",
+  "href": "/ar/mosques/"
+ },
+ {
+  "page": "/ar/more/",
+  "tag": "a",
+  "type": null,
   "name": "الحج والعمرةدليل المناسك",
   "href": "/ar/hajj/"
  },
@@ -13844,6 +13851,13 @@
   "type": null,
   "name": "Qibla directionLive compass",
   "href": "/en/qibla/"
+ },
+ {
+  "page": "/en/more/",
+  "tag": "a",
+  "type": null,
+  "name": "Nearby mosquesThe mosques closest to you",
+  "href": "/en/mosques/"
  },
  {
   "page": "/en/more/",

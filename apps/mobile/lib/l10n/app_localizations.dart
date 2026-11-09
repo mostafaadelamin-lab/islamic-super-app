@@ -1178,6 +1178,78 @@ abstract class AppLocalizations {
   /// **'More'**
   String get moreTitle;
 
+  /// shared key "mosques.around"
+  ///
+  /// In en, this message translates to:
+  /// **'Mosques around {place}'**
+  String mosquesAround(String place);
+
+  /// shared key "mosques.count"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} mosques, nearest first. Tap one for directions.'**
+  String mosquesCount(String n);
+
+  /// shared key "mosques.error"
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach OpenStreetMap. Check your internet connection.'**
+  String get mosquesError;
+
+  /// shared key "mosques.km"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} km'**
+  String mosquesKm(String n);
+
+  /// shared key "mosques.loading"
+  ///
+  /// In en, this message translates to:
+  /// **'Searching for mosques…'**
+  String get mosquesLoading;
+
+  /// shared key "mosques.meters"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} m'**
+  String mosquesMeters(String n);
+
+  /// shared key "mosques.none"
+  ///
+  /// In en, this message translates to:
+  /// **'No mosques are mapped within this distance. Try a larger one.'**
+  String get mosquesNone;
+
+  /// shared key "mosques.note"
+  ///
+  /// In en, this message translates to:
+  /// **'Straight-line distance around your prayer-times city. Data from the open OpenStreetMap map; it can be incomplete in some places.'**
+  String get mosquesNote;
+
+  /// shared key "mosques.offline"
+  ///
+  /// In en, this message translates to:
+  /// **'(last saved result, you are offline)'**
+  String get mosquesOffline;
+
+  /// shared key "mosques.retry"
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get mosquesRetry;
+
+  /// shared key "mosques.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby mosques'**
+  String get mosquesTitle;
+
+  /// shared key "mosques.unnamed"
+  ///
+  /// In en, this message translates to:
+  /// **'Mosque (no name on the map)'**
+  String get mosquesUnnamed;
+
   /// shared key "mushaf.copied"
   ///
   /// In en, this message translates to:

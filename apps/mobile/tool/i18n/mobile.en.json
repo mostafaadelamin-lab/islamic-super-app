@@ -309,5 +309,17 @@
   "reader.khatmaReset": "Cancel the khatma",
   "reader.font": "Text size",
   "reader.fontSize": "Text size: {size} — press to enlarge",
-  "reader.repeatN": "Repeat: {n}"
+  "reader.repeatN": "Repeat: {n}",
+  "mosques.title": "Nearby mosques",
+  "mosques.around": "Mosques around {place}",
+  "mosques.loading": "Searching for mosques…",
+  "mosques.error": "Could not reach OpenStreetMap. Check your internet connection.",
+  "mosques.retry": "Try again",
+  "mosques.none": "No mosques are mapped within this distance. Try a larger one.",
+  "mosques.count": "{n} mosques, nearest first. Tap one for directions.",
+  "mosques.offline": "(last saved result, you are offline)",
+  "mosques.unnamed": "Mosque (no name on the map)",
+  "mosques.meters": "{n} m",
+  "mosques.km": "{n} km",
+  "mosques.note": "Straight-line distance around your prayer-times city. Data from the open OpenStreetMap map; it can be incomplete in some places."
 }
