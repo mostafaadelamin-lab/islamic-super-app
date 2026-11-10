@@ -513,6 +513,87 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String hadithAttribution(String name, String licence) {
+    return 'Hadiths numbered as in al-Alamiyya, from the $name project ($licence).';
+  }
+
+  @override
+  String get hadithBackToBook => 'Back to the book';
+
+  @override
+  String hadithCount(String n) {
+    return '$n hadiths';
+  }
+
+  @override
+  String get hadithFavourites => 'Saved hadiths';
+
+  @override
+  String hadithGoTo(String max) {
+    return 'Go to hadith number (1–$max)';
+  }
+
+  @override
+  String get hadithLoadError => 'Couldn\'t open this part of the book.';
+
+  @override
+  String get hadithNext => 'Next';
+
+  @override
+  String get hadithNoFavourites => 'No saved hadiths yet. Tap the star next to any hadith.';
+
+  @override
+  String hadithNumber(String n) {
+    return 'Hadith $n';
+  }
+
+  @override
+  String get hadithPrev => 'Previous';
+
+  @override
+  String hadithRange(String from, String to, String count) {
+    return 'Hadiths $from–$to of $count';
+  }
+
+  @override
+  String hadithResults(String n) {
+    return '$n results';
+  }
+
+  @override
+  String hadithResultsMany(String n) {
+    return 'First $n results (add more words to narrow it)';
+  }
+
+  @override
+  String get hadithReview =>
+      'Under shar\'i review: the hadith texts are copied unchanged from the open Open-Hadith-Data database and have not yet been checked against a printed edition. If you find a mistake, please report it.';
+
+  @override
+  String get hadithSave => 'Save hadith';
+
+  @override
+  String hadithSearch(String book) {
+    return 'Search $book';
+  }
+
+  @override
+  String hadithSearching(String done, String total) {
+    return 'Searching… part $done of $total';
+  }
+
+  @override
+  String hadithSource(String book, String n) {
+    return '$book, hadith $n (al-Alamiyya numbering)';
+  }
+
+  @override
+  String get hadithTitle => 'Hadith books';
+
+  @override
+  String get hadithUnsave => 'Remove from saved';
+
+  @override
   String get hajjHajj => 'Hajj';
 
   @override

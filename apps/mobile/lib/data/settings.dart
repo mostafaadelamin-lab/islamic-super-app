@@ -397,6 +397,24 @@ class SettingsController extends ChangeNotifier {
     if (yearPassed != null) await _prefs.setBool('zakat.year', yearPassed);
   }
 
+  /// Saved hadiths as "book:n" keys, newest first.
+  List<String> get hadithFavourites => _prefs.getStringList('hadith.favourites') ?? const [];
+
+  Future<void> toggleHadithFavourite(String book, int n) async {
+    final key = '$book:$n';
+    final list = hadithFavourites;
+    await _prefs.setStringList(
+      'hadith.favourites',
+      list.contains(key)
+          ? [
+              for (final k in list)
+                if (k != key) k,
+            ]
+          : [key, ...list],
+    );
+    notifyListeners();
+  }
+
   /// Prayers that should get a notification right now.
   Set<String> get adhanPrayers => adhanEnabled
       ? {

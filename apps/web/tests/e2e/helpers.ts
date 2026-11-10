@@ -25,6 +25,8 @@ export const MAIN_PAGES = [
   "tracker/",
   "help/",
   "zakat/",
+  "hadith/",
+  "hadith/bukhari/",
   "khatma/",
   "qibla/",
   "hajj/",

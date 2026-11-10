@@ -49,6 +49,16 @@ flutter:
     - assets/content/
     - assets/schemas/
     - assets/audio/
+    - assets/hadith/
+    - assets/hadith/abudawud/
+    - assets/hadith/ahmad/
+    - assets/hadith/bukhari/
+    - assets/hadith/darimi/
+    - assets/hadith/ibnmajah/
+    - assets/hadith/malik/
+    - assets/hadith/muslim/
+    - assets/hadith/nasai/
+    - assets/hadith/tirmidhi/
   fonts:
     - family: Amiri Quran
       fonts:

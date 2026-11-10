@@ -42,7 +42,32 @@ PAIRS=(
   "packages/design-tokens/dist/design_tokens.dart:lib/theme/design_tokens.dart"
 )
 
+# Whole folders copied as they are (hadith books: content/hadith/dist, built by tools/build_hadith.py).
+DIRS=(
+  "content/hadith/dist:assets/hadith"
+)
+
 stale=0
+for pair in "${DIRS[@]}"; do
+  src="$ROOT/${pair%%:*}"
+  dst="$APP/${pair#*:}"
+  if [[ ! -d "$src" ]]; then
+    echo "missing source folder: $src" >&2
+    exit 1
+  fi
+  if [[ "$MODE" == "--check" ]]; then
+    if ! diff -rq "$src" "$dst" >/dev/null 2>&1; then
+      echo "stale: ${pair#*:}/ (differs from ${pair%%:*}/)" >&2
+      stale=1
+    fi
+  else
+    rm -rf "$dst"
+    mkdir -p "$(dirname "$dst")"
+    cp -r "$src" "$dst"
+    echo "copied ${pair%%:*}/ -> ${pair#*:}/"
+  fi
+done
+
 for pair in "${PAIRS[@]}"; do
   src="$ROOT/${pair%%:*}"
   dst="$APP/${pair#*:}"

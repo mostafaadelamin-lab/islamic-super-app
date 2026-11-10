@@ -15,6 +15,7 @@ import 'package:rattil/data/notifications.dart';
 import 'package:rattil/data/recitation.dart';
 import 'package:rattil/data/sensors.dart';
 import 'package:rattil/data/sharing.dart';
+import 'package:rattil/data/hadith.dart';
 import 'package:rattil/data/tafsir.dart';
 import 'package:rattil/domain/qibla.dart';
 import 'package:rattil/domain/tafsir.dart';
@@ -42,6 +43,10 @@ Future<AppContent> loadContent({bool realFonts = true}) async {
 }
 
 TafsirContent? _tafsir;
+
+/// The bundled hadith books, read straight from apps/mobile/assets (no isolates in widget tests).
+HadithLibrary testHadith(AppContent c) =>
+    HadithLibrary(c.hadith, (key) async => File(key).readAsStringSync(), isolate: false);
 
 /// The bundled Tafsir al-Muyassar, decoded by [loadContent].
 TafsirContent get testTafsir => _tafsir!;
@@ -98,6 +103,7 @@ Future<TestApp> pumpApp(
   FakeAdhanPlayer? adhanPlayer,
   CompassSensors? sensors,
   TafsirStore? tafsir,
+  HadithLibrary? hadith,
   LocationProvider? location,
   FakeSharer? sharer,
   Directory? storage,
@@ -117,6 +123,7 @@ Future<TestApp> pumpApp(
     adhanPlayer: adhanPlayer ?? FakeAdhanPlayer(),
     sensors: sensors ?? FakeSensors.none(),
     tafsir: tafsir ?? TafsirStore.preloaded(_tafsir!),
+    hadith: hadith ?? testHadith(c),
     location: location ?? const FakeLocation(LocationUnavailable()),
     sharer: sharer ?? FakeSharer(),
   );

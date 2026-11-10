@@ -745,6 +745,151 @@
       }
     }
   },
+  "hadithAttribution": "Hadiths numbered as in al-Alamiyya, from the {name} project ({licence}).",
+  "@hadithAttribution": {
+    "description": "shared key \"hadith.attribution\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "licence": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithBackToBook": "Back to the book",
+  "@hadithBackToBook": {
+    "description": "shared key \"hadith.backToBook\""
+  },
+  "hadithCount": "{n} hadiths",
+  "@hadithCount": {
+    "description": "shared key \"hadith.count\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithFavourites": "Saved hadiths",
+  "@hadithFavourites": {
+    "description": "shared key \"hadith.favourites\""
+  },
+  "hadithGoTo": "Go to hadith number (1–{max})",
+  "@hadithGoTo": {
+    "description": "shared key \"hadith.goTo\"",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithLoadError": "Couldn't open this part of the book.",
+  "@hadithLoadError": {
+    "description": "shared key \"hadith.loadError\""
+  },
+  "hadithNext": "Next",
+  "@hadithNext": {
+    "description": "shared key \"hadith.next\""
+  },
+  "hadithNoFavourites": "No saved hadiths yet. Tap the star next to any hadith.",
+  "@hadithNoFavourites": {
+    "description": "shared key \"hadith.noFavourites\""
+  },
+  "hadithNumber": "Hadith {n}",
+  "@hadithNumber": {
+    "description": "shared key \"hadith.number\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithPrev": "Previous",
+  "@hadithPrev": {
+    "description": "shared key \"hadith.prev\""
+  },
+  "hadithRange": "Hadiths {from}–{to} of {count}",
+  "@hadithRange": {
+    "description": "shared key \"hadith.range\"",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithResults": "{n} results",
+  "@hadithResults": {
+    "description": "shared key \"hadith.results\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithResultsMany": "First {n} results (add more words to narrow it)",
+  "@hadithResultsMany": {
+    "description": "shared key \"hadith.resultsMany\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithReview": "Under shar'i review: the hadith texts are copied unchanged from the open Open-Hadith-Data database and have not yet been checked against a printed edition. If you find a mistake, please report it.",
+  "@hadithReview": {
+    "description": "shared key \"hadith.review\""
+  },
+  "hadithSave": "Save hadith",
+  "@hadithSave": {
+    "description": "shared key \"hadith.save\""
+  },
+  "hadithSearch": "Search {book}",
+  "@hadithSearch": {
+    "description": "shared key \"hadith.search\"",
+    "placeholders": {
+      "book": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithSearching": "Searching… part {done} of {total}",
+  "@hadithSearching": {
+    "description": "shared key \"hadith.searching\"",
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithSource": "{book}, hadith {n} (al-Alamiyya numbering)",
+  "@hadithSource": {
+    "description": "shared key \"hadith.source\"",
+    "placeholders": {
+      "book": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithTitle": "Hadith books",
+  "@hadithTitle": {
+    "description": "shared key \"hadith.title\""
+  },
+  "hadithUnsave": "Remove from saved",
+  "@hadithUnsave": {
+    "description": "shared key \"hadith.unsave\""
+  },
   "hajjHajj": "Hajj",
   "@hajjHajj": {
     "description": "shared key \"hajj.hajj\""

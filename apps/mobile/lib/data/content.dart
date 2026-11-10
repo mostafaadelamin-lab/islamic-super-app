@@ -14,6 +14,7 @@ import '../domain/reels.dart';
 import '../domain/search.dart';
 import '../domain/stories.dart';
 import '../domain/text.dart';
+import '../domain/hadith.dart';
 import '../domain/zakat.dart';
 
 class City {
@@ -72,6 +73,7 @@ class AppContent {
     this.magneticModel,
     this.links = const AppLinks(),
     this.zakat = ZakatGuide.empty,
+    this.hadith = HadithCatalog.empty,
   }) : search = QuranSearch(quran, normalizer);
 
   static const quranAsset = 'assets/content/quran.v1.json';
@@ -94,6 +96,7 @@ class AppContent {
   static const normalizationAsset = 'assets/schemas/search-normalization.json';
   static const linksAsset = 'assets/schemas/app-links.json';
   static const zakatAsset = 'assets/content/zakat.v1.json';
+  static const hadithAsset = 'assets/hadith/books.v1.json';
 
   final QuranContent quran;
   final MushafLayout mushaf;
@@ -125,6 +128,9 @@ class AppContent {
 
   /// Zakat rules and fatwas of Dar al-Ifta al-Misriyya (pending a shar'i review).
   final ZakatGuide zakat;
+
+  /// The nine hadith books (list only; the texts are read by HadithLibrary when opened).
+  final HadithCatalog hadith;
 
   PrayerCalculator get calculator => PrayerCalculator(prayerConfig);
 
@@ -166,6 +172,7 @@ class AppContent {
       magneticModel: WorldMagneticModel.fromJson(await j(wmmAsset)),
       links: AppLinks.fromJson(await j(linksAsset)),
       zakat: ZakatGuide.fromJson(await j(zakatAsset)),
+      hadith: HadithCatalog.fromJson(await j(hadithAsset)),
     );
   }
 }

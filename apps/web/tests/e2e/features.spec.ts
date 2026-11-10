@@ -406,3 +406,21 @@ test("zakat calculator follows Dar al-Ifta and shows the result", async ({ page 
   await page.reload();
   await expect(page.getByTestId("zakat-result")).toHaveAttribute("data-status", "due");
 });
+
+test("hadith books: open a book, jump, search, save and find it offline-ready", async ({ page }) => {
+  await page.goto("/ar/hadith/");
+  await expect(page.locator("html[data-hydrated=true]")).toHaveCount(1);
+  await expect(page.getByTestId("hadith-attribution")).toContainText("Open-Hadith-Data");
+  await page.getByTestId("hadith-book-bukhari").click();
+  await expect(page.getByTestId("hadith")).toHaveCount(20);
+  await page.getByTestId("hadith-go").fill("1000");
+  await page.getByTestId("hadith-go-btn").click();
+  await expect(page.getByTestId("hadith").first()).toHaveAttribute("data-n", "981");
+  await page.locator("[data-n='1000'] [data-testid=hadith-fav]").click();
+  await page.getByTestId("hadith-query").fill("إنما الأعمال بالنيات");
+  await page.getByTestId("hadith-search-btn").click();
+  await expect(page.getByTestId("hadith-results")).toBeVisible({ timeout: 30000 });
+  await expect(page.getByTestId("hadith").first()).toHaveAttribute("data-n", "1");
+  await page.goto("/ar/hadith/");
+  await expect(page.getByTestId("hadith-favourites").getByTestId("hadith")).toHaveAttribute("data-n", "1000");
+});

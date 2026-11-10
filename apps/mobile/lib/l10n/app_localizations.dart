@@ -962,6 +962,126 @@ abstract class AppLocalizations {
   /// **'Space used: {mb} MB'**
   String downloadsUsed(String mb);
 
+  /// shared key "hadith.attribution"
+  ///
+  /// In en, this message translates to:
+  /// **'Hadiths numbered as in al-Alamiyya, from the {name} project ({licence}).'**
+  String hadithAttribution(String name, String licence);
+
+  /// shared key "hadith.backToBook"
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the book'**
+  String get hadithBackToBook;
+
+  /// shared key "hadith.count"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} hadiths'**
+  String hadithCount(String n);
+
+  /// shared key "hadith.favourites"
+  ///
+  /// In en, this message translates to:
+  /// **'Saved hadiths'**
+  String get hadithFavourites;
+
+  /// shared key "hadith.goTo"
+  ///
+  /// In en, this message translates to:
+  /// **'Go to hadith number (1–{max})'**
+  String hadithGoTo(String max);
+
+  /// shared key "hadith.loadError"
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open this part of the book.'**
+  String get hadithLoadError;
+
+  /// shared key "hadith.next"
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get hadithNext;
+
+  /// shared key "hadith.noFavourites"
+  ///
+  /// In en, this message translates to:
+  /// **'No saved hadiths yet. Tap the star next to any hadith.'**
+  String get hadithNoFavourites;
+
+  /// shared key "hadith.number"
+  ///
+  /// In en, this message translates to:
+  /// **'Hadith {n}'**
+  String hadithNumber(String n);
+
+  /// shared key "hadith.prev"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get hadithPrev;
+
+  /// shared key "hadith.range"
+  ///
+  /// In en, this message translates to:
+  /// **'Hadiths {from}–{to} of {count}'**
+  String hadithRange(String from, String to, String count);
+
+  /// shared key "hadith.results"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} results'**
+  String hadithResults(String n);
+
+  /// shared key "hadith.resultsMany"
+  ///
+  /// In en, this message translates to:
+  /// **'First {n} results (add more words to narrow it)'**
+  String hadithResultsMany(String n);
+
+  /// shared key "hadith.review"
+  ///
+  /// In en, this message translates to:
+  /// **'Under shar\'i review: the hadith texts are copied unchanged from the open Open-Hadith-Data database and have not yet been checked against a printed edition. If you find a mistake, please report it.'**
+  String get hadithReview;
+
+  /// shared key "hadith.save"
+  ///
+  /// In en, this message translates to:
+  /// **'Save hadith'**
+  String get hadithSave;
+
+  /// shared key "hadith.search"
+  ///
+  /// In en, this message translates to:
+  /// **'Search {book}'**
+  String hadithSearch(String book);
+
+  /// shared key "hadith.searching"
+  ///
+  /// In en, this message translates to:
+  /// **'Searching… part {done} of {total}'**
+  String hadithSearching(String done, String total);
+
+  /// shared key "hadith.source"
+  ///
+  /// In en, this message translates to:
+  /// **'{book}, hadith {n} (al-Alamiyya numbering)'**
+  String hadithSource(String book, String n);
+
+  /// shared key "hadith.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Hadith books'**
+  String get hadithTitle;
+
+  /// shared key "hadith.unsave"
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from saved'**
+  String get hadithUnsave;
+
   /// shared key "hajj.hajj"
   ///
   /// In en, this message translates to:

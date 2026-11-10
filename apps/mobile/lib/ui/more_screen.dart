@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'about_screen.dart';
 import 'bookmarks_screen.dart';
+import 'hadith_screen.dart';
 import 'hajj_screen.dart';
 import 'help_screen.dart';
 import 'hisn_screen.dart';
@@ -51,6 +52,7 @@ class MoreScreen extends StatelessWidget {
             SectionCard(
               children: [
                 tile('hisn', Icons.menu_book_outlined, l.adhkarHisn, () => const HisnScreen()),
+                tile('hadith', Icons.auto_stories_outlined, l.hadithTitle, () => const HadithScreen()),
                 tile('tasbih', Icons.touch_app_outlined, l.tasbihTitle, () => const TasbihScreen()),
                 tile('tracker', Icons.event_available_outlined, l.worshipTitle, () => const WorshipScreen()),
                 tile('qibla', Icons.explore_outlined, l.qiblaTitle, () => const QiblaScreen()),

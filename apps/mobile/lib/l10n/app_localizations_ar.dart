@@ -511,6 +511,87 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String hadithAttribution(String name, String licence) {
+    return 'الأحاديث بترقيم العالمية، من مشروع $name ($licence).';
+  }
+
+  @override
+  String get hadithBackToBook => 'العودة إلى الكتاب';
+
+  @override
+  String hadithCount(String n) {
+    return '$n حديثًا';
+  }
+
+  @override
+  String get hadithFavourites => 'الأحاديث المحفوظة';
+
+  @override
+  String hadithGoTo(String max) {
+    return 'اذهب إلى حديث رقم (١–$max)';
+  }
+
+  @override
+  String get hadithLoadError => 'تعذّر فتح هذا الجزء من الكتاب.';
+
+  @override
+  String get hadithNext => 'التالي';
+
+  @override
+  String get hadithNoFavourites => 'لم تحفظ أحاديث بعد. اضغط على النجمة بجانب أي حديث.';
+
+  @override
+  String hadithNumber(String n) {
+    return 'حديث $n';
+  }
+
+  @override
+  String get hadithPrev => 'السابق';
+
+  @override
+  String hadithRange(String from, String to, String count) {
+    return 'الأحاديث $from–$to من $count';
+  }
+
+  @override
+  String hadithResults(String n) {
+    return '$n نتيجة';
+  }
+
+  @override
+  String hadithResultsMany(String n) {
+    return 'أول $n نتيجة (ضيّق البحث بكلمات أكثر)';
+  }
+
+  @override
+  String get hadithReview =>
+      'قيد المراجعة الشرعية: نصوص الأحاديث منقولة كما هي من قاعدة Open-Hadith-Data المفتوحة، ولم تُقابَل بعد بطبعة مطبوعة. إن وجدت خطأ فأبلغنا.';
+
+  @override
+  String get hadithSave => 'احفظ الحديث';
+
+  @override
+  String hadithSearch(String book) {
+    return 'ابحث في $book';
+  }
+
+  @override
+  String hadithSearching(String done, String total) {
+    return 'جارٍ البحث… الجزء $done من $total';
+  }
+
+  @override
+  String hadithSource(String book, String n) {
+    return '$book، حديث رقم $n (ترقيم العالمية)';
+  }
+
+  @override
+  String get hadithTitle => 'كتب السنة';
+
+  @override
+  String get hadithUnsave => 'إلغاء الحفظ';
+
+  @override
   String get hajjHajj => 'الحج';
 
   @override

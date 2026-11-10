@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "reviewStatus": "pending",
+  "numbering": "al-Alamiyya (Sakhr/Harf)",
+  "chunkSize": 500,
+  "source": {
+    "name": "Open-Hadith-Data",
+    "url": "https://github.com/mhashim6/Open-Hadith-Data",
+    "commit": "1515f6cba21efed20d8916bf55acef1dffa0d2d5",
+    "licence": "ODbL 1.0 (database), DbCL 1.0 (contents)",
+    "origin": "hadith-islamware (Islam Ware, 2006-2014)"
+  },
+  "books": [
+    {
+      "id": "bukhari",
+      "nameAr": "صحيح البخاري",
+      "nameEn": "Sahih al-Bukhari",
+      "count": 7008,
+      "chunks": 15,
+      "sourceFile": "Sahih_Al-Bukhari/sahih_al-bukhari_ahadith_mushakkala_mufassala.utf8.csv",
+      "sha256": "b03f661876fc4089520800b9231b57a1564baff734344ea8914494b86e2eb708",
+      "textSha256": "28fc7bb4ab19e1f943a1f84af74e802eee8df888cb10bf4eccf8b98056224701"
+    },
+    {
+      "id": "muslim",
+      "nameAr": "صحيح مسلم",
+      "nameEn": "Sahih Muslim",
+      "count": 5362,
+      "chunks": 11,
+      "sourceFile": "Sahih_Muslim/sahih_muslim_ahadith_mushakkala_mufassala.utf8.csv",
+      "sha256": "79232c8d7c27fef161d8f33ca169f9754741cfe14957dde2ac76893374998943",
+      "textSha256": "bd028449f44d9351af2c13a0b752e28d2b30ea9b853b648f1814408c698232c1"
+    },
+    {
+      "id": "abudawud",
+      "nameAr": "سنن أبي داود",
+      "nameEn": "Sunan Abi Dawud",
+      "count": 4590,
+      "chunks": 10,
+      "sourceFile": "Sunan_Abu-Dawud/sunan_abu-dawud_ahadith_mushakkala_mufassala.utf8.csv",
+      "sha256": "68918ef593d5154d38c1d00bad3ae8237510cb35eeb3ebf22b4a1f9fa3b2799f",
+      "textSha256": "8cfb84883a34abeec2c0a88c575d0813643dbb32f5fc53a4f6a717981223bc5d"
+    },
+    {
+      "id": "tirmidhi",
+      "nameAr": "جامع الترمذي",
+      "nameEn": "Jami' at-Tirmidhi",
+      "count": 3891,
+      "chunks": 8,
+      "sourceFile": "Sunan_Al-Tirmidhi/sunan_al-tirmidhi_ahadith_mushakkala_mufassala.utf8.csv",
+      "sha256": "136b4467116a59dd81b9633306960898d6f8fd34c3a3aa3579d2d0ba130b3ce9",
+      "textSha256": "d4d243ef57e64b28e22cdd5f89858fb453e6398aac7cd9aa3c8d8fd0c5037066"
+    },
+    {
+      "id": "nasai",
+      "nameAr": "سنن النسائي",
+      "nameEn": "Sunan an-Nasa'i",
+      "count": 5662,
+      "chunks": 12,
+      "sourceFile": "Sunan_Al-Nasai/sunan_al-nasai_ahadith_mushakkala_mufassala.utf8.csv",
+      "sha256": "21d677b02a39722f039f9a79f06706e71a0a09a18cc1aa71df6f90d994bf11c2",
+      "textSha256": "395e003ac2bc705b638f9540f19c2b771ed49eed4d90189ac572102f93d507a1"
+    },
+    {
+      "id": "ibnmajah",
+      "nameAr": "سنن ابن ماجه",
+      "nameEn": "Sunan Ibn Majah",
+      "count": 4332,
+      "chunks": 9,
+      "sourceFile": "Sunan_Ibn-Maja/sunan_ibn-maja_ahadith_mushakkala_mufassala.utf8.csv",
+      "sha256": "88b2fec03dbaff0b6d8e36d9b4b3989d1526a0aa8f81a8cdd56e1de95a7d5f68",
+      "textSha256": "6cb1548810f1a576476ba9c0d228da548007c8c9cc45ff865a802105fb8bfa13"
+    },
+    {
+      "id": "malik",
+      "nameAr": "موطأ مالك",
+      "nameEn": "Muwatta Malik",
+      "count": 1594,
+      "chunks": 4,
+      "sourceFile": "Maliks_Muwataa/maliks_muwataa_ahadith_mushakkala_mufassala.utf8.csv",
+      "sha256": "d306930f056bb0a74745a4453fbef04cc80765213554b052a29427e24702ece0",
+      "textSha256": "e2c67df04c83b3f79feccb632d67b236fd090582750cbabb2f1a4f199a79781d"
+    },
+    {
+      "id": "ahmad",
+      "nameAr": "مسند أحمد",
+      "nameEn": "Musnad Ahmad",
+      "count": 26363,
+      "chunks": 53,
+      "sourceFile": "Musnad_Ahmad_Ibn-Hanbal/musnad_ahmad_ibn-hanbal_ahadith_mushakkala.utf8.csv",
+      "sha256": "41553fee47fe582a8d0b60fbea1f71b867df44d40adac94dcfe742571a8bce24",
+      "textSha256": "00f22c2d26faaa9cd88f329a712dfb36a56debdc7e40dbc9c8a3e29d21d96337"
+    },
+    {
+      "id": "darimi",
+      "nameAr": "سنن الدارمي",
+      "nameEn": "Sunan ad-Darimi",
+      "count": 3367,
+      "chunks": 7,
+      "sourceFile": "Sunan_Al-Darimi/sunan_al-darimi_ahadith_mushakkala_mufassala.utf8.csv",
+      "sha256": "bb995abb07a513cf76743e9580787e80c7ce5bd08dd6108c13e01d936a048327",
+      "textSha256": "e0123485bd1db1ea5935d1a3d3e648b230aed53ea4313c50441ad04bb484aa9e"
+    }
+  ]
+}

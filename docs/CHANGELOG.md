@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased] — Hadith books from Open-Hadith-Data (owner's feature list, phase 7) — 2026-11-10
+### Added
+- The nine hadith books (al-Bukhari, Muslim, Abu Dawud, at-Tirmidhi, an-Nasa'i, Ibn Majah, Malik's Muwatta, Ahmad's Musnad, ad-Darimi) with their Arabic text unchanged, al-Alamiyya numbering (mobile: More → Hadith books; web: /hadith/).
+- Read 20 hadiths at a time, jump to a number, search a whole book ignoring diacritics, save hadiths, copy, share and report a mistake.
+- Mobile: the books are bundled and work offline. Web: each part is fetched when first opened and then kept for offline use.
+- Source and licence (ODbL) shown on the hadith page; a "pending shar'i review" notice on every screen.
+### Not yet
+- Chapters (the source has none), the commentary column, and the other books (Riyad as-Salihin, Nawawi's 40, etc.) until an open source is found.
+
 ## [Unreleased] — Zakat calculator after Egypt's Dar al-Ifta (owner's feature list, phase 6) — 2026-11-10
 ### Added
 - Zakat calculator (mobile: More → Zakat calculator; web: /zakat/): cash and bank balances, bank certificates and their returns, saved shares, trade goods, gold kept for saving (24, 21 or 18 karat) and debts due. Nisab = the value of 85 g of 21-karat gold at the price the user enters; 2.5% once a full Hijri year has passed.

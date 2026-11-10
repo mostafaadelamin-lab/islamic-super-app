@@ -24,6 +24,7 @@ import 'data/reels_feed.dart';
 import 'data/sensors.dart';
 import 'data/settings.dart';
 import 'data/sharing.dart';
+import 'data/hadith.dart';
 import 'data/tafsir.dart';
 import 'domain/prayer_schedule.dart';
 import 'ui/prayer_model.dart' show resolveCity;
@@ -43,6 +44,7 @@ class AppServices {
     required this.adhkar,
     required this.sensors,
     required this.tafsir,
+    required this.hadith,
     required this.narration,
     required this.sleepTimer,
     this.location = const GeolocatorLocation(),
@@ -66,6 +68,7 @@ class AppServices {
     AdhanPlayer? adhanPlayer,
     CompassSensors? sensors,
     TafsirStore? tafsir,
+    HadithLibrary? hadith,
     LocationProvider? location,
     ImageSharer? sharer,
     Future<Directory> Function()? storageRoot,
@@ -167,6 +170,7 @@ class AppServices {
       adhkar: AdhkarController(content, settings, localToday),
       sensors: sensors ?? const DeviceCompassSensors(),
       tafsir: tafsir ?? TafsirStore.asset(rootBundle),
+      hadith: hadith ?? HadithLibrary.asset(content.hadith, rootBundle),
       location: location ?? const GeolocatorLocation(),
       khatma: khatma,
       worship: WorshipController(settings, localToday),
@@ -199,6 +203,9 @@ class AppServices {
 
   /// Tafsir al-Muyassar, loaded on first use.
   final TafsirStore tafsir;
+
+  /// The hadith books, read part by part when opened.
+  final HadithLibrary hadith;
 
   /// Narrated story episodes (audio only) and the sleep timer.
   final NarrationController narration;
