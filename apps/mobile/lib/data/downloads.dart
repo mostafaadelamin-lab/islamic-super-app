@@ -127,4 +127,69 @@ class RecitationDownloads extends ChangeNotifier {
     if (base.existsSync()) await base.delete(recursive: true);
     notifyListeners();
   }
+
+  // ---- Whole-file audio (recitation library, stories) kept for offline listening ----
+
+  /// Files being downloaded now: "series/id" → fraction done (0..1).
+  final Map<String, double> fileProgress = {};
+
+  static String _safe(String s) => s.replaceAll(RegExp(r'[^A-Za-z0-9_.-]'), '_');
+
+  Future<File> _file(String series, String id) async =>
+      File('${(await root()).path}/offline/${_safe(series)}/${_safe(id)}.mp3');
+
+  /// The saved copy of one audio file, or null when it is not on the phone.
+  Future<String?> offlineFile(String series, String id) async {
+    final f = await _file(series, id);
+    return f.existsSync() && f.lengthSync() > 0 ? f.path : null;
+  }
+
+  bool isFileDownloading(String series, String id) => fileProgress.containsKey('$series/$id');
+
+  /// Saves [url] for listening without internet. Throws on a network error.
+  Future<void> downloadFile(String series, String id, String url) async {
+    final key = '$series/$id';
+    if (fileProgress.containsKey(key)) return;
+    final f = await _file(series, id);
+    await f.parent.create(recursive: true);
+    final part = File('${f.path}.part');
+    fileProgress[key] = 0;
+    notifyListeners();
+    try {
+      final res = await httpClient.send(http.Request('GET', Uri.parse(url)));
+      if (res.statusCode != 200) throw HttpException('HTTP ${res.statusCode}', uri: Uri.parse(url));
+      final total = res.contentLength ?? 0;
+      final sink = part.openWrite();
+      var got = 0;
+      var lastShown = 0.0;
+      try {
+        await for (final chunk in res.stream) {
+          sink.add(chunk);
+          got += chunk.length;
+          if (total > 0) {
+            final p = got / total;
+            if (p - lastShown >= 0.02) {
+              lastShown = p;
+              fileProgress[key] = p;
+              notifyListeners();
+            }
+          }
+        }
+      } finally {
+        await sink.close();
+      }
+      if (got == 0) throw HttpException('empty file', uri: Uri.parse(url));
+      await part.rename(f.path);
+    } finally {
+      if (part.existsSync()) part.deleteSync();
+      fileProgress.remove(key);
+      notifyListeners();
+    }
+  }
+
+  Future<void> deleteFile(String series, String id) async {
+    final f = await _file(series, id);
+    if (f.existsSync()) f.deleteSync();
+    notifyListeners();
+  }
 }

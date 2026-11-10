@@ -72,7 +72,7 @@ void main() {
     expect(cat.visible(reviewer: true).map((r) => r.ref), ['hTtlD-u4_HI', '26dRG7OeL6Q']);
   });
 
-  test('official privacy-enhanced YouTube embed, autoplaying muted and inline', () {
+  test('official privacy-enhanced YouTube embed, autoplaying with sound and inline', () {
     final r = ReelCatalog.fromJson({
       'schema': 'reels.v1',
       'items': [item({})],
@@ -81,7 +81,7 @@ void main() {
     expect(u.host, 'www.youtube-nocookie.com');
     expect(u.path, '/embed/hTtlD-u4_HI');
     expect(u.queryParameters, containsPair('autoplay', '1'));
-    expect(u.queryParameters, containsPair('mute', '1'));
+    expect(u.queryParameters, containsPair('mute', '0'));
     expect(u.queryParameters, containsPair('playsinline', '1'));
     expect(u.queryParameters, containsPair('origin', ReelCatalog.embedOrigin));
     expect(r.embedHtml(), contains('src="$u"'));

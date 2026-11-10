@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'about_screen.dart';
-import 'bookmarks_screen.dart';
+import 'asma_screen.dart';
+import 'radio_screen.dart';
 import 'hadith_screen.dart';
 import 'hajj_screen.dart';
 import 'help_screen.dart';
-import 'hisn_screen.dart';
 import 'l10n_ext.dart';
 import 'mosques_screen.dart';
 import 'qibla_screen.dart';
-import 'reels_screen.dart';
-import 'downloads_screen.dart';
-import 'khatma_screen.dart';
 import 'library_screen.dart';
-import 'worship_screen.dart';
 import 'stories_screen.dart';
-import 'search_screen.dart';
 import 'settings_screen.dart';
-import 'tasbih_screen.dart';
 import 'widgets.dart';
 import 'zakat_screen.dart';
 import 'adaptive.dart';
@@ -45,25 +39,15 @@ class MoreScreen extends StatelessWidget {
           children: [
             SectionCard(
               children: [
-                tile('bookmarks', RIcons.bookmarks, l.navBookmarks, () => const BookmarksScreen()),
-                tile('search', RIcons.search, l.quranSearch, () => const SearchScreen()),
-                tile('khatma', RIcons.khatma, l.khatmaTitle, () => const KhatmaScreen()),
-                tile('downloads', RIcons.download, l.downloadsTitle, () => const DownloadsScreen()),
-              ],
-            ),
-            SectionCard(
-              children: [
-                tile('hisn', RIcons.hisn, l.adhkarHisn, () => const HisnScreen()),
                 tile('hadith', RIcons.openBook, l.hadithTitle, () => const HadithScreen()),
-                tile('tasbih', RIcons.beads, l.tasbihTitle, () => const TasbihScreen()),
-                tile('tracker', RIcons.calendarCheck, l.worshipTitle, () => const WorshipScreen()),
+                tile('asma', RIcons.star, l.asmaTitle, () => const AsmaScreen()),
+                tile('radio', RIcons.radio, l.radiosTitle, () => const RadioScreen()),
+                tile('library', RIcons.reciter, l.libraryTitle, () => const LibraryScreen()),
+                tile('stories', RIcons.headphones, l.storiesTitle, () => const StoriesScreen()),
                 tile('qibla', RIcons.compass, l.qiblaTitle, () => const QiblaScreen()),
                 tile('mosques', RIcons.location, l.mosquesTitle, () => const MosquesScreen()),
                 tile('zakat', RIcons.zakat, l.zakatTitle, () => const ZakatScreen()),
                 tile('hajj', RIcons.kaaba, l.hajjTitle, () => const HajjScreen()),
-                tile('library', RIcons.reciter, l.libraryTitle, () => const LibraryScreen()),
-                tile('stories', RIcons.headphones, l.storiesTitle, () => const StoriesScreen()),
-                tile('reels', RIcons.reels, l.reelsTitle, () => const ReelsScreen()),
               ],
             ),
             SectionCard(

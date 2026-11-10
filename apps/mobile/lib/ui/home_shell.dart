@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../app_services.dart';
+import '../data/location.dart';
 import '../data/shortcuts.dart';
 import '../domain/tasbih.dart';
 
@@ -9,14 +12,16 @@ import 'adhkar_screen.dart';
 import 'audio_widgets.dart';
 import 'help_screen.dart';
 import 'home_screen.dart';
+import 'locate.dart';
 import 'l10n_ext.dart';
 import 'more_screen.dart';
 import 'prayer_screen.dart';
+import 'reels_screen.dart';
 import 'surah_list_screen.dart';
 import 'tasbih_screen.dart';
 import 'r_icon.dart';
 
-/// Bottom navigation (a side rail on tablets): Home, Quran, Prayer, Adhkar, More.
+/// Bottom navigation (a side rail on tablets): Home, Quran, Reels, Prayer, Adhkar, More.
 /// The recitation mini player sits above the bar while audio is active.
 class HomeShell extends StatefulWidget {
   const HomeShell({super.key});
@@ -37,7 +42,14 @@ class HomeShellState extends State<HomeShell> {
     shortcutRequests.addListener(_onShortcut);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _onShortcut();
-      if (mounted) maybeShowSharePrompt(context, isoDay(context.services.clock()));
+      if (!mounted) return;
+      maybeShowSharePrompt(context, isoDay(context.services.clock()));
+      // Prayer times and the place name follow the phone's position (the
+      // "automatic location" setting, on by default) unless a city was picked.
+      final s = context.services;
+      if (s.settings.autoLocation && (s.settings.cityNeverChosen || s.settings.cityId == 'gps')) {
+        unawaited(locateAndSave(s, keepMethod: true).catchError((Object _) => const LocationUnavailable()));
+      }
     });
   }
 
@@ -55,10 +67,12 @@ class HomeShellState extends State<HomeShell> {
     switch (type) {
       case 'quran':
         select(1);
-      case 'prayer':
+      case 'reels':
         select(2);
-      case 'adhkar':
+      case 'prayer':
         select(3);
+      case 'adhkar':
+        select(4);
       case 'tasbih':
         Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TasbihScreen()));
     }
@@ -70,13 +84,15 @@ class HomeShellState extends State<HomeShell> {
     final body = switch (_index) {
       0 => HomeScreen(onSelectTab: select),
       1 => const SurahListScreen(),
-      2 => const PrayerScreen(),
-      3 => const AdhkarScreen(),
+      2 => const ReelsScreen(),
+      3 => const PrayerScreen(),
+      4 => const AdhkarScreen(),
       _ => const MoreScreen(),
     };
     final items = [
       (RIcons.home, RIcons.home, l.navHome),
       (RIcons.quran, RIcons.quran, l.navQuran),
+      (RIcons.reels, RIcons.reels, l.reelsTitle),
       (RIcons.prayer, RIcons.prayer, l.navPrayer),
       (RIcons.dua, RIcons.dua, l.navAdhkar),
       (RIcons.more, RIcons.more, l.navMore),
@@ -124,6 +140,7 @@ class HomeShellState extends State<HomeShell> {
           const MiniPlayer(),
           NavigationBar(
             key: const Key('navBar'),
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
             selectedIndex: _index,
             onDestinationSelected: select,
             destinations: [

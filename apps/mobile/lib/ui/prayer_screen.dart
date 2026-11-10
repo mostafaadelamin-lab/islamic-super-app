@@ -17,6 +17,7 @@ import 'l10n_ext.dart';
 import 'prayer_calendar_screen.dart';
 import 'prayer_model.dart';
 import 'qibla_screen.dart';
+import 'locate.dart';
 import 'settings_screen.dart' show enableAdhanAlerts;
 import 'widgets.dart';
 import 'adaptive.dart';
@@ -44,13 +45,11 @@ class _PrayerScreenState extends State<PrayerScreen> {
       _locating = true;
       _geoError = null;
     });
-    final r = await s.location.current();
+    final r = await locateAndSave(s);
     if (!mounted) return;
     switch (r) {
-      case LocationFound(:final lat, :final lng):
-        final near = nearestCity(s.content.cities, lat, lng);
-        await s.settings.setGpsLocation(lat, lng, near.id, near.method);
-        if (mounted) setState(() => _locating = false);
+      case LocationFound():
+        setState(() => _locating = false);
       case LocationDenied():
         setState(() {
           _locating = false;

@@ -219,14 +219,16 @@ class AdhanSettingsCard extends StatelessWidget {
             }
           },
         ),
-        if (settings.adhanEnabled) ...[
+        // Muezzin, sound and test stay visible even before the alerts are
+        // switched on, so the choices are easy to find.
+        ...[
           for (final p in obligatoryPrayers)
             SwitchListTile(
               key: Key('adhanSwitch-$p'),
               contentPadding: const EdgeInsetsDirectional.only(start: 16),
               title: Text(context.prayerName(p)),
-              value: settings.adhanFor(p),
-              onChanged: (v) => settings.setAdhanFor(p, v),
+              value: settings.adhanEnabled && settings.adhanFor(p),
+              onChanged: settings.adhanEnabled ? (v) => settings.setAdhanFor(p, v) : null,
             ),
           const SizedBox(height: DesignTokens.spaceSm),
           Text(l.adhanSound, style: Theme.of(context).textTheme.titleSmall),
@@ -278,9 +280,19 @@ class AdhanSettingsCard extends StatelessWidget {
         ],
         const SizedBox(height: DesignTokens.spaceXs),
         Text(l.adhanNote, style: small),
-        Text(l.adhanCredit, key: const Key('adhanCredit'), style: small),
-        for (final v in bundledAdhanVoices)
-          if (v.credit != null) Text('• ${v.name(context.isArabic)}: ${v.credit}', style: small),
+        ExpansionTile(
+          key: const Key('adhanCredits'),
+          tilePadding: EdgeInsets.zero,
+          title: Text(l.adhanCredit, key: const Key('adhanCredit'), style: small),
+          children: [
+            for (final v in bundledAdhanVoices)
+              if (v.credit != null)
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text('• ${v.name(context.isArabic)}: ${v.credit}', style: small),
+                ),
+          ],
+        ),
       ],
     );
   }

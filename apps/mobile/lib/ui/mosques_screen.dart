@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -148,6 +147,17 @@ class _MosquesScreenState extends State<MosquesScreen> {
                   ),
               ],
             ),
+            const SizedBox(height: DesignTokens.spaceSm),
+            FilledButton.icon(
+              key: const Key('mosquesGoogleMaps'),
+              onPressed: () {
+                final lat = _here?.lat ?? city.lat;
+                final lng = _here?.lng ?? city.lng;
+                launchUrl(googleMapsNearbyUri(lat, lng, arabic: context.isArabic), mode: LaunchMode.externalApplication);
+              },
+              icon: const RIcon(RIcons.location),
+              label: Text(l.mosquesOnGoogleMaps),
+            ),
             const SizedBox(height: DesignTokens.spaceMd),
             if (_locating || _loading)
               Row(
@@ -174,15 +184,23 @@ class _MosquesScreenState extends State<MosquesScreen> {
                 style: theme.textTheme.bodySmall,
               ),
               for (final m in r.mosques)
-                ListTile(
+                Card(
                   key: Key('mosque-${m.id}'),
-                  contentPadding: EdgeInsets.zero,
-                  leading: const RIcon(RIcons.kaaba),
-                  title: Text(m.name ?? l.mosquesUnnamed),
-                  trailing: Text(_distance(context, m.distance)),
-                  onTap: () => launchUrl(
-                    directionsUri(m, ios: defaultTargetPlatform == TargetPlatform.iOS),
-                    mode: LaunchMode.externalApplication,
+                  margin: const EdgeInsets.symmetric(vertical: DesignTokens.spaceXs),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: theme.colorScheme.primaryContainer,
+                      child: RIcon(RIcons.kaaba, color: theme.colorScheme.primary),
+                    ),
+                    title: Text(m.name ?? l.mosquesUnnamed),
+                    subtitle: Text(_distance(context, m.distance)),
+                    trailing: IconButton(
+                      key: Key('mosqueMap-${m.id}'),
+                      tooltip: l.mosquesOnGoogleMaps,
+                      icon: const RIcon(RIcons.location),
+                      onPressed: () => launchUrl(googleMapsMosqueUri(m), mode: LaunchMode.externalApplication),
+                    ),
+                    onTap: () => launchUrl(googleMapsMosqueUri(m), mode: LaunchMode.externalApplication),
                   ),
                 ),
             ],

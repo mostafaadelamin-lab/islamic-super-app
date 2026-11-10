@@ -6,13 +6,13 @@ import '../domain/stories.dart';
 import '../theme/design_tokens.dart';
 import 'audio_widgets.dart';
 import 'l10n_ext.dart';
-import 'story_screen.dart';
+import 'library_screen.dart' show OfflineButton;
 import 'widgets.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
 
-/// Quranic stories: the narrated series (audio only, Sheikh Nabil al-Awadi's
-/// "Stories of the Prophets"), then each story's verses from the Mushaf.
+/// Prophets' stories: the narrated series (audio only, Sheikh Nabil al-Awadi's
+/// "Stories of the Prophets"), every episode shown (owner: no review step).
 class StoriesScreen extends StatelessWidget {
   const StoriesScreen({super.key});
 
@@ -33,51 +33,10 @@ class StoriesScreen extends StatelessWidget {
               child: Text(l.storiesIntro, style: Theme.of(context).textTheme.bodyMedium),
             ),
             for (final se in cat.series) SeriesCard(series: se),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceLg, DesignTokens.spaceLg, 0),
-              child: Text(l.storiesVersesTitle, style: Theme.of(context).textTheme.titleLarge),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
-              child: Text(l.storiesVersesIntro, style: Theme.of(context).textTheme.bodySmall),
-            ),
-            for (final c in QuranStory.categories)
-              if (cat.inCategory(c).isNotEmpty)
-                SectionCard(
-                  key: Key('stories.cat.$c'),
-                  title: c == 'prophets' ? l.storiesCatProphets : l.storiesCatOthers,
-                  children: [for (final st in cat.inCategory(c)) _StoryTile(story: st)],
-                ),
           ],
         ),
       ),
       bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
-    );
-  }
-}
-
-class _StoryTile extends StatelessWidget {
-  const _StoryTile({required this.story});
-  final QuranStory story;
-
-  @override
-  Widget build(BuildContext context) {
-    final q = context.services.content.quran;
-    final surahs = <String>[];
-    for (final r in story.ranges) {
-      final n = surahName(context, q.surah(r.surah));
-      if (!surahs.contains(n)) surahs.add(n);
-    }
-    return ListTile(
-      key: Key('story-${story.id}'),
-      contentPadding: EdgeInsets.zero,
-      leading: const RIcon(RIcons.quran),
-      title: Text(story.title(context.isArabic)),
-      subtitle: Text(
-        '${surahs.join(context.isArabic ? '، ' : ', ')} · ${context.l10n.storiesAyahs(context.num(story.ayahCount))}',
-      ),
-      trailing: const RIcon(RIcons.chevronForward),
-      onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => StoryScreen(story: story))),
     );
   }
 }
@@ -96,8 +55,7 @@ class SeriesCard extends StatelessWidget {
     return ListenableBuilder(
       listenable: Listenable.merge([s.settings, s.narration]),
       builder: (context, _) {
-        final reviewer = s.settings.reelsReviewer;
-        final eps = series.visible(reviewer: reviewer);
+        final eps = series.episodes;
         final theme = Theme.of(context);
         return SectionCard(
           key: Key('series-${series.id}'),
@@ -111,21 +69,12 @@ class SeriesCard extends StatelessWidget {
               )
             else ...[
               Text(
-                '${l.storiesEpisodes(context.num(eps.length))} · ${l.storiesOnlineOnly}',
+                l.storiesEpisodes(context.num(eps.length)),
                 style: theme.textTheme.bodySmall,
               ),
               const SizedBox(height: DesignTokens.spaceSm),
               for (final e in eps) _EpisodeTile(seriesId: series.id, episode: e),
             ],
-            const SizedBox(height: DesignTokens.spaceSm),
-            Text(l.storiesSeriesSource(series.source, series.licence), style: theme.textTheme.bodySmall),
-            SwitchListTile(
-              key: const Key('stories.reviewer'),
-              contentPadding: EdgeInsets.zero,
-              title: Text(l.storiesReviewerMode, style: theme.textTheme.bodyMedium),
-              value: reviewer,
-              onChanged: (v) => s.settings.setReelsReviewer(v),
-            ),
           ],
         );
       },
@@ -155,12 +104,11 @@ class _EpisodeTile extends StatelessWidget {
       subtitle: Text(
         [
           if (m != null) l.storiesMinutes(context.num(m)),
-          if (episode.isPending) '⚠ ${l.storiesEpisodePending}',
-          if (episode.reviewer != null) l.storiesReviewedBy(episode.reviewer!),
         ].join(' · '),
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       ),
+      trailing: OfflineButton(series: seriesId, episode: episode),
       onTap: () {
         if (playing) {
           s.narration.pause();
@@ -175,7 +123,7 @@ class _EpisodeTile extends StatelessWidget {
 }
 
 /// Player for the narrated episode: title, progress, ±30 s, play/pause, stop,
-/// sleep timer, and a link to the story's verses.
+/// sleep timer.
 class NarrationBar extends StatelessWidget {
   const NarrationBar({super.key});
 
@@ -193,7 +141,6 @@ class NarrationBar extends StatelessWidget {
         final scheme = theme.colorScheme;
         final error = n.state == RecitationState.error;
         final total = n.duration ?? (e.durationSec == null ? null : Duration(seconds: e.durationSec!));
-        final story = s.content.stories.byId(e.story);
         String fmt(Duration d) => context.numLtr('${d.inMinutes}:${(d.inSeconds % 60).toString().padLeft(2, '0')}');
         return Material(
           key: const Key('narrationBar'),
@@ -269,15 +216,6 @@ class NarrationBar extends StatelessWidget {
                       const SleepTimerButton(),
                     ],
                   ),
-                  if (story != null)
-                    TextButton.icon(
-                      key: const Key('narrationReadVerses'),
-                      icon: const RIcon(RIcons.quran),
-                      label: Text(l.storiesReadVerses),
-                      onPressed: () => Navigator.of(
-                        context,
-                      ).push(MaterialPageRoute<void>(builder: (_) => StoryScreen(story: story))),
-                    ),
                 ],
               ),
             ),

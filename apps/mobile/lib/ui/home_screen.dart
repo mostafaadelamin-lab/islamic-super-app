@@ -17,6 +17,7 @@ import 'qibla_screen.dart';
 import 'reels_screen.dart';
 import 'settings_screen.dart';
 import 'stories_screen.dart';
+import 'locate.dart';
 import 'tasbih_screen.dart';
 import 'widgets.dart';
 import 'r_icon.dart';
@@ -84,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 DesignTokens.spaceXl,
               ),
               children: [
-                _Hero(pv: pv, onTap: () => widget.onSelectTab(2), onSettings: () => _push(const SettingsScreen())),
+                _Hero(pv: pv, onTap: () => widget.onSelectTab(3), onSettings: () => _push(const SettingsScreen())),
                 const SizedBox(height: DesignTokens.spaceMd),
                 _DayCard(
                   pv: pv,
@@ -98,9 +99,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Expanded(child: _BigTile('quran', RIcons.quran, l.homeBigQuran, () => widget.onSelectTab(1))),
                       const SizedBox(width: DesignTokens.spaceSm),
-                      Expanded(child: _BigTile('adhkar', RIcons.dua, l.homeBigAdhkar, () => widget.onSelectTab(3))),
+                      Expanded(child: _BigTile('adhkar', RIcons.dua, l.homeBigAdhkar, () => widget.onSelectTab(4))),
                       const SizedBox(width: DesignTokens.spaceSm),
-                      Expanded(child: _BigTile('prayer', RIcons.clock, l.homeBigPrayer, () => widget.onSelectTab(2))),
+                      Expanded(child: _BigTile('prayer', RIcons.clock, l.homeBigPrayer, () => widget.onSelectTab(3))),
                     ],
                   ),
                 ),
@@ -121,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: InkWell(
                     key: const Key('home.mainSections'),
                     borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
-                    onTap: () => widget.onSelectTab(4),
+                    onTap: () => widget.onSelectTab(5),
                     child: Padding(
                       padding: const EdgeInsets.all(DesignTokens.spaceLg),
                       child: Row(
@@ -189,7 +190,7 @@ class _Hero extends StatelessWidget {
     final recent = pv.today == null ? null : PrayerSchedule.recent(now, pv.today!);
     final next = recent ?? pv.next;
     final remaining = recent?.remaining ?? next?.at.difference(now);
-    final city = context.isArabic ? '${pv.city.countryAr} - ${pv.city.nameAr}' : pv.city.nameEn;
+    final city = placeLabel(s, pv.city, arabic: context.isArabic);
     final nextTime = next == null ? null : PrayerSchedule.localDate(pv.location, next.at.toUtc());
     final nextDay = next == null || nextTime == pv.date ? pv.today : pv.tomorrow;
     return Column(

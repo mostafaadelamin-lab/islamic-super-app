@@ -15,7 +15,7 @@
   "prayer.asrStandard": "Standard (Shafi'i, Maliki, Hanbali)", "prayer.asrHanafi": "Hanafi", "prayer.qibla": "Qibla direction", "prayer.qiblaDeg": "{deg}° from true north",
   "prayer.highLat": "High-latitude rule applied to: {list}", "prayer.adjust": "Manual adjustment (minutes)",
   "settings.language": "Language", "settings.theme": "Theme", "settings.themeSystem": "System", "settings.themeLight": "Light", "settings.themeDark": "Dark",
-  "settings.fontSize": "Quran font size", "settings.about": "About", "settings.free": "This app is completely free: no ads, no subscriptions, no purchases.",
+  "settings.fontSize": "Quran font size", "settings.about": "About", "settings.free": "A free app made for the sake of Allah: no charge and no ads.",
   "settings.sources": "Content sources", "bookmarks.empty": "No bookmarks yet",
   "common.retry": "Retry", "common.offline": "You are offline — showing saved content", "common.error": "Something went wrong",
   "reels.title": "Islamic reels",

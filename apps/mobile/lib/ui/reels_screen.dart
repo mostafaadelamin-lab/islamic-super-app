@@ -376,7 +376,7 @@ bool reelNavigationAllowedInFeed(Uri u) =>
     (u.scheme == 'https' && u.host == 'www.youtube-nocookie.com' && (u.path == '/' || u.path.startsWith('/embed/'))) ||
     (u.scheme == 'https' && u.host == 'www.instagram.com' && _igEmbedPath.hasMatch(u.path));
 
-/// The platform's official embed in a WebView. YouTube autoplays muted and
+/// The platform's official embed in a WebView. YouTube autoplays with sound and
 /// inline (its own controls unmute); Instagram's embed shows its play button.
 /// Navigation away from the embed (logos, "view on Instagram", related links)
 /// opens in the YouTube/Instagram app or browser instead of inside the feed.

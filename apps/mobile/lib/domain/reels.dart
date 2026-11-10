@@ -111,11 +111,11 @@ class Reel {
   /// Instagram's official embed page, loaded directly in the WebView.
   Uri get instagramEmbedUri => Uri.https('www.instagram.com', '/reel/$ref/embed/');
 
-  /// The YouTube privacy-enhanced embed, autoplaying (muted, as mobile
-  /// browsers require), inline and looping.
+  /// The YouTube privacy-enhanced embed, autoplaying with sound (the WebView
+  /// allows playback without a tap), inline and looping.
   Uri embedUri({String origin = ReelCatalog.embedOrigin}) => Uri.https('www.youtube-nocookie.com', '/embed/$ref', {
     'autoplay': '1',
-    'mute': '1',
+    'mute': '0',
     'playsinline': '1',
     'loop': '1',
     'playlist': ref,

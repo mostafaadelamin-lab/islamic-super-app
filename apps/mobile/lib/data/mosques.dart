@@ -19,6 +19,7 @@ class MosqueFinder {
   final http.Client _http;
   final SharedPreferences _prefs;
   static const _cacheKey = 'mosques.cache';
+  static const _ua = 'Rattil-Quran-app/1.0 (nearby mosques)';
 
   static String _key(double lat, double lng, int radius, bool arabic) =>
       '${lat.toStringAsFixed(3)},${lng.toStringAsFixed(3)},$radius,${arabic ? 'ar' : 'en'}';
@@ -35,11 +36,11 @@ class MosqueFinder {
               headers: const {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 // Overpass asks clients to identify themselves.
-                'User-Agent': 'Rattil-Quran-app/1.0 (nearby mosques)',
+                'User-Agent': _ua,
               },
               body: 'data=${Uri.encodeQueryComponent(overpassQuery(lat, lng, radius))}',
             )
-            .timeout(const Duration(seconds: 15));
+            .timeout(const Duration(seconds: 25));
         if (res.statusCode != 200) throw http.ClientException('HTTP ${res.statusCode}');
         final list = parseOverpass(jsonDecode(utf8.decode(res.bodyBytes)), lat, lng, arabic: arabic);
         await _prefs.setString(
@@ -49,10 +50,22 @@ class MosqueFinder {
             'items': [for (final m in list) m.toJson()],
           }),
         );
+        if (list.isEmpty) continue; // an empty answer from one server: try the next
         return MosqueResult(list);
       } catch (e) {
         last = e;
       }
+    }
+    try {
+      final res = await _http
+          .get(nominatimMosquesUri(lat, lng, radius, arabic: arabic), headers: const {'User-Agent': _ua})
+          .timeout(const Duration(seconds: 20));
+      if (res.statusCode == 200) {
+        final list = parseNominatim(jsonDecode(utf8.decode(res.bodyBytes)), lat, lng);
+        if (list.isNotEmpty) return MosqueResult(list);
+      }
+    } catch (e) {
+      last = e;
     }
     final raw = _prefs.getString(_cacheKey);
     if (raw != null) {

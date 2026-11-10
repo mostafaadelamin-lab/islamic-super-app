@@ -17,6 +17,7 @@ import 'data/worship_store.dart';
 import 'data/downloads.dart';
 import 'data/adhan_voice_files.dart';
 import 'data/location.dart';
+import 'data/place_names.dart';
 import 'data/media_session.dart';
 import 'data/notifications.dart';
 import 'data/recitation.dart';
@@ -52,6 +53,7 @@ class AppServices {
     required this.narration,
     required this.sleepTimer,
     this.location = const GeolocatorLocation(),
+    required this.placeNames,
     required this.khatma,
     required this.worship,
     required this.downloads,
@@ -147,6 +149,7 @@ class AppServices {
       settings: settings,
       recitation: recitation,
       backendFactory: narrationBackend ?? JustAudioNarrationBackend.new,
+      offlineFile: downloads.offlineFile,
     );
     return AppServices(
       content: content,
@@ -185,6 +188,7 @@ class AppServices {
       hadith: hadith ?? HadithLibrary.asset(content.hadith, rootBundle),
       mp3quran: Mp3QuranClient(httpClient: httpClient, prefs: prefs, clock: c),
       location: location ?? const GeolocatorLocation(),
+      placeNames: PlaceNames(httpClient),
       khatma: khatma,
       worship: WorshipController(settings, localToday),
       downloads: downloads,
@@ -231,6 +235,8 @@ class AppServices {
   final SleepTimerController sleepTimer;
 
   /// Device position for "use my location".
+  /// Area names for the home screen (OpenStreetMap reverse geocoding).
+  final PlaceNames placeNames;
   final LocationProvider location;
 
   /// Quran khatma plan and history.

@@ -14,7 +14,7 @@ import 'widgets.dart';
 
 const _bottomPlayers = Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]);
 
-/// mp3quran.net reciters (every riwaya) and Quran radios, streamed.
+/// mp3quran.net reciters (every riwaya), streamed or saved for offline listening.
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
 
@@ -39,18 +39,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(l.libraryTitle),
-          bottom: TabBar(
-            tabs: [
-              Tab(key: const Key('libraryTabReciters'), text: l.libraryReciters),
-              Tab(key: const Key('libraryTabRadios'), text: l.libraryRadios),
-            ],
-          ),
-        ),
+    return Scaffold(
+        appBar: AppBar(title: Text(l.libraryTitle)),
         bottomNavigationBar: _bottomPlayers,
         body: ReadableWidth(
           child: FutureBuilder<Mp3Library>(
@@ -77,11 +67,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
               }
               final lib = snap.data;
               if (lib == null) return const Center(child: CircularProgressIndicator());
-              return TabBarView(children: [_reciters(context, lib), _radios(context, lib)]);
+              return _reciters(context, lib);
             },
           ),
         ),
-      ),
     );
   }
 
@@ -155,37 +144,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
       ],
     );
   }
-
-  Widget _radios(BuildContext context, Mp3Library lib) {
-    final l = context.l10n;
-    final s = context.services;
-    final list = lib.filterRadios(_query, s.content.normalizer.normalize);
-    return ListenableBuilder(
-      listenable: s.narration,
-      builder: (context, _) => ListView(
-        key: const Key('libraryRadios'),
-        children: [
-          _search(context),
-          if (list.isEmpty) Padding(padding: const EdgeInsets.all(DesignTokens.spaceXl), child: Text(l.libraryEmpty)),
-          for (final r in list)
-            _PlayTile(
-              key: Key('radio-${r.id}'),
-              series: 'radio',
-              episode: Episode(
-                id: 'radio-${r.id}',
-                titleAr: r.name,
-                titleEn: r.name,
-                url: r.url,
-                status: ReviewStatus.approved,
-              ),
-              subtitle: l.libraryLive,
-              remember: false,
-            ),
-          _source(context),
-        ],
-      ),
-    );
-  }
 }
 
 /// One reciter: choose a recording (riwaya), then a surah to play.
@@ -249,8 +207,9 @@ class _ReciterScreenState extends State<ReciterScreen> {
                   builder: (context) {
                     final surah = s.content.quran.surah(n);
                     final ar = l.librarySurahTitle(r.name, surah.nameAr);
-                    return _PlayTile(
+                    return PlayTile(
                       key: Key('surah-$n'),
+                      offline: true,
                       series: 'mp3quran-${_moshaf.id}',
                       episode: Episode(
                         id: 's$n',
@@ -275,32 +234,41 @@ class _ReciterScreenState extends State<ReciterScreen> {
   }
 }
 
-/// Play / pause row for one stream through the narration player (one voice at a time).
-class _PlayTile extends StatelessWidget {
-  const _PlayTile({
+/// Play / pause row for one stream through the narration player (one voice at a
+/// time). With [offline], a button saves the file on the phone (or deletes the
+/// saved copy); a saved copy plays without internet.
+class PlayTile extends StatelessWidget {
+  const PlayTile({
     super.key,
     required this.series,
     required this.episode,
     this.title,
     this.subtitle,
     this.remember = true,
+    this.offline = false,
+    this.leading,
   });
   final String series;
   final Episode episode;
   final String? title;
   final String? subtitle;
   final bool remember;
+  final bool offline;
+  final Widget? leading;
 
   @override
   Widget build(BuildContext context) {
-    final n = context.services.narration;
+    final s = context.services;
+    final n = s.narration;
     final on = n.episode?.id == episode.id && n.episode?.url == episode.url;
     final playing = on && n.isPlaying;
+    final scheme = Theme.of(context).colorScheme;
     return ListTile(
       selected: on,
-      leading: Icon(playing ? Icons.pause_circle : Icons.play_circle, color: Theme.of(context).colorScheme.primary),
+      leading: leading ?? Icon(playing ? Icons.pause_circle : Icons.play_circle, color: scheme.primary),
       title: Text(title ?? episode.title(context.isArabic)),
       subtitle: subtitle == null ? null : Text(subtitle!),
+      trailing: offline ? OfflineButton(series: series, episode: episode) : (leading != null ? Icon(playing ? Icons.pause_circle : Icons.play_circle, color: scheme.primary) : null),
       onTap: () {
         if (playing) {
           n.pause();
@@ -309,6 +277,78 @@ class _PlayTile extends StatelessWidget {
         } else {
           n.playEpisode(series, episode, remember: remember);
         }
+      },
+    );
+  }
+}
+
+/// Download for offline listening / saved (tap to delete) / progress.
+class OfflineButton extends StatefulWidget {
+  const OfflineButton({super.key, required this.series, required this.episode});
+  final String series;
+  final Episode episode;
+
+  @override
+  State<OfflineButton> createState() => OfflineButtonState();
+}
+
+class OfflineButtonState extends State<OfflineButton> {
+  Future<String?>? _saved;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _saved ??= _check();
+  }
+
+  Future<String?> _check() async {
+    try {
+      return await context.services.downloads.offlineFile(widget.series, widget.episode.id);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final d = context.services.downloads;
+    final l = context.l10n;
+    return ListenableBuilder(
+      listenable: d,
+      builder: (context, _) {
+        if (d.isFileDownloading(widget.series, widget.episode.id)) {
+          final p = d.fileProgress['${widget.series}/${widget.episode.id}'] ?? 0;
+          return SizedBox.square(
+            dimension: 28,
+            child: CircularProgressIndicator(strokeWidth: 2.5, value: p > 0 ? p : null),
+          );
+        }
+        return FutureBuilder<String?>(
+          future: _saved,
+          builder: (context, snap) {
+            final saved = snap.data != null;
+            return IconButton(
+              key: Key('offline-${widget.episode.id}'),
+              tooltip: saved ? l.offlineSavedDelete : l.offlineDownload,
+              icon: Icon(saved ? Icons.download_done : Icons.download_for_offline_outlined,
+                  color: saved ? Theme.of(context).colorScheme.primary : null),
+              onPressed: () async {
+                final messenger = ScaffoldMessenger.of(context);
+                if (saved) {
+                  await d.deleteFile(widget.series, widget.episode.id);
+                } else {
+                  try {
+                    await d.downloadFile(widget.series, widget.episode.id, widget.episode.url);
+                    messenger.showSnackBar(SnackBar(content: Text(l.offlineDone)));
+                  } catch (_) {
+                    messenger.showSnackBar(SnackBar(content: Text(l.offlineFailed)));
+                  }
+                }
+                if (mounted) setState(() => _saved = _check());
+              },
+            );
+          },
+        );
       },
     );
   }

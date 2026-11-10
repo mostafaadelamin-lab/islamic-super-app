@@ -347,7 +347,7 @@ abstract class AppLocalizations {
   /// shared key "adhan.fajrVoiceNote"
   ///
   /// In en, this message translates to:
-  /// **'The Fajr adhan has \"as-salatu khayrun min an-nawm\", so it has its own choice and plays by itself at Fajr. Tap a muezzin to download and choose it.'**
+  /// **'The Fajr adhan says «prayer is better than sleep», so it has its own choice and plays only at Fajr.'**
   String get adhanFajrVoiceNote;
 
   /// shared key "adhan.iosNote"
@@ -551,7 +551,7 @@ abstract class AppLocalizations {
   /// shared key "adhan.voiceNote"
   ///
   /// In en, this message translates to:
-  /// **'The adhan of Dhuhr, Asr, Maghrib and Isha. Tap a muezzin to download and choose it; it stays on the phone and works without internet. The play button lets you listen.'**
+  /// **'Dhuhr, Asr, Maghrib and Isha. Pick a muezzin and press play to listen; every voice is inside the app and works offline.'**
   String get adhanVoiceNote;
 
   /// shared key "adhan.voiceSearch"
@@ -829,6 +829,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rattil'**
   String get appName;
+
+  /// shared key "asma.less"
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get asmaLess;
+
+  /// shared key "asma.more"
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get asmaMore;
+
+  /// shared key "asma.search"
+  ///
+  /// In en, this message translates to:
+  /// **'Find a name'**
+  String get asmaSearch;
+
+  /// shared key "asma.seeAlso"
+  ///
+  /// In en, this message translates to:
+  /// **'Explained together with: {name}'**
+  String asmaSeeAlso(String name);
+
+  /// shared key "asma.source"
+  ///
+  /// In en, this message translates to:
+  /// **'Explanations quoted word for word from «تفسير أسماء الله الحسنى» by Sheikh Abd al-Rahman al-Sa\'di (compiled and edited by Ubaid al-Ubaid).'**
+  String get asmaSource;
+
+  /// shared key "asma.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Names of Allah'**
+  String get asmaTitle;
 
   /// shared key "audio.basmala"
   ///
@@ -1916,6 +1952,12 @@ abstract class AppLocalizations {
   /// **'(last saved result, you are offline)'**
   String get mosquesOffline;
 
+  /// shared key "mosques.onGoogleMaps"
+  ///
+  /// In en, this message translates to:
+  /// **'Open nearby mosques in Google Maps'**
+  String get mosquesOnGoogleMaps;
+
   /// shared key "mosques.retry"
   ///
   /// In en, this message translates to:
@@ -2047,6 +2089,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get navSettings;
+
+  /// shared key "offline.done"
+  ///
+  /// In en, this message translates to:
+  /// **'Saved: you can listen without internet'**
+  String get offlineDone;
+
+  /// shared key "offline.download"
+  ///
+  /// In en, this message translates to:
+  /// **'Download for offline listening'**
+  String get offlineDownload;
+
+  /// shared key "offline.failed"
+  ///
+  /// In en, this message translates to:
+  /// **'Download failed. Check the internet and try again'**
+  String get offlineFailed;
+
+  /// shared key "offline.savedDelete"
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on the phone — tap to delete'**
+  String get offlineSavedDelete;
 
   /// shared key "prayer.adjust"
   ///
@@ -2768,6 +2834,24 @@ abstract class AppLocalizations {
   /// **'Unlimited'**
   String get radioUnlimited;
 
+  /// shared key "radios.featured"
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get radiosFeatured;
+
+  /// shared key "radios.more"
+  ///
+  /// In en, this message translates to:
+  /// **'More radios'**
+  String get radiosMore;
+
+  /// shared key "radios.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Quran radios'**
+  String get radiosTitle;
+
   /// shared key "reader.back"
   ///
   /// In en, this message translates to:
@@ -3161,7 +3245,7 @@ abstract class AppLocalizations {
   /// shared key "settings.free"
   ///
   /// In en, this message translates to:
-  /// **'This app is completely free: no ads, no subscriptions, no purchases.'**
+  /// **'A free app made for the sake of Allah: no charge and no ads.'**
   String get settingsFree;
 
   /// shared key "settings.hijriOffset"

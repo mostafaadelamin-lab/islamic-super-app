@@ -157,7 +157,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adhanFajrVoiceNote =>
-      'أذان الفجر فيه «الصلاة خير من النوم»، لذلك له اختيار مستقل ويعمل وحده في وقت الفجر. اضغط على أي مؤذن ليتحمّل ويُختار.';
+      'أذان الفجر فيه «الصلاة خير من النوم»، لذلك له اختيار مستقل ويعمل وحده في وقت الفجر.';
 
   @override
   String get adhanIosNote =>
@@ -282,7 +282,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adhanVoiceNote =>
-      'أذان الظهر والعصر والمغرب والعشاء. اضغط على أي مؤذن ليتحمّل ويُختار، ويفضل محفوظًا على الموبايل ليعمل دون إنترنت. زر التشغيل للاستماع.';
+      'أذان الظهر والعصر والمغرب والعشاء. اختر المؤذن واضغط زر التشغيل لتسمعه؛ كل الأصوات محفوظة داخل التطبيق وتعمل بدون إنترنت.';
 
   @override
   String get adhanVoiceSearch => 'ابحث باسم المؤذن أو البلد';
@@ -436,6 +436,27 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get appName => 'رتّل';
+
+  @override
+  String get asmaLess => 'أقل';
+
+  @override
+  String get asmaMore => 'المزيد';
+
+  @override
+  String get asmaSearch => 'ابحث عن اسم';
+
+  @override
+  String asmaSeeAlso(String name) {
+    return 'يأتي شرحه مع: $name';
+  }
+
+  @override
+  String get asmaSource =>
+      'الشرح منقول بنصّه من كتاب «تفسير أسماء الله الحسنى» للشيخ عبد الرحمن بن ناصر السعدي رحمه الله (جمع وتحقيق: عبيد بن علي العبيد).';
+
+  @override
+  String get asmaTitle => 'أسماء الله الحسنى';
 
   @override
   String get audioBasmala => 'البسملة';
@@ -1062,6 +1083,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get mosquesOffline => '(آخر نتيجة محفوظة، أنت غير متصل)';
 
   @override
+  String get mosquesOnGoogleMaps => 'افتح المساجد القريبة على خرائط جوجل';
+
+  @override
   String get mosquesRetry => 'إعادة المحاولة';
 
   @override
@@ -1128,6 +1152,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get navSettings => 'الإعدادات';
+
+  @override
+  String get offlineDone => 'تم الحفظ، يمكنك الاستماع بدون إنترنت';
+
+  @override
+  String get offlineDownload => 'تحميل للاستماع بدون إنترنت';
+
+  @override
+  String get offlineFailed => 'تعذّر التحميل، تحقّق من الإنترنت وحاول مرة أخرى';
+
+  @override
+  String get offlineSavedDelete => 'محفوظة على الهاتف — اضغط للحذف';
 
   @override
   String get prayerAdjust => 'تعديل يدوي (بالدقائق)';
@@ -1551,6 +1587,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get radioUnlimited => 'غير محدود';
 
   @override
+  String get radiosFeatured => 'بث مباشر';
+
+  @override
+  String get radiosMore => 'إذاعات أخرى';
+
+  @override
+  String get radiosTitle => 'إذاعات القرآن الكريم';
+
+  @override
   String get readerBack => 'رجوع إلى الفهرس';
 
   @override
@@ -1765,7 +1810,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsFontSize => 'حجم خط المصحف';
 
   @override
-  String get settingsFree => 'التطبيق مجاني بالكامل: بلا إعلانات ولا اشتراكات ولا مشتريات.';
+  String get settingsFree => 'تطبيق مجاني تم إنشاؤه لوجه الله تعالى، بدون مقابل وبدون إعلانات.';
 
   @override
   String get settingsHijriOffset => 'تعديل التاريخ الهجري';

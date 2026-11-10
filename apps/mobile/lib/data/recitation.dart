@@ -336,6 +336,7 @@ class NarrationController extends ChangeNotifier {
     required SettingsController settings,
     required RecitationController recitation,
     required NarrationBackend Function() backendFactory,
+    this.offlineFile,
   }) : _settings = settings,
        _recitation = recitation,
        _factory = backendFactory {
@@ -345,6 +346,9 @@ class NarrationController extends ChangeNotifier {
   final SettingsController _settings;
   final RecitationController _recitation;
   final NarrationBackend Function() _factory;
+
+  /// The saved copy of an episode (series, episode id), played instead of streaming.
+  final Future<String?> Function(String seriesId, String episodeId)? offlineFile;
   NarrationBackend? _backend;
   StreamSubscription<Duration>? _posSub;
   StreamSubscription<void>? _doneSub;
@@ -395,7 +399,13 @@ class NarrationController extends ChangeNotifier {
     final b = _ensure();
     try {
       await b.stop();
-      _duration = await b.load(e.url);
+      String? local;
+      try {
+        local = await offlineFile?.call(seriesId, e.id);
+      } catch (_) {
+        local = null;
+      }
+      _duration = await b.load(local != null ? Uri.file(local).toString() : e.url);
       if (gen != _generation) return;
       final resume = remember ? _settings.storyPosition(_key(seriesId, e)) : 0;
       if (resume > 5 && (_duration == null || resume < _duration!.inSeconds - 10)) {

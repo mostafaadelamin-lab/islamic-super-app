@@ -158,7 +158,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhanFajrVoiceNote =>
-      'The Fajr adhan has \"as-salatu khayrun min an-nawm\", so it has its own choice and plays by itself at Fajr. Tap a muezzin to download and choose it.';
+      'The Fajr adhan says «prayer is better than sleep», so it has its own choice and plays only at Fajr.';
 
   @override
   String get adhanIosNote =>
@@ -283,7 +283,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhanVoiceNote =>
-      'The adhan of Dhuhr, Asr, Maghrib and Isha. Tap a muezzin to download and choose it; it stays on the phone and works without internet. The play button lets you listen.';
+      'Dhuhr, Asr, Maghrib and Isha. Pick a muezzin and press play to listen; every voice is inside the app and works offline.';
 
   @override
   String get adhanVoiceSearch => 'Search by muezzin or country';
@@ -437,6 +437,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appName => 'Rattil';
+
+  @override
+  String get asmaLess => 'Less';
+
+  @override
+  String get asmaMore => 'More';
+
+  @override
+  String get asmaSearch => 'Find a name';
+
+  @override
+  String asmaSeeAlso(String name) {
+    return 'Explained together with: $name';
+  }
+
+  @override
+  String get asmaSource =>
+      'Explanations quoted word for word from «تفسير أسماء الله الحسنى» by Sheikh Abd al-Rahman al-Sa\'di (compiled and edited by Ubaid al-Ubaid).';
+
+  @override
+  String get asmaTitle => 'Names of Allah';
 
   @override
   String get audioBasmala => 'Basmala';
@@ -1065,6 +1086,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mosquesOffline => '(last saved result, you are offline)';
 
   @override
+  String get mosquesOnGoogleMaps => 'Open nearby mosques in Google Maps';
+
+  @override
   String get mosquesRetry => 'Try again';
 
   @override
@@ -1131,6 +1155,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get navSettings => 'Settings';
+
+  @override
+  String get offlineDone => 'Saved: you can listen without internet';
+
+  @override
+  String get offlineDownload => 'Download for offline listening';
+
+  @override
+  String get offlineFailed => 'Download failed. Check the internet and try again';
+
+  @override
+  String get offlineSavedDelete => 'Saved on the phone — tap to delete';
 
   @override
   String get prayerAdjust => 'Manual adjustment (minutes)';
@@ -1552,6 +1588,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get radioUnlimited => 'Unlimited';
 
   @override
+  String get radiosFeatured => 'Live';
+
+  @override
+  String get radiosMore => 'More radios';
+
+  @override
+  String get radiosTitle => 'Quran radios';
+
+  @override
   String get readerBack => 'Back to the index';
 
   @override
@@ -1767,7 +1812,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsFontSize => 'Quran font size';
 
   @override
-  String get settingsFree => 'This app is completely free: no ads, no subscriptions, no purchases.';
+  String get settingsFree => 'A free app made for the sake of Allah: no charge and no ads.';
 
   @override
   String get settingsHijriOffset => 'Hijri date adjustment';

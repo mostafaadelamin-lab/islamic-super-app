@@ -211,7 +211,7 @@
   "@adhanFajrVoice": {
     "description": "shared key \"adhan.fajrVoice\""
   },
-  "adhanFajrVoiceNote": "The Fajr adhan has \"as-salatu khayrun min an-nawm\", so it has its own choice and plays by itself at Fajr. Tap a muezzin to download and choose it.",
+  "adhanFajrVoiceNote": "The Fajr adhan says «prayer is better than sleep», so it has its own choice and plays only at Fajr.",
   "@adhanFajrVoiceNote": {
     "description": "shared key \"adhan.fajrVoiceNote\""
   },
@@ -403,7 +403,7 @@
       }
     }
   },
-  "adhanVoiceNote": "The adhan of Dhuhr, Asr, Maghrib and Isha. Tap a muezzin to download and choose it; it stays on the phone and works without internet. The play button lets you listen.",
+  "adhanVoiceNote": "Dhuhr, Asr, Maghrib and Isha. Pick a muezzin and press play to listen; every voice is inside the app and works offline.",
   "@adhanVoiceNote": {
     "description": "shared key \"adhan.voiceNote\""
   },
@@ -631,6 +631,35 @@
   "appName": "Rattil",
   "@appName": {
     "description": "shared key \"appName\""
+  },
+  "asmaLess": "Less",
+  "@asmaLess": {
+    "description": "shared key \"asma.less\""
+  },
+  "asmaMore": "More",
+  "@asmaMore": {
+    "description": "shared key \"asma.more\""
+  },
+  "asmaSearch": "Find a name",
+  "@asmaSearch": {
+    "description": "shared key \"asma.search\""
+  },
+  "asmaSeeAlso": "Explained together with: {name}",
+  "@asmaSeeAlso": {
+    "description": "shared key \"asma.seeAlso\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "asmaSource": "Explanations quoted word for word from «تفسير أسماء الله الحسنى» by Sheikh Abd al-Rahman al-Sa'di (compiled and edited by Ubaid al-Ubaid).",
+  "@asmaSource": {
+    "description": "shared key \"asma.source\""
+  },
+  "asmaTitle": "Names of Allah",
+  "@asmaTitle": {
+    "description": "shared key \"asma.title\""
   },
   "audioBasmala": "Basmala",
   "@audioBasmala": {
@@ -1587,6 +1616,10 @@
   "@mosquesOffline": {
     "description": "shared key \"mosques.offline\""
   },
+  "mosquesOnGoogleMaps": "Open nearby mosques in Google Maps",
+  "@mosquesOnGoogleMaps": {
+    "description": "shared key \"mosques.onGoogleMaps\""
+  },
   "mosquesRetry": "Try again",
   "@mosquesRetry": {
     "description": "shared key \"mosques.retry\""
@@ -1679,6 +1712,22 @@
   "navSettings": "Settings",
   "@navSettings": {
     "description": "shared key \"nav.settings\""
+  },
+  "offlineDone": "Saved: you can listen without internet",
+  "@offlineDone": {
+    "description": "shared key \"offline.done\""
+  },
+  "offlineDownload": "Download for offline listening",
+  "@offlineDownload": {
+    "description": "shared key \"offline.download\""
+  },
+  "offlineFailed": "Download failed. Check the internet and try again",
+  "@offlineFailed": {
+    "description": "shared key \"offline.failed\""
+  },
+  "offlineSavedDelete": "Saved on the phone — tap to delete",
+  "@offlineSavedDelete": {
+    "description": "shared key \"offline.savedDelete\""
   },
   "prayerAdjust": "Manual adjustment (minutes)",
   "@prayerAdjust": {
@@ -2323,6 +2372,18 @@
   "@radioUnlimited": {
     "description": "shared key \"radio.unlimited\""
   },
+  "radiosFeatured": "Live",
+  "@radiosFeatured": {
+    "description": "shared key \"radios.featured\""
+  },
+  "radiosMore": "More radios",
+  "@radiosMore": {
+    "description": "shared key \"radios.more\""
+  },
+  "radiosTitle": "Quran radios",
+  "@radiosTitle": {
+    "description": "shared key \"radios.title\""
+  },
   "readerBack": "Back to the index",
   "@readerBack": {
     "description": "shared key \"reader.back\""
@@ -2634,7 +2695,7 @@
   "@settingsFontSize": {
     "description": "shared key \"settings.fontSize\""
   },
-  "settingsFree": "This app is completely free: no ads, no subscriptions, no purchases.",
+  "settingsFree": "A free app made for the sake of Allah: no charge and no ads.",
   "@settingsFree": {
     "description": "shared key \"settings.free\""
   },

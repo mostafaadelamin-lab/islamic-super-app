@@ -5,9 +5,56 @@ import 'dart:math' as math;
 
 const overpassEndpoints = [
   'https://overpass-api.de/api/interpreter',
-  'https://overpass.kumi.systems/api/interpreter',
   'https://overpass.private.coffee/api/interpreter',
+  'https://maps.mail.ru/osm/tools/overpass/api/interpreter',
+  'https://overpass.osm.jp/api/interpreter',
+  'https://overpass.kumi.systems/api/interpreter',
 ];
+
+/// Last resort when every Overpass server fails: OpenStreetMap's own search
+/// (Nominatim) for mosques inside a box around the point.
+Uri nominatimMosquesUri(double lat, double lng, int radius, {required bool arabic}) {
+  final dLat = radius / 111320.0;
+  final dLng = radius / (111320.0 * math.cos(lat * math.pi / 180).abs().clamp(0.1, 1.0));
+  return Uri.https('nominatim.openstreetmap.org', '/search', {
+    'q': arabic ? 'مسجد' : 'mosque',
+    'format': 'jsonv2',
+    'limit': '50',
+    'bounded': '1',
+    'viewbox': '${lng - dLng},${lat + dLat},${lng + dLng},${lat - dLat}',
+    'accept-language': arabic ? 'ar' : 'en',
+  });
+}
+
+/// Parses a Nominatim search answer into mosques sorted by distance.
+List<Mosque> parseNominatim(Object? json, double lat, double lng) {
+  if (json is! List) return const [];
+  final out = <Mosque>[];
+  final seen = <String>{};
+  for (final raw in json) {
+    if (raw is! Map) continue;
+    final mLat = double.tryParse('${raw['lat']}');
+    final mLng = double.tryParse('${raw['lon']}');
+    final id = '${raw['osm_type']}/${raw['osm_id']}';
+    if (mLat == null || mLng == null || !seen.add(id)) continue;
+    final name = _str(raw['name']) ?? _str('${raw['display_name'] ?? ''}'.split(',').first);
+    out.add(Mosque(id: id, name: name, lat: mLat, lng: mLng, distance: distanceM(lat, lng, mLat, mLng)));
+  }
+  out.sort((a, b) => a.distance.compareTo(b.distance));
+  return out.take(maxMosques).toList();
+}
+
+/// Google Maps search for mosques around a point (always available, even when
+/// the free map data has gaps).
+Uri googleMapsNearbyUri(double lat, double lng, {required bool arabic}) => Uri.parse(
+  'https://www.google.com/maps/search/${Uri.encodeComponent(arabic ? 'مسجد' : 'mosque')}/@${lat.toStringAsFixed(6)},${lng.toStringAsFixed(6)},15z',
+);
+
+/// One mosque on Google Maps (by its name next to its position).
+Uri googleMapsMosqueUri(Mosque m) {
+  final p = '${m.lat.toStringAsFixed(6)},${m.lng.toStringAsFixed(6)}';
+  return Uri.https('www.google.com', '/maps/search/', {'api': '1', 'query': m.name == null ? p : '${m.name} $p'});
+}
 const mosqueRadii = [2000, 5000, 10000];
 const defaultMosqueRadius = 5000;
 const maxMosques = 60;

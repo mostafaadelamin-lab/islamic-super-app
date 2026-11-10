@@ -86,6 +86,9 @@ class SettingsController extends ChangeNotifier {
 
   String get cityId => _prefs.getString('cityId') ?? _defaultCityId;
 
+  /// True until the user picks a city or a position is found.
+  bool get cityNeverChosen => _prefs.getString('cityId') == null;
+
   /// Coordinates from "use my location" (null when never located).
   ({double lat, double lng, String nearestCityId})? get gpsLocation {
     final lat = _prefs.getDouble('gps.lat');
@@ -96,12 +99,47 @@ class SettingsController extends ChangeNotifier {
 
   /// Uses the device position for prayer times; the time zone and the default
   /// method come from the nearest listed city.
-  Future<void> setGpsLocation(double lat, double lng, String nearestCityId, String recommendedMethod) async {
+  Future<void> setGpsLocation(
+    double lat,
+    double lng,
+    String nearestCityId,
+    String recommendedMethod, {
+    bool keepMethod = false,
+  }) async {
     await _prefs.setDouble('gps.lat', (lat * 10000).roundToDouble() / 10000);
     await _prefs.setDouble('gps.lng', (lng * 10000).roundToDouble() / 10000);
     await _prefs.setString('gps.near', nearestCityId);
     await _prefs.setString('cityId', gpsCityId);
-    await _prefs.setString('method', recommendedMethod);
+    await _prefs.remove('gps.place.ar');
+    await _prefs.remove('gps.place.en');
+    if (!keepMethod || _prefs.getString('method') == null) await _prefs.setString('method', recommendedMethod);
+    notifyListeners();
+  }
+
+  /// The area name of the GPS position per language ("ar"/"en": {country, area}).
+  Map<String, dynamic>? gpsPlace(String lang) {
+    final raw = _prefs.getString('gps.place.$lang');
+    if (raw == null) return null;
+    try {
+      return jsonDecode(raw) as Map<String, dynamic>;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<void> setGpsPlace(String lang, Map<String, dynamic>? place) async {
+    if (place == null) {
+      await _prefs.remove('gps.place.$lang');
+    } else {
+      await _prefs.setString('gps.place.$lang', jsonEncode(place));
+    }
+    notifyListeners();
+  }
+
+  /// Find the phone's position by itself when the app opens (on by default).
+  bool get autoLocation => _prefs.getBool('autoLocation') ?? true;
+  Future<void> setAutoLocation(bool v) async {
+    await _prefs.setBool('autoLocation', v);
     notifyListeners();
   }
 

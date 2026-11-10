@@ -62,18 +62,30 @@ class AdhanVoice {
 const bundledAdhanVoices = <AdhanVoice>[
   AdhanVoice(
     id: 'haram',
-    nameAr: 'محمد رمضان سعد (الحرم المكي)',
-    nameEn: 'Mohamed Ramadan Saad (Makkah Haram)',
+    nameAr: 'أذان المسجد الحرام بمكة المكرمة',
+    nameEn: 'Adhan of the Grand Mosque, Makkah',
+    place: 'مكة المكرمة',
     raw: 'adhan_haram',
     asset: 'assets/audio/adhan_haram.m4a',
+    credit: '"Adhan, Great Mosque of Mecca - Jan 21, 2013", Seyfula Islam, Wikimedia Commons, CC BY 3.0',
   ),
   AdhanVoice(
-    id: 'haram_fajr',
-    nameAr: 'حمد الدغريري (فجر الحرم المكي)',
-    nameEn: 'Hamad Al-Daghriri (Fajr, Makkah Haram)',
-    fajr: true,
-    raw: 'adhan_haram_fajr',
-    asset: 'assets/audio/adhan_haram_fajr.m4a',
+    id: 'madinah',
+    nameAr: 'أذان المسجد النبوي بالمدينة المنورة',
+    nameEn: "Adhan of the Prophet's Mosque, Madinah",
+    place: 'المدينة المنورة',
+    raw: 'adhan_madinah',
+    asset: 'assets/audio/adhan_madinah.m4a',
+    credit: '"Call to prayer from the prophet\'s mosque", ejaz215, Wikimedia Commons, CC BY 3.0',
+  ),
+  AdhanVoice(
+    id: 'fakhry',
+    nameAr: 'صباح فخري',
+    nameEn: 'Sabah Fakhri',
+    place: 'حلب، سوريا',
+    raw: 'adhan_fakhry',
+    asset: 'assets/audio/adhan_fakhry.m4a',
+    credit: '"Call to prayer by Sabah Fakhry", Wikimedia Commons, public domain',
   ),
   AdhanVoice(
     id: 'v1',
@@ -85,20 +97,30 @@ const bundledAdhanVoices = <AdhanVoice>[
   ),
   AdhanVoice(
     id: 'v2',
-    nameAr: 'صوت أقصر',
-    nameEn: 'Shorter voice',
+    nameAr: 'عاقب عزيز',
+    nameEn: 'Aaqib Azeez',
     raw: 'adhan_v2',
     asset: 'assets/audio/adhan_v2.m4a',
     credit: '"The Adhan - Muslim Call to Prayer - Aaqib Azeez", Atcovi, Wikimedia Commons, CC BY-SA 4.0',
+  ),
+  AdhanVoice(
+    id: 'haram_fajr',
+    nameAr: 'أذان الفجر (المركز الإسلامي في مالمو)',
+    nameEn: 'Fajr adhan (Islamic Center, Malmö)',
+    fajr: true,
+    raw: 'adhan_haram_fajr',
+    asset: 'assets/audio/adhan_haram_fajr.m4a',
+    credit: '"Eid al-Fitr Fajr azan at Malmö Mosque - 19 August 2012", Islamic Center Malmö, Wikimedia Commons, CC BY 3.0',
   ),
 ];
 
 const defaultAdhanVoice = 'haram';
 const defaultFajrVoice = 'haram_fajr';
-final _remoteId = RegExp(r'^iw(\d{1,9})$');
 
 /// Whether [id] names a bundled voice or a recording of the collection.
-bool isAdhanVoiceId(String? id) => id != null && (bundledAdhanVoices.any((v) => v.id == id) || _remoteId.hasMatch(id));
+/// Only the bundled, openly licensed recordings are valid now (the earlier
+/// downloadable collection was removed on the owner's request, 2026-11-10).
+bool isAdhanVoiceId(String? id) => id != null && bundledAdhanVoices.any((v) => v.id == id);
 
 AdhanVoice? bundledAdhanVoice(String? id) {
   for (final v in bundledAdhanVoices) {
@@ -108,10 +130,6 @@ AdhanVoice? bundledAdhanVoice(String? id) {
 }
 
 /// Download address of a recording of the collection.
-Uri adhanDownloadUri(int remoteId) =>
-    Uri.https('audio.islamweb.net', '/audio/downloadmp3.php', {'audioid': '$remoteId'});
+Uri adhanDownloadUri(int remoteId) => throw UnsupportedError('no downloadable muezzin collection');
 
-int? remoteAdhanId(String id) {
-  final m = _remoteId.firstMatch(id);
-  return m == null ? null : int.parse(m.group(1)!);
-}
+int? remoteAdhanId(String id) => null;
