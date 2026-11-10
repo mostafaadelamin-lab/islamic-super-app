@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../app_services.dart';
 import '../domain/adhkar.dart';
+import '../domain/nasheeds.dart';
 import '../theme/design_tokens.dart';
 import 'dhikr_tools.dart';
 import 'hisn_screen.dart';
@@ -11,6 +12,7 @@ import 'prayer_model.dart';
 import 'review_notice.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
+import 'youtube_player.dart';
 
 /// The Adhkar tab: a vertical list of the daily adhkar (morning, evening,
 /// sleep, prayer…) and the duas, all from Hisn al-Muslim, then the whole book.
@@ -67,6 +69,24 @@ class AdhkarScreen extends StatelessWidget {
             hisn('hajj', RIcons.kaaba, l.hisnSectionHajj),
             const SizedBox(height: DesignTokens.spaceSm),
             tile('hisn', RIcons.hisn, l.adhkarHisn, () => push(const HisnScreen())),
+            header(l.adhkarListenHeader),
+            for (final (a, icon, title) in [
+              (AdhkarAudio.morning, RIcons.sunHigh, l.adhkarMorningTitle),
+              (AdhkarAudio.evening, RIcons.moon, l.adhkarEveningTitle),
+              (AdhkarAudio.afterPrayer, RIcons.prayer, l.adhkarAfterPrayer),
+              (AdhkarAudio.sleep, RIcons.moon, l.adhkarSleep),
+            ])
+              Card(
+                key: Key('adhkarAudio.${a.name}'),
+                margin: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
+                child: ListTile(
+                  leading: RIcon(icon, color: Theme.of(context).colorScheme.primary, size: 28),
+                  title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+                  subtitle: Text(l.adhkarAlafasy),
+                  trailing: const RIcon(RIcons.playCircle),
+                  onTap: () => showYouTubeSheet(context, videoId: adhkarAudioVideo[a]!, title: title, subtitle: l.adhkarAlafasy),
+                ),
+              ),
           ],
         ),
       ),
@@ -115,6 +135,21 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
         title: Text(session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle),
         actions: [
           const AdhkarViewToggle(),
+          IconButton(
+            key: const Key('adhkarListen'),
+            tooltip: l.adhkarListen,
+            icon: const RIcon(RIcons.headphones),
+            onPressed: () {
+              final morning = session == AdhkarSession.morning;
+              final title = morning ? l.adhkarMorningTitle : l.adhkarEveningTitle;
+              showYouTubeSheet(
+                context,
+                videoId: adhkarAudioVideo[morning ? AdhkarAudio.morning : AdhkarAudio.evening]!,
+                title: title,
+                subtitle: l.adhkarAlafasy,
+              );
+            },
+          ),
           IconButton(
             key: const Key('adhkarReminders'),
             tooltip: l.adhkarReminders,

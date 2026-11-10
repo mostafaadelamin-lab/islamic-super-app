@@ -291,6 +291,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhanVoiceTapToDownload => 'اضغط للتحميل';
 
   @override
+  String get adhkarAfterPrayer => 'أذكار بعد الصلاة';
+
+  @override
+  String get adhkarAlafasy => 'بصوت الشيخ مشاري راشد العفاسي';
+
+  @override
   String get adhkarArabicOnly => 'هذا المحتوى متاح بالعربية فقط.';
 
   @override
@@ -330,6 +336,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adhkarList => 'عرض كقائمة';
+
+  @override
+  String get adhkarListen => 'استمع بصوت الشيخ مشاري العفاسي';
+
+  @override
+  String get adhkarListenHeader => 'استمع إلى الأذكار';
 
   @override
   String get adhkarMorning => 'الصباح';
@@ -392,6 +404,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String adhkarShareSourceSession(String session) {
     return 'حصن المسلم — أذكار $session';
   }
+
+  @override
+  String get adhkarSleep => 'أذكار النوم';
 
   @override
   String get adhkarTapToCount => 'اضغط على البطاقة للعدّ';
@@ -1163,6 +1178,23 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get mushafToggleControls => 'إظهار عناصر التحكم أو إخفاؤها';
+
+  @override
+  String get nasheedsArab => 'من العالم العربي';
+
+  @override
+  String nasheedsCount(String n) {
+    return '$n أناشيد';
+  }
+
+  @override
+  String get nasheedsEgypt => 'من مصر';
+
+  @override
+  String get nasheedsNote => 'أناشيد بدون موسيقى، تُشغَّل من القنوات الرسمية للمنشدين على يوتيوب.';
+
+  @override
+  String get nasheedsTitle => 'أناشيد';
 
   @override
   String get navAdhkar => 'الأذكار';
@@ -2184,6 +2216,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get worshipWeek => 'آخر ٧ أيام';
+
+  @override
+  String get ytOfficialNote => 'يُشغَّل من القناة الرسمية على يوتيوب، ويحتاج إلى اتصال بالإنترنت.';
 
   @override
   String get zakatAdornment => 'ذهب الزينة';

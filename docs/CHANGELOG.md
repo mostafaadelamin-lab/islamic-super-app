@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.2] — Nasheeds and adhkar audio (owner's request) — 2026-11-10
+### Added
+- More → Nasheeds: voice-only nasheeds by the munshidin the owner approved. Egypt: Mohamed Tarek, Mohamed Youssef, Sheikh Nasr el-Din Tobar, Sheikh Sayed al-Naqshbandi. Arab world: Mishary Alafasy, Ahmed Bukhatir, Abu Ali (Mosa Alomairah), Muhammad Al Muqit. They play from each artist's official YouTube channel (or the label's official/Topic channel) through YouTube's embedded player; nothing is copied or downloaded. The list is in `lib/domain/nasheeds.dart`.
+- Adhkar audio in Sheikh Mishary Rashid Alafasy's voice (morning, evening, after prayer, sleep) from his official channel, from the Adhkar tab and the morning/evening list.
+- Any Quran recitation or story that is playing pauses when a nasheed or adhkar recording opens.
+
 ## [Unreleased] — Owner's feedback round (mobile) — 2026-11-10
 ### Changed
 - Bottom bar: Home, Quran, Reels, Prayer, Adhkar, More. Reels play with sound.

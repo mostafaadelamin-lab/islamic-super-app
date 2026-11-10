@@ -292,6 +292,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhanVoiceTapToDownload => 'Tap to download';
 
   @override
+  String get adhkarAfterPrayer => 'Adhkar after prayer';
+
+  @override
+  String get adhkarAlafasy => 'Recited by Sheikh Mishary Rashid Alafasy';
+
+  @override
   String get adhkarArabicOnly => 'This content is available in Arabic only.';
 
   @override
@@ -331,6 +337,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhkarList => 'Show as a list';
+
+  @override
+  String get adhkarListen => 'Listen (Mishary Alafasy)';
+
+  @override
+  String get adhkarListenHeader => 'Listen to the adhkar';
 
   @override
   String get adhkarMorning => 'Morning';
@@ -393,6 +405,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String adhkarShareSourceSession(String session) {
     return 'Hisn al-Muslim — $session adhkar';
   }
+
+  @override
+  String get adhkarSleep => 'Adhkar before sleep';
 
   @override
   String get adhkarTapToCount => 'Tap a card to count it';
@@ -1166,6 +1181,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mushafToggleControls => 'Show or hide controls';
+
+  @override
+  String get nasheedsArab => 'From the Arab world';
+
+  @override
+  String nasheedsCount(String n) {
+    return '$n nasheeds';
+  }
+
+  @override
+  String get nasheedsEgypt => 'From Egypt';
+
+  @override
+  String get nasheedsNote => 'Nasheeds without music, played from the munshidin\'s official YouTube channels.';
+
+  @override
+  String get nasheedsTitle => 'Nasheeds';
 
   @override
   String get navAdhkar => 'Adhkar';
@@ -2191,6 +2223,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get worshipWeek => 'Last 7 days';
+
+  @override
+  String get ytOfficialNote => 'Plays from the official YouTube channel and needs an internet connection.';
 
   @override
   String get zakatAdornment => 'Gold worn for adornment';

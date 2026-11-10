@@ -52,3 +52,19 @@ after being told the site's terms forbid reuse. Details in apps/mobile/assets/au
 | Egyptian and Saudi Quran radios | live streams at stream.radiojar.com (`8s5u5tpdtwzuv` Cairo, `0tpy1h0kxtzuv` Saudi) | public live streams; station names shown, host not shown (owner) | cleartext allowed for radiojar.com (redirects to http edges) |
 | Nearby mosques fallback, place names | OpenStreetMap Nominatim (search + reverse) | ODbL, attribution "© OpenStreetMap contributors" | used when the Overpass mirrors fail; area name for the home screen |
 | Hajj/Umrah step drawings | drawn in code (`apps/mobile/lib/ui/hajj_art.dart`) | our own | no photos or third-party art |
+
+## Nasheeds and adhkar audio (2026-11-10)
+
+Played through YouTube's embedded player (www.youtube-nocookie.com) from the official channels below; YouTube's terms allow embedding, and every video was checked as embeddable (oEmbed 200) on 2026-11-10. Nothing is downloaded or re-hosted. Nasheeds were chosen as voice-only versions (the owner listen-checks them). "Mawlay" by al-Naqshbandi was left out because it has musical accompaniment.
+
+| Artist | Channel | Kind |
+|---|---|---|
+| Mohamed Tarek | UCPp0_tTnE3DUJmUmcLMfOyg | Official Artist Channel (vocals-only versions) |
+| Mohamed Youssef | UCeHKDFxsQXWxCYO-EXeBl_A | Official Artist Channel (vocals-only versions) |
+| Nasr el-Din Tobar | UCM8T0Re5FfFnYEvQOfTQHOw | YouTube auto-generated Topic channel (licensed releases) |
+| Sayed al-Naqshbandi | UCurG_RKCM6Cg1doqYa2mp4A | SayedNaqshbandiVEVO (label official) |
+| Mishary Alafasy (nasheeds) | UCzuEc6pl59Z-lADI3ceQK1w | Anashid Alafasy, verified |
+| Mishary Alafasy (adhkar) | UCmMcOjsVehVlEOteyrhjI2Q | Alafasy, verified |
+| Ahmed Bukhatir | UC-2pqFUafqKCnACEfQasZGg | Official Artist Channel |
+| Abu Ali (Mosa Alomairah) | UCQQCG2_xVTC6CYwobudUTLQ | Official Artist Channel |
+| Muhammad Al Muqit | UCheBIbE_7Trrhatjt9LIteQ | Official Artist Channel |

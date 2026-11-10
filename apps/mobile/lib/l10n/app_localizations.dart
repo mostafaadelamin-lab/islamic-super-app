@@ -566,6 +566,18 @@ abstract class AppLocalizations {
   /// **'Tap to download'**
   String get adhanVoiceTapToDownload;
 
+  /// shared key "adhkar.afterPrayer"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhkar after prayer'**
+  String get adhkarAfterPrayer;
+
+  /// shared key "adhkar.alafasy"
+  ///
+  /// In en, this message translates to:
+  /// **'Recited by Sheikh Mishary Rashid Alafasy'**
+  String get adhkarAlafasy;
+
   /// shared key "adhkar.arabicOnly"
   ///
   /// In en, this message translates to:
@@ -643,6 +655,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show as a list'**
   String get adhkarList;
+
+  /// shared key "adhkar.listen"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen (Mishary Alafasy)'**
+  String get adhkarListen;
+
+  /// shared key "adhkar.listenHeader"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to the adhkar'**
+  String get adhkarListenHeader;
 
   /// shared key "adhkar.morning"
   ///
@@ -745,6 +769,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hisn al-Muslim — {session} adhkar'**
   String adhkarShareSourceSession(String session);
+
+  /// shared key "adhkar.sleep"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhkar before sleep'**
+  String get adhkarSleep;
 
   /// shared key "adhkar.tapToCount"
   ///
@@ -2107,6 +2137,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show or hide controls'**
   String get mushafToggleControls;
+
+  /// shared key "nasheeds.arab"
+  ///
+  /// In en, this message translates to:
+  /// **'From the Arab world'**
+  String get nasheedsArab;
+
+  /// shared key "nasheeds.count"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} nasheeds'**
+  String nasheedsCount(String n);
+
+  /// shared key "nasheeds.egypt"
+  ///
+  /// In en, this message translates to:
+  /// **'From Egypt'**
+  String get nasheedsEgypt;
+
+  /// shared key "nasheeds.note"
+  ///
+  /// In en, this message translates to:
+  /// **'Nasheeds without music, played from the munshidin\'s official YouTube channels.'**
+  String get nasheedsNote;
+
+  /// shared key "nasheeds.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Nasheeds'**
+  String get nasheedsTitle;
 
   /// shared key "nav.adhkar"
   ///
@@ -3913,6 +3973,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Last 7 days'**
   String get worshipWeek;
+
+  /// shared key "yt.officialNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Plays from the official YouTube channel and needs an internet connection.'**
+  String get ytOfficialNote;
 
   /// shared key "zakat.adornment"
   ///

@@ -539,5 +539,16 @@
   "hadith.pageOf": "Hadith {n} of {total}",
   "zakat.groupMoney": "Money and savings",
   "zakat.groupGold": "Gold (grams)",
-  "zakat.groupDebts": "Debts you owe"
+  "zakat.groupDebts": "Debts you owe",
+  "nasheeds.title": "Nasheeds",
+  "nasheeds.note": "Nasheeds without music, played from the munshidin's official YouTube channels.",
+  "nasheeds.egypt": "From Egypt",
+  "nasheeds.arab": "From the Arab world",
+  "nasheeds.count": "{n} nasheeds",
+  "yt.officialNote": "Plays from the official YouTube channel and needs an internet connection.",
+  "adhkar.listenHeader": "Listen to the adhkar",
+  "adhkar.listen": "Listen (Mishary Alafasy)",
+  "adhkar.alafasy": "Recited by Sheikh Mishary Rashid Alafasy",
+  "adhkar.afterPrayer": "Adhkar after prayer",
+  "adhkar.sleep": "Adhkar before sleep"
 }

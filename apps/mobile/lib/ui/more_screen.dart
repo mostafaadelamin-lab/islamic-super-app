@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'about_screen.dart';
 import 'asma_screen.dart';
 import 'radio_screen.dart';
+import 'nasheeds_screen.dart';
 import 'hadith_screen.dart';
 import 'hajj_screen.dart';
 import 'help_screen.dart';
@@ -42,6 +43,7 @@ class MoreScreen extends StatelessWidget {
                 tile('hadith', RIcons.openBook, l.hadithTitle, () => const HadithScreen()),
                 tile('asma', RIcons.star, l.asmaTitle, () => const AsmaScreen()),
                 tile('radio', RIcons.radio, l.radiosTitle, () => const RadioScreen()),
+                tile('nasheeds', RIcons.headphones, l.nasheedsTitle, () => const NasheedsScreen()),
                 tile('library', RIcons.reciter, l.libraryTitle, () => const LibraryScreen()),
                 tile('stories', RIcons.headphones, l.storiesTitle, () => const StoriesScreen()),
                 tile('qibla', RIcons.compass, l.qiblaTitle, () => const QiblaScreen()),

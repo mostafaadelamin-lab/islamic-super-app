@@ -415,6 +415,14 @@
   "@adhanVoiceTapToDownload": {
     "description": "shared key \"adhan.voiceTapToDownload\""
   },
+  "adhkarAfterPrayer": "Adhkar after prayer",
+  "@adhkarAfterPrayer": {
+    "description": "shared key \"adhkar.afterPrayer\""
+  },
+  "adhkarAlafasy": "Recited by Sheikh Mishary Rashid Alafasy",
+  "@adhkarAlafasy": {
+    "description": "shared key \"adhkar.alafasy\""
+  },
   "adhkarArabicOnly": "This content is available in Arabic only.",
   "@adhkarArabicOnly": {
     "description": "shared key \"adhkar.arabicOnly\""
@@ -471,6 +479,14 @@
   "adhkarList": "Show as a list",
   "@adhkarList": {
     "description": "shared key \"adhkar.list\""
+  },
+  "adhkarListen": "Listen (Mishary Alafasy)",
+  "@adhkarListen": {
+    "description": "shared key \"adhkar.listen\""
+  },
+  "adhkarListenHeader": "Listen to the adhkar",
+  "@adhkarListenHeader": {
+    "description": "shared key \"adhkar.listenHeader\""
   },
   "adhkarMorning": "Morning",
   "@adhkarMorning": {
@@ -570,6 +586,10 @@
         "type": "String"
       }
     }
+  },
+  "adhkarSleep": "Adhkar before sleep",
+  "@adhkarSleep": {
+    "description": "shared key \"adhkar.sleep\""
   },
   "adhkarTapToCount": "Tap a card to count it",
   "@adhkarTapToCount": {
@@ -1732,6 +1752,31 @@
   "mushafToggleControls": "Show or hide controls",
   "@mushafToggleControls": {
     "description": "shared key \"mushaf.toggleControls\""
+  },
+  "nasheedsArab": "From the Arab world",
+  "@nasheedsArab": {
+    "description": "shared key \"nasheeds.arab\""
+  },
+  "nasheedsCount": "{n} nasheeds",
+  "@nasheedsCount": {
+    "description": "shared key \"nasheeds.count\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "nasheedsEgypt": "From Egypt",
+  "@nasheedsEgypt": {
+    "description": "shared key \"nasheeds.egypt\""
+  },
+  "nasheedsNote": "Nasheeds without music, played from the munshidin's official YouTube channels.",
+  "@nasheedsNote": {
+    "description": "shared key \"nasheeds.note\""
+  },
+  "nasheedsTitle": "Nasheeds",
+  "@nasheedsTitle": {
+    "description": "shared key \"nasheeds.title\""
   },
   "navAdhkar": "Adhkar",
   "@navAdhkar": {
@@ -3258,6 +3303,10 @@
   "worshipWeek": "Last 7 days",
   "@worshipWeek": {
     "description": "shared key \"worship.week\""
+  },
+  "ytOfficialNote": "Plays from the official YouTube channel and needs an internet connection.",
+  "@ytOfficialNote": {
+    "description": "shared key \"yt.officialNote\""
   },
   "zakatAdornment": "Gold worn for adornment",
   "@zakatAdornment": {
