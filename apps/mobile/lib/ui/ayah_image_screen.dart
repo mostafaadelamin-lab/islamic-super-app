@@ -7,6 +7,7 @@ import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'share_capture.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 /// "Share as image": a preview of the ayah on a card in the Rattil colours (the
 /// stored text unchanged, display map applied as everywhere else) and a button
@@ -98,7 +99,7 @@ class _AyahImageScreenState extends State<AyahImageScreen> {
             FilledButton.icon(
               key: const Key('ayahImage.share'),
               onPressed: _share,
-              icon: const Icon(Icons.share),
+              icon: const RIcon(RIcons.share),
               label: Text(l.mushafShareNow),
             ),
           ],

@@ -11,8 +11,10 @@ import 'about_screen.dart';
 import 'account_screen.dart';
 import 'audio_widgets.dart';
 import 'l10n_ext.dart';
+import 'muezzin_screen.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -102,7 +104,7 @@ class SettingsScreen extends StatelessWidget {
                       IconButton(
                         key: const Key('hijriOffsetMinus'),
                         tooltip: '${l.settingsHijriOffset} −',
-                        icon: const Icon(Icons.remove),
+                        icon: const RIcon(RIcons.minus),
                         onPressed: settings.hijriOffset > -hijriOffsetMax
                             ? () => settings.setHijriOffset(settings.hijriOffset - 1)
                             : null,
@@ -128,7 +130,7 @@ class SettingsScreen extends StatelessWidget {
                       IconButton(
                         key: const Key('hijriOffsetPlus'),
                         tooltip: '${l.settingsHijriOffset} +',
-                        icon: const Icon(Icons.add),
+                        icon: const RIcon(RIcons.plus),
                         onPressed: settings.hijriOffset < hijriOffsetMax
                             ? () => settings.setHijriOffset(settings.hijriOffset + 1)
                             : null,
@@ -145,19 +147,19 @@ class SettingsScreen extends StatelessWidget {
                   ListTile(
                     key: const Key('accountTile'),
                     contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.sync),
+                    leading: const RIcon(RIcons.refresh),
                     title: Text(l.settingsAccount),
                     subtitle: Text(l.settingsAccountHint),
-                    trailing: const Icon(Icons.chevron_right),
+                    trailing: const RIcon(RIcons.chevronForward),
                     onTap: () =>
                         Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const AccountScreen())),
                   ),
                   ListTile(
                     key: const Key('aboutTile'),
                     contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.info_outline),
+                    leading: const RIcon(RIcons.info),
                     title: Text(l.settingsAbout),
-                    trailing: const Icon(Icons.chevron_right),
+                    trailing: const RIcon(RIcons.chevronForward),
                     onTap: () =>
                         Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const AboutScreen())),
                   ),
@@ -231,27 +233,17 @@ class AdhanSettingsCard extends StatelessWidget {
               key: const Key('adhanSound'),
               showSelectedIcon: false,
               segments: [
-                ButtonSegment(value: 'adhan', label: Text(l.adhanSoundAdhan), icon: const Icon(Icons.mosque)),
-                ButtonSegment(value: 'tone', label: Text(l.adhanSoundTone), icon: const Icon(Icons.notifications)),
-                ButtonSegment(
-                  value: 'silent',
-                  label: Text(l.adhanSoundSilent),
-                  icon: const Icon(Icons.notifications_off),
-                ),
+                ButtonSegment(value: 'adhan', label: Text(l.adhanSoundAdhan), icon: const RIcon(RIcons.prayer)),
+                ButtonSegment(value: 'tone', label: Text(l.adhanSoundTone), icon: const RIcon(RIcons.bell)),
+                ButtonSegment(value: 'silent', label: Text(l.adhanSoundSilent), icon: const RIcon(RIcons.bellOff)),
               ],
               selected: {settings.adhanSound},
               onSelectionChanged: (v) => settings.setAdhanSound(v.first),
             ),
           ),
           const SizedBox(height: DesignTokens.spaceMd),
-          Text(l.adhanVoice, style: Theme.of(context).textTheme.titleSmall),
-          const SizedBox(height: DesignTokens.spaceXs),
-          ListenableBuilder(
-            listenable: s.adhanPreview,
-            builder: (context, _) => Column(
-              children: [for (final v in adhanVoices) _VoiceTile(voice: v, selected: settings.adhanVoice == v.id)],
-            ),
-          ),
+          _VoiceRow(fajr: false, id: settings.adhanVoice),
+          _VoiceRow(fajr: true, id: settings.adhanFajrVoice),
           const SizedBox(height: DesignTokens.spaceSm),
           Wrap(
             spacing: DesignTokens.spaceSm,
@@ -262,7 +254,7 @@ class AdhanSettingsCard extends StatelessWidget {
                 builder: (context, _) => FilledButton.tonalIcon(
                   key: const Key('adhanPreview'),
                   onPressed: () => s.adhanPreview.toggle(settings.adhanVoice),
-                  icon: Icon(s.adhanPreview.playing ? Icons.stop : Icons.play_arrow),
+                  icon: RIcon(s.adhanPreview.playing ? RIcons.stop : RIcons.play),
                   label: Text(s.adhanPreview.playing ? l.adhanPreviewStop : l.adhanPreview),
                 ),
               ),
@@ -273,7 +265,7 @@ class AdhanSettingsCard extends StatelessWidget {
                   await s.adhan.test();
                   messenger.showSnackBar(SnackBar(content: Text(l.adhanTestScheduled)));
                 },
-                icon: const Icon(Icons.alarm),
+                icon: const RIcon(RIcons.alarm),
                 label: Text(l.adhanTest),
               ),
             ],
@@ -283,47 +275,34 @@ class AdhanSettingsCard extends StatelessWidget {
         const SizedBox(height: DesignTokens.spaceXs),
         Text(l.adhanNote, style: small),
         Text(l.adhanCredit, key: const Key('adhanCredit'), style: small),
-        for (final v in adhanVoices) Text('• ${v.name(context.isArabic)}: ${v.credit}', style: small),
+        for (final v in bundledAdhanVoices)
+          if (v.credit != null) Text('• ${v.name(context.isArabic)}: ${v.credit}', style: small),
       ],
     );
   }
 }
 
-/// One muezzin: tap to choose it, the round button to listen.
-class _VoiceTile extends StatelessWidget {
-  const _VoiceTile({required this.voice, required this.selected});
-  final AdhanVoice voice;
-  final bool selected;
+/// The chosen muezzin for the adhan (or the Fajr adhan); opens the full list.
+class _VoiceRow extends StatelessWidget {
+  const _VoiceRow({required this.fajr, required this.id});
+  final bool fajr;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
     final s = context.services;
-    final scheme = Theme.of(context).colorScheme;
-    final playing = s.adhanPreview.voice == voice.id;
-    final name = voice.name(context.isArabic);
-    return Padding(
-      padding: const EdgeInsets.only(bottom: DesignTokens.spaceXs),
-      child: Material(
-        color: selected ? scheme.primaryContainer.withValues(alpha: 0.55) : Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-          side: BorderSide(color: selected ? scheme.primary : scheme.outlineVariant),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: ListTile(
-          key: Key('adhanVoice-${voice.id}'),
-          selected: selected,
-          leading: Icon(selected ? Icons.check_circle : Icons.circle_outlined, color: selected ? scheme.primary : null),
-          title: Text(name),
-          trailing: IconButton.filledTonal(
-            key: Key('adhanVoicePlay-${voice.id}'),
-            tooltip: context.l10n.adhanVoiceListen(name),
-            icon: Icon(playing ? Icons.stop : Icons.play_arrow),
-            onPressed: () => s.adhanPreview.toggle(voice.id),
-          ),
-          onTap: () => s.settings.setAdhanVoice(voice.id),
-        ),
+    final l = context.l10n;
+    return ListTile(
+      key: Key(fajr ? 'adhanFajrVoice' : 'adhanVoice'),
+      contentPadding: EdgeInsets.zero,
+      leading: RIcon(fajr ? RIcons.sunrise : RIcons.prayer),
+      title: Text(fajr ? l.adhanFajrVoice : l.adhanVoice),
+      subtitle: FutureBuilder(
+        future: s.adhanVoices.voice(id),
+        builder: (context, snap) => Text(snap.data?.name(context.isArabic) ?? ''),
       ),
+      trailing: const RIcon(RIcons.chevronForward),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => MuezzinScreen(fajr: fajr))),
     );
   }
 }

@@ -138,7 +138,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get adhanCredit => 'تسجيلات الأذان من ويكيميديا كومنز برخص مفتوحة (التفاصيل لكل صوت):';
+  String get adhanCredit => 'تسجيلات الأذان:';
 
   @override
   String get adhanDenied => 'الإشعارات غير مسموح بها. فعّلها من إعدادات النظام.';
@@ -153,8 +153,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhanExtrasNote => 'يصدر تنبيه قبل الأذان وتنبيه الإقامة بنغمة الهاتف القصيرة، وليس بصوت الأذان.';
 
   @override
+  String get adhanFajrVoice => 'أذان الفجر';
+
+  @override
+  String get adhanFajrVoiceNote =>
+      'أذان الفجر فيه «الصلاة خير من النوم»، لذلك له اختيار مستقل ويعمل وحده في وقت الفجر. اضغط على أي مؤذن ليتحمّل ويُختار.';
+
+  @override
   String get adhanIosNote =>
-      'على الآيفون يُسمع التكبير الأول فقط في الإشعار وبالصوت الأول (النظام يسمح بـ٣٠ ثانية بحد أقصى)، والأذان كاملًا بالصوت المختار داخل التطبيق.';
+      'على الآيفون يُسمع التكبير الأول فقط في الإشعار (النظام يسمح بـ٣٠ ثانية بحد أقصى)، والأذان كاملًا بالصوت المختار داخل التطبيق.';
 
   @override
   String get adhanIqama => 'تنبيه الإقامة بعد الأذان';
@@ -257,12 +264,31 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get adhanVoice => 'المؤذن';
+  String get adhanVoice => 'مؤذن الصلوات';
+
+  @override
+  String get adhanVoiceBundled => 'موجود في التطبيق';
+
+  @override
+  String get adhanVoiceDownloadFailed => 'تعذّر تحميل الأذان. تأكد من الإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get adhanVoiceDownloaded => 'محمّل على الموبايل';
 
   @override
   String adhanVoiceListen(String name) {
     return 'اسمع $name';
   }
+
+  @override
+  String get adhanVoiceNote =>
+      'أذان الظهر والعصر والمغرب والعشاء. اضغط على أي مؤذن ليتحمّل ويُختار، ويفضل محفوظًا على الموبايل ليعمل دون إنترنت. زر التشغيل للاستماع.';
+
+  @override
+  String get adhanVoiceSearch => 'ابحث باسم المؤذن أو البلد';
+
+  @override
+  String get adhanVoiceTapToDownload => 'اضغط للتحميل';
 
   @override
   String get adhkarArabicOnly => 'هذا المحتوى متاح بالعربية فقط.';

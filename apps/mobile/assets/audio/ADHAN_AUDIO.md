@@ -42,14 +42,25 @@ Derived (mono transcodes of the whole recording, nothing cut or added):
 `apps/web/public/audio/adhan_v2.mp3` (MP3 64 kbit/s). The iPhone notification keeps voice 1's opening
 takbir (adhan_short.caf); the full chosen voice plays inside the app.
 
-## Candidates not added yet
+## Makkah Haram adhans and the muezzin collection (owner's decision, 2026-11-10)
 
-Commons blocked downloads (HTTP 429) on 2026-11-10. Licence checked, files still to fetch:
-`Azan.ogg` (Andrewler, CC BY-SA 4.0), `Adhan.ogg` (Aishatu98, CC0), `Adhan_in_Istanbul.webm` (CC0),
-`Maghrib_Adhan_at_the_Masjid_al_Haram,_Mecca_-_25_Feb,_2012.webm` and
-`Adhan,_Great_Mosque_of_Mecca_-_Jan_21,_2013.webm` (YouTube CC BY, licence-reviewed on Commons).
-Rejected: Sabah Fakhri recording (doubtful public-domain claim), Shia-form adhan files, spoken
-readings (`Adhan_wiki.oga`, `Islamic_call_to_worship.oga`), the 30 s fragment `Oración_Al-Azzan.ogg`.
+Source: audio.islamweb.net, group "مختارات من الأذان" (AudioGroup Gtype=1). The site's terms (Qatar Ministry
+of Awqaf) forbid copying, republishing and automated downloading without prior written permission; no
+open licence was found. The owner was told this twice on 2026-11-10 and chose to use the recordings
+anyway. The owner also asked that the site's name is NOT shown in the app or on the website; it is kept
+only in this file and docs/CONTENT_SOURCES.md. A permission request draft is in project files
+(islamic-super-app/docs/islamweb-permission-request.md).
+
+| File | Source id | Muezzin | Use |
+|---|---|---|---|
+| `adhan_haram` (.ogg raw, .m4a asset, web .mp3) | 426698 | Mohamed Ramadan Saad, Makkah Haram | default adhan, bundled |
+| `adhan_haram_fajr` (same formats) | 489488 | Hamad Al-Daghriri, Makkah Haram | default Fajr adhan, bundled |
+| `ios/Runner/adhan_short.caf` | 426698 | Mohamed Ramadan Saad | iPhone notification, 28 s cut with fade-out |
+
+Transcodes: `ffmpeg -vn -map_metadata -1 -ac 1` (cover art and tags dropped, nothing cut except the
+iPhone clip). The other ~290 recordings are listed in `assets/content/adhan_catalog.json`
+(tools/adhan_catalog.py from a saved copy of the group page) and are downloaded by the phone only when the
+user picks one (`downloadmp3.php?audioid=ID`, 4 tries), then kept offline. The website streams them.
 
 **Religious review:** every recording must be listened to and approved by a named reviewer before a
 store release (wording and pronunciation of the adhan). Status: PENDING owner review.

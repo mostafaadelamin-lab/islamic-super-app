@@ -311,7 +311,7 @@ abstract class AppLocalizations {
   /// shared key "adhan.credit"
   ///
   /// In en, this message translates to:
-  /// **'Adhan recordings from Wikimedia Commons under open licences (per voice):'**
+  /// **'Adhan recordings:'**
   String get adhanCredit;
 
   /// shared key "adhan.denied"
@@ -338,10 +338,22 @@ abstract class AppLocalizations {
   /// **'The reminder and the iqama alert use the phone\'s short tone, not the adhan recording.'**
   String get adhanExtrasNote;
 
+  /// shared key "adhan.fajrVoice"
+  ///
+  /// In en, this message translates to:
+  /// **'Fajr adhan'**
+  String get adhanFajrVoice;
+
+  /// shared key "adhan.fajrVoiceNote"
+  ///
+  /// In en, this message translates to:
+  /// **'The Fajr adhan has \"as-salatu khayrun min an-nawm\", so it has its own choice and plays by itself at Fajr. Tap a muezzin to download and choose it.'**
+  String get adhanFajrVoiceNote;
+
   /// shared key "adhan.iosNote"
   ///
   /// In en, this message translates to:
-  /// **'On iPhone the notification plays the opening takbir only, in the first voice (the system allows at most 30 seconds); the full adhan in the chosen voice plays inside the app.'**
+  /// **'On iPhone the notification plays the opening takbir only (the system allows at most 30 seconds); the full adhan in the chosen voice plays inside the app.'**
   String get adhanIosNote;
 
   /// shared key "adhan.iqama"
@@ -512,11 +524,47 @@ abstract class AppLocalizations {
   /// **'Muezzin'**
   String get adhanVoice;
 
+  /// shared key "adhan.voiceBundled"
+  ///
+  /// In en, this message translates to:
+  /// **'In the app'**
+  String get adhanVoiceBundled;
+
+  /// shared key "adhan.voiceDownloadFailed"
+  ///
+  /// In en, this message translates to:
+  /// **'Could not download the adhan. Check the internet and try again.'**
+  String get adhanVoiceDownloadFailed;
+
+  /// shared key "adhan.voiceDownloaded"
+  ///
+  /// In en, this message translates to:
+  /// **'On the phone'**
+  String get adhanVoiceDownloaded;
+
   /// shared key "adhan.voiceListen"
   ///
   /// In en, this message translates to:
   /// **'Listen to {name}'**
   String adhanVoiceListen(String name);
+
+  /// shared key "adhan.voiceNote"
+  ///
+  /// In en, this message translates to:
+  /// **'The adhan of Dhuhr, Asr, Maghrib and Isha. Tap a muezzin to download and choose it; it stays on the phone and works without internet. The play button lets you listen.'**
+  String get adhanVoiceNote;
+
+  /// shared key "adhan.voiceSearch"
+  ///
+  /// In en, this message translates to:
+  /// **'Search by muezzin or country'**
+  String get adhanVoiceSearch;
+
+  /// shared key "adhan.voiceTapToDownload"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to download'**
+  String get adhanVoiceTapToDownload;
 
   /// shared key "adhkar.arabicOnly"
   ///

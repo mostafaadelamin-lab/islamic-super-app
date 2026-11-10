@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/design_tokens.dart';
+import 'r_icon.dart';
 
 /// Visible "pending religious review" notice for adhkar and the Hajj guide.
 class ReviewNotice extends StatelessWidget {
@@ -21,7 +22,7 @@ class ReviewNotice extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.info_outline, color: scheme.onSecondaryContainer),
+          RIcon(RIcons.info, color: scheme.onSecondaryContainer),
           const SizedBox(width: DesignTokens.spaceSm),
           Expanded(
             child: Text(

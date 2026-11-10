@@ -14,6 +14,7 @@ import 'more_screen.dart';
 import 'prayer_screen.dart';
 import 'surah_list_screen.dart';
 import 'tasbih_screen.dart';
+import 'r_icon.dart';
 
 /// Bottom navigation (a side rail on tablets): Home, Quran, Prayer, Adhkar, More.
 /// The recitation mini player sits above the bar while audio is active.
@@ -74,11 +75,11 @@ class HomeShellState extends State<HomeShell> {
       _ => const MoreScreen(),
     };
     final items = [
-      (Icons.home_outlined, Icons.home, l.navHome),
-      (Icons.menu_book_outlined, Icons.menu_book, l.navQuran),
-      (Icons.schedule_outlined, Icons.schedule, l.navPrayer),
-      (Icons.wb_twilight_outlined, Icons.wb_twilight, l.navAdhkar),
-      (Icons.grid_view_outlined, Icons.grid_view, l.navMore),
+      (RIcons.home, RIcons.home, l.navHome),
+      (RIcons.quran, RIcons.quran, l.navQuran),
+      (RIcons.prayer, RIcons.prayer, l.navPrayer),
+      (RIcons.dua, RIcons.dua, l.navAdhkar),
+      (RIcons.more, RIcons.more, l.navMore),
     ];
     if (Adaptive.isWide(context)) {
       // Tablets and landscape: a side rail, the tab centred at a comfortable width,
@@ -96,7 +97,7 @@ class HomeShellState extends State<HomeShell> {
                 labelType: extended ? NavigationRailLabelType.none : NavigationRailLabelType.all,
                 destinations: [
                   for (final (icon, selected, label) in items)
-                    NavigationRailDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: Text(label)),
+                    NavigationRailDestination(icon: RIcon(icon), selectedIcon: RIcon(selected), label: Text(label)),
                 ],
               ),
               const VerticalDivider(width: 1),
@@ -127,7 +128,7 @@ class HomeShellState extends State<HomeShell> {
             onDestinationSelected: select,
             destinations: [
               for (final (icon, selected, label) in items)
-                NavigationDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: label),
+                NavigationDestination(icon: RIcon(icon), selectedIcon: RIcon(selected), label: label),
             ],
           ),
         ],

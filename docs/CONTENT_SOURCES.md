@@ -1,5 +1,11 @@
 # Content sources and licences
 
+**Owner's rule (2026-11-10):** the owner considers the sites they sent (islamweb.net and audio.islamweb.net, alukah.net,
+mp3quran.net and similar) free for anyone to download from, and asked that no permission is requested and that
+their names are NOT shown in the app or on the website. Sources are recorded here only, for our reference. Credits
+that an open licence itself requires (CC BY / CC BY-SA, ODbL: Quran text, Wikimedia voices, OpenStreetMap, hadith
+data) stay visible, because showing them is the condition of that licence.
+
 | Content | Source | Licence | Integrity control | Review status |
 |---|---|---|---|---|
 | Quran Arabic text (Uthmani, Hafs an Asim, 6236 ayahs) | King Fahd Glorious Quran Printing Complex (KFGQPC), "Hafs Uthmanic Data" **v18** `hafsData_v18.json` (2021-10-25, the Complex's latest published release), stored as `content/quran/upstream/kfgqpc-hafs-v18.json` | Published by the Complex for free use; distributed unmodified | file SHA-256 `5d8bb91726e482839d0057633cb1973031e4d706fa9604eea5e08892f20ba140` pinned in `tests/vectors/quran-reference.json`; build and tests on every platform assert every ayah equals `aya_text` byte-for-byte with only its trailing NBSP + ayah number removed; per-surah and overall hashes in `content/quran/dist/integrity.v1.json`. Surah names and translation come from `quran-json@3.1.2` (not the Arabic text) | Text verified mechanically against the Complex's file. **Human verification against a printed Madinah Mushaf by a qualified reviewer, and official approval (KFGQPC / al-Azhar), are still pending.** |
@@ -35,3 +41,7 @@ CC0 1.0 public-domain dedication, uploaded as own work. Original SHA-256
 apps/mobile/assets/audio/ADHAN_AUDIO.md.
 Voice 2: "The Adhan - Muslim Call to Prayer - Aaqib Azeez" by Atcovi, Wikimedia Commons, CC BY-SA 4.0 (credited in the
 app and on the website). Religious review (listen-through by a named reviewer) of every voice: PENDING.
+Default adhan (Mohamed Ramadan Saad, Makkah Haram), default Fajr adhan (Hamad Al-Daghriri) and the in-app
+muezzin collection: audio.islamweb.net. **No permission or open licence; the site's terms forbid
+republishing and automated download. Used by the owner's decision (2026-11-10), site name not shown in
+the app.** Details in apps/mobile/assets/audio/ADHAN_AUDIO.md.

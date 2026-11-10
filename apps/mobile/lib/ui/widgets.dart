@@ -8,6 +8,7 @@ import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'page_reader_screen.dart';
 import 'surah_reader_screen.dart';
+import 'r_icon.dart';
 
 /// Quran text for display. The render map is applied here, to the string
 /// passed to [Text] only — the stored ayah string is never modified.
@@ -95,14 +96,14 @@ class ContinueReadingTile extends StatelessWidget {
         final l = context.l10n;
         if (r == null) {
           return ListTile(
-            leading: const Icon(Icons.auto_stories),
+            leading: const RIcon(RIcons.quran),
             title: Text(l.quranStartReading),
             subtitle: Text(surahLabel(context, s.content.quran.surah(1))),
             onTap: () => openSurah(context, 1),
           );
         }
         return ListTile(
-          leading: const Icon(Icons.auto_stories),
+          leading: const RIcon(RIcons.quran),
           title: Text(l.quranContinueReading),
           subtitle: Text(ayahLabel(context, r)),
           onTap: () => openSurah(context, r.surah, ayah: r.ayah),

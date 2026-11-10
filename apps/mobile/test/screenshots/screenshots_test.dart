@@ -42,6 +42,23 @@ void main() {
     File('${outDir.path}/$name.png').writeAsBytesSync(bytes);
   }
 
+  for (final theme in ['light', 'dark']) {
+    testWidgets('icon set screenshots ($theme): home, nav, More, prayer, Quran, settings', (tester) async {
+      tester.view.devicePixelRatio = 1;
+      await pumpApp(tester, size: const Size(390, 1640), prefs: {'theme': theme});
+      await shot(tester, 'icons_${theme}_01_home');
+      await pumpApp(tester, size: const Size(390, 1240), prefs: {'theme': theme});
+      await goToTab(tester, 4);
+      await shot(tester, 'icons_${theme}_02_more');
+      await goToTab(tester, 2);
+      await shot(tester, 'icons_${theme}_03_prayer');
+      await goToTab(tester, 1);
+      await shot(tester, 'icons_${theme}_04_quran');
+      await goToTab(tester, 3);
+      await shot(tester, 'icons_${theme}_05_adhkar');
+    });
+  }
+
   testWidgets('iPad screenshots (ar)', (tester) async {
     tester.view.devicePixelRatio = 1;
     for (final size in const [Size(1194, 834), Size(834, 1194)]) {

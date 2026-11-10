@@ -4,6 +4,7 @@ import '../app_services.dart';
 import '../data/content.dart';
 import 'l10n_ext.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 /// Pick a city from packages/shared-schemas/cities.json. Pops with the City.
 class CityPickerScreen extends StatefulWidget {
@@ -42,7 +43,7 @@ class _CityPickerScreenState extends State<CityPickerScreen> {
               padding: const EdgeInsets.all(16),
               child: TextField(
                 key: const Key('citySearch'),
-                decoration: InputDecoration(labelText: l.prayerSearchCity, prefixIcon: const Icon(Icons.search)),
+                decoration: InputDecoration(labelText: l.prayerSearchCity, prefixIcon: const RIcon(RIcons.search)),
                 onChanged: (v) => setState(() => _q = v),
               ),
             ),
@@ -58,7 +59,7 @@ class _CityPickerScreenState extends State<CityPickerScreen> {
                           key: Key('city-${c.id}'),
                           title: Text(c.name(context.isArabic)),
                           subtitle: Text(context.isArabic ? '${c.countryAr} · ${c.tz}' : '${c.nameAr} · ${c.tz}'),
-                          trailing: selected ? const Icon(Icons.check) : null,
+                          trailing: selected ? const RIcon(RIcons.check) : null,
                           selected: selected,
                           onTap: () => Navigator.of(context).pop(c),
                         );

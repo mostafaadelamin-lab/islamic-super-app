@@ -5463,6 +5463,7 @@
   "page": "/ar/more/",
   "tag": "a",
   "type": null,
+<<<<<<< HEAD
   "name": "كتب السنةالبخاري ومسلم والسنن والموطأ والمسند",
   "href": "/ar/hadith/"
  },
@@ -5470,6 +5471,8 @@
   "page": "/ar/more/",
   "tag": "a",
   "type": null,
+=======
+>>>>>>> feature/adhan-voices
   "name": "حاسبة الزكاةزكاة المال على فتاوى دار الإفتاء المصرية",
   "href": "/ar/zakat/"
  },
@@ -8645,6 +8648,7 @@
   "href": "/ar/page/1/"
  },
  {
+<<<<<<< HEAD
   "page": "/ar/hadith/",
   "tag": "a",
   "type": null,
@@ -9408,6 +9412,8 @@
   "href": "/ar/page/1/"
  },
  {
+=======
+>>>>>>> feature/adhan-voices
   "page": "/ar/khatma/",
   "tag": "a",
   "type": null,
@@ -16362,6 +16368,7 @@
   "page": "/en/more/",
   "tag": "a",
   "type": null,
+<<<<<<< HEAD
   "name": "Hadith booksBukhari, Muslim, the Sunan, the Muwatta and the Musnad",
   "href": "/en/hadith/"
  },
@@ -16369,6 +16376,8 @@
   "page": "/en/more/",
   "tag": "a",
   "type": null,
+=======
+>>>>>>> feature/adhan-voices
   "name": "Zakat calculatorZakat on money, after Egypt's Dar al-Ifta",
   "href": "/en/zakat/"
  },
@@ -19544,6 +19553,7 @@
   "href": "/en/page/1/"
  },
  {
+<<<<<<< HEAD
   "page": "/en/hadith/",
   "tag": "a",
   "type": null,
@@ -20307,6 +20317,8 @@
   "href": "/en/page/1/"
  },
  {
+=======
+>>>>>>> feature/adhan-voices
   "page": "/en/khatma/",
   "tag": "a",
   "type": null,

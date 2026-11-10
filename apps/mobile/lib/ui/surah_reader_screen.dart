@@ -8,6 +8,7 @@ import 'l10n_ext.dart';
 import 'page_reader_screen.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 /// Reads one surah, ayah by ayah, optionally starting at [initialAyah]
 /// (which is highlighted and scrolled to the top).
@@ -91,14 +92,14 @@ class _SurahReaderScreenState extends State<SurahReaderScreen> {
                 key: const Key('toggleTranslation'),
                 tooltip: l.quranShowTranslation,
                 isSelected: showEn,
-                icon: const Icon(Icons.translate_outlined),
-                selectedIcon: const Icon(Icons.translate),
+                icon: const RIcon(RIcons.translate),
+                selectedIcon: const RIcon(RIcons.translate),
                 onPressed: () => services.settings.setShowTranslation(!showEn),
               ),
               IconButton(
                 key: const Key('openInMushaf'),
                 tooltip: l.quranOpenMushaf,
-                icon: const Icon(Icons.chrome_reader_mode),
+                icon: const RIcon(RIcons.book),
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute<void>(
                     builder: (_) => PageReaderScreen(initialPage: services.content.quran.pageOf(_current)),
@@ -174,8 +175,8 @@ class _AyahTile extends StatelessWidget {
                     key: Key('bookmark-${ref.surah}-${ref.ayah}'),
                     tooltip: marked ? l.quranRemoveBookmark : l.quranBookmark,
                     isSelected: marked,
-                    icon: const Icon(Icons.bookmark_border),
-                    selectedIcon: const Icon(Icons.bookmark),
+                    icon: const RIcon(RIcons.bookmark),
+                    selectedIcon: const RIcon(RIcons.bookmark),
                     onPressed: () async {
                       final messenger = ScaffoldMessenger.of(context);
                       final added = await services.bookmarks.toggle(ref);

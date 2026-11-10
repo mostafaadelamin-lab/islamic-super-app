@@ -40,6 +40,7 @@ PAIRS=(
   "content/fonts/KFGQPC-HAFS-LICENSE.txt:assets/fonts/KFGQPC-HAFS-LICENSE.txt"
   "content/fonts/OFL-IBMPlexSansArabic.txt:assets/fonts/OFL-IBMPlexSansArabic.txt"
   "packages/design-tokens/dist/design_tokens.dart:lib/theme/design_tokens.dart"
+  "packages/design-tokens/dist/rattil_icons.dart:lib/theme/rattil_icons.dart"
 )
 
 # Whole folders copied as they are (hadith books: content/hadith/dist, built by tools/build_hadith.py).

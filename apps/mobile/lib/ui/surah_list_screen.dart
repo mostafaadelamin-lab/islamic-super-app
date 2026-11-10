@@ -6,6 +6,7 @@ import 'page_reader_screen.dart';
 import 'quran_index.dart';
 import 'search_screen.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 class SurahListScreen extends StatefulWidget {
   const SurahListScreen({super.key});
@@ -25,12 +26,12 @@ class _SurahListScreenState extends State<SurahListScreen> {
         actions: [
           IconButton(
             tooltip: l.quranSearch,
-            icon: const Icon(Icons.search),
+            icon: const RIcon(RIcons.search),
             onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const SearchScreen())),
           ),
           IconButton(
             tooltip: l.quranOpenMushaf,
-            icon: const Icon(Icons.chrome_reader_mode),
+            icon: const RIcon(RIcons.book),
             onPressed: () {
               final s = context.services;
               final r = s.settings.lastRead;

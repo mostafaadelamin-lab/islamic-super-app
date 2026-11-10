@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="96" fill="#1E4D78"/><path d="M256 96a160 160 0 1 0 112 274A132 132 0 1 1 256 96z" fill="#F6E8D2"/><path d="M352 168l12 30 32 2-25 20 9 31-28-18-28 18 9-31-25-20 32-2z" fill="#B97A1E"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+<!-- Rattil app icon (our own design): gold mihrab arch, star and an open Mushaf on a rehal, on emerald. Full-bleed square; platforms apply their own mask. -->
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#17795F"/><stop offset="1" stop-color="#0A3D32"/></linearGradient></defs>
+<rect width="1024" height="1024" rx="230" fill="url(#bg)"/>
+<circle cx="512" cy="512" r="430" fill="none" stroke="#E0BD6A" stroke-opacity=".14" stroke-width="6"/>
+<g id="mark" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M300 812V500C300 392 392 318 512 236C632 318 724 392 724 500V812" stroke="#E0BD6A" stroke-width="36"/>
+  <path d="M512.0 330.0 L523.5 364.3 L555.8 348.2 L539.7 380.5 L574.0 392.0 L539.7 403.5 L555.8 435.8 L523.5 419.7 L512.0 454.0 L500.5 419.7 L468.2 435.8 L484.3 403.5 L450.0 392.0 L484.3 380.5 L468.2 348.2 L500.5 364.3Z" fill="#E0BD6A"/>
+  <path d="M400 660L628 812M624 660L396 812" stroke="#E0BD6A" stroke-width="26"/>
+  <path d="M512 566C466 534 414 524 368 534V676C414 666 466 676 512 708C558 676 610 666 656 676V534C610 524 558 534 512 566Z" fill="#F4EBD3" stroke="#E0BD6A" stroke-width="20"/>
+  <path d="M512 566V708" stroke="#B8923A" stroke-width="14"/>
+</g>
+</svg>

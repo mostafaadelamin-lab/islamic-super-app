@@ -22,6 +22,7 @@ import 'package:rattil/domain/tafsir.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:rattil/ui/r_icon.dart';
 
 /// Repo root, resolved from apps/mobile (the cwd of `flutter test`).
 final repoRoot = Directory.current.parent.parent.path;
@@ -118,6 +119,7 @@ Future<TestApp> pumpApp(
     clock: clock ?? () => fixedNow,
     audioBackend: () => audio ?? FakeAudioBackend(),
     storageRoot: () async => storage ?? (_testStorage ??= Directory.systemTemp.createTempSync('rattil-test')),
+    adhanRetryDelay: Duration.zero,
     narrationBackend: () => narration ?? FakeNarrationBackend(),
     notifications: notifications ?? FakeNotifications(),
     adhanPlayer: adhanPlayer ?? FakeAdhanPlayer(),
@@ -167,7 +169,7 @@ Future<void> goToTab(WidgetTester tester, int index) async {
   if (bar.evaluate().isNotEmpty) {
     await tester.tap(bar.at(index));
   } else {
-    await tester.tap(find.descendant(of: find.byType(NavigationRail), matching: find.byType(Icon)).at(index));
+    await tester.tap(find.descendant(of: find.byType(NavigationRail), matching: find.byType(RIcon)).at(index));
   }
   await tester.pumpAndSettle();
 }

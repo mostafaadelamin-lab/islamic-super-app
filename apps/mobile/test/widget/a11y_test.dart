@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers.dart';
+import 'package:rattil/ui/r_icon.dart';
 
 void main() {
   setUpAll(() => loadContent(realFonts: false));
@@ -24,7 +25,12 @@ void main() {
     await expectAccessible(tester, contrast: contrast);
     await goBack(tester);
     await goBack(tester);
-    await tester.tap(find.byIcon(Icons.search));
+    await tester.tap(
+      find.descendant(
+        of: find.byType(AppBar),
+        matching: find.byWidgetPredicate((w) => w is RIcon && w.icon == RIcons.search),
+      ),
+    );
     await tester.pumpAndSettle();
     await tester.enterText(find.byKey(const Key('searchField')), 'الرحمن');
     await tester.tap(find.byKey(const Key('searchButton')));

@@ -10,6 +10,7 @@ import 'l10n_ext.dart';
 import 'prayer_model.dart';
 import 'review_notice.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 /// Morning / evening adhkar with a counter on every item (persisted for the
 /// day), plus the way into Hisn al-Muslim.
@@ -55,19 +56,19 @@ class AdhkarScreenState extends State<AdhkarScreen> {
           IconButton(
             key: const Key('adhkarReminders'),
             tooltip: l.adhkarReminders,
-            icon: const Icon(Icons.alarm),
+            icon: const RIcon(RIcons.alarm),
             onPressed: () => showModalBottomSheet<void>(context: context, builder: (_) => const AdhkarRemindersSheet()),
           ),
           IconButton(
             key: const Key('adhkarReset'),
             tooltip: l.adhkarReset,
-            icon: const Icon(Icons.restart_alt),
+            icon: const RIcon(RIcons.reset),
             onPressed: () => s.adhkar.reset(session),
           ),
           IconButton(
             key: const Key('openHisn'),
             tooltip: l.adhkarHisn,
-            icon: const Icon(Icons.menu_book_outlined),
+            icon: const RIcon(RIcons.quran),
             onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const HisnScreen())),
           ),
         ],
@@ -85,12 +86,12 @@ class AdhkarScreenState extends State<AdhkarScreen> {
                   segments: [
                     ButtonSegment(
                       value: AdhkarSession.morning,
-                      icon: const Icon(Icons.wb_sunny_outlined),
+                      icon: const RIcon(RIcons.sunHigh),
                       label: Text(l.adhkarMorning),
                     ),
                     ButtonSegment(
                       value: AdhkarSession.evening,
-                      icon: const Icon(Icons.nights_stay_outlined),
+                      icon: const RIcon(RIcons.moon),
                       label: Text(l.adhkarEvening),
                     ),
                   ],
@@ -208,8 +209,8 @@ class _DhikrCard extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(
-                                done ? Icons.check : Icons.touch_app_outlined,
+                              RIcon(
+                                done ? RIcons.check : RIcons.beads,
                                 size: 18,
                                 color: done ? scheme.onPrimary : scheme.onSecondaryContainer,
                               ),
@@ -272,7 +273,7 @@ class CopyButton extends StatelessWidget {
         await Clipboard.setData(ClipboardData(text: text));
         messenger.showSnackBar(SnackBar(content: Text(l.adhkarCopied)));
       },
-      icon: const Icon(Icons.copy, size: 18),
+      icon: const RIcon(RIcons.copy, size: 18),
       label: Text(l.adhkarCopy),
     );
   }

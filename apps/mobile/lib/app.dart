@@ -24,14 +24,17 @@ class _RattilAppState extends State<RattilApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     services.settings.addListener(_syncAdhan);
-    // Renew the next days of adhan notifications on every start.
-    unawaited(services.adhan.sync(force: true));
+    services.adhanVoices.addListener(_syncAdhan);
+    // Renew the next days of adhan notifications on every start (once the
+    // downloaded muezzin recordings are known).
+    unawaited(services.adhanVoices.init().whenComplete(() => services.adhan.sync(force: true)));
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     services.settings.removeListener(_syncAdhan);
+    services.adhanVoices.removeListener(_syncAdhan);
     super.dispose();
   }
 
