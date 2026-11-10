@@ -150,7 +150,6 @@ class _TasbihScreenState extends State<TasbihScreen> {
                                   child: Material(
                                     color: Colors.white,
                                     shape: const CircleBorder(),
-                                    elevation: 6,
                                     clipBehavior: Clip.antiAlias,
                                     child: InkWell(
                                       key: const Key('tasbihButton'),

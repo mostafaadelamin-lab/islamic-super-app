@@ -4,6 +4,7 @@ import '../app_services.dart';
 import '../domain/hajj.dart';
 import '../theme/design_tokens.dart';
 import 'adhkar_screen.dart';
+import 'hajj_art.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
 import 'adaptive.dart';
@@ -71,66 +72,91 @@ class _Block extends StatelessWidget {
             )
           : Card(
               margin: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
-              child: Padding(
-                padding: const EdgeInsets.all(DesignTokens.spaceLg),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (b.label != null)
-                      Text(b.label!, style: theme.textTheme.labelLarge?.copyWith(color: scheme.primary)),
-                    if (b.title != null) Text(b.title!, style: theme.textTheme.titleMedium),
-                    for (final d in b.defs)
-                      Padding(
-                        padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: '${d.term}: ',
-                                style: const TextStyle(fontWeight: FontWeight.w600),
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (hajjSceneFor(b.title) case final scene?)
+                    Stack(
+                      children: [
+                        HajjArt(key: Key('hajjArt-${scene.name}'), scene: scene),
+                        if (b.label != null)
+                          PositionedDirectional(
+                            top: DesignTokens.spaceSm,
+                            start: DesignTokens.spaceSm,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: 4),
+                              decoration: BoxDecoration(color: scheme.primary, borderRadius: BorderRadius.circular(20)),
+                              child: Text(
+                                b.label!,
+                                style: theme.textTheme.labelLarge?.copyWith(color: scheme.onPrimary),
                               ),
-                              TextSpan(text: d.detail),
-                            ],
-                          ),
-                        ),
-                      ),
-                    for (final item in b.items)
-                      Padding(
-                        padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Icon(Icons.circle, size: 7, color: scheme.secondary),
                             ),
-                            const SizedBox(width: DesignTokens.spaceSm),
-                            Expanded(child: Text(item, style: const TextStyle(height: 1.7))),
-                          ],
-                        ),
-                      ),
-                    for (final p in b.paragraphs)
-                      Padding(
-                        padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
-                        child: Text(p, style: theme.textTheme.bodyMedium),
-                      ),
-                    if (b.dua != null) ...[
-                      const SizedBox(height: DesignTokens.spaceMd),
-                      Container(
-                        padding: const EdgeInsets.all(DesignTokens.spaceMd),
-                        decoration: BoxDecoration(
-                          color: scheme.secondaryContainer,
-                          borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-                        ),
-                        child: Text(b.dua!, style: duaStyle(context).copyWith(color: scheme.onSecondaryContainer)),
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: CopyButton(text: b.dua!),
-                      ),
-                    ],
-                  ],
-                ),
+                          ),
+                      ],
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (b.label != null && hajjSceneFor(b.title) == null)
+                          Text(b.label!, style: theme.textTheme.labelLarge?.copyWith(color: scheme.primary)),
+                        if (b.title != null) Text(b.title!, style: theme.textTheme.titleMedium),
+                        for (final d in b.defs)
+                          Padding(
+                            padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: '${d.term}: ',
+                                    style: const TextStyle(fontWeight: FontWeight.w600),
+                                  ),
+                                  TextSpan(text: d.detail),
+                                ],
+                              ),
+                            ),
+                          ),
+                        for (final item in b.items)
+                          Padding(
+                            padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8),
+                                  child: Icon(Icons.circle, size: 7, color: scheme.secondary),
+                                ),
+                                const SizedBox(width: DesignTokens.spaceSm),
+                                Expanded(child: Text(item, style: const TextStyle(height: 1.7))),
+                              ],
+                            ),
+                          ),
+                        for (final p in b.paragraphs)
+                          Padding(
+                            padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
+                            child: Text(p, style: theme.textTheme.bodyMedium),
+                          ),
+                        if (b.dua != null) ...[
+                          const SizedBox(height: DesignTokens.spaceMd),
+                          Container(
+                            padding: const EdgeInsets.all(DesignTokens.spaceMd),
+                            decoration: BoxDecoration(
+                              color: scheme.secondaryContainer,
+                              borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+                            ),
+                            child: Text(b.dua!, style: duaStyle(context).copyWith(color: scheme.onSecondaryContainer)),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional.centerEnd,
+                            child: CopyButton(text: b.dua!),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
     );

@@ -331,7 +331,7 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
                       key: const Key('hadithPrev'),
                       tooltip: l.hadithPrev,
                       onPressed: _n <= 1 ? null : () => _turn(-1),
-                      icon: Icon(ar ? Icons.chevron_right : Icons.chevron_left),
+                      icon: const Icon(Icons.chevron_left),
                     ),
                     Expanded(
                       child: Text(
@@ -345,7 +345,7 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
                       key: const Key('hadithNext'),
                       tooltip: l.hadithNext,
                       onPressed: _n >= book.count ? null : () => _turn(1),
-                      icon: Icon(ar ? Icons.chevron_left : Icons.chevron_right),
+                      icon: const Icon(Icons.chevron_right),
                     ),
                   ],
                 ),
