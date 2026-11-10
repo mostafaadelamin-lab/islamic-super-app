@@ -3409,6 +3409,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Last 7 days'**
   String get worshipWeek;
+
+  /// shared key "zakat.adornment"
+  ///
+  /// In en, this message translates to:
+  /// **'Gold worn for adornment'**
+  String get zakatAdornment;
+
+  /// shared key "zakat.belowNisab"
+  ///
+  /// In en, this message translates to:
+  /// **'Your wealth after debts ({net}) is below the nisab ({nisab}), so no zakat is due on it now.'**
+  String zakatBelowNisab(String net, String nisab);
+
+  /// shared key "zakat.due"
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat due: {zakat}'**
+  String zakatDue(String zakat);
+
+  /// shared key "zakat.dueDetail"
+  ///
+  /// In en, this message translates to:
+  /// **'One fortieth (2.5%) of {net}; the nisab is {nisab}.'**
+  String zakatDueDetail(String net, String nisab);
+
+  /// shared key "zakat.fatwa"
+  ///
+  /// In en, this message translates to:
+  /// **'Fatwa no. {n} on Dar al-Ifta\'s website'**
+  String zakatFatwa(String n);
+
+  /// shared key "zakat.field.cash"
+  ///
+  /// In en, this message translates to:
+  /// **'Cash and bank balances'**
+  String get zakatFieldCash;
+
+  /// shared key "zakat.field.certificateReturns"
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate returns you add to the capital at year end'**
+  String get zakatFieldCertificateReturns;
+
+  /// shared key "zakat.field.certificates"
+  ///
+  /// In en, this message translates to:
+  /// **'Bank certificates and deposits (principal)'**
+  String get zakatFieldCertificates;
+
+  /// shared key "zakat.field.debts"
+  ///
+  /// In en, this message translates to:
+  /// **'Debts now due from you (subtracted)'**
+  String get zakatFieldDebts;
+
+  /// shared key "zakat.field.gold18"
+  ///
+  /// In en, this message translates to:
+  /// **'Gold kept as savings or investment, 18 karat (grams)'**
+  String get zakatFieldGold18;
+
+  /// shared key "zakat.field.gold21"
+  ///
+  /// In en, this message translates to:
+  /// **'Gold kept as savings or investment, 21 karat (grams)'**
+  String get zakatFieldGold21;
+
+  /// shared key "zakat.field.gold24"
+  ///
+  /// In en, this message translates to:
+  /// **'Gold kept as savings or investment, 24 karat (grams)'**
+  String get zakatFieldGold24;
+
+  /// shared key "zakat.field.shares"
+  ///
+  /// In en, this message translates to:
+  /// **'Shares kept as savings (today\'s value with profits)'**
+  String get zakatFieldShares;
+
+  /// shared key "zakat.field.trade"
+  ///
+  /// In en, this message translates to:
+  /// **'Trade goods (market price)'**
+  String get zakatFieldTrade;
+
+  /// shared key "zakat.needPrice"
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the price of a gram of 21-karat gold to work out the nisab.'**
+  String get zakatNeedPrice;
+
+  /// shared key "zakat.nisabRule"
+  ///
+  /// In en, this message translates to:
+  /// **'The nisab is the value of {grams} grams of {karat}-karat gold, so enter today\'s market price per gram.'**
+  String zakatNisabRule(String grams, String karat);
+
+  /// shared key "zakat.price"
+  ///
+  /// In en, this message translates to:
+  /// **'Price of one gram of 21-karat gold today (your currency)'**
+  String get zakatPrice;
+
+  /// shared key "zakat.priceTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s gold price'**
+  String get zakatPriceTitle;
+
+  /// shared key "zakat.result"
+  ///
+  /// In en, this message translates to:
+  /// **'Result'**
+  String get zakatResult;
+
+  /// shared key "zakat.review"
+  ///
+  /// In en, this message translates to:
+  /// **'Pending a shar\'i review: the calculator follows the published fatwas of Egypt\'s Dar al-Ifta (linked below) and has not been reviewed by a scholar yet. If your case is unclear, ask Dar al-Ifta.'**
+  String get zakatReview;
+
+  /// shared key "zakat.sources"
+  ///
+  /// In en, this message translates to:
+  /// **'Sources: fatwas of {ref}'**
+  String zakatSources(String ref);
+
+  /// shared key "zakat.tileSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat on money, after Egypt\'s Dar al-Ifta'**
+  String get zakatTileSub;
+
+  /// shared key "zakat.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat calculator'**
+  String get zakatTitle;
+
+  /// shared key "zakat.wealth"
+  ///
+  /// In en, this message translates to:
+  /// **'Your wealth (in your currency; gold in grams)'**
+  String get zakatWealth;
+
+  /// shared key "zakat.yearNotPassed"
+  ///
+  /// In en, this message translates to:
+  /// **'Your wealth ({net}) has reached the nisab ({nisab}); zakat is due once a full Hijri year passes over it.'**
+  String zakatYearNotPassed(String net, String nisab);
+
+  /// shared key "zakat.yearPassed"
+  ///
+  /// In en, this message translates to:
+  /// **'A full Hijri year has passed since my wealth reached the nisab'**
+  String get zakatYearPassed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

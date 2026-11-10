@@ -17,6 +17,7 @@ import 'search_screen.dart';
 import 'settings_screen.dart';
 import 'tasbih_screen.dart';
 import 'widgets.dart';
+import 'zakat_screen.dart';
 import 'adaptive.dart';
 
 /// "More" tab: the remaining sections and the settings.
@@ -54,6 +55,7 @@ class MoreScreen extends StatelessWidget {
                 tile('tracker', Icons.event_available_outlined, l.worshipTitle, () => const WorshipScreen()),
                 tile('qibla', Icons.explore_outlined, l.qiblaTitle, () => const QiblaScreen()),
                 tile('mosques', Icons.place_outlined, l.mosquesTitle, () => const MosquesScreen()),
+                tile('zakat', Icons.savings_outlined, l.zakatTitle, () => const ZakatScreen()),
                 tile('hajj', Icons.mosque_outlined, l.hajjTitle, () => const HajjScreen()),
                 tile('stories', Icons.headphones_outlined, l.storiesTitle, () => const StoriesScreen()),
                 tile('reels', Icons.smart_display_outlined, l.reelsTitle, () => const ReelsScreen()),

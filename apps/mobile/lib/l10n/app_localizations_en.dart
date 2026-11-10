@@ -1902,4 +1902,97 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get worshipWeek => 'Last 7 days';
+
+  @override
+  String get zakatAdornment => 'Gold worn for adornment';
+
+  @override
+  String zakatBelowNisab(String net, String nisab) {
+    return 'Your wealth after debts ($net) is below the nisab ($nisab), so no zakat is due on it now.';
+  }
+
+  @override
+  String zakatDue(String zakat) {
+    return 'Zakat due: $zakat';
+  }
+
+  @override
+  String zakatDueDetail(String net, String nisab) {
+    return 'One fortieth (2.5%) of $net; the nisab is $nisab.';
+  }
+
+  @override
+  String zakatFatwa(String n) {
+    return 'Fatwa no. $n on Dar al-Ifta\'s website';
+  }
+
+  @override
+  String get zakatFieldCash => 'Cash and bank balances';
+
+  @override
+  String get zakatFieldCertificateReturns => 'Certificate returns you add to the capital at year end';
+
+  @override
+  String get zakatFieldCertificates => 'Bank certificates and deposits (principal)';
+
+  @override
+  String get zakatFieldDebts => 'Debts now due from you (subtracted)';
+
+  @override
+  String get zakatFieldGold18 => 'Gold kept as savings or investment, 18 karat (grams)';
+
+  @override
+  String get zakatFieldGold21 => 'Gold kept as savings or investment, 21 karat (grams)';
+
+  @override
+  String get zakatFieldGold24 => 'Gold kept as savings or investment, 24 karat (grams)';
+
+  @override
+  String get zakatFieldShares => 'Shares kept as savings (today\'s value with profits)';
+
+  @override
+  String get zakatFieldTrade => 'Trade goods (market price)';
+
+  @override
+  String get zakatNeedPrice => 'Enter the price of a gram of 21-karat gold to work out the nisab.';
+
+  @override
+  String zakatNisabRule(String grams, String karat) {
+    return 'The nisab is the value of $grams grams of $karat-karat gold, so enter today\'s market price per gram.';
+  }
+
+  @override
+  String get zakatPrice => 'Price of one gram of 21-karat gold today (your currency)';
+
+  @override
+  String get zakatPriceTitle => 'Today\'s gold price';
+
+  @override
+  String get zakatResult => 'Result';
+
+  @override
+  String get zakatReview =>
+      'Pending a shar\'i review: the calculator follows the published fatwas of Egypt\'s Dar al-Ifta (linked below) and has not been reviewed by a scholar yet. If your case is unclear, ask Dar al-Ifta.';
+
+  @override
+  String zakatSources(String ref) {
+    return 'Sources: fatwas of $ref';
+  }
+
+  @override
+  String get zakatTileSub => 'Zakat on money, after Egypt\'s Dar al-Ifta';
+
+  @override
+  String get zakatTitle => 'Zakat calculator';
+
+  @override
+  String get zakatWealth => 'Your wealth (in your currency; gold in grams)';
+
+  @override
+  String zakatYearNotPassed(String net, String nisab) {
+    return 'Your wealth ($net) has reached the nisab ($nisab); zakat is due once a full Hijri year passes over it.';
+  }
+
+  @override
+  String get zakatYearPassed => 'A full Hijri year has passed since my wealth reached the nisab';
 }

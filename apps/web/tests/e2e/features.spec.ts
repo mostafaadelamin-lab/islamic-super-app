@@ -394,3 +394,15 @@ test("Quran index: surahs and quarters tabs, search, opens the Mushaf page", asy
   await expect(page.locator(".qidx-item.current")).toContainText("سورة الكهف");
   w.assertClean();
 });
+
+test("zakat calculator follows Dar al-Ifta and shows the result", async ({ page }) => {
+  await page.goto("/ar/zakat/");
+  await expect(page.locator("html[data-hydrated=true]")).toHaveCount(1);
+  await expect(page.getByTestId("zakat-review")).toBeVisible();
+  await page.getByTestId("zakat-price").fill("4000");
+  await page.getByTestId("zakat-cash").fill("400000");
+  await page.getByTestId("zakat-year").check();
+  await expect(page.getByTestId("zakat-amount")).toHaveText("الزكاة الواجبة: ١٠,٠٠٠");
+  await page.reload();
+  await expect(page.getByTestId("zakat-result")).toHaveAttribute("data-status", "due");
+});

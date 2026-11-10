@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased] — Zakat calculator after Egypt's Dar al-Ifta (owner's feature list, phase 6) — 2026-11-10
+### Added
+- Zakat calculator (mobile: More → Zakat calculator; web: /zakat/): cash and bank balances, bank certificates and their returns, saved shares, trade goods, gold kept for saving (24, 21 or 18 karat) and debts due. Nisab = the value of 85 g of 21-karat gold at the price the user enters; 2.5% once a full Hijri year has passed.
+- Every rule shows the fatwa's own words with a link to it on dar-alifta.org; gold worn for adornment shows fatwa 8848 instead of a field.
+- A visible "pending shar'i review" notice. The numbers stay on the device.
+### Not yet
+- Apple Watch: parked (no Mac or Apple developer account).
+
 ## [Unreleased] — iPad and tablet layout (owner's feature list, phase 8) — 2026-11-10
 ### Added
 - Mobile on iPad, Android tablets and wide landscape screens: a side navigation rail (on the right in Arabic, with labels from 840 pt wide) instead of the bottom bar, and the mini player under the content.

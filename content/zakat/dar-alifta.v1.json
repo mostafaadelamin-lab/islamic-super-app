@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "reviewStatus": "pending",
+  "reference": {
+    "nameAr": "دار الإفتاء المصرية",
+    "nameEn": "Dar al-Ifta al-Misriyya (Egypt)",
+    "url": "https://www.dar-alifta.org"
+  },
+  "rules": {
+    "nisabGoldGrams": 85,
+    "nisabKarat": 21,
+    "rate": 0.025,
+    "year": "lunar"
+  },
+  "sources": [
+    { "id": "nisab", "number": 7506, "date": "2023-02-22", "url": "https://www.dar-alifta.org/ar/fatwa/details/18349", "titleAr": "نصاب زكاة المال والمقدار الواجب في إخراجها", "quotes": ["والنِّصاب الشرعي هو ما بلغت قيمته 85 جرامًا من الذهب عيار 21", "وجبت فيه الزكاة بمقدار ربع العشر 2.5%", "ومضى عليه الحول -عامٌ قمريٌّ كامل-"] },
+    { "id": "karat", "number": 8426, "date": "2024-08-11", "url": "https://www.dar-alifta.org/ar/fatwa/details/21692", "titleAr": "السبب في تقدير النصاب في زكاة المال على اعتبار عيار 21 وليس 18 أو 24", "quotes": ["وهذا الاختيار هو ما جرت عليه الفتوى في الديار المصرية"] },
+    { "id": "conditions", "number": 6231, "date": "1984-02-06", "url": "https://www.dar-alifta.org/ar/fatwa/details/17117", "titleAr": "النصاب الشرعي الذي تجب فيه زكاة المال", "quotes": ["أن يكون فاضلًا عن الحوائج الأصلية لمالكه؛ كالنفقة والسكنى والثياب", "وألا يكون المالك مَدينًا بدين يستغرقُ المال المُدَّخر أو ينقصه عن النصاب"] },
+    { "id": "adornment", "number": 8848, "date": "2025-12-28", "url": "https://www.dar-alifta.org/ar/fatwa/details/22484", "titleAr": "حكم زكاة الذهب الذي تتخذه المرأة للزينة", "quotes": ["لا زكاة على المرأة في الذهب الذي تملكه بقصد استعماله في التزيُّنِ به والتحلي", "وإنما تجب الزكاة فيما تملكه من الذهب بقصد محض الادخار وحفظ المال أو الاستثمار", "خمسة وثمانون جرامًا من الذهب عيار واحد وعشرين أو ما يساويه من العيارات الأخرى"] },
+    { "id": "trade", "number": 8115, "date": "2021-09-09", "url": "https://www.dar-alifta.org/ar/fatwa/details/19842", "titleAr": "شروط وجوب الزكاة في عروض التجارة", "quotes": ["فإذا كان المال كذلك قُوِّم بثمن السوق، فإذا كان بالغًا للنصاب وحال عليه الحول أخرجت زكاته."] },
+    { "id": "tradeNisab", "number": 8087, "date": "2023-10-31", "url": "https://www.dar-alifta.org/ar/fatwa/details/19768", "titleAr": "مقدار النصاب في زكاة عروض التجارة", "quotes": ["والذي عليه العمل في زماننا: أن النصاب هو ما يعادل خمسة وثمانين جرامًا مِن الذهب غير المشغول عيار (21)."] },
+    { "id": "certificates", "number": 6423, "date": "1991-12-23", "url": "https://www.dar-alifta.org/ar/fatwa/details/17026", "titleAr": "كيفية احتساب الزكاة على الشهادات البنكية", "quotes": ["أمَّا بالنسبة لعائد هذه الشهادات فإذا كان السائل يُنْفِقُها خلال العام فلا زكاة عليها", "أمَّا إذا كان يضمّها إلى رأس المال في آخر العام وجبت الزكاة في الجميع؛ رأس المال والأرباح."] },
+    { "id": "shares", "number": 3133, "date": "1996-12-26", "url": "https://www.dar-alifta.org/ar/fatwa/details/12218", "titleAr": "حكم زكاة الأسهم المدخرة", "quotes": ["يجب على السائل أن يخرج الزكاة من قيمة الأسهم الحالية متى حال عليه الحول", "وقت إخراج الزكاة بالسعر الحالي وقت الخروج"] }
+  ],
+  "fields": [
+    { "id": "cash", "sources": ["nisab", "conditions"] },
+    { "id": "certificates", "sources": ["certificates"] },
+    { "id": "certificateReturns", "sources": ["certificates"] },
+    { "id": "shares", "sources": ["shares"] },
+    { "id": "trade", "sources": ["trade", "tradeNisab"] },
+    { "id": "gold24", "karat": 24, "sources": ["adornment"] },
+    { "id": "gold21", "karat": 21, "sources": ["adornment"] },
+    { "id": "gold18", "karat": 18, "sources": ["adornment"] },
+    { "id": "debts", "subtract": true, "sources": ["conditions"] }
+  ],
+  "reviewQuestions": [
+    "Debts are subtracted before comparing with the nisab and before taking 2.5% (fatwa 6231 says debt that consumes the savings or brings them under the nisab removes zakat). Confirm that zakat is then taken on the amount after debts.",
+    "Gold of other karats is converted to 21-karat grams by purity (grams × karat ÷ 21), following 'أو ما يساويه من العيارات الأخرى' (fatwa 8848). Confirm.",
+    "The nisab and gold price use the price of one gram of 21-karat gold that the user enters on the day of calculation (fatwa 3133 values shares 'وقت إخراج الزكاة بالسعر الحالي'). Confirm the same day applies to the nisab.",
+    "Gold worn for adornment is not asked for at all; the screen shows fatwa 8848's text instead."
+  ]
+}

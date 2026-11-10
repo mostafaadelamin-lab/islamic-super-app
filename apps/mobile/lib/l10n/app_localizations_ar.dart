@@ -1895,4 +1895,97 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get worshipWeek => 'آخر ٧ أيام';
+
+  @override
+  String get zakatAdornment => 'ذهب الزينة';
+
+  @override
+  String zakatBelowNisab(String net, String nisab) {
+    return 'مالك بعد الديون ($net) أقل من النصاب ($nisab)، فلا زكاة فيه الآن.';
+  }
+
+  @override
+  String zakatDue(String zakat) {
+    return 'الزكاة الواجبة: $zakat';
+  }
+
+  @override
+  String zakatDueDetail(String net, String nisab) {
+    return 'ربع العشر (٢٫٥٪) من $net، والنصاب $nisab.';
+  }
+
+  @override
+  String zakatFatwa(String n) {
+    return 'الفتوى رقم $n على موقع دار الإفتاء';
+  }
+
+  @override
+  String get zakatFieldCash => 'النقود والأرصدة في البنك';
+
+  @override
+  String get zakatFieldCertificateReturns => 'عائد الشهادات الذي تضمه لرأس المال آخر العام';
+
+  @override
+  String get zakatFieldCertificates => 'الشهادات والودائع البنكية (أصل المبلغ)';
+
+  @override
+  String get zakatFieldDebts => 'ديون حالّة عليك (تُطرح)';
+
+  @override
+  String get zakatFieldGold18 => 'ذهب للادخار أو الاستثمار عيار ١٨ (جرام)';
+
+  @override
+  String get zakatFieldGold21 => 'ذهب للادخار أو الاستثمار عيار ٢١ (جرام)';
+
+  @override
+  String get zakatFieldGold24 => 'ذهب للادخار أو الاستثمار عيار ٢٤ (جرام)';
+
+  @override
+  String get zakatFieldShares => 'الأسهم المدخرة (قيمتها اليوم مع أرباحها)';
+
+  @override
+  String get zakatFieldTrade => 'بضاعة التجارة (بسعر السوق)';
+
+  @override
+  String get zakatNeedPrice => 'اكتب سعر جرام الذهب عيار ٢١ ليُحسب النصاب.';
+
+  @override
+  String zakatNisabRule(String grams, String karat) {
+    return 'النصاب قيمة $grams جرامًا من الذهب عيار $karat، فاكتب سعر الجرام من السوق يوم الحساب.';
+  }
+
+  @override
+  String get zakatPrice => 'سعر جرام الذهب عيار ٢١ اليوم (بعملتك)';
+
+  @override
+  String get zakatPriceTitle => 'سعر الذهب اليوم';
+
+  @override
+  String get zakatResult => 'النتيجة';
+
+  @override
+  String get zakatReview =>
+      'قيد المراجعة الشرعية: الحاسبة تتبع فتاوى دار الإفتاء المصرية المنشورة (روابطها بالأسفل)، ولم تراجعها جهة شرعية بعد. إن كانت حالتك غير واضحة فاسأل دار الإفتاء.';
+
+  @override
+  String zakatSources(String ref) {
+    return 'المصادر: فتاوى $ref';
+  }
+
+  @override
+  String get zakatTileSub => 'زكاة المال على فتاوى دار الإفتاء المصرية';
+
+  @override
+  String get zakatTitle => 'حاسبة الزكاة';
+
+  @override
+  String get zakatWealth => 'مالك (بعملتك، والذهب بالجرام)';
+
+  @override
+  String zakatYearNotPassed(String net, String nisab) {
+    return 'مالك ($net) بلغ النصاب ($nisab)، وتجب زكاته حين يمرّ عليه عام هجري كامل.';
+  }
+
+  @override
+  String get zakatYearPassed => 'مرّ عام هجري كامل منذ بلغ مالي النصاب';
 }

@@ -21,6 +21,7 @@ PAIRS=(
   "content/adhkar/dist/adhkar.v1.json:assets/content/adhkar.v1.json"
   "content/adhkar/hisn.json:assets/content/hisn.json"
   "content/adhkar/hisn-sections.json:assets/content/hisn-sections.json"
+  "content/zakat/dar-alifta.v1.json:assets/content/zakat.v1.json"
   "packages/shared-schemas/app-links.json:assets/schemas/app-links.json"
   "content/tafsir/dist/muyassar.v1.json:assets/content/tafsir-muyassar.v1.json"
   "content/VERSIONS.json:assets/content/VERSIONS.json"

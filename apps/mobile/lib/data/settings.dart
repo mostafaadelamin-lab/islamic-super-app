@@ -361,6 +361,32 @@ class SettingsController extends ChangeNotifier {
     if (done != null) await _prefs.setBool('sharePrompt.done', done);
   }
 
+  /// Zakat calculator: what the user typed (kept on this device only).
+  Map<String, double> get zakatValues {
+    final raw = _prefs.getString('zakat.values');
+    if (raw == null) return const {};
+    try {
+      final m = jsonDecode(raw) as Map<String, dynamic>;
+      return {
+        for (final e in m.entries)
+          if (e.value is num && (e.value as num) > 0) e.key: (e.value as num).toDouble(),
+      };
+    } on FormatException {
+      return const {};
+    } on TypeError {
+      return const {};
+    }
+  }
+
+  double get zakatGoldPrice => _prefs.getDouble('zakat.price') ?? 0;
+  bool get zakatYearPassed => _prefs.getBool('zakat.year') ?? false;
+
+  Future<void> setZakat({Map<String, double>? values, double? price, bool? yearPassed}) async {
+    if (values != null) await _prefs.setString('zakat.values', jsonEncode(values));
+    if (price != null) await _prefs.setDouble('zakat.price', price);
+    if (yearPassed != null) await _prefs.setBool('zakat.year', yearPassed);
+  }
+
   /// Prayers that should get a notification right now.
   Set<String> get adhanPrayers => adhanEnabled
       ? {

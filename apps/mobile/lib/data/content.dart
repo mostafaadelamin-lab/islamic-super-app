@@ -14,6 +14,7 @@ import '../domain/reels.dart';
 import '../domain/search.dart';
 import '../domain/stories.dart';
 import '../domain/text.dart';
+import '../domain/zakat.dart';
 
 class City {
   const City({
@@ -70,6 +71,7 @@ class AppContent {
     this.stories = StoryCatalog.empty,
     this.magneticModel,
     this.links = const AppLinks(),
+    this.zakat = ZakatGuide.empty,
   }) : search = QuranSearch(quran, normalizer);
 
   static const quranAsset = 'assets/content/quran.v1.json';
@@ -91,6 +93,7 @@ class AppContent {
   static const renderAsset = 'assets/schemas/quran-render.json';
   static const normalizationAsset = 'assets/schemas/search-normalization.json';
   static const linksAsset = 'assets/schemas/app-links.json';
+  static const zakatAsset = 'assets/content/zakat.v1.json';
 
   final QuranContent quran;
   final MushafLayout mushaf;
@@ -119,6 +122,9 @@ class AppContent {
 
   /// Contact, website and store links (Help & contact, share, rate).
   final AppLinks links;
+
+  /// Zakat rules and fatwas of Dar al-Ifta al-Misriyya (pending a shar'i review).
+  final ZakatGuide zakat;
 
   PrayerCalculator get calculator => PrayerCalculator(prayerConfig);
 
@@ -159,6 +165,7 @@ class AppContent {
       stories: StoryCatalog.fromJson(await j(storiesAsset), [for (final s in quran.surahs) s.ayahCount]),
       magneticModel: WorldMagneticModel.fromJson(await j(wmmAsset)),
       links: AppLinks.fromJson(await j(linksAsset)),
+      zakat: ZakatGuide.fromJson(await j(zakatAsset)),
     );
   }
 }

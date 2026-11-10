@@ -100,6 +100,11 @@ void main() {
       await openBookmarks(tester);
       await shot(tester, '${locale}_06_bookmarks');
       await goBack(tester);
+      await tester.scrollUntilVisible(
+        find.byKey(const Key('more.settings')),
+        200,
+        scrollable: find.descendant(of: find.byKey(const Key('moreList')), matching: find.byType(Scrollable)),
+      );
       await tester.tap(find.byKey(const Key('more.settings')));
       await tester.pumpAndSettle();
       await shot(tester, '${locale}_07_settings');

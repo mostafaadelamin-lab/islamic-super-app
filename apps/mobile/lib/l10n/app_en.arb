@@ -2826,5 +2826,156 @@
   "worshipWeek": "Last 7 days",
   "@worshipWeek": {
     "description": "shared key \"worship.week\""
+  },
+  "zakatAdornment": "Gold worn for adornment",
+  "@zakatAdornment": {
+    "description": "shared key \"zakat.adornment\""
+  },
+  "zakatBelowNisab": "Your wealth after debts ({net}) is below the nisab ({nisab}), so no zakat is due on it now.",
+  "@zakatBelowNisab": {
+    "description": "shared key \"zakat.belowNisab\"",
+    "placeholders": {
+      "net": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatDue": "Zakat due: {zakat}",
+  "@zakatDue": {
+    "description": "shared key \"zakat.due\"",
+    "placeholders": {
+      "zakat": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatDueDetail": "One fortieth (2.5%) of {net}; the nisab is {nisab}.",
+  "@zakatDueDetail": {
+    "description": "shared key \"zakat.dueDetail\"",
+    "placeholders": {
+      "net": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatFatwa": "Fatwa no. {n} on Dar al-Ifta's website",
+  "@zakatFatwa": {
+    "description": "shared key \"zakat.fatwa\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatFieldCash": "Cash and bank balances",
+  "@zakatFieldCash": {
+    "description": "shared key \"zakat.field.cash\""
+  },
+  "zakatFieldCertificateReturns": "Certificate returns you add to the capital at year end",
+  "@zakatFieldCertificateReturns": {
+    "description": "shared key \"zakat.field.certificateReturns\""
+  },
+  "zakatFieldCertificates": "Bank certificates and deposits (principal)",
+  "@zakatFieldCertificates": {
+    "description": "shared key \"zakat.field.certificates\""
+  },
+  "zakatFieldDebts": "Debts now due from you (subtracted)",
+  "@zakatFieldDebts": {
+    "description": "shared key \"zakat.field.debts\""
+  },
+  "zakatFieldGold18": "Gold kept as savings or investment, 18 karat (grams)",
+  "@zakatFieldGold18": {
+    "description": "shared key \"zakat.field.gold18\""
+  },
+  "zakatFieldGold21": "Gold kept as savings or investment, 21 karat (grams)",
+  "@zakatFieldGold21": {
+    "description": "shared key \"zakat.field.gold21\""
+  },
+  "zakatFieldGold24": "Gold kept as savings or investment, 24 karat (grams)",
+  "@zakatFieldGold24": {
+    "description": "shared key \"zakat.field.gold24\""
+  },
+  "zakatFieldShares": "Shares kept as savings (today's value with profits)",
+  "@zakatFieldShares": {
+    "description": "shared key \"zakat.field.shares\""
+  },
+  "zakatFieldTrade": "Trade goods (market price)",
+  "@zakatFieldTrade": {
+    "description": "shared key \"zakat.field.trade\""
+  },
+  "zakatNeedPrice": "Enter the price of a gram of 21-karat gold to work out the nisab.",
+  "@zakatNeedPrice": {
+    "description": "shared key \"zakat.needPrice\""
+  },
+  "zakatNisabRule": "The nisab is the value of {grams} grams of {karat}-karat gold, so enter today's market price per gram.",
+  "@zakatNisabRule": {
+    "description": "shared key \"zakat.nisabRule\"",
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "karat": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatPrice": "Price of one gram of 21-karat gold today (your currency)",
+  "@zakatPrice": {
+    "description": "shared key \"zakat.price\""
+  },
+  "zakatPriceTitle": "Today's gold price",
+  "@zakatPriceTitle": {
+    "description": "shared key \"zakat.priceTitle\""
+  },
+  "zakatResult": "Result",
+  "@zakatResult": {
+    "description": "shared key \"zakat.result\""
+  },
+  "zakatReview": "Pending a shar'i review: the calculator follows the published fatwas of Egypt's Dar al-Ifta (linked below) and has not been reviewed by a scholar yet. If your case is unclear, ask Dar al-Ifta.",
+  "@zakatReview": {
+    "description": "shared key \"zakat.review\""
+  },
+  "zakatSources": "Sources: fatwas of {ref}",
+  "@zakatSources": {
+    "description": "shared key \"zakat.sources\"",
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatTileSub": "Zakat on money, after Egypt's Dar al-Ifta",
+  "@zakatTileSub": {
+    "description": "shared key \"zakat.tileSub\""
+  },
+  "zakatTitle": "Zakat calculator",
+  "@zakatTitle": {
+    "description": "shared key \"zakat.title\""
+  },
+  "zakatWealth": "Your wealth (in your currency; gold in grams)",
+  "@zakatWealth": {
+    "description": "shared key \"zakat.wealth\""
+  },
+  "zakatYearNotPassed": "Your wealth ({net}) has reached the nisab ({nisab}); zakat is due once a full Hijri year passes over it.",
+  "@zakatYearNotPassed": {
+    "description": "shared key \"zakat.yearNotPassed\"",
+    "placeholders": {
+      "net": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatYearPassed": "A full Hijri year has passed since my wealth reached the nisab",
+  "@zakatYearPassed": {
+    "description": "shared key \"zakat.yearPassed\""
   }
 }
