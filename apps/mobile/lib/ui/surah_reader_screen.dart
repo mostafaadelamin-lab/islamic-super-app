@@ -7,6 +7,7 @@ import 'ayah_sheet.dart';
 import 'l10n_ext.dart';
 import 'page_reader_screen.dart';
 import 'widgets.dart';
+import 'adaptive.dart';
 
 /// Reads one surah, ayah by ayah, optionally starting at [initialAyah]
 /// (which is highlighted and scrolled to the top).
@@ -106,19 +107,23 @@ class _SurahReaderScreenState extends State<SurahReaderScreen> {
               ),
             ],
           ),
-          body: CustomScrollView(
-            key: const Key('surahReader'),
-            center: _centerKey,
-            slivers: [
-              SliverList(delegate: SliverChildBuilderDelegate((c, i) => tile(_start - 2 - i), childCount: _start - 1)),
-              SliverList(
-                key: _centerKey,
-                delegate: SliverChildBuilderDelegate(
-                  (c, i) => tile(_start - 1 + i),
-                  childCount: s.ayahCount - _start + 1,
+          body: ReadableWidth(
+            child: CustomScrollView(
+              key: const Key('surahReader'),
+              center: _centerKey,
+              slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate((c, i) => tile(_start - 2 - i), childCount: _start - 1),
                 ),
-              ),
-            ],
+                SliverList(
+                  key: _centerKey,
+                  delegate: SliverChildBuilderDelegate(
+                    (c, i) => tile(_start - 1 + i),
+                    childCount: s.ayahCount - _start + 1,
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

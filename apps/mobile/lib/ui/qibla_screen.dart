@@ -10,6 +10,7 @@ import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'prayer_model.dart';
 import 'prayer_screen.dart';
+import 'adaptive.dart';
 
 /// Live qibla compass. Uses the phone's own compass heading (iOS
 /// CLLocationManager / Android rotation-vector sensor) and falls back to the
@@ -118,63 +119,65 @@ class QiblaScreenState extends State<QiblaScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(title: Text(l.qiblaTitle)),
-      body: ListView(
-        padding: const EdgeInsets.all(DesignTokens.spaceLg),
-        children: [
-          Text(pv.city.name(context.isArabic), style: theme.textTheme.titleMedium, textAlign: TextAlign.center),
-          Text(
-            l.prayerQiblaDeg(context.num(qibla.toStringAsFixed(1))),
-            key: const Key('qiblaBearing'),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: DesignTokens.spaceLg),
-          if (m == CompassMode.live) ...[
-            Center(
-              child: _LiveDial(key: const Key('qiblaMode-live'), qibla: qibla, heading: _heading!),
-            ),
-            const SizedBox(height: DesignTokens.spaceMd),
+      body: ReadableWidth(
+        child: ListView(
+          padding: const EdgeInsets.all(DesignTokens.spaceLg),
+          children: [
+            Text(pv.city.name(context.isArabic), style: theme.textTheme.titleMedium, textAlign: TextAlign.center),
             Text(
-              _direction(context, qibla, _heading!),
-              key: const Key('qiblaTurn'),
+              l.prayerQiblaDeg(context.num(qibla.toStringAsFixed(1))),
+              key: const Key('qiblaBearing'),
               textAlign: TextAlign.center,
-              style: theme.textTheme.titleLarge,
             ),
-            Text(
-              l.qiblaHeading(context.num(_heading!.round())),
-              textAlign: TextAlign.center,
-              style: theme.textTheme.bodySmall,
-            ),
-            if (declination != null)
+            const SizedBox(height: DesignTokens.spaceLg),
+            if (m == CompassMode.live) ...[
+              Center(
+                child: _LiveDial(key: const Key('qiblaMode-live'), qibla: qibla, heading: _heading!),
+              ),
+              const SizedBox(height: DesignTokens.spaceMd),
               Text(
-                l.qiblaDeclination(context.num('${declination! >= 0 ? '+' : ''}${declination!.toStringAsFixed(1)}')),
-                key: const Key('qiblaDeclination'),
+                _direction(context, qibla, _heading!),
+                key: const Key('qiblaTurn'),
+                textAlign: TextAlign.center,
+                style: theme.textTheme.titleLarge,
+              ),
+              Text(
+                l.qiblaHeading(context.num(_heading!.round())),
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodySmall,
               ),
-            const SizedBox(height: DesignTokens.spaceMd),
-            Text(l.qiblaLiveNote, style: theme.textTheme.bodySmall),
-          ] else ...[
-            Center(
-              child: m == CompassMode.waiting
-                  ? Column(
-                      key: const Key('qiblaMode-waiting'),
-                      children: [
-                        const CircularProgressIndicator(),
-                        const SizedBox(height: DesignTokens.spaceSm),
-                        Text(l.qiblaWaiting),
-                      ],
-                    )
-                  : Column(
-                      key: const Key('qiblaMode-static'),
-                      children: [
-                        QiblaCompass(bearing: qibla, size: 220),
-                        const SizedBox(height: DesignTokens.spaceMd),
-                        Text(l.qiblaStatic, textAlign: TextAlign.center),
-                      ],
-                    ),
-            ),
+              if (declination != null)
+                Text(
+                  l.qiblaDeclination(context.num('${declination! >= 0 ? '+' : ''}${declination!.toStringAsFixed(1)}')),
+                  key: const Key('qiblaDeclination'),
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodySmall,
+                ),
+              const SizedBox(height: DesignTokens.spaceMd),
+              Text(l.qiblaLiveNote, style: theme.textTheme.bodySmall),
+            ] else ...[
+              Center(
+                child: m == CompassMode.waiting
+                    ? Column(
+                        key: const Key('qiblaMode-waiting'),
+                        children: [
+                          const CircularProgressIndicator(),
+                          const SizedBox(height: DesignTokens.spaceSm),
+                          Text(l.qiblaWaiting),
+                        ],
+                      )
+                    : Column(
+                        key: const Key('qiblaMode-static'),
+                        children: [
+                          QiblaCompass(bearing: qibla, size: 220),
+                          const SizedBox(height: DesignTokens.spaceMd),
+                          Text(l.qiblaStatic, textAlign: TextAlign.center),
+                        ],
+                      ),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }

@@ -7,6 +7,7 @@ import '../l10n/app_localizations.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'widgets.dart';
+import 'adaptive.dart';
 
 /// The text shared by "Share Rattil": a short line and the website or store link when set.
 String shareAppText(AppLocalizations l, AppLinks links) =>
@@ -34,67 +35,69 @@ class HelpScreen extends StatelessWidget {
     final store = links.playStore ?? links.appStore;
     return Scaffold(
       appBar: AppBar(title: Text(l.helpTitle)),
-      body: ListView(
-        key: const Key('helpList'),
-        padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-        children: [
-          SectionCard(
-            children: [
-              ListTile(title: Text(l.helpFaq, style: Theme.of(context).textTheme.titleMedium)),
-              for (var i = 0; i < faq.length; i++)
-                ExpansionTile(
-                  key: Key('faq-${i + 1}'),
-                  title: Text(faq[i].$1),
-                  childrenPadding: const EdgeInsets.fromLTRB(
-                    DesignTokens.spaceLg,
-                    0,
-                    DesignTokens.spaceLg,
-                    DesignTokens.spaceMd,
+      body: ReadableWidth(
+        child: ListView(
+          key: const Key('helpList'),
+          padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+          children: [
+            SectionCard(
+              children: [
+                ListTile(title: Text(l.helpFaq, style: Theme.of(context).textTheme.titleMedium)),
+                for (var i = 0; i < faq.length; i++)
+                  ExpansionTile(
+                    key: Key('faq-${i + 1}'),
+                    title: Text(faq[i].$1),
+                    childrenPadding: const EdgeInsets.fromLTRB(
+                      DesignTokens.spaceLg,
+                      0,
+                      DesignTokens.spaceLg,
+                      DesignTokens.spaceMd,
+                    ),
+                    expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text(faq[i].$2)],
                   ),
-                  expandedCrossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text(faq[i].$2)],
+              ],
+            ),
+            SectionCard(
+              children: [
+                ListTile(title: Text(l.helpContact, style: Theme.of(context).textTheme.titleMedium)),
+                if (email != null)
+                  ListTile(
+                    key: const Key('helpEmail'),
+                    leading: const Icon(Icons.email_outlined),
+                    title: Text(l.helpEmail),
+                    subtitle: Text(email),
+                    onTap: () => launchUrl(Uri(scheme: 'mailto', path: email)),
+                  )
+                else
+                  ListTile(key: const Key('helpContactPending'), subtitle: Text(l.helpContactPending)),
+              ],
+            ),
+            SectionCard(
+              children: [
+                ListTile(
+                  title: Text(l.helpSpread, style: Theme.of(context).textTheme.titleMedium),
+                  subtitle: Text(l.helpSpreadBody),
                 ),
-            ],
-          ),
-          SectionCard(
-            children: [
-              ListTile(title: Text(l.helpContact, style: Theme.of(context).textTheme.titleMedium)),
-              if (email != null)
                 ListTile(
-                  key: const Key('helpEmail'),
-                  leading: const Icon(Icons.email_outlined),
-                  title: Text(l.helpEmail),
-                  subtitle: Text(email),
-                  onTap: () => launchUrl(Uri(scheme: 'mailto', path: email)),
-                )
-              else
-                ListTile(key: const Key('helpContactPending'), subtitle: Text(l.helpContactPending)),
-            ],
-          ),
-          SectionCard(
-            children: [
-              ListTile(
-                title: Text(l.helpSpread, style: Theme.of(context).textTheme.titleMedium),
-                subtitle: Text(l.helpSpreadBody),
-              ),
-              ListTile(
-                key: const Key('helpShareApp'),
-                leading: const Icon(Icons.share),
-                title: Text(l.helpShareApp),
-                onTap: () => s.sharer.shareText(shareAppText(l, links)),
-              ),
-              if (store != null)
-                ListTile(
-                  key: const Key('helpRate'),
-                  leading: const Icon(Icons.star_outline),
-                  title: Text(l.helpRate),
-                  onTap: () => launchUrl(Uri.parse(store), mode: LaunchMode.externalApplication),
-                )
-              else
-                ListTile(key: const Key('helpRatePending'), subtitle: Text(l.helpRatePending)),
-            ],
-          ),
-        ],
+                  key: const Key('helpShareApp'),
+                  leading: const Icon(Icons.share),
+                  title: Text(l.helpShareApp),
+                  onTap: () => s.sharer.shareText(shareAppText(l, links)),
+                ),
+                if (store != null)
+                  ListTile(
+                    key: const Key('helpRate'),
+                    leading: const Icon(Icons.star_outline),
+                    title: Text(l.helpRate),
+                    onTap: () => launchUrl(Uri.parse(store), mode: LaunchMode.externalApplication),
+                  )
+                else
+                  ListTile(key: const Key('helpRatePending'), subtitle: Text(l.helpRatePending)),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

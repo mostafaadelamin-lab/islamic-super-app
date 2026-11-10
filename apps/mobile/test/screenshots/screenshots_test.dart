@@ -42,6 +42,25 @@ void main() {
     File('${outDir.path}/$name.png').writeAsBytesSync(bytes);
   }
 
+  testWidgets('iPad screenshots (ar)', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    for (final size in const [Size(1194, 834), Size(834, 1194)]) {
+      final tag = size.width > size.height ? 'landscape' : 'portrait';
+      await pumpApp(tester, size: size, prefs: {'theme': 'light'});
+      await shot(tester, 'ipad_${tag}_01_home');
+      await goToTab(tester, 1);
+      await shot(tester, 'ipad_${tag}_02_surah_list');
+      await pushScreen(tester, const PageReaderScreen(initialPage: 50));
+      await shot(tester, 'ipad_${tag}_03_mushaf');
+      await goBack(tester);
+      await pushScreen(tester, const SurahReaderScreen(surah: 1));
+      await shot(tester, 'ipad_${tag}_04_surah_reader');
+      await goBack(tester);
+      await goToTab(tester, 2);
+      await shot(tester, 'ipad_${tag}_05_prayer');
+    }
+  });
+
   for (final locale in ['ar', 'en']) {
     testWidgets('home after the owner mockup ($locale): light and dark, whole page', (tester) async {
       tester.view.devicePixelRatio = 1;

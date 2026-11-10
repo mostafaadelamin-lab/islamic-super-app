@@ -65,6 +65,8 @@ void main() {
     );
     // Hizb 2 starts at 2:75: its badge shows the hizb number, not a fraction.
     expect(find.descendant(of: find.byKey(const Key('quarter-5')), matching: find.text('٢')), findsOneWidget);
+    await tester.ensureVisible(find.byKey(const Key('quarter-5')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('quarter-5')));
     await tester.pumpAndSettle();
     expect(tester.state<PageReaderScreenState>(find.byType(PageReaderScreen)).page, 11);

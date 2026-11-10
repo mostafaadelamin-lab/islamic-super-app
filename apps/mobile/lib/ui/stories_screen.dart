@@ -8,6 +8,7 @@ import 'audio_widgets.dart';
 import 'l10n_ext.dart';
 import 'story_screen.dart';
 import 'widgets.dart';
+import 'adaptive.dart';
 
 /// Quranic stories: the narrated series (audio only, Sheikh Nabil al-Awadi's
 /// "Stories of the Prophets"), then each story's verses from the Mushaf.
@@ -21,31 +22,33 @@ class StoriesScreen extends StatelessWidget {
     final cat = s.content.stories;
     return Scaffold(
       appBar: AppBar(title: Text(l.storiesTitle)),
-      body: ListView(
-        key: const Key('stories.list'),
-        padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
-            child: Text(l.storiesIntro, style: Theme.of(context).textTheme.bodyMedium),
-          ),
-          for (final se in cat.series) SeriesCard(series: se),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceLg, DesignTokens.spaceLg, 0),
-            child: Text(l.storiesVersesTitle, style: Theme.of(context).textTheme.titleLarge),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
-            child: Text(l.storiesVersesIntro, style: Theme.of(context).textTheme.bodySmall),
-          ),
-          for (final c in QuranStory.categories)
-            if (cat.inCategory(c).isNotEmpty)
-              SectionCard(
-                key: Key('stories.cat.$c'),
-                title: c == 'prophets' ? l.storiesCatProphets : l.storiesCatOthers,
-                children: [for (final st in cat.inCategory(c)) _StoryTile(story: st)],
-              ),
-        ],
+      body: ReadableWidth(
+        child: ListView(
+          key: const Key('stories.list'),
+          padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
+              child: Text(l.storiesIntro, style: Theme.of(context).textTheme.bodyMedium),
+            ),
+            for (final se in cat.series) SeriesCard(series: se),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceLg, DesignTokens.spaceLg, 0),
+              child: Text(l.storiesVersesTitle, style: Theme.of(context).textTheme.titleLarge),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
+              child: Text(l.storiesVersesIntro, style: Theme.of(context).textTheme.bodySmall),
+            ),
+            for (final c in QuranStory.categories)
+              if (cat.inCategory(c).isNotEmpty)
+                SectionCard(
+                  key: Key('stories.cat.$c'),
+                  title: c == 'prophets' ? l.storiesCatProphets : l.storiesCatOthers,
+                  children: [for (final st in cat.inCategory(c)) _StoryTile(story: st)],
+                ),
+          ],
+        ),
       ),
       bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
     );

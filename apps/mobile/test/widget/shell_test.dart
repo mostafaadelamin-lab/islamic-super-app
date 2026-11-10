@@ -28,7 +28,7 @@ void main() {
 
   for (final locale in ['ar', 'en']) {
     testWidgets('bottom navigation reaches every tab ($locale)', (tester) async {
-      await pumpApp(tester, locale: locale);
+      await pumpApp(tester, locale: locale, size: const Size(412, 915));
       for (var i = 0; i < tabs.length; i++) {
         await goToTab(tester, i);
         expect(find.byType(tabs[i]), findsOneWidget, reason: 'tab $i');

@@ -8,6 +8,7 @@ import 'adhkar_screen.dart';
 import 'dhikr_tools.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
+import 'adaptive.dart';
 
 /// Hisn al-Muslim: chapter list with a filter.
 class HisnScreen extends StatefulWidget {
@@ -37,63 +38,65 @@ class _HisnScreenState extends State<HisnScreen> {
     ];
     return Scaffold(
       appBar: AppBar(title: Text(l.adhkarHisn)),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceSm, DesignTokens.spaceLg, 0),
-            child: TextField(
-              key: const Key('hisnFilter'),
-              decoration: InputDecoration(labelText: l.adhkarHisnSearch, prefixIcon: const Icon(Icons.search)),
-              onChanged: (v) => setState(() => _filter = v),
-            ),
-          ),
-          if (sections.isNotEmpty)
-            SizedBox(
-              height: 52,
-              child: ListView(
-                key: const Key('hisnSections'),
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
-                children: [
-                  for (final id in [null, ...sections.map((x) => x.id)])
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(end: DesignTokens.spaceXs),
-                      child: ChoiceChip(
-                        key: Key('hisnSection-${id ?? 'all'}'),
-                        label: Text(id == null ? l.hisnSectionAll : hisnSectionName(l, id)),
-                        selected: _section == id,
-                        onSelected: (_) => setState(() => _section = id),
-                      ),
-                    ),
-                ],
+      body: ReadableWidth(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceSm, DesignTokens.spaceLg, 0),
+              child: TextField(
+                key: const Key('hisnFilter'),
+                decoration: InputDecoration(labelText: l.adhkarHisnSearch, prefixIcon: const Icon(Icons.search)),
+                onChanged: (v) => setState(() => _filter = v),
               ),
             ),
-          if (!context.isArabic) ReviewNotice(l.adhkarArabicOnly),
-          Expanded(
-            child: chapters.isEmpty
-                ? Center(child: Text(l.quranNoResults))
-                : ListView.builder(
-                    key: const Key('hisnList'),
-                    itemCount: chapters.length,
-                    itemBuilder: (context, i) {
-                      final c = chapters[i];
-                      return ListTile(
-                        key: Key('hisn-${c.index}'),
-                        leading: CircleAvatar(
-                          backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-                          foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer,
-                          child: Text(context.num(c.index + 1)),
+            if (sections.isNotEmpty)
+              SizedBox(
+                height: 52,
+                child: ListView(
+                  key: const Key('hisnSections'),
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
+                  children: [
+                    for (final id in [null, ...sections.map((x) => x.id)])
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(end: DesignTokens.spaceXs),
+                        child: ChoiceChip(
+                          key: Key('hisnSection-${id ?? 'all'}'),
+                          label: Text(id == null ? l.hisnSectionAll : hisnSectionName(l, id)),
+                          selected: _section == id,
+                          onSelected: (_) => setState(() => _section = id),
                         ),
-                        title: Text(c.title, textDirection: TextDirection.rtl),
-                        subtitle: Text(l.adhkarHisnCount(context.num(c.items.length))),
-                        onTap: () => Navigator.of(
-                          context,
-                        ).push(MaterialPageRoute<void>(builder: (_) => HisnChapterScreen(chapter: c))),
-                      );
-                    },
-                  ),
-          ),
-        ],
+                      ),
+                  ],
+                ),
+              ),
+            if (!context.isArabic) ReviewNotice(l.adhkarArabicOnly),
+            Expanded(
+              child: chapters.isEmpty
+                  ? Center(child: Text(l.quranNoResults))
+                  : ListView.builder(
+                      key: const Key('hisnList'),
+                      itemCount: chapters.length,
+                      itemBuilder: (context, i) {
+                        final c = chapters[i];
+                        return ListTile(
+                          key: Key('hisn-${c.index}'),
+                          leading: CircleAvatar(
+                            backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+                            foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer,
+                            child: Text(context.num(c.index + 1)),
+                          ),
+                          title: Text(c.title, textDirection: TextDirection.rtl),
+                          subtitle: Text(l.adhkarHisnCount(context.num(c.items.length))),
+                          onTap: () => Navigator.of(
+                            context,
+                          ).push(MaterialPageRoute<void>(builder: (_) => HisnChapterScreen(chapter: c))),
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -142,25 +145,27 @@ class HisnChapterScreen extends StatelessWidget {
         title: Text(chapter.title, textDirection: TextDirection.rtl),
         actions: const [AdhkarViewToggle()],
       ),
-      body: ListenableBuilder(
-        listenable: settings,
-        builder: (context, _) => settings.adhkarCards
-            ? Column(
-                children: [
-                  ReviewNotice(l.adhkarReviewNotice),
-                  Expanded(
-                    child: CardPager(count: chapter.items.length, builder: _item),
-                  ),
-                ],
-              )
-            : ListView(
-                key: const Key('hisnChapter'),
-                padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-                children: [
-                  ReviewNotice(l.adhkarReviewNotice),
-                  for (var i = 0; i < chapter.items.length; i++) _item(context, i),
-                ],
-              ),
+      body: ReadableWidth(
+        child: ListenableBuilder(
+          listenable: settings,
+          builder: (context, _) => settings.adhkarCards
+              ? Column(
+                  children: [
+                    ReviewNotice(l.adhkarReviewNotice),
+                    Expanded(
+                      child: CardPager(count: chapter.items.length, builder: _item),
+                    ),
+                  ],
+                )
+              : ListView(
+                  key: const Key('hisnChapter'),
+                  padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+                  children: [
+                    ReviewNotice(l.adhkarReviewNotice),
+                    for (var i = 0; i < chapter.items.length; i++) _item(context, i),
+                  ],
+                ),
+        ),
       ),
     );
   }

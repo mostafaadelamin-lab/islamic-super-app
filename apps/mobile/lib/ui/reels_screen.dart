@@ -9,6 +9,7 @@ import '../app_services.dart';
 import '../domain/reels.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
+import 'adaptive.dart';
 
 typedef ReelPlayerBuilder = Widget Function(BuildContext context, Reel reel);
 
@@ -108,53 +109,55 @@ class _ReelsScreenState extends State<ReelsScreen> {
               ),
             ],
           ),
-          body: reels.isEmpty
-              ? _Empty(
-                  text: feed.loading
-                      ? l.reelsLoading
-                      : feed.failed
-                      ? l.reelsOffline
-                      : l.reelsEmpty,
-                  note: l.reelsNote,
-                  loading: feed.loading,
-                  actions: [
-                    if (!feed.loading && feed.failed)
-                      FilledButton.icon(
-                        key: const Key('reels.retry'),
-                        onPressed: () => feed.refresh(force: true),
-                        icon: const Icon(Icons.refresh),
-                        label: Text(l.reelsRetry),
-                      ),
-                    if (!feed.loading && feed.hidden.isNotEmpty)
-                      TextButton(
-                        key: const Key('reels.showHidden'),
-                        style: TextButton.styleFrom(foregroundColor: Colors.white),
-                        onPressed: () async {
-                          for (final id in feed.hidden) {
-                            await feed.unhide(id);
-                          }
-                        },
-                        child: Text(l.reelsShowHidden),
-                      ),
-                  ],
-                )
-              : PageView.builder(
-                  key: const Key('reels.feed'),
-                  controller: _pages,
-                  scrollDirection: Axis.vertical,
-                  itemCount: reels.length,
-                  onPageChanged: (i) => setState(() => _current = i),
-                  itemBuilder: (context, i) => _ReelPage(
-                    reel: reels[i],
-                    index: i,
-                    total: reels.length,
-                    active: i == _current,
-                    player: widget.playerBuilder ?? (context, r) => ReelPlayer(key: ValueKey(r.id), reel: r),
-                    showPoster: widget.showPosters,
-                    onOpen: () => _open(reels[i]),
-                    onHide: reels[i].isAuto ? () => _hide(reels[i]) : null,
+          body: ReadableWidth(
+            child: reels.isEmpty
+                ? _Empty(
+                    text: feed.loading
+                        ? l.reelsLoading
+                        : feed.failed
+                        ? l.reelsOffline
+                        : l.reelsEmpty,
+                    note: l.reelsNote,
+                    loading: feed.loading,
+                    actions: [
+                      if (!feed.loading && feed.failed)
+                        FilledButton.icon(
+                          key: const Key('reels.retry'),
+                          onPressed: () => feed.refresh(force: true),
+                          icon: const Icon(Icons.refresh),
+                          label: Text(l.reelsRetry),
+                        ),
+                      if (!feed.loading && feed.hidden.isNotEmpty)
+                        TextButton(
+                          key: const Key('reels.showHidden'),
+                          style: TextButton.styleFrom(foregroundColor: Colors.white),
+                          onPressed: () async {
+                            for (final id in feed.hidden) {
+                              await feed.unhide(id);
+                            }
+                          },
+                          child: Text(l.reelsShowHidden),
+                        ),
+                    ],
+                  )
+                : PageView.builder(
+                    key: const Key('reels.feed'),
+                    controller: _pages,
+                    scrollDirection: Axis.vertical,
+                    itemCount: reels.length,
+                    onPageChanged: (i) => setState(() => _current = i),
+                    itemBuilder: (context, i) => _ReelPage(
+                      reel: reels[i],
+                      index: i,
+                      total: reels.length,
+                      active: i == _current,
+                      player: widget.playerBuilder ?? (context, r) => ReelPlayer(key: ValueKey(r.id), reel: r),
+                      showPoster: widget.showPosters,
+                      onOpen: () => _open(reels[i]),
+                      onHide: reels[i].isAuto ? () => _hide(reels[i]) : null,
+                    ),
                   ),
-                ),
+          ),
         );
       },
     );

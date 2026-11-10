@@ -10,6 +10,7 @@ import '../domain/quran.dart';
 import '../theme/design_tokens.dart';
 import 'ayah_sheet.dart';
 import 'bookmarks_screen.dart';
+import 'adaptive.dart';
 import 'l10n_ext.dart';
 import 'mushaf_page.dart';
 import 'quran_index_entry.dart';
@@ -208,31 +209,37 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                       itemBuilder: (context, i) => BookPage(
                         index: i,
                         controller: controller,
-                        child: MushafPageView(
-                          page: i + 1,
-                          selected: _selected,
-                          playing: s.recitation.currentRef,
-                          onAyahTap: _onAyahTap,
-                          onBackgroundTap: () => setState(() {
-                            _controls = !_controls; // tap the margin for a full-screen page
-                            _selected = null;
-                          }),
+                        child: TabletPage(
+                          child: MushafPageView(
+                            page: i + 1,
+                            selected: _selected,
+                            playing: s.recitation.currentRef,
+                            onAyahTap: _onAyahTap,
+                            onBackgroundTap: () => setState(() {
+                              _controls = !_controls; // tap the margin for a full-screen page
+                              _selected = null;
+                            }),
+                          ),
                         ),
                       ),
                     ),
-                    ReaderTab.ayat => PageAyahList(
-                      key: ValueKey('ayat-$_page'),
-                      page: _page,
-                      withTafsir: false,
-                      selected: _selected,
-                      onAyahTap: _onAyahTap,
+                    ReaderTab.ayat => ReadableWidth(
+                      child: PageAyahList(
+                        key: ValueKey('ayat-$_page'),
+                        page: _page,
+                        withTafsir: false,
+                        selected: _selected,
+                        onAyahTap: _onAyahTap,
+                      ),
                     ),
-                    ReaderTab.tafsir => PageAyahList(
-                      key: ValueKey('tafsir-$_page'),
-                      page: _page,
-                      withTafsir: true,
-                      selected: _selected,
-                      onAyahTap: _onAyahTap,
+                    ReaderTab.tafsir => ReadableWidth(
+                      child: PageAyahList(
+                        key: ValueKey('tafsir-$_page'),
+                        page: _page,
+                        withTafsir: true,
+                        selected: _selected,
+                        onAyahTap: _onAyahTap,
+                      ),
                     ),
                   };
                 },

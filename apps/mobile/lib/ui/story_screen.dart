@@ -9,6 +9,7 @@ import 'ayah_sheet.dart';
 import 'l10n_ext.dart';
 import 'stories_screen.dart';
 import 'widgets.dart';
+import 'adaptive.dart';
 
 /// One Quranic story: its verses only (Mushaf text), recited in order with the
 /// chosen reciter; tapping an ayah opens its Tafsir al-Muyassar.
@@ -35,57 +36,59 @@ class StoryScreen extends StatelessWidget {
           const SleepTimerButton(),
         ],
       ),
-      body: ListenableBuilder(
-        listenable: s.recitation,
-        builder: (context, _) {
-          final cur = s.recitation.current;
-          final playingRef = cur != null && !cur.isBasmala && story.contains(cur.ref) ? cur.ref : null;
-          return ListView(
-            key: const Key('story.verses'),
-            padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(DesignTokens.spaceLg),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      '${story.category == 'prophets' ? l.storiesCatProphets : l.storiesCatOthers} · '
-                      '${l.storiesAyahs(context.num(story.ayahCount))}',
-                      style: theme.textTheme.bodySmall,
-                    ),
-                    const SizedBox(height: DesignTokens.spaceSm),
-                    FilledButton.icon(
-                      key: const Key('story.play'),
-                      icon: const Icon(Icons.play_arrow),
-                      label: Text(l.storiesListen),
-                      onPressed: () => s.recitation.playRanges(story.ranges),
-                    ),
-                    const SizedBox(height: DesignTokens.spaceSm),
-                    Text(l.storiesTafsirHint, style: theme.textTheme.bodySmall),
-                    Text(l.storiesSource, key: const Key('story.source'), style: theme.textTheme.bodySmall),
-                  ],
-                ),
-              ),
-              for (final r in story.ranges) ...[
+      body: ReadableWidth(
+        child: ListenableBuilder(
+          listenable: s.recitation,
+          builder: (context, _) {
+            final cur = s.recitation.current;
+            final playingRef = cur != null && !cur.isBasmala && story.contains(cur.ref) ? cur.ref : null;
+            return ListView(
+              key: const Key('story.verses'),
+              padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+              children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    DesignTokens.spaceLg,
-                    DesignTokens.spaceSm,
-                    DesignTokens.spaceLg,
-                    0,
-                  ),
-                  child: Text(
-                    l.storiesFrom(surahName(context, q.surah(r.surah)), context.num(r.from), context.num(r.to)),
-                    style: theme.textTheme.titleSmall?.copyWith(color: theme.colorScheme.primary),
+                  padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        '${story.category == 'prophets' ? l.storiesCatProphets : l.storiesCatOthers} · '
+                        '${l.storiesAyahs(context.num(story.ayahCount))}',
+                        style: theme.textTheme.bodySmall,
+                      ),
+                      const SizedBox(height: DesignTokens.spaceSm),
+                      FilledButton.icon(
+                        key: const Key('story.play'),
+                        icon: const Icon(Icons.play_arrow),
+                        label: Text(l.storiesListen),
+                        onPressed: () => s.recitation.playRanges(story.ranges),
+                      ),
+                      const SizedBox(height: DesignTokens.spaceSm),
+                      Text(l.storiesTafsirHint, style: theme.textTheme.bodySmall),
+                      Text(l.storiesSource, key: const Key('story.source'), style: theme.textTheme.bodySmall),
+                    ],
                   ),
                 ),
-                for (var a = r.from; a <= r.to; a++)
-                  _Verse(ref: AyahRef(r.surah, a), playing: playingRef == AyahRef(r.surah, a)),
+                for (final r in story.ranges) ...[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      DesignTokens.spaceLg,
+                      DesignTokens.spaceSm,
+                      DesignTokens.spaceLg,
+                      0,
+                    ),
+                    child: Text(
+                      l.storiesFrom(surahName(context, q.surah(r.surah)), context.num(r.from), context.num(r.to)),
+                      style: theme.textTheme.titleSmall?.copyWith(color: theme.colorScheme.primary),
+                    ),
+                  ),
+                  for (var a = r.from; a <= r.to; a++)
+                    _Verse(ref: AyahRef(r.surah, a), playing: playingRef == AyahRef(r.surah, a)),
+                ],
               ],
-            ],
-          );
-        },
+            );
+          },
+        ),
       ),
       bottomNavigationBar: const MiniPlayer(),
     );

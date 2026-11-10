@@ -6,6 +6,7 @@ import '../theme/design_tokens.dart';
 import 'adhkar_screen.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
+import 'adaptive.dart';
 
 /// Hajj & Umrah guide (Arabic text from the prototype, pending review).
 class HajjScreen extends StatelessWidget {
@@ -31,19 +32,21 @@ class HajjScreen extends StatelessWidget {
             tabs: [for (final k in sections) Tab(key: Key('hajjTab-$k'), text: label(k))],
           ),
         ),
-        body: TabBarView(
-          children: [
-            for (final k in sections)
-              ListView(
-                key: Key('hajjList-$k'),
-                padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-                children: [
-                  ReviewNotice(l.hajjReviewNotice, key: const Key('hajjNotice')),
-                  if (!context.isArabic) ReviewNotice(l.adhkarArabicOnly),
-                  for (final b in guide.sections[k] ?? const <HajjBlock>[]) _Block(block: b),
-                ],
-              ),
-          ],
+        body: ReadableWidth(
+          child: TabBarView(
+            children: [
+              for (final k in sections)
+                ListView(
+                  key: Key('hajjList-$k'),
+                  padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+                  children: [
+                    ReviewNotice(l.hajjReviewNotice, key: const Key('hajjNotice')),
+                    if (!context.isArabic) ReviewNotice(l.adhkarArabicOnly),
+                    for (final b in guide.sections[k] ?? const <HajjBlock>[]) _Block(block: b),
+                  ],
+                ),
+            ],
+          ),
         ),
       ),
     );

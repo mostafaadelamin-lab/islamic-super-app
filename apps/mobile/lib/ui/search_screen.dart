@@ -4,6 +4,7 @@ import '../app_services.dart';
 import '../domain/search.dart';
 import 'l10n_ext.dart';
 import 'widgets.dart';
+import 'adaptive.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -76,33 +77,35 @@ class _SearchScreenState extends State<SearchScreen> {
     }
     return Scaffold(
       appBar: AppBar(title: Text(l.quranSearch)),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    key: const Key('searchField'),
-                    controller: _controller,
-                    textDirection: TextDirection.rtl,
-                    textInputAction: TextInputAction.search,
-                    onSubmitted: (_) => _run(),
-                    decoration: InputDecoration(labelText: l.quranSearch, hintText: l.quranSearchHint),
+      body: ReadableWidth(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      key: const Key('searchField'),
+                      controller: _controller,
+                      textDirection: TextDirection.rtl,
+                      textInputAction: TextInputAction.search,
+                      onSubmitted: (_) => _run(),
+                      decoration: InputDecoration(labelText: l.quranSearch, hintText: l.quranSearchHint),
+                    ),
                   ),
-                ),
-                IconButton(
-                  key: const Key('searchButton'),
-                  tooltip: l.quranSearchAction,
-                  icon: const Icon(Icons.search),
-                  onPressed: _run,
-                ),
-              ],
+                  IconButton(
+                    key: const Key('searchButton'),
+                    tooltip: l.quranSearchAction,
+                    icon: const Icon(Icons.search),
+                    onPressed: _run,
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(child: body),
-        ],
+            Expanded(child: body),
+          ],
+        ),
       ),
     );
   }

@@ -11,6 +11,7 @@ import 'account_screen.dart';
 import 'audio_widgets.dart';
 import 'l10n_ext.dart';
 import 'widgets.dart';
+import 'adaptive.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -22,144 +23,147 @@ class SettingsScreen extends StatelessWidget {
     final l = context.l10n;
     return Scaffold(
       appBar: AppBar(title: Text(l.navSettings)),
-      body: ListenableBuilder(
-        listenable: settings,
-        builder: (context, _) => ListView(
-          key: const Key('settingsList'),
-          children: [
-            SectionCard(
-              title: l.settingsLanguage,
-              children: [
-                SegmentedButton<String>(
-                  key: const Key('languageSelector'),
-                  segments: [
-                    ButtonSegment(value: 'ar', label: Text(l.settingsLanguageAr)),
-                    ButtonSegment(value: 'en', label: Text(l.settingsLanguageEn)),
-                  ],
-                  selected: {settings.locale.languageCode},
-                  onSelectionChanged: (v) => settings.setLocale(v.single),
-                ),
-              ],
-            ),
-            SectionCard(
-              title: l.settingsTheme,
-              children: [
-                SegmentedButton<ThemeMode>(
-                  key: const Key('themeSelector'),
-                  segments: [
-                    ButtonSegment(value: ThemeMode.system, label: Text(l.settingsThemeSystem)),
-                    ButtonSegment(value: ThemeMode.light, label: Text(l.settingsThemeLight)),
-                    ButtonSegment(value: ThemeMode.dark, label: Text(l.settingsThemeDark)),
-                  ],
-                  selected: {settings.themeMode},
-                  onSelectionChanged: (v) => settings.setThemeMode(v.single),
-                ),
-              ],
-            ),
-            SectionCard(
-              title: l.settingsFontSize,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Slider(
-                        key: const Key('fontSizeSlider'),
-                        min: SettingsController.minFontSize,
-                        max: SettingsController.maxFontSize,
-                        divisions: (SettingsController.maxFontSize - SettingsController.minFontSize).round(),
-                        value: settings.quranFontSize,
-                        label: context.num(settings.quranFontSize.round()),
-                        semanticFormatterCallback: (v) => '${l.settingsFontSize}: ${context.num(v.round())}',
-                        onChanged: settings.setQuranFontSize,
+      body: ReadableWidth(
+        child: ListenableBuilder(
+          listenable: settings,
+          builder: (context, _) => ListView(
+            key: const Key('settingsList'),
+            children: [
+              SectionCard(
+                title: l.settingsLanguage,
+                children: [
+                  SegmentedButton<String>(
+                    key: const Key('languageSelector'),
+                    segments: [
+                      ButtonSegment(value: 'ar', label: Text(l.settingsLanguageAr)),
+                      ButtonSegment(value: 'en', label: Text(l.settingsLanguageEn)),
+                    ],
+                    selected: {settings.locale.languageCode},
+                    onSelectionChanged: (v) => settings.setLocale(v.single),
+                  ),
+                ],
+              ),
+              SectionCard(
+                title: l.settingsTheme,
+                children: [
+                  SegmentedButton<ThemeMode>(
+                    key: const Key('themeSelector'),
+                    segments: [
+                      ButtonSegment(value: ThemeMode.system, label: Text(l.settingsThemeSystem)),
+                      ButtonSegment(value: ThemeMode.light, label: Text(l.settingsThemeLight)),
+                      ButtonSegment(value: ThemeMode.dark, label: Text(l.settingsThemeDark)),
+                    ],
+                    selected: {settings.themeMode},
+                    onSelectionChanged: (v) => settings.setThemeMode(v.single),
+                  ),
+                ],
+              ),
+              SectionCard(
+                title: l.settingsFontSize,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Slider(
+                          key: const Key('fontSizeSlider'),
+                          min: SettingsController.minFontSize,
+                          max: SettingsController.maxFontSize,
+                          divisions: (SettingsController.maxFontSize - SettingsController.minFontSize).round(),
+                          value: settings.quranFontSize,
+                          label: context.num(settings.quranFontSize.round()),
+                          semanticFormatterCallback: (v) => '${l.settingsFontSize}: ${context.num(v.round())}',
+                          onChanged: settings.setQuranFontSize,
+                        ),
                       ),
-                    ),
-                    Text(context.num(settings.quranFontSize.round()), key: const Key('fontSizeValue')),
-                  ],
-                ),
-                Text(l.settingsFontPreview, style: Theme.of(context).textTheme.labelMedium),
-                QuranText(s.content.quran.text(const AyahRef(1, 1)), key: const Key('fontPreview'), ayahNumber: 1),
-              ],
-            ),
-            SectionCard(
-              children: [
-                SwitchListTile(
-                  key: const Key('translationSwitch'),
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(l.quranShowTranslation),
-                  value: settings.showTranslation,
-                  onChanged: settings.setShowTranslation,
-                ),
-              ],
-            ),
-            SectionCard(
-              title: l.settingsHijriOffset,
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      key: const Key('hijriOffsetMinus'),
-                      tooltip: '${l.settingsHijriOffset} −',
-                      icon: const Icon(Icons.remove),
-                      onPressed: settings.hijriOffset > -hijriOffsetMax
-                          ? () => settings.setHijriOffset(settings.hijriOffset - 1)
-                          : null,
-                    ),
-                    Expanded(
-                      child: Builder(
-                        builder: (context) {
-                          final h = hijriFor(
-                            DateTime.now(),
-                            arabic: context.isArabic,
-                            offsetDays: settings.hijriOffset,
-                          );
-                          final o = settings.hijriOffset;
-                          return Text(
-                            '${l.homeHijriDate(context.num(h.day), h.monthName, context.num(h.year))}'
-                            '  (\u2066${o > 0 ? '+' : ''}${context.num(o)}\u2069)',
-                            key: const Key('hijriOffsetPreview'),
-                            textAlign: TextAlign.center,
-                          );
-                        },
+                      Text(context.num(settings.quranFontSize.round()), key: const Key('fontSizeValue')),
+                    ],
+                  ),
+                  Text(l.settingsFontPreview, style: Theme.of(context).textTheme.labelMedium),
+                  QuranText(s.content.quran.text(const AyahRef(1, 1)), key: const Key('fontPreview'), ayahNumber: 1),
+                ],
+              ),
+              SectionCard(
+                children: [
+                  SwitchListTile(
+                    key: const Key('translationSwitch'),
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(l.quranShowTranslation),
+                    value: settings.showTranslation,
+                    onChanged: settings.setShowTranslation,
+                  ),
+                ],
+              ),
+              SectionCard(
+                title: l.settingsHijriOffset,
+                children: [
+                  Row(
+                    children: [
+                      IconButton(
+                        key: const Key('hijriOffsetMinus'),
+                        tooltip: '${l.settingsHijriOffset} −',
+                        icon: const Icon(Icons.remove),
+                        onPressed: settings.hijriOffset > -hijriOffsetMax
+                            ? () => settings.setHijriOffset(settings.hijriOffset - 1)
+                            : null,
                       ),
-                    ),
-                    IconButton(
-                      key: const Key('hijriOffsetPlus'),
-                      tooltip: '${l.settingsHijriOffset} +',
-                      icon: const Icon(Icons.add),
-                      onPressed: settings.hijriOffset < hijriOffsetMax
-                          ? () => settings.setHijriOffset(settings.hijriOffset + 1)
-                          : null,
-                    ),
-                  ],
-                ),
-                Text(l.settingsHijriOffsetHint, style: Theme.of(context).textTheme.bodySmall),
-              ],
-            ),
-            SectionCard(title: l.audioTitle, children: const [RecitationSettings()]),
-            const AdhanSettingsCard(),
-            SectionCard(
-              children: [
-                ListTile(
-                  key: const Key('accountTile'),
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.sync),
-                  title: Text(l.settingsAccount),
-                  subtitle: Text(l.settingsAccountHint),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () =>
-                      Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const AccountScreen())),
-                ),
-                ListTile(
-                  key: const Key('aboutTile'),
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.info_outline),
-                  title: Text(l.settingsAbout),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const AboutScreen())),
-                ),
-              ],
-            ),
-          ],
+                      Expanded(
+                        child: Builder(
+                          builder: (context) {
+                            final h = hijriFor(
+                              DateTime.now(),
+                              arabic: context.isArabic,
+                              offsetDays: settings.hijriOffset,
+                            );
+                            final o = settings.hijriOffset;
+                            return Text(
+                              '${l.homeHijriDate(context.num(h.day), h.monthName, context.num(h.year))}'
+                              '  (\u2066${o > 0 ? '+' : ''}${context.num(o)}\u2069)',
+                              key: const Key('hijriOffsetPreview'),
+                              textAlign: TextAlign.center,
+                            );
+                          },
+                        ),
+                      ),
+                      IconButton(
+                        key: const Key('hijriOffsetPlus'),
+                        tooltip: '${l.settingsHijriOffset} +',
+                        icon: const Icon(Icons.add),
+                        onPressed: settings.hijriOffset < hijriOffsetMax
+                            ? () => settings.setHijriOffset(settings.hijriOffset + 1)
+                            : null,
+                      ),
+                    ],
+                  ),
+                  Text(l.settingsHijriOffsetHint, style: Theme.of(context).textTheme.bodySmall),
+                ],
+              ),
+              SectionCard(title: l.audioTitle, children: const [RecitationSettings()]),
+              const AdhanSettingsCard(),
+              SectionCard(
+                children: [
+                  ListTile(
+                    key: const Key('accountTile'),
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.sync),
+                    title: Text(l.settingsAccount),
+                    subtitle: Text(l.settingsAccountHint),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () =>
+                        Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const AccountScreen())),
+                  ),
+                  ListTile(
+                    key: const Key('aboutTile'),
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.info_outline),
+                    title: Text(l.settingsAbout),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () =>
+                        Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const AboutScreen())),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

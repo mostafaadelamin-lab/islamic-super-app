@@ -9,6 +9,7 @@ import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'page_reader_screen.dart';
 import 'widgets.dart';
+import 'adaptive.dart';
 
 const _openingWords = 6;
 const _dayPresets = [30, 60, 7];
@@ -23,16 +24,18 @@ class KhatmaScreen extends StatelessWidget {
     final s = context.services;
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.khatmaTitle)),
-      body: ListenableBuilder(
-        listenable: s.khatma,
-        builder: (context, _) {
-          final k = s.khatma.current;
-          return ListView(
-            key: const Key('khatmaList'),
-            padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-            children: [if (k == null) const _CreateCard() else ..._current(context, k), const _HistoryCard()],
-          );
-        },
+      body: ReadableWidth(
+        child: ListenableBuilder(
+          listenable: s.khatma,
+          builder: (context, _) {
+            final k = s.khatma.current;
+            return ListView(
+              key: const Key('khatmaList'),
+              padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+              children: [if (k == null) const _CreateCard() else ..._current(context, k), const _HistoryCard()],
+            );
+          },
+        ),
       ),
     );
   }

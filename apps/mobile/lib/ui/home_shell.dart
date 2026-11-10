@@ -4,6 +4,7 @@ import '../app_services.dart';
 import '../data/shortcuts.dart';
 import '../domain/tasbih.dart';
 
+import 'adaptive.dart';
 import 'adhkar_screen.dart';
 import 'audio_widgets.dart';
 import 'help_screen.dart';
@@ -14,8 +15,8 @@ import 'prayer_screen.dart';
 import 'surah_list_screen.dart';
 import 'tasbih_screen.dart';
 
-/// Bottom navigation: Home, Quran, Prayer, Adhkar, More. The recitation mini
-/// player sits above the bar while audio is active.
+/// Bottom navigation (a side rail on tablets): Home, Quran, Prayer, Adhkar, More.
+/// The recitation mini player sits above the bar while audio is active.
 class HomeShell extends StatefulWidget {
   const HomeShell({super.key});
 
@@ -72,6 +73,48 @@ class HomeShellState extends State<HomeShell> {
       3 => const AdhkarScreen(),
       _ => const MoreScreen(),
     };
+    final items = [
+      (Icons.home_outlined, Icons.home, l.navHome),
+      (Icons.menu_book_outlined, Icons.menu_book, l.navQuran),
+      (Icons.schedule_outlined, Icons.schedule, l.navPrayer),
+      (Icons.wb_twilight_outlined, Icons.wb_twilight, l.navAdhkar),
+      (Icons.grid_view_outlined, Icons.grid_view, l.navMore),
+    ];
+    if (Adaptive.isWide(context)) {
+      // Tablets and landscape: a side rail, the tab centred at a comfortable width,
+      // and the mini player under the content.
+      final extended = Adaptive.isExpanded(context);
+      return Scaffold(
+        body: SafeArea(
+          child: Row(
+            children: [
+              NavigationRail(
+                key: const Key('navRail'),
+                selectedIndex: _index,
+                onDestinationSelected: select,
+                extended: extended,
+                labelType: extended ? NavigationRailLabelType.none : NavigationRailLabelType.all,
+                destinations: [
+                  for (final (icon, selected, label) in items)
+                    NavigationRailDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: Text(label)),
+                ],
+              ),
+              const VerticalDivider(width: 1),
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ReadableWidth(maxWidth: Adaptive.tabWidth, child: body),
+                    ),
+                    const MiniPlayer(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return Scaffold(
       body: body,
       bottomNavigationBar: Column(
@@ -79,34 +122,12 @@ class HomeShellState extends State<HomeShell> {
         children: [
           const MiniPlayer(),
           NavigationBar(
+            key: const Key('navBar'),
             selectedIndex: _index,
             onDestinationSelected: select,
             destinations: [
-              NavigationDestination(
-                icon: const Icon(Icons.home_outlined),
-                selectedIcon: const Icon(Icons.home),
-                label: l.navHome,
-              ),
-              NavigationDestination(
-                icon: const Icon(Icons.menu_book_outlined),
-                selectedIcon: const Icon(Icons.menu_book),
-                label: l.navQuran,
-              ),
-              NavigationDestination(
-                icon: const Icon(Icons.schedule_outlined),
-                selectedIcon: const Icon(Icons.schedule),
-                label: l.navPrayer,
-              ),
-              NavigationDestination(
-                icon: const Icon(Icons.wb_twilight_outlined),
-                selectedIcon: const Icon(Icons.wb_twilight),
-                label: l.navAdhkar,
-              ),
-              NavigationDestination(
-                icon: const Icon(Icons.grid_view_outlined),
-                selectedIcon: const Icon(Icons.grid_view),
-                label: l.navMore,
-              ),
+              for (final (icon, selected, label) in items)
+                NavigationDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: label),
             ],
           ),
         ],

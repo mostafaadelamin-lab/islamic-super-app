@@ -10,6 +10,7 @@ import '../domain/mosques.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'prayer_model.dart';
+import 'adaptive.dart';
 
 /// Nearby mosques from OpenStreetMap around the prayer city, nearest first.
 /// Tapping a mosque opens directions in the phone's maps app.
@@ -80,68 +81,70 @@ class _MosquesScreenState extends State<MosquesScreen> {
     final r = _result;
     return Scaffold(
       appBar: AppBar(title: Text(l.mosquesTitle)),
-      body: ListView(
-        padding: const EdgeInsets.all(DesignTokens.spaceLg),
-        children: [
-          Text(l.mosquesAround(city.name(context.isArabic)), style: theme.textTheme.titleMedium),
-          const SizedBox(height: DesignTokens.spaceSm),
-          Wrap(
-            spacing: DesignTokens.spaceSm,
-            children: [
-              for (final rad in mosqueRadii)
-                ChoiceChip(
-                  key: Key('mosquesRadius-$rad'),
-                  label: Text(_distance(context, rad.toDouble())),
-                  selected: _radius == rad,
-                  onSelected: (_) {
-                    if (_radius == rad) return;
-                    setState(() => _radius = rad);
-                    _search();
-                  },
+      body: ReadableWidth(
+        child: ListView(
+          padding: const EdgeInsets.all(DesignTokens.spaceLg),
+          children: [
+            Text(l.mosquesAround(city.name(context.isArabic)), style: theme.textTheme.titleMedium),
+            const SizedBox(height: DesignTokens.spaceSm),
+            Wrap(
+              spacing: DesignTokens.spaceSm,
+              children: [
+                for (final rad in mosqueRadii)
+                  ChoiceChip(
+                    key: Key('mosquesRadius-$rad'),
+                    label: Text(_distance(context, rad.toDouble())),
+                    selected: _radius == rad,
+                    onSelected: (_) {
+                      if (_radius == rad) return;
+                      setState(() => _radius = rad);
+                      _search();
+                    },
+                  ),
+              ],
+            ),
+            const SizedBox(height: DesignTokens.spaceMd),
+            if (_loading)
+              Row(
+                key: const Key('mosquesLoading'),
+                children: [
+                  const SizedBox.square(dimension: 20, child: CircularProgressIndicator(strokeWidth: 2)),
+                  const SizedBox(width: DesignTokens.spaceSm),
+                  Text(l.mosquesLoading),
+                ],
+              )
+            else if (_error) ...[
+              Text(l.mosquesError, key: const Key('mosquesError')),
+              const SizedBox(height: DesignTokens.spaceSm),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: OutlinedButton(key: const Key('mosquesRetry'), onPressed: _search, child: Text(l.mosquesRetry)),
+              ),
+            ] else if (r != null) ...[
+              Text(
+                r.mosques.isEmpty
+                    ? l.mosquesNone
+                    : '${l.mosquesCount(context.num(r.mosques.length))}${r.offline ? ' ${l.mosquesOffline}' : ''}',
+                key: const Key('mosquesStatus'),
+                style: theme.textTheme.bodySmall,
+              ),
+              for (final m in r.mosques)
+                ListTile(
+                  key: Key('mosque-${m.id}'),
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.mosque_outlined),
+                  title: Text(m.name ?? l.mosquesUnnamed),
+                  trailing: Text(_distance(context, m.distance)),
+                  onTap: () => launchUrl(
+                    directionsUri(m, ios: defaultTargetPlatform == TargetPlatform.iOS),
+                    mode: LaunchMode.externalApplication,
+                  ),
                 ),
             ],
-          ),
-          const SizedBox(height: DesignTokens.spaceMd),
-          if (_loading)
-            Row(
-              key: const Key('mosquesLoading'),
-              children: [
-                const SizedBox.square(dimension: 20, child: CircularProgressIndicator(strokeWidth: 2)),
-                const SizedBox(width: DesignTokens.spaceSm),
-                Text(l.mosquesLoading),
-              ],
-            )
-          else if (_error) ...[
-            Text(l.mosquesError, key: const Key('mosquesError')),
-            const SizedBox(height: DesignTokens.spaceSm),
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: OutlinedButton(key: const Key('mosquesRetry'), onPressed: _search, child: Text(l.mosquesRetry)),
-            ),
-          ] else if (r != null) ...[
-            Text(
-              r.mosques.isEmpty
-                  ? l.mosquesNone
-                  : '${l.mosquesCount(context.num(r.mosques.length))}${r.offline ? ' ${l.mosquesOffline}' : ''}',
-              key: const Key('mosquesStatus'),
-              style: theme.textTheme.bodySmall,
-            ),
-            for (final m in r.mosques)
-              ListTile(
-                key: Key('mosque-${m.id}'),
-                contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.mosque_outlined),
-                title: Text(m.name ?? l.mosquesUnnamed),
-                trailing: Text(_distance(context, m.distance)),
-                onTap: () => launchUrl(
-                  directionsUri(m, ios: defaultTargetPlatform == TargetPlatform.iOS),
-                  mode: LaunchMode.externalApplication,
-                ),
-              ),
+            const SizedBox(height: DesignTokens.spaceLg),
+            Text('${l.mosquesNote} © OpenStreetMap contributors', style: theme.textTheme.bodySmall),
           ],
-          const SizedBox(height: DesignTokens.spaceLg),
-          Text('${l.mosquesNote} © OpenStreetMap contributors', style: theme.textTheme.bodySmall),
-        ],
+        ),
       ),
     );
   }

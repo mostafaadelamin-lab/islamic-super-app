@@ -153,11 +153,15 @@ class FakeLocation implements LocationProvider {
   Future<LocationResult> current() async => result;
 }
 
-/// Taps the bottom-navigation destination with [index] (0..4).
+/// Taps the navigation destination with [index] (0..4): the bottom bar on a
+/// phone, the side rail on a tablet.
 Future<void> goToTab(WidgetTester tester, int index) async {
-  await tester.tap(
-    find.descendant(of: find.byType(NavigationBar), matching: find.byType(NavigationDestination)).at(index),
-  );
+  final bar = find.descendant(of: find.byType(NavigationBar), matching: find.byType(NavigationDestination));
+  if (bar.evaluate().isNotEmpty) {
+    await tester.tap(bar.at(index));
+  } else {
+    await tester.tap(find.descendant(of: find.byType(NavigationRail), matching: find.byType(Icon)).at(index));
+  }
   await tester.pumpAndSettle();
 }
 

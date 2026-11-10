@@ -6,6 +6,7 @@ import '../domain/text.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'share_capture.dart';
+import 'adaptive.dart';
 
 /// "Share as image": a preview of the ayah on a card in the Rattil colours (the
 /// stored text unchanged, display map applied as everywhere else) and a button
@@ -46,57 +47,62 @@ class _AyahImageScreenState extends State<AyahImageScreen> {
     final text = s.content.renderMap.forDisplay(s.content.quran.text(widget.ayah));
     return Scaffold(
       appBar: AppBar(title: Text(l.mushafShareImageTitle)),
-      body: ListView(
-        padding: const EdgeInsets.all(DesignTokens.spaceLg),
-        children: [
-          RepaintBoundary(
-            key: _cardKey,
-            child: Container(
-              key: const Key('ayahImage.card'),
-              padding: const EdgeInsets.all(DesignTokens.spaceSm),
-              color: c['paper'],
+      body: ReadableWidth(
+        child: ListView(
+          padding: const EdgeInsets.all(DesignTokens.spaceLg),
+          children: [
+            RepaintBoundary(
+              key: _cardKey,
               child: Container(
-                decoration: BoxDecoration(border: Border.all(color: c['frame']!, width: 2)),
-                padding: const EdgeInsets.all(DesignTokens.spaceXs),
+                key: const Key('ayahImage.card'),
+                padding: const EdgeInsets.all(DesignTokens.spaceSm),
+                color: c['paper'],
                 child: Container(
-                  decoration: BoxDecoration(border: Border.all(color: c['frame']!, width: 0.6)),
-                  padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXl),
-                  child: Column(
-                    children: [
-                      Text(
-                        text,
-                        key: const Key('ayahImage.text'),
-                        textDirection: TextDirection.rtl,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: DesignTokens.fontQuran,
-                          fontSize: 26,
-                          height: 2,
-                          color: c['paperInk'],
+                  decoration: BoxDecoration(border: Border.all(color: c['frame']!, width: 2)),
+                  padding: const EdgeInsets.all(DesignTokens.spaceXs),
+                  child: Container(
+                    decoration: BoxDecoration(border: Border.all(color: c['frame']!, width: 0.6)),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: DesignTokens.spaceLg,
+                      vertical: DesignTokens.spaceXl,
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          text,
+                          key: const Key('ayahImage.text'),
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: DesignTokens.fontQuran,
+                            fontSize: 26,
+                            height: 2,
+                            color: c['paperInk'],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: DesignTokens.spaceLg),
-                      Text(
-                        _reference(),
-                        textDirection: TextDirection.rtl,
-                        style: TextStyle(color: c['primary'], fontWeight: FontWeight.w600, fontSize: 16),
-                      ),
-                      const SizedBox(height: DesignTokens.spaceXs),
-                      Text(l.appName, style: TextStyle(color: c['frame'], fontSize: 13)),
-                    ],
+                        const SizedBox(height: DesignTokens.spaceLg),
+                        Text(
+                          _reference(),
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(color: c['primary'], fontWeight: FontWeight.w600, fontSize: 16),
+                        ),
+                        const SizedBox(height: DesignTokens.spaceXs),
+                        Text(l.appName, style: TextStyle(color: c['frame'], fontSize: 13)),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: DesignTokens.spaceLg),
-          FilledButton.icon(
-            key: const Key('ayahImage.share'),
-            onPressed: _share,
-            icon: const Icon(Icons.share),
-            label: Text(l.mushafShareNow),
-          ),
-        ],
+            const SizedBox(height: DesignTokens.spaceLg),
+            FilledButton.icon(
+              key: const Key('ayahImage.share'),
+              onPressed: _share,
+              icon: const Icon(Icons.share),
+              label: Text(l.mushafShareNow),
+            ),
+          ],
+        ),
       ),
     );
   }
