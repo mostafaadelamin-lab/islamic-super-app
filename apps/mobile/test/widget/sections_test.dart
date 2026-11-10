@@ -432,6 +432,16 @@ void main() {
       expect(t.sound, 'tone');
       expect(find.text('A test alert will arrive in 10 seconds; you can close the app.'), findsOneWidget);
       expect(find.byKey(const Key('adhanCredit')), findsOneWidget);
+
+      // Muezzin choice: listen to voice 2, pick it, the plan is made again.
+      await tester.ensureVisible(find.byKey(const Key('adhanVoicePlay-v2')));
+      await tester.tap(find.byKey(const Key('adhanVoicePlay-v2')));
+      await tester.pumpAndSettle();
+      expect(player.lastAsset, 'assets/audio/adhan_v2.m4a');
+      await tester.tap(find.byKey(const Key('adhanVoice-v2')));
+      await tester.pumpAndSettle();
+      expect(app.prefs.getString('adhan.voice'), 'v2');
+      expect(app.services.settings.adhanVoice, 'v2');
     });
   });
 }

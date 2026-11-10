@@ -21,6 +21,13 @@ export const ADHAN_VOICES: readonly AdhanVoice[] = [
     file: "/audio/adhan.mp3",
     credit: '"Beautiful adhan", Adam-synagda, Wikimedia Commons, CC0',
   },
+  {
+    id: "v2",
+    nameAr: "الصوت الثاني (أقصر)",
+    nameEn: "Voice 2 (shorter)",
+    file: "/audio/adhan_v2.mp3",
+    credit: '"The Adhan - Muslim Call to Prayer - Aaqib Azeez", Atcovi, Wikimedia Commons, CC BY-SA 4.0',
+  },
 ];
 
 export const DEFAULT_ADHAN_VOICE = "v1";

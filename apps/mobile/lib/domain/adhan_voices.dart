@@ -39,6 +39,14 @@ const adhanVoices = <AdhanVoice>[
     asset: 'assets/audio/adhan.m4a',
     credit: '"Beautiful adhan", Adam-synagda, Wikimedia Commons, CC0',
   ),
+  AdhanVoice(
+    id: 'v2',
+    nameAr: 'الصوت الثاني (أقصر)',
+    nameEn: 'Voice 2 (shorter)',
+    raw: 'adhan_v2',
+    asset: 'assets/audio/adhan_v2.m4a',
+    credit: '"The Adhan - Muslim Call to Prayer - Aaqib Azeez", Atcovi, Wikimedia Commons, CC BY-SA 4.0',
+  ),
 ];
 
 const defaultAdhanVoice = 'v1';
