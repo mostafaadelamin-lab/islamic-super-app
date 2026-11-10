@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import re
 
 from .conftest import REPO
 
@@ -10,7 +11,8 @@ BUNDLE = json.loads((DIST / "quran.v1.json").read_text(encoding="utf-8"))
 INTEG = json.loads((DIST / "integrity.v1.json").read_text(encoding="utf-8"))
 PAGES = json.loads((DIST / "pages.v1.json").read_text(encoding="utf-8"))["pages"]
 REF = json.loads((REPO / "tests/vectors/quran-reference.json").read_text(encoding="utf-8"))
-UPSTREAM = REPO / "content/quran/upstream/quran-json-3.1.2.quran.json"
+UPSTREAM = REPO / "content/quran/upstream/kfgqpc-hafs-v18.json"  # KFGQPC hafsData_v18.json
+AYAH_NUMBER_SUFFIX = re.compile("\u00a0[\u0660-\u0669]+$")
 
 
 def test_upstream_file_hash_is_pinned():
@@ -32,9 +34,23 @@ def test_surah_order():
 
 
 def test_text_identical_to_upstream_every_ayah():
-    up = json.loads(UPSTREAM.read_text(encoding="utf-8"))
-    for s, u in zip(BUNDLE["surahs"], up, strict=True):
-        assert s["ayahs"] == [v["text"] for v in u["verses"]], s["n"]
+    # every ayah is the KFGQPC v18 aya_text byte-for-byte, minus only its trailing NBSP + ayah number
+    rows = json.loads(UPSTREAM.read_text(encoding="utf-8"))
+    assert [r["id"] for r in rows] == list(range(1, 6237))
+    bundled = [(s["n"], i + 1, t) for s in BUNDLE["surahs"] for i, t in enumerate(s["ayahs"])]
+    for (n, a, text), r in zip(bundled, rows, strict=True):
+        assert (n, a) == (r["sora"], r["aya_no"])
+        suffix = AYAH_NUMBER_SUFFIX.search(r["aya_text"])
+        assert suffix and int(suffix.group()[1:].translate(str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789"))) == a
+        assert text == r["aya_text"][: suffix.start()], (n, a)
+
+
+def test_pages_match_kfgqpc_v18_every_ayah():
+    rows = json.loads(UPSTREAM.read_text(encoding="utf-8"))
+    page_of = {(r["sora"], r["aya_no"]): r["page"] for r in rows}
+    for p in PAGES:
+        assert page_of[tuple(p["start"])] == p["page"]
+        assert page_of[tuple(p["end"])] == p["page"]
 
 
 def test_hashes():
@@ -47,9 +63,12 @@ def test_hashes():
 def test_no_display_glyph_substitution_in_stored_text():
     render = json.loads((REPO / "packages/shared-schemas/quran-render.json").read_text(encoding="utf-8"))
     joined = "".join(t for s in BUNDLE["surahs"] for t in s["ayahs"])
-    for target in render["map"].values():
-        assert target not in joined  # U+08F0..08F2 must never appear in canonical text
-    assert any(src in joined for src in render["map"])
+    # the Complex's own font draws its text as published: no display substitution at all
+    assert render["map"] == {}
+    assert render["font"] == "KFGQPC HAFS Uthmanic Script"
+    for cp in ("\u08f0", "\u08f1", "\u08f2"):
+        assert cp not in joined
+    assert "\u0657" in joined  # KFGQPC open tanween code points are kept
 
 
 def test_spot_check_ayah_skeletons():

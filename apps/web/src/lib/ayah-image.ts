@@ -20,7 +20,7 @@ const PAPER = "#FFFBEF";
 const INK = "#141414";
 const PRIMARY = "#0F5C4A";
 const GOLD = "#B8923A";
-const QURAN_FONT = "'Amiri Quran', serif";
+const QURAN_FONT = "'KFGQPC HAFS Uthmanic Script', serif";
 const UI_FONT = "'IBM Plex Sans Arabic', system-ui, sans-serif";
 
 export interface AyahCard {
@@ -99,7 +99,7 @@ function drawCard(card: AyahCard): HTMLCanvasElement {
 
 /** Renders the card to a PNG (after the Quran font has loaded, so the text is not drawn in a fallback). */
 export async function renderAyahPng(card: AyahCard): Promise<Blob> {
-  if (document.fonts) await document.fonts.load(`${AYAH_FONT_PX}px "Amiri Quran"`);
+  if (document.fonts) await document.fonts.load(`${AYAH_FONT_PX}px "KFGQPC HAFS Uthmanic Script"`);
   const canvas = drawCard(card);
   return new Promise((resolve, reject) =>
     canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("toBlob failed"))), "image/png"),

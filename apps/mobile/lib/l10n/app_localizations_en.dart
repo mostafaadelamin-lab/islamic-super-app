@@ -9,14 +9,15 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get aboutFonts => 'Fonts: Amiri Quran and IBM Plex Sans Arabic — SIL Open Font License 1.1.';
+  String get aboutFonts =>
+      'Fonts: Quran — KFGQPC HAFS Uthmanic Script v18 (King Fahd Complex, unmodified, under its licence); interface — IBM Plex Sans Arabic, SIL Open Font License 1.1.';
 
   @override
   String get aboutOpenSource => 'Open source and free forever. No tracking, no ads, no in-app purchases.';
 
   @override
   String get aboutPages =>
-      'Mushaf page boundaries: Madinah Mushaf 1405H (KFGQPC) via QuranMeHelp manifest — Waqf General Public License 2.0.';
+      'Mushaf pages and lines: Madinah Mushaf, KFGQPC new edition (1441H), line breaks via quran-madina-html (Waqf General Public License 2.0), checked against the Complex\'s page and line data.';
 
   @override
   String get aboutPrayerAlgo =>
@@ -24,7 +25,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutQuranText =>
-      'Quran text: The Noble Qur\'an Encyclopedia (quranenc.com) Uthmani text, Hafs an Asim, via quran-json 3.1.2 — CC BY 4.0. Bundled unchanged; verified by SHA-256.';
+      'Quran text: King Fahd Glorious Quran Printing Complex, Hafs Uthmanic Data v18 (hafsData_v18.json), Hafs an Asim. Bundled exactly as published (only the trailing ayah number is removed); verified by SHA-256.';
 
   @override
   String get aboutTranslation =>

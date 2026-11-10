@@ -62,8 +62,8 @@ export function arrowTarget(key: string, page: number, dir: "rtl" | "ltr"): numb
 
 /** Layout constants of the page fit (see useFitFont). */
 const FIT = {
-  /** A 15-line Madinah line is about this many em wide in Amiri Quran (pages 1–2 and the cap use it). */
-  lineEms: 16.2,
+  /** A 15-line Madinah line is about this many em wide in the KFGQPC HAFS v18 font (median of the 1441H lines; pages 1–2 and the cap use it). */
+  lineEms: 15.6,
   /** Upper bound relative to lineEms, so a page with unusually short lines is not enlarged. */
   capRatio: 0.86,
   lines: 15,
@@ -128,7 +128,7 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number): voi
     if (fonts?.load) {
       void (async () => {
         try {
-          await fonts.load(`${FIT.defaultProbe}px "Amiri Quran"`);
+          await fonts.load(`${FIT.defaultProbe}px "KFGQPC HAFS Uthmanic Script"`);
         } catch {
           // keep the fallback measurement
         }

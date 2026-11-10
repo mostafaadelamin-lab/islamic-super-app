@@ -145,7 +145,8 @@ test.describe("recitation highlight never hides text (fake media element)", () =
         await page.addStyleTag({ content: OLD_HIGHLIGHT });
         const old = await frame.screenshot();
         writeFileSync(`${SHOTS}/recitation-highlight-before-p${slug}.png`, old);
-        expect(await inkPixels(page, old)).toBeLessThan(before);
+        // (with Amiri Quran the old box also hid glyph pixels of the next line; the KFGQPC v18 font's
+        // marks stay inside the line box, so this evidence screenshot is no longer asserted)
       }
       await page.getByTestId("player-stop").click();
     });

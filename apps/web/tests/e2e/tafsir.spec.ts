@@ -67,7 +67,7 @@ test.describe("tafsir al-Muyassar in the Mushaf", () => {
       // the tafsir uses the UI font, never the Quran font
       const font = await page.getByTestId("tafsir-text").evaluate((e) => getComputedStyle(e).fontFamily);
       expect(font).toContain("IBM Plex Sans Arabic");
-      expect(font).not.toContain("Amiri");
+      expect(font).not.toContain("KFGQPC");
       await noHorizontalOverflow(page);
       await axeSheet(page, `${theme}-ar-phone-2-255`);
       await page.getByTestId("tafsir-next").click();

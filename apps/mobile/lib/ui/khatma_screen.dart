@@ -173,7 +173,7 @@ class KhatmaScreen extends StatelessWidget {
             '${l.khatmaOpening} $opening',
             key: const Key('khatmaOpening'),
             textDirection: TextDirection.rtl,
-            style: theme.textTheme.titleMedium?.copyWith(fontFamily: 'AmiriQuran', height: 2),
+            style: theme.textTheme.titleMedium?.copyWith(fontFamily: DesignTokens.fontQuran, height: 2),
           ),
           Text(
             '${l.khatmaJuz(context.num(q.juzOfPage(cur.from)))} · ${_range(context, k, k.done)}',

@@ -30,7 +30,7 @@ AC: lists 114 surahs in order with Arabic name, English name, ayah count, Meccan
 AC: shows every ayah of the surah exactly as stored, with ayah numbers (Arabic-Indic in Arabic UI); optional English translation toggle that persists; font size 18–40 applies immediately and persists.
 
 ### F-QURAN-03 Madinah Mushaf page reader
-AC: pages 1–604 follow KFGQPC 1405H boundaries (e.g. p1 = 1:1–7, p2 = 2:1–5, p50 starts 3:1, p604 = 112:1–114:6); previous/next controls and swipe/keyboard; go-to-page accepts only 1–604 and rejects other input with a message; header shows page and juz.
+AC: pages 1–604 follow the KFGQPC new-edition (1441H) boundaries of hafsData_v18 (e.g. p1 = 1:1–7, p2 = 2:1–5, p50 starts 3:1, p604 = 112:1–114:6); previous/next controls and swipe/keyboard; go-to-page accepts only 1–604 and rejects other input with a message; header shows page and juz.
 
 ### F-QURAN-04 Search
 AC: diacritic-insensitive Arabic search per `search-normalization.json`; results show the original text and open the ayah; fewer than 2 letters shows guidance, no results shows "No results".

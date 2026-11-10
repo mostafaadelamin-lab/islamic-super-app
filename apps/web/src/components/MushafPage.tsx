@@ -1,5 +1,5 @@
 import { Fragment, type Ref } from "react";
-import { toArabicIndic } from "@/lib/digits";
+import { ayahEndMark } from "@/lib/quran-render";
 import { isCentredPage, type Line, type ResolvedPage } from "@/lib/mushaf";
 import { surahMeta } from "@/lib/pages";
 
@@ -62,7 +62,7 @@ function LineContent({ line, selected, playing, playingBasmala, markerLabel }: L
                   data-testid="ayah-marker"
                   aria-pressed={key === selected}
                 >
-                  <span aria-hidden="true">{`۝${toArabicIndic(g.a)}`}</span>
+                  <span aria-hidden="true">{ayahEndMark(g.a)}</span>
                   <span className="sr-only">{markerLabel(g.s, g.a)}</span>
                 </button>
               </>

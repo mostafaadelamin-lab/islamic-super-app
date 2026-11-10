@@ -78,9 +78,9 @@ test.describe("Mushaf reader (15-line Madinah layout)", () => {
       expect(frame.x).toBeGreaterThanOrEqual(0);
       expect(frame.x + frame.width).toBeLessThanOrEqual(vp.width);
       await noHorizontalOverflow(page);
-      // Amiri Quran is the font of the page
+      // the King Fahd Complex font (v18) is the font of the page
       expect(await page.getByTestId("mushaf-page").evaluate((e) => getComputedStyle(e).fontFamily)).toContain(
-        "Amiri Quran",
+        "KFGQPC HAFS Uthmanic Script",
       );
     });
   }
@@ -93,27 +93,26 @@ test.describe("Mushaf reader (15-line Madinah layout)", () => {
     await expect(page.getByTestId("mushaf-page")).toHaveClass(/centred/);
     await expect(page.getByTestId("sura-band")).toHaveText("سورة الفاتحة");
     await expect(page.getByTestId("ayah-marker").locator("[aria-hidden]")).toHaveText([
-      "۝١",
-      "۝٢",
-      "۝٣",
-      "۝٤",
-      "۝٥",
-      "۝٦",
-      "۝٧",
+      "١",
+      "٢",
+      "٣",
+      "٤",
+      "٥",
+      "٦",
+      "٧",
     ]);
     await expect(page.getByTestId("page-surahs")).toContainText("سورة الفاتحة");
     await expect(page.getByTestId("juz")).toHaveText("الجزء ١");
     await expect(page.locator("h1")).toHaveText("الصفحة ١ من ٦٠٤");
   });
 
-  test("rendered text is the canonical text with only the display glyph map applied", async ({ page }) => {
+  test("rendered text is exactly the canonical KFGQPC v18 text", async ({ page }) => {
     const text = await quranText(page);
     await page.goto("/ar/page/293/");
     const shown = (await page.locator('.seg[data-ayah="18:2"]').allInnerTexts()).join(" ");
     const canonical = text[17]![1]!;
     expect(canonical).toContain("ٗ");
-    expect(shown).not.toContain("ٗ");
-    expect(shown.replaceAll("ࣰ", "ٗ").replaceAll("ࣱ", "ٞ").replaceAll("ࣲ", "ٖ")).toBe(canonical);
+    expect(shown).toBe(canonical);
     await expect(page.getByTestId("basmala")).toHaveText(text[0]![0]!);
   });
 

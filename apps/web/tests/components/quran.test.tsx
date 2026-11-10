@@ -79,7 +79,9 @@ describe("GoToPage", () => {
 describe("AyahMarker", () => {
   it("Arabic-Indic for ar, western for en", () => {
     const { rerender } = render(<AyahMarker n={12} locale="ar" />);
-    expect(screen.getByTestId("ayah-marker")).toHaveTextContent("۝١٢");
+    expect(screen.getByTestId("ayah-marker")).toHaveTextContent("١٢");
+    // the KFGQPC font draws the ornament itself; no U+06DD is added
+    expect(screen.getByTestId("ayah-marker").textContent).not.toContain("۝");
     expect(screen.getByText("الآية ١٢")).toHaveClass("sr-only");
     rerender(<AyahMarker n={12} locale="en" />);
     expect(screen.getByTestId("ayah-marker")).toHaveTextContent("(12)");

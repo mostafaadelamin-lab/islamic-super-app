@@ -141,14 +141,14 @@ test.describe("Quran", () => {
     await expect(page).toHaveURL("/ar/page/293/");
     await expect(page.getByTestId("page-surahs")).toContainText("سورة الكهف");
     await expect(page.getByTestId("sura-band")).toHaveText("سورة الكهف");
-    await expect(page.getByTestId("ayah-marker").first()).toHaveText(/۝/);
+    await expect(page.getByTestId("ayah-marker").first()).toHaveText(/^[٠-٩]+/);
     // the list view is still one tap away
     await page.goto("/ar/quran/");
     await page.getByLabel("تصفية السور").fill("الكهف");
     await page.getByTestId("surah-list").getByTestId("surah-list-view").click();
     await expect(page).toHaveURL("/ar/surah/18/");
     await expect(page.locator("article.ayah")).toHaveCount(110);
-    await expect(page.getByTestId("ayah-marker").first()).toHaveText("۝١");
+    await expect(page.getByTestId("ayah-marker").first()).toHaveText("١");
   });
 
   test("surah reader: translation toggle, neighbours and Mushaf link", async ({ page }) => {
@@ -168,14 +168,16 @@ test.describe("Quran", () => {
     await expect(page).toHaveURL("/en/page/604/");
   });
 
-  test("display map is applied only to rendered text", async ({ page, request }) => {
+  test("the KFGQPC v18 text is shown exactly as published (no glyph substitution)", async ({
+    page,
+    request,
+  }) => {
     await page.goto("/ar/surah/18/");
     const shown = await page.locator("#a-2 p.quran").innerText();
-    expect(shown).toContain("ࣰ");
-    expect(shown).not.toContain("ٗ");
     const canonical = (await (await request.get("/data/quran-text.json")).json()) as string[][];
     expect(canonical[17]![1]).toContain("ٗ");
-    expect(canonical[17]![1]).not.toContain("ࣰ");
+    expect(shown).toContain(canonical[17]![1]!);
+    expect(shown).not.toContain("ࣰ");
   });
 
   test("Mushaf page reader: header, prev/next, arrow keys and go-to-page validation", async ({ page }) => {
@@ -366,12 +368,12 @@ test("about page: free-forever statement and sources", async ({ page }) => {
   await expect(page.getByTestId("free-statement")).toContainText(
     "no ads, no subscriptions, no in-app purchases",
   );
-  await expect(page.getByText(/quranenc\.com/)).toBeVisible();
+  await expect(page.getByText(/hafsData_v18/)).toBeVisible();
   await expect(page.getByText(/Saheeh International/)).toBeVisible();
-  await expect(page.getByText("Madinah Mushaf KFGQPC 1405H")).toBeVisible();
+  await expect(page.getByText("Madinah Mushaf KFGQPC new edition (1441H)")).toBeVisible();
   const [lic] = await Promise.all([
-    page.waitForResponse(/OFL\.txt/),
-    page.getByRole("link", { name: "Amiri Quran — OFL" }).click(),
+    page.waitForResponse(/KFGQPC-HAFS-LICENSE\.txt/),
+    page.getByRole("link", { name: "KFGQPC HAFS Uthmanic Script v18 — EULA" }).click(),
   ]);
   expect(lic.status()).toBe(200);
 });

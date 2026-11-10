@@ -142,13 +142,13 @@ void main() {
     await tester.tap(find.byKey(const Key('aboutTile')));
     await tester.pumpAndSettle();
     expect(find.text('This app is completely free: no ads, no subscriptions, no purchases.'), findsOneWidget);
-    expect(find.textContaining('CC BY 4.0'), findsOneWidget);
+    expect(find.textContaining('hafsData_v18'), findsOneWidget);
     expect(find.textContaining('Saheeh International'), findsOneWidget);
     expect(find.textContaining('Waqf General Public License'), findsOneWidget);
     expect(find.textContaining('SIL Open Font License'), findsOneWidget);
     expect(find.textContaining('adhan-js'), findsOneWidget);
     expect(find.textContaining('IANA'), findsOneWidget);
-    expect(find.text('Quran 1.0.0 · Pages 1405H-1'), findsOneWidget);
+    expect(find.text('Quran 2.0.0 · Pages 1441H-1'), findsOneWidget);
     expect(find.text('Version 1.0.0'), findsOneWidget);
   });
 

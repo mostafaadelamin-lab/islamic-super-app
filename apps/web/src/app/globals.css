@@ -1,7 +1,8 @@
 /* Rattil web — emerald & gold. Every colour, size and radius comes from the design tokens (tokens.css). */
 @font-face {
-  font-family: "Amiri Quran";
-  src: url("/fonts/AmiriQuran-Regular.ttf") format("truetype");
+  /* King Fahd Complex font for its Hafs v18 text; distributed unmodified (content/fonts/KFGQPC-HAFS-LICENSE.txt) */
+  font-family: "KFGQPC HAFS Uthmanic Script";
+  src: url("/fonts/KFGQPC-HAFS-Uthmanic-v18.ttf") format("truetype");
   /* preloaded on reader routes; blocking avoids re-flowing Quran text (layout shift) */
   font-display: block;
 }
@@ -1241,6 +1242,8 @@ input[type="radio"] {
   bottom: 2px;
   inset-inline: 0;
   text-align: center;
+  /* UI font: the KFGQPC Quran font turns Arabic-Indic digits into ayah ornaments */
+  font-family: var(--font-ui);
   font-size: var(--font-size-xs);
   color: var(--color-muted);
 }

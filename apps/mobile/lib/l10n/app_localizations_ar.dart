@@ -9,14 +9,15 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get aboutFonts => 'الخطوط: Amiri Quran وIBM Plex Sans Arabic — رخصة SIL المفتوحة للخطوط ١٫١.';
+  String get aboutFonts =>
+      'الخطوط: خط المصحف — خط مجمع الملك فهد (حفص، الإصدار ١٨) دون أي تعديل وفق رخصة المجمع؛ خط الواجهة — IBM Plex Sans Arabic برخصة SIL المفتوحة ١٫١.';
 
   @override
   String get aboutOpenSource => 'مفتوح المصدر ومجاني للأبد. بلا تتبع ولا إعلانات ولا مشتريات داخل التطبيق.';
 
   @override
   String get aboutPages =>
-      'حدود صفحات المصحف: مصحف المدينة ١٤٠٥هـ (مجمع الملك فهد) عبر بيانات QuranMeHelp — رخصة الوقف العامة ٢٫٠.';
+      'صفحات المصحف وأسطره: مصحف المدينة، طبعة مجمع الملك فهد الجديدة (١٤٤١هـ)، وتقسيم الأسطر عبر quran-madina-html (رخصة الوقف العامة ٢٫٠) مع مطابقته ببيانات المجمع للصفحات والأسطر.';
 
   @override
   String get aboutPrayerAlgo =>
@@ -24,7 +25,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get aboutQuranText =>
-      'نص القرآن: الرسم العثماني من موسوعة القرآن الكريم (quranenc.com)، رواية حفص عن عاصم، عبر quran-json 3.1.2 — رخصة CC BY 4.0. مضمَّن دون أي تعديل ومُتحقَّق منه ببصمة SHA-256.';
+      'نص القرآن: مجمع الملك فهد لطباعة المصحف الشريف، بيانات حفص العثمانية الإصدار ١٨ (hafsData_v18.json)، رواية حفص عن عاصم. مضمَّن كما نشره المجمع حرفيًا (حُذف رقم الآية الملحق فقط)، ويُتحقق منه ببصمة SHA-256.';
 
   @override
   String get aboutTranslation =>

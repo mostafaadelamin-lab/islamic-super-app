@@ -56,7 +56,7 @@ test("service worker precaches the app; it works offline after first load", asyn
       has: [
         "/ar/surah/36/",
         "/ar/page/604/",
-        "/fonts/AmiriQuran-Regular.ttf",
+        "/fonts/KFGQPC-HAFS-Uthmanic-v18.ttf",
         "/data/quran-text.json",
         "/data/mushaf-lines.json",
         "/ar/adhkar/",
@@ -112,7 +112,7 @@ test("service worker precaches the app; it works offline after first load", asyn
   // Quran font is served from cache
   const fontOk = await page.evaluate(async () => {
     await document.fonts.ready;
-    return document.fonts.check('26px "Amiri Quran"');
+    return document.fonts.check('26px "KFGQPC HAFS Uthmanic Script"');
   });
   expect(fontOk).toBe(true);
   // search works offline (index JSON cached)

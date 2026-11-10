@@ -50,7 +50,8 @@ export default async function AboutPage({ params }: { params: LocaleParams }) {
             <strong>{t(locale, "about.fonts")}</strong>
           </dt>
           <dd>
-            {t(locale, "about.fontsBody")} <a href={withBase("/fonts/OFL.txt")}>Amiri Quran — OFL</a> ·{" "}
+            {t(locale, "about.fontsBody")}{" "}
+            <a href={withBase("/fonts/KFGQPC-HAFS-LICENSE.txt")}>KFGQPC HAFS Uthmanic Script v18 — EULA</a> ·{" "}
             <a href={withBase("/fonts/OFL-IBMPlexSansArabic.txt")}>IBM Plex Sans Arabic — OFL</a>
           </dd>
           <dt>

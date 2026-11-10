@@ -119,7 +119,8 @@ void main() {
             }
           }
           expect(changedOutside, 0, reason: 'nothing outside the highlight changes');
-          expect(inkPixels, greaterThan(200), reason: 'the highlighted ayah has ink to check');
+          // (the KFGQPC font's strokes are thinner than Amiri's, so fewer pixels are fully ink-coloured)
+          expect(inkPixels, greaterThan(100), reason: 'the highlighted ayah has ink to check');
           expect(inkLost, 0, reason: 'no ink pixel is covered by the highlight');
 
           // Paint order: the highlight layer is the first child of the stack, under the text.

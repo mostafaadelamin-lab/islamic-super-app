@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
-import { localizeDigits, toArabicIndic } from "@/lib/digits";
+import { localizeDigits } from "@/lib/digits";
 import { surahMeta, surahName, type Ref } from "@/lib/pages";
 import { NO_BASMALA_BEFORE } from "@/lib/audio";
-import { renderQuranText } from "@/lib/quran-render";
+import { ayahEndMark, renderQuranText } from "@/lib/quran-render";
 import { loadTafsirSurah } from "@/lib/tafsir";
 import type { MushafData } from "@/lib/mushaf-data";
 import { TafsirPanel } from "./TafsirPanel";
@@ -61,7 +61,7 @@ export function PageAyahList({ locale, refs, data, selected, playing, onSelect }
             {r[1] === 1 ? <SurahStart s={r[0]} data={data} /> : null}
             <button type="button" className="rd-ayah-btn" onClick={() => onSelect(r)}>
               <span className="rd-quran" lang="ar" dir="rtl">
-                {text ?? "…"} <span className="rd-num">{`۝${toArabicIndic(r[1])}`}</span>
+                {text ?? "…"} <span className="rd-num">{ayahEndMark(r[1])}</span>
               </span>
               <span className="sr-only">
                 {t(locale, "quran.ayahRef", {
@@ -142,7 +142,7 @@ export function PageTafsirList({ locale, refs, data, selected, playing, onSelect
               {r[1] === 1 ? <SurahStart s={r[0]} data={data} /> : null}
               <button type="button" className="rd-ayah-btn" onClick={() => onSelect(r)}>
                 <span className="rd-quran" lang="ar" dir="rtl">
-                  {ayahText(data, r) ?? "…"} <span className="rd-num">{`۝${toArabicIndic(r[1])}`}</span>
+                  {ayahText(data, r) ?? "…"} <span className="rd-num">{ayahEndMark(r[1])}</span>
                 </span>
               </button>
               <p className="rd-tafsir-text" lang="ar" dir="rtl" data-testid="tafsir-item-text">
@@ -200,8 +200,7 @@ export function SplitRecitation({
         </div>
         {ayah && text ? (
           <p className="rd-split-quran" lang="ar" dir="rtl" data-testid="split-ayah-text">
-            <span className="rd-split-hl">{text}</span>{" "}
-            <span className="rd-num">{`۝${toArabicIndic(ayah[1])}`}</span>
+            <span className="rd-split-hl">{text}</span> <span className="rd-num">{ayahEndMark(ayah[1])}</span>
           </p>
         ) : null}
         {!ayah && basmala ? (

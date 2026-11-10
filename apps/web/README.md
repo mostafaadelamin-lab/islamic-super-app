@@ -47,9 +47,9 @@ bottom tab bar on phone widths (≤ 720 px).
   language switch keeps the current page and is persisted.
 - Theme light / dark / system (design tokens), Quran font size 18–40 (tokens) — persisted in `localStorage`
   (every access wrapped in try/catch; the app works with storage blocked).
-- Surah reader: Arabic-Indic ayah numbers in Arabic (U+06DD + digits), optional English translation
+- Surah reader: Arabic-Indic ayah numbers in Arabic (digits; the KFGQPC font draws the ayah ornament), optional English translation
   (fetched per surah), bookmarks, last-read position (IntersectionObserver), previous/next surah.
-- Mushaf (`page/N/`): each page is drawn from `mushaf-lines.v1.json` with Amiri Quran — surah title bands,
+- Mushaf (`page/N/`): each page is drawn from `mushaf-lines.v1.json` with the KFGQPC HAFS Uthmanic Script v18 font — surah title bands,
   basmala lines, 15 lines justified edge to edge (8 centred lines on pages 1–2), ayah-end markers with
   Arabic-Indic digits, paper background and gold frame. The font size is measured so the widest line exactly
   fills the frame (and the page fits the screen height on wide screens). The route's page is rendered at
@@ -121,8 +121,8 @@ npm run serve & npm run lighthouse
   requests with a local silent MP3 and say "mocked network" in their names.
 - Fonts are shipped as TTF (no WOFF2 subsetting); UI fonts use `font-display: optional` to avoid layout
   shift, so a first visit on a slow connection may show the system font.
-- The Mushaf follows the printed Madinah line breaks, but is drawn with the Amiri Quran font (not the KFGQPC
-  page fonts), so letter shapes and spacing differ from the print; Chrome justifies by widening spaces
-  (no kashida).
+- The Mushaf follows the printed Madinah (1441H) line breaks and is drawn with the Complex's KFGQPC HAFS v18
+  font, but not with the per-page fonts of the print, so word widths and spacing still differ slightly from
+  the printed page; Chrome justifies by widening spaces (no kashida).
 - Only Chromium is available in this environment; Firefox/WebKit were not tested.
 - Only bookmarks sync; `/v1/me/settings` sync is not wired yet.

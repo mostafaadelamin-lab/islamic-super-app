@@ -51,32 +51,24 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('display glyph map is applied to the drawn string only (stored text untouched)', (tester) async {
+  testWidgets('the KFGQPC v18 words are drawn exactly as stored (no glyph substitution)', (tester) async {
     final app = await pumpApp(tester, size: const Size(390, 844));
     final c = app.services.content;
-    // Find the first page whose words contain a code point the render map changes.
-    final keys = c.renderMap.map.keys.toList();
-    late int page;
+    expect(c.renderMap.map, isEmpty);
+    // 18:2 (page 293) has open tanween (U+0657) in the Complex's encoding
     late MushafWord word;
     outer:
-    for (final p in c.mushaf.pages) {
-      for (final l in p.lines.where((l) => l.kind == MushafLineKind.text)) {
-        for (final w in lineWords(c.quran, l)) {
-          if (keys.any(w.text.contains)) {
-            page = p.page;
-            word = w;
-            break outer;
-          }
+    for (final l in c.mushaf.pages[292].lines.where((l) => l.kind == MushafLineKind.text)) {
+      for (final w in lineWords(c.quran, l)) {
+        if (w.text.contains('ٗ')) {
+          word = w;
+          break outer;
         }
       }
     }
-    final before = c.quran.text(word.ref);
-    await pushScreen(tester, PageReaderScreen(initialPage: page));
-    final shown = c.renderMap.forDisplay(word.text);
-    expect(shown, isNot(word.text));
-    expect(find.text(shown), findsWidgets);
-    expect(find.text(word.text), findsNothing, reason: 'the unmapped form is never drawn');
-    expect(c.quran.text(word.ref), before, reason: 'stored text unchanged');
+    await pushScreen(tester, const PageReaderScreen(initialPage: 293));
+    expect(c.renderMap.forDisplay(word.text), word.text);
+    expect(find.text(word.text), findsWidgets);
   });
 
   for (final size in [const Size(390, 844), const Size(320, 568)]) {

@@ -66,9 +66,10 @@ void main() {
 
   group('render map (display only)', () {
     final m = QuranRenderMap.fromJson(renderJson);
-    test('maps KFGQPC open tanween code points to the Amiri Quran ones', () {
-      expect(m.forDisplay('ٖٗٞ'), 'ࣰࣱࣲ');
-      expect(m.forDisplay('هُدٗى'), 'هُدࣰى');
+    test('is empty: the KFGQPC v18 font draws its text as published', () {
+      expect(m.map, isEmpty);
+      expect(m.forDisplay('ٖٗٞ'), 'ٖٗٞ');
+      expect(m.forDisplay('هُدٗى'), 'هُدٗى');
       expect(m.forDisplay('بِسۡمِ'), 'بِسۡمِ');
     });
     test('does not touch stored, searched or hashed text', () {
@@ -82,7 +83,7 @@ void main() {
           expect(d.runes.length, t.runes.length);
         }
       }
-      expect(changed, greaterThan(0), reason: 'the map must matter for some ayahs');
+      expect(changed, 0, reason: 'nothing is substituted for the KFGQPC font');
       expect(allAyahsSha256(q.surahs), before);
       expect(allAyahsSha256(q.surahs), content.integrity['allAyahsSha256']);
       expect(q.text(const AyahRef(2, 2)), contains('ٗ'));
@@ -127,7 +128,7 @@ void main() {
     test('Arabic-Indic digits', () {
       expect(toArabicIndic(1234567890), '١٢٣٤٥٦٧٨٩٠');
       expect(toArabicIndic('12:05'), '١٢:٠٥');
-      expect(ayahMarker(255), '﴿٢٥٥﴾');
+      expect(ayahMarker(255), '٢٥٥'); // the KFGQPC font draws the ornament
       expect(toAsciiDigits('٦٠٤ ۶۰۴'), '604 604');
     });
     test('parsePageNumber validates 1..604', () {

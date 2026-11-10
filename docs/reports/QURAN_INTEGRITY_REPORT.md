@@ -1,4 +1,18 @@
-# Quran integrity report — Milestone 1
+# Quran integrity report
+
+## Update 2026-11-10 — Quran content 2.0.0: King Fahd Complex text v18 (owner's request)
+- **Source now:** KFGQPC "Hafs Uthmanic Data" v18, `hafsData_v18.json` (2021-10-25, the Complex's latest published release), file SHA-256 `5d8bb91726e482839d0057633cb1973031e4d706fa9604eea5e08892f20ba140`.
+- **Text:** every one of the 6236 ayahs is the Complex's `aya_text` byte-for-byte; only the trailing no-break space + ayah number that the file appends is removed (the build and tests check that number equals the ayah). Overall SHA-256 of the bundled ayahs: `debc5c29cc6116809f4778dbbcb7abbe01e8f845fb924081d8b67d97b757b48b`.
+- **Compared with the previous text (quranenc via quran-json 3.1.2):** no letter, dot or haraka differs; the differences were Unicode encoding only (code point order and the no-break space after ۞ and some signs).
+- **Pages and lines:** KFGQPC new edition (1441H). Every ayah's page equals the v18 `page` column (6236/6236); every ayah's first and last line in the 15-line layout equals v18 `line_start`/`line_end`. Juz starts follow v18 `jozz` (juz 4 starts at 3:92 and juz 11 at 9:94, as in the 1441H print; the ۞ quarter signs are at 3:93 and 9:93).
+- **Font:** KFGQPC HAFS Uthmanic Script v18, unmodified; the display glyph map is now empty; the ayah ornament is drawn by the font.
+- **Tafsir al-Muyassar:** 114 surahs, one entry per ayah (6236), positions equal the upstream numbering 1..6236; spot-checked 2:255, 2:282, 9:129, 18:1, 36:82, 112:1.
+- **Recitation:** audio is addressed by surah and ayah number (everyayah `SSSAAA.mp3`), independent of the text; page playlists come from the new pages (checked above). everyayah.com is not reachable from the build machine, so the files were not fetched here.
+- Human comparison with a printed Mushaf and official approval (KFGQPC / al-Azhar) remain **pending**.
+
+---
+
+# Milestone 1 (historical)
 
 **Result: PASS on Backend, Web, and the Flutter suite (run on Linux and on macOS CI).** Human religious verification: **PENDING**.
 
