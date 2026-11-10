@@ -249,7 +249,7 @@
   "adhan.playNow": "Play adhan",
   "adhan.webNote": "On the website the alert works while a page of the site is open (any tab). For alerts while the device is locked, use the mobile app.",
   "adhan.webDenied": "The browser blocks notifications. The alert and adhan still play inside the page; allow notifications in the browser settings to get a system notification too.",
-  "adhan.credit": "Adhan recordings from Wikimedia Commons under open licences:",
+  "adhan.credit": "Adhan recordings:",
   "adhan.voice": "Muezzin",
   "home.timingFor": "Times for",
   "home.prayerOf": "{name} prayer",
@@ -522,5 +522,12 @@
   "compass.n": "N",
   "compass.e": "E",
   "compass.s": "S",
-  "compass.w": "W"
+  "compass.w": "W",
+  "adhan.fajrVoice": "Fajr muezzin",
+  "adhan.voiceChange": "Change",
+  "adhan.voiceDone": "Done",
+  "adhan.voiceSearch": "Search by muezzin or country",
+  "adhan.voiceMore": "{n} more; type in the search to find them.",
+  "adhan.listenFajr": "Listen to the Fajr adhan",
+  "adhan.voiceNote": "The Fajr adhan has “prayer is better than sleep”, so it is chosen separately. The other muezzins play over the internet."
 }

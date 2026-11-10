@@ -22,6 +22,9 @@ rmSync(join(pub, "data"), { recursive: true, force: true });
 mkdirSync(gen, { recursive: true });
 mkdirSync(join(pub, "fonts"), { recursive: true });
 
+// Muezzin collection (built by tools/adhan_catalog.py; the mobile asset is the one source).
+writeJson(join(pub, "data/adhan-catalog.json"), readJson("apps/mobile/assets/content/adhan_catalog.json"));
+
 const copies = {
   "packages/shared-schemas/cities.json": "cities.json",
   "packages/shared-schemas/prayer/methods.json": "methods.json",

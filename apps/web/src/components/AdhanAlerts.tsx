@@ -3,7 +3,8 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { resolveLocation } from "@/lib/cities";
 import { prayerStore } from "@/lib/settings";
-import { ADHAN_VOICES, adhanVoiceById } from "@/lib/adhan-voices";
+import { adhanVoiceSrc, BUNDLED_ADHAN_VOICES } from "@/lib/adhan-voices";
+import { MuezzinPicker } from "./MuezzinPicker";
 import {
   adhanFor,
   adhanStore,
@@ -17,6 +18,7 @@ import {
   nextAlert,
   PRE_CHOICES,
   soundFor,
+  voiceForPrayer,
   type AdhanPrefs,
   type AlertKind,
   type AlertSound,
@@ -33,8 +35,7 @@ let playing = false;
 const listeners = new Set<() => void>();
 const emit = (): void => listeners.forEach((l) => l());
 
-function audioEl(file: string): HTMLAudioElement {
-  const src = withBase(file);
+function audioEl(src: string): HTMLAudioElement {
   if (audio && audio.getAttribute("src") !== src) {
     audio.pause();
     audio.setAttribute("src", src);
@@ -50,9 +51,9 @@ function audioEl(file: string): HTMLAudioElement {
   return audio;
 }
 
-/** Starts the adhan in the chosen muezzin's voice; resolves false when the browser blocks autoplay. */
-export async function playAdhan(voice: string = adhanStore.get().voice): Promise<boolean> {
-  const a = audioEl(adhanVoiceById(voice).file);
+/** Starts the adhan in a muezzin's voice; resolves false when the browser blocks autoplay or it cannot load. */
+export async function playAdhan(voice: string = adhanStore.get().voice, fajr = false): Promise<boolean> {
+  const a = audioEl(adhanVoiceSrc(voice, fajr));
   a.currentTime = 0;
   playing = true;
   emit();
@@ -181,7 +182,9 @@ export function AdhanAlerts({ locale }: { locale: Locale }) {
       void showNotification(title, body, fired.kind);
       const sound = alertSound(prefs, fired.kind, fired.key);
       if (sound === "adhan") {
-        void playAdhan().then((ok) => setRinging({ key: fired.key, kind: fired.kind, blocked: !ok }));
+        void playAdhan(voiceForPrayer(prefs, fired.key), fired.key === "fajr").then((ok) =>
+          setRinging({ key: fired.key, kind: fired.kind, blocked: !ok }),
+        );
         return;
       }
       if (sound === "tone") playTone();
@@ -197,7 +200,11 @@ export function AdhanAlerts({ locale }: { locale: Locale }) {
     <div className="adhan-ringing" role="alert" data-testid="adhan-ringing" data-kind={ringing.kind}>
       <strong>{title}</strong>
       {ringing.blocked && !isPlaying ? (
-        <button type="button" className="btn btn-primary" onClick={() => void playAdhan()}>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => void playAdhan(voiceForPrayer(prefs, ringing.key), ringing.key === "fajr")}
+        >
           {t(locale, "adhan.playNow")}
         </button>
       ) : null}
@@ -426,26 +433,26 @@ export function AdhanSettings({ locale }: { locale: Locale }) {
           </fieldset>
         </>
       ) : null}
-      <div className="field">
-        <label htmlFor="adhan-voice">{t(locale, "adhan.voice")}</label>
-        <select
-          id="adhan-voice"
-          value={prefs.voice}
-          onChange={(e) => {
-            const voice = e.target.value;
-            adhanStore.set((p) => ({ ...p, voice }));
-            if (isPlaying) void playAdhan(voice);
-          }}
-          data-testid="adhan-voice"
-        >
-          {ADHAN_VOICES.map((v) => (
-            <option key={v.id} value={v.id}>
-              {locale === "ar" ? v.nameAr : v.nameEn}
-            </option>
-          ))}
-        </select>
-      </div>
-      <p>
+      <MuezzinPicker
+        locale={locale}
+        fajr={false}
+        value={prefs.voice}
+        onChange={(voice) => {
+          adhanStore.set((p) => ({ ...p, voice }));
+          if (isPlaying) void playAdhan(voice);
+        }}
+      />
+      <MuezzinPicker
+        locale={locale}
+        fajr
+        value={prefs.fajrVoice}
+        onChange={(fajrVoice) => {
+          adhanStore.set((p) => ({ ...p, fajrVoice }));
+          if (isPlaying) void playAdhan(fajrVoice, true);
+        }}
+      />
+      <p className="muted">{t(locale, "adhan.voiceNote")}</p>
+      <p className="row">
         <button
           type="button"
           className="btn"
@@ -454,13 +461,23 @@ export function AdhanSettings({ locale }: { locale: Locale }) {
         >
           {isPlaying ? t(locale, "adhan.stop") : t(locale, "adhan.listen")}
         </button>
+        {isPlaying ? null : (
+          <button
+            type="button"
+            className="btn"
+            data-testid="adhan-listen-fajr"
+            onClick={() => void playAdhan(prefs.fajrVoice, true)}
+          >
+            {t(locale, "adhan.listenFajr")}
+          </button>
+        )}
       </p>
       <p className="muted">{t(locale, "adhan.webNote")}</p>
       <p className="muted" style={{ fontSize: "0.85em" }}>
         {t(locale, "adhan.credit")}
       </p>
       <ul className="muted" style={{ fontSize: "0.85em" }} data-testid="adhan-credits">
-        {ADHAN_VOICES.map((v) => (
+        {BUNDLED_ADHAN_VOICES.filter((v) => v.credit).map((v) => (
           <li key={v.id}>
             {locale === "ar" ? v.nameAr : v.nameEn}: {v.credit}
           </li>

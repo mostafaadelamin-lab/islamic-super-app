@@ -1,7 +1,7 @@
 """Builds the muezzin catalogue from a saved copy of the adhan selection page (owner's choice, 2026-11-10).
 
 Usage: python tools/adhan_catalog.py <saved-page.html>
-Writes apps/mobile/assets/content/adhan_catalog.json and apps/web/public/data/adhan-catalog.json.
+Writes apps/mobile/assets/content/adhan_catalog.json (the website copies it at build time).
 
 Each entry: id (the site's audio id), muezzin (name shown in the app), place (city / country words of the
 title, may be empty), fajr (true for a Fajr adhan, which has "as-salatu khayrun min an-nawm").
@@ -19,7 +19,17 @@ BY_VOICE = re.compile(r"(?:بصوت|للشيخ|للقارئ|لفضيله الش�
 
 
 def clean(s: str) -> str:
-    return re.sub(r"\s+", " ", html.unescape(s)).strip(" -_.,،")
+    return re.sub(r"\s+", " ", html.unescape(s)).strip(" -_.,،/*")
+
+
+TITLE = re.compile(r"^(?:لل|ال)?(?:شيخ|مقرئ|مقرىء|قارئ|قارىء|دكتور)\s+")
+
+
+def tidy_name(s: str) -> str:
+    """Drops leading titles (الشيخ, المقرئ, القارئ, ...) and names with no Arabic letters."""
+    while (t := TITLE.sub("", s)) != s:
+        s = t
+    return s if re.search(r"[\u0600-\u06FF]", s) else ""
 
 
 def main(path: str) -> None:
@@ -50,12 +60,12 @@ def main(path: str) -> None:
         parts = [clean(p) for p in title_s.split(",")]
         place = "، ".join(p for p in parts[1:] if p)
         fajr = "فجر" in title_s or "فجر" in full_s
+        name = tidy_name(name) or tidy_name(title_s) or UNKNOWN
         entries[aid] = {"id": aid, "muezzin": name, "place": place, "fajr": fajr}
     out = sorted(entries.values(), key=lambda e: (e["fajr"], e["muezzin"], e["id"]))
     text = json.dumps(out, ensure_ascii=False, indent=1) + "\n"
-    for dest in (ROOT / "apps/mobile/assets/content/adhan_catalog.json", ROOT / "apps/web/public/data/adhan-catalog.json"):
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(text, encoding="utf-8")
+    # The website copies this file in apps/web/scripts/prepare-content.mjs.
+    (ROOT / "apps/mobile/assets/content/adhan_catalog.json").write_text(text, encoding="utf-8")
     print(f"{len(out)} recordings, {sum(e['fajr'] for e in out)} Fajr")
 
 
