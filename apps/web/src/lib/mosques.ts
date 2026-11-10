@@ -11,7 +11,12 @@
 export const OVERPASS_ENDPOINTS = [
   "https://overpass-api.de/api/interpreter",
   "https://overpass.kumi.systems/api/interpreter",
+  "https://overpass.private.coffee/api/interpreter",
 ] as const;
+/** A server that has not answered by then is skipped for the next one. */
+export const SERVER_TIMEOUT_MS = 15_000;
+/** A building-only element this close to a tagged mosque is the same mosque drawn twice. */
+const SAME_MOSQUE_M = 60;
 export const RADII_M = [2000, 5000, 10000] as const;
 export const DEFAULT_RADIUS_M = 5000;
 export const MAX_RESULTS = 60;
@@ -27,10 +32,10 @@ export interface Mosque {
   distance: number;
 }
 
+/** Muslim places of worship, plus buildings drawn as mosques that nobody tagged as a place of worship. */
 export function overpassQuery(lat: number, lng: number, radius: number): string {
-  const r = Math.round(radius);
-  const p = `${lat.toFixed(5)},${lng.toFixed(5)}`;
-  return `[out:json][timeout:25];nwr["amenity"="place_of_worship"]["religion"="muslim"](around:${r},${p});out center tags;`;
+  const a = `(around:${Math.round(radius)},${lat.toFixed(5)},${lng.toFixed(5)})`;
+  return `[out:json][timeout:20];(nwr["amenity"="place_of_worship"]["religion"="muslim"]${a};nwr["building"="mosque"]${a};);out center tags;`;
 }
 
 /** Great-circle distance in metres. */
@@ -67,6 +72,7 @@ export function parseOverpass(json: unknown, lat: number, lng: number, locale: "
   if (!Array.isArray(elements)) return [];
   const seen = new Set<string>();
   const out: Mosque[] = [];
+  const buildingOnly: Mosque[] = [];
   for (const raw of elements as OsmElement[]) {
     const type = str(raw?.type);
     const id = num(raw?.id);
@@ -77,13 +83,18 @@ export function parseOverpass(json: unknown, lat: number, lng: number, locale: "
     if (seen.has(key)) continue;
     seen.add(key);
     const tags = raw.tags && typeof raw.tags === "object" ? raw.tags : {};
-    out.push({
+    const m: Mosque = {
       id: key,
       name: pickName(tags, locale),
       lat: mLat,
       lng: mLng,
       distance: distanceM(lat, lng, mLat, mLng),
-    });
+    };
+    (tags.amenity === "place_of_worship" ? out : buildingOnly).push(m);
+  }
+  const tagged = [...out];
+  for (const b of buildingOnly) {
+    if (!tagged.some((m) => distanceM(m.lat, m.lng, b.lat, b.lng) < SAME_MOSQUE_M)) out.push(b);
   }
   out.sort((a, b) => a.distance - b.distance);
   return out.slice(0, MAX_RESULTS);
@@ -105,6 +116,7 @@ export async function fetchMosques(
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body,
+        signal: AbortSignal.timeout(SERVER_TIMEOUT_MS),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return parseOverpass(await res.json(), lat, lng, locale);

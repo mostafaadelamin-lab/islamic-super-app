@@ -3,7 +3,11 @@
 // Data © OpenStreetMap contributors (ODbL 1.0): the screen shows that credit.
 import 'dart:math' as math;
 
-const overpassEndpoints = ['https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter'];
+const overpassEndpoints = [
+  'https://overpass-api.de/api/interpreter',
+  'https://overpass.kumi.systems/api/interpreter',
+  'https://overpass.private.coffee/api/interpreter',
+];
 const mosqueRadii = [2000, 5000, 10000];
 const defaultMosqueRadius = 5000;
 const maxMosques = 60;
@@ -30,9 +34,16 @@ class Mosque {
   );
 }
 
-String overpassQuery(double lat, double lng, int radius) =>
-    '[out:json][timeout:25];nwr["amenity"="place_of_worship"]["religion"="muslim"]'
-    '(around:$radius,${lat.toStringAsFixed(5)},${lng.toStringAsFixed(5)});out center tags;';
+/// Muslim places of worship, plus buildings drawn as mosques that nobody
+/// tagged as a place of worship (common in Egypt and elsewhere).
+String overpassQuery(double lat, double lng, int radius) {
+  final a = '(around:$radius,${lat.toStringAsFixed(5)},${lng.toStringAsFixed(5)})';
+  return '[out:json][timeout:20];(nwr["amenity"="place_of_worship"]["religion"="muslim"]$a;'
+      'nwr["building"="mosque"]$a;);out center tags;';
+}
+
+/// A building-only element this close to a tagged mosque is the same mosque drawn twice.
+const _sameMosqueM = 60.0;
 
 /// Great-circle distance in metres.
 double distanceM(double lat1, double lng1, double lat2, double lng2) {
@@ -54,6 +65,7 @@ List<Mosque> parseOverpass(Object? json, double lat, double lng, {required bool 
   if (elements is! List) return const [];
   final seen = <String>{};
   final out = <Mosque>[];
+  final buildingOnly = <Mosque>[];
   for (final raw in elements) {
     if (raw is! Map) continue;
     final type = _str(raw['type']);
@@ -68,7 +80,12 @@ List<Mosque> parseOverpass(Object? json, double lat, double lng, {required bool 
     final name = arabic
         ? _str(tags['name:ar']) ?? _str(tags['name']) ?? _str(tags['name:en'])
         : _str(tags['name:en']) ?? _str(tags['name']) ?? _str(tags['name:ar']);
-    out.add(Mosque(id: key, name: name, lat: mLat, lng: mLng, distance: distanceM(lat, lng, mLat, mLng)));
+    final m = Mosque(id: key, name: name, lat: mLat, lng: mLng, distance: distanceM(lat, lng, mLat, mLng));
+    (tags['amenity'] == 'place_of_worship' ? out : buildingOnly).add(m);
+  }
+  final tagged = List.of(out);
+  for (final b in buildingOnly) {
+    if (!tagged.any((m) => distanceM(m.lat, m.lng, b.lat, b.lng) < _sameMosqueM)) out.add(b);
   }
   out.sort((a, b) => a.distance.compareTo(b.distance));
   return out.length > maxMosques ? out.sublist(0, maxMosques) : out;

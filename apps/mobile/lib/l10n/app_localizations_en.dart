@@ -137,8 +137,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get adhanCredit =>
-      'Adhan recording: \"Beautiful adhan\" from Wikimedia Commons (Adam-synagda), public domain CC0.';
+  String get adhanCredit => 'Adhan recordings from Wikimedia Commons under open licences (per voice):';
 
   @override
   String get adhanDenied => 'Notifications are not allowed. Turn them on in the system settings.';
@@ -155,7 +154,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhanIosNote =>
-      'On iPhone the notification plays the opening takbir only (the system allows at most 30 seconds).';
+      'On iPhone the notification plays the opening takbir only, in the first voice (the system allows at most 30 seconds); the full adhan in the chosen voice plays inside the app.';
 
   @override
   String get adhanIqama => 'Iqama alert after the adhan';
@@ -255,6 +254,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String adhanTitle(String name) {
     return 'Time for $name';
+  }
+
+  @override
+  String get adhanVoice => 'Muezzin';
+
+  @override
+  String adhanVoiceListen(String name) {
+    return 'Listen to $name';
   }
 
   @override
@@ -871,6 +878,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mosquesError => 'Could not reach OpenStreetMap. Check your internet connection.';
 
   @override
+  String get mosquesGeoFallback =>
+      'Your location is not available (turn on GPS and allow location). Showing mosques around your prayer-times city.';
+
+  @override
   String mosquesKm(String n) {
     return '$n km';
   }
@@ -879,16 +890,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mosquesLoading => 'Searching for mosques…';
 
   @override
+  String get mosquesLocate => 'Update my location';
+
+  @override
+  String get mosquesLocating => 'Finding your location…';
+
+  @override
   String mosquesMeters(String n) {
     return '$n m';
   }
+
+  @override
+  String get mosquesMyLocation => 'your current location';
 
   @override
   String get mosquesNone => 'No mosques are mapped within this distance. Try a larger one.';
 
   @override
   String get mosquesNote =>
-      'Straight-line distance around your prayer-times city. Data from the open OpenStreetMap map; it can be incomplete in some places.';
+      'Straight-line distance. Data from the open OpenStreetMap map; it can be incomplete in some places.';
 
   @override
   String get mosquesOffline => '(last saved result, you are offline)';
@@ -1134,6 +1154,15 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get qiblaDirection => 'Qibla direction';
+
+  @override
+  String get qiblaDistance => 'Distance to the Kaaba';
+
+  @override
+  String get qiblaEast => 'E';
+
+  @override
   String get qiblaFacing => 'You are facing the qibla';
 
   @override
@@ -1146,7 +1175,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The phone\'s compass points to magnetic north; the app corrects it to true north for your city.';
 
   @override
+  String get qiblaSouth => 'S';
+
+  @override
   String get qiblaStatic => 'No compass reading on this device: the diagram shows the qibla from true north.';
+
+  @override
+  String get qiblaTipsTitle => 'For an accurate reading';
 
   @override
   String get qiblaTitle => 'Qibla';
@@ -1163,6 +1198,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get qiblaWaiting => 'Reading the compass…';
+
+  @override
+  String get qiblaWest => 'W';
 
   @override
   String quranAyahCount(String count) {

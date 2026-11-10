@@ -8,6 +8,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../domain/adhan_schedule.dart';
+import '../domain/adhan_voices.dart';
 import '../domain/prayer_schedule.dart';
 import '../l10n/app_localizations.dart';
 import '../ui/prayer_model.dart';
@@ -81,7 +82,7 @@ class LocalNotificationsBackend implements NotificationsBackend {
 
   // Android ties the sound to the channel, so each sound choice has its own
   // channel (the user can still fine-tune each one in the system settings).
-  static AndroidNotificationDetails _android(String sound, String stopLabel) => switch (sound) {
+  static AndroidNotificationDetails _android(String sound, String stopLabel, String voice) => switch (sound) {
     'tone' => const AndroidNotificationDetails(
       'adhan_tone',
       'تنبيه الصلاة (نغمة) · Prayer alert (tone)',
@@ -100,14 +101,15 @@ class LocalNotificationsBackend implements NotificationsBackend {
       enableVibration: false,
     ),
     _ => AndroidNotificationDetails(
-      'adhan_voice',
+      // One channel per muezzin: a channel's sound cannot change once created.
+      voice == 'adhan' ? 'adhan_voice' : 'adhan_voice_$voice',
       'الأذان · Adhan',
       channelDescription: 'Prayer time notifications with the adhan recording',
       importance: Importance.max,
       priority: Priority.high,
       category: AndroidNotificationCategory.alarm,
-      // res/raw/adhan.ogg (see assets/audio/ADHAN_AUDIO.md for its licence).
-      sound: const RawResourceAndroidNotificationSound('adhan'),
+      // res/raw/<voice>.ogg (see assets/audio/ADHAN_AUDIO.md for the licences).
+      sound: RawResourceAndroidNotificationSound(voice),
       // Tapping "stop" or the notification itself silences the adhan.
       actions: [AndroidNotificationAction('stop', stopLabel, cancelNotification: true)],
     ),
@@ -167,6 +169,9 @@ class LocalNotificationsBackend implements NotificationsBackend {
   /// Label of the Android "stop" action (set by the scheduler from l10n).
   String stopLabel = 'إيقاف';
 
+  /// Android res/raw name of the chosen muezzin (set by the scheduler).
+  String voice = 'adhan';
+
   @override
   Future<void> schedule({
     required int id,
@@ -183,6 +188,7 @@ class LocalNotificationsBackend implements NotificationsBackend {
         'title': title,
         'body': body,
         'stopLabel': stopLabel,
+        'voice': voice,
       });
       return;
     }
@@ -191,7 +197,7 @@ class LocalNotificationsBackend implements NotificationsBackend {
       title: title,
       body: body,
       scheduledDate: tz.TZDateTime.from(atUtc, tz.UTC),
-      notificationDetails: NotificationDetails(android: _android(sound, stopLabel), iOS: _darwin(sound)),
+      notificationDetails: NotificationDetails(android: _android(sound, stopLabel, voice), iOS: _darwin(sound)),
       androidScheduleMode: _exact ? AndroidScheduleMode.exactAllowWhileIdle : AndroidScheduleMode.inexactAllowWhileIdle,
     );
   }
@@ -275,6 +281,7 @@ class AdhanScheduler {
   String get _signature => [
     settings.adhanPrayers.toList()..sort(),
     settings.adhanSound,
+    settings.adhanVoice,
     [for (final p in obligatoryPrayers) settings.adhanSoundFor(p)],
     settings.sunriseAlert,
     settings.lastThirdAlert,
@@ -324,7 +331,10 @@ class AdhanScheduler {
       if (items.isEmpty) return;
       final l = lookupAppLocalizations(Locale(settings.locale.languageCode));
       final b = backend;
-      if (b is LocalNotificationsBackend) b.stopLabel = l.adhanStop;
+      if (b is LocalNotificationsBackend) {
+        b.stopLabel = l.adhanStop;
+        b.voice = adhanVoiceById(settings.adhanVoice).raw;
+      }
       final city = resolveCity(content, settings).name(settings.isArabic);
       for (final n in items) {
         final name = _prayerName(l, n.prayer);
@@ -364,7 +374,10 @@ class AdhanScheduler {
   Future<void> test({Duration delay = const Duration(seconds: 10)}) async {
     final l = lookupAppLocalizations(Locale(settings.locale.languageCode));
     final b = backend;
-    if (b is LocalNotificationsBackend) b.stopLabel = l.adhanStop;
+    if (b is LocalNotificationsBackend) {
+      b.stopLabel = l.adhanStop;
+      b.voice = adhanVoiceById(settings.adhanVoice).raw;
+    }
     await backend.schedule(
       id: adhanTestNotificationId,
       title: l.adhanTestTitle,
@@ -383,9 +396,9 @@ class AdhanScheduler {
   };
 }
 
-/// Plays the bundled adhan inside the app (settings "listen" button).
+/// Plays a bundled adhan recording inside the app (settings "listen" buttons).
 abstract class AdhanPlayer {
-  Future<void> play();
+  Future<void> play(String asset);
   Future<void> stop();
 
   /// Fires when the recording reaches its end.
@@ -393,7 +406,6 @@ abstract class AdhanPlayer {
 }
 
 class JustAudioAdhanPlayer implements AdhanPlayer {
-  static const asset = 'assets/audio/adhan.m4a';
   AudioPlayer? _player;
   final _completed = StreamController<void>.broadcast();
 
@@ -408,7 +420,7 @@ class JustAudioAdhanPlayer implements AdhanPlayer {
   }
 
   @override
-  Future<void> play() async {
+  Future<void> play(String asset) async {
     await _p.setAsset(asset);
     unawaited(_p.play());
   }
@@ -422,31 +434,37 @@ class JustAudioAdhanPlayer implements AdhanPlayer {
 
 class AdhanPreview extends ChangeNotifier {
   AdhanPreview(this._player) {
-    _sub = _player.completed.listen((_) => _set(false));
+    _sub = _player.completed.listen((_) => _set(null));
   }
 
   final AdhanPlayer _player;
   late final StreamSubscription<void> _sub;
-  bool _playing = false;
-  bool get playing => _playing;
+  String? _voice;
 
-  void _set(bool v) {
-    if (_playing == v) return;
-    _playing = v;
+  /// Whether a recording is playing; [voice] says which muezzin.
+  bool get playing => _voice != null;
+  String? get voice => _voice;
+
+  void _set(String? v) {
+    if (_voice == v) return;
+    _voice = v;
     notifyListeners();
   }
 
-  Future<void> toggle() async {
-    if (_playing) {
-      _set(false);
+  /// Plays [voiceId] (default: the first muezzin), or stops it when it is the one playing.
+  Future<void> toggle([String? voiceId]) async {
+    final v = adhanVoiceById(voiceId);
+    final was = _voice;
+    if (was != null) {
+      _set(null);
       await _player.stop();
-      return;
+      if (was == v.id) return;
     }
-    _set(true);
+    _set(v.id);
     try {
-      await _player.play();
+      await _player.play(v.asset);
     } catch (e) {
-      _set(false);
+      _set(null);
       debugPrint('adhan preview failed: $e');
     }
   }

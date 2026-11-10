@@ -25,6 +25,7 @@ class MainActivity : AudioServiceActivity() {
                                 title = call.argument<String>("title") ?: "",
                                 body = call.argument<String>("body") ?: "",
                                 stopLabel = call.argument<String>("stopLabel") ?: "Stop",
+                                voice = call.argument<String>("voice") ?: "adhan",
                             ),
                         )
                         result.success(null)

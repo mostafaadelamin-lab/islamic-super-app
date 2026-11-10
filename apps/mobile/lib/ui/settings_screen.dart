@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app_services.dart';
 import '../data/settings.dart';
+import '../domain/adhan_voices.dart';
 import '../domain/hijri.dart';
 import '../domain/prayer_schedule.dart';
 import '../domain/quran.dart';
@@ -238,6 +239,15 @@ class AdhanSettingsCard extends StatelessWidget {
               onSelectionChanged: (v) => settings.setAdhanSound(v.first),
             ),
           ),
+          const SizedBox(height: DesignTokens.spaceMd),
+          Text(l.adhanVoice, style: Theme.of(context).textTheme.titleSmall),
+          const SizedBox(height: DesignTokens.spaceXs),
+          ListenableBuilder(
+            listenable: s.adhanPreview,
+            builder: (context, _) => Column(
+              children: [for (final v in adhanVoices) _VoiceTile(voice: v, selected: settings.adhanVoice == v.id)],
+            ),
+          ),
           const SizedBox(height: DesignTokens.spaceSm),
           Wrap(
             spacing: DesignTokens.spaceSm,
@@ -247,7 +257,7 @@ class AdhanSettingsCard extends StatelessWidget {
                 listenable: s.adhanPreview,
                 builder: (context, _) => FilledButton.tonalIcon(
                   key: const Key('adhanPreview'),
-                  onPressed: s.adhanPreview.toggle,
+                  onPressed: () => s.adhanPreview.toggle(settings.adhanVoice),
                   icon: Icon(s.adhanPreview.playing ? Icons.stop : Icons.play_arrow),
                   label: Text(s.adhanPreview.playing ? l.adhanPreviewStop : l.adhanPreview),
                 ),
@@ -269,7 +279,47 @@ class AdhanSettingsCard extends StatelessWidget {
         const SizedBox(height: DesignTokens.spaceXs),
         Text(l.adhanNote, style: small),
         Text(l.adhanCredit, key: const Key('adhanCredit'), style: small),
+        for (final v in adhanVoices) Text('• ${v.name(context.isArabic)}: ${v.credit}', style: small),
       ],
+    );
+  }
+}
+
+/// One muezzin: tap to choose it, the round button to listen.
+class _VoiceTile extends StatelessWidget {
+  const _VoiceTile({required this.voice, required this.selected});
+  final AdhanVoice voice;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    final s = context.services;
+    final scheme = Theme.of(context).colorScheme;
+    final playing = s.adhanPreview.voice == voice.id;
+    final name = voice.name(context.isArabic);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: DesignTokens.spaceXs),
+      child: Material(
+        color: selected ? scheme.primaryContainer.withValues(alpha: 0.55) : Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+          side: BorderSide(color: selected ? scheme.primary : scheme.outlineVariant),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: ListTile(
+          key: Key('adhanVoice-${voice.id}'),
+          selected: selected,
+          leading: Icon(selected ? Icons.check_circle : Icons.circle_outlined, color: selected ? scheme.primary : null),
+          title: Text(name),
+          trailing: IconButton.filledTonal(
+            key: Key('adhanVoicePlay-${voice.id}'),
+            tooltip: context.l10n.adhanVoiceListen(name),
+            icon: Icon(playing ? Icons.stop : Icons.play_arrow),
+            onPressed: () => s.adhanPreview.toggle(voice.id),
+          ),
+          onTap: () => s.settings.setAdhanVoice(voice.id),
+        ),
+      ),
     );
   }
 }

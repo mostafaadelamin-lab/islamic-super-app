@@ -71,7 +71,7 @@ export function MosquesView({ locale }: { locale: Locale }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [point.lat, point.lng, radius, search]);
 
-  const useMyLocation = (): void => {
+  const locateMe = useCallback((): void => {
     setGeoError(false);
     if (typeof navigator === "undefined" || !navigator.geolocation) {
       setGeoError(true);
@@ -80,9 +80,21 @@ export function MosquesView({ locale }: { locale: Locale }) {
     navigator.geolocation.getCurrentPosition(
       (pos) => setHere({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
       () => setGeoError(true),
-      { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 },
+      // The nearest mosque needs a street-level fix, not the city.
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 },
     );
-  };
+  }, []);
+
+  // Already allowed before: search around the user straight away, no extra tap.
+  useEffect(() => {
+    if (typeof navigator === "undefined" || !navigator.permissions?.query) return;
+    navigator.permissions
+      .query({ name: "geolocation" })
+      .then((s) => {
+        if (s.state === "granted") locateMe();
+      })
+      .catch(() => undefined);
+  }, [locateMe]);
 
   const placeName = here
     ? t(locale, "mosques.myLocation")
@@ -107,7 +119,7 @@ export function MosquesView({ locale }: { locale: Locale }) {
             </option>
           ))}
         </select>
-        <button type="button" className="btn" data-testid="mosques-here" onClick={useMyLocation}>
+        <button type="button" className="btn" data-testid="mosques-here" onClick={locateMe}>
           {t(locale, "mosques.useMyLocation")}
         </button>
       </div>

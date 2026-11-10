@@ -150,7 +150,7 @@ class FakeLocation implements LocationProvider {
   const FakeLocation(this.result);
   final LocationResult result;
   @override
-  Future<LocationResult> current() async => result;
+  Future<LocationResult> current({bool precise = false}) async => result;
 }
 
 /// Taps the bottom-navigation destination with [index] (0..4).
@@ -386,13 +386,17 @@ class FakeNotifications implements NotificationsBackend {
 class FakeAdhanPlayer implements AdhanPlayer {
   int plays = 0;
   int stops = 0;
+  String? lastAsset;
   final _done = StreamController<void>.broadcast();
 
   /// Simulates the recording reaching its end.
   void finish() => _done.add(null);
 
   @override
-  Future<void> play() async => plays++;
+  Future<void> play(String asset) async {
+    plays++;
+    lastAsset = asset;
+  }
 
   @override
   Future<void> stop() async => stops++;

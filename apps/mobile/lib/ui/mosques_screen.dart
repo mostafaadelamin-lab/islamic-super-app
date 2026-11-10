@@ -5,13 +5,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../app_services.dart';
+import '../data/location.dart';
 import '../data/mosques.dart';
 import '../domain/mosques.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'prayer_model.dart';
 
-/// Nearby mosques from OpenStreetMap around the prayer city, nearest first.
+/// Nearby mosques from OpenStreetMap around the device position (GPS), nearest
+/// first; around the prayer city only when the position is not available.
 /// Tapping a mosque opens directions in the phone's maps app.
 class MosquesScreen extends StatefulWidget {
   const MosquesScreen({super.key, this.client});
@@ -27,6 +29,11 @@ class _MosquesScreenState extends State<MosquesScreen> {
   late final http.Client _client = widget.client ?? http.Client();
   int _radius = defaultMosqueRadius;
   MosqueResult? _result;
+
+  /// Device position for this visit; null = not asked yet or not available.
+  ({double lat, double lng})? _here;
+  bool _locating = false;
+  bool _geoFailed = false;
   bool _loading = false;
   bool _error = false;
   bool _started = false;
@@ -36,7 +43,26 @@ class _MosquesScreenState extends State<MosquesScreen> {
     super.didChangeDependencies();
     if (_started) return;
     _started = true;
-    _search();
+    _locateAndSearch();
+  }
+
+  /// Asks the device where it is, then searches around that point.
+  Future<void> _locateAndSearch() async {
+    setState(() {
+      _locating = true;
+      _geoFailed = false;
+    });
+    final r = await context.services.location.current(precise: true);
+    if (!mounted) return;
+    setState(() {
+      _locating = false;
+      if (r case LocationFound(:final lat, :final lng)) {
+        _here = (lat: lat, lng: lng);
+      } else {
+        _geoFailed = _here == null;
+      }
+    });
+    await _search();
   }
 
   @override
@@ -47,6 +73,8 @@ class _MosquesScreenState extends State<MosquesScreen> {
 
   Future<void> _search() async {
     final city = PrayerView.compute(context.services).city;
+    final lat = _here?.lat ?? city.lat;
+    final lng = _here?.lng ?? city.lng;
     final arabic = context.isArabic;
     setState(() {
       _loading = true;
@@ -54,7 +82,7 @@ class _MosquesScreenState extends State<MosquesScreen> {
     });
     try {
       final finder = MosqueFinder(_client, await SharedPreferences.getInstance());
-      final r = await finder.find(city.lat, city.lng, _radius, arabic: arabic);
+      final r = await finder.find(lat, lng, _radius, arabic: arabic);
       if (mounted) setState(() => _result = r);
     } catch (_) {
       if (mounted) {
@@ -83,8 +111,24 @@ class _MosquesScreenState extends State<MosquesScreen> {
       body: ListView(
         padding: const EdgeInsets.all(DesignTokens.spaceLg),
         children: [
-          Text(l.mosquesAround(city.name(context.isArabic)), style: theme.textTheme.titleMedium),
-          const SizedBox(height: DesignTokens.spaceSm),
+          Text(
+            l.mosquesAround(_here != null ? l.mosquesMyLocation : city.name(context.isArabic)),
+            key: const Key('mosquesAround'),
+            style: theme.textTheme.titleMedium,
+          ),
+          if (_geoFailed) ...[
+            const SizedBox(height: DesignTokens.spaceXs),
+            Text(l.mosquesGeoFallback, key: const Key('mosquesGeoFallback'), style: theme.textTheme.bodySmall),
+          ],
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: TextButton.icon(
+              key: const Key('mosquesLocate'),
+              onPressed: _locating || _loading ? null : _locateAndSearch,
+              icon: const Icon(Icons.my_location),
+              label: Text(l.mosquesLocate),
+            ),
+          ),
           Wrap(
             spacing: DesignTokens.spaceSm,
             children: [
@@ -94,7 +138,7 @@ class _MosquesScreenState extends State<MosquesScreen> {
                   label: Text(_distance(context, rad.toDouble())),
                   selected: _radius == rad,
                   onSelected: (_) {
-                    if (_radius == rad) return;
+                    if (_radius == rad || _locating) return;
                     setState(() => _radius = rad);
                     _search();
                   },
@@ -102,13 +146,13 @@ class _MosquesScreenState extends State<MosquesScreen> {
             ],
           ),
           const SizedBox(height: DesignTokens.spaceMd),
-          if (_loading)
+          if (_locating || _loading)
             Row(
               key: const Key('mosquesLoading'),
               children: [
                 const SizedBox.square(dimension: 20, child: CircularProgressIndicator(strokeWidth: 2)),
                 const SizedBox(width: DesignTokens.spaceSm),
-                Text(l.mosquesLoading),
+                Text(_locating ? l.mosquesLocating : l.mosquesLoading),
               ],
             )
           else if (_error) ...[

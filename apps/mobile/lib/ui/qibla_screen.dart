@@ -2,14 +2,16 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../app_services.dart';
 import '../domain/declination.dart';
+import '../domain/mosques.dart' show distanceM;
 import '../domain/qibla.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'prayer_model.dart';
-import 'prayer_screen.dart';
+import 'prayer_screen.dart' show QiblaCompass;
 
 /// Live qibla compass. Uses the phone's own compass heading (iOS
 /// CLLocationManager / Android rotation-vector sensor) and falls back to the
@@ -96,7 +98,11 @@ class QiblaScreenState extends State<QiblaScreen> {
   /// [magnetic]: degrees from magnetic north; stored as degrees from true north.
   void _onHeading(double magnetic) {
     if (!mounted || magnetic.isNaN) return;
+    final qibla = PrayerView.compute(context.services).qibla;
+    final was = _heading != null && facesQibla(qibla, _heading!);
     setState(() => _heading = _filter.add(normalizeDegrees(magnetic + (declination ?? 0))));
+    // A light tap in the hand when the phone comes round to the qibla.
+    if (!was && facesQibla(qibla, _heading!)) HapticFeedback.mediumImpact();
   }
 
   @override
@@ -116,29 +122,139 @@ class QiblaScreenState extends State<QiblaScreen> {
     final qibla = pv.qibla;
     final m = mode;
     final theme = Theme.of(context);
+    final live = m == CompassMode.live;
+    final facing = live && facesQibla(qibla, _heading!);
+    final km = distanceM(pv.city.lat, pv.city.lng, kaabaLat, kaabaLng) / 1000;
+    final dial = switch (m) {
+      CompassMode.live => QiblaDial(key: const Key('qiblaMode-live'), qibla: qibla, heading: _heading!, live: true),
+      CompassMode.waiting => const SizedBox.square(
+        key: Key('qiblaMode-waiting'),
+        dimension: 280,
+        child: Center(child: CircularProgressIndicator(color: QiblaColors.gold)),
+      ),
+      _ => KeyedSubtree(
+        key: const Key('qiblaMode-static'),
+        child: QiblaCompass(bearing: qibla, size: 280),
+      ),
+    };
+    final status = switch (m) {
+      CompassMode.live => _direction(context, qibla, _heading!),
+      CompassMode.waiting => l.qiblaWaiting,
+      _ => l.qiblaStatic,
+    };
     return Scaffold(
       appBar: AppBar(title: Text(l.qiblaTitle)),
       body: ListView(
         padding: const EdgeInsets.all(DesignTokens.spaceLg),
         children: [
-          Text(pv.city.name(context.isArabic), style: theme.textTheme.titleMedium, textAlign: TextAlign.center),
-          Text(
-            l.prayerQiblaDeg(context.num(qibla.toStringAsFixed(1))),
-            key: const Key('qiblaBearing'),
-            textAlign: TextAlign.center,
+          // The hero card keeps the Rattil emerald and gold in light and dark mode.
+          Container(
+            padding: const EdgeInsets.fromLTRB(
+              DesignTokens.spaceLg,
+              DesignTokens.spaceLg,
+              DesignTokens.spaceLg,
+              DesignTokens.spaceXl,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(28),
+              gradient: const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [QiblaColors.emerald, QiblaColors.emeraldDeep],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: QiblaColors.emeraldDeep.withValues(alpha: 0.22),
+                  blurRadius: 28,
+                  offset: const Offset(0, 10),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.place_outlined, color: QiblaColors.goldSoft, size: 20),
+                    const SizedBox(width: DesignTokens.spaceXs),
+                    Expanded(
+                      child: Text(
+                        pv.city.name(context.isArabic),
+                        style: theme.textTheme.titleMedium?.copyWith(color: Colors.white),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: QiblaColors.gold.withValues(alpha: 0.18),
+                        borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
+                        border: Border.all(color: QiblaColors.gold.withValues(alpha: 0.6)),
+                      ),
+                      child: Text(
+                        context.numLtr('${qibla.toStringAsFixed(0)}°'),
+                        style: theme.textTheme.labelLarge?.copyWith(color: QiblaColors.goldSoft),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: DesignTokens.spaceLg),
+                Center(child: dial),
+                const SizedBox(height: DesignTokens.spaceLg),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 250),
+                  padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceMd),
+                  decoration: BoxDecoration(
+                    color: facing ? QiblaColors.gold : Colors.white.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (facing) ...[
+                        const Icon(Icons.check_circle, color: QiblaColors.emeraldDeep, size: 22),
+                        const SizedBox(width: DesignTokens.spaceSm),
+                      ],
+                      Flexible(
+                        child: Text(
+                          status,
+                          key: live ? const Key('qiblaTurn') : null,
+                          textAlign: TextAlign.center,
+                          style: (live ? theme.textTheme.titleMedium : theme.textTheme.bodyMedium)?.copyWith(
+                            color: facing ? QiblaColors.emeraldDeep : Colors.white,
+                            fontWeight: live ? FontWeight.w700 : null,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: DesignTokens.spaceLg),
-          if (m == CompassMode.live) ...[
-            Center(
-              child: _LiveDial(key: const Key('qiblaMode-live'), qibla: qibla, heading: _heading!),
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: _InfoTile(
+                  icon: Icons.explore_outlined,
+                  label: l.qiblaDirection,
+                  value: l.prayerQiblaDeg(context.num(qibla.toStringAsFixed(1))),
+                  valueKey: const Key('qiblaBearing'),
+                ),
+              ),
+              const SizedBox(width: DesignTokens.spaceMd),
+              Expanded(
+                child: _InfoTile(
+                  icon: Icons.mosque_outlined,
+                  label: l.qiblaDistance,
+                  value: l.mosquesKm(context.num(km.round())),
+                  valueKey: const Key('qiblaDistance'),
+                ),
+              ),
+            ],
+          ),
+          if (live) ...[
             const SizedBox(height: DesignTokens.spaceMd),
-            Text(
-              _direction(context, qibla, _heading!),
-              key: const Key('qiblaTurn'),
-              textAlign: TextAlign.center,
-              style: theme.textTheme.titleLarge,
-            ),
             Text(
               l.qiblaHeading(context.num(_heading!.round())),
               textAlign: TextAlign.center,
@@ -152,26 +268,25 @@ class QiblaScreenState extends State<QiblaScreen> {
                 style: theme.textTheme.bodySmall,
               ),
             const SizedBox(height: DesignTokens.spaceMd),
-            Text(l.qiblaLiveNote, style: theme.textTheme.bodySmall),
-          ] else ...[
-            Center(
-              child: m == CompassMode.waiting
-                  ? Column(
-                      key: const Key('qiblaMode-waiting'),
+            Card(
+              margin: EdgeInsets.zero,
+              child: Padding(
+                padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
-                        const CircularProgressIndicator(),
-                        const SizedBox(height: DesignTokens.spaceSm),
-                        Text(l.qiblaWaiting),
-                      ],
-                    )
-                  : Column(
-                      key: const Key('qiblaMode-static'),
-                      children: [
-                        QiblaCompass(bearing: qibla, size: 220),
-                        const SizedBox(height: DesignTokens.spaceMd),
-                        Text(l.qiblaStatic, textAlign: TextAlign.center),
+                        Icon(Icons.tips_and_updates_outlined, size: 20, color: theme.colorScheme.secondary),
+                        const SizedBox(width: DesignTokens.spaceSm),
+                        Text(l.qiblaTipsTitle, style: theme.textTheme.titleSmall),
                       ],
                     ),
+                    const SizedBox(height: DesignTokens.spaceSm),
+                    Text(l.qiblaLiveNote, style: theme.textTheme.bodySmall),
+                  ],
+                ),
+              ),
             ),
           ],
         ],
@@ -188,31 +303,82 @@ class QiblaScreenState extends State<QiblaScreen> {
   }
 }
 
-/// Compass card rotated so that north follows the earth; the gold needle
-/// points to the qibla relative to where the phone's top is pointing.
-class _LiveDial extends StatelessWidget {
-  const _LiveDial({super.key, required this.qibla, required this.heading});
-  final double qibla;
-  final double heading;
+/// The Kaaba, Makkah (for the distance shown under the dial).
+const kaabaLat = 21.4225;
+const kaabaLng = 39.8262;
+
+/// Rattil brand colours for the qibla card (same in light and dark mode).
+abstract final class QiblaColors {
+  static const emerald = Color(0xFF0F5C4A);
+  static const emeraldDeep = Color(0xFF073027);
+  static const gold = Color(0xFFD4AF5A);
+  static const goldSoft = Color(0xFFF1DFAE);
+}
+
+class _InfoTile extends StatelessWidget {
+  const _InfoTile({required this.icon, required this.label, required this.value, required this.valueKey});
+  final IconData icon;
+  final String label;
+  final String value;
+  final Key valueKey;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final facing = facesQibla(qibla, heading);
+    final theme = Theme.of(context);
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(DesignTokens.spaceMd),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, size: 22, color: theme.colorScheme.secondary),
+            const SizedBox(height: DesignTokens.spaceSm),
+            Text(label, style: theme.textTheme.bodySmall),
+            const SizedBox(height: 2),
+            Text(
+              value,
+              key: valueKey,
+              style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Emerald-and-gold compass. The card turns with the earth (north follows
+/// [heading]); the gold line and the Kaaba mark show the qibla; the gold
+/// triangle at the top is where the phone points. With [live] false the card
+/// is drawn north-up (no compass reading).
+class QiblaDial extends StatelessWidget {
+  const QiblaDial({super.key, required this.qibla, required this.heading, required this.live, this.size = 280});
+  final double qibla;
+  final double heading;
+  final bool live;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final facing = live && facesQibla(qibla, heading);
     return Semantics(
-      label: context.l10n.prayerCompassLabel(context.num(qibla.toStringAsFixed(1))),
+      label: l.prayerCompassLabel(context.num(qibla.toStringAsFixed(1))),
       image: true,
-      child: SizedBox.square(
-        dimension: 260,
-        child: CustomPaint(
-          painter: _DialPainter(
-            heading: heading,
-            qibla: qibla,
-            ring: scheme.outline,
-            text: scheme.onSurface,
-            needle: facing ? scheme.primary : scheme.secondary,
-            north: context.l10n.prayerNorth,
-            textDirection: Directionality.of(context),
+      container: true,
+      child: ExcludeSemantics(
+        child: SizedBox.square(
+          dimension: size,
+          child: CustomPaint(
+            painter: QiblaDialPainter(
+              heading: heading,
+              qibla: qibla,
+              facing: facing,
+              showPointer: live,
+              labels: [l.prayerNorth, l.qiblaEast, l.qiblaSouth, l.qiblaWest],
+              textDirection: Directionality.of(context),
+            ),
           ),
         ),
       ),
@@ -220,80 +386,173 @@ class _LiveDial extends StatelessWidget {
   }
 }
 
-class _DialPainter extends CustomPainter {
-  _DialPainter({
+class QiblaDialPainter extends CustomPainter {
+  QiblaDialPainter({
     required this.heading,
     required this.qibla,
-    required this.ring,
-    required this.text,
-    required this.needle,
-    required this.north,
+    required this.facing,
+    required this.showPointer,
+    required this.labels,
     required this.textDirection,
   });
 
   final double heading;
   final double qibla;
-  final Color ring;
-  final Color text;
-  final Color needle;
-  final String north;
+  final bool facing;
+  final bool showPointer;
+
+  /// N, E, S, W in the app language.
+  final List<String> labels;
   final TextDirection textDirection;
+
+  static Offset _at(Offset c, double deg, double radius) {
+    final a = deg * math.pi / 180;
+    return c + Offset(math.sin(a), -math.cos(a)) * radius;
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
+    const gold = QiblaColors.gold;
     final c = size.center(Offset.zero);
-    final r = size.shortestSide / 2 - 6;
-    final rot = -heading * math.pi / 180;
+    final r = size.shortestSide / 2 - 16;
+
+    // Glow when the phone faces the qibla.
+    if (facing) {
+      canvas.drawCircle(
+        c,
+        r + 4,
+        Paint()
+          ..color = gold.withValues(alpha: 0.55)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 14),
+      );
+    }
+    // Face.
+    canvas.drawCircle(
+      c,
+      r,
+      Paint()
+        ..shader = const RadialGradient(
+          colors: [Color(0xFF17735E), Color(0xFF0B4538), Color(0xFF062A22)],
+          stops: [0, 0.7, 1],
+        ).createShader(Rect.fromCircle(center: c, radius: r)),
+    );
     canvas.drawCircle(
       c,
       r,
       Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 3
-        ..color = ring,
+        ..strokeWidth = 2.5
+        ..color = gold,
     );
-    for (var i = 0; i < 360; i += 15) {
-      final a = rot + i * math.pi / 180;
-      final len = i % 90 == 0 ? 16.0 : (i % 45 == 0 ? 11.0 : 6.0);
+    canvas.drawCircle(
+      c,
+      r - 30,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1
+        ..color = gold.withValues(alpha: 0.35),
+    );
+
+    // Ticks every 5°, turning with the earth.
+    for (var i = 0; i < 360; i += 5) {
+      final deg = i - heading;
+      final major = i % 30 == 0;
+      final len = i % 90 == 0 ? 14.0 : (major ? 10.0 : 5.0);
       canvas.drawLine(
-        c + Offset(math.sin(a), -math.cos(a)) * (r - len),
-        c + Offset(math.sin(a), -math.cos(a)) * r,
+        _at(c, deg, r - 4 - len),
+        _at(c, deg, r - 4),
         Paint()
-          ..strokeWidth = i % 90 == 0 ? 3 : 1.5
-          ..color = ring,
+          ..strokeWidth = major ? 2 : 1
+          ..strokeCap = StrokeCap.round
+          ..color = (major ? gold : Colors.white).withValues(alpha: major ? 0.95 : 0.4),
       );
     }
-    final tp = TextPainter(
-      text: TextSpan(
-        text: north,
-        style: TextStyle(color: text, fontSize: 16, fontWeight: FontWeight.w700),
-      ),
-      textDirection: textDirection,
-    )..layout();
-    final np = c + Offset(math.sin(rot), -math.cos(rot)) * (r - 30);
-    tp.paint(canvas, np - Offset(tp.width / 2, tp.height / 2));
-    // Fixed marker for the top of the phone.
+
+    // N E S W.
+    for (var k = 0; k < 4; k++) {
+      final tp = TextPainter(
+        text: TextSpan(
+          text: labels[k],
+          style: TextStyle(
+            fontFamily: DesignTokens.fontUi,
+            color: k == 0 ? gold : Colors.white.withValues(alpha: 0.85),
+            fontSize: k == 0 ? 18 : 15,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        textDirection: textDirection,
+      )..layout();
+      tp.paint(canvas, _at(c, k * 90 - heading, r - 44) - Offset(tp.width / 2, tp.height / 2));
+    }
+
+    // Eight-pointed star in the middle (two squares), turning with the card.
+    final star = r * 0.3;
+    for (final base in [0.0, 45.0]) {
+      final path = Path();
+      for (var k = 0; k < 4; k++) {
+        final p = _at(c, base + k * 90 - heading, star);
+        k == 0 ? path.moveTo(p.dx, p.dy) : path.lineTo(p.dx, p.dy);
+      }
+      path.close();
+      canvas.drawPath(
+        path,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1.2
+          ..color = gold.withValues(alpha: 0.4),
+      );
+    }
+
+    // Qibla line and the Kaaba mark on the ring.
+    final qa = qibla - heading;
+    final tip = _at(c, qa, r - 30);
     canvas.drawLine(
-      c + Offset(0, -r - 4),
-      c + Offset(0, -r + 10),
+      c,
+      tip,
       Paint()
-        ..color = text
-        ..strokeWidth = 3,
+        ..shader = LinearGradient(colors: [gold.withValues(alpha: 0.15), gold]).createShader(Rect.fromPoints(c, tip))
+        ..strokeWidth = 4
+        ..strokeCap = StrokeCap.round,
     );
-    // Qibla needle.
-    final qa = (qibla - heading) * math.pi / 180;
-    final dir = Offset(math.sin(qa), -math.cos(qa));
-    final tip = c + dir * (r - 22);
-    final p = Paint()
-      ..color = needle
-      ..strokeWidth = 6
-      ..strokeCap = StrokeCap.round;
-    canvas.drawLine(c, tip, p);
-    canvas.drawCircle(tip, 11, Paint()..color = needle);
-    canvas.drawRect(Rect.fromCenter(center: tip, width: 9, height: 9), Paint()..color = const Color(0xFF111111));
-    canvas.drawCircle(c, 7, Paint()..color = needle);
+    final kaaba = _at(c, qa, r - 14);
+    canvas.save();
+    canvas.translate(kaaba.dx, kaaba.dy);
+    canvas.rotate(qa * math.pi / 180);
+    final body = RRect.fromRectAndRadius(
+      Rect.fromCenter(center: Offset.zero, width: 22, height: 22),
+      const Radius.circular(3),
+    );
+    canvas.drawRRect(body.shift(const Offset(0, 1.5)), Paint()..color = Colors.black.withValues(alpha: 0.35));
+    canvas.drawRRect(body, Paint()..color = const Color(0xFF151515));
+    canvas.drawRect(const Rect.fromLTWH(-11, -5, 22, 4), Paint()..color = gold);
+    canvas.drawRRect(
+      body,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.5
+        ..color = gold,
+    );
+    canvas.restore();
+
+    // Hub.
+    canvas.drawCircle(c, 8, Paint()..color = gold);
+    canvas.drawCircle(c, 3.5, Paint()..color = QiblaColors.emeraldDeep);
+
+    // Where the top of the phone points.
+    if (showPointer) {
+      final top = c.dy - r - 14;
+      canvas.drawPath(
+        Path()
+          ..moveTo(c.dx, top + 14)
+          ..lineTo(c.dx - 9, top)
+          ..lineTo(c.dx + 9, top)
+          ..close(),
+        Paint()..color = facing ? gold : Colors.white,
+      );
+    }
   }
 
   @override
-  bool shouldRepaint(_DialPainter old) => old.heading != heading || old.qibla != qibla || old.needle != needle;
+  bool shouldRepaint(QiblaDialPainter old) =>
+      old.heading != heading || old.qibla != qibla || old.facing != facing || old.showPointer != showPointer;
 }

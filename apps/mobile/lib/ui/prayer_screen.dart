@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
@@ -579,107 +578,17 @@ class _AdjustRow extends StatelessWidget {
 
 /// Static compass diagram: north at the top, a needle at [bearing] degrees.
 class QiblaCompass extends StatelessWidget {
-  const QiblaCompass({super.key, required this.bearing, this.size = 160});
+  const QiblaCompass({super.key, required this.bearing, this.size = 180});
   final double bearing;
   final double size;
 
+  /// The same emerald-and-gold dial as the live qibla screen, north-up.
   @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Semantics(
-      key: const Key('qiblaCompass'),
-      label: context.l10n.prayerCompassLabel(context.num(bearing.toStringAsFixed(1))),
-      image: true,
-      container: true,
-      child: ExcludeSemantics(
-        child: SizedBox.square(
-          dimension: size,
-          child: CustomPaint(
-            painter: CompassPainter(
-              bearing: bearing,
-              ring: scheme.outline,
-              needle: scheme.primary,
-              text: scheme.onSurface,
-              north: context.l10n.prayerNorth,
-              textDirection: Directionality.of(context),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CompassPainter extends CustomPainter {
-  CompassPainter({
-    required this.bearing,
-    required this.ring,
-    required this.needle,
-    required this.text,
-    required this.north,
-    required this.textDirection,
-  });
-
-  final double bearing;
-  final Color ring;
-  final Color needle;
-  final Color text;
-  final String north;
-  final TextDirection textDirection;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final c = size.center(Offset.zero);
-    final r = size.shortestSide / 2 - 4;
-    canvas.drawCircle(
-      c,
-      r,
-      Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2
-        ..color = ring,
-    );
-    for (var i = 0; i < 360; i += 30) {
-      final a = i * math.pi / 180;
-      final p1 = c + Offset(math.sin(a), -math.cos(a)) * (r - 8);
-      final p2 = c + Offset(math.sin(a), -math.cos(a)) * r;
-      canvas.drawLine(
-        p1,
-        p2,
-        Paint()
-          ..strokeWidth = 2
-          ..color = ring,
-      );
-    }
-    final tp = TextPainter(
-      text: TextSpan(
-        text: north,
-        style: TextStyle(color: text, fontSize: 14, fontWeight: FontWeight.w600),
-      ),
-      textDirection: textDirection,
-    )..layout();
-    tp.paint(canvas, c + Offset(-tp.width / 2, -r + 10));
-    final a = bearing * math.pi / 180;
-    final dir = Offset(math.sin(a), -math.cos(a));
-    final tip = c + dir * (r - 14);
-    final paint = Paint()
-      ..color = needle
-      ..strokeWidth = 4
-      ..strokeCap = StrokeCap.round;
-    canvas.drawLine(c, tip, paint);
-    final perp = Offset(-dir.dy, dir.dx);
-    final head = Path()
-      ..moveTo(tip.dx, tip.dy)
-      ..lineTo((tip - dir * 14 + perp * 7).dx, (tip - dir * 14 + perp * 7).dy)
-      ..lineTo((tip - dir * 14 - perp * 7).dx, (tip - dir * 14 - perp * 7).dy)
-      ..close();
-    canvas.drawPath(head, Paint()..color = needle);
-    canvas.drawCircle(c, 5, Paint()..color = needle);
-  }
-
-  @override
-  bool shouldRepaint(CompassPainter old) =>
-      old.bearing != bearing || old.needle != needle || old.ring != ring || old.north != north;
+  Widget build(BuildContext context) => SizedBox.square(
+    key: const Key('qiblaCompass'),
+    dimension: size,
+    child: FittedBox(child: QiblaDial(qibla: bearing, heading: 0, live: false)),
+  );
 }
 
 /// A labelled dropdown whose selection always reflects [value].
