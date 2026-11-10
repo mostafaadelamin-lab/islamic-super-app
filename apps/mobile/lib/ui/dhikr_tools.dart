@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app_services.dart';
 import 'l10n_ext.dart';
+import 'r_icon.dart';
 
 /// Text shared for a dhikr: the text unchanged, then where it comes from.
 String dhikrShareBody(String text, String source) => '$text\n\n— $source';
@@ -38,13 +39,13 @@ class DhikrActions extends StatelessWidget {
         TextButton.icon(
           key: Key('${keyPrefix}Share'),
           onPressed: () => sharer.shareText(dhikrShareBody(text, source)),
-          icon: const Icon(Icons.share, size: 18),
+          icon: const RIcon(RIcons.share, size: 18),
           label: Text(l.adhkarShare),
         ),
         TextButton.icon(
           key: Key('${keyPrefix}Report'),
           onPressed: () => sharer.shareText(dhikrReportBody(l.adhkarReportIntro, where, text)),
-          icon: const Icon(Icons.flag_outlined, size: 18),
+          icon: const RIcon(RIcons.flag, size: 18),
           label: Text(l.adhkarReport),
         ),
       ],
@@ -67,7 +68,7 @@ class AdhkarViewToggle extends StatelessWidget {
         return IconButton(
           key: const Key('adhkarViewMode'),
           tooltip: cards ? l.adhkarList : l.adhkarCards,
-          icon: Icon(cards ? Icons.view_agenda_outlined : Icons.style_outlined),
+          icon: RIcon(cards ? RIcons.pages : RIcons.palette),
           onPressed: () => settings.setAdhkarCards(!cards),
         );
       },

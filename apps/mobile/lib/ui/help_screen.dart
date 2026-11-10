@@ -8,6 +8,7 @@ import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 /// The text shared by "Share Rattil": a short line and the website or store link when set.
 String shareAppText(AppLocalizations l, AppLinks links) =>
@@ -64,7 +65,7 @@ class HelpScreen extends StatelessWidget {
                 if (email != null)
                   ListTile(
                     key: const Key('helpEmail'),
-                    leading: const Icon(Icons.email_outlined),
+                    leading: const RIcon(RIcons.mail),
                     title: Text(l.helpEmail),
                     subtitle: Text(email),
                     onTap: () => launchUrl(Uri(scheme: 'mailto', path: email)),
@@ -81,14 +82,14 @@ class HelpScreen extends StatelessWidget {
                 ),
                 ListTile(
                   key: const Key('helpShareApp'),
-                  leading: const Icon(Icons.share),
+                  leading: const RIcon(RIcons.share),
                   title: Text(l.helpShareApp),
                   onTap: () => s.sharer.shareText(shareAppText(l, links)),
                 ),
                 if (store != null)
                   ListTile(
                     key: const Key('helpRate'),
-                    leading: const Icon(Icons.star_outline),
+                    leading: const RIcon(RIcons.star),
                     title: Text(l.helpRate),
                     onTap: () => launchUrl(Uri.parse(store), mode: LaunchMode.externalApplication),
                   )

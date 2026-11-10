@@ -16,6 +16,23 @@
 ### Not yet
 - Chapters (the source has none), the commentary column, and the other books (Riyad as-Salihin, Nawawi's 40, etc.) until an open source is found.
 
+## [Unreleased] — Muezzin collection and a separate Fajr adhan — 2026-11-10
+### Added
+- Default adhan is now the Makkah Haram adhan (Mohamed Ramadan Saad); Fajr has its own adhan with "as-salatu khayrun min an-nawm" (Makkah Haram Fajr, Hamad Al-Daghriri). Both bundled, work offline. iPhone notification sound = first 28 s of the Haram adhan.
+- Muezzin list (~290 recordings, 38 Fajr) with search, on mobile (Settings → Muezzin / Fajr muezzin) and the website (prayer page). On the phone a muezzin is downloaded when tapped and kept offline; the Android alarm plays the downloaded file. The website streams it.
+- The Fajr alarm/alert uses the Fajr muezzin; the other prayers use the regular one.
+### Note
+- Recordings taken from a site whose terms forbid republishing without written permission; used by the owner's decision (see apps/mobile/assets/audio/ADHAN_AUDIO.md). The site's name is not shown in the app.
+
+## [Unreleased] — App icon and one icon set in the app's design — 2026-11-10
+### Changed
+- New Rattil app icon (our own design): a gold mihrab arch with an eight-pointed star over an open Mushaf on a rehal, on the emerald background. Android (adaptive icon, round icon, Android 13 themed/monochrome icon), iPhone/iPad (all sizes, opaque as the App Store requires) and the website (favicon, PWA icons incl. maskable, Apple touch icon). Replaces the default Flutter logo in the app and the old blue moon icon of the website.
+- One shared icon set for the app and the website (packages/design-tokens/icons.json, 80 line icons, 24×24, stroke 1.8, round ends): the mobile app now draws the same icons as the website (new RIcon widget) instead of mixed filled/outlined Material icons. Bottom bar, home tiles, More list (icons on a soft emerald square like the website's tiles), prayer times, reader, players, settings, khatma, adhkar, qibla, mosques, reels and stories.
+- Same icon per section on both: Adhkar = raised hands, Prayer = mosque, Hisn al-Muslim = shield with a book (was the Quran book), Qibla = compass, Hajj = Kaaba, Zakat = coins, Tasbih = prayer beads.
+- Android notifications (adhan, reminders) use a white Rattil mark in the status bar instead of the app icon square; launch screen on emerald with the gold mark (Android, Android 12+ splash, iPhone).
+### How to change icons
+- Edit packages/design-tokens/icons.json, run `python3 packages/design-tokens/scripts/build.py` and `apps/mobile/tool/sync_assets.sh`; app icon: edit packages/design-tokens/app-icon/*.svg, then `cd apps/web && node scripts/make-icons.mjs && python3 ../../tools/flatten_ios_icons.py`.
+
 ## [Unreleased] — Zakat calculator after Egypt's Dar al-Ifta (owner's feature list, phase 6) — 2026-11-10
 ### Added
 - Zakat calculator (mobile: More → Zakat calculator; web: /zakat/): cash and bank balances, bank certificates and their returns, saved shares, trade goods, gold kept for saving (24, 21 or 18 karat) and debts due. Nisab = the value of 85 g of 21-karat gold at the price the user enters; 2.5% once a full Hijri year has passed.

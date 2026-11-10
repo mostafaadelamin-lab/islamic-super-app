@@ -9,6 +9,7 @@ import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
 import 'widgets.dart';
+import 'r_icon.dart';
 
 /// "1", "1.25", "0.75" for a speed.
 String _speedLabel(double s) => s == s.roundToDouble() ? s.toStringAsFixed(0) : s.toString();
@@ -51,8 +52,8 @@ class MiniPlayer extends StatelessWidget {
                     key: const Key('audioTafsirToggle'),
                     tooltip: l.audioTafsirToggle,
                     isSelected: withTafsir,
-                    icon: Icon(Icons.menu_book_outlined, color: scheme.primary),
-                    selectedIcon: Icon(Icons.menu_book, color: scheme.onPrimary),
+                    icon: RIcon(RIcons.quran, color: scheme.primary),
+                    selectedIcon: RIcon(RIcons.quran, color: scheme.onPrimary),
                     style: IconButton.styleFrom(backgroundColor: withTafsir ? scheme.primary : null),
                     onPressed: () => settings.setTafsirWithRecitation(!withTafsir),
                   ),
@@ -85,14 +86,14 @@ class MiniPlayer extends StatelessWidget {
                     IconButton(
                       key: const Key('audioPrev'),
                       tooltip: l.audioPrevious,
-                      icon: const Icon(Icons.skip_previous),
+                      icon: const RIcon(RIcons.prev),
                       onPressed: rec.previous,
                     ),
                   IconButton.filledTonal(
                     key: const Key('audioPlayPause'),
                     tooltip: error ? l.commonRetry : (rec.state == RecitationState.paused ? l.audioPlay : l.audioPause),
-                    icon: Icon(
-                      error ? Icons.refresh : (rec.state == RecitationState.paused ? Icons.play_arrow : Icons.pause),
+                    icon: RIcon(
+                      error ? RIcons.refresh : (rec.state == RecitationState.paused ? RIcons.play : RIcons.pause),
                     ),
                     onPressed: rec.state == RecitationState.playing ? rec.pause : rec.resume,
                   ),
@@ -100,7 +101,7 @@ class MiniPlayer extends StatelessWidget {
                     IconButton(
                       key: const Key('audioNext'),
                       tooltip: l.audioNext,
-                      icon: const Icon(Icons.skip_next),
+                      icon: const RIcon(RIcons.next),
                       onPressed: rec.next,
                     ),
                   if (!error)
@@ -120,7 +121,7 @@ class MiniPlayer extends StatelessWidget {
                   IconButton(
                     key: const Key('audioStop'),
                     tooltip: l.audioStop,
-                    icon: const Icon(Icons.close),
+                    icon: const RIcon(RIcons.close),
                     onPressed: rec.stop,
                   ),
                 ],

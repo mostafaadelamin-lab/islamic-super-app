@@ -12,6 +12,7 @@ import 'ayah_image_screen.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
 import 'widgets.dart';
+import 'r_icon.dart';
 
 /// Opens the sheet for a tapped ayah: its Tafsir al-Muyassar (with previous /
 /// next ayah) and the actions listen, listen to the surah, bookmark, copy and,
@@ -90,7 +91,7 @@ class AyahSheetState extends State<AyahSheet> {
                   IconButton(
                     key: const Key('tafsirPrev'),
                     tooltip: l.tafsirPrev,
-                    icon: const Icon(Icons.navigate_before),
+                    icon: const RIcon(RIcons.chevron),
                     onPressed: canPrev ? () => _step(-1) : null,
                   ),
                   Expanded(
@@ -104,7 +105,7 @@ class AyahSheetState extends State<AyahSheet> {
                   IconButton(
                     key: const Key('tafsirNext'),
                     tooltip: l.tafsirNext,
-                    icon: const Icon(Icons.navigate_next),
+                    icon: const RIcon(RIcons.chevronForward),
                     onPressed: canNext ? () => _step(1) : null,
                   ),
                 ],
@@ -181,7 +182,7 @@ class _TafsirCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.menu_book_outlined, size: 20, color: scheme.primary),
+              RIcon(RIcons.quran, size: 20, color: scheme.primary),
               const SizedBox(width: DesignTokens.spaceSm),
               Expanded(
                 child: Text(
@@ -224,8 +225,8 @@ class _Actions extends StatelessWidget {
       listenable: s.bookmarks,
       builder: (context, _) {
         final marked = s.bookmarks.isBookmarked(ref);
-        Widget action(String key, IconData icon, String label, VoidCallback onPressed) =>
-            ActionChip(key: Key(key), avatar: Icon(icon, size: 18), label: Text(label), onPressed: onPressed);
+        Widget action(String key, RIconData icon, String label, VoidCallback onPressed) =>
+            ActionChip(key: Key(key), avatar: RIcon(icon, size: 18), label: Text(label), onPressed: onPressed);
         return Padding(
           padding: const EdgeInsets.fromLTRB(
             DesignTokens.spaceLg,
@@ -236,26 +237,26 @@ class _Actions extends StatelessWidget {
           child: Wrap(
             spacing: DesignTokens.spaceSm,
             children: [
-              action('ayahPlayOne', Icons.play_circle_outline, l.readerPlayAyah, () {
+              action('ayahPlayOne', RIcons.playCircle, l.readerPlayAyah, () {
                 Navigator.of(context).pop();
                 s.recitation.playFrom(ref, scope: PlayScope.ayah);
               }),
-              action('ayahPlayTafsir', Icons.vertical_split_outlined, l.readerPlayWithTafsir, () {
+              action('ayahPlayTafsir', RIcons.split, l.readerPlayWithTafsir, () {
                 Navigator.of(context).pop();
                 s.settings.setTafsirWithRecitation(true);
                 s.recitation.playFrom(ref);
               }),
-              action('ayahPlay', Icons.play_arrow, l.mushafPlayFromHere, () {
+              action('ayahPlay', RIcons.play, l.mushafPlayFromHere, () {
                 Navigator.of(context).pop();
                 s.recitation.playFrom(ref);
               }),
-              action('ayahPlaySurah', Icons.queue_music, l.mushafPlaySurah, () {
+              action('ayahPlaySurah', RIcons.playlist, l.mushafPlaySurah, () {
                 Navigator.of(context).pop();
                 s.recitation.playFrom(AyahRef(ref.surah, 1), scope: PlayScope.surah);
               }),
               action(
                 'ayahBookmark',
-                marked ? Icons.bookmark : Icons.bookmark_border,
+                marked ? RIcons.bookmark : RIcons.bookmark,
                 marked ? l.quranRemoveBookmark : l.quranBookmark,
                 () async {
                   final messenger = ScaffoldMessenger.of(context);
@@ -269,7 +270,7 @@ class _Actions extends StatelessWidget {
                   messenger.showSnackBar(SnackBar(content: Text(marked ? l.quranBookmarkRemoved : l.quranBookmarked)));
                 },
               ),
-              action('ayahCopy', Icons.copy, l.mushafCopy, () async {
+              action('ayahCopy', RIcons.copy, l.mushafCopy, () async {
                 final messenger = ScaffoldMessenger.of(context);
                 final nav = Navigator.of(context);
                 final q = s.content.quran;
@@ -280,13 +281,13 @@ class _Actions extends StatelessWidget {
                 nav.pop();
                 messenger.showSnackBar(SnackBar(content: Text(l.mushafCopied)));
               }),
-              action('ayahShareImage', Icons.image_outlined, l.mushafShareImage, () {
+              action('ayahShareImage', RIcons.image, l.mushafShareImage, () {
                 final nav = Navigator.of(context);
                 nav.pop();
                 nav.push(MaterialPageRoute<void>(builder: (_) => AyahImageScreen(ayah: ref)));
               }),
               if (readAsList)
-                action('ayahReadList', Icons.view_agenda_outlined, l.mushafReadAsList, () {
+                action('ayahReadList', RIcons.pages, l.mushafReadAsList, () {
                   Navigator.of(context).pop();
                   openSurah(context, ref.surah, ayah: ref.ayah);
                 }),

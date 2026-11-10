@@ -21,7 +21,7 @@ const BIG: readonly HomeTile[] = [
 ];
 const WIDE: readonly HomeTile[] = [
   { path: "tasbih", title: "home.big.tasbih", icon: "beads" },
-  { path: "qibla", title: "home.big.qibla", icon: "kaaba" },
+  { path: "qibla", title: "home.big.qibla", icon: "compass" },
   { path: "reels", title: "home.big.reels", icon: "reels" },
   { path: "stories", title: "home.big.stories", icon: "headphones" },
 ];

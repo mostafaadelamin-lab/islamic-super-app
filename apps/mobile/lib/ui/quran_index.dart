@@ -9,6 +9,7 @@ import '../theme/app_theme.dart';
 import 'l10n_ext.dart';
 import 'page_reader_screen.dart';
 import 'widgets.dart';
+import 'r_icon.dart';
 
 enum QuranIndexTab { surahs, quarters }
 
@@ -240,7 +241,7 @@ class _QuranIndexViewState extends State<QuranIndexView> {
                         controller: _search,
                         decoration: InputDecoration(
                           hintText: l.quranIndexSearch,
-                          prefixIcon: const Icon(Icons.search_rounded),
+                          prefixIcon: const RIcon(RIcons.search),
                           filled: true,
                           fillColor: scheme.surface,
                           isDense: true,
@@ -262,7 +263,7 @@ class _QuranIndexViewState extends State<QuranIndexView> {
                               _search.clear();
                               _q = '';
                             }),
-                      icon: const Icon(Icons.close),
+                      icon: const RIcon(RIcons.close),
                     ),
                   ],
                 ),
@@ -425,7 +426,7 @@ class _SurahTile extends StatelessWidget {
       trailing: IconButton(
         key: Key('surahText-${s.n}'),
         tooltip: '${l.quranListView}: $name',
-        icon: const Icon(Icons.format_list_bulleted),
+        icon: const RIcon(RIcons.list),
         color: Theme.of(context).hintColor,
         onPressed: () => openSurah(context, s.n),
       ),

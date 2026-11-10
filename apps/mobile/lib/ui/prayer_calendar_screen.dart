@@ -10,6 +10,7 @@ import 'l10n_ext.dart';
 import 'prayer_model.dart';
 import 'share_capture.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 /// Days in Gregorian [month] (1-12) of [year].
 int daysInMonth(int year, int month) => DateTime.utc(year, month + 1, 0).day;
@@ -60,7 +61,7 @@ class _PrayerCalendarScreenState extends State<PrayerCalendarScreen> {
           IconButton(
             key: const Key('calendar.share'),
             tooltip: l.prayerShareCalendar,
-            icon: const Icon(Icons.share_outlined),
+            icon: const RIcon(RIcons.share),
             onPressed: () => _share('${l.prayerCalendarTitle} · $monthTitle · ${inputs.city.name(ar)}'),
           ),
         ],
@@ -90,7 +91,7 @@ class _PrayerCalendarScreenState extends State<PrayerCalendarScreen> {
                   IconButton(
                     key: const Key('calendar.prev'),
                     tooltip: l.prayerPrevMonth,
-                    icon: const Icon(Icons.chevron_left),
+                    icon: const RIcon(RIcons.chevron),
                     onPressed: () => setState(() => _monthDelta--),
                   ),
                   Expanded(
@@ -104,7 +105,7 @@ class _PrayerCalendarScreenState extends State<PrayerCalendarScreen> {
                   IconButton(
                     key: const Key('calendar.next'),
                     tooltip: l.prayerNextMonth,
-                    icon: const Icon(Icons.chevron_right),
+                    icon: const RIcon(RIcons.chevronForward),
                     onPressed: () => setState(() => _monthDelta++),
                   ),
                 ],

@@ -8,6 +8,7 @@ import '../domain/tasbih.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 /// Tasbih: a counter per dhikr (built-in or the user's own), big-button or
 /// beads mode, nine colours, sound/vibration and a per-day history.
@@ -203,13 +204,13 @@ class _TasbihScreenState extends State<TasbihScreen> {
                           OutlinedButton.icon(
                             key: const Key('tasbihUndo'),
                             onPressed: st.count == 0 ? null : t.undo,
-                            icon: const Icon(Icons.undo),
+                            icon: const RIcon(RIcons.undo),
                             label: Text(l.tasbihUndo),
                           ),
                           OutlinedButton.icon(
                             key: const Key('tasbihReset'),
                             onPressed: t.reset,
-                            icon: const Icon(Icons.restart_alt),
+                            icon: const RIcon(RIcons.reset),
                             label: Text(l.tasbihReset),
                           ),
                         ],
@@ -294,7 +295,7 @@ class _TasbihScreenState extends State<TasbihScreen> {
                           trailing: IconButton(
                             key: Key('tasbihRemove-${cd.id}'),
                             tooltip: l.tasbihRemove(cd.text),
-                            icon: const Icon(Icons.delete_outline),
+                            icon: const RIcon(RIcons.trash),
                             onPressed: () => t.removeCustom(cd.id),
                           ),
                         ),
@@ -319,7 +320,7 @@ class _TasbihScreenState extends State<TasbihScreen> {
                           child: TextButton.icon(
                             key: const Key('tasbihClearHistory'),
                             onPressed: _confirmClear,
-                            icon: const Icon(Icons.delete_sweep_outlined),
+                            icon: const RIcon(RIcons.trash),
                             label: Text(l.tasbihClearHistory),
                           ),
                         ),

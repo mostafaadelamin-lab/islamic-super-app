@@ -5,6 +5,7 @@ import '../domain/quran.dart';
 import 'l10n_ext.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 class BookmarksScreen extends StatelessWidget {
   const BookmarksScreen({super.key});
@@ -38,14 +39,14 @@ class BookmarksScreen extends StatelessWidget {
                       final label = ayahLabel(context, ref);
                       return ListTile(
                         key: Key('bm-${b.id}'),
-                        leading: const Icon(Icons.bookmark),
+                        leading: const RIcon(RIcons.bookmark),
                         title: Text(label),
                         subtitle: valid ? QuranText(s.content.quran.text(ref), size: 20, maxLines: 2) : null,
                         onTap: valid ? () => openSurah(context, b.surah, ayah: b.ayah) : null,
                         trailing: IconButton(
                           key: Key('bmDelete-${b.id}'),
                           tooltip: l.bookmarksDelete(label),
-                          icon: const Icon(Icons.delete_outline),
+                          icon: const RIcon(RIcons.trash),
                           onPressed: () => s.bookmarks.remove(b.id),
                         ),
                       );

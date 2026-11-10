@@ -19,6 +19,7 @@ import 'settings_screen.dart';
 import 'stories_screen.dart';
 import 'tasbih_screen.dart';
 import 'widgets.dart';
+import 'r_icon.dart';
 
 /// Hero colours (deep emerald with white text and gold accents), kept for the
 /// banners that still use them; contrast checked in theme_contrast_test.dart.
@@ -95,44 +96,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Expanded(
-                        child: _BigTile('quran', Icons.menu_book_outlined, l.homeBigQuran, () => widget.onSelectTab(1)),
-                      ),
+                      Expanded(child: _BigTile('quran', RIcons.quran, l.homeBigQuran, () => widget.onSelectTab(1))),
                       const SizedBox(width: DesignTokens.spaceSm),
-                      Expanded(
-                        child: _BigTile(
-                          'adhkar',
-                          Icons.volunteer_activism_outlined,
-                          l.homeBigAdhkar,
-                          () => widget.onSelectTab(3),
-                        ),
-                      ),
+                      Expanded(child: _BigTile('adhkar', RIcons.dua, l.homeBigAdhkar, () => widget.onSelectTab(3))),
                       const SizedBox(width: DesignTokens.spaceSm),
-                      Expanded(
-                        child: _BigTile(
-                          'prayer',
-                          Icons.schedule_outlined,
-                          l.homeBigPrayer,
-                          () => widget.onSelectTab(2),
-                        ),
-                      ),
+                      Expanded(child: _BigTile('prayer', RIcons.clock, l.homeBigPrayer, () => widget.onSelectTab(2))),
                     ],
                   ),
                 ),
                 const SizedBox(height: DesignTokens.spaceSm),
                 _WideRow(
-                  a: _WideTile('tasbih', Icons.touch_app_outlined, l.homeBigTasbih, () => _push(const TasbihScreen())),
-                  b: _WideTile('qibla', Icons.explore_outlined, l.homeBigQibla, () => _push(const QiblaScreen())),
+                  a: _WideTile('tasbih', RIcons.beads, l.homeBigTasbih, () => _push(const TasbihScreen())),
+                  b: _WideTile('qibla', RIcons.compass, l.homeBigQibla, () => _push(const QiblaScreen())),
                 ),
                 const SizedBox(height: DesignTokens.spaceSm),
                 _WideRow(
-                  a: _WideTile('reels', Icons.smart_display_outlined, l.homeBigReels, () => _push(const ReelsScreen())),
-                  b: _WideTile(
-                    'stories',
-                    Icons.headphones_outlined,
-                    l.homeBigStories,
-                    () => _push(const StoriesScreen()),
-                  ),
+                  a: _WideTile('reels', RIcons.reels, l.homeBigReels, () => _push(const ReelsScreen())),
+                  b: _WideTile('stories', RIcons.headphones, l.homeBigStories, () => _push(const StoriesScreen())),
                 ),
                 const SizedBox(height: DesignTokens.spaceMd),
                 const QuranRadioCard(),
@@ -146,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(DesignTokens.spaceLg),
                       child: Row(
                         children: [
-                          Icon(Icons.apps, color: Theme.of(context).colorScheme.primary),
+                          RIcon(RIcons.more, color: Theme.of(context).colorScheme.primary),
                           Expanded(
                             child: Text(
                               l.homeMainSections,
@@ -154,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
                             ),
                           ),
-                          Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
+                          RIcon(RIcons.chevronForward, color: Theme.of(context).colorScheme.primary),
                         ],
                       ),
                     ),
@@ -218,7 +198,7 @@ class _Hero extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(Icons.location_on_outlined, color: primary),
+            RIcon(RIcons.location, color: primary),
             const SizedBox(width: DesignTokens.spaceXs),
             Expanded(
               child: Column(
@@ -238,7 +218,7 @@ class _Hero extends StatelessWidget {
               key: const Key('home.settings'),
               tooltip: l.navSettings,
               onPressed: onSettings,
-              icon: Icon(Icons.settings_outlined, color: primary, size: 28),
+              icon: RIcon(RIcons.settings, color: primary, size: 28),
             ),
           ],
         ),
@@ -366,7 +346,7 @@ class _DayCard extends StatelessWidget {
               OutlinedButton.icon(
                 key: const Key('home.calendar'),
                 onPressed: onCalendar,
-                icon: const Icon(Icons.calendar_month_outlined, size: 20),
+                icon: const RIcon(RIcons.calendar, size: 20),
                 label: Text(l.homeCalendar),
                 style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 10)),
               ),
@@ -406,16 +386,11 @@ class _DayCard extends StatelessWidget {
               children: [
                 _SunItem(
                   key: const Key('home.time-sunrise'),
-                  icon: Icons.wb_twilight,
+                  icon: RIcons.sunset,
                   label: l.homeSunrise,
                   time: hhmm('sunrise'),
                 ),
-                _SunItem(
-                  key: const Key('home.sunset'),
-                  icon: Icons.wb_sunny_outlined,
-                  label: l.homeSunset,
-                  time: sunset(),
-                ),
+                _SunItem(key: const Key('home.sunset'), icon: RIcons.sunHigh, label: l.homeSunset, time: sunset()),
               ],
             ),
           ],
@@ -432,11 +407,11 @@ class _PrayerCell extends StatelessWidget {
   final bool isNext;
 
   static const _icons = {
-    'fajr': Icons.nightlight_outlined,
-    'dhuhr': Icons.wb_sunny_outlined,
-    'asr': Icons.wb_cloudy_outlined,
-    'maghrib': Icons.wb_twilight,
-    'isha': Icons.dark_mode_outlined,
+    'fajr': RIcons.moon,
+    'dhuhr': RIcons.sunHigh,
+    'asr': RIcons.sunLow,
+    'maghrib': RIcons.sunset,
+    'isha': RIcons.moon,
   };
 
   @override
@@ -453,7 +428,7 @@ class _PrayerCell extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(_icons[k], size: 22, color: scheme.primary),
+          RIcon(_icons[k]!, size: 22, color: scheme.primary),
           const SizedBox(height: 2),
           FittedBox(child: Text(context.prayerName(k), style: theme.labelMedium)),
           FittedBox(
@@ -471,7 +446,7 @@ class _PrayerCell extends StatelessWidget {
 
 class _SunItem extends StatelessWidget {
   const _SunItem({super.key, required this.icon, required this.label, required this.time});
-  final IconData icon;
+  final RIconData icon;
   final String label;
   final String time;
 
@@ -479,7 +454,7 @@ class _SunItem extends StatelessWidget {
   Widget build(BuildContext context) => Row(
     mainAxisSize: MainAxisSize.min,
     children: [
-      Icon(icon, size: 18, color: Theme.of(context).colorScheme.secondary),
+      RIcon(icon, size: 18, color: Theme.of(context).colorScheme.secondary),
       const SizedBox(width: 6),
       Text('$label  '),
       Text(
@@ -494,7 +469,7 @@ class _SunItem extends StatelessWidget {
 class _BigTile extends StatelessWidget {
   const _BigTile(this.id, this.icon, this.label, this.onTap);
   final String id;
-  final IconData icon;
+  final RIconData icon;
   final String label;
   final VoidCallback onTap;
 
@@ -511,7 +486,7 @@ class _BigTile extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 40, color: Theme.of(context).colorScheme.primary),
+              RIcon(icon, size: 40, color: Theme.of(context).colorScheme.primary),
               const SizedBox(height: DesignTokens.spaceSm),
               Text(
                 label,
@@ -530,7 +505,7 @@ class _BigTile extends StatelessWidget {
 class _WideTile {
   const _WideTile(this.id, this.icon, this.label, this.onTap);
   final String id;
-  final IconData icon;
+  final RIconData icon;
   final String label;
   final VoidCallback onTap;
 }
@@ -551,7 +526,7 @@ class _WideRow extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd),
           child: Row(
             children: [
-              Icon(t.icon, size: 30, color: Theme.of(context).colorScheme.secondary),
+              RIcon(t.icon, size: 30, color: Theme.of(context).colorScheme.secondary),
               Expanded(
                 child: Text(
                   t.label,
@@ -651,7 +626,7 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
                               key: const Key('radio.reciter'),
                               value: reciter.folder,
                               isExpanded: true,
-                              icon: const Icon(Icons.expand_more),
+                              icon: const RIcon(RIcons.chevronDown),
                               items: [
                                 for (final r in s.content.reciters.reciters)
                                   DropdownMenuItem(
@@ -682,7 +657,7 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
                         tooltip: playing ? l.radioPause : l.radioListen,
                         onPressed: onPlay,
                         iconSize: 30,
-                        icon: Icon(playing ? Icons.pause : Icons.play_arrow),
+                        icon: RIcon(playing ? RIcons.pause : RIcons.play),
                       ),
                     ],
                   ),
@@ -702,7 +677,7 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
                             tooltip: l.radioLonger,
                             color: scheme.primary,
                             onPressed: step == QuranRadioCard.durations.length - 1 ? null : () => setDuration(1),
-                            icon: const Icon(Icons.add),
+                            icon: const RIcon(RIcons.plus),
                           ),
                           Expanded(
                             child: Text(
@@ -717,7 +692,7 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
                             tooltip: l.radioShorter,
                             color: scheme.primary,
                             onPressed: step <= 0 ? null : () => setDuration(-1),
-                            icon: const Icon(Icons.remove),
+                            icon: const RIcon(RIcons.minus),
                           ),
                         ],
                       ),

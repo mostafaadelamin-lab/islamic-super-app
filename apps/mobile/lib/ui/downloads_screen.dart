@@ -5,6 +5,7 @@ import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 /// Recitations saved on the device: download a surah for the chosen reciter,
 /// see how much space they use, delete one or all.
@@ -124,14 +125,14 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
                         trailing: busy != null
                             ? IconButton(
                                 tooltip: l.downloadsCancel,
-                                icon: const Icon(Icons.close),
+                                icon: const RIcon(RIcons.close),
                                 onPressed: () => s.downloads.cancel(reciter.folder, n),
                               )
                             : done
                             ? IconButton(
                                 key: Key('downloadDelete-$n'),
                                 tooltip: l.downloadsDelete,
-                                icon: const Icon(Icons.delete_outline),
+                                icon: const RIcon(RIcons.trash),
                                 onPressed: () async {
                                   await s.downloads.deleteSurah(reciter.folder, n);
                                   _refresh();
@@ -140,7 +141,7 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
                             : IconButton(
                                 key: Key('downloadStart-$n'),
                                 tooltip: l.downloadsDownload,
-                                icon: const Icon(Icons.download_outlined),
+                                icon: const RIcon(RIcons.download),
                                 onPressed: () => _download(n),
                               ),
                       );

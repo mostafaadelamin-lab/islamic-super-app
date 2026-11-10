@@ -247,12 +247,24 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Muezzin recording for the adhan (id from [adhanVoices]).
-  String get adhanVoice => adhanVoiceById(_prefs.getString('adhan.voice')).id;
+  /// Muezzin for the adhan of Dhuhr, Asr, Maghrib and Isha (see adhan_voices.dart).
+  String get adhanVoice {
+    final v = _prefs.getString('adhan.voice');
+    return isAdhanVoiceId(v) ? v! : defaultAdhanVoice;
+  }
 
-  Future<void> setAdhanVoice(String id) async {
-    if (!adhanVoices.any((v) => v.id == id)) throw ArgumentError.value(id, 'voice');
-    await _prefs.setString('adhan.voice', id);
+  /// Muezzin for the Fajr adhan, which has its own wording ("as-salatu khayrun min an-nawm").
+  String get adhanFajrVoice {
+    final v = _prefs.getString('adhan.voice.fajr');
+    return isAdhanVoiceId(v) ? v! : defaultFajrVoice;
+  }
+
+  /// The voice for [prayer]'s adhan.
+  String adhanVoiceFor(String prayer) => prayer == 'fajr' ? adhanFajrVoice : adhanVoice;
+
+  Future<void> setAdhanVoice(String id, {bool fajr = false}) async {
+    if (!isAdhanVoiceId(id)) throw ArgumentError.value(id, 'voice');
+    await _prefs.setString(fajr ? 'adhan.voice.fajr' : 'adhan.voice', id);
     notifyListeners();
   }
 

@@ -6,6 +6,7 @@ import '../domain/worship.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 /// Worship tracker: monthly calendar, the chosen day's five prayers, fasting
 /// and a note, weekly / monthly totals and the streak.
@@ -70,7 +71,7 @@ class _WorshipScreenState extends State<WorshipScreen> {
                     IconButton(
                       key: const Key('worship.prev'),
                       onPressed: () => setState(() => _monthDelta--),
-                      icon: const Icon(Icons.chevron_left),
+                      icon: const RIcon(RIcons.chevron),
                       tooltip: l.prayerPrevMonth,
                     ),
                     Expanded(
@@ -84,7 +85,7 @@ class _WorshipScreenState extends State<WorshipScreen> {
                     IconButton(
                       key: const Key('worship.next'),
                       onPressed: _monthDelta >= 0 ? null : () => setState(() => _monthDelta++),
-                      icon: const Icon(Icons.chevron_right),
+                      icon: const RIcon(RIcons.chevronForward),
                       tooltip: l.prayerNextMonth,
                     ),
                   ],

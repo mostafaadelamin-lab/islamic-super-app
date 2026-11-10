@@ -10,6 +10,7 @@ import 'l10n_ext.dart';
 import 'page_reader_screen.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 const _openingWords = 6;
 const _dayPresets = [30, 60, 7];
@@ -97,7 +98,7 @@ class KhatmaScreen extends StatelessWidget {
                         IconButton(
                           key: const Key('khatmaRename'),
                           tooltip: l.khatmaRename,
-                          icon: const Icon(Icons.edit_outlined, size: 20),
+                          icon: const RIcon(RIcons.edit, size: 20),
                           onPressed: () => _rename(context, k.name),
                         ),
                       ],
@@ -190,13 +191,13 @@ class KhatmaScreen extends StatelessWidget {
                 onPressed: () => Navigator.of(
                   context,
                 ).push(MaterialPageRoute<void>(builder: (_) => PageReaderScreen(initialPage: cur.from))),
-                icon: const Icon(Icons.menu_book),
+                icon: const RIcon(RIcons.quran),
                 label: Text(l.khatmaRead),
               ),
               OutlinedButton.icon(
                 key: const Key('khatmaDone'),
                 onPressed: s.khatma.completeWird,
-                icon: const Icon(Icons.check),
+                icon: const RIcon(RIcons.check),
                 label: Text(l.khatmaMarkDone),
               ),
             ],
@@ -211,8 +212,8 @@ class KhatmaScreen extends StatelessWidget {
                   key: ValueKey('khatmaWird-$i'),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
-                  leading: Icon(
-                    i < k.done ? Icons.check_circle : (i == k.done ? Icons.play_circle : Icons.circle_outlined),
+                  leading: RIcon(
+                    i < k.done ? RIcons.checkCircle : (i == k.done ? RIcons.playCircle : RIcons.radioOff),
                     color: i <= k.done ? theme.colorScheme.primary : null,
                   ),
                   title: Text(_range(context, k, i)),
@@ -260,7 +261,7 @@ class KhatmaScreen extends StatelessWidget {
                 );
                 if (ok == true) await s.khatma.delete();
               },
-              icon: const Icon(Icons.delete_outline),
+              icon: const RIcon(RIcons.trash),
               label: Text(l.khatmaDelete),
             ),
           ),
@@ -339,13 +340,13 @@ class _CreateCardState extends State<_CreateCard> {
       Expanded(child: Text(label)),
       IconButton(
         key: Key('$key-minus'),
-        icon: const Icon(Icons.remove),
+        icon: const RIcon(RIcons.minus),
         onPressed: value > min ? () => set(value - 1) : null,
       ),
       Text(context.num(value), key: Key('$key-value'), style: Theme.of(context).textTheme.titleMedium),
       IconButton(
         key: Key('$key-plus'),
-        icon: const Icon(Icons.add),
+        icon: const RIcon(RIcons.plus),
         onPressed: value < max ? () => set(value + 1) : null,
       ),
     ],
@@ -434,7 +435,7 @@ class _HistoryCard extends StatelessWidget {
         for (final x in h)
           ListTile(
             contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.verified_outlined),
+            leading: const RIcon(RIcons.checkCircle),
             title: Text(x.name),
             subtitle: Text(l.khatmaFinishedOn(KhatmaScreen.dateText(context, x.finishedDate), context.num(x.days))),
           ),

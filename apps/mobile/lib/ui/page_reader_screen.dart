@@ -16,6 +16,7 @@ import 'mushaf_page.dart';
 import 'quran_index_entry.dart';
 import 'reader_widgets.dart';
 import 'search_screen.dart';
+import 'r_icon.dart';
 
 /// Madinah Mushaf (1405H) reader: tabs المصحف / الآيات / التفسير; 604 pages of
 /// 15 lines turned like a book (RTL: swipe right for the next page); a
@@ -185,7 +186,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                       key: const Key('readerHelp'),
                       tooltip: l.readerHelp,
                       color: scheme.primary,
-                      icon: const Icon(Icons.help_outline),
+                      icon: const RIcon(RIcons.help),
                       onPressed: () => showReaderHelp(context, pageCount: _count, onGo: _jump),
                     )
                   else
@@ -269,7 +270,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
             key: const Key('prevPage'),
             tooltip: l.quranPrevPage,
             color: scheme.primary,
-            icon: Icon(rtl ? Icons.skip_next : Icons.skip_previous, size: 20),
+            icon: RIcon(rtl ? RIcons.next : RIcons.prev, size: 20),
             onPressed: _page > 1 ? () => _jump(_page - 1) : null,
           ),
           Expanded(
@@ -326,7 +327,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
             key: const Key('nextPage'),
             tooltip: l.quranNextPage,
             color: scheme.primary,
-            icon: Icon(rtl ? Icons.skip_previous : Icons.skip_next, size: 20),
+            icon: RIcon(rtl ? RIcons.prev : RIcons.next, size: 20),
             onPressed: _page < _count ? () => _jump(_page + 1) : null,
           ),
         ],
@@ -337,7 +338,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   Widget _bottomBar(BuildContext context) {
     final l = context.l10n;
     final scheme = Theme.of(context).colorScheme;
-    Widget item(String key, IconData icon, String label, VoidCallback onTap) => Expanded(
+    Widget item(String key, RIconData icon, String label, VoidCallback onTap) => Expanded(
       child: InkWell(
         key: Key(key),
         onTap: onTap,
@@ -346,7 +347,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, color: scheme.primary),
+              RIcon(icon, color: scheme.primary),
               const SizedBox(height: 2),
               Text(
                 label,
@@ -371,23 +372,13 @@ class PageReaderScreenState extends State<PageReaderScreen> {
           ),
           child: Row(
             children: [
-              item('barIndex', Icons.format_list_bulleted, l.readerIndex, () async {
+              item('barIndex', RIcons.list, l.readerIndex, () async {
                 final p = await showQuranIndex(context, currentPage: _page);
                 if (p != null && mounted) _jump(p);
               }),
-              item(
-                'barBookmarks',
-                Icons.collections_bookmark_outlined,
-                l.readerBookmarks,
-                () => push(const BookmarksScreen()),
-              ),
-              item(
-                'barKhatma',
-                Icons.auto_stories_outlined,
-                l.readerKhatma,
-                () => unawaited(showKhatmaSheet(context, onGo: _jump)),
-              ),
-              item('barSearch', Icons.search, l.readerSearch, () => push(const SearchScreen())),
+              item('barBookmarks', RIcons.bookmarks, l.readerBookmarks, () => push(const BookmarksScreen())),
+              item('barKhatma', RIcons.quran, l.readerKhatma, () => unawaited(showKhatmaSheet(context, onGo: _jump))),
+              item('barSearch', RIcons.search, l.readerSearch, () => push(const SearchScreen())),
             ],
           ),
         ),

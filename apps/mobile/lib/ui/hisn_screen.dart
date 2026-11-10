@@ -9,6 +9,7 @@ import 'dhikr_tools.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 /// Hisn al-Muslim: chapter list with a filter.
 class HisnScreen extends StatefulWidget {
@@ -45,7 +46,7 @@ class _HisnScreenState extends State<HisnScreen> {
               padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceSm, DesignTokens.spaceLg, 0),
               child: TextField(
                 key: const Key('hisnFilter'),
-                decoration: InputDecoration(labelText: l.adhkarHisnSearch, prefixIcon: const Icon(Icons.search)),
+                decoration: InputDecoration(labelText: l.adhkarHisnSearch, prefixIcon: const RIcon(RIcons.search)),
                 onChanged: (v) => setState(() => _filter = v),
               ),
             ),

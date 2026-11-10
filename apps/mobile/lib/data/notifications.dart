@@ -9,6 +9,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 import '../domain/adhan_schedule.dart';
 import '../domain/adhan_voices.dart';
+import 'adhan_voice_files.dart';
 import '../domain/prayer_schedule.dart';
 import '../l10n/app_localizations.dart';
 import '../ui/prayer_model.dart';
@@ -82,38 +83,42 @@ class LocalNotificationsBackend implements NotificationsBackend {
 
   // Android ties the sound to the channel, so each sound choice has its own
   // channel (the user can still fine-tune each one in the system settings).
-  static AndroidNotificationDetails _android(String sound, String stopLabel, String voice) => switch (sound) {
-    'tone' => const AndroidNotificationDetails(
-      'adhan_tone',
-      'تنبيه الصلاة (نغمة) · Prayer alert (tone)',
-      channelDescription: 'Prayer time notifications with the phone sound',
-      importance: Importance.high,
-      priority: Priority.high,
-      category: AndroidNotificationCategory.alarm,
-    ),
-    'silent' => const AndroidNotificationDetails(
-      'adhan_silent',
-      'تنبيه الصلاة (صامت) · Prayer alert (silent)',
-      channelDescription: 'Prayer time notifications without sound',
-      importance: Importance.defaultImportance,
-      priority: Priority.defaultPriority,
-      playSound: false,
-      enableVibration: false,
-    ),
-    _ => AndroidNotificationDetails(
-      // One channel per muezzin: a channel's sound cannot change once created.
-      voice == 'adhan' ? 'adhan_voice' : 'adhan_voice_$voice',
-      'الأذان · Adhan',
-      channelDescription: 'Prayer time notifications with the adhan recording',
-      importance: Importance.max,
-      priority: Priority.high,
-      category: AndroidNotificationCategory.alarm,
-      // res/raw/<voice>.ogg (see assets/audio/ADHAN_AUDIO.md for the licences).
-      sound: RawResourceAndroidNotificationSound(voice),
-      // Tapping "stop" or the notification itself silences the adhan.
-      actions: [AndroidNotificationAction('stop', stopLabel, cancelNotification: true)],
-    ),
-  };
+  static AndroidNotificationDetails _android(String sound, String stopLabel, String voiceName) {
+    // A downloaded recording cannot be a channel sound: the channel keeps the default adhan.
+    final voice = voiceName.startsWith('/') ? 'adhan_haram' : voiceName;
+    return switch (sound) {
+      'tone' => const AndroidNotificationDetails(
+        'adhan_tone',
+        'تنبيه الصلاة (نغمة) · Prayer alert (tone)',
+        channelDescription: 'Prayer time notifications with the phone sound',
+        importance: Importance.high,
+        priority: Priority.high,
+        category: AndroidNotificationCategory.alarm,
+      ),
+      'silent' => const AndroidNotificationDetails(
+        'adhan_silent',
+        'تنبيه الصلاة (صامت) · Prayer alert (silent)',
+        channelDescription: 'Prayer time notifications without sound',
+        importance: Importance.defaultImportance,
+        priority: Priority.defaultPriority,
+        playSound: false,
+        enableVibration: false,
+      ),
+      _ => AndroidNotificationDetails(
+        // One channel per muezzin: a channel's sound cannot change once created.
+        voice == 'adhan' ? 'adhan_voice' : 'adhan_voice_$voice',
+        'الأذان · Adhan',
+        channelDescription: 'Prayer time notifications with the adhan recording',
+        importance: Importance.max,
+        priority: Priority.high,
+        category: AndroidNotificationCategory.alarm,
+        // res/raw/<voice>.ogg (see assets/audio/ADHAN_AUDIO.md for the licences).
+        sound: RawResourceAndroidNotificationSound(voice),
+        // Tapping "stop" or the notification itself silences the adhan.
+        actions: [AndroidNotificationAction('stop', stopLabel, cancelNotification: true)],
+      ),
+    };
+  }
 
   // iOS plays at most 30 s of a notification sound, so it gets the opening
   // takbir only (Runner/adhan_short.caf); the full adhan plays inside the app.
@@ -128,7 +133,7 @@ class LocalNotificationsBackend implements NotificationsBackend {
     if (_ready) return;
     await _plugin.initialize(
       settings: const InitializationSettings(
-        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+        android: AndroidInitializationSettings('ic_stat_rattil'),
         iOS: DarwinInitializationSettings(
           requestAlertPermission: false,
           requestBadgePermission: false,
@@ -169,8 +174,9 @@ class LocalNotificationsBackend implements NotificationsBackend {
   /// Label of the Android "stop" action (set by the scheduler from l10n).
   String stopLabel = 'إيقاف';
 
-  /// Android res/raw name of the chosen muezzin (set by the scheduler).
-  String voice = 'adhan';
+  /// The muezzin for the next schedule() call: an Android res/raw name or a
+  /// downloaded file's path (set by the scheduler, per prayer).
+  String voice = 'adhan_haram';
 
   @override
   Future<void> schedule({
@@ -255,7 +261,20 @@ class AdhanScheduler {
     this.max = 60,
     this.reserved,
     this.afterReset,
+    this.voices,
   });
+
+  /// Downloaded muezzin recordings (null in tests that do not need them).
+  final AdhanVoiceFiles? voices;
+
+  /// What Android plays for [prayer]'s adhan.
+  String nativeVoiceFor(String prayer) {
+    final id = settings.adhanVoiceFor(prayer);
+    final fajr = prayer == 'fajr';
+    final v = voices;
+    if (v != null) return v.nativeVoice(id, fajr: fajr);
+    return (bundledAdhanVoice(id) ?? bundledAdhanVoice(fajr ? defaultFajrVoice : defaultAdhanVoice)!).raw!;
+  }
 
   /// Pending slots kept for the repeating reminders (khatma, adhkar, Friday),
   /// taken from [max] (iOS keeps at most 64 pending notifications in all).
@@ -281,7 +300,7 @@ class AdhanScheduler {
   String get _signature => [
     settings.adhanPrayers.toList()..sort(),
     settings.adhanSound,
-    settings.adhanVoice,
+    [for (final p in obligatoryPrayers) nativeVoiceFor(p)],
     [for (final p in obligatoryPrayers) settings.adhanSoundFor(p)],
     settings.sunriseAlert,
     settings.lastThirdAlert,
@@ -331,10 +350,7 @@ class AdhanScheduler {
       if (items.isEmpty) return;
       final l = lookupAppLocalizations(Locale(settings.locale.languageCode));
       final b = backend;
-      if (b is LocalNotificationsBackend) {
-        b.stopLabel = l.adhanStop;
-        b.voice = adhanVoiceById(settings.adhanVoice).raw;
-      }
+      if (b is LocalNotificationsBackend) b.stopLabel = l.adhanStop;
       final city = resolveCity(content, settings).name(settings.isArabic);
       for (final n in items) {
         final name = _prayerName(l, n.prayer);
@@ -342,6 +358,7 @@ class AdhanScheduler {
         // Reminders and iqama alerts use the short phone tone (never the adhan
         // recording), or stay silent when the user chose silent alerts.
         final extraSound = settings.adhanSound == 'silent' ? 'silent' : 'tone';
+        if (b is LocalNotificationsBackend) b.voice = nativeVoiceFor(n.prayer);
         await backend.schedule(
           id: n.id,
           title: switch (n.kind) {
@@ -376,7 +393,7 @@ class AdhanScheduler {
     final b = backend;
     if (b is LocalNotificationsBackend) {
       b.stopLabel = l.adhanStop;
-      b.voice = adhanVoiceById(settings.adhanVoice).raw;
+      b.voice = nativeVoiceFor('dhuhr');
     }
     await backend.schedule(
       id: adhanTestNotificationId,
@@ -396,9 +413,10 @@ class AdhanScheduler {
   };
 }
 
-/// Plays a bundled adhan recording inside the app (settings "listen" buttons).
+/// Plays an adhan recording inside the app (settings "listen" buttons).
 abstract class AdhanPlayer {
-  Future<void> play(String asset);
+  /// [source]: a bundled asset ("assets/...") or a downloaded file's path.
+  Future<void> play(String source);
   Future<void> stop();
 
   /// Fires when the recording reaches its end.
@@ -420,8 +438,12 @@ class JustAudioAdhanPlayer implements AdhanPlayer {
   }
 
   @override
-  Future<void> play(String asset) async {
-    await _p.setAsset(asset);
+  Future<void> play(String source) async {
+    if (source.startsWith('assets/')) {
+      await _p.setAsset(source);
+    } else {
+      await _p.setFilePath(source);
+    }
     unawaited(_p.play());
   }
 
@@ -433,11 +455,13 @@ class JustAudioAdhanPlayer implements AdhanPlayer {
 }
 
 class AdhanPreview extends ChangeNotifier {
-  AdhanPreview(this._player) {
+  AdhanPreview(this._player, {Future<String?> Function(String voiceId)? source})
+    : _source = source ?? ((id) async => bundledAdhanVoice(id)?.asset) {
     _sub = _player.completed.listen((_) => _set(null));
   }
 
   final AdhanPlayer _player;
+  final Future<String?> Function(String voiceId) _source;
   late final StreamSubscription<void> _sub;
   String? _voice;
 
@@ -451,18 +475,22 @@ class AdhanPreview extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Plays [voiceId] (default: the first muezzin), or stops it when it is the one playing.
-  Future<void> toggle([String? voiceId]) async {
-    final v = adhanVoiceById(voiceId);
+  /// Plays [voiceId] (downloading it first when needed), or stops it when it is the one playing.
+  Future<void> toggle([String voiceId = defaultAdhanVoice]) async {
     final was = _voice;
     if (was != null) {
       _set(null);
       await _player.stop();
-      if (was == v.id) return;
+      if (was == voiceId) return;
     }
-    _set(v.id);
+    _set(voiceId);
     try {
-      await _player.play(v.asset);
+      final source = await _source(voiceId);
+      if (source == null || _voice != voiceId) {
+        if (_voice == voiceId) _set(null);
+        return;
+      }
+      await _player.play(source);
     } catch (e) {
       _set(null);
       debugPrint('adhan preview failed: $e');

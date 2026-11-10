@@ -12,6 +12,7 @@ import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'prayer_model.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 /// Nearby mosques from OpenStreetMap around the device position (GPS), nearest
 /// first; around the prayer city only when the position is not available.
@@ -127,7 +128,7 @@ class _MosquesScreenState extends State<MosquesScreen> {
               child: TextButton.icon(
                 key: const Key('mosquesLocate'),
                 onPressed: _locating || _loading ? null : _locateAndSearch,
-                icon: const Icon(Icons.my_location),
+                icon: const RIcon(RIcons.myLocation),
                 label: Text(l.mosquesLocate),
               ),
             ),
@@ -176,7 +177,7 @@ class _MosquesScreenState extends State<MosquesScreen> {
                 ListTile(
                   key: Key('mosque-${m.id}'),
                   contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.mosque_outlined),
+                  leading: const RIcon(RIcons.kaaba),
                   title: Text(m.name ?? l.mosquesUnnamed),
                   trailing: Text(_distance(context, m.distance)),
                   onTap: () => launchUrl(
