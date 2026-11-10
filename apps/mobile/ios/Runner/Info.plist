@@ -18,8 +18,14 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>رتّل يستخدم موقعك فقط أثناء فتح التطبيق لحساب مواقيت الصلاة واتجاه القبلة والمساجد القريبة، ولا يتتبعك في الخلفية. Rattil uses your location only while the app is open, for prayer times, the qibla and nearby mosques; it never tracks you in the background.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>تُستخدم مستشعرات الحركة لتوجيه بوصلة القبلة. Motion sensors are used to point the qibla compass.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>يُستخدم موقعك لحساب مواقيت الصلاة واتجاه القبلة بدقة. Your location is used to calculate prayer times and the qibla direction.</string>
+	<string>يُستخدم موقعك لحساب مواقيت الصلاة واتجاه القبلة وإظهار المساجد القريبة. Your location is used for prayer times, the qibla direction and nearby mosques.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

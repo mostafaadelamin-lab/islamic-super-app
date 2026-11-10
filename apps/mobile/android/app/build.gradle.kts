@@ -32,11 +32,28 @@ android {
         multiDexEnabled = true
     }
 
+    // Store builds (Codemagic) sign with the Play upload key. Codemagic's `android_signing` puts the
+    // keystore on disk and exports CM_KEYSTORE_PATH / CM_KEYSTORE_PASSWORD / CM_KEY_ALIAS / CM_KEY_PASSWORD.
+    // Local builds without those variables keep using the debug key (test APKs only, never uploaded).
+    val uploadKeystore = System.getenv("CM_KEYSTORE_PATH")
+    signingConfigs {
+        if (uploadKeystore != null) {
+            create("upload") {
+                storeFile = file(uploadKeystore)
+                storePassword = System.getenv("CM_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("CM_KEY_ALIAS")
+                keyPassword = System.getenv("CM_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // No release keystore in M1: release builds are signed with the debug key.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = if (uploadKeystore != null) {
+                signingConfigs.getByName("upload")
+            } else {
+                signingConfigs.getByName("debug")
+            }
         }
     }
 }

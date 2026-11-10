@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_services.dart';
+import '../build_flags.dart';
 import '../data/settings.dart';
 import '../domain/adhan_voices.dart';
 import '../domain/hijri.dart';
@@ -144,16 +145,19 @@ class SettingsScreen extends StatelessWidget {
               const AdhanSettingsCard(),
               SectionCard(
                 children: [
-                  ListTile(
-                    key: const Key('accountTile'),
-                    contentPadding: EdgeInsets.zero,
-                    leading: const RIcon(RIcons.refresh),
-                    title: Text(l.settingsAccount),
-                    subtitle: Text(l.settingsAccountHint),
-                    trailing: const RIcon(RIcons.chevronForward),
-                    onTap: () =>
-                        Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const AccountScreen())),
-                  ),
+                  // Store builds hide account sync until the sync server is hosted (it points at a dev
+                  // address today, and App Review rejects features that cannot work).
+                  if (!kStoreBuild)
+                    ListTile(
+                      key: const Key('accountTile'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const RIcon(RIcons.refresh),
+                      title: Text(l.settingsAccount),
+                      subtitle: Text(l.settingsAccountHint),
+                      trailing: const RIcon(RIcons.chevronForward),
+                      onTap: () =>
+                          Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const AccountScreen())),
+                    ),
                   ListTile(
                     key: const Key('aboutTile'),
                     contentPadding: EdgeInsets.zero,

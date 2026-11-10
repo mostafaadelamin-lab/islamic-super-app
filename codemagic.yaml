@@ -1,0 +1,118 @@
+# Codemagic: builds the Rattil (رتّل) Flutter app for the stores.
+#
+# Every workflow is MANUAL (no `triggering:` section): nothing builds or uploads on a push.
+# Nothing here makes the app public:
+#   - iOS uploads to App Store Connect / TestFlight only (no TestFlight beta review, no App Store submission).
+#   - Android uploads to the Play "internal testing" track as a DRAFT (the owner rolls it out by hand).
+# Going live in either store is a separate manual step in App Store Connect / Play Console, after the
+# owner's approval (see docs/STORE_RELEASE.md).
+#
+# Secrets live in Codemagic (Team settings), never in this repo:
+#   group "app_store_credentials": APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_KEY_IDENTIFIER,
+#                                  APP_STORE_CONNECT_PRIVATE_KEY (the .p8 file's text), CERTIFICATE_PRIVATE_KEY
+#   group "google_play":           GCLOUD_SERVICE_ACCOUNT_CREDENTIALS (service-account JSON)
+#   Android keystore reference:    rattil_upload (Code signing identities > Android keystores)
+
+definitions:
+  env: &flutter_env
+    flutter: 3.41.6
+    xcode: latest
+    cocoapods: default
+  scripts:
+    - &pub_get
+      name: Get packages
+      script: flutter pub get
+    - &unit_tests
+      name: Unit and widget tests
+      script: flutter test
+    - &android_bundle
+      name: Build Android App Bundle (.aab)
+      script: |
+        flutter build appbundle --release \
+          --build-number=$PROJECT_BUILD_NUMBER \
+          --dart-define=RATTIL_STORE=true
+  artifacts:
+    - &aab "**/build/app/outputs/bundle/release/*.aab"
+    - &mapping "**/build/app/outputs/mapping/release/mapping.txt"
+
+workflows:
+  ios-testflight:
+    name: iOS → TestFlight (private)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    working_directory: apps/mobile
+    environment:
+      <<: *flutter_env
+      groups:
+        - app_store_credentials
+      vars:
+        BUNDLE_ID: org.rattil.app
+    scripts:
+      - *pub_get
+      - *unit_tests
+      - name: Signing (certificate + App Store profile, created on first run)
+        script: |
+          keychain initialize
+          app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
+          keychain add-certificates
+          xcode-project use-profiles
+      - name: Build IPA
+        script: |
+          flutter build ipa --release \
+            --build-number=$PROJECT_BUILD_NUMBER \
+            --dart-define=RATTIL_STORE=true \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - "**/build/ios/ipa/*.ipa"
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        # Upload only: internal TestFlight testers can install it. No beta review, no App Store submission.
+        submit_to_testflight: false
+        submit_to_app_store: false
+
+  android-aab:
+    # First Play upload must be done by hand in Play Console: download the .aab from this build.
+    name: Android → signed .aab (download only)
+    instance_type: mac_mini_m2
+    max_build_duration: 45
+    working_directory: apps/mobile
+    environment:
+      <<: *flutter_env
+      android_signing:
+        - rattil_upload
+    scripts:
+      - *pub_get
+      - *unit_tests
+      - *android_bundle
+    artifacts:
+      - *aab
+      - *mapping
+
+  android-play-internal:
+    # Use after the first manual upload, once the Google Play service account is linked.
+    name: Android → Play internal testing (draft)
+    instance_type: mac_mini_m2
+    max_build_duration: 45
+    working_directory: apps/mobile
+    environment:
+      <<: *flutter_env
+      android_signing:
+        - rattil_upload
+      groups:
+        - google_play
+    scripts:
+      - *pub_get
+      - *unit_tests
+      - *android_bundle
+    artifacts:
+      - *aab
+      - *mapping
+    publishing:
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal
+        submit_as_draft: true

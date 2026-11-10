@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased] — Store publishing setup: Codemagic, signing, listing, privacy (owner's request) — 2026-11-10
+### Added
+- `codemagic.yaml`: manual workflows only. iOS builds, signs (App Store Connect API key, certificate and profile created on the first run) and uploads to TestFlight without any beta review or App Store submission. Android builds a signed `.aab` for the first manual Play upload, and a second workflow uploads to the Play internal-testing track as a draft. No Mac needed.
+- Android release builds sign with the Play upload key when Codemagic provides it (`CM_KEYSTORE_*`); local builds keep the debug key.
+- `docs/store/`: owner's step-by-step guide (STORE_RELEASE.md), Arabic/English store listing drafts with category, age rating and privacy answers (LISTING.md), bilingual privacy policy page (privacy-policy.html).
+- iOS: `ITSAppUsesNonExemptEncryption = false` (no export-compliance question per upload), motion and location purpose strings (qibla compass, nearby mosques).
+### Changed
+- Store builds (`--dart-define=RATTIL_STORE=true`) hide Settings → Account sync until the sync server is hosted.
+
 ## [Unreleased] — Quran text from the King Fahd Complex, release 18 (owner's request) — 2026-11-10
 ### Changed
 - The Mushaf text is now the King Fahd Glorious Quran Printing Complex's latest published data, Hafs v18 (`hafsData_v18.json`), exactly as published. No letter, dot or haraka changed compared with the previous text (only the Unicode encoding).
