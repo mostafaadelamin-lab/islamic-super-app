@@ -93,6 +93,9 @@ void main() {
         }
       }
     }
-    expect(withKeys, greaterThan(0), reason: 'the canonical text does use U+0657/U+065E/U+0656');
+    // KFGQPC v18 + its own font: the map is empty, and the words keep U+0657/U+065E/U+0656
+    expect(map, isEmpty);
+    expect(withKeys, 0);
+    expect(c.quran.surahs.any((s) => s.ayahs.any((t) => t.contains('\u0657'))), isTrue);
   });
 }

@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 """Build versioned, platform-neutral content bundles from pinned upstream sources.
 
-The Quran text is copied byte-for-byte from the upstream file. Nothing in this
-script edits, normalises or re-encodes ayah text. Any glyph substitution needed
+The Quran text is the King Fahd Glorious Quran Printing Complex's own digital
+text, "KFGQPC Hafs Uthmanic Data" version 18 (hafsData_v18.json), copied
+byte-for-byte. The only thing removed is the ayah number that the Complex
+appends to each aya_text after a no-break space (the apps draw that number
+themselves, in the Complex's font). Nothing in this script edits, normalises or
+re-encodes ayah text. Any glyph substitution needed
 for a particular font happens at render time in the client, never in content.
 
 Outputs (all deterministic, sorted keys, UTF-8):
   content/quran/dist/quran.v1.json       surahs + ayah text (+ English translation)
-  content/quran/dist/pages.v1.json       Madinah Mushaf 1405H page boundaries (604), juz starts and
+  content/quran/dist/pages.v1.json       Madinah Mushaf (KFGQPC, new edition 1441H, the pages of hafsData_v18) page boundaries (604), juz starts and
                                          the 240 hizb quarters (rub' al-hizb) with their start ayah and page
   content/quran/dist/integrity.v1.json   SHA-256 hashes used by every platform's tests
   content/quran/dist/mushaf-lines.v1.json  15-line Madinah page layout as word ranges of the canonical text
@@ -21,6 +25,7 @@ from __future__ import annotations
 import hashlib
 import json
 import pathlib
+import re
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -30,14 +35,16 @@ import stories  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 C = ROOT / "content"
-QURAN_SRC = C / "quran/upstream/quran-json-3.1.2.quran.json"
+QURAN_SRC = C / "quran/upstream/kfgqpc-hafs-v18.json"
+META_SRC = C / "quran/upstream/quran-json-3.1.2.quran.json"  # surah names/transliteration only, never ayah text
 EN_SRC = C / "translations/upstream/quran-json-3.1.2.quran_en.json"
-MADINA = C / "quran/madina-1405h-manifest.json"
+MADINA = C / "quran/madina-1441h-manifest.json"
+AYAH_NUMBER_SUFFIX = re.compile("\u00a0[\u0660-\u0669]+$")  # " ١" appended by the Complex to aya_text
 REF = ROOT / "tests/vectors/quran-reference.json"
 QUARTERS_SRC = C / "quran/upstream/quran-meta-7.0.0-hizb-quarters.json"
 RUB_SIGN = "\u06de"  # ۞ printed in the Mushaf at the start of each hizb quarter
 
-QURAN_VERSION = "1.0.0"
+QURAN_VERSION = "2.0.0"  # 2.0.0: text = KFGQPC Hafs v18, pages = new edition (1441H)
 
 
 def sha(s: str) -> str:
@@ -87,8 +94,13 @@ def build_quarters(surahs, pages, juz):
         problems.append(f"quarters: rub' al-hizb sign without a quarter start at {sorted(missing)}")
     if odd := [r for r in starts if r not in marked and r[1] != 1]:
         problems.append(f"quarters: start without the sign and not at a surah start: {odd}")
+    # The Complex's data starts juz 4 at 3:92 and juz 11 at 9:94, one ayah away from the
+    # rub' al-hizb sign of that quarter (3:93, 9:93) in its own text. Both are kept as published.
+    juz_off_quarter = {4: [3, 92], 11: [9, 94]}
     for j in juz:
         k = (j["juz"] - 1) * 8
+        if juz_off_quarter.get(j["juz"]) == j["start"]:
+            continue
         if k < len(starts) and list(starts[k]) != j["start"]:
             problems.append(f"quarters: juz {j['juz']} start {j['start']} != quarter {k + 1} {starts[k]}")
     out = [{
@@ -103,25 +115,37 @@ def build_quarters(surahs, pages, juz):
 
 
 def main() -> int:
-    src = json.loads(QURAN_SRC.read_text(encoding="utf-8"))
+    kf = json.loads(QURAN_SRC.read_text(encoding="utf-8"))
+    meta = json.loads(META_SRC.read_text(encoding="utf-8"))
     en = json.loads(EN_SRC.read_text(encoding="utf-8"))
     ref = json.loads(REF.read_text(encoding="utf-8"))
+    assert [r["id"] for r in kf] == list(range(1, 6237)), "hafsData_v18 rows out of order"
+    by_surah: dict[int, list[dict]] = {}
+    for r in kf:
+        by_surah.setdefault(r["sora"], []).append(r)
     surahs = []
-    for s, e in zip(src, en, strict=True):
+    for s, e in zip(meta, en, strict=True):
         assert s["id"] == e["id"]
+        rows = by_surah[s["id"]]
+        assert [r["aya_no"] for r in rows] == list(range(1, len(rows) + 1)), s["id"]
+        ayahs = []
+        for r in rows:
+            m = AYAH_NUMBER_SUFFIX.search(r["aya_text"])
+            assert m and int(m.group(0)[1:].translate(str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789"))) == r["aya_no"], (s["id"], r["aya_no"])
+            ayahs.append(r["aya_text"][: m.start()])
         surahs.append({
             "n": s["id"],
             "nameAr": s["name"],
             "translit": s["transliteration"],
             "nameEn": e["translation"],
             "revelation": s["type"],
-            "ayahCount": len(s["verses"]),
-            "ayahs": [v["text"] for v in s["verses"]],
+            "ayahCount": len(rows),
+            "ayahs": ayahs,
             "en": [v["translation"] for v in e["verses"]],
         })
-        assert [v["id"] for v in s["verses"]] == list(range(1, len(s["verses"]) + 1))
+        assert len(e["verses"]) == len(rows)
 
-    # --- Madinah Mushaf (KFGQPC 1405H) page boundaries ---------------------
+    # --- Madinah Mushaf (KFGQPC new edition, 1441H) page boundaries ----------
     # Manifest rows are [surahIdx0, lineIdx, surahIdx0, lineIdx] where lineIdx 0/1
     # are the surah header and basmala and lineIdx k>=2 is ayah k-1.
     m = json.loads(MADINA.read_text(encoding="utf-8"))
@@ -134,7 +158,18 @@ def main() -> int:
         else:  # page ends on the next surah's header: last ayah is in previous surah
             end = (s1, counts[s1 - 1])
         pages.append({"page": i + 1, "start": list(start), "end": list(end)})
-    juz = [{"juz": k + 1, "page": row[2], "start": [row[0] + 1, max(1, row[1] - 1)]} for k, row in enumerate(m["juz"])]
+    # Juz starts and the page of every ayah come from the Complex's own data (jozz, page columns).
+    first = {}
+    for r in kf:
+        first.setdefault(r["jozz"], r)
+    juz = [{"juz": j, "page": first[j]["page"], "start": [first[j]["sora"], first[j]["aya_no"]]} for j in range(1, 31)]
+    juz_problems = []
+    kf_page_start = {}
+    for r in kf:
+        kf_page_start.setdefault(r["page"], [r["sora"], r["aya_no"]])
+    for p in pages:
+        if kf_page_start.get(p["page"]) != p["start"]:
+            juz_problems.append(f"page {p['page']} starts at {p['start']} but hafsData_v18 says {kf_page_start.get(p['page'])}")
     quarters, quarter_problems = build_quarters(surahs, pages, juz)
 
     bundle = {
@@ -143,14 +178,15 @@ def main() -> int:
         "riwayah": "Hafs an Asim",
         "numbering": "Kufi (6236)",
         "source": {
-            "text": "The Noble Qur'an Encyclopedia (quranenc.com) Uthmani text, via npm quran-json@3.1.2 (CC BY 4.0)",
+            "text": "King Fahd Glorious Quran Printing Complex, KFGQPC Hafs Uthmanic Data v18 (hafsData_v18.json, 2021-10-25), byte-for-byte; ayah-number suffix removed",
+            "font": "KFGQPC HAFS Uthmanic Script v0.18 (the Complex's font for this text, distributed unmodified)",
             "translationEn": "Saheeh International via quran-json@3.1.2 (licence review pending, see docs/CONTENT_SOURCES.md)",
             "upstreamSha256": hashlib.sha256(QURAN_SRC.read_bytes()).hexdigest(),
         },
         "surahs": surahs,
     }
     dump(C / "quran/dist/quran.v1.json", bundle)
-    dump(C / "quran/dist/pages.v1.json", {"schema": "pages.v1", "layout": "Madinah Mushaf KFGQPC 1405H", "pages": pages, "juz": juz, "quarters": quarters,
+    dump(C / "quran/dist/pages.v1.json", {"schema": "pages.v1", "layout": "Madinah Mushaf KFGQPC new edition (1441H)", "pages": pages, "juz": juz, "quarters": quarters,
          "quartersSource": "starts from npm quran-meta@7.0.0 (Tanzil data), checked against the rub' al-hizb sign in the canonical KFGQPC text; where the two differ the Mushaf text wins (15:49)"})
 
     integrity = {
@@ -164,7 +200,7 @@ def main() -> int:
         "upstreamFileSha256": bundle["source"]["upstreamSha256"],
         "pageCount": len(pages),
     }
-    lines_bundle, line_problems = mushaf_lines.build(C, surahs, pages)
+    lines_bundle, line_problems = mushaf_lines.build(C, surahs, pages, kf)
     dump(C / "quran/dist/mushaf-lines.v1.json", lines_bundle)
     integrity["mushafLinesSha256"] = sha(json.dumps(lines_bundle["pages"], ensure_ascii=False, separators=(",", ":"), sort_keys=True))
     dump(C / "quran/dist/integrity.v1.json", integrity)
@@ -194,10 +230,10 @@ def main() -> int:
         "surahs": muy,
     })
 
-    dump(C / "VERSIONS.json", {"quran": QURAN_VERSION, "pages": "1405H-1", "adhkar": "1.0.0", "tafsir": "muyassar-1"})
+    dump(C / "VERSIONS.json", {"quran": QURAN_VERSION, "pages": "1441H-1", "adhkar": "1.0.0", "tafsir": "muyassar-1"})
 
     # Independent cross-checks against reference data (not derived from the source).
-    problems = list(line_problems) + quarter_problems
+    problems = list(line_problems) + quarter_problems + juz_problems
     # --- Curated reels (YouTube/Instagram embeds, religious review status) -------
     _, reel_problems = reels.build()
     problems += [f"reels: {x}" for x in reel_problems]

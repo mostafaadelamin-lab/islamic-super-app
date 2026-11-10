@@ -106,7 +106,7 @@
   "about.translation": "الترجمة الإنجليزية",
   "about.layout": "ترقيم صفحات المصحف",
   "about.fonts": "الخطوط",
-  "about.fontsBody": "Amiri Quran وIBM Plex Sans Arabic — رخصة SIL المفتوحة للخطوط 1.1 (مستضافة محليًا).",
+  "about.fontsBody": "خط المصحف: خط مجمع الملك فهد لطباعة المصحف الشريف (حفص، الإصدار 18) بلا أي تعديل وفق رخصة المجمع. خط الواجهة: IBM Plex Sans Arabic — رخصة SIL المفتوحة 1.1. الخطوط مستضافة محليًا.",
   "about.prayerAlgo": "مواقيت الصلاة",
   "about.prayerAlgoBody": "معادلات فلكية قياسية (Meeus / المرصد البحري الأمريكي)، مُتحقَّق منها مقابل مكتبة adhan-js المستقلة.",
   "about.version": "إصدار المحتوى {v} — {riwayah}، {numbering}",

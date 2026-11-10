@@ -1,5 +1,5 @@
 {
- "_note": "Independent reference: standard Hafs/Kufi ayah counts per surah (114 surahs, 6236 ayahs), typed from the published Madinah Mushaf index, not derived from the content file. upstreamFileSha256 pins the approved npm quran-json@3.1.2 dist/quran.json (npm shasum 6cfe0249dc0db413cf582358925717a74a934d7d).",
+ "_note": "Independent reference: standard Hafs/Kufi ayah counts per surah (114 surahs, 6236 ayahs), typed from the published Madinah Mushaf index, not derived from the content file. upstreamFileSha256 pins the King Fahd Glorious Quran Printing Complex 'Hafs Uthmanic Data' v18 file hafsData_v18.json (content/quran/upstream/kfgqpc-hafs-v18.json). Page spot checks follow the Complex's new Madinah edition (1441H).",
  "ayahCounts": [
   7,
   286,
@@ -116,7 +116,7 @@
   5,
   6
  ],
- "upstreamFileSha256": "d8a8adff387f60ce3ff7dbe3238dd9b27120bfe29d8fcb07ad2e89cad37cefd4",
+ "upstreamFileSha256": "5d8bb91726e482839d0057633cb1973031e4d706fa9604eea5e08892f20ba140",
  "madinahPageSpotChecks": [
   {
    "page": 1,

@@ -113,8 +113,9 @@ String toAsciiDigits(String s) {
   return sb.toString();
 }
 
-/// Ayah end marker with Arabic-Indic number, e.g. "﴿١٢﴾".
-String ayahMarker(int n) => '﴿${toArabicIndic(n)}﴾';
+/// Ayah end marker for Quran text: the Arabic-Indic number, e.g. "١٢". The KFGQPC HAFS v18 font
+/// draws the Complex's ayah ornament around these digits (as in hafsData_v18), so nothing is added.
+String ayahMarker(int n) => toArabicIndic(n);
 
 /// Parses a Mushaf page number typed by the user; null when invalid.
 int? parsePageNumber(String raw, {int max = 604}) {

@@ -1,8 +1,10 @@
-"""Madinah Mushaf 1405H line layout (15 lines per page) bound to the canonical text.
+"""Madinah Mushaf line layout (15 lines per page, KFGQPC new edition 1441H) bound to the canonical text.
 
 The line layout (which words sit on which line of which page) comes from the
-pinned upstream package quran-madina-html@2.2.2 (Madina-1405H database, KFGQPC
-1405H layout, Waqf GPL 2.0). Its own text is used ONLY to locate line breaks;
+pinned upstream package quran-madina-html@2.2.2 (Madina-1441H database, the
+KFGQPC new-edition layout, Waqf GPL 2.0). Every ayah's page, first line and last
+line are checked against the Complex's own hafsData_v18 (page, line_start,
+line_end). Its own text is used ONLY to locate line breaks;
 it is never copied into the output. Each output segment references a word range
 of the canonical ayah text (content/quran/dist/quran.v1.json), so every platform
 renders exactly the canonical code points.
@@ -23,7 +25,7 @@ import json
 import pathlib
 import unicodedata
 
-UPSTREAM = "quran/upstream/quran-madina-html-2.2.2/Madina-1405H"
+UPSTREAM = "quran/upstream/quran-madina-html-2.2.2/Madina-1441H"
 AYAH_MARK = "۝"
 
 
@@ -68,9 +70,10 @@ def _assign_lines(canon_words: list[str], up_words: list[tuple[int, int, str]]) 
     return out
 
 
-def build(content: pathlib.Path, surahs: list[dict], pages: list[dict]):
+def build(content: pathlib.Path, surahs: list[dict], pages: list[dict], kf: list[dict] | None = None):
     segs = _load_upstream(content)
     problems: list[str] = []
+    kf_rows = {(r["sora"], r["aya_no"]): r for r in kf or []}
     # page -> line -> list of items
     layout: dict[int, dict[int, list]] = collections.defaultdict(lambda: collections.defaultdict(list))
     for s in surahs:
@@ -95,6 +98,11 @@ def build(content: pathlib.Path, surahs: list[dict], pages: list[dict]):
                 continue
             words = text.split(" ")
             where = _assign_lines(words, up)
+            if kf is not None:
+                row = kf_rows[(s["n"], a)]
+                if (where[0][0], where[0][1], where[-1][1]) != (row["page"], row["line_start"], row["line_end"]):
+                    problems.append(f"{s['n']}:{a} at page {where[0][0]} lines {where[0][1]}-{where[-1][1]}, "
+                                    f"hafsData_v18 says page {row['page']} lines {row['line_start']}-{row['line_end']}")
             run_start = 0
             for i in range(1, len(words) + 1):
                 if i == len(words) or where[i] != where[run_start]:
@@ -131,6 +139,6 @@ def build(content: pathlib.Path, surahs: list[dict], pages: list[dict]):
         ends = [(g[0], g[1]) for ln_ in p["lines"] if ln_["k"] == "text" for g in ln_["g"] if g[4]]
         if ends and list(ends[-1]) != meta["end"]:
             problems.append(f"page {p['page']}: last ayah ending {ends[-1]} != pages.v1 end {meta['end']}")
-    return {"schema": "mushaf-lines.v1", "layout": "Madinah Mushaf KFGQPC 1405H (15 lines)",
-            "source": "line breaks from npm quran-madina-html@2.2.2 (Waqf GPL 2.0); words reference quran.v1.json",
+    return {"schema": "mushaf-lines.v1", "layout": "Madinah Mushaf KFGQPC new edition 1441H (15 lines)",
+            "source": "line breaks from npm quran-madina-html@2.2.2 Madina-1441H (Waqf GPL 2.0), checked against hafsData_v18 page/line_start/line_end; words reference quran.v1.json",
             "pages": out_pages}, problems

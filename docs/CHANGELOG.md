@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased] — Quran text from the King Fahd Complex, release 18 (owner's request) — 2026-11-10
+### Changed
+- The Mushaf text is now the King Fahd Glorious Quran Printing Complex's latest published data, Hafs v18 (`hafsData_v18.json`), exactly as published. No letter, dot or haraka changed compared with the previous text (only the Unicode encoding).
+- Pages and lines follow the Complex's new Madinah edition (1441H); checked ayah by ayah against the Complex's page and line columns.
+- The Quran is drawn with the Complex's own font (KFGQPC HAFS Uthmanic Script v18) on web and mobile; ayah numbers use the Complex's ornament. Amiri Quran removed.
+- Quran content version 2.0.0, pages 1441H-1.
+### Checked
+- Tafsir al-Muyassar: one entry per ayah, aligned (6236). Recitation audio: addressed by surah/ayah, page playlists follow the new pages.
+
 ## [Unreleased] — Recitations library and Quran radios from mp3quran.net (owner's feature list, phase 7) — 2026-11-10
 ### Added
 - Recitations and radios (mobile: More → Recitations and radios; web: /library/): reciters from mp3quran.net in every riwaya (Hafs, Warsh, Qalun, ad-Duri, ...), filter by riwaya, search by name, choose a recording, then play any surah it has.

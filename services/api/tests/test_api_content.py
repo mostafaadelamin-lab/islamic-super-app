@@ -7,7 +7,7 @@ def test_health(client):
 
 def test_versions_include_quran_hash(client):
     v = client.get("/v1/content/versions").json()
-    assert v["quran"] == "1.0.0" and len(v["quranSha256"]) == 64
+    assert v["quran"] == "2.0.0" and len(v["quranSha256"]) == 64
 
 
 def test_surah_list(client):

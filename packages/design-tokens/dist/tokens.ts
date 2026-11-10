@@ -41,7 +41,7 @@ export const tokens = {
   }
  },
  "font": {
-  "quran": "Amiri Quran",
+  "quran": "KFGQPC HAFS Uthmanic Script",
   "uiArabic": "IBM Plex Sans Arabic",
   "uiLatin": "IBM Plex Sans"
  },

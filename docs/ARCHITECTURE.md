@@ -41,7 +41,7 @@ docs/                    SRS, architecture, changelog, reports
 Low-precision solar coordinates (Meeus / USNO), hour-angle for Fajr/Isha angles and sunrise/sunset at −0.833°, Asr shadow factor 1 or 2, two refinement iterations, Isha as fixed interval for Umm al-Qura/Qatar, "twilight angle" high-latitude rule (fraction angle/60 of the night), +1 min Dhuhr, rounding to the nearest minute. Times are computed in UTC and converted with the platform's IANA tz database, so DST is handled by tzdata, not by the algorithm. Polar day/night returns a clear error.
 
 ### Quran content pipeline
-`content/quran/upstream/quran-json-3.1.2.quran.json` (npm tarball shasum verified against the registry) → `tools/build_content.py` → `quran.v1.json`, `pages.v1.json` (604 Madinah 1405H pages derived from the KFGQPC page manifest used by quran-madina-html), `integrity.v1.json` (overall and per-surah SHA-256). The build refuses to emit output if counts differ from the independent reference or pages have gaps/overlaps.
+`content/quran/upstream/kfgqpc-hafs-v18.json` (KFGQPC hafsData_v18.json, SHA-256 pinned) → `tools/build_content.py` → `quran.v1.json`, `pages.v1.json` (604 Madinah pages of the KFGQPC new edition 1441H, from the v18 `page` column; line breaks from quran-madina-html Madina-1441H checked against v18 `line_start`/`line_end`), `integrity.v1.json` (overall and per-surah SHA-256). The build refuses to emit output if counts differ from the independent reference or pages have gaps/overlaps.
 
 ## 4. Backend
 - FastAPI app factory `create_app(Settings)`; state holds DB, Quran store, rate limiter.
@@ -69,5 +69,5 @@ content → backend → web (Chromium/Firefox/WebKit e2e, axe) · mobile-android
 - iOS: no macOS in the development container; iOS is built and tested only by the CI macOS job.
 - Android emulator tests run only in CI (no KVM in the container).
 - Mushaf page reader shows the exact ayahs of each Madinah page, but not the printed line-by-line calligraphic layout (planned: KFGQPC page fonts).
-- Amiri Quran font needs the display glyph map for open tanween; bundling the KFGQPC HAFS font removes it.
+- The Quran text is drawn with the KFGQPC HAFS Uthmanic Script v18 font (the Complex's font for that text), so the display glyph map is empty; the font is shipped unmodified (its EULA forbids changes, so no subsetting).
 - Adhan notifications, audio recitation, adhkar, Hajj guide, AI and speech are not in M1.

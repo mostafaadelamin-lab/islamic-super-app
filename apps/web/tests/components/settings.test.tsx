@@ -66,9 +66,9 @@ describe("DisplaySettings", () => {
     await userEvent.click(screen.getByRole("checkbox", { name: /English translation/ }));
     expect(prefsStore.get().translation).toBe(true);
   });
-  it("preview uses the display map", () => {
+  it("preview shows the KFGQPC text unchanged", () => {
     render(<DisplaySettings locale="ar" preview={"قَيِّمٗا"} />);
-    expect(screen.getByTestId("font-preview").textContent).toContain("قَيِّمࣰا");
+    expect(screen.getByTestId("font-preview").textContent).toContain("قَيِّمٗا");
   });
 });
 

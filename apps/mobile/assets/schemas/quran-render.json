@@ -1,6 +1,6 @@
 {
   "schema": "quran-render.v1",
-  "_doc": "Display-time glyph mapping ONLY. The canonical text in content/quran/dist keeps the KFGQPC/QuranEnc code points and is what every integrity hash covers. The bundled Amiri Quran font draws open (idgham) tanween at U+08F0..U+08F2, while the KFGQPC text encodes them at U+0657/U+065E/U+0656. Clients apply this map to the string they hand to the text renderer, never to stored, searched, synced or hashed text. Remove this map once the KFGQPC HAFS font is bundled.",
-  "font": "Amiri Quran",
-  "map": {"ٗ": "ࣰ", "ٞ": "ࣱ", "ٖ": "ࣲ"}
+  "_doc": "Display-time glyph mapping ONLY (never applied to stored, searched, synced or hashed text). Empty since 2.0.0: the Quran text is KFGQPC Hafs v18 and is drawn with the Complex's own font (KFGQPC HAFS Uthmanic Script v18), which draws every code point of that text as published, so no substitution is needed. The end-of-ayah ornament is drawn by that font from Arabic-Indic digits.",
+  "font": "KFGQPC HAFS Uthmanic Script",
+  "map": {}
 }

@@ -10,11 +10,11 @@ The API is used for account sync (bookmarks, settings) and as a cross-check for 
 | Method | Path | Auth | Purpose |
 |---|---|---|---|
 | GET | `/health` | – | `{"status":"ok","version":"0.1.0"}` |
-| GET | `/v1/content/versions` | – | `{"quran":"1.0.0","pages":"1405H-1","adhkar":"1.0.0","quranSha256":"…"}` |
+| GET | `/v1/content/versions` | – | `{"quran":"2.0.0","pages":"1441H-1","adhkar":"1.0.0","quranSha256":"…"}` |
 | GET | `/v1/quran/surahs` | – | list of `{n,nameAr,nameEn,translit,revelation,ayahCount}` (114) |
 | GET | `/v1/quran/surahs/{n}?translation=en` | – | `{n,nameAr,…,ayahs:[{a,text,en?}]}`; 404 if n∉1..114 |
 | GET | `/v1/quran/ayahs/{s}/{a}` | – | `{s,a,text,page,en}` |
-| GET | `/v1/quran/pages/{p}` | – | Madinah 1405H page: `{page,start:[s,a],end:[s,a],ayahs:[{s,a,text}]}`; 404 if p∉1..604 |
+| GET | `/v1/quran/pages/{p}` | – | Madinah 1441H page (KFGQPC new edition): `{page,start:[s,a],end:[s,a],ayahs:[{s,a,text}]}`; 404 if p∉1..604 |
 | GET | `/v1/quran/search?q=…&limit=20` | – | diacritic-insensitive Arabic search: `{q,total,results:[{s,a,text}]}`; 422 if q shorter than 2 letters |
 | GET | `/v1/reels?include_pending=false` | – | curated YouTube/Instagram reels `{schema:"reels.v1",version,items:[{id,platform:"youtube"|"instagram",ref,url,title:{ar,en},speaker,category:"recitation"|"lesson"|"admonition",source,status,reviewer,reviewedAt}]}`. Only `status:"approved"` by default; `include_pending=true` (reviewer mode) adds pending ones. Rejected reels are never served |
 | GET | `/v1/reels/feed` | – | automatic reels: newest Shorts of the trusted channels in `content/reels/sources.json` from YouTube's public feeds, mixed across channels, cached 3 h. `{schema:"reels-feed.v1",sources:[{id,channelId,name:{ar,en},category}],items:[{id,platform:"youtube",ref,url,title:{ar,en},speaker,category,sourceId,status:"auto",published}]}`. No per-video review (owner approves channels) |

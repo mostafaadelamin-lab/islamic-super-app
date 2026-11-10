@@ -20,7 +20,11 @@ afterEach(() => vi.unstubAllGlobals());
 describe("Hisn sections", () => {
   it("filters chapters by section", async () => {
     render(
-      <HisnIndex locale="en" chapters={HISN.map(({ id, title }) => ({ id, title }))} sections={HISN_SECTIONS} />,
+      <HisnIndex
+        locale="en"
+        chapters={HISN.map(({ id, title }) => ({ id, title }))}
+        sections={HISN_SECTIONS}
+      />,
     );
     const list = screen.getByTestId("hisn-list");
     expect(within(list).getAllByRole("link")).toHaveLength(HISN.length);

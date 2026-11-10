@@ -34,10 +34,10 @@ PAIRS=(
   "packages/shared-schemas/quran-render.json:assets/schemas/quran-render.json"
   "packages/shared-schemas/search-normalization.json:assets/schemas/search-normalization.json"
   "packages/shared-schemas/audio/reciters.json:assets/schemas/reciters.json"
-  "content/fonts/AmiriQuran-Regular.ttf:assets/fonts/AmiriQuran-Regular.ttf"
+  "content/fonts/KFGQPC-HAFS-Uthmanic-v18.ttf:assets/fonts/KFGQPC-HAFS-Uthmanic-v18.ttf"
   "content/fonts/IBMPlexSansArabic-Regular.ttf:assets/fonts/IBMPlexSansArabic-Regular.ttf"
   "content/fonts/IBMPlexSansArabic-SemiBold.ttf:assets/fonts/IBMPlexSansArabic-SemiBold.ttf"
-  "content/fonts/OFL.txt:assets/fonts/OFL-AmiriQuran.txt"
+  "content/fonts/KFGQPC-HAFS-LICENSE.txt:assets/fonts/KFGQPC-HAFS-LICENSE.txt"
   "content/fonts/OFL-IBMPlexSansArabic.txt:assets/fonts/OFL-IBMPlexSansArabic.txt"
   "packages/design-tokens/dist/design_tokens.dart:lib/theme/design_tokens.dart"
 )

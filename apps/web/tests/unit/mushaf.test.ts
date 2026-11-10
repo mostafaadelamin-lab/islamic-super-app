@@ -71,13 +71,11 @@ describe("Mushaf line layout (15-line Madinah)", () => {
     }
   });
 
-  it("applies the display glyph map only to the rendered string (open tanween)", () => {
-    const withMark = segments(all[292]!).find((g) => unrender(g.text) !== g.text); // page 293, al-Kahf
+  it("draws the KFGQPC code points unchanged (open tanween on page 293, al-Kahf)", () => {
+    const withMark = segments(all[292]!).find((g) => /[ٖٗٞ]/.test(g.text));
     expect(withMark).toBeDefined();
-    expect(withMark!.text).toMatch(/[ࣰ-ࣲ]/);
-    expect(withMark!.text).not.toMatch(/[ٖٗٞ]/);
-    // the canonical text still has the KFGQPC code points
-    expect(canonical[withMark!.s - 1]![withMark!.a - 1]).toMatch(/[ٖٗٞ]/);
+    expect(withMark!.text).not.toMatch(/[ࣰ-ࣲ]/);
+    expect(unrender(withMark!.text)).toBe(withMark!.text);
   });
 
   it("ayah-end markers: exactly one per ayah, on its last segment", () => {

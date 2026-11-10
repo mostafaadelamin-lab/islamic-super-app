@@ -106,7 +106,7 @@
   "about.translation": "English translation",
   "about.layout": "Mushaf page layout",
   "about.fonts": "Fonts",
-  "about.fontsBody": "Amiri Quran and IBM Plex Sans Arabic — SIL Open Font License 1.1 (self-hosted).",
+  "about.fontsBody": "Quran font: King Fahd Glorious Quran Printing Complex KFGQPC HAFS Uthmanic Script v18, unmodified under the Complex's licence. Interface font: IBM Plex Sans Arabic — SIL Open Font License 1.1. Fonts are self-hosted.",
   "about.prayerAlgo": "Prayer times",
   "about.prayerAlgoBody": "Standard astronomical formulas (Meeus / U.S. Naval Observatory), verified against the independent adhan-js library.",
   "about.version": "Content version {v} — {riwayah}, {numbering}",

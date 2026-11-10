@@ -57,12 +57,13 @@ describe("SearchIndex", () => {
 describe("display-only render map", () => {
   it("uses the shared map", () => {
     expect(RENDER_MAP).toEqual(render.map);
-    expect(Object.keys(RENDER_MAP)).toHaveLength(3);
+    // KFGQPC v18 text is drawn with the Complex's own font: nothing is substituted
+    expect(Object.keys(RENDER_MAP)).toHaveLength(0);
   });
-  it("maps KFGQPC open-tanween code points to Amiri Quran ones and nothing else", () => {
-    expect(renderQuranText("ٖٗٞ")).toBe("ࣰࣱࣲ");
+  it("hands the KFGQPC code points (open tanween included) to the renderer unchanged", () => {
+    expect(renderQuranText("ٖٗٞ")).toBe("ٖٗٞ");
     const s = "قَيِّمٗا لِّيُنذِرَ";
-    expect(renderQuranText(s)).toBe(s.replace("ٗ", "ࣰ"));
+    expect(renderQuranText(s)).toBe(s);
     expect(renderQuranText("abc")).toBe("abc");
   });
   it("is a pure function (canonical text stays unchanged)", () => {

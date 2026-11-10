@@ -28,14 +28,13 @@ void main() {
     final content = app.services.content;
     final stored = content.quran.text(const AyahRef(2, 2));
     final display = content.renderMap.forDisplay(stored);
-    expect(display, isNot(stored), reason: '2:2 contains an open tanween that the map changes');
+    expect(display, stored, reason: 'the KFGQPC v18 text is drawn exactly as stored');
     expect(find.text('$display ${ayahMarker(2)}'), findsOneWidget);
-    expect(find.text('$stored ${ayahMarker(2)}'), findsNothing);
-    expect(ayahMarker(2), '﴿٢﴾');
+    expect(ayahMarker(2), '٢');
     expect(content.quran.text(const AyahRef(2, 2)), stored, reason: 'stored text untouched');
     expect(find.text('سورة البقرة'), findsOneWidget);
     final t = tester.widget<Text>(find.text('$display ${ayahMarker(2)}'));
-    expect(t.style!.fontFamily, 'Amiri Quran');
+    expect(t.style!.fontFamily, 'KFGQPC HAFS Uthmanic Script');
     expect(t.style!.fontSize, 26);
     expect(t.textDirection, TextDirection.rtl);
   });

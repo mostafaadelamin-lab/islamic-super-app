@@ -60,9 +60,9 @@ flutter:
     - assets/hadith/nasai/
     - assets/hadith/tirmidhi/
   fonts:
-    - family: Amiri Quran
+    - family: KFGQPC HAFS Uthmanic Script
       fonts:
-        - asset: assets/fonts/AmiriQuran-Regular.ttf
+        - asset: assets/fonts/KFGQPC-HAFS-Uthmanic-v18.ttf
     - family: IBM Plex Sans Arabic
       fonts:
         - asset: assets/fonts/IBMPlexSansArabic-Regular.ttf

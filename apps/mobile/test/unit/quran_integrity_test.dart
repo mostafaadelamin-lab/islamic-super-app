@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/data/content.dart';
 import 'package:rattil/domain/quran.dart';
+import 'package:rattil/domain/text.dart';
 
 import '../helpers.dart';
 
@@ -144,24 +145,21 @@ void main() {
     expect(() => q.surah(115), throwsRangeError);
   });
 
-  test('every bundled ayah equals the pinned upstream quran-json 3.1.2 text', () {
-    final upstreamFile = File('$repoRoot/content/quran/upstream/quran-json-3.1.2.quran.json');
+  test('every bundled ayah equals the pinned KFGQPC hafsData_v18 text (minus its ayah-number suffix)', () {
+    final upstreamFile = File('$repoRoot/content/quran/upstream/kfgqpc-hafs-v18.json');
     expect(sha256.convert(upstreamFile.readAsBytesSync()).toString(), reference['upstreamFileSha256']);
-    final upstream = jsonDecode(upstreamFile.readAsStringSync()) as List<dynamic>;
-    expect(upstream, hasLength(114));
-    var n = 0;
-    for (final raw in upstream) {
-      final u = raw as Map<String, dynamic>;
-      final s = q.surah(u['id'] as int);
-      final verses = u['verses'] as List<dynamic>;
-      expect(verses, hasLength(s.ayahCount));
-      for (final v in verses) {
-        final m = v as Map<String, dynamic>;
-        expect(s.ayahs[(m['id'] as int) - 1], m['text'], reason: '${s.n}:${m['id']}');
-        n++;
-      }
+    final rows = jsonDecode(upstreamFile.readAsStringSync()) as List<dynamic>;
+    expect(rows, hasLength(6236));
+    final suffix = RegExp(' [٠-٩]+\$');
+    for (final raw in rows) {
+      final r = raw as Map<String, dynamic>;
+      final ref = AyahRef(r['sora'] as int, r['aya_no'] as int);
+      final text = r['aya_text'] as String;
+      final m = suffix.firstMatch(text)!;
+      expect(toAsciiDigits(m.group(0)!.substring(1)), '${ref.ayah}');
+      expect(q.text(ref), text.substring(0, m.start), reason: '$ref');
+      expect(q.pageOf(ref), r['page'], reason: 'page of $ref');
     }
-    expect(n, 6236);
   });
 
   test('integrity.v1.json is the copy bundled with the app', () async {

@@ -57,7 +57,7 @@ class DesignTokens {
   static const double radiusMd = 14.0;
   static const double radiusLg = 20.0;
   static const double radiusPill = 999.0;
-  static const String fontQuran = 'Amiri Quran';
+  static const String fontQuran = 'KFGQPC HAFS Uthmanic Script';
   static const String fontUi = 'IBM Plex Sans Arabic';
   static const double minTouchTarget = 48.0;
 }
