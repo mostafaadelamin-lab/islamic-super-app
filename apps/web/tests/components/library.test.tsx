@@ -23,7 +23,7 @@ describe("RecitationLibrary", () => {
     serve();
     render(<RecitationLibrary locale="ar" />);
     expect(await screen.findByTestId("library-reciter-153")).toBeTruthy();
-    expect(screen.getByTestId("library-source").textContent).toContain("mp3quran.net");
+    expect(screen.getByTestId("library-source").textContent).not.toContain("mp3quran");
     fireEvent.change(screen.getByTestId("library-rewaya"), { target: { value: "2" } });
     expect(screen.queryByTestId("library-reciter-153")).toBeNull();
     fireEvent.click(screen.getByTestId("library-reciter-7"));

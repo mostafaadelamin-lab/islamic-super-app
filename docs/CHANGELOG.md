@@ -5,7 +5,7 @@
 - Recitations and radios (mobile: More → Recitations and radios; web: /library/): reciters from mp3quran.net in every riwaya (Hafs, Warsh, Qalun, ad-Duri, ...), filter by riwaya, search by name, choose a recording, then play any surah it has.
 - Quran radios (live streams), with search.
 - Streams through the narration player (mobile) or a native player (web) with the sleep timer; starting one stops the recitation player.
-- The list is saved on the device for a week, so it opens without the internet (playing still needs it). Source credited on the screen.
+- The list is saved on the device for a week, so it opens without the internet (playing still needs it). The source site is not named in the app (owner's decision); it is recorded in CONTENT_SOURCES.md.
 
 ## [Unreleased] — Hadith books from Open-Hadith-Data (owner's feature list, phase 7) — 2026-11-10
 ### Added
