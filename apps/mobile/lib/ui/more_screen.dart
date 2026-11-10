@@ -19,6 +19,7 @@ import 'tasbih_screen.dart';
 import 'widgets.dart';
 import 'zakat_screen.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 /// "More" tab: the remaining sections and the settings.
 class MoreScreen extends StatelessWidget {
@@ -27,11 +28,11 @@ class MoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    Widget tile(String id, IconData icon, String title, Widget Function() screen) => ListTile(
+    Widget tile(String id, RIconData icon, String title, Widget Function() screen) => ListTile(
       key: Key('more.$id'),
-      leading: Icon(icon),
+      leading: RIconBadge(icon),
       title: Text(title),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: const RIcon(RIcons.chevronForward),
       onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => screen())),
     );
     return Scaffold(
@@ -42,30 +43,30 @@ class MoreScreen extends StatelessWidget {
           children: [
             SectionCard(
               children: [
-                tile('bookmarks', Icons.bookmarks_outlined, l.navBookmarks, () => const BookmarksScreen()),
-                tile('search', Icons.search, l.quranSearch, () => const SearchScreen()),
-                tile('khatma', Icons.donut_large_outlined, l.khatmaTitle, () => const KhatmaScreen()),
-                tile('downloads', Icons.download_for_offline_outlined, l.downloadsTitle, () => const DownloadsScreen()),
+                tile('bookmarks', RIcons.bookmarks, l.navBookmarks, () => const BookmarksScreen()),
+                tile('search', RIcons.search, l.quranSearch, () => const SearchScreen()),
+                tile('khatma', RIcons.khatma, l.khatmaTitle, () => const KhatmaScreen()),
+                tile('downloads', RIcons.download, l.downloadsTitle, () => const DownloadsScreen()),
               ],
             ),
             SectionCard(
               children: [
-                tile('hisn', Icons.menu_book_outlined, l.adhkarHisn, () => const HisnScreen()),
-                tile('tasbih', Icons.touch_app_outlined, l.tasbihTitle, () => const TasbihScreen()),
-                tile('tracker', Icons.event_available_outlined, l.worshipTitle, () => const WorshipScreen()),
-                tile('qibla', Icons.explore_outlined, l.qiblaTitle, () => const QiblaScreen()),
-                tile('mosques', Icons.place_outlined, l.mosquesTitle, () => const MosquesScreen()),
-                tile('zakat', Icons.savings_outlined, l.zakatTitle, () => const ZakatScreen()),
-                tile('hajj', Icons.mosque_outlined, l.hajjTitle, () => const HajjScreen()),
-                tile('stories', Icons.headphones_outlined, l.storiesTitle, () => const StoriesScreen()),
-                tile('reels', Icons.smart_display_outlined, l.reelsTitle, () => const ReelsScreen()),
+                tile('hisn', RIcons.hisn, l.adhkarHisn, () => const HisnScreen()),
+                tile('tasbih', RIcons.beads, l.tasbihTitle, () => const TasbihScreen()),
+                tile('tracker', RIcons.calendarCheck, l.worshipTitle, () => const WorshipScreen()),
+                tile('qibla', RIcons.compass, l.qiblaTitle, () => const QiblaScreen()),
+                tile('mosques', RIcons.location, l.mosquesTitle, () => const MosquesScreen()),
+                tile('zakat', RIcons.zakat, l.zakatTitle, () => const ZakatScreen()),
+                tile('hajj', RIcons.kaaba, l.hajjTitle, () => const HajjScreen()),
+                tile('stories', RIcons.headphones, l.storiesTitle, () => const StoriesScreen()),
+                tile('reels', RIcons.reels, l.reelsTitle, () => const ReelsScreen()),
               ],
             ),
             SectionCard(
               children: [
-                tile('settings', Icons.settings_outlined, l.navSettings, () => const SettingsScreen()),
-                tile('help', Icons.help_outline, l.helpTitle, () => const HelpScreen()),
-                tile('about', Icons.info_outline, l.settingsAbout, () => const AboutScreen()),
+                tile('settings', RIcons.settings, l.navSettings, () => const SettingsScreen()),
+                tile('help', RIcons.help, l.helpTitle, () => const HelpScreen()),
+                tile('about', RIcons.info, l.settingsAbout, () => const AboutScreen()),
               ],
             ),
           ],

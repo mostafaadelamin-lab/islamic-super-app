@@ -13,6 +13,7 @@ import 'audio_widgets.dart';
 import 'l10n_ext.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -102,7 +103,7 @@ class SettingsScreen extends StatelessWidget {
                       IconButton(
                         key: const Key('hijriOffsetMinus'),
                         tooltip: '${l.settingsHijriOffset} −',
-                        icon: const Icon(Icons.remove),
+                        icon: const RIcon(RIcons.minus),
                         onPressed: settings.hijriOffset > -hijriOffsetMax
                             ? () => settings.setHijriOffset(settings.hijriOffset - 1)
                             : null,
@@ -128,7 +129,7 @@ class SettingsScreen extends StatelessWidget {
                       IconButton(
                         key: const Key('hijriOffsetPlus'),
                         tooltip: '${l.settingsHijriOffset} +',
-                        icon: const Icon(Icons.add),
+                        icon: const RIcon(RIcons.plus),
                         onPressed: settings.hijriOffset < hijriOffsetMax
                             ? () => settings.setHijriOffset(settings.hijriOffset + 1)
                             : null,
@@ -145,19 +146,19 @@ class SettingsScreen extends StatelessWidget {
                   ListTile(
                     key: const Key('accountTile'),
                     contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.sync),
+                    leading: const RIcon(RIcons.refresh),
                     title: Text(l.settingsAccount),
                     subtitle: Text(l.settingsAccountHint),
-                    trailing: const Icon(Icons.chevron_right),
+                    trailing: const RIcon(RIcons.chevronForward),
                     onTap: () =>
                         Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const AccountScreen())),
                   ),
                   ListTile(
                     key: const Key('aboutTile'),
                     contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.info_outline),
+                    leading: const RIcon(RIcons.info),
                     title: Text(l.settingsAbout),
-                    trailing: const Icon(Icons.chevron_right),
+                    trailing: const RIcon(RIcons.chevronForward),
                     onTap: () =>
                         Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const AboutScreen())),
                   ),
@@ -231,13 +232,9 @@ class AdhanSettingsCard extends StatelessWidget {
               key: const Key('adhanSound'),
               showSelectedIcon: false,
               segments: [
-                ButtonSegment(value: 'adhan', label: Text(l.adhanSoundAdhan), icon: const Icon(Icons.mosque)),
-                ButtonSegment(value: 'tone', label: Text(l.adhanSoundTone), icon: const Icon(Icons.notifications)),
-                ButtonSegment(
-                  value: 'silent',
-                  label: Text(l.adhanSoundSilent),
-                  icon: const Icon(Icons.notifications_off),
-                ),
+                ButtonSegment(value: 'adhan', label: Text(l.adhanSoundAdhan), icon: const RIcon(RIcons.prayer)),
+                ButtonSegment(value: 'tone', label: Text(l.adhanSoundTone), icon: const RIcon(RIcons.bell)),
+                ButtonSegment(value: 'silent', label: Text(l.adhanSoundSilent), icon: const RIcon(RIcons.bellOff)),
               ],
               selected: {settings.adhanSound},
               onSelectionChanged: (v) => settings.setAdhanSound(v.first),
@@ -262,7 +259,7 @@ class AdhanSettingsCard extends StatelessWidget {
                 builder: (context, _) => FilledButton.tonalIcon(
                   key: const Key('adhanPreview'),
                   onPressed: () => s.adhanPreview.toggle(settings.adhanVoice),
-                  icon: Icon(s.adhanPreview.playing ? Icons.stop : Icons.play_arrow),
+                  icon: RIcon(s.adhanPreview.playing ? RIcons.stop : RIcons.play),
                   label: Text(s.adhanPreview.playing ? l.adhanPreviewStop : l.adhanPreview),
                 ),
               ),
@@ -273,7 +270,7 @@ class AdhanSettingsCard extends StatelessWidget {
                   await s.adhan.test();
                   messenger.showSnackBar(SnackBar(content: Text(l.adhanTestScheduled)));
                 },
-                icon: const Icon(Icons.alarm),
+                icon: const RIcon(RIcons.alarm),
                 label: Text(l.adhanTest),
               ),
             ],
@@ -313,12 +310,12 @@ class _VoiceTile extends StatelessWidget {
         child: ListTile(
           key: Key('adhanVoice-${voice.id}'),
           selected: selected,
-          leading: Icon(selected ? Icons.check_circle : Icons.circle_outlined, color: selected ? scheme.primary : null),
+          leading: RIcon(selected ? RIcons.checkCircle : RIcons.radioOff, color: selected ? scheme.primary : null),
           title: Text(name),
           trailing: IconButton.filledTonal(
             key: Key('adhanVoicePlay-${voice.id}'),
             tooltip: context.l10n.adhanVoiceListen(name),
-            icon: Icon(playing ? Icons.stop : Icons.play_arrow),
+            icon: RIcon(playing ? RIcons.stop : RIcons.play),
             onPressed: () => s.adhanPreview.toggle(voice.id),
           ),
           onTap: () => s.settings.setAdhanVoice(voice.id),

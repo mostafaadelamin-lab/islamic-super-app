@@ -13,6 +13,7 @@ import 'l10n_ext.dart';
 import 'prayer_model.dart';
 import 'adaptive.dart';
 import 'prayer_screen.dart' show QiblaCompass;
+import 'r_icon.dart';
 
 /// Live qibla compass. Uses the phone's own compass heading (iOS
 /// CLLocationManager / Android rotation-vector sensor) and falls back to the
@@ -176,7 +177,7 @@ class QiblaScreenState extends State<QiblaScreen> {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.place_outlined, color: QiblaColors.goldSoft, size: 20),
+                      const RIcon(RIcons.location, color: QiblaColors.goldSoft, size: 20),
                       const SizedBox(width: DesignTokens.spaceXs),
                       Expanded(
                         child: Text(
@@ -216,7 +217,7 @@ class QiblaScreenState extends State<QiblaScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         if (facing) ...[
-                          const Icon(Icons.check_circle, color: QiblaColors.emeraldDeep, size: 22),
+                          const RIcon(RIcons.checkCircle, color: QiblaColors.emeraldDeep, size: 22),
                           const SizedBox(width: DesignTokens.spaceSm),
                         ],
                         Flexible(
@@ -241,7 +242,7 @@ class QiblaScreenState extends State<QiblaScreen> {
               children: [
                 Expanded(
                   child: _InfoTile(
-                    icon: Icons.explore_outlined,
+                    icon: RIcons.compass,
                     label: l.qiblaDirection,
                     value: l.prayerQiblaDeg(context.num(qibla.toStringAsFixed(1))),
                     valueKey: const Key('qiblaBearing'),
@@ -250,7 +251,7 @@ class QiblaScreenState extends State<QiblaScreen> {
                 const SizedBox(width: DesignTokens.spaceMd),
                 Expanded(
                   child: _InfoTile(
-                    icon: Icons.mosque_outlined,
+                    icon: RIcons.kaaba,
                     label: l.qiblaDistance,
                     value: l.mosquesKm(context.num(km.round())),
                     valueKey: const Key('qiblaDistance'),
@@ -282,7 +283,7 @@ class QiblaScreenState extends State<QiblaScreen> {
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.tips_and_updates_outlined, size: 20, color: theme.colorScheme.secondary),
+                          RIcon(RIcons.bulb, size: 20, color: theme.colorScheme.secondary),
                           const SizedBox(width: DesignTokens.spaceSm),
                           Text(l.qiblaTipsTitle, style: theme.textTheme.titleSmall),
                         ],
@@ -323,7 +324,7 @@ abstract final class QiblaColors {
 
 class _InfoTile extends StatelessWidget {
   const _InfoTile({required this.icon, required this.label, required this.value, required this.valueKey});
-  final IconData icon;
+  final RIconData icon;
   final String label;
   final String value;
   final Key valueKey;
@@ -338,7 +339,7 @@ class _InfoTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(icon, size: 22, color: theme.colorScheme.secondary),
+            RIcon(icon, size: 22, color: theme.colorScheme.secondary),
             const SizedBox(height: DesignTokens.spaceSm),
             Text(label, style: theme.textTheme.bodySmall),
             const SizedBox(height: 2),

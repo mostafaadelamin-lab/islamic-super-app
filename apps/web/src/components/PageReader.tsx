@@ -759,7 +759,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
             aria-expanded={sheet === "khatma"}
             onClick={() => setSheet((v) => (v === "khatma" ? null : "khatma"))}
           >
-            <ReaderIcon name="khatma" />
+            <ReaderIcon name="openBook" />
             <span>{t(locale, "reader.khatma")}</span>
           </button>
           <Link href={href(locale, "search")} data-testid="bar-search">

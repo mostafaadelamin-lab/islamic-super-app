@@ -33,6 +33,7 @@ const copies = {
   "content/quran/dist/pages.v1.json": "pages.json",
   "packages/design-tokens/dist/tokens.css": "tokens.css",
   "packages/design-tokens/dist/tokens.ts": "tokens.ts",
+  "packages/design-tokens/dist/icons.ts": "icons.ts",
   "packages/shared-schemas/audio/reciters.json": "reciters.json",
   "packages/shared-schemas/app-links.json": "app-links.json",
   "content/adhkar/dist/adhkar.v1.json": "adhkar.json",

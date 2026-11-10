@@ -9,6 +9,7 @@ import 'l10n_ext.dart';
 import 'story_screen.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 /// Quranic stories: the narrated series (audio only, Sheikh Nabil al-Awadi's
 /// "Stories of the Prophets"), then each story's verses from the Mushaf.
@@ -70,12 +71,12 @@ class _StoryTile extends StatelessWidget {
     return ListTile(
       key: Key('story-${story.id}'),
       contentPadding: EdgeInsets.zero,
-      leading: const Icon(Icons.menu_book_outlined),
+      leading: const RIcon(RIcons.quran),
       title: Text(story.title(context.isArabic)),
       subtitle: Text(
         '${surahs.join(context.isArabic ? '، ' : ', ')} · ${context.l10n.storiesAyahs(context.num(story.ayahCount))}',
       ),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: const RIcon(RIcons.chevronForward),
       onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => StoryScreen(story: story))),
     );
   }
@@ -149,7 +150,7 @@ class _EpisodeTile extends StatelessWidget {
       key: Key('episode-${episode.id}'),
       contentPadding: EdgeInsets.zero,
       selected: on,
-      leading: Icon(playing ? Icons.pause_circle : Icons.play_circle, color: scheme.primary, size: 32),
+      leading: RIcon(playing ? RIcons.pauseCircle : RIcons.playCircle, color: scheme.primary, size: 32),
       title: Text(episode.title(context.isArabic)),
       subtitle: Text(
         [
@@ -251,7 +252,7 @@ class NarrationBar extends StatelessWidget {
                       IconButton.filled(
                         key: const Key('narrationToggle'),
                         tooltip: n.isPlaying ? l.storiesPause : l.storiesPlay,
-                        icon: Icon(n.isPlaying ? Icons.pause : Icons.play_arrow),
+                        icon: RIcon(n.isPlaying ? RIcons.pause : RIcons.play),
                         onPressed: () => n.isPlaying ? n.pause() : n.resume(),
                       ),
                       IconButton(
@@ -262,7 +263,7 @@ class NarrationBar extends StatelessWidget {
                       IconButton(
                         key: const Key('narrationStop'),
                         tooltip: l.storiesStop,
-                        icon: const Icon(Icons.stop),
+                        icon: const RIcon(RIcons.stop),
                         onPressed: n.stop,
                       ),
                       const SleepTimerButton(),
@@ -271,7 +272,7 @@ class NarrationBar extends StatelessWidget {
                   if (story != null)
                     TextButton.icon(
                       key: const Key('narrationReadVerses'),
-                      icon: const Icon(Icons.menu_book_outlined),
+                      icon: const RIcon(RIcons.quran),
                       label: Text(l.storiesReadVerses),
                       onPressed: () => Navigator.of(
                         context,
@@ -314,10 +315,7 @@ class SleepTimerButton extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  left == null ? Icons.bedtime_outlined : Icons.bedtime,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                RIcon(RIcons.moon, color: Theme.of(context).colorScheme.primary),
                 if (left != null) Text(' ${context.num(left)}', key: const Key('sleepLeft')),
               ],
             ),

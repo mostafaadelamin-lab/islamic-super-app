@@ -13,10 +13,10 @@ export interface Section {
 /** Every section of the app, in the order shown on the home screen and the "More" page. */
 export const SECTIONS: readonly Section[] = [
   { path: "page/1", title: "home.tile.mushaf", sub: "home.tile.mushafSub", icon: "quran" },
-  { path: "quran", title: "quran.surahs", sub: "home.tile.surahsSub", icon: "book" },
+  { path: "quran", title: "quran.surahs", sub: "home.tile.surahsSub", icon: "surahs" },
   { path: "khatma", title: "khatma.title", sub: "khatma.tileSub", icon: "khatma" },
-  { path: "adhkar", title: "adhkar.title", sub: "home.tile.adhkarSub", icon: "sun" },
-  { path: "hisn", title: "hisn.title", sub: "home.tile.hisnSub", icon: "book" },
+  { path: "adhkar", title: "adhkar.title", sub: "home.tile.adhkarSub", icon: "dua" },
+  { path: "hisn", title: "hisn.title", sub: "home.tile.hisnSub", icon: "hisn" },
   { path: "tasbih", title: "tasbih.title", sub: "home.tile.tasbihSub", icon: "beads" },
   { path: "tracker", title: "worship.title", sub: "worship.tileSub", icon: "calendarCheck" },
   { path: "qibla", title: "qibla.title", sub: "home.tile.qiblaSub", icon: "compass" },
@@ -27,7 +27,7 @@ export const SECTIONS: readonly Section[] = [
   { path: "reels", title: "reels.title", sub: "home.tile.reelsSub", icon: "reels" },
   { path: "prayer", title: "prayer.title", sub: "home.tile.prayerSub", icon: "prayer" },
   { path: "search", title: "quran.search", sub: "quran.searchHint", icon: "search" },
-  { path: "bookmarks", title: "bookmarks.title", sub: "home.tile.bookmarksSub", icon: "bookmark" },
+  { path: "bookmarks", title: "bookmarks.title", sub: "home.tile.bookmarksSub", icon: "bookmarks" },
   { path: "settings", title: "settings.title", sub: "home.tile.settingsSub", icon: "settings" },
   { path: "help", title: "help.title", sub: "help.tileSub", icon: "help" },
   { path: "about", title: "about.title", sub: "home.tile.aboutSub", icon: "info" },

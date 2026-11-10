@@ -10,6 +10,7 @@ import 'l10n_ext.dart';
 import 'stories_screen.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 /// One Quranic story: its verses only (Mushaf text), recited in order with the
 /// chosen reciter; tapping an ayah opens its Tafsir al-Muyassar.
@@ -30,7 +31,7 @@ class StoryScreen extends StatelessWidget {
           IconButton(
             key: const Key('story.reciter'),
             tooltip: l.storiesReciter,
-            icon: const Icon(Icons.record_voice_over_outlined),
+            icon: const RIcon(RIcons.reciter),
             onPressed: () => showRecitationSheet(context),
           ),
           const SleepTimerButton(),
@@ -59,7 +60,7 @@ class StoryScreen extends StatelessWidget {
                       const SizedBox(height: DesignTokens.spaceSm),
                       FilledButton.icon(
                         key: const Key('story.play'),
-                        icon: const Icon(Icons.play_arrow),
+                        icon: const RIcon(RIcons.play),
                         label: Text(l.storiesListen),
                         onPressed: () => s.recitation.playRanges(story.ranges),
                       ),

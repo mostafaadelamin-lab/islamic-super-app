@@ -15,6 +15,7 @@ import 'l10n_ext.dart';
 import 'mushaf_page.dart';
 import 'review_notice.dart';
 import 'widgets.dart';
+import 'r_icon.dart';
 
 /// المصحف / الآيات / التفسير.
 enum ReaderTab { mushaf, ayat, tafsir }
@@ -119,8 +120,8 @@ class ReaderPlayerCard extends StatelessWidget {
         }
 
         final playIcon = !active || rec.state == RecitationState.paused
-            ? Icons.play_arrow
-            : (error ? Icons.refresh : Icons.pause);
+            ? RIcons.play
+            : (error ? RIcons.refresh : RIcons.pause);
         final repeat = settings.repeat;
         // Short screens: one row (the reciter opens from the round button) so the page keeps its 15 lines.
         final compact = MediaQuery.sizeOf(context).height < 700;
@@ -143,7 +144,7 @@ class ReaderPlayerCard extends StatelessWidget {
                     CircleAvatar(
                       radius: 16,
                       backgroundColor: scheme.primary,
-                      child: Icon(Icons.record_voice_over, size: 18, color: scheme.onPrimary),
+                      child: RIcon(RIcons.reciter, size: 18, color: scheme.onPrimary),
                     ),
                     const SizedBox(width: DesignTokens.spaceSm),
                     Flexible(
@@ -166,7 +167,7 @@ class ReaderPlayerCard extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(width: 4),
-                              Icon(Icons.expand_circle_down_outlined, size: 18, color: scheme.primary),
+                              RIcon(RIcons.chevronDown, size: 18, color: scheme.primary),
                             ],
                           ),
                         ),
@@ -199,7 +200,7 @@ class ReaderPlayerCard extends StatelessWidget {
                           key: const Key('reciterButton'),
                           tooltip: '${l.audioReciter}: ${rec.reciter.name(context.isArabic)}',
                           color: scheme.primary,
-                          icon: const Icon(Icons.record_voice_over),
+                          icon: const RIcon(RIcons.reciter),
                           onPressed: () => showReciterPicker(context),
                         ),
                       Flexible(
@@ -217,7 +218,7 @@ class ReaderPlayerCard extends StatelessWidget {
                               minimumSize: const Size(48, 48),
                               padding: const EdgeInsets.symmetric(horizontal: 8),
                             );
-                            const icon = Icon(Icons.vertical_split_outlined, size: 20);
+                            const icon = RIcon(RIcons.split, size: 20);
                             // Narrow phones: the icon alone (the label stays as its tooltip).
                             if (c.maxWidth < 100) {
                               return Tooltip(
@@ -248,7 +249,7 @@ class ReaderPlayerCard extends StatelessWidget {
                       IconButton(
                         key: const Key('audioPrev'),
                         tooltip: l.audioPrevious,
-                        icon: const Icon(Icons.skip_previous),
+                        icon: const RIcon(RIcons.prev),
                         color: scheme.primary,
                         onPressed: active ? rec.previous : null,
                       ),
@@ -258,13 +259,13 @@ class ReaderPlayerCard extends StatelessWidget {
                             ? (rec.state == RecitationState.paused ? l.audioPlay : l.audioPause)
                             : l.mushafPlayPage,
                         iconSize: 30,
-                        icon: Icon(playIcon),
+                        icon: RIcon(playIcon),
                         onPressed: play,
                       ),
                       IconButton(
                         key: const Key('audioNext'),
                         tooltip: l.audioNext,
-                        icon: const Icon(Icons.skip_next),
+                        icon: const RIcon(RIcons.next),
                         color: scheme.primary,
                         onPressed: active ? rec.next : null,
                       ),
@@ -275,7 +276,7 @@ class ReaderPlayerCard extends StatelessWidget {
                         child: IconButton(
                           key: const Key('audioRepeat'),
                           tooltip: l.readerRepeatN(context.num(repeat)),
-                          icon: const Icon(Icons.repeat),
+                          icon: const RIcon(RIcons.repeat),
                           color: scheme.primary,
                           onPressed: () {
                             const choices = SettingsController.repeatChoices;
@@ -288,7 +289,7 @@ class ReaderPlayerCard extends StatelessWidget {
                         IconButton(
                           key: const Key('audioStop'),
                           tooltip: l.audioStop,
-                          icon: const Icon(Icons.close, size: 20),
+                          icon: const RIcon(RIcons.close, size: 20),
                           onPressed: rec.stop,
                         ),
                     ],
@@ -326,7 +327,7 @@ Future<void> showReciterPicker(BuildContext context) => showModalBottomSheet<voi
             for (final r in s.content.reciters.reciters)
               ListTile(
                 key: Key('reciter-${r.folder}'),
-                leading: Icon(r.folder == current ? Icons.radio_button_checked : Icons.radio_button_off),
+                leading: RIcon(r.folder == current ? RIcons.radioOn : RIcons.radioOff),
                 title: Text(r.name(context.isArabic)),
                 onTap: () {
                   unawaited(s.settings.setReciter(r.folder));

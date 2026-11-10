@@ -19,3 +19,29 @@ dart = ("// generated from packages/design-tokens/tokens.json — do not edit\ni
         + f"  static const String fontQuran = '{T['font']['quran']}';\n  static const String fontUi = '{T['font']['uiArabic']}';\n  static const double minTouchTarget = {float(T['minTouchTarget'])};\n}}\n")
 (R / "dist/design_tokens.dart").write_text(dart)
 print("tokens built")
+
+# Icon set (icons.json): TypeScript for the website, Dart for the app.
+I = json.loads((R / "icons.json").read_text())
+(R / "dist/icons.ts").write_text(
+    "// generated from packages/design-tokens/icons.json — do not edit\n"
+    f"export const ICON_PATHS = {json.dumps(I['icons'], indent=1)} as const;\n"
+    f"export const ICON_FILLED: readonly string[] = {json.dumps(I['filled'])};\n"
+    f"export const ICON_STROKE_WIDTH = {I['strokeWidth']};\n")
+lower = lambda k: k[0].lower() + k[1:]
+def dart_icon(k, v):
+    """One constant, laid out the way `dart format` (page width 120) would."""
+    args = [f"'{v}'"] + (["filled: true"] if k in I['filled'] else []) + (["mirrorInRtl: true"] if k in I['mirrorInRtl'] else [])
+    one = f"  static const {lower(k)} = RIconData({', '.join(args)});\n"
+    if len(one) <= 121:
+        return one
+    return f"  static const {lower(k)} = RIconData(\n" + "".join(f"    {a},\n" for a in args) + "  );\n"
+dart_icons = ("// generated from packages/design-tokens/icons.json — do not edit\n"
+    "/// One Rattil line icon: SVG path data on a 24×24 grid (see lib/ui/r_icon.dart).\n"
+    "class RIconData {\n  const RIconData(this.path, {this.filled = false, this.mirrorInRtl = false});\n"
+    "  final String path;\n  final bool filled;\n  final bool mirrorInRtl;\n}\n\n"
+    "/// The shared Rattil icon set (same drawings as the website).\nclass RIcons {\n  RIcons._();\n"
+    f"  static const double strokeWidth = {float(I['strokeWidth'])};\n"
+    + "".join(dart_icon(k, v) for k, v in I['icons'].items())
+    + "}\n")
+(R / "dist/rattil_icons.dart").write_text(dart_icons)
+print("icons built")

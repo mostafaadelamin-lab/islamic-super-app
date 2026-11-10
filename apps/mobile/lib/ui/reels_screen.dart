@@ -10,6 +10,7 @@ import '../domain/reels.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 typedef ReelPlayerBuilder = Widget Function(BuildContext context, Reel reel);
 
@@ -99,8 +100,8 @@ class _ReelsScreenState extends State<ReelsScreen> {
                 key: const Key('reels.reviewer'),
                 tooltip: '${l.reelsReviewerMode} — ${l.reelsReviewerHint}',
                 isSelected: reviewer,
-                icon: const Icon(Icons.fact_check_outlined),
-                selectedIcon: const Icon(Icons.fact_check, color: Colors.amber),
+                icon: const RIcon(RIcons.checkCircle),
+                selectedIcon: const RIcon(RIcons.checkCircle, color: Colors.amber),
                 onPressed: () async {
                   await settings.setReelsReviewer(!reviewer);
                   if (_pages.hasClients) _pages.jumpToPage(0);
@@ -124,7 +125,7 @@ class _ReelsScreenState extends State<ReelsScreen> {
                         FilledButton.icon(
                           key: const Key('reels.retry'),
                           onPressed: () => feed.refresh(force: true),
-                          icon: const Icon(Icons.refresh),
+                          icon: const RIcon(RIcons.refresh),
                           label: Text(l.reelsRetry),
                         ),
                       if (!feed.loading && feed.hidden.isNotEmpty)
@@ -181,7 +182,7 @@ class _Empty extends StatelessWidget {
           if (loading)
             const CircularProgressIndicator(key: Key('reels.loading'), color: Colors.white70)
           else
-            const Icon(Icons.smart_display_outlined, color: Colors.white70, size: 56),
+            const RIcon(RIcons.reels, color: Colors.white70, size: 56),
           const SizedBox(height: DesignTokens.spaceMd),
           Text(
             text,
@@ -265,7 +266,7 @@ class _ReelPage extends StatelessWidget {
                   colors: [Color(0xFF0F5C4A), Color(0xFF06140F)],
                 ),
               ),
-              child: const Center(child: Icon(Icons.play_circle_outline, color: Colors.white70, size: 64)),
+              child: const Center(child: RIcon(RIcons.playCircle, color: Colors.white70, size: 64)),
             ),
           if (reel.isPending)
             Positioned(
@@ -326,7 +327,7 @@ class _ReelPage extends StatelessWidget {
                           key: Key('reel.open.${reel.id}'),
                           style: TextButton.styleFrom(foregroundColor: Colors.white, padding: EdgeInsets.zero),
                           onPressed: onOpen,
-                          icon: const Icon(Icons.open_in_new, size: 18),
+                          icon: const RIcon(RIcons.external, size: 18),
                           label: Text(reel.isInstagram ? l.reelsOpenInstagram : l.reelsOpenYoutube),
                         ),
                         if (onHide != null)
@@ -334,7 +335,7 @@ class _ReelPage extends StatelessWidget {
                             key: Key('reel.hide.${reel.id}'),
                             style: TextButton.styleFrom(foregroundColor: Colors.white70, padding: EdgeInsets.zero),
                             onPressed: onHide,
-                            icon: const Icon(Icons.visibility_off_outlined, size: 18),
+                            icon: const RIcon(RIcons.eyeOff, size: 18),
                             label: Text(l.reelsHide),
                           ),
                       ],

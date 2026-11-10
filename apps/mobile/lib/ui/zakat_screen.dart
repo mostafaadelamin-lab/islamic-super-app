@@ -11,6 +11,7 @@ import 'adaptive.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
 import 'widgets.dart';
+import 'r_icon.dart';
 
 /// Zakat on money after the published fatwas of Dar al-Ifta al-Misriyya, held for a
 /// shar'i review. Every rule links to its fatwa; the numbers stay on this device.
@@ -164,7 +165,7 @@ class _ZakatScreenState extends State<ZakatScreen> {
 
   Widget _fatwaLink(AppLocalizations l, ZakatSource s, String Function(num) n) => ListTile(
     key: Key('zakatLink-${s.id}'),
-    leading: const Icon(Icons.open_in_new),
+    leading: const RIcon(RIcons.external),
     title: Text(l.zakatFatwa(n(s.number))),
     onTap: () => launchUrl(Uri.parse(s.url), mode: LaunchMode.externalApplication),
   );

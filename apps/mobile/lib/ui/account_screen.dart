@@ -7,6 +7,7 @@ import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -123,7 +124,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           FilledButton.icon(
                             key: const Key('syncNowButton'),
                             onPressed: a.busy ? null : a.syncNow,
-                            icon: const Icon(Icons.sync),
+                            icon: const RIcon(RIcons.refresh),
                             label: Text(l.accountSyncNow),
                           ),
                           OutlinedButton(

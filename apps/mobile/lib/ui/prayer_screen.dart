@@ -20,6 +20,7 @@ import 'qibla_screen.dart';
 import 'settings_screen.dart' show enableAdhanAlerts;
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 class PrayerScreen extends StatefulWidget {
   const PrayerScreen({super.key});
@@ -113,7 +114,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.notifications_off_outlined, color: Theme.of(context).colorScheme.primary),
+                          RIcon(RIcons.bellOff, color: Theme.of(context).colorScheme.primary),
                           const SizedBox(width: DesignTokens.spaceSm),
                           Expanded(child: Text(l.adhanBanner)),
                         ],
@@ -123,7 +124,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                         child: FilledButton.icon(
                           key: const Key('adhanBannerEnable'),
                           onPressed: () => enableAdhanAlerts(context),
-                          icon: const Icon(Icons.notifications_active),
+                          icon: const RIcon(RIcons.bell),
                           label: Text(l.adhanBannerAction),
                         ),
                       ),
@@ -134,10 +135,10 @@ class _PrayerScreenState extends State<PrayerScreen> {
                     ListTile(
                       key: const Key('cityTile'),
                       contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.location_city),
+                      leading: const RIcon(RIcons.city),
                       title: Text(l.prayerCity),
                       subtitle: Text(pv.city.name(context.isArabic), key: const Key('cityName')),
-                      trailing: const Icon(Icons.chevron_right),
+                      trailing: const RIcon(RIcons.chevronForward),
                       onTap: () async {
                         final c = await Navigator.of(
                           context,
@@ -152,7 +153,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                         onPressed: _locating ? null : _useLocation,
                         icon: _locating
                             ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                            : const Icon(Icons.my_location),
+                            : const RIcon(RIcons.myLocation),
                         label: Text(_locating ? l.prayerLocating : l.prayerUseLocation),
                       ),
                     ),
@@ -196,7 +197,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                         IconButton(
                           key: const Key('dayPrev'),
                           tooltip: l.prayerPrevDay,
-                          icon: Icon(ar ? Icons.chevron_right : Icons.chevron_left),
+                          icon: RIcon(ar ? RIcons.chevronForward : RIcons.chevron),
                           onPressed: () => setState(() => _dayOffset--),
                         ),
                         Expanded(
@@ -221,7 +222,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                         IconButton(
                           key: const Key('dayNext'),
                           tooltip: l.prayerNextDay,
-                          icon: Icon(ar ? Icons.chevron_left : Icons.chevron_right),
+                          icon: RIcon(ar ? RIcons.chevron : RIcons.chevronForward),
                           onPressed: () => setState(() => _dayOffset++),
                         ),
                       ],
@@ -242,7 +243,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                           onPressed: () => Navigator.of(
                             context,
                           ).push(MaterialPageRoute<void>(builder: (_) => const PrayerCalendarScreen())),
-                          icon: const Icon(Icons.calendar_month_outlined),
+                          icon: const RIcon(RIcons.calendar),
                           label: Text(l.prayerOpenCalendar),
                         ),
                       ],
@@ -289,10 +290,8 @@ class _PrayerScreenState extends State<PrayerScreen> {
                                   tooltip: s.settings.adhanFor(k)
                                       ? l.adhanBellOn(context.prayerName(k))
                                       : l.adhanBellOff(context.prayerName(k)),
-                                  icon: Icon(
-                                    s.settings.adhanFor(k)
-                                        ? Icons.notifications_active
-                                        : Icons.notifications_off_outlined,
+                                  icon: RIcon(
+                                    s.settings.adhanFor(k) ? RIcons.bell : RIcons.bellOff,
                                     color: s.settings.adhanFor(k) ? Theme.of(context).colorScheme.primary : null,
                                   ),
                                   onPressed: () => s.settings.setAdhanFor(k, !s.settings.adhanFor(k)),
@@ -335,7 +334,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                           child: TextButton.icon(
                             key: const Key('resetAdjust'),
                             onPressed: s.settings.resetAdjustments,
-                            icon: const Icon(Icons.restart_alt),
+                            icon: const RIcon(RIcons.reset),
                             label: Text(l.prayerResetAdjust),
                           ),
                         ),
@@ -358,7 +357,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                         key: const Key('openLiveQibla'),
                         onPressed: () =>
                             Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const QiblaScreen())),
-                        icon: const Icon(Icons.explore),
+                        icon: const RIcon(RIcons.compass),
                         label: Text(l.qiblaTitle),
                       ),
                     ),
@@ -415,7 +414,7 @@ class _AdhanExtrasCard extends StatelessWidget {
                     IconButton(
                       key: Key('iqamaMinus-$k'),
                       tooltip: l.adhanIqamaDecrease(context.prayerName(k)),
-                      icon: const Icon(Icons.remove),
+                      icon: const RIcon(RIcons.minus),
                       onPressed: settings.iqamaMinutes(k) > minIqama
                           ? () => settings.setIqamaMinutes(k, settings.iqamaMinutes(k) - 1)
                           : null,
@@ -431,7 +430,7 @@ class _AdhanExtrasCard extends StatelessWidget {
                     IconButton(
                       key: Key('iqamaPlus-$k'),
                       tooltip: l.adhanIqamaIncrease(context.prayerName(k)),
-                      icon: const Icon(Icons.add),
+                      icon: const RIcon(RIcons.plus),
                       onPressed: settings.iqamaMinutes(k) < maxIqama
                           ? () => settings.setIqamaMinutes(k, settings.iqamaMinutes(k) + 1)
                           : null,
@@ -559,7 +558,7 @@ class _AdjustRow extends StatelessWidget {
         IconButton(
           key: Key('adjustMinus-$prayerKey'),
           tooltip: l.prayerDecrease(name),
-          icon: const Icon(Icons.remove),
+          icon: const RIcon(RIcons.minus),
           onPressed: value > minAdjustment ? () => onStep(-1) : null,
         ),
         SizedBox(
@@ -573,7 +572,7 @@ class _AdjustRow extends StatelessWidget {
         IconButton(
           key: Key('adjustPlus-$prayerKey'),
           tooltip: l.prayerIncrease(name),
-          icon: const Icon(Icons.add),
+          icon: const RIcon(RIcons.plus),
           onPressed: value < maxAdjustment ? () => onStep(1) : null,
         ),
       ],

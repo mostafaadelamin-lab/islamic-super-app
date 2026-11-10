@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+<!-- Android adaptive icon monochrome (themed icons, notification): the mark in one colour scaled into the 66dp safe zone -->
+<g transform="translate(512 512) scale(0.74) translate(-512 -524)">
+<g id="mark" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M300 812V500C300 392 392 318 512 236C632 318 724 392 724 500V812" stroke="#FFFFFF" stroke-width="36"/>
+  <path d="M512.0 330.0 L523.5 364.3 L555.8 348.2 L539.7 380.5 L574.0 392.0 L539.7 403.5 L555.8 435.8 L523.5 419.7 L512.0 454.0 L500.5 419.7 L468.2 435.8 L484.3 403.5 L450.0 392.0 L484.3 380.5 L468.2 348.2 L500.5 364.3Z" fill="#FFFFFF"/>
+  <path d="M400 660L628 812M624 660L396 812" stroke="#FFFFFF" stroke-width="26"/>
+  <path d="M512 566C466 534 414 524 368 534V676C414 666 466 676 512 708C558 676 610 666 656 676V534C610 524 558 534 512 566Z" fill="none" stroke="#FFFFFF" stroke-width="28"/>
+  <path d="M512 566V708" stroke="#FFFFFF" stroke-width="14"/>
+</g>
+</g></svg>

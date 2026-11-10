@@ -40,6 +40,7 @@ PAIRS=(
   "content/fonts/OFL.txt:assets/fonts/OFL-AmiriQuran.txt"
   "content/fonts/OFL-IBMPlexSansArabic.txt:assets/fonts/OFL-IBMPlexSansArabic.txt"
   "packages/design-tokens/dist/design_tokens.dart:lib/theme/design_tokens.dart"
+  "packages/design-tokens/dist/rattil_icons.dart:lib/theme/rattil_icons.dart"
 )
 
 stale=0

@@ -5,6 +5,7 @@ import '../domain/search.dart';
 import 'l10n_ext.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'r_icon.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -68,7 +69,7 @@ class _SearchScreenState extends State<SearchScreen> {
               key: Key('hitMushaf-${h.ref.surah}-${h.ref.ayah}'),
               tooltip:
                   '${l.homeOpenMushaf}: ${l.quranSurahAyah(surahName(context, q.surah(h.ref.surah)), context.num(h.ref.ayah))}',
-              icon: const Icon(Icons.chrome_reader_mode_outlined),
+              icon: const RIcon(RIcons.book),
               onPressed: () => openMushafAt(context, h.ref),
             ),
           );
@@ -97,7 +98,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   IconButton(
                     key: const Key('searchButton'),
                     tooltip: l.quranSearchAction,
-                    icon: const Icon(Icons.search),
+                    icon: const RIcon(RIcons.search),
                     onPressed: _run,
                   ),
                 ],

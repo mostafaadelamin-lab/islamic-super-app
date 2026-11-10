@@ -101,7 +101,7 @@ class AdhanService : Service() {
             PendingIntent.getActivity(this, 0, it, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         }
         return NotificationCompat.Builder(this, PLAYING_CHANNEL)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_stat_rattil)
             .setContentTitle(title)
             .setContentText(body)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
@@ -173,7 +173,7 @@ class AdhanService : Service() {
                 )
             }
             val n = NotificationCompat.Builder(ctx, FALLBACK_CHANNEL)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_stat_rattil)
                 .setContentTitle(title)
                 .setContentText(body)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)

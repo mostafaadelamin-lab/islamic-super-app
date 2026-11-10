@@ -30,7 +30,13 @@ export async function generateMetadata({
     title: { default: t(l, "appName"), template: `%s — ${t(l, "appName")}` },
     description: t(l, "tagline"),
     manifest: withBase("/manifest.webmanifest"),
-    icons: { icon: withBase("/icon.svg"), apple: withBase("/icon-192.png") },
+    icons: {
+      icon: [
+        { url: withBase("/icon.svg"), type: "image/svg+xml" },
+        { url: withBase("/favicon-32.png"), sizes: "32x32", type: "image/png" },
+      ],
+      apple: withBase("/apple-touch-icon.png"),
+    },
   };
 }
 
