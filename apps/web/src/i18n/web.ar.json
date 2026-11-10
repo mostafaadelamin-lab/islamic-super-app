@@ -492,5 +492,9 @@
   "help.ratePending": "التقييم متاح بعد نشر التطبيق في المتاجر.",
   "help.promptTitle": "تشارك رتّل؟",
   "help.promptBody": "تستخدم رتّل منذ أيام. إن نفعك فشاركه مع غيرك، فهو مجاني للجميع.",
-  "help.notNow": "ليس الآن"
+  "help.notNow": "ليس الآن",
+  "compass.n": "ش",
+  "compass.e": "ق",
+  "compass.s": "ج",
+  "compass.w": "غ"
 }

@@ -492,5 +492,9 @@
   "help.ratePending": "Rating opens once the app is in the stores.",
   "help.promptTitle": "Share Rattil?",
   "help.promptBody": "You have been using Rattil for a few days. If it helps you, share it with someone; it is free for everyone.",
-  "help.notNow": "Not now"
+  "help.notNow": "Not now",
+  "compass.n": "N",
+  "compass.e": "E",
+  "compass.s": "S",
+  "compass.w": "W"
 }

@@ -362,7 +362,16 @@ export function PrayerView({ locale }: { locale: Locale }) {
           <p className="countdown" data-testid="qibla-bearing">
             {t(locale, "prayer.qiblaDeg", { deg: bearingText })}
           </p>
-          <Compass bearing={bearing} label={t(locale, "prayer.compass", { deg: bearingText })} />
+          <Compass
+            bearing={bearing}
+            label={t(locale, "prayer.compass", { deg: bearingText })}
+            cardinals={[
+              t(locale, "compass.n"),
+              t(locale, "compass.e"),
+              t(locale, "compass.s"),
+              t(locale, "compass.w"),
+            ]}
+          />
           <p className="muted">{t(locale, "prayer.qiblaNote")}</p>
         </section>
       </div>
