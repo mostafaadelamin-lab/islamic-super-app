@@ -34,3 +34,7 @@ CC0 1.0 public-domain dedication, uploaded as own work. Original SHA-256
 apps/mobile/assets/audio/ADHAN_AUDIO.md.
 Voice 2: "The Adhan - Muslim Call to Prayer - Aaqib Azeez" by Atcovi, Wikimedia Commons, CC BY-SA 4.0 (credited in the
 app and on the website). Religious review (listen-through by a named reviewer) of every voice: PENDING.
+Default adhan (Mohamed Ramadan Saad, Makkah Haram), default Fajr adhan (Hamad Al-Daghriri) and the in-app
+muezzin collection: audio.islamweb.net. **No permission or open licence; the site's terms forbid
+republishing and automated download. Used by the owner's decision (2026-11-10), site name not shown in
+the app.** Details in apps/mobile/assets/audio/ADHAN_AUDIO.md.

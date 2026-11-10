@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased] — Muezzin collection and a separate Fajr adhan — 2026-11-10
+### Added
+- Default adhan is now the Makkah Haram adhan (Mohamed Ramadan Saad); Fajr has its own adhan with "as-salatu khayrun min an-nawm" (Makkah Haram Fajr, Hamad Al-Daghriri). Both bundled, work offline. iPhone notification sound = first 28 s of the Haram adhan.
+- Muezzin list (~290 recordings, 38 Fajr) with search, on mobile (Settings → Muezzin / Fajr muezzin) and the website (prayer page). On the phone a muezzin is downloaded when tapped and kept offline; the Android alarm plays the downloaded file. The website streams it.
+- The Fajr alarm/alert uses the Fajr muezzin; the other prayers use the regular one.
+### Note
+- Recordings taken from a site whose terms forbid republishing without written permission; used by the owner's decision (see apps/mobile/assets/audio/ADHAN_AUDIO.md). The site's name is not shown in the app.
+
 ## [Unreleased] — App icon and one icon set in the app's design — 2026-11-10
 ### Changed
 - New Rattil app icon (our own design): a gold mihrab arch with an eight-pointed star over an open Mushaf on a rehal, on the emerald background. Android (adaptive icon, round icon, Android 13 themed/monochrome icon), iPhone/iPad (all sizes, opaque as the App Store requires) and the website (favicon, PWA icons incl. maskable, Apple touch icon). Replaces the default Flutter logo in the app and the old blue moon icon of the website.
