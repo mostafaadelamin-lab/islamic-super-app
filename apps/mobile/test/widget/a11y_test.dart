@@ -11,19 +11,15 @@ void main() {
   setUpAll(() => loadContent(realFonts: false));
 
   Future<void> visitAll(WidgetTester tester, {required bool contrast}) async {
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 6; i++) {
       await goToTab(tester, i);
       await expectAccessible(tester, contrast: contrast);
     }
     // Pushed screens.
     await goToTab(tester, 1);
-    await tester.tap(find.byKey(const Key('surahText-1')));
+    await tester.tap(find.byKey(const Key('surah-1')));
     await tester.pumpAndSettle();
     await expectAccessible(tester, contrast: contrast);
-    await tester.tap(find.byKey(const Key('openInMushaf')));
-    await tester.pumpAndSettle();
-    await expectAccessible(tester, contrast: contrast);
-    await goBack(tester);
     await goBack(tester);
     await tester.tap(
       find.descendant(
@@ -37,10 +33,14 @@ void main() {
     await tester.pumpAndSettle();
     await expectAccessible(tester, contrast: contrast);
     await goBack(tester);
-    await goToTab(tester, 2);
+    await goToTab(tester, 3);
+    await tester.tap(find.byKey(const Key('editPrayerTimes')));
+    await tester.pumpAndSettle();
+    await expectAccessible(tester, contrast: contrast);
     await tester.tap(find.byKey(const Key('cityTile')));
     await tester.pumpAndSettle();
     await expectAccessible(tester, contrast: contrast);
+    await goBack(tester);
     await goBack(tester);
     await openSettings(tester);
     await tester.tap(find.byKey(const Key('accountTile')));
@@ -73,7 +73,10 @@ void main() {
     await openBookmarks(tester);
     await expectAccessible(tester, contrast: true);
     await goBack(tester);
-    await goToTab(tester, 2);
+    await goToTab(tester, 3);
+    await tester.tap(find.byKey(const Key('editPrayerTimes')));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.byKey(const Key('adjustTile')), 300);
     await tester.tap(find.byKey(const Key('adjustTile')));
     await tester.pumpAndSettle();
     await expectAccessible(tester, contrast: true);

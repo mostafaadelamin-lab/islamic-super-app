@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/domain/quran.dart';
 import 'package:rattil/domain/text.dart';
 import 'package:rattil/ui/search_screen.dart';
-import 'package:rattil/ui/surah_reader_screen.dart';
+
+import 'package:rattil/ui/page_reader_screen.dart';
 
 import '../helpers.dart';
 
@@ -61,8 +62,8 @@ void main() {
     expect(find.text('2 results'), findsOneWidget);
     await tester.tap(find.byKey(const Key('hit-2-255')));
     await tester.pumpAndSettle();
-    final r = tester.widget<SurahReaderScreen>(find.byType(SurahReaderScreen));
-    expect((r.surah, r.initialAyah), (2, 255));
-    expect(find.byKey(const Key('ayah-2-255')), findsOneWidget);
+    final r = tester.widget<PageReaderScreen>(find.byType(PageReaderScreen));
+    expect(r.highlight, const AyahRef(2, 255));
+    expect(r.initialPage, 42);
   });
 }

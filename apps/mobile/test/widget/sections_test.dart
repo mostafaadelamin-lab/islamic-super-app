@@ -7,7 +7,6 @@ import 'package:rattil/app_services.dart';
 import 'package:rattil/domain/adhkar.dart';
 import 'package:rattil/domain/qibla.dart';
 import 'package:rattil/ui/adhkar_screen.dart';
-import 'package:rattil/ui/bookmarks_screen.dart';
 import 'package:rattil/ui/hajj_screen.dart';
 import 'package:rattil/ui/hisn_screen.dart';
 import 'package:rattil/ui/home_shell.dart';
@@ -16,6 +15,8 @@ import 'package:rattil/ui/settings_screen.dart';
 import 'package:rattil/ui/tasbih_screen.dart';
 
 import 'package:rattil/data/notifications.dart';
+
+import 'package:rattil/ui/zakat_screen.dart';
 
 import '../helpers.dart';
 
@@ -28,13 +29,15 @@ void main() {
   group('Adhkar', () {
     testWidgets('morning by default before Asr, with the review notice and per-item counters', (tester) async {
       final app = await pumpApp(tester, size: tallPhone);
-      await goToTab(tester, 3);
-      expect(tester.state<AdhkarScreenState>(find.byType(AdhkarScreen)).session, AdhkarSession.morning);
+      await goToTab(tester, 4);
+      await tester.tap(find.byKey(const Key('adhkarHub.morning')));
+      await tester.pumpAndSettle();
+      expect(tester.state<AdhkarScreenState>(find.byType(AdhkarSessionScreen)).session, AdhkarSession.morning);
       expect(find.byKey(const Key('adhkarNotice')), findsOneWidget);
       expect(find.textContaining('بانتظار المراجعة الشرعية'), findsOneWidget);
       // Item 3 (al-Ikhlas) is said three times.
       expect(
-        find.descendant(of: find.byKey(const Key('dhikrCount-3')), matching: find.text('متبقٍّ ٣')),
+        find.descendant(of: find.byKey(const Key('dhikr-3')), matching: find.text('متبقٍّ ٣')),
         findsOneWidget,
       );
       await tester.ensureVisible(find.byKey(const Key('dhikrTap-3')));
@@ -43,12 +46,12 @@ void main() {
         await tester.pump();
       }
       expect(
-        find.descendant(of: find.byKey(const Key('dhikrCount-3')), matching: find.text('متبقٍّ ١')),
+        find.descendant(of: find.byKey(const Key('dhikr-3')), matching: find.text('متبقٍّ ١')),
         findsOneWidget,
       );
       await tester.tap(find.byKey(const Key('dhikrTap-3')));
       await tester.pump();
-      expect(find.descendant(of: find.byKey(const Key('dhikrCount-3')), matching: find.text('تمّ')), findsOneWidget);
+      expect(find.descendant(of: find.byKey(const Key('dhikr-3')), matching: find.text('تمّ')), findsOneWidget);
       await tester.tap(find.byKey(const Key('dhikrTap-3')));
       await tester.pump();
       expect(app.services.adhkar.progress(AdhkarSession.morning).countOf(app.services.content.adhkar.items[3]), 3);
@@ -60,17 +63,23 @@ void main() {
 
     testWidgets('evening after Asr; switching sessions; reset', (tester) async {
       final app = await pumpApp(tester, size: tallPhone, clock: () => DateTime.utc(2026, 1, 15, 17));
-      await goToTab(tester, 3);
-      final state = tester.state<AdhkarScreenState>(find.byType(AdhkarScreen));
+      await goToTab(tester, 4);
+      await tester.tap(find.byKey(const Key('adhkarHub.evening')));
+      await tester.pumpAndSettle();
+      final state = tester.state<AdhkarScreenState>(find.byType(AdhkarSessionScreen));
       expect(state.session, AdhkarSession.evening);
+      await tester.scrollUntilVisible(find.byKey(const Key('dhikr-7')), 300);
       expect(find.byKey(const Key('dhikr-7')), findsOneWidget, reason: 'أمسينا وأمسى الملك لله');
       expect(find.byKey(const Key('dhikr-6')), findsNothing, reason: 'its morning form is hidden');
+      await tester.scrollUntilVisible(find.byKey(const Key('dhikrTap-0')), -300);
       await tester.tap(find.byKey(const Key('dhikrTap-0')));
       await tester.pump();
+      await tester.scrollUntilVisible(find.byKey(const Key('adhkarProgress')), -300);
       expect(find.text('أُنجز ١ من ٢٥'), findsOneWidget);
       await tester.tap(find.byKey(const Key('adhkarReset')));
       await tester.pump();
       expect(find.text('أُنجز ٠ من ٢٥'), findsOneWidget);
+      await tester.scrollUntilVisible(find.byKey(const Key('adhkarSession')), -300);
       await tester.tap(find.text('الصباح'));
       await tester.pumpAndSettle();
       expect(state.session, AdhkarSession.morning);
@@ -80,8 +89,9 @@ void main() {
 
     testWidgets('Hisn al-Muslim: 134 chapters, filter, chapter with copy', (tester) async {
       await pumpApp(tester, size: tallPhone);
-      await goToTab(tester, 3);
-      await tester.tap(find.byKey(const Key('openHisn')));
+      await goToTab(tester, 4);
+      await tester.scrollUntilVisible(find.byKey(const Key('adhkarHub.hisn')), 200);
+      await tester.tap(find.byKey(const Key('adhkarHub.hisn')));
       await tester.pumpAndSettle();
       expect(find.byType(HisnScreen), findsOneWidget);
       await tester.enterText(find.byKey(const Key('hisnFilter')), 'السفر');
@@ -269,7 +279,10 @@ void main() {
 
     testWidgets('prayer tab links to the live qibla screen', (tester) async {
       await pumpApp(tester, size: tallPhone);
-      await goToTab(tester, 2);
+      await goToTab(tester, 3);
+      await tester.tap(find.byKey(const Key('editPrayerTimes')));
+      await tester.pumpAndSettle();
+      await tester.scrollUntilVisible(find.byKey(const Key('openLiveQibla')), 300);
       await tester.tap(find.byKey(const Key('openLiveQibla')));
       await tester.pumpAndSettle();
       expect(find.byType(QiblaScreen), findsOneWidget);
@@ -323,15 +336,15 @@ void main() {
       }
 
       await tile('adhkar');
-      expect(tester.state<HomeShellState>(find.byType(HomeShell)).index, 3);
+      expect(tester.state<HomeShellState>(find.byType(HomeShell)).index, 4);
       await goToTab(tester, 0);
       for (final (id, type) in [('tasbih', TasbihScreen), ('qibla', QiblaScreen)]) {
         await tile(id);
         expect(find.byType(type), findsOneWidget, reason: id);
         await goBack(tester);
       }
-      for (final (id, type) in [('hajj', HajjScreen), ('hisn', HisnScreen), ('bookmarks', BookmarksScreen)]) {
-        await goToTab(tester, 4);
+      for (final (id, type) in [('hajj', HajjScreen), ('zakat', ZakatScreen)]) {
+        await goToTab(tester, 5);
         await tester.tap(find.byKey(Key('more.$id')));
         await tester.pumpAndSettle();
         expect(find.byType(type), findsOneWidget, reason: id);
@@ -343,8 +356,8 @@ void main() {
   group('More and settings', () {
     testWidgets('More lists the sections and settings', (tester) async {
       await pumpApp(tester, size: tallPhone);
-      await goToTab(tester, 4);
-      for (final id in ['bookmarks', 'search', 'hisn', 'tasbih', 'qibla', 'hajj', 'settings', 'about']) {
+      await goToTab(tester, 5);
+      for (final id in ['hadith', 'asma', 'radio', 'library', 'stories', 'qibla', 'mosques', 'zakat', 'hajj', 'settings', 'about']) {
         expect(find.byKey(Key('more.$id')), findsOneWidget);
       }
       await tester.tap(find.byKey(const Key('more.settings')));

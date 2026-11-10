@@ -247,7 +247,7 @@ class _Actions extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               action('ayahPlayOne', RIcons.playCircle, l.ayahListenOne, () => play(ref, PlayScope.ayah)),
-              action('ayahPlayTafsir', RIcons.split, l.ayahListenTafsir, () => play(ref, PlayScope.ayah, tafsir: true)),
+              action('ayahPlayTafsir', RIcons.split, l.ayahListenTafsir, () => play(ref, PlayScope.surah, tafsir: true)),
               action('ayahPlayPage', RIcons.pages, l.ayahListenToPageEnd, () => play(ref, PlayScope.page)),
               action('ayahPlaySurah', RIcons.playlist, l.ayahListenToSurahEnd, () => play(ref, PlayScope.surah)),
               action(

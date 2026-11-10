@@ -60,10 +60,10 @@ void main() {
     expect(shown(tester).data, source(2, 255));
     expect(shown(tester).style?.fontFamily, DesignTokens.fontUi);
     expect(shown(tester).style?.fontFamily, isNot(DesignTokens.fontQuran));
-    // The tafsir comes before the actions.
+    // The list of actions comes first (owner's request), then the tafsir.
     expect(
       tester.getTopLeft(find.byKey(const Key('tafsirCard'))).dy,
-      lessThan(tester.getTopLeft(find.byKey(const Key('ayahPlay'))).dy),
+      greaterThan(tester.getTopLeft(find.byKey(const Key('ayahPlayOne'))).dy),
     );
     expect(app.services.content.quran.text(const AyahRef(2, 255)), isNot(contains(shown(tester).data!)));
   });
@@ -147,7 +147,7 @@ void main() {
       expect(shown(tester).data, source(2, 282));
       final sheet = tester.getRect(find.byKey(const Key('ayahSheet')));
       expect(sheet.bottom, lessThanOrEqualTo(size.height + 0.01));
-      for (final k in ['tafsirCard', 'ayahPlay', 'ayahCopy', 'tafsirNext']) {
+      for (final k in ['tafsirCard', 'ayahPlayOne', 'ayahCopy', 'tafsirNext']) {
         final r = tester.getRect(find.byKey(Key(k)));
         expect(r.left, greaterThanOrEqualTo(-0.01), reason: k);
         expect(r.right, lessThanOrEqualTo(size.width + 0.01), reason: k);

@@ -94,7 +94,7 @@ class _ReelsScreenState extends State<ReelsScreen> {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.white,
-            title: Text(l.reelsTitle),
+            title: Text(l.reelsTitle, style: const TextStyle(color: Colors.white)),
             actions: [
               IconButton(
                 key: const Key('reels.reviewer'),

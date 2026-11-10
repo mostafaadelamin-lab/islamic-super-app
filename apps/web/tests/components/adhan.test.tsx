@@ -74,8 +74,8 @@ describe("adhan alert planning", () => {
     expect(x.sunrise).toBe(true);
     expect(sanitizeAdhan({ friday: "09:30" }).friday).toBe("09:30");
     expect(sanitizeAdhan({ voice: "nobody" }).voice).toBe("haram");
-    expect(sanitizeAdhan({ voice: "iw426698", fajrVoice: "../x" })).toMatchObject({
-      voice: "iw426698",
+    expect(sanitizeAdhan({ voice: "madinah", fajrVoice: "../x" })).toMatchObject({
+      voice: "madinah",
       fajrVoice: "haram_fajr",
     });
     const s = sanitizeAdhan({ preMinutes: 7, iqamaEnabled: true, iqama: { fajr: 500, dhuhr: "x", asr: 0 } });

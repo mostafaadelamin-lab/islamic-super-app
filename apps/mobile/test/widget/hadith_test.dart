@@ -143,7 +143,7 @@ void main() {
 
   testWidgets('More opens the hadith books', (tester) async {
     await pumpApp(tester, size: tallPhone);
-    await goToTab(tester, 4);
+    await goToTab(tester, 5);
     await tester.tap(find.byKey(const Key('more.hadith')));
     await tester.pumpAndSettle();
     expect(find.byType(HadithScreen), findsOneWidget);

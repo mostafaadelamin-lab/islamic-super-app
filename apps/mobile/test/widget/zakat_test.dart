@@ -73,7 +73,7 @@ void main() {
 
   testWidgets('zakat is reachable from More', (tester) async {
     await pumpApp(tester, size: tallPhone);
-    await goToTab(tester, 4);
+    await goToTab(tester, 5);
     await tester.tap(find.byKey(const Key('more.zakat')));
     await tester.pumpAndSettle();
     expect(find.byType(ZakatScreen), findsOneWidget);

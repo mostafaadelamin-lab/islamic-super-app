@@ -27,9 +27,14 @@ void main() {
     Map<String, Object> prefs = const {},
     DateTime Function()? clock,
     LocationProvider? location,
+    bool edit = false,
   }) async {
     final app = await pumpApp(tester, locale: locale, prefs: prefs, clock: clock, size: tallPhone, location: location);
-    await goToTab(tester, 2);
+    await goToTab(tester, 3);
+    if (edit) {
+      await tester.tap(find.byKey(const Key('editPrayerTimes')));
+      await tester.pumpAndSettle();
+    }
     return app;
   }
 
@@ -71,7 +76,7 @@ void main() {
   });
 
   testWidgets('city picker: search and choose London; method follows the city', (tester) async {
-    final app = await open(tester);
+    final app = await open(tester, edit: true);
     await tester.tap(find.byKey(const Key('cityTile')));
     await tester.pumpAndSettle();
     expect(find.byType(CityPickerScreen), findsOneWidget);
@@ -82,10 +87,9 @@ void main() {
     expect(find.byKey(const Key('city-c1')), findsNothing);
     await tester.tap(find.byKey(const Key('city-c54')));
     await tester.pumpAndSettle();
-    expect(find.text('London'), findsOneWidget);
+    expect(tester.widget<Text>(find.byKey(const Key('cityName'))).data, 'London');
     expect(app.prefs.getString('cityId'), 'c54');
     expect(app.prefs.getString('method'), 'mwl');
-    expect(find.text('Time zone: Europe/London'), findsOneWidget);
     // London 2026-01-15 MWL, recomputed with the same calculator.
     final r = app.services.content.calculator.times(year: 2026, month: 1, day: 15, lat: 51.5074, lng: -0.1278);
     String hhmm(DateTime t) => '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
@@ -93,7 +97,7 @@ void main() {
   });
 
   testWidgets('city picker: Arabic search and no-results', (tester) async {
-    await open(tester, locale: 'ar');
+    await open(tester, locale: 'ar', edit: true);
     await tester.tap(find.byKey(const Key('cityTile')));
     await tester.pumpAndSettle();
     await tester.enterText(find.byKey(const Key('citySearch')), 'الرياض');
@@ -107,7 +111,7 @@ void main() {
   });
 
   testWidgets('method selector changes the calculation and persists', (tester) async {
-    final app = await open(tester);
+    final app = await open(tester, edit: true);
     final before = timeText(tester, 'fajr');
     await tester.tap(find.byKey(const Key('methodDropdown')));
     await tester.pumpAndSettle();
@@ -128,7 +132,7 @@ void main() {
   });
 
   testWidgets('Asr selector switches to Hanafi and persists', (tester) async {
-    final app = await open(tester);
+    final app = await open(tester, edit: true);
     final std = timeText(tester, 'asr');
     await tester.tap(find.byKey(const Key('asrDropdown')));
     await tester.pumpAndSettle();
@@ -140,7 +144,7 @@ void main() {
   });
 
   testWidgets('manual adjustment: +/- buttons, clamp at ±30, reset', (tester) async {
-    final app = await open(tester);
+    final app = await open(tester, edit: true);
     await tester.tap(find.byKey(const Key('adjustTile')));
     await tester.pumpAndSettle();
     final want = local('Cairo-2026-01-15-egypt-standard');
@@ -173,7 +177,7 @@ void main() {
   });
 
   testWidgets('adjustment minimum is -30', (tester) async {
-    await open(tester, prefs: {'adjustments': '{"asr": -30}'});
+    await open(tester, prefs: {'adjustments': '{"asr": -30}'}, edit: true);
     await tester.tap(find.byKey(const Key('adjustTile')));
     await tester.pumpAndSettle();
     expect(tester.widget<Text>(find.byKey(const Key('adjustValue-asr'))).data, '-30 min');
@@ -199,7 +203,7 @@ void main() {
       clock: () => DateTime.utc(2026, 12, 21, 12),
       size: tallPhone,
     );
-    await goToTab(tester, 2);
+    await goToTab(tester, 3);
     expect(find.byKey(const Key('polarMessage')), findsOneWidget);
     expect(find.byKey(const Key('time-fajr')), findsNothing);
     expect(find.text('Tromsø'), findsOneWidget);
@@ -207,7 +211,7 @@ void main() {
 
   testWidgets('qibla bearing text and compass semantics', (tester) async {
     final handle = tester.ensureSemantics();
-    await open(tester);
+    await open(tester, edit: true);
     expect(find.text('136.1° from true north'), findsOneWidget);
     expect(find.bySemanticsLabel('Compass: qibla is 136.1° clockwise from north'), findsOneWidget);
     handle.dispose();
@@ -286,16 +290,16 @@ void main() {
   });
 
   testWidgets('use my location: GPS position with the nearest city time zone', (tester) async {
-    final app = await open(tester, location: const FakeLocation(LocationFound(30.5, 31.2)));
+    final app = await open(tester, location: const FakeLocation(LocationFound(30.5, 31.2)), edit: true);
     await tester.tap(find.byKey(const Key('useLocation')));
     await tester.pumpAndSettle();
     expect(app.services.settings.cityId, 'gps');
-    expect(find.textContaining('My location (near Cairo)'), findsOneWidget);
-    expect(find.text('Time zone: Africa/Cairo'), findsOneWidget);
+    expect(find.textContaining('My location (near Cairo)'), findsWidgets);
+    expect(app.services.settings.gpsLocation?.lat, 30.5);
   });
 
   testWidgets('use my location: denied shows a message and keeps the city', (tester) async {
-    final app = await open(tester, location: const FakeLocation(LocationDenied()));
+    final app = await open(tester, location: const FakeLocation(LocationDenied()), edit: true);
     await tester.tap(find.byKey(const Key('useLocation')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('geoError')), findsOneWidget);
@@ -303,7 +307,7 @@ void main() {
   });
 
   testWidgets('reminder before the adhan and iqama minutes per prayer', (tester) async {
-    final app = await open(tester, prefs: {'adhan.enabled': true});
+    final app = await open(tester, prefs: {'adhan.enabled': true}, edit: true);
     await tester.scrollUntilVisible(find.byKey(const Key('adhanExtrasTile')), 200);
     await tester.tap(find.byKey(const Key('adhanExtrasTile')));
     await tester.pumpAndSettle();
@@ -322,7 +326,7 @@ void main() {
   testWidgets('calendar: Hijri month mode and sharing the table as an image', (tester) async {
     final sharer = FakeSharer();
     await pumpApp(tester, locale: 'en', size: tallPhone, sharer: sharer);
-    await goToTab(tester, 2);
+    await goToTab(tester, 3);
     await tester.tap(find.byKey(const Key('openCalendar')));
     await tester.pumpAndSettle();
     await tester.tap(find.descendant(of: find.byKey(const Key('calendar.kind')), matching: find.text('Hijri')));

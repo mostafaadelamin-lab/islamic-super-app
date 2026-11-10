@@ -721,6 +721,7 @@ class _TimesStrip extends StatelessWidget {
           for (final k in prayerKeys)
             Expanded(
               child: Container(
+                key: Key('time-$k'),
                 margin: const EdgeInsets.symmetric(horizontal: 2),
                 padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
                 decoration: BoxDecoration(

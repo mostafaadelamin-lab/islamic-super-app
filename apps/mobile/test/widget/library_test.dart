@@ -10,6 +10,8 @@ import 'package:rattil/domain/mp3quran.dart';
 import 'package:rattil/ui/library_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:rattil/ui/radio_screen.dart';
+
 import '../helpers.dart';
 
 const _reciters = {
@@ -149,8 +151,12 @@ void main() {
     expect(find.byKey(const Key('narrationBar')), findsOneWidget);
 
     await goBack(tester);
-    await tester.tap(find.byKey(const Key('libraryTabRadios')));
+    await goBack(tester);
+    await pushScreen(tester, const RadioScreen());
     await tester.pumpAndSettle();
+    expect(find.byKey(const Key('radio-eg')), findsOneWidget);
+    expect(find.byKey(const Key('radio-sa')), findsOneWidget);
+    await tester.scrollUntilVisible(find.byKey(const Key('radio-1')), 200, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.byKey(const Key('radio-1')));
     await tester.pumpAndSettle();
     expect(app.services.narration.episode?.url, 'https://backup.qurango.net/radio/ibrahim_alakdar');
@@ -168,7 +174,7 @@ void main() {
 
   testWidgets('More opens the library', (tester) async {
     await pumpApp(tester, httpClient: _api(), size: tallPhone);
-    await goToTab(tester, 4);
+    await goToTab(tester, 5);
     await tester.scrollUntilVisible(
       find.byKey(const Key('more.library')),
       200,

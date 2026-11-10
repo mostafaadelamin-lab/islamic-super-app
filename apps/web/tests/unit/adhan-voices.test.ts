@@ -5,11 +5,8 @@ import {
   DEFAULT_FAJR_VOICE,
   isAdhanVoiceId,
   normalizeArabic,
-  remoteAdhanId,
-  voiceFromCatalog,
 } from "@/lib/adhan-voices";
 import { DEFAULT_ADHAN, voiceForPrayer } from "@/lib/adhan-alerts";
-import catalog from "../../../mobile/assets/content/adhan_catalog.json";
 
 describe("adhan voices", () => {
   it("defaults to the Makkah Haram adhan, with its own Fajr adhan", () => {
@@ -21,21 +18,12 @@ describe("adhan voices", () => {
     expect(adhanVoiceSrc("haram_fajr")).toBe("/audio/adhan_haram_fajr.mp3");
   });
 
-  it("accepts collection ids only in the iw<number> form", () => {
-    expect(isAdhanVoiceId("iw426698")).toBe(true);
-    expect(isAdhanVoiceId("iw")).toBe(false);
+  it("accepts only the bundled, openly licensed voices", () => {
+    expect(isAdhanVoiceId("madinah")).toBe(true);
+    expect(isAdhanVoiceId("iw426698")).toBe(false);
     expect(isAdhanVoiceId("../x")).toBe(false);
-    expect(remoteAdhanId("iw122646")).toBe(122646);
-    expect(adhanVoiceSrc("iw5")).toBe("https://audio.islamweb.net/audio/downloadmp3.php?audioid=5");
     expect(adhanVoiceSrc("nobody", true)).toBe("/audio/adhan_haram_fajr.mp3");
-  });
-
-  it("catalogue: unique ids, Arabic names, Fajr adhans marked", () => {
-    const ids = new Set(catalog.map((e) => e.id));
-    expect(ids.size).toBe(catalog.length);
-    expect(catalog.filter((e) => e.fajr).length).toBeGreaterThan(30);
-    expect(catalog.every((e) => /[؀-ۿ]/.test(e.muezzin))).toBe(true);
-    expect(voiceFromCatalog(catalog[0]!).id).toMatch(/^iw\d+$/);
+    expect(adhanVoiceSrc("fakhry")).toBe("/audio/adhan_fakhry.mp3");
   });
 
   it("search folds Arabic letter forms and diacritics", () => {

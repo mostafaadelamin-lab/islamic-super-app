@@ -58,17 +58,13 @@ void main() {
   late AppContent base;
   setUpAll(() async => base = await loadContent());
 
-  testWidgets('unreviewed episodes are hidden; reviewer mode lists all 19 with a warning', (tester) async {
-    final app = await pumpApp(tester, size: tallPhone);
+  testWidgets('every episode is listed, with an offline button (no review step)', (tester) async {
+    await pumpApp(tester, size: tallPhone);
     await pushScreen(tester, const StoriesScreen());
-    expect(find.byKey(const Key('series.hidden')), findsOneWidget);
     expect(find.textContaining('نبيل العوضي'), findsWidgets);
-    expect(find.byKey(const Key('episode-adam')), findsNothing);
-    await tester.tap(find.byKey(const Key('stories.reviewer')));
-    await tester.pumpAndSettle();
-    expect(app.prefs.getBool('reelsReviewer'), isTrue);
     expect(find.byKey(const Key('episode-adam')), findsOneWidget);
-    expect(find.textContaining('لم تتم مراجعة هذه الحلقة'), findsWidgets);
+    expect(find.byKey(const Key('stories.reviewer')), findsNothing);
+    expect(find.byKey(const Key('story-yusuf')), findsNothing, reason: 'verse stories removed');
   });
 
   testWidgets('plays an approved episode, resumes where it stopped, and stops the recitation', (tester) async {
@@ -85,7 +81,6 @@ void main() {
     await app.services.recitation.playSurah(105);
     await pushScreen(tester, const StoriesScreen());
     expect(find.byKey(const Key('episode-idris-nuh')), findsOneWidget);
-    expect(find.byKey(const Key('episode-hud')), findsNothing, reason: 'still pending');
     expect(find.text('راجعها: الشيخ س'), findsNothing); // shown inside the subtitle line
     await tester.tap(find.byKey(const Key('episode-adam')));
     await tester.pumpAndSettle();
@@ -101,11 +96,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(narration.calls.last, 'pause');
     expect(app.prefs.getInt('storyPos.awadi-prophets/adam'), 720);
-
-    await tester.tap(find.byKey(const Key('narrationReadVerses')));
-    await tester.pumpAndSettle();
-    expect(find.byType(StoryScreen), findsOneWidget);
-    expect(find.byKey(const Key('verse-2-30')), findsOneWidget);
   });
 
   testWidgets('a failed episode shows an error and can be retried', (tester) async {
@@ -164,19 +154,12 @@ void main() {
     expect(audio.loaded.last, endsWith('/038041.mp3'));
   });
 
-  testWidgets('verse stories are listed by category and reachable from More', (tester) async {
+  testWidgets('stories are reachable from More', (tester) async {
     await pumpApp(tester, size: tallPhone);
-    await goToTab(tester, 4);
+    await goToTab(tester, 5);
     await tester.tap(find.byKey(const Key('more.stories')));
     await tester.pumpAndSettle();
     expect(find.byType(StoriesScreen), findsOneWidget);
-    await tester.scrollUntilVisible(
-      find.byKey(const Key('story-yusuf')),
-      300,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await tester.tap(find.byKey(const Key('story-yusuf')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('verse-12-4')), findsOneWidget);
+    expect(find.byKey(const Key('episode-adam')), findsOneWidget);
   });
 }

@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rattil/ui/bookmarks_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:rattil/app.dart';
@@ -240,16 +241,14 @@ Future<void> pushScreen(WidgetTester tester, Widget screen) async {
 /// Opens Settings (More tab → Settings) — the M2 navigation moved Settings
 /// from the 5th tab into "More".
 Future<void> openSettings(WidgetTester tester) async {
-  await goToTab(tester, 4);
+  await goToTab(tester, 5);
   await tester.tap(find.byKey(const Key('more.settings')));
   await tester.pumpAndSettle();
 }
 
 /// Opens Bookmarks (More tab → Bookmarks) — formerly the 4th tab.
 Future<void> openBookmarks(WidgetTester tester) async {
-  await goToTab(tester, 4);
-  await tester.tap(find.byKey(const Key('more.bookmarks')));
-  await tester.pumpAndSettle();
+  await pushScreen(tester, const BookmarksScreen());
 }
 
 /// Records what the recitation controller asks the audio engine to do. Tests

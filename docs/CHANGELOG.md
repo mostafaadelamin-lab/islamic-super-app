@@ -1,5 +1,22 @@
 # Changelog
 
+## [Unreleased] — Owner's feedback round (mobile) — 2026-11-10
+### Changed
+- Bottom bar: Home, Quran, Reels, Prayer, Adhkar, More. Reels play with sound.
+- Home shows "country - area" from the phone's location (detected automatically on start; can be turned off).
+- Mushaf: tapping an ayah opens a list of 7 actions (listen to the ayah, with tafsir, to the end of the page, to the end of the surah, save a mark, copy, share as image). "Read ayah by ayah" removed; surah links open the Mushaf page.
+- Adhkar: a list (morning, evening, sleep, prayer, and dua categories) with a round counter under each dhikr.
+- Prayer times: compact screen; "Edit prayer times" holds the city, method, location services, adhan alerts and muezzin, adjustments and qibla.
+- Tasbih: new design. Zakat: simpler layout with the result on top. Hadith books: read as a page-turning book, no review notice.
+- Hajj/Umrah: a drawing for every step. Prophets' stories: every episode shown, story-verses section removed, episodes can be saved offline.
+- More: Hadith, Names of Allah, Quran radios, Recitations library, Stories, Qibla, Mosques, Zakat, Hajj; bookmarks, Quran search, khatma, downloads, Hisn al-Muslim, duplicate tasbih and worship tracking removed from the menu.
+- Qibla: steady heading when the phone is held upright; button to re-read the location the bearing uses.
+- Nearby mosques: more servers plus an OpenStreetMap fallback, names shown, each opens in Google Maps.
+- Muezzins: openly licensed Wikimedia Commons recordings (Makkah, Madinah, Sabah Fakhri, Fajr); islamweb recordings removed. Adhan settings always visible.
+- About: free app made for the sake of Allah, no charge and no ads.
+### Added
+- Names of Allah with al-Sa'di's explanation; Quran radios screen (Mushaf radio, Egyptian and Saudi Quran radios, others); offline download in the recitations library.
+
 ## [Unreleased] — Store publishing setup: Codemagic, signing, listing, privacy (owner's request) — 2026-11-10
 ### Added
 - `codemagic.yaml`: manual workflows only. iOS builds, signs (App Store Connect API key, certificate and profile created on the first run) and uploads to TestFlight without any beta review or App Store submission. Android builds a signed `.aab` for the first manual Play upload, and a second workflow uploads to the Play internal-testing track as a draft. No Mac needed.

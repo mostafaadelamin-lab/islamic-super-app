@@ -105,7 +105,7 @@ void main() {
     await pushScreen(tester, MosquesScreen(client: client));
     await tester.pumpAndSettle();
     expect(urls.first, contains('overpass-api.de'));
-    expect(urls[1], contains('kumi.systems'));
+    expect(urls[1], contains('private.coffee'));
     expect(bodies[1], contains('around:5000,30.04440,31.23570')); // no GPS: Cairo, the default city
     expect(find.byKey(const Key('mosquesGeoFallback')), findsOneWidget);
     expect(find.byKey(const Key('mosque-node/1')), findsOneWidget);

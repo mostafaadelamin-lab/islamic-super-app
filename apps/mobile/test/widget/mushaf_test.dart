@@ -212,7 +212,7 @@ void main() {
     final app = await open(tester, 2, audio: audio);
     await tester.tap(find.byKey(const Key('pageAyah-2-5')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const Key('ayahPlay')));
+    await tester.tap(find.byKey(const Key('ayahPlaySurah')));
     await tester.pumpAndSettle();
     expect(audio.loaded.last, 'https://everyayah.com/data/Alafasy_128kbps/002005.mp3');
     expect(find.byKey(const Key('miniPlayer')), findsOneWidget);

@@ -77,7 +77,7 @@ describe("Header/Footer", () => {
   });
   it("footer states the app is free and links to about", () => {
     render(<Footer locale="en" />);
-    expect(screen.getByText(/no ads, no subscriptions, no purchases/)).toBeInTheDocument();
+    expect(screen.getByText(/for the sake of Allah: no charge and no ads/)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "About" })).toHaveAttribute("href", "/en/about/");
   });
 });

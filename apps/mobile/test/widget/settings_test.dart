@@ -141,7 +141,7 @@ void main() {
     await open(tester, locale: 'en');
     await tester.tap(find.byKey(const Key('aboutTile')));
     await tester.pumpAndSettle();
-    expect(find.text('This app is completely free: no ads, no subscriptions, no purchases.'), findsOneWidget);
+    expect(find.text('A free app made for the sake of Allah: no charge and no ads.'), findsOneWidget);
     expect(find.textContaining('hafsData_v18'), findsOneWidget);
     expect(find.textContaining('Saheeh International'), findsOneWidget);
     expect(find.textContaining('Waqf General Public License'), findsOneWidget);
@@ -156,7 +156,7 @@ void main() {
     await open(tester);
     await tester.tap(find.byKey(const Key('aboutTile')));
     await tester.pumpAndSettle();
-    expect(find.text('التطبيق مجاني بالكامل: بلا إعلانات ولا اشتراكات ولا مشتريات.'), findsOneWidget);
+    expect(find.text('تطبيق مجاني تم إنشاؤه لوجه الله تعالى، بدون مقابل وبدون إعلانات.'), findsOneWidget);
     expect(find.text('مصادر المحتوى'), findsOneWidget);
     expect(find.text('الإصدار ١.٠.٠'), findsOneWidget);
   });

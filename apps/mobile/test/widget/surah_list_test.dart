@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/ui/page_reader_screen.dart';
 import 'package:rattil/ui/quran_index.dart';
 import 'package:rattil/ui/search_screen.dart';
-import 'package:rattil/ui/surah_reader_screen.dart';
 
 import '../helpers.dart';
 
@@ -111,10 +110,7 @@ void main() {
     await tester.tap(find.byKey(const Key('surah-2')));
     await tester.pumpAndSettle();
     expect(tester.state<PageReaderScreenState>(find.byType(PageReaderScreen)).page, 2);
-    await goBack(tester);
-    await tester.tap(find.byKey(const Key('surahText-2')));
-    await tester.pumpAndSettle();
-    expect(tester.widget<SurahReaderScreen>(find.byType(SurahReaderScreen)).surah, 2);
+    expect(find.byKey(const Key('surahText-2')), findsNothing, reason: 'ayah-by-ayah view removed');
   });
 
   testWidgets('the last-read surah and quarter are highlighted', (tester) async {

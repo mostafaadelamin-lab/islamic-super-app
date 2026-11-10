@@ -41,7 +41,14 @@ CC0 1.0 public-domain dedication, uploaded as own work. Original SHA-256
 apps/mobile/assets/audio/ADHAN_AUDIO.md.
 Voice 2: "The Adhan - Muslim Call to Prayer - Aaqib Azeez" by Atcovi, Wikimedia Commons, CC BY-SA 4.0 (credited in the
 app and on the website). Religious review (listen-through by a named reviewer) of every voice: PENDING.
-Default adhan (Mohamed Ramadan Saad, Makkah Haram), default Fajr adhan (Hamad Al-Daghriri) and the in-app
-muezzin collection: audio.islamweb.net. **No permission or open licence; the site's terms forbid
-republishing and automated download. Used by the owner's decision (2026-11-10), site name not shown in
-the app.** Details in apps/mobile/assets/audio/ADHAN_AUDIO.md.
+Since 2026-11-10 every muezzin is an openly licensed Wikimedia Commons recording (Makkah Haram 2013, Madinah,
+Sabah Fakhri, Malmö Fajr); the islamweb recordings and downloadable collection were removed at the owner's request
+after being told the site's terms forbid reuse. Details in apps/mobile/assets/audio/ADHAN_AUDIO.md.
+
+## Feedback round sources (2026-11-10)
+| Content | Source | Licence / terms | Notes |
+|---|---|---|---|
+| Names of Allah (97 entries, explanation under each name) | al-Sa'di, «تفسير أسماء الله الحسنى», ed. Ubaid al-Ubaid, via Shamela (book 10090); `content/asma/` | classical text, public domain; Shamela edition used for the wording | first paragraph of al-Sa'di's own words per name, verbatim (footnote numbers removed); approved by the owner |
+| Egyptian and Saudi Quran radios | live streams at stream.radiojar.com (`8s5u5tpdtwzuv` Cairo, `0tpy1h0kxtzuv` Saudi) | public live streams; station names shown, host not shown (owner) | cleartext allowed for radiojar.com (redirects to http edges) |
+| Nearby mosques fallback, place names | OpenStreetMap Nominatim (search + reverse) | ODbL, attribution "© OpenStreetMap contributors" | used when the Overpass mirrors fail; area name for the home screen |
+| Hajj/Umrah step drawings | drawn in code (`apps/mobile/lib/ui/hajj_art.dart`) | our own | no photos or third-party art |

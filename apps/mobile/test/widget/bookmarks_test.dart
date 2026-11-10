@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/ui/surah_reader_screen.dart';
 
+import 'package:rattil/ui/page_reader_screen.dart';
+
+import 'package:rattil/domain/quran.dart';
+
 import '../helpers.dart';
 
 void main() {
@@ -63,7 +67,7 @@ void main() {
   });
 
   testWidgets('tapping a bookmark opens the reader at that ayah', (tester) async {
-    await pumpApp(
+    final app = await pumpApp(
       tester,
       prefs: {
         'bookmarks.v1': items([
@@ -74,15 +78,14 @@ void main() {
     await openBookmarks(tester);
     await tester.tap(find.byKey(const Key('bm-b-18-10')));
     await tester.pumpAndSettle();
-    final r = tester.widget<SurahReaderScreen>(find.byType(SurahReaderScreen));
-    expect((r.surah, r.initialAyah), (18, 10));
+    final r = tester.widget<PageReaderScreen>(find.byType(PageReaderScreen));
+    expect(r.highlight, const AyahRef(18, 10));
+    expect(r.initialPage, app.services.content.quran.pageOf(const AyahRef(18, 10)));
   });
 
   testWidgets('bookmark added in the reader appears in the list', (tester) async {
     await pumpApp(tester);
-    await goToTab(tester, 1);
-    await tester.tap(find.byKey(const Key('surahText-1')));
-    await tester.pumpAndSettle();
+    await pushScreen(tester, const SurahReaderScreen(surah: 1));
     await tester.tap(find.byKey(const Key('bookmark-1-5')));
     await tester.pumpAndSettle();
     await goBack(tester);
@@ -91,11 +94,11 @@ void main() {
   });
 
   testWidgets('continue-reading tile is on the bookmarks screen', (tester) async {
-    await pumpApp(tester, prefs: {'lastRead.surah': 36, 'lastRead.ayah': 5});
+    final app = await pumpApp(tester, prefs: {'lastRead.surah': 36, 'lastRead.ayah': 5});
     await openBookmarks(tester);
     await tester.tap(find.text('متابعة القراءة'));
     await tester.pumpAndSettle();
-    final r = tester.widget<SurahReaderScreen>(find.byType(SurahReaderScreen));
-    expect((r.surah, r.initialAyah), (36, 5));
+    final r = tester.widget<PageReaderScreen>(find.byType(PageReaderScreen));
+    expect(r.initialPage, app.services.content.quran.pageOf(const AyahRef(36, 5)));
   });
 }
