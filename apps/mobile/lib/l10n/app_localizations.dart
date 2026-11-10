@@ -1763,7 +1763,7 @@ abstract class AppLocalizations {
   /// shared key "library.source"
   ///
   /// In en, this message translates to:
-  /// **'Recitations and radios from mp3quran.net, streamed over the internet.'**
+  /// **'Recitations and radios are streamed over the internet.'**
   String get librarySource;
 
   /// shared key "library.surahCount"

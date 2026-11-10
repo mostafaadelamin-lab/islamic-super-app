@@ -967,7 +967,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get librarySearch => 'ابحث بالاسم';
 
   @override
-  String get librarySource => 'التلاوات والإذاعات من موقع mp3quran.net، وتُسمع عبر الإنترنت.';
+  String get librarySource => 'التلاوات والإذاعات تُسمع عبر الإنترنت.';
 
   @override
   String librarySurahCount(String n) {

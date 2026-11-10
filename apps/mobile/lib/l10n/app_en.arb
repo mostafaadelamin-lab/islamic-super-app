@@ -1450,7 +1450,7 @@
   "@librarySearch": {
     "description": "shared key \"library.search\""
   },
-  "librarySource": "Recitations and radios from mp3quran.net, streamed over the internet.",
+  "librarySource": "Recitations and radios are streamed over the internet.",
   "@librarySource": {
     "description": "shared key \"library.source\""
   },

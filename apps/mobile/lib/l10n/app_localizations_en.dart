@@ -970,7 +970,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get librarySearch => 'Search by name';
 
   @override
-  String get librarySource => 'Recitations and radios from mp3quran.net, streamed over the internet.';
+  String get librarySource => 'Recitations and radios are streamed over the internet.';
 
   @override
   String librarySurahCount(String n) {
