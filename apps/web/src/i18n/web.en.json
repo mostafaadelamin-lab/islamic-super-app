@@ -249,7 +249,8 @@
   "adhan.playNow": "Play adhan",
   "adhan.webNote": "On the website the alert works while a page of the site is open (any tab). For alerts while the device is locked, use the mobile app.",
   "adhan.webDenied": "The browser blocks notifications. The alert and adhan still play inside the page; allow notifications in the browser settings to get a system notification too.",
-  "adhan.credit": "Adhan recording: \"Beautiful adhan\" from Wikimedia Commons (Adam-synagda), public domain CC0.",
+  "adhan.credit": "Adhan recordings from Wikimedia Commons under open licences:",
+  "adhan.voice": "Muezzin",
   "home.timingFor": "Times for",
   "home.prayerOf": "{name} prayer",
   "home.left": "Time left",
@@ -517,5 +518,9 @@
   "zakat.dueDetail": "One fortieth (2.5%) of {net}; the nisab is {nisab}.",
   "zakat.adornment": "Gold worn for adornment",
   "zakat.sources": "Sources: fatwas of {ref}",
-  "zakat.fatwa": "Fatwa no. {n} on Dar al-Ifta's website"
+  "zakat.fatwa": "Fatwa no. {n} on Dar al-Ifta's website",
+  "compass.n": "N",
+  "compass.e": "E",
+  "compass.s": "S",
+  "compass.w": "W"
 }

@@ -16,13 +16,23 @@ import org.json.JSONObject
  * time-zone change (AlarmManager forgets them).
  */
 object AdhanAlarms {
-    data class Alarm(val id: Int, val atMillis: Long, val title: String, val body: String, val stopLabel: String) {
+    /** [voice]: name of the res/raw recording of the muezzin the user chose ("adhan" = the first one). */
+    data class Alarm(
+        val id: Int,
+        val atMillis: Long,
+        val title: String,
+        val body: String,
+        val stopLabel: String,
+        val voice: String = "adhan",
+    ) {
         fun toJson(): JSONObject = JSONObject()
             .put("id", id).put("at", atMillis).put("title", title).put("body", body).put("stop", stopLabel)
+            .put("voice", voice)
 
         companion object {
             fun fromJson(o: JSONObject) = Alarm(
                 o.getInt("id"), o.getLong("at"), o.optString("title"), o.optString("body"), o.optString("stop", "Stop"),
+                o.optString("voice", "adhan"),
             )
         }
     }

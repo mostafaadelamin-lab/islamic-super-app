@@ -42,6 +42,7 @@ class AdhanService : Service() {
         val title = intent?.getStringExtra(EXTRA_TITLE) ?: ""
         val body = intent?.getStringExtra(EXTRA_BODY) ?: ""
         val stop = intent?.getStringExtra(EXTRA_STOP) ?: "Stop"
+        val voice = rawVoice(this, intent?.getStringExtra(EXTRA_VOICE))
         ensureChannels(this)
         val notification = buildNotification(title, body, stop)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -56,12 +57,12 @@ class AdhanService : Service() {
             stopSelf()
             return START_NOT_STICKY
         }
-        play(audio)
+        play(audio, voice)
         handler.postDelayed({ stopSelf() }, MAX_PLAY_MS)
         return START_NOT_STICKY
     }
 
-    private fun play(audio: AudioManager) {
+    private fun play(audio: AudioManager, voice: Int) {
         val attrs = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_ALARM)
             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -82,7 +83,7 @@ class AdhanService : Service() {
         }
         player = MediaPlayer().apply {
             setAudioAttributes(attrs)
-            setDataSource(this@AdhanService, Uri.parse("android.resource://$packageName/${R.raw.adhan}"))
+            setDataSource(this@AdhanService, Uri.parse("android.resource://$packageName/$voice"))
             setWakeMode(this@AdhanService, PowerManager.PARTIAL_WAKE_LOCK)
             setOnCompletionListener { stopSelf() }
             setOnErrorListener { _, _, _ -> stopSelf(); true }
@@ -131,6 +132,14 @@ class AdhanService : Service() {
         const val EXTRA_TITLE = "title"
         const val EXTRA_BODY = "body"
         const val EXTRA_STOP = "stop"
+        const val EXTRA_VOICE = "voice"
+
+        /** The res/raw recording called [name] (only adhan* names), else the first adhan. */
+        fun rawVoice(ctx: Context, name: String?): Int {
+            if (name == null || !name.matches(Regex("adhan[a-z0-9_]*"))) return R.raw.adhan
+            val id = ctx.resources.getIdentifier(name, "raw", ctx.packageName)
+            return if (id != 0) id else R.raw.adhan
+        }
         const val ACTION_STOP = "org.rattil.app.ADHAN_STOP"
         private const val NOTIFICATION_ID = 7_000_001
         private const val PLAYING_CHANNEL = "adhan_full"

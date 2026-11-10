@@ -7,6 +7,7 @@ import { createStore } from "./store";
 import { prayerTimes, type PrayerDay, type PrayerKey } from "./prayer";
 import { OBLIGATORY, type PrayerQuery } from "./next-prayer";
 import { addDays, localDateInTz, zonedInstant } from "./time";
+import { adhanVoiceById, DEFAULT_ADHAN_VOICE } from "./adhan-voices";
 
 export interface AdhanPrefs {
   enabled: boolean;
@@ -14,6 +15,8 @@ export interface AdhanPrefs {
   prayers: Record<string, boolean>;
   /** Play the adhan recording (otherwise only the notification is shown). */
   sound: boolean;
+  /** Chosen muezzin (id from ADHAN_VOICES). */
+  voice: string;
   /** Reminder this many minutes before each enabled adhan (0 = off). */
   preMinutes: number;
   /** Iqama reminder after each enabled adhan. */
@@ -59,6 +62,7 @@ export const DEFAULT_ADHAN: AdhanPrefs = {
   enabled: false,
   prayers: {},
   sound: true,
+  voice: DEFAULT_ADHAN_VOICE,
   preMinutes: 0,
   iqamaEnabled: false,
   iqama: { ...DEFAULT_IQAMA },
@@ -96,6 +100,7 @@ export function sanitizeAdhan(raw: unknown): AdhanPrefs {
     enabled: r.enabled === true,
     prayers,
     sound: r.sound !== false,
+    voice: adhanVoiceById(r.voice).id,
     preMinutes: pre,
     iqamaEnabled: r.iqamaEnabled === true,
     iqama,

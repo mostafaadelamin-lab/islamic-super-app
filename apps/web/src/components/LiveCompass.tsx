@@ -93,7 +93,17 @@ export function LiveCompass({
       data-mode={mode}
       data-declination={declination.toFixed(6)}
     >
-      <Compass bearing={bearing} heading={live} label={t(locale, "prayer.compass", { deg })} />
+      <Compass
+        bearing={bearing}
+        heading={live}
+        label={t(locale, "prayer.compass", { deg })}
+        cardinals={[
+          t(locale, "compass.n"),
+          t(locale, "compass.e"),
+          t(locale, "compass.s"),
+          t(locale, "compass.w"),
+        ]}
+      />
       <p className="compass-status" role="status" data-testid="compass-status">
         {mode === "live" ? t(locale, facing ? "qibla.facing" : "qibla.turn") : null}
         {mode === "waiting" ? t(locale, "qibla.waiting") : null}

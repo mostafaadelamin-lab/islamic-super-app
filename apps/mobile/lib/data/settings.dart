@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/adhan_schedule.dart';
+import '../domain/adhan_voices.dart';
 import '../domain/hijri.dart';
 import '../domain/page_khatma.dart';
 import '../domain/prayer_schedule.dart';
@@ -243,6 +244,15 @@ class SettingsController extends ChangeNotifier {
   bool adhanFor(String prayer) => _prefs.getBool('adhan.$prayer') ?? true;
   Future<void> setAdhanFor(String prayer, bool v) async {
     await _prefs.setBool('adhan.$prayer', v);
+    notifyListeners();
+  }
+
+  /// Muezzin recording for the adhan (id from [adhanVoices]).
+  String get adhanVoice => adhanVoiceById(_prefs.getString('adhan.voice')).id;
+
+  Future<void> setAdhanVoice(String id) async {
+    if (!adhanVoices.any((v) => v.id == id)) throw ArgumentError.value(id, 'voice');
+    await _prefs.setString('adhan.voice', id);
     notifyListeners();
   }
 

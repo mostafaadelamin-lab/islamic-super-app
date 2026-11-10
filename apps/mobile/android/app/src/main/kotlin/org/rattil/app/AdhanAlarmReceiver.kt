@@ -19,6 +19,7 @@ class AdhanAlarmReceiver : BroadcastReceiver() {
                     .putExtra(AdhanService.EXTRA_TITLE, alarm.title)
                     .putExtra(AdhanService.EXTRA_BODY, alarm.body)
                     .putExtra(AdhanService.EXTRA_STOP, alarm.stopLabel)
+                    .putExtra(AdhanService.EXTRA_VOICE, alarm.voice)
                 try {
                     // Allowed from the background because an exact alarm just fired.
                     ContextCompat.startForegroundService(ctx, service)

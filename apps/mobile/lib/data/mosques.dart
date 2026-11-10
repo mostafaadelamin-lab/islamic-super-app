@@ -39,7 +39,7 @@ class MosqueFinder {
               },
               body: 'data=${Uri.encodeQueryComponent(overpassQuery(lat, lng, radius))}',
             )
-            .timeout(const Duration(seconds: 30));
+            .timeout(const Duration(seconds: 15));
         if (res.statusCode != 200) throw http.ClientException('HTTP ${res.statusCode}');
         final list = parseOverpass(jsonDecode(utf8.decode(res.bodyBytes)), lat, lng, arabic: arabic);
         await _prefs.setString(

@@ -19,16 +19,17 @@ class LocationUnavailable extends LocationResult {
   const LocationUnavailable();
 }
 
-/// The device position for "use my location" (coarse accuracy is enough for prayer times).
+/// The device position. Coarse accuracy is enough for prayer times; nearby
+/// mosques ask for a [precise] fix.
 abstract class LocationProvider {
-  Future<LocationResult> current();
+  Future<LocationResult> current({bool precise = false});
 }
 
 class GeolocatorLocation implements LocationProvider {
   const GeolocatorLocation();
 
   @override
-  Future<LocationResult> current() async {
+  Future<LocationResult> current({bool precise = false}) async {
     try {
       if (!await Geolocator.isLocationServiceEnabled()) return const LocationUnavailable();
       var perm = await Geolocator.checkPermission();
@@ -36,10 +37,21 @@ class GeolocatorLocation implements LocationProvider {
       if (perm == LocationPermission.denied || perm == LocationPermission.deniedForever) {
         return const LocationDenied();
       }
-      final p = await Geolocator.getCurrentPosition(
-        locationSettings: const LocationSettings(accuracy: LocationAccuracy.low, timeLimit: Duration(seconds: 20)),
-      );
-      return LocationFound(p.latitude, p.longitude);
+      try {
+        final p = await Geolocator.getCurrentPosition(
+          locationSettings: LocationSettings(
+            accuracy: precise ? LocationAccuracy.high : LocationAccuracy.low,
+            timeLimit: const Duration(seconds: 20),
+          ),
+        );
+        return LocationFound(p.latitude, p.longitude);
+      } catch (_) {
+        // No fresh fix in time (indoors, GPS warming up): the last known one is
+        // still far better than the city centre.
+        final last = await Geolocator.getLastKnownPosition();
+        if (last != null) return LocationFound(last.latitude, last.longitude);
+        return const LocationUnavailable();
+      }
     } catch (_) {
       return const LocationUnavailable();
     }

@@ -187,7 +187,7 @@
       }
     }
   },
-  "adhanCredit": "Adhan recording: \"Beautiful adhan\" from Wikimedia Commons (Adam-synagda), public domain CC0.",
+  "adhanCredit": "Adhan recordings from Wikimedia Commons under open licences (per voice):",
   "@adhanCredit": {
     "description": "shared key \"adhan.credit\""
   },
@@ -207,7 +207,7 @@
   "@adhanExtrasNote": {
     "description": "shared key \"adhan.extrasNote\""
   },
-  "adhanIosNote": "On iPhone the notification plays the opening takbir only (the system allows at most 30 seconds).",
+  "adhanIosNote": "On iPhone the notification plays the opening takbir only, in the first voice (the system allows at most 30 seconds); the full adhan in the chosen voice plays inside the app.",
   "@adhanIosNote": {
     "description": "shared key \"adhan.iosNote\""
   },
@@ -364,6 +364,19 @@
   "adhanTitle": "Time for {name}",
   "@adhanTitle": {
     "description": "shared key \"adhan.title\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adhanVoice": "Muezzin",
+  "@adhanVoice": {
+    "description": "shared key \"adhan.voice\""
+  },
+  "adhanVoiceListen": "Listen to {name}",
+  "@adhanVoiceListen": {
+    "description": "shared key \"adhan.voiceListen\"",
     "placeholders": {
       "name": {
         "type": "String"
@@ -1282,6 +1295,10 @@
   "@mosquesError": {
     "description": "shared key \"mosques.error\""
   },
+  "mosquesGeoFallback": "Your location is not available (turn on GPS and allow location). Showing mosques around your prayer-times city.",
+  "@mosquesGeoFallback": {
+    "description": "shared key \"mosques.geoFallback\""
+  },
   "mosquesKm": "{n} km",
   "@mosquesKm": {
     "description": "shared key \"mosques.km\"",
@@ -1295,6 +1312,14 @@
   "@mosquesLoading": {
     "description": "shared key \"mosques.loading\""
   },
+  "mosquesLocate": "Update my location",
+  "@mosquesLocate": {
+    "description": "shared key \"mosques.locate\""
+  },
+  "mosquesLocating": "Finding your location…",
+  "@mosquesLocating": {
+    "description": "shared key \"mosques.locating\""
+  },
   "mosquesMeters": "{n} m",
   "@mosquesMeters": {
     "description": "shared key \"mosques.meters\"",
@@ -1304,11 +1329,15 @@
       }
     }
   },
+  "mosquesMyLocation": "your current location",
+  "@mosquesMyLocation": {
+    "description": "shared key \"mosques.myLocation\""
+  },
   "mosquesNone": "No mosques are mapped within this distance. Try a larger one.",
   "@mosquesNone": {
     "description": "shared key \"mosques.none\""
   },
-  "mosquesNote": "Straight-line distance around your prayer-times city. Data from the open OpenStreetMap map; it can be incomplete in some places.",
+  "mosquesNote": "Straight-line distance. Data from the open OpenStreetMap map; it can be incomplete in some places.",
   "@mosquesNote": {
     "description": "shared key \"mosques.note\""
   },
@@ -1664,6 +1693,18 @@
       }
     }
   },
+  "qiblaDirection": "Qibla direction",
+  "@qiblaDirection": {
+    "description": "shared key \"qibla.direction\""
+  },
+  "qiblaDistance": "Distance to the Kaaba",
+  "@qiblaDistance": {
+    "description": "shared key \"qibla.distance\""
+  },
+  "qiblaEast": "E",
+  "@qiblaEast": {
+    "description": "shared key \"qibla.east\""
+  },
   "qiblaFacing": "You are facing the qibla",
   "@qiblaFacing": {
     "description": "shared key \"qibla.facing\""
@@ -1681,9 +1722,17 @@
   "@qiblaLiveNote": {
     "description": "shared key \"qibla.liveNote\""
   },
+  "qiblaSouth": "S",
+  "@qiblaSouth": {
+    "description": "shared key \"qibla.south\""
+  },
   "qiblaStatic": "No compass reading on this device: the diagram shows the qibla from true north.",
   "@qiblaStatic": {
     "description": "shared key \"qibla.static\""
+  },
+  "qiblaTipsTitle": "For an accurate reading",
+  "@qiblaTipsTitle": {
+    "description": "shared key \"qibla.tipsTitle\""
   },
   "qiblaTitle": "Qibla",
   "@qiblaTitle": {
@@ -1710,6 +1759,10 @@
   "qiblaWaiting": "Reading the compass…",
   "@qiblaWaiting": {
     "description": "shared key \"qibla.waiting\""
+  },
+  "qiblaWest": "W",
+  "@qiblaWest": {
+    "description": "shared key \"qibla.west\""
   },
   "quranAyahCount": "{count} ayahs",
   "@quranAyahCount": {

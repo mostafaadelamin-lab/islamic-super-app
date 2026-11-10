@@ -18,6 +18,17 @@
 - Website at iPad portrait and landscape: no sideways scrolling, two-column home, Mushaf page fits the height.
 ### Not yet
 - Apple Watch: needs a Mac with Xcode and an Apple developer account to build and test.
+## [Unreleased] — Nearest mosque fix, new qibla design, muezzin choice — 2026-11-10
+### Fixed
+- Nearby mosques searched around the centre of the prayer-times city, so the "nearest" mosque could be kilometres away. They now search around the phone's own position (GPS, with the last known position as a fallback), and only use the city when location is off (with a note). New "Update my location" button.
+- Mosques drawn on OpenStreetMap only as a building ("building=mosque") are now included, without duplicates; a third free Overpass server and a 15 s limit per server.
+### Changed
+- Qibla compass redesigned (mobile and website): emerald and gold dial, Kaaba mark, eight-pointed star, the phone's pointer, gold glow and a light vibration (mobile) when facing the qibla, distance to the Kaaba.
+### Added
+- Choice of muezzin for the adhan (mobile Settings and website adhan settings), with a listen button per voice. Voice 2: CC BY-SA 4.0 recording from Wikimedia Commons (credited). On Android the full adhan alarm plays the chosen voice; the iPhone notification keeps the short opening takbir of voice 1.
+### Not yet
+- More voices (licences checked, see ADHAN_AUDIO.md): Wikimedia blocked the downloads for now.
+- Religious listen-through of each voice: pending.
 
 ## [Unreleased] — Adhkar, help and sharing (owner's feature list, phases 5–6) — 2026-11-10
 ### Added

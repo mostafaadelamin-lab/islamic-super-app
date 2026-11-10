@@ -311,7 +311,7 @@ abstract class AppLocalizations {
   /// shared key "adhan.credit"
   ///
   /// In en, this message translates to:
-  /// **'Adhan recording: \"Beautiful adhan\" from Wikimedia Commons (Adam-synagda), public domain CC0.'**
+  /// **'Adhan recordings from Wikimedia Commons under open licences (per voice):'**
   String get adhanCredit;
 
   /// shared key "adhan.denied"
@@ -341,7 +341,7 @@ abstract class AppLocalizations {
   /// shared key "adhan.iosNote"
   ///
   /// In en, this message translates to:
-  /// **'On iPhone the notification plays the opening takbir only (the system allows at most 30 seconds).'**
+  /// **'On iPhone the notification plays the opening takbir only, in the first voice (the system allows at most 30 seconds); the full adhan in the chosen voice plays inside the app.'**
   String get adhanIosNote;
 
   /// shared key "adhan.iqama"
@@ -505,6 +505,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Time for {name}'**
   String adhanTitle(String name);
+
+  /// shared key "adhan.voice"
+  ///
+  /// In en, this message translates to:
+  /// **'Muezzin'**
+  String get adhanVoice;
+
+  /// shared key "adhan.voiceListen"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to {name}'**
+  String adhanVoiceListen(String name);
 
   /// shared key "adhkar.arabicOnly"
   ///
@@ -1598,6 +1610,12 @@ abstract class AppLocalizations {
   /// **'Could not reach OpenStreetMap. Check your internet connection.'**
   String get mosquesError;
 
+  /// shared key "mosques.geoFallback"
+  ///
+  /// In en, this message translates to:
+  /// **'Your location is not available (turn on GPS and allow location). Showing mosques around your prayer-times city.'**
+  String get mosquesGeoFallback;
+
   /// shared key "mosques.km"
   ///
   /// In en, this message translates to:
@@ -1610,11 +1628,29 @@ abstract class AppLocalizations {
   /// **'Searching for mosques…'**
   String get mosquesLoading;
 
+  /// shared key "mosques.locate"
+  ///
+  /// In en, this message translates to:
+  /// **'Update my location'**
+  String get mosquesLocate;
+
+  /// shared key "mosques.locating"
+  ///
+  /// In en, this message translates to:
+  /// **'Finding your location…'**
+  String get mosquesLocating;
+
   /// shared key "mosques.meters"
   ///
   /// In en, this message translates to:
   /// **'{n} m'**
   String mosquesMeters(String n);
+
+  /// shared key "mosques.myLocation"
+  ///
+  /// In en, this message translates to:
+  /// **'your current location'**
+  String get mosquesMyLocation;
 
   /// shared key "mosques.none"
   ///
@@ -1625,7 +1661,7 @@ abstract class AppLocalizations {
   /// shared key "mosques.note"
   ///
   /// In en, this message translates to:
-  /// **'Straight-line distance around your prayer-times city. Data from the open OpenStreetMap map; it can be incomplete in some places.'**
+  /// **'Straight-line distance. Data from the open OpenStreetMap map; it can be incomplete in some places.'**
   String get mosquesNote;
 
   /// shared key "mosques.offline"
@@ -2066,6 +2102,24 @@ abstract class AppLocalizations {
   /// **'Corrected from magnetic to true north: {deg}°'**
   String qiblaDeclination(String deg);
 
+  /// shared key "qibla.direction"
+  ///
+  /// In en, this message translates to:
+  /// **'Qibla direction'**
+  String get qiblaDirection;
+
+  /// shared key "qibla.distance"
+  ///
+  /// In en, this message translates to:
+  /// **'Distance to the Kaaba'**
+  String get qiblaDistance;
+
+  /// shared key "qibla.east"
+  ///
+  /// In en, this message translates to:
+  /// **'E'**
+  String get qiblaEast;
+
   /// shared key "qibla.facing"
   ///
   /// In en, this message translates to:
@@ -2084,11 +2138,23 @@ abstract class AppLocalizations {
   /// **'Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The phone\'s compass points to magnetic north; the app corrects it to true north for your city.'**
   String get qiblaLiveNote;
 
+  /// shared key "qibla.south"
+  ///
+  /// In en, this message translates to:
+  /// **'S'**
+  String get qiblaSouth;
+
   /// shared key "qibla.static"
   ///
   /// In en, this message translates to:
   /// **'No compass reading on this device: the diagram shows the qibla from true north.'**
   String get qiblaStatic;
+
+  /// shared key "qibla.tipsTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'For an accurate reading'**
+  String get qiblaTipsTitle;
 
   /// shared key "qibla.title"
   ///
@@ -2113,6 +2179,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reading the compass…'**
   String get qiblaWaiting;
+
+  /// shared key "qibla.west"
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get qiblaWest;
 
   /// shared key "quran.ayahCount"
   ///
