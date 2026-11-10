@@ -943,6 +943,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String get khatmaTitle => 'Quran khatma';
 
   @override
+  String get libraryAllRiwayat => 'All riwayat';
+
+  @override
+  String get libraryEmpty => 'No results.';
+
+  @override
+  String get libraryLive => 'Live';
+
+  @override
+  String get libraryLoadError => 'Couldn\'t load the list. Check your connection and try again.';
+
+  @override
+  String get libraryRadios => 'Radios';
+
+  @override
+  String get libraryReciters => 'Reciters';
+
+  @override
+  String get libraryRetry => 'Try again';
+
+  @override
+  String get libraryRewaya => 'Riwaya';
+
+  @override
+  String get librarySearch => 'Search by name';
+
+  @override
+  String get librarySource => 'Recitations and radios from mp3quran.net, streamed over the internet.';
+
+  @override
+  String librarySurahCount(String n) {
+    return '$n surahs';
+  }
+
+  @override
+  String librarySurahTitle(String reciter, String surah) {
+    return '$reciter — Surah $surah';
+  }
+
+  @override
+  String get libraryTitle => 'Recitations and radios';
+
+  @override
   String get moreTitle => 'More';
 
   @override

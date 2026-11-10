@@ -424,7 +424,7 @@ test.describe("navigation", () => {
     await expect(page).toHaveURL("/ar/adhkar/");
     await nav.getByRole("link", { name: "المزيد" }).click();
     await expect(page).toHaveURL("/ar/more/");
-    await expect(page.getByTestId("section-tiles").getByRole("link")).toHaveCount(20); // 12 + reels + stories + khatma + mosques + tracker + help + zakat + hadith
+    await expect(page.getByTestId("section-tiles").getByRole("link")).toHaveCount(21); // 12 + reels + stories + khatma + mosques + tracker + help + zakat + hadith + library
     await page.setViewportSize({ width: 1280, height: 900 });
     const top = (await nav.boundingBox())!;
     expect(top.y).toBeLessThan(80);
@@ -437,7 +437,7 @@ test.describe("navigation", () => {
         .getByTestId("section-tiles")
         .getByRole("link")
         .evaluateAll((as) => as.map((a) => a.getAttribute("href")!));
-      expect(hrefs).toHaveLength(20); // 12 + reels + stories + khatma + mosques + tracker + help + zakat + hadith
+      expect(hrefs).toHaveLength(21); // 12 + reels + stories + khatma + mosques + tracker + help + zakat + hadith + library
       for (const h of hrefs) expect((await request.get(h)).status(), h).toBe(200);
     }
   });

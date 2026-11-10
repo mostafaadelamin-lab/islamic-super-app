@@ -25,6 +25,7 @@ import 'data/sensors.dart';
 import 'data/settings.dart';
 import 'data/sharing.dart';
 import 'data/hadith.dart';
+import 'data/mp3quran.dart';
 import 'data/tafsir.dart';
 import 'domain/prayer_schedule.dart';
 import 'ui/prayer_model.dart' show resolveCity;
@@ -45,6 +46,7 @@ class AppServices {
     required this.sensors,
     required this.tafsir,
     required this.hadith,
+    required this.mp3quran,
     required this.narration,
     required this.sleepTimer,
     this.location = const GeolocatorLocation(),
@@ -171,6 +173,7 @@ class AppServices {
       sensors: sensors ?? const DeviceCompassSensors(),
       tafsir: tafsir ?? TafsirStore.asset(rootBundle),
       hadith: hadith ?? HadithLibrary.asset(content.hadith, rootBundle),
+      mp3quran: Mp3QuranClient(httpClient: httpClient, prefs: prefs, clock: c),
       location: location ?? const GeolocatorLocation(),
       khatma: khatma,
       worship: WorshipController(settings, localToday),
@@ -206,6 +209,9 @@ class AppServices {
 
   /// The hadith books, read part by part when opened.
   final HadithLibrary hadith;
+
+  /// Recitations library and Quran radios (mp3quran.net), cached on the device.
+  final Mp3QuranClient mp3quran;
 
   /// Narrated story episodes (audio only) and the sleep timer.
   final NarrationController narration;

@@ -1414,6 +1414,71 @@
   "@khatmaTitle": {
     "description": "shared key \"khatma.title\""
   },
+  "libraryAllRiwayat": "All riwayat",
+  "@libraryAllRiwayat": {
+    "description": "shared key \"library.allRiwayat\""
+  },
+  "libraryEmpty": "No results.",
+  "@libraryEmpty": {
+    "description": "shared key \"library.empty\""
+  },
+  "libraryLive": "Live",
+  "@libraryLive": {
+    "description": "shared key \"library.live\""
+  },
+  "libraryLoadError": "Couldn't load the list. Check your connection and try again.",
+  "@libraryLoadError": {
+    "description": "shared key \"library.loadError\""
+  },
+  "libraryRadios": "Radios",
+  "@libraryRadios": {
+    "description": "shared key \"library.radios\""
+  },
+  "libraryReciters": "Reciters",
+  "@libraryReciters": {
+    "description": "shared key \"library.reciters\""
+  },
+  "libraryRetry": "Try again",
+  "@libraryRetry": {
+    "description": "shared key \"library.retry\""
+  },
+  "libraryRewaya": "Riwaya",
+  "@libraryRewaya": {
+    "description": "shared key \"library.rewaya\""
+  },
+  "librarySearch": "Search by name",
+  "@librarySearch": {
+    "description": "shared key \"library.search\""
+  },
+  "librarySource": "Recitations and radios from mp3quran.net, streamed over the internet.",
+  "@librarySource": {
+    "description": "shared key \"library.source\""
+  },
+  "librarySurahCount": "{n} surahs",
+  "@librarySurahCount": {
+    "description": "shared key \"library.surahCount\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "librarySurahTitle": "{reciter} — Surah {surah}",
+  "@librarySurahTitle": {
+    "description": "shared key \"library.surahTitle\"",
+    "placeholders": {
+      "reciter": {
+        "type": "String"
+      },
+      "surah": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryTitle": "Recitations and radios",
+  "@libraryTitle": {
+    "description": "shared key \"library.title\""
+  },
   "moreTitle": "More",
   "@moreTitle": {
     "description": "shared key \"more.title\""

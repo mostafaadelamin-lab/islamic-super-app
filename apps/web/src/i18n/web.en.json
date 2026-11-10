@@ -548,5 +548,22 @@
   "hadith.prev": "Previous",
   "hadith.next": "Next",
   "hadith.loadError": "This part could not be loaded. Check the connection and try again.",
-  "hadith.allBooks": "All hadith books"
+  "hadith.allBooks": "All hadith books",
+  "library.title": "Recitations and radios",
+  "library.tileSub": "Reciters in every riwaya and Quran radios",
+  "library.reciters": "Reciters",
+  "library.radios": "Radios",
+  "library.search": "Search by name",
+  "library.allRiwayat": "All riwayat",
+  "library.rewaya": "Riwaya",
+  "library.surahCount": "{n} surahs",
+  "library.loadError": "Couldn't load the list. Check your connection and try again.",
+  "library.retry": "Try again",
+  "library.empty": "No results.",
+  "library.source": "Recitations and radios from mp3quran.net, streamed over the internet.",
+  "library.live": "Live",
+  "library.surahTitle": "{reciter} — Surah {surah}",
+  "library.nowPlaying": "Now playing",
+  "library.playError": "Couldn't play. Check your connection.",
+  "library.back": "All reciters"
 }

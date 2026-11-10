@@ -940,6 +940,49 @@ class AppLocalizationsAr extends AppLocalizations {
   String get khatmaTitle => 'ختمة القرآن';
 
   @override
+  String get libraryAllRiwayat => 'كل الروايات';
+
+  @override
+  String get libraryEmpty => 'لا نتائج.';
+
+  @override
+  String get libraryLive => 'بث مباشر';
+
+  @override
+  String get libraryLoadError => 'تعذّر تحميل القائمة. تأكد من اتصالك بالإنترنت ثم أعد المحاولة.';
+
+  @override
+  String get libraryRadios => 'الإذاعات';
+
+  @override
+  String get libraryReciters => 'القرّاء';
+
+  @override
+  String get libraryRetry => 'إعادة المحاولة';
+
+  @override
+  String get libraryRewaya => 'الرواية';
+
+  @override
+  String get librarySearch => 'ابحث بالاسم';
+
+  @override
+  String get librarySource => 'التلاوات والإذاعات من موقع mp3quran.net، وتُسمع عبر الإنترنت.';
+
+  @override
+  String librarySurahCount(String n) {
+    return '$n سورة';
+  }
+
+  @override
+  String librarySurahTitle(String reciter, String surah) {
+    return '$reciter — سورة $surah';
+  }
+
+  @override
+  String get libraryTitle => 'مكتبة التلاوات والإذاعات';
+
+  @override
   String get moreTitle => 'المزيد';
 
   @override

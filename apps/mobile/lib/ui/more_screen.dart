@@ -12,6 +12,7 @@ import 'qibla_screen.dart';
 import 'reels_screen.dart';
 import 'downloads_screen.dart';
 import 'khatma_screen.dart';
+import 'library_screen.dart';
 import 'worship_screen.dart';
 import 'stories_screen.dart';
 import 'search_screen.dart';
@@ -59,6 +60,7 @@ class MoreScreen extends StatelessWidget {
                 tile('mosques', Icons.place_outlined, l.mosquesTitle, () => const MosquesScreen()),
                 tile('zakat', Icons.savings_outlined, l.zakatTitle, () => const ZakatScreen()),
                 tile('hajj', Icons.mosque_outlined, l.hajjTitle, () => const HajjScreen()),
+                tile('library', Icons.library_music_outlined, l.libraryTitle, () => const LibraryScreen()),
                 tile('stories', Icons.headphones_outlined, l.storiesTitle, () => const StoriesScreen()),
                 tile('reels', Icons.smart_display_outlined, l.reelsTitle, () => const ReelsScreen()),
               ],

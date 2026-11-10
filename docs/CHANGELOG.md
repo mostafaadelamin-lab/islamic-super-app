@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased] — Recitations library and Quran radios from mp3quran.net (owner's feature list, phase 7) — 2026-11-10
+### Added
+- Recitations and radios (mobile: More → Recitations and radios; web: /library/): reciters from mp3quran.net in every riwaya (Hafs, Warsh, Qalun, ad-Duri, ...), filter by riwaya, search by name, choose a recording, then play any surah it has.
+- Quran radios (live streams), with search.
+- Streams through the narration player (mobile) or a native player (web) with the sleep timer; starting one stops the recitation player.
+- The list is saved on the device for a week, so it opens without the internet (playing still needs it). Source credited on the screen.
+
 ## [Unreleased] — Hadith books from Open-Hadith-Data (owner's feature list, phase 7) — 2026-11-10
 ### Added
 - The nine hadith books (al-Bukhari, Muslim, Abu Dawud, at-Tirmidhi, an-Nasa'i, Ibn Majah, Malik's Muwatta, Ahmad's Musnad, ad-Darimi) with their Arabic text unchanged, al-Alamiyya numbering (mobile: More → Hadith books; web: /hadith/).

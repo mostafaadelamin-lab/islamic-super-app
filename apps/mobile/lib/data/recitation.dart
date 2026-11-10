@@ -355,6 +355,7 @@ class NarrationController extends ChangeNotifier {
   Duration _position = Duration.zero;
   Duration? _duration;
   int _generation = 0;
+  bool _remember = true;
   DateTime _lastSave = DateTime.fromMillisecondsSinceEpoch(0);
 
   Episode? get episode => _episode;
@@ -380,9 +381,11 @@ class NarrationController extends ChangeNotifier {
     if (_recitation.isPlaying && isPlaying) unawaited(pause());
   }
 
-  Future<void> playEpisode(String seriesId, Episode e) async {
+  /// Plays [e]. [remember]: resume where the listener stopped (off for live radio streams).
+  Future<void> playEpisode(String seriesId, Episode e, {bool remember = true}) async {
     final gen = ++_generation;
     if (_recitation.isActive) await _recitation.stop();
+    _remember = remember;
     _seriesId = seriesId;
     _episode = e;
     _state = RecitationState.loading;
@@ -394,7 +397,7 @@ class NarrationController extends ChangeNotifier {
       await b.stop();
       _duration = await b.load(e.url);
       if (gen != _generation) return;
-      final resume = _settings.storyPosition(_key(seriesId, e));
+      final resume = remember ? _settings.storyPosition(_key(seriesId, e)) : 0;
       if (resume > 5 && (_duration == null || resume < _duration!.inSeconds - 10)) {
         await b.seek(Duration(seconds: resume));
         _position = Duration(seconds: resume);
@@ -413,7 +416,7 @@ class NarrationController extends ChangeNotifier {
     if (_episode == null) return;
     _position = p;
     final now = DateTime.now();
-    if (now.difference(_lastSave).inSeconds >= 5) {
+    if (_remember && now.difference(_lastSave).inSeconds >= 5) {
       _lastSave = now;
       unawaited(_settings.setStoryPosition(_key(_seriesId!, _episode!), p.inSeconds));
     }
@@ -422,7 +425,7 @@ class NarrationController extends ChangeNotifier {
 
   void _onDone() {
     if (_episode == null || _state != RecitationState.playing) return;
-    unawaited(_settings.setStoryPosition(_key(_seriesId!, _episode!), 0));
+    if (_remember) unawaited(_settings.setStoryPosition(_key(_seriesId!, _episode!), 0));
     _state = RecitationState.paused;
     _position = Duration.zero;
     notifyListeners();
@@ -433,13 +436,15 @@ class NarrationController extends ChangeNotifier {
     _state = RecitationState.paused;
     notifyListeners();
     await _backend?.pause();
-    if (_episode != null) await _settings.setStoryPosition(_key(_seriesId!, _episode!), _position.inSeconds);
+    if (_remember && _episode != null) {
+      await _settings.setStoryPosition(_key(_seriesId!, _episode!), _position.inSeconds);
+    }
   }
 
   Future<void> resume() async {
     final e = _episode;
     if (e == null) return;
-    if (_state == RecitationState.error) return playEpisode(_seriesId!, e);
+    if (_state == RecitationState.error) return playEpisode(_seriesId!, e, remember: _remember);
     if (_state != RecitationState.paused) return;
     if (_recitation.isActive) await _recitation.stop();
     _state = RecitationState.playing;
@@ -460,7 +465,7 @@ class NarrationController extends ChangeNotifier {
   Future<void> stop() async {
     _generation++;
     final e = _episode;
-    if (e != null) await _settings.setStoryPosition(_key(_seriesId!, e), _position.inSeconds);
+    if (_remember && e != null) await _settings.setStoryPosition(_key(_seriesId!, e), _position.inSeconds);
     _episode = null;
     _state = RecitationState.idle;
     notifyListeners();

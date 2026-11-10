@@ -1706,6 +1706,84 @@ abstract class AppLocalizations {
   /// **'Quran khatma'**
   String get khatmaTitle;
 
+  /// shared key "library.allRiwayat"
+  ///
+  /// In en, this message translates to:
+  /// **'All riwayat'**
+  String get libraryAllRiwayat;
+
+  /// shared key "library.empty"
+  ///
+  /// In en, this message translates to:
+  /// **'No results.'**
+  String get libraryEmpty;
+
+  /// shared key "library.live"
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get libraryLive;
+
+  /// shared key "library.loadError"
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the list. Check your connection and try again.'**
+  String get libraryLoadError;
+
+  /// shared key "library.radios"
+  ///
+  /// In en, this message translates to:
+  /// **'Radios'**
+  String get libraryRadios;
+
+  /// shared key "library.reciters"
+  ///
+  /// In en, this message translates to:
+  /// **'Reciters'**
+  String get libraryReciters;
+
+  /// shared key "library.retry"
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get libraryRetry;
+
+  /// shared key "library.rewaya"
+  ///
+  /// In en, this message translates to:
+  /// **'Riwaya'**
+  String get libraryRewaya;
+
+  /// shared key "library.search"
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name'**
+  String get librarySearch;
+
+  /// shared key "library.source"
+  ///
+  /// In en, this message translates to:
+  /// **'Recitations and radios from mp3quran.net, streamed over the internet.'**
+  String get librarySource;
+
+  /// shared key "library.surahCount"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} surahs'**
+  String librarySurahCount(String n);
+
+  /// shared key "library.surahTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'{reciter} — Surah {surah}'**
+  String librarySurahTitle(String reciter, String surah);
+
+  /// shared key "library.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Recitations and radios'**
+  String get libraryTitle;
+
   /// shared key "more.title"
   ///
   /// In en, this message translates to:

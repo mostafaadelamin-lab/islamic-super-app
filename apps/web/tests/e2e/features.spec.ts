@@ -1,5 +1,6 @@
 import { expect, test, withHydration } from "./fixtures";
 import { watchErrors } from "./helpers";
+import { MP3_API } from "../mp3quran-fixture";
 
 test.describe("navigation & language", () => {
   test("main nav reaches every section in both languages", async ({ page }) => {
@@ -423,4 +424,31 @@ test("hadith books: open a book, jump, search, save and find it offline-ready", 
   await expect(page.getByTestId("hadith").first()).toHaveAttribute("data-n", "1");
   await page.goto("/ar/hadith/");
   await expect(page.getByTestId("hadith-favourites").getByTestId("hadith")).toHaveAttribute("data-n", "1000");
+});
+
+test("recitations library: mp3quran reciters by riwaya and radios (API mocked)", async ({ page }) => {
+  await page.route("https://www.mp3quran.net/api/v3/**", (route) => {
+    const key = new URL(route.request().url()).pathname.split("/").pop() as keyof typeof MP3_API;
+    return route.fulfill({
+      json: MP3_API[key],
+      headers: { "Access-Control-Allow-Origin": "*" },
+    });
+  });
+  await page.route(/(cdn\.mp3quran\.net|server6\.mp3quran\.net|qurango\.net)/, (route) =>
+    route.fulfill({ status: 204 }),
+  );
+  await page.goto("/ar/library/");
+  await expect(page.getByTestId("library-reciter-7")).toBeVisible();
+  await page.getByTestId("library-rewaya").selectOption("2");
+  await expect(page.getByTestId("library-reciter-153")).toHaveCount(0);
+  await page.getByTestId("library-reciter-7").click();
+  await page.getByTestId("library-surah-36").click();
+  await expect(page.getByTestId("library-audio")).toHaveAttribute(
+    "src",
+    "https://cdn.mp3quran.net/warsh/036.mp3",
+  );
+  await page.getByTestId("library-back").click();
+  await page.getByTestId("library-tab-radios").click();
+  await page.getByTestId("library-radio-1").click();
+  await expect(page.getByTestId("library-now")).toContainText("إبراهيم الأخضر");
 });

@@ -5484,6 +5484,13 @@
   "page": "/ar/more/",
   "tag": "a",
   "type": null,
+  "name": "مكتبة التلاوات والإذاعاتقرّاء بكل الروايات وإذاعات القرآن",
+  "href": "/ar/library/"
+ },
+ {
+  "page": "/ar/more/",
+  "tag": "a",
+  "type": null,
   "name": "قصص قرآنية مسموعةآيات القصص بصوت القارئ",
   "href": "/ar/stories/"
  },
@@ -9318,6 +9325,83 @@
  },
  {
   "page": "/ar/hadith/bukhari/",
+  "tag": "a",
+  "type": null,
+  "name": "صفحات المصحف",
+  "href": "/ar/page/1/"
+ },
+ {
+  "page": "/ar/library/",
+  "tag": "a",
+  "type": null,
+  "name": "تخطَّ إلى المحتوى",
+  "href": "#main"
+ },
+ {
+  "page": "/ar/library/",
+  "tag": "a",
+  "type": null,
+  "name": "رتّل",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/library/",
+  "tag": "a",
+  "type": null,
+  "name": "الرئيسية",
+  "href": "/ar/"
+ },
+ {
+  "page": "/ar/library/",
+  "tag": "a",
+  "type": null,
+  "name": "القرآن",
+  "href": "/ar/quran/"
+ },
+ {
+  "page": "/ar/library/",
+  "tag": "a",
+  "type": null,
+  "name": "الصلاة",
+  "href": "/ar/prayer/"
+ },
+ {
+  "page": "/ar/library/",
+  "tag": "a",
+  "type": null,
+  "name": "الأذكار",
+  "href": "/ar/adhkar/"
+ },
+ {
+  "page": "/ar/library/",
+  "tag": "a",
+  "type": null,
+  "name": "المزيد",
+  "href": "/ar/more/"
+ },
+ {
+  "page": "/ar/library/",
+  "tag": "a",
+  "type": null,
+  "name": "تغيير اللغة: English",
+  "href": "/en/library/"
+ },
+ {
+  "page": "/ar/library/",
+  "tag": "button",
+  "type": "button",
+  "name": "إعادة المحاولة",
+  "href": null
+ },
+ {
+  "page": "/ar/library/",
+  "tag": "a",
+  "type": null,
+  "name": "حول التطبيق",
+  "href": "/ar/about/"
+ },
+ {
+  "page": "/ar/library/",
   "tag": "a",
   "type": null,
   "name": "صفحات المصحف",
@@ -16299,6 +16383,13 @@
   "page": "/en/more/",
   "tag": "a",
   "type": null,
+  "name": "Recitations and radiosReciters in every riwaya and Quran radios",
+  "href": "/en/library/"
+ },
+ {
+  "page": "/en/more/",
+  "tag": "a",
+  "type": null,
   "name": "Quranic stories (audio)Story verses, recited",
   "href": "/en/stories/"
  },
@@ -20133,6 +20224,83 @@
  },
  {
   "page": "/en/hadith/bukhari/",
+  "tag": "a",
+  "type": null,
+  "name": "Mushaf pages",
+  "href": "/en/page/1/"
+ },
+ {
+  "page": "/en/library/",
+  "tag": "a",
+  "type": null,
+  "name": "Skip to content",
+  "href": "#main"
+ },
+ {
+  "page": "/en/library/",
+  "tag": "a",
+  "type": null,
+  "name": "Rattil",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/library/",
+  "tag": "a",
+  "type": null,
+  "name": "Home",
+  "href": "/en/"
+ },
+ {
+  "page": "/en/library/",
+  "tag": "a",
+  "type": null,
+  "name": "Quran",
+  "href": "/en/quran/"
+ },
+ {
+  "page": "/en/library/",
+  "tag": "a",
+  "type": null,
+  "name": "Prayer",
+  "href": "/en/prayer/"
+ },
+ {
+  "page": "/en/library/",
+  "tag": "a",
+  "type": null,
+  "name": "Adhkar",
+  "href": "/en/adhkar/"
+ },
+ {
+  "page": "/en/library/",
+  "tag": "a",
+  "type": null,
+  "name": "More",
+  "href": "/en/more/"
+ },
+ {
+  "page": "/en/library/",
+  "tag": "a",
+  "type": null,
+  "name": "Switch language: العربية",
+  "href": "/ar/library/"
+ },
+ {
+  "page": "/en/library/",
+  "tag": "button",
+  "type": "button",
+  "name": "Try again",
+  "href": null
+ },
+ {
+  "page": "/en/library/",
+  "tag": "a",
+  "type": null,
+  "name": "About",
+  "href": "/en/about/"
+ },
+ {
+  "page": "/en/library/",
   "tag": "a",
   "type": null,
   "name": "Mushaf pages",

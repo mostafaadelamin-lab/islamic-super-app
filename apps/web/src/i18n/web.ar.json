@@ -548,5 +548,22 @@
   "hadith.prev": "السابق",
   "hadith.next": "التالي",
   "hadith.loadError": "تعذّر تحميل هذا الجزء. تحقق من الاتصال ثم أعد المحاولة.",
-  "hadith.allBooks": "كل كتب السنة"
+  "hadith.allBooks": "كل كتب السنة",
+  "library.title": "مكتبة التلاوات والإذاعات",
+  "library.tileSub": "قرّاء بكل الروايات وإذاعات القرآن",
+  "library.reciters": "القرّاء",
+  "library.radios": "الإذاعات",
+  "library.search": "ابحث بالاسم",
+  "library.allRiwayat": "كل الروايات",
+  "library.rewaya": "الرواية",
+  "library.surahCount": "{n} سورة",
+  "library.loadError": "تعذّر تحميل القائمة. تأكد من اتصالك بالإنترنت ثم أعد المحاولة.",
+  "library.retry": "إعادة المحاولة",
+  "library.empty": "لا نتائج.",
+  "library.source": "التلاوات والإذاعات من موقع mp3quran.net، وتُسمع عبر الإنترنت.",
+  "library.live": "بث مباشر",
+  "library.surahTitle": "{reciter} — سورة {surah}",
+  "library.nowPlaying": "تُسمع الآن",
+  "library.playError": "تعذّر التشغيل. تأكد من اتصالك بالإنترنت.",
+  "library.back": "كل القرّاء"
 }
