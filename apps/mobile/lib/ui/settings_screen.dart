@@ -11,6 +11,7 @@ import 'about_screen.dart';
 import 'account_screen.dart';
 import 'audio_widgets.dart';
 import 'l10n_ext.dart';
+import 'muezzin_screen.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
@@ -241,14 +242,8 @@ class AdhanSettingsCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: DesignTokens.spaceMd),
-          Text(l.adhanVoice, style: Theme.of(context).textTheme.titleSmall),
-          const SizedBox(height: DesignTokens.spaceXs),
-          ListenableBuilder(
-            listenable: s.adhanPreview,
-            builder: (context, _) => Column(
-              children: [for (final v in adhanVoices) _VoiceTile(voice: v, selected: settings.adhanVoice == v.id)],
-            ),
-          ),
+          _VoiceRow(fajr: false, id: settings.adhanVoice),
+          _VoiceRow(fajr: true, id: settings.adhanFajrVoice),
           const SizedBox(height: DesignTokens.spaceSm),
           Wrap(
             spacing: DesignTokens.spaceSm,
@@ -280,47 +275,34 @@ class AdhanSettingsCard extends StatelessWidget {
         const SizedBox(height: DesignTokens.spaceXs),
         Text(l.adhanNote, style: small),
         Text(l.adhanCredit, key: const Key('adhanCredit'), style: small),
-        for (final v in adhanVoices) Text('• ${v.name(context.isArabic)}: ${v.credit}', style: small),
+        for (final v in bundledAdhanVoices)
+          if (v.credit != null) Text('• ${v.name(context.isArabic)}: ${v.credit}', style: small),
       ],
     );
   }
 }
 
-/// One muezzin: tap to choose it, the round button to listen.
-class _VoiceTile extends StatelessWidget {
-  const _VoiceTile({required this.voice, required this.selected});
-  final AdhanVoice voice;
-  final bool selected;
+/// The chosen muezzin for the adhan (or the Fajr adhan); opens the full list.
+class _VoiceRow extends StatelessWidget {
+  const _VoiceRow({required this.fajr, required this.id});
+  final bool fajr;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
     final s = context.services;
-    final scheme = Theme.of(context).colorScheme;
-    final playing = s.adhanPreview.voice == voice.id;
-    final name = voice.name(context.isArabic);
-    return Padding(
-      padding: const EdgeInsets.only(bottom: DesignTokens.spaceXs),
-      child: Material(
-        color: selected ? scheme.primaryContainer.withValues(alpha: 0.55) : Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-          side: BorderSide(color: selected ? scheme.primary : scheme.outlineVariant),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: ListTile(
-          key: Key('adhanVoice-${voice.id}'),
-          selected: selected,
-          leading: RIcon(selected ? RIcons.checkCircle : RIcons.radioOff, color: selected ? scheme.primary : null),
-          title: Text(name),
-          trailing: IconButton.filledTonal(
-            key: Key('adhanVoicePlay-${voice.id}'),
-            tooltip: context.l10n.adhanVoiceListen(name),
-            icon: RIcon(playing ? RIcons.stop : RIcons.play),
-            onPressed: () => s.adhanPreview.toggle(voice.id),
-          ),
-          onTap: () => s.settings.setAdhanVoice(voice.id),
-        ),
+    final l = context.l10n;
+    return ListTile(
+      key: Key(fajr ? 'adhanFajrVoice' : 'adhanVoice'),
+      contentPadding: EdgeInsets.zero,
+      leading: RIcon(fajr ? RIcons.sunrise : RIcons.prayer),
+      title: Text(fajr ? l.adhanFajrVoice : l.adhanVoice),
+      subtitle: FutureBuilder(
+        future: s.adhanVoices.voice(id),
+        builder: (context, snap) => Text(snap.data?.name(context.isArabic) ?? ''),
       ),
+      trailing: const RIcon(RIcons.chevronForward),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => MuezzinScreen(fajr: fajr))),
     );
   }
 }

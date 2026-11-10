@@ -42,7 +42,7 @@ class AdhanService : Service() {
         val title = intent?.getStringExtra(EXTRA_TITLE) ?: ""
         val body = intent?.getStringExtra(EXTRA_BODY) ?: ""
         val stop = intent?.getStringExtra(EXTRA_STOP) ?: "Stop"
-        val voice = rawVoice(this, intent?.getStringExtra(EXTRA_VOICE))
+        val voice = voiceUri(this, intent?.getStringExtra(EXTRA_VOICE))
         ensureChannels(this)
         val notification = buildNotification(title, body, stop)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -62,7 +62,7 @@ class AdhanService : Service() {
         return START_NOT_STICKY
     }
 
-    private fun play(audio: AudioManager, voice: Int) {
+    private fun play(audio: AudioManager, voice: Uri) {
         val attrs = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_ALARM)
             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -83,7 +83,7 @@ class AdhanService : Service() {
         }
         player = MediaPlayer().apply {
             setAudioAttributes(attrs)
-            setDataSource(this@AdhanService, Uri.parse("android.resource://$packageName/$voice"))
+            setDataSource(this@AdhanService, voice)
             setWakeMode(this@AdhanService, PowerManager.PARTIAL_WAKE_LOCK)
             setOnCompletionListener { stopSelf() }
             setOnErrorListener { _, _, _ -> stopSelf(); true }
@@ -134,16 +134,30 @@ class AdhanService : Service() {
         const val EXTRA_STOP = "stop"
         const val EXTRA_VOICE = "voice"
 
-        /** The res/raw recording called [name] (only adhan* names), else the first adhan. */
+        /**
+         * The chosen muezzin: a recording the user downloaded (absolute path inside the app's own storage), or a
+         * res/raw recording by name (adhan*). Anything else, or a file that is gone, falls back to the default
+         * Haram adhan.
+         */
+        fun voiceUri(ctx: Context, name: String?): Uri {
+            if (name != null && name.startsWith("/")) {
+                val f = java.io.File(name)
+                val own = f.canonicalPath.startsWith(ctx.filesDir.parentFile!!.canonicalPath)
+                if (own && f.isFile && f.length() > 0) return Uri.fromFile(f)
+            }
+            return Uri.parse("android.resource://${ctx.packageName}/${rawVoice(ctx, name)}")
+        }
+
+        /** The res/raw recording called [name] (only adhan* names), else the default Haram adhan. */
         fun rawVoice(ctx: Context, name: String?): Int {
-            if (name == null || !name.matches(Regex("adhan[a-z0-9_]*"))) return R.raw.adhan
+            if (name == null || !name.matches(Regex("adhan[a-z0-9_]*"))) return R.raw.adhan_haram
             val id = ctx.resources.getIdentifier(name, "raw", ctx.packageName)
-            return if (id != 0) id else R.raw.adhan
+            return if (id != 0) id else R.raw.adhan_haram
         }
         const val ACTION_STOP = "org.rattil.app.ADHAN_STOP"
         private const val NOTIFICATION_ID = 7_000_001
         private const val PLAYING_CHANNEL = "adhan_full"
-        private const val FALLBACK_CHANNEL = "adhan_voice"
+        private const val FALLBACK_CHANNEL = "adhan_voice_adhan_haram"
         private const val MAX_PLAY_MS = 6 * 60 * 1000L
 
         /** The playing notification's channel has no sound of its own: the service plays the adhan. */
@@ -168,7 +182,7 @@ class AdhanService : Service() {
                 val attrs = AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION).build()
                 nm.createNotificationChannel(
                     NotificationChannel(FALLBACK_CHANNEL, "الأذان · Adhan", NotificationManager.IMPORTANCE_HIGH).apply {
-                        setSound(Uri.parse("android.resource://${ctx.packageName}/${R.raw.adhan}"), attrs)
+                        setSound(Uri.parse("android.resource://${ctx.packageName}/${R.raw.adhan_haram}"), attrs)
                     },
                 )
             }

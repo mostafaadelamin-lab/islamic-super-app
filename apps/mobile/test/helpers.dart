@@ -113,6 +113,7 @@ Future<TestApp> pumpApp(
     clock: clock ?? () => fixedNow,
     audioBackend: () => audio ?? FakeAudioBackend(),
     storageRoot: () async => storage ?? (_testStorage ??= Directory.systemTemp.createTempSync('rattil-test')),
+    adhanRetryDelay: Duration.zero,
     narrationBackend: () => narration ?? FakeNarrationBackend(),
     notifications: notifications ?? FakeNotifications(),
     adhanPlayer: adhanPlayer ?? FakeAdhanPlayer(),

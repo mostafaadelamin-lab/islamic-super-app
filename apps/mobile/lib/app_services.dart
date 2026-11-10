@@ -15,6 +15,7 @@ import 'data/devotions.dart';
 import 'data/khatma_store.dart';
 import 'data/worship_store.dart';
 import 'data/downloads.dart';
+import 'data/adhan_voice_files.dart';
 import 'data/location.dart';
 import 'data/media_session.dart';
 import 'data/notifications.dart';
@@ -39,6 +40,7 @@ class AppServices {
     required this.recitation,
     required this.adhan,
     required this.adhanPreview,
+    required this.adhanVoices,
     required this.tasbih,
     required this.adhkar,
     required this.sensors,
@@ -69,6 +71,7 @@ class AppServices {
     LocationProvider? location,
     ImageSharer? sharer,
     Future<Directory> Function()? storageRoot,
+    Duration adhanRetryDelay = const Duration(seconds: 2),
     MediaSession? mediaSession,
   }) {
     final c = clock ?? DateTime.now;
@@ -112,6 +115,11 @@ class AppServices {
               minutes: m,
             ),
       ],
+    );
+    final adhanVoices = AdhanVoiceFiles(
+      httpClient: httpClient,
+      root: storageRoot ?? getApplicationSupportDirectory,
+      retryDelay: adhanRetryDelay,
     );
     final downloads = RecitationDownloads(
       content: content,
@@ -161,8 +169,10 @@ class AppServices {
         // adhan going even if the app is not opened; iOS keeps at most 64.
         days: defaultTargetPlatform == TargetPlatform.android ? 30 : 7,
         max: defaultTargetPlatform == TargetPlatform.android ? 150 : 60,
+        voices: adhanVoices,
       ),
-      adhanPreview: AdhanPreview(adhanPlayer ?? JustAudioAdhanPlayer()),
+      adhanPreview: AdhanPreview(adhanPlayer ?? JustAudioAdhanPlayer(), source: adhanVoices.playable),
+      adhanVoices: adhanVoices,
       tasbih: TasbihController(settings),
       adhkar: AdhkarController(content, settings, localToday),
       sensors: sensors ?? const DeviceCompassSensors(),
@@ -193,6 +203,9 @@ class AppServices {
 
   /// In-app playback of the adhan recording (settings "listen" button).
   final AdhanPreview adhanPreview;
+
+  /// The muezzin collection and the recordings downloaded from it.
+  final AdhanVoiceFiles adhanVoices;
   final TasbihController tasbih;
   final AdhkarController adhkar;
   final CompassSensors sensors;

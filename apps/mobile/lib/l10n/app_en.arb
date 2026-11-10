@@ -187,7 +187,7 @@
       }
     }
   },
-  "adhanCredit": "Adhan recordings from Wikimedia Commons under open licences (per voice):",
+  "adhanCredit": "Adhan recordings:",
   "@adhanCredit": {
     "description": "shared key \"adhan.credit\""
   },
@@ -207,7 +207,15 @@
   "@adhanExtrasNote": {
     "description": "shared key \"adhan.extrasNote\""
   },
-  "adhanIosNote": "On iPhone the notification plays the opening takbir only, in the first voice (the system allows at most 30 seconds); the full adhan in the chosen voice plays inside the app.",
+  "adhanFajrVoice": "Fajr adhan",
+  "@adhanFajrVoice": {
+    "description": "shared key \"adhan.fajrVoice\""
+  },
+  "adhanFajrVoiceNote": "The Fajr adhan has \"as-salatu khayrun min an-nawm\", so it has its own choice and plays by itself at Fajr. Tap a muezzin to download and choose it.",
+  "@adhanFajrVoiceNote": {
+    "description": "shared key \"adhan.fajrVoiceNote\""
+  },
+  "adhanIosNote": "On iPhone the notification plays the opening takbir only (the system allows at most 30 seconds); the full adhan in the chosen voice plays inside the app.",
   "@adhanIosNote": {
     "description": "shared key \"adhan.iosNote\""
   },
@@ -374,6 +382,18 @@
   "@adhanVoice": {
     "description": "shared key \"adhan.voice\""
   },
+  "adhanVoiceBundled": "In the app",
+  "@adhanVoiceBundled": {
+    "description": "shared key \"adhan.voiceBundled\""
+  },
+  "adhanVoiceDownloadFailed": "Could not download the adhan. Check the internet and try again.",
+  "@adhanVoiceDownloadFailed": {
+    "description": "shared key \"adhan.voiceDownloadFailed\""
+  },
+  "adhanVoiceDownloaded": "On the phone",
+  "@adhanVoiceDownloaded": {
+    "description": "shared key \"adhan.voiceDownloaded\""
+  },
   "adhanVoiceListen": "Listen to {name}",
   "@adhanVoiceListen": {
     "description": "shared key \"adhan.voiceListen\"",
@@ -382,6 +402,18 @@
         "type": "String"
       }
     }
+  },
+  "adhanVoiceNote": "The adhan of Dhuhr, Asr, Maghrib and Isha. Tap a muezzin to download and choose it; it stays on the phone and works without internet. The play button lets you listen.",
+  "@adhanVoiceNote": {
+    "description": "shared key \"adhan.voiceNote\""
+  },
+  "adhanVoiceSearch": "Search by muezzin or country",
+  "@adhanVoiceSearch": {
+    "description": "shared key \"adhan.voiceSearch\""
+  },
+  "adhanVoiceTapToDownload": "Tap to download",
+  "@adhanVoiceTapToDownload": {
+    "description": "shared key \"adhan.voiceTapToDownload\""
   },
   "adhkarArabicOnly": "This content is available in Arabic only.",
   "@adhkarArabicOnly": {

@@ -137,7 +137,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get adhanCredit => 'Adhan recordings from Wikimedia Commons under open licences (per voice):';
+  String get adhanCredit => 'Adhan recordings:';
 
   @override
   String get adhanDenied => 'Notifications are not allowed. Turn them on in the system settings.';
@@ -153,8 +153,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'The reminder and the iqama alert use the phone\'s short tone, not the adhan recording.';
 
   @override
+  String get adhanFajrVoice => 'Fajr adhan';
+
+  @override
+  String get adhanFajrVoiceNote =>
+      'The Fajr adhan has \"as-salatu khayrun min an-nawm\", so it has its own choice and plays by itself at Fajr. Tap a muezzin to download and choose it.';
+
+  @override
   String get adhanIosNote =>
-      'On iPhone the notification plays the opening takbir only, in the first voice (the system allows at most 30 seconds); the full adhan in the chosen voice plays inside the app.';
+      'On iPhone the notification plays the opening takbir only (the system allows at most 30 seconds); the full adhan in the chosen voice plays inside the app.';
 
   @override
   String get adhanIqama => 'Iqama alert after the adhan';
@@ -260,9 +267,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhanVoice => 'Muezzin';
 
   @override
+  String get adhanVoiceBundled => 'In the app';
+
+  @override
+  String get adhanVoiceDownloadFailed => 'Could not download the adhan. Check the internet and try again.';
+
+  @override
+  String get adhanVoiceDownloaded => 'On the phone';
+
+  @override
   String adhanVoiceListen(String name) {
     return 'Listen to $name';
   }
+
+  @override
+  String get adhanVoiceNote =>
+      'The adhan of Dhuhr, Asr, Maghrib and Isha. Tap a muezzin to download and choose it; it stays on the phone and works without internet. The play button lets you listen.';
+
+  @override
+  String get adhanVoiceSearch => 'Search by muezzin or country';
+
+  @override
+  String get adhanVoiceTapToDownload => 'Tap to download';
 
   @override
   String get adhkarArabicOnly => 'This content is available in Arabic only.';
