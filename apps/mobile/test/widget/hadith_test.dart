@@ -99,29 +99,26 @@ void main() {
       final first = _part('malik', 0).first.trim();
       expect(find.text(first), findsOneWidget);
 
-      await tester.scrollUntilVisible(
-        find.byKey(const Key('hadithNext')),
-        600,
-        scrollable: find.byType(Scrollable).first,
-      );
       await tester.tap(find.byKey(const Key('hadithNext')));
       await tester.pumpAndSettle();
-      expect(find.byKey(const Key('hadith-21')), findsOneWidget);
+      expect(find.byKey(const Key('hadith-2')), findsOneWidget);
 
+      await tester.tap(find.byKey(const Key('hadithTools')));
+      await tester.pumpAndSettle();
       await tester.enterText(find.byKey(const Key('hadithGo')), locale == 'ar' ? '١٥٩٤' : '1594');
       await tester.testTextInput.receiveAction(TextInputAction.go);
       await tester.pumpAndSettle();
-      expect(find.byKey(const Key('hadith-1581')), findsOneWidget);
+      expect(find.byKey(const Key('hadith-1594')), findsOneWidget);
 
-      await tester.tap(find.byKey(const Key('hadithFav-1581')));
+      await tester.tap(find.byKey(const Key('hadithFav-1594')));
       await tester.pumpAndSettle();
-      expect(app.services.settings.hadithFavourites, ['malik:1581']);
+      expect(app.services.settings.hadithFavourites, ['malik:1594']);
 
       await goBack(tester);
       await tester.tap(find.byKey(const Key('hadithFavourites')));
       await tester.pumpAndSettle();
-      expect(find.byKey(const Key('hadith-1581')), findsOneWidget);
-      await tester.tap(find.byKey(const Key('hadithFav-1581')));
+      expect(find.byKey(const Key('hadith-1594')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('hadithFav-1594')));
       await tester.pumpAndSettle();
       expect(find.byKey(const Key('hadithFavEmpty')), findsOneWidget);
     });
@@ -130,6 +127,8 @@ void main() {
   testWidgets('hadith search shows the results and goes back to the book', (tester) async {
     await pumpApp(tester, size: tallPhone);
     await pushScreen(tester, HadithBookScreen(book: catalog.book('bukhari')!));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('hadithTools')));
     await tester.pumpAndSettle();
     await tester.enterText(find.byKey(const Key('hadithQuery')), 'إنما الأعمال بالنيات');
     await tester.testTextInput.receiveAction(TextInputAction.search);

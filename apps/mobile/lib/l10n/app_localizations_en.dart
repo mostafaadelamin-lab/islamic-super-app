@@ -623,6 +623,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String hadithPageOf(String n, String total) {
+    return 'Hadith $n of $total';
+  }
+
+  @override
   String get hadithPrev => 'Previous';
 
   @override

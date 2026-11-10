@@ -27,7 +27,6 @@ class HadithScreen extends StatelessWidget {
         child: ListView(
           key: const Key('hadithBooks'),
           children: [
-            ReviewNotice(l.hadithReview),
             if (!context.isArabic) ReviewNotice(l.adhkarArabicOnly),
             for (final b in catalog.books)
               ListTile(
@@ -120,7 +119,8 @@ class HadithCard extends StatelessWidget {
   }
 }
 
-/// A book twenty hadiths at a time, with "go to number" and search.
+/// A hadith book read like a book: one hadith per page, turned with a swipe
+/// (page-turn animation) or the arrows, with "go to number" and search.
 class HadithBookScreen extends StatefulWidget {
   const HadithBookScreen({super.key, required this.book, this.start = 1});
   final HadithBook book;
@@ -131,39 +131,46 @@ class HadithBookScreen extends StatefulWidget {
 }
 
 class _HadithBookScreenState extends State<HadithBookScreen> {
-  late int _from = hadithPageStart(widget.start.clamp(1, widget.book.count));
-  Future<List<HadithItem>>? _page;
+  late final _pager = PageController(initialPage: widget.start.clamp(1, widget.book.count) - 1);
+  late int _n = widget.start.clamp(1, widget.book.count);
+  final _blocks = <int, Future<List<HadithItem>>>{};
   List<HadithItem>? _results;
   (int, int)? _progress;
   bool _searchFailed = false;
+  bool _tools = false;
   final _go = TextEditingController();
   final _query = TextEditingController();
-  final _scroll = ScrollController();
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _page ??= _load();
-  }
 
   @override
   void dispose() {
+    _pager.dispose();
     _go.dispose();
     _query.dispose();
-    _scroll.dispose();
     super.dispose();
   }
 
-  Future<List<HadithItem>> _load() => context.services.hadith.range(widget.book, _from, _from + hadithPageSize - 1);
+  /// The twenty hadiths around [n], loaded once.
+  Future<List<HadithItem>> _block(int n) {
+    final from = hadithPageStart(n);
+    return _blocks[from] ??= context.services.hadith.range(widget.book, from, from + hadithPageSize - 1);
+  }
 
   void _open(int n) {
+    final target = n.clamp(1, widget.book.count);
     setState(() {
-      _from = hadithPageStart(n.clamp(1, widget.book.count));
       _results = null;
-      _page = _load();
+      _n = target;
     });
-    if (_scroll.hasClients) _scroll.jumpTo(0);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_pager.hasClients) _pager.jumpToPage(target - 1);
+    });
   }
+
+  void _turn(int by) => _pager.animateToPage(
+    (_n - 1 + by).clamp(0, widget.book.count - 1),
+    duration: const Duration(milliseconds: 450),
+    curve: Curves.easeInOut,
+  );
 
   Future<void> _search() async {
     final s = context.services;
@@ -187,7 +194,7 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
     if (mounted) setState(() => _progress = null);
   }
 
-  Widget _tools(BuildContext context) {
+  Widget _toolsPanel(BuildContext context) {
     final l = context.l10n;
     final book = widget.book;
     return Padding(
@@ -202,6 +209,7 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
             decoration: InputDecoration(
               labelText: l.hadithGoTo(context.num(book.count)),
               prefixIcon: const Icon(Icons.tag),
+              isDense: true,
             ),
             onSubmitted: (v) {
               final n = int.tryParse(_westernDigits(v.trim()));
@@ -218,6 +226,7 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
             decoration: InputDecoration(
               labelText: l.hadithSearch(book.name(context.isArabic)),
               prefixIcon: const Icon(Icons.search),
+              isDense: true,
             ),
             onSubmitted: (_) => _search(),
           ),
@@ -232,90 +241,259 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
     );
   }
 
+  Widget _resultsList(BuildContext context, List<HadithItem> results) {
+    final l = context.l10n;
+    return ListView(
+      key: const Key('hadithList'),
+      padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  results.length >= hadithSearchLimit
+                      ? l.hadithResultsMany(context.num(results.length))
+                      : l.hadithResults(context.num(results.length)),
+                  key: const Key('hadithResults'),
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              TextButton(
+                key: const Key('hadithClear'),
+                onPressed: () => setState(() => _results = null),
+                child: Text(l.hadithBackToBook),
+              ),
+            ],
+          ),
+        ),
+        for (final h in results)
+          InkWell(
+            onTap: () => _open(h.n),
+            child: HadithCard(book: widget.book, item: h),
+          ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final book = widget.book;
-    final last = (_from + hadithPageSize - 1).clamp(1, book.count);
     final results = _results;
+    final ar = context.isArabic;
     return Scaffold(
-      appBar: AppBar(title: Text(book.name(context.isArabic))),
+      appBar: AppBar(
+        title: Text(book.name(ar)),
+        actions: [
+          IconButton(
+            key: const Key('hadithTools'),
+            tooltip: l.hadithSearch(book.name(ar)),
+            isSelected: _tools,
+            icon: const Icon(Icons.search),
+            onPressed: () => setState(() => _tools = !_tools),
+          ),
+        ],
+      ),
       body: ReadableWidth(
-        child: FutureBuilder<List<HadithItem>>(
-          future: _page,
-          builder: (context, snap) {
-            final items = results ?? snap.data ?? const <HadithItem>[];
-            return ListView(
-              key: const Key('hadithList'),
-              controller: _scroll,
-              padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-              children: [
-                ReviewNotice(l.hadithReview),
-                _tools(context),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    DesignTokens.spaceLg,
-                    DesignTokens.spaceMd,
-                    DesignTokens.spaceLg,
-                    0,
-                  ),
-                  child: results != null
-                      ? Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                results.length >= hadithSearchLimit
-                                    ? l.hadithResultsMany(context.num(results.length))
-                                    : l.hadithResults(context.num(results.length)),
-                                key: const Key('hadithResults'),
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            ),
-                            TextButton(
-                              key: const Key('hadithClear'),
-                              onPressed: () => setState(() => _results = null),
-                              child: Text(l.hadithBackToBook),
-                            ),
-                          ],
-                        )
-                      : Text(
-                          l.hadithRange(context.num(_from), context.num(last), context.num(book.count)),
-                          key: const Key('hadithRange'),
-                        ),
+        child: Column(
+          children: [
+            if (_tools) _toolsPanel(context),
+            Expanded(
+              child: results != null
+                  ? _resultsList(context, results)
+                  : AnimatedBuilder(
+                      animation: _pager,
+                      builder: (context, _) {
+                        final page = _pager.hasClients && _pager.position.haveDimensions
+                            ? _pager.page ?? (_n - 1).toDouble()
+                            : (_n - 1).toDouble();
+                        return PageView.builder(
+                          key: const Key('hadithBook'),
+                          controller: _pager,
+                          itemCount: book.count,
+                          onPageChanged: (i) => setState(() => _n = i + 1),
+                          itemBuilder: (context, i) => _PageTurn(
+                            delta: i - page,
+                            child: _BookPage(book: book, n: i + 1, items: _block(i + 1)),
+                          ),
+                        );
+                      },
+                    ),
+            ),
+            if (results == null)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceSm),
+                child: Row(
+                  children: [
+                    IconButton.filledTonal(
+                      key: const Key('hadithPrev'),
+                      tooltip: l.hadithPrev,
+                      onPressed: _n <= 1 ? null : () => _turn(-1),
+                      icon: Icon(ar ? Icons.chevron_right : Icons.chevron_left),
+                    ),
+                    Expanded(
+                      child: Text(
+                        l.hadithPageOf(context.num(_n), context.num(book.count)),
+                        key: const Key('hadithRange'),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                    ),
+                    IconButton.filledTonal(
+                      key: const Key('hadithNext'),
+                      tooltip: l.hadithNext,
+                      onPressed: _n >= book.count ? null : () => _turn(1),
+                      icon: Icon(ar ? Icons.chevron_left : Icons.chevron_right),
+                    ),
+                  ],
                 ),
-                if (results == null && snap.hasError)
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Turns a page about its spine as it slides away ([delta] -1..1 from the
+/// page in view), with a soft shadow, like a paper book.
+class _PageTurn extends StatelessWidget {
+  const _PageTurn({required this.delta, required this.child});
+  final double delta;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final d = delta.clamp(-1.0, 1.0);
+    if (d == 0) return child;
+    final rtl = Directionality.of(context) == TextDirection.rtl;
+    // The page that is leaving folds about the edge it shares with the next one.
+    final towardsStart = d < 0;
+    final alignment = (towardsStart != rtl) ? Alignment.centerRight : Alignment.centerLeft;
+    final angle = d * 1.2 * (rtl ? -1 : 1);
+    return Transform(
+      alignment: alignment,
+      transform: Matrix4.identity()
+        ..setEntry(3, 2, 0.0012)
+        ..rotateY(angle),
+      child: Stack(
+        fit: StackFit.passthrough,
+        children: [
+          child,
+          IgnorePointer(
+            child: Container(color: Colors.black.withValues(alpha: 0.25 * d.abs())),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// One page of the book: the hadith on paper, its number, and save/copy/share.
+class _BookPage extends StatelessWidget {
+  const _BookPage({required this.book, required this.n, required this.items});
+  final HadithBook book;
+  final int n;
+  final Future<List<HadithItem>> items;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final scheme = Theme.of(context).colorScheme;
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    final paper = dark ? const Color(0xFF26231D) : const Color(0xFFFBF6EA);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, DesignTokens.spaceMd),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: paper,
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 14, offset: const Offset(0, 6))],
+        ),
+        child: Container(
+          margin: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            border: Border.all(color: scheme.secondary.withValues(alpha: 0.6), width: 1.2),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: FutureBuilder<List<HadithItem>>(
+            future: items,
+            builder: (context, snap) {
+              if (snap.hasError) {
+                return Center(child: Text(l.hadithLoadError, key: const Key('hadithError')));
+              }
+              final list = snap.data;
+              if (list == null) return const Center(child: CircularProgressIndicator());
+              final item = list.where((h) => h.n == n).firstOrNull;
+              if (item == null) return const SizedBox.shrink();
+              final text = item.text.trim();
+              final source = l.hadithSource(book.name(context.isArabic), context.num(item.n));
+              final settings = context.services.settings;
+              return Column(
+                key: Key('hadith-${item.n}'),
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
                   Padding(
-                    padding: const EdgeInsets.all(DesignTokens.spaceLg),
-                    child: Text(l.hadithLoadError, key: const Key('hadithError')),
-                  )
-                else if (results == null && snap.connectionState != ConnectionState.done)
-                  const Padding(
-                    padding: EdgeInsets.all(DesignTokens.spaceXl),
-                    child: Center(child: CircularProgressIndicator()),
-                  ),
-                for (final h in items) HadithCard(book: book, item: h),
-                if (results == null)
-                  Padding(
-                    padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                    padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, DesignTokens.spaceSm, DesignTokens.spaceMd, 0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        OutlinedButton(
-                          key: const Key('hadithPrev'),
-                          onPressed: _from <= 1 ? null : () => _open(_from - hadithPageSize),
-                          child: Text(l.hadithPrev),
+                        Expanded(
+                          child: Text(
+                            book.name(context.isArabic),
+                            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: scheme.secondary),
+                          ),
                         ),
-                        OutlinedButton(
-                          key: const Key('hadithNext'),
-                          onPressed: last >= book.count ? null : () => _open(_from + hadithPageSize),
-                          child: Text(l.hadithNext),
+                        ListenableBuilder(
+                          listenable: settings,
+                          builder: (context, _) {
+                            final saved = settings.hadithFavourites.contains('${book.id}:${item.n}');
+                            return IconButton(
+                              key: Key('hadithFav-${item.n}'),
+                              tooltip: saved ? l.hadithUnsave : l.hadithSave,
+                              isSelected: saved,
+                              icon: Icon(saved ? Icons.star : Icons.star_outline, color: scheme.secondary),
+                              onPressed: () => settings.toggleHadithFavourite(book.id, item.n),
+                            );
+                          },
                         ),
                       ],
                     ),
                   ),
-              ],
-            );
-          },
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: scheme.secondary.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(l.hadithNumber(context.num(item.n)), style: Theme.of(context).textTheme.labelLarge),
+                    ),
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                      child: Text(
+                        text,
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.justify,
+                        style: duaStyle(context),
+                      ),
+                    ),
+                  ),
+                  const Divider(height: 1, indent: DesignTokens.spaceLg, endIndent: DesignTokens.spaceLg),
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    children: [
+                      CopyButton(text: text),
+                      DhikrActions(text: text, source: source, where: source, keyPrefix: 'hadith${item.n}'),
+                    ],
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

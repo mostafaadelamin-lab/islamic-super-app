@@ -1154,6 +1154,12 @@ abstract class AppLocalizations {
   /// **'Hadith {n}'**
   String hadithNumber(String n);
 
+  /// shared key "hadith.pageOf"
+  ///
+  /// In en, this message translates to:
+  /// **'Hadith {n} of {total}'**
+  String hadithPageOf(String n, String total);
+
   /// shared key "hadith.prev"
   ///
   /// In en, this message translates to:

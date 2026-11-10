@@ -901,6 +901,18 @@
       }
     }
   },
+  "hadithPageOf": "Hadith {n} of {total}",
+  "@hadithPageOf": {
+    "description": "shared key \"hadith.pageOf\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
   "hadithPrev": "Previous",
   "@hadithPrev": {
     "description": "shared key \"hadith.prev\""

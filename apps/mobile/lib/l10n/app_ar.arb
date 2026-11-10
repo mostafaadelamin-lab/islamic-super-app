@@ -177,6 +177,7 @@
   "hadithNext": "التالي",
   "hadithNoFavourites": "لم تحفظ أحاديث بعد. اضغط على النجمة بجانب أي حديث.",
   "hadithNumber": "حديث {n}",
+  "hadithPageOf": "الحديث {n} من {total}",
   "hadithPrev": "السابق",
   "hadithRange": "الأحاديث {from}–{to} من {count}",
   "hadithResults": "{n} نتيجة",
