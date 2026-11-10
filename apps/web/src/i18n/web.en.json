@@ -560,7 +560,7 @@
   "library.loadError": "Couldn't load the list. Check your connection and try again.",
   "library.retry": "Try again",
   "library.empty": "No results.",
-  "library.source": "Recitations and radios from mp3quran.net, streamed over the internet.",
+  "library.source": "Recitations and radios are streamed over the internet.",
   "library.live": "Live",
   "library.surahTitle": "{reciter} — Surah {surah}",
   "library.nowPlaying": "Now playing",

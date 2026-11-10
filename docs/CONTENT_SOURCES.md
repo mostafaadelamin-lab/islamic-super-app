@@ -1,5 +1,11 @@
 # Content sources and licences
 
+**Owner's rule (2026-11-10):** the owner considers the sites they sent (islamweb.net and audio.islamweb.net, alukah.net,
+mp3quran.net and similar) free for anyone to download from, and asked that no permission is requested and that
+their names are NOT shown in the app or on the website. Sources are recorded here only, for our reference. Credits
+that an open licence itself requires (CC BY / CC BY-SA, ODbL: Quran text, Wikimedia voices, OpenStreetMap, hadith
+data) stay visible, because showing them is the condition of that licence.
+
 | Content | Source | Licence | Integrity control | Review status |
 |---|---|---|---|---|
 | Quran Arabic text (Uthmani, Hafs, 6236 ayahs) | The Noble Qur'an Encyclopedia (quranenc.com), distributed as npm `quran-json@3.1.2` `dist/quran.json` | CC BY 4.0 (package) | npm shasum `6cfe0249dc0db413cf582358925717a74a934d7d` matched against the npm registry; file SHA-256 `d8a8adff387f60ce3ff7dbe3238dd9b27120bfe29d8fcb07ad2e89cad37cefd4` pinned in `tests/vectors/quran-reference.json`; per-surah and overall hashes in `content/quran/dist/integrity.v1.json` | Text verified mechanically. **Human verification against a printed Madinah Mushaf by a qualified reviewer: pending.** |
