@@ -3341,6 +3341,18 @@
   "@zakatFieldTrade": {
     "description": "shared key \"zakat.field.trade\""
   },
+  "zakatGroupDebts": "Debts you owe",
+  "@zakatGroupDebts": {
+    "description": "shared key \"zakat.groupDebts\""
+  },
+  "zakatGroupGold": "Gold (grams)",
+  "@zakatGroupGold": {
+    "description": "shared key \"zakat.groupGold\""
+  },
+  "zakatGroupMoney": "Money and savings",
+  "@zakatGroupMoney": {
+    "description": "shared key \"zakat.groupMoney\""
+  },
   "zakatNeedPrice": "Enter the price of a gram of 21-karat gold to work out the nisab.",
   "@zakatNeedPrice": {
     "description": "shared key \"zakat.needPrice\""

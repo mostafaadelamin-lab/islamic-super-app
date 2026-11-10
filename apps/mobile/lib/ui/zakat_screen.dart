@@ -10,7 +10,6 @@ import '../theme/design_tokens.dart';
 import 'adaptive.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
-import 'widgets.dart';
 import 'r_icon.dart';
 
 /// Zakat on money after the published fatwas of Dar al-Ifta al-Misriyya, held for a
@@ -73,90 +72,141 @@ class _ZakatScreenState extends State<ZakatScreen> {
     final adornment = guide.source('adornment');
     String n(num v) => arabic ? toArabicIndic('$v') : '$v';
 
-    Widget numberField(String key, String label, double initial, ValueChanged<double> onChanged) => Padding(
-      padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
-      child: TextFormField(
-        key: Key(key),
-        initialValue: initial > 0 ? _money(initial, false).replaceAll(',', '') : '',
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9٠-٩.,٫]'))],
-        decoration: InputDecoration(labelText: label, border: const OutlineInputBorder()),
-        onChanged: (raw) {
-          setState(() => onChanged(_parse(raw)));
-          _save();
-        },
-      ),
-    );
+    final scheme = Theme.of(context).colorScheme;
+
+    Widget numberField(String key, String label, double initial, ValueChanged<double> onChanged, {RIconData? icon}) =>
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceXs),
+          child: TextFormField(
+            key: Key(key),
+            initialValue: initial > 0 ? _money(initial, false).replaceAll(',', '') : '',
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9٠-٩.,٫]'))],
+            decoration: InputDecoration(
+              labelText: label,
+              filled: true,
+              fillColor: scheme.surfaceContainerHighest.withValues(alpha: 0.5),
+              prefixIcon: icon == null ? null : RIcon(icon, size: 20, color: scheme.primary),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide.none),
+              isDense: true,
+            ),
+            onChanged: (raw) {
+              setState(() => onChanged(_parse(raw)));
+              _save();
+            },
+          ),
+        );
+
+    Widget group(String title, RIconData icon, List<String> ids) {
+      final fields = [for (final f in guide.fields) if (ids.contains(f.id)) f];
+      if (fields.isEmpty) return const SizedBox.shrink();
+      return _Group(
+        title: title,
+        icon: icon,
+        children: [
+          for (final f in fields)
+            numberField('zakat-${f.id}', _fieldLabel(l, f.id), _values[f.id] ?? 0, (v) => _values[f.id] = v),
+        ],
+      );
+    }
+
+    const moneyIds = ['cash', 'certificates', 'certificateReturns', 'shares', 'trade'];
+    const goldIds = ['gold24', 'gold21', 'gold18'];
+    final known = {...moneyIds, ...goldIds, 'debts'};
+    final otherIds = [for (final f in guide.fields) if (!known.contains(f.id)) f.id];
 
     return Scaffold(
       appBar: AppBar(title: Text(l.zakatTitle)),
       body: ReadableWidth(
         child: ListView(
           key: const Key('zakatList'),
-          padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+          padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceSm, DesignTokens.spaceLg, DesignTokens.spaceXl),
           children: [
-            ReviewNotice(l.zakatReview, key: const Key('zakatReview')),
-            SectionCard(
+            // The answer first, updated as the user types.
+            Container(
+              key: const Key('zakatHero'),
+              padding: const EdgeInsets.all(DesignTokens.spaceLg),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                gradient: LinearGradient(
+                  begin: AlignmentDirectional.topStart,
+                  end: AlignmentDirectional.bottomEnd,
+                  colors: [scheme.primary, Color.lerp(scheme.primary, Colors.black, 0.35)!],
+                ),
+              ),
+              child: Row(
+                children: [
+                  Expanded(child: _ResultView(result: result, money: (v) => _money(v, arabic))),
+                  const SizedBox(width: DesignTokens.spaceSm),
+                  RIcon(RIcons.zakat, size: 44, color: Colors.white.withValues(alpha: 0.85)),
+                ],
+              ),
+            ),
+            const SizedBox(height: DesignTokens.spaceMd),
+            _Group(
               title: l.zakatPriceTitle,
+              icon: RIcons.star,
               children: [
                 numberField('zakatPrice', l.zakatPrice, _price, (v) => _price = v),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg),
-                  child: Text(
-                    l.zakatNisabRule(n(guide.nisabGoldGrams.round()), n(guide.nisabKarat)),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                Text(
+                  l.zakatNisabRule(n(guide.nisabGoldGrams.round()), n(guide.nisabKarat)),
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
-                const SizedBox(height: DesignTokens.spaceSm),
               ],
             ),
-            SectionCard(
-              title: l.zakatWealth,
+            group(l.zakatGroupMoney, RIcons.zakat, moneyIds),
+            group(l.zakatGroupGold, RIcons.star, goldIds),
+            group(l.zakatGroupDebts, RIcons.minus, ['debts', ...otherIds]),
+            _Group(
+              title: null,
+              icon: null,
               children: [
-                for (final f in guide.fields)
-                  numberField('zakat-${f.id}', _fieldLabel(l, f.id), _values[f.id] ?? 0, (v) => _values[f.id] = v),
-                CheckboxListTile(
+                SwitchListTile(
                   key: const Key('zakatYear'),
+                  contentPadding: EdgeInsets.zero,
                   value: _yearPassed,
+                  secondary: RIcon(RIcons.calendarCheck, color: scheme.primary),
                   title: Text(l.zakatYearPassed),
                   onChanged: (v) {
-                    setState(() => _yearPassed = v ?? false);
+                    setState(() => _yearPassed = v);
                     _save();
                   },
                 ),
               ],
             ),
-            SectionCard(
-              title: l.zakatResult,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(DesignTokens.spaceLg),
-                  child: _ResultView(result: result, money: (v) => _money(v, arabic)),
-                ),
-              ],
-            ),
             if (adornment != null)
-              SectionCard(
+              _Group(
                 title: l.zakatAdornment,
+                icon: RIcons.info,
                 children: [
                   _Quote(key: const Key('zakatAdornment'), text: adornment.quotes.first),
                   _fatwaLink(l, adornment, n),
                 ],
               ),
-            SectionCard(
-              title: l.zakatSources(arabic ? guide.referenceAr : guide.referenceEn),
+            _Group(
+              title: null,
+              icon: null,
               children: [
-                for (final s in guide.sources)
-                  ExpansionTile(
-                    key: Key('zakatSource-${s.id}'),
-                    title: Text(s.titleAr, textDirection: TextDirection.rtl),
-                    children: [
-                      for (final q in s.quotes) _Quote(text: q),
-                      _fatwaLink(l, s, n),
-                    ],
-                  ),
+                ExpansionTile(
+                  key: const Key('zakatSourcesTile'),
+                  tilePadding: EdgeInsets.zero,
+                  leading: RIcon(RIcons.book, color: scheme.primary),
+                  title: Text(l.zakatSources(arabic ? guide.referenceAr : guide.referenceEn)),
+                  children: [
+                    for (final s in guide.sources)
+                      ExpansionTile(
+                        key: Key('zakatSource-${s.id}'),
+                        title: Text(s.titleAr, textDirection: TextDirection.rtl),
+                        children: [
+                          for (final q in s.quotes) _Quote(text: q),
+                          _fatwaLink(l, s, n),
+                        ],
+                      ),
+                  ],
+                ),
               ],
             ),
+            ReviewNotice(l.zakatReview, key: const Key('zakatReview')),
           ],
         ),
       ),
@@ -200,19 +250,63 @@ class _ResultView extends StatelessWidget {
       ZakatStatus.yearNotPassed => l.zakatYearNotPassed(net, nisab),
       ZakatStatus.due => null,
     };
-    if (text != null) return Text(text, key: Key('zakatResult-${result.status.name}'));
     final theme = Theme.of(context);
+    if (text != null) {
+      return Text(
+        text,
+        key: Key('zakatResult-${result.status.name}'),
+        style: theme.textTheme.bodyLarge?.copyWith(color: Colors.white),
+      );
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           l.zakatDue(money(result.zakat)),
           key: const Key('zakatAmount'),
-          style: theme.textTheme.headlineSmall?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.w700),
+          style: theme.textTheme.headlineMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.w700),
         ),
         const SizedBox(height: DesignTokens.spaceXs),
-        Text(l.zakatDueDetail(net, nisab), style: theme.textTheme.bodySmall),
+        Text(l.zakatDueDetail(net, nisab), style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70)),
       ],
+    );
+  }
+}
+
+/// A rounded block of related fields with an optional small heading.
+class _Group extends StatelessWidget {
+  const _Group({required this.title, required this.icon, required this.children});
+  final String? title;
+  final RIconData? icon;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Container(
+      margin: const EdgeInsets.only(top: DesignTokens.spaceMd),
+      padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, DesignTokens.spaceMd),
+      decoration: BoxDecoration(
+        color: scheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: scheme.outlineVariant.withValues(alpha: 0.5)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (title != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
+              child: Row(
+                children: [
+                  if (icon != null) ...[RIcon(icon!, size: 18, color: scheme.secondary), const SizedBox(width: DesignTokens.spaceSm)],
+                  Expanded(child: Text(title!, style: Theme.of(context).textTheme.titleSmall)),
+                ],
+              ),
+            ),
+          ...children,
+        ],
+      ),
     );
   }
 }

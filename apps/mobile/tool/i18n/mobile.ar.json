@@ -536,5 +536,8 @@
   "prayer.autoLocationNote": "يُحدَّث موقعك عند فتح التطبيق لتبقى المواقيت صحيحة إذا سافرت.",
   "qibla.placeNote": "اتجاه القبلة محسوب لهذا الموقع. اضغط زر الموقع إن كنت في مكان آخر.",
   "qibla.locateFailed": "تعذّر تحديد موقعك. فعّل خدمات الموقع وحاول مرة أخرى.",
-  "hadith.pageOf": "الحديث {n} من {total}"
+  "hadith.pageOf": "الحديث {n} من {total}",
+  "zakat.groupMoney": "النقود والمدخرات",
+  "zakat.groupGold": "الذهب (بالجرام)",
+  "zakat.groupDebts": "الديون عليك"
 }

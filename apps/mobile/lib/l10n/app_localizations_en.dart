@@ -2243,6 +2243,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get zakatFieldTrade => 'Trade goods (market price)';
 
   @override
+  String get zakatGroupDebts => 'Debts you owe';
+
+  @override
+  String get zakatGroupGold => 'Gold (grams)';
+
+  @override
+  String get zakatGroupMoney => 'Money and savings';
+
+  @override
   String get zakatNeedPrice => 'Enter the price of a gram of 21-karat gold to work out the nisab.';
 
   @override

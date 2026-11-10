@@ -3998,6 +3998,24 @@ abstract class AppLocalizations {
   /// **'Trade goods (market price)'**
   String get zakatFieldTrade;
 
+  /// shared key "zakat.groupDebts"
+  ///
+  /// In en, this message translates to:
+  /// **'Debts you owe'**
+  String get zakatGroupDebts;
+
+  /// shared key "zakat.groupGold"
+  ///
+  /// In en, this message translates to:
+  /// **'Gold (grams)'**
+  String get zakatGroupGold;
+
+  /// shared key "zakat.groupMoney"
+  ///
+  /// In en, this message translates to:
+  /// **'Money and savings'**
+  String get zakatGroupMoney;
+
   /// shared key "zakat.needPrice"
   ///
   /// In en, this message translates to:

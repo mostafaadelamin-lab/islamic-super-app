@@ -2236,6 +2236,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get zakatFieldTrade => 'بضاعة التجارة (بسعر السوق)';
 
   @override
+  String get zakatGroupDebts => 'الديون عليك';
+
+  @override
+  String get zakatGroupGold => 'الذهب (بالجرام)';
+
+  @override
+  String get zakatGroupMoney => 'النقود والمدخرات';
+
+  @override
   String get zakatNeedPrice => 'اكتب سعر جرام الذهب عيار ٢١ ليُحسب النصاب.';
 
   @override
