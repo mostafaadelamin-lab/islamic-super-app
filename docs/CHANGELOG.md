@@ -1,5 +1,16 @@
 # Changelog
 
+## [Unreleased] — iPad and tablet layout (owner's feature list, phase 8) — 2026-11-10
+### Added
+- Mobile on iPad, Android tablets and wide landscape screens: a side navigation rail (on the right in Arabic, with labels from 840 pt wide) instead of the bottom bar, and the mini player under the content.
+- Lists and reading screens keep a comfortable reading width (720 pt) centred on the screen; home and the tabs up to 960 pt.
+- The Mushaf page keeps the printed page's proportions on a tablet instead of stretching to the full width.
+- Tests on iPad sizes (834×1194, 1194×834, 1366×1024) in Arabic and English, plus iPad screenshots.
+### Checked
+- Website at iPad portrait and landscape: no sideways scrolling, two-column home, Mushaf page fits the height.
+### Not yet
+- Apple Watch: needs a Mac with Xcode and an Apple developer account to build and test.
+
 ## [Unreleased] — Adhkar, help and sharing (owner's feature list, phases 5–6) — 2026-11-10
 ### Added
 - Hisn al-Muslim sections (remembrance, morning and evening, sleep, prayer, home, food, travel, hardship, illness, nature, people, hajj): a grouping of the existing chapters, no text added or changed.
