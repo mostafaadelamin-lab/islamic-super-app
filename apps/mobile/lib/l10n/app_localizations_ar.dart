@@ -1401,6 +1401,12 @@ class AppLocalizationsAr extends AppLocalizations {
       'أمسك الهاتف أفقيًا بعيدًا عن المعادن والمغناطيس، وإن اضطربت القراءة فحرّكه على شكل الرقم ٨. تشير بوصلة الهاتف إلى الشمال المغناطيسي، ويصحّحها التطبيق إلى الشمال الحقيقي لمدينتك.';
 
   @override
+  String get qiblaLocateFailed => 'تعذّر تحديد موقعك. فعّل خدمات الموقع وحاول مرة أخرى.';
+
+  @override
+  String get qiblaPlaceNote => 'اتجاه القبلة محسوب لهذا الموقع. اضغط زر الموقع إن كنت في مكان آخر.';
+
+  @override
   String get qiblaSouth => 'ج';
 
   @override

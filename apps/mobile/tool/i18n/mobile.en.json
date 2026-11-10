@@ -533,5 +533,7 @@
   "prayer.editTimes": "Edit prayer times",
   "prayer.locationServices": "Location services",
   "prayer.autoLocation": "Detect location automatically",
-  "prayer.autoLocationNote": "Your location is refreshed when the app opens, so times stay right when you travel."
+  "prayer.autoLocationNote": "Your location is refreshed when the app opens, so times stay right when you travel.",
+  "qibla.placeNote": "The qibla is worked out for this place. Tap the location button if you are somewhere else.",
+  "qibla.locateFailed": "Couldn't find your location. Turn on location services and try again."
 }

@@ -1405,6 +1405,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The phone\'s compass points to magnetic north; the app corrects it to true north for your city.';
 
   @override
+  String get qiblaLocateFailed => 'Couldn\'t find your location. Turn on location services and try again.';
+
+  @override
+  String get qiblaPlaceNote =>
+      'The qibla is worked out for this place. Tap the location button if you are somewhere else.';
+
+  @override
   String get qiblaSouth => 'S';
 
   @override

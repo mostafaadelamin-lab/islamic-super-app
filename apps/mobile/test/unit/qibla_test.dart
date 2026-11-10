@@ -26,6 +26,14 @@ void main() {
     expect(headingFromSensors(pitch(g), pitch(fieldTowards(60))), closeTo(60, 1e-6));
   });
 
+  test('steady when the phone is held upright (screen facing the user)', () {
+    for (final deg in [80.0, 90.0]) {
+      final r = deg * math.pi / 180, c = math.cos(r), s = math.sin(r);
+      Vec3 pitch(Vec3 v) => Vec3(v.x, c * v.y + s * v.z, -s * v.y + c * v.z);
+      expect(headingFromSensors(pitch(g), pitch(fieldTowards(60))), closeTo(60, 1e-6), reason: '$deg°');
+    }
+  });
+
   test('no heading in free fall or when the field is parallel to gravity', () {
     expect(headingFromSensors(const Vec3(0, 0, 0.2), fieldTowards(10)), isNull);
     expect(headingFromSensors(g, const Vec3(0, 0, -40)), isNull);

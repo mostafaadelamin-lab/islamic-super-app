@@ -27,7 +27,12 @@ double? headingFromSensors(Vec3 gravity, Vec3 magnetic) {
   h = h.scale(1 / hn);
   final g = gravity.scale(1 / a);
   final m = g.cross(h);
-  final az = math.atan2(h.y, m.y) * 180 / math.pi;
+  // Direction of (screen top − screen normal) on the ground: equal to the
+  // usual azimuth when the phone is flat, and still steady when it is held
+  // upright (where the screen top points at the sky).
+  final e = h.y - h.z, n = m.y - m.z;
+  if (e * e + n * n < 1e-6) return null;
+  final az = math.atan2(e, n) * 180 / math.pi;
   return normalizeDegrees(az);
 }
 

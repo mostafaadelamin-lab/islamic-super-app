@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../app_services.dart';
+import '../data/location.dart';
 import '../domain/declination.dart';
 import '../domain/mosques.dart' show distanceM;
 import '../domain/qibla.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
+import 'locate.dart';
 import 'prayer_model.dart';
 import 'adaptive.dart';
 import 'prayer_screen.dart' show QiblaCompass;
@@ -86,6 +88,26 @@ class QiblaScreenState extends State<QiblaScreen> {
       _mag = sensors.magnetometer.listen(_onMagnetic, onError: fail, cancelOnError: true);
     } catch (e) {
       _error = true;
+    }
+  }
+
+  bool _locating = false;
+
+  /// Re-reads the phone's position so the qibla bearing is for where the user is now.
+  Future<void> _relocate() async {
+    final s = context.services;
+    final messenger = ScaffoldMessenger.of(context);
+    final l = context.l10n;
+    setState(() => _locating = true);
+    try {
+      final r = await locateAndSave(s, keepMethod: true);
+      if (r is! LocationFound) throw StateError('no fix');
+      final city = PrayerView.compute(s).city;
+      declination = s.content.magneticModel?.declination(city.lat, city.lng, decimalYear(DateTime.now()));
+    } catch (_) {
+      messenger.showSnackBar(SnackBar(content: Text(l.qiblaLocateFailed)));
+    } finally {
+      if (mounted) setState(() => _locating = false);
     }
   }
 
@@ -258,6 +280,24 @@ class QiblaScreenState extends State<QiblaScreen> {
                   ),
                 ),
               ],
+            ),
+            const SizedBox(height: DesignTokens.spaceMd),
+            Card(
+              margin: EdgeInsets.zero,
+              child: ListTile(
+                key: const Key('qiblaPlace'),
+                leading: RIcon(RIcons.location, color: theme.colorScheme.primary),
+                title: Text(placeLabel(s, pv.city, arabic: context.isArabic)),
+                subtitle: Text(l.qiblaPlaceNote),
+                trailing: _locating
+                    ? const SizedBox.square(dimension: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                    : IconButton(
+                        key: const Key('qiblaRelocate'),
+                        tooltip: l.prayerUseLocation,
+                        icon: const RIcon(RIcons.myLocation),
+                        onPressed: _relocate,
+                      ),
+              ),
             ),
             if (live) ...[
               const SizedBox(height: DesignTokens.spaceMd),

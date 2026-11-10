@@ -2534,6 +2534,18 @@ abstract class AppLocalizations {
   /// **'Hold the phone flat, away from metal and magnets; if the reading jumps, move it in a figure 8. The phone\'s compass points to magnetic north; the app corrects it to true north for your city.'**
   String get qiblaLiveNote;
 
+  /// shared key "qibla.locateFailed"
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t find your location. Turn on location services and try again.'**
+  String get qiblaLocateFailed;
+
+  /// shared key "qibla.placeNote"
+  ///
+  /// In en, this message translates to:
+  /// **'The qibla is worked out for this place. Tap the location button if you are somewhere else.'**
+  String get qiblaPlaceNote;
+
   /// shared key "qibla.south"
   ///
   /// In en, this message translates to:

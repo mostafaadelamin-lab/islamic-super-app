@@ -21,7 +21,6 @@ class HeadingStream(private val activity: Activity) : EventChannel.StreamHandler
     private var sink: EventChannel.EventSink? = null
     private val rotation = FloatArray(9)
     private val remapped = FloatArray(9)
-    private val orientation = FloatArray(3)
 
     override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
         val sensor = sensors.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
@@ -49,8 +48,13 @@ class HeadingStream(private val activity: Activity) : EventChannel.StreamHandler
             else -> SensorManager.AXIS_X to SensorManager.AXIS_Y
         }
         SensorManager.remapCoordinateSystem(rotation, x, y, remapped)
-        SensorManager.getOrientation(remapped, orientation)
-        val deg = (Math.toDegrees(orientation[0].toDouble()) + 360.0) % 360.0
+        // Heading of (screen-top minus screen-normal) projected on the ground: the same as getOrientation's
+        // azimuth when the phone lies flat, and still steady when it is held upright (where the plain azimuth
+        // swings wildly because the screen-top points at the sky).
+        val east = (remapped[1] - remapped[2]).toDouble()
+        val north = (remapped[4] - remapped[5]).toDouble()
+        if (east * east + north * north < 1e-6) return
+        val deg = (Math.toDegrees(Math.atan2(east, north)) + 360.0) % 360.0
         sink?.success(deg)
     }
 
