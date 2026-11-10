@@ -14,9 +14,10 @@ import 'review_notice.dart';
 import 'widgets.dart';
 import 'r_icon.dart';
 
-/// Opens the sheet for a tapped ayah: its Tafsir al-Muyassar (with previous /
-/// next ayah) and the actions listen, listen to the surah, bookmark, copy and,
-/// when [readAsList] is true, read as a list. [onAyahChanged] is told when the
+/// Opens the sheet for a tapped ayah: a list of actions (listen to the ayah,
+/// with tafsir, to the end of the page, to the end of the surah; save a mark;
+/// copy; share as an image), then its Tafsir al-Muyassar (previous / next ayah).
+/// [readAsList] is kept for callers but no longer adds an action. [onAyahChanged] is told when the
 /// reader moves to another ayah inside the sheet.
 Future<void> showAyahSheet(
   BuildContext context,
@@ -111,6 +112,7 @@ class AyahSheetState extends State<AyahSheet> {
                 ],
               ),
             ),
+            _Actions(ref: _ref, readAsList: widget.readAsList),
             Flexible(
               child: FutureBuilder<TafsirContent>(
                 future: _tafsir,
@@ -119,7 +121,6 @@ class AyahSheetState extends State<AyahSheet> {
                     _TafsirCard(text: snap.data?.text(_ref.surah, _ref.ayah), failed: snap.hasError),
               ),
             ),
-            _Actions(ref: _ref, readAsList: widget.readAsList),
           ],
         ),
       ),
@@ -225,39 +226,34 @@ class _Actions extends StatelessWidget {
       listenable: s.bookmarks,
       builder: (context, _) {
         final marked = s.bookmarks.isBookmarked(ref);
-        Widget action(String key, RIconData icon, String label, VoidCallback onPressed) =>
-            ActionChip(key: Key(key), avatar: RIcon(icon, size: 18), label: Text(label), onPressed: onPressed);
+        Widget action(String key, RIconData icon, String label, VoidCallback onPressed) => ListTile(
+          key: Key(key),
+          dense: true,
+          visualDensity: VisualDensity.compact,
+          leading: RIcon(icon, size: 22, color: Theme.of(context).colorScheme.primary),
+          title: Text(label),
+          onTap: onPressed,
+        );
+        void play(AyahRef from, PlayScope scope, {bool tafsir = false}) {
+          Navigator.of(context).pop();
+          s.settings.setTafsirWithRecitation(tafsir);
+          s.recitation.playFrom(from, scope: scope);
+        }
+
         return Padding(
-          padding: const EdgeInsets.fromLTRB(
-            DesignTokens.spaceLg,
-            DesignTokens.spaceXs,
-            DesignTokens.spaceLg,
-            DesignTokens.spaceSm,
-          ),
-          child: Wrap(
-            spacing: DesignTokens.spaceSm,
+          padding: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
+          child: Column(
+            key: const Key('ayahActions'),
+            mainAxisSize: MainAxisSize.min,
             children: [
-              action('ayahPlayOne', RIcons.playCircle, l.readerPlayAyah, () {
-                Navigator.of(context).pop();
-                s.recitation.playFrom(ref, scope: PlayScope.ayah);
-              }),
-              action('ayahPlayTafsir', RIcons.split, l.readerPlayWithTafsir, () {
-                Navigator.of(context).pop();
-                s.settings.setTafsirWithRecitation(true);
-                s.recitation.playFrom(ref);
-              }),
-              action('ayahPlay', RIcons.play, l.mushafPlayFromHere, () {
-                Navigator.of(context).pop();
-                s.recitation.playFrom(ref);
-              }),
-              action('ayahPlaySurah', RIcons.playlist, l.mushafPlaySurah, () {
-                Navigator.of(context).pop();
-                s.recitation.playFrom(AyahRef(ref.surah, 1), scope: PlayScope.surah);
-              }),
+              action('ayahPlayOne', RIcons.playCircle, l.ayahListenOne, () => play(ref, PlayScope.ayah)),
+              action('ayahPlayTafsir', RIcons.split, l.ayahListenTafsir, () => play(ref, PlayScope.ayah, tafsir: true)),
+              action('ayahPlayPage', RIcons.pages, l.ayahListenToPageEnd, () => play(ref, PlayScope.page)),
+              action('ayahPlaySurah', RIcons.playlist, l.ayahListenToSurahEnd, () => play(ref, PlayScope.surah)),
               action(
                 'ayahBookmark',
-                marked ? RIcons.bookmark : RIcons.bookmark,
-                marked ? l.quranRemoveBookmark : l.quranBookmark,
+                RIcons.bookmark,
+                marked ? l.quranRemoveBookmark : l.ayahSaveMark,
                 () async {
                   final messenger = ScaffoldMessenger.of(context);
                   final nav = Navigator.of(context);
@@ -270,7 +266,7 @@ class _Actions extends StatelessWidget {
                   messenger.showSnackBar(SnackBar(content: Text(marked ? l.quranBookmarkRemoved : l.quranBookmarked)));
                 },
               ),
-              action('ayahCopy', RIcons.copy, l.mushafCopy, () async {
+              action('ayahCopy', RIcons.copy, l.ayahCopy, () async {
                 final messenger = ScaffoldMessenger.of(context);
                 final nav = Navigator.of(context);
                 final q = s.content.quran;
@@ -281,16 +277,11 @@ class _Actions extends StatelessWidget {
                 nav.pop();
                 messenger.showSnackBar(SnackBar(content: Text(l.mushafCopied)));
               }),
-              action('ayahShareImage', RIcons.image, l.mushafShareImage, () {
+              action('ayahShareImage', RIcons.image, l.ayahShareImage, () {
                 final nav = Navigator.of(context);
                 nav.pop();
                 nav.push(MaterialPageRoute<void>(builder: (_) => AyahImageScreen(ayah: ref)));
               }),
-              if (readAsList)
-                action('ayahReadList', RIcons.pages, l.mushafReadAsList, () {
-                  Navigator.of(context).pop();
-                  openSurah(context, ref.surah, ayah: ref.ayah);
-                }),
             ],
           ),
         );

@@ -57,7 +57,7 @@ void main() {
   testWidgets('adhkar cards move on when a dhikr is complete', (tester) async {
     final app = await pumpApp(tester, size: tallPhone);
     await app.services.settings.setAdhkarCards(true);
-    await pushScreen(tester, const AdhkarScreen(initial: AdhkarSession.morning));
+    await pushScreen(tester, const AdhkarSessionScreen(initial: AdhkarSession.morning));
     final first = app.services.adhkar.progress(AdhkarSession.morning).items.first;
     expect(find.byKey(Key('dhikr-${first.index}')), findsOneWidget);
     for (var k = 0; k < first.meta.count; k++) {
@@ -70,7 +70,7 @@ void main() {
   testWidgets('morning and evening reminders are scheduled daily at the chosen time', (tester) async {
     final notes = FakeNotifications();
     final app = await pumpApp(tester, size: tallPhone, notifications: notes, locale: 'en');
-    await pushScreen(tester, const AdhkarScreen(initial: AdhkarSession.morning));
+    await pushScreen(tester, const AdhkarSessionScreen(initial: AdhkarSession.morning));
     await tester.tap(find.byKey(const Key('adhkarReminders')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('reminderMorning')));

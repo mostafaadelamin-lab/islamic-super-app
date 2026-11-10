@@ -519,5 +519,19 @@
   "offline.savedDelete": "Saved on the phone — tap to delete",
   "offline.done": "Saved: you can listen without internet",
   "offline.failed": "Download failed. Check the internet and try again",
-  "mosques.onGoogleMaps": "Open nearby mosques in Google Maps"
+  "mosques.onGoogleMaps": "Open nearby mosques in Google Maps",
+  "ayah.listenOne": "Listen to this ayah only",
+  "ayah.listenTafsir": "Listen with tafsir",
+  "ayah.listenToPageEnd": "Listen from here to the end of the page",
+  "ayah.listenToSurahEnd": "Listen from here to the end of the surah",
+  "ayah.saveMark": "Save a mark on this ayah",
+  "ayah.copy": "Copy the ayah",
+  "ayah.shareImage": "Share as an image",
+  "adhkar.daily": "Daily adhkar",
+  "adhkar.duas": "Duas",
+  "prayer.compactNote": "To change the city, calculation method or adhan alerts, tap Edit prayer times.",
+  "prayer.editTimes": "Edit prayer times",
+  "prayer.locationServices": "Location services",
+  "prayer.autoLocation": "Detect location automatically",
+  "prayer.autoLocationNote": "Your location is refreshed when the app opens, so times stay right when you travel."
 }

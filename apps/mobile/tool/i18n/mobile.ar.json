@@ -519,5 +519,19 @@
   "offline.savedDelete": "محفوظة على الهاتف — اضغط للحذف",
   "offline.done": "تم الحفظ، يمكنك الاستماع بدون إنترنت",
   "offline.failed": "تعذّر التحميل، تحقّق من الإنترنت وحاول مرة أخرى",
-  "mosques.onGoogleMaps": "افتح المساجد القريبة على خرائط جوجل"
+  "mosques.onGoogleMaps": "افتح المساجد القريبة على خرائط جوجل",
+  "ayah.listenOne": "استمع للآية المختارة فقط",
+  "ayah.listenTafsir": "استمع مع التفسير",
+  "ayah.listenToPageEnd": "استمع من هذه الآية إلى آخر الصفحة",
+  "ayah.listenToSurahEnd": "استمع من هذه الآية إلى آخر السورة",
+  "ayah.saveMark": "حفظ علامة الآية",
+  "ayah.copy": "نسخ الآية",
+  "ayah.shareImage": "مشاركة كصورة",
+  "adhkar.daily": "الأذكار اليومية",
+  "adhkar.duas": "الأدعية",
+  "prayer.compactNote": "لتغيير المدينة أو طريقة الحساب أو تنبيهات الأذان اضغط تعديل أوقات الصلاة.",
+  "prayer.editTimes": "تعديل أوقات الصلاة",
+  "prayer.locationServices": "خدمات الموقع",
+  "prayer.autoLocation": "تحديد الموقع تلقائيًا",
+  "prayer.autoLocationNote": "يُحدَّث موقعك عند فتح التطبيق لتبقى المواقيت صحيحة إذا سافرت."
 }

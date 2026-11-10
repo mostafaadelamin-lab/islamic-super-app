@@ -7,7 +7,6 @@ import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'page_reader_screen.dart';
-import 'surah_reader_screen.dart';
 import 'r_icon.dart';
 
 /// Quran text for display. The render map is applied here, to the string
@@ -123,11 +122,19 @@ String ayahLabel(BuildContext context, AyahRef r) {
   return context.l10n.quranSurahAyah(surahName(context, s), context.num(r.ayah));
 }
 
-Future<void> openSurah(BuildContext context, int surah, {int? ayah}) => Navigator.of(context).push(
-  MaterialPageRoute<void>(
-    builder: (_) => SurahReaderScreen(surah: surah, initialAyah: ayah),
-  ),
-);
+/// Opens the Mushaf at [surah] (or at [ayah] of it, highlighted). The
+/// ayah-by-ayah list reader was removed on the owner's request (2026-11-10).
+Future<void> openSurah(BuildContext context, int surah, {int? ayah}) {
+  final r = AyahRef(surah, ayah ?? 1);
+  return Navigator.of(context).push(
+    MaterialPageRoute<void>(
+      builder: (_) => PageReaderScreen(
+        initialPage: context.services.content.quran.pageOf(r),
+        highlight: ayah == null ? null : r,
+      ),
+    ),
+  );
+}
 
 /// Opens the Mushaf at the page of [r], with that ayah highlighted.
 Future<void> openMushafAt(BuildContext context, AyahRef r) => Navigator.of(context).push(

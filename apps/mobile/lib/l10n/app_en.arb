@@ -431,9 +431,17 @@
   "@adhkarCopy": {
     "description": "shared key \"adhkar.copy\""
   },
+  "adhkarDaily": "Daily adhkar",
+  "@adhkarDaily": {
+    "description": "shared key \"adhkar.daily\""
+  },
   "adhkarDone": "Done",
   "@adhkarDone": {
     "description": "shared key \"adhkar.done\""
+  },
+  "adhkarDuas": "Duas",
+  "@adhkarDuas": {
+    "description": "shared key \"adhkar.duas\""
   },
   "adhkarEvening": "Evening",
   "@adhkarEvening": {
@@ -730,6 +738,34 @@
   "audioTitle": "Recitation",
   "@audioTitle": {
     "description": "shared key \"audio.title\""
+  },
+  "ayahCopy": "Copy the ayah",
+  "@ayahCopy": {
+    "description": "shared key \"ayah.copy\""
+  },
+  "ayahListenOne": "Listen to this ayah only",
+  "@ayahListenOne": {
+    "description": "shared key \"ayah.listenOne\""
+  },
+  "ayahListenTafsir": "Listen with tafsir",
+  "@ayahListenTafsir": {
+    "description": "shared key \"ayah.listenTafsir\""
+  },
+  "ayahListenToPageEnd": "Listen from here to the end of the page",
+  "@ayahListenToPageEnd": {
+    "description": "shared key \"ayah.listenToPageEnd\""
+  },
+  "ayahListenToSurahEnd": "Listen from here to the end of the surah",
+  "@ayahListenToSurahEnd": {
+    "description": "shared key \"ayah.listenToSurahEnd\""
+  },
+  "ayahSaveMark": "Save a mark on this ayah",
+  "@ayahSaveMark": {
+    "description": "shared key \"ayah.saveMark\""
+  },
+  "ayahShareImage": "Share as an image",
+  "@ayahShareImage": {
+    "description": "shared key \"ayah.shareImage\""
   },
   "bookmarksDelete": "Delete bookmark for {label}",
   "@bookmarksDelete": {
@@ -1749,6 +1785,14 @@
   "@prayerAsrStandard": {
     "description": "shared key \"prayer.asrStandard\""
   },
+  "prayerAutoLocation": "Detect location automatically",
+  "@prayerAutoLocation": {
+    "description": "shared key \"prayer.autoLocation\""
+  },
+  "prayerAutoLocationNote": "Your location is refreshed when the app opens, so times stay right when you travel.",
+  "@prayerAutoLocationNote": {
+    "description": "shared key \"prayer.autoLocationNote\""
+  },
   "prayerBackToToday": "Back to today",
   "@prayerBackToToday": {
     "description": "shared key \"prayer.backToToday\""
@@ -1772,6 +1816,10 @@
   "prayerClock24": "24-hour (13:05)",
   "@prayerClock24": {
     "description": "shared key \"prayer.clock24\""
+  },
+  "prayerCompactNote": "To change the city, calculation method or adhan alerts, tap Edit prayer times.",
+  "@prayerCompactNote": {
+    "description": "shared key \"prayer.compactNote\""
   },
   "prayerCompassLabel": "Compass: qibla is {deg}° clockwise from north",
   "@prayerCompassLabel": {
@@ -1807,6 +1855,10 @@
   "prayerDhuhr": "Dhuhr",
   "@prayerDhuhr": {
     "description": "shared key \"prayer.dhuhr\""
+  },
+  "prayerEditTimes": "Edit prayer times",
+  "@prayerEditTimes": {
+    "description": "shared key \"prayer.editTimes\""
   },
   "prayerFajr": "Fajr",
   "@prayerFajr": {
@@ -1866,6 +1918,10 @@
   "prayerLocating": "Locating…",
   "@prayerLocating": {
     "description": "shared key \"prayer.locating\""
+  },
+  "prayerLocationServices": "Location services",
+  "@prayerLocationServices": {
+    "description": "shared key \"prayer.locationServices\""
   },
   "prayerMaghrib": "Maghrib",
   "@prayerMaghrib": {

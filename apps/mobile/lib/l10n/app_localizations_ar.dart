@@ -303,7 +303,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhkarCopy => 'نسخ';
 
   @override
+  String get adhkarDaily => 'الأذكار اليومية';
+
+  @override
   String get adhkarDone => 'تمّ';
+
+  @override
+  String get adhkarDuas => 'الأدعية';
 
   @override
   String get adhkarEvening => 'المساء';
@@ -506,6 +512,27 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get audioTitle => 'التلاوة';
+
+  @override
+  String get ayahCopy => 'نسخ الآية';
+
+  @override
+  String get ayahListenOne => 'استمع للآية المختارة فقط';
+
+  @override
+  String get ayahListenTafsir => 'استمع مع التفسير';
+
+  @override
+  String get ayahListenToPageEnd => 'استمع من هذه الآية إلى آخر الصفحة';
+
+  @override
+  String get ayahListenToSurahEnd => 'استمع من هذه الآية إلى آخر السورة';
+
+  @override
+  String get ayahSaveMark => 'حفظ علامة الآية';
+
+  @override
+  String get ayahShareImage => 'مشاركة كصورة';
 
   @override
   String bookmarksDelete(String label) {
@@ -1181,6 +1208,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get prayerAsrStandard => 'الجمهور (الشافعي والمالكي والحنبلي)';
 
   @override
+  String get prayerAutoLocation => 'تحديد الموقع تلقائيًا';
+
+  @override
+  String get prayerAutoLocationNote => 'يُحدَّث موقعك عند فتح التطبيق لتبقى المواقيت صحيحة إذا سافرت.';
+
+  @override
   String get prayerBackToToday => 'العودة إلى اليوم';
 
   @override
@@ -1197,6 +1230,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get prayerClock24 => '٢٤ ساعة (١٣:٠٥)';
+
+  @override
+  String get prayerCompactNote => 'لتغيير المدينة أو طريقة الحساب أو تنبيهات الأذان اضغط تعديل أوقات الصلاة.';
 
   @override
   String prayerCompassLabel(String deg) {
@@ -1218,6 +1254,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get prayerDhuhr => 'الظهر';
+
+  @override
+  String get prayerEditTimes => 'تعديل أوقات الصلاة';
 
   @override
   String get prayerFajr => 'الفجر';
@@ -1257,6 +1296,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get prayerLocating => 'جارٍ تحديد الموقع…';
+
+  @override
+  String get prayerLocationServices => 'خدمات الموقع';
 
   @override
   String get prayerMaghrib => 'المغرب';

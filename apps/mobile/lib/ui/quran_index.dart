@@ -337,7 +337,6 @@ class _Entry extends StatelessWidget {
     required this.current,
     required this.onTap,
     this.semanticsLabel,
-    this.trailing,
     super.key,
   });
   final Widget badge;
@@ -346,7 +345,6 @@ class _Entry extends StatelessWidget {
   final bool current;
   final VoidCallback onTap;
   final String? semanticsLabel;
-  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -386,7 +384,6 @@ class _Entry extends StatelessWidget {
                     ],
                   ),
                 ),
-                ?trailing,
               ],
             ),
           ),
@@ -423,13 +420,6 @@ class _SurahTile extends StatelessWidget {
       subtitle: l.quranSurahLine(context.num(page), context.num(s.ayahCount), kind),
       current: current,
       onTap: () => onOpen(page),
-      trailing: IconButton(
-        key: Key('surahText-${s.n}'),
-        tooltip: '${l.quranListView}: $name',
-        icon: const RIcon(RIcons.list),
-        color: Theme.of(context).hintColor,
-        onPressed: () => openSurah(context, s.n),
-      ),
     );
   }
 }

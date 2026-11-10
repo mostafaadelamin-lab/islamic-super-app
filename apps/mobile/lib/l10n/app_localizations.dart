@@ -590,11 +590,23 @@ abstract class AppLocalizations {
   /// **'Copy'**
   String get adhkarCopy;
 
+  /// shared key "adhkar.daily"
+  ///
+  /// In en, this message translates to:
+  /// **'Daily adhkar'**
+  String get adhkarDaily;
+
   /// shared key "adhkar.done"
   ///
   /// In en, this message translates to:
   /// **'Done'**
   String get adhkarDone;
+
+  /// shared key "adhkar.duas"
+  ///
+  /// In en, this message translates to:
+  /// **'Duas'**
+  String get adhkarDuas;
 
   /// shared key "adhkar.evening"
   ///
@@ -955,6 +967,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recitation'**
   String get audioTitle;
+
+  /// shared key "ayah.copy"
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the ayah'**
+  String get ayahCopy;
+
+  /// shared key "ayah.listenOne"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to this ayah only'**
+  String get ayahListenOne;
+
+  /// shared key "ayah.listenTafsir"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen with tafsir'**
+  String get ayahListenTafsir;
+
+  /// shared key "ayah.listenToPageEnd"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen from here to the end of the page'**
+  String get ayahListenToPageEnd;
+
+  /// shared key "ayah.listenToSurahEnd"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen from here to the end of the surah'**
+  String get ayahListenToSurahEnd;
+
+  /// shared key "ayah.saveMark"
+  ///
+  /// In en, this message translates to:
+  /// **'Save a mark on this ayah'**
+  String get ayahSaveMark;
+
+  /// shared key "ayah.shareImage"
+  ///
+  /// In en, this message translates to:
+  /// **'Share as an image'**
+  String get ayahShareImage;
 
   /// shared key "bookmarks.delete"
   ///
@@ -2144,6 +2198,18 @@ abstract class AppLocalizations {
   /// **'Standard (Shafi\'i, Maliki, Hanbali)'**
   String get prayerAsrStandard;
 
+  /// shared key "prayer.autoLocation"
+  ///
+  /// In en, this message translates to:
+  /// **'Detect location automatically'**
+  String get prayerAutoLocation;
+
+  /// shared key "prayer.autoLocationNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Your location is refreshed when the app opens, so times stay right when you travel.'**
+  String get prayerAutoLocationNote;
+
   /// shared key "prayer.backToToday"
   ///
   /// In en, this message translates to:
@@ -2180,6 +2246,12 @@ abstract class AppLocalizations {
   /// **'24-hour (13:05)'**
   String get prayerClock24;
 
+  /// shared key "prayer.compactNote"
+  ///
+  /// In en, this message translates to:
+  /// **'To change the city, calculation method or adhan alerts, tap Edit prayer times.'**
+  String get prayerCompactNote;
+
   /// shared key "prayer.compassLabel"
   ///
   /// In en, this message translates to:
@@ -2209,6 +2281,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dhuhr'**
   String get prayerDhuhr;
+
+  /// shared key "prayer.editTimes"
+  ///
+  /// In en, this message translates to:
+  /// **'Edit prayer times'**
+  String get prayerEditTimes;
 
   /// shared key "prayer.fajr"
   ///
@@ -2275,6 +2353,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Locating…'**
   String get prayerLocating;
+
+  /// shared key "prayer.locationServices"
+  ///
+  /// In en, this message translates to:
+  /// **'Location services'**
+  String get prayerLocationServices;
 
   /// shared key "prayer.maghrib"
   ///

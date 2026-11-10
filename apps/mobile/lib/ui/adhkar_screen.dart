@@ -12,17 +12,79 @@ import 'review_notice.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
 
-/// Morning / evening adhkar with a counter on every item (persisted for the
-/// day), plus the way into Hisn al-Muslim.
-class AdhkarScreen extends StatefulWidget {
-  const AdhkarScreen({super.key, this.initial});
+/// The Adhkar tab: a vertical list of the daily adhkar (morning, evening,
+/// sleep, prayer…) and the duas, all from Hisn al-Muslim, then the whole book.
+class AdhkarScreen extends StatelessWidget {
+  const AdhkarScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    void push(Widget w) => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => w));
+    Widget tile(String id, RIconData icon, String title, VoidCallback onTap) => Card(
+      key: Key('adhkarHub.$id'),
+      margin: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
+      child: ListTile(
+        leading: RIcon(icon, color: Theme.of(context).colorScheme.primary, size: 28),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+        trailing: const RIcon(RIcons.chevronForward),
+        onTap: onTap,
+      ),
+    );
+    Widget hisn(String id, RIconData icon, String title) =>
+        tile(id, icon, title, () => push(HisnScreen(section: id, title: title)));
+    Widget header(String text) => Padding(
+      padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceLg, DesignTokens.spaceLg, DesignTokens.spaceXs),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+          color: Theme.of(context).colorScheme.primary,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    );
+    return Scaffold(
+      appBar: AppBar(title: Text(l.navAdhkar)),
+      body: ReadableWidth(
+        child: ListView(
+          key: const Key('adhkarHub'),
+          padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+          children: [
+            header(l.adhkarDaily),
+            tile('morning', RIcons.sunHigh, l.adhkarMorningTitle, () => push(const AdhkarSessionScreen(initial: AdhkarSession.morning))),
+            tile('evening', RIcons.moon, l.adhkarEveningTitle, () => push(const AdhkarSessionScreen(initial: AdhkarSession.evening))),
+            hisn('sleep', RIcons.moon, l.hisnSectionSleep),
+            hisn('prayer', RIcons.prayer, l.hisnSectionPrayer),
+            hisn('remembrance', RIcons.beads, l.hisnSectionRemembrance),
+            header(l.adhkarDuas),
+            hisn('hardship', RIcons.dua, l.hisnSectionHardship),
+            hisn('illness', RIcons.adhkar, l.hisnSectionIllness),
+            hisn('travel', RIcons.location, l.hisnSectionTravel),
+            hisn('home', RIcons.home, l.hisnSectionHome),
+            hisn('food', RIcons.calendarCheck, l.hisnSectionFood),
+            hisn('people', RIcons.dua, l.hisnSectionPeople),
+            hisn('nature', RIcons.sunrise, l.hisnSectionNature),
+            hisn('hajj', RIcons.kaaba, l.hisnSectionHajj),
+            const SizedBox(height: DesignTokens.spaceSm),
+            tile('hisn', RIcons.hisn, l.adhkarHisn, () => push(const HisnScreen())),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Morning or evening adhkar, one under the other, with a counter under every
+/// item (persisted for the day).
+class AdhkarSessionScreen extends StatefulWidget {
+  const AdhkarSessionScreen({super.key, this.initial});
   final AdhkarSession? initial;
 
   @override
-  State<AdhkarScreen> createState() => AdhkarScreenState();
+  State<AdhkarSessionScreen> createState() => AdhkarScreenState();
 }
 
-class AdhkarScreenState extends State<AdhkarScreen> {
+class AdhkarScreenState extends State<AdhkarSessionScreen> {
   AdhkarSession? _session;
   AdhkarSession get session => _session!;
 
@@ -50,7 +112,7 @@ class AdhkarScreenState extends State<AdhkarScreen> {
     final s = context.services;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l.navAdhkar),
+        title: Text(session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle),
         actions: [
           const AdhkarViewToggle(),
           IconButton(
@@ -64,12 +126,6 @@ class AdhkarScreenState extends State<AdhkarScreen> {
             tooltip: l.adhkarReset,
             icon: const RIcon(RIcons.reset),
             onPressed: () => s.adhkar.reset(session),
-          ),
-          IconButton(
-            key: const Key('openHisn'),
-            tooltip: l.adhkarHisn,
-            icon: const RIcon(RIcons.quran),
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const HisnScreen())),
           ),
         ],
       ),
@@ -192,40 +248,47 @@ class _DhikrCard extends StatelessWidget {
                   children: [
                     Text(dhikr.text, textDirection: TextDirection.rtl, style: duaStyle(context)),
                     const SizedBox(height: DesignTokens.spaceMd),
-                    Row(
-                      children: [
-                        Chip(label: Text(l.adhkarRepeat(context.num(dhikr.meta.count)))),
-                        const Spacer(),
-                        Container(
-                          key: Key('dhikrCount-${dhikr.index}'),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: DesignTokens.spaceMd,
-                            vertical: DesignTokens.spaceSm,
-                          ),
-                          decoration: BoxDecoration(
-                            color: done ? scheme.primary : scheme.secondaryContainer,
-                            borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              RIcon(
-                                done ? RIcons.check : RIcons.beads,
-                                size: 18,
-                                color: done ? scheme.onPrimary : scheme.onSecondaryContainer,
-                              ),
-                              const SizedBox(width: DesignTokens.spaceXs),
-                              Text(
-                                done ? l.adhkarDone : l.adhkarRemaining(context.num(remaining)),
-                                style: TextStyle(
-                                  color: done ? scheme.onPrimary : scheme.onSecondaryContainer,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
+                    Center(
+                      child: Container(
+                        key: Key('dhikrCount-${dhikr.index}'),
+                        width: 96,
+                        height: 96,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: done ? scheme.primary : scheme.primaryContainer,
+                          border: Border.all(color: scheme.secondary.withValues(alpha: 0.6), width: 4),
+                          boxShadow: [
+                            BoxShadow(color: scheme.primary.withValues(alpha: 0.18), blurRadius: 12, offset: const Offset(0, 4)),
+                          ],
                         ),
-                      ],
+                        child: done
+                            ? RIcon(RIcons.check, size: 40, color: scheme.onPrimary)
+                            : Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    context.num('${dhikr.meta.count - remaining}'),
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w700,
+                                      color: scheme.onPrimaryContainer,
+                                      height: 1.1,
+                                    ),
+                                  ),
+                                  Text(
+                                    '/ ${context.num('${dhikr.meta.count}')}',
+                                    style: TextStyle(fontSize: 14, color: scheme.onPrimaryContainer),
+                                  ),
+                                ],
+                              ),
+                      ),
+                    ),
+                    const SizedBox(height: DesignTokens.spaceXs),
+                    Text(
+                      done ? l.adhkarDone : l.adhkarRemaining(context.num(remaining)),
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
                 ),

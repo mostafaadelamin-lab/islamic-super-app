@@ -13,7 +13,11 @@ import 'r_icon.dart';
 
 /// Hisn al-Muslim: chapter list with a filter.
 class HisnScreen extends StatefulWidget {
-  const HisnScreen({super.key});
+  const HisnScreen({super.key, this.section, this.title});
+
+  /// Opens filtered to one section (e.g. 'sleep'), titled [title].
+  final String? section;
+  final String? title;
 
   @override
   State<HisnScreen> createState() => _HisnScreenState();
@@ -21,7 +25,7 @@ class HisnScreen extends StatefulWidget {
 
 class _HisnScreenState extends State<HisnScreen> {
   String _filter = '';
-  String? _section;
+  late String? _section = widget.section;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +42,7 @@ class _HisnScreenState extends State<HisnScreen> {
           c,
     ];
     return Scaffold(
-      appBar: AppBar(title: Text(l.adhkarHisn)),
+      appBar: AppBar(title: Text(widget.title ?? l.adhkarHisn)),
       body: ReadableWidth(
         child: Column(
           children: [

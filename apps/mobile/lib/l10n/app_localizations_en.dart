@@ -304,7 +304,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhkarCopy => 'Copy';
 
   @override
+  String get adhkarDaily => 'Daily adhkar';
+
+  @override
   String get adhkarDone => 'Done';
+
+  @override
+  String get adhkarDuas => 'Duas';
 
   @override
   String get adhkarEvening => 'Evening';
@@ -507,6 +513,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get audioTitle => 'Recitation';
+
+  @override
+  String get ayahCopy => 'Copy the ayah';
+
+  @override
+  String get ayahListenOne => 'Listen to this ayah only';
+
+  @override
+  String get ayahListenTafsir => 'Listen with tafsir';
+
+  @override
+  String get ayahListenToPageEnd => 'Listen from here to the end of the page';
+
+  @override
+  String get ayahListenToSurahEnd => 'Listen from here to the end of the surah';
+
+  @override
+  String get ayahSaveMark => 'Save a mark on this ayah';
+
+  @override
+  String get ayahShareImage => 'Share as an image';
 
   @override
   String bookmarksDelete(String label) {
@@ -1184,6 +1211,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get prayerAsrStandard => 'Standard (Shafi\'i, Maliki, Hanbali)';
 
   @override
+  String get prayerAutoLocation => 'Detect location automatically';
+
+  @override
+  String get prayerAutoLocationNote =>
+      'Your location is refreshed when the app opens, so times stay right when you travel.';
+
+  @override
   String get prayerBackToToday => 'Back to today';
 
   @override
@@ -1200,6 +1234,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prayerClock24 => '24-hour (13:05)';
+
+  @override
+  String get prayerCompactNote => 'To change the city, calculation method or adhan alerts, tap Edit prayer times.';
 
   @override
   String prayerCompassLabel(String deg) {
@@ -1221,6 +1258,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prayerDhuhr => 'Dhuhr';
+
+  @override
+  String get prayerEditTimes => 'Edit prayer times';
 
   @override
   String get prayerFajr => 'Fajr';
@@ -1260,6 +1300,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prayerLocating => 'Locating…';
+
+  @override
+  String get prayerLocationServices => 'Location services';
 
   @override
   String get prayerMaghrib => 'Maghrib';

@@ -18,13 +18,17 @@ import 'prayer_calendar_screen.dart';
 import 'prayer_model.dart';
 import 'qibla_screen.dart';
 import 'locate.dart';
-import 'settings_screen.dart' show enableAdhanAlerts;
+import 'settings_screen.dart' show AdhanSettingsCard, enableAdhanAlerts;
 import 'widgets.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
 
+/// Prayer times. The tab is compact (date, the five times with their alert,
+/// and "edit prayer times"); [settingsMode] is that edit screen: location,
+/// calculation method, adjustments, alerts and the qibla.
 class PrayerScreen extends StatefulWidget {
-  const PrayerScreen({super.key});
+  const PrayerScreen({super.key, this.settingsMode = false});
+  final bool settingsMode;
 
   @override
   State<PrayerScreen> createState() => _PrayerScreenState();
@@ -84,7 +88,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
     final s = context.services;
     final l = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: Text(l.prayerTitle)),
+      appBar: AppBar(title: Text(widget.settingsMode ? l.prayerEditTimes : l.prayerTitle)),
       body: ReadableWidth(
         child: ListenableBuilder(
           listenable: s.settings,
@@ -103,10 +107,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                   ).day(PrayerSchedule(s.content.calculator), shownDate, adjustments);
             final next = _dayOffset == 0 ? pv.next : null;
             final hijri = hijriFor(shownDate, arabic: ar);
-            return ListView(
-              key: const Key('prayerList'),
-              padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-              children: [
+            final banner = <Widget>[
                 if (!s.settings.adhanEnabled)
                   SectionCard(
                     key: const Key('adhanBanner'),
@@ -129,6 +130,8 @@ class _PrayerScreenState extends State<PrayerScreen> {
                       ),
                     ],
                   ),
+            ];
+            final cityCard = <Widget>[
                 SectionCard(
                   children: [
                     ListTile(
@@ -188,6 +191,8 @@ class _PrayerScreenState extends State<PrayerScreen> {
                     ),
                   ],
                 ),
+            ];
+            final timesCard = <Widget>[
                 SectionCard(
                   title: l.prayerTitle,
                   children: [
@@ -275,6 +280,16 @@ class _PrayerScreenState extends State<PrayerScreen> {
                             ],
                           ),
                         ),
+                      const SizedBox(height: DesignTokens.spaceSm),
+                      Container(
+                        key: const Key('timesTint'),
+                        padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: DesignTokens.spaceSm),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.35),
+                          borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
+                        ),
+                        child: Column(
+                          children: [
                       for (final k in prayerKeys)
                         _TimeRow(
                           name: context.prayerName(k),
@@ -298,6 +313,9 @@ class _PrayerScreenState extends State<PrayerScreen> {
                               // Keeps the times aligned on the sunrise row.
                               : (s.settings.adhanEnabled ? const SizedBox(width: 40) : null),
                         ),
+                          ],
+                        ),
+                      ),
                       if (today.day.highLatitudeAdjusted.isNotEmpty)
                         Padding(
                           padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
@@ -313,6 +331,8 @@ class _PrayerScreenState extends State<PrayerScreen> {
                     ],
                   ],
                 ),
+            ];
+            final rest = <Widget>[
                 if (s.settings.adhanEnabled) _AdhanExtrasCard(settings: s.settings),
                 SectionCard(
                   children: [
@@ -361,6 +381,43 @@ class _PrayerScreenState extends State<PrayerScreen> {
                       ),
                     ),
                   ],
+                ),
+            ];
+            if (widget.settingsMode) {
+              return ListView(
+                key: const Key('prayerSettingsList'),
+                padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+                children: [
+                  if (today != null) _TimesStrip(today: today, h12: h12),
+                  ...cityCard,
+                  _AutoLocationCard(placeLabel: placeLabel(s, pv.city, arabic: ar)),
+                  const AdhanSettingsCard(),
+                  ...rest,
+                ],
+              );
+            }
+            return ListView(
+              key: const Key('prayerList'),
+              padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+              children: [
+                ...banner,
+                ...timesCard,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceXl, vertical: DesignTokens.spaceSm),
+                  child: Text(l.prayerCompactNote, style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.center),
+                ),
+                Card(
+                  margin: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceSm),
+                  child: ListTile(
+                    key: const Key('editPrayerTimes'),
+                    leading: RIcon(RIcons.edit, color: Theme.of(context).colorScheme.primary),
+                    title: Text(l.prayerEditTimes, style: const TextStyle(fontWeight: FontWeight.w600)),
+                    subtitle: Text(placeLabel(s, pv.city, arabic: ar)),
+                    trailing: const RIcon(RIcons.chevronForward),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(builder: (_) => const PrayerScreen(settingsMode: true)),
+                    ),
+                  ),
                 ),
               ],
             );
@@ -635,4 +692,94 @@ class LabeledDropdown<T> extends StatelessWidget {
       ),
     ),
   );
+}
+
+/// A strip of the day's five prayers (plus sunrise): icon, name and time.
+class _TimesStrip extends StatelessWidget {
+  const _TimesStrip({required this.today, required this.h12});
+  final LocalPrayerDay today;
+  final bool h12;
+
+  static const _icons = {
+    'fajr': RIcons.sunrise,
+    'sunrise': RIcons.sunLow,
+    'dhuhr': RIcons.sunHigh,
+    'asr': RIcons.sun,
+    'maghrib': RIcons.sunset,
+    'isha': RIcons.moon,
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final ar = context.isArabic;
+    return Padding(
+      key: const Key('timesStrip'),
+      padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
+      child: Row(
+        children: [
+          for (final k in prayerKeys)
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 2),
+                padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
+                decoration: BoxDecoration(
+                  color: scheme.primaryContainer.withValues(alpha: 0.5),
+                  borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
+                ),
+                child: Column(
+                  children: [
+                    RIcon(_icons[k]!, color: scheme.primary, size: 20),
+                    const SizedBox(height: 2),
+                    FittedBox(child: Text(context.prayerName(k), style: Theme.of(context).textTheme.labelSmall)),
+                    FittedBox(
+                      child: Text(
+                        context.num(today.clock(k, h12: h12, arabic: ar)),
+                        style: Theme.of(context).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w600),
+                        textDirection: TextDirection.ltr,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Location services: follow the phone's location automatically, with the
+/// current place name.
+class _AutoLocationCard extends StatelessWidget {
+  const _AutoLocationCard({required this.placeLabel});
+  final String placeLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    final s = context.services;
+    final l = context.l10n;
+    return SectionCard(
+      title: l.prayerLocationServices,
+      children: [
+        SwitchListTile(
+          key: const Key('autoLocation'),
+          contentPadding: EdgeInsets.zero,
+          secondary: const RIcon(RIcons.location),
+          title: Text(l.prayerAutoLocation),
+          subtitle: Text(placeLabel),
+          value: s.settings.autoLocation,
+          onChanged: (v) async {
+            await s.settings.setAutoLocation(v);
+            if (v) {
+              try {
+                await locateAndSave(s, keepMethod: true);
+              } catch (_) {}
+            }
+          },
+        ),
+        Text(l.prayerAutoLocationNote, style: Theme.of(context).textTheme.bodySmall),
+      ],
+    );
+  }
 }
