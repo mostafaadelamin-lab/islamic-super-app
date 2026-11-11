@@ -1,7 +1,8 @@
 """Links the simplified explanations of the published hadith encyclopedia
 (HadeethEnc, Arabic) to the hadiths of the nine books shipped in the app, by
 matching the Prophet's words (the «...» part) word for word.
-usage: hadith_explained.py <hadeethenc.json> <apps/mobile/assets/hadith> <out.json>"""
+usage: hadith_explained.py content/hadith/hadeethenc-ar.json content/hadith/dist content/hadith/dist/explained.v1.json
+(then apps/mobile/tool/sync_assets.sh copies it to the app)"""
 import glob, json, os, re, sys
 
 src, root, out = sys.argv[1:4]

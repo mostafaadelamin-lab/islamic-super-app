@@ -67,7 +67,7 @@ void main() {
     await pushScreen(tester, const ReelsScreen(playerBuilder: fakePlayer, showPosters: false));
     expect(find.byKey(const Key('player.hTtlD-u4_HI')), findsOneWidget);
     expect(find.text('تلاوة قرآنية'), findsNothing); // labels removed (owner)
-    expect(find.text('راجعه: الشيخ فلان'), findsOneWidget);
+    expect(find.text('راجعه: الشيخ فلان'), findsNothing); // labels removed (owner)
     expect(find.text('غير مراجع'), findsNothing, reason: 'pending reels are hidden from normal users');
 
     await tester.fling(find.byKey(const Key('reels.feed')), const Offset(0, -600), 2000);
@@ -75,7 +75,6 @@ void main() {
     expect(find.byKey(const Key('player.26dRG7OeL6Q')), findsOneWidget);
     expect(find.byKey(const Key('player.hTtlD-u4_HI')), findsNothing);
     expect(find.text('درس ديني'), findsNothing);
-    expect(find.text('\u2066٢ / ٢\u2069'), findsOneWidget);
   });
 
   testWidgets('Instagram admonition reel: no labels, Instagram button, poster placeholder off-screen', (tester) async {

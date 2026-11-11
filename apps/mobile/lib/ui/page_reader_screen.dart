@@ -164,6 +164,9 @@ class PageReaderScreenState extends State<PageReaderScreen> {
     final l = context.l10n;
     final s = context.services;
     final scheme = Theme.of(context).colorScheme;
+    // Short phones keep the whole Mushaf page on screen: zoom and surah info move into a menu.
+    final size = MediaQuery.sizeOf(context);
+    final compact = _tab == ReaderTab.mushaf && size.height < 700 && size.width < 420;
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -182,7 +185,32 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                       ),
                     ),
                   ),
-                  if (_tab == ReaderTab.mushaf)
+                  if (compact)
+                    PopupMenuButton<int>(
+                      key: const Key('readerMore'),
+                      tooltip: l.readerHelp,
+                      icon: RIcon(RIcons.help, color: scheme.primary),
+                      onSelected: (v) {
+                        final st = s.settings;
+                        switch (v) {
+                          case 0:
+                            unawaited(st.setMushafZoom(st.mushafZoom + 0.25));
+                          case 1:
+                            unawaited(st.setMushafZoom(st.mushafZoom - 0.25));
+                          case 2:
+                            showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah);
+                          default:
+                            showReaderHelp(context, pageCount: _count, onGo: _jump);
+                        }
+                      },
+                      itemBuilder: (_) => [
+                        PopupMenuItem(value: 0, child: Text('A+  ${l.readerFontBigger}')),
+                        PopupMenuItem(value: 1, child: Text('A−  ${l.readerFontSmaller}')),
+                        PopupMenuItem(value: 2, child: Text(l.surahInfoTitle)),
+                        PopupMenuItem(value: 3, child: Text(l.readerHelp)),
+                      ],
+                    )
+                  else if (_tab == ReaderTab.mushaf)
                     IconButton(
                       key: const Key('readerHelp'),
                       tooltip: l.readerHelp,
@@ -195,22 +223,28 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm),
-              child: Row(
-                children: [
-                  _ZoomButtons(mushaf: _tab == ReaderTab.mushaf),
-                  const Spacer(),
-                  TextButton.icon(
-                    key: const Key('readerSurahInfo'),
-                    icon: const RIcon(RIcons.info, size: 20),
-                    label: Text(l.surahInfoTitle),
-                    onPressed: () =>
-                        showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah),
-                  ),
-                ],
+            if (!compact)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm),
+                child: Row(
+                  children: [
+                    _ZoomButtons(mushaf: _tab == ReaderTab.mushaf),
+                    const SizedBox(width: DesignTokens.spaceSm),
+                    Expanded(
+                      child: Align(
+                        alignment: AlignmentDirectional.centerEnd,
+                        child: TextButton.icon(
+                          key: const Key('readerSurahInfo'),
+                          icon: const RIcon(RIcons.info, size: 20),
+                          label: Text(l.surahInfoTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
+                          onPressed: () =>
+                              showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
             Expanded(
               child: ListenableBuilder(
                 listenable: Listenable.merge([s.recitation, s.settings]),
@@ -447,12 +481,16 @@ class _ZoomButtons extends StatelessWidget {
           height: 48,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: enabled ? scheme.primary : scheme.primary.withValues(alpha: 0.35),
+            color: enabled ? scheme.primary : scheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
             label,
-            style: TextStyle(color: scheme.onPrimary, fontWeight: FontWeight.w700, fontSize: dir > 0 ? 18 : 14),
+            style: TextStyle(
+              color: enabled ? scheme.onPrimary : scheme.onSurfaceVariant,
+              fontWeight: FontWeight.w700,
+              fontSize: dir > 0 ? 18 : 14,
+            ),
           ),
         ),
       ),

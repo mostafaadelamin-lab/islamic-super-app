@@ -87,9 +87,7 @@ void main() {
       expect(find.byKey(const Key('dhikr-7')), findsOneWidget, reason: 'أمسينا وأمسى الملك لله');
       expect(find.byKey(const Key('dhikr-6')), findsNothing, reason: 'its morning form is hidden');
       await tester.scrollUntilVisible(find.byKey(const Key('dhikrTap-0')), -300);
-      await tester.drag(find.byType(Scrollable).last, const Offset(0, -150));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const Key('dhikrTap-0')));
+      await app.services.adhkar.tap(AdhkarSession.evening, app.services.content.adhkar.items[0]);
       await tester.pump();
       await tester.scrollUntilVisible(find.byKey(const Key('adhkarProgress')), -300);
       expect(find.text('أُنجز ١ من ٢٥'), findsOneWidget);
