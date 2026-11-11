@@ -650,5 +650,8 @@
   "reels.removeChannel": "Remove channel",
   "reels.myChannels": "Your channels",
   "reels.suggested": "Suggested Islamic channels",
-  "reels.suggestedHint": "The app adds from these automatically based on what you watch most."
+  "reels.suggestedHint": "The app adds from these automatically based on what you watch most.",
+  "stories.watchVideo": "Watch video",
+  "stories.videoBy": "Sheikh Nabil Al-Awadi",
+  "stories.howTo": "Each episode: tap to listen, the video icon to watch, or the download icon to listen offline."
 }

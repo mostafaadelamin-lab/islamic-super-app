@@ -3818,6 +3818,12 @@ abstract class AppLocalizations {
   /// **'Surah {surah}, ayahs {from}–{to}'**
   String storiesFrom(String surah, String from, String to);
 
+  /// shared key "stories.howTo"
+  ///
+  /// In en, this message translates to:
+  /// **'Each episode: tap to listen, the video icon to watch, or the download icon to listen offline.'**
+  String get storiesHowTo;
+
   /// shared key "stories.intro"
   ///
   /// In en, this message translates to:
@@ -3967,6 +3973,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The stories\' verses from the Mushaf'**
   String get storiesVersesTitle;
+
+  /// shared key "stories.videoBy"
+  ///
+  /// In en, this message translates to:
+  /// **'Sheikh Nabil Al-Awadi'**
+  String get storiesVideoBy;
+
+  /// shared key "stories.watchVideo"
+  ///
+  /// In en, this message translates to:
+  /// **'Watch video'**
+  String get storiesWatchVideo;
 
   /// shared key "surahInfo.about"
   ///

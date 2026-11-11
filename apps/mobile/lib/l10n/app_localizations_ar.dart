@@ -2117,6 +2117,10 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get storiesHowTo =>
+      'لكل حلقة: اضغط للاستماع، أو أيقونة الفيديو للمشاهدة، أو أيقونة التحميل للسماع بدون إنترنت.';
+
+  @override
   String get storiesIntro =>
       'استمع إلى قصص الأنبياء بصوت هادئ قبل النوم، أو اقرأ آيات كل قصة من المصحف مع التفسير الميسّر.';
 
@@ -2204,6 +2208,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get storiesVersesTitle => 'آيات القصص من المصحف';
+
+  @override
+  String get storiesVideoBy => 'الشيخ نبيل العوضي';
+
+  @override
+  String get storiesWatchVideo => 'مشاهدة فيديو';
 
   @override
   String get surahInfoAbout => 'نبذة عن السورة';

@@ -3136,6 +3136,10 @@
       }
     }
   },
+  "storiesHowTo": "Each episode: tap to listen, the video icon to watch, or the download icon to listen offline.",
+  "@storiesHowTo": {
+    "description": "shared key \"stories.howTo\""
+  },
   "storiesIntro": "Listen to the stories of the prophets in a calm voice before sleep, or read each story's verses from the Mushaf with Tafsir al-Muyassar.",
   "@storiesIntro": {
     "description": "shared key \"stories.intro\""
@@ -3271,6 +3275,14 @@
   "storiesVersesTitle": "The stories' verses from the Mushaf",
   "@storiesVersesTitle": {
     "description": "shared key \"stories.versesTitle\""
+  },
+  "storiesVideoBy": "Sheikh Nabil Al-Awadi",
+  "@storiesVideoBy": {
+    "description": "shared key \"stories.videoBy\""
+  },
+  "storiesWatchVideo": "Watch video",
+  "@storiesWatchVideo": {
+    "description": "shared key \"stories.watchVideo\""
   },
   "surahInfoAbout": "About the surah",
   "@surahInfoAbout": {

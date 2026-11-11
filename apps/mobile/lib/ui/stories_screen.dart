@@ -8,6 +8,7 @@ import 'audio_widgets.dart';
 import 'l10n_ext.dart';
 import 'library_screen.dart' show OfflineButton;
 import 'widgets.dart';
+import 'youtube_player.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
 
@@ -69,6 +70,7 @@ class SeriesCard extends StatelessWidget {
               )
             else ...[
               Text(l.storiesEpisodes(context.num(eps.length)), style: theme.textTheme.bodySmall),
+              Text(l.storiesHowTo, key: const Key('stories.howTo'), style: theme.textTheme.bodySmall),
               const SizedBox(height: DesignTokens.spaceSm),
               for (final e in eps) _EpisodeTile(seriesId: series.id, episode: e),
             ],
@@ -78,6 +80,30 @@ class SeriesCard extends StatelessWidget {
     );
   }
 }
+
+/// The same series on video (Sheikh Nabil Al-Awadi's lessons channel, playlist
+/// PLx0cDxpWtpY_65w9G0_SEA5TF3jhq_QaF; some videos cover two or more prophets).
+const storyVideos = <String, String>{
+  'adam': 'VQtyczrmgDU',
+  'idris-nuh': 'U1b6uIe9LmM',
+  'hud': 'ck6vaENGENg',
+  'salih': 'ck6vaENGENg',
+  'ibrahim': 'G5sO3nBi-gM',
+  'lut': 'xKc6_kZYq9I',
+  'shuayb': 'xKc6_kZYq9I',
+  'yusuf': 'eLC6K7YyIIU',
+  'ayyub': 'S-hwVKViokc',
+  'yunus': 'S-hwVKViokc',
+  'musa': 'wvtWBHguRh0',
+  'khidr': 'lqzbfy26gC4',
+  'yusha': '2lyl2XOMhqs',
+  'dawud': '2lyl2XOMhqs',
+  'sulayman-uzair': '2lyl2XOMhqs',
+  'zakariya-yahya': '2lyl2XOMhqs',
+  'maryam': '4cxCcYlJXbY',
+  'isa': '4cxCcYlJXbY',
+  'muhammad': 'd5vq2Ly9LBw',
+};
 
 class _EpisodeTile extends StatelessWidget {
   const _EpisodeTile({required this.seriesId, required this.episode});
@@ -103,7 +129,27 @@ class _EpisodeTile extends StatelessWidget {
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       ),
-      trailing: OfflineButton(series: seriesId, episode: episode),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (storyVideos[episode.id] != null)
+            IconButton(
+              key: Key('episodeVideo-${episode.id}'),
+              tooltip: l.storiesWatchVideo,
+              icon: RIcon(RIcons.reels, color: scheme.primary),
+              onPressed: () {
+                if (s.narration.isPlaying) s.narration.pause();
+                showYouTubeSheet(
+                  context,
+                  videoId: storyVideos[episode.id]!,
+                  title: episode.title(context.isArabic),
+                  subtitle: l.storiesVideoBy,
+                );
+              },
+            ),
+          OfflineButton(series: seriesId, episode: episode),
+        ],
+      ),
       onTap: () {
         if (playing) {
           s.narration.pause();

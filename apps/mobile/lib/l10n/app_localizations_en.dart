@@ -2124,6 +2124,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get storiesHowTo =>
+      'Each episode: tap to listen, the video icon to watch, or the download icon to listen offline.';
+
+  @override
   String get storiesIntro =>
       'Listen to the stories of the prophets in a calm voice before sleep, or read each story\'s verses from the Mushaf with Tafsir al-Muyassar.';
 
@@ -2212,6 +2216,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get storiesVersesTitle => 'The stories\' verses from the Mushaf';
+
+  @override
+  String get storiesVideoBy => 'Sheikh Nabil Al-Awadi';
+
+  @override
+  String get storiesWatchVideo => 'Watch video';
 
   @override
   String get surahInfoAbout => 'About the surah';
