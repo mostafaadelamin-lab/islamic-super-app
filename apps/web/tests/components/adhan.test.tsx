@@ -56,8 +56,8 @@ describe("adhan alert planning", () => {
       enabled: false,
       prayers: { fajr: false },
       sound: true,
-      voice: "haram",
-      fajrVoice: "haram_fajr",
+      voice: "mulla",
+      fajrVoice: "daghriri_fajr",
       preMinutes: 0,
       iqamaEnabled: false,
       iqama: { fajr: 20, dhuhr: 15, asr: 15, maghrib: 10, isha: 15 },
@@ -73,10 +73,10 @@ describe("adhan alert planning", () => {
     expect(x.friday).toBeNull();
     expect(x.sunrise).toBe(true);
     expect(sanitizeAdhan({ friday: "09:30" }).friday).toBe("09:30");
-    expect(sanitizeAdhan({ voice: "nobody" }).voice).toBe("haram");
+    expect(sanitizeAdhan({ voice: "nobody" }).voice).toBe("mulla");
     expect(sanitizeAdhan({ voice: "madinah", fajrVoice: "../x" })).toMatchObject({
       voice: "madinah",
-      fajrVoice: "haram_fajr",
+      fajrVoice: "daghriri_fajr",
     });
     const s = sanitizeAdhan({ preMinutes: 7, iqamaEnabled: true, iqama: { fajr: 500, dhuhr: "x", asr: 0 } });
     expect(s.preMinutes).toBe(0);

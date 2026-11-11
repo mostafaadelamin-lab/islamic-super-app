@@ -1,5 +1,5 @@
 /**
- * Muezzin recordings for the adhan, openly licensed (Wikimedia Commons) and served by the site itself. The Fajr adhan ("as-salatu khayrun min an-nawm") has its own recording, chosen
+ * Muezzin recordings for the adhan (the owner's picks plus openly licensed Wikimedia Commons ones), served by the site itself. The Fajr adhan ("as-salatu khayrun min an-nawm") has its own recording, chosen
  * separately. Sources: apps/mobile/assets/audio/ADHAN_AUDIO.md.
  * Same rules as apps/mobile/lib/domain/adhan_voices.dart.
  */
@@ -21,6 +21,71 @@ export interface AdhanVoice {
 }
 
 export const BUNDLED_ADHAN_VOICES: readonly AdhanVoice[] = [
+  // The owner's picks (2026-11-11); sources only in ADHAN_AUDIO.md, never shown on the site (no credit).
+  {
+    id: "mulla",
+    nameAr: "الشيخ علي بن أحمد ملا",
+    nameEn: "Sheikh Ali Ahmed Mulla",
+    place: "المسجد الحرام، مكة المكرمة",
+    fajr: false,
+    file: "/audio/adhan_mulla.mp3",
+  },
+  {
+    id: "makkah",
+    nameAr: "أذان مكة المكرمة",
+    nameEn: "Adhan of Makkah",
+    place: "مكة المكرمة",
+    fajr: false,
+    file: "/audio/adhan_makkah.mp3",
+  },
+  {
+    id: "bukhari",
+    nameAr: "الشيخ عصام بخاري",
+    nameEn: "Sheikh Essam Bukhari",
+    place: "المسجد النبوي، المدينة المنورة",
+    fajr: false,
+    file: "/audio/adhan_bukhari.mp3",
+  },
+  {
+    id: "mismail",
+    nameAr: "الشيخ مصطفى إسماعيل",
+    nameEn: "Sheikh Mustafa Ismail",
+    place: "مصر",
+    fajr: false,
+    file: "/audio/adhan_mismail.mp3",
+  },
+  {
+    id: "banna",
+    nameAr: "الشيخ محمود علي البنا",
+    nameEn: "Sheikh Mahmoud Ali Al-Banna",
+    place: "القاهرة",
+    fajr: false,
+    file: "/audio/adhan_banna.mp3",
+  },
+  {
+    id: "rifaat",
+    nameAr: "الشيخ محمد رفعت",
+    nameEn: "Sheikh Muhammad Rifaat",
+    place: "القاهرة",
+    fajr: false,
+    file: "/audio/adhan_rifaat.mp3",
+  },
+  {
+    id: "daghriri_fajr",
+    nameAr: "أذان الفجر: الشيخ حمد الدغريري",
+    nameEn: "Fajr adhan: Sheikh Hamad Al-Daghriri",
+    place: "المسجد الحرام، مكة المكرمة",
+    fajr: true,
+    file: "/audio/adhan_daghriri_fajr.mp3",
+  },
+  {
+    id: "afasy_fajr",
+    nameAr: "أذان الفجر: الشيخ مشاري راشد العفاسي",
+    nameEn: "Fajr adhan: Sheikh Mishary Alafasy",
+    place: "",
+    fajr: true,
+    file: "/audio/adhan_afasy_fajr.mp3",
+  },
   {
     id: "haram",
     nameAr: "أذان المسجد الحرام بمكة المكرمة",
@@ -73,12 +138,13 @@ export const BUNDLED_ADHAN_VOICES: readonly AdhanVoice[] = [
     place: "",
     fajr: true,
     file: "/audio/adhan_haram_fajr.mp3",
-    credit: '"Eid al-Fitr Fajr azan at Malmö Mosque - 19 August 2012", Islamic Center Malmö, Wikimedia Commons, CC BY 3.0',
+    credit:
+      '"Eid al-Fitr Fajr azan at Malmö Mosque - 19 August 2012", Islamic Center Malmö, Wikimedia Commons, CC BY 3.0',
   },
 ];
 
-export const DEFAULT_ADHAN_VOICE = "haram";
-export const DEFAULT_FAJR_VOICE = "haram_fajr";
+export const DEFAULT_ADHAN_VOICE = "mulla";
+export const DEFAULT_FAJR_VOICE = "daghriri_fajr";
 
 export function bundledAdhanVoice(id: unknown): AdhanVoice | undefined {
   return BUNDLED_ADHAN_VOICES.find((v) => v.id === id);
@@ -103,7 +169,7 @@ export function loadAdhanCatalog(): Promise<AdhanVoice[]> {
 
 const HARAKA_FIRST = 0x064b; // fathatan
 const HARAKA_LAST = 0x0652; // sukun
-const LETTER_FOLD: Readonly<Record<string, string>> = { "أ": "ا", "إ": "ا", "آ": "ا", "ة": "ه", "ى": "ي" };
+const LETTER_FOLD: Readonly<Record<string, string>> = { أ: "ا", إ: "ا", آ: "ا", ة: "ه", ى: "ي" };
 
 /** Folds Arabic letter variants and drops diacritics so a search finds a name however it is typed. */
 export function normalizeArabic(s: string): string {
