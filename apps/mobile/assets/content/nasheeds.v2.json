@@ -1,0 +1,3305 @@
+{
+"version": 2,
+"singers": [
+{
+"id": 2,
+"name": "مشاري العفاسي",
+"items": [
+{
+"id": 347,
+"title": "رحمن يا رحمن",
+"url": "https://archive.org/download/rihmen/111.mp3",
+"bytes": 4450667
+},
+{
+"id": 129,
+"title": "إلا صلاتي",
+"url": "https://archive.org/download/hnein/Hni4.mp3",
+"bytes": 2953508
+},
+{
+"id": 239,
+"title": "أنا العبد",
+"url": "https://archive.org/download/afassy_qalby_sghir/ana_l3abd.mp3",
+"bytes": 4750203
+},
+{
+"id": 498,
+"title": "ليس الغريب",
+"url": "https://archive.org/download/lais-alghrib/6.mp3",
+"bytes": 15222784
+},
+{
+"id": 359,
+"title": "عمر الفاروق",
+"url": "https://archive.org/download/rihmen/19.mp3",
+"bytes": 4111702
+},
+{
+"id": 37,
+"title": "أسماء الله الحسنى",
+"url": "https://archive.org/download/islamino.net__Machari_Thekryat/16_Thekryat.mp3",
+"bytes": 4669066
+},
+{
+"id": 689,
+"title": "غردي يا روح",
+"url": "https://archive.org/download/sepahi2001_yahoo_20190515_0311/%D8%BA%D8%B1%D8%AF%D9%8A%20%D9%8A%D8%A7%20%D8%B1%D9%88%D8%AD.mp3",
+"bytes": 4075126
+},
+{
+"id": 36,
+"title": "اضفيت",
+"url": "https://archive.org/download/islamino.net__Machari_Thekryat/14_Thekryat.mp3",
+"bytes": 4521109
+},
+{
+"id": 253,
+"title": "اغيب و ذو اللطائف لا يغيب",
+"url": "https://archive.org/download/3anaqeed_afassy_www.bir7.com/aghib_wado_lataef_la_yarib.mp3",
+"bytes": 5453790
+},
+{
+"id": 582,
+"title": "طلع البدر علينا",
+"url": "https://archive.org/download/alkayedalhareth_gmail_Badr_201505/badr.mp3",
+"bytes": 3383299
+},
+{
+"id": 534,
+"title": "أيا من يدعي الفهم",
+"url": "https://archive.org/download/OuyounAlAfaey_WWW.SURATMP3.COM/Aya%20men%20yaddaee%20Al-Fahm.mp3",
+"bytes": 3852557
+},
+{
+"id": 409,
+"title": "ياطيبة",
+"url": "https://archive.org/download/Anachid-Afasy-Up-By-mUSLEm/taiba.mp3",
+"bytes": 4117068
+},
+{
+"id": 38,
+"title": "لا إله إلا الله",
+"url": "https://archive.org/download/islamino.net__Machari_Thekryat/06_Thekryat.mp3",
+"bytes": 4570428
+},
+{
+"id": 346,
+"title": "أفواه القرآن",
+"url": "https://archive.org/download/rihmen/1.mp3",
+"bytes": 3916146
+},
+{
+"id": 130,
+"title": "دعوني أناجي",
+"url": "https://archive.org/download/hnein/Hni9.mp3",
+"bytes": 9278071
+},
+{
+"id": 608,
+"title": "اسم النبي ( بالمصري )",
+"url": "https://archive.org/download/bilmassry/tmp_14604-%d8%a7%d8%b3%d9%85%20%d8%a7%d9%84%d9%86%d8%a8%d9%8a%20%7c%20%d9%85%d8%b4%d8%a7%d8%b1%d9%89%20%d8%b1%d8%a7%d8%b4%d8%af%20%d8%a7%d9%84%d8%b9%d9%81%d8%a7%d8%b3%d9%89_soundcloudf929fe16-6857-4fcb-a288-2f7700a47230528124321.mp3",
+"bytes": 2063218
+},
+{
+"id": 563,
+"title": "يا روح هنا صليتِ (وطهر بيتي)",
+"url": "https://archive.org/download/Album-kamry-MishariAlafasy/01%20Track%2001.mp3",
+"bytes": 9504434
+},
+{
+"id": 133,
+"title": "بكت عيني",
+"url": "https://archive.org/download/afassy_qalby_sghir/bakat_3aini.mp3",
+"bytes": 3818045
+},
+{
+"id": 524,
+"title": "أبا الأنبياء",
+"url": "https://archive.org/download/anasheed-mshary-alafasy-89-nasheed/15-Abal.Anbiyaaee.mp3",
+"bytes": 3357974
+},
+{
+"id": 254,
+"title": "دوما لك الحمد",
+"url": "https://archive.org/download/3anaqeed_afassy_www.bir7.com/doman_laka_lhamd.mp3",
+"bytes": 4066787
+},
+{
+"id": 39,
+"title": "سيد الخلق",
+"url": "https://archive.org/download/islamino.net__Machari_Thekryat/09_Thekryat.mp3",
+"bytes": 4627688
+},
+{
+"id": 40,
+"title": "الضرير",
+"url": "https://archive.org/download/islamino.net__Machari_Thekryat/10_Thekryat.mp3",
+"bytes": 4594670
+},
+{
+"id": 391,
+"title": "قمري",
+"url": "https://archive.org/download/al_afassy_2014/9amary.mp3",
+"bytes": 4879872
+},
+{
+"id": 132,
+"title": "أرى الدنيا",
+"url": "https://archive.org/download/afassy_qalby_sghir/ara_donya.mp3",
+"bytes": 4681288
+},
+{
+"id": 435,
+"title": "اشتياقي",
+"url": "https://archive.org/download/qalby_mohamed/18 Ishtyaki اشتياقي.mp3",
+"bytes": 5333367
+},
+{
+"id": 238,
+"title": "اشكو الى الله",
+"url": "https://archive.org/download/afassy_qalby_sghir/achko_ila_llah.mp3",
+"bytes": 3239283
+},
+{
+"id": 246,
+"title": "اصلي عليك",
+"url": "https://archive.org/download/afassy_qalby_sghir/ossally_3lik.mp3",
+"bytes": 4768414
+},
+{
+"id": 348,
+"title": "غاليـة يايمن",
+"url": "https://archive.org/download/rihmen/13.mp3",
+"bytes": 3593479
+},
+{
+"id": 257,
+"title": "مع الحبيب",
+"url": "https://archive.org/download/3anaqeed_afassy_www.bir7.com/ma3a-al7abib-alafasy.mp3",
+"bytes": 3959886
+},
+{
+"id": 131,
+"title": "إلهي سيدي",
+"url": "https://archive.org/download/hnein/Hni5.mp3",
+"bytes": 7472483
+},
+{
+"id": 389,
+"title": "حب اليتامى",
+"url": "https://archive.org/download/al_afassy_2014/7ob_lyatama.mp3",
+"bytes": 4074894
+},
+{
+"id": 523,
+"title": "دع الصبا",
+"url": "https://archive.org/download/al_afassy_2014/da3i_seba.mp3",
+"bytes": 7598422
+},
+{
+"id": 451,
+"title": "محمد",
+"url": "https://archive.org/download/Album-Ya-Razzak-MishariAlafasy/muhammed.mp3",
+"bytes": 6036765
+},
+{
+"id": 586,
+"title": "توشك العين تغيض",
+"url": "https://archive.org/download/demmouche_20161128/%D8%AA%D9%88%D8%B4%D9%83%20%D8%A7%D9%84%D8%B9%D9%8A%D9%80%D9%86%20%D8%AA%D8%BA%D9%8A%D9%80%D8%B6.mp3",
+"bytes": 9967215
+},
+{
+"id": 240,
+"title": "انت رحماني (حبيبي)",
+"url": "https://archive.org/download/afassy_qalby_sghir/anat_ra7many.mp3",
+"bytes": 3643554
+},
+{
+"id": 411,
+"title": "فقدتك مع فضل شاكر",
+"url": "https://archive.org/download/anasheed_islamya/afassy_fadl-shaker__fagadtek.mp3",
+"bytes": 5330389
+},
+{
+"id": 327,
+"title": "يا ربنا لك الصلاة",
+"url": "https://archive.org/download/Afasy-Nasheed_up_by-ayoub-islam/29-Yaa.Rabbanaa.mp3",
+"bytes": 4427837
+},
+{
+"id": 247,
+"title": "قلبي الصغير",
+"url": "https://archive.org/download/afassy_qalby_sghir/qalby_sghir.mp3",
+"bytes": 4854365
+},
+{
+"id": 260,
+"title": "يا رب",
+"url": "https://archive.org/download/3anaqeed_afassy_www.bir7.com/yarab.mp3",
+"bytes": 2834644
+},
+{
+"id": 362,
+"title": "إنسان أنا و محسوب لا تقول عادي",
+"url": "https://archive.org/download/rihmen/15.mp3",
+"bytes": 7440512
+},
+{
+"id": 392,
+"title": "العارم",
+"url": "https://archive.org/download/al_afassy_2014/al-3arem.mp3",
+"bytes": 4145553
+},
+{
+"id": 243,
+"title": "كتاب الله",
+"url": "https://archive.org/download/afassy_qalby_sghir/kitab_allah.mp3",
+"bytes": 5071184
+},
+{
+"id": 3,
+"title": "يارب إن عظمت",
+"url": "https://archive.org/download/yarab_691/yarab_64kb.mp3",
+"bytes": 527173
+},
+{
+"id": 394,
+"title": "أيا سامع الدعاء",
+"url": "https://archive.org/download/al_afassy_2014/aya_same3a_do3a2.mp3",
+"bytes": 6344005
+},
+{
+"id": 526,
+"title": "لا عاد تصرخ تنادي",
+"url": "https://archive.org/download/soso_186_201403/%D9%84%D8%A7%20%D8%B9%D8%A7%D8%AF.mp3",
+"bytes": 4457664
+},
+{
+"id": 249,
+"title": "يا من يرى",
+"url": "https://archive.org/download/afassy_qalby_sghir/yaman_yara.mp3",
+"bytes": 5362420
+},
+{
+"id": 248,
+"title": "تفوح روائح - يد الابداع",
+"url": "https://archive.org/download/afassy_qalby_sghir/tafoo7_rawae7_ray7an.mp3",
+"bytes": 4839423
+},
+{
+"id": 244,
+"title": "ليلة القدر",
+"url": "https://archive.org/download/afassy_qalby_sghir/lilat_alqadr.mp3",
+"bytes": 3842735
+},
+{
+"id": 261,
+"title": "يا صاحبي",
+"url": "https://archive.org/download/3anaqeed_afassy_www.bir7.com/yasa7iby.mp3",
+"bytes": 2998902
+},
+{
+"id": 506,
+"title": "خل ادكار الأربعِ",
+"url": "https://archive.org/download/1437_Onchouda_uP_bY_mUSLEm/0563-.mp3",
+"bytes": 3588508
+},
+{
+"id": 454,
+"title": "طهور",
+"url": "https://archive.org/download/Album-Ya-Razzak-MishariAlafasy/tahoor.mp3",
+"bytes": 4693610
+},
+{
+"id": 418,
+"title": "قلبي محمد",
+"url": "https://archive.org/download/qalby_mohamed/01 Qalbi Mohammad قلبي محمد.mp3",
+"bytes": 5347159
+},
+{
+"id": 358,
+"title": "تراحمي يا قلوب",
+"url": "https://archive.org/download/rihmen/17.mp3",
+"bytes": 3475626
+},
+{
+"id": 134,
+"title": "أشد الجهاد جهاد الهوى",
+"url": "https://archive.org/download/afassy_qalby_sghir/achaddo_ljiha.mp3",
+"bytes": 4081318
+},
+{
+"id": 614,
+"title": "صل على النبي ( بالمصري )",
+"url": "https://archive.org/download/bilmassry/tmp_14604-%d8%b5%d9%84%d9%91%d9%90%20%d8%b9%20%d8%a7%d9%84%d9%86%d8%a8%d9%89%20%7c%20%d9%85%d8%b4%d8%a7%d8%b1%d9%89%20%d8%b1%d8%a7%d8%b4%d8%af%20%d8%a7%d9%84%d8%b9%d9%81%d8%a7%d8%b3%d9%89_soundcloud7809d853-cadf-42da-991c-2a55b995e4151357238533.mp3",
+"bytes": 3678630
+},
+{
+"id": 606,
+"title": "آخر كلام النبي ( بالمصري )",
+"url": "https://archive.org/download/bilmassry/tmp_14604-%d8%a2%d8%ae%d8%b1%20%d9%83%d9%84%d8%a7%d9%85%20%d8%a7%d9%84%d9%86%d8%a8%d9%8a%20%7c%20%d9%85%d8%b4%d8%a7%d8%b1%d9%89%20%d8%b1%d8%a7%d8%b4%d8%af%20%d8%a7%d9%84%d8%b9%d9%81%d8%a7%d8%b3%d9%89_soundcloud0087a947-0c7f-4f55-a4db-7c8089b90cb7529389159.mp3",
+"bytes": 4308077
+},
+{
+"id": 357,
+"title": "صحبتك سمعتك",
+"url": "https://archive.org/download/rihmen/110.mp3",
+"bytes": 3654455
+},
+{
+"id": 585,
+"title": "ضادية ابن زيدون",
+"url": "https://archive.org/download/boniya_islam_3la_5/dadiyat-ibn-zaidoun.mp3",
+"bytes": 6182912
+},
+{
+"id": 455,
+"title": "يا رزاق",
+"url": "https://archive.org/download/Album-Ya-Razzak-MishariAlafasy/ya-razzaq.mp3",
+"bytes": 3538943
+},
+{
+"id": 533,
+"title": "ياربي حقق توبتي",
+"url": "https://archive.org/download/al_afassy_2014/yarabbi_7a9e9_tawbaty.mp3",
+"bytes": 865416
+},
+{
+"id": 607,
+"title": "أول كلامي ( بالمصري )",
+"url": "https://archive.org/download/bilmassry/tmp_14604-%d8%a3%d9%88%d9%91%d9%90%d9%84%20%d9%83%d9%8e%d9%84%d8%a7%d9%85%d9%89%20%7c%20%d9%85%d8%b4%d8%a7%d8%b1%d9%89%20%d8%b1%d8%a7%d8%b4%d8%af%20%d8%a7%d9%84%d8%b9%d9%81%d8%a7%d8%b3%d9%89_soundcloud6f46e4ea-e18d-48a7-9fce-9ed308087543734773651.mp3",
+"bytes": 3757206
+},
+{
+"id": 525,
+"title": "الله على الظالم",
+"url": "https://archive.org/download/anasheed-mshary-alafasy-89-nasheed/03.Allah.3la.El.Zalem.mp3",
+"bytes": 4142386
+},
+{
+"id": 610,
+"title": "بنتي ( بالمصري )",
+"url": "https://archive.org/download/bilmassry/tmp_14604-%d8%a8%d9%86%d8%aa%d9%89%20%7c%20%d9%85%d8%b4%d8%a7%d8%b1%d9%89%20%d8%b1%d8%a7%d8%b4%d8%af%20%d8%a7%d9%84%d8%b9%d9%81%d8%a7%d8%b3%d9%89_soundcloud9b7bb130-a14d-4936-bb6c-4396a94ea4d81260317416.mp3",
+"bytes": 4100769
+},
+{
+"id": 393,
+"title": "الأرض لله",
+"url": "https://archive.org/download/al_afassy_2014/al-ard-lellah-new.mp3",
+"bytes": 6679030
+},
+{
+"id": 250,
+"title": "يا سروري",
+"url": "https://archive.org/download/afassy_qalby_sghir/yasorory.mp3",
+"bytes": 4866358
+},
+{
+"id": 360,
+"title": "بيني وبينكم",
+"url": "https://archive.org/download/rihmen/16.mp3",
+"bytes": 3645260
+},
+{
+"id": 430,
+"title": "ربي هو الله",
+"url": "https://archive.org/download/qalby_mohamed/13 Rabi Howa Allah ربي هو الله.mp3",
+"bytes": 6063124
+},
+{
+"id": 242,
+"title": "بيت الله",
+"url": "https://archive.org/download/afassy_qalby_sghir/bayt_allah.mp3",
+"bytes": 4407301
+},
+{
+"id": 390,
+"title": "قل الحماة",
+"url": "https://archive.org/download/al_afassy_2014/9alla_l7omato.mp3",
+"bytes": 1176345
+},
+{
+"id": 408,
+"title": "منهاج الهدى",
+"url": "https://archive.org/download/OuyounAlAfaey_WWW.SURATMP3.COM/Fa%20Audaha.mp3",
+"bytes": 3584618
+},
+{
+"id": 527,
+"title": "يا أرحم الرحماء",
+"url": "https://archive.org/download/al_afassy_2014/Ya_Arham_Ar-Ruhama.mp3",
+"bytes": 3003124
+},
+{
+"id": 617,
+"title": "يوم جمعة ( بالمصري )",
+"url": "https://archive.org/download/bilmassry/tmp_14604-%d9%8a%d9%88%d9%85%20%d8%ac%d9%85%d8%b9%d8%a9%20%7c%20%d9%85%d8%b4%d8%a7%d8%b1%d9%89%20%d8%b1%d8%a7%d8%b4%d8%af%20%d8%a7%d9%84%d8%b9%d9%81%d8%a7%d8%b3%d9%89_soundcloudc5b7dea1-ea1a-4860-9478-1777e5d11d541394051929.mp3",
+"bytes": 3780222
+},
+{
+"id": 241,
+"title": "انت المعين",
+"url": "https://archive.org/download/afassy_qalby_sghir/anata_lmo3in.mp3",
+"bytes": 4189281
+},
+{
+"id": 545,
+"title": "حصان رزان",
+"url": "https://archive.org/download/OuyounAlAfaey_WWW.SURATMP3.COM/hassan-razan.mp3",
+"bytes": 4678770
+},
+{
+"id": 423,
+"title": "أحببتك",
+"url": "https://archive.org/download/qalby_mohamed/06 Ahbabtak أحببتك.mp3",
+"bytes": 5229295
+},
+{
+"id": 452,
+"title": "رتل معي 2",
+"url": "https://archive.org/download/Album-Ya-Razzak-MishariAlafasy/rattel-2.mp3",
+"bytes": 3669885
+},
+{
+"id": 609,
+"title": "اوعديني ( بالمصري )",
+"url": "https://archive.org/download/bilmassry/tmp_14604-%d8%a7%d9%88%d8%b9%d8%af%d9%8a%d9%86%d9%89%20%7c%20%d9%85%d8%b4%d8%a7%d8%b1%d9%89%20%d8%b1%d8%a7%d8%b4%d8%af%20%d8%a7%d9%84%d8%b9%d9%81%d8%a7%d8%b3%d9%89_soundcloud773c46b2-e67a-48f6-851b-9b013ac3d464423207047.mp3",
+"bytes": 4488217
+},
+{
+"id": 258,
+"title": "مصر",
+"url": "https://archive.org/download/3anaqeed_afassy_www.bir7.com/msr.mp3",
+"bytes": 1932066
+},
+{
+"id": 427,
+"title": "رباه",
+"url": "https://archive.org/download/qalby_mohamed/10 Rabaah رباه.mp3",
+"bytes": 6272521
+},
+{
+"id": 259,
+"title": "تذكر انت",
+"url": "https://archive.org/download/3anaqeed_afassy_www.bir7.com/thakrt.mp3",
+"bytes": 3898766
+},
+{
+"id": 256,
+"title": "جربتها",
+"url": "https://archive.org/download/3anaqeed_afassy_www.bir7.com/jrbtoha.mp3",
+"bytes": 10867024
+},
+{
+"id": 434,
+"title": "يا رفيقي",
+"url": "https://archive.org/download/qalby_mohamed/17 Ya Rafeqe يا رفيقي.mp3",
+"bytes": 4954696
+},
+{
+"id": 361,
+"title": "أنا واحد - البحرين",
+"url": "https://archive.org/download/rihmen/14.mp3",
+"bytes": 3766596
+},
+{
+"id": 211,
+"title": "قل لي وين ذنبك ؟؟",
+"url": "https://archive.org/download/islamino.net__Machari_Thekryat/02_Thekryat.mp3",
+"bytes": 3054908
+},
+{
+"id": 251,
+"title": "مهما اتفقنا",
+"url": "https://archive.org/download/3anaqeed_afassy_www.bir7.com/Mahma_Etafkna.mp3",
+"bytes": 2717280
+},
+{
+"id": 419,
+"title": "أبو بكر",
+"url": "https://archive.org/download/qalby_mohamed/02 Abu Bakar ابو بكر.mp3",
+"bytes": 5989145
+},
+{
+"id": 448,
+"title": "يا مصر دعاء",
+"url": "https://archive.org/download/Album-Ya-Razzak-MishariAlafasy/duaa-misr.mp3",
+"bytes": 3599408
+},
+{
+"id": 615,
+"title": "غمض عينيك ( بالمصري )",
+"url": "https://archive.org/download/bilmassry/tmp_14604-%d8%ba%d9%85%d8%b6%20%d8%b9%d9%8a%d9%86%d9%8a%d9%83%20%7c%20%d9%85%d8%b4%d8%a7%d8%b1%d9%89%20%d8%b1%d8%a7%d8%b4%d8%af%20%d8%a7%d9%84%d8%b9%d9%81%d8%a7%d8%b3%d9%89_soundcloud71488331-d902-465a-b91e-4ce746e3036b2019324070.mp3",
+"bytes": 4740274
+},
+{
+"id": 428,
+"title": "اقبل ياشهر",
+"url": "https://archive.org/download/qalby_mohamed/11 Aqbel أقبل.mp3",
+"bytes": 5994160
+},
+{
+"id": 449,
+"title": "كلامك عنوانك",
+"url": "https://archive.org/download/Album-Ya-Razzak-MishariAlafasy/kalamak-onwank.mp3",
+"bytes": 2478925
+},
+{
+"id": 450,
+"title": "كن محسنا",
+"url": "https://archive.org/download/Album-Ya-Razzak-MishariAlafasy/kun-muhsenan.mp3",
+"bytes": 4185283
+},
+{
+"id": 210,
+"title": "انت مين ؟",
+"url": "https://archive.org/download/islamino.net__Machari_Thekryat/01_Thekryat.mp3",
+"bytes": 3104645
+},
+{
+"id": 245,
+"title": "النعمة زوالة",
+"url": "https://archive.org/download/afassy_qalby_sghir/na3ma-zawwala.mp3",
+"bytes": 4614705
+},
+{
+"id": 616,
+"title": "قابلني صدفة ( بالمصري )",
+"url": "https://archive.org/download/bilmassry/tmp_14604-%d9%82%d8%a7%d8%a8%d9%84%d9%86%d9%89%20%d8%b5%d8%af%d9%81%d9%87%20%7c%20%d9%85%d8%b4%d8%a7%d8%b1%d9%89%20%d8%b1%d8%a7%d8%b4%d8%af%20%d8%a7%d9%84%d8%b9%d9%81%d8%a7%d8%b3%d9%89_soundcloud8886faf4-9fd4-498b-992c-6243a8d98af8-1901375248.mp3",
+"bytes": 4037685
+},
+{
+"id": 429,
+"title": "راضية عني",
+"url": "https://archive.org/download/qalby_mohamed/12 Radia Ani راضية عني.mp3",
+"bytes": 4559097
+},
+{
+"id": 613,
+"title": "خير الصباح ( بالمصري )",
+"url": "https://archive.org/download/bilmassry/tmp_14604-%d8%ae%d9%8a%d8%b1%20%d8%a7%d9%84%d8%b5%d8%a8%d8%a7%d8%ad%20%7c%20%d9%85%d8%b4%d8%a7%d8%b1%d9%89%20%d8%b1%d8%a7%d8%b4%d8%af%20%d8%a7%d9%84%d8%b9%d9%81%d8%a7%d8%b3%d9%89_soundcloud86d4da99-7217-4cc1-9625-3700af4939fe1527821378.mp3",
+"bytes": 4740246
+},
+{
+"id": 529,
+"title": "خاطري يا رب",
+"url": "https://archive.org/download/al_afassy_2014/khatery.mp3",
+"bytes": 1015443
+},
+{
+"id": 422,
+"title": "ليلة بحر",
+"url": "https://archive.org/download/qalby_mohamed/05 Laylat Bahar ليلة بحر.mp3",
+"bytes": 6495084
+},
+{
+"id": 425,
+"title": "الحب",
+"url": "https://archive.org/download/qalby_mohamed/08 Alhob الحب.mp3",
+"bytes": 6979081
+},
+{
+"id": 536,
+"title": "فأشهد أن اللّه أرسل عبده",
+"url": "https://archive.org/download/OuyounAlAfaey_WWW.SURATMP3.COM/fashhad.mp3",
+"bytes": 2817875
+},
+{
+"id": 433,
+"title": "شغلتني الحياة",
+"url": "https://archive.org/download/qalby_mohamed/16 Shaghltni Elhayah شغلتني الحياة.mp3",
+"bytes": 5855607
+},
+{
+"id": 420,
+"title": "إلى طيبه",
+"url": "https://archive.org/download/qalby_mohamed/03%20Ela%20Tayba%20الى%20طيبه.mp3",
+"bytes": 7016697
+},
+{
+"id": 237,
+"title": "اشد الجهاد",
+"url": "https://archive.org/download/afassy_qalby_sghir/achaddo_ljiha.mp3",
+"bytes": 4081318
+},
+{
+"id": 432,
+"title": "متى نلتقي",
+"url": "https://archive.org/download/qalby_mohamed/15 Mata Naltake متى نلتقي.mp3",
+"bytes": 6530820
+},
+{
+"id": 453,
+"title": "سعودي",
+"url": "https://archive.org/download/Album-Ya-Razzak-MishariAlafasy/saudi.mp3",
+"bytes": 3707824
+},
+{
+"id": 535,
+"title": "براهين",
+"url": "https://archive.org/download/OuyounAlAfaey_WWW.SURATMP3.COM/brahen.mp3",
+"bytes": 4070493
+},
+{
+"id": 532,
+"title": "يا عين",
+"url": "https://archive.org/download/al_afassy_2014/ya_3ayn.mp3",
+"bytes": 993689
+},
+{
+"id": 612,
+"title": "حقيقة ( بالمصري )",
+"url": "https://archive.org/download/bilmassry/tmp_14604-%d8%ad%d9%82%d9%8a%d9%82%d8%a9%20%7c%20%d9%85%d8%b4%d8%a7%d8%b1%d9%89%20%d8%b1%d8%a7%d8%b4%d8%af%20%d8%a7%d9%84%d8%b9%d9%81%d8%a7%d8%b3%d9%89_soundcloud7e7e9e86-5cec-4515-957e-76d8614390ca-432126486.mp3",
+"bytes": 4433882
+},
+{
+"id": 255,
+"title": "هذي زكاتي",
+"url": "https://archive.org/download/3anaqeed_afassy_www.bir7.com/hadi_zakaty.mp3",
+"bytes": 3583626
+},
+{
+"id": 611,
+"title": "بيوت كتير ( بالمصري )",
+"url": "https://archive.org/download/bilmassry/tmp_14604-%d8%a8%d9%8a%d9%88%d8%aa%20%d9%83%d8%aa%d9%8a%d8%b1%20%7c%20%d9%85%d8%b4%d8%a7%d8%b1%d9%89%20%d8%b1%d8%a7%d8%b4%d8%af%20%d8%a7%d9%84%d8%b9%d9%81%d8%a7%d8%b3%d9%89_soundcloud91223e6d-93bf-49b4-a43d-c604ebf2c6e6-2099655052.mp3",
+"bytes": 3850411
+},
+{
+"id": 426,
+"title": "طول الأمل",
+"url": "https://archive.org/download/qalby_mohamed/09 Tool Elamal طول الأمل.mp3",
+"bytes": 6431764
+},
+{
+"id": 421,
+"title": "الأمر لله",
+"url": "https://archive.org/download/qalby_mohamed/04 Elamr Leallah العمر لله.mp3",
+"bytes": 6925164
+},
+{
+"id": 424,
+"title": "درب الكرم",
+"url": "https://archive.org/download/qalby_mohamed/07 Darb Elkaram درب الكرم.mp3",
+"bytes": 6233024
+},
+{
+"id": 447,
+"title": "آمين دعاء الكويت",
+"url": "https://archive.org/download/Album-Ya-Razzak-MishariAlafasy/duaa-kuwait.mp3",
+"bytes": 2657856
+},
+{
+"id": 493,
+"title": "قطر",
+"url": "https://archive.org/download/1437_Onchouda_uP_bY_mUSLEm/0254-.mp3",
+"bytes": 3123986
+},
+{
+"id": 531,
+"title": "وديعتك الكويت",
+"url": "https://archive.org/download/al_afassy_2014/wadi3atoka_lkwit.mp3",
+"bytes": 4085767
+},
+{
+"id": 530,
+"title": "تطيب",
+"url": "https://archive.org/download/al_afassy_2014/tatayeb.mp3",
+"bytes": 642183
+},
+{
+"id": 431,
+"title": "سكة تانية",
+"url": "https://archive.org/download/qalby_mohamed/14 Seka Tanya سكة تانية.mp3",
+"bytes": 6403551
+}
+]
+},
+{
+"id": 1,
+"name": "أبو عبد الملك",
+"items": [
+{
+"id": 318,
+"title": "كفى يانفس ماكان كفاك هوى وعصيان",
+"url": "https://archive.org/download/kafa_makan_74free.com/kafa_yanafsso_makan_01.mp3",
+"bytes": 1514832
+},
+{
+"id": 337,
+"title": "أخي في الله ما أقوى رباط الدين",
+"url": "https://archive.org/download/Abo-abdalmalek_up-by-ayoub-islam/013--.mp3",
+"bytes": 3647604
+},
+{
+"id": 29,
+"title": "ناشدتها يا غربتي",
+"url": "https://archive.org/download/assif_by_bir7_com/yaghorbaty.mp3",
+"bytes": 1772713
+},
+{
+"id": 71,
+"title": "متفائل و اليأس بالمرصاد",
+"url": "https://archive.org/download/bir7_anachid/05_Mshahd.mp3",
+"bytes": 1946062
+},
+{
+"id": 4,
+"title": "كفى يانفس ماكان",
+"url": "https://archive.org/download/bir7_anachid/01-kafa_ya_nafss.mp3",
+"bytes": 1514832
+},
+{
+"id": 507,
+"title": "هم وغم",
+"url": "https://archive.org/download/1437_Onchouda_uP_bY_mUSLEm/0007-.mp3",
+"bytes": 8362032
+},
+{
+"id": 324,
+"title": "يانفس مالَكِ تعشقين عنادِ",
+"url": "https://archive.org/download/kafa_makan_74free.com/yafasso_malk_08.mp3",
+"bytes": 967306
+},
+{
+"id": 5,
+"title": "فاز من قام الليالي",
+"url": "https://archive.org/download/bir7_anachid/02-Almodlegon.mp3",
+"bytes": 6184224
+},
+{
+"id": 301,
+"title": "العشرة المبشرون بالجنة",
+"url": "https://archive.org/download/141_way2allah/al3shra_almobshron.mp3",
+"bytes": 414272
+},
+{
+"id": 270,
+"title": "رتـل وزد مـن منهـل القـرآن",
+"url": "https://archive.org/download/sarkhat_roba_bir7_com/warattel_wazed.mp3",
+"bytes": 4860199
+},
+{
+"id": 317,
+"title": "باع الثمين بلا ثمن وغفى هناك بلا وطن",
+"url": "https://archive.org/download/assif_by_bir7_com/shar_mahana.mp3",
+"bytes": 1279939
+},
+{
+"id": 319,
+"title": "أبت نفسي تتوب فما احتيالي",
+"url": "https://archive.org/download/kafa_makan_74free.com/abat_nafssy_07.mp3",
+"bytes": 993219
+},
+{
+"id": 144,
+"title": "يا نفس لله توبي",
+"url": "https://archive.org/download/abo_abd_almalek/ya_nafso.mp3",
+"bytes": 2325609
+},
+{
+"id": 11,
+"title": "نبرات شعري",
+"url": "https://archive.org/download/bir7_anachid/03-Qada2waQader.mp3",
+"bytes": 1359976
+},
+{
+"id": 581,
+"title": "ثكلى",
+"url": "https://archive.org/download/anasheed_islamya/Thakla.mp3",
+"bytes": 6581540
+},
+{
+"id": 314,
+"title": "الله أعلى و أكبر",
+"url": "https://archive.org/download/assif_by_bir7_com/allaho_akbar.mp3",
+"bytes": 1442108
+},
+{
+"id": 22,
+"title": "ما اقرب الموت جداً",
+"url": "https://archive.org/download/bir7_anachid/maAqrabElmaot.mp3",
+"bytes": 4354048
+},
+{
+"id": 315,
+"title": "مغيب الشمس",
+"url": "https://archive.org/download/assif_by_bir7_com/maw3id_akbar.mp3",
+"bytes": 1527371
+},
+{
+"id": 205,
+"title": "لأمتنا تعازينا",
+"url": "https://archive.org/download/Islamic_Tape-126_uP_bY_mUSLEm/091_uP_bY_mUSLEm.Ettounssi.mp3",
+"bytes": 6181948
+},
+{
+"id": 70,
+"title": "ويسألني عن الأخبار",
+"url": "https://archive.org/download/bir7_anachid/04_Mshahd.mp3",
+"bytes": 2179075
+},
+{
+"id": 165,
+"title": "يا رفيق الصبا",
+"url": "https://archive.org/download/9oqoor_Al-3ezz/9oqoor_Al-3ezz_-_10_-_Ya_Rafeeq_Al-9ebaa.mp3",
+"bytes": 5216384
+},
+{
+"id": 235,
+"title": "بالأمس كان جليسنا واليوم لحدناه",
+"url": "https://archive.org/download/BekAstager_299/Track08.mp3",
+"bytes": 7087823
+},
+{
+"id": 325,
+"title": "ياصاحبي كفى عذبتني العذاب",
+"url": "https://archive.org/download/kafa_makan_74free.com/yasa7iby_kafa_.mp3",
+"bytes": 1331975
+},
+{
+"id": 233,
+"title": "لكأنى في القبر أراني",
+"url": "https://archive.org/download/BekAstager_299/Track06.mp3",
+"bytes": 5689282
+},
+{
+"id": 69,
+"title": "عفوا أخي - يا مسلما",
+"url": "https://archive.org/download/bir7_anachid/03_Mshahd.mp3",
+"bytes": 1918268
+},
+{
+"id": 173,
+"title": "يا نفسي كفي",
+"url": "https://archive.org/download/www.omety.com-L7NALHOB/L7NALHOB4.mp3",
+"bytes": 4633581
+},
+{
+"id": 143,
+"title": "ارى الاقوام",
+"url": "https://archive.org/download/abo_abd_almalek/ara-al-akwama.mp3",
+"bytes": 2957288
+},
+{
+"id": 142,
+"title": "سكر الشبابِ",
+"url": "https://archive.org/download/357-anasheed-by-abo-3abd-almalek-357--nasheed-anashid/161--.mp3",
+"bytes": 4702065
+},
+{
+"id": 180,
+"title": "فلسطين تناديكم",
+"url": "https://archive.org/download/bir7_anachid/02_felestine_tonadikom.mp3",
+"bytes": 1349844
+},
+{
+"id": 6,
+"title": "ما لي قومي كلما حطوا رحالا",
+"url": "https://archive.org/download/bir7_anachid/02-Qada2waQader.mp3",
+"bytes": 1301424
+},
+{
+"id": 7,
+"title": "ماذا دهاك",
+"url": "https://archive.org/download/bir7_anachid/02-mada_dahak.mp3",
+"bytes": 1450885
+},
+{
+"id": 583,
+"title": "شاب راسي",
+"url": "https://archive.org/download/bir7_anachid/06_lhdt.mp3",
+"bytes": 2647084
+},
+{
+"id": 326,
+"title": "ذكروا الأجيال أنا أمة",
+"url": "https://archive.org/download/bir7_anachid/Dhakero_ajial.mp3",
+"bytes": 5632000
+},
+{
+"id": 159,
+"title": "ضحكات الزمان",
+"url": "https://archive.org/download/9oqoor_Al-3ezz/9oqoor_Al-3ezz_-_04_-_9a7akaat_Al-Zamaan.mp3",
+"bytes": 5759104
+},
+{
+"id": 157,
+"title": "خلّي يدي",
+"url": "https://archive.org/download/a3dhab-anasheed/113.mp3",
+"bytes": 1620480
+},
+{
+"id": 273,
+"title": "النخلة ياحسنها",
+"url": "https://archive.org/download/nadra_bir7.com/al_nakhla_04.mp3",
+"bytes": 5506801
+},
+{
+"id": 8,
+"title": "أطرقت حتى ملني الإطراق",
+"url": "https://archive.org/download/bir7_anachid/02_Mshahd.mp3",
+"bytes": 2745618
+},
+{
+"id": 570,
+"title": "أحب اللي يحب الخير",
+"url": "https://archive.org/download/TFDAK_ayny1/NNW1-004.mp3",
+"bytes": 4089916
+},
+{
+"id": 204,
+"title": "يا نديمي",
+"url": "https://archive.org/download/Islamic_Tape-126_uP_bY_mUSLEm/131_uP_bY_mUSLEm.Ettounssi.mp3",
+"bytes": 3658293
+},
+{
+"id": 176,
+"title": "أنت ربي",
+"url": "https://archive.org/download/www.omety.com-L7NALHOB/L7NALHOB3.mp3",
+"bytes": 5309839
+},
+{
+"id": 320,
+"title": "بعثت رسالة في طيها نصحي لمن جسا",
+"url": "https://archive.org/download/kafa_makan_74free.com/ba3atto_ressala_05.mp3",
+"bytes": 493967
+},
+{
+"id": 207,
+"title": "واقف في حمى الحرم",
+"url": "https://archive.org/download/Islamic_Tape-126_uP_bY_mUSLEm/118_uP_bY_mUSLEm.Ettounssi.mp3",
+"bytes": 3874405
+},
+{
+"id": 168,
+"title": "لامني",
+"url": "https://archive.org/download/Islamic_Tape-686_uP_bY_mUSLEm/muslem.ettounsi-053.mp3",
+"bytes": 1247069
+},
+{
+"id": 231,
+"title": "وقفت",
+"url": "https://archive.org/download/BekAstager_299/Track03.mp3",
+"bytes": 6515666
+},
+{
+"id": 269,
+"title": "وعشنا سعادة",
+"url": "https://archive.org/download/sarkhat_roba_bir7_com/wa3echna_sa3ada.mp3",
+"bytes": 4169731
+},
+{
+"id": 323,
+"title": "يا نسل الهدى ماذا دهاك؟",
+"url": "https://archive.org/download/kafa_makan_74free.com/maza_dahak_02.mp3",
+"bytes": 1450885
+},
+{
+"id": 160,
+"title": "ما ضره",
+"url": "https://archive.org/download/1437_Onchouda_uP_bY_mUSLEm/0148-.mp3",
+"bytes": 5120723
+},
+{
+"id": 278,
+"title": "يا فؤادي",
+"url": "https://archive.org/download/nadra_bir7.com/ya_fo2ady_02.mp3",
+"bytes": 5978428
+},
+{
+"id": 17,
+"title": "لمن طلل",
+"url": "https://archive.org/download/357-anasheed-by-abo-3abd-almalek-357--nasheed-anashid/256--.mp3",
+"bytes": 5436832
+},
+{
+"id": 275,
+"title": "سماء الله",
+"url": "https://archive.org/download/nadra_bir7.com/sama2o_lahy_03.mp3",
+"bytes": 5515141
+},
+{
+"id": 202,
+"title": "أبشري بالخير يا أم المعاق",
+"url": "https://archive.org/download/Islamic_Tape-126_uP_bY_mUSLEm/021_uP_bY_mUSLEm.Ettounssi.mp3",
+"bytes": 4026729
+},
+{
+"id": 264,
+"title": "بشريات أزهرت",
+"url": "https://archive.org/download/sarkhat_roba_bir7_com/bouchrayat_azharat.mp3",
+"bytes": 5117244
+},
+{
+"id": 13,
+"title": "تأمل ترى الارض و الكائنات",
+"url": "https://archive.org/download/bir7_anachid/ta_ammal.mp3",
+"bytes": 4193845
+},
+{
+"id": 263,
+"title": "عبد دعاك بذلة",
+"url": "https://archive.org/download/sarkhat_roba_bir7_com/abd_da3ak_bezella.mp3",
+"bytes": 7325740
+},
+{
+"id": 170,
+"title": "لحن الحب",
+"url": "https://archive.org/download/www.omety.com-L7NALHOB/L7NALHOB6.mp3",
+"bytes": 5473261
+},
+{
+"id": 277,
+"title": "ياحادي العير",
+"url": "https://archive.org/download/nadra_bir7.com/ya7adya_l3ir_05.mp3",
+"bytes": 3274183
+},
+{
+"id": 271,
+"title": "اسال الهم احباري",
+"url": "https://archive.org/download/nadra_bir7.com/al_7ibr_06.mp3",
+"bytes": 3440149
+},
+{
+"id": 172,
+"title": "لك صمت",
+"url": "https://archive.org/download/www.omety.com-L7NALHOB/L7NALHOB5.mp3",
+"bytes": 3324951
+},
+{
+"id": 322,
+"title": "هز جنبي خاطر",
+"url": "https://archive.org/download/kafa_makan_74free.com/hazza_janmbi_06.mp3",
+"bytes": 1401148
+},
+{
+"id": 265,
+"title": "فجري الحب",
+"url": "https://archive.org/download/sarkhat_roba_bir7_com/fajery_al7ob.mp3",
+"bytes": 3739651
+},
+{
+"id": 267,
+"title": "اليك نجأر",
+"url": "https://archive.org/download/sarkhat_roba_bir7_com/ilayka_naj2ar.mp3",
+"bytes": 5064163
+},
+{
+"id": 166,
+"title": "يا قومنا",
+"url": "https://archive.org/download/357-anasheed-by-abo-3abd-almalek-357--nasheed-anashid/345--.mp3",
+"bytes": 894826
+},
+{
+"id": 321,
+"title": "ظلمات الجاهلية غسق",
+"url": "https://archive.org/download/kafa_makan_74free.com/dolomat_jahlya_03.mp3",
+"bytes": 1428733
+},
+{
+"id": 169,
+"title": "ورزقت حبك",
+"url": "https://archive.org/download/www.omety.com-L7NALHOB/L7NALHOB8.mp3",
+"bytes": 4133284
+},
+{
+"id": 10,
+"title": "ما قيمة الليل",
+"url": "https://archive.org/download/bir7_anachid/03-Almodlegon.mp3",
+"bytes": 1233720
+},
+{
+"id": 9,
+"title": "فلسطين تناديكم 2",
+"url": "https://archive.org/download/bir7_anachid/02_felestine_tonadikom.mp3",
+"bytes": 1349844
+},
+{
+"id": 12,
+"title": "ظلمات الجاهلية",
+"url": "https://archive.org/download/bir7_anachid/03-dolomat_jahilya.mp3",
+"bytes": 1428733
+},
+{
+"id": 174,
+"title": "الحياة",
+"url": "https://archive.org/download/www.omety.com-L7NALHOB/L7NALHOB9.mp3",
+"bytes": 3688993
+},
+{
+"id": 175,
+"title": "كنز الوجود",
+"url": "https://archive.org/download/www.omety.com-L7NALHOB/L7NALHOB7.mp3",
+"bytes": 5403880
+},
+{
+"id": 266,
+"title": "هيا إرفعي صرح الأمل",
+"url": "https://archive.org/download/sarkhat_roba_bir7_com/haya_irfa3y_sar7a_amal.mp3",
+"bytes": 5282756
+},
+{
+"id": 171,
+"title": "خاطرة",
+"url": "https://archive.org/download/www.omety.com-L7NALHOB/L7NALHOB2.mp3",
+"bytes": 2935831
+},
+{
+"id": 272,
+"title": "ليل الاسى",
+"url": "https://archive.org/download/nadra_bir7.com/al_layl_08.mp3",
+"bytes": 3426805
+},
+{
+"id": 167,
+"title": "محت بعدكم",
+"url": "https://archive.org/download/Islamic_Tape-686_uP_bY_mUSLEm/muslem.ettounsi-052.mp3",
+"bytes": 1201519
+},
+{
+"id": 201,
+"title": "عوانس تشتكي",
+"url": "https://archive.org/download/1437_Onchouda_uP_bY_mUSLEm/0322-.mp3",
+"bytes": 2701180
+},
+{
+"id": 191,
+"title": "شكوى",
+"url": "https://archive.org/download/Chakwa/09.mp3",
+"bytes": 6087745
+},
+{
+"id": 274,
+"title": "فكري تأمل",
+"url": "https://archive.org/download/nadra_bir7.com/fikry_07.mp3",
+"bytes": 4684894
+},
+{
+"id": 276,
+"title": "تأمل ترى",
+"url": "https://archive.org/download/nadra_bir7.com/ta2aml_09.mp3",
+"bytes": 4232449
+}
+]
+},
+{
+"id": 53,
+"name": "عبد الله المهداوي",
+"items": [
+{
+"id": 636,
+"title": "يا من عصيت الله",
+"url": "https://archive.org/download/mahdawi/ya_man_3asayta_allah.mp3",
+"bytes": 3072000
+},
+{
+"id": 675,
+"title": "زمن جميل كان فيه سمونا",
+"url": "https://archive.org/download/alkhattat001_gmail_201608/%D8%B2%D9%85%D9%86%20%D8%AC%D9%85%D9%8A%D9%84%20_%20%D8%B9%D8%A8%D8%AF%D8%A7%D9%84%D9%84%D9%87%20%D8%A7%D9%84%D9%85%D9%87%D8%AF%D8%A7%D9%88%D9%8A.mp3",
+"bytes": 7165578
+},
+{
+"id": 465,
+"title": "أرحنا بالصلاة يا بلال",
+"url": "https://archive.org/download/alkhattat001_gmail_201608/أرحنا%20بالصلاة%20_%20أداء%20-%20عبد%20الله%20المهداوي.mp3",
+"bytes": 8308362
+},
+{
+"id": 603,
+"title": "فخور بإسلامي",
+"url": "https://archive.org/download/mahdawi/fa5oor_bi_islamy.mp3",
+"bytes": 2826240
+},
+{
+"id": 690,
+"title": "محمد",
+"url": "https://archive.org/download/mahdawi/Mohammed.mp3",
+"bytes": 3287683
+},
+{
+"id": 468,
+"title": "انا مالي فيهاش",
+"url": "https://archive.org/download/alkhattat001_gmail_201608/انا مالي فيهاش ... أداء - عبدالله المهداوي.mp3 ",
+"bytes": 6151050
+},
+{
+"id": 467,
+"title": "الموت حق",
+"url": "https://archive.org/download/alkhattat001_gmail_201608/المَوتُ حَقٌّ _ أمل الشقير _ عبدالله المهداوي.mp3",
+"bytes": 11175306
+},
+{
+"id": 470,
+"title": "جهلت عيون الناس",
+"url": "https://archive.org/download/alkhattat001_gmail_201608/جهلت عيون الناس () _ بصوت المنشد ^ عبد الله المهداوي ..mp3",
+"bytes": 3688842
+},
+{
+"id": 650,
+"title": "رددي يا جبال رددي يا سهول",
+"url": "https://archive.org/download/AlMahdawi/23-%20AlMahdawi.mp3",
+"bytes": 1837460
+},
+{
+"id": 598,
+"title": "ربي لك الحمد",
+"url": "https://archive.org/download/mahdawi/Rabyy_laka_al7amdo.mp3",
+"bytes": 4077568
+},
+{
+"id": 560,
+"title": "حلم التخرج",
+"url": "https://archive.org/download/mahdawi/7olm_al_ta5arroj.mp3",
+"bytes": 4386816
+},
+{
+"id": 635,
+"title": "قالوا وقالوا",
+"url": "https://archive.org/download/QALOWAQALO/QALO_WA_QALO.mp3",
+"bytes": 3226667
+},
+{
+"id": 658,
+"title": "أقبلت يا رمضان",
+"url": "https://archive.org/download/mhamed_1478/1478.mp3",
+"bytes": 3817264
+},
+{
+"id": 518,
+"title": "فتن تموج حدث حذيفة",
+"url": "https://archive.org/download/mahdawi/fitan_tamoj.mp3",
+"bytes": 3334144
+},
+{
+"id": 469,
+"title": "ايا نفس حزما وعزما يصون",
+"url": "https://archive.org/download/alkhattat001_gmail_201608/ايا نفس حزما وعزما يصون - أداء _ عبدالله المهداوي.mp3 ",
+"bytes": 6458250
+},
+{
+"id": 651,
+"title": "يا راحلين إلى منى بقيادي",
+"url": "https://archive.org/download/mahdawi/ya_ra7eleen_ila_menan.mp3",
+"bytes": 991232
+},
+{
+"id": 639,
+"title": "لنا الله",
+"url": "https://archive.org/download/mahdawi/lana_allah.mp3",
+"bytes": 2539520
+},
+{
+"id": 634,
+"title": "تاج الكرامة",
+"url": "https://archive.org/download/Loriga27/loriga%20%286%29.mp3",
+"bytes": 4643983
+},
+{
+"id": 463,
+"title": "أيا مصر",
+"url": "https://archive.org/download/alhdo_y/alhdo_y.mp3",
+"bytes": 2413422
+},
+{
+"id": 466,
+"title": "البرد يقتلني",
+"url": "https://archive.org/download/alkhattat001_gmail_201608/البرد يقتلني - عبدالله المهداوي ومعاذ الفضلي ، كلمات _ أمل الشقير.mp3 ",
+"bytes": 11043978
+},
+{
+"id": 647,
+"title": "لما رحلت (أبكيك بالدمع)",
+"url": "https://archive.org/download/loriga-birjdid/%D9%84%D9%85%D8%A7%20%D8%B1%D8%AD%D9%84%D8%AA%20%D8%A3%D8%AF%D8%A7%D8%A1%20%D8%B9%D8%A8%D8%AF%D8%A7%D9%84%D9%84%D9%87%20%D8%A7%D9%84%D9%85%D9%87%D8%AF%D8%A7%D9%88%D9%8A.mp3",
+"bytes": 10319659
+},
+{
+"id": 637,
+"title": "احزم متاعك للسفر ( جبال أبها )",
+"url": "https://archive.org/download/mahdawi/i7zim_mata3k_li_assafar.mp3",
+"bytes": 1572864
+},
+{
+"id": 676,
+"title": "في ليلة قمراء",
+"url": "https://archive.org/download/mahdawi/fi_laylah_qamraa.mp3",
+"bytes": 721680
+},
+{
+"id": 649,
+"title": "طالت جراحك أمتي",
+"url": "https://archive.org/download/AlMahdawi/02-%20AlMahdawi.mp3",
+"bytes": 3315216
+},
+{
+"id": 641,
+"title": "مدارس تحفيظ القران",
+"url": "https://archive.org/download/mahdawi/madariss_ta7fid_al_quran.mp3",
+"bytes": 2635776
+},
+{
+"id": 599,
+"title": "الشعر يحكي فرحة الوجدان ( يا حافظ القرآن )",
+"url": "https://archive.org/download/mahdawi/alshi3r_ya7ki_far7at_alwijdan.mp3",
+"bytes": 1622016
+},
+{
+"id": 471,
+"title": "دمع الشوق",
+"url": "https://archive.org/download/alkhattat001_gmail_201608/دمع الشوق - عبدالله المهداوي _ HD.mp3",
+"bytes": 2850954
+},
+{
+"id": 640,
+"title": "ما حيلة المأسور ( الأقصى )",
+"url": "https://archive.org/download/mahdawi/ma_7ilat_al_ma2soor.mp3",
+"bytes": 3379200
+},
+{
+"id": 597,
+"title": "لاحت على تلك الربى أفياء",
+"url": "https://archive.org/download/mahdawi/Molta9a_bina2_alsayfi.mp3",
+"bytes": 1896448
+},
+{
+"id": 602,
+"title": "بشراكم اهل التقى والصلاح",
+"url": "https://archive.org/download/mahdawi/boshrakom__sana_alwadiyeen.mp3",
+"bytes": 3145728
+},
+{
+"id": 472,
+"title": "روح الحياة",
+"url": "https://archive.org/download/alkhattat001_gmail_201608/رَوحُ الحيَاة __ حنان العنزي - عبدالله المهداوي.mp3",
+"bytes": 7587978
+},
+{
+"id": 656,
+"title": "شهر السلام (رمضان)",
+"url": "https://archive.org/download/mahdawi/shahr_al_salam.mp3",
+"bytes": 2877440
+},
+{
+"id": 596,
+"title": "ذاك العظيم في علاه",
+"url": "https://archive.org/download/mahdawi/Masha2a_Allah.mp3",
+"bytes": 1140736
+},
+{
+"id": 600,
+"title": "أشرقت",
+"url": "https://archive.org/download/mahdawi/ashra9at.mp3",
+"bytes": 1355776
+},
+{
+"id": 562,
+"title": "دثروني",
+"url": "https://archive.org/download/mahdawi/Datheronyy.mp3",
+"bytes": 2467840
+},
+{
+"id": 679,
+"title": "صباح الحب",
+"url": "https://archive.org/download/mahdawi/sabah_alhob.mp3",
+"bytes": 1002336
+},
+{
+"id": 655,
+"title": "أمي",
+"url": "https://archive.org/download/mahdawi/ommy.mp3",
+"bytes": 9121792
+},
+{
+"id": 638,
+"title": "جامع الياقوت",
+"url": "https://archive.org/download/mahdawi/jame3_al_ya9oot.mp3",
+"bytes": 3366912
+},
+{
+"id": 559,
+"title": "عم الفرح",
+"url": "https://archive.org/download/mahdawi/3am_alfara7.mp3",
+"bytes": 2482176
+},
+{
+"id": 642,
+"title": "من بعد طول انتظاري ( سميه )",
+"url": "https://archive.org/download/mahdawi/mn_ba3d_tool_intedary.mp3",
+"bytes": 4206592
+},
+{
+"id": 643,
+"title": "نحث الخطى",
+"url": "https://archive.org/download/mahdawi/na7otto_al5ota.mp3",
+"bytes": 2613248
+},
+{
+"id": 601,
+"title": "بـشهر الخير ومقدمه رمضان",
+"url": "https://archive.org/download/mahdawi/bi_shahr_alkhayr.mp3",
+"bytes": 2496512
+},
+{
+"id": 678,
+"title": "لجودك",
+"url": "https://archive.org/download/mahdawi/lijoudk.mp3",
+"bytes": 1977972
+},
+{
+"id": 657,
+"title": "الدار دنيا فلا تطمع بزهرتها",
+"url": "https://archive.org/download/01po12/01po%20%282%29.mp3",
+"bytes": 5518636
+},
+{
+"id": 561,
+"title": "صحن الرز البرياني",
+"url": "https://archive.org/download/mahdawi/Alroz_al_Bryali.mp3",
+"bytes": 972800
+},
+{
+"id": 648,
+"title": "جئنا كمزن الغيث",
+"url": "https://archive.org/download/Sans8/Sans%20%2813%29.mp3",
+"bytes": 4347752
+},
+{
+"id": 654,
+"title": "نور تلألأ في متاهات الدروب",
+"url": "https://archive.org/download/mahdawi/nor_tala2la2a_fi_matahat_aldorob.mp3",
+"bytes": 626688
+},
+{
+"id": 652,
+"title": "الصيف أقبل",
+"url": "https://archive.org/download/mahdawi/nadi_shabab_altanmiya_alsayfi.mp3",
+"bytes": 2301952
+},
+{
+"id": 653,
+"title": "نزل الأسى",
+"url": "https://archive.org/download/mahdawi/nazala_al_asaa.mp3",
+"bytes": 4149248
+},
+{
+"id": 677,
+"title": "لا تندب الحظ",
+"url": "https://archive.org/download/mahdawi/la_tandab_elhaz.mp3",
+"bytes": 1730560
+}
+]
+},
+{
+"id": 4,
+"name": "أحمد أبو خاطر",
+"items": [
+{
+"id": 48,
+"title": "أمي",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/040-.mp3",
+"bytes": 9293401
+},
+{
+"id": 155,
+"title": "طويل الشوق",
+"url": "https://archive.org/download/bukhater_qods_bir7.com/Al-Shawqi.mp3",
+"bytes": 5920768
+},
+{
+"id": 405,
+"title": "زوجتي",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/009-.mp3",
+"bytes": 10235819
+},
+{
+"id": 208,
+"title": "يا من يرى",
+"url": "https://archive.org/download/1437_Onchouda_uP_bY_mUSLEm/1277-.mp3",
+"bytes": 4423844
+},
+{
+"id": 34,
+"title": "طالب العلم",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/012-.mp3",
+"bytes": 5980995
+},
+{
+"id": 32,
+"title": "فليقولو عن حجابي",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/034-.mp3",
+"bytes": 4988422
+},
+{
+"id": 15,
+"title": "هذا القرأن",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/016-.mp3",
+"bytes": 5761148
+},
+{
+"id": 288,
+"title": "لا إله إلا الله",
+"url": "https://archive.org/download/l7dat_m3_Allah/7.mp3",
+"bytes": 4305748
+},
+{
+"id": 46,
+"title": "مبحر في ذكرياتي",
+"url": "https://archive.org/download/Abokhater-1elHabib/MobhironeFidikra.mp3",
+"bytes": 12686213
+},
+{
+"id": 281,
+"title": "مذ عرفت الله ربي",
+"url": "https://archive.org/download/l7dat_m3_Allah/8.mp3",
+"bytes": 4281172
+},
+{
+"id": 177,
+"title": "ياعظيما",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/026-.mp3",
+"bytes": 7580106
+},
+{
+"id": 47,
+"title": "لننطلق",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/021-.mp3",
+"bytes": 7683760
+},
+{
+"id": 290,
+"title": "يا إلهي",
+"url": "https://archive.org/download/l7dat_m3_Allah/10.mp3",
+"bytes": 4817620
+},
+{
+"id": 149,
+"title": "القدس تنادينا",
+"url": "https://archive.org/download/bukhater_qods_bir7.com/qods.mp3",
+"bytes": 3481676
+},
+{
+"id": 35,
+"title": "دار الغرور",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/006-.mp3",
+"bytes": 7551685
+},
+{
+"id": 444,
+"title": "يا أخي",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/025-.mp3",
+"bytes": 11161181
+},
+{
+"id": 403,
+"title": "كم تشتكي",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/017-.mp3",
+"bytes": 9694980
+},
+{
+"id": 397,
+"title": "نسيم الشوق",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/023-.mp3",
+"bytes": 7820851
+},
+{
+"id": 150,
+"title": "رمضان قد أهل",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/008-.mp3",
+"bytes": 6013595
+},
+{
+"id": 178,
+"title": "ياعيد",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/027-.mp3",
+"bytes": 7427133
+},
+{
+"id": 153,
+"title": "إبتهال الفجر",
+"url": "https://archive.org/download/bukhater_qods_bir7.com/Al-Fajr.mp3",
+"bytes": 4491264
+},
+{
+"id": 402,
+"title": "اكثرو من عتابي",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/018-.mp3",
+"bytes": 9574608
+},
+{
+"id": 398,
+"title": "اقرأ",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/033-.mp3",
+"bytes": 9913155
+},
+{
+"id": 209,
+"title": "فارتق",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/015-.mp3",
+"bytes": 5970964
+},
+{
+"id": 33,
+"title": "صناع الحياة",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/011-.mp3",
+"bytes": 10130493
+},
+{
+"id": 407,
+"title": "دعني",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/007-.mp3",
+"bytes": 13560266
+},
+{
+"id": 404,
+"title": "صمتا",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/010-.mp3",
+"bytes": 11833259
+},
+{
+"id": 443,
+"title": "يا بني",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/029-.mp3",
+"bytes": 11556570
+},
+{
+"id": 151,
+"title": "وقف الطفل",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/024-.mp3",
+"bytes": 5186036
+},
+{
+"id": 154,
+"title": "أيها الحادي",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/002-.mp3",
+"bytes": 8838999
+},
+{
+"id": 401,
+"title": "لازلت أسأل I still ask",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/020-.mp3",
+"bytes": 11754683
+},
+{
+"id": 287,
+"title": "عودة الدرة",
+"url": "https://archive.org/download/l7dat_m3_Allah/6.mp3",
+"bytes": 5185492
+},
+{
+"id": 406,
+"title": "حسنات",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/004-.mp3",
+"bytes": 9975848
+},
+{
+"id": 445,
+"title": "خير الخلق",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/005-.mp3",
+"bytes": 13252648
+},
+{
+"id": 400,
+"title": "أمة الصحراء",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/039-.mp3",
+"bytes": 8175779
+},
+{
+"id": 286,
+"title": "دنيا البشر",
+"url": "https://archive.org/download/l7dat_m3_Allah/5.mp3",
+"bytes": 4569556
+},
+{
+"id": 289,
+"title": "نهاية غربة",
+"url": "https://archive.org/download/l7dat_m3_Allah/9.mp3",
+"bytes": 4825684
+},
+{
+"id": 399,
+"title": "الشارقة",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/035-.mp3",
+"bytes": 8676494
+},
+{
+"id": 284,
+"title": "hold these days",
+"url": "https://archive.org/download/l7dat_m3_Allah/1.mp3",
+"bytes": 4681300
+},
+{
+"id": 283,
+"title": "Yusuf يوسف",
+"url": "https://archive.org/download/l7dat_m3_Allah/4.mp3",
+"bytes": 3169876
+},
+{
+"id": 595,
+"title": "يتيم",
+"url": "https://archive.org/download/YateemAhmedBukhatir2017/Yateem%20-%20Ahmed%20Bukhatir%202017%20%D9%8A%D8%AA%D9%8A%D9%85%20-%20%D8%A3%D8%AD%D9%85%D8%AF%20%D8%A8%D9%88%D8%AE%D8%A7%D8%B7%D8%B1.mp3",
+"bytes": 8080751
+},
+{
+"id": 285,
+"title": "Pourquoi les Hommes Pleurent",
+"url": "https://archive.org/download/l7dat_m3_Allah/2.mp3",
+"bytes": 5217364
+},
+{
+"id": 446,
+"title": "عجبا",
+"url": "https://archive.org/download/Islamic_Tape-760_uP_bY_mUSLEm/014-.mp3",
+"bytes": 6043688
+},
+{
+"id": 282,
+"title": "Remember them",
+"url": "https://archive.org/download/l7dat_m3_Allah/3.mp3",
+"bytes": 4165588
+}
+]
+},
+{
+"id": 41,
+"name": "ماهر زين",
+"items": [
+{
+"id": 379,
+"title": "رقت عيناي شوقا",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Assalamu_Alaika_ar.mp3",
+"bytes": 2956138
+},
+{
+"id": 382,
+"title": "مولاي صل وسلم دائما أبدا",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Mawlay-ar.mp3",
+"bytes": 5803639
+},
+{
+"id": 377,
+"title": "واحشنا يارسول الله",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Waheshna_ya_rasoul_allah.mp3",
+"bytes": 4014309
+},
+{
+"id": 388,
+"title": "يانبي انت نور الله فجرا",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Yanabi_salam_alik.mp3",
+"bytes": 4359130
+},
+{
+"id": 384,
+"title": "رضيت بالله ربا",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/radito_billah_ar.mp3",
+"bytes": 3903928
+},
+{
+"id": 380,
+"title": "بارك الله لكما",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Baraka_Allahu_Lakuma.mp3",
+"bytes": 6308497
+},
+{
+"id": 386,
+"title": "سبحانك ربي سبحانك",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Subhana_Allah.mp3",
+"bytes": 5419388
+},
+{
+"id": 378,
+"title": "إن شاء الله",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/%20Insha_Allah.mp3",
+"bytes": 4910651
+},
+{
+"id": 381,
+"title": "ما شاء الله",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Masha_Allah.mp3",
+"bytes": 3388081
+},
+{
+"id": 396,
+"title": "أعمارنا أعمالنا",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/maher-zean_a3malona-a3marona.mp3",
+"bytes": 3590631
+},
+{
+"id": 660,
+"title": "السلام عليك يا رسول الله",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Assalamu_Alaika_ar.mp3",
+"bytes": 2956138
+},
+{
+"id": 385,
+"title": "سامح انت الرابح",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Sameh.mp3",
+"bytes": 9117939
+},
+{
+"id": 605,
+"title": "رمضان",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Ramadan.mp3",
+"bytes": 3917824
+},
+{
+"id": 387,
+"title": "الحمد لله Thank You Allah",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Thank_You_Allah.mp3",
+"bytes": 5180393
+},
+{
+"id": 659,
+"title": "يانبي سلام عليك",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Yanabi_salam_alik.mp3",
+"bytes": 4359130
+},
+{
+"id": 645,
+"title": "رقت عيناي شوقا (السلام عليك) بالانجليزي",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Assalamu_Alayka_en.mp3",
+"bytes": 2981125
+},
+{
+"id": 383,
+"title": "Palestine Will Be Free",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Palestine_Will_Be_Free.mp3",
+"bytes": 5270672
+},
+{
+"id": 620,
+"title": "بك ملهمي",
+"url": "https://archive.org/download/Zain2017/Bika-Moulhimi.mp3",
+"bytes": 4462278
+},
+{
+"id": 661,
+"title": "يانبي سلام عليك تركي",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Ya-naby-salam-alaika_tr.mp3",
+"bytes": 4133451
+},
+{
+"id": 395,
+"title": "استيقظ Awaken",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/MaherZain-Istay9ez-VocalsOnly.mp3",
+"bytes": 3755857
+},
+{
+"id": 619,
+"title": "الله يا مولانا",
+"url": "https://archive.org/download/Zain2017/Allah-Ya-Moulana.mp3",
+"bytes": 4407881
+},
+{
+"id": 633,
+"title": "رضيت بالله ربا بالانجليزي",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Radhitu_Billahi.mp3",
+"bytes": 4079806
+},
+{
+"id": 504,
+"title": "لبقية حياتي For The Rest Of My Life",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/For_The_Rest_Of_My_Life.mp3",
+"bytes": 2817024
+},
+{
+"id": 631,
+"title": "مولاي صل وسلم دائما أبدا بالانجليزي",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Mawlaya.mp3",
+"bytes": 4319702
+},
+{
+"id": 438,
+"title": "ابنتي الصغيرة My little girl",
+"url": "https://archive.org/download/maherzainforgiveme_201605/04 - My Little Girl (Vocals Only - No Music).mp3",
+"bytes": 3965370
+},
+{
+"id": 437,
+"title": "Number One For Me",
+"url": "https://archive.org/download/maherzainforgiveme_201605/02 - Number One For Me (Vocals Only - No Music).mp3",
+"bytes": 4135062
+},
+{
+"id": 627,
+"title": "مدينة Medina",
+"url": "https://archive.org/download/Zain2017/Medina.mp3",
+"bytes": 4176650
+},
+{
+"id": 436,
+"title": "أنا أحبك I Love You So",
+"url": "https://archive.org/download/maherzainforgiveme_201605/01 - I Love You So (Vocals Only - No Music).mp3",
+"bytes": 4303917
+},
+{
+"id": 439,
+"title": "اغفر لي Forgive Me",
+"url": "https://archive.org/download/maherzainforgiveme_201605/05 - Forgive Me (Vocals Only - No Music).mp3",
+"bytes": 3399036
+},
+{
+"id": 625,
+"title": "جنة Jannah",
+"url": "https://archive.org/download/Zain2017/Jannah-English.mp3",
+"bytes": 4542105
+},
+{
+"id": 440,
+"title": "أسرة واحدة كبيرة One Big Family",
+"url": "https://archive.org/download/maherzainforgiveme_201605/06 - One Big Family (Vocals Only - No Music).mp3",
+"bytes": 3959519
+},
+{
+"id": 505,
+"title": "سيكون هناك دائماً Always Be There",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Always_Be_There.mp3",
+"bytes": 3860845
+},
+{
+"id": 621,
+"title": "بالذكر",
+"url": "https://archive.org/download/Zain2017/Bil-thikr.mp3",
+"bytes": 4485125
+},
+{
+"id": 503,
+"title": "المختار The Chosen One",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/The_Chosen_One.mp3",
+"bytes": 3271983
+},
+{
+"id": 632,
+"title": "Paradise",
+"url": "https://archive.org/download/Maher_Zean_www.suratmp3.com/Paradise.mp3",
+"bytes": 3828887
+},
+{
+"id": 629,
+"title": "يوماً ما One Day",
+"url": "https://archive.org/download/Zain2017/One-Day.mp3",
+"bytes": 4225364
+},
+{
+"id": 624,
+"title": "Im alive أنا حي",
+"url": "https://archive.org/download/Zain2017/Im-Alive.mp3",
+"bytes": 4043958
+},
+{
+"id": 623,
+"title": "Good Day",
+"url": "https://archive.org/download/Zain2017/Good-Day.mp3",
+"bytes": 3761974
+},
+{
+"id": 622,
+"title": "Close to you",
+"url": "https://archive.org/download/Zain2017/Close-to-you.mp3",
+"bytes": 4040486
+},
+{
+"id": 626,
+"title": "انطلق Let it go",
+"url": "https://archive.org/download/Zain2017/Let-it-Go.mp3",
+"bytes": 3723314
+}
+]
+},
+{
+"id": 3,
+"name": "أسامة الصافي",
+"items": [
+{
+"id": 224,
+"title": "تبلغ بالقليل",
+"url": "https://archive.org/download/ossama-safi-01-www.bir7.com/02_Drb_taballagh.mp3",
+"bytes": 1016417
+},
+{
+"id": 24,
+"title": "غرد يا شبل الإيمان",
+"url": "https://archive.org/download/oussama_safy_birnet/gred_ya_shebl_alIman.mp3",
+"bytes": 5557826
+},
+{
+"id": 51,
+"title": "عزي إيماني لفظي قرآني",
+"url": "https://archive.org/download/oussama_safy_birnet/3ezzy_emany.mp3",
+"bytes": 3074583
+},
+{
+"id": 49,
+"title": "لاتقل فات الأوان",
+"url": "https://archive.org/download/oussama_safy_birnet/la_ta9ol_fat_lawan.mp3",
+"bytes": 776568
+},
+{
+"id": 334,
+"title": "ربي اني لك عدت",
+"url": "https://archive.org/download/oussama_safy_birnet/3-laka_3odt.mp3",
+"bytes": 4071303
+},
+{
+"id": 50,
+"title": "مازلت ابحث فى وجوه الناس ( الرجال )",
+"url": "https://archive.org/download/oussama_safy_birnet/rejal.mp3",
+"bytes": 3029079
+},
+{
+"id": 477,
+"title": "يارب يا عالم الحال",
+"url": "https://archive.org/download/oussama_safy_birnet/5-ya_3alm_el7al.mp3",
+"bytes": 4699863
+},
+{
+"id": 227,
+"title": "تبارك الله",
+"url": "https://archive.org/download/ossama-safi-01-www.bir7.com/06_Drb_tabark_allah.mp3",
+"bytes": 1468857
+},
+{
+"id": 329,
+"title": "يا عظيم المن يا رب السما",
+"url": "https://archive.org/download/oussama_safy_birnet/1-ya_3adim.mp3",
+"bytes": 4201479
+},
+{
+"id": 479,
+"title": "في عيوني في يميني",
+"url": "https://archive.org/download/oussama_safy_birnet/6-fi_3youny.mp3",
+"bytes": 8553744
+},
+{
+"id": 52,
+"title": "ياأخي المسلم",
+"url": "https://archive.org/download/oussama_safy_birnet/ya_a5y_lmoslem.mp3",
+"bytes": 1175973
+},
+{
+"id": 222,
+"title": "يا شاعر الأطفال",
+"url": "https://archive.org/download/ossama-safi-01-www.bir7.com/04_Drb_ya_sha3ir_al_atfal.mp3",
+"bytes": 1190601
+},
+{
+"id": 223,
+"title": "لماذا الحزن",
+"url": "https://archive.org/download/ossama-safi-01-www.bir7.com/01_Drb_limada.mp3",
+"bytes": 1936136
+},
+{
+"id": 330,
+"title": "حبي الله",
+"url": "https://archive.org/download/oussama_safy_birnet/2-7bya_lah.mp3",
+"bytes": 2591703
+},
+{
+"id": 54,
+"title": "وصيتي لك ياذى الفضل والأدب",
+"url": "https://archive.org/download/oussama_safy_birnet/wassyaty.mp3",
+"bytes": 2171133
+},
+{
+"id": 140,
+"title": "فلسطين",
+"url": "https://archive.org/download/oussama_safy_birnet/felstin_mata_yatik.mp3",
+"bytes": 4022272
+},
+{
+"id": 226,
+"title": "أيها السالك",
+"url": "https://archive.org/download/ossama-safi-01-www.bir7.com/05_Drb_ayoha_salek.mp3",
+"bytes": 1152776
+},
+{
+"id": 480,
+"title": "هذي الحياة",
+"url": "https://archive.org/download/oussama_safy_birnet/6-hadihi_el7ayat.mp3",
+"bytes": 4875407
+},
+{
+"id": 53,
+"title": "أيا رباه",
+"url": "https://archive.org/download/oussama_safy_birnet/aya_rabbaho.mp3",
+"bytes": 1536279
+},
+{
+"id": 476,
+"title": "امي ولا احد في العرب غير امي",
+"url": "https://archive.org/download/oussama_safy_birnet/5-ommy.mp3",
+"bytes": 950152
+},
+{
+"id": 107,
+"title": "رحلتي",
+"url": "https://archive.org/download/oussama_safy_birnet/1-re7laty.mp3",
+"bytes": 4794764
+},
+{
+"id": 473,
+"title": "تزين بالمروءة والسماح",
+"url": "https://archive.org/download/oussama_safy_birnet/7-tazayen_belmoro2a.mp3",
+"bytes": 4169219
+},
+{
+"id": 333,
+"title": "فجد يا صاح",
+"url": "https://archive.org/download/oussama_safy_birnet/3-elwassiya.mp3",
+"bytes": 5889558
+},
+{
+"id": 225,
+"title": "أقول للناس حسنا",
+"url": "https://archive.org/download/ossama-safi-01-www.bir7.com/03_Drb_aqolLinnas.mp3",
+"bytes": 1158836
+},
+{
+"id": 475,
+"title": "عندما كنت صغيرا",
+"url": "https://archive.org/download/oussama_safy_birnet/4-3endama_knt_saghirn.mp3",
+"bytes": 3327513
+},
+{
+"id": 331,
+"title": "الوجد المصفى",
+"url": "https://archive.org/download/oussama_safy_birnet/2-ra3i_l5ir.mp3",
+"bytes": 5318562
+},
+{
+"id": 474,
+"title": "ابسم",
+"url": "https://archive.org/download/oussama_safy_birnet/8-abbsam.mp3",
+"bytes": 1102890
+}
+]
+},
+{
+"id": 10,
+"name": "ياسر فاروق أبو عمار",
+"items": [
+{
+"id": 230,
+"title": "بك أستجير",
+"url": "https://archive.org/download/BekAstager_299/Track02.mp3",
+"bytes": 12839184
+},
+{
+"id": 221,
+"title": "انشودة رباه انى قد وهبت حياتى",
+"url": "https://archive.org/download/1002_rbah/rbah.mp3",
+"bytes": 471888
+},
+{
+"id": 229,
+"title": "تذكرت الوقوف أمام ربى",
+"url": "https://archive.org/download/BekAstager_299/Track04.mp3",
+"bytes": 6555833
+},
+{
+"id": 299,
+"title": "جدد حياة القلب بالقرآن",
+"url": "https://archive.org/download/210_way2allah/gdd_7yatk.mp3",
+"bytes": 2904735
+},
+{
+"id": 628,
+"title": "الروح تسري والملائك حولنا",
+"url": "https://archive.org/download/4-aleslame.blogspot.com_33/arroho-tasry.mp3",
+"bytes": 1547183
+},
+{
+"id": 292,
+"title": "يا من له تعنو الوجوه وتخشع",
+"url": "https://archive.org/download/Mushta99_Bir7.com/allaho_rabby.mp3",
+"bytes": 7340440
+},
+{
+"id": 234,
+"title": "ليس غير الله - الموت قادم",
+"url": "https://archive.org/download/BekAstager_299/Track07.mp3",
+"bytes": 6048867
+},
+{
+"id": 91,
+"title": "لك الحمد ياذا الجود",
+"url": "https://archive.org/download/Mushta99_Bir7.com/laka_l7amdo_yada_lmajdi_wa_l3ola.mp3",
+"bytes": 5497658
+},
+{
+"id": 296,
+"title": "لك الحمد يا ذا الجود والمجد والعلى",
+"url": "https://archive.org/download/Mushta99_Bir7.com/laka_l7amdo_yada_lmajdi_wa_l3ola.mp3",
+"bytes": 5497658
+},
+{
+"id": 89,
+"title": "فلا والله ماطابت حياة",
+"url": "https://archive.org/download/Mushta99_Bir7.com/fala_wallah_matabt_hayat_03.mp3",
+"bytes": 5230177
+},
+{
+"id": 232,
+"title": "الموت أبلغ واعظ",
+"url": "https://archive.org/download/BekAstager_299/Track05.mp3",
+"bytes": 7070134
+},
+{
+"id": 519,
+"title": "مفيش أغلى من ديني",
+"url": "https://archive.org/download/mostafahashm74_gmail/مفيش%20أغلى%20من%20ديني%20للمنشد%20ياسر%20فاروق%20أبو%20عمار.MP3",
+"bytes": 4519633
+},
+{
+"id": 298,
+"title": "سبحان رب العرش جل جلاله",
+"url": "https://archive.org/download/Mushta99_Bir7.com/sb7an_rab_al3arch.mp3",
+"bytes": 2852397
+},
+{
+"id": 236,
+"title": "قم يا ابن ادم",
+"url": "https://archive.org/download/BekAstager_299/Track09.mp3",
+"bytes": 7864995
+},
+{
+"id": 413,
+"title": "ياعيد يا أجمل أعيادي",
+"url": "https://archive.org/download/anasheed_islamya/ya3id_yasser_2.mp3",
+"bytes": 502195
+},
+{
+"id": 88,
+"title": "غريب على باب الرجاء",
+"url": "https://archive.org/download/Mushta99_Bir7.com/gharib_3ala_bab_rajae_02.mp3",
+"bytes": 3387378
+},
+{
+"id": 293,
+"title": "فلا والله ماطابت",
+"url": "https://archive.org/download/Mushta99_Bir7.com/fala_wallah_matabt_hayat_03.mp3",
+"bytes": 5230177
+},
+{
+"id": 294,
+"title": "غريب على باب الرجـــاء طريــح",
+"url": "https://archive.org/download/Mushta99_Bir7.com/gharib_3ala_bab_rajae_02.mp3",
+"bytes": 3387378
+},
+{
+"id": 295,
+"title": "هجرت الورى",
+"url": "https://archive.org/download/Mushta99_Bir7.com/hadjarto_lwara.mp3",
+"bytes": 3743904
+},
+{
+"id": 92,
+"title": "سبحان رب العرش",
+"url": "https://archive.org/download/Mushta99_Bir7.com/sb7an_rab_al3arch.mp3",
+"bytes": 2852397
+},
+{
+"id": 90,
+"title": "سبحات فكري في عُلاك ..",
+"url": "https://archive.org/download/Mushta99_Bir7.com/sb7at_fikry_fi_3olak_hayat_04.mp3",
+"bytes": 5883855
+},
+{
+"id": 297,
+"title": "لك محياي خالصا و مماتي",
+"url": "https://archive.org/download/Mushta99_Bir7.com/laka_ma7yaya_khalesan_wamamaty.mp3",
+"bytes": 6626984
+},
+{
+"id": 93,
+"title": "لك محياي خالصاً ومماتي",
+"url": "https://archive.org/download/Mushta99_Bir7.com/laka_ma7yaya_khalesan_wamamaty.mp3",
+"bytes": 6626984
+}
+]
+},
+{
+"id": 39,
+"name": "أبو علي",
+"items": [
+{
+"id": 410,
+"title": "ياهموم القلب ذوبي قد دنوت للمغيب",
+"url": "https://archive.org/download/anasheed_islamya/yahoma-l9albi-thobi.mp3",
+"bytes": 3368812
+},
+{
+"id": 374,
+"title": "يا أماه",
+"url": "https://archive.org/download/somo_al_7ayah/ya_ommah.mp3",
+"bytes": 5224576
+},
+{
+"id": 412,
+"title": "اعذروني فاض همي",
+"url": "https://archive.org/download/anasheed_islamya/Ederony-fad-hamy.mp3",
+"bytes": 5240686
+},
+{
+"id": 366,
+"title": "بكيت وكم يداوي البكاء",
+"url": "https://archive.org/download/somo_al_7ayah/bakito_wakam_yodawi_lboka2o.mp3",
+"bytes": 3180839
+},
+{
+"id": 364,
+"title": "الربيع الجو",
+"url": "https://archive.org/download/somo_al_7ayah/arrabi3_ljaw.mp3",
+"bytes": 5898368
+},
+{
+"id": 499,
+"title": "لم يا صاح",
+"url": "https://archive.org/download/somo_al_7ayah/lima_ya_sa7.mp3",
+"bytes": 3301407
+},
+{
+"id": 375,
+"title": "ياربي الواحد",
+"url": "https://archive.org/download/somo_al_7ayah/ya_rabi_lwa7ed.mp3",
+"bytes": 4966528
+},
+{
+"id": 363,
+"title": "حدثيني غزة",
+"url": "https://archive.org/download/somo_al_7ayah/7adithini_ghazza.mp3",
+"bytes": 4108416
+},
+{
+"id": 367,
+"title": "بيني وبينك وعد",
+"url": "https://archive.org/download/somo_al_7ayah/bini_wbinak_wa3d.mp3",
+"bytes": 5505152
+},
+{
+"id": 373,
+"title": "يقولون الحياة أحلى",
+"url": "https://archive.org/download/somo_al_7ayah/ya9olon_al7ayat_a7la.mp3",
+"bytes": 3663872
+},
+{
+"id": 365,
+"title": "بعد بعدي",
+"url": "https://archive.org/download/somo_al_7ayah/ba3da_bo3di.mp3",
+"bytes": 4513920
+},
+{
+"id": 522,
+"title": "امنت بالمسيح",
+"url": "https://archive.org/download/somo_al_7ayah/jesus.mp3",
+"bytes": 5795775
+},
+{
+"id": 370,
+"title": "تجهز وانطلق واثبت وجودك",
+"url": "https://archive.org/download/somo_al_7ayah/tajhz_wantl9_wathbet.mp3",
+"bytes": 5912704
+},
+{
+"id": 371,
+"title": "وطت رجلي على أرض الحرم",
+"url": "https://archive.org/download/somo_al_7ayah/watat_rejli.mp3",
+"bytes": 3758080
+},
+{
+"id": 368,
+"title": "صحيح اني صغير",
+"url": "https://archive.org/download/somo_al_7ayah/sa7i7_inni_sgheer.mp3",
+"bytes": 4038784
+},
+{
+"id": 372,
+"title": "وين اللي أول",
+"url": "https://archive.org/download/somo_al_7ayah/win_lli_awl.mp3",
+"bytes": 5453824
+}
+]
+},
+{
+"id": 17,
+"name": "منوعات",
+"items": [
+{
+"id": 604,
+"title": "إذا ما قال لي ربي أما استحييت تعصيني",
+"url": "https://archive.org/download/y.a.a.r.b/estahiit.mp3",
+"bytes": 2100579
+},
+{
+"id": 152,
+"title": "مولاي قد نامت عيون",
+"url": "https://archive.org/download/facebook..hzatni/ebid.mp3",
+"bytes": 1369475
+},
+{
+"id": 335,
+"title": "أخي لا تشكو المذلة باكيا",
+"url": "https://archive.org/download/alaqsa_20160528/%D8%A3%D8%A3%D9%8F%D8%AE%D9%8A%D9%8E%20%D9%84%D8%A7%20%D8%AA%D8%B4%D9%83%D9%88%20%D8%A7%D9%84%D9%85%D8%B0%D9%84%D8%A9%20%D8%A8%D8%A7%D9%83%D9%8A%D8%A7.mp3",
+"bytes": 4009760
+},
+{
+"id": 313,
+"title": "عرف الكون السلام ( رحمة للعالمين )",
+"url": "https://archive.org/download/islamTvRadio.Com_507/rahamtn-li3alamin.mp3",
+"bytes": 4293486
+},
+{
+"id": 511,
+"title": "هلي دموعي",
+"url": "https://archive.org/download/Al_KABBAH.CoM_M.E/013-.mp3",
+"bytes": 8157488
+},
+{
+"id": 584,
+"title": "ماذا نقول إذا إلتقينا بالرسول ( جراح أمة )",
+"url": "https://archive.org/download/bir7_anachid/Jerah_Ummah.mp3",
+"bytes": 6317631
+},
+{
+"id": 691,
+"title": "طال ليل الأنين - أيها المسلمون",
+"url": "https://archive.org/download/NADERA/%D8%A7%D9%8A%D9%87%D8%A7%20%D8%A7%D9%84%D9%85%D8%B3%D9%84%D9%85%D9%88%D9%86%20%D8%B7%D8%A7%D9%84%20%D9%84%D9%8A%D9%84%20%D8%A7%D9%84%D8%A7%D9%86%D9%8A%D9%86%201.mp3",
+"bytes": 3124540
+},
+{
+"id": 352,
+"title": "أتعبت عيني بالبكاء",
+"url": "https://archive.org/download/NADERA/%D8%A7%D8%AA%D8%B9%D8%A8%D8%AA%20%D8%B9%D9%8A%D9%86%D9%8A%20%D8%A8%D8%A7%D9%84%D8%A8%D9%83%D8%A7%D8%A1%20%D9%88%D8%A3%D9%85%D8%B1%D8%AA%20%D9%82%D9%84%D8%A8%D9%8A%20%D8%A8%D8%A7%D9%84%D9%81%D8%AF%D8%A7%D8%A1.mp3",
+"bytes": 8976311
+},
+{
+"id": 341,
+"title": "أواه آه أواه بتعليق الشيخ خالد الراشد",
+"url": "https://archive.org/download/musictest2_20191124/music_test2_%D8%A3%D8%BA%D8%A7%D9%86%D9%8A%20%D8%A5%D8%B3%D9%84%D8%A7%D9%85%D9%8A%D8%A9_%D8%A7%D9%86%D8%A7%D8%B4%D9%8A%D8%AF-%D9%85%D8%A4%D8%AB%D8%B1%D8%A9-%D9%88%D8%AD%D8%B2%D9%8A%D9%86%D8%A9_%D8%A7%D9%86%D8%B4%D9%88%D8%AF%D8%A9%20%D8%A3%D9%88%D9%91%D8%A7%D9%87%20%D8%A2%D9%87%20%D8%A3%D9%88%D9%91%D8%A7%D9%87.mp3",
+"bytes": 3224660
+},
+{
+"id": 31,
+"title": "ياخاطري كل ضيقة",
+"url": "https://archive.org/download/Anasheed_Jihadya_Ver_01/salmlee-3la-aboo-mos3ab.mp3",
+"bytes": 6360064
+},
+{
+"id": 303,
+"title": "سنن النبي محمد ( صلى الله عليه وسلم )",
+"url": "https://archive.org/download/141_way2allah/men_hady_alsona.mp3",
+"bytes": 356672
+},
+{
+"id": 512,
+"title": "الله أكبر تجلت",
+"url": "https://archive.org/download/anasheed_islamya/Allah_Akbar_Tajalat.mp3",
+"bytes": 2172912
+},
+{
+"id": 510,
+"title": "في حمى الحق",
+"url": "https://archive.org/download/a3dhab-anasheed/166.mp3",
+"bytes": 2216960
+},
+{
+"id": 302,
+"title": "الفقه الميسر",
+"url": "https://archive.org/download/141_way2allah/alfqh_almoyasr.mp3",
+"bytes": 445376
+}
+]
+},
+{
+"id": 58,
+"name": "حمود الخضر",
+"items": [
+{
+"id": 496,
+"title": "كن أنت",
+"url": "https://archive.org/download/hmd_kdr/Kon_Anta.mp3",
+"bytes": 5797888
+},
+{
+"id": 495,
+"title": "يا ليل يا بحر السكون",
+"url": "https://archive.org/download/YaLayl/ya-layeel.mp3",
+"bytes": 9226718
+},
+{
+"id": 588,
+"title": "كل لغات العالم ( أمي )",
+"url": "https://archive.org/download/Album-I-am-becoming-better-Hammoud-Al-khuther/03-Lugaat.Alalam(Acapella)(Samaa.Network).mp3",
+"bytes": 11251840
+},
+{
+"id": 497,
+"title": "اضحك",
+"url": "https://archive.org/download/hmd_kdr/Edhak.mp3",
+"bytes": 3055616
+},
+{
+"id": 587,
+"title": "أصير أحسن",
+"url": "https://archive.org/download/Album-I-am-becoming-better-Hammoud-Al-khuther/02-Aseer.Ahsan(Acapella)(Samaa.Network).mp3",
+"bytes": 10078336
+},
+{
+"id": 590,
+"title": "ها أنذا ( أنا لست ممن قال كان أبي )",
+"url": "https://archive.org/download/Album-I-am-becoming-better-Hammoud-Al-khuther/05-Ha.Anatha(Acapella)(Samaa.Network).mp3",
+"bytes": 9226368
+},
+{
+"id": 594,
+"title": "قصة العشاق",
+"url": "https://archive.org/download/Album-I-am-becoming-better-Hammoud-Al-khuther/10-Qissat.Al3oshaq(Acapella)(Samaa.Network).mp3",
+"bytes": 9199744
+},
+{
+"id": 592,
+"title": "لعله خير",
+"url": "https://archive.org/download/Album-I-am-becoming-better-Hammoud-Al-khuther/08-La3alah.Khair(Acapella)(Samaa.Network).mp3",
+"bytes": 10598528
+},
+{
+"id": 593,
+"title": "نفسها",
+"url": "https://archive.org/download/Album-I-am-becoming-better-Hammoud-Al-khuther/09-Nafsaha(Acapella)(Samaa.Network).mp3",
+"bytes": 9836672
+},
+{
+"id": 591,
+"title": "عين",
+"url": "https://archive.org/download/Album-I-am-becoming-better-Hammoud-Al-khuther/06-Ain(Acapella)(Samaa.Network).mp3",
+"bytes": 8913024
+},
+{
+"id": 589,
+"title": "خله",
+"url": "https://archive.org/download/Album-I-am-becoming-better-Hammoud-Al-khuther/04-Khallah(Acapella)(Samaa.Network).mp3",
+"bytes": 10332288
+}
+]
+},
+{
+"id": 73,
+"name": "مسعود كرتيس",
+"items": [
+{
+"id": 684,
+"title": "يا من بحالي دوما عليم",
+"url": "https://archive.org/download/Mesut_Kurtis_Album_Tabassam_Vocals_Only_Version/Yaman%20Bihaly%20Dawman%20%28Acapella%20Version%29%20-%20Mesut%20Kurtis.mp3",
+"bytes": 2764092
+},
+{
+"id": 668,
+"title": "صلى عليك الله يا عدناني",
+"url": "https://archive.org/download/Mesut_Kurtis_Album_Tabassam_Vocals_Only_Version/Adnani%20%28Acapella%20Version%29%20-%20Mesut%20Kurtis.mp3",
+"bytes": 3725393
+},
+{
+"id": 683,
+"title": "تبسم",
+"url": "https://archive.org/download/Mesut_Kurtis_Album_Tabassam_Vocals_Only_Version/Tabassam%20%28Acapella%20Version%29%20-%20Mesut%20Kurtis.mp3",
+"bytes": 3836988
+},
+{
+"id": 673,
+"title": "عيد سعيد",
+"url": "https://archive.org/download/Mesut_Kurtis_Album_Tabassam_Vocals_Only_Version/Eidun%20Saed%20%28Feat.%20Maher%20Zain%29%20%28Acapella%20Version%29%20-%20Mesut%20Kurtis.mp3",
+"bytes": 4016714
+},
+{
+"id": 669,
+"title": "الحمد لله",
+"url": "https://archive.org/download/Mesut_Kurtis_Album_Tabassam_Vocals_Only_Version/Al-Hamdu%20Lillah%20%28Acapella%20Version%29%20-%20Mesut%20Kurtis.mp3",
+"bytes": 3657272
+},
+{
+"id": 682,
+"title": "روحي فداك",
+"url": "https://archive.org/download/Mesut_Kurtis_Album_Tabassam_Vocals_Only_Version/Rouhi%20Fidak%20%28Acapella%20Version%29%20-%20Mesut%20Kurtis.mp3",
+"bytes": 3907263
+},
+{
+"id": 680,
+"title": "فرحة الدنيا بلقاء الأحباب تزيد",
+"url": "https://archive.org/download/Mesut_Kurtis_Album_Tabassam_Vocals_Only_Version/Farha%20%28Acapella%20Version%29%20-%20Mesut%20Kurtis.mp3",
+"bytes": 3982436
+},
+{
+"id": 671,
+"title": "أتيت بذنبي",
+"url": "https://archive.org/download/Mesut_Kurtis_Album_Tabassam_Vocals_Only_Version/Ataetu%20Bithamby%20%28Acapella%20Version%29%20-%20Mesut%20Kurtis.mp3",
+"bytes": 5126818
+},
+{
+"id": 672,
+"title": "دعاء",
+"url": "https://archive.org/download/Mesut_Kurtis_Album_Tabassam_Vocals_Only_Version/Dua%20%28Acapella%20Version%29%20-%20Mesut%20Kurtis.mp3",
+"bytes": 4535395
+},
+{
+"id": 670,
+"title": "الصلاة والسلام",
+"url": "https://archive.org/download/Mesut_Kurtis_Album_Tabassam_Vocals_Only_Version/Assalatu%20Wa%20Assalam%20%28Acapella%20Version%29%20-%20Mesut%20Kurtis.mp3",
+"bytes": 4175963
+},
+{
+"id": 681,
+"title": "في غار حراء كان حبيبي",
+"url": "https://archive.org/download/Mesut_Kurtis_Album_Tabassam_Vocals_Only_Version/Ghar%20Hira%20%28Acapella%20Version%29%20-%20Mesut%20Kurtis.mp3",
+"bytes": 4089437
+}
+]
+},
+{
+"id": 50,
+"name": "فهد مطر",
+"items": [
+{
+"id": 549,
+"title": "هل صليت اليوم عليه (هل حقا تشتاق إليه)",
+"url": "https://archive.org/download/fhd_mtr/hal_sallayt_alyom_3alayh.mp3",
+"bytes": 2379776
+},
+{
+"id": 343,
+"title": "أودعكم بدمعات العيون",
+"url": "https://archive.org/download/anasheed.2/wada3.mp3",
+"bytes": 8560907
+},
+{
+"id": 550,
+"title": "تدللي يا تاج راسي",
+"url": "https://archive.org/download/fhd_mtr/Tadallaly_ya_taj_rassi.mp3",
+"bytes": 4079616
+},
+{
+"id": 551,
+"title": "يا حمد قلبي على الزين شفقان",
+"url": "https://archive.org/download/fhd_mtr/Ya_7amed_9albi_3la_al_zin_chaf9an.mp3",
+"bytes": 3608576
+},
+{
+"id": 488,
+"title": "قولوا للغالي قولوله",
+"url": "https://archive.org/download/fhd_mtr/Golo_li_al_ghali.mp3",
+"bytes": 4093952
+},
+{
+"id": 486,
+"title": "حذراك خلان الرخا عدهم قوم",
+"url": "https://archive.org/download/fhd_mtr/7azrak_khallan_al_ra5a.mp3",
+"bytes": 5722112
+},
+{
+"id": 484,
+"title": "على خير أشوفك",
+"url": "https://archive.org/download/fhd_mtr/3ala_khir_achoofk.mp3",
+"bytes": 5826560
+},
+{
+"id": 552,
+"title": "يا سحايب",
+"url": "https://archive.org/download/fhd_mtr/Ya_Sa7ayeb.mp3",
+"bytes": 4706304
+},
+{
+"id": 553,
+"title": "العمر يفنى",
+"url": "https://archive.org/download/fhd_mtr/al3omr_yafna.mp3",
+"bytes": 4894720
+},
+{
+"id": 487,
+"title": "هذيل",
+"url": "https://archive.org/download/fhd_mtr/9abilat_hazil.mp3",
+"bytes": 6035456
+}
+]
+},
+{
+"id": 62,
+"name": "عمر الضحيان",
+"items": [
+{
+"id": 544,
+"title": "أحب الله والإسلام",
+"url": "https://archive.org/download/anasheed_islamya/ohibo_allah_wa_al_islam.mp3",
+"bytes": 1857252
+},
+{
+"id": 538,
+"title": "قلبي لرحمتك اللهم يرتقب (وجدان)",
+"url": "https://archive.org/download/Album_Wijdan_Omar_Dahyan_uP_bY_mUSLEm/001.mp3",
+"bytes": 5772912
+},
+{
+"id": 539,
+"title": "ما الحب",
+"url": "https://archive.org/download/Album_Wijdan_Omar_Dahyan_uP_bY_mUSLEm/002.mp3",
+"bytes": 5099166
+},
+{
+"id": 542,
+"title": "يا طائر الحب",
+"url": "https://archive.org/download/Album_Wijdan_Omar_Dahyan_uP_bY_mUSLEm/005.mp3",
+"bytes": 5164678
+},
+{
+"id": 541,
+"title": "ما الوجدان",
+"url": "https://archive.org/download/Album_Wijdan_Omar_Dahyan_uP_bY_mUSLEm/004.mp3",
+"bytes": 6228505
+},
+{
+"id": 543,
+"title": "ابتسامة",
+"url": "https://archive.org/download/Album_Wijdan_Omar_Dahyan_uP_bY_mUSLEm/006.mp3",
+"bytes": 2255794
+},
+{
+"id": 540,
+"title": "الحب الأكبر",
+"url": "https://archive.org/download/Album_Wijdan_Omar_Dahyan_uP_bY_mUSLEm/003.mp3",
+"bytes": 5872407
+}
+]
+},
+{
+"id": 72,
+"name": "أسامة السلمان",
+"items": [
+{
+"id": 686,
+"title": "صورني كي يصل ندائي",
+"url": "https://archive.org/download/loriga-birjdid/%D8%B5%D9%88%D8%B1%D9%86%D9%8A%20%D9%83%D9%8A%20%D9%8A%D8%B5%D9%84%20%D9%86%D8%AF%D8%A7%D8%A6%D9%8A%20%D8%A3%D8%AF%D8%A7%D8%A1%20%D8%A3%D8%B3%D8%A7%D9%85%D8%A9%20%D8%A7%D9%84%D8%B3%D9%84%D9%85%D8%A7%D9%86.mp3",
+"bytes": 7128537
+},
+{
+"id": 667,
+"title": "ياليالي الوصل عودي",
+"url": "https://archive.org/download/Album_Awal_Hob_Ossama_Salman/Layale_Alwsel.mp3",
+"bytes": 8746447
+},
+{
+"id": 662,
+"title": "عصافير الفجر",
+"url": "https://archive.org/download/Album_Awal_Hob_Ossama_Salman/3asafer_alfajer.mp3",
+"bytes": 5250722
+},
+{
+"id": 665,
+"title": "هلا بالنور",
+"url": "https://archive.org/download/Album_Awal_Hob_Ossama_Salman/Hala_bnoor.mp3",
+"bytes": 4622888
+},
+{
+"id": 666,
+"title": "لو سألني الصبح عنك",
+"url": "https://archive.org/download/Album_Awal_Hob_Ossama_Salman/Law_saalne.mp3",
+"bytes": 4318756
+},
+{
+"id": 664,
+"title": "هلا بك",
+"url": "https://archive.org/download/Album_Awal_Hob_Ossama_Salman/Hala_Bk.mp3",
+"bytes": 2998206
+},
+{
+"id": 663,
+"title": "أي دفئ",
+"url": "https://archive.org/download/Album_Awal_Hob_Ossama_Salman/Ayo_Defeen.mp3",
+"bytes": 5226955
+}
+]
+},
+{
+"id": 12,
+"name": "أناشيد رمضانية",
+"items": [
+{
+"id": 103,
+"title": "رمضان أتى للأطفال",
+"url": "https://archive.org/download/bir7_anachid/rmdan-ata.mp3",
+"bytes": 2831232
+},
+{
+"id": 101,
+"title": "رمضان أتى",
+"url": "https://archive.org/download/bir7_anachid/02_Quran.mp3",
+"bytes": 1877601
+},
+{
+"id": 102,
+"title": "شهر الخير",
+"url": "https://archive.org/download/bir7_anachid/chahr_el5ir_03.mp3",
+"bytes": 700200
+},
+{
+"id": 104,
+"title": "رمضان بالبشرى أتى",
+"url": "https://archive.org/download/bir7_anachid/ramadan_belbochra_30.mp3",
+"bytes": 834768
+},
+{
+"id": 106,
+"title": "رمضان قد لاحت طيوفك",
+"url": "https://archive.org/download/bir7_anachid/s3dtlhh.mp3",
+"bytes": 1452672
+},
+{
+"id": 105,
+"title": "نستقبل الصيام بالحب كل عام",
+"url": "https://archive.org/download/bir7_anachid/mar7aban_5ir_lahella_22.mp3",
+"bytes": 1258812
+}
+]
+},
+{
+"id": 60,
+"name": "محمد العمري",
+"items": [
+{
+"id": 580,
+"title": "كشوق الليالى لضوء القمر",
+"url": "https://archive.org/download/mhmd_amri/kashawqi_al_layali_ldaw2i_al_qamar.mp3",
+"bytes": 4419584
+},
+{
+"id": 547,
+"title": "ينادي فؤادي بليل السكون",
+"url": "https://archive.org/download/al3mai/Al3maira5.mp3",
+"bytes": 3781955
+},
+{
+"id": 521,
+"title": "شفاء لروحي",
+"url": "https://archive.org/download/al3mai/Al3maira4.mp3",
+"bytes": 3005152
+},
+{
+"id": 520,
+"title": "تؤمل أنك يوما تتوب",
+"url": "https://archive.org/download/al3mai/Al3maira2.mp3",
+"bytes": 6257100
+},
+{
+"id": 548,
+"title": "أبتاه فقدك موجع",
+"url": "https://archive.org/download/al3mai/al3maira.mp3",
+"bytes": 8388685
+},
+{
+"id": 546,
+"title": "دثريني وارحلي",
+"url": "https://archive.org/download/al3mai/Al3maira3.mp3",
+"bytes": 10412426
+}
+]
+},
+{
+"id": 51,
+"name": "محمد المساعد",
+"items": [
+{
+"id": 164,
+"title": "كشيخ حائر",
+"url": "https://archive.org/download/bir7_anachid/autres_10.mp3",
+"bytes": 6994920
+},
+{
+"id": 459,
+"title": "دامع الشجي",
+"url": "https://archive.org/download/muhammed_almusaaid_qa3qa3at/dami3_alchaji.mp3",
+"bytes": 4587194
+},
+{
+"id": 460,
+"title": "هل ترى المصباح",
+"url": "https://archive.org/download/muhammed_almusaaid_qa3qa3at/hal_tora_almisba7.mp3",
+"bytes": 3834875
+},
+{
+"id": 461,
+"title": "كلنا في الشرق",
+"url": "https://archive.org/download/muhammed_almusaaid_qa3qa3at/kolona_fi_alcharq.mp3",
+"bytes": 4467245
+},
+{
+"id": 462,
+"title": "رددوها",
+"url": "https://archive.org/download/muhammed_almusaaid_qa3qa3at/raddedoha.mp3",
+"bytes": 4455112
+}
+]
+},
+{
+"id": 56,
+"name": "مشاري العرادة",
+"items": [
+{
+"id": 491,
+"title": "إذا ما قال لي ربي",
+"url": "https://archive.org/download/lazharviet_hotmail_201404/إذا%20ما%20قال%20لي%20ربي%20--%20مشاري%20العرادة.mp3",
+"bytes": 1610434
+},
+{
+"id": 502,
+"title": "رباه ياملك العباد تولني",
+"url": "https://archive.org/download/Arrada/Rabbah.mp3",
+"bytes": 2367488
+},
+{
+"id": 492,
+"title": "إذا هجم الشقاء على الرقاد",
+"url": "https://archive.org/download/Arrada/Idha_Hajama_Al_Shakaa.mp3",
+"bytes": 4581376
+},
+{
+"id": 501,
+"title": "إني على المولى العظيم توكلي",
+"url": "https://archive.org/download/Arrada/Rab_al_anam.mp3",
+"bytes": 2367488
+},
+{
+"id": 490,
+"title": "أرأيت البعد مني",
+"url": "https://archive.org/download/lazharviet_hotmail_201404/آرأيت%20البعد%20مني%20--%20مشاري%20العرادة.mp3",
+"bytes": 1699877
+}
+]
+},
+{
+"id": 64,
+"name": "بلال الكبيسي",
+"items": [
+{
+"id": 558,
+"title": "الله أرسل للبرية أحمدا",
+"url": "https://archive.org/download/1437_Onchouda_uP_bY_mUSLEm/0980-.mp3",
+"bytes": 6917979
+},
+{
+"id": 554,
+"title": "بالحب جانا رمضان",
+"url": "https://archive.org/download/1437_Onchouda_uP_bY_mUSLEm/0481-.mp3",
+"bytes": 5198901
+},
+{
+"id": 555,
+"title": "خالص الشوق",
+"url": "https://archive.org/download/1437_Onchouda_uP_bY_mUSLEm/0569-.mp3",
+"bytes": 5314899
+},
+{
+"id": 557,
+"title": "يا رافعا",
+"url": "https://archive.org/download/1437_Onchouda_uP_bY_mUSLEm/1343-.mp3",
+"bytes": 8143641
+},
+{
+"id": 556,
+"title": "أطوي السنين",
+"url": "https://archive.org/download/1437_Onchouda_uP_bY_mUSLEm/1101-.mp3",
+"bytes": 8258380
+}
+]
+},
+{
+"id": 68,
+"name": "منصور السالمي",
+"items": [
+{
+"id": 688,
+"title": "كسب القلوب بحبه",
+"url": "https://archive.org/download/AtaynaLiDarAlNabi/_kasab_al9olob_bi7obih.mp3",
+"bytes": 622655
+},
+{
+"id": 578,
+"title": "إلهي وقفت دموعي تسيل",
+"url": "https://archive.org/download/AtaynaLiDarAlNabi/ilahi_wa9afto_domo3i_tasil.mp3",
+"bytes": 966137
+},
+{
+"id": 575,
+"title": "أتى رمضان",
+"url": "https://archive.org/download/AtaynaLiDarAlNabi/Ata_Ramadan_low.mp3",
+"bytes": 1026655
+},
+{
+"id": 577,
+"title": "يا نفس توبي",
+"url": "https://archive.org/download/AtaynaLiDarAlNabi/Ya_nafso_touby.mp3",
+"bytes": 785188
+},
+{
+"id": 576,
+"title": "أتينا لدار النبي",
+"url": "https://archive.org/download/AtaynaLiDarAlNabi/Atayna_li_dar_al_nabi.mp3",
+"bytes": 1270579
+}
+]
+},
+{
+"id": 5,
+"name": "أحمد العجمي",
+"items": [
+{
+"id": 41,
+"title": "انا سمعنا عن الحجاب",
+"url": "https://archive.org/download/7hllad/hijab.mp3",
+"bytes": 677088
+},
+{
+"id": 43,
+"title": "إنه الله القدير",
+"url": "https://archive.org/download/7hllad/qadeer.mp3",
+"bytes": 317088
+},
+{
+"id": 14,
+"title": "جاتني الأخبار",
+"url": "https://archive.org/download/bir7_anachid/Jaatni.mp3",
+"bytes": 5204096
+},
+{
+"id": 42,
+"title": "خلاد",
+"url": "https://archive.org/download/7hllad/ajmy.mp3",
+"bytes": 1380096
+}
+]
+},
+{
+"id": 55,
+"name": "محمد مطري",
+"items": [
+{
+"id": 481,
+"title": "هزتني نسمات الليالي",
+"url": "https://archive.org/download/Hazzatni-Nasheed_925/x202b--.mp3",
+"bytes": 4968448
+},
+{
+"id": 482,
+"title": "يا واعظ الناس",
+"url": "https://archive.org/download/m.matri/ia_waaz_alnas.mp3",
+"bytes": 5946961
+},
+{
+"id": 483,
+"title": "عين يالله",
+"url": "https://archive.org/download/m.matri/ain_iallh.mp3",
+"bytes": 4923370
+},
+{
+"id": 568,
+"title": "على من أشكي",
+"url": "https://archive.org/download/TFDAK_ayny1/NNW1-002.mp3",
+"bytes": 4237756
+}
+]
+},
+{
+"id": 65,
+"name": "جهاد اليافعي",
+"items": [
+{
+"id": 564,
+"title": "تفداك عيني",
+"url": "https://archive.org/download/TFDAK_ayny1/NNW1-005.mp3",
+"bytes": 3871804
+},
+{
+"id": 565,
+"title": "حبها في القلب ( أمي )",
+"url": "https://archive.org/download/TFDAK_ayny1/NNW1-006.mp3",
+"bytes": 4433212
+},
+{
+"id": 566,
+"title": "سالت دموعي",
+"url": "https://archive.org/download/TFDAK_ayny1/NNW1-007.mp3",
+"bytes": 2921788
+},
+{
+"id": 569,
+"title": "أبدع بذكرك إلهي",
+"url": "https://archive.org/download/TFDAK_ayny1/NNW1-003.mp3",
+"bytes": 3403708
+}
+]
+},
+{
+"id": 54,
+"name": "حسين الجسمي",
+"items": [
+{
+"id": 464,
+"title": "تأملت والدنيا",
+"url": "https://archive.org/download/anasheed_islamya/Jadid_Al_Doniya-full.mp3",
+"bytes": 1711228
+},
+{
+"id": 573,
+"title": "نداء منا إلينا يجوب خواطرنا",
+"url": "https://archive.org/download/anasheed_islamya/Al-sirat_Al-mostaqim.mp3",
+"bytes": 1292288
+},
+{
+"id": 579,
+"title": "عيد على خير ( لا تحزن )",
+"url": "https://archive.org/download/anasheed_islamya/lata7zan__3id.mp3",
+"bytes": 1710750
+}
+]
+},
+{
+"id": 48,
+"name": "محمد الحسيان",
+"items": [
+{
+"id": 442,
+"title": "يارفيق الدرب",
+"url": "https://archive.org/download/Rafiq/Rafiq.mp3",
+"bytes": 782464
+},
+{
+"id": 441,
+"title": "مولاي",
+"url": "https://archive.org/download/nasheed_mohammed_zakaria/مولاي صل وسلم - محمد الحسيان.mp3",
+"bytes": 4170395
+}
+]
+},
+{
+"id": 57,
+"name": "مبارك عبد الله",
+"items": [
+{
+"id": 494,
+"title": "موطني",
+"url": "https://archive.org/download/anasheed_islamya/Mawteny_nasheed.mp3",
+"bytes": 3389440
+},
+{
+"id": 646,
+"title": "غازلتها فتبسمت",
+"url": "https://archive.org/download/Ghazltouha/Ghazltouha.mp3",
+"bytes": 2441438
+}
+]
+},
+{
+"id": 61,
+"name": "نواف القريني",
+"items": [
+{
+"id": 574,
+"title": "صلى عليك الله ياخير الورى",
+"url": "https://archive.org/download/nawaf_alqrini/sala_3layka_allah_ya_khayra_al_wara.mp3",
+"bytes": 3319751
+},
+{
+"id": 537,
+"title": "يرتاح قلبي",
+"url": "https://archive.org/download/nawaf_alqrini/Yarta7o_9albi.mp3",
+"bytes": 2626351
+}
+]
+},
+{
+"id": 66,
+"name": "خالد التميمي",
+"items": [
+{
+"id": 571,
+"title": "يارسول الله",
+"url": "https://archive.org/download/ibndalil_gmail_2015_20151022/%D8%AE%D8%A7%D9%84%D8%AF%20%D8%A7%D9%84%D8%AA%D9%85%D9%8A%D9%85%D9%8A%20-%20%D9%8A%D8%A7%D8%B1%D8%B3%D9%88%D9%84%20%D8%A7%D9%84%D9%84%D9%87%20(%D8%A7%D9%84%D9%86%D8%B3%D8%AE%D8%A9%20%D8%A7%D9%84%D8%A3%D8%B5%D9%84%D9%8A%D8%A9)%20-%202015.mp3",
+"bytes": 4200514
+},
+{
+"id": 567,
+"title": "يا دمعة",
+"url": "https://archive.org/download/TFDAK_ayny1/NNW1-001.mp3",
+"bytes": 4161340
+}
+]
+},
+{
+"id": 49,
+"name": "أبو الغريب",
+"items": [
+{
+"id": 342,
+"title": "أيها المسلمون",
+"url": "https://archive.org/download/Anasheed_AbuElGhrieb/Aioha_El_Moslmoun.mp3",
+"bytes": 2815937
+}
+]
+},
+{
+"id": 67,
+"name": "نزار القرماني",
+"items": [
+{
+"id": 572,
+"title": "قمر سيدنا النبي",
+"url": "https://archive.org/download/nezar_al_qarmani/qamar_sayedna_nabi.mp3",
+"bytes": 4472832
+}
+]
+},
+{
+"id": 69,
+"name": "عبد الواحد المغربي",
+"items": [
+{
+"id": 618,
+"title": "بك أستجير",
+"url": "https://archive.org/download/madinaswave_gmail_201309/%D8%B9%D8%A8%D8%AF%D8%A7%D9%84%D9%88%D8%A7%D8%AD%D8%AF%20%D8%A8%D9%83%20%D8%A3%D8%B3%D8%AA%D8%AC%D9%8A%D8%B1.mp3",
+"bytes": 10942735
+}
+]
+},
+{
+"id": 71,
+"name": "ناصر السعيد",
+"items": [
+{
+"id": 644,
+"title": "الفكر يا انسان لو أطلقته",
+"url": "https://archive.org/download/solimanof_gmail_20170124_1941/%D8%A2%D9%8A%D8%A7%D8%AA%28%D8%A7%D9%84%D9%81%D9%83%D8%B1%20%D9%8A%D8%A7%20%D8%A7%D9%86%D8%B3%D8%A7%D9%86%20%D9%84%D9%88%20%D8%A3%D8%B7%D9%84%D9%82%D8%AA%D9%87%29.mp3",
+"bytes": 5320192
+}
+]
+},
+{
+"id": 74,
+"name": "سلوم السلوم",
+"items": [
+{
+"id": 674,
+"title": "كان عندك هم",
+"url": "https://archive.org/download/Spec7/spec%20%288%29.mp3",
+"bytes": 7272816
+}
+]
+},
+{
+"id": 75,
+"name": "محمد طارق",
+"items": [
+{
+"id": 687,
+"title": "توكلت في رزقي على الله خالقي - اذا المرء لا يرعاك الا تكلف",
+"url": "https://archive.org/download/twakalto/ida-lmar2o.mp3",
+"bytes": 2493142
+}
+]
+}
+]
+}

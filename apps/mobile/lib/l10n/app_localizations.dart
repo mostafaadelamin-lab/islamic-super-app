@@ -2294,11 +2294,23 @@ abstract class AppLocalizations {
   /// **'From Egypt'**
   String get nasheedsEgypt;
 
+  /// shared key "nasheeds.loadError"
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the nasheeds list.'**
+  String get nasheedsLoadError;
+
   /// shared key "nasheeds.note"
   ///
   /// In en, this message translates to:
-  /// **'Nasheeds without music, played from the munshidin\'s official YouTube channels.'**
+  /// **'Listen to any nasheed online, or tap the download icon to keep it for offline listening.'**
   String get nasheedsNote;
+
+  /// shared key "nasheeds.search"
+  ///
+  /// In en, this message translates to:
+  /// **'Find a nasheed or munshid'**
+  String get nasheedsSearch;
 
   /// shared key "nasheeds.title"
   ///

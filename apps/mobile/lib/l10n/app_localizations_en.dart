@@ -1271,7 +1271,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nasheedsEgypt => 'From Egypt';
 
   @override
-  String get nasheedsNote => 'Nasheeds without music, played from the munshidin\'s official YouTube channels.';
+  String get nasheedsLoadError => 'Couldn\'t load the nasheeds list.';
+
+  @override
+  String get nasheedsNote => 'Listen to any nasheed online, or tap the download icon to keep it for offline listening.';
+
+  @override
+  String get nasheedsSearch => 'Find a nasheed or munshid';
 
   @override
   String get nasheedsTitle => 'Nasheeds';

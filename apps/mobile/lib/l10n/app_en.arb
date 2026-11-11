@@ -1880,9 +1880,17 @@
   "@nasheedsEgypt": {
     "description": "shared key \"nasheeds.egypt\""
   },
-  "nasheedsNote": "Nasheeds without music, played from the munshidin's official YouTube channels.",
+  "nasheedsLoadError": "Couldn't load the nasheeds list.",
+  "@nasheedsLoadError": {
+    "description": "shared key \"nasheeds.loadError\""
+  },
+  "nasheedsNote": "Listen to any nasheed online, or tap the download icon to keep it for offline listening.",
   "@nasheedsNote": {
     "description": "shared key \"nasheeds.note\""
+  },
+  "nasheedsSearch": "Find a nasheed or munshid",
+  "@nasheedsSearch": {
+    "description": "shared key \"nasheeds.search\""
   },
   "nasheedsTitle": "Nasheeds",
   "@nasheedsTitle": {

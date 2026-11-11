@@ -541,7 +541,7 @@
   "zakat.groupGold": "Gold (grams)",
   "zakat.groupDebts": "Debts you owe",
   "nasheeds.title": "Nasheeds",
-  "nasheeds.note": "Nasheeds without music, played from the munshidin's official YouTube channels.",
+  "nasheeds.note": "Listen to any nasheed online, or tap the download icon to keep it for offline listening.",
   "nasheeds.egypt": "From Egypt",
   "nasheeds.arab": "From the Arab world",
   "nasheeds.count": "{n} nasheeds",
@@ -656,5 +656,7 @@
   "stories.howTo": "Each episode: tap to listen, the video icon to watch, or the download icon to listen offline.",
   "asma.listen": "Listen to the name and its meaning",
   "asma.stop": "Stop",
-  "asma.noVoice": "Arabic speech isn't available on this device. Install the Arabic voice in text-to-speech settings."
+  "asma.noVoice": "Arabic speech isn't available on this device. Install the Arabic voice in text-to-speech settings.",
+  "nasheeds.search": "Find a nasheed or munshid",
+  "nasheeds.loadError": "Couldn't load the nasheeds list."
 }

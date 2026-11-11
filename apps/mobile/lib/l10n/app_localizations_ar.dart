@@ -1259,14 +1259,20 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String nasheedsCount(String n) {
-    return '$n أناشيد';
+    return '$n نشيد';
   }
 
   @override
   String get nasheedsEgypt => 'من مصر';
 
   @override
-  String get nasheedsNote => 'أناشيد بدون موسيقى، تُشغَّل من القنوات الرسمية للمنشدين على يوتيوب.';
+  String get nasheedsLoadError => 'تعذّر تحميل قائمة الأناشيد.';
+
+  @override
+  String get nasheedsNote => 'استمع لأي نشيد مباشرة، أو اضغط أيقونة التحميل لتسمعه بدون إنترنت.';
+
+  @override
+  String get nasheedsSearch => 'ابحث عن نشيد أو منشد';
 
   @override
   String get nasheedsTitle => 'أناشيد';
