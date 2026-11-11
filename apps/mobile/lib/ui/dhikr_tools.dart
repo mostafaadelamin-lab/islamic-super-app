@@ -78,7 +78,8 @@ class AdhkarViewToggle extends StatelessWidget {
 
 /// One item at a time with previous / next and the position.
 class CardPager extends StatefulWidget {
-  const CardPager({super.key, required this.count, required this.builder, this.isDone, this.resetKey});
+  const CardPager({super.key, required this.count, required this.builder, this.isDone, this.resetKey, this.onIndex});
+  final ValueChanged<int>? onIndex;
   final int count;
   final Widget Function(BuildContext context, int i) builder;
 
@@ -102,6 +103,7 @@ class _CardPagerState extends State<CardPager> {
       _at = 0;
       _wasDone = false;
       if (_pages.hasClients) _pages.jumpToPage(0);
+      widget.onIndex?.call(0);
       return;
     }
     final done = widget.isDone?.call(_at) ?? false;
@@ -132,10 +134,13 @@ class _CardPagerState extends State<CardPager> {
             key: const Key('cardPager'),
             controller: _pages,
             itemCount: widget.count,
-            onPageChanged: (i) => setState(() {
-              _at = i;
-              _wasDone = widget.isDone?.call(i) ?? false;
-            }),
+            onPageChanged: (i) {
+              setState(() {
+                _at = i;
+                _wasDone = widget.isDone?.call(i) ?? false;
+              });
+              widget.onIndex?.call(i);
+            },
             itemBuilder: (context, i) => SingleChildScrollView(child: widget.builder(context, i)),
           ),
         ),

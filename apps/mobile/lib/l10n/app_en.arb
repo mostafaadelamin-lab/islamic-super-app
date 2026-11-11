@@ -476,6 +476,18 @@
   "@adhkarHisnSearch": {
     "description": "shared key \"adhkar.hisnSearch\""
   },
+  "adhkarItemOf": "Dhikr {n} of {total}",
+  "@adhkarItemOf": {
+    "description": "shared key \"adhkar.itemOf\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
   "adhkarList": "Show as a list",
   "@adhkarList": {
     "description": "shared key \"adhkar.list\""
@@ -503,6 +515,15 @@
   "adhkarOfflineNote": "Saved in the app; plays without internet.",
   "@adhkarOfflineNote": {
     "description": "shared key \"adhkar.offlineNote\""
+  },
+  "adhkarPercentDone": "{p}% done",
+  "@adhkarPercentDone": {
+    "description": "shared key \"adhkar.percentDone\"",
+    "placeholders": {
+      "p": {
+        "type": "String"
+      }
+    }
   },
   "adhkarPrevCard": "Previous",
   "@adhkarPrevCard": {
@@ -544,6 +565,15 @@
   "adhkarRepeat": "Repeat {n}",
   "@adhkarRepeat": {
     "description": "shared key \"adhkar.repeat\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "adhkarRepeatTimes": "Repeat: {n}",
+  "@adhkarRepeatTimes": {
+    "description": "shared key \"adhkar.repeatTimes\"",
     "placeholders": {
       "n": {
         "type": "String"
@@ -594,6 +624,10 @@
   "adhkarSleep": "Adhkar before sleep",
   "@adhkarSleep": {
     "description": "shared key \"adhkar.sleep\""
+  },
+  "adhkarTapCounter": "Tap the circle to count; it moves on when the count is complete",
+  "@adhkarTapCounter": {
+    "description": "shared key \"adhkar.tapCounter\""
   },
   "adhkarTapToCount": "Tap a card to count it",
   "@adhkarTapToCount": {
@@ -851,6 +885,18 @@
   "contactThanks": "Your message was sent. Thank you!",
   "@contactThanks": {
     "description": "shared key \"contact.thanks\""
+  },
+  "dhikrListen": "Listen to this dhikr",
+  "@dhikrListen": {
+    "description": "shared key \"dhikr.listen\""
+  },
+  "dhikrListenFailed": "Could not play; check your internet",
+  "@dhikrListenFailed": {
+    "description": "shared key \"dhikr.listenFailed\""
+  },
+  "dhikrListenStop": "Stop",
+  "@dhikrListenStop": {
+    "description": "shared key \"dhikr.listenStop\""
   },
   "downloadsCancel": "Stop download",
   "@downloadsCancel": {

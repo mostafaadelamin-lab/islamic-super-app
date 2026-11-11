@@ -5,13 +5,14 @@ import '../app_services.dart';
 import '../domain/adhkar.dart';
 import '../domain/nasheeds.dart';
 import '../theme/design_tokens.dart';
+import 'dhikr_audio.dart';
 import 'dhikr_tools.dart';
 import 'hisn_screen.dart';
 import 'l10n_ext.dart';
 import 'prayer_model.dart';
-import 'review_notice.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
+import 'review_notice.dart' show duaStyle;
 import 'adhkar_audio.dart';
 
 /// The Adhkar tab: a vertical list of the daily adhkar (morning, evening,
@@ -87,8 +88,6 @@ class AdhkarScreen extends StatelessWidget {
             for (final (a, icon, title) in [
               (AdhkarAudio.morning, RIcons.sunHigh, l.adhkarMorningTitle),
               (AdhkarAudio.evening, RIcons.moon, l.adhkarEveningTitle),
-              (AdhkarAudio.afterPrayer, RIcons.prayer, l.adhkarAfterPrayer),
-              (AdhkarAudio.sleep, RIcons.moon, l.adhkarSleep),
             ])
               Card(
                 key: Key('adhkarAudio.${a.name}'),
@@ -120,6 +119,9 @@ class AdhkarSessionScreen extends StatefulWidget {
 
 class AdhkarScreenState extends State<AdhkarSessionScreen> {
   AdhkarSession? _session;
+
+  /// The dhikr shown in the one-per-page view.
+  int _at = 0;
   AdhkarSession get session => _session!;
 
   @override
@@ -149,19 +151,6 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
         title: Text(session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle),
         actions: [
           const AdhkarViewToggle(),
-          IconButton(
-            key: const Key('adhkarListen'),
-            tooltip: l.adhkarListen,
-            icon: const RIcon(RIcons.headphones),
-            onPressed: () {
-              final morning = session == AdhkarSession.morning;
-              openAdhkarAudio(
-                context,
-                morning ? AdhkarAudio.morning : AdhkarAudio.evening,
-                morning ? l.adhkarMorningTitle : l.adhkarEveningTitle,
-              );
-            },
-          ),
           IconButton(
             key: const Key('adhkarReminders'),
             tooltip: l.adhkarReminders,
@@ -199,7 +188,10 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
                     ),
                   ],
                   selected: {session},
-                  onSelectionChanged: (v) => setState(() => _session = v.single),
+                  onSelectionChanged: (v) => setState(() {
+                    _session = v.single;
+                    _at = 0;
+                  }),
                 ),
               ),
               Padding(
@@ -228,15 +220,52 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
               ),
             ];
             if (s.settings.adhkarCards) {
+              // One dhikr per page (owner's choice, 2026-11-11): a bar with the overall progress on
+              // top, the dhikr, "listen to this dhikr", and a big counter that moves on when complete.
+              final n = p.items.length;
+              final pct = (p.fraction * 100).round();
               return Column(
                 children: [
-                  ...header,
+                  header.first,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      DesignTokens.spaceLg,
+                      DesignTokens.spaceMd,
+                      DesignTokens.spaceLg,
+                      0,
+                    ),
+                    child: Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
+                          child: LinearProgressIndicator(
+                            key: const Key('adhkarTopBar'),
+                            value: p.fraction,
+                            minHeight: 10,
+                          ),
+                        ),
+                        const SizedBox(height: DesignTokens.spaceXs),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                l.adhkarItemOf(context.num(_at.clamp(0, n - 1) + 1), context.num(n)),
+                                key: const Key('adhkarItemOf'),
+                              ),
+                            ),
+                            Text(l.adhkarPercentDone(context.num(pct)), key: const Key('adhkarProgress')),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                   Expanded(
                     child: CardPager(
                       resetKey: session,
-                      count: p.items.length,
+                      count: n,
                       isDone: (i) => p.isDone(p.items[i]),
-                      builder: (context, i) => _DhikrCard(dhikr: p.items[i], session: session, progress: p),
+                      onIndex: (i) => setState(() => _at = i),
+                      builder: (context, i) => _DhikrCard(dhikr: p.items[i], session: session, progress: p, big: true),
                     ),
                   ),
                 ],
@@ -258,7 +287,8 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
 }
 
 class _DhikrCard extends StatelessWidget {
-  const _DhikrCard({required this.dhikr, required this.session, required this.progress});
+  const _DhikrCard({required this.dhikr, required this.session, required this.progress, this.big = false});
+  final bool big;
   final Dhikr dhikr;
   final AdhkarSession session;
   final AdhkarProgress progress;
@@ -292,13 +322,32 @@ class _DhikrCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(dhikr.text, textDirection: TextDirection.rtl, style: duaStyle(context)),
+                    if (big)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
+                        child: Text(
+                          l.adhkarRepeatTimes(context.num(dhikr.meta.count)),
+                          style: Theme.of(context).textTheme.labelLarge?.copyWith(color: scheme.primary),
+                        ),
+                      ),
+                    Text(
+                      dhikr.text,
+                      textDirection: TextDirection.rtl,
+                      style: duaStyle(context, size: big ? 24 : 18),
+                    ),
+                    const SizedBox(height: DesignTokens.spaceSm),
+                    DhikrAudioUrl(
+                      pick: (m) => m.forDhikr(dhikr.index),
+                      builder: (context, url) => Center(
+                        child: DhikrListenButton(url: url, compact: !big),
+                      ),
+                    ),
                     const SizedBox(height: DesignTokens.spaceMd),
                     Center(
                       child: Container(
                         key: Key('dhikrCount-${dhikr.index}'),
-                        width: 96,
-                        height: 96,
+                        width: big ? 170 : 96,
+                        height: big ? 170 : 96,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
@@ -313,14 +362,14 @@ class _DhikrCard extends StatelessWidget {
                           ],
                         ),
                         child: done
-                            ? RIcon(RIcons.check, size: 40, color: scheme.onPrimary)
+                            ? RIcon(RIcons.check, size: big ? 64 : 40, color: scheme.onPrimary)
                             : Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
                                     context.num('${dhikr.meta.count - remaining}'),
                                     style: TextStyle(
-                                      fontSize: 30,
+                                      fontSize: big ? 52 : 30,
                                       fontWeight: FontWeight.w700,
                                       color: scheme.onPrimaryContainer,
                                       height: 1.1,
@@ -328,7 +377,7 @@ class _DhikrCard extends StatelessWidget {
                                   ),
                                   Text(
                                     '/ ${context.num('${dhikr.meta.count}')}',
-                                    style: TextStyle(fontSize: 14, color: scheme.onPrimaryContainer),
+                                    style: TextStyle(fontSize: big ? 18 : 14, color: scheme.onPrimaryContainer),
                                   ),
                                 ],
                               ),
@@ -336,7 +385,7 @@ class _DhikrCard extends StatelessWidget {
                     ),
                     const SizedBox(height: DesignTokens.spaceXs),
                     Text(
-                      done ? l.adhkarDone : l.adhkarRemaining(context.num(remaining)),
+                      done ? l.adhkarDone : (big ? l.adhkarTapCounter : l.adhkarRemaining(context.num(remaining))),
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),

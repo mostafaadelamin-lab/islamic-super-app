@@ -336,6 +336,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhkarHisnSearch => 'Search chapters';
 
   @override
+  String adhkarItemOf(String n, String total) {
+    return 'Dhikr $n of $total';
+  }
+
+  @override
   String get adhkarList => 'Show as a list';
 
   @override
@@ -355,6 +360,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhkarOfflineNote => 'Saved in the app; plays without internet.';
+
+  @override
+  String adhkarPercentDone(String p) {
+    return '$p% done';
+  }
 
   @override
   String get adhkarPrevCard => 'Previous';
@@ -381,6 +391,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String adhkarRepeat(String n) {
     return 'Repeat $n';
+  }
+
+  @override
+  String adhkarRepeatTimes(String n) {
+    return 'Repeat: $n';
   }
 
   @override
@@ -411,6 +426,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhkarSleep => 'Adhkar before sleep';
+
+  @override
+  String get adhkarTapCounter => 'Tap the circle to count; it moves on when the count is complete';
 
   @override
   String get adhkarTapToCount => 'Tap a card to count it';
@@ -597,6 +615,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contactThanks => 'Your message was sent. Thank you!';
+
+  @override
+  String get dhikrListen => 'Listen to this dhikr';
+
+  @override
+  String get dhikrListenFailed => 'Could not play; check your internet';
+
+  @override
+  String get dhikrListenStop => 'Stop';
 
   @override
   String get downloadsCancel => 'Stop download';

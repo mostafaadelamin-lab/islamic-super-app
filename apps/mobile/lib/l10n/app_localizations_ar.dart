@@ -335,6 +335,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhkarHisnSearch => 'ابحث في الأبواب';
 
   @override
+  String adhkarItemOf(String n, String total) {
+    return 'الذكر $n من $total';
+  }
+
+  @override
   String get adhkarList => 'عرض كقائمة';
 
   @override
@@ -354,6 +359,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adhkarOfflineNote => 'محفوظة داخل التطبيق، تعمل بدون إنترنت.';
+
+  @override
+  String adhkarPercentDone(String p) {
+    return 'تم $p٪';
+  }
 
   @override
   String get adhkarPrevCard => 'السابق';
@@ -380,6 +390,11 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String adhkarRepeat(String n) {
     return 'التكرار $n';
+  }
+
+  @override
+  String adhkarRepeatTimes(String n) {
+    return 'التكرار: $n';
   }
 
   @override
@@ -410,6 +425,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adhkarSleep => 'أذكار النوم';
+
+  @override
+  String get adhkarTapCounter => 'اضغط على الدائرة للعدّ، ولما يكمل العدد ينتقل للذكر اللي بعده';
 
   @override
   String get adhkarTapToCount => 'اضغط على البطاقة للعدّ';
@@ -595,6 +613,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get contactThanks => 'وصلت رسالتك، جزاك الله خيرًا.';
+
+  @override
+  String get dhikrListen => 'استمع لهذا الذكر';
+
+  @override
+  String get dhikrListenFailed => 'تعذّر التشغيل، تأكد من الإنترنت';
+
+  @override
+  String get dhikrListenStop => 'إيقاف الصوت';
 
   @override
   String get downloadsCancel => 'إيقاف التحميل';

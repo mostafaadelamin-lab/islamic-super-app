@@ -650,6 +650,12 @@ abstract class AppLocalizations {
   /// **'Search chapters'**
   String get adhkarHisnSearch;
 
+  /// shared key "adhkar.itemOf"
+  ///
+  /// In en, this message translates to:
+  /// **'Dhikr {n} of {total}'**
+  String adhkarItemOf(String n, String total);
+
   /// shared key "adhkar.list"
   ///
   /// In en, this message translates to:
@@ -692,6 +698,12 @@ abstract class AppLocalizations {
   /// **'Saved in the app; plays without internet.'**
   String get adhkarOfflineNote;
 
+  /// shared key "adhkar.percentDone"
+  ///
+  /// In en, this message translates to:
+  /// **'{p}% done'**
+  String adhkarPercentDone(String p);
+
   /// shared key "adhkar.prevCard"
   ///
   /// In en, this message translates to:
@@ -733,6 +745,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Repeat {n}'**
   String adhkarRepeat(String n);
+
+  /// shared key "adhkar.repeatTimes"
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat: {n}'**
+  String adhkarRepeatTimes(String n);
 
   /// shared key "adhkar.report"
   ///
@@ -781,6 +799,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Adhkar before sleep'**
   String get adhkarSleep;
+
+  /// shared key "adhkar.tapCounter"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the circle to count; it moves on when the count is complete'**
+  String get adhkarTapCounter;
 
   /// shared key "adhkar.tapToCount"
   ///
@@ -1129,6 +1153,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your message was sent. Thank you!'**
   String get contactThanks;
+
+  /// shared key "dhikr.listen"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to this dhikr'**
+  String get dhikrListen;
+
+  /// shared key "dhikr.listenFailed"
+  ///
+  /// In en, this message translates to:
+  /// **'Could not play; check your internet'**
+  String get dhikrListenFailed;
+
+  /// shared key "dhikr.listenStop"
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get dhikrListenStop;
 
   /// shared key "downloads.cancel"
   ///

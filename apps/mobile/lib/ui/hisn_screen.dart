@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../app_services.dart';
 import '../domain/adhkar.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/design_tokens.dart';
 import 'adhkar_screen.dart';
+import 'dhikr_audio.dart';
 import 'dhikr_tools.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
@@ -123,6 +125,13 @@ class HisnChapterScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(chapter.items[i], textDirection: TextDirection.rtl, style: duaStyle(context)),
+            const SizedBox(height: DesignTokens.spaceSm),
+            DhikrAudioUrl(
+              pick: (m) => m.forHisn(chapter.index, i),
+              builder: (context, url) => Center(child: DhikrListenButton(url: url, compact: true)),
+            ),
+            if (context.services.settings.adhkarCards)
+              HisnCounter(key: Key('hisnCounter-$i'), target: countStatedIn(chapter.items[i])),
             Wrap(
               alignment: WrapAlignment.end,
               children: [
@@ -187,3 +196,50 @@ String hisnSectionName(AppLocalizations l, String id) => switch (id) {
   'hajj' => l.hisnSectionHajj,
   _ => id,
 };
+
+/// Tap counter under a Hisn al-Muslim dhikr in the one-per-page view (target from the text, else 1).
+class HisnCounter extends StatefulWidget {
+  const HisnCounter({super.key, required this.target});
+  final int target;
+
+  @override
+  State<HisnCounter> createState() => _HisnCounterState();
+}
+
+class _HisnCounterState extends State<HisnCounter> {
+  int _n = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final done = _n >= widget.target;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceMd),
+      child: Center(
+        child: InkResponse(
+          onTap: () {
+            HapticFeedback.selectionClick();
+            setState(() => _n = done ? 0 : _n + 1);
+          },
+          radius: 70,
+          child: Container(
+            width: 120,
+            height: 120,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: done ? scheme.primary : scheme.primaryContainer,
+              border: Border.all(color: scheme.secondary.withValues(alpha: 0.6), width: 4),
+            ),
+            child: done
+                ? RIcon(RIcons.check, size: 48, color: scheme.onPrimary)
+                : Text(
+                    '${context.num(_n)} / ${context.num(widget.target)}',
+                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: scheme.onPrimaryContainer),
+                  ),
+          ),
+        ),
+      ),
+    );
+  }
+}

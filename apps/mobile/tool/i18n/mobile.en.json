@@ -578,5 +578,12 @@
   "contact.failed": "Could not send. Check your internet connection and try again.",
   "radio.mushaf": "Whole-Mushaf radio (chosen reciter)",
   "radio.all": "All radios",
-  "radio.liveNote": "Live broadcast. Pick another station from the list or from \"All radios\"."
+  "radio.liveNote": "Live broadcast. Pick another station from the list or from \"All radios\".",
+  "dhikr.listen": "Listen to this dhikr",
+  "dhikr.listenStop": "Stop",
+  "dhikr.listenFailed": "Could not play; check your internet",
+  "adhkar.itemOf": "Dhikr {n} of {total}",
+  "adhkar.percentDone": "{p}% done",
+  "adhkar.repeatTimes": "Repeat: {n}",
+  "adhkar.tapCounter": "Tap the circle to count; it moves on when the count is complete"
 }
