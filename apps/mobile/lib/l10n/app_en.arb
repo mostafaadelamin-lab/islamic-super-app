@@ -702,9 +702,17 @@
   "@asmaLess": {
     "description": "shared key \"asma.less\""
   },
+  "asmaListen": "Listen to the name and its meaning",
+  "@asmaListen": {
+    "description": "shared key \"asma.listen\""
+  },
   "asmaMore": "More",
   "@asmaMore": {
     "description": "shared key \"asma.more\""
+  },
+  "asmaNoVoice": "Arabic speech isn't available on this device. Install the Arabic voice in text-to-speech settings.",
+  "@asmaNoVoice": {
+    "description": "shared key \"asma.noVoice\""
   },
   "asmaSearch": "Find a name",
   "@asmaSearch": {
@@ -719,9 +727,13 @@
       }
     }
   },
-  "asmaSource": "Explanations quoted word for word from «تفسير أسماء الله الحسنى» by Sheikh Abd al-Rahman al-Sa'di (compiled and edited by Ubaid al-Ubaid).",
+  "asmaSource": "A simplified explanation of the 99 Names of Allah, quoted word for word from a published source.",
   "@asmaSource": {
     "description": "shared key \"asma.source\""
+  },
+  "asmaStop": "Stop",
+  "@asmaStop": {
+    "description": "shared key \"asma.stop\""
   },
   "asmaTitle": "Names of Allah",
   "@asmaTitle": {

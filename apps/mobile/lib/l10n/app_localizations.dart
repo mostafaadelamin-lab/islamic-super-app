@@ -908,11 +908,23 @@ abstract class AppLocalizations {
   /// **'Less'**
   String get asmaLess;
 
+  /// shared key "asma.listen"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to the name and its meaning'**
+  String get asmaListen;
+
   /// shared key "asma.more"
   ///
   /// In en, this message translates to:
   /// **'More'**
   String get asmaMore;
+
+  /// shared key "asma.noVoice"
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic speech isn\'t available on this device. Install the Arabic voice in text-to-speech settings.'**
+  String get asmaNoVoice;
 
   /// shared key "asma.search"
   ///
@@ -929,8 +941,14 @@ abstract class AppLocalizations {
   /// shared key "asma.source"
   ///
   /// In en, this message translates to:
-  /// **'Explanations quoted word for word from «تفسير أسماء الله الحسنى» by Sheikh Abd al-Rahman al-Sa\'di (compiled and edited by Ubaid al-Ubaid).'**
+  /// **'A simplified explanation of the 99 Names of Allah, quoted word for word from a published source.'**
   String get asmaSource;
+
+  /// shared key "asma.stop"
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get asmaStop;
 
   /// shared key "asma.title"
   ///

@@ -484,7 +484,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get asmaLess => 'Less';
 
   @override
+  String get asmaListen => 'Listen to the name and its meaning';
+
+  @override
   String get asmaMore => 'More';
+
+  @override
+  String get asmaNoVoice =>
+      'Arabic speech isn\'t available on this device. Install the Arabic voice in text-to-speech settings.';
 
   @override
   String get asmaSearch => 'Find a name';
@@ -496,7 +503,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get asmaSource =>
-      'Explanations quoted word for word from «تفسير أسماء الله الحسنى» by Sheikh Abd al-Rahman al-Sa\'di (compiled and edited by Ubaid al-Ubaid).';
+      'A simplified explanation of the 99 Names of Allah, quoted word for word from a published source.';
+
+  @override
+  String get asmaStop => 'Stop';
 
   @override
   String get asmaTitle => 'Names of Allah';

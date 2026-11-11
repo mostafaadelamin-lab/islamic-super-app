@@ -7,9 +7,10 @@ import '../theme/design_tokens.dart';
 import 'adaptive.dart';
 import 'l10n_ext.dart';
 import 'r_icon.dart';
+import 'speech.dart';
 
-/// One name with its explanation: the opening of al-Sa'di's own words for it,
-/// quoted verbatim from "تفسير أسماء الله الحسنى" (never written by us).
+/// One of the 99 names with its simplified explanation, quoted verbatim from a
+/// published source (see docs/CONTENT_SOURCES.md; never written by us).
 class AsmaEntry {
   const AsmaEntry({required this.name, required this.text, this.group, this.seeAlso, required this.page});
   final String name;
@@ -40,8 +41,9 @@ String _norm(String s) =>
 
 /// أسماء الله الحسنى: every name with a short explanation under it.
 class AsmaScreen extends StatefulWidget {
-  const AsmaScreen({super.key, this.loader = loadAsma});
+  const AsmaScreen({super.key, this.loader = loadAsma, this.speaker});
   final Future<List<AsmaEntry>> Function() loader;
+  final Speaker? speaker;
 
   @override
   State<AsmaScreen> createState() => _AsmaScreenState();
@@ -50,6 +52,37 @@ class AsmaScreen extends StatefulWidget {
 class _AsmaScreenState extends State<AsmaScreen> {
   late final Future<List<AsmaEntry>> _future = widget.loader();
   String _query = '';
+  late final Speaker _speaker = widget.speaker ?? DeviceSpeaker();
+  String? _speaking;
+
+  @override
+  void initState() {
+    super.initState();
+    _speaker.onDone(() {
+      if (mounted) setState(() => _speaking = null);
+    });
+  }
+
+  @override
+  void dispose() {
+    _speaker.stop();
+    super.dispose();
+  }
+
+  Future<void> _toggle(AsmaEntry e, String text) async {
+    if (_speaking == e.name) {
+      await _speaker.stop();
+      setState(() => _speaking = null);
+      return;
+    }
+    await _speaker.stop();
+    setState(() => _speaking = e.name);
+    final ok = await _speaker.speak('${e.name}. $text');
+    if (!ok && mounted) {
+      setState(() => _speaking = null);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.asmaNoVoice)));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,6 +170,13 @@ class _AsmaScreenState extends State<AsmaScreen> {
                                   color: scheme.primary,
                                 ),
                               ),
+                            ),
+                            IconButton(
+                              key: Key('asmaListen-${i - 1}'),
+                              tooltip: _speaking == e.name ? l.asmaStop : l.asmaListen,
+                              color: scheme.primary,
+                              icon: RIcon(_speaking == e.name ? RIcons.stop : RIcons.headphones),
+                              onPressed: () => _toggle(e, text),
                             ),
                           ],
                         ),

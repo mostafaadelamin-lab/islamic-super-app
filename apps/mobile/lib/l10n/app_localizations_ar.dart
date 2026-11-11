@@ -483,7 +483,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get asmaLess => 'أقل';
 
   @override
+  String get asmaListen => 'استمع للاسم وشرحه';
+
+  @override
   String get asmaMore => 'المزيد';
+
+  @override
+  String get asmaNoVoice =>
+      'صوت القراءة العربية غير متاح على هذا الجهاز. ثبّت الصوت العربي من إعدادات تحويل النص إلى كلام.';
 
   @override
   String get asmaSearch => 'ابحث عن اسم';
@@ -494,8 +501,10 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get asmaSource =>
-      'الشرح منقول بنصّه من كتاب «تفسير أسماء الله الحسنى» للشيخ عبد الرحمن بن ناصر السعدي رحمه الله (جمع وتحقيق: عبيد بن علي العبيد).';
+  String get asmaSource => 'شرح مبسّط لأسماء الله الحسنى التسعة والتسعين، منقول بنصّه من مصدر منشور.';
+
+  @override
+  String get asmaStop => 'إيقاف';
 
   @override
   String get asmaTitle => 'أسماء الله الحسنى';
