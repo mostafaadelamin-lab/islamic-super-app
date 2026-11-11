@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.0.9] — Final feedback round before release (owner's list) — 2026-11-11
+### Changed
+- Settings rebuilt: language, prayer times auto/manual, location auto/manual, rate, share, FAQ, contact us (a form, no phone or email shown), our apps, about. The account & sync section and the theme/font/translation entries were removed.
+- Adhan alerts and the muezzin choice are on the prayer page. New voices: Abdul Basit adhan and Abdul Basit Fajr adhan.
+- Cairo Quran radio is the home radio's default; any station from the radios list can be chosen.
+- Adhkar: one dhikr per page with a big counter, an overall progress bar, and an automatic move to the next dhikr. Every dhikr (adhkar and Hisn al-Muslim) can be listened to online. The listening section keeps only the morning and evening recordings.
+- The review notices are gone from the adhkar, Hisn al-Muslim and Hajj/Umrah screens.
+- Quran reader: A+ / A− (the Mushaf zooms 1x to 2x, and the lists change font size), and a card per surah with where it was revealed and the reasons for revelation. On short phones these sit in a menu so the whole page still fits.
+- Zakat: simplified to five tabs (silver, gold, money, livestock, crops).
+- Tasbih: a realistic misbaha is the default.
+- Reels: search YouTube channels and add them; the app suggests similar Islamic channels from what you watch most; the labels under each video are gone.
+- Prophets' stories: a video option per episode (Sheikh Nabil al-Awadi), plus listening and the offline download. The story player bar stays visible with stop on the main screens.
+- Names of Allah: the 99 names with a simplified explanation each; a listen button reads the name and its explanation (the phone's Arabic text-to-speech).
+- Nasheeds: the old YouTube list was replaced by 516 nasheeds from 34 munshidin, streamed or downloaded for offline listening. Battle and war anthems were left out (store policy).
+- Hadith books: a "simplified explanation" button on 5,731 hadiths (2,543 explanations from a published hadith encyclopedia, linked by matching the Prophet's words).
+- "مكتبة التلاوات والإذاعات" is renamed "مكتبة التلاوات لجميع قراء القرآن الكريم".
+- Juz 4 and 11 start at 3:93 and 9:93, as in the printed Mushaf margin.
+
 ## [1.0.7] — Nearby mosques: OpenStreetMap list, tap opens Google Maps (owner's decision) — 2026-11-11
 ### Changed
 - Owner dropped Google Places (cost). The list comes from OpenStreetMap again (no key); tapping a mosque opens it in Google Maps. The Places code stays dormant (only used if a build passes GOOGLE_PLACES_KEY); the map-app chooser was removed.

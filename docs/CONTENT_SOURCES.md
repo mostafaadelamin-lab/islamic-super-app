@@ -76,3 +76,18 @@ Morning and evening adhkar, Mishary Rashid Alafasy: audio.islamweb.net audioid 1
 2026-11-11 (owner's decision): eight muezzin recordings picked by the owner from audio.islamweb.net are bundled offline
 (Ali Mulla, Makkah adhan, Essam Bukhari, Mustafa Ismail, Mahmoud Ali Al-Banna, Muhammad Rifaat; Fajr: Hamad Al-Daghriri,
 Mishary Alafasy). The source site is not named in the app. audioids and checksums: apps/mobile/assets/audio/ADHAN_AUDIO.md.
+
+## Final feedback round (v1.0.9, 2026-11-11)
+
+None of these source names are shown in the app (owner's rule).
+
+| Content | Source | Notes |
+|---|---|---|
+| Per-dhikr audio (adhkar + Hisn al-Muslim) | hisnmuslim.com API, `https://www.hisnmuslim.com/audio/ar/{id}.mp3`; mapping built by `tools/adhkar_audio.py` from `content/adhkar/hisnmuslim-audio-source.json` | streamed, not bundled; 272 Hisn items + the morning/evening list mapped |
+| Surah information and asbab al-nuzul | Quranpedia dumps (`content/quran-info/quranpedia-surahs.json`, `quranpedia-asbab-wahidi.json`), built by `tools/surah_info.py` | licence allows in-app use without attribution |
+| Names of Allah (99, simplified explanation) | surahquran.com, page 99-Names-of-Allah-with-Meaning, retrieved 2026-11-11 | replaces the al-Sa'di text; owner's request; audio is device text-to-speech |
+| Nasheeds (516 by 34 munshidin) | anasheed.info singer pages (audio hosted on archive.org), scraped 2026-11-11; `tools/nasheeds_build.py` | only https archive.org links that answered 200; 47 dead links and 56 battle/war/militant titles and archive "jihad" collections left out; owner should listen-check for music |
+| Hadith simplified explanations | HadeethEnc (hadeethenc.com API, Arabic), 3,574 entries fetched 2026-11-11 into `content/hadith/hadeethenc-ar.json`; linked by `tools/hadith_explained.py` | quoted verbatim: title, explanation, benefits, grade, attribution |
+| Prophets' stories videos | Sheikh Nabil Al-Awadi's lessons channel, playlist PLx0cDxpWtpY_65w9G0_SEA5TF3jhq_QaF | YouTube embed |
+| Abdul Basit adhan / Fajr adhan | audio.islamweb.net audioid 88633 and 404627 | see apps/mobile/assets/audio/ADHAN_AUDIO.md |
+| Reel channel suggestions | 21 verified YouTube channel ids, `assets/content/reel-suggestions.v1.json` | |
