@@ -1,7 +1,8 @@
 {
   "_doc": "Public links shown in Help & contact, Share and Rate. null = not set yet: the matching button is hidden. Set by the owner (contact email, website, store listing).",
+  "contactForm": "https://formsubmit.co/ajax/mostafa.adelamin@zoolacademy.com",
   "contactEmail": null,
   "website": null,
-  "playStore": null,
+  "playStore": "https://play.google.com/store/apps/details?id=org.rattil.app",
   "appStore": null
 }

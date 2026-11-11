@@ -1,10 +1,11 @@
 /// Public links set by the owner (packages/shared-schemas/app-links.json); null = not set (button hidden).
 class AppLinks {
-  const AppLinks({this.contactEmail, this.website, this.playStore, this.appStore});
+  const AppLinks({this.contactForm, this.contactEmail, this.website, this.playStore, this.appStore});
 
   factory AppLinks.fromJson(Map<String, dynamic> j) {
     String? s(Object? v) => v is String && v.trim().isNotEmpty ? v : null;
     return AppLinks(
+      contactForm: s(j['contactForm']),
       contactEmail: s(j['contactEmail']),
       website: s(j['website']),
       playStore: s(j['playStore']),
@@ -12,6 +13,8 @@ class AppLinks {
     );
   }
 
+  /// Form service address that emails the team (never shown in the app).
+  final String? contactForm;
   final String? contactEmail;
   final String? website;
   final String? playStore;

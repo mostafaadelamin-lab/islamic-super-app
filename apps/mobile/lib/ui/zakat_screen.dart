@@ -98,7 +98,10 @@ class _ZakatScreenState extends State<ZakatScreen> {
         );
 
     Widget group(String title, RIconData icon, List<String> ids) {
-      final fields = [for (final f in guide.fields) if (ids.contains(f.id)) f];
+      final fields = [
+        for (final f in guide.fields)
+          if (ids.contains(f.id)) f,
+      ];
       if (fields.isEmpty) return const SizedBox.shrink();
       return _Group(
         title: title,
@@ -113,14 +116,22 @@ class _ZakatScreenState extends State<ZakatScreen> {
     const moneyIds = ['cash', 'certificates', 'certificateReturns', 'shares', 'trade'];
     const goldIds = ['gold24', 'gold21', 'gold18'];
     final known = {...moneyIds, ...goldIds, 'debts'};
-    final otherIds = [for (final f in guide.fields) if (!known.contains(f.id)) f.id];
+    final otherIds = [
+      for (final f in guide.fields)
+        if (!known.contains(f.id)) f.id,
+    ];
 
     return Scaffold(
       appBar: AppBar(title: Text(l.zakatTitle)),
       body: ReadableWidth(
         child: ListView(
           key: const Key('zakatList'),
-          padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceSm, DesignTokens.spaceLg, DesignTokens.spaceXl),
+          padding: const EdgeInsets.fromLTRB(
+            DesignTokens.spaceLg,
+            DesignTokens.spaceSm,
+            DesignTokens.spaceLg,
+            DesignTokens.spaceXl,
+          ),
           children: [
             // The answer first, updated as the user types.
             Container(
@@ -136,7 +147,9 @@ class _ZakatScreenState extends State<ZakatScreen> {
               ),
               child: Row(
                 children: [
-                  Expanded(child: _ResultView(result: result, money: (v) => _money(v, arabic))),
+                  Expanded(
+                    child: _ResultView(result: result, money: (v) => _money(v, arabic)),
+                  ),
                   const SizedBox(width: DesignTokens.spaceSm),
                   RIcon(RIcons.zakat, size: 44, color: Colors.white.withValues(alpha: 0.85)),
                 ],
@@ -285,7 +298,12 @@ class _Group extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     return Container(
       margin: const EdgeInsets.only(top: DesignTokens.spaceMd),
-      padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, DesignTokens.spaceMd),
+      padding: const EdgeInsets.fromLTRB(
+        DesignTokens.spaceLg,
+        DesignTokens.spaceMd,
+        DesignTokens.spaceLg,
+        DesignTokens.spaceMd,
+      ),
       decoration: BoxDecoration(
         color: scheme.surfaceContainerLow,
         borderRadius: BorderRadius.circular(20),
@@ -299,7 +317,10 @@ class _Group extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
               child: Row(
                 children: [
-                  if (icon != null) ...[RIcon(icon!, size: 18, color: scheme.secondary), const SizedBox(width: DesignTokens.spaceSm)],
+                  if (icon != null) ...[
+                    RIcon(icon!, size: 18, color: scheme.secondary),
+                    const SizedBox(width: DesignTokens.spaceSm),
+                  ],
                   Expanded(child: Text(title!, style: Theme.of(context).textTheme.titleSmall)),
                 ],
               ),

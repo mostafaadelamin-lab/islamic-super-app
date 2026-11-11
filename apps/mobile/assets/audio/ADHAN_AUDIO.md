@@ -79,5 +79,9 @@ On 2026-11-11 the owner chose these eight recordings from the audio.islamweb.net
 | `rifaat` | أذان القاهرة - محمد رفعت | 122665 | https://audio.islamweb.net/audio/downloadmp3.php?audioid=122665 | 39964e1b6df88cfc30e66ca18cbc8efe5829fbf82d24210ebddc3d435eebd96c |
 | `daghriri_fajr` | آذان الفجر الأول من المسجد الحرام للشيخ حمد الدغريري (Fajr) | 489488 | https://audio.islamweb.net/audio/downloadmp3.php?audioid=489488 | c2a824f3b0e8a2b77104c9e4a24f2b4229bb361ae202ebd853ee8362e044ae22 |
 | `afasy_fajr` | أذان الفجر1 الشيخ مشاري بن راشد العفاسي (Fajr) | 206932 | https://audio.islamweb.net/audio/downloadmp3.php?audioid=206932 | e025f8cf040e6490edc3aef1dc13b5883339b6b9481092b4bed00b7b54087d5a |
+| `abdulbasit` | أذان الشيخ عبد الباسط 1 (list no. 134) | 88633 | https://audio.islamweb.net/audio/downloadmp3.php?audioid=88633 | 1c44f4a44265e975a6fe85bea0d4282c00cfe17e736a6df146fee8dbd7f070b6 |
+| `abdulbasit_fajr` | أذان الفجر1-بصوت الشيخ عبدالباسط عبد الصمد (list no. 139, Fajr) | 404627 | https://audio.islamweb.net/audio/downloadmp3.php?audioid=404627 | 6acb1d78cb53fba6151ce621308ae213007ae087bede0fcf9f96c3c9b299d565 |
+
+The two Abdul Basit recordings were added in 1.0.9 (owner's request, 2026-11-11), same transcodes (web: MP3 64 kbit/s mono).
 
 Defaults since 1.0.8: `mulla` for the five prayers and `daghriri_fajr` for Fajr. The Commons recordings above stay available.

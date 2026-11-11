@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app_services.dart';
 import '../data/mp3quran.dart';
+import '../data/settings.dart';
 import '../domain/mp3quran.dart';
 import '../domain/stories.dart';
 import '../theme/design_tokens.dart';
@@ -39,6 +40,23 @@ const featuredRadios = [
   ),
 ];
 
+/// The live station the home radio card plays (Cairo Quran radio by default).
+Episode homeStation(SettingsController settings, bool arabic) {
+  final id = settings.radioStation;
+  for (final r in featuredRadios) {
+    if (r.id == id) {
+      return Episode(id: r.id, titleAr: r.nameAr, titleEn: r.nameEn, url: r.url, status: ReviewStatus.approved);
+    }
+  }
+  final url = settings.radioStationUrl;
+  if (url == null) {
+    final r = featuredRadios.first;
+    return Episode(id: r.id, titleAr: r.nameAr, titleEn: r.nameEn, url: r.url, status: ReviewStatus.approved);
+  }
+  final name = settings.radioStationName ?? id;
+  return Episode(id: id, titleAr: name, titleEn: name, url: url, status: ReviewStatus.approved);
+}
+
 /// Quran radios: the app's own whole-Mushaf radio, the Egyptian and Saudi
 /// Quran radios, then every other live Quran radio (no source names shown).
 class RadioScreen extends StatefulWidget {
@@ -73,6 +91,8 @@ class _RadioScreenState extends State<RadioScreen> {
             )
           : null,
       episode: Episode(id: id, titleAr: title, titleEn: title, url: url, status: ReviewStatus.approved),
+      // Playing a station also makes it the home radio's station (owner: choose among all radios).
+      onPlay: () => context.services.settings.setRadioStation(id, name: title, url: url),
     );
   }
 
@@ -94,7 +114,8 @@ class _RadioScreenState extends State<RadioScreen> {
               SectionCard(
                 title: l.radiosFeatured,
                 children: [
-                  for (final r in featuredRadios) _station(context, r.id, ar ? r.nameAr : r.nameEn, r.url, featured: true),
+                  for (final r in featuredRadios)
+                    _station(context, r.id, ar ? r.nameAr : r.nameEn, r.url, featured: true),
                 ],
               ),
               FutureBuilder<Mp3Library>(
@@ -102,7 +123,10 @@ class _RadioScreenState extends State<RadioScreen> {
                 builder: (context, snap) {
                   final lib = snap.data;
                   if (snap.hasError) {
-                    return Padding(padding: const EdgeInsets.all(DesignTokens.spaceLg), child: Text(l.libraryLoadError));
+                    return Padding(
+                      padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                      child: Text(l.libraryLoadError),
+                    );
                   }
                   if (lib == null) {
                     return const Padding(

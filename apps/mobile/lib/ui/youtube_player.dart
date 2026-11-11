@@ -112,11 +112,17 @@ Future<void> showYouTubeSheet(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(title, style: Theme.of(ctx).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
-            Text(subtitle, style: Theme.of(ctx).textTheme.bodyMedium?.copyWith(color: Theme.of(ctx).colorScheme.onSurfaceVariant)),
+            Text(
+              subtitle,
+              style: Theme.of(ctx).textTheme.bodyMedium?.copyWith(color: Theme.of(ctx).colorScheme.onSurfaceVariant),
+            ),
             const SizedBox(height: DesignTokens.spaceMd),
             ClipRRect(
               borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-              child: AspectRatio(aspectRatio: 16 / 9, child: YouTubeEmbed(key: Key('yt-$videoId'), videoId: videoId)),
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: YouTubeEmbed(key: Key('yt-$videoId'), videoId: videoId),
+              ),
             ),
             const SizedBox(height: DesignTokens.spaceSm),
             Row(

@@ -8,6 +8,7 @@ import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'contact_screen.dart';
 import 'r_icon.dart';
 
 /// The text shared by "Share Rattil": a short line and the website or store link when set.
@@ -32,7 +33,6 @@ class HelpScreen extends StatelessWidget {
       (l.helpQ6, l.helpA6),
       (l.helpQ7, l.helpA7),
     ];
-    final email = links.contactEmail;
     final store = links.playStore ?? links.appStore;
     return Scaffold(
       appBar: AppBar(title: Text(l.helpTitle)),
@@ -62,16 +62,14 @@ class HelpScreen extends StatelessWidget {
             SectionCard(
               children: [
                 ListTile(title: Text(l.helpContact, style: Theme.of(context).textTheme.titleMedium)),
-                if (email != null)
-                  ListTile(
-                    key: const Key('helpEmail'),
-                    leading: const RIcon(RIcons.mail),
-                    title: Text(l.helpEmail),
-                    subtitle: Text(email),
-                    onTap: () => launchUrl(Uri(scheme: 'mailto', path: email)),
-                  )
-                else
-                  ListTile(key: const Key('helpContactPending'), subtitle: Text(l.helpContactPending)),
+                ListTile(
+                  key: const Key('helpContactForm'),
+                  leading: const RIcon(RIcons.mail),
+                  title: Text(l.contactSend),
+                  trailing: const RIcon(RIcons.chevronForward),
+                  onTap: () =>
+                      Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ContactScreen())),
+                ),
               ],
             ),
             SectionCard(

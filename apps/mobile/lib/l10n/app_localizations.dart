@@ -1082,6 +1082,54 @@ abstract class AppLocalizations {
   /// **'Retry'**
   String get commonRetry;
 
+  /// shared key "contact.failed"
+  ///
+  /// In en, this message translates to:
+  /// **'Could not send. Check your internet connection and try again.'**
+  String get contactFailed;
+
+  /// shared key "contact.intro"
+  ///
+  /// In en, this message translates to:
+  /// **'Write your message and it will reach the team. Add your email or number if you want a reply.'**
+  String get contactIntro;
+
+  /// shared key "contact.message"
+  ///
+  /// In en, this message translates to:
+  /// **'Your message'**
+  String get contactMessage;
+
+  /// shared key "contact.messageRequired"
+  ///
+  /// In en, this message translates to:
+  /// **'Please write your message'**
+  String get contactMessageRequired;
+
+  /// shared key "contact.name"
+  ///
+  /// In en, this message translates to:
+  /// **'Name (optional)'**
+  String get contactName;
+
+  /// shared key "contact.reply"
+  ///
+  /// In en, this message translates to:
+  /// **'Your email or number for a reply (optional)'**
+  String get contactReply;
+
+  /// shared key "contact.send"
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get contactSend;
+
+  /// shared key "contact.thanks"
+  ///
+  /// In en, this message translates to:
+  /// **'Your message was sent. Thank you!'**
+  String get contactThanks;
+
   /// shared key "downloads.cancel"
   ///
   /// In en, this message translates to:
@@ -1961,7 +2009,7 @@ abstract class AppLocalizations {
   /// shared key "library.title"
   ///
   /// In en, this message translates to:
-  /// **'Recitations and radios'**
+  /// **'Recitations library: all Quran reciters'**
   String get libraryTitle;
 
   /// shared key "more.title"
@@ -2996,6 +3044,12 @@ abstract class AppLocalizations {
   /// **'Surahs'**
   String get quranTabSurahs;
 
+  /// shared key "radio.all"
+  ///
+  /// In en, this message translates to:
+  /// **'All radios'**
+  String get radioAll;
+
   /// shared key "radio.duration"
   ///
   /// In en, this message translates to:
@@ -3008,6 +3062,12 @@ abstract class AppLocalizations {
   /// **'Listen'**
   String get radioListen;
 
+  /// shared key "radio.liveNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Live broadcast. Pick another station from the list or from \"All radios\".'**
+  String get radioLiveNote;
+
   /// shared key "radio.longer"
   ///
   /// In en, this message translates to:
@@ -3019,6 +3079,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n} min'**
   String radioMin(String n);
+
+  /// shared key "radio.mushaf"
+  ///
+  /// In en, this message translates to:
+  /// **'Whole-Mushaf radio (chosen reciter)'**
+  String get radioMushaf;
 
   /// shared key "radio.note"
   ///
@@ -3452,6 +3518,12 @@ abstract class AppLocalizations {
   /// **'Optional — sync bookmarks between devices'**
   String get settingsAccountHint;
 
+  /// shared key "settings.auto"
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic'**
+  String get settingsAuto;
+
   /// shared key "settings.fontPreview"
   ///
   /// In en, this message translates to:
@@ -3499,6 +3571,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'English'**
   String get settingsLanguageEn;
+
+  /// shared key "settings.manual"
+  ///
+  /// In en, this message translates to:
+  /// **'Manual'**
+  String get settingsManual;
+
+  /// shared key "settings.ourApps"
+  ///
+  /// In en, this message translates to:
+  /// **'Our apps'**
+  String get settingsOurApps;
+
+  /// shared key "settings.ourAppsSoon"
+  ///
+  /// In en, this message translates to:
+  /// **'More apps coming soon, God willing'**
+  String get settingsOurAppsSoon;
+
+  /// shared key "settings.prayerAutoHint"
+  ///
+  /// In en, this message translates to:
+  /// **'From your location and your country\'s calculation method'**
+  String get settingsPrayerAutoHint;
+
+  /// shared key "settings.prayerManualHint"
+  ///
+  /// In en, this message translates to:
+  /// **'You choose the method and adjust the minutes yourself'**
+  String get settingsPrayerManualHint;
+
+  /// shared key "settings.prayerTimes"
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer times'**
+  String get settingsPrayerTimes;
 
   /// shared key "settings.sources"
   ///

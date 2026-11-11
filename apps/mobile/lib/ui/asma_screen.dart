@@ -35,11 +35,8 @@ class AsmaEntry {
 
 Future<List<AsmaEntry>> loadAsma() async => AsmaEntry.parse(await rootBundle.loadString('assets/content/asma.v1.json'));
 
-String _norm(String s) => s
-    .replaceAll(RegExp('[ًٌٍَُِّْـ]'), '')
-    .replaceAll(RegExp('[أإآ]'), 'ا')
-    .replaceAll('ى', 'ي')
-    .replaceAll('ة', 'ه');
+String _norm(String s) =>
+    s.replaceAll(RegExp('[ًٌٍَُِّْـ]'), '').replaceAll(RegExp('[أإآ]'), 'ا').replaceAll('ى', 'ي').replaceAll('ة', 'ه');
 
 /// أسماء الله الحسنى: every name with a short explanation under it.
 class AsmaScreen extends StatefulWidget {
@@ -99,7 +96,11 @@ class _AsmaScreenState extends State<AsmaScreen> {
                 if (i == list.length + 1) {
                   return Padding(
                     padding: const EdgeInsets.all(DesignTokens.spaceLg),
-                    child: Text(l.asmaSource, key: const Key('asmaSource'), style: Theme.of(context).textTheme.bodySmall),
+                    child: Text(
+                      l.asmaSource,
+                      key: const Key('asmaSource'),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   );
                 }
                 final e = list[i - 1];
@@ -140,7 +141,10 @@ class _AsmaScreenState extends State<AsmaScreen> {
                           ],
                         ),
                         if (e.group != null && e.group != e.name)
-                          Text(e.group!, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: scheme.secondary)),
+                          Text(
+                            e.group!,
+                            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: scheme.secondary),
+                          ),
                         const SizedBox(height: DesignTokens.spaceSm),
                         _Explanation(text: text, seeAlso: target == null ? null : l.asmaSeeAlso(target.name)),
                       ],
@@ -176,8 +180,7 @@ class _ExplanationState extends State<_Explanation> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.seeAlso != null)
-          Text(widget.seeAlso!, style: Theme.of(context).textTheme.labelMedium),
+        if (widget.seeAlso != null) Text(widget.seeAlso!, style: Theme.of(context).textTheme.labelMedium),
         Text(
           widget.text,
           style: style,

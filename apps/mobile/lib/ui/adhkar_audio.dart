@@ -43,7 +43,8 @@ class JustAudioAsset implements AssetAudio {
   @override
   Stream<Duration> get position => _p.positionStream;
   @override
-  Stream<bool> get playing => _p.playerStateStream.map((s) => s.playing && s.processingState != ProcessingState.completed);
+  Stream<bool> get playing =>
+      _p.playerStateStream.map((s) => s.playing && s.processingState != ProcessingState.completed);
 }
 
 @visibleForTesting
@@ -62,7 +63,9 @@ Future<void> openAdhkarAudio(BuildContext context, AdhkarAudio a, String title) 
   return showModalBottomSheet<void>(
     context: context,
     showDragHandle: true,
-    builder: (_) => SafeArea(child: _AssetPlayer(asset: asset, title: title, subtitle: l.adhkarAlafasy)),
+    builder: (_) => SafeArea(
+      child: _AssetPlayer(asset: asset, title: title, subtitle: l.adhkarAlafasy),
+    ),
   );
 }
 
@@ -134,10 +137,7 @@ class _AssetPlayerState extends State<_AssetPlayer> {
             max: max <= 0 ? 1 : max,
             onChanged: max <= 0 ? null : (v) => _a.seek(Duration(milliseconds: v.round())),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text(_fmt(_pos)), Text(_fmt(_total))],
-          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(_fmt(_pos)), Text(_fmt(_total))]),
           Center(
             child: IconButton.filled(
               key: const Key('adhkarAudioPlay'),

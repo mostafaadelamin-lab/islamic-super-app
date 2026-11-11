@@ -405,12 +405,19 @@ class _BookPage extends StatelessWidget {
     final dark = Theme.of(context).brightness == Brightness.dark;
     final paper = dark ? const Color(0xFF26231D) : const Color(0xFFFBF6EA);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, DesignTokens.spaceMd),
+      padding: const EdgeInsets.fromLTRB(
+        DesignTokens.spaceLg,
+        DesignTokens.spaceMd,
+        DesignTokens.spaceLg,
+        DesignTokens.spaceMd,
+      ),
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: paper,
           borderRadius: BorderRadius.circular(14),
-          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 14, offset: const Offset(0, 6))],
+          boxShadow: [
+            BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 14, offset: const Offset(0, 6)),
+          ],
         ),
         child: Container(
           margin: const EdgeInsets.all(8),
@@ -436,7 +443,12 @@ class _BookPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, DesignTokens.spaceSm, DesignTokens.spaceMd, 0),
+                    padding: const EdgeInsets.fromLTRB(
+                      DesignTokens.spaceMd,
+                      DesignTokens.spaceSm,
+                      DesignTokens.spaceMd,
+                      0,
+                    ),
                     child: Row(
                       children: [
                         Expanded(

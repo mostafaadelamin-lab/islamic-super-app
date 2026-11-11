@@ -217,4 +217,3 @@ class _MosquesScreenState extends State<MosquesScreen> {
     );
   }
 }
-

@@ -573,6 +573,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonRetry => 'إعادة المحاولة';
 
   @override
+  String get contactFailed => 'تعذّر الإرسال. تأكد من الاتصال بالإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get contactIntro => 'اكتب رسالتك وهتوصل لفريق العمل. لو عايز رد، اكتب إيميلك أو رقمك.';
+
+  @override
+  String get contactMessage => 'رسالتك';
+
+  @override
+  String get contactMessageRequired => 'اكتب رسالتك أولًا';
+
+  @override
+  String get contactName => 'الاسم (اختياري)';
+
+  @override
+  String get contactReply => 'إيميلك أو رقمك للرد (اختياري)';
+
+  @override
+  String get contactSend => 'إرسال';
+
+  @override
+  String get contactThanks => 'وصلت رسالتك، جزاك الله خيرًا.';
+
+  @override
   String get downloadsCancel => 'إيقاف التحميل';
 
   @override
@@ -1078,7 +1102,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get libraryTitle => 'مكتبة التلاوات والإذاعات';
+  String get libraryTitle => 'مكتبة التلاوات لجميع قراء القرآن الكريم';
 
   @override
   String get moreTitle => 'المزيد';
@@ -1671,10 +1695,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get quranTabSurahs => 'السور';
 
   @override
+  String get radioAll => 'كل الإذاعات';
+
+  @override
   String get radioDuration => 'مدة التشغيل';
 
   @override
   String get radioListen => 'استماع';
+
+  @override
+  String get radioLiveNote => 'بث مباشر. اختار إذاعة تانية من القائمة أو من \"كل الإذاعات\".';
 
   @override
   String get radioLonger => 'زيادة المدة';
@@ -1683,6 +1713,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String radioMin(String n) {
     return '$n دقيقة';
   }
+
+  @override
+  String get radioMushaf => 'إذاعة المصحف كاملًا بصوت القارئ';
 
   @override
   String get radioNote => 'تلاوة متصلة للمصحف كاملًا تبدأ من سورة عشوائية.';
@@ -1922,6 +1955,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsAccountHint => 'اختياري — مزامنة العلامات بين الأجهزة';
 
   @override
+  String get settingsAuto => 'تلقائي';
+
+  @override
   String get settingsFontPreview => 'معاينة';
 
   @override
@@ -1944,6 +1980,24 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsLanguageEn => 'English';
+
+  @override
+  String get settingsManual => 'يدوي';
+
+  @override
+  String get settingsOurApps => 'تطبيقاتنا';
+
+  @override
+  String get settingsOurAppsSoon => 'تطبيقات أخرى قريبًا إن شاء الله';
+
+  @override
+  String get settingsPrayerAutoHint => 'حسب موقعك وطريقة الحساب المعتمدة في بلدك';
+
+  @override
+  String get settingsPrayerManualHint => 'أنت تختار طريقة الحساب وتعدّل الدقائق بنفسك';
+
+  @override
+  String get settingsPrayerTimes => 'أوقات الصلاة';
 
   @override
   String get settingsSources => 'مصادر المحتوى';

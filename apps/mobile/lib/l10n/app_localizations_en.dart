@@ -574,6 +574,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonRetry => 'Retry';
 
   @override
+  String get contactFailed => 'Could not send. Check your internet connection and try again.';
+
+  @override
+  String get contactIntro =>
+      'Write your message and it will reach the team. Add your email or number if you want a reply.';
+
+  @override
+  String get contactMessage => 'Your message';
+
+  @override
+  String get contactMessageRequired => 'Please write your message';
+
+  @override
+  String get contactName => 'Name (optional)';
+
+  @override
+  String get contactReply => 'Your email or number for a reply (optional)';
+
+  @override
+  String get contactSend => 'Send';
+
+  @override
+  String get contactThanks => 'Your message was sent. Thank you!';
+
+  @override
   String get downloadsCancel => 'Stop download';
 
   @override
@@ -1081,7 +1106,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get libraryTitle => 'Recitations and radios';
+  String get libraryTitle => 'Recitations library: all Quran reciters';
 
   @override
   String get moreTitle => 'More';
@@ -1674,10 +1699,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quranTabSurahs => 'Surahs';
 
   @override
+  String get radioAll => 'All radios';
+
+  @override
   String get radioDuration => 'Play for';
 
   @override
   String get radioListen => 'Listen';
+
+  @override
+  String get radioLiveNote => 'Live broadcast. Pick another station from the list or from \"All radios\".';
 
   @override
   String get radioLonger => 'Longer';
@@ -1686,6 +1717,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String radioMin(String n) {
     return '$n min';
   }
+
+  @override
+  String get radioMushaf => 'Whole-Mushaf radio (chosen reciter)';
 
   @override
   String get radioNote => 'Continuous recitation of the whole Mushaf, starting from a random surah.';
@@ -1926,6 +1960,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsAccountHint => 'Optional — sync bookmarks between devices';
 
   @override
+  String get settingsAuto => 'Automatic';
+
+  @override
   String get settingsFontPreview => 'Preview';
 
   @override
@@ -1949,6 +1986,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsLanguageEn => 'English';
+
+  @override
+  String get settingsManual => 'Manual';
+
+  @override
+  String get settingsOurApps => 'Our apps';
+
+  @override
+  String get settingsOurAppsSoon => 'More apps coming soon, God willing';
+
+  @override
+  String get settingsPrayerAutoHint => 'From your location and your country\'s calculation method';
+
+  @override
+  String get settingsPrayerManualHint => 'You choose the method and adjust the minutes yourself';
+
+  @override
+  String get settingsPrayerTimes => 'Prayer times';
 
   @override
   String get settingsSources => 'Content sources';

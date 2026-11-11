@@ -14,6 +14,7 @@ import 'l10n_ext.dart';
 import 'prayer_calendar_screen.dart';
 import 'prayer_model.dart';
 import 'qibla_screen.dart';
+import 'radio_screen.dart';
 import 'reels_screen.dart';
 import 'settings_screen.dart';
 import 'stories_screen.dart';
@@ -579,21 +580,39 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
     final theme = Theme.of(context).textTheme;
     final scheme = Theme.of(context).colorScheme;
     return ListenableBuilder(
-      listenable: Listenable.merge([rec, s.sleepTimer, s.settings]),
+      listenable: Listenable.merge([rec, s.sleepTimer, s.settings, s.narration]),
       builder: (context, _) {
         final isRadio = rec.isActive && rec.scope == PlayScope.radio;
         final playing = isRadio && rec.isPlaying;
         final minutes = _chosen;
         final step = QuranRadioCard.durations.indexOf(minutes);
         final cur = isRadio ? rec.current : null;
+        // Live station chosen for the card (Cairo Quran radio unless the user picked another).
+        final station = s.settings.radioStation;
+        final live = station == 'mushaf' ? null : homeStation(s.settings, context.isArabic);
+        final n = s.narration;
+        final liveOn = live != null && n.episode?.id == live.id;
+        final livePlaying = liveOn && n.isPlaying;
+
         void setDuration(int delta) {
           final i = ((step < 0 ? 0 : step) + delta).clamp(0, QuranRadioCard.durations.length - 1);
-          final n = QuranRadioCard.durations[i];
-          setState(() => _chosen = n);
-          if (isRadio) s.sleepTimer.set(n == 0 ? null : n);
+          final m = QuranRadioCard.durations[i];
+          setState(() => _chosen = m);
+          if (isRadio || livePlaying) s.sleepTimer.set(m == 0 ? null : m);
         }
 
         Future<void> onPlay() async {
+          if (live != null) {
+            if (livePlaying) {
+              await n.pause();
+            } else if (liveOn && n.state == RecitationState.paused) {
+              await n.resume();
+            } else {
+              s.sleepTimer.set(_chosen == 0 ? null : _chosen);
+              await n.playEpisode('radio', live, remember: false);
+            }
+            return;
+          }
           if (isRadio) {
             if (playing) {
               await rec.pause();
@@ -624,25 +643,82 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
                         _Box(
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
-                              key: const Key('radio.reciter'),
-                              value: reciter.folder,
+                              key: const Key('radio.station'),
+                              value: station,
                               isExpanded: true,
                               icon: const RIcon(RIcons.chevronDown),
                               items: [
-                                for (final r in s.content.reciters.reciters)
+                                for (final r in featuredRadios)
                                   DropdownMenuItem(
-                                    value: r.folder,
+                                    value: r.id,
                                     child: Text(
-                                      r.name(context.isArabic),
+                                      context.isArabic ? r.nameAr : r.nameEn,
                                       overflow: TextOverflow.ellipsis,
                                       style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
                                     ),
                                   ),
+                                if (!featuredRadios.any((r) => r.id == station) && station != 'mushaf')
+                                  DropdownMenuItem(
+                                    value: station,
+                                    child: Text(
+                                      s.settings.radioStationName ?? station,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                DropdownMenuItem(
+                                  value: 'mushaf',
+                                  child: Text(
+                                    l.radioMushaf,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+                                  ),
+                                ),
                               ],
-                              onChanged: (v) {
-                                if (v != null) s.settings.setReciter(v);
+                              onChanged: (v) async {
+                                if (v == null || v == station) return;
+                                if (livePlaying) await n.stop();
+                                if (isRadio) await rec.stop();
+                                await s.settings.setRadioStation(v);
                               },
                             ),
+                          ),
+                        ),
+                        if (station == 'mushaf') ...[
+                          const SizedBox(height: 6),
+                          _Box(
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                key: const Key('radio.reciter'),
+                                value: reciter.folder,
+                                isExpanded: true,
+                                icon: const RIcon(RIcons.chevronDown),
+                                items: [
+                                  for (final r in s.content.reciters.reciters)
+                                    DropdownMenuItem(
+                                      value: r.folder,
+                                      child: Text(
+                                        r.name(context.isArabic),
+                                        overflow: TextOverflow.ellipsis,
+                                        style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                ],
+                                onChanged: (v) {
+                                  if (v != null) s.settings.setReciter(v);
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                        Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: TextButton(
+                            key: const Key('radio.all'),
+                            onPressed: () => Navigator.of(
+                              context,
+                            ).push(MaterialPageRoute<void>(builder: (_) => const RadioScreen())),
+                            child: Text(l.radioAll),
                           ),
                         ),
                       ],
@@ -655,10 +731,10 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
                       const SizedBox(height: 6),
                       IconButton.filled(
                         key: const Key('radio.play'),
-                        tooltip: playing ? l.radioPause : l.radioListen,
+                        tooltip: (playing || livePlaying) ? l.radioPause : l.radioListen,
                         onPressed: onPlay,
                         iconSize: 30,
-                        icon: RIcon(playing ? RIcons.pause : RIcons.play),
+                        icon: RIcon((playing || livePlaying) ? RIcons.pause : RIcons.play),
                       ),
                     ],
                   ),
@@ -703,7 +779,11 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
               ),
               const SizedBox(height: DesignTokens.spaceSm),
               Text(
-                cur == null ? l.radioNote : l.radioNowPlaying(surahName(context, s.content.quran.surah(cur.ref.surah))),
+                live != null
+                    ? (livePlaying ? l.libraryLive : l.radioLiveNote)
+                    : cur == null
+                    ? l.radioNote
+                    : l.radioNowPlaying(surahName(context, s.content.quran.surah(cur.ref.surah))),
                 key: const Key('radio.status'),
                 textAlign: TextAlign.center,
                 style: theme.bodySmall,

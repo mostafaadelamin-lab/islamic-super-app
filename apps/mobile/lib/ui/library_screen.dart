@@ -40,37 +40,37 @@ class _LibraryScreenState extends State<LibraryScreen> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     return Scaffold(
-        appBar: AppBar(title: Text(l.libraryTitle)),
-        bottomNavigationBar: _bottomPlayers,
-        body: ReadableWidth(
-          child: FutureBuilder<Mp3Library>(
-            future: _future,
-            builder: (context, snap) {
-              if (snap.hasError) {
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(DesignTokens.spaceXl),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(l.libraryLoadError, key: const Key('libraryError'), textAlign: TextAlign.center),
-                        const SizedBox(height: DesignTokens.spaceMd),
-                        FilledButton(
-                          key: const Key('libraryRetry'),
-                          onPressed: () => setState(() => _future = _load(refresh: true)),
-                          child: Text(l.libraryRetry),
-                        ),
-                      ],
-                    ),
+      appBar: AppBar(title: Text(l.libraryTitle)),
+      bottomNavigationBar: _bottomPlayers,
+      body: ReadableWidth(
+        child: FutureBuilder<Mp3Library>(
+          future: _future,
+          builder: (context, snap) {
+            if (snap.hasError) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(DesignTokens.spaceXl),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(l.libraryLoadError, key: const Key('libraryError'), textAlign: TextAlign.center),
+                      const SizedBox(height: DesignTokens.spaceMd),
+                      FilledButton(
+                        key: const Key('libraryRetry'),
+                        onPressed: () => setState(() => _future = _load(refresh: true)),
+                        child: Text(l.libraryRetry),
+                      ),
+                    ],
                   ),
-                );
-              }
-              final lib = snap.data;
-              if (lib == null) return const Center(child: CircularProgressIndicator());
-              return _reciters(context, lib);
-            },
-          ),
+                ),
+              );
+            }
+            final lib = snap.data;
+            if (lib == null) return const Center(child: CircularProgressIndicator());
+            return _reciters(context, lib);
+          },
         ),
+      ),
     );
   }
 
@@ -247,7 +247,9 @@ class PlayTile extends StatelessWidget {
     this.remember = true,
     this.offline = false,
     this.leading,
+    this.onPlay,
   });
+  final VoidCallback? onPlay;
   final String series;
   final Episode episode;
   final String? title;
@@ -268,13 +270,16 @@ class PlayTile extends StatelessWidget {
       leading: leading ?? Icon(playing ? Icons.pause_circle : Icons.play_circle, color: scheme.primary),
       title: Text(title ?? episode.title(context.isArabic)),
       subtitle: subtitle == null ? null : Text(subtitle!),
-      trailing: offline ? OfflineButton(series: series, episode: episode) : (leading != null ? Icon(playing ? Icons.pause_circle : Icons.play_circle, color: scheme.primary) : null),
+      trailing: offline
+          ? OfflineButton(series: series, episode: episode)
+          : (leading != null ? Icon(playing ? Icons.pause_circle : Icons.play_circle, color: scheme.primary) : null),
       onTap: () {
         if (playing) {
           n.pause();
         } else if (on && n.state == RecitationState.paused) {
           n.resume();
         } else {
+          onPlay?.call();
           n.playEpisode(series, episode, remember: remember);
         }
       },
@@ -330,8 +335,10 @@ class OfflineButtonState extends State<OfflineButton> {
             return IconButton(
               key: Key('offline-${widget.episode.id}'),
               tooltip: saved ? l.offlineSavedDelete : l.offlineDownload,
-              icon: Icon(saved ? Icons.download_done : Icons.download_for_offline_outlined,
-                  color: saved ? Theme.of(context).colorScheme.primary : null),
+              icon: Icon(
+                saved ? Icons.download_done : Icons.download_for_offline_outlined,
+                color: saved ? Theme.of(context).colorScheme.primary : null,
+              ),
               onPressed: () async {
                 final messenger = ScaffoldMessenger.of(context);
                 if (saved) {

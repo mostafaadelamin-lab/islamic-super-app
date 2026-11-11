@@ -11,6 +11,7 @@ import 'adaptive.dart';
 import 'adhkar_screen.dart';
 import 'audio_widgets.dart';
 import 'help_screen.dart';
+import 'stories_screen.dart' show NarrationBar;
 import 'home_screen.dart';
 import 'locate.dart';
 import 'l10n_ext.dart';
@@ -126,6 +127,7 @@ class HomeShellState extends State<HomeShell> {
                     Expanded(
                       child: ReadableWidth(maxWidth: Adaptive.tabWidth, child: body),
                     ),
+                    const NarrationBar(),
                     const MiniPlayer(),
                   ],
                 ),
@@ -140,6 +142,9 @@ class HomeShellState extends State<HomeShell> {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // Owner (2026-11-11): a story keeps playing after leaving its page, so its player
+          // (play/pause/stop) stays on the main screens too.
+          const NarrationBar(),
           const MiniPlayer(),
           NavigationBar(
             key: const Key('navBar'),

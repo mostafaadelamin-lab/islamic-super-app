@@ -111,6 +111,14 @@ const bundledAdhanVoices = <AdhanVoice>[
     asset: 'assets/audio/adhan_rifaat.m4a',
   ),
   AdhanVoice(
+    id: 'abdulbasit',
+    nameAr: 'الشيخ عبد الباسط عبد الصمد',
+    nameEn: 'Sheikh Abdul Basit Abdul Samad',
+    place: 'مصر',
+    raw: 'adhan_abdulbasit',
+    asset: 'assets/audio/adhan_abdulbasit.m4a',
+  ),
+  AdhanVoice(
     id: 'daghriri_fajr',
     nameAr: 'أذان الفجر: الشيخ حمد الدغريري',
     nameEn: 'Fajr adhan: Sheikh Hamad Al-Daghriri',
@@ -126,6 +134,15 @@ const bundledAdhanVoices = <AdhanVoice>[
     fajr: true,
     raw: 'adhan_afasy_fajr',
     asset: 'assets/audio/adhan_afasy_fajr.m4a',
+  ),
+  AdhanVoice(
+    id: 'abdulbasit_fajr',
+    nameAr: 'أذان الفجر: الشيخ عبد الباسط عبد الصمد',
+    nameEn: 'Fajr adhan: Sheikh Abdul Basit Abdul Samad',
+    place: 'مصر',
+    fajr: true,
+    raw: 'adhan_abdulbasit_fajr',
+    asset: 'assets/audio/adhan_abdulbasit_fajr.m4a',
   ),
   AdhanVoice(
     id: 'haram',
@@ -177,7 +194,8 @@ const bundledAdhanVoices = <AdhanVoice>[
     fajr: true,
     raw: 'adhan_haram_fajr',
     asset: 'assets/audio/adhan_haram_fajr.m4a',
-    credit: '"Eid al-Fitr Fajr azan at Malmö Mosque - 19 August 2012", Islamic Center Malmö, Wikimedia Commons, CC BY 3.0',
+    credit:
+        '"Eid al-Fitr Fajr azan at Malmö Mosque - 19 August 2012", Islamic Center Malmö, Wikimedia Commons, CC BY 3.0',
   ),
 ];
 

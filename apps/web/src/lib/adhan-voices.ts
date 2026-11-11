@@ -71,6 +71,14 @@ export const BUNDLED_ADHAN_VOICES: readonly AdhanVoice[] = [
     file: "/audio/adhan_rifaat.mp3",
   },
   {
+    id: "abdulbasit",
+    nameAr: "الشيخ عبد الباسط عبد الصمد",
+    nameEn: "Sheikh Abdul Basit Abdul Samad",
+    place: "مصر",
+    fajr: false,
+    file: "/audio/adhan_abdulbasit.mp3",
+  },
+  {
     id: "daghriri_fajr",
     nameAr: "أذان الفجر: الشيخ حمد الدغريري",
     nameEn: "Fajr adhan: Sheikh Hamad Al-Daghriri",
@@ -85,6 +93,14 @@ export const BUNDLED_ADHAN_VOICES: readonly AdhanVoice[] = [
     place: "",
     fajr: true,
     file: "/audio/adhan_afasy_fajr.mp3",
+  },
+  {
+    id: "abdulbasit_fajr",
+    nameAr: "أذان الفجر: الشيخ عبد الباسط عبد الصمد",
+    nameEn: "Fajr adhan: Sheikh Abdul Basit Abdul Samad",
+    place: "مصر",
+    fajr: true,
+    file: "/audio/adhan_abdulbasit_fajr.mp3",
   },
   {
     id: "haram",

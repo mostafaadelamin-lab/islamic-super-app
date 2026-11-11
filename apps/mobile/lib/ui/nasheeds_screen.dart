@@ -18,8 +18,16 @@ class NasheedsScreen extends StatelessWidget {
     final l = context.l10n;
     final theme = Theme.of(context);
     Widget header(String text) => Padding(
-      padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceLg, DesignTokens.spaceLg, DesignTokens.spaceXs),
-      child: Text(text, style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.w700)),
+      padding: const EdgeInsets.fromLTRB(
+        DesignTokens.spaceLg,
+        DesignTokens.spaceLg,
+        DesignTokens.spaceLg,
+        DesignTokens.spaceXs,
+      ),
+      child: Text(
+        text,
+        style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.w700),
+      ),
     );
     Widget card(Munshid m) => Card(
       key: Key('munshid.${m.id}'),

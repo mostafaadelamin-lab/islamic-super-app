@@ -55,6 +55,7 @@ Uri googleMapsMosqueUri(Mosque m) {
   final p = '${m.lat.toStringAsFixed(6)},${m.lng.toStringAsFixed(6)}';
   return Uri.https('www.google.com', '/maps/search/', {'api': '1', 'query': m.name == null ? p : '${m.name} $p'});
 }
+
 const mosqueRadii = [2000, 5000, 10000];
 const defaultMosqueRadius = 5000;
 const maxMosques = 60;

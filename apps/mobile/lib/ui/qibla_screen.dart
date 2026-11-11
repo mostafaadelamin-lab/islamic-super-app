@@ -328,7 +328,10 @@ class QiblaScreenState extends State<QiblaScreen> {
                 color: theme.colorScheme.errorContainer,
                 child: ListTile(
                   leading: RIcon(RIcons.refresh, color: theme.colorScheme.onErrorContainer),
-                  title: Text(l.qiblaCalibrateTitle, style: TextStyle(color: theme.colorScheme.onErrorContainer, fontWeight: FontWeight.w700)),
+                  title: Text(
+                    l.qiblaCalibrateTitle,
+                    style: TextStyle(color: theme.colorScheme.onErrorContainer, fontWeight: FontWeight.w700),
+                  ),
                   subtitle: Text(l.qiblaCalibrateBody, style: TextStyle(color: theme.colorScheme.onErrorContainer)),
                 ),
               ),
@@ -338,7 +341,8 @@ class QiblaScreenState extends State<QiblaScreen> {
               key: const Key('qiblaMapCheck'),
               icon: const RIcon(RIcons.external),
               label: Text(l.qiblaMapCheck),
-              onPressed: () => launchUrl(Uri.parse('https://qiblafinder.withgoogle.com/'), mode: LaunchMode.externalApplication),
+              onPressed: () =>
+                  launchUrl(Uri.parse('https://qiblafinder.withgoogle.com/'), mode: LaunchMode.externalApplication),
             ),
             if (live) ...[
               const SizedBox(height: DesignTokens.spaceMd),

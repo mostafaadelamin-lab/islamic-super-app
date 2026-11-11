@@ -82,7 +82,12 @@ class _TasbihScreenState extends State<TasbihScreen> {
               builder: (context, c) {
                 final dial = math.max(180.0, math.min(280.0, math.min(c.maxWidth - 96, c.maxHeight * 0.45)));
                 return ListView(
-                  padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceSm, DesignTokens.spaceLg, DesignTokens.spaceXl),
+                  padding: const EdgeInsets.fromLTRB(
+                    DesignTokens.spaceLg,
+                    DesignTokens.spaceSm,
+                    DesignTokens.spaceLg,
+                    DesignTokens.spaceXl,
+                  ),
                   children: [
                     // Dhikr picker: a row of pills.
                     SizedBox(
@@ -114,7 +119,12 @@ class _TasbihScreenState extends State<TasbihScreen> {
                     // The counter: a gradient card with the ring and the big tap button.
                     Container(
                       key: const Key('tasbihHero'),
-                      padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceXl, DesignTokens.spaceLg, DesignTokens.spaceLg),
+                      padding: const EdgeInsets.fromLTRB(
+                        DesignTokens.spaceLg,
+                        DesignTokens.spaceXl,
+                        DesignTokens.spaceLg,
+                        DesignTokens.spaceLg,
+                      ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(28),
                         gradient: LinearGradient(
@@ -122,7 +132,9 @@ class _TasbihScreenState extends State<TasbihScreen> {
                           end: Alignment.bottomCenter,
                           colors: [color, dark],
                         ),
-                        boxShadow: [BoxShadow(color: color.withValues(alpha: 0.35), blurRadius: 24, offset: const Offset(0, 10))],
+                        boxShadow: [
+                          BoxShadow(color: color.withValues(alpha: 0.35), blurRadius: 24, offset: const Offset(0, 10)),
+                        ],
                       ),
                       child: Column(
                         children: [
@@ -130,7 +142,11 @@ class _TasbihScreenState extends State<TasbihScreen> {
                             b.textOf(b.phrase),
                             key: const Key('tasbihPhraseText'),
                             textAlign: TextAlign.center,
-                            style: theme.textTheme.headlineSmall?.copyWith(color: Colors.white, fontWeight: FontWeight.w600, height: 1.5),
+                            style: theme.textTheme.headlineSmall?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              height: 1.5,
+                            ),
                           ),
                           const SizedBox(height: DesignTokens.spaceLg),
                           Semantics(
@@ -143,8 +159,17 @@ class _TasbihScreenState extends State<TasbihScreen> {
                               child: CustomPaint(
                                 key: Key('tasbihDial-${b.mode.name}'),
                                 painter: b.mode == TasbihMode.beads
-                                    ? _BeadsPainter(st.count, st.target, Colors.white, Colors.white.withValues(alpha: 0.15))
-                                    : _RingPainter(st.count / st.target, Colors.white, Colors.white.withValues(alpha: 0.2)),
+                                    ? _BeadsPainter(
+                                        st.count,
+                                        st.target,
+                                        Colors.white,
+                                        Colors.white.withValues(alpha: 0.15),
+                                      )
+                                    : _RingPainter(
+                                        st.count / st.target,
+                                        Colors.white,
+                                        Colors.white.withValues(alpha: 0.2),
+                                      ),
                                 child: Padding(
                                   padding: EdgeInsets.all(b.mode == TasbihMode.beads ? 36 : 20),
                                   child: Material(
@@ -163,7 +188,10 @@ class _TasbihScreenState extends State<TasbihScreen> {
                                               child: Text(
                                                 context.num(st.count),
                                                 key: const Key('tasbihCount'),
-                                                style: theme.textTheme.displayLarge?.copyWith(color: dark, fontWeight: FontWeight.w700),
+                                                style: theme.textTheme.displayLarge?.copyWith(
+                                                  color: dark,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
                                               ),
                                             ),
                                             Text(
@@ -192,7 +220,12 @@ class _TasbihScreenState extends State<TasbihScreen> {
                                 onTap: st.count == 0 ? null : t.undo,
                               ),
                               const SizedBox(width: DesignTokens.spaceXl),
-                              _HeroAction(key: const Key('tasbihReset'), icon: RIcons.reset, label: l.tasbihReset, onTap: t.reset),
+                              _HeroAction(
+                                key: const Key('tasbihReset'),
+                                icon: RIcons.reset,
+                                label: l.tasbihReset,
+                                onTap: t.reset,
+                              ),
                             ],
                           ),
                         ],
@@ -201,7 +234,11 @@ class _TasbihScreenState extends State<TasbihScreen> {
                     const SizedBox(height: DesignTokens.spaceLg),
                     Row(
                       children: [
-                        _Stat(key: const Key('tasbihRounds'), text: l.tasbihRounds(context.num(st.rounds)), color: color),
+                        _Stat(
+                          key: const Key('tasbihRounds'),
+                          text: l.tasbihRounds(context.num(st.rounds)),
+                          color: color,
+                        ),
                         const SizedBox(width: DesignTokens.spaceSm),
                         _Stat(key: const Key('tasbihTotal'), text: l.tasbihTotal(context.num(st.total)), color: color),
                         const SizedBox(width: DesignTokens.spaceSm),
@@ -261,9 +298,14 @@ class _TasbihScreenState extends State<TasbihScreen> {
                                     decoration: BoxDecoration(
                                       color: Color(e.value),
                                       shape: BoxShape.circle,
-                                      border: Border.all(color: b.color == e.key ? scheme.onSurface : Colors.transparent, width: 3),
+                                      border: Border.all(
+                                        color: b.color == e.key ? scheme.onSurface : Colors.transparent,
+                                        width: 3,
+                                      ),
                                     ),
-                                    child: b.color == e.key ? const RIcon(RIcons.check, color: Colors.white, size: 18) : null,
+                                    child: b.color == e.key
+                                        ? const RIcon(RIcons.check, color: Colors.white, size: 18)
+                                        : null,
                                   ),
                                 ),
                               ),
@@ -391,7 +433,10 @@ class _HeroAction extends StatelessWidget {
             children: [
               RIcon(icon, color: fg, size: 20),
               const SizedBox(width: DesignTokens.spaceXs),
-              Text(label, style: TextStyle(color: fg, fontWeight: FontWeight.w600)),
+              Text(
+                label,
+                style: TextStyle(color: fg, fontWeight: FontWeight.w600),
+              ),
             ],
           ),
         ),
@@ -409,10 +454,7 @@ class _Stat extends StatelessWidget {
   Widget build(BuildContext context) => Expanded(
     child: Container(
       padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceMd, horizontal: DesignTokens.spaceXs),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.10),
-        borderRadius: BorderRadius.circular(16),
-      ),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.10), borderRadius: BorderRadius.circular(16)),
       child: Text(
         text,
         textAlign: TextAlign.center,

@@ -820,6 +820,38 @@
   "@commonRetry": {
     "description": "shared key \"common.retry\""
   },
+  "contactFailed": "Could not send. Check your internet connection and try again.",
+  "@contactFailed": {
+    "description": "shared key \"contact.failed\""
+  },
+  "contactIntro": "Write your message and it will reach the team. Add your email or number if you want a reply.",
+  "@contactIntro": {
+    "description": "shared key \"contact.intro\""
+  },
+  "contactMessage": "Your message",
+  "@contactMessage": {
+    "description": "shared key \"contact.message\""
+  },
+  "contactMessageRequired": "Please write your message",
+  "@contactMessageRequired": {
+    "description": "shared key \"contact.messageRequired\""
+  },
+  "contactName": "Name (optional)",
+  "@contactName": {
+    "description": "shared key \"contact.name\""
+  },
+  "contactReply": "Your email or number for a reply (optional)",
+  "@contactReply": {
+    "description": "shared key \"contact.reply\""
+  },
+  "contactSend": "Send",
+  "@contactSend": {
+    "description": "shared key \"contact.send\""
+  },
+  "contactThanks": "Your message was sent. Thank you!",
+  "@contactThanks": {
+    "description": "shared key \"contact.thanks\""
+  },
   "downloadsCancel": "Stop download",
   "@downloadsCancel": {
     "description": "shared key \"downloads.cancel\""
@@ -1608,7 +1640,7 @@
       }
     }
   },
-  "libraryTitle": "Recitations and radios",
+  "libraryTitle": "Recitations library: all Quran reciters",
   "@libraryTitle": {
     "description": "shared key \"library.title\""
   },
@@ -2488,6 +2520,10 @@
   "@quranTabSurahs": {
     "description": "shared key \"quran.tabSurahs\""
   },
+  "radioAll": "All radios",
+  "@radioAll": {
+    "description": "shared key \"radio.all\""
+  },
   "radioDuration": "Play for",
   "@radioDuration": {
     "description": "shared key \"radio.duration\""
@@ -2495,6 +2531,10 @@
   "radioListen": "Listen",
   "@radioListen": {
     "description": "shared key \"radio.listen\""
+  },
+  "radioLiveNote": "Live broadcast. Pick another station from the list or from \"All radios\".",
+  "@radioLiveNote": {
+    "description": "shared key \"radio.liveNote\""
   },
   "radioLonger": "Longer",
   "@radioLonger": {
@@ -2508,6 +2548,10 @@
         "type": "String"
       }
     }
+  },
+  "radioMushaf": "Whole-Mushaf radio (chosen reciter)",
+  "@radioMushaf": {
+    "description": "shared key \"radio.mushaf\""
   },
   "radioNote": "Continuous recitation of the whole Mushaf, starting from a random surah.",
   "@radioNote": {
@@ -2853,6 +2897,10 @@
   "@settingsAccountHint": {
     "description": "shared key \"settings.accountHint\""
   },
+  "settingsAuto": "Automatic",
+  "@settingsAuto": {
+    "description": "shared key \"settings.auto\""
+  },
   "settingsFontPreview": "Preview",
   "@settingsFontPreview": {
     "description": "shared key \"settings.fontPreview\""
@@ -2884,6 +2932,30 @@
   "settingsLanguageEn": "English",
   "@settingsLanguageEn": {
     "description": "shared key \"settings.languageEn\""
+  },
+  "settingsManual": "Manual",
+  "@settingsManual": {
+    "description": "shared key \"settings.manual\""
+  },
+  "settingsOurApps": "Our apps",
+  "@settingsOurApps": {
+    "description": "shared key \"settings.ourApps\""
+  },
+  "settingsOurAppsSoon": "More apps coming soon, God willing",
+  "@settingsOurAppsSoon": {
+    "description": "shared key \"settings.ourAppsSoon\""
+  },
+  "settingsPrayerAutoHint": "From your location and your country's calculation method",
+  "@settingsPrayerAutoHint": {
+    "description": "shared key \"settings.prayerAutoHint\""
+  },
+  "settingsPrayerManualHint": "You choose the method and adjust the minutes yourself",
+  "@settingsPrayerManualHint": {
+    "description": "shared key \"settings.prayerManualHint\""
+  },
+  "settingsPrayerTimes": "Prayer times",
+  "@settingsPrayerTimes": {
+    "description": "shared key \"settings.prayerTimes\""
   },
   "settingsSources": "Content sources",
   "@settingsSources": {

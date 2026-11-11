@@ -157,9 +157,18 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Automatic prayer times (owner, 2026-11-11): the city's recommended method and no
+  /// manual minute adjustments. Choosing a method or adjusting a time switches to manual.
+  bool get prayerAuto => _prefs.getBool('prayer.auto') ?? !_prefs.containsKey('adjustments');
+  Future<void> setPrayerAuto(bool v) async {
+    await _prefs.setBool('prayer.auto', v);
+    notifyListeners();
+  }
+
   /// Null means "use the city's recommended method".
-  String? get method => _prefs.getString('method');
+  String? get method => prayerAuto ? null : _prefs.getString('method');
   Future<void> setMethod(String m) async {
+    await _prefs.setBool('prayer.auto', false);
     await _prefs.setString('method', m);
     notifyListeners();
   }
@@ -171,6 +180,7 @@ class SettingsController extends ChangeNotifier {
   }
 
   Map<String, int> get adjustments {
+    if (prayerAuto) return const {};
     final raw = _prefs.getString('adjustments');
     if (raw == null) return const {};
     final m = jsonDecode(raw) as Map<String, dynamic>;
@@ -180,6 +190,7 @@ class SettingsController extends ChangeNotifier {
   Future<void> setAdjustment(String key, int minutes) async {
     final m = Map<String, int>.of(adjustments)..[key] = clampAdjustment(minutes);
     m.removeWhere((_, v) => v == 0);
+    await _prefs.setBool('prayer.auto', false);
     await _prefs.setString('adjustments', jsonEncode(m));
     notifyListeners();
   }
@@ -406,8 +417,20 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// The home radio station (owner, 2026-11-11: Cairo Quran radio by default). "mushaf" = the
+  /// app's whole-Mushaf radio; otherwise a live stream (id, name, url).
+  String get radioStation => _prefs.getString('radio.station') ?? 'radio-eg';
+  String? get radioStationName => _prefs.getString('radio.stationName');
+  String? get radioStationUrl => _prefs.getString('radio.stationUrl');
+  Future<void> setRadioStation(String id, {String? name, String? url}) async {
+    await _prefs.setString('radio.station', id);
+    if (name != null) await _prefs.setString('radio.stationName', name);
+    if (url != null) await _prefs.setString('radio.stationUrl', url);
+    notifyListeners();
+  }
+
   /// Adhkar and Hisn al-Muslim shown one card at a time instead of a list.
-  bool get adhkarCards => _prefs.getBool('adhkar.cards') ?? false;
+  bool get adhkarCards => _prefs.getBool('adhkar.cards') ?? true;
   Future<void> setAdhkarCards(bool v) async {
     await _prefs.setBool('adhkar.cards', v);
     notifyListeners();

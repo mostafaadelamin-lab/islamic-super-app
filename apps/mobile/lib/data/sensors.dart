@@ -32,7 +32,8 @@ class DeviceCompassSensors implements CompassSensors {
   Stream<double>? get systemHeading => _events.where((e) => e is num).map((e) => (e as num).toDouble());
 
   @override
-  Stream<CompassQuality>? get quality => _events.where((e) => e is Map).map((e) => CompassQuality.fromPlatform(e as Map<dynamic, dynamic>));
+  Stream<CompassQuality>? get quality =>
+      _events.where((e) => e is Map).map((e) => CompassQuality.fromPlatform(e as Map<dynamic, dynamic>));
 
   @override
   Stream<Vec3> get accelerometer =>
@@ -50,8 +51,6 @@ class CompassQuality {
   final int? calibration;
   final double? accuracyDeg;
 
-  factory CompassQuality.fromPlatform(Map<dynamic, dynamic> e) => CompassQuality(
-    calibration: (e['cal'] as num?)?.toInt(),
-    accuracyDeg: (e['acc'] as num?)?.toDouble(),
-  );
+  factory CompassQuality.fromPlatform(Map<dynamic, dynamic> e) =>
+      CompassQuality(calibration: (e['cal'] as num?)?.toInt(), accuracyDeg: (e['acc'] as num?)?.toDouble());
 }

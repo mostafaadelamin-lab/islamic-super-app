@@ -143,7 +143,6 @@ class HisnChapterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l = context.l10n;
     final settings = context.services.settings;
     return Scaffold(
       appBar: AppBar(
@@ -156,7 +155,6 @@ class HisnChapterScreen extends StatelessWidget {
           builder: (context, _) => settings.adhkarCards
               ? Column(
                   children: [
-                    ReviewNotice(l.adhkarReviewNotice),
                     Expanded(
                       child: CardPager(count: chapter.items.length, builder: _item),
                     ),
@@ -165,10 +163,7 @@ class HisnChapterScreen extends StatelessWidget {
               : ListView(
                   key: const Key('hisnChapter'),
                   padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-                  children: [
-                    ReviewNotice(l.adhkarReviewNotice),
-                    for (var i = 0; i < chapter.items.length; i++) _item(context, i),
-                  ],
+                  children: [for (var i = 0; i < chapter.items.length; i++) _item(context, i)],
                 ),
         ),
       ),

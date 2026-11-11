@@ -128,10 +128,8 @@ Future<void> openSurah(BuildContext context, int surah, {int? ayah}) {
   final r = AyahRef(surah, ayah ?? 1);
   return Navigator.of(context).push(
     MaterialPageRoute<void>(
-      builder: (_) => PageReaderScreen(
-        initialPage: context.services.content.quran.pageOf(r),
-        highlight: ayah == null ? null : r,
-      ),
+      builder: (_) =>
+          PageReaderScreen(initialPage: context.services.content.quran.pageOf(r), highlight: ayah == null ? null : r),
     ),
   );
 }

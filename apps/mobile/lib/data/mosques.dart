@@ -21,7 +21,14 @@ class MosqueResult {
 const googlePlacesKey = String.fromEnvironment('GOOGLE_PLACES_KEY');
 
 /// Google Places "Nearby Search (New)": up to 20 mosques, nearest first.
-Future<List<Mosque>> googlePlacesMosques(http.Client client, String key, double lat, double lng, int radius, {required bool arabic}) async {
+Future<List<Mosque>> googlePlacesMosques(
+  http.Client client,
+  String key,
+  double lat,
+  double lng,
+  int radius, {
+  required bool arabic,
+}) async {
   final res = await client
       .post(
         Uri.https('places.googleapis.com', '/v1/places:searchNearby'),
@@ -58,7 +65,9 @@ List<Mosque> parseGooglePlaces(Object? json, double lat, double lng) {
     final mLng = (loc['longitude'] as num?)?.toDouble();
     if (mLat == null || mLng == null) continue;
     final dn = p['displayName'];
-    final name = dn is Map && dn['text'] is String && (dn['text'] as String).trim().isNotEmpty ? (dn['text'] as String).trim() : null;
+    final name = dn is Map && dn['text'] is String && (dn['text'] as String).trim().isNotEmpty
+        ? (dn['text'] as String).trim()
+        : null;
     out.add(Mosque(id: 'g/${p['id']}', name: name, lat: mLat, lng: mLng, distance: distanceM(lat, lng, mLat, mLng)));
   }
   out.sort((a, b) => a.distance.compareTo(b.distance));
@@ -133,9 +142,11 @@ class MosqueFinder {
     if (raw != null) {
       final j = jsonDecode(raw) as Map<String, dynamic>;
       if (j['key'] == key) {
-        return MosqueResult([
-          for (final m in j['items'] as List<dynamic>) Mosque.fromJson(m as Map<String, dynamic>),
-        ], offline: true, fromGoogle: j['google'] == true);
+        return MosqueResult(
+          [for (final m in j['items'] as List<dynamic>) Mosque.fromJson(m as Map<String, dynamic>)],
+          offline: true,
+          fromGoogle: j['google'] == true,
+        );
       }
     }
     throw last ?? Exception('Overpass unavailable');

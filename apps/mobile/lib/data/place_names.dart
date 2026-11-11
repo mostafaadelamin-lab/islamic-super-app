@@ -36,7 +36,18 @@ class PlaceNames {
   static const _small = ['village', 'hamlet', 'neighbourhood', 'residential'];
 
   /// What the street-level answer offers, most specific first.
-  static const _street = ['suburb', 'town', 'quarter', 'city_district', 'village', 'hamlet', 'city', 'municipality', 'county', 'state'];
+  static const _street = [
+    'suburb',
+    'town',
+    'quarter',
+    'city_district',
+    'village',
+    'hamlet',
+    'city',
+    'municipality',
+    'county',
+    'state',
+  ];
   static const _broad = ['city', 'municipality', 'county', 'state'];
 
   static String? _get(Map<dynamic, dynamic> a, String k) {
@@ -44,7 +55,8 @@ class PlaceNames {
     return v is String && v.trim().isNotEmpty ? v.trim() : null;
   }
 
-  static Map<dynamic, dynamic>? _address(Object? json) => json is Map && json['address'] is Map ? json['address'] as Map<dynamic, dynamic> : null;
+  static Map<dynamic, dynamic>? _address(Object? json) =>
+      json is Map && json['address'] is Map ? json['address'] as Map<dynamic, dynamic> : null;
 
   /// [district]: Nominatim at zoom 14; [street]: at zoom 16 (either may be null).
   static PlaceName? parse(Object? district, [Object? street]) {
@@ -82,7 +94,8 @@ class PlaceNames {
   /// BigDataCloud's reverse-geocode-client answer.
   static PlaceName? parseBigDataCloud(Object? json) {
     if (json is! Map) return null;
-    String? s(String k) => json[k] is String && (json[k] as String).trim().isNotEmpty ? (json[k] as String).trim() : null;
+    String? s(String k) =>
+        json[k] is String && (json[k] as String).trim().isNotEmpty ? (json[k] as String).trim() : null;
     final area = s('locality') ?? s('city') ?? s('principalSubdivision');
     final country = s('countryName');
     if (area == null && country == null) return null;
@@ -97,13 +110,14 @@ class PlaceNames {
     return jsonDecode(utf8.decode(res.bodyBytes));
   }
 
-  Uri _nominatim(double lat, double lng, int zoom, bool arabic) => Uri.https('nominatim.openstreetmap.org', '/reverse', {
-    'lat': lat.toStringAsFixed(5),
-    'lon': lng.toStringAsFixed(5),
-    'format': 'jsonv2',
-    'zoom': '$zoom',
-    'accept-language': arabic ? 'ar' : 'en',
-  });
+  Uri _nominatim(double lat, double lng, int zoom, bool arabic) =>
+      Uri.https('nominatim.openstreetmap.org', '/reverse', {
+        'lat': lat.toStringAsFixed(5),
+        'lon': lng.toStringAsFixed(5),
+        'format': 'jsonv2',
+        'zoom': '$zoom',
+        'accept-language': arabic ? 'ar' : 'en',
+      });
 
   Future<PlaceName?> lookup(double lat, double lng, {required bool arabic}) async {
     Object? district;
@@ -118,11 +132,13 @@ class PlaceNames {
     if (p != null && p.area != null) return p;
     try {
       final b = parseBigDataCloud(
-        await _get2(Uri.https('api.bigdatacloud.net', '/data/reverse-geocode-client', {
-          'latitude': lat.toStringAsFixed(5),
-          'longitude': lng.toStringAsFixed(5),
-          'localityLanguage': arabic ? 'ar' : 'en',
-        })),
+        await _get2(
+          Uri.https('api.bigdatacloud.net', '/data/reverse-geocode-client', {
+            'latitude': lat.toStringAsFixed(5),
+            'longitude': lng.toStringAsFixed(5),
+            'localityLanguage': arabic ? 'ar' : 'en',
+          }),
+        ),
       );
       if (b != null) return b;
     } catch (_) {}

@@ -18,7 +18,7 @@ import 'prayer_calendar_screen.dart';
 import 'prayer_model.dart';
 import 'qibla_screen.dart';
 import 'locate.dart';
-import 'settings_screen.dart' show AdhanSettingsCard, enableAdhanAlerts;
+import 'settings_screen.dart' show AdhanSettingsCard, HijriOffsetCard;
 import 'widgets.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
@@ -107,281 +107,258 @@ class _PrayerScreenState extends State<PrayerScreen> {
                   ).day(PrayerSchedule(s.content.calculator), shownDate, adjustments);
             final next = _dayOffset == 0 ? pv.next : null;
             final hijri = hijriFor(shownDate, arabic: ar);
-            final banner = <Widget>[
-                if (!s.settings.adhanEnabled)
-                  SectionCard(
-                    key: const Key('adhanBanner'),
+            final cityCard = <Widget>[
+              SectionCard(
+                children: [
+                  ListTile(
+                    key: const Key('cityTile'),
+                    contentPadding: EdgeInsets.zero,
+                    leading: const RIcon(RIcons.city),
+                    title: Text(l.prayerCity),
+                    subtitle: Text(pv.city.name(context.isArabic), key: const Key('cityName')),
+                    trailing: const RIcon(RIcons.chevronForward),
+                    onTap: () async {
+                      final c = await Navigator.of(
+                        context,
+                      ).push<City>(MaterialPageRoute(builder: (_) => CityPickerScreen(selectedId: pv.city.id)));
+                      if (c != null) await s.settings.setCity(c.id, c.method);
+                    },
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: TextButton.icon(
+                      key: const Key('useLocation'),
+                      onPressed: _locating ? null : _useLocation,
+                      icon: _locating
+                          ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                          : const RIcon(RIcons.myLocation),
+                      label: Text(_locating ? l.prayerLocating : l.prayerUseLocation),
+                    ),
+                  ),
+                  if (_geoError != null)
+                    Text(
+                      _geoError!,
+                      key: const Key('geoError'),
+                      style: TextStyle(color: Theme.of(context).colorScheme.error),
+                    ),
+                  const SizedBox(height: DesignTokens.spaceSm),
+                  LabeledDropdown<String>(
+                    dropdownKey: const Key('methodDropdown'),
+                    label: l.prayerMethod,
+                    value: pv.method,
+                    items: {for (final m in cfg.methods.values) m.id: _methodName(context, m)},
+                    onChanged: s.settings.setMethod,
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMd),
+                  LabeledDropdown<String>(
+                    dropdownKey: const Key('asrDropdown'),
+                    label: l.prayerAsrMethod,
+                    value: pv.asr,
+                    items: {'standard': l.prayerAsrStandard, 'hanafi': l.prayerAsrHanafi},
+                    onChanged: s.settings.setAsr,
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMd),
+                  LabeledDropdown<bool>(
+                    dropdownKey: const Key('clockDropdown'),
+                    label: l.prayerClock,
+                    value: h12,
+                    items: {false: l.prayerClock24, true: l.prayerClock12},
+                    onChanged: s.settings.setClock12,
+                  ),
+                ],
+              ),
+            ];
+            final timesCard = <Widget>[
+              SectionCard(
+                title: l.prayerTitle,
+                children: [
+                  Row(
                     children: [
-                      Row(
+                      IconButton(
+                        key: const Key('dayPrev'),
+                        tooltip: l.prayerPrevDay,
+                        icon: RIcon(ar ? RIcons.chevronForward : RIcons.chevron),
+                        onPressed: () => setState(() => _dayOffset--),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              '${weekdayName(shownDate, arabic: ar)} ${context.num(shownDate.day)} '
+                              '${gregorianMonthName(shownDate.month, arabic: ar)} ${context.num(shownDate.year)}',
+                              key: const Key('dayLabel'),
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                            Text(
+                              l.homeHijriDate(context.num(hijri.day), hijri.monthName, context.num(hijri.year)),
+                              key: const Key('dayHijri'),
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        key: const Key('dayNext'),
+                        tooltip: l.prayerNextDay,
+                        icon: RIcon(ar ? RIcons.chevron : RIcons.chevronForward),
+                        onPressed: () => setState(() => _dayOffset++),
+                      ),
+                    ],
+                  ),
+                  Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: DesignTokens.spaceSm,
+                    children: [
+                      if (_dayOffset != 0)
+                        TextButton(
+                          key: const Key('dayToday'),
+                          onPressed: () => setState(() => _dayOffset = 0),
+                          child: Text(l.prayerBackToToday),
+                        ),
+                      TextButton.icon(
+                        key: const Key('openCalendar'),
+                        onPressed: () => Navigator.of(
+                          context,
+                        ).push(MaterialPageRoute<void>(builder: (_) => const PrayerCalendarScreen())),
+                        icon: const RIcon(RIcons.calendar),
+                        label: Text(l.prayerOpenCalendar),
+                      ),
+                    ],
+                  ),
+                  Text(l.prayerDate(context.numLtr(_date(shownDate))), key: const Key('prayerDate')),
+                  Text(l.prayerTimezone(pv.city.tz), key: const Key('prayerTz')),
+                  const SizedBox(height: DesignTokens.spaceSm),
+                  if (today == null)
+                    Text(l.prayerNoPrayerToday, key: const Key('polarMessage'))
+                  else ...[
+                    if (next != null)
+                      Container(
+                        key: const Key('nextPrayer'),
+                        padding: const EdgeInsets.all(DesignTokens.spaceMd),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              l.prayerNext(context.prayerName(next.key)),
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            Text(
+                              l.prayerIn(context.numLtr(PrayerSchedule.formatCountdown(next.remaining))),
+                              key: const Key('countdown'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    const SizedBox(height: DesignTokens.spaceSm),
+                    Container(
+                      key: const Key('timesTint'),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: DesignTokens.spaceMd,
+                        vertical: DesignTokens.spaceSm,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.35),
+                        borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
+                      ),
+                      child: Column(
                         children: [
-                          RIcon(RIcons.bellOff, color: Theme.of(context).colorScheme.primary),
-                          const SizedBox(width: DesignTokens.spaceSm),
-                          Expanded(child: Text(l.adhanBanner)),
+                          for (final k in prayerKeys)
+                            _TimeRow(
+                              name: context.prayerName(k),
+                              time: context.num(today.clock(k, h12: h12, arabic: ar)),
+                              isNext: next != null && next.key == k && next.at == today.day.utc[k],
+                              rowKey: Key('time-$k'),
+                              // Bell per obligatory prayer once adhan alerts are on.
+                              bell: s.settings.adhanEnabled && obligatoryPrayers.contains(k)
+                                  ? IconButton(
+                                      key: Key('adhanBell-$k'),
+                                      visualDensity: VisualDensity.compact,
+                                      tooltip: s.settings.adhanFor(k)
+                                          ? l.adhanBellOn(context.prayerName(k))
+                                          : l.adhanBellOff(context.prayerName(k)),
+                                      icon: RIcon(
+                                        s.settings.adhanFor(k) ? RIcons.bell : RIcons.bellOff,
+                                        color: s.settings.adhanFor(k) ? Theme.of(context).colorScheme.primary : null,
+                                      ),
+                                      onPressed: () => s.settings.setAdhanFor(k, !s.settings.adhanFor(k)),
+                                    )
+                                  // Keeps the times aligned on the sunrise row.
+                                  : (s.settings.adhanEnabled ? const SizedBox(width: 40) : null),
+                            ),
                         ],
                       ),
+                    ),
+                    if (today.day.highLatitudeAdjusted.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
+                        child: Text(
+                          l.prayerHighLat(
+                            today.day.highLatitudeAdjusted.map(context.prayerName).join(context.isArabic ? '، ' : ', '),
+                          ),
+                          key: const Key('highLatNote'),
+                        ),
+                      ),
+                  ],
+                ],
+              ),
+            ];
+            final rest = <Widget>[
+              if (s.settings.adhanEnabled) _AdhanExtrasCard(settings: s.settings),
+              SectionCard(
+                children: [
+                  ExpansionTile(
+                    key: const Key('adjustTile'),
+                    tilePadding: EdgeInsets.zero,
+                    title: Text(l.prayerAdjust),
+                    children: [
+                      for (final k in prayerKeys)
+                        _AdjustRow(
+                          prayerKey: k,
+                          value: adjustments[k] ?? 0,
+                          // Read the stored value at tap time so quick taps accumulate.
+                          onStep: (d) => s.settings.setAdjustment(k, (s.settings.adjustments[k] ?? 0) + d),
+                        ),
                       Align(
                         alignment: AlignmentDirectional.centerEnd,
-                        child: FilledButton.icon(
-                          key: const Key('adhanBannerEnable'),
-                          onPressed: () => enableAdhanAlerts(context),
-                          icon: const RIcon(RIcons.bell),
-                          label: Text(l.adhanBannerAction),
+                        child: TextButton.icon(
+                          key: const Key('resetAdjust'),
+                          onPressed: s.settings.resetAdjustments,
+                          icon: const RIcon(RIcons.reset),
+                          label: Text(l.prayerResetAdjust),
                         ),
                       ),
                     ],
                   ),
-            ];
-            final cityCard = <Widget>[
-                SectionCard(
-                  children: [
-                    ListTile(
-                      key: const Key('cityTile'),
-                      contentPadding: EdgeInsets.zero,
-                      leading: const RIcon(RIcons.city),
-                      title: Text(l.prayerCity),
-                      subtitle: Text(pv.city.name(context.isArabic), key: const Key('cityName')),
-                      trailing: const RIcon(RIcons.chevronForward),
-                      onTap: () async {
-                        final c = await Navigator.of(
-                          context,
-                        ).push<City>(MaterialPageRoute(builder: (_) => CityPickerScreen(selectedId: pv.city.id)));
-                        if (c != null) await s.settings.setCity(c.id, c.method);
-                      },
+                ],
+              ),
+              SectionCard(
+                title: l.prayerQibla,
+                children: [
+                  Text(l.prayerQiblaDeg(context.num(pv.qibla.toStringAsFixed(1))), key: const Key('qiblaText')),
+                  const SizedBox(height: DesignTokens.spaceSm),
+                  Center(child: QiblaCompass(bearing: pv.qibla)),
+                  const SizedBox(height: DesignTokens.spaceSm),
+                  Text(l.prayerQiblaNote, style: Theme.of(context).textTheme.bodySmall),
+                  const SizedBox(height: DesignTokens.spaceSm),
+                  Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: FilledButton.tonalIcon(
+                      key: const Key('openLiveQibla'),
+                      onPressed: () =>
+                          Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const QiblaScreen())),
+                      icon: const RIcon(RIcons.compass),
+                      label: Text(l.qiblaTitle),
                     ),
-                    Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: TextButton.icon(
-                        key: const Key('useLocation'),
-                        onPressed: _locating ? null : _useLocation,
-                        icon: _locating
-                            ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                            : const RIcon(RIcons.myLocation),
-                        label: Text(_locating ? l.prayerLocating : l.prayerUseLocation),
-                      ),
-                    ),
-                    if (_geoError != null)
-                      Text(
-                        _geoError!,
-                        key: const Key('geoError'),
-                        style: TextStyle(color: Theme.of(context).colorScheme.error),
-                      ),
-                    const SizedBox(height: DesignTokens.spaceSm),
-                    LabeledDropdown<String>(
-                      dropdownKey: const Key('methodDropdown'),
-                      label: l.prayerMethod,
-                      value: pv.method,
-                      items: {for (final m in cfg.methods.values) m.id: _methodName(context, m)},
-                      onChanged: s.settings.setMethod,
-                    ),
-                    const SizedBox(height: DesignTokens.spaceMd),
-                    LabeledDropdown<String>(
-                      dropdownKey: const Key('asrDropdown'),
-                      label: l.prayerAsrMethod,
-                      value: pv.asr,
-                      items: {'standard': l.prayerAsrStandard, 'hanafi': l.prayerAsrHanafi},
-                      onChanged: s.settings.setAsr,
-                    ),
-                    const SizedBox(height: DesignTokens.spaceMd),
-                    LabeledDropdown<bool>(
-                      dropdownKey: const Key('clockDropdown'),
-                      label: l.prayerClock,
-                      value: h12,
-                      items: {false: l.prayerClock24, true: l.prayerClock12},
-                      onChanged: s.settings.setClock12,
-                    ),
-                  ],
-                ),
-            ];
-            final timesCard = <Widget>[
-                SectionCard(
-                  title: l.prayerTitle,
-                  children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          key: const Key('dayPrev'),
-                          tooltip: l.prayerPrevDay,
-                          icon: RIcon(ar ? RIcons.chevronForward : RIcons.chevron),
-                          onPressed: () => setState(() => _dayOffset--),
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                '${weekdayName(shownDate, arabic: ar)} ${context.num(shownDate.day)} '
-                                '${gregorianMonthName(shownDate.month, arabic: ar)} ${context.num(shownDate.year)}',
-                                key: const Key('dayLabel'),
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.titleSmall,
-                              ),
-                              Text(
-                                l.homeHijriDate(context.num(hijri.day), hijri.monthName, context.num(hijri.year)),
-                                key: const Key('dayHijri'),
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                            ],
-                          ),
-                        ),
-                        IconButton(
-                          key: const Key('dayNext'),
-                          tooltip: l.prayerNextDay,
-                          icon: RIcon(ar ? RIcons.chevron : RIcons.chevronForward),
-                          onPressed: () => setState(() => _dayOffset++),
-                        ),
-                      ],
-                    ),
-                    Wrap(
-                      alignment: WrapAlignment.spaceBetween,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: DesignTokens.spaceSm,
-                      children: [
-                        if (_dayOffset != 0)
-                          TextButton(
-                            key: const Key('dayToday'),
-                            onPressed: () => setState(() => _dayOffset = 0),
-                            child: Text(l.prayerBackToToday),
-                          ),
-                        TextButton.icon(
-                          key: const Key('openCalendar'),
-                          onPressed: () => Navigator.of(
-                            context,
-                          ).push(MaterialPageRoute<void>(builder: (_) => const PrayerCalendarScreen())),
-                          icon: const RIcon(RIcons.calendar),
-                          label: Text(l.prayerOpenCalendar),
-                        ),
-                      ],
-                    ),
-                    Text(l.prayerDate(context.numLtr(_date(shownDate))), key: const Key('prayerDate')),
-                    Text(l.prayerTimezone(pv.city.tz), key: const Key('prayerTz')),
-                    const SizedBox(height: DesignTokens.spaceSm),
-                    if (today == null)
-                      Text(l.prayerNoPrayerToday, key: const Key('polarMessage'))
-                    else ...[
-                      if (next != null)
-                        Container(
-                          key: const Key('nextPrayer'),
-                          padding: const EdgeInsets.all(DesignTokens.spaceMd),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primaryContainer,
-                            borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                l.prayerNext(context.prayerName(next.key)),
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Text(
-                                l.prayerIn(context.numLtr(PrayerSchedule.formatCountdown(next.remaining))),
-                                key: const Key('countdown'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      const SizedBox(height: DesignTokens.spaceSm),
-                      Container(
-                        key: const Key('timesTint'),
-                        padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: DesignTokens.spaceSm),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.35),
-                          borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                        ),
-                        child: Column(
-                          children: [
-                      for (final k in prayerKeys)
-                        _TimeRow(
-                          name: context.prayerName(k),
-                          time: context.num(today.clock(k, h12: h12, arabic: ar)),
-                          isNext: next != null && next.key == k && next.at == today.day.utc[k],
-                          rowKey: Key('time-$k'),
-                          // Bell per obligatory prayer once adhan alerts are on.
-                          bell: s.settings.adhanEnabled && obligatoryPrayers.contains(k)
-                              ? IconButton(
-                                  key: Key('adhanBell-$k'),
-                                  visualDensity: VisualDensity.compact,
-                                  tooltip: s.settings.adhanFor(k)
-                                      ? l.adhanBellOn(context.prayerName(k))
-                                      : l.adhanBellOff(context.prayerName(k)),
-                                  icon: RIcon(
-                                    s.settings.adhanFor(k) ? RIcons.bell : RIcons.bellOff,
-                                    color: s.settings.adhanFor(k) ? Theme.of(context).colorScheme.primary : null,
-                                  ),
-                                  onPressed: () => s.settings.setAdhanFor(k, !s.settings.adhanFor(k)),
-                                )
-                              // Keeps the times aligned on the sunrise row.
-                              : (s.settings.adhanEnabled ? const SizedBox(width: 40) : null),
-                        ),
-                          ],
-                        ),
-                      ),
-                      if (today.day.highLatitudeAdjusted.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
-                          child: Text(
-                            l.prayerHighLat(
-                              today.day.highLatitudeAdjusted
-                                  .map(context.prayerName)
-                                  .join(context.isArabic ? '، ' : ', '),
-                            ),
-                            key: const Key('highLatNote'),
-                          ),
-                        ),
-                    ],
-                  ],
-                ),
-            ];
-            final rest = <Widget>[
-                if (s.settings.adhanEnabled) _AdhanExtrasCard(settings: s.settings),
-                SectionCard(
-                  children: [
-                    ExpansionTile(
-                      key: const Key('adjustTile'),
-                      tilePadding: EdgeInsets.zero,
-                      title: Text(l.prayerAdjust),
-                      children: [
-                        for (final k in prayerKeys)
-                          _AdjustRow(
-                            prayerKey: k,
-                            value: adjustments[k] ?? 0,
-                            // Read the stored value at tap time so quick taps accumulate.
-                            onStep: (d) => s.settings.setAdjustment(k, (s.settings.adjustments[k] ?? 0) + d),
-                          ),
-                        Align(
-                          alignment: AlignmentDirectional.centerEnd,
-                          child: TextButton.icon(
-                            key: const Key('resetAdjust'),
-                            onPressed: s.settings.resetAdjustments,
-                            icon: const RIcon(RIcons.reset),
-                            label: Text(l.prayerResetAdjust),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SectionCard(
-                  title: l.prayerQibla,
-                  children: [
-                    Text(l.prayerQiblaDeg(context.num(pv.qibla.toStringAsFixed(1))), key: const Key('qiblaText')),
-                    const SizedBox(height: DesignTokens.spaceSm),
-                    Center(child: QiblaCompass(bearing: pv.qibla)),
-                    const SizedBox(height: DesignTokens.spaceSm),
-                    Text(l.prayerQiblaNote, style: Theme.of(context).textTheme.bodySmall),
-                    const SizedBox(height: DesignTokens.spaceSm),
-                    Align(
-                      alignment: AlignmentDirectional.centerEnd,
-                      child: FilledButton.tonalIcon(
-                        key: const Key('openLiveQibla'),
-                        onPressed: () =>
-                            Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const QiblaScreen())),
-                        icon: const RIcon(RIcons.compass),
-                        label: Text(l.qiblaTitle),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
             ];
             if (widget.settingsMode) {
               return ListView(
@@ -390,9 +367,9 @@ class _PrayerScreenState extends State<PrayerScreen> {
                 children: [
                   if (today != null) _TimesStrip(today: today, h12: h12),
                   ...cityCard,
-                  _AutoLocationCard(placeLabel: placeLabel(s, pv.city, arabic: ar)),
-                  const AdhanSettingsCard(),
+                  AutoLocationCard(placeLabel: placeLabel(s, pv.city, arabic: ar)),
                   ...rest,
+                  const HijriOffsetCard(),
                 ],
               );
             }
@@ -400,11 +377,16 @@ class _PrayerScreenState extends State<PrayerScreen> {
               key: const Key('prayerList'),
               padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
               children: [
-                ...banner,
                 ...timesCard,
+                // Owner (2026-11-11): adhan alerts and the muezzin choice live on the prayer page itself.
+                const AdhanSettingsCard(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceXl, vertical: DesignTokens.spaceSm),
-                  child: Text(l.prayerCompactNote, style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.center),
+                  child: Text(
+                    l.prayerCompactNote,
+                    style: Theme.of(context).textTheme.bodySmall,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 Card(
                   margin: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceSm),
@@ -414,9 +396,9 @@ class _PrayerScreenState extends State<PrayerScreen> {
                     title: Text(l.prayerEditTimes, style: const TextStyle(fontWeight: FontWeight.w600)),
                     subtitle: Text(placeLabel(s, pv.city, arabic: ar)),
                     trailing: const RIcon(RIcons.chevronForward),
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute<void>(builder: (_) => const PrayerScreen(settingsMode: true)),
-                    ),
+                    onTap: () => Navigator.of(
+                      context,
+                    ).push(MaterialPageRoute<void>(builder: (_) => const PrayerScreen(settingsMode: true))),
                   ),
                 ),
               ],
@@ -752,8 +734,8 @@ class _TimesStrip extends StatelessWidget {
 
 /// Location services: follow the phone's location automatically, with the
 /// current place name.
-class _AutoLocationCard extends StatelessWidget {
-  const _AutoLocationCard({required this.placeLabel});
+class AutoLocationCard extends StatelessWidget {
+  const AutoLocationCard({super.key, required this.placeLabel});
   final String placeLabel;
 
   @override

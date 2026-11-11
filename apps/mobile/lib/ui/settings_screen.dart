@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
 import '../app_services.dart';
-import '../build_flags.dart';
-import '../data/settings.dart';
+import '../data/content.dart';
 import '../domain/adhan_voices.dart';
 import '../domain/hijri.dart';
 import '../domain/prayer_schedule.dart';
-import '../domain/quran.dart';
 import '../theme/design_tokens.dart';
 import 'about_screen.dart';
-import 'account_screen.dart';
-import 'audio_widgets.dart';
+import 'city_picker_screen.dart';
+import 'contact_screen.dart';
+import 'help_screen.dart';
+import 'locate.dart';
+import 'prayer_model.dart';
+import 'prayer_screen.dart';
 import 'l10n_ext.dart';
 import 'muezzin_screen.dart';
 import 'widgets.dart';
@@ -20,157 +24,138 @@ import 'r_icon.dart';
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
+  void _push(BuildContext context, Widget page) =>
+      Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page));
+
   @override
   Widget build(BuildContext context) {
     final s = context.services;
     final settings = s.settings;
     final l = context.l10n;
+    // The owner's list (2026-11-11): language, prayer times, location services, rate, share,
+    // FAQ, contact, our apps. Reading, adhan and recitation choices live on their own screens.
     return Scaffold(
       appBar: AppBar(title: Text(l.navSettings)),
       body: ReadableWidth(
         child: ListenableBuilder(
           listenable: settings,
-          builder: (context, _) => ListView(
-            key: const Key('settingsList'),
-            children: [
-              SectionCard(
-                title: l.settingsLanguage,
-                children: [
-                  SegmentedButton<String>(
-                    key: const Key('languageSelector'),
-                    segments: [
-                      ButtonSegment(value: 'ar', label: Text(l.settingsLanguageAr)),
-                      ButtonSegment(value: 'en', label: Text(l.settingsLanguageEn)),
-                    ],
-                    selected: {settings.locale.languageCode},
-                    onSelectionChanged: (v) => settings.setLocale(v.single),
-                  ),
-                ],
-              ),
-              SectionCard(
-                title: l.settingsTheme,
-                children: [
-                  SegmentedButton<ThemeMode>(
-                    key: const Key('themeSelector'),
-                    segments: [
-                      ButtonSegment(value: ThemeMode.system, label: Text(l.settingsThemeSystem)),
-                      ButtonSegment(value: ThemeMode.light, label: Text(l.settingsThemeLight)),
-                      ButtonSegment(value: ThemeMode.dark, label: Text(l.settingsThemeDark)),
-                    ],
-                    selected: {settings.themeMode},
-                    onSelectionChanged: (v) => settings.setThemeMode(v.single),
-                  ),
-                ],
-              ),
-              SectionCard(
-                title: l.settingsFontSize,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Slider(
-                          key: const Key('fontSizeSlider'),
-                          min: SettingsController.minFontSize,
-                          max: SettingsController.maxFontSize,
-                          divisions: (SettingsController.maxFontSize - SettingsController.minFontSize).round(),
-                          value: settings.quranFontSize,
-                          label: context.num(settings.quranFontSize.round()),
-                          semanticFormatterCallback: (v) => '${l.settingsFontSize}: ${context.num(v.round())}',
-                          onChanged: settings.setQuranFontSize,
-                        ),
-                      ),
-                      Text(context.num(settings.quranFontSize.round()), key: const Key('fontSizeValue')),
-                    ],
-                  ),
-                  Text(l.settingsFontPreview, style: Theme.of(context).textTheme.labelMedium),
-                  QuranText(s.content.quran.text(const AyahRef(1, 1)), key: const Key('fontPreview'), ayahNumber: 1),
-                ],
-              ),
-              SectionCard(
-                children: [
-                  SwitchListTile(
-                    key: const Key('translationSwitch'),
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(l.quranShowTranslation),
-                    value: settings.showTranslation,
-                    onChanged: settings.setShowTranslation,
-                  ),
-                ],
-              ),
-              SectionCard(
-                title: l.settingsHijriOffset,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        key: const Key('hijriOffsetMinus'),
-                        tooltip: '${l.settingsHijriOffset} −',
-                        icon: const RIcon(RIcons.minus),
-                        onPressed: settings.hijriOffset > -hijriOffsetMax
-                            ? () => settings.setHijriOffset(settings.hijriOffset - 1)
-                            : null,
-                      ),
-                      Expanded(
-                        child: Builder(
-                          builder: (context) {
-                            final h = hijriFor(
-                              DateTime.now(),
-                              arabic: context.isArabic,
-                              offsetDays: settings.hijriOffset,
-                            );
-                            final o = settings.hijriOffset;
-                            return Text(
-                              '${l.homeHijriDate(context.num(h.day), h.monthName, context.num(h.year))}'
-                              '  (\u2066${o > 0 ? '+' : ''}${context.num(o)}\u2069)',
-                              key: const Key('hijriOffsetPreview'),
-                              textAlign: TextAlign.center,
-                            );
-                          },
-                        ),
-                      ),
-                      IconButton(
-                        key: const Key('hijriOffsetPlus'),
-                        tooltip: '${l.settingsHijriOffset} +',
-                        icon: const RIcon(RIcons.plus),
-                        onPressed: settings.hijriOffset < hijriOffsetMax
-                            ? () => settings.setHijriOffset(settings.hijriOffset + 1)
-                            : null,
-                      ),
-                    ],
-                  ),
-                  Text(l.settingsHijriOffsetHint, style: Theme.of(context).textTheme.bodySmall),
-                ],
-              ),
-              SectionCard(title: l.audioTitle, children: const [RecitationSettings()]),
-              const AdhanSettingsCard(),
-              SectionCard(
-                children: [
-                  // Store builds hide account sync until the sync server is hosted (it points at a dev
-                  // address today, and App Review rejects features that cannot work).
-                  if (!kStoreBuild)
-                    ListTile(
-                      key: const Key('accountTile'),
-                      contentPadding: EdgeInsets.zero,
-                      leading: const RIcon(RIcons.refresh),
-                      title: Text(l.settingsAccount),
-                      subtitle: Text(l.settingsAccountHint),
-                      trailing: const RIcon(RIcons.chevronForward),
-                      onTap: () =>
-                          Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const AccountScreen())),
+          builder: (context, _) {
+            final pv = PrayerView.compute(s);
+            final links = s.content.links;
+            final store = links.playStore ?? links.appStore;
+            return ListView(
+              key: const Key('settingsList'),
+              children: [
+                SectionCard(
+                  title: l.settingsLanguage,
+                  children: [
+                    SegmentedButton<String>(
+                      key: const Key('languageSelector'),
+                      segments: [
+                        ButtonSegment(value: 'ar', label: Text(l.settingsLanguageAr)),
+                        ButtonSegment(value: 'en', label: Text(l.settingsLanguageEn)),
+                      ],
+                      selected: {settings.locale.languageCode},
+                      onSelectionChanged: (v) => settings.setLocale(v.single),
                     ),
-                  ListTile(
-                    key: const Key('aboutTile'),
-                    contentPadding: EdgeInsets.zero,
-                    leading: const RIcon(RIcons.info),
-                    title: Text(l.settingsAbout),
-                    trailing: const RIcon(RIcons.chevronForward),
-                    onTap: () =>
-                        Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const AboutScreen())),
+                  ],
+                ),
+                SectionCard(
+                  title: l.settingsPrayerTimes,
+                  children: [
+                    SwitchListTile(
+                      key: const Key('prayerAuto'),
+                      contentPadding: EdgeInsets.zero,
+                      secondary: const RIcon(RIcons.prayer),
+                      title: Text(settings.prayerAuto ? l.settingsAuto : l.settingsManual),
+                      subtitle: Text(settings.prayerAuto ? l.settingsPrayerAutoHint : l.settingsPrayerManualHint),
+                      value: settings.prayerAuto,
+                      onChanged: settings.setPrayerAuto,
+                    ),
+                    if (!settings.prayerAuto)
+                      ListTile(
+                        key: const Key('prayerManualTile'),
+                        contentPadding: EdgeInsets.zero,
+                        leading: const RIcon(RIcons.edit),
+                        title: Text(l.prayerEditTimes),
+                        trailing: const RIcon(RIcons.chevronForward),
+                        onTap: () => _push(context, const PrayerScreen(settingsMode: true)),
+                      ),
+                  ],
+                ),
+                AutoLocationCard(placeLabel: placeLabel(s, pv.city, arabic: context.isArabic)),
+                if (!settings.autoLocation)
+                  SectionCard(
+                    children: [
+                      ListTile(
+                        key: const Key('settingsCityTile'),
+                        contentPadding: EdgeInsets.zero,
+                        leading: const RIcon(RIcons.city),
+                        title: Text(l.prayerCity),
+                        subtitle: Text(pv.city.name(context.isArabic)),
+                        trailing: const RIcon(RIcons.chevronForward),
+                        onTap: () async {
+                          final c = await Navigator.of(
+                            context,
+                          ).push<City>(MaterialPageRoute(builder: (_) => CityPickerScreen(selectedId: pv.city.id)));
+                          if (c != null) await settings.setCity(c.id, c.method);
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ],
-          ),
+                SectionCard(
+                  children: [
+                    ListTile(
+                      key: const Key('rateTile'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const RIcon(RIcons.star),
+                      title: Text(l.helpRate),
+                      trailing: const RIcon(RIcons.chevronForward),
+                      onTap: () => launchUrl(Uri.parse(store ?? playStoreUrl), mode: LaunchMode.externalApplication),
+                    ),
+                    ListTile(
+                      key: const Key('shareTile'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const RIcon(RIcons.share),
+                      title: Text(l.helpShareApp),
+                      onTap: () => s.sharer.shareText(shareAppText(l, links)),
+                    ),
+                    ListTile(
+                      key: const Key('faqTile'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const RIcon(RIcons.help),
+                      title: Text(l.helpFaq),
+                      trailing: const RIcon(RIcons.chevronForward),
+                      onTap: () => _push(context, const HelpScreen()),
+                    ),
+                    ListTile(
+                      key: const Key('contactTile'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const RIcon(RIcons.mail),
+                      title: Text(l.helpContact),
+                      trailing: const RIcon(RIcons.chevronForward),
+                      onTap: () => _push(context, const ContactScreen()),
+                    ),
+                    ListTile(
+                      key: const Key('ourAppsTile'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const RIcon(RIcons.list),
+                      title: Text(l.settingsOurApps),
+                      subtitle: Text(l.settingsOurAppsSoon),
+                    ),
+                    ListTile(
+                      key: const Key('aboutTile'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const RIcon(RIcons.info),
+                      title: Text(l.settingsAbout),
+                      trailing: const RIcon(RIcons.chevronForward),
+                      onTap: () => _push(context, const AboutScreen()),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -319,6 +304,57 @@ class _VoiceRow extends StatelessWidget {
       ),
       trailing: const RIcon(RIcons.chevronForward),
       onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => MuezzinScreen(fajr: fajr))),
+    );
+  }
+}
+
+/// Hijri date correction (± days), shown with the prayer settings.
+class HijriOffsetCard extends StatelessWidget {
+  const HijriOffsetCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.services.settings;
+    final l = context.l10n;
+    return SectionCard(
+      title: l.settingsHijriOffset,
+      children: [
+        Row(
+          children: [
+            IconButton(
+              key: const Key('hijriOffsetMinus'),
+              tooltip: '${l.settingsHijriOffset} −',
+              icon: const RIcon(RIcons.minus),
+              onPressed: settings.hijriOffset > -hijriOffsetMax
+                  ? () => settings.setHijriOffset(settings.hijriOffset - 1)
+                  : null,
+            ),
+            Expanded(
+              child: Builder(
+                builder: (context) {
+                  final h = hijriFor(DateTime.now(), arabic: context.isArabic, offsetDays: settings.hijriOffset);
+                  final o = settings.hijriOffset;
+                  return Text(
+                    '${l.homeHijriDate(context.num(h.day), h.monthName, context.num(h.year))}'
+                    '  (\u2066${o > 0 ? '+' : ''}${context.num(o)}\u2069)',
+                    key: const Key('hijriOffsetPreview'),
+                    textAlign: TextAlign.center,
+                  );
+                },
+              ),
+            ),
+            IconButton(
+              key: const Key('hijriOffsetPlus'),
+              tooltip: '${l.settingsHijriOffset} +',
+              icon: const RIcon(RIcons.plus),
+              onPressed: settings.hijriOffset < hijriOffsetMax
+                  ? () => settings.setHijriOffset(settings.hijriOffset + 1)
+                  : null,
+            ),
+          ],
+        ),
+        Text(l.settingsHijriOffsetHint, style: Theme.of(context).textTheme.bodySmall),
+      ],
     );
   }
 }

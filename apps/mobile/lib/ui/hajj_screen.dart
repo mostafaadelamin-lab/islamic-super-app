@@ -41,7 +41,6 @@ class HajjScreen extends StatelessWidget {
                   key: Key('hajjList-$k'),
                   padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
                   children: [
-                    ReviewNotice(l.hajjReviewNotice, key: const Key('hajjNotice')),
                     if (!context.isArabic) ReviewNotice(l.adhkarArabicOnly),
                     for (final b in guide.sections[k] ?? const <HajjBlock>[]) _Block(block: b),
                   ],

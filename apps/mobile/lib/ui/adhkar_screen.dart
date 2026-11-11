@@ -36,13 +36,17 @@ class AdhkarScreen extends StatelessWidget {
     Widget hisn(String id, RIconData icon, String title) =>
         tile(id, icon, title, () => push(HisnScreen(section: id, title: title)));
     Widget header(String text) => Padding(
-      padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceLg, DesignTokens.spaceLg, DesignTokens.spaceXs),
+      padding: const EdgeInsets.fromLTRB(
+        DesignTokens.spaceLg,
+        DesignTokens.spaceLg,
+        DesignTokens.spaceLg,
+        DesignTokens.spaceXs,
+      ),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          color: Theme.of(context).colorScheme.primary,
-          fontWeight: FontWeight.w700,
-        ),
+        style: Theme.of(
+          context,
+        ).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w700),
       ),
     );
     return Scaffold(
@@ -53,8 +57,18 @@ class AdhkarScreen extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
           children: [
             header(l.adhkarDaily),
-            tile('morning', RIcons.sunHigh, l.adhkarMorningTitle, () => push(const AdhkarSessionScreen(initial: AdhkarSession.morning))),
-            tile('evening', RIcons.moon, l.adhkarEveningTitle, () => push(const AdhkarSessionScreen(initial: AdhkarSession.evening))),
+            tile(
+              'morning',
+              RIcons.sunHigh,
+              l.adhkarMorningTitle,
+              () => push(const AdhkarSessionScreen(initial: AdhkarSession.morning)),
+            ),
+            tile(
+              'evening',
+              RIcons.moon,
+              l.adhkarEveningTitle,
+              () => push(const AdhkarSessionScreen(initial: AdhkarSession.evening)),
+            ),
             hisn('sleep', RIcons.moon, l.hisnSectionSleep),
             hisn('prayer', RIcons.prayer, l.hisnSectionPrayer),
             hisn('remembrance', RIcons.beads, l.hisnSectionRemembrance),
@@ -188,7 +202,6 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
                   onSelectionChanged: (v) => setState(() => _session = v.single),
                 ),
               ),
-              ReviewNotice(l.adhkarReviewNotice, key: const Key('adhkarNotice')),
               Padding(
                 padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
                 child: Column(
@@ -292,7 +305,11 @@ class _DhikrCard extends StatelessWidget {
                           color: done ? scheme.primary : scheme.primaryContainer,
                           border: Border.all(color: scheme.secondary.withValues(alpha: 0.6), width: 4),
                           boxShadow: [
-                            BoxShadow(color: scheme.primary.withValues(alpha: 0.18), blurRadius: 12, offset: const Offset(0, 4)),
+                            BoxShadow(
+                              color: scheme.primary.withValues(alpha: 0.18),
+                              blurRadius: 12,
+                              offset: const Offset(0, 4),
+                            ),
                           ],
                         ),
                         child: done

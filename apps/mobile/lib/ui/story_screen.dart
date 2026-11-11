@@ -91,7 +91,7 @@ class StoryScreen extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: const MiniPlayer(),
+      bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
     );
   }
 }

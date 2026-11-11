@@ -68,10 +68,7 @@ class SeriesCard extends StatelessWidget {
                 style: theme.textTheme.bodyMedium,
               )
             else ...[
-              Text(
-                l.storiesEpisodes(context.num(eps.length)),
-                style: theme.textTheme.bodySmall,
-              ),
+              Text(l.storiesEpisodes(context.num(eps.length)), style: theme.textTheme.bodySmall),
               const SizedBox(height: DesignTokens.spaceSm),
               for (final e in eps) _EpisodeTile(seriesId: series.id, episode: e),
             ],
@@ -102,9 +99,7 @@ class _EpisodeTile extends StatelessWidget {
       leading: RIcon(playing ? RIcons.pauseCircle : RIcons.playCircle, color: scheme.primary, size: 32),
       title: Text(episode.title(context.isArabic)),
       subtitle: Text(
-        [
-          if (m != null) l.storiesMinutes(context.num(m)),
-        ].join(' · '),
+        [if (m != null) l.storiesMinutes(context.num(m))].join(' · '),
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       ),

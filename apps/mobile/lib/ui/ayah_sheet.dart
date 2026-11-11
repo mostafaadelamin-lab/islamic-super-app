@@ -247,25 +247,25 @@ class _Actions extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               action('ayahPlayOne', RIcons.playCircle, l.ayahListenOne, () => play(ref, PlayScope.ayah)),
-              action('ayahPlayTafsir', RIcons.split, l.ayahListenTafsir, () => play(ref, PlayScope.surah, tafsir: true)),
+              action(
+                'ayahPlayTafsir',
+                RIcons.split,
+                l.ayahListenTafsir,
+                () => play(ref, PlayScope.surah, tafsir: true),
+              ),
               action('ayahPlayPage', RIcons.pages, l.ayahListenToPageEnd, () => play(ref, PlayScope.page)),
               action('ayahPlaySurah', RIcons.playlist, l.ayahListenToSurahEnd, () => play(ref, PlayScope.surah)),
-              action(
-                'ayahBookmark',
-                RIcons.bookmark,
-                marked ? l.quranRemoveBookmark : l.ayahSaveMark,
-                () async {
-                  final messenger = ScaffoldMessenger.of(context);
-                  final nav = Navigator.of(context);
-                  if (marked) {
-                    await s.bookmarks.remove(Bookmark.idFor(ref.surah, ref.ayah));
-                  } else {
-                    await s.bookmarks.add(ref);
-                  }
-                  nav.pop();
-                  messenger.showSnackBar(SnackBar(content: Text(marked ? l.quranBookmarkRemoved : l.quranBookmarked)));
-                },
-              ),
+              action('ayahBookmark', RIcons.bookmark, marked ? l.quranRemoveBookmark : l.ayahSaveMark, () async {
+                final messenger = ScaffoldMessenger.of(context);
+                final nav = Navigator.of(context);
+                if (marked) {
+                  await s.bookmarks.remove(Bookmark.idFor(ref.surah, ref.ayah));
+                } else {
+                  await s.bookmarks.add(ref);
+                }
+                nav.pop();
+                messenger.showSnackBar(SnackBar(content: Text(marked ? l.quranBookmarkRemoved : l.quranBookmarked)));
+              }),
               action('ayahCopy', RIcons.copy, l.ayahCopy, () async {
                 final messenger = ScaffoldMessenger.of(context);
                 final nav = Navigator.of(context);
