@@ -2809,6 +2809,10 @@
   "@readerTabTafsir": {
     "description": "shared key \"reader.tabTafsir\""
   },
+  "reelsAddChannel": "Add channel",
+  "@reelsAddChannel": {
+    "description": "shared key \"reels.addChannel\""
+  },
   "reelsCatAdmonition": "Advice & admonition",
   "@reelsCatAdmonition": {
     "description": "shared key \"reels.cat.admonition\""
@@ -2845,6 +2849,10 @@
   "reelsLoading": "Fetching the newest reels…",
   "@reelsLoading": {
     "description": "shared key \"reels.loading\""
+  },
+  "reelsMyChannels": "Your channels",
+  "@reelsMyChannels": {
+    "description": "shared key \"reels.myChannels\""
   },
   "reelsNext": "Next reel",
   "@reelsNext": {
@@ -2894,6 +2902,10 @@
   "@reelsPrev": {
     "description": "shared key \"reels.prev\""
   },
+  "reelsRemoveChannel": "Remove channel",
+  "@reelsRemoveChannel": {
+    "description": "shared key \"reels.removeChannel\""
+  },
   "reelsRetry": "Try again",
   "@reelsRetry": {
     "description": "shared key \"reels.retry\""
@@ -2915,6 +2927,18 @@
   "@reelsReviewerMode": {
     "description": "shared key \"reels.reviewerMode\""
   },
+  "reelsSearch": "Find a channel",
+  "@reelsSearch": {
+    "description": "shared key \"reels.search\""
+  },
+  "reelsSearchHint": "Channel or sheikh name",
+  "@reelsSearchHint": {
+    "description": "shared key \"reels.searchHint\""
+  },
+  "reelsSearchNone": "No results, or no internet connection.",
+  "@reelsSearchNone": {
+    "description": "shared key \"reels.searchNone\""
+  },
   "reelsShowHidden": "Show hidden channels",
   "@reelsShowHidden": {
     "description": "shared key \"reels.showHidden\""
@@ -2922,6 +2946,14 @@
   "reelsSub": "Recitations, lessons and admonitions from trusted channels",
   "@reelsSub": {
     "description": "shared key \"reels.sub\""
+  },
+  "reelsSuggested": "Suggested Islamic channels",
+  "@reelsSuggested": {
+    "description": "shared key \"reels.suggested\""
+  },
+  "reelsSuggestedHint": "The app adds from these automatically based on what you watch most.",
+  "@reelsSuggestedHint": {
+    "description": "shared key \"reels.suggestedHint\""
   },
   "reelsTapToPlay": "Tap to play",
   "@reelsTapToPlay": {

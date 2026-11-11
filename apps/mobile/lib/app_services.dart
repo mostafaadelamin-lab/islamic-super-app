@@ -194,7 +194,13 @@ class AppServices {
       downloads: downloads,
       reminders: reminders,
       sharer: sharer ?? const SystemImageSharer(),
-      reelsFeed: ReelsFeedController(sources: content.reelSources, httpClient: httpClient, prefs: prefs, clock: c),
+      reelsFeed: ReelsFeedController(
+        sources: content.reelSources,
+        suggestionPool: content.reelSuggestions,
+        httpClient: httpClient,
+        prefs: prefs,
+        clock: c,
+      ),
       media: RecitationMediaBridge(
         recitation: recitation,
         content: content,

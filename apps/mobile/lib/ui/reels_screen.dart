@@ -32,6 +32,18 @@ class _ReelsScreenState extends State<ReelsScreen> {
   final _pages = PageController();
   int _current = 0;
 
+  /// When the reel on screen started showing (for the viewer's interest).
+  DateTime _shownAt = DateTime.now();
+  Reel? _shown;
+
+  void _noteWatch(Reel? next) {
+    final prev = _shown;
+    final secs = DateTime.now().difference(_shownAt).inSeconds;
+    if (prev != null && prev.isAuto) context.services.reelsFeed.recordWatch(prev.sourceId, secs.clamp(0, 120));
+    _shown = next;
+    _shownAt = DateTime.now();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -97,6 +109,17 @@ class _ReelsScreenState extends State<ReelsScreen> {
             title: Text(l.reelsTitle, style: const TextStyle(color: Colors.white)),
             actions: [
               IconButton(
+                key: const Key('reels.search'),
+                tooltip: l.reelsSearch,
+                icon: const RIcon(RIcons.search),
+                onPressed: () => showModalBottomSheet<void>(
+                  context: context,
+                  isScrollControlled: true,
+                  showDragHandle: true,
+                  builder: (_) => const ChannelSearchSheet(),
+                ),
+              ),
+              IconButton(
                 key: const Key('reels.reviewer'),
                 tooltip: '${l.reelsReviewerMode} — ${l.reelsReviewerHint}',
                 isSelected: reviewer,
@@ -146,7 +169,10 @@ class _ReelsScreenState extends State<ReelsScreen> {
                     controller: _pages,
                     scrollDirection: Axis.vertical,
                     itemCount: reels.length,
-                    onPageChanged: (i) => setState(() => _current = i),
+                    onPageChanged: (i) {
+                      _noteWatch(reels[i]);
+                      setState(() => _current = i);
+                    },
                     itemBuilder: (context, i) => _ReelPage(
                       reel: reels[i],
                       index: i,
@@ -234,11 +260,6 @@ class _ReelPage extends StatelessWidget {
     final l = context.l10n;
     final ar = context.services.settings.isArabic;
     final speaker = reel.speaker(ar);
-    final category = switch (reel.category) {
-      'recitation' => l.reelsCatRecitation,
-      'lesson' => l.reelsCatLesson,
-      _ => l.reelsCatAdmonition,
-    };
     final top = MediaQuery.paddingOf(context).top + kToolbarHeight;
     return Semantics(
       container: true,
@@ -310,17 +331,6 @@ class _ReelPage extends StatelessWidget {
                     if (speaker != null) Text(speaker, style: const TextStyle(color: Colors.white70)),
                     const SizedBox(height: DesignTokens.spaceXs),
                     Wrap(
-                      spacing: DesignTokens.spaceXs,
-                      runSpacing: DesignTokens.spaceXs,
-                      children: [
-                        _Chip(category),
-                        _Chip(reel.isInstagram ? l.reelsPlatformInstagram : l.reelsPlatformYoutube),
-                        if (reel.reviewer != null) _Chip(l.reelsReviewedBy(reel.reviewer!), green: true),
-                        if (reel.isAuto) _Chip(l.reelsTrusted, green: true),
-                        _Chip(context.numLtr('${index + 1} / $total')),
-                      ],
-                    ),
-                    Wrap(
                       spacing: DesignTokens.spaceMd,
                       children: [
                         TextButton.icon(
@@ -349,22 +359,6 @@ class _ReelPage extends StatelessWidget {
       ),
     );
   }
-}
-
-class _Chip extends StatelessWidget {
-  const _Chip(this.text, {this.green = false});
-  final String text;
-  final bool green;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm, vertical: 2),
-    decoration: BoxDecoration(
-      color: green ? const Color(0x8C2EA06E) : const Color(0x2EFFFFFF),
-      borderRadius: BorderRadius.circular(999),
-    ),
-    child: Text(text, style: const TextStyle(color: Colors.white, fontSize: 13)),
-  );
 }
 
 final _igEmbedPath = RegExp(r'^/(reel|p|tv)/[A-Za-z0-9_-]{5,40}/embed(/captioned)?/?$');
@@ -424,4 +418,126 @@ class _ReelPlayerState extends State<ReelPlayer> {
 
   @override
   Widget build(BuildContext context) => WebViewWidget(controller: _c);
+}
+
+/// Find a channel on YouTube and add it to the feed; also lists the channels the app suggests.
+class ChannelSearchSheet extends StatefulWidget {
+  const ChannelSearchSheet({super.key});
+
+  @override
+  State<ChannelSearchSheet> createState() => _ChannelSearchSheetState();
+}
+
+class _ChannelSearchSheetState extends State<ChannelSearchSheet> {
+  final _q = TextEditingController();
+  Future<List<({String id, String title, String? subs})>>? _results;
+
+  @override
+  void dispose() {
+    _q.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final feed = context.services.reelsFeed;
+    final ar = context.isArabic;
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+      child: SizedBox(
+        height: MediaQuery.sizeOf(context).height * 0.8,
+        child: ListenableBuilder(
+          listenable: feed,
+          builder: (context, _) {
+            final have = {for (final s in feed.sources) s.channelId};
+            final mine = feed.userSources;
+            final suggestions = [
+              for (final s in feed.suggestionPool)
+                if (!have.contains(s.channelId)) s,
+            ];
+            Widget addButton(String id, String name) => have.contains(id)
+                ? const RIcon(RIcons.checkCircle)
+                : IconButton(
+                    key: Key('reels.add.$id'),
+                    tooltip: l.reelsAddChannel,
+                    icon: const RIcon(RIcons.plus),
+                    onPressed: () => feed.addUserSource(id, name),
+                  );
+            return ListView(
+              padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, 0, DesignTokens.spaceLg, DesignTokens.spaceXl),
+              children: [
+                TextField(
+                  key: const Key('reels.searchField'),
+                  controller: _q,
+                  textInputAction: TextInputAction.search,
+                  decoration: InputDecoration(
+                    labelText: l.reelsSearchHint,
+                    prefixIcon: const RIcon(RIcons.search),
+                    border: const OutlineInputBorder(),
+                  ),
+                  onSubmitted: (v) => setState(() => _results = feed.searchChannels(v)),
+                ),
+                if (_results != null)
+                  FutureBuilder(
+                    future: _results,
+                    builder: (context, snap) {
+                      if (snap.connectionState != ConnectionState.done) {
+                        return const Padding(
+                          padding: EdgeInsets.all(DesignTokens.spaceLg),
+                          child: Center(child: CircularProgressIndicator()),
+                        );
+                      }
+                      final list = snap.data ?? const [];
+                      if (list.isEmpty) {
+                        return Padding(
+                          padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                          child: Text(l.reelsSearchNone),
+                        );
+                      }
+                      return Column(
+                        children: [
+                          for (final r in list)
+                            ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Text(r.title),
+                              subtitle: r.subs == null ? null : Text(r.subs!),
+                              trailing: addButton(r.id, r.title),
+                            ),
+                        ],
+                      );
+                    },
+                  ),
+                if (mine.isNotEmpty) ...[
+                  const SizedBox(height: DesignTokens.spaceLg),
+                  Text(l.reelsMyChannels, style: Theme.of(context).textTheme.titleMedium),
+                  for (final s in mine)
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(s.name(ar)),
+                      trailing: IconButton(
+                        tooltip: l.reelsRemoveChannel,
+                        icon: const RIcon(RIcons.trash),
+                        onPressed: () => feed.removeUserSource(s.id),
+                      ),
+                    ),
+                ],
+                if (suggestions.isNotEmpty) ...[
+                  const SizedBox(height: DesignTokens.spaceLg),
+                  Text(l.reelsSuggested, style: Theme.of(context).textTheme.titleMedium),
+                  Text(l.reelsSuggestedHint, style: Theme.of(context).textTheme.bodySmall),
+                  for (final s in suggestions)
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(s.name(ar)),
+                      trailing: addButton(s.channelId!, s.name(ar)),
+                    ),
+                ],
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
 }

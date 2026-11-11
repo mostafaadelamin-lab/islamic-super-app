@@ -69,6 +69,7 @@ class AppContent {
     required this.versions,
     this.reels = ReelCatalog.empty,
     this.reelSources = const [],
+    this.reelSuggestions = const [],
     this.stories = StoryCatalog.empty,
     this.magneticModel,
     this.links = const AppLinks(),
@@ -88,6 +89,7 @@ class AppContent {
   static const versionsAsset = 'assets/content/VERSIONS.json';
   static const reelsAsset = 'assets/content/reels.v1.json';
   static const reelSourcesAsset = 'assets/content/reel-sources.v1.json';
+  static const reelSuggestionsAsset = 'assets/content/reel-suggestions.v1.json';
   static const storiesAsset = 'assets/content/stories.v1.json';
   static const methodsAsset = 'assets/schemas/methods.json';
   static const wmmAsset = 'assets/schemas/wmm2025.json';
@@ -115,6 +117,7 @@ class AppContent {
 
   /// Trusted channels whose newest Shorts are shown automatically.
   final List<ReelSource> reelSources;
+  final List<ReelSource> reelSuggestions;
 
   /// Quranic stories (verse ranges) and narrated series (audio only).
   final StoryCatalog stories;
@@ -168,6 +171,7 @@ class AppContent {
       versions: await j(versionsAsset),
       reels: ReelCatalog.fromJson(await j(reelsAsset)),
       reelSources: ReelSource.listFromJson(await j(reelSourcesAsset)),
+      reelSuggestions: ReelSource.listFromJson(await j(reelSuggestionsAsset)),
       stories: StoryCatalog.fromJson(await j(storiesAsset), [for (final s in quran.surahs) s.ayahCount]),
       magneticModel: WorldMagneticModel.fromJson(await j(wmmAsset)),
       links: AppLinks.fromJson(await j(linksAsset)),

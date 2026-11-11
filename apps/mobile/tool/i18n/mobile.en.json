@@ -642,5 +642,13 @@
   "zakat.unitHiqqa": "hiqqa (3-year camel)",
   "zakat.unitJadhaa": "jadha'a (4-year camel)",
   "zakat.unitTabi": "tabi' (1-year calf)",
-  "zakat.unitMusinna": "musinna (2-year cow)"
+  "zakat.unitMusinna": "musinna (2-year cow)",
+  "reels.search": "Find a channel",
+  "reels.searchHint": "Channel or sheikh name",
+  "reels.searchNone": "No results, or no internet connection.",
+  "reels.addChannel": "Add channel",
+  "reels.removeChannel": "Remove channel",
+  "reels.myChannels": "Your channels",
+  "reels.suggested": "Suggested Islamic channels",
+  "reels.suggestedHint": "The app adds from these automatically based on what you watch most."
 }

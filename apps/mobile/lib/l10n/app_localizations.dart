@@ -3386,6 +3386,12 @@ abstract class AppLocalizations {
   /// **'Tafsir'**
   String get readerTabTafsir;
 
+  /// shared key "reels.addChannel"
+  ///
+  /// In en, this message translates to:
+  /// **'Add channel'**
+  String get reelsAddChannel;
+
   /// shared key "reels.cat.admonition"
   ///
   /// In en, this message translates to:
@@ -3433,6 +3439,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fetching the newest reels…'**
   String get reelsLoading;
+
+  /// shared key "reels.myChannels"
+  ///
+  /// In en, this message translates to:
+  /// **'Your channels'**
+  String get reelsMyChannels;
 
   /// shared key "reels.next"
   ///
@@ -3494,6 +3506,12 @@ abstract class AppLocalizations {
   /// **'Previous reel'**
   String get reelsPrev;
 
+  /// shared key "reels.removeChannel"
+  ///
+  /// In en, this message translates to:
+  /// **'Remove channel'**
+  String get reelsRemoveChannel;
+
   /// shared key "reels.retry"
   ///
   /// In en, this message translates to:
@@ -3518,6 +3536,24 @@ abstract class AppLocalizations {
   /// **'Reviewer mode'**
   String get reelsReviewerMode;
 
+  /// shared key "reels.search"
+  ///
+  /// In en, this message translates to:
+  /// **'Find a channel'**
+  String get reelsSearch;
+
+  /// shared key "reels.searchHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Channel or sheikh name'**
+  String get reelsSearchHint;
+
+  /// shared key "reels.searchNone"
+  ///
+  /// In en, this message translates to:
+  /// **'No results, or no internet connection.'**
+  String get reelsSearchNone;
+
   /// shared key "reels.showHidden"
   ///
   /// In en, this message translates to:
@@ -3529,6 +3565,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recitations, lessons and admonitions from trusted channels'**
   String get reelsSub;
+
+  /// shared key "reels.suggested"
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested Islamic channels'**
+  String get reelsSuggested;
+
+  /// shared key "reels.suggestedHint"
+  ///
+  /// In en, this message translates to:
+  /// **'The app adds from these automatically based on what you watch most.'**
+  String get reelsSuggestedHint;
 
   /// shared key "reels.tapToPlay"
   ///

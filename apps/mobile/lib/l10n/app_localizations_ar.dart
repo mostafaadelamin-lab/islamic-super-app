@@ -1888,6 +1888,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerTabTafsir => 'التفسير';
 
   @override
+  String get reelsAddChannel => 'أضف القناة';
+
+  @override
   String get reelsCatAdmonition => 'نصائح ومواعظ';
 
   @override
@@ -1912,6 +1915,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get reelsLoading => 'جارٍ جلب أحدث المقاطع…';
+
+  @override
+  String get reelsMyChannels => 'قنواتك';
 
   @override
   String get reelsNext => 'المقطع التالي';
@@ -1947,6 +1953,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reelsPrev => 'المقطع السابق';
 
   @override
+  String get reelsRemoveChannel => 'احذف القناة';
+
+  @override
   String get reelsRetry => 'إعادة المحاولة';
 
   @override
@@ -1961,10 +1970,25 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reelsReviewerMode => 'وضع المراجعة';
 
   @override
+  String get reelsSearch => 'ابحث عن قناة';
+
+  @override
+  String get reelsSearchHint => 'اكتب اسم القناة أو الشيخ';
+
+  @override
+  String get reelsSearchNone => 'لا توجد نتائج، أو لا يوجد اتصال بالإنترنت.';
+
+  @override
   String get reelsShowHidden => 'إظهار القنوات المخفية';
 
   @override
   String get reelsSub => 'تلاوات ودروس ومواعظ من قنوات موثوقة';
+
+  @override
+  String get reelsSuggested => 'قنوات إسلامية مقترحة لك';
+
+  @override
+  String get reelsSuggestedHint => 'التطبيق بيضيف من القنوات دي تلقائيًا حسب اللي بتتفرج عليه أكتر.';
 
   @override
   String get reelsTapToPlay => 'اضغط للتشغيل';

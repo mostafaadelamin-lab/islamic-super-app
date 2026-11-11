@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -12,19 +13,163 @@ import '../domain/reels.dart';
 /// The viewer can hide a channel they do not want to see.
 class ReelsFeedController extends ChangeNotifier {
   ReelsFeedController({
-    required this.sources,
+    required List<ReelSource> sources,
+    this.suggestionPool = const [],
     required http.Client httpClient,
     required SharedPreferences prefs,
     DateTime Function()? clock,
     this.maxAge = const Duration(hours: 3),
     this.perSource = 15,
     this.timeout = const Duration(seconds: 12),
-  }) : _http = httpClient,
+  }) : _base = sources,
+       _http = httpClient,
        _prefs = prefs,
        _clock = clock ?? DateTime.now;
 
-  final List<ReelSource> sources;
+  final List<ReelSource> _base;
+
+  /// Extra trusted Islamic channels the app adds by itself as the viewer's interest grows.
+  final List<ReelSource> suggestionPool;
   final http.Client _http;
+
+  static const userKey = 'reels.userSources';
+  static const suggestedKey = 'reels.suggested';
+  static const interestKey = 'reels.interest';
+
+  /// Channels the viewer added by searching.
+  List<ReelSource> get userSources => [
+    for (final raw in _prefs.getStringList(userKey) ?? const <String>[]) ?ReelSource.tryParse(_decode(raw)),
+  ];
+
+  static Object? _decode(String raw) {
+    try {
+      return jsonDecode(raw);
+    } on Object {
+      return null;
+    }
+  }
+
+  /// Suggested channels switched on automatically (ids from [suggestionPool]).
+  List<ReelSource> get suggested {
+    final on = {...?_prefs.getStringList(suggestedKey)};
+    return [
+      for (final s in suggestionPool)
+        if (on.contains(s.id)) s,
+    ];
+  }
+
+  /// Every channel in the feed: the owner's list, the viewer's own, then suggestions.
+  List<ReelSource> get sources {
+    final seen = <String>{};
+    return [
+      for (final s in [..._base, ...userSources, ...suggested])
+        if (seen.add(s.id)) s,
+    ];
+  }
+
+  /// Seconds watched per channel (the viewer's interest).
+  Map<String, int> get interest {
+    final raw = _prefs.getString(interestKey);
+    if (raw == null) return const {};
+    try {
+      return {for (final e in (jsonDecode(raw) as Map<String, dynamic>).entries) e.key: (e.value as num).toInt()};
+    } on Object {
+      return const {};
+    }
+  }
+
+  /// Records [seconds] watched on a reel of [sourceId]; every 90 s watched in one category
+  /// switches on one more suggested channel of that category (up to 8).
+  Future<void> recordWatch(String? sourceId, int seconds) async {
+    final src = source(sourceId);
+    if (src == null || seconds < 3) return;
+    final m = Map<String, int>.of(interest)..update(src.id, (v) => v + seconds, ifAbsent: () => seconds);
+    await _prefs.setString(interestKey, jsonEncode(m));
+    var catSeconds = 0;
+    for (final s in sources) {
+      if (s.category == src.category) catSeconds += m[s.id] ?? 0;
+    }
+    final on = [...?_prefs.getStringList(suggestedKey)];
+    final wanted = (catSeconds ~/ 90).clamp(0, 8);
+    final inCat = suggestionPool.where((s) => s.category == src.category && on.contains(s.id)).length;
+    if (inCat < wanted && on.length < 8) {
+      final have = {for (final s in sources) s.id};
+      for (final s in suggestionPool) {
+        if (s.category == src.category && !have.contains(s.id)) {
+          on.add(s.id);
+          await _prefs.setStringList(suggestedKey, on);
+          notifyListeners();
+          unawaited(refresh());
+          break;
+        }
+      }
+    }
+  }
+
+  /// Adds a channel the viewer found by searching.
+  Future<void> addUserSource(String channelId, String name, {String category = 'lesson'}) async {
+    if (!ReelSource.channelPattern.hasMatch(channelId)) return;
+    final list = [...?_prefs.getStringList(userKey)];
+    if (sources.any((s) => s.channelId == channelId)) {
+      await unhide('yt-$channelId');
+      return;
+    }
+    list.add(
+      jsonEncode({
+        'platform': 'youtube',
+        'category': category,
+        'channelId': channelId,
+        'name': {'ar': name, 'en': name},
+      }),
+    );
+    await _prefs.setStringList(userKey, list);
+    notifyListeners();
+    await refresh();
+  }
+
+  Future<void> removeUserSource(String id) async {
+    final list = [
+      for (final raw in _prefs.getStringList(userKey) ?? const <String>[])
+        if (ReelSource.tryParse(_decode(raw))?.id != id) raw,
+    ];
+    await _prefs.setStringList(userKey, list);
+    notifyListeners();
+  }
+
+  /// Channels matching [query] on YouTube (channel search page; no API key). Empty when offline.
+  Future<List<({String id, String title, String? subs})>> searchChannels(String query) async {
+    final q = query.trim();
+    if (q.isEmpty) return const [];
+    final page = await _get(
+      Uri.https('www.youtube.com', '/results', {'search_query': q, 'sp': 'EgIQAg==', 'hl': 'ar'}),
+    );
+    if (page == null) return const [];
+    return parseChannelSearch(page);
+  }
+
+  @visibleForTesting
+  static List<({String id, String title, String? subs})> parseChannelSearch(String page) {
+    final out = <({String id, String title, String? subs})>[];
+    final seen = <String>{};
+    final re = RegExp(
+      r'"channelRenderer":\{"channelId":"(UC[A-Za-z0-9_-]{22})","title":\{"simpleText":"((?:[^"\\]|\\.)*)"',
+    );
+    for (final m in re.allMatches(page)) {
+      if (!seen.add(m.group(1)!)) continue;
+      String title;
+      try {
+        title = jsonDecode('"${m.group(2)}"') as String;
+      } on Object {
+        title = m.group(2)!;
+      }
+      final after = page.substring(m.end, math.min(page.length, m.end + 4000));
+      final subs = RegExp(r'"subscriberCountText":\{[^}]*?"simpleText":"([^"]+)"').firstMatch(after)?.group(1);
+      out.add((id: m.group(1)!, title: title, subs: subs));
+      if (out.length >= 15) break;
+    }
+    return out;
+  }
+
   final SharedPreferences _prefs;
   final DateTime Function() _clock;
   final Duration maxAge;
@@ -57,8 +202,12 @@ class ReelsFeedController extends ChangeNotifier {
     return null;
   }
 
-  /// Cached reels of the visible channels, mixed.
-  List<Reel> get items => mixReels([for (final s in visibleSources) _cached(s)?.$2 ?? const <Reel>[]]);
+  /// Cached reels of the visible channels, mixed; the channels watched most come first.
+  List<Reel> get items {
+    final score = interest;
+    final ordered = [...visibleSources]..sort((a, b) => (score[b.id] ?? 0).compareTo(score[a.id] ?? 0));
+    return mixReels([for (final s in ordered) _cached(s)?.$2 ?? const <Reel>[]]);
+  }
 
   (DateTime, List<Reel>)? _cached(ReelSource s) {
     final raw = _prefs.getString(cacheKey(s.id));

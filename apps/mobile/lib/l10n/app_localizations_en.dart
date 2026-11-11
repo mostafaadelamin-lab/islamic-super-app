@@ -1893,6 +1893,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerTabTafsir => 'Tafsir';
 
   @override
+  String get reelsAddChannel => 'Add channel';
+
+  @override
   String get reelsCatAdmonition => 'Advice & admonition';
 
   @override
@@ -1917,6 +1920,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reelsLoading => 'Fetching the newest reels…';
+
+  @override
+  String get reelsMyChannels => 'Your channels';
 
   @override
   String get reelsNext => 'Next reel';
@@ -1952,6 +1958,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reelsPrev => 'Previous reel';
 
   @override
+  String get reelsRemoveChannel => 'Remove channel';
+
+  @override
   String get reelsRetry => 'Try again';
 
   @override
@@ -1966,10 +1975,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reelsReviewerMode => 'Reviewer mode';
 
   @override
+  String get reelsSearch => 'Find a channel';
+
+  @override
+  String get reelsSearchHint => 'Channel or sheikh name';
+
+  @override
+  String get reelsSearchNone => 'No results, or no internet connection.';
+
+  @override
   String get reelsShowHidden => 'Show hidden channels';
 
   @override
   String get reelsSub => 'Recitations, lessons and admonitions from trusted channels';
+
+  @override
+  String get reelsSuggested => 'Suggested Islamic channels';
+
+  @override
+  String get reelsSuggestedHint => 'The app adds from these automatically based on what you watch most.';
 
   @override
   String get reelsTapToPlay => 'Tap to play';
