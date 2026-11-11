@@ -106,8 +106,8 @@ void main() {
     await pumpApp(tester, size: tallPhone, locale: 'en');
     await pushScreen(tester, MosquesScreen(client: client));
     await tester.pumpAndSettle();
-    expect(urls.first, contains('overpass-api.de'));
-    expect(urls[1], contains('private.coffee'));
+    // The first two servers are asked together; the busy one is ignored.
+    expect(urls.take(2), unorderedEquals([contains('overpass-api.de'), contains('private.coffee')]));
     expect(bodies[1], contains('around:5000,30.04440,31.23570')); // no GPS: Cairo, the default city
     expect(find.byKey(const Key('mosquesGeoFallback')), findsOneWidget);
     expect(find.byKey(const Key('mosque-node/1')), findsOneWidget);
@@ -149,14 +149,14 @@ void main() {
     await pumpApp(tester, size: tallPhone, locale: 'en', location: const FakeLocation(LocationFound(30.0445, 31.2357)));
     await pushScreen(tester, MosquesScreen(client: client));
     await tester.pumpAndSettle();
-    expect(bodies, hasLength(1));
-    expect(bodies.single, contains('around:5000,30.04450,31.23570'));
+    expect(bodies, hasLength(2), reason: 'two servers asked together');
+    expect(bodies.first, contains('around:5000,30.04450,31.23570'));
     expect(find.text('Mosques around your current location'), findsOneWidget);
     expect(find.byKey(const Key('mosquesGeoFallback')), findsNothing);
     expect(find.text('56 m'), findsOneWidget);
     await tester.tap(find.byKey(const Key('mosquesLocate')));
     await tester.pumpAndSettle();
-    expect(bodies, hasLength(2));
+    expect(bodies, hasLength(4));
   });
 
   test('Google Places: parsed nearest first; the finder uses it when a key is set, else OpenStreetMap', () async {
@@ -189,19 +189,5 @@ void main() {
     final o = await MosqueFinder(client, prefs, placesKey: '').find(30.0445, 31.2357, 5000, arabic: true);
     expect(o.fromGoogle, isFalse);
     expect(hosts.last, isNot('places.googleapis.com'));
-  });
-
-  testWidgets('tapping a mosque offers Google Maps, Waze and another maps app', (tester) async {
-    final client = MockClient((req) async => http.Response.bytes(utf8.encode(jsonEncode(_sample)), 200));
-    await pumpApp(tester, size: tallPhone, location: const FakeLocation(LocationFound(30.0445, 31.2357)));
-    await pushScreen(tester, MosquesScreen(client: client));
-    await tester.pumpAndSettle();
-    final first = find.byWidgetPredicate((w) => w.key is ValueKey<String> && (w.key! as ValueKey<String>).value.startsWith('mosque-'));
-    await tester.tap(first.first);
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('directionsSheet')), findsOneWidget);
-    expect(find.text('فتح في خرائط جوجل'), findsOneWidget);
-    expect(find.text('فتح في Waze'), findsOneWidget);
-    expect(find.text('فتح في تطبيق خرائط آخر'), findsOneWidget);
   });
 }

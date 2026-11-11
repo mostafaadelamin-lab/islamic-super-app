@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -90,38 +91,43 @@ class MosqueFinder {
         last = e; // fall back to OpenStreetMap
       }
     }
-    for (final url in overpassEndpoints) {
-      try {
-        final res = await _http
-            .post(
-              Uri.parse(url),
-              headers: const {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                // Overpass asks clients to identify themselves.
-                'User-Agent': _ua,
-              },
-              body: 'data=${Uri.encodeQueryComponent(overpassQuery(lat, lng, radius))}',
-            )
-            .timeout(const Duration(seconds: 25));
-        if (res.statusCode != 200) throw http.ClientException('HTTP ${res.statusCode}');
-        final list = parseOverpass(jsonDecode(utf8.decode(res.bodyBytes)), lat, lng, arabic: arabic);
-        await _save(key, list);
-        if (list.isEmpty) continue; // an empty answer from one server: try the next
-        return MosqueResult(list);
-      } catch (e) {
-        last = e;
-      }
+    // Two waves of servers asked at the same time, so a slow server does not
+    // keep the user waiting: the first non-empty answer wins.
+    Future<List<Mosque>> overpass(String url) async {
+      final res = await _http
+          .post(
+            Uri.parse(url),
+            headers: const {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              // Overpass asks clients to identify themselves.
+              'User-Agent': _ua,
+            },
+            body: 'data=${Uri.encodeQueryComponent(overpassQuery(lat, lng, radius))}',
+          )
+          .timeout(const Duration(seconds: 12));
+      if (res.statusCode != 200) throw http.ClientException('HTTP ${res.statusCode}');
+      return parseOverpass(jsonDecode(utf8.decode(res.bodyBytes)), lat, lng, arabic: arabic);
     }
-    try {
+
+    Future<List<Mosque>> nominatim() async {
       final res = await _http
           .get(nominatimMosquesUri(lat, lng, radius, arabic: arabic), headers: const {'User-Agent': _ua})
-          .timeout(const Duration(seconds: 20));
-      if (res.statusCode == 200) {
-        final list = parseNominatim(jsonDecode(utf8.decode(res.bodyBytes)), lat, lng);
-        if (list.isNotEmpty) return MosqueResult(list);
+          .timeout(const Duration(seconds: 12));
+      if (res.statusCode != 200) throw http.ClientException('HTTP ${res.statusCode}');
+      return parseNominatim(jsonDecode(utf8.decode(res.bodyBytes)), lat, lng);
+    }
+
+    final waves = <List<Future<List<Mosque>> Function()>>[
+      [for (final u in overpassEndpoints.take(2)) () => overpass(u)],
+      [for (final u in overpassEndpoints.skip(2)) () => overpass(u), nominatim],
+    ];
+    for (final wave in waves) {
+      final r = await _firstNonEmpty(wave);
+      if (r.list != null) {
+        await _save(key, r.list!);
+        return MosqueResult(r.list!);
       }
-    } catch (e) {
-      last = e;
+      last = r.error ?? last;
     }
     final raw = _prefs.getString(_cacheKey);
     if (raw != null) {
@@ -133,6 +139,30 @@ class MosqueFinder {
       }
     }
     throw last ?? Exception('Overpass unavailable');
+  }
+
+  /// Runs [jobs] together; completes with the first non-empty list, or with
+  /// no list (and the last error) once every job has finished.
+  static Future<({List<Mosque>? list, Object? error})> _firstNonEmpty(List<Future<List<Mosque>> Function()> jobs) {
+    final done = Completer<({List<Mosque>? list, Object? error})>();
+    var left = jobs.length;
+    Object? error;
+    for (final job in jobs) {
+      Future<void> run() async {
+        try {
+          final list = await job();
+          if (list.isNotEmpty && !done.isCompleted) done.complete((list: list, error: null));
+        } catch (e) {
+          error = e;
+        } finally {
+          left--;
+          if (left == 0 && !done.isCompleted) done.complete((list: null, error: error));
+        }
+      }
+
+      unawaited(run());
+    }
+    return done.future;
   }
 
   Future<void> _save(String key, List<Mosque> list, {bool google = false}) => _prefs.setString(

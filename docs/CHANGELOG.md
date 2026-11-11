@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.7] — Nearby mosques: OpenStreetMap list, tap opens Google Maps (owner's decision) — 2026-11-11
+### Changed
+- Owner dropped Google Places (cost). The list comes from OpenStreetMap again (no key); tapping a mosque opens it in Google Maps. The Places code stays dormant (only used if a build passes GOOGLE_PLACES_KEY); the map-app chooser was removed.
+- Faster search: the first two Overpass servers are asked at the same time (12 s limit), then the other three plus Nominatim together, instead of one by one with 25 s each (the screen could sit on "searching" for minutes).
+
 ## [1.0.6] — Nearby mosques: list inside the app, choose the maps app (owner's request) — 2026-11-11
 ### Changed
 - Nearby mosques are a list again (name + distance, nearest first), from Google Places "Nearby Search (New)" when the build has a key (`--dart-define=GOOGLE_PLACES_KEY=…`, owner's Google Cloud project), else OpenStreetMap (credit line shown only then).
