@@ -2379,9 +2379,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get zakatAdornment => 'Gold worn for adornment';
 
   @override
-  String zakatBelowNisab(String net, String nisab) {
-    return 'Your wealth after debts ($net) is below the nisab ($nisab), so no zakat is due on it now.';
-  }
+  String get zakatAnimalCount => 'Number of animals';
+
+  @override
+  String get zakatBasis => 'Measure the nisab by';
+
+  @override
+  String get zakatBasisGold => 'Gold (85 g)';
+
+  @override
+  String get zakatBasisSilver => 'Silver (595 g)';
+
+  @override
+  String get zakatBelowNisab => 'Below the nisab: no zakat is due';
+
+  @override
+  String get zakatCamels => 'Camels';
+
+  @override
+  String get zakatCattle => 'Cattle';
+
+  @override
+  String get zakatCropsKg => 'Harvest weight';
+
+  @override
+  String get zakatCropsNote => 'Paid on the day of harvest.';
+
+  @override
+  String get zakatCropsRule => 'The crops nisab is about 612 kg; due at harvest, no year needed.';
 
   @override
   String zakatDue(String zakat) {
@@ -2389,8 +2414,33 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String zakatDueAnimals(String v) {
+    return 'Zakat due: $v';
+  }
+
+  @override
+  String zakatDueCrops(String kg) {
+    return 'Zakat due: $kg kg of the harvest';
+  }
+
+  @override
   String zakatDueDetail(String net, String nisab) {
     return 'One fortieth (2.5%) of $net; the nisab is $nisab.';
+  }
+
+  @override
+  String zakatDueGold(String g, String k) {
+    return 'Zakat due: $g g of $k-carat gold';
+  }
+
+  @override
+  String zakatDueMoney(String v) {
+    return 'Zakat due: $v';
+  }
+
+  @override
+  String zakatDueSilver(String g) {
+    return 'Zakat due: $g g of silver';
   }
 
   @override
@@ -2426,6 +2476,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get zakatFieldTrade => 'Trade goods (market price)';
 
   @override
+  String get zakatGoldGrams => 'Weight of saved gold';
+
+  @override
+  String get zakatGoldPrice => 'Price of 1 g of 24-carat gold (optional)';
+
+  @override
+  String get zakatGoldRule => 'The gold nisab is 85 g of pure (24-carat) gold.';
+
+  @override
+  String get zakatGram => 'g';
+
+  @override
   String get zakatGroupDebts => 'Debts you owe';
 
   @override
@@ -2435,7 +2497,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get zakatGroupMoney => 'Money and savings';
 
   @override
+  String get zakatIrrigated => 'Machine-watered 5%';
+
+  @override
+  String get zakatKarat => 'Carat';
+
+  @override
+  String get zakatKg => 'kg';
+
+  @override
+  String get zakatLivestockNote => 'For grazing animals after a full year.';
+
+  @override
+  String get zakatLivestockRule =>
+      'Grazing animals after a full year. Camels and sheep: the zakat letter in Sahih al-Bukhari (1454); cattle: the hadith of Mu\'adh in Sunan al-Tirmidhi (623).';
+
+  @override
+  String get zakatMoney => 'Saved money (cash and bank)';
+
+  @override
+  String get zakatMoneyRule => 'Money is measured against the gold or the silver nisab; choose either.';
+
+  @override
+  String get zakatNeedGoldPrice => 'Enter the price of 24-carat gold to work out the nisab';
+
+  @override
   String get zakatNeedPrice => 'Enter the price of a gram of 21-karat gold to work out the nisab.';
+
+  @override
+  String get zakatNeedSilverPrice => 'Enter the price of silver to work out the nisab';
+
+  @override
+  String zakatNisabIs(String v) {
+    return 'Nisab now: $v';
+  }
 
   @override
   String zakatNisabRule(String grams, String karat) {
@@ -2449,6 +2544,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get zakatPriceTitle => 'Today\'s gold price';
 
   @override
+  String get zakatRain => 'Watered at no cost (rain/river) 10%';
+
+  @override
   String get zakatResult => 'Result';
 
   @override
@@ -2456,9 +2554,36 @@ class AppLocalizationsEn extends AppLocalizations {
       'Pending a shar\'i review: the calculator follows the published fatwas of Egypt\'s Dar al-Ifta (linked below) and has not been reviewed by a scholar yet. If your case is unclear, ask Dar al-Ifta.';
 
   @override
+  String get zakatSheep => 'Sheep/goats';
+
+  @override
+  String get zakatSilverGrams => 'Weight of saved silver';
+
+  @override
+  String get zakatSilverPrice => 'Price of 1 g of pure silver (optional)';
+
+  @override
+  String get zakatSilverRule => 'The silver nisab is 595 g of pure silver.';
+
+  @override
   String zakatSources(String ref) {
     return 'Sources: fatwas of $ref';
   }
+
+  @override
+  String get zakatTabCrops => 'Crops';
+
+  @override
+  String get zakatTabGold => 'Gold';
+
+  @override
+  String get zakatTabLivestock => 'Livestock';
+
+  @override
+  String get zakatTabMoney => 'Money';
+
+  @override
+  String get zakatTabSilver => 'Silver';
 
   @override
   String get zakatTileSub => 'Zakat on money, after Egypt\'s Dar al-Ifta';
@@ -2467,12 +2592,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get zakatTitle => 'Zakat calculator';
 
   @override
+  String get zakatUnitBintLabun => 'bint labun (2-year camel)';
+
+  @override
+  String get zakatUnitBintMakhad => 'bint makhad (1-year camel)';
+
+  @override
+  String get zakatUnitHiqqa => 'hiqqa (3-year camel)';
+
+  @override
+  String get zakatUnitJadhaa => 'jadha\'a (4-year camel)';
+
+  @override
+  String get zakatUnitMusinna => 'musinna (2-year cow)';
+
+  @override
+  String get zakatUnitSheep => 'sheep';
+
+  @override
+  String get zakatUnitTabi => 'tabi\' (1-year calf)';
+
+  @override
   String get zakatWealth => 'Your wealth (in your currency; gold in grams)';
 
   @override
   String zakatYearNotPassed(String net, String nisab) {
     return 'Your wealth ($net) has reached the nisab ($nisab); zakat is due once a full Hijri year passes over it.';
   }
+
+  @override
+  String get zakatYearNote =>
+      'Due when the amount has stayed at or above the nisab for a full lunar year; the rate is 2.5%.';
 
   @override
   String get zakatYearPassed => 'A full Hijri year has passed since my wealth reached the nisab';

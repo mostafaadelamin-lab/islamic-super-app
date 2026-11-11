@@ -1,19 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../app_services.dart';
-import '../domain/text.dart';
-import '../domain/zakat.dart';
-import '../l10n/app_localizations.dart';
+import '../domain/zakat_simple.dart';
 import '../theme/design_tokens.dart';
 import 'adaptive.dart';
 import 'l10n_ext.dart';
-import 'review_notice.dart';
-import 'r_icon.dart';
 
-/// Zakat on money after the published fatwas of Dar al-Ifta al-Misriyya, held for a
-/// shar'i review. Every rule links to its fatwa; the numbers stay on this device.
+/// Zakat calculator, simplified on the owner's request (2026-11-11): five tabs only:
+/// silver, gold, money, livestock, crops. Rules: lib/domain/zakat_simple.dart.
 class ZakatScreen extends StatefulWidget {
   const ZakatScreen({super.key});
 
@@ -22,330 +18,272 @@ class ZakatScreen extends StatefulWidget {
 }
 
 class _ZakatScreenState extends State<ZakatScreen> {
-  late Map<String, double> _values;
-  late double _price;
-  late bool _yearPassed;
-  bool _loaded = false;
+  static const _key = 'zakat.simple';
+  Map<String, dynamic> _v = {};
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (_loaded) return;
-    _loaded = true;
-    final s = context.services.settings;
-    _values = Map.of(s.zakatValues);
-    _price = s.zakatGoldPrice;
-    _yearPassed = s.zakatYearPassed;
-  }
-
-  /// Accepts Western and Arabic-Indic digits and the Arabic decimal comma.
-  static double _parse(String raw) {
-    final western = raw
-        .split('')
-        .map((c) {
-          final code = c.codeUnitAt(0);
-          if (code >= 0x0660 && code <= 0x0669) return String.fromCharCode(code - 0x0660 + 0x30);
-          return c == '٫' ? '.' : c;
-        })
-        .join()
-        .replaceAll(',', '');
-    final v = double.tryParse(western.trim()) ?? 0;
-    return v.isFinite && v > 0 ? v : 0;
-  }
-
-  String _money(double v, bool arabic) {
-    final fixed = v == v.roundToDouble() ? v.toStringAsFixed(0) : v.toStringAsFixed(2);
-    final parts = fixed.split('.');
-    final whole = parts.first.replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (_) => ',');
-    final text = parts.length > 1 ? '$whole.${parts[1]}' : whole;
-    return arabic ? toArabicIndic(text) : text;
-  }
-
-  void _save() => context.services.settings.setZakat(values: _values, price: _price, yearPassed: _yearPassed);
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final arabic = Localizations.localeOf(context).languageCode == 'ar';
-    final guide = context.services.content.zakat;
-    final result = guide.compute(_values, _price, _yearPassed);
-    final adornment = guide.source('adornment');
-    String n(num v) => arabic ? toArabicIndic('$v') : '$v';
-
-    final scheme = Theme.of(context).colorScheme;
-
-    Widget numberField(String key, String label, double initial, ValueChanged<double> onChanged, {RIconData? icon}) =>
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceXs),
-          child: TextFormField(
-            key: Key(key),
-            initialValue: initial > 0 ? _money(initial, false).replaceAll(',', '') : '',
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9٠-٩.,٫]'))],
-            decoration: InputDecoration(
-              labelText: label,
-              filled: true,
-              fillColor: scheme.surfaceContainerHighest.withValues(alpha: 0.5),
-              prefixIcon: icon == null ? null : RIcon(icon, size: 20, color: scheme.primary),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide.none),
-              isDense: true,
-            ),
-            onChanged: (raw) {
-              setState(() => onChanged(_parse(raw)));
-              _save();
-            },
-          ),
-        );
-
-    Widget group(String title, RIconData icon, List<String> ids) {
-      final fields = [
-        for (final f in guide.fields)
-          if (ids.contains(f.id)) f,
-      ];
-      if (fields.isEmpty) return const SizedBox.shrink();
-      return _Group(
-        title: title,
-        icon: icon,
-        children: [
-          for (final f in fields)
-            numberField('zakat-${f.id}', _fieldLabel(l, f.id), _values[f.id] ?? 0, (v) => _values[f.id] = v),
-        ],
-      );
+    if (_v.isEmpty) {
+      try {
+        _v = jsonDecode(context.services.settings.rawJson(_key) ?? '{}') as Map<String, dynamic>;
+      } catch (_) {
+        _v = {};
+      }
     }
+  }
 
-    const moneyIds = ['cash', 'certificates', 'certificateReturns', 'shares', 'trade'];
-    const goldIds = ['gold24', 'gold21', 'gold18'];
-    final known = {...moneyIds, ...goldIds, 'debts'};
-    final otherIds = [
-      for (final f in guide.fields)
-        if (!known.contains(f.id)) f.id,
-    ];
+  double? _d(String k) => (_v[k] as num?)?.toDouble();
+  void _set(String k, Object? v) {
+    setState(() => v == null ? _v.remove(k) : _v[k] = v);
+    context.services.settings.setRawJson(_key, jsonEncode(_v));
+  }
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l.zakatTitle)),
-      body: ReadableWidth(
-        child: ListView(
-          key: const Key('zakatList'),
-          padding: const EdgeInsets.fromLTRB(
-            DesignTokens.spaceLg,
-            DesignTokens.spaceSm,
-            DesignTokens.spaceLg,
-            DesignTokens.spaceXl,
-          ),
+  String _fmt(BuildContext context, double v, {int digits = 2}) {
+    final t = v == v.roundToDouble() ? v.round().toString() : v.toStringAsFixed(digits);
+    return context.num(t);
+  }
+
+  Widget _number(String key, String label, {String? suffix}) => Padding(
+    padding: const EdgeInsets.only(bottom: DesignTokens.spaceMd),
+    child: TextFormField(
+      key: Key('zakat.$key'),
+      initialValue: _d(key) == null ? '' : _fmtRaw(_d(key)!),
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      decoration: InputDecoration(labelText: label, suffixText: suffix, border: const OutlineInputBorder()),
+      onChanged: (t) => _set(key, double.tryParse(_ascii(t.trim()))),
+    ),
+  );
+
+  static String _fmtRaw(double v) => v == v.roundToDouble() ? v.round().toString() : v.toString();
+  static String _ascii(String t) {
+    const ar = '٠١٢٣٤٥٦٧٨٩';
+    final b = StringBuffer();
+    for (final c in t.split('')) {
+      final i = ar.indexOf(c);
+      b.write(i >= 0 ? '$i' : (c == '٫' || c == ',' ? '.' : c));
+    }
+    return b.toString();
+  }
+
+  Widget _result(BuildContext context, {required bool reached, required String text, String? note}) {
+    final scheme = Theme.of(context).colorScheme;
+    return Card(
+      key: const Key('zakatResult'),
+      color: reached ? scheme.primaryContainer : scheme.surfaceContainer,
+      margin: const EdgeInsets.only(bottom: DesignTokens.spaceMd),
+      child: Padding(
+        padding: const EdgeInsets.all(DesignTokens.spaceLg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // The answer first, updated as the user types.
-            Container(
-              key: const Key('zakatHero'),
-              padding: const EdgeInsets.all(DesignTokens.spaceLg),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
-                gradient: LinearGradient(
-                  begin: AlignmentDirectional.topStart,
-                  end: AlignmentDirectional.bottomEnd,
-                  colors: [scheme.primary, Color.lerp(scheme.primary, Colors.black, 0.35)!],
-                ),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: _ResultView(result: result, money: (v) => _money(v, arabic)),
-                  ),
-                  const SizedBox(width: DesignTokens.spaceSm),
-                  RIcon(RIcons.zakat, size: 44, color: Colors.white.withValues(alpha: 0.85)),
-                ],
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+                color: reached ? scheme.onPrimaryContainer : null,
               ),
             ),
-            const SizedBox(height: DesignTokens.spaceMd),
-            _Group(
-              title: l.zakatPriceTitle,
-              icon: RIcons.star,
-              children: [
-                numberField('zakatPrice', l.zakatPrice, _price, (v) => _price = v),
-                Text(
-                  l.zakatNisabRule(n(guide.nisabGoldGrams.round()), n(guide.nisabKarat)),
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
-            ),
-            group(l.zakatGroupMoney, RIcons.zakat, moneyIds),
-            group(l.zakatGroupGold, RIcons.star, goldIds),
-            group(l.zakatGroupDebts, RIcons.minus, ['debts', ...otherIds]),
-            _Group(
-              title: null,
-              icon: null,
-              children: [
-                SwitchListTile(
-                  key: const Key('zakatYear'),
-                  contentPadding: EdgeInsets.zero,
-                  value: _yearPassed,
-                  secondary: RIcon(RIcons.calendarCheck, color: scheme.primary),
-                  title: Text(l.zakatYearPassed),
-                  onChanged: (v) {
-                    setState(() => _yearPassed = v);
-                    _save();
-                  },
-                ),
-              ],
-            ),
-            if (adornment != null)
-              _Group(
-                title: l.zakatAdornment,
-                icon: RIcons.info,
-                children: [
-                  _Quote(key: const Key('zakatAdornment'), text: adornment.quotes.first),
-                  _fatwaLink(l, adornment, n),
-                ],
-              ),
-            _Group(
-              title: null,
-              icon: null,
-              children: [
-                ExpansionTile(
-                  key: const Key('zakatSourcesTile'),
-                  tilePadding: EdgeInsets.zero,
-                  leading: RIcon(RIcons.book, color: scheme.primary),
-                  title: Text(l.zakatSources(arabic ? guide.referenceAr : guide.referenceEn)),
-                  children: [
-                    for (final s in guide.sources)
-                      ExpansionTile(
-                        key: Key('zakatSource-${s.id}'),
-                        title: Text(s.titleAr, textDirection: TextDirection.rtl),
-                        children: [
-                          for (final q in s.quotes) _Quote(text: q),
-                          _fatwaLink(l, s, n),
-                        ],
-                      ),
-                  ],
-                ),
-              ],
-            ),
-            ReviewNotice(l.zakatReview, key: const Key('zakatReview')),
+            if (note != null) ...[
+              const SizedBox(height: DesignTokens.spaceXs),
+              Text(note, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall),
+            ],
           ],
         ),
       ),
     );
   }
 
-  Widget _fatwaLink(AppLocalizations l, ZakatSource s, String Function(num) n) => ListTile(
-    key: Key('zakatLink-${s.id}'),
-    leading: const RIcon(RIcons.external),
-    title: Text(l.zakatFatwa(n(s.number))),
-    onTap: () => launchUrl(Uri.parse(s.url), mode: LaunchMode.externalApplication),
-  );
+  Widget _page(List<Widget> children) =>
+      ListView(padding: const EdgeInsets.all(DesignTokens.spaceLg), children: children);
 
-  static String _fieldLabel(AppLocalizations l, String id) => switch (id) {
-    'cash' => l.zakatFieldCash,
-    'certificates' => l.zakatFieldCertificates,
-    'certificateReturns' => l.zakatFieldCertificateReturns,
-    'shares' => l.zakatFieldShares,
-    'trade' => l.zakatFieldTrade,
-    'gold24' => l.zakatFieldGold24,
-    'gold21' => l.zakatFieldGold21,
-    'gold18' => l.zakatFieldGold18,
-    'debts' => l.zakatFieldDebts,
-    _ => id,
-  };
-}
+  Widget _gold(BuildContext context) {
+    final l = context.l10n;
+    final grams = _d('gold') ?? 0;
+    final karat = (_v['karat'] as int?) ?? 21;
+    final r = goldZakat(grams, karat, _d('goldPrice'));
+    return _page([
+      if (grams > 0)
+        _result(
+          context,
+          reached: r.reached,
+          text: r.reached
+              ? l.zakatDueGold(_fmt(context, r.dueGrams), context.num(karat)) +
+                    (r.dueMoney == null ? '' : '\n${l.zakatDueMoney(_fmt(context, r.dueMoney!))}')
+              : l.zakatBelowNisab,
+          note: l.zakatYearNote,
+        ),
+      _number('gold', l.zakatGoldGrams, suffix: l.zakatGram),
+      Text(l.zakatKarat, style: Theme.of(context).textTheme.titleSmall),
+      const SizedBox(height: DesignTokens.spaceXs),
+      SegmentedButton<int>(
+        key: const Key('zakat.karat'),
+        segments: [
+          for (final k in const [24, 21, 18]) ButtonSegment(value: k, label: Text(context.num(k))),
+        ],
+        selected: {karat},
+        onSelectionChanged: (v) => _set('karat', v.single),
+      ),
+      const SizedBox(height: DesignTokens.spaceMd),
+      _number('goldPrice', l.zakatGoldPrice),
+      Text(l.zakatGoldRule, style: Theme.of(context).textTheme.bodySmall),
+    ]);
+  }
 
-class _ResultView extends StatelessWidget {
-  const _ResultView({required this.result, required this.money});
-  final ZakatResult result;
-  final String Function(double) money;
+  Widget _silver(BuildContext context) {
+    final l = context.l10n;
+    final grams = _d('silver') ?? 0;
+    final r = silverZakat(grams, _d('silverPrice'));
+    return _page([
+      if (grams > 0)
+        _result(
+          context,
+          reached: r.reached,
+          text: r.reached
+              ? l.zakatDueSilver(_fmt(context, r.dueGrams)) +
+                    (r.dueMoney == null ? '' : '\n${l.zakatDueMoney(_fmt(context, r.dueMoney!))}')
+              : l.zakatBelowNisab,
+          note: l.zakatYearNote,
+        ),
+      _number('silver', l.zakatSilverGrams, suffix: l.zakatGram),
+      _number('silverPrice', l.zakatSilverPrice),
+      Text(l.zakatSilverRule, style: Theme.of(context).textTheme.bodySmall),
+    ]);
+  }
+
+  Widget _money(BuildContext context) {
+    final l = context.l10n;
+    final byGold = (_v['basis'] as String? ?? 'gold') == 'gold';
+    final price = byGold ? _d('goldPrice') : _d('silverPrice');
+    final amount = _d('money') ?? 0;
+    final nisab = price == null ? 0.0 : price * (byGold ? goldNisabGrams : silverNisabGrams);
+    final r = moneyZakat(amount, nisab);
+    return _page([
+      if (amount > 0)
+        _result(
+          context,
+          reached: r.reached,
+          text: price == null
+              ? (byGold ? l.zakatNeedGoldPrice : l.zakatNeedSilverPrice)
+              : r.reached
+              ? l.zakatDueMoney(_fmt(context, r.due))
+              : l.zakatBelowNisab,
+          note: price == null ? null : '${l.zakatNisabIs(_fmt(context, nisab, digits: 0))}\n${l.zakatYearNote}',
+        ),
+      _number('money', l.zakatMoney),
+      Text(l.zakatBasis, style: Theme.of(context).textTheme.titleSmall),
+      const SizedBox(height: DesignTokens.spaceXs),
+      SegmentedButton<String>(
+        key: const Key('zakat.basis'),
+        segments: [
+          ButtonSegment(value: 'gold', label: Text(l.zakatBasisGold)),
+          ButtonSegment(value: 'silver', label: Text(l.zakatBasisSilver)),
+        ],
+        selected: {byGold ? 'gold' : 'silver'},
+        onSelectionChanged: (v) => _set('basis', v.single),
+      ),
+      const SizedBox(height: DesignTokens.spaceMd),
+      if (byGold) _number('goldPrice', l.zakatGoldPrice) else _number('silverPrice', l.zakatSilverPrice),
+      Text(l.zakatMoneyRule, style: Theme.of(context).textTheme.bodySmall),
+    ]);
+  }
+
+  Widget _livestock(BuildContext context) {
+    final l = context.l10n;
+    final kind = Livestock.values.byName(_v['animal'] as String? ?? 'sheep');
+    final count = (_d('animals') ?? 0).floor();
+    final due = livestockZakat(kind, count);
+    String unit(String u) => switch (u) {
+      'sheep' => l.zakatUnitSheep,
+      'bintMakhad' => l.zakatUnitBintMakhad,
+      'bintLabun' => l.zakatUnitBintLabun,
+      'hiqqa' => l.zakatUnitHiqqa,
+      'jadhaa' => l.zakatUnitJadhaa,
+      'tabi' => l.zakatUnitTabi,
+      'musinna' => l.zakatUnitMusinna,
+      _ => u,
+    };
+    return _page([
+      if (count > 0)
+        _result(
+          context,
+          reached: due.isNotEmpty,
+          text: due.isEmpty
+              ? l.zakatBelowNisab
+              : l.zakatDueAnimals(due.map((d) => '${context.num(d.$1)} ${unit(d.$2)}').join(' + ')),
+          note: l.zakatLivestockNote,
+        ),
+      SegmentedButton<Livestock>(
+        key: const Key('zakat.animal'),
+        segments: [
+          ButtonSegment(value: Livestock.sheep, label: Text(l.zakatSheep)),
+          ButtonSegment(value: Livestock.cattle, label: Text(l.zakatCattle)),
+          ButtonSegment(value: Livestock.camels, label: Text(l.zakatCamels)),
+        ],
+        selected: {kind},
+        onSelectionChanged: (v) => _set('animal', v.single.name),
+      ),
+      const SizedBox(height: DesignTokens.spaceMd),
+      _number('animals', l.zakatAnimalCount),
+      Text(l.zakatLivestockRule, style: Theme.of(context).textTheme.bodySmall),
+    ]);
+  }
+
+  Widget _crops(BuildContext context) {
+    final l = context.l10n;
+    final kg = _d('crops') ?? 0;
+    final rain = (_v['rain'] as bool?) ?? true;
+    final r = cropsZakat(kg, rainFed: rain);
+    return _page([
+      if (kg > 0)
+        _result(
+          context,
+          reached: r.reached,
+          text: r.reached ? l.zakatDueCrops(_fmt(context, r.dueKg)) : l.zakatBelowNisab,
+          note: l.zakatCropsNote,
+        ),
+      _number('crops', l.zakatCropsKg, suffix: l.zakatKg),
+      SegmentedButton<bool>(
+        key: const Key('zakat.rain'),
+        segments: [
+          ButtonSegment(value: true, label: Text(l.zakatRain)),
+          ButtonSegment(value: false, label: Text(l.zakatIrrigated)),
+        ],
+        selected: {rain},
+        onSelectionChanged: (v) => _set('rain', v.single),
+      ),
+      const SizedBox(height: DesignTokens.spaceMd),
+      Text(l.zakatCropsRule, style: Theme.of(context).textTheme.bodySmall),
+    ]);
+  }
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final net = money(result.net);
-    final nisab = money(result.nisab);
-    final text = switch (result.status) {
-      ZakatStatus.needPrice => l.zakatNeedPrice,
-      ZakatStatus.belowNisab => l.zakatBelowNisab(net, nisab),
-      ZakatStatus.yearNotPassed => l.zakatYearNotPassed(net, nisab),
-      ZakatStatus.due => null,
-    };
-    final theme = Theme.of(context);
-    if (text != null) {
-      return Text(
-        text,
-        key: Key('zakatResult-${result.status.name}'),
-        style: theme.textTheme.bodyLarge?.copyWith(color: Colors.white),
-      );
-    }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          l.zakatDue(money(result.zakat)),
-          key: const Key('zakatAmount'),
-          style: theme.textTheme.headlineMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.w700),
+    final tabs = [
+      (l.zakatTabSilver, _silver),
+      (l.zakatTabGold, _gold),
+      (l.zakatTabMoney, _money),
+      (l.zakatTabLivestock, _livestock),
+      (l.zakatTabCrops, _crops),
+    ];
+    return DefaultTabController(
+      length: tabs.length,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(l.zakatTitle),
+          bottom: TabBar(
+            key: const Key('zakatTabs'),
+            isScrollable: true,
+            tabAlignment: TabAlignment.start,
+            tabs: [for (final t in tabs) Tab(text: t.$1)],
+          ),
         ),
-        const SizedBox(height: DesignTokens.spaceXs),
-        Text(l.zakatDueDetail(net, nisab), style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70)),
-      ],
-    );
-  }
-}
-
-/// A rounded block of related fields with an optional small heading.
-class _Group extends StatelessWidget {
-  const _Group({required this.title, required this.icon, required this.children});
-  final String? title;
-  final RIconData? icon;
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Container(
-      margin: const EdgeInsets.only(top: DesignTokens.spaceMd),
-      padding: const EdgeInsets.fromLTRB(
-        DesignTokens.spaceLg,
-        DesignTokens.spaceMd,
-        DesignTokens.spaceLg,
-        DesignTokens.spaceMd,
-      ),
-      decoration: BoxDecoration(
-        color: scheme.surfaceContainerLow,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: scheme.outlineVariant.withValues(alpha: 0.5)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (title != null)
-            Padding(
-              padding: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
-              child: Row(
-                children: [
-                  if (icon != null) ...[
-                    RIcon(icon!, size: 18, color: scheme.secondary),
-                    const SizedBox(width: DesignTokens.spaceSm),
-                  ],
-                  Expanded(child: Text(title!, style: Theme.of(context).textTheme.titleSmall)),
-                ],
-              ),
-            ),
-          ...children,
-        ],
+        body: ReadableWidth(
+          child: TabBarView(children: [for (final t in tabs) Builder(builder: t.$2)]),
+        ),
       ),
     );
   }
-}
-
-/// A fatwa's words, unchanged, in Arabic.
-class _Quote extends StatelessWidget {
-  const _Quote({super.key, required this.text});
-  final String text;
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
-    child: Container(
-      padding: const EdgeInsetsDirectional.only(start: DesignTokens.spaceMd),
-      decoration: BoxDecoration(
-        border: BorderDirectional(start: BorderSide(color: Theme.of(context).colorScheme.secondary, width: 3)),
-      ),
-      child: Text('«$text»', textDirection: TextDirection.rtl, style: duaStyle(context, size: 16)),
-    ),
-  );
 }

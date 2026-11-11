@@ -3519,23 +3519,69 @@
   "@zakatAdornment": {
     "description": "shared key \"zakat.adornment\""
   },
-  "zakatBelowNisab": "Your wealth after debts ({net}) is below the nisab ({nisab}), so no zakat is due on it now.",
+  "zakatAnimalCount": "Number of animals",
+  "@zakatAnimalCount": {
+    "description": "shared key \"zakat.animalCount\""
+  },
+  "zakatBasis": "Measure the nisab by",
+  "@zakatBasis": {
+    "description": "shared key \"zakat.basis\""
+  },
+  "zakatBasisGold": "Gold (85 g)",
+  "@zakatBasisGold": {
+    "description": "shared key \"zakat.basisGold\""
+  },
+  "zakatBasisSilver": "Silver (595 g)",
+  "@zakatBasisSilver": {
+    "description": "shared key \"zakat.basisSilver\""
+  },
+  "zakatBelowNisab": "Below the nisab: no zakat is due",
   "@zakatBelowNisab": {
-    "description": "shared key \"zakat.belowNisab\"",
-    "placeholders": {
-      "net": {
-        "type": "String"
-      },
-      "nisab": {
-        "type": "String"
-      }
-    }
+    "description": "shared key \"zakat.belowNisab\""
+  },
+  "zakatCamels": "Camels",
+  "@zakatCamels": {
+    "description": "shared key \"zakat.camels\""
+  },
+  "zakatCattle": "Cattle",
+  "@zakatCattle": {
+    "description": "shared key \"zakat.cattle\""
+  },
+  "zakatCropsKg": "Harvest weight",
+  "@zakatCropsKg": {
+    "description": "shared key \"zakat.cropsKg\""
+  },
+  "zakatCropsNote": "Paid on the day of harvest.",
+  "@zakatCropsNote": {
+    "description": "shared key \"zakat.cropsNote\""
+  },
+  "zakatCropsRule": "The crops nisab is about 612 kg; due at harvest, no year needed.",
+  "@zakatCropsRule": {
+    "description": "shared key \"zakat.cropsRule\""
   },
   "zakatDue": "Zakat due: {zakat}",
   "@zakatDue": {
     "description": "shared key \"zakat.due\"",
     "placeholders": {
       "zakat": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatDueAnimals": "Zakat due: {v}",
+  "@zakatDueAnimals": {
+    "description": "shared key \"zakat.dueAnimals\"",
+    "placeholders": {
+      "v": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatDueCrops": "Zakat due: {kg} kg of the harvest",
+  "@zakatDueCrops": {
+    "description": "shared key \"zakat.dueCrops\"",
+    "placeholders": {
+      "kg": {
         "type": "String"
       }
     }
@@ -3548,6 +3594,36 @@
         "type": "String"
       },
       "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatDueGold": "Zakat due: {g} g of {k}-carat gold",
+  "@zakatDueGold": {
+    "description": "shared key \"zakat.dueGold\"",
+    "placeholders": {
+      "g": {
+        "type": "String"
+      },
+      "k": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatDueMoney": "Zakat due: {v}",
+  "@zakatDueMoney": {
+    "description": "shared key \"zakat.dueMoney\"",
+    "placeholders": {
+      "v": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatDueSilver": "Zakat due: {g} g of silver",
+  "@zakatDueSilver": {
+    "description": "shared key \"zakat.dueSilver\"",
+    "placeholders": {
+      "g": {
         "type": "String"
       }
     }
@@ -3597,6 +3673,22 @@
   "@zakatFieldTrade": {
     "description": "shared key \"zakat.field.trade\""
   },
+  "zakatGoldGrams": "Weight of saved gold",
+  "@zakatGoldGrams": {
+    "description": "shared key \"zakat.goldGrams\""
+  },
+  "zakatGoldPrice": "Price of 1 g of 24-carat gold (optional)",
+  "@zakatGoldPrice": {
+    "description": "shared key \"zakat.goldPrice\""
+  },
+  "zakatGoldRule": "The gold nisab is 85 g of pure (24-carat) gold.",
+  "@zakatGoldRule": {
+    "description": "shared key \"zakat.goldRule\""
+  },
+  "zakatGram": "g",
+  "@zakatGram": {
+    "description": "shared key \"zakat.gram\""
+  },
   "zakatGroupDebts": "Debts you owe",
   "@zakatGroupDebts": {
     "description": "shared key \"zakat.groupDebts\""
@@ -3609,9 +3701,54 @@
   "@zakatGroupMoney": {
     "description": "shared key \"zakat.groupMoney\""
   },
+  "zakatIrrigated": "Machine-watered 5%",
+  "@zakatIrrigated": {
+    "description": "shared key \"zakat.irrigated\""
+  },
+  "zakatKarat": "Carat",
+  "@zakatKarat": {
+    "description": "shared key \"zakat.karat\""
+  },
+  "zakatKg": "kg",
+  "@zakatKg": {
+    "description": "shared key \"zakat.kg\""
+  },
+  "zakatLivestockNote": "For grazing animals after a full year.",
+  "@zakatLivestockNote": {
+    "description": "shared key \"zakat.livestockNote\""
+  },
+  "zakatLivestockRule": "Grazing animals after a full year. Camels and sheep: the zakat letter in Sahih al-Bukhari (1454); cattle: the hadith of Mu'adh in Sunan al-Tirmidhi (623).",
+  "@zakatLivestockRule": {
+    "description": "shared key \"zakat.livestockRule\""
+  },
+  "zakatMoney": "Saved money (cash and bank)",
+  "@zakatMoney": {
+    "description": "shared key \"zakat.money\""
+  },
+  "zakatMoneyRule": "Money is measured against the gold or the silver nisab; choose either.",
+  "@zakatMoneyRule": {
+    "description": "shared key \"zakat.moneyRule\""
+  },
+  "zakatNeedGoldPrice": "Enter the price of 24-carat gold to work out the nisab",
+  "@zakatNeedGoldPrice": {
+    "description": "shared key \"zakat.needGoldPrice\""
+  },
   "zakatNeedPrice": "Enter the price of a gram of 21-karat gold to work out the nisab.",
   "@zakatNeedPrice": {
     "description": "shared key \"zakat.needPrice\""
+  },
+  "zakatNeedSilverPrice": "Enter the price of silver to work out the nisab",
+  "@zakatNeedSilverPrice": {
+    "description": "shared key \"zakat.needSilverPrice\""
+  },
+  "zakatNisabIs": "Nisab now: {v}",
+  "@zakatNisabIs": {
+    "description": "shared key \"zakat.nisabIs\"",
+    "placeholders": {
+      "v": {
+        "type": "String"
+      }
+    }
   },
   "zakatNisabRule": "The nisab is the value of {grams} grams of {karat}-karat gold, so enter today's market price per gram.",
   "@zakatNisabRule": {
@@ -3633,6 +3770,10 @@
   "@zakatPriceTitle": {
     "description": "shared key \"zakat.priceTitle\""
   },
+  "zakatRain": "Watered at no cost (rain/river) 10%",
+  "@zakatRain": {
+    "description": "shared key \"zakat.rain\""
+  },
   "zakatResult": "Result",
   "@zakatResult": {
     "description": "shared key \"zakat.result\""
@@ -3640,6 +3781,22 @@
   "zakatReview": "Pending a shar'i review: the calculator follows the published fatwas of Egypt's Dar al-Ifta (linked below) and has not been reviewed by a scholar yet. If your case is unclear, ask Dar al-Ifta.",
   "@zakatReview": {
     "description": "shared key \"zakat.review\""
+  },
+  "zakatSheep": "Sheep/goats",
+  "@zakatSheep": {
+    "description": "shared key \"zakat.sheep\""
+  },
+  "zakatSilverGrams": "Weight of saved silver",
+  "@zakatSilverGrams": {
+    "description": "shared key \"zakat.silverGrams\""
+  },
+  "zakatSilverPrice": "Price of 1 g of pure silver (optional)",
+  "@zakatSilverPrice": {
+    "description": "shared key \"zakat.silverPrice\""
+  },
+  "zakatSilverRule": "The silver nisab is 595 g of pure silver.",
+  "@zakatSilverRule": {
+    "description": "shared key \"zakat.silverRule\""
   },
   "zakatSources": "Sources: fatwas of {ref}",
   "@zakatSources": {
@@ -3650,6 +3807,26 @@
       }
     }
   },
+  "zakatTabCrops": "Crops",
+  "@zakatTabCrops": {
+    "description": "shared key \"zakat.tabCrops\""
+  },
+  "zakatTabGold": "Gold",
+  "@zakatTabGold": {
+    "description": "shared key \"zakat.tabGold\""
+  },
+  "zakatTabLivestock": "Livestock",
+  "@zakatTabLivestock": {
+    "description": "shared key \"zakat.tabLivestock\""
+  },
+  "zakatTabMoney": "Money",
+  "@zakatTabMoney": {
+    "description": "shared key \"zakat.tabMoney\""
+  },
+  "zakatTabSilver": "Silver",
+  "@zakatTabSilver": {
+    "description": "shared key \"zakat.tabSilver\""
+  },
   "zakatTileSub": "Zakat on money, after Egypt's Dar al-Ifta",
   "@zakatTileSub": {
     "description": "shared key \"zakat.tileSub\""
@@ -3657,6 +3834,34 @@
   "zakatTitle": "Zakat calculator",
   "@zakatTitle": {
     "description": "shared key \"zakat.title\""
+  },
+  "zakatUnitBintLabun": "bint labun (2-year camel)",
+  "@zakatUnitBintLabun": {
+    "description": "shared key \"zakat.unitBintLabun\""
+  },
+  "zakatUnitBintMakhad": "bint makhad (1-year camel)",
+  "@zakatUnitBintMakhad": {
+    "description": "shared key \"zakat.unitBintMakhad\""
+  },
+  "zakatUnitHiqqa": "hiqqa (3-year camel)",
+  "@zakatUnitHiqqa": {
+    "description": "shared key \"zakat.unitHiqqa\""
+  },
+  "zakatUnitJadhaa": "jadha'a (4-year camel)",
+  "@zakatUnitJadhaa": {
+    "description": "shared key \"zakat.unitJadhaa\""
+  },
+  "zakatUnitMusinna": "musinna (2-year cow)",
+  "@zakatUnitMusinna": {
+    "description": "shared key \"zakat.unitMusinna\""
+  },
+  "zakatUnitSheep": "sheep",
+  "@zakatUnitSheep": {
+    "description": "shared key \"zakat.unitSheep\""
+  },
+  "zakatUnitTabi": "tabi' (1-year calf)",
+  "@zakatUnitTabi": {
+    "description": "shared key \"zakat.unitTabi\""
   },
   "zakatWealth": "Your wealth (in your currency; gold in grams)",
   "@zakatWealth": {
@@ -3673,6 +3878,10 @@
         "type": "String"
       }
     }
+  },
+  "zakatYearNote": "Due when the amount has stayed at or above the nisab for a full lunar year; the rate is 2.5%.",
+  "@zakatYearNote": {
+    "description": "shared key \"zakat.yearNote\""
   },
   "zakatYearPassed": "A full Hijri year has passed since my wealth reached the nisab",
   "@zakatYearPassed": {

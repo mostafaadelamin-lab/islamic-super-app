@@ -8,6 +8,7 @@ import '../domain/tasbih.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'adaptive.dart';
+import 'misbaha.dart';
 import 'r_icon.dart';
 
 /// Tasbih: a counter per dhikr (built-in or the user's own), big-button or
@@ -149,56 +150,92 @@ class _TasbihScreenState extends State<TasbihScreen> {
                             ),
                           ),
                           const SizedBox(height: DesignTokens.spaceLg),
-                          Semantics(
-                            button: true,
-                            label: l.tasbihCounter(context.num(st.count), context.num(st.target)),
-                            hint: l.tasbihTap,
-                            excludeSemantics: true,
-                            child: SizedBox.square(
-                              dimension: dial,
-                              child: CustomPaint(
-                                key: Key('tasbihDial-${b.mode.name}'),
-                                painter: b.mode == TasbihMode.beads
-                                    ? _BeadsPainter(
-                                        st.count,
-                                        st.target,
-                                        Colors.white,
-                                        Colors.white.withValues(alpha: 0.15),
-                                      )
-                                    : _RingPainter(
-                                        st.count / st.target,
-                                        Colors.white,
-                                        Colors.white.withValues(alpha: 0.2),
+                          if (b.mode == TasbihMode.beads)
+                            Semantics(
+                              button: true,
+                              label: l.tasbihCounter(context.num(st.count), context.num(st.target)),
+                              hint: l.tasbihTap,
+                              excludeSemantics: true,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    '${context.num(st.count)} / ${context.num(st.target)}',
+                                    key: const Key('tasbihCount'),
+                                    style: theme.textTheme.displaySmall?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  const SizedBox(height: DesignTokens.spaceSm),
+                                  Container(
+                                    key: const Key('tasbihButton'),
+                                    height: dial * 1.55,
+                                    width: dial,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24),
+                                      gradient: const RadialGradient(
+                                        center: Alignment(0, -0.3),
+                                        radius: 1.1,
+                                        colors: [Color(0xFF2E2A26), Color(0xFF14110F)],
                                       ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(b.mode == TasbihMode.beads ? 36 : 20),
-                                  child: Material(
-                                    color: Colors.white,
-                                    shape: const CircleBorder(),
-                                    clipBehavior: Clip.antiAlias,
-                                    child: InkWell(
-                                      key: const Key('tasbihButton'),
-                                      onTap: _tap,
-                                      splashColor: color.withValues(alpha: 0.2),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            FittedBox(
-                                              child: Text(
-                                                context.num(st.count),
-                                                key: const Key('tasbihCount'),
-                                                style: theme.textTheme.displayLarge?.copyWith(
-                                                  color: dark,
-                                                  fontWeight: FontWeight.w700,
+                                    ),
+                                    child: RealMisbaha(count: st.count, target: st.target, onCount: _tap),
+                                  ),
+                                ],
+                              ),
+                            )
+                          else
+                            Semantics(
+                              button: true,
+                              label: l.tasbihCounter(context.num(st.count), context.num(st.target)),
+                              hint: l.tasbihTap,
+                              excludeSemantics: true,
+                              child: SizedBox.square(
+                                dimension: dial,
+                                child: CustomPaint(
+                                  key: Key('tasbihDial-${b.mode.name}'),
+                                  painter: b.mode == TasbihMode.beads
+                                      ? _BeadsPainter(
+                                          st.count,
+                                          st.target,
+                                          Colors.white,
+                                          Colors.white.withValues(alpha: 0.15),
+                                        )
+                                      : _RingPainter(
+                                          st.count / st.target,
+                                          Colors.white,
+                                          Colors.white.withValues(alpha: 0.2),
+                                        ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(b.mode == TasbihMode.beads ? 36 : 20),
+                                    child: Material(
+                                      color: Colors.white,
+                                      shape: const CircleBorder(),
+                                      clipBehavior: Clip.antiAlias,
+                                      child: InkWell(
+                                        key: const Key('tasbihButton'),
+                                        onTap: _tap,
+                                        splashColor: color.withValues(alpha: 0.2),
+                                        child: Center(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              FittedBox(
+                                                child: Text(
+                                                  context.num(st.count),
+                                                  key: const Key('tasbihCount'),
+                                                  style: theme.textTheme.displayLarge?.copyWith(
+                                                    color: dark,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            Text(
-                                              '/ ${context.num(st.target)}',
-                                              style: theme.textTheme.titleMedium?.copyWith(color: color),
-                                            ),
-                                          ],
+                                              Text(
+                                                '/ ${context.num(st.target)}',
+                                                style: theme.textTheme.titleMedium?.copyWith(color: color),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -206,7 +243,6 @@ class _TasbihScreenState extends State<TasbihScreen> {
                                 ),
                               ),
                             ),
-                          ),
                           const SizedBox(height: DesignTokens.spaceMd),
                           Text(l.tasbihTap, style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70)),
                           const SizedBox(height: DesignTokens.spaceMd),

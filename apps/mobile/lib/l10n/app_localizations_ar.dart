@@ -2371,9 +2371,34 @@ class AppLocalizationsAr extends AppLocalizations {
   String get zakatAdornment => 'ذهب الزينة';
 
   @override
-  String zakatBelowNisab(String net, String nisab) {
-    return 'مالك بعد الديون ($net) أقل من النصاب ($nisab)، فلا زكاة فيه الآن.';
-  }
+  String get zakatAnimalCount => 'عدد الرؤوس';
+
+  @override
+  String get zakatBasis => 'احسب النصاب على';
+
+  @override
+  String get zakatBasisGold => 'الذهب (85 جرام)';
+
+  @override
+  String get zakatBasisSilver => 'الفضة (595 جرام)';
+
+  @override
+  String get zakatBelowNisab => 'لم يبلغ النصاب، فلا زكاة عليه';
+
+  @override
+  String get zakatCamels => 'إبل';
+
+  @override
+  String get zakatCattle => 'بقر';
+
+  @override
+  String get zakatCropsKg => 'وزن المحصول بعد الحصاد';
+
+  @override
+  String get zakatCropsNote => 'تُخرج يوم الحصاد.';
+
+  @override
+  String get zakatCropsRule => 'نصاب الزروع والثمار نحو 612 كيلو، وتُخرج عند الحصاد بلا انتظار عام.';
 
   @override
   String zakatDue(String zakat) {
@@ -2381,8 +2406,33 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String zakatDueAnimals(String v) {
+    return 'الزكاة الواجبة: $v';
+  }
+
+  @override
+  String zakatDueCrops(String kg) {
+    return 'الزكاة الواجبة: $kg كيلو من المحصول';
+  }
+
+  @override
   String zakatDueDetail(String net, String nisab) {
     return 'ربع العشر (٢٫٥٪) من $net، والنصاب $nisab.';
+  }
+
+  @override
+  String zakatDueGold(String g, String k) {
+    return 'الزكاة الواجبة: $g جرام ذهب عيار $k';
+  }
+
+  @override
+  String zakatDueMoney(String v) {
+    return 'الزكاة الواجبة: $v جنيه';
+  }
+
+  @override
+  String zakatDueSilver(String g) {
+    return 'الزكاة الواجبة: $g جرام فضة';
   }
 
   @override
@@ -2418,6 +2468,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get zakatFieldTrade => 'بضاعة التجارة (بسعر السوق)';
 
   @override
+  String get zakatGoldGrams => 'وزن الذهب المدّخر';
+
+  @override
+  String get zakatGoldPrice => 'سعر جرام الذهب عيار 24 بالجنيه (اختياري)';
+
+  @override
+  String get zakatGoldRule => 'نصاب الذهب 85 جرامًا من الذهب الخالص (عيار 24).';
+
+  @override
+  String get zakatGram => 'جرام';
+
+  @override
   String get zakatGroupDebts => 'الديون عليك';
 
   @override
@@ -2427,7 +2489,40 @@ class AppLocalizationsAr extends AppLocalizations {
   String get zakatGroupMoney => 'النقود والمدخرات';
 
   @override
+  String get zakatIrrigated => 'تُروى بالآلات 5٪';
+
+  @override
+  String get zakatKarat => 'العيار';
+
+  @override
+  String get zakatKg => 'كيلو';
+
+  @override
+  String get zakatLivestockNote => 'للأنعام السائمة بعد مرور عام.';
+
+  @override
+  String get zakatLivestockRule =>
+      'الأنعام السائمة (التي ترعى أكثر العام) إذا مرّ عليها عام. الإبل والغنم: كتاب الصدقة في صحيح البخاري (1454)، والبقر: حديث معاذ في سنن الترمذي (623).';
+
+  @override
+  String get zakatMoney => 'المال المدّخر (نقدًا وفي البنك)';
+
+  @override
+  String get zakatMoneyRule => 'النقود تُقاس على نصاب الذهب أو نصاب الفضة، واختار أي الطريقتين.';
+
+  @override
+  String get zakatNeedGoldPrice => 'اكتب سعر جرام الذهب عيار 24 عشان نحسب النصاب';
+
+  @override
   String get zakatNeedPrice => 'اكتب سعر جرام الذهب عيار ٢١ ليُحسب النصاب.';
+
+  @override
+  String get zakatNeedSilverPrice => 'اكتب سعر جرام الفضة عشان نحسب النصاب';
+
+  @override
+  String zakatNisabIs(String v) {
+    return 'النصاب الآن: $v جنيه';
+  }
 
   @override
   String zakatNisabRule(String grams, String karat) {
@@ -2441,6 +2536,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get zakatPriceTitle => 'سعر الذهب اليوم';
 
   @override
+  String get zakatRain => 'تُروى بلا تكلفة (مطر/نهر) 10٪';
+
+  @override
   String get zakatResult => 'النتيجة';
 
   @override
@@ -2448,9 +2546,36 @@ class AppLocalizationsAr extends AppLocalizations {
       'قيد المراجعة الشرعية: الحاسبة تتبع فتاوى دار الإفتاء المصرية المنشورة (روابطها بالأسفل)، ولم تراجعها جهة شرعية بعد. إن كانت حالتك غير واضحة فاسأل دار الإفتاء.';
 
   @override
+  String get zakatSheep => 'غنم';
+
+  @override
+  String get zakatSilverGrams => 'وزن الفضة المدّخرة';
+
+  @override
+  String get zakatSilverPrice => 'سعر جرام الفضة الخالصة بالجنيه (اختياري)';
+
+  @override
+  String get zakatSilverRule => 'نصاب الفضة 595 جرامًا من الفضة الخالصة.';
+
+  @override
   String zakatSources(String ref) {
     return 'المصادر: فتاوى $ref';
   }
+
+  @override
+  String get zakatTabCrops => 'زكاة المحاصيل';
+
+  @override
+  String get zakatTabGold => 'زكاة الذهب';
+
+  @override
+  String get zakatTabLivestock => 'زكاة الأنعام';
+
+  @override
+  String get zakatTabMoney => 'زكاة المال';
+
+  @override
+  String get zakatTabSilver => 'زكاة الفضة';
 
   @override
   String get zakatTileSub => 'زكاة المال على فتاوى دار الإفتاء المصرية';
@@ -2459,12 +2584,36 @@ class AppLocalizationsAr extends AppLocalizations {
   String get zakatTitle => 'حاسبة الزكاة';
 
   @override
+  String get zakatUnitBintLabun => 'بنت لبون';
+
+  @override
+  String get zakatUnitBintMakhad => 'بنت مخاض';
+
+  @override
+  String get zakatUnitHiqqa => 'حِقّة';
+
+  @override
+  String get zakatUnitJadhaa => 'جَذَعة';
+
+  @override
+  String get zakatUnitMusinna => 'مُسِنّة';
+
+  @override
+  String get zakatUnitSheep => 'شاة';
+
+  @override
+  String get zakatUnitTabi => 'تبيع';
+
+  @override
   String get zakatWealth => 'مالك (بعملتك، والذهب بالجرام)';
 
   @override
   String zakatYearNotPassed(String net, String nisab) {
     return 'مالك ($net) بلغ النصاب ($nisab)، وتجب زكاته حين يمرّ عليه عام هجري كامل.';
   }
+
+  @override
+  String get zakatYearNote => 'تجب الزكاة إذا مرّ على المال عام هجري كامل وهو بالغ النصاب، ومقدارها ربع العشر (2.5٪).';
 
   @override
   String get zakatYearPassed => 'مرّ عام هجري كامل منذ بلغ مالي النصاب';
