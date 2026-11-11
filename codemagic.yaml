@@ -7,6 +7,9 @@
 # Going live in either store is a separate manual step in App Store Connect / Play Console, after the
 # owner's approval (see docs/STORE_RELEASE.md).
 #
+# Build numbers are 1000 + Codemagic's counter, so they stay above the hand-built first Play upload
+# (versionCode 9, 1.0.8) and keep growing on both stores.
+#
 # Secrets live in Codemagic (Team settings), never in this repo:
 #   group "app_store_credentials": APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_KEY_IDENTIFIER,
 #                                  APP_STORE_CONNECT_PRIVATE_KEY (the .p8 file's text), CERTIFICATE_PRIVATE_KEY
@@ -29,7 +32,7 @@ definitions:
       name: Build Android App Bundle (.aab)
       script: |
         flutter build appbundle --release \
-          --build-number=$PROJECT_BUILD_NUMBER \
+          --build-number=$((1000 + PROJECT_BUILD_NUMBER)) \
           --dart-define=RATTIL_STORE=true
   artifacts:
     - &aab "**/build/app/outputs/bundle/release/*.aab"
@@ -59,7 +62,7 @@ workflows:
       - name: Build IPA
         script: |
           flutter build ipa --release \
-            --build-number=$PROJECT_BUILD_NUMBER \
+            --build-number=$((1000 + PROJECT_BUILD_NUMBER)) \
             --dart-define=RATTIL_STORE=true \
             --export-options-plist=/Users/builder/export_options.plist
     artifacts:
