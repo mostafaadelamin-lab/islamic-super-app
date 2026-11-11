@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.5] — Nearby mosques from Google Maps inside the app (owner's request) — 2026-11-11
+### Changed
+- Nearby mosques: Google Maps' mosque search around the phone's position is shown inside the app (WebView, no API key), zoomed to the 2/5/10 km choice; Google links stay in the view, anything else opens outside. The OpenStreetMap list and its attribution were removed from the screen.
+
 ## [1.0.4] — Area name and compass calibration (owner's feedback) — 2026-11-11
 ### Fixed
 - Home place line: the area is now looked up at district level first (a compound or town such as Madinaty, then suburbs), with the street-level answer used to reject a nearby village; BigDataCloud's free client geocoder is a fallback when OpenStreetMap is unreachable. Names saved by the old rules are looked up again; a failed lookup is retried on the next start.

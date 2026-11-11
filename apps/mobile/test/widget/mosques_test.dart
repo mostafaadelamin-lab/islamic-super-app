@@ -1,9 +1,6 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/testing.dart';
 import 'package:rattil/data/location.dart';
 import 'package:rattil/domain/mosques.dart';
 import 'package:rattil/ui/mosques_screen.dart';
@@ -90,70 +87,51 @@ void main() {
     });
   });
 
-  testWidgets('lists mosques around the prayer city, falls back to the second server, radius re-queries', (
-    tester,
-  ) async {
-    final urls = <String>[];
-    final bodies = <String>[];
-    final client = MockClient((req) async {
-      urls.add(req.url.toString());
-      bodies.add(Uri.decodeQueryComponent(req.body));
-      if (urls.length == 1) return http.Response('busy', 429);
-      return http.Response.bytes(utf8.encode(jsonEncode(_sample)), 200);
-    });
-    await pumpApp(tester, size: tallPhone, locale: 'en');
-    await pushScreen(tester, MosquesScreen(client: client));
-    await tester.pumpAndSettle();
-    expect(urls.first, contains('overpass-api.de'));
-    expect(urls[1], contains('private.coffee'));
-    expect(bodies[1], contains('around:5000,30.04440,31.23570')); // no GPS: Cairo, the default city
-    expect(find.byKey(const Key('mosquesGeoFallback')), findsOneWidget);
-    expect(find.byKey(const Key('mosque-node/1')), findsOneWidget);
-    expect(find.text('Mosque B'), findsOneWidget);
-    expect(find.text('Mosque (no name on the map)'), findsOneWidget);
-    expect(find.text('67 m'), findsOneWidget);
-    expect(find.textContaining('© OpenStreetMap contributors'), findsOneWidget);
-    await tester.tap(find.byKey(const Key('mosquesRadius-10000')));
-    await tester.pumpAndSettle();
-    expect(bodies.last, contains('around:10000,'));
+  test('the in-app map is Google Maps\' mosque search, zoomed to the radius', () {
+    final u = googleMapsMosquesInApp(30.0445, 31.2357, 2000, arabic: true);
+    expect(u.host, 'www.google.com');
+    expect(u.toString(), contains('/maps/search/'));
+    expect(u.toString(), contains('@30.044500,31.235700,15z'));
+    expect(u.queryParameters['hl'], 'ar');
+    expect(mosqueZoom(10000), 13);
+    expect(mosqueMapNavigationAllowed(Uri.parse('https://www.google.com/maps/place/x')), isTrue);
+    expect(mosqueMapNavigationAllowed(Uri.parse('intent://maps')), isFalse);
+    expect(mosqueMapNavigationAllowed(Uri.parse('https://example.com/')), isFalse);
   });
 
-  testWidgets('offline: last saved list, else an error with retry', (tester) async {
-    var online = true;
-    final client = MockClient((req) async {
-      if (!online) throw http.ClientException('offline');
-      return http.Response.bytes(utf8.encode(jsonEncode(_sample)), 200);
+  group('screen', () {
+    final shown = <Uri>[];
+    setUp(() => debugMapBuilder = (_, u) {
+      shown.add(u);
+      return const SizedBox.expand();
     });
-    await pumpApp(tester, size: tallPhone, locale: 'en');
-    await pushScreen(tester, MosquesScreen(client: client));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('mosque-node/1')), findsOneWidget);
-    online = false;
-    await tester.tap(find.byKey(const Key('mosquesRadius-2000')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('mosquesError')), findsOneWidget);
-    await tester.tap(find.byKey(const Key('mosquesRadius-5000')));
-    await tester.pumpAndSettle();
-    expect(find.textContaining('last saved result'), findsOneWidget);
-    expect(find.byKey(const Key('mosque-node/1')), findsOneWidget);
-  });
+    tearDown(() {
+      debugMapBuilder = null;
+      shown.clear();
+    });
 
-  testWidgets('searches around the GPS position, and again on "update my location"', (tester) async {
-    final bodies = <String>[];
-    final client = MockClient((req) async {
-      bodies.add(Uri.decodeQueryComponent(req.body));
-      return http.Response.bytes(utf8.encode(jsonEncode(_sample)), 200);
+    testWidgets('shows Google Maps around the GPS position; radius and "update my location" reload it', (tester) async {
+      await pumpApp(tester, size: tallPhone, locale: 'en', location: const FakeLocation(LocationFound(30.0445, 31.2357)));
+      await pushScreen(tester, const MosquesScreen());
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('mosquesMap')), findsOneWidget);
+      expect(shown.last.toString(), contains('@30.044500,31.235700,14z'));
+      expect(find.text('Mosques around your current location'), findsOneWidget);
+      expect(find.textContaining('OpenStreetMap'), findsNothing);
+      await tester.tap(find.byKey(const Key('mosquesRadius-2000')));
+      await tester.pumpAndSettle();
+      expect(shown.last.toString(), contains(',15z'));
+      await tester.tap(find.byKey(const Key('mosquesLocate')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('mosquesMap')), findsOneWidget);
     });
-    await pumpApp(tester, size: tallPhone, locale: 'en', location: const FakeLocation(LocationFound(30.0445, 31.2357)));
-    await pushScreen(tester, MosquesScreen(client: client));
-    await tester.pumpAndSettle();
-    expect(bodies, hasLength(1));
-    expect(bodies.single, contains('around:5000,30.04450,31.23570'));
-    expect(find.text('Mosques around your current location'), findsOneWidget);
-    expect(find.byKey(const Key('mosquesGeoFallback')), findsNothing);
-    expect(find.text('56 m'), findsOneWidget);
-    await tester.tap(find.byKey(const Key('mosquesLocate')));
-    await tester.pumpAndSettle();
-    expect(bodies, hasLength(2));
+
+    testWidgets('without a position it uses the prayer city', (tester) async {
+      await pumpApp(tester, size: tallPhone, locale: 'en');
+      await pushScreen(tester, const MosquesScreen());
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('mosquesGeoFallback')), findsOneWidget);
+      expect(find.byKey(const Key('mosquesMap')), findsOneWidget);
+    });
   });
 }
