@@ -176,3 +176,15 @@ def test_tafsir_one_entry_per_ayah_unmodified():
 def test_tafsir_spot_checks():
     assert "الكرسي" in TAFSIR["surahs"][1][254]  # 2:255 Ayat al-Kursi
     assert "أحد" in TAFSIR["surahs"][111][0]  # 112:1
+
+
+def test_juz_starts_follow_the_printed_margin_marks():
+    # Owner's printed Madinah Mushaf (photos 2026-11-11): page 62 header "الجزء الرابع" with the margin mark
+    # "الجزء ٤ / الحزب ٧" at ۞ 3:93; page 201 header "الجزء العاشر" with "الجزء ١١ / الحزب ٢١" at ۞ 9:93;
+    # page 202 header "الجزء الحادي عشر".
+    juz = {j["juz"]: j for j in json.loads((DIST / "pages.v1.json").read_text(encoding="utf-8"))["juz"]}
+    assert juz[4] == {"juz": 4, "page": 62, "start": [3, 93]}
+    assert juz[11] == {"juz": 11, "page": 202, "start": [9, 93]}
+    quarters = json.loads((DIST / "pages.v1.json").read_text(encoding="utf-8"))["quarters"]
+    for j in juz.values():
+        assert quarters[(j["juz"] - 1) * 8]["start"] == j["start"]

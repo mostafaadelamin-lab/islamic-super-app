@@ -94,15 +94,19 @@ def build_quarters(surahs, pages, juz):
         problems.append(f"quarters: rub' al-hizb sign without a quarter start at {sorted(missing)}")
     if odd := [r for r in starts if r not in marked and r[1] != 1]:
         problems.append(f"quarters: start without the sign and not at a surah start: {odd}")
-    # The Complex's data starts juz 4 at 3:92 and juz 11 at 9:94, one ayah away from the
-    # rub' al-hizb sign of that quarter (3:93, 9:93) in its own text. Both are kept as published.
-    juz_off_quarter = {4: [3, 92], 11: [9, 94]}
+    # A juz starts at its rub' al-hizb sign (every 8th quarter), as the printed Madinah Mushaf marks it in
+    # the margin ("الجزء ٤ / الحزب ٧" beside 3:93, "الجزء ١١ / الحزب ٢١" beside 9:93). The `page` of a juz is
+    # the first page whose header carries its name (hafsData_v18 `jozz`): pages 62 and 202 for juz 4 and 11,
+    # whose ۞ fall on the previous page's last line(s). Checked against the owner's printed copy 2026-11-11.
     for j in juz:
         k = (j["juz"] - 1) * 8
-        if juz_off_quarter.get(j["juz"]) == j["start"]:
+        if k >= len(starts):
             continue
-        if k < len(starts) and list(starts[k]) != j["start"]:
-            problems.append(f"quarters: juz {j['juz']} start {j['start']} != quarter {k + 1} {starts[k]}")
+        q = list(starts[k])
+        if q != j["start"]:
+            if page_of(pages, tuple(q)) not in (j["page"], j["page"] - 1):
+                problems.append(f"quarters: juz {j['juz']} sign {q} far from its header page {j['page']}")
+            j["start"] = q
     out = [{
         "n": i + 1,
         "hizb": i // 4 + 1,

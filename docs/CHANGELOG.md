@@ -64,6 +64,7 @@
 - Pages and lines follow the Complex's new Madinah edition (1441H); checked ayah by ayah against the Complex's page and line columns.
 - The Quran is drawn with the Complex's own font (KFGQPC HAFS Uthmanic Script v18) on web and mobile; ayah numbers use the Complex's ornament. Amiri Quran removed.
 - Quran content version 2.0.0, pages 1441H-1.
+- Juz 4 and 11 start at their ۞ marks (3:93, 9:93) as the printed margin shows; page headers follow the Complex's data (page 201 = juz 10, page 202 = juz 11). Checked against the owner's printed copy.
 ### Checked
 - Tafsir al-Muyassar: one entry per ayah, aligned (6236). Recitation audio: addressed by surah/ayah, page playlists follow the new pages.
 
