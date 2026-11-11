@@ -972,6 +972,10 @@
   "@hadithBackToBook": {
     "description": "shared key \"hadith.backToBook\""
   },
+  "hadithBenefits": "Lessons from the hadith",
+  "@hadithBenefits": {
+    "description": "shared key \"hadith.benefits\""
+  },
   "hadithCount": "{n} hadiths",
   "@hadithCount": {
     "description": "shared key \"hadith.count\"",
@@ -980,6 +984,14 @@
         "type": "String"
       }
     }
+  },
+  "hadithExplain": "Simplified explanation",
+  "@hadithExplain": {
+    "description": "shared key \"hadith.explain\""
+  },
+  "hadithExplainSource": "The explanation is quoted word for word from a published hadith encyclopedia, not written by the app.",
+  "@hadithExplainSource": {
+    "description": "shared key \"hadith.explainSource\""
   },
   "hadithFavourites": "Saved hadiths",
   "@hadithFavourites": {
@@ -990,6 +1002,15 @@
     "description": "shared key \"hadith.goTo\"",
     "placeholders": {
       "max": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithGrade": "Grade: {grade}",
+  "@hadithGrade": {
+    "description": "shared key \"hadith.grade\"",
+    "placeholders": {
+      "grade": {
         "type": "String"
       }
     }

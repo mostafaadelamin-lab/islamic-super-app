@@ -182,15 +182,6 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                       ),
                     ),
                   ),
-                  _ZoomButtons(mushaf: _tab == ReaderTab.mushaf),
-                  IconButton(
-                    key: const Key('readerSurahInfo'),
-                    tooltip: l.surahInfoTitle,
-                    color: scheme.primary,
-                    icon: const RIcon(RIcons.info),
-                    onPressed: () =>
-                        showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah),
-                  ),
                   if (_tab == ReaderTab.mushaf)
                     IconButton(
                       key: const Key('readerHelp'),
@@ -198,7 +189,25 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                       color: scheme.primary,
                       icon: const RIcon(RIcons.help),
                       onPressed: () => showReaderHelp(context, pageCount: _count, onGo: _jump),
-                    ),
+                    )
+                  else
+                    const SizedBox(width: 48),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm),
+              child: Row(
+                children: [
+                  _ZoomButtons(mushaf: _tab == ReaderTab.mushaf),
+                  const Spacer(),
+                  TextButton.icon(
+                    key: const Key('readerSurahInfo'),
+                    icon: const RIcon(RIcons.info, size: 20),
+                    label: Text(l.surahInfoTitle),
+                    onPressed: () =>
+                        showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah),
+                  ),
                 ],
               ),
             ),
@@ -434,8 +443,8 @@ class _ZoomButtons extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         onTap: enabled ? () => change(dir) : null,
         child: Container(
-          width: 40,
-          height: 38,
+          width: 48,
+          height: 48,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: enabled ? scheme.primary : scheme.primary.withValues(alpha: 0.35),

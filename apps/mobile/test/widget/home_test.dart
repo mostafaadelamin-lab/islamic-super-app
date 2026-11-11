@@ -98,6 +98,7 @@ void main() {
     await tester.pump();
     expect(find.text('١٥ دقيقة'), findsOneWidget);
     await s.settings.setReciter('Yasser_Ad-Dussary_128kbps');
+    await s.settings.setRadioStation('mushaf');
     await tester.pump();
     await tester.tap(find.byKey(const Key('radio.play')));
     await tester.pump();

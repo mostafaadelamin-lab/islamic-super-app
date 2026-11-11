@@ -6,12 +6,14 @@ import 'package:rattil/app.dart';
 import 'package:rattil/app_services.dart';
 import 'package:rattil/domain/adhkar.dart';
 import 'package:rattil/domain/qibla.dart';
+import 'package:rattil/domain/tasbih.dart';
 import 'package:rattil/ui/adhkar_screen.dart';
 import 'package:rattil/ui/hajj_screen.dart';
 import 'package:rattil/ui/hisn_screen.dart';
 import 'package:rattil/ui/home_shell.dart';
 import 'package:rattil/ui/qibla_screen.dart';
 import 'package:rattil/ui/settings_screen.dart';
+import 'package:rattil/ui/misbaha.dart';
 import 'package:rattil/ui/tasbih_screen.dart';
 
 import 'package:rattil/data/notifications.dart';
@@ -29,28 +31,34 @@ void main() {
   setUpAll(loadContent);
 
   group('Adhkar', () {
-    testWidgets('morning by default before Asr, with the review notice and per-item counters', (tester) async {
-      final app = await pumpApp(tester, size: tallPhone);
+    testWidgets('one dhikr per page: top bar, counter, moves on when a count is done', (tester) async {
+      await pumpApp(tester, size: tallPhone);
+      await goToTab(tester, 3);
+      await tester.tap(find.byKey(const Key('adhkarHub.morning')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('adhkarTopBar')), findsOneWidget);
+      expect(find.byKey(const Key('adhkarNotice')), findsNothing);
+      expect(find.text('١ / ٢٦'), findsOneWidget);
+      await tester.tap(find.byKey(const Key('dhikrTap-0')));
+      await tester.pumpAndSettle();
+      expect(find.text('٢ / ٢٦'), findsOneWidget, reason: 'a finished dhikr moves to the next page');
+      expect(find.byKey(const Key('dhikrListen')), findsWidgets, reason: 'every dhikr can be listened to');
+    });
+
+    testWidgets('list mode: morning by default before Asr, per-item counters', (tester) async {
+      final app = await pumpApp(tester, size: tallPhone, prefs: {'adhkar.cards': false});
       await goToTab(tester, 3);
       await tester.tap(find.byKey(const Key('adhkarHub.morning')));
       await tester.pumpAndSettle();
       expect(tester.state<AdhkarScreenState>(find.byType(AdhkarSessionScreen)).session, AdhkarSession.morning);
-      expect(find.byKey(const Key('adhkarNotice')), findsOneWidget);
-      expect(find.textContaining('بانتظار المراجعة الشرعية'), findsOneWidget);
       // Item 3 (al-Ikhlas) is said three times.
-      expect(
-        find.descendant(of: find.byKey(const Key('dhikr-3')), matching: find.text('متبقٍّ ٣')),
-        findsOneWidget,
-      );
+      expect(find.descendant(of: find.byKey(const Key('dhikr-3')), matching: find.text('متبقٍّ ٣')), findsOneWidget);
       await tester.ensureVisible(find.byKey(const Key('dhikrTap-3')));
       for (var i = 0; i < 2; i++) {
         await tester.tap(find.byKey(const Key('dhikrTap-3')));
         await tester.pump();
       }
-      expect(
-        find.descendant(of: find.byKey(const Key('dhikr-3')), matching: find.text('متبقٍّ ١')),
-        findsOneWidget,
-      );
+      expect(find.descendant(of: find.byKey(const Key('dhikr-3')), matching: find.text('متبقٍّ ١')), findsOneWidget);
       await tester.tap(find.byKey(const Key('dhikrTap-3')));
       await tester.pump();
       expect(find.descendant(of: find.byKey(const Key('dhikr-3')), matching: find.text('تمّ')), findsOneWidget);
@@ -63,8 +71,13 @@ void main() {
       expect(app.prefs.getString('adhkar.progress.morning'), contains('"3":3'));
     });
 
-    testWidgets('evening after Asr; switching sessions; reset', (tester) async {
-      final app = await pumpApp(tester, size: tallPhone, clock: () => DateTime.utc(2026, 1, 15, 17));
+    testWidgets('list mode: evening after Asr; switching sessions; reset', (tester) async {
+      final app = await pumpApp(
+        tester,
+        size: tallPhone,
+        clock: () => DateTime.utc(2026, 1, 15, 17),
+        prefs: {'adhkar.cards': false},
+      );
       await goToTab(tester, 3);
       await tester.tap(find.byKey(const Key('adhkarHub.evening')));
       await tester.pumpAndSettle();
@@ -74,6 +87,8 @@ void main() {
       expect(find.byKey(const Key('dhikr-7')), findsOneWidget, reason: 'أمسينا وأمسى الملك لله');
       expect(find.byKey(const Key('dhikr-6')), findsNothing, reason: 'its morning form is hidden');
       await tester.scrollUntilVisible(find.byKey(const Key('dhikrTap-0')), -300);
+      await tester.drag(find.byType(Scrollable).last, const Offset(0, -150));
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const Key('dhikrTap-0')));
       await tester.pump();
       await tester.scrollUntilVisible(find.byKey(const Key('adhkarProgress')), -300);
@@ -112,6 +127,10 @@ void main() {
     testWidgets('counts, completes a round at 33, changes target, resets; survives a restart', (tester) async {
       final app = await pumpApp(tester, size: tallPhone, locale: 'en');
       await pushScreen(tester, const TasbihScreen());
+      await tester.ensureVisible(find.text('Big button'));
+      await tester.tap(find.text('Big button'));
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.byKey(const Key('tasbihButton')));
       for (var i = 0; i < 34; i++) {
         await tester.tap(find.byKey(const Key('tasbihButton')));
         await tester.pump();
@@ -146,9 +165,8 @@ void main() {
       final app = await pumpApp(tester, size: tallPhone, locale: 'en');
       await pushScreen(tester, const TasbihScreen());
       final t = app.services.tasbih;
-      await tester.tap(find.text('Beads'));
-      await tester.pump();
-      expect(find.byKey(const Key('tasbihDial-beads')), findsOneWidget);
+      expect(t.book.mode, TasbihMode.beads, reason: 'the realistic misbaha is the default');
+      expect(find.byType(RealMisbaha), findsOneWidget);
       await tester.tap(find.byKey(const Key('tasbihButton')));
       await tester.pump();
       await tester.ensureVisible(find.byKey(const Key('tasbihColor-plum')));
@@ -318,15 +336,13 @@ void main() {
   });
 
   group('Hajj & Umrah', () {
-    testWidgets('three tabs with the pending-review notice and the prototype text', (tester) async {
+    testWidgets('three tabs, no review notice', (tester) async {
       final app = await pumpApp(tester, size: tallPhone);
       await pushScreen(tester, const HajjScreen());
-      expect(find.byKey(const Key('hajjNotice')), findsOneWidget);
-      expect(find.textContaining('بانتظار المراجعة الشرعية'), findsOneWidget);
+      expect(find.byKey(const Key('hajjNotice')), findsNothing);
       expect(find.text('الإحرام من الميقات'), findsOneWidget);
       await tester.tap(find.byKey(const Key('hajjTab-ihram')));
       await tester.pumpAndSettle();
-      expect(find.byKey(const Key('hajjNotice')), findsOneWidget);
       expect(find.text('محظورات الإحرام'), findsOneWidget);
       expect(find.text(app.services.content.hajj.talbiya), findsWidgets);
     });
@@ -335,7 +351,7 @@ void main() {
       await pumpApp(tester, size: tallPhone, locale: 'en');
       await pushScreen(tester, const HajjScreen());
       expect(find.text('This content is available in Arabic only.'), findsOneWidget);
-      expect(find.textContaining('Pending religious review'), findsOneWidget);
+      expect(find.textContaining('Pending religious review'), findsNothing);
     });
   });
 
@@ -385,7 +401,19 @@ void main() {
     testWidgets('More lists the sections and settings', (tester) async {
       await pumpApp(tester, size: tallPhone);
       await goToTab(tester, 5);
-      for (final id in ['hadith', 'asma', 'radio', 'library', 'stories', 'qibla', 'mosques', 'zakat', 'hajj', 'settings', 'about']) {
+      for (final id in [
+        'hadith',
+        'asma',
+        'radio',
+        'library',
+        'stories',
+        'qibla',
+        'mosques',
+        'zakat',
+        'hajj',
+        'settings',
+        'about',
+      ]) {
         expect(find.byKey(Key('more.$id')), findsOneWidget);
       }
       await tester.tap(find.byKey(const Key('more.settings')));
@@ -396,8 +424,12 @@ void main() {
     testWidgets('adhan: permission denied keeps it off and says so', (tester) async {
       final n = FakeNotifications(grant: false);
       final app = await pumpApp(tester, size: tallPhone, locale: 'en', notifications: n);
-      await openSettings(tester);
-      await tester.ensureVisible(find.byKey(const Key('adhanSwitch')));
+      await goToTab(tester, 2);
+      await tester.scrollUntilVisible(
+        find.byKey(const Key('adhanSwitch')),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       await tester.tap(find.byKey(const Key('adhanSwitch')));
       await tester.pumpAndSettle();
       expect(n.permissionRequests, 1);
@@ -409,8 +441,12 @@ void main() {
     testWidgets('adhan: granted → five prayers scheduled; a per-prayer switch removes one', (tester) async {
       final n = FakeNotifications();
       final app = await pumpApp(tester, size: tallPhone, locale: 'en', notifications: n);
-      await openSettings(tester);
-      await tester.ensureVisible(find.byKey(const Key('adhanSwitch')));
+      await goToTab(tester, 2);
+      await tester.scrollUntilVisible(
+        find.byKey(const Key('adhanSwitch')),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       await tester.tap(find.byKey(const Key('adhanSwitch')));
       await tester.pumpAndSettle();
       expect(app.services.settings.adhanEnabled, isTrue);
@@ -437,8 +473,12 @@ void main() {
         adhanPlayer: player,
         prefs: {'adhan.enabled': true},
       );
-      await openSettings(tester);
-      await tester.ensureVisible(find.byKey(const Key('adhanSound')));
+      await goToTab(tester, 2);
+      await tester.scrollUntilVisible(
+        find.byKey(const Key('adhanSound')),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       await tester.tap(find.text('Silent'));
       await tester.pumpAndSettle();
       expect(app.prefs.getString('adhan.sound'), 'silent');

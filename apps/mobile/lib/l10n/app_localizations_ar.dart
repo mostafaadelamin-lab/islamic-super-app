@@ -672,9 +672,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hadithBackToBook => 'العودة إلى الكتاب';
 
   @override
+  String get hadithBenefits => 'من فوائد الحديث';
+
+  @override
   String hadithCount(String n) {
     return '$n حديثًا';
   }
+
+  @override
+  String get hadithExplain => 'الشرح المبسّط';
+
+  @override
+  String get hadithExplainSource => 'الشرح منقول بنصّه من موسوعة حديثية منشورة، وليس من كتابة التطبيق.';
 
   @override
   String get hadithFavourites => 'الأحاديث المحفوظة';
@@ -682,6 +691,11 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String hadithGoTo(String max) {
     return 'اذهب إلى حديث رقم (١–$max)';
+  }
+
+  @override
+  String hadithGrade(String grade) {
+    return 'الدرجة: $grade';
   }
 
   @override

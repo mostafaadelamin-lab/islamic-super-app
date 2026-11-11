@@ -13,7 +13,7 @@ import 'r_icon.dart';
 
 /// The text shared by "Share Rattil": a short line and the website or store link when set.
 String shareAppText(AppLocalizations l, AppLinks links) =>
-    [l.helpShareText, ?(links.website ?? links.playStore)].join('\n');
+    [l.helpShareText, ?(links.website ?? links.playStore)].where((s) => s.trim().isNotEmpty).join('\n');
 
 /// Help & contact: FAQ, contact address, share and rate the app.
 class HelpScreen extends StatelessWidget {

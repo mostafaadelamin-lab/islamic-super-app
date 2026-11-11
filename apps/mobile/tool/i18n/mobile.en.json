@@ -658,5 +658,9 @@
   "asma.stop": "Stop",
   "asma.noVoice": "Arabic speech isn't available on this device. Install the Arabic voice in text-to-speech settings.",
   "nasheeds.search": "Find a nasheed or munshid",
-  "nasheeds.loadError": "Couldn't load the nasheeds list."
+  "nasheeds.loadError": "Couldn't load the nasheeds list.",
+  "hadith.explain": "Simplified explanation",
+  "hadith.benefits": "Lessons from the hadith",
+  "hadith.grade": "Grade: {grade}",
+  "hadith.explainSource": "The explanation is quoted word for word from a published hadith encyclopedia, not written by the app."
 }

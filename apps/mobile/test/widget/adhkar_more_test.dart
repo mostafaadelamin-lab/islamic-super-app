@@ -49,6 +49,9 @@ void main() {
     expect(sharer.texts.last, contains('أظن أن في هذا الذكر خطأ'));
     await tester.tap(find.byKey(const Key('adhkarViewMode')));
     await tester.pumpAndSettle();
+    expect(app.services.settings.adhkarCards, isFalse, reason: 'cards are the default now');
+    await tester.tap(find.byKey(const Key('adhkarViewMode')));
+    await tester.pumpAndSettle();
     expect(app.services.settings.adhkarCards, isTrue);
     expect(find.byKey(const Key('cardPager')), findsOneWidget);
     expect(find.text('١ / ١'), findsOneWidget);

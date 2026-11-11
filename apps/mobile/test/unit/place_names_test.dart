@@ -1,7 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/data/place_names.dart';
 
-Map<String, dynamic> _a(Map<String, String> m) => {'address': {...m, 'country': 'مصر'}};
+Map<String, dynamic> _a(Map<String, String> m) => {
+  'address': {...m, 'country': 'مصر'},
+};
 
 void main() {
   test('a named compound or town wins over the street-level neighbourhood (Madinaty)', () {

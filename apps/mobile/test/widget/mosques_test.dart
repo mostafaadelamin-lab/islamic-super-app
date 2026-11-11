@@ -162,8 +162,16 @@ void main() {
   test('Google Places: parsed nearest first; the finder uses it when a key is set, else OpenStreetMap', () async {
     final places = {
       'places': [
-        {'id': 'b', 'displayName': {'text': 'مسجد نور الإيمان'}, 'location': {'latitude': 30.0490, 'longitude': 31.2357}},
-        {'id': 'a', 'displayName': {'text': 'مسجد الرحمن'}, 'location': {'latitude': 30.0460, 'longitude': 31.2357}},
+        {
+          'id': 'b',
+          'displayName': {'text': 'مسجد نور الإيمان'},
+          'location': {'latitude': 30.0490, 'longitude': 31.2357},
+        },
+        {
+          'id': 'a',
+          'displayName': {'text': 'مسجد الرحمن'},
+          'location': {'latitude': 30.0460, 'longitude': 31.2357},
+        },
         {'id': 'x'},
       ],
     };

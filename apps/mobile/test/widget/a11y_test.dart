@@ -43,10 +43,16 @@ void main() {
     await goBack(tester);
     await goBack(tester);
     await openSettings(tester);
-    await tester.tap(find.byKey(const Key('accountTile')));
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('contactTile')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const Key('contactTile')));
     await tester.pumpAndSettle();
     await expectAccessible(tester, contrast: contrast);
     await goBack(tester);
+    await tester.scrollUntilVisible(find.byKey(const Key('aboutTile')), 200, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.byKey(const Key('aboutTile')));
     await tester.pumpAndSettle();
     await expectAccessible(tester, contrast: contrast);

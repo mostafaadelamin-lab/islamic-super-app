@@ -676,9 +676,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hadithBackToBook => 'Back to the book';
 
   @override
+  String get hadithBenefits => 'Lessons from the hadith';
+
+  @override
   String hadithCount(String n) {
     return '$n hadiths';
   }
+
+  @override
+  String get hadithExplain => 'Simplified explanation';
+
+  @override
+  String get hadithExplainSource =>
+      'The explanation is quoted word for word from a published hadith encyclopedia, not written by the app.';
 
   @override
   String get hadithFavourites => 'Saved hadiths';
@@ -686,6 +696,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String hadithGoTo(String max) {
     return 'Go to hadith number (1–$max)';
+  }
+
+  @override
+  String hadithGrade(String grade) {
+    return 'Grade: $grade';
   }
 
   @override

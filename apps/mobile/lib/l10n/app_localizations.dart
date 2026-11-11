@@ -1256,11 +1256,29 @@ abstract class AppLocalizations {
   /// **'Back to the book'**
   String get hadithBackToBook;
 
+  /// shared key "hadith.benefits"
+  ///
+  /// In en, this message translates to:
+  /// **'Lessons from the hadith'**
+  String get hadithBenefits;
+
   /// shared key "hadith.count"
   ///
   /// In en, this message translates to:
   /// **'{n} hadiths'**
   String hadithCount(String n);
+
+  /// shared key "hadith.explain"
+  ///
+  /// In en, this message translates to:
+  /// **'Simplified explanation'**
+  String get hadithExplain;
+
+  /// shared key "hadith.explainSource"
+  ///
+  /// In en, this message translates to:
+  /// **'The explanation is quoted word for word from a published hadith encyclopedia, not written by the app.'**
+  String get hadithExplainSource;
 
   /// shared key "hadith.favourites"
   ///
@@ -1273,6 +1291,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go to hadith number (1–{max})'**
   String hadithGoTo(String max);
+
+  /// shared key "hadith.grade"
+  ///
+  /// In en, this message translates to:
+  /// **'Grade: {grade}'**
+  String hadithGrade(String grade);
 
   /// shared key "hadith.loadError"
   ///

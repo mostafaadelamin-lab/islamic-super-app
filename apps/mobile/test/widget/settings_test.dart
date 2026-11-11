@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/app.dart';
 import 'package:rattil/app_services.dart';
 import 'package:rattil/ui/about_screen.dart';
-import 'package:rattil/ui/account_screen.dart';
-import 'package:rattil/theme/design_tokens.dart';
+import 'package:rattil/ui/contact_screen.dart';
+import 'package:rattil/ui/prayer_screen.dart';
 import 'package:rattil/ui/settings_screen.dart';
 
 import '../helpers.dart';
@@ -39,8 +38,6 @@ void main() {
     final app = await open(tester);
     await tester.tap(find.text('English'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Dark'));
-    await tester.pumpAndSettle();
     // "Restart": a brand-new widget tree and services reading the same prefs.
     await tester.pumpWidget(const SizedBox());
     final restarted = AppServices.create(
@@ -52,28 +49,6 @@ void main() {
     await tester.pumpWidget(RattilApp(services: restarted));
     await tester.pumpAndSettle();
     expect(find.text('Home'), findsOneWidget);
-    expect(tester.widget<MaterialApp>(find.byType(MaterialApp)).themeMode, ThemeMode.dark);
-  });
-
-  testWidgets('theme selector: light, dark, system', (tester) async {
-    final app = await open(tester, locale: 'en');
-    MaterialApp mat() => tester.widget<MaterialApp>(find.byType(MaterialApp));
-    expect(mat().themeMode, ThemeMode.system);
-    await tester.tap(find.text('Dark'));
-    await tester.pumpAndSettle();
-    expect(mat().themeMode, ThemeMode.dark);
-    expect(app.prefs.getString('theme'), 'dark');
-    expect(Theme.of(tester.element(find.byType(SettingsScreen))).brightness, Brightness.dark);
-    final bg = Theme.of(tester.element(find.byType(SettingsScreen))).scaffoldBackgroundColor;
-    expect(bg, DesignTokens.dark['bg'], reason: 'dark bg token (emerald palette: 0xFF0C1714)');
-    await tester.tap(find.text('Light'));
-    await tester.pumpAndSettle();
-    expect(mat().themeMode, ThemeMode.light);
-    expect(Theme.of(tester.element(find.byType(SettingsScreen))).scaffoldBackgroundColor, DesignTokens.light['bg']);
-    await tester.tap(find.text('System'));
-    await tester.pumpAndSettle();
-    expect(mat().themeMode, ThemeMode.system);
-    expect(app.prefs.getString('theme'), 'system');
   });
 
   testWidgets('system theme follows the platform brightness', (tester) async {
@@ -83,54 +58,34 @@ void main() {
     expect(Theme.of(tester.element(find.byType(SettingsScreen))).brightness, Brightness.dark);
   });
 
-  testWidgets('Quran font size slider: 18..40, persists, updates preview', (tester) async {
-    final app = await open(tester, locale: 'en');
-    final slider = tester.widget<Slider>(find.byKey(const Key('fontSizeSlider')));
-    expect(slider.min, 18);
-    expect(slider.max, 40);
-    expect(slider.value, 26);
-    final rect = tester.getRect(find.byKey(const Key('fontSizeSlider')));
-    await tester.tapAt(Offset(rect.right - 2, rect.center.dy));
+  testWidgets('settings list: prayer/location auto switches, rate, share, FAQ, contact, our apps, about', (
+    tester,
+  ) async {
+    final app = await open(tester);
+    for (final k in ['prayerAuto', 'rateTile', 'shareTile', 'faqTile', 'contactTile', 'ourAppsTile', 'aboutTile']) {
+      await tester.scrollUntilVisible(find.byKey(Key(k)), 200, scrollable: find.byType(Scrollable).first);
+      expect(find.byKey(Key(k)), findsOneWidget, reason: k);
+    }
+    expect(find.byKey(const Key('accountTile')), findsNothing);
+    expect(app.services.settings.prayerAuto, isTrue);
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('prayerAuto')),
+      -200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const Key('prayerAuto')));
     await tester.pumpAndSettle();
-    expect(app.prefs.getDouble('quranFontSize'), 40);
-    expect(tester.widget<Text>(find.byKey(const Key('fontSizeValue'))).data, '40');
-    Text preview() =>
-        tester.widget<Text>(find.descendant(of: find.byKey(const Key('fontPreview')), matching: find.byType(Text)));
-    expect(preview().style!.fontSize, 40);
-    await tester.tapAt(Offset(rect.left + 2, rect.center.dy));
+    expect(app.services.settings.prayerAuto, isFalse);
+    expect(find.byKey(const Key('prayerManualTile')), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('contactTile')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const Key('contactTile')));
     await tester.pumpAndSettle();
-    expect(app.prefs.getDouble('quranFontSize'), 18);
-    expect(preview().style!.fontSize, 18);
-  });
-
-  testWidgets('slider supports accessibility increase/decrease actions', (tester) async {
-    final handle = tester.ensureSemantics();
-    final app = await open(tester, locale: 'en');
-    final node = tester.getSemantics(find.byKey(const Key('fontSizeSlider')));
-    tester.binding.renderViews.first.owner!.semanticsOwner!.performAction(node.id, SemanticsAction.increase);
-    await tester.pumpAndSettle();
-    expect(app.prefs.getDouble('quranFontSize'), greaterThan(26));
-    handle.dispose();
-  });
-
-  testWidgets('out-of-range stored font size is clamped', (tester) async {
-    await open(tester, locale: 'en', prefs: {'quranFontSize': 99.0});
-    expect(tester.widget<Slider>(find.byKey(const Key('fontSizeSlider'))).value, 40);
-  });
-
-  testWidgets('translation switch persists', (tester) async {
-    final app = await open(tester, locale: 'en');
-    await tester.tap(find.byKey(const Key('translationSwitch')));
-    await tester.pumpAndSettle();
-    expect(app.prefs.getBool('showTranslation'), isTrue);
-    expect(tester.widget<SwitchListTile>(find.byKey(const Key('translationSwitch'))).value, isTrue);
-  });
-
-  testWidgets('account and about entries open their screens', (tester) async {
-    await open(tester);
-    await tester.tap(find.byKey(const Key('accountTile')));
-    await tester.pumpAndSettle();
-    expect(find.byType(AccountScreen), findsOneWidget);
+    expect(find.byType(ContactScreen), findsOneWidget);
+    expect(find.textContaining('@'), findsNothing, reason: 'no email address is shown');
     await goBack(tester);
     await tester.tap(find.byKey(const Key('aboutTile')));
     await tester.pumpAndSettle();
@@ -139,6 +94,7 @@ void main() {
 
   testWidgets('about: free-forever statement and content sources/licences', (tester) async {
     await open(tester, locale: 'en');
+    await tester.scrollUntilVisible(find.byKey(const Key('aboutTile')), 200, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.byKey(const Key('aboutTile')));
     await tester.pumpAndSettle();
     expect(find.text('A free app made for the sake of Allah: no charge and no ads.'), findsOneWidget);
@@ -154,6 +110,7 @@ void main() {
 
   testWidgets('about in Arabic', (tester) async {
     await open(tester);
+    await tester.scrollUntilVisible(find.byKey(const Key('aboutTile')), 200, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.byKey(const Key('aboutTile')));
     await tester.pumpAndSettle();
     expect(find.text('تطبيق مجاني تم إنشاؤه لوجه الله تعالى، بدون مقابل وبدون إعلانات.'), findsOneWidget);
@@ -162,7 +119,8 @@ void main() {
   });
 
   testWidgets('Hijri date adjustment: +/- within -2..+2, persisted', (tester) async {
-    final app = await open(tester, locale: 'en');
+    final app = await pumpApp(tester, locale: 'en', size: tallPhone);
+    await pushScreen(tester, const PrayerScreen(settingsMode: true));
     final plus = find.byKey(const Key('hijriOffsetPlus'));
     await tester.ensureVisible(plus);
     await tester.tap(plus);

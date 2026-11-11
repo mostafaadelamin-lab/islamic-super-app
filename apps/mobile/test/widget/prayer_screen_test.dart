@@ -227,13 +227,24 @@ void main() {
     }
   });
 
-  testWidgets('adhan banner turns alerts on; a bell per prayer switches one off', (tester) async {
+  testWidgets('adhan alerts card on the prayer page turns alerts on; a bell per prayer switches one off', (
+    tester,
+  ) async {
     final app = await open(tester);
     expect(find.byKey(const Key('adhanBell-dhuhr')), findsNothing);
-    await tester.tap(find.byKey(const Key('adhanBannerEnable')));
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('adhanSwitch')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const Key('adhanSwitch')));
     await tester.pumpAndSettle();
     expect(app.services.settings.adhanEnabled, isTrue);
-    expect(find.byKey(const Key('adhanBanner')), findsNothing);
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('adhanBell-dhuhr')),
+      -200,
+      scrollable: find.byType(Scrollable).first,
+    );
     for (final p in ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha']) {
       expect(find.byKey(Key('adhanBell-$p')), findsOneWidget);
     }

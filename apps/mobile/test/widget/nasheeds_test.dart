@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rattil/domain/adhkar.dart';
 import 'package:rattil/domain/nasheeds.dart';
 import 'package:rattil/ui/adhkar_audio.dart';
 import 'package:rattil/ui/adhkar_screen.dart';
@@ -26,7 +25,9 @@ void main() {
   test('nasheeds list: unique ids, https audio, no empty munshid; adhkar videos well-formed', () {
     final all = Munshid.parse(File('assets/content/nasheeds.v2.json').readAsStringSync());
     expect(all.length, greaterThan(20));
-    final ids = [for (final m in all) ...[for (final n in m.items) n.id]];
+    final ids = [
+      for (final m in all) ...[for (final n in m.items) n.id],
+    ];
     expect(ids.toSet().length, ids.length);
     for (final m in all) {
       expect(m.items, isNotEmpty, reason: m.name);
@@ -49,8 +50,8 @@ void main() {
 
   testWidgets('nasheeds: munshidin list, search by title, a munshid opens with download buttons', (tester) async {
     await pumpApp(tester, size: tallPhone);
-    await pushScreen(tester, const NasheedsScreen());
-    await tester.pumpAndSettle();
+    final list = Munshid.parse(File('assets/content/nasheeds.v2.json').readAsStringSync());
+    await pushScreen(tester, NasheedsScreen(loader: () async => list));
     expect(find.text('أناشيد'), findsOneWidget);
     expect(find.byKey(const Key('nasheedsNote')), findsOneWidget);
     expect(find.byKey(const Key('munshid.2')), findsOneWidget);
@@ -70,8 +71,11 @@ void main() {
   testWidgets('adhkar: only morning and evening recordings, played offline', (tester) async {
     await pumpApp(tester, size: tallPhone);
     await pushScreen(tester, const AdhkarScreen());
-    await tester.scrollUntilVisible(find.byKey(const Key('adhkarAudio.morning')), 200,
-        scrollable: find.descendant(of: find.byKey(const Key('adhkarHub')), matching: find.byType(Scrollable)));
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('adhkarAudio.morning')),
+      200,
+      scrollable: find.descendant(of: find.byKey(const Key('adhkarHub')), matching: find.byType(Scrollable)),
+    );
     expect(find.byKey(const Key('adhkarAudio.sleep')), findsNothing);
     await tester.tap(find.byKey(const Key('adhkarAudio.morning')));
     await tester.pumpAndSettle();
@@ -98,6 +102,7 @@ class _FakeAudio implements AssetAudio {
     loaded.add(asset);
     return const Duration(minutes: 18, seconds: 41);
   }
+
   @override
   Future<void> play() async => _playing.add(isPlaying = true);
   @override

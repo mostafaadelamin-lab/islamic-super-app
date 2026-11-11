@@ -66,7 +66,7 @@ void main() {
     await pumpApp(tester, size: tallPhone, content: content);
     await pushScreen(tester, const ReelsScreen(playerBuilder: fakePlayer, showPosters: false));
     expect(find.byKey(const Key('player.hTtlD-u4_HI')), findsOneWidget);
-    expect(find.text('تلاوة قرآنية'), findsOneWidget); // category chip
+    expect(find.text('تلاوة قرآنية'), findsNothing); // labels removed (owner)
     expect(find.text('راجعه: الشيخ فلان'), findsOneWidget);
     expect(find.text('غير مراجع'), findsNothing, reason: 'pending reels are hidden from normal users');
 
@@ -74,11 +74,11 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('player.26dRG7OeL6Q')), findsOneWidget);
     expect(find.byKey(const Key('player.hTtlD-u4_HI')), findsNothing);
-    expect(find.text('درس ديني'), findsOneWidget);
+    expect(find.text('درس ديني'), findsNothing);
     expect(find.text('\u2066٢ / ٢\u2069'), findsOneWidget);
   });
 
-  testWidgets('Instagram admonition reel: Instagram chip and button, poster placeholder off-screen', (tester) async {
+  testWidgets('Instagram admonition reel: no labels, Instagram button, poster placeholder off-screen', (tester) async {
     final content = withReels(base, [
       reel('C1a2B3c4D5e', 'approved', 'admonition', 'موعظة قصيرة', platform: 'instagram'),
       reel('hTtlD-u4_HI', 'approved', 'recitation', 'تلاوة'),
@@ -86,8 +86,8 @@ void main() {
     await pumpApp(tester, size: tallPhone, content: content);
     await pushScreen(tester, const ReelsScreen(playerBuilder: fakePlayer, showPosters: false));
     expect(find.byKey(const Key('player.C1a2B3c4D5e')), findsOneWidget);
-    expect(find.text('نصائح ومواعظ'), findsOneWidget);
-    expect(find.text('إنستجرام'), findsOneWidget);
+    expect(find.text('نصائح ومواعظ'), findsNothing);
+    expect(find.text('إنستجرام'), findsNothing);
     expect(find.text('افتح على إنستجرام'), findsOneWidget);
     await tester.fling(find.byKey(const Key('reels.feed')), const Offset(0, -600), 2000);
     await tester.pumpAndSettle();
@@ -120,7 +120,7 @@ void main() {
       expect(find.byKey(const Key('reels.feed')), findsOneWidget);
       expect(find.byKey(const Key('player.BBBBBBBBBB2')), findsOneWidget);
       expect(find.text('بث مباشر صلاة التراويح'), findsOneWidget);
-      expect(find.text('قناة موثوقة'), findsOneWidget);
+      expect(find.text('قناة موثوقة'), findsNothing);
       expect(find.textContaining('لم تتم مراجعة'), findsNothing);
       expect(find.byKey(const Key('reel.hide.yt-BBBBBBBBBB2')), findsOneWidget);
     });

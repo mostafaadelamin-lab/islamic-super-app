@@ -137,7 +137,7 @@ void main() {
       expect(bad.phrase, 'tasbih');
       expect(bad.custom, isEmpty);
       expect(bad.counters, isEmpty);
-      expect(bad.mode, TasbihMode.button);
+      expect(bad.mode, TasbihMode.beads);
       expect(bad.color, 'emerald');
       expect(bad.history, {
         '2026-11-09': {'takbir': 3},

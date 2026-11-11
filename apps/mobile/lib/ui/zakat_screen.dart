@@ -40,7 +40,9 @@ class _ZakatScreenState extends State<ZakatScreen> {
   }
 
   String _fmt(BuildContext context, double v, {int digits = 2}) {
-    final t = v == v.roundToDouble() ? v.round().toString() : v.toStringAsFixed(digits);
+    final t = v == v.roundToDouble()
+        ? v.round().toString()
+        : v.toStringAsFixed(digits).replaceFirst(RegExp(r'0+$'), '').replaceFirst(RegExp(r'\.$'), '');
     return context.num(t);
   }
 

@@ -56,13 +56,13 @@ void main() {
     final box = find.byKey(const Key('listTafsir-2-6'));
     expect(box, findsOneWidget);
     expect(find.descendant(of: box, matching: find.text(source(2, 6))), findsOneWidget);
-    // font size button (lists only) enlarges by 4 and wraps after the largest
+    // A+ enlarges the list font by 2 (up to 40)
     expect(find.byKey(const Key('readerHelp')), findsNothing);
     final app = tester.state<PageReaderScreenState>(find.byType(PageReaderScreen)).context.services;
     final before = app.settings.quranFontSize;
-    await tester.tap(find.byKey(const Key('readerFont')));
+    await tester.tap(find.byKey(const Key('readerFontUp')));
     await tester.pumpAndSettle();
-    expect(app.settings.quranFontSize, before + 4 > 40 ? 18 : before + 4);
+    expect(app.settings.quranFontSize, (before + 2).clamp(18, 40));
 
     // tapping an ayah in the list opens its sheet with its tafsir
     await tester.tap(find.byKey(const Key('listAyah-2-6')));

@@ -6,6 +6,7 @@ import '../theme/design_tokens.dart';
 import 'adaptive.dart';
 import 'adhkar_screen.dart';
 import 'dhikr_tools.dart';
+import 'hadith_explain.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
 
@@ -498,6 +499,7 @@ class _BookPage extends StatelessWidget {
                   Wrap(
                     alignment: WrapAlignment.center,
                     children: [
+                      HadithExplainButton(book: book.id, n: item.n),
                       CopyButton(text: text),
                       DhikrActions(text: text, source: source, where: source, keyPrefix: 'hadith${item.n}'),
                     ],

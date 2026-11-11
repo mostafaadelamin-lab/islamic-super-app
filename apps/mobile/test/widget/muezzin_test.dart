@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/domain/adhan_voices.dart';
@@ -19,7 +18,18 @@ void main() {
     expect(bundledAdhanVoice(defaultAdhanVoice)!.fajr, isFalse);
     // Openly licensed recordings carry their credit; the owner's picks never show a source.
     for (final v in bundledAdhanVoices) {
-      final owners = ['mulla', 'makkah', 'bukhari', 'mismail', 'banna', 'rifaat', 'daghriri_fajr', 'afasy_fajr'];
+      final owners = [
+        'mulla',
+        'makkah',
+        'bukhari',
+        'mismail',
+        'banna',
+        'rifaat',
+        'daghriri_fajr',
+        'afasy_fajr',
+        'abdulbasit',
+        'abdulbasit_fajr',
+      ];
       expect(v.credit == null, owners.contains(v.id), reason: v.id);
     }
     expect(bundledAdhanVoice('afasy_fajr')!.fajr, isTrue);
@@ -50,7 +60,19 @@ void main() {
     expect(find.byKey(const Key('muezzin-mulla')), findsNothing);
     await goBack(tester);
     await pushScreen(tester, const MuezzinScreen(fajr: false));
-    for (final id in ['mulla', 'makkah', 'bukhari', 'mismail', 'banna', 'rifaat', 'haram', 'madinah', 'fakhry', 'v1', 'v2']) {
+    for (final id in [
+      'mulla',
+      'makkah',
+      'bukhari',
+      'mismail',
+      'banna',
+      'rifaat',
+      'haram',
+      'madinah',
+      'fakhry',
+      'v1',
+      'v2',
+    ]) {
       expect(find.byKey(Key('muezzin-$id')), findsOneWidget, reason: id);
     }
     expect(find.byKey(const Key('muezzin-haram_fajr')), findsNothing);

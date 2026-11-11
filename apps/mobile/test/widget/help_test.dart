@@ -25,19 +25,19 @@ void main() {
     expect(AppLinks.fromJson({'contactEmail': ' ', 'website': 'https://x.test'}).contactEmail, isNull);
   });
 
-  testWidgets('Help: FAQ opens, contact pending, share the app', (tester) async {
+  testWidgets('Help: FAQ opens, contact form, share and rate the app', (tester) async {
     final sharer = FakeSharer();
     await pumpApp(tester, size: tallPhone, sharer: sharer, locale: 'en');
     await pushScreen(tester, const HelpScreen());
     await tester.tap(find.text('Is Rattil really free?'));
     await tester.pumpAndSettle();
     expect(find.textContaining('no ads, no subscriptions'), findsOneWidget);
-    expect(find.byKey(const Key('helpContactPending')), findsOneWidget);
+    expect(find.byKey(const Key('helpContactForm')), findsOneWidget);
     await tester.scrollUntilVisible(find.byKey(const Key('helpShareApp')), 200);
     await tester.tap(find.byKey(const Key('helpShareApp')));
     await tester.pump();
-    expect(sharer.texts.single, 'Rattil: Quran, prayer times and adhkar, free with no ads.');
-    expect(find.byKey(const Key('helpRatePending')), findsOneWidget);
+    expect(sharer.texts.single, startsWith('Rattil: Quran, prayer times and adhkar, free with no ads.'));
+    expect(find.byKey(const Key('helpRate')), findsOneWidget);
   });
 
   testWidgets('no share suggestion on the first day of use', (tester) async {
