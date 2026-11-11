@@ -585,5 +585,16 @@
   "adhkar.itemOf": "الذكر {n} من {total}",
   "adhkar.percentDone": "تم {p}٪",
   "adhkar.repeatTimes": "التكرار: {n}",
-  "adhkar.tapCounter": "اضغط على الدائرة للعدّ، ولما يكمل العدد ينتقل للذكر اللي بعده"
+  "adhkar.tapCounter": "اضغط على الدائرة للعدّ، ولما يكمل العدد ينتقل للذكر اللي بعده",
+  "reader.fontBigger": "تكبير الخط",
+  "reader.fontSmaller": "تصغير الخط",
+  "surahInfo.title": "عن السورة وأسباب نزولها",
+  "surahInfo.place": "مكان النزول",
+  "surahInfo.order": "ترتيب النزول",
+  "surahInfo.ayahs": "عدد الآيات",
+  "surahInfo.about": "نبذة عن السورة",
+  "surahInfo.asbab": "أسباب النزول",
+  "surahInfo.wahidi": "من كتاب «أسباب نزول القرآن» للواحدي",
+  "surahInfo.noAsbab": "لم يُذكر للسورة سبب نزول خاص في المصدر.",
+  "surahInfo.missing": "المعلومات غير متاحة الآن."
 }

@@ -1790,9 +1790,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerFont => 'Text size';
 
   @override
+  String get readerFontBigger => 'Bigger text';
+
+  @override
   String readerFontSize(String size) {
     return 'Text size: $size — press to enlarge';
   }
+
+  @override
+  String get readerFontSmaller => 'Smaller text';
 
   @override
   String get readerHelp => 'Help';
@@ -2182,6 +2188,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get storiesVersesTitle => 'The stories\' verses from the Mushaf';
+
+  @override
+  String get surahInfoAbout => 'About the surah';
+
+  @override
+  String get surahInfoAsbab => 'Reasons for revelation';
+
+  @override
+  String get surahInfoAyahs => 'Verses';
+
+  @override
+  String get surahInfoMissing => 'Information not available.';
+
+  @override
+  String get surahInfoNoAsbab => 'The source mentions no specific reason for revelation for this surah.';
+
+  @override
+  String get surahInfoOrder => 'Order of revelation';
+
+  @override
+  String get surahInfoPlace => 'Revealed in';
+
+  @override
+  String get surahInfoTitle => 'About the surah';
+
+  @override
+  String get surahInfoWahidi => 'From al-Wahidi, \"Asbab Nuzul al-Quran\"';
 
   @override
   String get tafsirArabicOnly => 'This tafsir is available in Arabic only.';

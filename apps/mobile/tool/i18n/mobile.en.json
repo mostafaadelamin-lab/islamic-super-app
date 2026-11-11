@@ -585,5 +585,16 @@
   "adhkar.itemOf": "Dhikr {n} of {total}",
   "adhkar.percentDone": "{p}% done",
   "adhkar.repeatTimes": "Repeat: {n}",
-  "adhkar.tapCounter": "Tap the circle to count; it moves on when the count is complete"
+  "adhkar.tapCounter": "Tap the circle to count; it moves on when the count is complete",
+  "reader.fontBigger": "Bigger text",
+  "reader.fontSmaller": "Smaller text",
+  "surahInfo.title": "About the surah",
+  "surahInfo.place": "Revealed in",
+  "surahInfo.order": "Order of revelation",
+  "surahInfo.ayahs": "Verses",
+  "surahInfo.about": "About the surah",
+  "surahInfo.asbab": "Reasons for revelation",
+  "surahInfo.wahidi": "From al-Wahidi, \"Asbab Nuzul al-Quran\"",
+  "surahInfo.noAsbab": "The source mentions no specific reason for revelation for this surah.",
+  "surahInfo.missing": "Information not available."
 }

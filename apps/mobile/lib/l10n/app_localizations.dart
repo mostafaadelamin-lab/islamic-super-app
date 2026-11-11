@@ -3206,11 +3206,23 @@ abstract class AppLocalizations {
   /// **'Text size'**
   String get readerFont;
 
+  /// shared key "reader.fontBigger"
+  ///
+  /// In en, this message translates to:
+  /// **'Bigger text'**
+  String get readerFontBigger;
+
   /// shared key "reader.fontSize"
   ///
   /// In en, this message translates to:
   /// **'Text size: {size} — press to enlarge'**
   String readerFontSize(String size);
+
+  /// shared key "reader.fontSmaller"
+  ///
+  /// In en, this message translates to:
+  /// **'Smaller text'**
+  String get readerFontSmaller;
 
   /// shared key "reader.help"
   ///
@@ -3907,6 +3919,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The stories\' verses from the Mushaf'**
   String get storiesVersesTitle;
+
+  /// shared key "surahInfo.about"
+  ///
+  /// In en, this message translates to:
+  /// **'About the surah'**
+  String get surahInfoAbout;
+
+  /// shared key "surahInfo.asbab"
+  ///
+  /// In en, this message translates to:
+  /// **'Reasons for revelation'**
+  String get surahInfoAsbab;
+
+  /// shared key "surahInfo.ayahs"
+  ///
+  /// In en, this message translates to:
+  /// **'Verses'**
+  String get surahInfoAyahs;
+
+  /// shared key "surahInfo.missing"
+  ///
+  /// In en, this message translates to:
+  /// **'Information not available.'**
+  String get surahInfoMissing;
+
+  /// shared key "surahInfo.noAsbab"
+  ///
+  /// In en, this message translates to:
+  /// **'The source mentions no specific reason for revelation for this surah.'**
+  String get surahInfoNoAsbab;
+
+  /// shared key "surahInfo.order"
+  ///
+  /// In en, this message translates to:
+  /// **'Order of revelation'**
+  String get surahInfoOrder;
+
+  /// shared key "surahInfo.place"
+  ///
+  /// In en, this message translates to:
+  /// **'Revealed in'**
+  String get surahInfoPlace;
+
+  /// shared key "surahInfo.title"
+  ///
+  /// In en, this message translates to:
+  /// **'About the surah'**
+  String get surahInfoTitle;
+
+  /// shared key "surahInfo.wahidi"
+  ///
+  /// In en, this message translates to:
+  /// **'From al-Wahidi, \"Asbab Nuzul al-Quran\"'**
+  String get surahInfoWahidi;
 
   /// shared key "tafsir.arabicOnly"
   ///

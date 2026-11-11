@@ -65,6 +65,15 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Mushaf page zoom (1 = fits the screen; owner asked for bigger/smaller Quran text).
+  static const mushafZoomMin = 1.0;
+  static const mushafZoomMax = 2.0;
+  double get mushafZoom => (_prefs.getDouble('mushafZoom') ?? 1.0).clamp(mushafZoomMin, mushafZoomMax);
+  Future<void> setMushafZoom(double v) async {
+    await _prefs.setDouble('mushafZoom', v.clamp(mushafZoomMin, mushafZoomMax));
+    notifyListeners();
+  }
+
   bool get showTranslation => _prefs.getBool('showTranslation') ?? false;
   Future<void> setShowTranslation(bool v) async {
     await _prefs.setBool('showTranslation', v);

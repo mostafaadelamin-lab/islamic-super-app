@@ -16,6 +16,7 @@ import 'mushaf_page.dart';
 import 'quran_index_entry.dart';
 import 'reader_widgets.dart';
 import 'search_screen.dart';
+import 'surah_info_sheet.dart';
 import 'r_icon.dart';
 
 /// Madinah Mushaf (1405H) reader: tabs المصحف / الآيات / التفسير; 604 pages of
@@ -181,6 +182,15 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                       ),
                     ),
                   ),
+                  _ZoomButtons(mushaf: _tab == ReaderTab.mushaf),
+                  IconButton(
+                    key: const Key('readerSurahInfo'),
+                    tooltip: l.surahInfoTitle,
+                    color: scheme.primary,
+                    icon: const RIcon(RIcons.info),
+                    onPressed: () =>
+                        showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah),
+                  ),
                   if (_tab == ReaderTab.mushaf)
                     IconButton(
                       key: const Key('readerHelp'),
@@ -188,9 +198,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                       color: scheme.primary,
                       icon: const RIcon(RIcons.help),
                       onPressed: () => showReaderHelp(context, pageCount: _count, onGo: _jump),
-                    )
-                  else
-                    _FontButton(key: const Key('readerFont')),
+                    ),
                 ],
               ),
             ),
@@ -211,15 +219,18 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                         index: i,
                         controller: controller,
                         child: TabletPage(
-                          child: MushafPageView(
-                            page: i + 1,
-                            selected: _selected,
-                            playing: s.recitation.currentRef,
-                            onAyahTap: _onAyahTap,
-                            onBackgroundTap: () => setState(() {
-                              _controls = !_controls; // tap the margin for a full-screen page
-                              _selected = null;
-                            }),
+                          child: ZoomedPage(
+                            zoom: s.settings.mushafZoom,
+                            child: MushafPageView(
+                              page: i + 1,
+                              selected: _selected,
+                              playing: s.recitation.currentRef,
+                              onAyahTap: _onAyahTap,
+                              onBackgroundTap: () => setState(() {
+                                _controls = !_controls; // tap the margin for a full-screen page
+                                _selected = null;
+                              }),
+                            ),
                           ),
                         ),
                       ),
@@ -387,45 +398,112 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   }
 }
 
-/// "حجم الخط": enlarges the text of the verse and tafsir lists, then wraps to the smallest size.
-class _FontButton extends StatelessWidget {
-  const _FontButton({super.key});
-
-  static const step = 4.0;
+/// Bigger / smaller Quran text (owner, 2026-11-11). On the Mushaf page it zooms the page
+/// (pan to read the enlarged page); on the verse and tafsir lists it changes the font size.
+class _ZoomButtons extends StatelessWidget {
+  const _ZoomButtons({required this.mushaf});
+  final bool mushaf;
 
   @override
   Widget build(BuildContext context) {
     final settings = context.services.settings;
     final scheme = Theme.of(context).colorScheme;
-    return Tooltip(
-      message: context.l10n.readerFontSize(context.num(settings.quranFontSize.round())),
-      child: Material(
-        color: scheme.primary,
+    final l = context.l10n;
+    final canDown = mushaf
+        ? settings.mushafZoom > SettingsController.mushafZoomMin
+        : settings.quranFontSize > SettingsController.minFontSize;
+    final canUp = mushaf
+        ? settings.mushafZoom < SettingsController.mushafZoomMax
+        : settings.quranFontSize < SettingsController.maxFontSize;
+    void change(int dir) {
+      if (mushaf) {
+        unawaited(settings.setMushafZoom(settings.mushafZoom + 0.25 * dir));
+      } else {
+        final next = (settings.quranFontSize + 2 * dir).clamp(
+          SettingsController.minFontSize,
+          SettingsController.maxFontSize,
+        );
+        unawaited(settings.setQuranFontSize(next.toDouble()));
+      }
+    }
+
+    Widget btn(String key, String label, bool enabled, int dir, String tip) => Tooltip(
+      message: tip,
+      child: InkWell(
+        key: Key(key),
         borderRadius: BorderRadius.circular(10),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(10),
-          onTap: () {
-            final next = settings.quranFontSize + step;
-            unawaited(
-              settings.setQuranFontSize(next > SettingsController.maxFontSize ? SettingsController.minFontSize : next),
-            );
-          },
-          child: SizedBox(
-            width: 48,
-            height: 44,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'ع',
-                  style: TextStyle(color: scheme.onPrimary, fontWeight: FontWeight.w700, height: 1),
-                ),
-                Text(context.l10n.readerFont, style: TextStyle(color: scheme.onPrimary, fontSize: 9, height: 1.2)),
-              ],
-            ),
+        onTap: enabled ? () => change(dir) : null,
+        child: Container(
+          width: 40,
+          height: 38,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: enabled ? scheme.primary : scheme.primary.withValues(alpha: 0.35),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(color: scheme.onPrimary, fontWeight: FontWeight.w700, fontSize: dir > 0 ? 18 : 14),
           ),
         ),
       ),
+    );
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        btn('readerFontDown', 'A−', canDown, -1, l.readerFontSmaller),
+        const SizedBox(width: 4),
+        btn('readerFontUp', 'A+', canUp, 1, l.readerFontBigger),
+        const SizedBox(width: 4),
+      ],
+    );
+  }
+}
+
+/// Shows [child] (a Mushaf page laid out for the screen) [zoom] times larger; the reader pans
+/// across it. Starts at the top right (Arabic reading start).
+class ZoomedPage extends StatefulWidget {
+  const ZoomedPage({super.key, required this.zoom, required this.child});
+  final double zoom;
+  final Widget child;
+
+  @override
+  State<ZoomedPage> createState() => _ZoomedPageState();
+}
+
+class _ZoomedPageState extends State<ZoomedPage> {
+  final _h = ScrollController();
+  final _v = ScrollController();
+
+  @override
+  void dispose() {
+    _h.dispose();
+    _v.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.zoom <= 1.0) return widget.child;
+    return LayoutBuilder(
+      builder: (context, c) {
+        final w = c.maxWidth * widget.zoom;
+        final h = c.maxHeight * widget.zoom;
+        // Horizontal scroll follows the text direction, so it starts at the right edge in Arabic.
+        return Scrollbar(
+          controller: _v,
+          child: SingleChildScrollView(
+            key: const Key('mushafZoomV'),
+            controller: _v,
+            child: SingleChildScrollView(
+              key: const Key('mushafZoomH'),
+              controller: _h,
+              scrollDirection: Axis.horizontal,
+              child: SizedBox(width: w, height: h, child: widget.child),
+            ),
+          ),
+        );
+      },
     );
   }
 }

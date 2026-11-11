@@ -1786,9 +1786,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerFont => 'حجم الخط';
 
   @override
+  String get readerFontBigger => 'تكبير الخط';
+
+  @override
   String readerFontSize(String size) {
     return 'حجم الخط: $size — اضغط للتكبير';
   }
+
+  @override
+  String get readerFontSmaller => 'تصغير الخط';
 
   @override
   String get readerHelp => 'مساعدة';
@@ -2174,6 +2180,33 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get storiesVersesTitle => 'آيات القصص من المصحف';
+
+  @override
+  String get surahInfoAbout => 'نبذة عن السورة';
+
+  @override
+  String get surahInfoAsbab => 'أسباب النزول';
+
+  @override
+  String get surahInfoAyahs => 'عدد الآيات';
+
+  @override
+  String get surahInfoMissing => 'المعلومات غير متاحة الآن.';
+
+  @override
+  String get surahInfoNoAsbab => 'لم يُذكر للسورة سبب نزول خاص في المصدر.';
+
+  @override
+  String get surahInfoOrder => 'ترتيب النزول';
+
+  @override
+  String get surahInfoPlace => 'مكان النزول';
+
+  @override
+  String get surahInfoTitle => 'عن السورة وأسباب نزولها';
+
+  @override
+  String get surahInfoWahidi => 'من كتاب «أسباب نزول القرآن» للواحدي';
 
   @override
   String get tafsirArabicOnly => 'هذا التفسير متاح بالعربية فقط.';

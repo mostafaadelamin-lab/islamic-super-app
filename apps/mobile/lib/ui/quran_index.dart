@@ -8,6 +8,7 @@ import '../domain/text.dart';
 import '../theme/app_theme.dart';
 import 'l10n_ext.dart';
 import 'page_reader_screen.dart';
+import 'surah_info_sheet.dart';
 import 'widgets.dart';
 import 'r_icon.dart';
 
@@ -337,8 +338,10 @@ class _Entry extends StatelessWidget {
     required this.current,
     required this.onTap,
     this.semanticsLabel,
+    this.onInfo,
     super.key,
   });
+  final VoidCallback? onInfo;
   final Widget badge;
   final Widget title;
   final String subtitle;
@@ -384,6 +387,13 @@ class _Entry extends StatelessWidget {
                     ],
                   ),
                 ),
+                if (onInfo != null)
+                  IconButton(
+                    key: const Key('surahInfoButton'),
+                    tooltip: context.l10n.surahInfoTitle,
+                    icon: RIcon(RIcons.info, color: theme.colorScheme.primary, size: 22),
+                    onPressed: onInfo,
+                  ),
               ],
             ),
           ),
@@ -420,6 +430,7 @@ class _SurahTile extends StatelessWidget {
       subtitle: l.quranSurahLine(context.num(page), context.num(s.ayahCount), kind),
       current: current,
       onTap: () => onOpen(page),
+      onInfo: () => showSurahInfo(context, s.n),
     );
   }
 }

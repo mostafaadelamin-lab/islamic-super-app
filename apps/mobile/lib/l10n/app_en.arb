@@ -2656,6 +2656,10 @@
   "@readerFont": {
     "description": "shared key \"reader.font\""
   },
+  "readerFontBigger": "Bigger text",
+  "@readerFontBigger": {
+    "description": "shared key \"reader.fontBigger\""
+  },
   "readerFontSize": "Text size: {size} — press to enlarge",
   "@readerFontSize": {
     "description": "shared key \"reader.fontSize\"",
@@ -2664,6 +2668,10 @@
         "type": "String"
       }
     }
+  },
+  "readerFontSmaller": "Smaller text",
+  "@readerFontSmaller": {
+    "description": "shared key \"reader.fontSmaller\""
   },
   "readerHelp": "Help",
   "@readerHelp": {
@@ -3231,6 +3239,42 @@
   "storiesVersesTitle": "The stories' verses from the Mushaf",
   "@storiesVersesTitle": {
     "description": "shared key \"stories.versesTitle\""
+  },
+  "surahInfoAbout": "About the surah",
+  "@surahInfoAbout": {
+    "description": "shared key \"surahInfo.about\""
+  },
+  "surahInfoAsbab": "Reasons for revelation",
+  "@surahInfoAsbab": {
+    "description": "shared key \"surahInfo.asbab\""
+  },
+  "surahInfoAyahs": "Verses",
+  "@surahInfoAyahs": {
+    "description": "shared key \"surahInfo.ayahs\""
+  },
+  "surahInfoMissing": "Information not available.",
+  "@surahInfoMissing": {
+    "description": "shared key \"surahInfo.missing\""
+  },
+  "surahInfoNoAsbab": "The source mentions no specific reason for revelation for this surah.",
+  "@surahInfoNoAsbab": {
+    "description": "shared key \"surahInfo.noAsbab\""
+  },
+  "surahInfoOrder": "Order of revelation",
+  "@surahInfoOrder": {
+    "description": "shared key \"surahInfo.order\""
+  },
+  "surahInfoPlace": "Revealed in",
+  "@surahInfoPlace": {
+    "description": "shared key \"surahInfo.place\""
+  },
+  "surahInfoTitle": "About the surah",
+  "@surahInfoTitle": {
+    "description": "shared key \"surahInfo.title\""
+  },
+  "surahInfoWahidi": "From al-Wahidi, \"Asbab Nuzul al-Quran\"",
+  "@surahInfoWahidi": {
+    "description": "shared key \"surahInfo.wahidi\""
   },
   "tafsirArabicOnly": "This tafsir is available in Arabic only.",
   "@tafsirArabicOnly": {
