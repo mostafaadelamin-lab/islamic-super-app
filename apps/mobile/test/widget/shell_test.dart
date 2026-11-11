@@ -12,7 +12,7 @@ import '../helpers.dart';
 void main() {
   setUpAll(loadContent);
 
-  final tabs = <Type>[HomeScreen, SurahListScreen, ReelsScreen, PrayerScreen, AdhkarScreen, MoreScreen];
+  final tabs = <Type>[HomeScreen, SurahListScreen, PrayerScreen, AdhkarScreen, ReelsScreen, MoreScreen];
 
   testWidgets('Arabic is the default locale and the layout is RTL', (tester) async {
     await pumpApp(tester, prefs: const {});

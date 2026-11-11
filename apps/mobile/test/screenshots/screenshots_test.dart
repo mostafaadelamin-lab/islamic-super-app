@@ -50,11 +50,11 @@ void main() {
       await pumpApp(tester, size: const Size(390, 1240), prefs: {'theme': theme});
       await goToTab(tester, 5);
       await shot(tester, 'icons_${theme}_02_more');
-      await goToTab(tester, 3);
+      await goToTab(tester, 2);
       await shot(tester, 'icons_${theme}_03_prayer');
       await goToTab(tester, 1);
       await shot(tester, 'icons_${theme}_04_quran');
-      await goToTab(tester, 4);
+      await goToTab(tester, 3);
       await shot(tester, 'icons_${theme}_05_adhkar');
     });
   }
@@ -73,7 +73,7 @@ void main() {
       await pushScreen(tester, const SurahReaderScreen(surah: 1));
       await shot(tester, 'ipad_${tag}_04_surah_reader');
       await goBack(tester);
-      await goToTab(tester, 3);
+      await goToTab(tester, 2);
       await shot(tester, 'ipad_${tag}_05_prayer');
     }
   });
@@ -112,7 +112,7 @@ void main() {
       await pushScreen(tester, const PageReaderScreen(initialPage: 604));
       await shot(tester, '${locale}_04_mushaf_page_604');
       await goBack(tester);
-      await goToTab(tester, 3);
+      await goToTab(tester, 2);
       await shot(tester, '${locale}_05_prayer');
       await openBookmarks(tester);
       await shot(tester, '${locale}_06_bookmarks');
@@ -155,7 +155,7 @@ void main() {
       await tester.tapAt(const Offset(195, 40)); // dismiss the sheet
       await tester.pumpAndSettle();
       await goBack(tester);
-      await goToTab(tester, 4);
+      await goToTab(tester, 3);
       await shot(tester, '${locale}_m2_adhkar');
       await goToTab(tester, 5);
       await shot(tester, '${locale}_m2_more');
@@ -204,7 +204,7 @@ void main() {
       await pushScreen(tester, const SurahReaderScreen(surah: 2, initialAyah: 1));
       await shot(tester, '${locale}_08_surah_reader_dark');
       await goBack(tester);
-      await goToTab(tester, 3);
+      await goToTab(tester, 2);
       await shot(tester, '${locale}_09_prayer_dark');
     });
   }

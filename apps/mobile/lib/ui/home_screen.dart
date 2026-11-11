@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 DesignTokens.spaceXl,
               ),
               children: [
-                _Hero(pv: pv, onTap: () => widget.onSelectTab(3), onSettings: () => _push(const SettingsScreen())),
+                _Hero(pv: pv, onTap: () => widget.onSelectTab(2), onSettings: () => _push(const SettingsScreen())),
                 const SizedBox(height: DesignTokens.spaceMd),
                 _DayCard(
                   pv: pv,
@@ -99,9 +99,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Expanded(child: _BigTile('quran', RIcons.quran, l.homeBigQuran, () => widget.onSelectTab(1))),
                       const SizedBox(width: DesignTokens.spaceSm),
-                      Expanded(child: _BigTile('adhkar', RIcons.dua, l.homeBigAdhkar, () => widget.onSelectTab(4))),
+                      Expanded(child: _BigTile('adhkar', RIcons.dua, l.homeBigAdhkar, () => widget.onSelectTab(3))),
                       const SizedBox(width: DesignTokens.spaceSm),
-                      Expanded(child: _BigTile('prayer', RIcons.clock, l.homeBigPrayer, () => widget.onSelectTab(3))),
+                      Expanded(child: _BigTile('prayer', RIcons.clock, l.homeBigPrayer, () => widget.onSelectTab(2))),
                     ],
                   ),
                 ),

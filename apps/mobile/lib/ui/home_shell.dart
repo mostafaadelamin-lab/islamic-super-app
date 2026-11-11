@@ -21,7 +21,7 @@ import 'surah_list_screen.dart';
 import 'tasbih_screen.dart';
 import 'r_icon.dart';
 
-/// Bottom navigation (a side rail on tablets): Home, Quran, Reels, Prayer, Adhkar, More.
+/// Bottom navigation (a side rail on tablets): Home, Quran, Prayer, Adhkar, Videos, More.
 /// The recitation mini player sits above the bar while audio is active.
 class HomeShell extends StatefulWidget {
   const HomeShell({super.key});
@@ -67,11 +67,11 @@ class HomeShellState extends State<HomeShell> {
     switch (type) {
       case 'quran':
         select(1);
-      case 'reels':
-        select(2);
       case 'prayer':
-        select(3);
+        select(2);
       case 'adhkar':
+        select(3);
+      case 'reels':
         select(4);
       case 'tasbih':
         Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TasbihScreen()));
@@ -84,17 +84,17 @@ class HomeShellState extends State<HomeShell> {
     final body = switch (_index) {
       0 => HomeScreen(onSelectTab: select),
       1 => const SurahListScreen(),
-      2 => const ReelsScreen(),
-      3 => const PrayerScreen(),
-      4 => const AdhkarScreen(),
+      2 => const PrayerScreen(),
+      3 => const AdhkarScreen(),
+      4 => const ReelsScreen(),
       _ => const MoreScreen(),
     };
     final items = [
       (RIcons.home, RIcons.home, l.navHome),
       (RIcons.quran, RIcons.quran, l.navQuran),
-      (RIcons.reels, RIcons.reels, l.reelsTitle),
       (RIcons.prayer, RIcons.prayer, l.navPrayer),
       (RIcons.dua, RIcons.dua, l.navAdhkar),
+      (RIcons.reels, RIcons.reels, l.navVideos),
       (RIcons.more, RIcons.more, l.navMore),
     ];
     if (Adaptive.isWide(context)) {

@@ -68,3 +68,7 @@ Played through YouTube's embedded player (www.youtube-nocookie.com) from the off
 | Ahmed Bukhatir | UC-2pqFUafqKCnACEfQasZGg | Official Artist Channel |
 | Abu Ali (Mosa Alomairah) | UCQQCG2_xVTC6CYwobudUTLQ | Official Artist Channel |
 | Muhammad Al Muqit | UCheBIbE_7Trrhatjt9LIteQ | Official Artist Channel |
+
+### Offline adhkar audio (2026-11-11)
+
+Morning and evening adhkar, Mishary Rashid Alafasy: audio.islamweb.net audioid 146980 (morning, 1121 s, 4 487 296 bytes) and 146981 (evening, 1162 s, 4 647 040 bytes), fetched 2026-11-11 via downloadmp3.php, bundled unchanged. Owner's decision (2026-11-11): the site offers free download; use it, no source name in the app.

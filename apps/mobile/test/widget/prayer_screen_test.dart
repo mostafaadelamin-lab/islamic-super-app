@@ -30,7 +30,7 @@ void main() {
     bool edit = false,
   }) async {
     final app = await pumpApp(tester, locale: locale, prefs: prefs, clock: clock, size: tallPhone, location: location);
-    await goToTab(tester, 3);
+    await goToTab(tester, 2);
     if (edit) {
       await tester.tap(find.byKey(const Key('editPrayerTimes')));
       await tester.pumpAndSettle();
@@ -203,7 +203,7 @@ void main() {
       clock: () => DateTime.utc(2026, 12, 21, 12),
       size: tallPhone,
     );
-    await goToTab(tester, 3);
+    await goToTab(tester, 2);
     expect(find.byKey(const Key('polarMessage')), findsOneWidget);
     expect(find.byKey(const Key('time-fajr')), findsNothing);
     expect(find.text('Tromsø'), findsOneWidget);
@@ -326,7 +326,7 @@ void main() {
   testWidgets('calendar: Hijri month mode and sharing the table as an image', (tester) async {
     final sharer = FakeSharer();
     await pumpApp(tester, locale: 'en', size: tallPhone, sharer: sharer);
-    await goToTab(tester, 3);
+    await goToTab(tester, 2);
     await tester.tap(find.byKey(const Key('openCalendar')));
     await tester.pumpAndSettle();
     await tester.tap(find.descendant(of: find.byKey(const Key('calendar.kind')), matching: find.text('Hijri')));

@@ -686,6 +686,12 @@ abstract class AppLocalizations {
   /// **'Next'**
   String get adhkarNextCard;
 
+  /// shared key "adhkar.offlineNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Saved in the app; plays without internet.'**
+  String get adhkarOfflineNote;
+
   /// shared key "adhkar.prevCard"
   ///
   /// In en, this message translates to:
@@ -2209,6 +2215,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get navSettings;
+
+  /// shared key "nav.videos"
+  ///
+  /// In en, this message translates to:
+  /// **'Videos'**
+  String get navVideos;
 
   /// shared key "offline.done"
   ///

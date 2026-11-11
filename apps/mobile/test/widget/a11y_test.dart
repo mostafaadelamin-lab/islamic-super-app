@@ -33,7 +33,7 @@ void main() {
     await tester.pumpAndSettle();
     await expectAccessible(tester, contrast: contrast);
     await goBack(tester);
-    await goToTab(tester, 3);
+    await goToTab(tester, 2);
     await tester.tap(find.byKey(const Key('editPrayerTimes')));
     await tester.pumpAndSettle();
     await expectAccessible(tester, contrast: contrast);
@@ -73,7 +73,7 @@ void main() {
     await openBookmarks(tester);
     await expectAccessible(tester, contrast: true);
     await goBack(tester);
-    await goToTab(tester, 3);
+    await goToTab(tester, 2);
     await tester.tap(find.byKey(const Key('editPrayerTimes')));
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(find.byKey(const Key('adjustTile')), 300);

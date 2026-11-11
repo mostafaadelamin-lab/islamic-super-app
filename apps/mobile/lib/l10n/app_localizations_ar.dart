@@ -353,6 +353,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhkarNextCard => 'التالي';
 
   @override
+  String get adhkarOfflineNote => 'محفوظة داخل التطبيق، تعمل بدون إنترنت.';
+
+  @override
   String get adhkarPrevCard => 'السابق';
 
   @override
@@ -1216,6 +1219,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get navSettings => 'الإعدادات';
+
+  @override
+  String get navVideos => 'فيديوهات';
 
   @override
   String get offlineDone => 'تم الحفظ، يمكنك الاستماع بدون إنترنت';

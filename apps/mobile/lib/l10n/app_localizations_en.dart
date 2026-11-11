@@ -354,6 +354,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhkarNextCard => 'Next';
 
   @override
+  String get adhkarOfflineNote => 'Saved in the app; plays without internet.';
+
+  @override
   String get adhkarPrevCard => 'Previous';
 
   @override
@@ -1219,6 +1222,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get navSettings => 'Settings';
+
+  @override
+  String get navVideos => 'Videos';
 
   @override
   String get offlineDone => 'Saved: you can listen without internet';

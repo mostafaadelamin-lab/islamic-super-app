@@ -12,7 +12,7 @@ import 'prayer_model.dart';
 import 'review_notice.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
-import 'youtube_player.dart';
+import 'adhkar_audio.dart';
 
 /// The Adhkar tab: a vertical list of the daily adhkar (morning, evening,
 /// sleep, prayer…) and the duas, all from Hisn al-Muslim, then the whole book.
@@ -84,7 +84,7 @@ class AdhkarScreen extends StatelessWidget {
                   title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
                   subtitle: Text(l.adhkarAlafasy),
                   trailing: const RIcon(RIcons.playCircle),
-                  onTap: () => showYouTubeSheet(context, videoId: adhkarAudioVideo[a]!, title: title, subtitle: l.adhkarAlafasy),
+                  onTap: () => openAdhkarAudio(context, a, title),
                 ),
               ),
           ],
@@ -141,12 +141,10 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
             icon: const RIcon(RIcons.headphones),
             onPressed: () {
               final morning = session == AdhkarSession.morning;
-              final title = morning ? l.adhkarMorningTitle : l.adhkarEveningTitle;
-              showYouTubeSheet(
+              openAdhkarAudio(
                 context,
-                videoId: adhkarAudioVideo[morning ? AdhkarAudio.morning : AdhkarAudio.evening]!,
-                title: title,
-                subtitle: l.adhkarAlafasy,
+                morning ? AdhkarAudio.morning : AdhkarAudio.evening,
+                morning ? l.adhkarMorningTitle : l.adhkarEveningTitle,
               );
             },
           ),

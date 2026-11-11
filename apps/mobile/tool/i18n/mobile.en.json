@@ -550,5 +550,7 @@
   "adhkar.listen": "Listen (Mishary Alafasy)",
   "adhkar.alafasy": "Recited by Sheikh Mishary Rashid Alafasy",
   "adhkar.afterPrayer": "Adhkar after prayer",
-  "adhkar.sleep": "Adhkar before sleep"
+  "adhkar.sleep": "Adhkar before sleep",
+  "nav.videos": "Videos",
+  "adhkar.offlineNote": "Saved in the app; plays without internet."
 }

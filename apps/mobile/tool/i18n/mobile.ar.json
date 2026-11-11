@@ -550,5 +550,7 @@
   "adhkar.listen": "استمع بصوت الشيخ مشاري العفاسي",
   "adhkar.alafasy": "بصوت الشيخ مشاري راشد العفاسي",
   "adhkar.afterPrayer": "أذكار بعد الصلاة",
-  "adhkar.sleep": "أذكار النوم"
+  "adhkar.sleep": "أذكار النوم",
+  "nav.videos": "فيديوهات",
+  "adhkar.offlineNote": "محفوظة داخل التطبيق، تعمل بدون إنترنت."
 }

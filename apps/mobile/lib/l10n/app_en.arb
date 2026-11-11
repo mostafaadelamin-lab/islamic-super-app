@@ -500,6 +500,10 @@
   "@adhkarNextCard": {
     "description": "shared key \"adhkar.nextCard\""
   },
+  "adhkarOfflineNote": "Saved in the app; plays without internet.",
+  "@adhkarOfflineNote": {
+    "description": "shared key \"adhkar.offlineNote\""
+  },
   "adhkarPrevCard": "Previous",
   "@adhkarPrevCard": {
     "description": "shared key \"adhkar.prevCard\""
@@ -1805,6 +1809,10 @@
   "navSettings": "Settings",
   "@navSettings": {
     "description": "shared key \"nav.settings\""
+  },
+  "navVideos": "Videos",
+  "@navVideos": {
+    "description": "shared key \"nav.videos\""
   },
   "offlineDone": "Saved: you can listen without internet",
   "@offlineDone": {

@@ -22,7 +22,7 @@ const ipadLarge = Size(1366, 1024);
 void main() {
   setUpAll(loadContent);
 
-  final tabs = <Type>[HomeScreen, SurahListScreen, ReelsScreen, PrayerScreen, AdhkarScreen, MoreScreen];
+  final tabs = <Type>[HomeScreen, SurahListScreen, PrayerScreen, AdhkarScreen, ReelsScreen, MoreScreen];
 
   for (final locale in ['ar', 'en']) {
     for (final size in [ipadPortrait, ipadLandscape, ipadLarge]) {

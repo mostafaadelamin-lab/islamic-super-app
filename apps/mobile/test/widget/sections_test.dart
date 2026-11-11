@@ -29,7 +29,7 @@ void main() {
   group('Adhkar', () {
     testWidgets('morning by default before Asr, with the review notice and per-item counters', (tester) async {
       final app = await pumpApp(tester, size: tallPhone);
-      await goToTab(tester, 4);
+      await goToTab(tester, 3);
       await tester.tap(find.byKey(const Key('adhkarHub.morning')));
       await tester.pumpAndSettle();
       expect(tester.state<AdhkarScreenState>(find.byType(AdhkarSessionScreen)).session, AdhkarSession.morning);
@@ -63,7 +63,7 @@ void main() {
 
     testWidgets('evening after Asr; switching sessions; reset', (tester) async {
       final app = await pumpApp(tester, size: tallPhone, clock: () => DateTime.utc(2026, 1, 15, 17));
-      await goToTab(tester, 4);
+      await goToTab(tester, 3);
       await tester.tap(find.byKey(const Key('adhkarHub.evening')));
       await tester.pumpAndSettle();
       final state = tester.state<AdhkarScreenState>(find.byType(AdhkarSessionScreen));
@@ -89,7 +89,7 @@ void main() {
 
     testWidgets('Hisn al-Muslim: 134 chapters, filter, chapter with copy', (tester) async {
       await pumpApp(tester, size: tallPhone);
-      await goToTab(tester, 4);
+      await goToTab(tester, 3);
       await tester.scrollUntilVisible(find.byKey(const Key('adhkarHub.hisn')), 200);
       await tester.tap(find.byKey(const Key('adhkarHub.hisn')));
       await tester.pumpAndSettle();
@@ -279,7 +279,7 @@ void main() {
 
     testWidgets('prayer tab links to the live qibla screen', (tester) async {
       await pumpApp(tester, size: tallPhone);
-      await goToTab(tester, 3);
+      await goToTab(tester, 2);
       await tester.tap(find.byKey(const Key('editPrayerTimes')));
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.byKey(const Key('openLiveQibla')), 300);
@@ -336,7 +336,7 @@ void main() {
       }
 
       await tile('adhkar');
-      expect(tester.state<HomeShellState>(find.byType(HomeShell)).index, 4);
+      expect(tester.state<HomeShellState>(find.byType(HomeShell)).index, 3);
       await goToTab(tester, 0);
       for (final (id, type) in [('tasbih', TasbihScreen), ('qibla', QiblaScreen)]) {
         await tile(id);

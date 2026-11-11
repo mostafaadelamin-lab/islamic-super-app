@@ -31,7 +31,7 @@ void main() {
     await tester.tap(find.byKey(const Key('home.nextPrayer')));
     await tester.pumpAndSettle();
     expect(find.byType(PrayerScreen), findsOneWidget);
-    expect(tester.state<HomeShellState>(find.byType(HomeShell)).index, 3);
+    expect(tester.state<HomeShellState>(find.byType(HomeShell)).index, 2);
   });
 
   testWidgets('day card: weekday, dates, five prayers, sunrise and sunset, calendar', (tester) async {
@@ -70,7 +70,7 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    for (final (id, tab) in [('quran', 1), ('adhkar', 4), ('prayer', 3)]) {
+    for (final (id, tab) in [('quran', 1), ('adhkar', 3), ('prayer', 2)]) {
       await tile(id);
       expect(tester.state<HomeShellState>(find.byType(HomeShell)).index, tab, reason: id);
       if (id == 'quran') expect(find.byType(SurahListScreen), findsOneWidget);

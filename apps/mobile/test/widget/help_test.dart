@@ -69,7 +69,7 @@ void main() {
     final shell = tester.state<HomeShellState>(find.byType(HomeShell));
     shortcutRequests.value = 'prayer';
     await tester.pumpAndSettle();
-    expect(shell.index, 3);
+    expect(shell.index, 2);
     shortcutRequests.value = 'tasbih';
     await tester.pumpAndSettle();
     expect(find.byType(TasbihScreen), findsOneWidget);

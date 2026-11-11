@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/domain/adhkar.dart';
 import 'package:rattil/domain/nasheeds.dart';
+import 'package:rattil/ui/adhkar_audio.dart';
 import 'package:rattil/ui/adhkar_screen.dart';
 import 'package:rattil/ui/nasheeds_screen.dart';
 import 'package:rattil/ui/youtube_player.dart';
@@ -11,7 +14,12 @@ import '../helpers.dart';
 void main() {
   setUpAll(loadContent);
   setUp(() => debugYouTubeEmbedBuilder = (_, id) => ColoredBox(key: Key('fakeEmbed-$id'), color: Colors.black));
-  tearDown(() => debugYouTubeEmbedBuilder = null);
+  setUp(() => debugAssetAudioFactory = _FakeAudio.new);
+  tearDown(() {
+    debugYouTubeEmbedBuilder = null;
+    debugAssetAudioFactory = null;
+    _FakeAudio.loaded.clear();
+  });
 
   test('every nasheed and adhkar recording is a well-formed, unique YouTube id', () {
     final ids = [
@@ -69,6 +77,39 @@ void main() {
     await pushScreen(tester, const AdhkarSessionScreen(initial: AdhkarSession.morning));
     await tester.tap(find.byKey(const Key('adhkarListen')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('fakeEmbed-V2Brp_esIVI')), findsOneWidget);
+    expect(find.byKey(const Key('adhkarAudioSheet')), findsOneWidget, reason: 'morning plays offline');
+    expect(_FakeAudio.loaded, ['assets/audio/adhkar_morning_alafasy.mp3']);
+    expect(find.text('18:41'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('adhkarAudioPlay')));
+    await tester.pump();
+    expect(_FakeAudio.last!.isPlaying, isFalse);
   });
+}
+
+class _FakeAudio implements AssetAudio {
+  _FakeAudio() {
+    last = this;
+  }
+  static final loaded = <String>[];
+  static _FakeAudio? last;
+  bool isPlaying = false;
+  final _pos = StreamController<Duration>.broadcast();
+  final _playing = StreamController<bool>.broadcast();
+  @override
+  Future<Duration?> load(String asset) async {
+    loaded.add(asset);
+    return const Duration(minutes: 18, seconds: 41);
+  }
+  @override
+  Future<void> play() async => _playing.add(isPlaying = true);
+  @override
+  Future<void> pause() async => _playing.add(isPlaying = false);
+  @override
+  Future<void> seek(Duration d) async => _pos.add(d);
+  @override
+  Future<void> dispose() async {}
+  @override
+  Stream<Duration> get position => _pos.stream;
+  @override
+  Stream<bool> get playing => _playing.stream;
 }
