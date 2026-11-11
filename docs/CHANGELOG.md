@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.4] — Area name and compass calibration (owner's feedback) — 2026-11-11
+### Fixed
+- Home place line: the area is now looked up at district level first (a compound or town such as Madinaty, then suburbs), with the street-level answer used to reject a nearby village; BigDataCloud's free client geocoder is a fallback when OpenStreetMap is unreachable. Names saved by the old rules are looked up again; a failed lookup is retried on the next start.
+### Added
+- Qibla: a "calibrate the compass" card (figure-8) when Android reports the magnetometer as unreliable/low or the heading error is over 25°; the current accuracy (± degrees); a link to Google's Qibla Finder to check the direction on a map. iOS sends its heading accuracy too.
+
 ## [1.0.3] — Bottom bar order, offline adhkar audio (owner's request) — 2026-11-11
 ### Changed
 - Bottom bar: Home, Quran, Prayer, Adhkar, Videos, More (the reels tab is now called "Videos").

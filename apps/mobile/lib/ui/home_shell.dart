@@ -49,6 +49,9 @@ class HomeShellState extends State<HomeShell> {
       final s = context.services;
       if (s.settings.autoLocation && (s.settings.cityNeverChosen || s.settings.cityId == 'gps')) {
         unawaited(locateAndSave(s, keepMethod: true).catchError((Object _) => const LocationUnavailable()));
+      } else {
+        // A place name that failed earlier (no network) or was saved by older rules.
+        unawaited(refreshPlaceName(s).catchError((Object _) {}));
       }
     });
   }

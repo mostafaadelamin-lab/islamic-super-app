@@ -27,7 +27,8 @@ Future<void> refreshPlaceName(AppServices s) async {
   final gps = s.settings.gpsLocation;
   if (gps == null) return;
   for (final lang in const ['ar', 'en']) {
-    if (s.settings.gpsPlace(lang) != null) continue;
+    final saved = s.settings.gpsPlace(lang);
+    if (saved != null && saved['v'] == PlaceNames.version && saved['area'] != null) continue;
     final p = await s.placeNames.lookup(gps.lat, gps.lng, arabic: lang == 'ar');
     if (p != null) await s.settings.setGpsPlace(lang, p.toJson());
   }

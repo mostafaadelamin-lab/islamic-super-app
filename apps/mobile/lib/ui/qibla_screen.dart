@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 
 import '../app_services.dart';
 import '../data/location.dart';
+import '../data/sensors.dart';
 import '../domain/declination.dart';
 import '../domain/mosques.dart' show distanceM;
 import '../domain/qibla.dart';
@@ -37,6 +39,11 @@ class QiblaScreenState extends State<QiblaScreen> {
   StreamSubscription<Vec3>? _acc;
   StreamSubscription<Vec3>? _mag;
   StreamSubscription<double>? _sys;
+  StreamSubscription<CompassQuality>? _quality;
+
+  /// The platform says the magnetometer is uncalibrated, or its error is large.
+  bool needsCalibration = false;
+  double? accuracyDeg;
   bool _started = false;
 
   /// Degrees east of true north of magnetic north at the selected city.
@@ -62,6 +69,7 @@ class QiblaScreenState extends State<QiblaScreen> {
     if (sys != null) {
       try {
         _sys = sys.listen(_onHeading, onError: (Object _) => _startRawSensors(), cancelOnError: true);
+        _quality = services.sensors.quality?.listen(_onQuality, onError: (Object _) {});
       } catch (_) {
         _startRawSensors();
       }
@@ -70,6 +78,18 @@ class QiblaScreenState extends State<QiblaScreen> {
     }
     _timeout = Timer(QiblaScreen.timeout, () {
       if (mounted) setState(() => _timedOut = true);
+    });
+  }
+
+  void _onQuality(CompassQuality q) {
+    if (!mounted) return;
+    setState(() {
+      if (q.calibration != null) needsCalibration = q.calibration! <= 1;
+      if (q.accuracyDeg != null) {
+        accuracyDeg = q.accuracyDeg;
+        if (q.accuracyDeg! > 25) needsCalibration = true;
+        if (q.accuracyDeg! <= 10 && q.calibration == null) needsCalibration = false;
+      }
     });
   }
 
@@ -134,6 +154,7 @@ class QiblaScreenState extends State<QiblaScreen> {
     _acc?.cancel();
     _mag?.cancel();
     _sys?.cancel();
+    _quality?.cancel();
     _timeout?.cancel();
     super.dispose();
   }
@@ -299,6 +320,26 @@ class QiblaScreenState extends State<QiblaScreen> {
                       ),
               ),
             ),
+            if (live && needsCalibration) ...[
+              const SizedBox(height: DesignTokens.spaceMd),
+              Card(
+                key: const Key('qiblaCalibrate'),
+                margin: EdgeInsets.zero,
+                color: theme.colorScheme.errorContainer,
+                child: ListTile(
+                  leading: RIcon(RIcons.refresh, color: theme.colorScheme.onErrorContainer),
+                  title: Text(l.qiblaCalibrateTitle, style: TextStyle(color: theme.colorScheme.onErrorContainer, fontWeight: FontWeight.w700)),
+                  subtitle: Text(l.qiblaCalibrateBody, style: TextStyle(color: theme.colorScheme.onErrorContainer)),
+                ),
+              ),
+            ],
+            const SizedBox(height: DesignTokens.spaceSm),
+            OutlinedButton.icon(
+              key: const Key('qiblaMapCheck'),
+              icon: const RIcon(RIcons.external),
+              label: Text(l.qiblaMapCheck),
+              onPressed: () => launchUrl(Uri.parse('https://qiblafinder.withgoogle.com/'), mode: LaunchMode.externalApplication),
+            ),
             if (live) ...[
               const SizedBox(height: DesignTokens.spaceMd),
               Text(
@@ -306,6 +347,13 @@ class QiblaScreenState extends State<QiblaScreen> {
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodySmall,
               ),
+              if (accuracyDeg != null)
+                Text(
+                  l.qiblaAccuracy(context.num(accuracyDeg!.round())),
+                  key: const Key('qiblaAccuracy'),
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodySmall,
+                ),
               if (declination != null)
                 Text(
                   l.qiblaDeclination(context.num('${declination! >= 0 ? '+' : ''}${declination!.toStringAsFixed(1)}')),

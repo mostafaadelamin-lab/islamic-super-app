@@ -1422,6 +1422,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get prayerUseLocation => 'Use my location';
 
   @override
+  String qiblaAccuracy(String n) {
+    return 'Compass accuracy now: ± $n°';
+  }
+
+  @override
+  String get qiblaCalibrateBody =>
+      'Move the phone in a figure 8 a few times, keep away from metal and electrical devices, and remove a magnetic case.';
+
+  @override
+  String get qiblaCalibrateTitle => 'The compass needs calibrating';
+
+  @override
   String qiblaDeclination(String deg) {
     return 'Corrected from magnetic to true north: $deg°';
   }
@@ -1449,6 +1461,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get qiblaLocateFailed => 'Couldn\'t find your location. Turn on location services and try again.';
+
+  @override
+  String get qiblaMapCheck => 'Check on Google\'s Qibla Finder map';
 
   @override
   String get qiblaPlaceNote =>

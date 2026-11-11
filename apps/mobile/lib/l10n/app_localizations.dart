@@ -2570,6 +2570,24 @@ abstract class AppLocalizations {
   /// **'Use my location'**
   String get prayerUseLocation;
 
+  /// shared key "qibla.accuracy"
+  ///
+  /// In en, this message translates to:
+  /// **'Compass accuracy now: ± {n}°'**
+  String qiblaAccuracy(String n);
+
+  /// shared key "qibla.calibrateBody"
+  ///
+  /// In en, this message translates to:
+  /// **'Move the phone in a figure 8 a few times, keep away from metal and electrical devices, and remove a magnetic case.'**
+  String get qiblaCalibrateBody;
+
+  /// shared key "qibla.calibrateTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'The compass needs calibrating'**
+  String get qiblaCalibrateTitle;
+
   /// shared key "qibla.declination"
   ///
   /// In en, this message translates to:
@@ -2617,6 +2635,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t find your location. Turn on location services and try again.'**
   String get qiblaLocateFailed;
+
+  /// shared key "qibla.mapCheck"
+  ///
+  /// In en, this message translates to:
+  /// **'Check on Google\'s Qibla Finder map'**
+  String get qiblaMapCheck;
 
   /// shared key "qibla.placeNote"
   ///

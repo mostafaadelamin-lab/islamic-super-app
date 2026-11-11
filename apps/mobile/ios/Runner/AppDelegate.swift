@@ -59,7 +59,11 @@ final class HeadingStreamHandler: NSObject, FlutterStreamHandler, CLLocationMana
 
   func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
     // Negative accuracy means the reading is invalid (interference / not calibrated).
-    if newHeading.headingAccuracy < 0 { return }
+    if newHeading.headingAccuracy < 0 {
+      sink?(["cal": 0])
+      return
+    }
+    sink?(["acc": newHeading.headingAccuracy])
     sink?(newHeading.magneticHeading)
   }
 

@@ -552,5 +552,9 @@
   "adhkar.afterPrayer": "Adhkar after prayer",
   "adhkar.sleep": "Adhkar before sleep",
   "nav.videos": "Videos",
-  "adhkar.offlineNote": "Saved in the app; plays without internet."
+  "adhkar.offlineNote": "Saved in the app; plays without internet.",
+  "qibla.calibrateTitle": "The compass needs calibrating",
+  "qibla.calibrateBody": "Move the phone in a figure 8 a few times, keep away from metal and electrical devices, and remove a magnetic case.",
+  "qibla.accuracy": "Compass accuracy now: ± {n}°",
+  "qibla.mapCheck": "Check on Google's Qibla Finder map"
 }

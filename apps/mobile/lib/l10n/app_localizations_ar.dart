@@ -1418,6 +1418,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get prayerUseLocation => 'استخدم موقعي';
 
   @override
+  String qiblaAccuracy(String n) {
+    return 'دقة البوصلة الآن: ± $n°';
+  }
+
+  @override
+  String get qiblaCalibrateBody =>
+      'حرّك الهاتف في الهواء على شكل الرقم ٨ عدة مرات، وابتعد عن المعادن والأجهزة الكهربائية، وانزع الجراب إن كان فيه مغناطيس.';
+
+  @override
+  String get qiblaCalibrateTitle => 'البوصلة تحتاج معايرة';
+
+  @override
   String qiblaDeclination(String deg) {
     return 'مع تصحيح فرق الشمال المغناطيسي عن الحقيقي: $deg°';
   }
@@ -1445,6 +1457,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get qiblaLocateFailed => 'تعذّر تحديد موقعك. فعّل خدمات الموقع وحاول مرة أخرى.';
+
+  @override
+  String get qiblaMapCheck => 'تأكّد من الاتجاه على خريطة جوجل للقبلة';
 
   @override
   String get qiblaPlaceNote => 'اتجاه القبلة محسوب لهذا الموقع. اضغط زر الموقع إن كنت في مكان آخر.';

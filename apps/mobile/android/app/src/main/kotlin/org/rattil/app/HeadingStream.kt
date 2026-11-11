@@ -21,6 +21,7 @@ class HeadingStream(private val activity: Activity) : EventChannel.StreamHandler
     private var sink: EventChannel.EventSink? = null
     private val rotation = FloatArray(9)
     private val remapped = FloatArray(9)
+    private var lastAccuracyDeg = -100.0
 
     override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
         val sensor = sensors.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
@@ -31,6 +32,10 @@ class HeadingStream(private val activity: Activity) : EventChannel.StreamHandler
         }
         sink = events
         sensors.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI)
+        // Only for its calibration status (onAccuracyChanged): tells the user to calibrate.
+        sensors.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)?.let {
+            sensors.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
+        }
     }
 
     override fun onCancel(arguments: Any?) {
@@ -39,6 +44,15 @@ class HeadingStream(private val activity: Activity) : EventChannel.StreamHandler
     }
 
     override fun onSensorChanged(event: SensorEvent) {
+        if (event.sensor.type == Sensor.TYPE_MAGNETIC_FIELD) return
+        // values[4]: the sensor's own estimate of the heading error, in radians (-1 when unknown).
+        if (event.values.size > 4 && event.values[4] >= 0f) {
+            val acc = Math.toDegrees(event.values[4].toDouble())
+            if (Math.abs(acc - lastAccuracyDeg) >= 2.0) {
+                lastAccuracyDeg = acc
+                sink?.success(mapOf("acc" to acc))
+            }
+        }
         SensorManager.getRotationMatrixFromVector(rotation, event.values)
         // Keep "up" = the top of the screen in every display rotation.
         val (x, y) = when (displayRotation()) {
@@ -58,7 +72,10 @@ class HeadingStream(private val activity: Activity) : EventChannel.StreamHandler
         sink?.success(deg)
     }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+    /** SENSOR_STATUS_UNRELIABLE (0) / ACCURACY_LOW (1) on the magnetometer = the compass needs calibrating. */
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        if (sensor?.type == Sensor.TYPE_MAGNETIC_FIELD) sink?.success(mapOf("cal" to accuracy))
+    }
 
     @Suppress("DEPRECATION")
     private fun displayRotation(): Int =

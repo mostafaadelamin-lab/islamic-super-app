@@ -18,6 +18,8 @@ import 'package:rattil/data/notifications.dart';
 
 import 'package:rattil/ui/zakat_screen.dart';
 
+import 'package:rattil/data/sensors.dart';
+
 import '../helpers.dart';
 
 /// Wraps [s] in the left-to-right isolate used by context.numLtr.
@@ -253,6 +255,32 @@ void main() {
       expect(st.heading, closeTo(qibla, 1e-6));
       expect(find.text('You are facing the qibla'), findsOneWidget);
       await sys.close();
+    });
+
+    testWidgets('an uncalibrated compass asks for the figure-8 and shows its accuracy', (tester) async {
+      final sys = StreamController<double>.broadcast();
+      final q = StreamController<CompassQuality>.broadcast();
+      await pumpApp(
+        tester,
+        size: tallPhone,
+        locale: 'en',
+        sensors: FakeSensors(const Stream.empty(), const Stream.empty(), systemHeading: sys.stream, quality: q.stream),
+      );
+      unawaited(pushRoute(tester, const QiblaScreen()));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      sys.add(100);
+      q.add(const CompassQuality(calibration: 0));
+      q.add(const CompassQuality(accuracyDeg: 30));
+      await tester.pump();
+      expect(find.byKey(const Key('qiblaCalibrate')), findsOneWidget);
+      expect(find.byKey(const Key('qiblaAccuracy')), findsOneWidget);
+      expect(find.byKey(const Key('qiblaMapCheck')), findsOneWidget);
+      q.add(const CompassQuality(calibration: 3));
+      await tester.pump();
+      expect(find.byKey(const Key('qiblaCalibrate')), findsNothing);
+      await sys.close();
+      await q.close();
     });
 
     testWidgets('system compass error falls back to the raw sensors', (tester) async {
