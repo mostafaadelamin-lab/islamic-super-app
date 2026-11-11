@@ -1136,6 +1136,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get mosquesOnGoogleMaps => 'افتح المساجد القريبة على خرائط جوجل';
 
   @override
+  String get mosquesOpenApple => 'فتح في الخرائط';
+
+  @override
+  String get mosquesOpenGoogle => 'فتح في خرائط جوجل';
+
+  @override
+  String get mosquesOpenOther => 'فتح في تطبيق خرائط آخر';
+
+  @override
+  String get mosquesOpenWaze => 'فتح في Waze';
+
+  @override
   String get mosquesRetry => 'إعادة المحاولة';
 
   @override

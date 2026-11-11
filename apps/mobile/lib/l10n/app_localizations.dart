@@ -2054,6 +2054,30 @@ abstract class AppLocalizations {
   /// **'Open nearby mosques in Google Maps'**
   String get mosquesOnGoogleMaps;
 
+  /// shared key "mosques.openApple"
+  ///
+  /// In en, this message translates to:
+  /// **'Open in Maps'**
+  String get mosquesOpenApple;
+
+  /// shared key "mosques.openGoogle"
+  ///
+  /// In en, this message translates to:
+  /// **'Open in Google Maps'**
+  String get mosquesOpenGoogle;
+
+  /// shared key "mosques.openOther"
+  ///
+  /// In en, this message translates to:
+  /// **'Open in another maps app'**
+  String get mosquesOpenOther;
+
+  /// shared key "mosques.openWaze"
+  ///
+  /// In en, this message translates to:
+  /// **'Open in Waze'**
+  String get mosquesOpenWaze;
+
   /// shared key "mosques.retry"
   ///
   /// In en, this message translates to:

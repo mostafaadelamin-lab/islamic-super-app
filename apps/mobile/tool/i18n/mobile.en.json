@@ -556,5 +556,9 @@
   "qibla.calibrateTitle": "The compass needs calibrating",
   "qibla.calibrateBody": "Move the phone in a figure 8 a few times, keep away from metal and electrical devices, and remove a magnetic case.",
   "qibla.accuracy": "Compass accuracy now: ± {n}°",
-  "qibla.mapCheck": "Check on Google's Qibla Finder map"
+  "qibla.mapCheck": "Check on Google's Qibla Finder map",
+  "mosques.openGoogle": "Open in Google Maps",
+  "mosques.openWaze": "Open in Waze",
+  "mosques.openApple": "Open in Maps",
+  "mosques.openOther": "Open in another maps app"
 }

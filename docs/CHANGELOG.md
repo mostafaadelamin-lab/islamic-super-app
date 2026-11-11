@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.6] — Nearby mosques: list inside the app, choose the maps app (owner's request) — 2026-11-11
+### Changed
+- Nearby mosques are a list again (name + distance, nearest first), from Google Places "Nearby Search (New)" when the build has a key (`--dart-define=GOOGLE_PLACES_KEY=…`, owner's Google Cloud project), else OpenStreetMap (credit line shown only then).
+- Tapping a mosque opens a sheet: Google Maps directions, Waze, or another maps app (Android system chooser via MethodChannel `org.rattil.app/maps`; Apple Maps on iOS).
+
 ## [1.0.5] — Nearby mosques from Google Maps inside the app (owner's request) — 2026-11-11
 ### Changed
 - Nearby mosques: Google Maps' mosque search around the phone's position is shown inside the app (WebView, no API key), zoomed to the 2/5/10 km choice; Google links stay in the view, anything else opens outside. The OpenStreetMap list and its attribution were removed from the screen.

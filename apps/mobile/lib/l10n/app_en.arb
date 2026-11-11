@@ -1692,6 +1692,22 @@
   "@mosquesOnGoogleMaps": {
     "description": "shared key \"mosques.onGoogleMaps\""
   },
+  "mosquesOpenApple": "Open in Maps",
+  "@mosquesOpenApple": {
+    "description": "shared key \"mosques.openApple\""
+  },
+  "mosquesOpenGoogle": "Open in Google Maps",
+  "@mosquesOpenGoogle": {
+    "description": "shared key \"mosques.openGoogle\""
+  },
+  "mosquesOpenOther": "Open in another maps app",
+  "@mosquesOpenOther": {
+    "description": "shared key \"mosques.openOther\""
+  },
+  "mosquesOpenWaze": "Open in Waze",
+  "@mosquesOpenWaze": {
+    "description": "shared key \"mosques.openWaze\""
+  },
   "mosquesRetry": "Try again",
   "@mosquesRetry": {
     "description": "shared key \"mosques.retry\""
