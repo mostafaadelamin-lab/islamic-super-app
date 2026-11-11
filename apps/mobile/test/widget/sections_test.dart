@@ -474,8 +474,8 @@ void main() {
       expect(find.text('A test alert will arrive in 10 seconds; you can close the app.'), findsOneWidget);
       expect(find.byKey(const Key('adhanCredit')), findsOneWidget);
 
-      // The preview plays the default muezzin (Makkah Haram).
-      expect(player.lastAsset, 'assets/audio/adhan_haram.m4a');
+      // The preview plays the default muezzin (Ali Mulla, Makkah Haram).
+      expect(player.lastAsset, 'assets/audio/adhan_mulla.m4a');
     });
   });
 }

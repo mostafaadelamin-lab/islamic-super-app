@@ -17,40 +17,48 @@ void main() {
     expect(remoteAdhanId('iw122646'), isNull);
     expect(bundledAdhanVoice(defaultFajrVoice)!.fajr, isTrue);
     expect(bundledAdhanVoice(defaultAdhanVoice)!.fajr, isFalse);
+    // Openly licensed recordings carry their credit; the owner's picks never show a source.
     for (final v in bundledAdhanVoices) {
-      expect(v.credit, isNotNull, reason: v.id);
+      final owners = ['mulla', 'makkah', 'bukhari', 'mismail', 'banna', 'rifaat', 'daghriri_fajr', 'afasy_fajr'];
+      expect(v.credit == null, owners.contains(v.id), reason: v.id);
     }
+    expect(bundledAdhanVoice('afasy_fajr')!.fajr, isTrue);
+    expect(bundledAdhanVoice('rifaat')!.fajr, isFalse);
   });
 
-  testWidgets('defaults: Makkah Haram adhan, and its own Fajr adhan', (tester) async {
+  testWidgets('defaults: Ali Mulla (Makkah Haram), and Al-Daghriri for Fajr', (tester) async {
     final app = await pumpApp(tester, size: tallPhone, locale: 'en');
     final s = app.services.settings;
-    expect(s.adhanVoice, 'haram');
-    expect(s.adhanFajrVoice, 'haram_fajr');
-    expect(s.adhanVoiceFor('fajr'), 'haram_fajr');
-    expect(s.adhanVoiceFor('maghrib'), 'haram');
-    expect(app.services.adhan.nativeVoiceFor('fajr'), 'adhan_haram_fajr');
-    expect(app.services.adhan.nativeVoiceFor('isha'), 'adhan_haram');
+    expect(s.adhanVoice, 'mulla');
+    expect(s.adhanFajrVoice, 'daghriri_fajr');
+    expect(s.adhanVoiceFor('fajr'), 'daghriri_fajr');
+    expect(s.adhanVoiceFor('maghrib'), 'mulla');
+    expect(app.services.adhan.nativeVoiceFor('fajr'), 'adhan_daghriri_fajr');
+    expect(app.services.adhan.nativeVoiceFor('isha'), 'adhan_mulla');
     await expectLater(s.setAdhanVoice('nope'), throwsA(anything));
-    expect(s.adhanVoice, 'haram');
+    expect(s.adhanVoice, 'mulla');
   });
 
   testWidgets('Fajr list shows only Fajr adhans; the main list the others; tapping one chooses it', (tester) async {
     final app = await pumpApp(tester, size: tallPhone, locale: 'en');
     await tester.runAsync(app.services.adhanVoices.catalog);
     await pushScreen(tester, const MuezzinScreen(fajr: true));
-    expect(find.byKey(const Key('muezzin-haram_fajr')), findsOneWidget);
+    for (final id in ['daghriri_fajr', 'afasy_fajr', 'haram_fajr']) {
+      expect(find.byKey(Key('muezzin-$id')), findsOneWidget, reason: id);
+    }
     expect(find.byKey(const Key('muezzin-haram')), findsNothing);
+    expect(find.byKey(const Key('muezzin-mulla')), findsNothing);
     await goBack(tester);
     await pushScreen(tester, const MuezzinScreen(fajr: false));
-    for (final id in ['haram', 'madinah', 'fakhry', 'v1', 'v2']) {
+    for (final id in ['mulla', 'makkah', 'bukhari', 'mismail', 'banna', 'rifaat', 'haram', 'madinah', 'fakhry', 'v1', 'v2']) {
       expect(find.byKey(Key('muezzin-$id')), findsOneWidget, reason: id);
     }
     expect(find.byKey(const Key('muezzin-haram_fajr')), findsNothing);
+    expect(find.byKey(const Key('muezzin-afasy_fajr')), findsNothing);
     await tester.tap(find.byKey(const Key('muezzin-madinah')));
     await tester.pumpAndSettle();
     expect(app.services.settings.adhanVoice, 'madinah');
     expect(app.services.adhan.nativeVoiceFor('dhuhr'), 'adhan_madinah');
-    expect(app.services.adhan.nativeVoiceFor('fajr'), 'adhan_haram_fajr');
+    expect(app.services.adhan.nativeVoiceFor('fajr'), 'adhan_daghriri_fajr');
   });
 }

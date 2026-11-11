@@ -64,3 +64,20 @@ the first 28 s of the Makkah recording (iOS notification limit 30 s).
 
 **Open checks:** the owner should listen to the Fajr recording to confirm "الصلاة خير من النوم"; religious
 listen-through by a named reviewer still pending for every voice.
+
+## The owner's picks (2026-11-11)
+
+On 2026-11-11 the owner chose these eight recordings from the audio.islamweb.net adhan collection and told us to bundle them offline (owner's decision: the site offers free download; see feedback-round notes). The source is recorded here only and never shown in the app. Transcodes: Android `res/raw/adhan_<id>.ogg` (Vorbis q2 mono) and `assets/audio/adhan_<id>.m4a` (AAC 48 kbit/s mono), full length, nothing cut or added.
+
+| App id | Title on the site | audioid | Download URL | Original SHA-256 |
+|---|---|---|---|---|
+| `mulla` | أذان الحرم المكي 3 - علي بن أحمد ملا | 3 | https://audio.islamweb.net/audio/downloadmp3.php?audioid=3 | d2aad7b357c0b83c968ceb450c02624febb6c1a7272ce681aa22d88de497d3f4 |
+| `makkah` | أذان - مكة المكرمة | 122647 | https://audio.islamweb.net/audio/downloadmp3.php?audioid=122647 | 4ab22d15fcea1a70f636b50f21e3f82597fa583ec2a21065373b3bde87482647 |
+| `bukhari` | الحرم المدني 1 - عصام البخارى | 5 | https://audio.islamweb.net/audio/downloadmp3.php?audioid=5 | d4085827cd4cd0d51b4b598af9ac4905191b0e90429d689265293b47420a79ad |
+| `mismail` | أذان - مصطفى إسماعيل | 176760 | https://audio.islamweb.net/audio/downloadmp3.php?audioid=176760 | 06e6376fb4243d8553892d33492ac70239489e5bbf797e43250d2c96176178fa |
+| `banna` | أذان القاهرة - محمود علي البنا | 122666 | https://audio.islamweb.net/audio/downloadmp3.php?audioid=122666 | 66f89f1852b33974fb33ae9640c9aa4768d409d1dec57f8ecd82edc320fa8d23 |
+| `rifaat` | أذان القاهرة - محمد رفعت | 122665 | https://audio.islamweb.net/audio/downloadmp3.php?audioid=122665 | 39964e1b6df88cfc30e66ca18cbc8efe5829fbf82d24210ebddc3d435eebd96c |
+| `daghriri_fajr` | آذان الفجر الأول من المسجد الحرام للشيخ حمد الدغريري (Fajr) | 489488 | https://audio.islamweb.net/audio/downloadmp3.php?audioid=489488 | c2a824f3b0e8a2b77104c9e4a24f2b4229bb361ae202ebd853ee8362e044ae22 |
+| `afasy_fajr` | أذان الفجر1 الشيخ مشاري بن راشد العفاسي (Fajr) | 206932 | https://audio.islamweb.net/audio/downloadmp3.php?audioid=206932 | e025f8cf040e6490edc3aef1dc13b5883339b6b9481092b4bed00b7b54087d5a |
+
+Defaults since 1.0.8: `mulla` for the five prayers and `daghriri_fajr` for Fajr. The Commons recordings above stay available.

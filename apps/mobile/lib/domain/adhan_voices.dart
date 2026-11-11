@@ -60,6 +60,73 @@ class AdhanVoice {
 }
 
 const bundledAdhanVoices = <AdhanVoice>[
+  // The owner's picks (2026-11-11). Sources are kept in ADHAN_AUDIO.md only,
+  // never shown in the app, so these have no [credit].
+  AdhanVoice(
+    id: 'mulla',
+    nameAr: 'الشيخ علي بن أحمد ملا',
+    nameEn: 'Sheikh Ali Ahmed Mulla',
+    place: 'المسجد الحرام، مكة المكرمة',
+    raw: 'adhan_mulla',
+    asset: 'assets/audio/adhan_mulla.m4a',
+  ),
+  AdhanVoice(
+    id: 'makkah',
+    nameAr: 'أذان مكة المكرمة',
+    nameEn: 'Adhan of Makkah',
+    place: 'مكة المكرمة',
+    raw: 'adhan_makkah',
+    asset: 'assets/audio/adhan_makkah.m4a',
+  ),
+  AdhanVoice(
+    id: 'bukhari',
+    nameAr: 'الشيخ عصام بخاري',
+    nameEn: 'Sheikh Essam Bukhari',
+    place: 'المسجد النبوي، المدينة المنورة',
+    raw: 'adhan_bukhari',
+    asset: 'assets/audio/adhan_bukhari.m4a',
+  ),
+  AdhanVoice(
+    id: 'mismail',
+    nameAr: 'الشيخ مصطفى إسماعيل',
+    nameEn: 'Sheikh Mustafa Ismail',
+    place: 'مصر',
+    raw: 'adhan_mismail',
+    asset: 'assets/audio/adhan_mismail.m4a',
+  ),
+  AdhanVoice(
+    id: 'banna',
+    nameAr: 'الشيخ محمود علي البنا',
+    nameEn: 'Sheikh Mahmoud Ali Al-Banna',
+    place: 'القاهرة',
+    raw: 'adhan_banna',
+    asset: 'assets/audio/adhan_banna.m4a',
+  ),
+  AdhanVoice(
+    id: 'rifaat',
+    nameAr: 'الشيخ محمد رفعت',
+    nameEn: 'Sheikh Muhammad Rifaat',
+    place: 'القاهرة',
+    raw: 'adhan_rifaat',
+    asset: 'assets/audio/adhan_rifaat.m4a',
+  ),
+  AdhanVoice(
+    id: 'daghriri_fajr',
+    nameAr: 'أذان الفجر: الشيخ حمد الدغريري',
+    nameEn: 'Fajr adhan: Sheikh Hamad Al-Daghriri',
+    place: 'المسجد الحرام، مكة المكرمة',
+    fajr: true,
+    raw: 'adhan_daghriri_fajr',
+    asset: 'assets/audio/adhan_daghriri_fajr.m4a',
+  ),
+  AdhanVoice(
+    id: 'afasy_fajr',
+    nameAr: 'أذان الفجر: الشيخ مشاري راشد العفاسي',
+    nameEn: 'Fajr adhan: Sheikh Mishary Alafasy',
+    fajr: true,
+    raw: 'adhan_afasy_fajr',
+    asset: 'assets/audio/adhan_afasy_fajr.m4a',
+  ),
   AdhanVoice(
     id: 'haram',
     nameAr: 'أذان المسجد الحرام بمكة المكرمة',
@@ -114,8 +181,8 @@ const bundledAdhanVoices = <AdhanVoice>[
   ),
 ];
 
-const defaultAdhanVoice = 'haram';
-const defaultFajrVoice = 'haram_fajr';
+const defaultAdhanVoice = 'mulla';
+const defaultFajrVoice = 'daghriri_fajr';
 
 /// Whether [id] names a bundled voice or a recording of the collection.
 /// Only the bundled, openly licensed recordings are valid now (the earlier
