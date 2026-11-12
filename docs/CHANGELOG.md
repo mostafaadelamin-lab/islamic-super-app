@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.11] — Al-Sha'rawi audio tafsir — 2026-11-12
+### Added
+- "تفسير الشعراوي" under More (app on Android and iOS, and the website): Sheikh Muhammad Mutawalli al-Sha'rawi's reflections on the Quran in his own voice, 1116 lessons (about 667 hours) ordered by surah, each labelled with the ayahs it explains. Search by surah name or number; listen online, or download any lesson for offline listening (about 7 MB each). The audio is not bundled in the app. The recordings cover the surahs the sheikh recorded (1–60, 78–89, 96, 100–114).
+
 ## [1.0.10] — Adhkar audio, hadith icon, home-screen widget, tashkeel — 2026-11-12
 ### Changed
 - Dhikr listening: a player bar (play/pause, position, stop) appears while a dhikr plays; the recording stops at its end, when moving to another dhikr, and when leaving the screen.
