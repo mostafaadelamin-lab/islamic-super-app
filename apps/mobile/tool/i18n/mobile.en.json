@@ -662,5 +662,9 @@
   "hadith.explain": "Simplified explanation",
   "hadith.benefits": "Lessons from the hadith",
   "hadith.grade": "Grade: {grade}",
-  "hadith.explainSource": "The explanation is quoted word for word from a published hadith encyclopedia, not written by the app."
+  "hadith.explainSource": "The explanation is quoted word for word from a published hadith encyclopedia, not written by the app.",
+  "dhikr.hadith": "The hadith",
+  "dhikr.hadithText": "The hadith about this dhikr",
+  "dhikr.hadithFadl": "Its virtue",
+  "dhikr.hadithSource": "Where it is reported"
 }

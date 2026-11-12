@@ -624,6 +624,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactThanks => 'وصلت رسالتك، جزاك الله خيرًا.';
 
   @override
+  String get dhikrHadith => 'الحديث';
+
+  @override
+  String get dhikrHadithFadl => 'فضله';
+
+  @override
+  String get dhikrHadithSource => 'التخريج';
+
+  @override
+  String get dhikrHadithText => 'الحديث الوارد في هذا الذكر';
+
+  @override
   String get dhikrListen => 'استمع لهذا الذكر';
 
   @override

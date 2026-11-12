@@ -7,7 +7,6 @@
 // counts, e.g. "( ثلاث مرات )" or "(مائة مرة إذا أصبح )".
 // test/unit/adhkar_test.dart re-derives every count and session from that
 // chapter's text, so this table cannot drift from the source.
-// Religious review of the selection and counts is still pending.
 
 enum AdhkarSession { morning, evening }
 
@@ -134,10 +133,13 @@ class AdhkarContent {
 /// Arabic count phrases used in hisn.json, and the number each one means.
 const hisnCountPhrases = <String, int>{'ثلاث مرات': 3, 'أربع مرات': 4, 'سبع مرات': 7, 'عشر مرات': 10, 'مائة مرة': 100};
 
-/// The repetition count stated in a Hisn text, or 1 when none is stated.
+final _marks = RegExp('[\u064B-\u0652\u0670\u0640]');
+
+/// The repetition count stated in a Hisn text (diacritics ignored), or 1 when none is stated.
 int countStatedIn(String hisnText) {
+  final bare = hisnText.replaceAll(_marks, '');
   for (final e in hisnCountPhrases.entries) {
-    if (hisnText.contains(e.key)) return e.value;
+    if (bare.contains(e.key)) return e.value;
   }
   return 1;
 }

@@ -43,8 +43,14 @@ class DhikrAudioMap {
 /// One shared player for dhikr recordings: starting one stops the previous.
 abstract class UrlAudio {
   Future<void> play(String url);
+  Future<void> pause();
+  Future<void> resume();
+  Future<void> seek(Duration d);
   Future<void> stop();
   Stream<bool> get playing;
+  Stream<bool> get completed;
+  Stream<Duration> get position;
+  Stream<Duration?> get duration;
 }
 
 class JustAudioUrl implements UrlAudio {
@@ -56,15 +62,29 @@ class JustAudioUrl implements UrlAudio {
   }
 
   @override
+  Future<void> pause() => _p.pause();
+  @override
+  Future<void> resume() async => unawaited(_p.play());
+  @override
+  Future<void> seek(Duration d) => _p.seek(d);
+  @override
   Future<void> stop() => _p.stop();
   @override
   Stream<bool> get playing =>
       _p.playerStateStream.map((s) => s.playing && s.processingState != ProcessingState.completed);
+  @override
+  Stream<bool> get completed => _p.processingStateStream.map((s) => s == ProcessingState.completed);
+  @override
+  Stream<Duration> get position => _p.positionStream;
+  @override
+  Stream<Duration?> get duration => _p.durationStream;
 }
 
 @visibleForTesting
 UrlAudio Function()? debugUrlAudioFactory;
 
+/// The dhikr recording now loaded: plays once to the end (never loops), can be
+/// paused, resumed, sought and stopped from [DhikrPlayerBar].
 class DhikrPlayer extends ChangeNotifier {
   DhikrPlayer._();
   static final instance = DhikrPlayer._();
@@ -74,6 +94,11 @@ class DhikrPlayer extends ChangeNotifier {
   bool playing = false;
   bool loading = false;
   bool failed = false;
+  Duration position = Duration.zero;
+  Duration? duration;
+
+  /// A recording is loaded (playing or paused): the bar is shown.
+  bool get active => url != null && !failed;
 
   UrlAudio get _a {
     if (_audio == null) {
@@ -83,20 +108,31 @@ class DhikrPlayer extends ChangeNotifier {
         if (p) loading = false;
         notifyListeners();
       });
+      _audio!.completed.listen((done) {
+        if (done) unawaited(stop());
+      });
+      _audio!.position.listen((p) {
+        position = p;
+        notifyListeners();
+      });
+      _audio!.duration.listen((d) {
+        duration = d;
+        notifyListeners();
+      });
     }
     return _audio!;
   }
 
   Future<void> toggle(String u) async {
     if (url == u && (playing || loading)) {
-      loading = false;
-      await _a.stop();
-      notifyListeners();
+      await stop();
       return;
     }
     url = u;
     loading = true;
     failed = false;
+    position = Duration.zero;
+    duration = null;
     notifyListeners();
     try {
       await _a.play(u);
@@ -108,11 +144,95 @@ class DhikrPlayer extends ChangeNotifier {
     }
   }
 
-  Future<void> stop() async {
+  Future<void> pause() async {
     if (_audio == null) return;
+    await _a.pause();
+  }
+
+  Future<void> resume() async {
+    if (_audio == null || url == null) return;
+    await _a.resume();
+  }
+
+  Future<void> seek(Duration d) async {
+    if (_audio == null) return;
+    await _a.seek(d);
+  }
+
+  /// Stops and unloads; the bar disappears.
+  Future<void> stop() async {
+    final had = url != null;
+    url = null;
     loading = false;
-    await _a.stop();
-    notifyListeners();
+    playing = false;
+    position = Duration.zero;
+    duration = null;
+    if (_audio != null) await _a.stop();
+    if (had) notifyListeners();
+  }
+}
+
+/// Play/pause, progress and stop for the dhikr recording (shown while one is loaded).
+class DhikrPlayerBar extends StatelessWidget {
+  const DhikrPlayerBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final p = DhikrPlayer.instance;
+    return ListenableBuilder(
+      listenable: p,
+      builder: (context, _) {
+        if (!p.active) return const SizedBox.shrink();
+        final l = context.l10n;
+        final theme = Theme.of(context);
+        final scheme = theme.colorScheme;
+        final total = p.duration;
+        String fmt(Duration d) => context.numLtr('${d.inMinutes}:${(d.inSeconds % 60).toString().padLeft(2, '0')}');
+        return Material(
+          key: const Key('dhikrPlayerBar'),
+          color: scheme.surfaceContainer,
+          child: SafeArea(
+            top: false,
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(top: BorderSide(color: scheme.outline)),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                children: [
+                  IconButton.filled(
+                    key: const Key('dhikrPlayerToggle'),
+                    tooltip: p.playing ? l.storiesPause : l.storiesPlay,
+                    icon: p.loading && !p.playing
+                        ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                        : RIcon(p.playing ? RIcons.pause : RIcons.play),
+                    onPressed: () => p.playing ? p.pause() : p.resume(),
+                  ),
+                  Text(fmt(p.position), style: theme.textTheme.bodySmall),
+                  Expanded(
+                    child: Slider(
+                      key: const Key('dhikrPlayerSlider'),
+                      value: total == null || total.inMilliseconds == 0
+                          ? 0
+                          : p.position.inMilliseconds.clamp(0, total.inMilliseconds).toDouble(),
+                      max: total == null || total.inMilliseconds == 0 ? 1 : total.inMilliseconds.toDouble(),
+                      onChanged: total == null ? null : (v) => p.seek(Duration(milliseconds: v.round())),
+                    ),
+                  ),
+                  if (total != null) Text(fmt(total), style: theme.textTheme.bodySmall),
+                  IconButton(
+                    key: const Key('dhikrPlayerStop'),
+                    tooltip: l.storiesStop,
+                    icon: const RIcon(RIcons.stop),
+                    onPressed: p.stop,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -165,4 +285,24 @@ class DhikrAudioUrl extends StatelessWidget {
       return u == null ? const SizedBox.shrink() : builder(context, u);
     },
   );
+}
+
+/// Stops the dhikr recording when the screen holding [child] closes.
+class StopDhikrAudioOnExit extends StatefulWidget {
+  const StopDhikrAudioOnExit({super.key, required this.child});
+  final Widget child;
+
+  @override
+  State<StopDhikrAudioOnExit> createState() => _StopDhikrAudioOnExitState();
+}
+
+class _StopDhikrAudioOnExitState extends State<StopDhikrAudioOnExit> {
+  @override
+  void dispose() {
+    unawaited(DhikrPlayer.instance.stop());
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
 }

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.10] — Adhkar audio, hadith icon, home-screen widget, tashkeel — 2026-11-12
+### Changed
+- Dhikr listening: a player bar (play/pause, position, stop) appears while a dhikr plays; the recording stops at its end, when moving to another dhikr, and when leaving the screen.
+- A "الحديث" icon under each dhikr (all 34 morning/evening adhkar, 106 Hisn al-Muslim items) shows the hadith it comes from, its virtue and where it is reported.
+- Home-screen widget (Android): Hijri date, clock, next prayer and a countdown ring. iOS widget code is in ios/PrayerWidget and needs a one-time Xcode target (see its README).
+- Tashkeel of all adhkar and Hisn al-Muslim texts completed and corrected from the fully vowelled Hisn al-Muslim text (tools/hisn_tashkeel.py; every changed word is listed in content/adhkar/tashkeel-changes-2026-11-12.tsv). Tanween al-fath is written on the letter before the alif (رَبًّا، دِينًا), as the owner asked.
+
 ## [1.0.9] — Final feedback round before release (owner's list) — 2026-11-11
 ### Changed
 - Settings rebuilt: language, prayer times auto/manual, location auto/manual, rate, share, FAQ, contact us (a form, no phone or email shown), our apps, about. The account & sync section and the theme/font/translation entries were removed.

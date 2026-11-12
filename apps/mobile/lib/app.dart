@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'app_services.dart';
+import 'data/home_widget_sync.dart';
 import 'l10n/app_localizations.dart';
 import 'theme/app_theme.dart';
 import 'ui/home_shell.dart';
@@ -28,7 +29,10 @@ class _RattilAppState extends State<RattilApp> with WidgetsBindingObserver {
     // Renew the next days of adhan notifications on every start (once the
     // downloaded muezzin recordings are known).
     unawaited(services.adhanVoices.init().whenComplete(() => services.adhan.sync(force: true)));
+    unawaited(_widget.sync(force: true));
   }
+
+  late final _widget = HomeWidgetSync(widget.services);
 
   @override
   void dispose() {
@@ -40,10 +44,16 @@ class _RattilAppState extends State<RattilApp> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) unawaited(services.adhan.sync());
+    if (state == AppLifecycleState.resumed) {
+      unawaited(services.adhan.sync());
+      unawaited(_widget.sync());
+    }
   }
 
-  void _syncAdhan() => unawaited(services.adhan.sync());
+  void _syncAdhan() {
+    unawaited(services.adhan.sync());
+    unawaited(_widget.sync());
+  }
 
   @override
   Widget build(BuildContext context) {

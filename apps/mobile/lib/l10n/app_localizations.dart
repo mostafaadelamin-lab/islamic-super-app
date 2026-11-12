@@ -1172,6 +1172,30 @@ abstract class AppLocalizations {
   /// **'Your message was sent. Thank you!'**
   String get contactThanks;
 
+  /// shared key "dhikr.hadith"
+  ///
+  /// In en, this message translates to:
+  /// **'The hadith'**
+  String get dhikrHadith;
+
+  /// shared key "dhikr.hadithFadl"
+  ///
+  /// In en, this message translates to:
+  /// **'Its virtue'**
+  String get dhikrHadithFadl;
+
+  /// shared key "dhikr.hadithSource"
+  ///
+  /// In en, this message translates to:
+  /// **'Where it is reported'**
+  String get dhikrHadithSource;
+
+  /// shared key "dhikr.hadithText"
+  ///
+  /// In en, this message translates to:
+  /// **'The hadith about this dhikr'**
+  String get dhikrHadithText;
+
   /// shared key "dhikr.listen"
   ///
   /// In en, this message translates to:

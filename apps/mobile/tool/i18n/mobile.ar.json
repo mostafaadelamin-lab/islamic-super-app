@@ -662,5 +662,9 @@
   "hadith.explain": "الشرح المبسّط",
   "hadith.benefits": "من فوائد الحديث",
   "hadith.grade": "الدرجة: {grade}",
-  "hadith.explainSource": "الشرح منقول بنصّه من موسوعة حديثية منشورة، وليس من كتابة التطبيق."
+  "hadith.explainSource": "الشرح منقول بنصّه من موسوعة حديثية منشورة، وليس من كتابة التطبيق.",
+  "dhikr.hadith": "الحديث",
+  "dhikr.hadithText": "الحديث الوارد في هذا الذكر",
+  "dhikr.hadithFadl": "فضله",
+  "dhikr.hadithSource": "التخريج"
 }

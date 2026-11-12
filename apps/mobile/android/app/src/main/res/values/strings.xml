@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Rattil</string>
+    <string name="prayer_widget_description">Hijri date, time and the next prayer</string>
 </resources>

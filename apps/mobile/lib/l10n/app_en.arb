@@ -898,6 +898,22 @@
   "@contactThanks": {
     "description": "shared key \"contact.thanks\""
   },
+  "dhikrHadith": "The hadith",
+  "@dhikrHadith": {
+    "description": "shared key \"dhikr.hadith\""
+  },
+  "dhikrHadithFadl": "Its virtue",
+  "@dhikrHadithFadl": {
+    "description": "shared key \"dhikr.hadithFadl\""
+  },
+  "dhikrHadithSource": "Where it is reported",
+  "@dhikrHadithSource": {
+    "description": "shared key \"dhikr.hadithSource\""
+  },
+  "dhikrHadithText": "The hadith about this dhikr",
+  "@dhikrHadithText": {
+    "description": "shared key \"dhikr.hadithText\""
+  },
   "dhikrListen": "Listen to this dhikr",
   "@dhikrListen": {
     "description": "shared key \"dhikr.listen\""

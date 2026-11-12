@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -6,6 +8,7 @@ import '../domain/adhkar.dart';
 import '../domain/nasheeds.dart';
 import '../theme/design_tokens.dart';
 import 'dhikr_audio.dart';
+import 'dhikr_hadith.dart';
 import 'dhikr_tools.dart';
 import 'hisn_screen.dart';
 import 'l10n_ext.dart';
@@ -146,140 +149,158 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final s = context.services;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle),
-        actions: [
-          const AdhkarViewToggle(),
-          IconButton(
-            key: const Key('adhkarReminders'),
-            tooltip: l.adhkarReminders,
-            icon: const RIcon(RIcons.alarm),
-            onPressed: () => showModalBottomSheet<void>(context: context, builder: (_) => const AdhkarRemindersSheet()),
-          ),
-          IconButton(
-            key: const Key('adhkarReset'),
-            tooltip: l.adhkarReset,
-            icon: const RIcon(RIcons.reset),
-            onPressed: () => s.adhkar.reset(session),
-          ),
-        ],
-      ),
-      body: ReadableWidth(
-        child: ListenableBuilder(
-          listenable: Listenable.merge([s.adhkar, s.settings]),
-          builder: (context, _) {
-            final p = s.adhkar.progress(session);
-            final header = <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceSm, DesignTokens.spaceLg, 0),
-                child: SegmentedButton<AdhkarSession>(
-                  key: const Key('adhkarSession'),
-                  segments: [
-                    ButtonSegment(
-                      value: AdhkarSession.morning,
-                      icon: const RIcon(RIcons.sunHigh),
-                      label: Text(l.adhkarMorning),
-                    ),
-                    ButtonSegment(
-                      value: AdhkarSession.evening,
-                      icon: const RIcon(RIcons.moon),
-                      label: Text(l.adhkarEvening),
-                    ),
-                  ],
-                  selected: {session},
-                  onSelectionChanged: (v) => setState(() {
-                    _session = v.single;
-                    _at = 0;
-                  }),
+    return StopDhikrAudioOnExit(
+      child: Scaffold(
+        bottomNavigationBar: const DhikrPlayerBar(),
+        appBar: AppBar(
+          title: Text(session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle),
+          actions: [
+            const AdhkarViewToggle(),
+            IconButton(
+              key: const Key('adhkarReminders'),
+              tooltip: l.adhkarReminders,
+              icon: const RIcon(RIcons.alarm),
+              onPressed: () =>
+                  showModalBottomSheet<void>(context: context, builder: (_) => const AdhkarRemindersSheet()),
+            ),
+            IconButton(
+              key: const Key('adhkarReset'),
+              tooltip: l.adhkarReset,
+              icon: const RIcon(RIcons.reset),
+              onPressed: () => s.adhkar.reset(session),
+            ),
+          ],
+        ),
+        body: ReadableWidth(
+          child: ListenableBuilder(
+            listenable: Listenable.merge([s.adhkar, s.settings]),
+            builder: (context, _) {
+              final p = s.adhkar.progress(session);
+              final header = <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    DesignTokens.spaceLg,
+                    DesignTokens.spaceSm,
+                    DesignTokens.spaceLg,
+                    0,
+                  ),
+                  child: SegmentedButton<AdhkarSession>(
+                    key: const Key('adhkarSession'),
+                    segments: [
+                      ButtonSegment(
+                        value: AdhkarSession.morning,
+                        icon: const RIcon(RIcons.sunHigh),
+                        label: Text(l.adhkarMorning),
+                      ),
+                      ButtonSegment(
+                        value: AdhkarSession.evening,
+                        icon: const RIcon(RIcons.moon),
+                        label: Text(l.adhkarEvening),
+                      ),
+                    ],
+                    selected: {session},
+                    onSelectionChanged: (v) => setState(() {
+                      _session = v.single;
+                      _at = 0;
+                    }),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    DesignTokens.spaceLg,
+                    DesignTokens.spaceMd,
+                    DesignTokens.spaceLg,
+                    0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: DesignTokens.spaceXs),
+                      Text(
+                        l.adhkarProgress(context.num(p.completedItems), context.num(p.items.length)),
+                        key: const Key('adhkarProgress'),
+                      ),
+                      const SizedBox(height: DesignTokens.spaceXs),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
+                        child: LinearProgressIndicator(value: p.fraction, minHeight: 6),
+                      ),
+                      const SizedBox(height: DesignTokens.spaceXs),
+                      Text(l.adhkarTapToCount, style: Theme.of(context).textTheme.bodySmall),
+                    ],
+                  ),
+                ),
+              ];
+              if (s.settings.adhkarCards) {
+                // One dhikr per page (owner's choice, 2026-11-11): a bar with the overall progress on
+                // top, the dhikr, "listen to this dhikr", and a big counter that moves on when complete.
+                final n = p.items.length;
+                final pct = (p.fraction * 100).round();
+                return Column(
                   children: [
-                    Text(
-                      session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(height: DesignTokens.spaceXs),
-                    Text(
-                      l.adhkarProgress(context.num(p.completedItems), context.num(p.items.length)),
-                      key: const Key('adhkarProgress'),
-                    ),
-                    const SizedBox(height: DesignTokens.spaceXs),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
-                      child: LinearProgressIndicator(value: p.fraction, minHeight: 6),
-                    ),
-                    const SizedBox(height: DesignTokens.spaceXs),
-                    Text(l.adhkarTapToCount, style: Theme.of(context).textTheme.bodySmall),
-                  ],
-                ),
-              ),
-            ];
-            if (s.settings.adhkarCards) {
-              // One dhikr per page (owner's choice, 2026-11-11): a bar with the overall progress on
-              // top, the dhikr, "listen to this dhikr", and a big counter that moves on when complete.
-              final n = p.items.length;
-              final pct = (p.fraction * 100).round();
-              return Column(
-                children: [
-                  header.first,
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      DesignTokens.spaceLg,
-                      DesignTokens.spaceMd,
-                      DesignTokens.spaceLg,
-                      0,
-                    ),
-                    child: Column(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
-                          child: LinearProgressIndicator(
-                            key: const Key('adhkarTopBar'),
-                            value: p.fraction,
-                            minHeight: 10,
-                          ),
-                        ),
-                        const SizedBox(height: DesignTokens.spaceXs),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                l.adhkarItemOf(context.num(_at.clamp(0, n - 1) + 1), context.num(n)),
-                                key: const Key('adhkarItemOf'),
-                              ),
+                    header.first,
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        DesignTokens.spaceLg,
+                        DesignTokens.spaceMd,
+                        DesignTokens.spaceLg,
+                        0,
+                      ),
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
+                            child: LinearProgressIndicator(
+                              key: const Key('adhkarTopBar'),
+                              value: p.fraction,
+                              minHeight: 10,
                             ),
-                            Text(l.adhkarPercentDone(context.num(pct)), key: const Key('adhkarProgress')),
-                          ],
-                        ),
-                      ],
+                          ),
+                          const SizedBox(height: DesignTokens.spaceXs),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  l.adhkarItemOf(context.num(_at.clamp(0, n - 1) + 1), context.num(n)),
+                                  key: const Key('adhkarItemOf'),
+                                ),
+                              ),
+                              Text(l.adhkarPercentDone(context.num(pct)), key: const Key('adhkarProgress')),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: CardPager(
-                      resetKey: session,
-                      count: n,
-                      isDone: (i) => p.isDone(p.items[i]),
-                      onIndex: (i) => setState(() => _at = i),
-                      builder: (context, i) => _DhikrCard(dhikr: p.items[i], session: session, progress: p, big: true),
+                    Expanded(
+                      child: CardPager(
+                        resetKey: session,
+                        count: n,
+                        isDone: (i) => p.isDone(p.items[i]),
+                        onIndex: (i) {
+                          unawaited(DhikrPlayer.instance.stop());
+                          setState(() => _at = i);
+                        },
+                        builder: (context, i) =>
+                            _DhikrCard(dhikr: p.items[i], session: session, progress: p, big: true),
+                      ),
                     ),
-                  ),
+                  ],
+                );
+              }
+              return ListView(
+                key: const Key('adhkarList'),
+                padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+                children: [
+                  ...header,
+                  for (final d in p.items) _DhikrCard(dhikr: d, session: session, progress: p),
                 ],
               );
-            }
-            return ListView(
-              key: const Key('adhkarList'),
-              padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-              children: [
-                ...header,
-                for (final d in p.items) _DhikrCard(dhikr: d, session: session, progress: p),
-              ],
-            );
-          },
+            },
+          ),
         ),
       ),
     );
@@ -402,6 +423,7 @@ class _DhikrCard extends StatelessWidget {
               return Wrap(
                 alignment: WrapAlignment.end,
                 children: [
+                  DhikrHadithButton(key: Key('dhikrHadith-${dhikr.index}'), pick: (m) => m.forDhikr(dhikr.index)),
                   CopyButton(text: dhikr.text, buttonKey: Key('dhikrCopy-${dhikr.index}')),
                   DhikrActions(
                     text: dhikr.text,

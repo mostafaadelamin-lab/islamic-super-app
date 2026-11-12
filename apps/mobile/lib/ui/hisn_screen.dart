@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,6 +9,7 @@ import '../l10n/app_localizations.dart';
 import '../theme/design_tokens.dart';
 import 'adhkar_screen.dart';
 import 'dhikr_audio.dart';
+import 'dhikr_hadith.dart';
 import 'dhikr_tools.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
@@ -135,6 +138,7 @@ class HisnChapterScreen extends StatelessWidget {
             Wrap(
               alignment: WrapAlignment.end,
               children: [
+                DhikrHadithButton(key: Key('hisnHadith-$i'), pick: (m) => m.forHisn(chapter.index, i)),
                 CopyButton(text: chapter.items[i]),
                 DhikrActions(
                   text: chapter.items[i],
@@ -153,27 +157,34 @@ class HisnChapterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settings = context.services.settings;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(chapter.title, textDirection: TextDirection.rtl),
-        actions: const [AdhkarViewToggle()],
-      ),
-      body: ReadableWidth(
-        child: ListenableBuilder(
-          listenable: settings,
-          builder: (context, _) => settings.adhkarCards
-              ? Column(
-                  children: [
-                    Expanded(
-                      child: CardPager(count: chapter.items.length, builder: _item),
-                    ),
-                  ],
-                )
-              : ListView(
-                  key: const Key('hisnChapter'),
-                  padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-                  children: [for (var i = 0; i < chapter.items.length; i++) _item(context, i)],
-                ),
+    return StopDhikrAudioOnExit(
+      child: Scaffold(
+        bottomNavigationBar: const DhikrPlayerBar(),
+        appBar: AppBar(
+          title: Text(chapter.title, textDirection: TextDirection.rtl),
+          actions: const [AdhkarViewToggle()],
+        ),
+        body: ReadableWidth(
+          child: ListenableBuilder(
+            listenable: settings,
+            builder: (context, _) => settings.adhkarCards
+                ? Column(
+                    children: [
+                      Expanded(
+                        child: CardPager(
+                          count: chapter.items.length,
+                          builder: _item,
+                          onIndex: (_) => unawaited(DhikrPlayer.instance.stop()),
+                        ),
+                      ),
+                    ],
+                  )
+                : ListView(
+                    key: const Key('hisnChapter'),
+                    padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+                    children: [for (var i = 0; i < chapter.items.length; i++) _item(context, i)],
+                  ),
+          ),
         ),
       ),
     );

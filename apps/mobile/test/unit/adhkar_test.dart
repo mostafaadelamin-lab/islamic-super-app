@@ -90,6 +90,7 @@ void main() {
   test('countStatedIn reads the Arabic count phrases', () {
     expect(countStatedIn('... ( ثلاث مرات )'), 3);
     expect(countStatedIn('(مائة مرة إذا أصبح )'), 100);
+    expect(countStatedIn('(ثلاثَ مرَّاتٍ)'), 3);
     expect(countStatedIn('بلا عدد'), 1);
   });
 

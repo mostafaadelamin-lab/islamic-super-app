@@ -91,3 +91,11 @@ None of these source names are shown in the app (owner's rule).
 | Prophets' stories videos | Sheikh Nabil Al-Awadi's lessons channel, playlist PLx0cDxpWtpY_65w9G0_SEA5TF3jhq_QaF | YouTube embed |
 | Abdul Basit adhan / Fajr adhan | audio.islamweb.net audioid 88633 and 404627 | see apps/mobile/assets/audio/ADHAN_AUDIO.md |
 | Reel channel suggestions | 21 verified YouTube channel ids, `assets/content/reel-suggestions.v1.json` | |
+
+## Adhkar hadith links and tashkeel (v1.0.10, 2026-11-12)
+
+| What | Source | Notes |
+|---|---|---|
+| Hadith, virtue and reference per morning/evening dhikr | Seen-Arabic/Morning-And-Evening-Adhkar-DB `ar.json`, commit 29d7623fede52eca835a789025dfda866e8cfe44 (`content/adhkar/seen-adhkar-ar.json`) | MIT; quoted verbatim; built by `tools/adhkar_hadith.py` |
+| Hadith per Hisn al-Muslim item | HadeethEnc entries (`content/hadith/hadeethenc-ar.json`) matched to the dhikr text (4-gram overlap >= 0.6) | quoted verbatim: hadith text, attribution and grade |
+| Tashkeel reference for adhkar and Hisn al-Muslim | the fully vowelled Hisn al-Muslim text (Sa'id ibn Wahf al-Qahtani) from the hisnmuslim.com API (`content/adhkar/hisnmuslim-audio-source.json`) | `tools/hisn_tashkeel.py` changes marks only, never letters; 266/298 Hisn items and 32/34 adhkar matched; intro and virtue prose with no counterpart keep their text. Change list: `content/adhkar/tashkeel-changes-2026-11-12.tsv` |

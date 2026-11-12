@@ -627,6 +627,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactThanks => 'Your message was sent. Thank you!';
 
   @override
+  String get dhikrHadith => 'The hadith';
+
+  @override
+  String get dhikrHadithFadl => 'Its virtue';
+
+  @override
+  String get dhikrHadithSource => 'Where it is reported';
+
+  @override
+  String get dhikrHadithText => 'The hadith about this dhikr';
+
+  @override
   String get dhikrListen => 'Listen to this dhikr';
 
   @override
