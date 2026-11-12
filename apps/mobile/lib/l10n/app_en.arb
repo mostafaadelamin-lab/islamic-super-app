@@ -3120,6 +3120,83 @@
   "@settingsThemeSystem": {
     "description": "shared key \"settings.themeSystem\""
   },
+  "sharawiAyah": "Ayah {n}",
+  "@sharawiAyah": {
+    "description": "shared key \"sharawi.ayah\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "sharawiAyahs": "Ayahs {from}–{to}",
+  "@sharawiAyahs": {
+    "description": "shared key \"sharawi.ayahs\"",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "sharawiIntro": "Introduction",
+  "@sharawiIntro": {
+    "description": "shared key \"sharawi.intro\""
+  },
+  "sharawiLesson": "Lesson {n}",
+  "@sharawiLesson": {
+    "description": "shared key \"sharawi.lesson\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "sharawiLessons": "{n} lessons",
+  "@sharawiLessons": {
+    "description": "shared key \"sharawi.lessons\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "sharawiLoadError": "Couldn't load the tafsir lessons.",
+  "@sharawiLoadError": {
+    "description": "shared key \"sharawi.loadError\""
+  },
+  "sharawiMinutes": "{n} min",
+  "@sharawiMinutes": {
+    "description": "shared key \"sharawi.minutes\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "sharawiNoMatch": "No lessons for this surah.",
+  "@sharawiNoMatch": {
+    "description": "shared key \"sharawi.noMatch\""
+  },
+  "sharawiNote": "Sheikh Muhammad Mutawalli al-Sha'rawi's reflections on the Quran in his own voice, {n} lessons ordered by surah. Listen to any lesson online, or tap the download icon to keep it for offline listening.",
+  "@sharawiNote": {
+    "description": "shared key \"sharawi.note\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "sharawiSearch": "Find a surah by name or number",
+  "@sharawiSearch": {
+    "description": "shared key \"sharawi.search\""
+  },
+  "sharawiTitle": "Al-Sha'rawi tafsir",
+  "@sharawiTitle": {
+    "description": "shared key \"sharawi.title\""
+  },
   "shortcutAdhkar": "Adhkar",
   "@shortcutAdhkar": {
     "description": "shared key \"shortcut.adhkar\""

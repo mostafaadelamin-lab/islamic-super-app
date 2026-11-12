@@ -666,5 +666,16 @@
   "dhikr.hadith": "الحديث",
   "dhikr.hadithText": "الحديث الوارد في هذا الذكر",
   "dhikr.hadithFadl": "فضله",
-  "dhikr.hadithSource": "التخريج"
+  "dhikr.hadithSource": "التخريج",
+  "sharawi.title": "تفسير الشعراوي",
+  "sharawi.note": "خواطر الشيخ محمد متولي الشعراوي في تفسير القرآن الكريم بصوته، {n} درسًا مرتبة حسب السور. استمع لأي درس مباشرة، أو اضغط أيقونة التحميل لتسمعه بدون إنترنت.",
+  "sharawi.search": "ابحث باسم السورة أو رقمها",
+  "sharawi.loadError": "تعذّر تحميل قائمة دروس التفسير.",
+  "sharawi.noMatch": "لا توجد دروس لهذه السورة.",
+  "sharawi.intro": "المقدمة",
+  "sharawi.lessons": "{n} درس",
+  "sharawi.lesson": "الدرس {n}",
+  "sharawi.ayah": "الآية {n}",
+  "sharawi.ayahs": "الآيات {from}–{to}",
+  "sharawi.minutes": "{n} دقيقة"
 }

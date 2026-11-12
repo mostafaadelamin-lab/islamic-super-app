@@ -2113,6 +2113,51 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsThemeSystem => 'حسب الجهاز';
 
   @override
+  String sharawiAyah(String n) {
+    return 'الآية $n';
+  }
+
+  @override
+  String sharawiAyahs(String from, String to) {
+    return 'الآيات $from–$to';
+  }
+
+  @override
+  String get sharawiIntro => 'المقدمة';
+
+  @override
+  String sharawiLesson(String n) {
+    return 'الدرس $n';
+  }
+
+  @override
+  String sharawiLessons(String n) {
+    return '$n درس';
+  }
+
+  @override
+  String get sharawiLoadError => 'تعذّر تحميل قائمة دروس التفسير.';
+
+  @override
+  String sharawiMinutes(String n) {
+    return '$n دقيقة';
+  }
+
+  @override
+  String get sharawiNoMatch => 'لا توجد دروس لهذه السورة.';
+
+  @override
+  String sharawiNote(String n) {
+    return 'خواطر الشيخ محمد متولي الشعراوي في تفسير القرآن الكريم بصوته، $n درسًا مرتبة حسب السور. استمع لأي درس مباشرة، أو اضغط أيقونة التحميل لتسمعه بدون إنترنت.';
+  }
+
+  @override
+  String get sharawiSearch => 'ابحث باسم السورة أو رقمها';
+
+  @override
+  String get sharawiTitle => 'تفسير الشعراوي';
+
+  @override
   String get shortcutAdhkar => 'الأذكار';
 
   @override

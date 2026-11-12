@@ -29,6 +29,7 @@ PAIRS=(
   "content/reels/dist/reels.v1.json:assets/content/reels.v1.json"
   "content/reels/dist/reel-sources.v1.json:assets/content/reel-sources.v1.json"
   "content/stories/dist/stories.v1.json:assets/content/stories.v1.json"
+  "content/sharawi/dist/sharawi.v1.json:assets/content/sharawi.v1.json"
   "packages/shared-schemas/prayer/methods.json:assets/schemas/methods.json"
   "packages/shared-schemas/geo/wmm2025.json:assets/schemas/wmm2025.json"
   "packages/shared-schemas/cities.json:assets/schemas/cities.json"

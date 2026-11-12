@@ -111,6 +111,8 @@ copyFileSync(join(repo, "content/quran/dist/mushaf-lines.v1.json"), join(pub, "d
 // Tafsir al-Muyassar: one file per surah (an array, one entry per ayah), fetched on demand by the ayah panel
 // and kept by the service worker once used (not precached). Entries are copied verbatim.
 // Hadith books (Open-Hadith-Data, ODbL): book list in src/generated, text chunks served from /data/hadith/<book>/<k>.json.
+// Al-Sha'rawi audio tafsir: lesson list (audio streamed per lesson), fetched by the /sharawi page.
+copyFileSync(join(repo, "content/sharawi/dist/sharawi.v1.json"), join(pub, "data/sharawi.json"));
 const hadith = readJson("content/hadith/dist/books.v1.json");
 writeJson(join(gen, "hadith-books.json"), hadith);
 for (const b of hadith.books) {

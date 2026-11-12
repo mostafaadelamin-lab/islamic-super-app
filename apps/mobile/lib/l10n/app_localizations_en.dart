@@ -2121,6 +2121,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsThemeSystem => 'System';
 
   @override
+  String sharawiAyah(String n) {
+    return 'Ayah $n';
+  }
+
+  @override
+  String sharawiAyahs(String from, String to) {
+    return 'Ayahs $from–$to';
+  }
+
+  @override
+  String get sharawiIntro => 'Introduction';
+
+  @override
+  String sharawiLesson(String n) {
+    return 'Lesson $n';
+  }
+
+  @override
+  String sharawiLessons(String n) {
+    return '$n lessons';
+  }
+
+  @override
+  String get sharawiLoadError => 'Couldn\'t load the tafsir lessons.';
+
+  @override
+  String sharawiMinutes(String n) {
+    return '$n min';
+  }
+
+  @override
+  String get sharawiNoMatch => 'No lessons for this surah.';
+
+  @override
+  String sharawiNote(String n) {
+    return 'Sheikh Muhammad Mutawalli al-Sha\'rawi\'s reflections on the Quran in his own voice, $n lessons ordered by surah. Listen to any lesson online, or tap the download icon to keep it for offline listening.';
+  }
+
+  @override
+  String get sharawiSearch => 'Find a surah by name or number';
+
+  @override
+  String get sharawiTitle => 'Al-Sha\'rawi tafsir';
+
+  @override
   String get shortcutAdhkar => 'Adhkar';
 
   @override

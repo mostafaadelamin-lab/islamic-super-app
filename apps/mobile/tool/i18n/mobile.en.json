@@ -666,5 +666,16 @@
   "dhikr.hadith": "The hadith",
   "dhikr.hadithText": "The hadith about this dhikr",
   "dhikr.hadithFadl": "Its virtue",
-  "dhikr.hadithSource": "Where it is reported"
+  "dhikr.hadithSource": "Where it is reported",
+  "sharawi.title": "Al-Sha'rawi tafsir",
+  "sharawi.note": "Sheikh Muhammad Mutawalli al-Sha'rawi's reflections on the Quran in his own voice, {n} lessons ordered by surah. Listen to any lesson online, or tap the download icon to keep it for offline listening.",
+  "sharawi.search": "Find a surah by name or number",
+  "sharawi.loadError": "Couldn't load the tafsir lessons.",
+  "sharawi.noMatch": "No lessons for this surah.",
+  "sharawi.intro": "Introduction",
+  "sharawi.lessons": "{n} lessons",
+  "sharawi.lesson": "Lesson {n}",
+  "sharawi.ayah": "Ayah {n}",
+  "sharawi.ayahs": "Ayahs {from}–{to}",
+  "sharawi.minutes": "{n} min"
 }

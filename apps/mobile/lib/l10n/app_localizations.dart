@@ -3818,6 +3818,72 @@ abstract class AppLocalizations {
   /// **'System'**
   String get settingsThemeSystem;
 
+  /// shared key "sharawi.ayah"
+  ///
+  /// In en, this message translates to:
+  /// **'Ayah {n}'**
+  String sharawiAyah(String n);
+
+  /// shared key "sharawi.ayahs"
+  ///
+  /// In en, this message translates to:
+  /// **'Ayahs {from}–{to}'**
+  String sharawiAyahs(String from, String to);
+
+  /// shared key "sharawi.intro"
+  ///
+  /// In en, this message translates to:
+  /// **'Introduction'**
+  String get sharawiIntro;
+
+  /// shared key "sharawi.lesson"
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson {n}'**
+  String sharawiLesson(String n);
+
+  /// shared key "sharawi.lessons"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} lessons'**
+  String sharawiLessons(String n);
+
+  /// shared key "sharawi.loadError"
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the tafsir lessons.'**
+  String get sharawiLoadError;
+
+  /// shared key "sharawi.minutes"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min'**
+  String sharawiMinutes(String n);
+
+  /// shared key "sharawi.noMatch"
+  ///
+  /// In en, this message translates to:
+  /// **'No lessons for this surah.'**
+  String get sharawiNoMatch;
+
+  /// shared key "sharawi.note"
+  ///
+  /// In en, this message translates to:
+  /// **'Sheikh Muhammad Mutawalli al-Sha\'rawi\'s reflections on the Quran in his own voice, {n} lessons ordered by surah. Listen to any lesson online, or tap the download icon to keep it for offline listening.'**
+  String sharawiNote(String n);
+
+  /// shared key "sharawi.search"
+  ///
+  /// In en, this message translates to:
+  /// **'Find a surah by name or number'**
+  String get sharawiSearch;
+
+  /// shared key "sharawi.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Al-Sha\'rawi tafsir'**
+  String get sharawiTitle;
+
   /// shared key "shortcut.adhkar"
   ///
   /// In en, this message translates to:
