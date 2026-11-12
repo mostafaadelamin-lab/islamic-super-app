@@ -125,9 +125,5 @@
             <action android:name="android.intent.action.VIEW"/>
             <data android:scheme="geo"/>
         </intent>
-        <!-- Names of Allah: read aloud with the device text-to-speech engine (flutter_tts). -->
-        <intent>
-            <action android:name="android.intent.action.TTS_SERVICE"/>
-        </intent>
     </queries>
 </manifest>

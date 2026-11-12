@@ -100,3 +100,9 @@ None of these source names are shown in the app (owner's rule).
 | Hadith, virtue and reference per morning/evening dhikr | Seen-Arabic/Morning-And-Evening-Adhkar-DB `ar.json`, commit 29d7623fede52eca835a789025dfda866e8cfe44 (`content/adhkar/seen-adhkar-ar.json`) | MIT; quoted verbatim; built by `tools/adhkar_hadith.py` |
 | Hadith per Hisn al-Muslim item | HadeethEnc entries (`content/hadith/hadeethenc-ar.json`) matched to the dhikr text (4-gram overlap >= 0.6) | quoted verbatim: hadith text, attribution and grade |
 | Tashkeel reference for adhkar and Hisn al-Muslim | the fully vowelled Hisn al-Muslim text (Sa'id ibn Wahf al-Qahtani) from the hisnmuslim.com API (`content/adhkar/hisnmuslim-audio-source.json`) | `tools/hisn_tashkeel.py` changes marks only, never letters; 266/298 Hisn items and 32/34 adhkar matched; intro and virtue prose with no counterpart keep their text. Change list: `content/adhkar/tashkeel-changes-2026-11-12.tsv` |
+
+## Names of Allah lessons (v1.0.13, 2026-11-12)
+
+| What | Source | Notes |
+|---|---|---|
+| Recorded lesson(s) on each name | Sheikh Muhammad Ratib al-Nabulsi's site nabulsi.com: series "أسماء الله الحسنى 2008" (`content/asma/nabulsi-2008.json`, 100 names x 2 parts) and, for names it lacks, "أسماء الله الحسنى 1996" (`content/asma/nabulsi-1996.json`) | streamed from the site's own audio host, not re-hosted; owner's choice 2026-11-12; `tools/asma_audio.py` maps 91 of the 99 names (the other 8 have no lesson in either series) |

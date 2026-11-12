@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 import '../theme/design_tokens.dart';
 import 'adaptive.dart';
 import 'l10n_ext.dart';
+import 'dhikr_audio.dart';
 import 'r_icon.dart';
-import 'speech.dart';
 
 /// One of the 99 names with its simplified explanation, quoted verbatim from a
 /// published source (see docs/CONTENT_SOURCES.md; never written by us).
@@ -36,14 +36,28 @@ class AsmaEntry {
 
 Future<List<AsmaEntry>> loadAsma() async => AsmaEntry.parse(await rootBundle.loadString('assets/content/asma.v1.json'));
 
+/// Recorded lessons on each name by Sheikh Muhammad Ratib al-Nabulsi, by index in asma.v1.json
+/// (built by tools/asma_audio.py; 1 or 2 parts per name; some names have none).
+Future<Map<int, List<String>>> loadAsmaLessons() async {
+  try {
+    final j = jsonDecode(await rootBundle.loadString('assets/content/asma-audio.v1.json')) as Map<String, dynamic>;
+    return {
+      for (final e in (j['names'] as Map<String, dynamic>).entries)
+        int.parse(e.key): (e.value as List<dynamic>).cast<String>(),
+    };
+  } catch (_) {
+    return const {};
+  }
+}
+
 String _norm(String s) =>
     s.replaceAll(RegExp('[ًٌٍَُِّْـ]'), '').replaceAll(RegExp('[أإآ]'), 'ا').replaceAll('ى', 'ي').replaceAll('ة', 'ه');
 
 /// أسماء الله الحسنى: every name with a short explanation under it.
 class AsmaScreen extends StatefulWidget {
-  const AsmaScreen({super.key, this.loader = loadAsma, this.speaker});
+  const AsmaScreen({super.key, this.loader = loadAsma, this.lessons = loadAsmaLessons});
   final Future<List<AsmaEntry>> Function() loader;
-  final Speaker? speaker;
+  final Future<Map<int, List<String>>> Function() lessons;
 
   @override
   State<AsmaScreen> createState() => _AsmaScreenState();
@@ -52,148 +66,168 @@ class AsmaScreen extends StatefulWidget {
 class _AsmaScreenState extends State<AsmaScreen> {
   late final Future<List<AsmaEntry>> _future = widget.loader();
   String _query = '';
-  late final Speaker _speaker = widget.speaker ?? DeviceSpeaker();
-  String? _speaking;
+  late final Future<Map<int, List<String>>> _lessons = widget.lessons();
+  Map<int, List<String>> _byIndex = const {};
 
   @override
   void initState() {
     super.initState();
-    _speaker.onDone(() {
-      if (mounted) setState(() => _speaking = null);
+    _lessons.then((m) {
+      if (mounted) setState(() => _byIndex = m);
     });
-  }
-
-  @override
-  void dispose() {
-    _speaker.stop();
-    super.dispose();
-  }
-
-  Future<void> _toggle(AsmaEntry e, String text) async {
-    if (_speaking == e.name) {
-      await _speaker.stop();
-      setState(() => _speaking = null);
-      return;
-    }
-    await _speaker.stop();
-    setState(() => _speaking = e.name);
-    final ok = await _speaker.speak('${e.name}. $text');
-    if (!ok && mounted) {
-      setState(() => _speaking = null);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.asmaNoVoice)));
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final scheme = Theme.of(context).colorScheme;
-    return Scaffold(
-      appBar: AppBar(title: Text(l.asmaTitle)),
-      body: ReadableWidth(
-        child: FutureBuilder<List<AsmaEntry>>(
-          future: _future,
-          builder: (context, snap) {
-            final all = snap.data;
-            if (all == null) return const Center(child: CircularProgressIndicator());
-            final byName = {for (final e in all) e.name: e};
-            final q = _norm(_query.trim());
-            final list = [
-              for (final e in all)
-                if (q.isEmpty || _norm('${e.name} ${e.group ?? ''}').contains(q)) e,
-            ];
-            return ListView.builder(
-              key: const Key('asmaList'),
-              padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-              itemCount: list.length + 2,
-              itemBuilder: (context, i) {
-                if (i == 0) {
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      DesignTokens.spaceLg,
-                      DesignTokens.spaceMd,
-                      DesignTokens.spaceLg,
-                      DesignTokens.spaceSm,
-                    ),
-                    child: TextField(
-                      key: const Key('asmaSearch'),
-                      decoration: InputDecoration(
-                        prefixIcon: const RIcon(RIcons.search),
-                        hintText: l.asmaSearch,
-                        isDense: true,
+    return StopDhikrAudioOnExit(
+      child: Scaffold(
+        bottomNavigationBar: const DhikrPlayerBar(),
+        appBar: AppBar(title: Text(l.asmaTitle)),
+        body: ReadableWidth(
+          child: FutureBuilder<List<AsmaEntry>>(
+            future: _future,
+            builder: (context, snap) {
+              final all = snap.data;
+              if (all == null) return const Center(child: CircularProgressIndicator());
+              final byName = {for (final e in all) e.name: e};
+              final indexOf = {for (var k = 0; k < all.length; k++) all[k].name: k};
+              final q = _norm(_query.trim());
+              final list = [
+                for (final e in all)
+                  if (q.isEmpty || _norm('${e.name} ${e.group ?? ''}').contains(q)) e,
+              ];
+              return ListView.builder(
+                key: const Key('asmaList'),
+                padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+                itemCount: list.length + 2,
+                itemBuilder: (context, i) {
+                  if (i == 0) {
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        DesignTokens.spaceLg,
+                        DesignTokens.spaceMd,
+                        DesignTokens.spaceLg,
+                        DesignTokens.spaceSm,
                       ),
-                      onChanged: (v) => setState(() => _query = v),
+                      child: TextField(
+                        key: const Key('asmaSearch'),
+                        decoration: InputDecoration(
+                          prefixIcon: const RIcon(RIcons.search),
+                          hintText: l.asmaSearch,
+                          isDense: true,
+                        ),
+                        onChanged: (v) => setState(() => _query = v),
+                      ),
+                    );
+                  }
+                  if (i == list.length + 1) {
+                    return Padding(
+                      padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                      child: Text(
+                        l.asmaSource,
+                        key: const Key('asmaSource'),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    );
+                  }
+                  final e = list[i - 1];
+                  final target = e.text == null && e.seeAlso != null ? byName[e.seeAlso] : null;
+                  final text = e.text ?? target?.text ?? '';
+                  return Card(
+                    key: Key('asma-${i - 1}'),
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: DesignTokens.spaceLg,
+                      vertical: DesignTokens.spaceXs,
                     ),
-                  );
-                }
-                if (i == list.length + 1) {
-                  return Padding(
-                    padding: const EdgeInsets.all(DesignTokens.spaceLg),
-                    child: Text(
-                      l.asmaSource,
-                      key: const Key('asmaSource'),
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  );
-                }
-                final e = list[i - 1];
-                final target = e.text == null && e.seeAlso != null ? byName[e.seeAlso] : null;
-                final text = e.text ?? target?.text ?? '';
-                return Card(
-                  key: Key('asma-${i - 1}'),
-                  margin: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
-                  child: Padding(
-                    padding: const EdgeInsets.all(DesignTokens.spaceLg),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 34,
-                              height: 34,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(color: scheme.secondaryContainer, shape: BoxShape.circle),
-                              child: Text(
-                                context.num('$i'),
-                                style: TextStyle(color: scheme.secondary, fontWeight: FontWeight.w600, fontSize: 13),
-                              ),
-                            ),
-                            const SizedBox(width: DesignTokens.spaceMd),
-                            Expanded(
-                              child: Text(
-                                e.name,
-                                style: TextStyle(
-                                  fontFamily: DesignTokens.fontQuran,
-                                  fontSize: 26,
-                                  height: 1.6,
-                                  color: scheme.primary,
+                    child: Padding(
+                      padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                width: 34,
+                                height: 34,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(color: scheme.secondaryContainer, shape: BoxShape.circle),
+                                child: Text(
+                                  context.num('$i'),
+                                  style: TextStyle(color: scheme.secondary, fontWeight: FontWeight.w600, fontSize: 13),
                                 ),
                               ),
-                            ),
-                            IconButton(
-                              key: Key('asmaListen-${i - 1}'),
-                              tooltip: _speaking == e.name ? l.asmaStop : l.asmaListen,
-                              color: scheme.primary,
-                              icon: RIcon(_speaking == e.name ? RIcons.stop : RIcons.headphones),
-                              onPressed: () => _toggle(e, text),
-                            ),
-                          ],
-                        ),
-                        if (e.group != null && e.group != e.name)
-                          Text(
-                            e.group!,
-                            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: scheme.secondary),
+                              const SizedBox(width: DesignTokens.spaceMd),
+                              Expanded(
+                                child: Text(
+                                  e.name,
+                                  style: TextStyle(
+                                    fontFamily: DesignTokens.fontQuran,
+                                    fontSize: 26,
+                                    height: 1.6,
+                                    color: scheme.primary,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        const SizedBox(height: DesignTokens.spaceSm),
-                        _Explanation(text: text, seeAlso: target == null ? null : l.asmaSeeAlso(target.name)),
-                      ],
+                          _Lessons(urls: _byIndex[indexOf[e.name]] ?? const [], keyPrefix: 'asmaListen-${i - 1}'),
+                          if (e.group != null && e.group != e.name)
+                            Text(
+                              e.group!,
+                              style: Theme.of(context).textTheme.labelMedium?.copyWith(color: scheme.secondary),
+                            ),
+                          const SizedBox(height: DesignTokens.spaceSm),
+                          _Explanation(text: text, seeAlso: target == null ? null : l.asmaSeeAlso(target.name)),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            );
-          },
+                  );
+                },
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// "Listen to the explanation" by Sheikh al-Nabulsi: one button per recorded lesson on this name.
+class _Lessons extends StatelessWidget {
+  const _Lessons({required this.urls, required this.keyPrefix});
+  final List<String> urls;
+  final String keyPrefix;
+
+  @override
+  Widget build(BuildContext context) {
+    if (urls.isEmpty) return const SizedBox.shrink();
+    final l = context.l10n;
+    final player = DhikrPlayer.instance;
+    return ListenableBuilder(
+      listenable: player,
+      builder: (context, _) => Padding(
+        padding: const EdgeInsets.only(top: DesignTokens.spaceXs),
+        child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: DesignTokens.spaceSm,
+          children: [
+            Text(l.asmaLessonBy, style: Theme.of(context).textTheme.labelMedium),
+            for (var k = 0; k < urls.length; k++)
+              Builder(
+                builder: (context) {
+                  final on = player.url == urls[k] && (player.playing || player.loading);
+                  final label = urls.length == 1 ? l.asmaListenLesson : l.asmaPart(context.num('${k + 1}'));
+                  return TextButton.icon(
+                    key: Key(k == 0 ? keyPrefix : '$keyPrefix-${k + 1}'),
+                    onPressed: () => player.toggle(urls[k]),
+                    icon: RIcon(on ? RIcons.stop : RIcons.headphones, size: 20),
+                    label: Text(on ? l.asmaStop : label),
+                  );
+                },
+              ),
+          ],
         ),
       ),
     );

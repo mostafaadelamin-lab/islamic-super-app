@@ -908,11 +908,17 @@ abstract class AppLocalizations {
   /// **'Less'**
   String get asmaLess;
 
-  /// shared key "asma.listen"
+  /// shared key "asma.lessonBy"
   ///
   /// In en, this message translates to:
-  /// **'Listen to the name and its meaning'**
-  String get asmaListen;
+  /// **'Explained by Sheikh Muhammad Ratib al-Nabulsi'**
+  String get asmaLessonBy;
+
+  /// shared key "asma.listenLesson"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to the explanation'**
+  String get asmaListenLesson;
 
   /// shared key "asma.more"
   ///
@@ -920,11 +926,11 @@ abstract class AppLocalizations {
   /// **'More'**
   String get asmaMore;
 
-  /// shared key "asma.noVoice"
+  /// shared key "asma.part"
   ///
   /// In en, this message translates to:
-  /// **'Arabic speech isn\'t available on this device. Install the Arabic voice in text-to-speech settings.'**
-  String get asmaNoVoice;
+  /// **'Lesson {n}'**
+  String asmaPart(String n);
 
   /// shared key "asma.search"
   ///

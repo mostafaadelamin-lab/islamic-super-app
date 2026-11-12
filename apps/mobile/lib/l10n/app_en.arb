@@ -702,17 +702,26 @@
   "@asmaLess": {
     "description": "shared key \"asma.less\""
   },
-  "asmaListen": "Listen to the name and its meaning",
-  "@asmaListen": {
-    "description": "shared key \"asma.listen\""
+  "asmaLessonBy": "Explained by Sheikh Muhammad Ratib al-Nabulsi",
+  "@asmaLessonBy": {
+    "description": "shared key \"asma.lessonBy\""
+  },
+  "asmaListenLesson": "Listen to the explanation",
+  "@asmaListenLesson": {
+    "description": "shared key \"asma.listenLesson\""
   },
   "asmaMore": "More",
   "@asmaMore": {
     "description": "shared key \"asma.more\""
   },
-  "asmaNoVoice": "Arabic speech isn't available on this device. Install the Arabic voice in text-to-speech settings.",
-  "@asmaNoVoice": {
-    "description": "shared key \"asma.noVoice\""
+  "asmaPart": "Lesson {n}",
+  "@asmaPart": {
+    "description": "shared key \"asma.part\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
   },
   "asmaSearch": "Find a name",
   "@asmaSearch": {

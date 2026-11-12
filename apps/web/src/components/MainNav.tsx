@@ -15,7 +15,7 @@ export const NAV_ITEMS: readonly { path: string; key: string; icon: IconName; al
     path: "more",
     key: "nav.more",
     icon: "more",
-    also: ["search", "bookmarks", "settings", "about", "hajj", "reels", "stories", "sharawi"],
+    also: ["search", "bookmarks", "settings", "about", "hajj", "reels", "stories", "sharawi", "asma"],
   },
 ];
 

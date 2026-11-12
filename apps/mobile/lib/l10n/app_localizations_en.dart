@@ -484,14 +484,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get asmaLess => 'Less';
 
   @override
-  String get asmaListen => 'Listen to the name and its meaning';
+  String get asmaLessonBy => 'Explained by Sheikh Muhammad Ratib al-Nabulsi';
+
+  @override
+  String get asmaListenLesson => 'Listen to the explanation';
 
   @override
   String get asmaMore => 'More';
 
   @override
-  String get asmaNoVoice =>
-      'Arabic speech isn\'t available on this device. Install the Arabic voice in text-to-speech settings.';
+  String asmaPart(String n) {
+    return 'Lesson $n';
+  }
 
   @override
   String get asmaSearch => 'Find a name';

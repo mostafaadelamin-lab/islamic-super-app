@@ -20,6 +20,7 @@ PAIRS=(
   "content/quran/dist/mushaf-lines.v1.json:assets/content/mushaf-lines.v1.json"
   "content/adhkar/dist/adhkar.v1.json:assets/content/adhkar.v1.json"
   "content/adhkar/dist/adhkar-hadith.v1.json:assets/content/adhkar-hadith.v1.json"
+  "content/asma/dist/asma-audio.v1.json:assets/content/asma-audio.v1.json"
   "content/adhkar/hisn.json:assets/content/hisn.json"
   "content/adhkar/hisn-sections.json:assets/content/hisn-sections.json"
   "content/zakat/dar-alifta.v1.json:assets/content/zakat.v1.json"

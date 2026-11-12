@@ -654,9 +654,7 @@
   "stories.watchVideo": "Watch video",
   "stories.videoBy": "Sheikh Nabil Al-Awadi",
   "stories.howTo": "Each episode: tap to listen, the video icon to watch, or the download icon to listen offline.",
-  "asma.listen": "Listen to the name and its meaning",
   "asma.stop": "Stop",
-  "asma.noVoice": "Arabic speech isn't available on this device. Install the Arabic voice in text-to-speech settings.",
   "nasheeds.search": "Find a nasheed or munshid",
   "nasheeds.loadError": "Couldn't load the nasheeds list.",
   "hadith.explain": "Simplified explanation",
@@ -677,5 +675,8 @@
   "sharawi.lesson": "Lesson {n}",
   "sharawi.ayah": "Ayah {n}",
   "sharawi.ayahs": "Ayahs {from}–{to}",
-  "sharawi.minutes": "{n} min"
+  "sharawi.minutes": "{n} min",
+  "asma.lessonBy": "Explained by Sheikh Muhammad Ratib al-Nabulsi",
+  "asma.part": "Lesson {n}",
+  "asma.listenLesson": "Listen to the explanation"
 }

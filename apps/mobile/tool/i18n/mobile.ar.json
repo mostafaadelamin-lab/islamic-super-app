@@ -654,9 +654,7 @@
   "stories.watchVideo": "مشاهدة فيديو",
   "stories.videoBy": "الشيخ نبيل العوضي",
   "stories.howTo": "لكل حلقة: اضغط للاستماع، أو أيقونة الفيديو للمشاهدة، أو أيقونة التحميل للسماع بدون إنترنت.",
-  "asma.listen": "استمع للاسم وشرحه",
   "asma.stop": "إيقاف",
-  "asma.noVoice": "صوت القراءة العربية غير متاح على هذا الجهاز. ثبّت الصوت العربي من إعدادات تحويل النص إلى كلام.",
   "nasheeds.search": "ابحث عن نشيد أو منشد",
   "nasheeds.loadError": "تعذّر تحميل قائمة الأناشيد.",
   "hadith.explain": "الشرح المبسّط",
@@ -677,5 +675,8 @@
   "sharawi.lesson": "الدرس {n}",
   "sharawi.ayah": "الآية {n}",
   "sharawi.ayahs": "الآيات {from}–{to}",
-  "sharawi.minutes": "{n} دقيقة"
+  "sharawi.minutes": "{n} دقيقة",
+  "asma.lessonBy": "شرح الشيخ محمد راتب النابلسي",
+  "asma.part": "الدرس {n}",
+  "asma.listenLesson": "استمع لشرح الاسم"
 }

@@ -2706,3 +2706,50 @@ dd {
   margin: var(--space-xs) 0;
   line-height: 1.9;
 }
+
+/* Names of Allah */
+.asma-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--space-sm);
+}
+.asma-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+.asma-num {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.asma-name {
+  margin: 0;
+  font-family: var(--font-quran);
+  font-size: 1.6rem;
+  color: var(--color-primary);
+}
+.asma-lessons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+.asma-text {
+  line-height: 1.9;
+  margin: var(--space-sm) 0 0;
+}
+.asma-text.folded {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

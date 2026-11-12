@@ -599,5 +599,16 @@
   "sharawi.save": "Download for offline listening",
   "sharawi.saving": "Downloading…",
   "sharawi.saved": "Saved",
-  "sharawi.delete": "Delete the saved copy"
+  "sharawi.delete": "Delete the saved copy",
+  "asma.title": "Names of Allah",
+  "asma.tileSub": "The 99 names with a simple explanation",
+  "asma.search": "Find a name",
+  "asma.source": "A simplified explanation of the 99 Names of Allah, quoted word for word from a published source.",
+  "asma.more": "More",
+  "asma.less": "Less",
+  "asma.stop": "Stop",
+  "asma.lessonBy": "Explained by Sheikh Muhammad Ratib al-Nabulsi",
+  "asma.part": "Lesson {n}",
+  "asma.listenLesson": "Listen to the explanation",
+  "asma.none": "No name matches."
 }

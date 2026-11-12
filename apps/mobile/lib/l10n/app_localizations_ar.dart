@@ -483,14 +483,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get asmaLess => 'أقل';
 
   @override
-  String get asmaListen => 'استمع للاسم وشرحه';
+  String get asmaLessonBy => 'شرح الشيخ محمد راتب النابلسي';
+
+  @override
+  String get asmaListenLesson => 'استمع لشرح الاسم';
 
   @override
   String get asmaMore => 'المزيد';
 
   @override
-  String get asmaNoVoice =>
-      'صوت القراءة العربية غير متاح على هذا الجهاز. ثبّت الصوت العربي من إعدادات تحويل النص إلى كلام.';
+  String asmaPart(String n) {
+    return 'الدرس $n';
+  }
 
   @override
   String get asmaSearch => 'ابحث عن اسم';

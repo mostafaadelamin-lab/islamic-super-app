@@ -17,6 +17,7 @@ export const SECTIONS: readonly Section[] = [
   { path: "khatma", title: "khatma.title", sub: "khatma.tileSub", icon: "khatma" },
   { path: "adhkar", title: "adhkar.title", sub: "home.tile.adhkarSub", icon: "dua" },
   { path: "hisn", title: "hisn.title", sub: "home.tile.hisnSub", icon: "hisn" },
+  { path: "asma", title: "asma.title", sub: "asma.tileSub", icon: "star" },
   { path: "tasbih", title: "tasbih.title", sub: "home.tile.tasbihSub", icon: "beads" },
   { path: "tracker", title: "worship.title", sub: "worship.tileSub", icon: "calendarCheck" },
   { path: "qibla", title: "qibla.title", sub: "home.tile.qiblaSub", icon: "compass" },

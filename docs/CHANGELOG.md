@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.13] — Names of Allah explained by Sheikh al-Nabulsi; story titles — 2026-11-12
+### Changed
+- Names of Allah: the phone's text-to-speech voice is gone. Each name now has Sheikh Muhammad Ratib al-Nabulsi's recorded lessons on it (91 of the 99 names; two lessons per name from his 2008 series, one from his 1996 series where 2008 has none), streamed with a play/pause bar. The flutter_tts dependency was removed.
+- Website: a new Names of Allah page with the same explanations and lessons.
+- Stories: "قصة زكريا ويحيى" and "قصة إدريس ونوح" spelled correctly.
+
 ## [1.0.12] — Audio keeps playing in the background — 2026-11-12
 ### Fixed
 - Radio stations, the recitation library, al-Sha'rawi lessons, stories, nasheeds and the adhkar recordings stopped a few seconds after leaving the app. Every player now runs through the system media service (Android) and the iOS background audio session, with a notification and lock-screen controls (play/pause, next/previous where there is a list, stop). Paused audio keeps its notification so it can be resumed from there.
