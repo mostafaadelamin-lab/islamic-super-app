@@ -4,7 +4,16 @@ import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import { player } from "@/lib/audio-player";
 import { surahName } from "@/lib/pages";
-import { loadSharawi, type SharawiLesson, type SharawiSurah } from "@/lib/sharawi";
+import { offlineSupported } from "@/lib/audio-offline";
+import {
+  deleteLesson,
+  loadSharawi,
+  saveLesson,
+  sharawiSavedStore,
+  type SharawiLesson,
+  type SharawiSurah,
+} from "@/lib/sharawi";
+import { useStore } from "@/hooks/useStore";
 import { Icon } from "./Icon";
 import { SleepTimer } from "./SleepTimer";
 
@@ -30,6 +39,23 @@ export function SharawiView({
   const [open, setOpen] = useState<number | null>(null);
   const [current, setCurrent] = useState<SharawiLesson | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const saved = useStore(sharawiSavedStore);
+  const [busy, setBusy] = useState<Record<number, "saving" | "error">>({});
+  const canSave = typeof window !== "undefined" && offlineSupported();
+  const toggleSave = async (l: SharawiLesson): Promise<void> => {
+    if (saved.includes(l.id)) return deleteLesson(l);
+    setBusy((b) => ({ ...b, [l.id]: "saving" }));
+    try {
+      await saveLesson(l);
+      setBusy((b) => {
+        const rest = { ...b };
+        delete rest[l.id];
+        return rest;
+      });
+    } catch {
+      setBusy((b) => ({ ...b, [l.id]: "error" }));
+    }
+  };
   const n = (v: number): string => localizeDigits(v, locale);
   const name = (s: number): string => (s === 0 ? t(locale, "sharawi.intro") : surahName(s, locale));
 
@@ -116,8 +142,10 @@ export function SharawiView({
                 <ol className="episode-list">
                   {s.lessons.map((l) => {
                     const on = current?.id === l.id;
+                    const isSaved = saved.includes(l.id);
+                    const state = busy[l.id];
                     return (
-                      <li key={l.id} aria-current={on ? "true" : undefined}>
+                      <li key={l.id} aria-current={on ? "true" : undefined} className="row">
                         <button
                           type="button"
                           className="episode"
@@ -131,6 +159,27 @@ export function SharawiView({
                             <span className="muted small">{sub(l)}</span>
                           </span>
                         </button>
+                        {canSave ? (
+                          <button
+                            type="button"
+                            className="btn btn-sm"
+                            data-testid={`sharawi-save-${l.id}`}
+                            disabled={state === "saving"}
+                            aria-label={t(
+                              locale,
+                              isSaved
+                                ? "sharawi.delete"
+                                : state === "saving"
+                                  ? "sharawi.saving"
+                                  : "sharawi.save",
+                            )}
+                            title={t(locale, isSaved ? "sharawi.delete" : "sharawi.save")}
+                            onClick={() => void toggleSave(l)}
+                          >
+                            <Icon name={isSaved ? "trash" : "download"} />
+                            {isSaved ? ` ${t(locale, "sharawi.saved")}` : state === "error" ? " ⚠" : ""}
+                          </button>
+                        ) : null}
                       </li>
                     );
                   })}

@@ -1,9 +1,11 @@
 /**
  * Sheikh al-Sha'rawi's audio tafsir (khawatir): 1116 lessons by surah, each with the ayah range it explains.
  * List built by tools/sharawi_build.py (content/sharawi/dist/sharawi.v1.json → /data/sharawi.json);
- * audio is streamed per lesson. The source is recorded in docs/CONTENT_SOURCES.md, never shown on the site.
+ * audio is streamed per lesson, or saved per lesson for offline listening. The source is recorded in docs/CONTENT_SOURCES.md, never shown on the site.
  */
+import { AUDIO_CACHE, offlineSupported } from "./audio-offline";
 import { withBase } from "./base-path";
+import { createStore } from "./store";
 
 export interface SharawiLesson {
   id: number;
@@ -50,4 +52,30 @@ export async function loadSharawi(fetchImpl: typeof fetch = fetch): Promise<Shar
   const r = await fetchImpl(SHARAWI_URL());
   if (!r.ok) throw new Error(`sharawi.json: HTTP ${r.status}`);
   return parseSharawi(await r.json());
+}
+
+/** Lessons saved for offline listening: ids in a small store, audio in the "rattil-audio" Cache Storage,
+ * which the service worker serves to the <audio> element (same as saved recitations). */
+export const sharawiSavedStore = createStore<number[]>("rattil.sharawiSaved", [], (raw) =>
+  Array.isArray(raw) ? raw.filter((v): v is number => Number.isInteger(v) && v > 0) : [],
+);
+
+export async function saveLesson(l: SharawiLesson): Promise<void> {
+  const cache = await caches.open(AUDIO_CACHE);
+  if (!(await cache.match(l.url))) {
+    let res: Response;
+    try {
+      res = await fetch(l.url, { mode: "cors" });
+      if (!res.ok) throw new Error(`${l.url} ${res.status}`);
+    } catch {
+      res = await fetch(l.url, { mode: "no-cors" });
+    }
+    await cache.put(l.url, res);
+  }
+  sharawiSavedStore.set((ids) => (ids.includes(l.id) ? ids : [...ids, l.id]));
+}
+
+export async function deleteLesson(l: SharawiLesson): Promise<void> {
+  if (offlineSupported()) await (await caches.open(AUDIO_CACHE)).delete(l.url);
+  sharawiSavedStore.set((ids) => ids.filter((id) => id !== l.id));
 }

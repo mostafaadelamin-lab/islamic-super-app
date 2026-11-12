@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SharawiView } from "@/components/SharawiView";
 import { SECTIONS } from "@/components/SectionTiles";
-import { parseSharawi } from "@/lib/sharawi";
+import { parseSharawi, sharawiSavedStore } from "@/lib/sharawi";
 import { readRepoJson } from "../repo";
 
 const data = parseSharawi(readRepoJson("content/sharawi/dist/sharawi.v1.json"));
@@ -35,5 +35,32 @@ describe("Sha'rawi audio tafsir", () => {
     const audio = screen.getByTestId("sharawi-audio") as HTMLAudioElement;
     expect(audio.getAttribute("src")).toBe(data[2]!.lessons[0]!.url);
     expect(screen.getByTestId("sharawi-now")).toHaveTextContent("الدرس ١");
+  });
+});
+
+describe("Sha'rawi offline save (website)", () => {
+  it("saves a lesson into the audio cache and deletes it again", async () => {
+    const store = new Map<string, Response>();
+    const cache = {
+      match: (u: string) => Promise.resolve(store.get(u)),
+      put: (u: string, r: Response) => (store.set(u, r), Promise.resolve()),
+      delete: (u: string) => Promise.resolve(store.delete(u)),
+    };
+    vi.stubGlobal("caches", { open: () => Promise.resolve(cache) });
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(() => Promise.resolve(new Response("mp3", { status: 200 }))),
+    );
+    const user = userEvent.setup();
+    render(<SharawiView locale="ar" loader={() => Promise.resolve(data)} />);
+    await user.click(await screen.findByText("الفاتحة"));
+    await user.click(screen.getByTestId("sharawi-save-5"));
+    expect(await screen.findByText(/محفوظ/)).toBeInTheDocument();
+    expect(store.has(data[1]!.lessons[0]!.url)).toBe(true);
+    expect(sharawiSavedStore.get()).toContain(5);
+    await user.click(screen.getByTestId("sharawi-save-5"));
+    expect(store.size).toBe(0);
+    expect(sharawiSavedStore.get()).not.toContain(5);
+    vi.unstubAllGlobals();
   });
 });
