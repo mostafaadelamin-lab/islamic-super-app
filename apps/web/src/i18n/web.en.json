@@ -572,5 +572,16 @@
   "adhan.voiceSearch": "Search by muezzin or country",
   "adhan.voiceMore": "{n} more; type in the search to find them.",
   "adhan.listenFajr": "Listen to the Fajr adhan",
-  "adhan.voiceNote": "The Fajr adhan has “prayer is better than sleep”, so it is chosen separately. The other muezzins play over the internet."
+  "adhan.voiceNote": "The Fajr adhan has “prayer is better than sleep”, so it is chosen separately. The other muezzins play over the internet.",
+  "dhikr.listen": "Listen to this dhikr",
+  "dhikr.play": "Play",
+  "dhikr.pause": "Pause",
+  "dhikr.stop": "Stop",
+  "dhikr.listenFailed": "Could not play; check your internet",
+  "dhikr.player": "Dhikr player",
+  "dhikr.seek": "Playback position",
+  "dhikr.hadith": "The hadith",
+  "dhikr.hadithText": "The hadith about this dhikr",
+  "dhikr.hadithFadl": "Its virtue",
+  "dhikr.hadithSource": "Where it is reported"
 }

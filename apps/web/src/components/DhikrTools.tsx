@@ -2,20 +2,24 @@
 import { useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { reportBody, reportMailto, shareBody, shareDhikr } from "@/lib/dhikr-share";
+import type { DhikrExtra } from "@/lib/dhikr-extras";
+import { DhikrHadithButton, DhikrListen } from "./DhikrAudio";
 
-/** Share and "report a mistake" for one dhikr. `where` names it (chapter and number) in the report. */
+/** Listen, the source hadith, share and "report a mistake" for one dhikr. `where` names it (chapter and number) in the report. */
 export function DhikrTools({
   locale,
   text,
   source,
   where,
   testId,
+  extra,
 }: {
   locale: Locale;
   text: string;
   source: string;
   where: string;
   testId: string;
+  extra?: DhikrExtra;
 }) {
   const [notice, setNotice] = useState("");
   const share = async (): Promise<void> => {
@@ -30,6 +34,8 @@ export function DhikrTools({
   );
   return (
     <div className="dhikr-tools">
+      {extra?.audio ? <DhikrListen locale={locale} url={extra.audio} testId={testId} /> : null}
+      {extra?.hadith ? <DhikrHadithButton locale={locale} hadith={extra.hadith} testId={testId} /> : null}
       <button
         type="button"
         className="btn btn-sm"

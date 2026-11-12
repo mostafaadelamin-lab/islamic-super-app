@@ -6,6 +6,7 @@ import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
 import { HISN, hisnChapter } from "@/lib/hisn";
 import { HisnItems } from "@/components/HisnItems";
+import { hisnExtras } from "@/lib/dhikr-extras";
 
 export const dynamicParams = false;
 
@@ -31,7 +32,13 @@ export default async function HisnChapterPage({ params }: { params: Params }) {
         <Link href={href(locale, "hisn")}>{t(locale, "hisn.title")}</Link>
       </p>
       <h1 lang="ar">{ch.title}</h1>
-      <HisnItems locale={locale} chapterId={id} title={ch.title} items={ch.items} />
+      <HisnItems
+        locale={locale}
+        chapterId={id}
+        title={ch.title}
+        items={ch.items}
+        extras={hisnExtras(id, ch.items.length)}
+      />
       <nav className="pager" aria-label={t(locale, "hisn.chapterNav")}>
         {id > 1 ? (
           <Link className="btn" href={href(locale, `hisn/${id - 1}`)} data-testid="hisn-prev">

@@ -2670,3 +2670,39 @@ dd {
 .muezzin-list li {
   padding: 0.35rem 0.6rem;
 }
+
+/* Dhikr player bar and source hadith */
+.dhikr-player {
+  position: sticky;
+  bottom: var(--space-sm);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.18);
+}
+.dhikr-player input[type="range"] {
+  flex: 1;
+  min-width: 0;
+}
+.dhikr-hadith {
+  flex-basis: 100%;
+  margin-top: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  border-inline-start: 3px solid var(--color-primary);
+  background: var(--color-accent-soft);
+  border-radius: var(--radius-md);
+}
+.dhikr-hadith h3 {
+  margin: var(--space-xs) 0 0;
+  color: var(--color-primary);
+}
+.dhikr-hadith p {
+  margin: var(--space-xs) 0;
+  line-height: 1.9;
+}

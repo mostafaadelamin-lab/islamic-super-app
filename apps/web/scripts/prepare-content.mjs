@@ -42,6 +42,8 @@ const copies = {
   "content/adhkar/dist/adhkar.v1.json": "adhkar.json",
   "content/adhkar/hisn.json": "hisn.json",
   "content/adhkar/hisn-sections.json": "hisn-sections.json",
+  "content/adhkar/dist/adhkar-hadith.v1.json": "adhkar-hadith.json",
+  "apps/mobile/assets/content/adhkar-audio.v1.json": "adhkar-audio.json",
   "content/zakat/dar-alifta.v1.json": "zakat.json",
   "content/reels/dist/reels.v1.json": "reels.json",
   "content/stories/dist/stories.v1.json": "stories.json",

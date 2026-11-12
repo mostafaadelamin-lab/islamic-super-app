@@ -72,7 +72,7 @@ describe("adhkar sessions", () => {
     };
     SESSIONS.forEach((row) => {
       if (row.hisn === null) return expect(row.count).toBe(1);
-      const src = chapter[row.hisn]!;
+      const src = chapter[row.hisn]!.replace(/[\u064B-\u0652\u0670\u0640]/g, ""); // annotations are vowelled since v1.0.10
       if (row.count === 1) expect(Object.values(ANNOTATION).some((re) => re.test(src))).toBe(false);
       else expect(src).toMatch(ANNOTATION[row.count]!);
     });

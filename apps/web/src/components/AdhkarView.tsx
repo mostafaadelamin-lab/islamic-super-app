@@ -18,6 +18,8 @@ import { useStore } from "@/hooks/useStore";
 import { Icon } from "./Icon";
 import { CardDeck, ModeSwitch } from "./CardDeck";
 import { DhikrTools } from "./DhikrTools";
+import { DhikrPlayerBar } from "./DhikrAudio";
+import type { DhikrExtra } from "@/lib/dhikr-extras";
 
 const SESSIONS: readonly Session[] = ["morning", "evening"];
 
@@ -27,7 +29,15 @@ function localToday(): string {
 }
 
 /** Morning / evening adhkar with a counter per item; progress is kept per day on this device. */
-export function AdhkarView({ locale, items }: { locale: Locale; items: readonly string[] }) {
+export function AdhkarView({
+  locale,
+  items,
+  extras = [],
+}: {
+  locale: Locale;
+  items: readonly string[];
+  extras?: readonly DhikrExtra[];
+}) {
   const [session, setSession] = useState<Session>("morning");
   const [today, setToday] = useState("");
   const stored = useStore(adhkarStore);
@@ -85,6 +95,7 @@ export function AdhkarView({ locale, items }: { locale: Locale; items: readonly 
           source={source}
           where={`${source} · ${localizeDigits(i + 1, locale)}`}
           testId={`dhikr-${i + 1}`}
+          extra={extras[d.id]}
         />
       </li>
     );
@@ -137,6 +148,7 @@ export function AdhkarView({ locale, items }: { locale: Locale; items: readonly 
         </ol>
       )}
       <p className="muted small">{t(locale, "adhkar.source")}</p>
+      <DhikrPlayerBar locale={locale} />
     </>
   );
 }

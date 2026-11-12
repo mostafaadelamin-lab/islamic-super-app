@@ -5,6 +5,8 @@ import { adhkarViewStore } from "@/lib/dhikr-share";
 import { useStore } from "@/hooks/useStore";
 import { CardDeck, ModeSwitch } from "./CardDeck";
 import { DhikrTools } from "./DhikrTools";
+import { DhikrPlayerBar } from "./DhikrAudio";
+import type { DhikrExtra } from "@/lib/dhikr-extras";
 
 /** The items of one Hisn al-Muslim chapter (text unchanged), as a list or one card at a time. */
 export function HisnItems({
@@ -12,11 +14,13 @@ export function HisnItems({
   chapterId,
   title,
   items,
+  extras = [],
 }: {
   locale: Locale;
   chapterId: number;
   title: string;
   items: readonly string[];
+  extras?: readonly DhikrExtra[];
 }) {
   const { mode } = useStore(adhkarViewStore);
   const source = t(locale, "hisn.shareSource", { title, n: localizeDigits(chapterId, locale) });
@@ -31,6 +35,7 @@ export function HisnItems({
         source={source}
         where={`${source} · ${localizeDigits(i + 1, locale)}`}
         testId={`hisn-${i + 1}`}
+        extra={extras[i]}
       />
     </li>
   );
@@ -49,6 +54,7 @@ export function HisnItems({
           {items.map((_, i) => item(i))}
         </ol>
       )}
+      <DhikrPlayerBar locale={locale} />
     </>
   );
 }

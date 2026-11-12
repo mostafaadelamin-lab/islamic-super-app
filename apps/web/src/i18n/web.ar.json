@@ -572,5 +572,16 @@
   "adhan.voiceSearch": "ابحث باسم المؤذن أو البلد",
   "adhan.voiceMore": "وفيه {n} كمان، اكتب في البحث عشان تلاقيهم.",
   "adhan.listenFajr": "اسمع أذان الفجر",
-  "adhan.voiceNote": "أذان الفجر فيه «الصلاة خير من النوم»، فبيتختار لوحده. باقي المؤذنين بيشتغلوا من الإنترنت."
+  "adhan.voiceNote": "أذان الفجر فيه «الصلاة خير من النوم»، فبيتختار لوحده. باقي المؤذنين بيشتغلوا من الإنترنت.",
+  "dhikr.listen": "استمع لهذا الذكر",
+  "dhikr.play": "تشغيل",
+  "dhikr.pause": "إيقاف مؤقت",
+  "dhikr.stop": "إيقاف",
+  "dhikr.listenFailed": "تعذّر التشغيل، تأكد من الإنترنت",
+  "dhikr.player": "مشغّل الذكر",
+  "dhikr.seek": "موضع التشغيل",
+  "dhikr.hadith": "الحديث",
+  "dhikr.hadithText": "الحديث الوارد في هذا الذكر",
+  "dhikr.hadithFadl": "فضله",
+  "dhikr.hadithSource": "التخريج"
 }
