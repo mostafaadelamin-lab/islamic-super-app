@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.12] — Audio keeps playing in the background — 2026-11-12
+### Fixed
+- Radio stations, the recitation library, al-Sha'rawi lessons, stories, nasheeds and the adhkar recordings stopped a few seconds after leaving the app. Every player now runs through the system media service (Android) and the iOS background audio session, with a notification and lock-screen controls (play/pause, next/previous where there is a list, stop). Paused audio keeps its notification so it can be resumed from there.
+### Changed
+- The reader's play button goes on past the end of the page through the following pages and surahs (the page turns by itself), instead of stopping at the page end.
+- In the recitation library a surah goes straight on to the next surah of the same reciter; al-Sha'rawi lessons go on to the next lesson of the surah; a munshid's nasheeds play one after another.
+- Website: the same continuation, and the lock-screen / notification controls for the library, radio, lessons and stories players.
+
 ## [1.0.11] — Al-Sha'rawi audio tafsir — 2026-11-12
 ### Added
 - "تفسير الشعراوي" under More (app on Android and iOS, and the website): Sheikh Muhammad Mutawalli al-Sha'rawi's reflections on the Quran in his own voice, 1116 lessons (about 667 hours) ordered by surah, each labelled with the ayahs it explains. Search by surah name or number; listen online, or download any lesson for offline listening (about 7 MB each). The audio is not bundled in the app. The recordings cover the surahs the sheikh recorded (1–60, 78–89, 96, 100–114).
