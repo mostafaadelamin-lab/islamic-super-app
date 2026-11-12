@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
 import '../app_services.dart';
+import '../data/media_session.dart';
 import '../domain/nasheeds.dart';
 import '../theme/design_tokens.dart';
+import 'background_audio.dart';
 import 'l10n_ext.dart';
 import 'r_icon.dart';
 import 'youtube_player.dart';
@@ -86,13 +88,40 @@ class _AssetPlayerState extends State<_AssetPlayer> {
   bool _playing = false;
   final _subs = <StreamSubscription<Object?>>[];
 
+  /// Lock screen / notification entry, so the recording goes on in the background.
+  late final SimpleMediaSource _media = SimpleMediaSource(
+    id: 'adhkar/${widget.asset}',
+    title: widget.title,
+    artist: widget.subtitle,
+    onAction: (a) {
+      if (a == 'play') _a.play();
+      if (a == 'pause' || a == 'stop') _a.pause();
+    },
+  );
+
   @override
   void initState() {
     super.initState();
     _subs
       ..add(_a.position.listen((p) => setState(() => _pos = p)))
-      ..add(_a.playing.listen((p) => setState(() => _playing = p)));
+      ..add(
+        _a.playing.listen((p) {
+          setState(() => _playing = p);
+          _media.playing = p;
+        }),
+      );
     unawaited(_start());
+  }
+
+  RecitationMediaBridge? _bridge;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final b = context.services.media;
+    if (b == _bridge) return;
+    _bridge?.detach(_media);
+    _bridge = b?..attach(_media);
   }
 
   Future<void> _start() async {
@@ -111,6 +140,9 @@ class _AssetPlayerState extends State<_AssetPlayer> {
     for (final s in _subs) {
       s.cancel();
     }
+    _media.loaded = false;
+    _bridge?.detach(_media);
+    _media.dispose();
     _a.dispose();
     super.dispose();
   }

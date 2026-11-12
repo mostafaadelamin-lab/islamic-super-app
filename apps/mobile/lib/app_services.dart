@@ -206,6 +206,7 @@ class AppServices {
         content: content,
         settings: settings,
         session: mediaSession ?? const NoMediaSession(),
+        narration: narration,
       ),
     );
   }

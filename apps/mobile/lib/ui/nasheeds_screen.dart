@@ -139,23 +139,27 @@ class MunshidScreen extends StatelessWidget {
       body: ReadableWidth(
         child: ListenableBuilder(
           listenable: context.services.narration,
-          builder: (context, _) => ListView.separated(
-            key: const Key('munshidList'),
-            padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
-            itemCount: munshid.items.length,
-            separatorBuilder: (_, _) => const Divider(height: 1),
-            itemBuilder: (context, i) {
-              final n = munshid.items[i];
-              return PlayTile(
-                key: Key('nasheed-${n.id}'),
-                series: 'nasheeds',
-                remember: false,
-                offline: true,
-                title: n.title,
-                episode: nasheedEpisode(n),
-              );
-            },
-          ),
+          builder: (context, _) {
+            final episodes = [for (final n in munshid.items) nasheedEpisode(n)];
+            return ListView.separated(
+              key: const Key('munshidList'),
+              padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
+              itemCount: munshid.items.length,
+              separatorBuilder: (_, _) => const Divider(height: 1),
+              itemBuilder: (context, i) {
+                final n = munshid.items[i];
+                return PlayTile(
+                  key: Key('nasheed-${n.id}'),
+                  series: 'nasheeds',
+                  remember: false,
+                  offline: true,
+                  title: n.title,
+                  episode: episodes[i],
+                  playlist: episodes,
+                );
+              },
+            );
+          },
         ),
       ),
     );

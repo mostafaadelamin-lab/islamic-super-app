@@ -80,7 +80,7 @@ export function ReaderPlayer({ locale, page }: { locale: Locale; page: number })
               const tafsir = e.target.checked;
               audioStore.set((p) => ({ ...p, tafsir }));
               // "Listen with tafsir" also starts listening when nothing is playing yet.
-              if (tafsir && !active) player.play({ kind: "page", page });
+              if (tafsir && !active) player.play({ kind: "pageOn", page });
             }}
           />
           <ReaderIcon name="split" size={20} />
@@ -113,7 +113,7 @@ export function ReaderPlayer({ locale, page }: { locale: Locale; page: number })
             className="rdp-play"
             aria-label={t(locale, "audio.playPage")}
             data-testid="play-page"
-            onClick={() => player.play({ kind: "page", page })}
+            onClick={() => player.play({ kind: "pageOn", page })}
           >
             <Icon name="play" size={26} />
           </button>

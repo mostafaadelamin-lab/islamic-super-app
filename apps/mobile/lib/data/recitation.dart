@@ -141,6 +141,10 @@ class RecitationController extends ChangeNotifier {
 
   Future<void> playPage(int page) => playFrom(_content.quran.page(page).start, scope: PlayScope.page);
 
+  /// The reader's play button: from the top of [page] on through the following
+  /// pages and surahs (owner, 2026-11-12: recitation must not stop at the page end).
+  Future<void> playOnFrom(int page) => playFrom(_content.quran.page(page).start, scope: PlayScope.toEnd);
+
   Future<void> playSurah(int surah) => playFrom(AyahRef(surah, 1), scope: PlayScope.surah);
 
   /// Plays the verse ranges of a Quranic story one after the other (with the
@@ -165,14 +169,17 @@ class RecitationController extends ChangeNotifier {
     await _playCurrent();
   }
 
-  Future<void> _playCurrent() async {
+  /// [advancing]: the previous ayah just ended; the new file replaces it without
+  /// stopping the player first, so the system keeps the app's audio (and its
+  /// background service) alive between ayahs.
+  Future<void> _playCurrent({bool advancing = false}) async {
     final gen = ++_generation;
     final item = _queue[_index];
     _state = RecitationState.loading;
     notifyListeners();
     final b = _ensureBackend();
     try {
-      await b.stop();
+      if (!advancing) await b.stop();
       final local = await _localFile?.call(reciter.folder, item);
       if (gen != _generation) return;
       await b.load(local != null ? Uri.file(local).toString() : urlFor(item));
@@ -195,7 +202,7 @@ class RecitationController extends ChangeNotifier {
       return;
     }
     _index++;
-    unawaited(_playCurrent());
+    unawaited(_playCurrent(advancing: true));
   }
 
   void _finish() {
@@ -361,8 +368,30 @@ class NarrationController extends ChangeNotifier {
   int _generation = 0;
   bool _remember = true;
   DateTime _lastSave = DateTime.fromMillisecondsSinceEpoch(0);
+  List<Episode> _playlist = const [];
 
   Episode? get episode => _episode;
+  String? get seriesId => _seriesId;
+
+  /// The list the episode was started from: when it ends the next one plays
+  /// (the next surah of the recitation, the next lesson, ...). Empty for one-offs and live radio.
+  List<Episode> get playlist => _playlist;
+
+  int get _playlistIndex {
+    final e = _episode;
+    if (e == null) return -1;
+    return _playlist.indexWhere((x) => x.id == e.id && x.url == e.url);
+  }
+
+  bool get hasNext {
+    final i = _playlistIndex;
+    return i >= 0 && i + 1 < _playlist.length;
+  }
+
+  bool get hasPrevious => _playlistIndex > 0;
+
+  /// A live stream (radio): no position, no skipping.
+  bool get isLive => _episode != null && _seriesId == 'radio';
   RecitationState get state => _state;
   Duration get position => _position;
   Duration? get duration => _duration;
@@ -386,10 +415,20 @@ class NarrationController extends ChangeNotifier {
   }
 
   /// Plays [e]. [remember]: resume where the listener stopped (off for live radio streams).
-  Future<void> playEpisode(String seriesId, Episode e, {bool remember = true}) async {
+  /// [playlist]: the list [e] belongs to; playback goes on to the following items.
+  /// [fromStart]: ignore the saved position (going on to the next item).
+  Future<void> playEpisode(
+    String seriesId,
+    Episode e, {
+    bool remember = true,
+    List<Episode>? playlist,
+    bool fromStart = false,
+  }) async {
     final gen = ++_generation;
     if (_recitation.isActive) await _recitation.stop();
     _remember = remember;
+    if (playlist != null) _playlist = List.unmodifiable(playlist);
+    if (playlist == null && _seriesId != seriesId) _playlist = const [];
     _seriesId = seriesId;
     _episode = e;
     _state = RecitationState.loading;
@@ -407,7 +446,7 @@ class NarrationController extends ChangeNotifier {
       }
       _duration = await b.load(local != null ? Uri.file(local).toString() : e.url);
       if (gen != _generation) return;
-      final resume = remember ? _settings.storyPosition(_key(seriesId, e)) : 0;
+      final resume = remember && !fromStart ? _settings.storyPosition(_key(seriesId, e)) : 0;
       if (resume > 5 && (_duration == null || resume < _duration!.inSeconds - 10)) {
         await b.seek(Duration(seconds: resume));
         _position = Duration(seconds: resume);
@@ -436,6 +475,10 @@ class NarrationController extends ChangeNotifier {
   void _onDone() {
     if (_episode == null || _state != RecitationState.playing) return;
     if (_remember) unawaited(_settings.setStoryPosition(_key(_seriesId!, _episode!), 0));
+    if (hasNext) {
+      unawaited(next());
+      return;
+    }
     _state = RecitationState.paused;
     _position = Duration.zero;
     notifyListeners();
@@ -460,6 +503,26 @@ class NarrationController extends ChangeNotifier {
     _state = RecitationState.playing;
     notifyListeners();
     await _backend?.play();
+  }
+
+  /// The next item of the playlist (lock-screen "next" and automatic at the end).
+  Future<void> next() async {
+    if (!hasNext) return;
+    final e = _playlist[_playlistIndex + 1];
+    await playEpisode(_seriesId!, e, remember: _remember, fromStart: true);
+  }
+
+  /// The previous item of the playlist, or the start of this one.
+  Future<void> previous() async {
+    if (hasPrevious && _position.inSeconds < 5) {
+      final e = _playlist[_playlistIndex - 1];
+      await playEpisode(_seriesId!, e, remember: _remember, fromStart: true);
+      return;
+    }
+    if (_episode == null || _backend == null || isLive) return;
+    _position = Duration.zero;
+    notifyListeners();
+    await _backend!.seek(Duration.zero);
   }
 
   Future<void> seekBy(Duration d) async {

@@ -88,6 +88,15 @@ describe("queue and the basmala rule", () => {
     expect(last.filter((x) => x.startsWith("b"))).toEqual(["b112", "b113", "b114"]);
     expect(last).toHaveLength(18);
   });
+  it("reader play goes on from the page through the following pages and surahs (owner, 2026-11-12)", () => {
+    const q = refs(buildQueue({ kind: "pageOn", page: 3 }));
+    expect(q[0]).toBe("2:6");
+    expect(q).toContain("b3");
+    expect(q.at(-1)).toBe("114:6");
+    expect(refs(buildQueue({ kind: "pageOn", page: 604 }))).toEqual(
+      refs(buildQueue({ kind: "page", page: 604 })),
+    );
+  });
   it("from-ayah scope continues to the end of the surah", () => {
     expect(refs(buildQueue({ kind: "from", surah: 2, ayah: 284 }))).toEqual(["2:284", "2:285", "2:286"]);
     expect(refs(buildQueue({ kind: "from", surah: 3, ayah: 1 })).slice(0, 2)).toEqual(["b3", "3:1"]);

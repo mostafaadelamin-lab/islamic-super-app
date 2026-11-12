@@ -193,6 +193,8 @@ function applySpeed(el: HTMLAudioElement): void {
 
 async function resume(): Promise<void> {
   const el = element();
+  // Take the lock-screen buttons back from a library / lesson player that used them last.
+  bindMediaKeys();
   applySpeed(el);
   setState({ status: "loading", error: null });
   try {

@@ -8,6 +8,7 @@ import { player } from "@/lib/audio-player";
 import { reelsPrefsStore } from "@/lib/reels";
 import { minutes, visibleEpisodes, type Episode, type Series } from "@/lib/stories";
 import { useStore } from "@/hooks/useStore";
+import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { Icon } from "./Icon";
 import { SleepTimer } from "./SleepTimer";
 
@@ -98,11 +99,16 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
                   lastSave.current = now;
                   savePosition(posKey(current), e.currentTarget.currentTime);
                 }}
-                onPause={(e) => savePosition(posKey(current), e.currentTarget.currentTime)}
+                onPause={(e) => {
+                  savePosition(posKey(current), e.currentTarget.currentTime);
+                  mediaSessionState(false);
+                }}
                 onEnded={() => savePosition(posKey(current), 0)}
-                onPlay={() => {
+                onPlay={(e) => {
                   setError(false);
                   player.stop(); // one voice at a time
+                  claimMediaSession(e.currentTarget, { title: L(current.title), artist: L(series.narrator) });
+                  mediaSessionState(true);
                 }}
                 onError={() => setError(true)}
               />

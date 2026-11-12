@@ -168,24 +168,29 @@ class SharawiSurahScreen extends StatelessWidget {
       body: ReadableWidth(
         child: ListenableBuilder(
           listenable: context.services.narration,
-          builder: (context, _) => ListView.separated(
-            key: const Key('sharawiLessons'),
-            padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
-            itemCount: surah.lessons.length,
-            separatorBuilder: (_, _) => const Divider(height: 1),
-            itemBuilder: (context, i) {
-              final x = surah.lessons[i];
-              final sub = context.sharawiLessonSubtitle(x);
-              return PlayTile(
-                key: Key('sharawi-${x.id}'),
-                series: sharawiSeries,
-                offline: true,
-                title: context.sharawiLessonTitle(x),
-                subtitle: sub.isEmpty ? null : sub,
-                episode: sharawiEpisode(context, x),
-              );
-            },
-          ),
+          builder: (context, _) {
+            // The surah's lessons in order: one lesson goes straight on to the next.
+            final episodes = [for (final x in surah.lessons) sharawiEpisode(context, x)];
+            return ListView.separated(
+              key: const Key('sharawiLessons'),
+              padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
+              itemCount: surah.lessons.length,
+              separatorBuilder: (_, _) => const Divider(height: 1),
+              itemBuilder: (context, i) {
+                final x = surah.lessons[i];
+                final sub = context.sharawiLessonSubtitle(x);
+                return PlayTile(
+                  key: Key('sharawi-${x.id}'),
+                  series: sharawiSeries,
+                  offline: true,
+                  title: context.sharawiLessonTitle(x),
+                  subtitle: sub.isEmpty ? null : sub,
+                  episode: episodes[i],
+                  playlist: episodes,
+                );
+              },
+            );
+          },
         ),
       ),
     );

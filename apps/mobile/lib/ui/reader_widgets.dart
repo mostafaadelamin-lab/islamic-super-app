@@ -111,7 +111,7 @@ class ReaderPlayerCard extends StatelessWidget {
         }
         void play() {
           if (!active) {
-            unawaited(rec.playPage(page));
+            unawaited(rec.playOnFrom(page));
           } else if (rec.state == RecitationState.playing) {
             unawaited(rec.pause());
           } else {
@@ -209,7 +209,7 @@ class ReaderPlayerCard extends StatelessWidget {
                             void toggle() {
                               unawaited(settings.setTafsirWithRecitation(!withTafsir));
                               // "Listen with tafsir" also starts listening when nothing plays yet.
-                              if (!withTafsir && !active) unawaited(rec.playPage(page));
+                              if (!withTafsir && !active) unawaited(rec.playOnFrom(page));
                             }
 
                             final style = TextButton.styleFrom(

@@ -1,3 +1,4 @@
+import 'package:audio_session/audio_session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -33,6 +34,12 @@ Future<AppServices> bootstrap({
 
 /// System media controls; the app still works (foreground only) if the service cannot start.
 Future<MediaSession> _mediaSession() async {
+  try {
+    // Recitation, radio and lessons are "music playback": iOS keeps them playing
+    // with the app in the background or the screen locked (Info.plist audio mode).
+    final audio = await AudioSession.instance;
+    await audio.configure(const AudioSessionConfiguration.music());
+  } catch (_) {}
   try {
     return await AudioServiceMediaSession.init(channelName: 'التلاوة · Recitation');
   } catch (_) {

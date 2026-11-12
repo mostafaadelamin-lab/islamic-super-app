@@ -72,6 +72,8 @@ function surahRefs(s: number, from: number): [number, number][] {
 
 export type PlayScope =
   | { kind: "page"; page: number }
+  /** The reader's play button: from the top of a page on through the following pages and surahs to an-Nas. */
+  | { kind: "pageOn"; page: number }
   | { kind: "surah"; surah: number }
   | { kind: "from"; surah: number; ayah: number }
   /** One ayah only (tapped in the Mushaf); no basmala before it. */
@@ -104,6 +106,13 @@ export function rangeRefs(ranges: readonly (readonly [number, number, number])[]
  */
 export function buildQueue(scope: PlayScope): QueueItem[] {
   if (scope.kind === "page") return withBasmala(ayahsOnPage(scope.page));
+  if (scope.kind === "pageOn") {
+    const first = ayahsOnPage(scope.page)[0];
+    if (!first) return [];
+    const [s0, a0] = first;
+    const rest = Array.from({ length: SURAH_COUNT - s0 }, (_, i) => surahRefs(s0 + 1 + i, 1));
+    return withBasmala([...surahRefs(s0, a0), ...rest.flat()]);
+  }
   if (scope.kind === "surah") return withBasmala(surahRefs(scope.surah, 1));
   if (scope.kind === "ranges") return withBasmala(rangeRefs(scope.ranges));
   if (scope.kind === "quran") return withBasmala(radioSurahs(scope.from).flatMap((s) => surahRefs(s, 1)));

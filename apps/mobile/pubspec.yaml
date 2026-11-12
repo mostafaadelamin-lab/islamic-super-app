@@ -21,6 +21,8 @@ dependencies:
   just_audio: ^0.10.6
   # Lock-screen / notification controls and background recitation (Android media service).
   audio_service: ^0.18.18
+  # Audio session as "music playback" so iOS keeps the audio going in the background / screen locked.
+  audio_session: ^0.2.4
   # Long-press shortcuts on the app icon.
   quick_actions: ^1.1.0
   flutter_local_notifications: ^22.3.2

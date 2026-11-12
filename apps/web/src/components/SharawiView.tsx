@@ -14,6 +14,7 @@ import {
   type SharawiSurah,
 } from "@/lib/sharawi";
 import { useStore } from "@/hooks/useStore";
+import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { Icon } from "./Icon";
 import { SleepTimer } from "./SleepTimer";
 
@@ -78,6 +79,13 @@ export function SharawiView({
   if (failed) return <p className="alert alert-error">{t(locale, "sharawi.loadError")}</p>;
   if (!data) return <p className="muted">…</p>;
   const total = data.reduce((a, s) => a + s.lessons.length, 0);
+  /** The lesson after (or before) the current one in its surah: a lesson goes straight on to the next. */
+  const stepLesson = (delta: 1 | -1): SharawiLesson | null => {
+    if (!current) return null;
+    const lessons = data.find((s) => s.surah === current.surah)?.lessons ?? [];
+    const i = lessons.findIndex((x) => x.id === current.id);
+    return i < 0 ? null : (lessons[i + delta] ?? null);
+  };
   const sub = (l: SharawiLesson): string =>
     [
       l.from && l.to
@@ -106,7 +114,22 @@ export function SharawiView({
             controls
             preload="metadata"
             data-testid="sharawi-audio"
-            onPlay={() => player.stop()}
+            onPlay={(e) => {
+              player.stop();
+              const next = stepLesson(1);
+              const prev = stepLesson(-1);
+              claimMediaSession(e.currentTarget, {
+                title: `${name(current.surah)} · ${t(locale, "sharawi.lesson", { n: n(current.index) })}`,
+                next: next ? () => setCurrent(next) : undefined,
+                previous: prev ? () => setCurrent(prev) : undefined,
+              });
+              mediaSessionState(true);
+            }}
+            onPause={() => mediaSessionState(false)}
+            onEnded={() => {
+              const next = stepLesson(1);
+              if (next) setCurrent(next);
+            }}
           />
           <div className="row">
             <SleepTimer locale={locale} />

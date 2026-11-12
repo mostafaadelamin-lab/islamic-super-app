@@ -167,6 +167,16 @@ class _ReciterScreenState extends State<ReciterScreen> {
     final l = context.l10n;
     final s = context.services;
     final r = widget.reciter;
+    final episodes = [
+      for (final n in _moshaf.surahs)
+        Episode(
+          id: 's$n',
+          titleAr: l.librarySurahTitle(r.name, s.content.quran.surah(n).nameAr),
+          titleEn: l.librarySurahTitle(r.name, s.content.quran.surah(n).translit),
+          url: _moshaf.url(n),
+          status: ReviewStatus.approved,
+        ),
+    ];
     return Scaffold(
       appBar: AppBar(title: Text(r.name)),
       bottomNavigationBar: _bottomPlayers,
@@ -202,25 +212,15 @@ class _ReciterScreenState extends State<ReciterScreen> {
               else
                 ListTile(title: Text(_moshaf.name)),
               ListTile(dense: true, title: Text(l.librarySurahCount(context.num(_moshaf.surahs.length)))),
-              for (final n in _moshaf.surahs)
-                Builder(
-                  builder: (context) {
-                    final surah = s.content.quran.surah(n);
-                    final ar = l.librarySurahTitle(r.name, surah.nameAr);
-                    return PlayTile(
-                      key: Key('surah-$n'),
-                      offline: true,
-                      series: 'mp3quran-${_moshaf.id}',
-                      episode: Episode(
-                        id: 's$n',
-                        titleAr: ar,
-                        titleEn: l.librarySurahTitle(r.name, surah.translit),
-                        url: _moshaf.url(n),
-                        status: ReviewStatus.approved,
-                      ),
-                      title: '${context.num(n)}. ${surahName(context, surah)}',
-                    );
-                  },
+              // The whole moshaf, in order: a surah goes straight on to the next one.
+              for (final (i, n) in _moshaf.surahs.indexed)
+                PlayTile(
+                  key: Key('surah-$n'),
+                  offline: true,
+                  series: 'mp3quran-${_moshaf.id}',
+                  episode: episodes[i],
+                  playlist: episodes,
+                  title: '${context.num(n)}. ${surahName(context, s.content.quran.surah(n))}',
                 ),
               Padding(
                 padding: const EdgeInsets.all(DesignTokens.spaceLg),
@@ -248,8 +248,12 @@ class PlayTile extends StatelessWidget {
     this.offline = false,
     this.leading,
     this.onPlay,
+    this.playlist,
   });
   final VoidCallback? onPlay;
+
+  /// The list this item belongs to: when it ends the next one plays.
+  final List<Episode>? playlist;
   final String series;
   final Episode episode;
   final String? title;
@@ -280,7 +284,7 @@ class PlayTile extends StatelessWidget {
           n.resume();
         } else {
           onPlay?.call();
-          n.playEpisode(series, episode, remember: remember);
+          n.playEpisode(series, episode, remember: remember, playlist: playlist);
         }
       },
     );

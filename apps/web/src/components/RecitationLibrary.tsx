@@ -14,20 +14,38 @@ import {
   type Library,
   type Reciter,
 } from "@/lib/mp3quran";
+import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { Icon } from "./Icon";
 import { SleepTimer } from "./SleepTimer";
 
-interface Track {
+export interface Track {
   key: string;
   title: string;
   url: string;
   live: boolean;
+  /** The reciter's surahs in order: when one ends the next one plays (owner, 2026-11-12). */
+  playlist?: Track[];
+}
+
+/** The track after (or before) `track` in its list. */
+export function stepTrack(track: Track, delta: 1 | -1): Track | null {
+  const list = track.playlist ?? [];
+  const i = list.findIndex((x) => x.key === track.key);
+  return i < 0 ? null : (list[i + delta] ?? null);
 }
 
 type Tab = "reciters" | "radios";
 
 /** One native audio player for the chosen surah or radio (stops the app's recitation player: one voice at a time). */
-function NowPlaying({ locale, track }: { locale: Locale; track: Track }) {
+function NowPlaying({
+  locale,
+  track,
+  onTrack,
+}: {
+  locale: Locale;
+  track: Track;
+  onTrack: (t: Track) => void;
+}) {
   const ref = useRef<HTMLAudioElement>(null);
   const [error, setError] = useState(false);
   useEffect(() => {
@@ -55,9 +73,22 @@ function NowPlaying({ locale, track }: { locale: Locale; track: Track }) {
         controls
         preload="none"
         data-testid="library-audio"
-        onPlay={() => {
+        onPlay={(e) => {
           setError(false);
           player.stop();
+          const next = stepTrack(track, 1);
+          const prev = stepTrack(track, -1);
+          claimMediaSession(e.currentTarget, {
+            title: track.title,
+            next: next ? () => onTrack(next) : undefined,
+            previous: prev ? () => onTrack(prev) : undefined,
+          });
+          mediaSessionState(true);
+        }}
+        onPause={() => mediaSessionState(false)}
+        onEnded={() => {
+          const next = stepTrack(track, 1);
+          if (next) onTrack(next);
         }}
         onError={() => setError(true)}
       />
@@ -89,6 +120,17 @@ function ReciterView({
   const first = reciter.moshafs.find((m) => m.rewayaId === rewaya) ?? reciter.moshafs[0]!;
   const [moshafId, setMoshafId] = useState(first.id);
   const moshaf = reciter.moshafs.find((m) => m.id === moshafId) ?? first;
+  const tracks: Track[] = moshaf.surahs.map((n) => {
+    const s = SURAHS[n - 1]!;
+    const name = locale === "ar" ? s.nameAr : s.translit;
+    return {
+      key: `${moshaf.id}:${n}`,
+      url: surahUrl(moshaf, n),
+      live: false,
+      title: t(locale, "library.surahTitle", { reciter: reciter.name, surah: name }),
+    };
+  });
+  tracks.forEach((x) => (x.playlist = tracks));
   return (
     <section className="card" data-testid="library-reciter" aria-labelledby="library-reciter-h">
       <p>
@@ -117,7 +159,7 @@ function ReciterView({
         {t(locale, "library.surahCount", { n: localizeDigits(moshaf.surahs.length, locale) })}
       </p>
       <ol className="episode-list">
-        {moshaf.surahs.map((n) => {
+        {moshaf.surahs.map((n, i) => {
           const s = SURAHS[n - 1]!;
           const name = locale === "ar" ? s.nameAr : s.translit;
           const key = `${moshaf.id}:${n}`;
@@ -129,14 +171,7 @@ function ReciterView({
                 className="episode"
                 aria-pressed={on}
                 data-testid={`library-surah-${n}`}
-                onClick={() =>
-                  onPlay({
-                    key,
-                    url: surahUrl(moshaf, n),
-                    live: false,
-                    title: t(locale, "library.surahTitle", { reciter: reciter.name, surah: name }),
-                  })
-                }
+                onClick={() => onPlay(tracks[i]!)}
               >
                 <Icon name={on ? "pause" : "play"} />
                 <span className="tile-text">
@@ -198,7 +233,7 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
   const radios = filterRadios(lib, query, normalizeArabic);
   return (
     <>
-      {track ? <NowPlaying locale={locale} track={track} /> : null}
+      {track ? <NowPlaying locale={locale} track={track} onTrack={setTrack} /> : null}
       {reciter ? (
         <ReciterView
           key={reciter.id}
