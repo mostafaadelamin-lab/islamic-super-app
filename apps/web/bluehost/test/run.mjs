@@ -1,0 +1,18 @@
+import fs from "fs";
+import * as V from "./videos-core.mjs";
+const sources = JSON.parse(fs.readFileSync("reel-sources.json","utf8"));
+const mode = process.argv[2];
+const get = async (u) => {
+  if (u.includes("results")) return fs.readFileSync("search.html","utf8");
+  if (u.includes("/@")) return fs.readFileSync("handle.html","utf8");
+  if (u.includes("playlist_id=UUSHYu")) return fs.readFileSync("feed.xml","utf8");
+  if (u.includes("channel_id=")) return u.includes("UCbbb") ? fs.readFileSync("feed.xml","utf8").replace(/shorts/g,"watch") : null;
+  if (u.includes("/videos?")) return fs.readFileSync("chan.html","utf8");
+  return null;
+};
+const trusted = new Set([...sources.feed, ...sources.suggested].map(s=>s.channelId).filter(Boolean));
+const out = {};
+out.feed = await V.buildFeed(sources.feed, get);
+for (const q of ["قرآن","اغنية","  ", "test"]) out["q"+q] = await V.searchVideos(q, get, trusted);
+out.norm = ["القُرْآنُ الكريمـ", "إيمانٌ ةى"].map(V.normalize);
+console.log(JSON.stringify(out));

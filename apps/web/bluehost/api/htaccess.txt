@@ -1,0 +1,8 @@
+# Only videos.php is public here; the channel list and the cache are not.
+Options -Indexes
+<FilesMatch "\.(json|log)$">
+  Require all denied
+</FilesMatch>
+<IfModule mod_headers.c>
+  Header always set Access-Control-Allow-Origin "https://rattilwasalli.com"
+</IfModule>
