@@ -4,7 +4,7 @@ import { readRepoJson } from "../repo";
 import { filterSurahs, SurahIndex } from "@/components/SurahIndex";
 import { GoToPage } from "@/components/GoToPage";
 import { SurahReader } from "@/components/SurahReader";
-import { arrowTarget, PageReader } from "@/components/PageReader";
+import { arrowTarget, isLandscapePhone, PageReader } from "@/components/PageReader";
 import { lookupFrom, resolvePage, type MushafLinesFile } from "@/lib/mushaf";
 import { SearchView, resetSearchIndexForTests, loadIndex } from "@/components/SearchView";
 import { BookmarksView } from "@/components/BookmarksView";
@@ -237,7 +237,11 @@ describe("PageReader (15-line Mushaf)", () => {
     expect(screen.getByTestId("act-bookmark")).toHaveAttribute("data-bookmarked", "true");
     await userEvent.click(screen.getByTestId("act-close"));
     expect(screen.queryByTestId("ayah-actions")).toBeNull();
-    // tapping words of an ayah selects it too
+    // full screen again: the first tap only shows the controls, then tapping words of an ayah selects it
+    expect(document.querySelector(".rd")).toHaveClass("rd-full");
+    fireEvent.click(document.querySelector('.seg[data-ayah="2:10"]')!);
+    expect(screen.queryByTestId("ayah-actions")).toBeNull();
+    expect(document.querySelector(".rd")).not.toHaveClass("rd-full");
     fireEvent.click(document.querySelector('.seg[data-ayah="2:10"]')!);
     expect(screen.getByTestId("ayah-actions")).toHaveTextContent("Al-Baqarah, ayah 10");
   });
@@ -311,5 +315,36 @@ describe("BookmarksView and ContinueReading", () => {
     rerender(<ContinueReading locale="en" />);
     expect(screen.getByTestId("continue-surah")).toHaveAttribute("href", "/en/surah/18/#a-10");
     expect(screen.getByTestId("continue-page")).toHaveAttribute("href", "/en/page/294/");
+  });
+});
+
+describe("Mushaf full screen", () => {
+  const lines = readRepoJson<MushafLinesFile>("content/quran/dist/mushaf-lines.v1.json");
+  const lookup = lookupFrom(quran.surahs.map((x) => x.ayahs));
+  const initial = (page: number) => resolvePage(lines.pages[page - 1]!, lookup);
+  beforeEach(() => resetStores());
+
+  it("opens full screen; a tap shows the controls and a tap beside the text hides them", () => {
+    render(<PageReader locale="ar" initial={initial(3)} />);
+    const rd = document.querySelector(".rd")!;
+    expect(rd).toHaveClass("rd-full");
+    fireEvent.click(screen.getByTestId("mushaf-stage"));
+    expect(rd).not.toHaveClass("rd-full");
+    expect(screen.queryByTestId("ayah-actions")).toBeNull();
+    fireEvent.click(screen.getByTestId("mushaf-stage"));
+    expect(rd).toHaveClass("rd-full");
+  });
+
+  it("other tabs are never full screen", async () => {
+    render(<PageReader locale="ar" initial={initial(3)} />);
+    fireEvent.click(screen.getByTestId("mushaf-stage"));
+    await userEvent.click(screen.getByRole("tab", { name: "الآيات" }));
+    expect(document.querySelector(".rd")).not.toHaveClass("rd-full");
+  });
+
+  it("landscape fit applies to phones held sideways only", () => {
+    expect(isLandscapePhone(844, 390)).toBe(true);
+    expect(isLandscapePhone(390, 844)).toBe(false);
+    expect(isLandscapePhone(1280, 800)).toBe(false);
   });
 });

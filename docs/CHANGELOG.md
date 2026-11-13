@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.14] — Mushaf full screen, new colours, landscape — 2026-11-13
+### Changed
+- The Mushaf opens full screen: only the page, with the status and navigation bars hidden. One tap on the page brings back the tabs, player, page slider and bottom bar; a tap beside the text hides them again. An ayah number still opens that ayah directly.
+- Reader colours follow the owner's reference: cream paper, brown frame, surah bands and ayah markers, black text; the reader's buttons, player and bars are brown and cream instead of green (a warm dark variant in dark mode).
+- A phone held sideways: the lines take the whole width in a bigger font and the page scrolls down (tablets and desktops still show the whole page).
+- The page layout, Quran text (KFGQPC Hafs v18), font, lines and page turning (swipe right for the next page) are unchanged.
+
 ## [1.0.13] — Names of Allah explained by Sheikh al-Nabulsi; story titles — 2026-11-12
 ### Changed
 - Names of Allah: the phone's text-to-speech voice is gone. Each name now has Sheikh Muhammad Ratib al-Nabulsi's recorded lessons on it (91 of the 99 names; two lessons per name from his 2008 series, one from his 1996 series where 2008 has none), streamed with a play/pause bar. The flutter_tts dependency was removed.

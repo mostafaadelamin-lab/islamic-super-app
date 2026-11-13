@@ -81,13 +81,14 @@ const TILT_DIVISOR = 40;
 const REBOUND = 0.35;
 
 /** Sizes the Quran font so the widest line of the page exactly fills the frame (no wrapping, no overflow). */
-function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number): void {
+function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full = false): void {
   const fit = useCallback(() => {
     const el = pageEl.current;
     const frame = el?.parentElement;
     if (!el || !frame) return;
     frame.style.removeProperty("--m-width");
     frame.style.removeProperty("--m-min-h");
+    el.style.removeProperty("--m-lh");
     const fs = getComputedStyle(frame);
     const available =
       frame.clientWidth - parseFloat(fs.paddingLeft || "0") - parseFloat(fs.paddingRight || "0");
@@ -102,6 +103,14 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number): voi
     const byWidth = widths.length
       ? fitFontSize(widths, probe, available - FIT.safetyPx)
       : available / FIT.lineEms;
+    // Full screen on a phone turned sideways: the lines take the whole width and the page scrolls down.
+    if (full && isLandscapePhone()) {
+      el.style.setProperty(
+        "--m-size",
+        `${Math.min(byWidth, available / (FIT.lineEms * FIT.capRatio)).toFixed(2)}px`,
+      );
+      return;
+    }
     // Fit between the page's top and the floating player / page slider / bottom bar.
     const top = frame.getBoundingClientRect().top + window.scrollY;
     const dock = document.querySelector<HTMLElement>(".rd-dock")?.offsetHeight ?? 0;
@@ -113,12 +122,17 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number): voi
       room / (Math.max(1, el.querySelectorAll(".m-line").length || FIT.lines) * FIT.lineHeight);
     const size = Math.min(byWidth, byHeight, available / (FIT.lineEms * FIT.capRatio));
     el.style.setProperty("--m-size", `${size.toFixed(2)}px`);
+    // Full screen: when the width limits the size, spread the 15 lines over the whole height (like the printed page).
+    const lineCount = el.querySelectorAll(".m-line").length;
+    if (full && !isCentredPage(page) && byHeight > size && lineCount) {
+      el.style.setProperty("--m-lh", (room / (lineCount * size)).toFixed(3));
+    }
     // When the screen height limits the size, narrow the page (border box) so lines are not stretched.
     if (byHeight < byWidth) {
       const ems = Math.max(widestEms, FIT.lineEms * FIT.capRatio);
       frame.style.setProperty("--m-width", `${Math.ceil(size * ems + chrome + FIT.safetyPx)}px`);
     }
-  }, [pageEl, page]);
+  }, [pageEl, page, full]);
 
   useLayoutEffect(() => {
     fit();
@@ -141,6 +155,12 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number): voi
       window.removeEventListener("resize", fit);
     };
   }, [fit]);
+}
+
+/** A phone held sideways: wider than tall and short (tablets and desktops keep the whole page on screen). */
+export const LANDSCAPE_MAX_HEIGHT = 600;
+export function isLandscapePhone(w = window.innerWidth, h = window.innerHeight): boolean {
+  return w > h && h <= LANDSCAPE_MAX_HEIGHT;
 }
 
 /** Font size steps of the verse and tafsir lists ("حجم الخط"): +4 px, back to the smallest after the largest. */
@@ -183,6 +203,8 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const [drag, setDrag] = useState<{ dx: number; anim: boolean }>({ dx: 0, anim: false });
   const [tab, setTab] = useState<ReaderTab>("mushaf");
   const [sheet, setSheet] = useState<"help" | "khatma" | null>(null);
+  // Full-screen reading: the controls stay hidden until the page is tapped.
+  const [chrome, setChrome] = useState(false);
   const dockRef = useRef<HTMLDivElement>(null);
   const pageEl = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLInputElement>(null);
@@ -197,7 +219,9 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const playingKey = current?.kind === "ayah" ? `${current.s}:${current.a}` : null;
   const playingBasmala = current?.kind === "basmala" ? current.s : null;
 
-  useFitFont(pageEl, page);
+  const fullScreen =
+    tab === "mushaf" && !chrome && !selected && sheet === null && !(audioPrefs.tafsir && active);
+  useFitFont(pageEl, page, fullScreen);
 
   useEffect(() => {
     let alive = true;
@@ -362,8 +386,18 @@ export function PageReader({ locale, initial }: PageReaderProps) {
       suppressClick.current = false;
       return;
     }
+    // Full screen: a tap brings the controls back; a tap on an ayah number still opens that ayah.
+    if (fullScreen && !(e.target as HTMLElement).closest(".ayah-end")) {
+      setChrome(true);
+      return;
+    }
     const hit = (e.target as HTMLElement).closest<HTMLElement>("[data-ayah]");
     const key = hit?.dataset.ayah ?? null;
+    // A tap beside the text with nothing selected hides the controls again.
+    if (!key && !selected) {
+      setChrome(false);
+      return;
+    }
     setSelected((cur) => (key && key !== cur ? key : null));
   };
 
@@ -433,7 +467,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
 
   return (
     <div
-      className="mushaf-reader rd"
+      className={fullScreen ? "mushaf-reader rd rd-full" : "mushaf-reader rd"}
       data-tab={tab}
       data-split={split ? "true" : "false"}
       style={{ "--rd-fs": `${prefs.fontSize}px` } as CSSProperties}

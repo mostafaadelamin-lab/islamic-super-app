@@ -67,7 +67,14 @@ class MushafMetrics {
 
   /// Largest font size whose glyph box fits [lineHeight].
   static double fitHeight(double lineHeight) => lineHeight * 0.92 * refSize / _heightAtRef;
+
+  /// Line height needed by [font] (the inverse of [fitHeight]).
+  static double lineHeightFor(double font) => font * _heightAtRef / (0.92 * refSize);
 }
+
+/// A phone held sideways: wider than tall and short. Its Mushaf page takes the
+/// whole width and scrolls down (tablets keep the whole page on screen).
+bool isLandscapePhone(Size s) => s.width > s.height && s.height <= 600;
 
 /// One Madinah Mushaf page drawn from mushaf-lines.v1.json: 15 lines (8 on
 /// pages 1–2), surah title bands, basmala lines and ayah markers, inside a
@@ -81,9 +88,15 @@ class MushafPageView extends StatelessWidget {
     this.playing,
     this.onAyahTap,
     this.onBackgroundTap,
+    this.immersive = false,
   });
 
   final int page;
+
+  /// Full-screen reading: a tap on the words only brings the controls back
+  /// (an ayah number still opens the ayah); a phone held sideways gets a
+  /// width-filling page that scrolls down.
+  final bool immersive;
   final AyahRef? selected;
   final AyahRef? playing;
   final ValueChanged<AyahRef>? onAyahTap;
@@ -116,8 +129,6 @@ class MushafPageView extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, c) {
           const chrome = 2 * outerPad + headerHeight + footerHeight + 2 * framePad + 8;
-          final lineH = math.max(minLineHeight, (c.maxHeight - chrome) / 15);
-          final totalH = math.max(c.maxHeight, lineH * 15 + chrome);
           final innerW = c.maxWidth - 2 * outerPad - 2 * framePad - 8;
           final words = [
             for (final line in layout.lines)
@@ -126,7 +137,9 @@ class MushafPageView extends StatelessWidget {
           final display = [
             for (final w in words) [for (final x in w) s.content.renderMap.forDisplay(x.text)],
           ];
-          var font = MushafMetrics.fitHeight(lineH);
+          final sideways = immersive && isLandscapePhone(Size(c.maxWidth, c.maxHeight));
+          var lineH = math.max(minLineHeight, (c.maxHeight - chrome) / 15);
+          var font = sideways ? double.infinity : MushafMetrics.fitHeight(lineH);
           for (var i = 0; i < words.length; i++) {
             if (words[i].isEmpty) continue;
             final markers = words[i].where((w) => w.endsAyah).length;
@@ -134,6 +147,11 @@ class MushafPageView extends StatelessWidget {
             font = math.min(font, MushafMetrics.fitWidth(innerW * 0.985, ref, words[i].length, markers));
           }
           if (layout.centered) font *= 0.94;
+          if (sideways) {
+            if (!font.isFinite) font = MushafMetrics.fitHeight(lineH);
+            lineH = MushafMetrics.lineHeightFor(font) * 1.45;
+          }
+          final totalH = math.max(c.maxHeight, lineH * 15 + chrome);
           final firstKeyed = <AyahRef>{};
 
           Color? highlightOf(AyahRef r) => r == playing
@@ -171,7 +189,7 @@ class MushafPageView extends StatelessWidget {
                         decoration: BoxDecoration(color: hl, borderRadius: BorderRadius.circular(4)),
                         child: word,
                       );
-              } else {
+              } else if (!immersive) {
                 word = MetaData(metaData: w.ref, behavior: HitTestBehavior.opaque, child: word);
               }
               if (layout.centered) {

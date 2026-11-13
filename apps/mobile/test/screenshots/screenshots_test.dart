@@ -59,6 +59,24 @@ void main() {
     });
   }
 
+  testWidgets('Mushaf full screen (ar): portrait pages, controls after a tap, a phone held sideways', (tester) async {
+    PageReaderScreen.startFullScreen = true;
+    addTearDown(() => PageReaderScreen.startFullScreen = false);
+    for (final p in [1, 3, 604]) {
+      await pumpApp(tester, size: const Size(390, 844), prefs: {'theme': 'light'});
+      await pushScreen(tester, PageReaderScreen(initialPage: p));
+      await shot(tester, 'mushaf_full_p$p');
+    }
+    await pumpApp(tester, size: const Size(390, 844), prefs: {'theme': 'light'});
+    await pushScreen(tester, const PageReaderScreen(initialPage: 3));
+    await tester.tap(find.byKey(const Key('pageAyah-2-10')));
+    await tester.pumpAndSettle();
+    await shot(tester, 'mushaf_full_p3_controls');
+    await pumpApp(tester, size: const Size(844, 390), prefs: {'theme': 'light'});
+    await pushScreen(tester, const PageReaderScreen(initialPage: 4));
+    await shot(tester, 'mushaf_full_landscape_p4');
+  });
+
   testWidgets('iPad screenshots (ar)', (tester) async {
     tester.view.devicePixelRatio = 1;
     for (final size in const [Size(1194, 834), Size(834, 1194)]) {

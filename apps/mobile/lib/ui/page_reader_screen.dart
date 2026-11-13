@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../app_services.dart';
 import '../data/recitation.dart';
 import '../data/settings.dart';
 import '../domain/page_khatma.dart';
 import '../domain/quran.dart';
+import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import 'ayah_sheet.dart';
 import 'bookmarks_screen.dart';
@@ -26,6 +28,10 @@ import 'r_icon.dart';
 /// bookmark, copy). With "Listen with tafsir" the Mushaf tab splits in two:
 /// the ayah being recited and its tafsir.
 class PageReaderScreen extends StatefulWidget {
+  /// The Mushaf opens full screen (only the page; a tap shows the controls).
+  /// Widget tests that drive the controls set this to false.
+  static bool startFullScreen = true;
+
   const PageReaderScreen({super.key, this.initialPage = 1, this.highlight});
   final int initialPage;
 
@@ -45,7 +51,9 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   RecitationController? _recitation;
   ReaderTab _tab = ReaderTab.mushaf;
   Timer? _khatmaTimer;
-  bool _controls = true;
+  // Full-screen reading: the controls stay hidden until the page is tapped.
+  bool _controls = !PageReaderScreen.startFullScreen;
+  bool? _immersiveUi;
 
   int get page => _page;
   AyahRef? get selected => _selected;
@@ -69,8 +77,16 @@ class PageReaderScreenState extends State<PageReaderScreen> {
     });
   }
 
+  /// Hides the status and navigation bars while the page is full screen.
+  void _syncSystemUi(bool full) {
+    if (_immersiveUi == full) return;
+    _immersiveUi = full;
+    unawaited(SystemChrome.setEnabledSystemUIMode(full ? SystemUiMode.immersiveSticky : SystemUiMode.edgeToEdge));
+  }
+
   @override
   void dispose() {
+    if (_immersiveUi == true) unawaited(SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge));
     _khatmaTimer?.cancel();
     _recitation?.removeListener(_onRecitation);
     _controller.dispose();
@@ -159,71 +175,94 @@ class PageReaderScreenState extends State<PageReaderScreen> {
     if (mounted) setState(() => _selected = null);
   }
 
+  /// True while only the Mushaf page is shown (no tabs, player or bars).
+  bool get fullScreen {
+    final s = context.services;
+    final split = s.settings.tafsirWithRecitation && s.recitation.isActive;
+    return _tab == ReaderTab.mushaf && !_controls && _selected == null && !split;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final s = context.services;
+    return MushafColors(
+      child: ListenableBuilder(
+        listenable: Listenable.merge([s.recitation, s.settings]),
+        builder: (context, _) => _build(context),
+      ),
+    );
+  }
+
+  Widget _build(BuildContext context) {
     final l = context.l10n;
     final s = context.services;
     final scheme = Theme.of(context).colorScheme;
     // Short phones keep the whole Mushaf page on screen: zoom and surah info move into a menu.
     final size = MediaQuery.sizeOf(context);
     final compact = _tab == ReaderTab.mushaf && size.height < 700 && size.width < 420;
+    final full = fullScreen;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _syncSystemUi(full);
+    });
     return Scaffold(
+      backgroundColor: full ? AppTheme.of(context, 'surface2') : null,
       body: SafeArea(
         bottom: false,
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(DesignTokens.spaceXs, DesignTokens.spaceXs, DesignTokens.spaceXs, 0),
-              child: Row(
-                children: [
-                  BackButton(key: const Key('readerBack'), color: scheme.primary),
-                  Expanded(
-                    child: Center(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: ReaderTabs(tab: _tab, onChanged: _setTab),
+            if (!full)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(DesignTokens.spaceXs, DesignTokens.spaceXs, DesignTokens.spaceXs, 0),
+                child: Row(
+                  children: [
+                    BackButton(key: const Key('readerBack'), color: scheme.primary),
+                    Expanded(
+                      child: Center(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: ReaderTabs(tab: _tab, onChanged: _setTab),
+                        ),
                       ),
                     ),
-                  ),
-                  if (compact)
-                    PopupMenuButton<int>(
-                      key: const Key('readerMore'),
-                      tooltip: l.readerHelp,
-                      icon: RIcon(RIcons.help, color: scheme.primary),
-                      onSelected: (v) {
-                        final st = s.settings;
-                        switch (v) {
-                          case 0:
-                            unawaited(st.setMushafZoom(st.mushafZoom + 0.25));
-                          case 1:
-                            unawaited(st.setMushafZoom(st.mushafZoom - 0.25));
-                          case 2:
-                            showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah);
-                          default:
-                            showReaderHelp(context, pageCount: _count, onGo: _jump);
-                        }
-                      },
-                      itemBuilder: (_) => [
-                        PopupMenuItem(value: 0, child: Text('A+  ${l.readerFontBigger}')),
-                        PopupMenuItem(value: 1, child: Text('A−  ${l.readerFontSmaller}')),
-                        PopupMenuItem(value: 2, child: Text(l.surahInfoTitle)),
-                        PopupMenuItem(value: 3, child: Text(l.readerHelp)),
-                      ],
-                    )
-                  else if (_tab == ReaderTab.mushaf)
-                    IconButton(
-                      key: const Key('readerHelp'),
-                      tooltip: l.readerHelp,
-                      color: scheme.primary,
-                      icon: const RIcon(RIcons.help),
-                      onPressed: () => showReaderHelp(context, pageCount: _count, onGo: _jump),
-                    )
-                  else
-                    const SizedBox(width: 48),
-                ],
+                    if (compact)
+                      PopupMenuButton<int>(
+                        key: const Key('readerMore'),
+                        tooltip: l.readerHelp,
+                        icon: RIcon(RIcons.help, color: scheme.primary),
+                        onSelected: (v) {
+                          final st = s.settings;
+                          switch (v) {
+                            case 0:
+                              unawaited(st.setMushafZoom(st.mushafZoom + 0.25));
+                            case 1:
+                              unawaited(st.setMushafZoom(st.mushafZoom - 0.25));
+                            case 2:
+                              showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah);
+                            default:
+                              showReaderHelp(context, pageCount: _count, onGo: _jump);
+                          }
+                        },
+                        itemBuilder: (_) => [
+                          PopupMenuItem(value: 0, child: Text('A+  ${l.readerFontBigger}')),
+                          PopupMenuItem(value: 1, child: Text('A−  ${l.readerFontSmaller}')),
+                          PopupMenuItem(value: 2, child: Text(l.surahInfoTitle)),
+                          PopupMenuItem(value: 3, child: Text(l.readerHelp)),
+                        ],
+                      )
+                    else if (_tab == ReaderTab.mushaf)
+                      IconButton(
+                        key: const Key('readerHelp'),
+                        tooltip: l.readerHelp,
+                        color: scheme.primary,
+                        icon: const RIcon(RIcons.help),
+                        onPressed: () => showReaderHelp(context, pageCount: _count, onGo: _jump),
+                      )
+                    else
+                      const SizedBox(width: 48),
+                  ],
+                ),
               ),
-            ),
-            if (!compact)
+            if (!compact && !full)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm),
                 child: Row(
@@ -245,7 +284,9 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                   ],
                 ),
               ),
+            if (full) const SizedBox.shrink(key: Key('readerFullScreen')),
             Expanded(
+              key: const Key('readerBody'),
               child: ListenableBuilder(
                 listenable: Listenable.merge([s.recitation, s.settings]),
                 builder: (context, _) {
@@ -269,8 +310,9 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                               selected: _selected,
                               playing: s.recitation.currentRef,
                               onAyahTap: _onAyahTap,
+                              immersive: full,
                               onBackgroundTap: () => setState(() {
-                                _controls = !_controls; // tap the margin for a full-screen page
+                                _controls = !_controls; // a tap shows or hides the controls
                                 _selected = null;
                               }),
                             ),
@@ -300,11 +342,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                 },
               ),
             ),
-            if (_controls || _tab != ReaderTab.mushaf) ...[
-              ReaderPlayerCard(page: _page),
-              _sliderRow(context),
-              _bottomBar(context),
-            ],
+            if (!full) ...[ReaderPlayerCard(page: _page), _sliderRow(context), _bottomBar(context)],
           ],
         ),
       ),
