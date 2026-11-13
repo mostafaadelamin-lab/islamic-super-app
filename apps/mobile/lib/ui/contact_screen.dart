@@ -71,7 +71,7 @@ class _ContactScreenState extends State<ContactScreen> {
       'name': _name.text.trim().isEmpty ? '-' : _name.text.trim(),
       'reply_to': _reply.text.trim().isEmpty ? '-' : _reply.text.trim(),
       'message': _message.text.trim(),
-      '_subject': 'Rattil app: ${l.helpContact}',
+      '_subject': 'Rattil wa Salli app: ${l.helpContact}',
       '_template': 'table',
       '_captcha': 'false',
     });

@@ -4,10 +4,10 @@
 
 ## العربية (اللغة الأساسية)
 
-**اسم التطبيق (30):** رتّل - القرآن والأذان
-بديل لو محجوز: رتّل: مصحف وأذان
+**اسم التطبيق (30):** رتّل وصلِّ: مصحف وأذان وأذكار
+(اختاره صاحب التطبيق 2026-11-13، والدومين rattilwasalli.com)
 
-**العنوان الفرعي – Apple (30):** مصحف وتلاوة ومواقيت وقبلة
+**العنوان الفرعي – Apple (30):** بلا إعلانات. لوجه الله تعالى
 
 **وصف قصير – Google (80):** مصحف المدينة، تلاوات، مواقيت الصلاة والأذان، القبلة، الأذكار والأحاديث. مجانًا.
 
@@ -16,7 +16,7 @@
 
 **الوصف الكامل (4000):**
 
-رتّل تطبيق مجاني بالكامل للقرآن الكريم والصلاة: بدون إعلانات، بدون اشتراكات، وبدون مشتريات داخل التطبيق.
+«رتّل وصلِّ» تطبيق مجاني بالكامل للقرآن الكريم والصلاة: بدون إعلانات، بدون اشتراكات، وبدون مشتريات داخل التطبيق.
 
 القرآن الكريم
 • مصحف المدينة برواية حفص بنص مجمع الملك فهد لطباعة المصحف الشريف وخطه، صفحة بصفحة كالمصحف المطبوع.
@@ -42,13 +42,13 @@
 
 ## English (secondary localisation)
 
-**Name (30):** Rattil - Quran & Adhan
-**Subtitle – Apple (30):** Mushaf, recitation, prayer
+**Name (30):** Rattil wa Salli: Quran, Adhan
+**Subtitle – Apple (30):** Free for Allah's sake, no ads
 **Short description – Google (80):** Madinah Mushaf, recitations, prayer times & adhan, qibla, adhkar. Free.
 **Keywords – Apple (100):** quran,mushaf,adhan,azan,prayer times,qibla,adhkar,tasbih,hadith,khatma,tafsir,muslim,salah
 
 **Description:**
-Rattil is a completely free Quran and prayer app: no ads, no subscriptions, no in-app purchases.
+Rattil wa Salli is a completely free Quran and prayer app: no ads, no subscriptions, no in-app purchases.
 • The Madinah Mushaf (Hafs) with the King Fahd Complex text and font, page by page.
 • Read by surah, page or juz, search, Tafsir al-Muyassar, verse-by-verse recitation with highlighting, a choice of reciters, a recitations library and Quran radios, khatma plans and bookmarks.
 • Offline prayer times for every calculation method, adhan alerts with your chosen muezzin (separate Fajr adhan), qibla compass, nearby mosques.
@@ -85,4 +85,4 @@ Rattil is a completely free Quran and prayer app: no ads, no subscriptions, no i
 
 ## ملاحظات للمراجع (App Review notes)
 
-Rattil is a free Quran and prayer app with no login, ads or purchases. Location is used only while the app is open for prayer times, the qibla and nearby mosques. Background audio is used for Quran recitation and the adhan. Notifications are local (prayer times and reminders). Short videos are curated YouTube/Instagram embeds with no open browsing.
+Rattil wa Salli is a free Quran and prayer app with no login, ads or purchases. Location is used only while the app is open for prayer times, the qibla and nearby mosques. Background audio is used for Quran recitation and the adhan. Notifications are local (prayer times and reminders). Short videos are curated YouTube/Instagram embeds with no open browsing.

@@ -72,7 +72,7 @@ describe("Header/Footer", () => {
   it("header has brand, nav and switch", () => {
     setPath("/en/");
     render(<Header locale="en" />);
-    expect(screen.getByRole("link", { name: "Rattil" })).toHaveAttribute("href", "/en/");
+    expect(screen.getByRole("link", { name: "Rattil wa Salli" })).toHaveAttribute("href", "/en/");
     expect(screen.getByTestId("lang-switch")).toHaveAttribute("href", "/ar/");
   });
   it("footer states the app is free and links to about", () => {

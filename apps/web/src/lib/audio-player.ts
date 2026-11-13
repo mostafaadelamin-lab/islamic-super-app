@@ -76,7 +76,7 @@ function syncMediaSession(): void {
   ms.metadata = new MediaMetadata({
     title,
     artist: reciter ? (ar ? reciter.ar : reciter.en) : "",
-    album: ar ? "رتّل" : "Rattil",
+    album: ar ? "رتّل وصلِّ" : "Rattil wa Salli",
     artwork: ICON_SIZES.map((n) => ({ src: `/icon-${n}.png`, sizes: `${n}x${n}`, type: "image/png" })),
   });
 }

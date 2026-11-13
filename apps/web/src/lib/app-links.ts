@@ -44,5 +44,5 @@ export function visit(s: SharePromptState, today: string): { next: SharePromptSt
 
 /** What is shared for "share the app": a short line and the site's own address. */
 export function shareAppData(text: string, origin: string): ShareData {
-  return { title: "Rattil — رتّل", text, url: APP_LINKS.website ?? origin };
+  return { title: "Rattil wa Salli — رتّل وصلِّ", text, url: APP_LINKS.website ?? origin };
 }

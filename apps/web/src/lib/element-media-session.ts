@@ -21,8 +21,8 @@ export function claimMediaSession(el: HTMLAudioElement, media: ElementMedia): vo
   if (typeof MediaMetadata !== "undefined") {
     ms.metadata = new MediaMetadata({
       title: media.title,
-      artist: media.artist ?? (ar ? "رتّل" : "Rattil"),
-      album: ar ? "رتّل" : "Rattil",
+      artist: media.artist ?? (ar ? "رتّل وصلِّ" : "Rattil wa Salli"),
+      album: ar ? "رتّل وصلِّ" : "Rattil wa Salli",
       artwork: ICON_SIZES.map((n) => ({ src: `/icon-${n}.png`, sizes: `${n}x${n}`, type: "image/png" })),
     });
   }

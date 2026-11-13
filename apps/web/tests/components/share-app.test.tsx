@@ -30,11 +30,11 @@ describe("share the app", () => {
     expect(screen.queryByTestId("share-prompt")).toBeNull();
   });
 
-  it("uses the share sheet with the site address", async () => {
+  it("uses the share sheet with the app's website", async () => {
     const share = vi.fn(async () => undefined);
     vi.stubGlobal("navigator", { ...navigator, share });
     render(<ShareAppButton locale="en" />);
     await userEvent.click(screen.getByTestId("share-app"));
-    expect(share).toHaveBeenCalledWith(expect.objectContaining({ url: `${window.location.origin}/en/` }));
+    expect(share).toHaveBeenCalledWith(expect.objectContaining({ url: "https://rattilwasalli.com" }));
   });
 });

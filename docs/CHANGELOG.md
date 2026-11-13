@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.15] — New name: «رتّل وصلِّ» (Rattil wa Salli) — 2026-11-13
+### Changed
+- The app is now called «رتّل وصلِّ» in Arabic and "Rattil wa Salli" in English (owner's choice). It is the name under the icon on Android and iPhone, the iPhone widget name, the media notification, the help/share texts, the website title, header and installable web app.
+- Share buttons now link to the app's own domain https://rattilwasalli.com (owner registered it 2026-11-13).
+- Store files: listing titles "رتّل وصلِّ: مصحف وأذان وأذكار" / "Rattil wa Salli: Quran, Adhan", subtitle "بلا إعلانات. لوجه الله تعالى"; privacy policy renamed and now also published at /privacy-policy.html on the website.
+- Unchanged: the icon, the package/bundle id org.rattil.app, and all Quran and religious content.
+
 ## [1.0.14] — Mushaf full screen, new colours, landscape — 2026-11-13
 ### Changed
 - The Mushaf opens full screen: only the page, with the status and navigation bars hidden. One tap on the page brings back the tabs, player, page slider and bottom bar; a tap beside the text hides them again. An ayah number still opens that ayah directly.

@@ -29,14 +29,14 @@ void main() {
     final sharer = FakeSharer();
     await pumpApp(tester, size: tallPhone, sharer: sharer, locale: 'en');
     await pushScreen(tester, const HelpScreen());
-    await tester.tap(find.text('Is Rattil really free?'));
+    await tester.tap(find.text('Is Rattil wa Salli really free?'));
     await tester.pumpAndSettle();
     expect(find.textContaining('no ads, no subscriptions'), findsOneWidget);
     expect(find.byKey(const Key('helpContactForm')), findsOneWidget);
     await tester.scrollUntilVisible(find.byKey(const Key('helpShareApp')), 200);
     await tester.tap(find.byKey(const Key('helpShareApp')));
     await tester.pump();
-    expect(sharer.texts.single, startsWith('Rattil: Quran, prayer times and adhkar, free with no ads.'));
+    expect(sharer.texts.single, startsWith('Rattil wa Salli: Quran, prayer times and adhkar, free with no ads.'));
     expect(find.byKey(const Key('helpRate')), findsOneWidget);
   });
 

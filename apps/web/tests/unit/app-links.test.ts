@@ -18,11 +18,11 @@ describe("share-app suggestion", () => {
     expect(visit({ ...after.s, done: true }, day(SHARE_PROMPT_AFTER_DAYS + 1)).show).toBe(false);
   });
 
-  it("shares the site's own address while no website link is set", () => {
-    expect(APP_LINKS.website).toBeNull();
-    expect(shareAppData("Rattil", "https://example.test/ar/")).toMatchObject({
-      text: "Rattil",
-      url: "https://example.test/ar/",
+  it("shares the app's own domain (rattilwasalli.com) instead of the page address", () => {
+    expect(APP_LINKS.website).toBe("https://rattilwasalli.com");
+    expect(shareAppData("Rattil wa Salli", "https://example.test/ar/")).toMatchObject({
+      text: "Rattil wa Salli",
+      url: "https://rattilwasalli.com",
     });
   });
 });

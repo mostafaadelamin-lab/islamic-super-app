@@ -477,7 +477,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get alertSunriseTitle => 'الشروق';
 
   @override
-  String get appName => 'رتّل';
+  String get appName => 'رتّل وصلِّ';
 
   @override
   String get asmaLess => 'أقل';
@@ -815,7 +815,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get helpA6 =>
-      'اسمح لرتّل بالإشعارات، وفي أندرويد بـ«المنبهات والتذكيرات». بعض الهواتف توقف التطبيقات في الخلفية لتوفير البطارية: استثنِ رتّل من تحسين البطارية.';
+      'اسمح لتطبيق «رتّل وصلِّ» بالإشعارات، وفي أندرويد بـ«المنبهات والتذكيرات». بعض الهواتف توقف التطبيقات في الخلفية لتوفير البطارية: استثنِ «رتّل وصلِّ» من تحسين البطارية.';
 
   @override
   String get helpA7 =>
@@ -837,13 +837,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get helpNotNow => 'ليس الآن';
 
   @override
-  String get helpPromptBody => 'تستخدم رتّل منذ أيام. إن نفعك فشاركه مع غيرك، فهو مجاني للجميع.';
+  String get helpPromptBody => 'تستخدم «رتّل وصلِّ» منذ أيام. إن نفعك فشاركه مع غيرك، فهو مجاني للجميع.';
 
   @override
-  String get helpPromptTitle => 'تشارك رتّل؟';
+  String get helpPromptTitle => 'تشارك «رتّل وصلِّ»؟';
 
   @override
-  String get helpQ1 => 'هل رتّل مجاني فعلًا؟';
+  String get helpQ1 => 'هل «رتّل وصلِّ» مجاني فعلًا؟';
 
   @override
   String get helpQ2 => 'ما الذي يعمل دون إنترنت؟';
@@ -864,22 +864,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get helpQ7 => 'وجدت خطأ في نص، ماذا أفعل؟';
 
   @override
-  String get helpRate => 'قيّم رتّل';
+  String get helpRate => 'قيّم «رتّل وصلِّ»';
 
   @override
   String get helpRatePending => 'التقييم متاح بعد نشر التطبيق في المتاجر.';
 
   @override
-  String get helpShareApp => 'شارك رتّل';
+  String get helpShareApp => 'شارك «رتّل وصلِّ»';
 
   @override
-  String get helpShareText => 'رتّل: القرآن ومواقيت الصلاة والأذكار، مجانًا بلا إعلانات.';
+  String get helpShareText => '«رتّل وصلِّ»: القرآن ومواقيت الصلاة والأذكار، مجانًا بلا إعلانات.';
 
   @override
   String get helpSpread => 'شارك وقيّم';
 
   @override
-  String get helpSpreadBody => 'إن نفعك رتّل فشاركه مع أهلك وأصدقائك.';
+  String get helpSpreadBody => 'إن نفعك «رتّل وصلِّ» فشاركه مع أهلك وأصدقائك.';
 
   @override
   String get helpTitle => 'المساعدة والتواصل';

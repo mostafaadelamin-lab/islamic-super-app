@@ -131,7 +131,7 @@ struct PrayerWidget: Widget {
         PrayerWidgetView(entry: entry)
       }
     }
-    .configurationDisplayName("Rattil")
+    .configurationDisplayName("رتّل وصلِّ")
     .description("Hijri date, time and the next prayer")
     .supportedFamilies([.systemSmall])
   }

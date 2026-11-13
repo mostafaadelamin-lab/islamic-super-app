@@ -1,4 +1,4 @@
-# نشر تطبيق «رتّل» على App Store و Google Play
+# نشر تطبيق «رتّل وصلِّ» على App Store و Google Play
 
 آخر تحديث: 2026-11-10 · الفرع: `feature/all-features`
 
@@ -17,7 +17,7 @@
 |---|---|
 | Bundle ID (iPhone) | `org.rattil.app` |
 | Package name (Android) | `org.rattil.app` |
-| اسم التطبيق على الشاشة | رتّل |
+| اسم التطبيق على الشاشة | رتّل وصلِّ |
 | الإصدار الأول | 1.0.0 (رقم البناء بيزيد تلقائي من Codemagic) |
 | أقل إصدار | iOS 13 · Android 7 (API 24) |
 
@@ -30,7 +30,7 @@
 1. ادخل https://developer.apple.com/account ← **Certificates, Identifiers & Profiles** ← **Identifiers** ← زرار **+** ← App IDs ← App.
    - Description: `Rattil` · Bundle ID: **Explicit** = `org.rattil.app` · سيب الـ Capabilities زي ما هي ← Register.
 2. ادخل https://appstoreconnect.apple.com ← **Apps** ← **+** ← New App:
-   - Platform: iOS · Name: `رتّل - القرآن والأذان` (لو الاسم محجوز جرّب `رتّل: مصحف وأذان`) · Primary language: Arabic · Bundle ID: `org.rattil.app` · SKU: `rattil-ios-001` · User access: Full Access.
+   - Platform: iOS · Name: `رتّل وصلِّ: مصحف وأذان وأذكار` · Primary language: Arabic · Bundle ID: `org.rattil.app` · SKU: `rattil-ios-001` · User access: Full Access.
 3. اعمل **مفتاح API** (بدل كلمة السر، ومتبعتش كلمة السر لأي حد):
    App Store Connect ← **Users and Access** ← تبويب **Integrations** ← **App Store Connect API** ← Team Keys ← **+**
    - Name: `Codemagic` · Access: **App Manager** ← Generate.
@@ -46,7 +46,7 @@
 
 5. أكّد إن حساب Google Play Developer شغال (https://play.google.com/console) وقولّي: **شخصي ولا شركة؟ واتعمل إمتى تقريبًا؟**
    (الحسابات الشخصية الجديدة لازم تعمل «اختبار مغلق» بـ 12 مختبر لمدة 14 يوم قبل النشر للعامة.)
-6. في Play Console ← **Create app**: الاسم `رتّل - القرآن والأذان` · Default language: العربية · App · Free ← وافق على الإقرارات ← Create.
+6. في Play Console ← **Create app**: الاسم `رتّل وصلِّ: مصحف وأذان وأذكار` · Default language: العربية · App · Free ← وافق على الإقرارات ← Create.
 
 ### ج) Codemagic (مرة واحدة)
 
@@ -70,11 +70,11 @@
     - Workflow **iOS → TestFlight (private)**: هيبني نسخة iPhone ويرفعها لـ TestFlight (حوالي 20–30 دقيقة).
     - Workflow **Android → signed .aab (download only)**: هيبني ملف `.aab` نزّله من صفحة البناء.
 11. **أول رفع على Google Play لازم يكون يدوي**: Play Console ← التطبيق ← **Testing ← Internal testing ← Create new release** ← ارفع ملف `.aab` ← Play App Signing: **Use Google-generated key** ← Save (متعملش Rollout قبل ما نراجع مع بعض).
-12. على الآيفون: نزّل تطبيق **TestFlight** من App Store ← هتلاقي «رتّل» بعد ما Apple تخلّص المعالجة (10–30 دقيقة) ← جرّبه.
+12. على الآيفون: نزّل تطبيق **TestFlight** من App Store ← هتلاقي «رتّل وصلِّ» بعد ما Apple تخلّص المعالجة (10–30 دقيقة) ← جرّبه.
 
 ### هـ) بعد كده (اختياري، عشان Android يترفع أوتوماتيك)
 
-13. Google Cloud: اعمل Service account وفعّل Google Play Android Developer API، نزّل مفتاح JSON، وفي Play Console ← **Users and permissions** ← Invite ← إيميل الـ service account ← صلاحية Release لتطبيق «رتّل».
+13. Google Cloud: اعمل Service account وفعّل Google Play Android Developer API، نزّل مفتاح JSON، وفي Play Console ← **Users and permissions** ← Invite ← إيميل الـ service account ← صلاحية Release لتطبيق «رتّل وصلِّ».
     في Codemagic: group اسمها `google_play` فيها `GCLOUD_SERVICE_ACCOUNT_CREDENTIALS` = محتوى ملف JSON. بعدها استخدم Workflow **Android → Play internal testing (draft)**.
 
 ---
@@ -92,4 +92,4 @@
 
 - **مزامنة الحساب** مخفية في نسخ المتاجر (`--dart-define=RATTIL_STORE=true`) لحد ما السيرفر يتحط على استضافة؛ لأن Apple بترفض أي ميزة مش شغالة، ولو فيه تسجيل حساب لازم يبقى فيه حذف حساب.
 - **أصوات المؤذنين** المأخوذة من موقع شروطه بتمنع إعادة النشر بدون إذن مكتوب (قرارك مسجل في `apps/mobile/assets/audio/ADHAN_AUDIO.md`): ده ممكن يعمل شكوى حقوق ملكية بعد النشر ويتشال التطبيق. الأفضل تاخد إذن مكتوب من الموقع أو نستخدم تسجيلات برخصة مفتوحة قبل النشر للعامة.
-- Apple ساعات بترفض تطبيقات المصحف بحجة «فئة مزدحمة» (Guideline 4.3). ميزات «رتّل» الكتير (أذان، قبلة، ختمة، أحاديث، زكاة، قصص) بتساعد، وهنكتبها في ملاحظات المراجعة.
+- Apple ساعات بترفض تطبيقات المصحف بحجة «فئة مزدحمة» (Guideline 4.3). ميزات «رتّل وصلِّ» الكتير (أذان، قبلة، ختمة، أحاديث، زكاة، قصص) بتساعد، وهنكتبها في ملاحظات المراجعة.

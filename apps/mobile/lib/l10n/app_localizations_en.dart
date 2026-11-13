@@ -478,7 +478,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get alertSunriseTitle => 'Sunrise';
 
   @override
-  String get appName => 'Rattil';
+  String get appName => 'Rattil wa Salli';
 
   @override
   String get asmaLess => 'Less';
@@ -801,7 +801,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hajjUmrah => 'Umrah';
 
   @override
-  String get helpA1 => 'Yes. Rattil has no ads, no subscriptions and no purchases, and it will stay that way.';
+  String get helpA1 => 'Yes. Rattil wa Salli has no ads, no subscriptions and no purchases, and it will stay that way.';
 
   @override
   String get helpA2 =>
@@ -820,7 +820,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpA6 =>
-      'Allow notifications for Rattil and, on Android, \"alarms and reminders\". Some phones stop apps in the background to save battery: exclude Rattil from battery optimisation.';
+      'Allow notifications for Rattil wa Salli and, on Android, \"alarms and reminders\". Some phones stop apps in the background to save battery: exclude Rattil wa Salli from battery optimisation.';
 
   @override
   String get helpA7 =>
@@ -843,13 +843,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpPromptBody =>
-      'You have been using Rattil for a few days. If it helps you, share it with someone; it is free for everyone.';
+      'You have been using Rattil wa Salli for a few days. If it helps you, share it with someone; it is free for everyone.';
 
   @override
-  String get helpPromptTitle => 'Share Rattil?';
+  String get helpPromptTitle => 'Share Rattil wa Salli?';
 
   @override
-  String get helpQ1 => 'Is Rattil really free?';
+  String get helpQ1 => 'Is Rattil wa Salli really free?';
 
   @override
   String get helpQ2 => 'What works without the internet?';
@@ -870,22 +870,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpQ7 => 'I found a mistake in a text. What should I do?';
 
   @override
-  String get helpRate => 'Rate Rattil';
+  String get helpRate => 'Rate Rattil wa Salli';
 
   @override
   String get helpRatePending => 'Rating opens once the app is in the stores.';
 
   @override
-  String get helpShareApp => 'Share Rattil';
+  String get helpShareApp => 'Share Rattil wa Salli';
 
   @override
-  String get helpShareText => 'Rattil: Quran, prayer times and adhkar, free with no ads.';
+  String get helpShareText => 'Rattil wa Salli: Quran, prayer times and adhkar, free with no ads.';
 
   @override
   String get helpSpread => 'Share and rate';
 
   @override
-  String get helpSpreadBody => 'If Rattil helps you, share it with family and friends.';
+  String get helpSpreadBody => 'If Rattil wa Salli helps you, share it with family and friends.';
 
   @override
   String get helpTitle => 'Help & contact';

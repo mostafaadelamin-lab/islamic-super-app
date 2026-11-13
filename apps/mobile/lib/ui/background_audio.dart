@@ -30,7 +30,7 @@ class DhikrMediaSource extends ChangeNotifier implements MediaSource {
     return NowPlaying(
       id: 'dhikr/$url',
       title: ar ? 'ذكر' : 'Dhikr',
-      artist: ar ? 'رتّل' : 'Rattil',
+      artist: ar ? 'رتّل وصلِّ' : 'Rattil wa Salli',
       playing: player.playing || player.loading,
       canSkip: false,
     );

@@ -899,7 +899,7 @@ abstract class AppLocalizations {
   /// shared key "appName"
   ///
   /// In en, this message translates to:
-  /// **'Rattil'**
+  /// **'Rattil wa Salli'**
   String get appName;
 
   /// shared key "asma.less"
@@ -1457,7 +1457,7 @@ abstract class AppLocalizations {
   /// shared key "help.a1"
   ///
   /// In en, this message translates to:
-  /// **'Yes. Rattil has no ads, no subscriptions and no purchases, and it will stay that way.'**
+  /// **'Yes. Rattil wa Salli has no ads, no subscriptions and no purchases, and it will stay that way.'**
   String get helpA1;
 
   /// shared key "help.a2"
@@ -1487,7 +1487,7 @@ abstract class AppLocalizations {
   /// shared key "help.a6"
   ///
   /// In en, this message translates to:
-  /// **'Allow notifications for Rattil and, on Android, \"alarms and reminders\". Some phones stop apps in the background to save battery: exclude Rattil from battery optimisation.'**
+  /// **'Allow notifications for Rattil wa Salli and, on Android, \"alarms and reminders\". Some phones stop apps in the background to save battery: exclude Rattil wa Salli from battery optimisation.'**
   String get helpA6;
 
   /// shared key "help.a7"
@@ -1529,19 +1529,19 @@ abstract class AppLocalizations {
   /// shared key "help.promptBody"
   ///
   /// In en, this message translates to:
-  /// **'You have been using Rattil for a few days. If it helps you, share it with someone; it is free for everyone.'**
+  /// **'You have been using Rattil wa Salli for a few days. If it helps you, share it with someone; it is free for everyone.'**
   String get helpPromptBody;
 
   /// shared key "help.promptTitle"
   ///
   /// In en, this message translates to:
-  /// **'Share Rattil?'**
+  /// **'Share Rattil wa Salli?'**
   String get helpPromptTitle;
 
   /// shared key "help.q1"
   ///
   /// In en, this message translates to:
-  /// **'Is Rattil really free?'**
+  /// **'Is Rattil wa Salli really free?'**
   String get helpQ1;
 
   /// shared key "help.q2"
@@ -1583,7 +1583,7 @@ abstract class AppLocalizations {
   /// shared key "help.rate"
   ///
   /// In en, this message translates to:
-  /// **'Rate Rattil'**
+  /// **'Rate Rattil wa Salli'**
   String get helpRate;
 
   /// shared key "help.ratePending"
@@ -1595,13 +1595,13 @@ abstract class AppLocalizations {
   /// shared key "help.shareApp"
   ///
   /// In en, this message translates to:
-  /// **'Share Rattil'**
+  /// **'Share Rattil wa Salli'**
   String get helpShareApp;
 
   /// shared key "help.shareText"
   ///
   /// In en, this message translates to:
-  /// **'Rattil: Quran, prayer times and adhkar, free with no ads.'**
+  /// **'Rattil wa Salli: Quran, prayer times and adhkar, free with no ads.'**
   String get helpShareText;
 
   /// shared key "help.spread"
@@ -1613,7 +1613,7 @@ abstract class AppLocalizations {
   /// shared key "help.spreadBody"
   ///
   /// In en, this message translates to:
-  /// **'If Rattil helps you, share it with family and friends.'**
+  /// **'If Rattil wa Salli helps you, share it with family and friends.'**
   String get helpSpreadBody;
 
   /// shared key "help.title"

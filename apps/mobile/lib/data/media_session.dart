@@ -223,7 +223,7 @@ class _NarrationSource extends ChangeNotifier implements MediaSource {
     return NowPlaying(
       id: '${narration.seriesId}/${e.id}',
       title: e.title(ar),
-      artist: ar ? 'رتّل' : 'Rattil',
+      artist: ar ? 'رتّل وصلِّ' : 'Rattil wa Salli',
       playing: narration.isPlaying,
       canSkip: narration.hasNext || narration.hasPrevious,
     );
@@ -272,7 +272,7 @@ class AudioServiceMediaSession extends BaseAudioHandler implements MediaSession 
       mediaItem.add(null);
       return;
     }
-    mediaItem.add(MediaItem(id: now.id, title: now.title, artist: now.artist, album: 'Rattil'));
+    mediaItem.add(MediaItem(id: now.id, title: now.title, artist: now.artist, album: 'Rattil wa Salli'));
     playbackState.add(
       PlaybackState(
         controls: [

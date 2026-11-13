@@ -14,8 +14,8 @@ const SHORTCUTS: readonly (readonly [string, string])[] = [
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Rattil — رتّل",
-    short_name: "Rattil",
+    name: "رتّل وصلِّ — Rattil wa Salli",
+    short_name: "رتّل وصلِّ",
     description: "Quran, prayer and remembrance — free, no ads",
     start_url: withBase("/"),
     scope: withBase("/"),
