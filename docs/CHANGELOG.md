@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.16] — Video search, nasheeds on the website, khatma planner and worship tracker in More, installable website — 2026-11-13
+### Added
+- Videos (app + website): a search box at the top of the videos page. Results are Islamic videos only (Quran recitation, religious lessons, advice/admonitions): the trusted channels first, other channels only when the title is clearly Islamic, never titles with music, songs or entertainment words. Tap a result to play it in the official YouTube player. The viewer's past searches are saved on the device (up to 20, newest first): tap one to search again, × removes it, "مسح السجل" clears them.
+- Website: the Nasheeds section (same voice-only list as the app: 34 munshids, 516 nasheeds), with search, a player that goes on to the next nasheed, and saving for offline listening.
+- Website: installable as a Windows app (Edge/Chrome: desktop + Start menu shortcut, own window). "ثبّت الموقع كتطبيق" card in More and Help with an install button when the browser offers it.
+- App (Android + iPhone): More now opens the full khatma planner (khatma by days or pages per day, daily portion, reminder, history) and the worship tracker (prayers, fasting, notes). The Mushaf's khatma sheet links to the planner, and reading the last page of today's portion in the Mushaf marks the portion done.
+### Changed
+- The two placeholder reels "pending review" are removed, and so is the reviewer switch. The videos page opens straight on the trusted channels' newest videos.
+- YouTube's channel feeds were failing on 2026-11-13 (404/500): the feed now falls back to each trusted channel's Videos page, so videos keep coming.
+- Website videos feed and search run through a small Netlify Function (netlify/functions/videos.mjs, deployed with the site); before this the website had no automatic videos.
+- Unchanged: Quran text and all religious content.
+
 ## [1.0.15] — New name: «رتّل وصلِّ» (Rattil wa Salli) — 2026-11-13
 ### Changed
 - The app is now called «رتّل وصلِّ» in Arabic and "Rattil wa Salli" in English (owner's choice). It is the name under the icon on Android and iPhone, the iPhone widget name, the media notification, the help/share texts, the website title, header and installable web app.
