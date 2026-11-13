@@ -2,49 +2,5 @@
   "schema": "reels-catalogue.v1",
   "version": 1,
   "note": "Edit with tools/reels.py. Sources: YouTube and Instagram (official embeds; nothing downloaded or re-hosted). Categories: 'recitation' (Quran recitation from Quran pages/channels), 'lesson' (religious lesson per the Quran and Sunnah), 'admonition' (advice and admonitions). Only 'approved' reels are shown to users; 'pending' ones appear only in reviewer mode.",
-  "items": [
-    {
-      "id": "yt-hTtlD-u4_HI",
-      "platform": "youtube",
-      "ref": "hTtlD-u4_HI",
-      "url": "https://www.youtube.com/watch?v=hTtlD-u4_HI",
-      "title": {
-        "ar": "تلاوة للطالبة إسراء السيد سعد، الأولى في مسابقة الأزهر لحفظ القرآن",
-        "en": "Recitation by Israa El-Sayed Saad, first place in the Al-Azhar Quran memorisation contest"
-      },
-      "speaker": null,
-      "category": "recitation",
-      "source": "YouTube",
-      "addedAt": "2026-11-08",
-      "review": {
-        "status": "pending",
-        "reviewer": null,
-        "reviewedAt": null,
-        "notes": "Sample for testing the feed; found by web search, not yet watched or reviewed."
-      }
-    },
-    {
-      "id": "yt-26dRG7OeL6Q",
-      "platform": "youtube",
-      "ref": "26dRG7OeL6Q",
-      "url": "https://www.youtube.com/watch?v=26dRG7OeL6Q",
-      "title": {
-        "ar": "الشيخ الطبلاوي — سورة الزخرف من الجامع الأزهر",
-        "en": "Sheikh al-Tablawi — Surat az-Zukhruf at al-Azhar Mosque"
-      },
-      "speaker": {
-        "ar": "الشيخ محمد محمود الطبلاوي",
-        "en": "Sheikh Muhammad Mahmoud al-Tablawi"
-      },
-      "category": "recitation",
-      "source": "YouTube",
-      "addedAt": "2026-11-08",
-      "review": {
-        "status": "pending",
-        "reviewer": null,
-        "reviewedAt": null,
-        "notes": "Sample for testing the feed; found by web search, not yet watched or reviewed."
-      }
-    }
-  ]
+  "items": []
 }

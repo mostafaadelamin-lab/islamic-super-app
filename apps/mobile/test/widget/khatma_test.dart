@@ -6,6 +6,7 @@ import 'package:rattil/data/reminders.dart';
 import 'package:rattil/domain/khatma.dart';
 import 'package:rattil/ui/khatma_screen.dart';
 import 'package:rattil/ui/page_reader_screen.dart';
+import 'package:rattil/ui/reader_widgets.dart';
 
 import '../helpers.dart';
 
@@ -90,5 +91,37 @@ void main() {
     await tester.tap(find.byKey(const Key('khatmaDone')));
     await tester.pumpAndSettle();
     expect(find.textContaining('خُتمت في ١٥ يناير ٢٠٢٦ خلال ٢ يومًا'), findsOneWidget);
+  });
+
+  testWidgets('the mushaf khatma sheet links to the full planner', (tester) async {
+    await pumpApp(tester, locale: 'en', size: tallPhone);
+    await pushScreen(
+      tester,
+      Builder(
+        builder: (context) => Scaffold(
+          body: TextButton(
+            key: const Key('openSheet'),
+            onPressed: () => showKhatmaSheet(context, onGo: (_) {}),
+            child: const Text('open'),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.byKey(const Key('openSheet')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('khatmaPlanner')));
+    await tester.pumpAndSettle();
+    expect(find.byType(KhatmaScreen), findsOneWidget);
+    expect(find.byKey(const Key('khatmaSheet')), findsNothing);
+  });
+
+  testWidgets('reading the last page of today\'s portion in the mushaf marks the portion done', (tester) async {
+    final app = await pumpApp(tester, locale: 'en', size: tallPhone);
+    await app.services.khatma.start(Khatma.byDays('Mine', app.services.khatma.today, 30));
+    final end = app.services.khatma.current!.wirdPages(0).to;
+    await pushScreen(tester, PageReaderScreen(initialPage: end));
+    await tester.pump(const Duration(seconds: 5));
+    await tester.pumpAndSettle();
+    expect(app.services.khatma.current!.done, 1);
   });
 }

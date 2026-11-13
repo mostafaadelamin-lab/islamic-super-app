@@ -11,6 +11,7 @@ import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
+import 'video_search_screen.dart';
 
 typedef ReelPlayerBuilder = Widget Function(BuildContext context, Reel reel);
 
@@ -97,8 +98,7 @@ class _ReelsScreenState extends State<ReelsScreen> {
     return ListenableBuilder(
       listenable: Listenable.merge([settings, feed]),
       builder: (context, _) {
-        final reviewer = settings.reelsReviewer;
-        final reels = _feed(feed.items, context.services.content.reels.visible(reviewer: reviewer));
+        final reels = _feed(feed.items, context.services.content.reels.visible(reviewer: false));
         if (_current >= reels.length && reels.isNotEmpty) _current = reels.length - 1;
         return Scaffold(
           backgroundColor: Colors.black,
@@ -110,28 +110,40 @@ class _ReelsScreenState extends State<ReelsScreen> {
             actions: [
               IconButton(
                 key: const Key('reels.search'),
-                tooltip: l.reelsSearch,
+                tooltip: l.videosSearch,
                 icon: const RIcon(RIcons.search),
-                onPressed: () => showModalBottomSheet<void>(
-                  context: context,
-                  isScrollControlled: true,
-                  showDragHandle: true,
-                  builder: (_) => const ChannelSearchSheet(),
-                ),
-              ),
-              IconButton(
-                key: const Key('reels.reviewer'),
-                tooltip: '${l.reelsReviewerMode} — ${l.reelsReviewerHint}',
-                isSelected: reviewer,
-                icon: const RIcon(RIcons.checkCircle),
-                selectedIcon: const RIcon(RIcons.checkCircle, color: Colors.amber),
-                onPressed: () async {
-                  await settings.setReelsReviewer(!reviewer);
-                  if (_pages.hasClients) _pages.jumpToPage(0);
-                  setState(() => _current = 0);
-                },
+                onPressed: () =>
+                    Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const VideoSearchScreen())),
               ),
             ],
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(48),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceSm),
+                child: Material(
+                  color: Colors.white.withValues(alpha: 0.16),
+                  shape: const StadiumBorder(),
+                  child: InkWell(
+                    key: const Key('reels.searchBar'),
+                    customBorder: const StadiumBorder(),
+                    onTap: () =>
+                        Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const VideoSearchScreen())),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: 10),
+                      child: Row(
+                        children: [
+                          const RIcon(RIcons.search, color: Colors.white70, size: 20),
+                          const SizedBox(width: DesignTokens.spaceSm),
+                          Expanded(
+                            child: Text(l.videosSearchHint, style: const TextStyle(color: Colors.white70)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
           body: ReadableWidth(
             child: reels.isEmpty

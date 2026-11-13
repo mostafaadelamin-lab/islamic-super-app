@@ -14,7 +14,7 @@ import {
   visibleReels,
   type Reel,
 } from "@/lib/reels";
-import { accountStore } from "@/lib/sync";
+import { VIDEO_API } from "@/lib/videos";
 import { useStore } from "@/hooks/useStore";
 import { Icon } from "./Icon";
 
@@ -34,7 +34,7 @@ export function ReelsFeed({
 }) {
   const prefs = useStore(reelsPrefsStore);
   const cache = useStore(reelsFeedStore);
-  const { apiBase } = useStore(accountStore);
+  const apiBase = VIDEO_API();
   const [feedState, setFeedState] = useState<"idle" | "loading" | "failed">("idle");
   const [undo, setUndo] = useState<{ id: string; name: string } | null>(null);
 
@@ -64,7 +64,7 @@ export function ReelsFeed({
   const bySource = new Map<string, Reel[]>();
   for (const r of autoItems) bySource.set(r.sourceId ?? "", [...(bySource.get(r.sourceId ?? "") ?? []), r]);
   const seen = new Set<string>();
-  const list = [...mixReels([...bySource.values()]), ...visibleReels(reels, prefs.reviewer)].filter((r) =>
+  const list = [...mixReels([...bySource.values()]), ...visibleReels(reels, false)].filter((r) =>
     seen.has(r.id) ? false : (seen.add(r.id), true),
   );
   const sourceName = (id: string | null | undefined): string => {
@@ -277,19 +277,6 @@ export function ReelsFeed({
         </div>
       ) : null}
       <p className="muted small">{t(locale, "reels.note")}</p>
-      <label className="reels-reviewer">
-        <input
-          type="checkbox"
-          checked={prefs.reviewer}
-          onChange={(e) => {
-            reelsPrefsStore.set((p) => ({ ...p, reviewer: e.target.checked }));
-            setActive(0);
-          }}
-          data-testid="reels-reviewer"
-        />{" "}
-        {t(locale, "reels.reviewerMode")}
-        <span className="muted small"> — {t(locale, "reels.reviewerHint")}</span>
-      </label>
     </div>
   );
 }

@@ -8,6 +8,7 @@ import 'package:http/testing.dart';
 import 'package:rattil/data/content.dart';
 import 'package:rattil/domain/reels.dart';
 import 'package:rattil/ui/reels_screen.dart';
+import 'package:rattil/ui/video_search_screen.dart';
 
 import '../helpers.dart';
 
@@ -44,17 +45,16 @@ void main() {
   late AppContent base;
   setUpAll(() async => base = await loadContent());
 
-  testWidgets('empty state when nothing is approved; reviewer mode reveals pending reels', (tester) async {
+  testWidgets('no placeholder reels and no reviewer switch; the search bar opens video search', (tester) async {
     final app = await pumpApp(tester, size: tallPhone);
     await pushScreen(tester, const ReelsScreen(playerBuilder: fakePlayer, showPosters: false));
-    // The shipped catalogue has pending samples only.
-    expect(app.services.content.reels.items, isNotEmpty);
+    // Owner 2026-11-13: the two "pending review" samples are gone; videos come from the trusted channels.
+    expect(app.services.content.reels.items.where((r) => r.isPending), isEmpty);
     expect(find.byKey(const Key('reels.empty')), findsOneWidget);
-    await tester.tap(find.byKey(const Key('reels.reviewer')));
+    expect(find.byKey(const Key('reels.reviewer')), findsNothing);
+    await tester.tap(find.byKey(const Key('reels.searchBar')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('reels.feed')), findsOneWidget);
-    expect(find.textContaining('لم تتم مراجعة هذا المقطع'), findsOneWidget);
-    expect(app.prefs.getBool('reelsReviewer'), isTrue);
+    expect(find.byType(VideoSearchScreen), findsOneWidget);
   });
 
   testWidgets('one live player at a time; swiping up plays the next reel', (tester) async {

@@ -1080,6 +1080,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get khatmaNew => 'New khatma';
 
   @override
+  String get khatmaOpenPlanner => 'Full khatma planner';
+
+  @override
+  String get khatmaOpenPlannerSub => 'Khatma by days, daily portion, reminder and history';
+
+  @override
   String get khatmaOpening => 'من قوله تعالى:';
 
   @override
@@ -2453,6 +2459,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tasbihVibrate => 'Vibration';
+
+  @override
+  String get videosClearHistory => 'Clear history';
+
+  @override
+  String get videosHistory => 'Recent searches';
+
+  @override
+  String get videosNoResults => 'No matching Islamic videos. Try other words.';
+
+  @override
+  String videosRemoveHistory(String q) {
+    return 'Remove “$q” from history';
+  }
+
+  @override
+  String get videosSearch => 'Search';
+
+  @override
+  String get videosSearchFailed => 'Search is not available right now. Check your connection and try again.';
+
+  @override
+  String get videosSearchHint => 'Search a recitation, lesson or admonition';
+
+  @override
+  String get videosSearchNote =>
+      'Search shows Islamic videos only (recitations, lessons, admonitions), trusted channels first. Tap a video to play it, or long-press to open it in YouTube.';
 
   @override
   String worshipFasted(String n) {

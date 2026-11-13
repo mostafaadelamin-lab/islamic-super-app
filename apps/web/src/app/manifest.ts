@@ -10,6 +10,7 @@ const SHORTCUTS: readonly (readonly [string, string])[] = [
   ["prayer", "مواقيت الصلاة"],
   ["adhkar", "الأذكار"],
   ["tasbih", "السبحة"],
+  ["reels", "فيديوهات"],
 ];
 
 export default function manifest(): MetadataRoute.Manifest {
@@ -17,9 +18,15 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "رتّل وصلِّ — Rattil wa Salli",
     short_name: "رتّل وصلِّ",
     description: "Quran, prayer and remembrance — free, no ads",
+    // A stable id lets Windows/Chrome/Edge keep one installed app across updates.
+    id: withBase("/"),
     start_url: withBase("/"),
     scope: withBase("/"),
     display: "standalone",
+    // Installed on Windows: its own window with the app's title bar (falls back to standalone elsewhere).
+    display_override: ["standalone", "minimal-ui"],
+    orientation: "any",
+    categories: ["education", "lifestyle", "books"],
     dir: "rtl",
     lang: "ar",
     background_color: tokens.color.light.bg,

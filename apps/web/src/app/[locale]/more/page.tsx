@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { isLocale, t } from "@/lib/i18n";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
 import { SectionTiles } from "@/components/SectionTiles";
+import { InstallApp } from "@/components/InstallApp";
 
 export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
   const { locale } = await params;
@@ -14,6 +15,7 @@ export default async function MorePage({ params }: { params: LocaleParams }) {
     <>
       <h1>{t(locale, "more.title")}</h1>
       <SectionTiles locale={locale} />
+      <InstallApp locale={locale} />
     </>
   );
 }

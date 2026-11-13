@@ -56,13 +56,11 @@ describe("ReelsFeed", () => {
     expect(screen.getAllByRole("link", { name: "Open on YouTube" })[0]).toHaveAttribute("href", base.url);
     expect(screen.getByTestId("reels-position")).toHaveTextContent("1 / 2");
   });
-  it("reviewer mode reveals pending reels with a warning banner", async () => {
+  it("never shows pending (unreviewed) reels and has no reviewer switch (owner, 2026-11-13)", () => {
     render(<ReelsFeed locale="ar" reels={[base, pending]} />);
     expect(document.querySelectorAll("[data-reel]")).toHaveLength(1);
-    await userEvent.click(screen.getByTestId("reels-reviewer"));
-    expect(document.querySelectorAll("[data-reel]")).toHaveLength(2);
-    expect(screen.getByTestId("reel-pending")).toHaveTextContent("لم تتم مراجعة");
-    expect(reelsPrefsStore.get().reviewer).toBe(true);
+    expect(screen.queryByTestId("reels-reviewer")).toBeNull();
+    expect(screen.queryByTestId("reel-pending")).toBeNull();
   });
   it("plays Instagram reels through Instagram's official embed, with a blank poster off-screen", async () => {
     const ig: Reel = {
@@ -137,7 +135,7 @@ describe("ReelsFeed: automatic reels from trusted channels", () => {
     const calls: string[] = [];
     render(<ReelsFeed locale="en" reels={[pending]} fetchImpl={okFetch(calls)} />);
     await waitFor(() => expect(screen.getByTestId("reels-feed")).toBeInTheDocument());
-    expect(calls).toEqual(["http://127.0.0.1:8000/v1/reels/feed"]);
+    expect(calls).toEqual(["/api/v1/reels/feed"]);
     expect(screen.getByTestId("reel-player").getAttribute("src")).toContain("/embed/BBBBBBBBBB2?");
     expect(screen.getAllByText("Trusted channel")).toHaveLength(2);
     expect(screen.queryByTestId("reel-pending")).toBeNull();

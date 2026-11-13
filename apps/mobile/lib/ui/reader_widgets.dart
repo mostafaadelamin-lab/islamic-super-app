@@ -11,6 +11,7 @@ import '../domain/tafsir.dart';
 import '../domain/text.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
+import 'khatma_screen.dart';
 import 'l10n_ext.dart';
 import 'mushaf_page.dart';
 import 'review_notice.dart';
@@ -733,6 +734,22 @@ Future<void> showKhatmaSheet(BuildContext context, {required ValueChanged<int> o
               ),
             ]);
           }
+          children.addAll([
+            const SizedBox(height: DesignTokens.spaceSm),
+            const Divider(),
+            ListTile(
+              key: const Key('khatmaPlanner'),
+              contentPadding: EdgeInsets.zero,
+              leading: const RIcon(RIcons.khatma),
+              title: Text(l.khatmaOpenPlanner),
+              subtitle: Text(l.khatmaOpenPlannerSub),
+              trailing: const RIcon(RIcons.chevronForward),
+              onTap: () {
+                final nav = Navigator.of(context)..pop();
+                nav.push(MaterialPageRoute<void>(builder: (_) => const KhatmaScreen()));
+              },
+            ),
+          ]);
           return Padding(
             padding: const EdgeInsets.all(DesignTokens.spaceLg),
             child: Column(

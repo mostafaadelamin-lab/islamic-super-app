@@ -2753,3 +2753,105 @@ dd {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Videos: search box, the viewer's search history and results. */
+.video-search {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  max-width: 720px;
+  margin: 0 auto var(--space-sm);
+}
+.video-search .input {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+.video-history {
+  max-width: 720px;
+  margin: 0 auto var(--space-sm);
+}
+.video-history .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+}
+.video-history .chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  cursor: default;
+}
+.video-history .chip-text,
+.video-history .chip-x {
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  min-height: 36px;
+  cursor: pointer;
+}
+.video-history .chip-text {
+  padding-inline: var(--space-md) var(--space-xs);
+}
+.video-history .chip-x {
+  padding-inline: var(--space-xs) var(--space-sm);
+  color: var(--color-muted, inherit);
+}
+[data-testid="video-results"] {
+  max-width: 720px;
+  margin-inline: auto;
+}
+.video-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-xs);
+}
+.video-hit {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-start;
+  width: 100%;
+  padding: var(--space-xs);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.video-hit img {
+  flex: none;
+  width: 160px;
+  max-width: 40%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-sm, 6px);
+  background: #000;
+}
+.video-hit[aria-pressed="true"] {
+  border-color: var(--color-primary);
+}
+.video-now {
+  display: grid;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+.video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}

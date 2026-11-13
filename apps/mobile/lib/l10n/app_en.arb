@@ -1583,6 +1583,14 @@
   "@khatmaNew": {
     "description": "shared key \"khatma.new\""
   },
+  "khatmaOpenPlanner": "Full khatma planner",
+  "@khatmaOpenPlanner": {
+    "description": "shared key \"khatma.openPlanner\""
+  },
+  "khatmaOpenPlannerSub": "Khatma by days, daily portion, reminder and history",
+  "@khatmaOpenPlannerSub": {
+    "description": "shared key \"khatma.openPlannerSub\""
+  },
   "khatmaOpening": "من قوله تعالى:",
   "@khatmaOpening": {
     "description": "shared key \"khatma.opening\""
@@ -3626,6 +3634,43 @@
   "tasbihVibrate": "Vibration",
   "@tasbihVibrate": {
     "description": "shared key \"tasbih.vibrate\""
+  },
+  "videosClearHistory": "Clear history",
+  "@videosClearHistory": {
+    "description": "shared key \"videos.clearHistory\""
+  },
+  "videosHistory": "Recent searches",
+  "@videosHistory": {
+    "description": "shared key \"videos.history\""
+  },
+  "videosNoResults": "No matching Islamic videos. Try other words.",
+  "@videosNoResults": {
+    "description": "shared key \"videos.noResults\""
+  },
+  "videosRemoveHistory": "Remove “{q}” from history",
+  "@videosRemoveHistory": {
+    "description": "shared key \"videos.removeHistory\"",
+    "placeholders": {
+      "q": {
+        "type": "String"
+      }
+    }
+  },
+  "videosSearch": "Search",
+  "@videosSearch": {
+    "description": "shared key \"videos.search\""
+  },
+  "videosSearchFailed": "Search is not available right now. Check your connection and try again.",
+  "@videosSearchFailed": {
+    "description": "shared key \"videos.searchFailed\""
+  },
+  "videosSearchHint": "Search a recitation, lesson or admonition",
+  "@videosSearchHint": {
+    "description": "shared key \"videos.searchHint\""
+  },
+  "videosSearchNote": "Search shows Islamic videos only (recitations, lessons, admonitions), trusted channels first. Tap a video to play it, or long-press to open it in YouTube.",
+  "@videosSearchNote": {
+    "description": "shared key \"videos.searchNote\""
   },
   "worshipFasted": "Fasting days: {n}",
   "@worshipFasted": {

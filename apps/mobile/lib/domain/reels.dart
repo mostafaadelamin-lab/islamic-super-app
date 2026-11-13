@@ -7,12 +7,14 @@
 /// lessons ("lesson") and advice/admonitions ("admonition") in line with the
 /// Quran and Sunnah, and only reels that passed a religious review
 /// ("approved") are shown to users.
-/// Pending reels are visible in reviewer mode only, with a warning banner.
+/// Pending (unreviewed) reels are never shown; the two samples were removed (owner, 2026-11-13).
 ///
 /// Owner decision (2026-11-09 21:31): besides the curated list, the app pulls
 /// the newest Shorts from trusted channels the owner approved once
 /// (content/reels/sources.json). Those reels ("auto") need no per-video review.
 library;
+
+import 'dart:convert';
 
 import 'package:xml/xml.dart';
 
@@ -212,6 +214,10 @@ class ReelSource {
       Uri.https('www.youtube.com', '/feeds/videos.xml', {'playlist_id': 'UUSH${channelId.substring(2)}'});
 
   /// A channel's whole upload feed (fallback when the Shorts feed fails).
+  /// The channel's Videos tab (used when YouTube's feeds fail, as seen 2026-11-13).
+  static Uri channelVideosPage(String channelId) =>
+      Uri.https('www.youtube.com', '/channel/$channelId/videos', {'hl': 'ar'});
+
   static Uri channelFeed(String channelId) =>
       Uri.https('www.youtube.com', '/feeds/videos.xml', {'channel_id': channelId});
 
@@ -257,6 +263,36 @@ class ReelSource {
   }
 
   /// Rebuilds a reel of this channel from its cached form ({ref, title, published}).
+  /// Newest videos from the channel page ("lockupViewModel" layout), newest first.
+  List<Reel> parseChannelPage(String page, {int max = 30}) {
+    final out = <Reel>[];
+    final seen = <String>{};
+    for (final m in _lockup.allMatches(page)) {
+      if (out.length >= max) break;
+      final id = m.group(1)!;
+      if (seen.contains(id)) continue;
+      final end = m.start + 12000 < page.length ? m.start + 12000 : page.length;
+      final t = _lockupTitle.firstMatch(page.substring(m.start, end));
+      if (t == null) continue;
+      String title;
+      try {
+        title = jsonDecode('"${t.group(1)}"') as String;
+      } on Object {
+        title = t.group(1)!;
+      }
+      final r = fromCache({'ref': id, 'title': title});
+      if (r == null) continue;
+      seen.add(id);
+      out.add(r);
+    }
+    return out;
+  }
+
+  static final _lockup = RegExp(
+    r'"lockupViewModel":\{"contentImage":\{"thumbnailViewModel":\{"image":\{"sources":\[\{"url":"https://i\.ytimg\.com/vi/([A-Za-z0-9_-]{11})/',
+  );
+  static final _lockupTitle = RegExp(r'"title":\{"content":"((?:[^"\\]|\\.)*)"');
+
   Reel? fromCache(Object? raw) {
     if (raw is! Map) return null;
     final ref = raw['ref'];

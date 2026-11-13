@@ -1952,6 +1952,18 @@ abstract class AppLocalizations {
   /// **'New khatma'**
   String get khatmaNew;
 
+  /// shared key "khatma.openPlanner"
+  ///
+  /// In en, this message translates to:
+  /// **'Full khatma planner'**
+  String get khatmaOpenPlanner;
+
+  /// shared key "khatma.openPlannerSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Khatma by days, daily portion, reminder and history'**
+  String get khatmaOpenPlannerSub;
+
   /// shared key "khatma.opening"
   ///
   /// In en, this message translates to:
@@ -4393,6 +4405,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Vibration'**
   String get tasbihVibrate;
+
+  /// shared key "videos.clearHistory"
+  ///
+  /// In en, this message translates to:
+  /// **'Clear history'**
+  String get videosClearHistory;
+
+  /// shared key "videos.history"
+  ///
+  /// In en, this message translates to:
+  /// **'Recent searches'**
+  String get videosHistory;
+
+  /// shared key "videos.noResults"
+  ///
+  /// In en, this message translates to:
+  /// **'No matching Islamic videos. Try other words.'**
+  String get videosNoResults;
+
+  /// shared key "videos.removeHistory"
+  ///
+  /// In en, this message translates to:
+  /// **'Remove “{q}” from history'**
+  String videosRemoveHistory(String q);
+
+  /// shared key "videos.search"
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get videosSearch;
+
+  /// shared key "videos.searchFailed"
+  ///
+  /// In en, this message translates to:
+  /// **'Search is not available right now. Check your connection and try again.'**
+  String get videosSearchFailed;
+
+  /// shared key "videos.searchHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Search a recitation, lesson or admonition'**
+  String get videosSearchHint;
+
+  /// shared key "videos.searchNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Search shows Islamic videos only (recitations, lessons, admonitions), trusted channels first. Tap a video to play it, or long-press to open it in YouTube.'**
+  String get videosSearchNote;
 
   /// shared key "worship.fasted"
   ///

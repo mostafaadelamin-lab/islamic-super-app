@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/reels.dart';
+import '../domain/video_search.dart';
 
 /// Pulls the newest Shorts of the trusted channels from YouTube's public
 /// feeds (no API key, no account), caches them on the device and mixes them.
@@ -287,9 +288,15 @@ class ReelsFeedController extends ChangeNotifier {
     final fromShorts = shorts == null ? const <Reel>[] : s.parseFeed(shorts);
     if (fromShorts.isNotEmpty) return fromShorts;
     final all = await _get(ReelSource.channelFeed(cid));
-    if (all == null) return shorts == null ? null : const [];
-    final onlyShorts = s.parseFeed(all, shortsOnly: true);
-    return onlyShorts.isNotEmpty ? onlyShorts : s.parseFeed(all);
+    if (all != null) {
+      final onlyShorts = s.parseFeed(all, shortsOnly: true);
+      final fromFeed = onlyShorts.isNotEmpty ? onlyShorts : s.parseFeed(all);
+      if (fromFeed.isNotEmpty) return fromFeed;
+    }
+    // YouTube's feeds sometimes fail (404/500, seen 2026-11-13): read the channel's Videos tab instead.
+    final page = await _get(ReelSource.channelVideosPage(cid));
+    if (page == null) return shorts == null && all == null ? null : const [];
+    return s.parseChannelPage(page);
   }
 
   Future<String?> _get(Uri u) async {
@@ -300,6 +307,68 @@ class ReelsFeedController extends ChangeNotifier {
     } on Object {
       return null;
     }
+  }
+
+  // --- Video search ----------------------------------------------------------
+
+  static const historyKey = 'videos.searchHistory';
+  static const historyMax = 20;
+
+  /// The viewer's past searches, newest first (kept on this device only).
+  List<String> get searchHistory => [...?_prefs.getStringList(historyKey)];
+
+  Future<void> rememberSearch(String query) async {
+    final q = query.trim().replaceAll(RegExp(r'\s+'), ' ');
+    if (q.isEmpty) return;
+    final list = [q, ...searchHistory.where((x) => x.toLowerCase() != q.toLowerCase())].take(historyMax).toList();
+    await _prefs.setStringList(historyKey, list);
+    notifyListeners();
+  }
+
+  Future<void> forgetSearch(String query) async {
+    await _prefs.setStringList(historyKey, [...searchHistory.where((x) => x != query)]);
+    notifyListeners();
+  }
+
+  Future<void> clearSearchHistory() async {
+    await _prefs.remove(historyKey);
+    notifyListeners();
+  }
+
+  /// Every channel the app trusts (owner's list, the viewer's own and the suggested ones).
+  Set<String> get trustedChannelIds => {
+    for (final s in [...sources, ...suggestionPool])
+      if (s.channelId != null) s.channelId!,
+  };
+
+  /// Islamic videos for [query]: matches in the trusted channels' cached feed first, then
+  /// YouTube's search filtered by [allowedVideo]. Null when YouTube cannot be reached and
+  /// nothing matched locally.
+  Future<List<VideoHit>?> searchVideos(String query) async {
+    final q = query.trim();
+    if (q.isEmpty || isBlockedVideoText(q)) return const [];
+    final nq = normalizeSearch(q);
+    final words = nq.split(' ').where((w) => w.isNotEmpty).toList();
+    final local = <VideoHit>[
+      for (final r in items)
+        if (words.every((w) => normalizeSearch(r.titleAr).contains(w)))
+          VideoHit(
+            ref: r.ref,
+            title: r.titleAr,
+            channel: source(r.sourceId)?.name(true),
+            channelId: source(r.sourceId)?.channelId,
+            trusted: true,
+          ),
+    ];
+    final page = await _get(videoSearchUri(q));
+    if (page == null) return local.isEmpty ? null : local;
+    final trusted = trustedChannelIds;
+    final seen = {for (final h in local) h.ref};
+    final web = [
+      for (final h in parseVideoSearch(page))
+        if (!seen.contains(h.ref) && allowedVideo(h, trusted)) h.withTrusted(trusted.contains(h.channelId)),
+    ]..sort((a, b) => (a.trusted ? 0 : 1).compareTo(b.trusted ? 0 : 1));
+    return [...local, ...web];
   }
 
   Future<void> hide(String sourceId) async {

@@ -3,7 +3,10 @@ import "@/generated/tokens.css";
 import "../globals.css";
 import { withBase } from "@/lib/base-path";
 
-export const metadata = { title: "رتّل وصلِّ — Rattil wa Salli", manifest: withBase("/manifest.webmanifest") };
+export const metadata = {
+  title: "رتّل وصلِّ — Rattil wa Salli",
+  manifest: withBase("/manifest.webmanifest"),
+};
 
 export default function RootRedirectLayout({ children }: { children: ReactNode }) {
   return (

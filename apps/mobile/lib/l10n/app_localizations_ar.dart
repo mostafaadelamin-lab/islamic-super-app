@@ -1074,6 +1074,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get khatmaNew => 'ختمة جديدة';
 
   @override
+  String get khatmaOpenPlanner => 'مخطط الختمة الكامل';
+
+  @override
+  String get khatmaOpenPlannerSub => 'ختمة بعدد أيام، ورد يومي، تذكير، وسجل الختمات';
+
+  @override
   String get khatmaOpening => 'من قوله تعالى:';
 
   @override
@@ -2443,6 +2449,33 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tasbihVibrate => 'اهتزاز';
+
+  @override
+  String get videosClearHistory => 'مسح السجل';
+
+  @override
+  String get videosHistory => 'عمليات البحث السابقة';
+
+  @override
+  String get videosNoResults => 'لا توجد فيديوهات إسلامية مطابقة. جرّب كلمات أخرى.';
+
+  @override
+  String videosRemoveHistory(String q) {
+    return 'حذف «$q» من السجل';
+  }
+
+  @override
+  String get videosSearch => 'بحث';
+
+  @override
+  String get videosSearchFailed => 'تعذّر البحث الآن. تحقّق من الاتصال بالإنترنت ثم أعد المحاولة.';
+
+  @override
+  String get videosSearchHint => 'ابحث عن تلاوة أو درس أو موعظة';
+
+  @override
+  String get videosSearchNote =>
+      'نتائج البحث فيديوهات إسلامية فقط (تلاوات ودروس ومواعظ)، والقنوات الموثوقة أولًا. اضغط على الفيديو لتشغيله، أو اضغط مطولًا لفتحه في يوتيوب.';
 
   @override
   String worshipFasted(String n) {

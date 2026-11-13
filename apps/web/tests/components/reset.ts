@@ -10,6 +10,8 @@ import { downloadsStore } from "@/lib/audio-offline";
 import { adhkarStore } from "@/lib/adhkar";
 import { adhkarViewStore } from "@/lib/dhikr-share";
 import { sharePromptStore } from "@/lib/app-links";
+import { videoHistoryStore } from "@/lib/videos";
+import { nasheedsSavedStore } from "@/lib/nasheeds";
 
 export function resetStores(): void {
   localStorage.clear();
@@ -24,6 +26,8 @@ export function resetStores(): void {
     worshipStore,
     reelsPrefsStore,
     reelsFeedStore,
+    videoHistoryStore,
+    nasheedsSavedStore,
     audioStore,
     downloadsStore,
     adhkarStore,

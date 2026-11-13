@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rattil/ui/khatma_screen.dart';
+import 'package:rattil/ui/worship_screen.dart';
 import 'package:rattil/app.dart';
 import 'package:rattil/app_services.dart';
 import 'package:rattil/domain/adhkar.dart';
@@ -400,6 +402,9 @@ void main() {
       await pumpApp(tester, size: tallPhone);
       await goToTab(tester, 5);
       for (final id in [
+        'khatma',
+        'tracker',
+        'nasheeds',
         'hadith',
         'asma',
         'radio',
@@ -417,6 +422,19 @@ void main() {
       await tester.tap(find.byKey(const Key('more.settings')));
       await tester.pumpAndSettle();
       expect(find.byType(SettingsScreen), findsOneWidget);
+    });
+
+    testWidgets('More opens the full khatma planner and the worship tracker (owner, 2026-11-13)', (tester) async {
+      await pumpApp(tester, size: tallPhone);
+      await goToTab(tester, 5);
+      await tester.tap(find.byKey(const Key('more.khatma')));
+      await tester.pumpAndSettle();
+      expect(find.byType(KhatmaScreen), findsOneWidget);
+      Navigator.of(tester.element(find.byType(KhatmaScreen))).pop();
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('more.tracker')));
+      await tester.pumpAndSettle();
+      expect(find.byType(WorshipScreen), findsOneWidget);
     });
 
     testWidgets('adhan: permission denied keeps it off and says so', (tester) async {

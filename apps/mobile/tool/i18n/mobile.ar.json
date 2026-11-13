@@ -678,5 +678,15 @@
   "sharawi.minutes": "{n} دقيقة",
   "asma.lessonBy": "شرح الشيخ محمد راتب النابلسي",
   "asma.part": "الدرس {n}",
-  "asma.listenLesson": "استمع لشرح الاسم"
+  "asma.listenLesson": "استمع لشرح الاسم",
+  "videos.search": "بحث",
+  "videos.searchHint": "ابحث عن تلاوة أو درس أو موعظة",
+  "videos.searchNote": "نتائج البحث فيديوهات إسلامية فقط (تلاوات ودروس ومواعظ)، والقنوات الموثوقة أولًا. اضغط على الفيديو لتشغيله، أو اضغط مطولًا لفتحه في يوتيوب.",
+  "videos.searchFailed": "تعذّر البحث الآن. تحقّق من الاتصال بالإنترنت ثم أعد المحاولة.",
+  "videos.noResults": "لا توجد فيديوهات إسلامية مطابقة. جرّب كلمات أخرى.",
+  "videos.history": "عمليات البحث السابقة",
+  "videos.clearHistory": "مسح السجل",
+  "videos.removeHistory": "حذف «{q}» من السجل",
+  "khatma.openPlanner": "مخطط الختمة الكامل",
+  "khatma.openPlannerSub": "ختمة بعدد أيام، ورد يومي، تذكير، وسجل الختمات"
 }

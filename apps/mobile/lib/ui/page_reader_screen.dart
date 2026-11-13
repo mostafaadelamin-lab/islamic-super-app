@@ -99,9 +99,17 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   void _scheduleKhatma() {
     _khatmaTimer?.cancel();
     final settings = context.services.settings;
-    if (settings.khatma == null) return;
+    final planner = context.services.khatma;
+    final plan = planner.current;
     final p = _page;
-    _khatmaTimer = Timer(khatmaDwell, () => unawaited(settings.markKhatmaPage(p)));
+    // The khatma planner's daily wird counts as done once its last page stayed open.
+    final wirdEnd = plan == null || plan.finished ? null : plan.wirdPages(plan.done).to;
+    if (settings.khatma == null && wirdEnd != p) return;
+    _khatmaTimer = Timer(khatmaDwell, () {
+      if (settings.khatma != null) unawaited(settings.markKhatmaPage(p));
+      final now = planner.current;
+      if (now != null && !now.finished && now.wirdPages(now.done).to == p) unawaited(planner.completeWird());
+    });
   }
 
   /// Turns to the page of the ayah being recited when it moves to a new page.

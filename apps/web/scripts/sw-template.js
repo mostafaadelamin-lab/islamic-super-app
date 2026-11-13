@@ -55,7 +55,8 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
-      for (const k of await caches.keys()) if (k !== CACHE && k !== AUDIO_CACHE && k.startsWith("rattil-")) await caches.delete(k);
+      for (const k of await caches.keys())
+        if (k !== CACHE && k !== AUDIO_CACHE && k.startsWith("rattil-")) await caches.delete(k);
       await self.clients.claim();
     })(),
   );
@@ -120,6 +121,8 @@ self.addEventListener("fetch", (event) => {
     );
     return;
   }
+  // Live data from the site's functions (videos feed and search) always goes to the network.
+  if (url.pathname.startsWith("__BASE__/api/")) return;
   event.respondWith(
     (async () => {
       const cache = await caches.open(CACHE);

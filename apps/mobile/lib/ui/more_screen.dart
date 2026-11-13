@@ -6,6 +6,8 @@ import 'radio_screen.dart';
 import 'nasheeds_screen.dart';
 import 'hadith_screen.dart';
 import 'hajj_screen.dart';
+import 'khatma_screen.dart';
+import 'worship_screen.dart';
 import 'help_screen.dart';
 import 'l10n_ext.dart';
 import 'mosques_screen.dart';
@@ -41,6 +43,8 @@ class MoreScreen extends StatelessWidget {
           children: [
             SectionCard(
               children: [
+                tile('khatma', RIcons.khatma, l.khatmaTitle, () => const KhatmaScreen()),
+                tile('tracker', RIcons.calendarCheck, l.worshipTitle, () => const WorshipScreen()),
                 tile('hadith', RIcons.openBook, l.hadithTitle, () => const HadithScreen()),
                 tile('asma', RIcons.star, l.asmaTitle, () => const AsmaScreen()),
                 tile('radio', RIcons.radio, l.radiosTitle, () => const RadioScreen()),

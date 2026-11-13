@@ -115,6 +115,13 @@ copyFileSync(join(repo, "content/quran/dist/mushaf-lines.v1.json"), join(pub, "d
 // Hadith books (Open-Hadith-Data, ODbL): book list in src/generated, text chunks served from /data/hadith/<book>/<k>.json.
 // Al-Sha'rawi audio tafsir: lesson list (audio streamed per lesson), fetched by the /sharawi page.
 copyFileSync(join(repo, "content/sharawi/dist/sharawi.v1.json"), join(pub, "data/sharawi.json"));
+// Nasheeds (same list as the mobile app, voice-only): munshid list with streamed/saved audio, fetched by /nasheeds.
+copyFileSync(join(repo, "apps/mobile/assets/content/nasheeds.v2.json"), join(pub, "data/nasheeds.json"));
+// Videos function (netlify/functions/videos.mjs): the trusted channels (feed) and the suggested ones (search ranking).
+writeJson(join(app, "netlify/lib/reel-sources.json"), {
+  feed: readJson("content/reels/dist/reel-sources.v1.json").sources,
+  suggested: readJson("apps/mobile/assets/content/reel-suggestions.v1.json").sources,
+});
 const hadith = readJson("content/hadith/dist/books.v1.json");
 writeJson(join(gen, "hadith-books.json"), hadith);
 for (const b of hadith.books) {

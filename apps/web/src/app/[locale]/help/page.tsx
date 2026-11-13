@@ -3,6 +3,7 @@ import { isLocale, t } from "@/lib/i18n";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
 import { APP_LINKS } from "@/lib/app-links";
 import { ShareAppButton } from "@/components/ShareApp";
+import { InstallApp } from "@/components/InstallApp";
 
 /** Number of questions in the help strings (help.q1 … help.q7 with help.a1 … help.a7). */
 const FAQ_COUNT = 7;
@@ -46,6 +47,7 @@ export default async function HelpPage({ params }: { params: LocaleParams }) {
           </p>
         )}
       </section>
+      <InstallApp locale={locale} />
       <section className="card" aria-labelledby="spread-h">
         <h2 id="spread-h" className="card-title">
           {t(locale, "help.spread")}

@@ -678,5 +678,15 @@
   "sharawi.minutes": "{n} min",
   "asma.lessonBy": "Explained by Sheikh Muhammad Ratib al-Nabulsi",
   "asma.part": "Lesson {n}",
-  "asma.listenLesson": "Listen to the explanation"
+  "asma.listenLesson": "Listen to the explanation",
+  "videos.search": "Search",
+  "videos.searchHint": "Search a recitation, lesson or admonition",
+  "videos.searchNote": "Search shows Islamic videos only (recitations, lessons, admonitions), trusted channels first. Tap a video to play it, or long-press to open it in YouTube.",
+  "videos.searchFailed": "Search is not available right now. Check your connection and try again.",
+  "videos.noResults": "No matching Islamic videos. Try other words.",
+  "videos.history": "Recent searches",
+  "videos.clearHistory": "Clear history",
+  "videos.removeHistory": "Remove “{q}” from history",
+  "khatma.openPlanner": "Full khatma planner",
+  "khatma.openPlannerSub": "Khatma by days, daily portion, reminder and history"
 }
