@@ -879,11 +879,11 @@
   "@contactFailed": {
     "description": "shared key \"contact.failed\""
   },
-  "contactIntro": "Write your message and it will reach the team. Add your email or number if you want a reply.",
+  "contactIntro": "Write your request and it will reach the team. Add your phone or WhatsApp number if you want a reply.",
   "@contactIntro": {
     "description": "shared key \"contact.intro\""
   },
-  "contactMessage": "Your message",
+  "contactMessage": "Message",
   "@contactMessage": {
     "description": "shared key \"contact.message\""
   },
@@ -891,13 +891,13 @@
   "@contactMessageRequired": {
     "description": "shared key \"contact.messageRequired\""
   },
-  "contactName": "Name (optional)",
+  "contactName": "Name",
   "@contactName": {
     "description": "shared key \"contact.name\""
   },
-  "contactReply": "Your email or number for a reply (optional)",
-  "@contactReply": {
-    "description": "shared key \"contact.reply\""
+  "contactPhone": "Phone number (optional)",
+  "@contactPhone": {
+    "description": "shared key \"contact.phone\""
   },
   "contactSend": "Send",
   "@contactSend": {
@@ -906,6 +906,18 @@
   "contactThanks": "Your message was sent. Thank you!",
   "@contactThanks": {
     "description": "shared key \"contact.thanks\""
+  },
+  "contactTitle": "Request title",
+  "@contactTitle": {
+    "description": "shared key \"contact.title\""
+  },
+  "contactTitleRequired": "Please write a title",
+  "@contactTitleRequired": {
+    "description": "shared key \"contact.titleRequired\""
+  },
+  "contactWhatsapp": "WhatsApp number (optional)",
+  "@contactWhatsapp": {
+    "description": "shared key \"contact.whatsapp\""
   },
   "dhikrHadith": "The hadith",
   "@dhikrHadith": {

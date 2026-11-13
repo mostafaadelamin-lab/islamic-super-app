@@ -43,16 +43,20 @@ class ContactScreen extends StatefulWidget {
 
 class _ContactScreenState extends State<ContactScreen> {
   final _form = GlobalKey<FormState>();
+  final _title = TextEditingController();
   final _name = TextEditingController();
-  final _reply = TextEditingController();
+  final _phone = TextEditingController();
+  final _whatsapp = TextEditingController();
   final _message = TextEditingController();
   bool _sending = false;
   bool _sent = false;
 
   @override
   void dispose() {
+    _title.dispose();
     _name.dispose();
-    _reply.dispose();
+    _phone.dispose();
+    _whatsapp.dispose();
     _message.dispose();
     super.dispose();
   }
@@ -67,11 +71,15 @@ class _ContactScreenState extends State<ContactScreen> {
       return;
     }
     setState(() => _sending = true);
+    String v(TextEditingController c) => c.text.trim().isEmpty ? '-' : c.text.trim();
     final ok = await widget.sender(Uri.parse(endpoint), {
-      'name': _name.text.trim().isEmpty ? '-' : _name.text.trim(),
-      'reply_to': _reply.text.trim().isEmpty ? '-' : _reply.text.trim(),
+      'title': _title.text.trim(),
+      'name': v(_name),
+      'phone': v(_phone),
+      'whatsapp': v(_whatsapp),
       'message': _message.text.trim(),
-      '_subject': 'Rattil wa Salli app: ${l.helpContact}',
+      'source': 'app',
+      '_subject': 'Rattil wa Salli app: ${_title.text.trim()}',
       '_template': 'table',
       '_captcha': 'false',
     });
@@ -118,15 +126,30 @@ class _ContactScreenState extends State<ContactScreen> {
                         Text(l.contactIntro),
                         const SizedBox(height: DesignTokens.spaceMd),
                         TextFormField(
+                          key: const Key('contactTitle'),
+                          controller: _title,
+                          decoration: InputDecoration(labelText: l.contactTitle, border: const OutlineInputBorder()),
+                          validator: (v) => (v ?? '').trim().isEmpty ? l.contactTitleRequired : null,
+                        ),
+                        const SizedBox(height: DesignTokens.spaceMd),
+                        TextFormField(
                           key: const Key('contactName'),
                           controller: _name,
                           decoration: InputDecoration(labelText: l.contactName, border: const OutlineInputBorder()),
                         ),
                         const SizedBox(height: DesignTokens.spaceMd),
                         TextFormField(
-                          key: const Key('contactReply'),
-                          controller: _reply,
-                          decoration: InputDecoration(labelText: l.contactReply, border: const OutlineInputBorder()),
+                          key: const Key('contactPhone'),
+                          controller: _phone,
+                          keyboardType: TextInputType.phone,
+                          decoration: InputDecoration(labelText: l.contactPhone, border: const OutlineInputBorder()),
+                        ),
+                        const SizedBox(height: DesignTokens.spaceMd),
+                        TextFormField(
+                          key: const Key('contactWhatsapp'),
+                          controller: _whatsapp,
+                          keyboardType: TextInputType.phone,
+                          decoration: InputDecoration(labelText: l.contactWhatsapp, border: const OutlineInputBorder()),
                         ),
                         const SizedBox(height: DesignTokens.spaceMd),
                         TextFormField(

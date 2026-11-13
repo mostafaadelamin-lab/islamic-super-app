@@ -8,6 +8,8 @@ export function Footer({ locale }: { locale: Locale }) {
       <p>{t(locale, "settings.free")}</p>
       <Link href={href(locale, "about")}>{t(locale, "nav.about")}</Link>
       <Link href={href(locale, "page/1")}>{t(locale, "quran.pages")}</Link>
+      <Link href={href(locale, "help")}>{t(locale, "help.contact")}</Link>
+      <a href="/privacy-policy.html">{t(locale, "help.privacy")}</a>
     </footer>
   );
 }

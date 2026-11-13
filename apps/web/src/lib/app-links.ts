@@ -3,6 +3,8 @@ import linksJson from "@/generated/app-links.json";
 import { createStore } from "./store";
 
 export interface AppLinks {
+  /** Form service address (FormSubmit). Messages go to the team's inbox; the address itself is never shown. */
+  contactForm: string | null;
   contactEmail: string | null;
   website: string | null;
   playStore: string | null;
@@ -11,6 +13,7 @@ export interface AppLinks {
 const str = (v: unknown): string | null => (typeof v === "string" && v.trim() !== "" ? v : null);
 const raw = linksJson as Record<string, unknown>;
 export const APP_LINKS: AppLinks = {
+  contactForm: str(raw.contactForm),
   contactEmail: str(raw.contactEmail),
   website: str(raw.website),
   playStore: str(raw.playStore),

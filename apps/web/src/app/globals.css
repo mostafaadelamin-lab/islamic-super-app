@@ -404,6 +404,8 @@ input[type="email"],
 input[type="password"],
 input[type="url"],
 input[type="number"],
+input[type="tel"],
+textarea,
 select {
   min-height: var(--min-touch);
   border: 1px solid var(--color-line);
@@ -413,6 +415,11 @@ select {
   font: inherit;
   padding: 0 var(--space-md);
   max-width: 100%;
+}
+textarea {
+  padding: var(--space-sm) var(--space-md);
+  resize: vertical;
+  width: 100%;
 }
 input[type="range"] {
   min-height: var(--min-touch);

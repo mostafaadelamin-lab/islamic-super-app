@@ -67,21 +67,32 @@ Rattil wa Salli is a completely free Quran and prayer app: no ads, no subscripti
 
 ## الخصوصية
 
-### Apple – App Privacy
-**Data Not Collected** (التطبيق نفسه مش بيجمع أي بيانات ولا يبعتها لنا).
-- الموقع بيتحسب على الجهاز؛ المساجد القريبة بتبعت إحداثيات تقريبية لخوادم OpenStreetMap للبحث وقت الطلب فقط ومش بتتربط بهوية المستخدم.
-- مفيش إعلانات ولا تحليلات ولا تتبع → Tracking = No.
+### Apple – App Privacy (لأن فيه فورم «تواصل معنا»)
+**Data Collection: Yes**، والأنواع دي بس:
+| النوع | الاستخدام | مربوط بالشخص؟ | تتبع؟ |
+|---|---|---|---|
+| Contact Info → Name | App Functionality (الرد على الرسالة) | Yes | No |
+| Contact Info → Phone Number | App Functionality | Yes | No |
+| User Content → Customer Support | App Functionality | Yes | No |
+
+- الموقع الجغرافي **مش** متجمّع: الحساب على الجهاز، والمساجد القريبة طلب لحظي من غير معرّف.
+- مفيش إعلانات ولا تحليلات ولا تتبع → Tracking = **No**.
 
 ### Google Play – Data safety
-- Does your app collect or share user data? **No** (معالجة على الجهاز فقط؛ الطلبات للخدمات الخارجية مذكورة في سياسة الخصوصية).
+- Does your app collect or share user data? **Yes, collects** (فورم التواصل بس). Shared with third parties: **No** (FormSubmit مزوّد خدمة بيوصّل الرسالة لينا، ده مش «مشاركة» في تعريف جوجل).
+- الأنواع: Personal info → **Name**, **Phone number** · Messages → **Other in-app messages**. كلها **Optional** ما عدا محتوى الرسالة، الغرض: **Developer communications / App functionality**.
 - Is data encrypted in transit? **Yes** (HTTPS).
-- Account deletion: لا يوجد حسابات في نسخة المتجر.
+- Can users request deletion? **Yes** (من نفس الفورم).
+- Account creation: لا يوجد حسابات.
 - Ads: **No**.
 - Target audience: 13+ (اختار «13–15, 16–17, 18+» عشان مايتطلبش برنامج Families). ينفع الأطفال يستخدموه، بس مش موجّه لهم.
 
-### روابط مطلوبة (لسه ناقصة)
-- Privacy Policy URL: صفحة عامة لـ `privacy-policy.html`.
-- Support URL + إيميل الدعم.
+### الروابط المطلوبة
+- Privacy Policy URL: `https://rattilwasalli.com/privacy-policy.html`
+- Support URL (Apple): `https://rattilwasalli.com/ar/help/` (الأسئلة الشائعة + فورم التواصل، من غير إيميل)
+- Marketing URL (اختياري): `https://rattilwasalli.com`
+- Google Play → Store settings → Contact details: الإيميل إجباري هنا بس (`mostafa.adelamin@zoolacademy.com`)، والموقع `https://rattilwasalli.com`.
+- App Review contact (Apple، مش بيظهر للناس): اسمك وتليفونك والإيميل.
 
 ## ملاحظات للمراجع (App Review notes)
 

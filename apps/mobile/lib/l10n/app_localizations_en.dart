@@ -610,25 +610,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contactIntro =>
-      'Write your message and it will reach the team. Add your email or number if you want a reply.';
+      'Write your request and it will reach the team. Add your phone or WhatsApp number if you want a reply.';
 
   @override
-  String get contactMessage => 'Your message';
+  String get contactMessage => 'Message';
 
   @override
   String get contactMessageRequired => 'Please write your message';
 
   @override
-  String get contactName => 'Name (optional)';
+  String get contactName => 'Name';
 
   @override
-  String get contactReply => 'Your email or number for a reply (optional)';
+  String get contactPhone => 'Phone number (optional)';
 
   @override
   String get contactSend => 'Send';
 
   @override
   String get contactThanks => 'Your message was sent. Thank you!';
+
+  @override
+  String get contactTitle => 'Request title';
+
+  @override
+  String get contactTitleRequired => 'Please write a title';
+
+  @override
+  String get contactWhatsapp => 'WhatsApp number (optional)';
 
   @override
   String get dhikrHadith => 'The hadith';

@@ -1139,13 +1139,13 @@ abstract class AppLocalizations {
   /// shared key "contact.intro"
   ///
   /// In en, this message translates to:
-  /// **'Write your message and it will reach the team. Add your email or number if you want a reply.'**
+  /// **'Write your request and it will reach the team. Add your phone or WhatsApp number if you want a reply.'**
   String get contactIntro;
 
   /// shared key "contact.message"
   ///
   /// In en, this message translates to:
-  /// **'Your message'**
+  /// **'Message'**
   String get contactMessage;
 
   /// shared key "contact.messageRequired"
@@ -1157,14 +1157,14 @@ abstract class AppLocalizations {
   /// shared key "contact.name"
   ///
   /// In en, this message translates to:
-  /// **'Name (optional)'**
+  /// **'Name'**
   String get contactName;
 
-  /// shared key "contact.reply"
+  /// shared key "contact.phone"
   ///
   /// In en, this message translates to:
-  /// **'Your email or number for a reply (optional)'**
-  String get contactReply;
+  /// **'Phone number (optional)'**
+  String get contactPhone;
 
   /// shared key "contact.send"
   ///
@@ -1177,6 +1177,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your message was sent. Thank you!'**
   String get contactThanks;
+
+  /// shared key "contact.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Request title'**
+  String get contactTitle;
+
+  /// shared key "contact.titleRequired"
+  ///
+  /// In en, this message translates to:
+  /// **'Please write a title'**
+  String get contactTitleRequired;
+
+  /// shared key "contact.whatsapp"
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp number (optional)'**
+  String get contactWhatsapp;
 
   /// shared key "dhikr.hadith"
   ///

@@ -607,25 +607,34 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactFailed => 'تعذّر الإرسال. تأكد من الاتصال بالإنترنت وحاول مرة أخرى.';
 
   @override
-  String get contactIntro => 'اكتب رسالتك وهتوصل لفريق العمل. لو عايز رد، اكتب إيميلك أو رقمك.';
+  String get contactIntro => 'اكتب طلبك وهيوصل لفريق العمل. لو عايز نرد عليك، اكتب رقم تليفونك أو الواتساب.';
 
   @override
-  String get contactMessage => 'رسالتك';
+  String get contactMessage => 'المحتوى';
 
   @override
   String get contactMessageRequired => 'اكتب رسالتك أولًا';
 
   @override
-  String get contactName => 'الاسم (اختياري)';
+  String get contactName => 'الاسم';
 
   @override
-  String get contactReply => 'إيميلك أو رقمك للرد (اختياري)';
+  String get contactPhone => 'رقم التليفون (اختياري)';
 
   @override
   String get contactSend => 'إرسال';
 
   @override
   String get contactThanks => 'وصلت رسالتك، جزاك الله خيرًا.';
+
+  @override
+  String get contactTitle => 'عنوان الطلب';
+
+  @override
+  String get contactTitleRequired => 'اكتب عنوان الطلب';
+
+  @override
+  String get contactWhatsapp => 'رقم الواتساب (اختياري)';
 
   @override
   String get dhikrHadith => 'الحديث';

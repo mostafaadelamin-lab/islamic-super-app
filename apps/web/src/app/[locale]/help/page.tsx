@@ -4,6 +4,7 @@ import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
 import { APP_LINKS } from "@/lib/app-links";
 import { ShareAppButton } from "@/components/ShareApp";
 import { InstallApp } from "@/components/InstallApp";
+import { ContactForm } from "@/components/ContactForm";
 
 /** Number of questions in the help strings (help.q1 … help.q7 with help.a1 … help.a7). */
 const FAQ_COUNT = 7;
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: { params: LocaleParams }): Pr
 
 export default async function HelpPage({ params }: { params: LocaleParams }) {
   const locale = await resolveLocale(params);
-  const { contactEmail, playStore, appStore } = APP_LINKS;
+  const { playStore, appStore } = APP_LINKS;
   return (
     <>
       <h1>{t(locale, "help.title")}</h1>
@@ -35,17 +36,10 @@ export default async function HelpPage({ params }: { params: LocaleParams }) {
         <h2 id="contact-h" className="card-title">
           {t(locale, "help.contact")}
         </h2>
-        {contactEmail ? (
-          <p>
-            <a className="btn" href={`mailto:${contactEmail}`} data-testid="contact-email">
-              {t(locale, "help.email")}
-            </a>
-          </p>
-        ) : (
-          <p className="muted" data-testid="contact-pending">
-            {t(locale, "help.contactPending")}
-          </p>
-        )}
+        <ContactForm locale={locale} />
+        <p className="muted small">
+          <a href="/privacy-policy.html">{t(locale, "help.privacy")}</a>
+        </p>
       </section>
       <InstallApp locale={locale} />
       <section className="card" aria-labelledby="spread-h">

@@ -631,5 +631,17 @@
   "pwa.install": "Install as an app",
   "pwa.installSub": "Add Rattil wa Salli to the Windows desktop and Start menu; it opens in its own window.",
   "pwa.installed": "The site is installed as an app on this device.",
-  "pwa.howTo": "In Edge or Chrome: open the menu (⋯), then Apps, then “Install this site as an app”."
+  "pwa.howTo": "In Edge or Chrome: open the menu (⋯), then Apps, then “Install this site as an app”.",
+  "help.privacy": "Privacy policy",
+  "contact.intro": "Write your request and it will reach the team. Add your phone or WhatsApp number if you want a reply.",
+  "contact.title": "Request title",
+  "contact.titleRequired": "Please write a title",
+  "contact.name": "Name",
+  "contact.phone": "Phone number (optional)",
+  "contact.whatsapp": "WhatsApp number (optional)",
+  "contact.message": "Message",
+  "contact.messageRequired": "Please write your message",
+  "contact.send": "Send",
+  "contact.thanks": "Your message was sent. Thank you!",
+  "contact.failed": "Could not send. Check your internet connection and try again."
 }
