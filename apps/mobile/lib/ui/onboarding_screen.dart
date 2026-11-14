@@ -80,7 +80,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 padding: const EdgeInsets.all(DesignTokens.spaceSm),
                 child: onSetup
                     ? const SizedBox(height: 48)
-                    : TextButton(key: const Key('tourSkip'), onPressed: widget.onDone, child: Text(l.tourSkip)),
+                    : TextButton(
+                        key: const Key('tourSkip'),
+                        // First run: Skip jumps to the setup (owner: location and adhan are always asked).
+                        onPressed: widget.replay ? widget.onDone : () => _pages.jumpToPage(count - 1),
+                        child: Text(l.tourSkip),
+                      ),
               ),
             ),
             Expanded(
@@ -233,7 +238,7 @@ class _SetupPage extends StatelessWidget {
             ),
             child: Text(l.setupIntro, style: theme.textTheme.bodyMedium, textAlign: TextAlign.center),
           ),
-          const DeviceSetupPanel(),
+          const DeviceSetupPanel(autoAsk: true),
         ],
       ),
     );
@@ -269,7 +274,11 @@ class PermissionsScreen extends StatelessWidget {
 /// The setup steps with their state. The state is read again when the user
 /// comes back from a system settings screen.
 class DeviceSetupPanel extends StatefulWidget {
-  const DeviceSetupPanel({super.key});
+  const DeviceSetupPanel({super.key, this.autoAsk = false});
+
+  /// First run (owner 2026-11-14): ask for the location and the adhan notifications
+  /// right away, one system prompt after the other, instead of waiting for a tap.
+  final bool autoAsk;
 
   @override
   State<DeviceSetupPanel> createState() => _DeviceSetupPanelState();
@@ -287,7 +296,10 @@ class _DeviceSetupPanelState extends State<DeviceSetupPanel> with WidgetsBinding
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _refresh());
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _refresh();
+      if (widget.autoAsk) await _askAll();
+    });
   }
 
   @override
@@ -299,6 +311,14 @@ class _DeviceSetupPanelState extends State<DeviceSetupPanel> with WidgetsBinding
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) unawaited(_refresh());
+  }
+
+  Future<void> _askAll() async {
+    if (!mounted) return;
+    final settings = context.services.settings;
+    if (settings.cityNeverChosen || settings.cityId == 'gps') await _useLocation();
+    if (!mounted) return;
+    if (!settings.adhanEnabled) await _enableAdhan();
   }
 
   Future<void> _refresh() async {

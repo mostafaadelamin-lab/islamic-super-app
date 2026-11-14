@@ -15,7 +15,7 @@ async function toSetup(): Promise<void> {
 }
 
 describe("first visit tour (owner 2026-11-14)", () => {
-  it("shows the features one by one; Skip closes it for good", async () => {
+  it("shows the features one by one; Skip goes to the setup, Start closes it for good", async () => {
     const { unmount } = render(<FirstRunTour locale="en" />);
     const dialog = await screen.findByRole("dialog");
     expect(within(dialog).getByText("Welcome to Rattil wa Salli")).toBeInTheDocument();
@@ -25,6 +25,8 @@ describe("first visit tour (owner 2026-11-14)", () => {
     await userEvent.click(screen.getByTestId("tour-back"));
     expect(screen.getByText("Welcome to Rattil wa Salli")).toBeInTheDocument();
     await userEvent.click(screen.getByTestId("tour-skip"));
+    expect(screen.getByTestId("tour-setup")).toBeInTheDocument();
+    await userEvent.click(screen.getByTestId("tour-start"));
     expect(screen.queryByTestId("first-run")).toBeNull();
     expect(firstRunStore.get().done).toBe(true);
     unmount();
@@ -52,11 +54,10 @@ describe("first visit tour (owner 2026-11-14)", () => {
     expect(screen.getByText(/browsers do not allow alerts with the site closed/)).toBeInTheDocument();
     expect(screen.getByText(/cannot override the phone's silent mode/)).toBeInTheDocument();
 
-    await userEvent.click(screen.getByTestId("tour-locate"));
+    // Owner: both are asked as soon as the setup opens, without another tap.
+    expect(getCurrentPosition).toHaveBeenCalledTimes(1);
     expect(prayerStore.get().custom).toMatchObject({ lat: 30.0445, lng: 31.2357 });
     expect(screen.getByTestId("tour-location-done")).toBeInTheDocument();
-
-    await userEvent.click(screen.getByTestId("tour-adhan"));
     expect(requestPermission).toHaveBeenCalledTimes(1);
     expect(adhanStore.get().enabled).toBe(true);
     expect(await screen.findByTestId("tour-adhan-done")).toBeInTheDocument();
@@ -74,7 +75,6 @@ describe("first visit tour (owner 2026-11-14)", () => {
     render(<FirstRunTour locale="en" />);
     await screen.findByRole("dialog");
     await toSetup();
-    await userEvent.click(screen.getByTestId("tour-locate"));
     expect(screen.getByRole("status")).toHaveTextContent("You can choose your city on the Prayer page.");
     expect(prayerStore.get().custom).toBeNull();
   });

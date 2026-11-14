@@ -26,12 +26,26 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('first start shows the tour; Skip goes to the home screen and is remembered', (tester) async {
-    final app = await pumpApp(tester, prefs: firstRun, size: tallPhone);
+  testWidgets('first start: Skip still asks for location and adhan alerts, then Start; remembered', (tester) async {
+    final notifications = FakeNotifications();
+    final app = await pumpApp(
+      tester,
+      prefs: firstRun,
+      size: tallPhone,
+      notifications: notifications,
+      location: const FakeLocation(LocationFound(30.0445, 31.2357)),
+    );
     expect(find.byKey(const Key('onboarding')), findsOneWidget);
     expect(find.text('أهلًا بك في «رتّل وصلِّ»'), findsOneWidget);
     expect(find.byKey(const Key('navBar')), findsNothing);
     await tester.tap(find.byKey(const Key('tourSkip')));
+    await tester.pumpAndSettle();
+    // Owner: right after install the app asks for the location and to turn on the adhan.
+    expect(find.byKey(const Key('setupPage')), findsOneWidget);
+    expect(app.services.settings.cityId, 'gps');
+    expect(notifications.permissionRequests, 1);
+    expect(app.services.settings.adhanEnabled, isTrue);
+    await tester.tap(find.byKey(const Key('tourStart')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('navBar')), findsOneWidget);
     expect(app.prefs.getBool('onboarding.done'), isTrue);
@@ -71,20 +85,19 @@ void main() {
     expect(find.byKey(const Key('setupPage')), findsOneWidget);
     expect(find.byKey(const Key('tourSkip')), findsNothing);
 
-    // Location.
-    await tapVisible(tester, const Key('setupLocationUse'));
+    // Location and notifications are asked as soon as the setup page opens.
     expect(app.services.settings.cityId, 'gps');
     expect(
       find.descendant(of: find.byKey(const Key('setupLocation')), matching: find.byKey(const Key('stepDone'))),
       findsOneWidget,
     );
 
-    // Notifications: asks the system, turns the adhan on.
-    device.notifications = true;
-    await tapVisible(tester, const Key('setupNotifAction'));
     expect(notifications.permissionRequests, 1);
     expect(app.services.settings.adhanEnabled, isTrue);
-    expect(find.byKey(const Key('setupNotifAction')), findsNothing);
+    // The system still says notifications are off: a button opens its settings.
+    await tapVisible(tester, const Key('setupNotifSettings'));
+    expect(device.opened, ['notifications']);
+    device.opened.clear();
 
     // Exact alarms and battery open the system screens (no direct battery dialog).
     await tapVisible(tester, const Key('setupExactAction'));
@@ -112,7 +125,6 @@ void main() {
       location: const FakeLocation(LocationDenied()),
     );
     await toSetup(tester);
-    await tapVisible(tester, const Key('setupLocationUse'));
     expect(find.text('Location was not allowed. You can choose your city instead.'), findsOneWidget);
     expect(find.byKey(const Key('setupLocationCity')), findsOneWidget);
   });

@@ -97,6 +97,17 @@ export function FirstRunTour({ locale }: { locale: Locale }) {
     adhanStore.set((p) => ({ ...p, enabled: true }));
   };
 
+  /**
+   * Owner (2026-11-14): on first open the site asks for the location and to turn on the adhan alerts
+   * right away. Called from the Next / Skip click, so the browser sees the notification request as
+   * the visitor's own action (Safari and Firefox require that).
+   */
+  const goToSetup = (): void => {
+    setIndex(count - 1);
+    if (!adhanStore.get().enabled) void enableAdhan();
+    if (!prayerStore.get().custom) locate();
+  };
+
   const slide = TOUR_SLIDES[index];
   return (
     <div className="tour-backdrop" data-testid="first-run">
@@ -113,7 +124,7 @@ export function FirstRunTour({ locale }: { locale: Locale }) {
             {t(locale, "tour.page", { n: n(index + 1), total: n(count) })}
           </span>
           {!last && (
-            <button type="button" className="btn-link" data-testid="tour-skip" onClick={finish}>
+            <button type="button" className="btn-link" data-testid="tour-skip" onClick={goToSetup}>
               {t(locale, "tour.skip")}
             </button>
           )}
@@ -218,7 +229,7 @@ export function FirstRunTour({ locale }: { locale: Locale }) {
               className="btn btn-primary"
               data-testid="tour-next"
               data-autofocus
-              onClick={() => setIndex(index + 1)}
+              onClick={() => (index + 1 === count - 1 ? goToSetup() : setIndex(index + 1))}
             >
               {t(locale, "tour.next")}
             </button>
