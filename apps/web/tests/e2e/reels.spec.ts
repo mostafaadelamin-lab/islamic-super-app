@@ -104,7 +104,8 @@ test("reels: keyboard and scroll-snap navigation", async ({ page }) => {
 
 test("reels tile on home and More", async ({ page }) => {
   await page.goto("/ar/more/");
-  await page.locator('a[data-section="reels"]').click();
+  // computer: the More page lists the sections grouped like the site menus
+  await page.getByTestId("more-group-hadith").locator('a[data-section="reels"]').click();
   await expect(page).toHaveURL(/\/ar\/reels\/$/);
 });
 

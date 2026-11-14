@@ -403,6 +403,7 @@ test.describe("home", () => {
   });
 
   test("Arabic home: Arabic-Indic countdown and section tiles", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/ar/");
     await expect(page.getByTestId("home-countdown")).toHaveText(/^[٠-٩]+:[٠-٩]{2}:[٠-٩]{2}$/);
     await expect(page.getByTestId("home-hijri")).toHaveText(/هـ/);
@@ -423,20 +424,24 @@ test.describe("navigation", () => {
     await expect(page).toHaveURL("/ar/adhkar/");
     await nav.getByRole("link", { name: "المزيد" }).click();
     await expect(page).toHaveURL("/ar/more/");
-    await expect(page.getByTestId("section-tiles").getByRole("link")).toHaveCount(21); // 12 + reels + stories + khatma + mosques + tracker + help + zakat + hadith + library
+    await expect(page.getByTestId("section-tiles").getByRole("link")).toHaveCount(24); // 12 + reels + stories + khatma + mosques + tracker + help + zakat + hadith + library + asma + nasheeds + sharawi
     await page.setViewportSize({ width: 1280, height: 900 });
+    // computer: no tab bar; the website header menus instead
+    await expect(nav.getByRole("link", { name: "المزيد" })).toHaveCount(0);
+    await expect(nav.getByRole("button", { name: "الصلاة", exact: true })).toBeVisible();
     const top = (await nav.boundingBox())!;
     expect(top.y).toBeLessThan(80);
   });
 
   test("every section on the More page opens", async ({ page, request }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
     for (const locale of ["ar", "en"]) {
       await page.goto(`/${locale}/more/`);
       const hrefs = await page
         .getByTestId("section-tiles")
         .getByRole("link")
         .evaluateAll((as) => as.map((a) => a.getAttribute("href")!));
-      expect(hrefs).toHaveLength(21); // 12 + reels + stories + khatma + mosques + tracker + help + zakat + hadith + library
+      expect(hrefs).toHaveLength(24); // 12 + reels + stories + khatma + mosques + tracker + help + zakat + hadith + library + asma + nasheeds + sharawi
       for (const h of hrefs) expect((await request.get(h)).status(), h).toBe(200);
     }
   });

@@ -3,8 +3,51 @@ import { watchErrors } from "./helpers";
 import { MP3_API } from "../mp3quran-fixture";
 
 test.describe("navigation & language", () => {
-  test("main nav reaches every section in both languages", async ({ page }) => {
+  test("website menus reach every section (wide screen)", async ({ page }) => {
     const w = watchErrors(page);
+    await page.goto("/en/");
+    const nav = page.getByRole("navigation", { name: "Main navigation" });
+    // No app-style tab bar on a computer: the menus are drop-downs of a website header.
+    await expect(nav.getByRole("link", { name: "More", exact: true })).toHaveCount(0);
+    for (const [menu, name, url, h1] of [
+      ["The Quran", "Surahs", "/en/quran/", "Quran index"],
+      ["Prayer", "Prayer times", "/en/prayer/", "Prayer times"],
+      ["Adhkar & duas", "Morning & evening adhkar", "/en/adhkar/", "Morning & evening adhkar"],
+      ["The Quran", "Search the Quran", "/en/search/", "Search the Quran"],
+      ["The Quran", "Bookmarks", "/en/bookmarks/", "Bookmarks"],
+      ["About", "Settings", "/en/settings/", "Settings"],
+    ] as const) {
+      await nav.getByRole("button", { name: menu, exact: true }).click();
+      await nav
+        .getByRole("link", { name: new RegExp(`^${name}`) })
+        .first()
+        .click();
+      await expect(page).toHaveURL(url);
+      await expect(page.locator("h1")).toHaveText(h1);
+      await expect(nav.getByRole("button", { name: menu, exact: true })).toHaveAttribute(
+        "data-active",
+        "true",
+      );
+      await expect(nav.getByRole("link")).toHaveCount(1); // menus close after navigating (only "Home" shows)
+    }
+    // the prayer menu leads to the adhan alerts on the prayer page
+    await nav.getByRole("button", { name: "Prayer", exact: true }).click();
+    await nav.getByRole("link", { name: /^Adhan alerts/ }).click();
+    await expect(page).toHaveURL("/en/prayer/#adhan");
+    await expect(page.getByTestId("adhan-settings")).toBeInViewport();
+    await expect(page.getByRole("navigation", { name: "Breadcrumb" })).toContainText("Prayer");
+    await nav.getByRole("link", { name: "Home", exact: true }).click();
+    await expect(page).toHaveURL("/en/");
+    await expect(page.locator("h1")).toHaveText("Peace be upon you");
+    await page.getByRole("contentinfo").getByRole("link", { name: "About" }).click();
+    await expect(page.locator("h1")).toHaveText("About");
+    await page.getByRole("contentinfo").getByRole("link", { name: "Mushaf pages" }).click();
+    await expect(page).toHaveURL("/en/page/1/");
+    w.assertClean();
+  });
+
+  test("phone: the tab bar reaches the main sections and More", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/en/");
     const nav = page.getByRole("navigation", { name: "Main navigation" });
     for (const [name, url, h1] of [
@@ -19,29 +62,6 @@ test.describe("navigation & language", () => {
       await expect(page.locator("h1")).toHaveText(h1);
       await expect(nav.getByRole("link", { name, exact: true })).toHaveAttribute("aria-current", "page");
     }
-    // Search, bookmarks and settings live under "More"
-    for (const [name, url, h1] of [
-      ["Search the Quran", "/en/search/", "Search the Quran"],
-      ["Bookmarks", "/en/bookmarks/", "Bookmarks"],
-      ["Settings", "/en/settings/", "Settings"],
-    ] as const) {
-      await nav.getByRole("link", { name: "More", exact: true }).click();
-      await page
-        .getByTestId("section-tiles")
-        .getByRole("link", { name: new RegExp(`^${name}`) })
-        .click();
-      await expect(page).toHaveURL(url);
-      await expect(page.locator("h1")).toHaveText(h1);
-      await expect(nav.getByRole("link", { name: "More", exact: true })).toHaveAttribute(
-        "aria-current",
-        "page",
-      );
-    }
-    await page.getByRole("contentinfo").getByRole("link", { name: "About" }).click();
-    await expect(page.locator("h1")).toHaveText("About");
-    await page.getByRole("contentinfo").getByRole("link", { name: "Mushaf pages" }).click();
-    await expect(page).toHaveURL("/en/page/1/");
-    w.assertClean();
   });
 
   test("language switch keeps the page, flips direction and persists", async ({ page }) => {
@@ -61,6 +81,7 @@ test.describe("navigation & language", () => {
   });
 
   test("home tiles, Quran radio and main sections", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/ar/");
     const tiles = page.getByTestId("home-tiles").locator("a[data-section]");
     const hrefs = await tiles.evaluateAll((as) => as.map((a) => a.getAttribute("href")));
@@ -82,6 +103,17 @@ test.describe("navigation & language", () => {
     await page.goto("/ar/");
     await page.getByRole("link", { name: "الإعدادات" }).first().click();
     await expect(page).toHaveURL("/ar/settings/");
+  });
+
+  test("computer: website home (hero, sections by group, Cairo radio first)", async ({ page }) => {
+    await page.goto("/ar/");
+    await expect(page.getByTestId("home-tiles")).toBeHidden();
+    await expect(page.getByRole("heading", { name: "رتّل وصلِّ", level: 2 })).toBeVisible();
+    const explore = page.getByTestId("home-explore");
+    await expect(explore.locator("a[data-section]")).toHaveCount(22);
+    await expect(explore.locator('a[data-section="adhan"]')).toHaveAttribute("href", "/ar/prayer/#adhan");
+    await expect(page.getByTestId("radio-station")).toHaveValue("eg");
+    await expect(page.getByRole("contentinfo").getByRole("link", { name: "تنبيه الأذان" })).toBeVisible();
   });
 });
 

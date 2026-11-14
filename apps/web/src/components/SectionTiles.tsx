@@ -38,10 +38,18 @@ export const SECTIONS: readonly Section[] = [
   { path: "about", title: "about.title", sub: "home.tile.aboutSub", icon: "info" },
 ];
 
-export function SectionTiles({ locale, paths }: { locale: Locale; paths?: readonly string[] }) {
+export function SectionTiles({
+  locale,
+  paths,
+  testId = "section-tiles",
+}: {
+  locale: Locale;
+  paths?: readonly string[];
+  testId?: string;
+}) {
   const list = paths ? SECTIONS.filter((s) => paths.includes(s.path)) : SECTIONS;
   return (
-    <ul className="tiles" data-testid="section-tiles">
+    <ul className="tiles" data-testid={testId}>
       {list.map((s) => (
         <li key={s.path}>
           <Link className="tile" href={href(locale, s.path)} data-section={s.path}>

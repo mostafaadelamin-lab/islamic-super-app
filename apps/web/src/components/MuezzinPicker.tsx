@@ -2,12 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
-import {
-  BUNDLED_ADHAN_VOICES,
-  loadAdhanCatalog,
-  normalizeArabic,
-  type AdhanVoice,
-} from "@/lib/adhan-voices";
+import { BUNDLED_ADHAN_VOICES, loadAdhanCatalog, normalizeArabic, type AdhanVoice } from "@/lib/adhan-voices";
 
 /** At most this many matches are shown at once; searching narrows the list. */
 const MAX_SHOWN = 80;
@@ -46,7 +41,10 @@ export function MuezzinPicker({
 
   const titled = useMemo(() => {
     const list = all.filter((v) => v.fajr === fajr);
-    const count = list.reduce((m, v) => m.set(v.nameAr, (m.get(v.nameAr) ?? 0) + 1), new Map<string, number>());
+    const count = list.reduce(
+      (m, v) => m.set(v.nameAr, (m.get(v.nameAr) ?? 0) + 1),
+      new Map<string, number>(),
+    );
     const seen = new Map<string, number>();
     return list.map((v) => {
       const n = (seen.get(v.nameAr) ?? 0) + 1;

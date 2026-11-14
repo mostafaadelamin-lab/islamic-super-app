@@ -31,7 +31,9 @@ export function Header({ locale }: { locale: Locale }) {
           <img className="brand-logo" src={withBase("/icon.svg")} alt="" width={40} height={40} />
           <span className="brand-text">
             <span className="brand-name">{t(locale, "appName")}</span>
-            <span className="brand-tagline">{t(locale, "site.tagline")}</span>
+            <span className="brand-tagline" aria-hidden="true">
+              {t(locale, "site.tagline")}
+            </span>
           </span>
         </Link>
         <SiteNav locale={locale} />
@@ -40,8 +42,8 @@ export function Header({ locale }: { locale: Locale }) {
           <Link
             className="header-icon-btn"
             href={href(locale, "search")}
-            aria-label={t(locale, "quran.search")}
-            title={t(locale, "quran.search")}
+            aria-label={t(locale, "nav.search")}
+            title={t(locale, "nav.search")}
           >
             <Icon name="search" size={20} />
           </Link>

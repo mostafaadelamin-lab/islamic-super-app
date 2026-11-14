@@ -7,7 +7,7 @@ import { QuranRadio } from "@/components/QuranRadio";
 import { SharePrompt } from "@/components/ShareApp";
 import { Icon, type IconName } from "@/components/Icon";
 import { MosqueArt } from "@/components/MosqueArt";
-import { SITE_GROUPS, sectionOf } from "@/lib/site-map";
+import { SITE_GROUPS, itemHref, sectionOf } from "@/lib/site-map";
 
 interface HomeTile {
   path: string;
@@ -48,7 +48,11 @@ function Tiles({ locale, list, kind }: { locale: Locale; list: readonly HomeTile
 /** Website home sections (wide screens): a card per menu group listing its pages. */
 function Explore({ locale }: { locale: Locale }) {
   return (
-    <section className="home-explore desktop-only" aria-labelledby="home-explore-h" data-testid="home-explore">
+    <section
+      className="home-explore desktop-only"
+      aria-labelledby="home-explore-h"
+      data-testid="home-explore"
+    >
       <h2 id="home-explore-h" className="site-section-title">
         {t(locale, "site.explore")}
       </h2>
@@ -69,7 +73,7 @@ function Explore({ locale }: { locale: Locale }) {
                 const s = sectionOf(p);
                 return (
                   <li key={p}>
-                    <Link href={href(locale, p)} data-section={p}>
+                    <Link href={itemHref(locale, p)} data-section={p}>
                       <Icon name={s.icon} size={18} />
                       <span>{t(locale, s.title)}</span>
                     </Link>

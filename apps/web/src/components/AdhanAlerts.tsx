@@ -245,7 +245,7 @@ export function AdhanSettings({ locale }: { locale: Locale }) {
   };
 
   return (
-    <section className="card" aria-labelledby="adhan-h" data-testid="adhan-settings">
+    <section className="card" id="adhan" aria-labelledby="adhan-h" data-testid="adhan-settings">
       <h2 id="adhan-h" style={{ marginTop: 0 }}>
         {t(locale, "adhan.settings")}
       </h2>

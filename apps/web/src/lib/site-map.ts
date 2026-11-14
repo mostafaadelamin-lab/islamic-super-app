@@ -1,5 +1,7 @@
 import type { IconName } from "@/components/Icon";
 import { SECTIONS, type Section } from "@/components/SectionTiles";
+import { href } from "@/lib/locale-path";
+import type { Locale } from "@/lib/i18n";
 
 /**
  * Website navigation (desktop / wide screens): every section of the site grouped into menus, used by the
@@ -34,7 +36,7 @@ export const SITE_GROUPS: readonly SiteGroup[] = [
     sub: "site.group.prayerSub",
     icon: "prayer",
     path: "prayer",
-    items: ["prayer", "qibla", "mosques", "tracker"],
+    items: ["prayer", "adhan", "qibla", "mosques", "tracker"],
   },
   {
     title: "site.group.adhkar",
@@ -59,7 +61,28 @@ export const SITE_GROUPS: readonly SiteGroup[] = [
   },
 ];
 
-const BY_PATH: ReadonlyMap<string, Section> = new Map(SECTIONS.map((s) => [s.path, s]));
+/** Menu entries that are a part of a page rather than a page of their own (owner, 2026-11-14: adhan alerts). */
+const EXTRA: Readonly<Record<string, Section & { page: string; hash: string }>> = {
+  adhan: {
+    path: "adhan",
+    page: "prayer",
+    hash: "adhan",
+    title: "nav.adhanAlerts",
+    sub: "nav.adhanAlertsSub",
+    icon: "bell",
+  },
+};
+
+const BY_PATH: ReadonlyMap<string, Section> = new Map([
+  ...SECTIONS.map((s) => [s.path, s] as const),
+  ...Object.values(EXTRA).map((s) => [s.path, s] as const),
+]);
+
+/** Link of a menu entry (a page, or a page plus an anchor). */
+export function itemHref(locale: Locale, path: string): string {
+  const x = EXTRA[path];
+  return x ? `${href(locale, x.page)}#${x.hash}` : href(locale, path);
+}
 
 export function sectionOf(path: string): Section {
   const s = BY_PATH.get(path);
@@ -69,7 +92,7 @@ export function sectionOf(path: string): Section {
 
 /** First URL segment(s) of a group, for the active state of its menu. */
 export function groupSegments(g: SiteGroup): string[] {
-  return [...g.items.map((p) => p.split("/")[0]!), ...(g.also ?? [])];
+  return [...g.items.map((p) => EXTRA[p]?.page ?? p.split("/")[0]!), ...(g.also ?? [])];
 }
 
 /** The group and section a path (without the locale prefix, e.g. "surah/2/") belongs to. */

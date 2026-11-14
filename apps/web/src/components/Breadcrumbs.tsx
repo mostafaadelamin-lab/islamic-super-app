@@ -10,11 +10,14 @@ export function Breadcrumbs({ locale }: { locale: Locale }) {
   const pathname = usePathname() ?? "/";
   const m = /^\/(?:ar|en)(\/.*)?$/.exec(pathname);
   const rest = m?.[1] ?? "/";
+  // The Mushaf reader is a full-screen page of its own: no trail above it.
+  if (/^\/page\//.test(rest)) return null;
   const where = locate(rest);
   if (!where) return null;
   const { group, section } = where;
   const sectionHref = section ? href(locale, section.path) : null;
-  const atSection = sectionHref !== null && (pathname.endsWith("/") ? pathname : `${pathname}/`) === sectionHref;
+  const atSection =
+    sectionHref !== null && (pathname.endsWith("/") ? pathname : `${pathname}/`) === sectionHref;
   return (
     <nav className="site-crumbs" aria-label={t(locale, "site.breadcrumbs")}>
       <ol>

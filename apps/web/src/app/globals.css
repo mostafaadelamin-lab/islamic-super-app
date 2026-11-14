@@ -3166,6 +3166,8 @@ dd {
    ===================================================================================== */
 :root {
   --site-max: 1240px;
+  /* gold text on the dark-green header/footer: light gold in light mode, the accent in dark mode */
+  --site-gold: var(--hero-soft);
   --header-deep: color-mix(in srgb, var(--header-bg) 80%, #000);
 }
 .brand-logo {
@@ -3256,7 +3258,7 @@ dd {
     text-decoration: none;
   }
   .topbar-prayer strong {
-    color: var(--color-accent-soft);
+    color: var(--site-gold);
   }
   .topbar-links {
     gap: var(--space-lg);
@@ -3515,7 +3517,7 @@ dd {
   .site-footer-col h2 {
     margin: 0 0 var(--space-md);
     font-size: var(--font-size-md);
-    color: var(--color-accent-soft);
+    color: var(--site-gold);
   }
   .site-footer-col ul {
     list-style: none;
@@ -3567,8 +3569,8 @@ dd {
     content: "";
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(circle at 12% 20%, rgb(255 255 255 / 10%) 0 2px, transparent 3px) 0 0 / 34px 34px;
+    background: radial-gradient(circle at 12% 20%, rgb(255 255 255 / 10%) 0 2px, transparent 3px) 0 0 / 34px
+      34px;
     pointer-events: none;
   }
   .site-hero-kicker {
@@ -3797,5 +3799,39 @@ dd {
 @media (min-width: 721px) and (max-width: 900px) {
   .brand-name {
     display: none;
+  }
+}
+
+/* Anchored sections (e.g. /prayer/#adhan from the menu) clear the sticky header. */
+[id] {
+  scroll-margin-top: 72px;
+}
+@media (min-width: 721px) {
+  [id] {
+    scroll-margin-top: 130px;
+  }
+}
+.radio-reciter-row {
+  grid-column: 1 / -1;
+}
+
+/* Wide screens: long lists in columns, grouped "all sections" page */
+@media (min-width: 721px) {
+  .list-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-md);
+  }
+  .more-groups .site-section-title {
+    color: var(--color-primary);
+    font-size: 22px;
+  }
+  .more-groups .tiles {
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  }
+}
+@media (min-width: 1101px) {
+  .list-links {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

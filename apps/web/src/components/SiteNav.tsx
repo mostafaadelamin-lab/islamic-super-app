@@ -1,10 +1,10 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
-import { SITE_GROUPS, groupSegments, sectionOf, type SiteGroup } from "@/lib/site-map";
+import { SITE_GROUPS, groupSegments, itemHref, sectionOf, type SiteGroup } from "@/lib/site-map";
 import { Icon } from "./Icon";
 
 function groupActive(pathname: string, locale: Locale, g: SiteGroup): boolean {
@@ -19,10 +19,16 @@ function groupActive(pathname: string, locale: Locale, g: SiteGroup): boolean {
 export function SiteNav({ locale }: { locale: Locale }) {
   const pathname = usePathname() ?? "/";
   const [open, setOpen] = useState<number | null>(null);
+  // A click right after the hover opened a menu must not close it again.
+  const hoverAt = useRef(0);
   useEffect(() => setOpen(null), [pathname]);
   const home = (pathname.endsWith("/") ? pathname : `${pathname}/`) === href(locale);
   return (
-    <nav className="site-nav" aria-label={t(locale, "nav.main")} onKeyDown={(e) => e.key === "Escape" && setOpen(null)}>
+    <nav
+      className="site-nav"
+      aria-label={t(locale, "nav.main")}
+      onKeyDown={(e) => e.key === "Escape" && setOpen(null)}
+    >
       <ul className="site-nav-list">
         <li>
           <Link className="site-nav-top" href={href(locale)} aria-current={home ? "page" : undefined}>
@@ -37,7 +43,10 @@ export function SiteNav({ locale }: { locale: Locale }) {
             <li
               key={g.title}
               className={`site-nav-group${isOpen ? " open" : ""}`}
-              onMouseEnter={() => setOpen(i)}
+              onMouseEnter={() => {
+                hoverAt.current = Date.now();
+                setOpen(i);
+              }}
               onMouseLeave={() => setOpen((o) => (o === i ? null : o))}
             >
               <button
@@ -46,7 +55,7 @@ export function SiteNav({ locale }: { locale: Locale }) {
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 data-active={active || undefined}
-                onClick={() => setOpen(isOpen ? null : i)}
+                onClick={() => setOpen(isOpen && Date.now() - hoverAt.current > 400 ? null : i)}
               >
                 {t(locale, g.title)}
                 <span className="site-nav-caret" aria-hidden="true" />
@@ -66,7 +75,7 @@ export function SiteNav({ locale }: { locale: Locale }) {
                     const s = sectionOf(p);
                     return (
                       <li key={p}>
-                        <Link href={href(locale, p)} onFocus={() => setOpen(i)}>
+                        <Link href={itemHref(locale, p)} onFocus={() => setOpen(i)}>
                           <span className="site-menu-item-icon">
                             <Icon name={s.icon} size={20} />
                           </span>

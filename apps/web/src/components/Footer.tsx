@@ -2,7 +2,7 @@ import Link from "next/link";
 import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { withBase } from "@/lib/base-path";
-import { SITE_GROUPS, sectionOf } from "@/lib/site-map";
+import { SITE_GROUPS, itemHref, sectionOf } from "@/lib/site-map";
 
 /** Website footer: about column + a site map column per menu group, then a bottom bar. */
 export function Footer({ locale }: { locale: Locale }) {
@@ -29,7 +29,7 @@ export function Footer({ locale }: { locale: Locale }) {
             <ul>
               {g.items.map((p) => (
                 <li key={p}>
-                  <Link href={href(locale, p)}>{t(locale, sectionOf(p).title)}</Link>
+                  <Link href={itemHref(locale, p)}>{t(locale, sectionOf(p).title)}</Link>
                 </li>
               ))}
             </ul>

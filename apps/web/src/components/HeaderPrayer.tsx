@@ -39,7 +39,8 @@ export function HeaderPrayer({ locale }: { locale: Locale }) {
           {t(locale, "home.prayerOf", { name: t(locale, `prayer.${next.key}`) })}{" "}
           <strong>{localizeDigits(formatClock(next.at, loc.tz, display.clock, locale), locale)}</strong>
           <span className="topbar-left">
-            ({t(locale, "home.left")} {localizeDigits(formatCountdown(next.at.getTime() - now.getTime()), locale)})
+            ({t(locale, "home.left")}{" "}
+            {localizeDigits(formatCountdown(next.at.getTime() - now.getTime()), locale)})
           </span>
         </Link>
       ) : null}

@@ -3,7 +3,15 @@ import userEvent from "@testing-library/user-event";
 import { audioStore, buildQueue, radioSurahs } from "@/lib/audio";
 import { player, resetPlayerForTests } from "@/lib/audio-player";
 import { sleepTimer } from "@/lib/sleep-timer";
-import { QuranRadio, RADIO_DURATIONS, randomSurah } from "@/components/QuranRadio";
+import {
+  DEFAULT_STATION,
+  QuranRadio,
+  RADIO_DURATIONS,
+  radioStationStore,
+  randomSurah,
+} from "@/components/QuranRadio";
+import { LIVE_RADIOS } from "@/lib/live-radios";
+import { SITE_GROUPS, itemHref, locate } from "@/lib/site-map";
 
 /** jsdom has no media playback: a minimal fake Audio that records sources. */
 class FakeAudio extends EventTarget {
@@ -32,6 +40,7 @@ class FakeAudio extends EventTarget {
 beforeEach(() => {
   localStorage.clear();
   audioStore.reload();
+  radioStationStore.reload();
   resetPlayerForTests();
   sleepTimer.set(null);
   vi.stubGlobal("Audio", FakeAudio);
@@ -74,6 +83,8 @@ describe("QuranRadio", () => {
     await user.click(screen.getByTestId("radio-longer"));
     expect(RADIO_DURATIONS[1]).toBe(15);
     expect(screen.getByTestId("radio-duration")).toHaveTextContent("١٥ دقيقة");
+    expect(screen.queryByTestId("radio-reciter")).toBeNull(); // live station: no reciter
+    await user.selectOptions(screen.getByTestId("radio-station"), "mushaf");
     await user.selectOptions(screen.getByTestId("radio-reciter"), "Yasser_Ad-Dussary_128kbps");
     await user.click(screen.getByTestId("radio-play"));
     expect(player.get().src).toContain("/Yasser_Ad-Dussary_128kbps/001001.mp3"); // basmala before al-Kahf
@@ -85,5 +96,41 @@ describe("QuranRadio", () => {
     await user.click(screen.getByTestId("radio-play"));
     expect(player.get().status).toBe("paused");
     expect(screen.getByTestId("radio-play")).toHaveAttribute("aria-pressed", "false");
+  });
+});
+
+describe("home radio station (owner, 2026-11-14)", () => {
+  it("defaults to the Holy Quran Radio from Cairo, listed first", () => {
+    render(<QuranRadio locale="ar" />);
+    const select = screen.getByTestId("radio-station") as HTMLSelectElement;
+    expect(DEFAULT_STATION).toBe("eg");
+    expect(select.value).toBe("eg");
+    expect(select.options[0]!.textContent).toBe("إذاعة القرآن الكريم من القاهرة");
+    expect(LIVE_RADIOS.find((r) => r.id === "eg")!.url).toMatch(/^https:/);
+    expect(screen.getByTestId("radio-status")).toHaveTextContent("بث مباشر");
+  });
+  it("plays the live stream and stops the recitation player", async () => {
+    const user = userEvent.setup();
+    const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
+    const stop = vi.spyOn(player, "stop");
+    render(<QuranRadio locale="ar" />);
+    await user.click(screen.getByTestId("radio-play"));
+    expect(play).toHaveBeenCalled();
+    expect(stop).toHaveBeenCalled();
+    expect((screen.getByTestId("radio-live-audio") as HTMLAudioElement).getAttribute("src")).toBe(
+      LIVE_RADIOS.find((r) => r.id === "eg")!.url,
+    );
+    expect(screen.getByTestId("radio-play")).toHaveAttribute("aria-pressed", "true");
+  });
+});
+
+describe("website menus", () => {
+  it("the prayer menu has adhan alerts, linking to the alerts on the prayer page", () => {
+    const prayer = SITE_GROUPS.find((g) => g.path === "prayer")!;
+    expect(prayer.items).toContain("adhan");
+    expect(itemHref("ar", "adhan")).toBe("/ar/prayer/#adhan");
+    expect(locate("/prayer/")!.group.path).toBe("prayer");
+    expect(locate("/surah/2/")!.group.path).toBe("quran");
+    expect(locate("/")).toBeNull();
   });
 });

@@ -787,5 +787,11 @@
   "site.explore": "Explore the site",
   "site.viewAll": "View all",
   "site.radioTitle": "Quran radio",
-  "site.radioLead": "Listen to a continuous recitation of the whole Mushaf by the reciter you choose."
+  "site.radioLead": "Listen live to the Holy Quran Radio from Cairo, pick another station, or play the whole Mushaf by the reciter you choose.",
+  "radio.station": "Station",
+  "radio.mushaf": "Whole-Mushaf radio (chosen reciter)",
+  "radio.liveNote": "Live broadcast. Press Listen to play.",
+  "radio.liveError": "The stream can't play right now. Try again or pick another station.",
+  "nav.adhanAlerts": "Adhan alerts",
+  "nav.adhanAlertsSub": "The adhan at the start of each prayer time"
 }
