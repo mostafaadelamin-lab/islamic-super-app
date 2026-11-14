@@ -11,7 +11,7 @@
 ### Changed
 - Colours: the app and website follow the Mushaf's cream, brown and gold palette instead of green, in light and dark mode.
 - "Rate the app" opens only this device's store (App Store on iPhone, hidden until the App Store link exists; Google Play on Android). Account sync is hidden in store builds.
-- Tawaf drawing goes anti-clockwise. Religious-review labels removed on the website, as in the app.
+- Hajj and Umrah guide (app + website): a new tawaf drawing that starts at the Black Stone and goes anti-clockwise with numbered rounds, and numbered step-by-step graphics. Religious-review labels removed on the website, as in the app.
 - Website hosted on rattilwasalli.com (Bluehost), with the privacy policy at /privacy-policy.html and support at /ar/help/.
 - Unchanged: Quran text, tashkeel and all religious content.
 
