@@ -296,7 +296,7 @@ class _ReelPage extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Color(0xFF0F5C4A), Color(0xFF06140F)],
+                  colors: [Color(0xFF8A5A2B), Color(0xFF1A120A)],
                 ),
               ),
               child: const Center(child: RIcon(RIcons.playCircle, color: Colors.white70, size: 64)),

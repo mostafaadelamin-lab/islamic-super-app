@@ -23,14 +23,14 @@ import 'tasbih_screen.dart';
 import 'widgets.dart';
 import 'r_icon.dart';
 
-/// Hero colours (deep emerald with white text and gold accents), kept for the
+/// Hero colours (Mushaf brown with white text and cream accents), kept for the
 /// banners that still use them; contrast checked in theme_contrast_test.dart.
 class HeroColors {
   HeroColors._();
-  static const top = Color(0xFF0F5C4A);
-  static const bottom = Color(0xFF0A3F33);
+  static const top = Color(0xFF8A5A2B);
+  static const bottom = Color(0xFF5E3B1A);
   static const text = Color(0xFFFFFFFF);
-  static const accent = Color(0xFFF4EBD3);
+  static const accent = Color(0xFFEFE3CB);
 }
 
 /// The five obligatory prayers shown as cards on the home screen.

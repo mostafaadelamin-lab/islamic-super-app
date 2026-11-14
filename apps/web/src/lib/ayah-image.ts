@@ -15,11 +15,11 @@ const BRAND_FONT_PX = 28;
 const HEADER_SPACE = 140;
 const FOOTER_SPACE = 190;
 const MIN_HEIGHT = 1080;
-/** Emerald and gold from the design tokens (packages/design-tokens). */
-const PAPER = "#FFFBEF";
+/** Mushaf cream and brown from the design tokens (packages/design-tokens). */
+const PAPER = "#FBF6EA";
 const INK = "#141414";
-const PRIMARY = "#0F5C4A";
-const GOLD = "#B8923A";
+const PRIMARY = "#8A5A2B";
+const GOLD = "#A8773E";
 const QURAN_FONT = "'KFGQPC HAFS Uthmanic Script', serif";
 const UI_FONT = "'IBM Plex Sans Arabic', system-ui, sans-serif";
 

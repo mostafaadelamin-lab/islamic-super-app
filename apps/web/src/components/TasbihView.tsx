@@ -88,7 +88,7 @@ export function TasbihView({ locale }: { locale: Locale }) {
   const [draft, setDraft] = useState("");
   const c = current(s);
   const progress = c.count / c.target;
-  const color = TASBIH_COLORS[s.color] ?? TASBIH_COLORS.emerald;
+  const color = TASBIH_COLORS[s.color] ?? TASBIH_COLORS.brown;
   const todayCount = s.history[today()]?.[s.phrase] ?? 0;
   const onTap = (): void => {
     const r = tap(tasbihStore.get(), today());

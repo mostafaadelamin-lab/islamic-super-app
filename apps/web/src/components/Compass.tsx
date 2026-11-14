@@ -32,9 +32,9 @@ export function Compass({
     <svg className="compass" viewBox="0 0 200 200" role="img" aria-label={label} data-testid="compass">
       <defs>
         <radialGradient id="compass-face">
-          <stop offset="0" stopColor="#17735e" />
-          <stop offset="0.7" stopColor="#0b4538" />
-          <stop offset="1" stopColor="#062a22" />
+          <stop offset="0" stopColor="#9a6a36" />
+          <stop offset="0.7" stopColor="#6b4420" />
+          <stop offset="1" stopColor="#3f2711" />
         </radialGradient>
         <linearGradient id="compass-ray" x1="0" y1="1" x2="0" y2="0">
           <stop offset="0" stopColor={GOLD} stopOpacity="0.15" />
@@ -136,7 +136,7 @@ export function Compass({
         </g>
       </g>
       <circle cx="100" cy="100" r="6" fill={GOLD} />
-      <circle cx="100" cy="100" r="2.6" fill="#073027" />
+      <circle cx="100" cy="100" r="2.6" fill="#3a240f" />
       {heading !== null ? <polygon points="100,9 94,0 106,0" fill={GOLD} /> : null}
     </svg>
   );
