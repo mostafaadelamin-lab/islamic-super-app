@@ -3156,3 +3156,7 @@ dd {
   font-size: 0.95rem;
   margin: var(--space-md) 0 var(--space-xs);
 }
+.segmented button[role="tab"][aria-selected="true"] {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}

@@ -7,12 +7,18 @@ import { createStore } from "./store";
 import { prayerStore } from "./settings";
 import { distanceM } from "./mosques";
 
-export const autoLocationStore = createStore<boolean>("rattil.prayer.autoLocation", true, (raw) => raw !== false);
+export const autoLocationStore = createStore<boolean>(
+  "rattil.prayer.autoLocation",
+  true,
+  (raw) => raw !== false,
+);
 
 /** Moves smaller than this keep the saved position (no needless re-render of every time). */
 export const MIN_MOVE_M = 1000;
 
-export async function refreshAutoLocation(nav: Navigator | undefined = globalThis.navigator): Promise<boolean> {
+export async function refreshAutoLocation(
+  nav: Navigator | undefined = globalThis.navigator,
+): Promise<boolean> {
   if (!autoLocationStore.get()) return false;
   const custom = prayerStore.get().custom;
   if (!custom || !nav?.geolocation) return false;

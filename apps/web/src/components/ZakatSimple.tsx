@@ -287,7 +287,6 @@ export function ZakatSimple({ locale }: { locale: Locale }) {
             type="button"
             role="tab"
             aria-selected={s.tab === tab}
-            aria-pressed={s.tab === tab}
             data-testid={`zakat-tab-${tab}`}
             onClick={() => patch({ tab })}
           >

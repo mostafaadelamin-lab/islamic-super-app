@@ -6,7 +6,14 @@ import { resolveLocation } from "@/lib/cities";
 import { prayerStore } from "@/lib/settings";
 import { readJson, writeJson } from "@/lib/storage";
 import { useStore } from "@/hooks/useStore";
-import { DEFAULT_RADIUS_M, fetchMosques, googleMapsMosque, googleMapsNearby, RADII_M, type Mosque } from "@/lib/mosques";
+import {
+  DEFAULT_RADIUS_M,
+  fetchMosques,
+  googleMapsMosque,
+  googleMapsNearby,
+  RADII_M,
+  type Mosque,
+} from "@/lib/mosques";
 
 type Status = "idle" | "loading" | "done" | "error";
 interface Point {

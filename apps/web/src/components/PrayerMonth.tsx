@@ -169,13 +169,19 @@ export function PrayerMonth({ locale }: { locale: Locale }) {
   const dayNumber = (d: LocalDate): number => (kind === "hijri" ? (hijriOf(d, offset)?.day ?? d.day) : d.day);
   /** The app shares the month (there as a picture); the site shares it as text, or copies it. */
   const shareMonth = async (): Promise<void> => {
-    const place = loc.city ? (locale === "ar" ? loc.city.nameAr : loc.city.nameEn) : t(locale, "home.myPlace");
+    const place = loc.city
+      ? locale === "ar"
+        ? loc.city.nameAr
+        : loc.city.nameEn
+      : t(locale, "home.myPlace");
     const title = `${t(locale, "prayer.monthTitle")} · ${monthTitle} · ${place}`;
     const lines = rows.map(({ date, pd }) =>
       [
         localizeDigits(dayNumber(date), locale),
         ...PRAYER_KEYS.map((k) =>
-          pd ? `${name(k)} ${localizeDigits(formatClock(pd.times[k], loc.tz, display.clock, locale), locale)}` : "—",
+          pd
+            ? `${name(k)} ${localizeDigits(formatClock(pd.times[k], loc.tz, display.clock, locale), locale)}`
+            : "—",
         ),
       ].join(" | "),
     );

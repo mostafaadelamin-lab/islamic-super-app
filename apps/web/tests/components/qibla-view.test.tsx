@@ -7,6 +7,8 @@ describe("QiblaView (as in the app)", () => {
     render(<QiblaView locale="ar" />);
     expect(screen.getByTestId("qibla-distance").textContent).toMatch(/المسافة إلى الكعبة: [٠-٩]+ كم/);
     expect(screen.getByText("لقراءة دقيقة")).toBeInTheDocument();
-    expect(screen.getByTestId("qibla-map-check").getAttribute("href")).toBe("https://qiblafinder.withgoogle.com/");
+    expect(screen.getByTestId("qibla-map-check").getAttribute("href")).toBe(
+      "https://qiblafinder.withgoogle.com/",
+    );
   });
 });

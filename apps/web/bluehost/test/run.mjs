@@ -1,7 +1,6 @@
 import fs from "fs";
 import * as V from "./videos-core.mjs";
 const sources = JSON.parse(fs.readFileSync("reel-sources.json","utf8"));
-const mode = process.argv[2];
 const get = async (u) => {
   if (u.includes("results")) return fs.readFileSync("search.html","utf8");
   if (u.includes("/@")) return fs.readFileSync("handle.html","utf8");

@@ -29,8 +29,13 @@ function api(calls: string[]): typeof fetch {
     const j = (b: unknown) => Promise.resolve(new Response(JSON.stringify(b), { status: 200 }));
     if (url.includes("/v1/reels/feed")) return j({ schema: "reels-feed.v1", sources: [], items: [] });
     if (url.includes("/channels/search"))
-      return j({ schema: "channel-search.v1", query: "x", items: [{ id: CH, title: "قناة الدروس", subs: "١٠ آلاف" }] });
-    if (url.includes("/v1/reels/channel")) return j({ schema: "reels-channel.v1", channelId: CH, items: [reel("CCCCCCCCCC1")] });
+      return j({
+        schema: "channel-search.v1",
+        query: "x",
+        items: [{ id: CH, title: "قناة الدروس", subs: "١٠ آلاف" }],
+      });
+    if (url.includes("/v1/reels/channel"))
+      return j({ schema: "reels-channel.v1", channelId: CH, items: [reel("CCCCCCCCCC1")] });
     return Promise.resolve(new Response("", { status: 404 }));
   }) as unknown as typeof fetch;
 }
