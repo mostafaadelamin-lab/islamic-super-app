@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.0] — First store release (App Store, then Google Play) — 2026-11-14
+### Added
+- First run (app): a short tour, then a setup that asks for location and adhan notifications straight away, plus exact alarms, battery and adhan on silent (Android only; iPhone cannot play sound on silent).
+- Radios (app + website): live sound from Masjid al-Haram and the Prophet's Mosque.
+- Contact us (app + website): a form with request title, name, phone, WhatsApp and message. No email address is shown.
+- Website: everything the app had that the website lacked (adhkar hub, five-tab zakat calculator, hadith explanations, surah "about" cards, story videos, "your channels" in videos, qibla distance and tips, automatic location and shared monthly timetable).
+- Website on a computer: top bar, drop-down menus, website home, breadcrumbs and a site-map footer. Phones keep the app look.
+- Reader (app + website): page-turn arrows and a hint in full screen; on tablets held sideways and wide screens, the player and tools sit beside the page; the ayah sheet no longer covers the page; one sound at a time (adhkar pause the Quran, which resumes from its ayah); the nasheed player sits under the playing nasheed.
+### Changed
+- Colours: the app and website follow the Mushaf's cream, brown and gold palette instead of green, in light and dark mode.
+- "Rate the app" opens only this device's store (App Store on iPhone, hidden until the App Store link exists; Google Play on Android). Account sync is hidden in store builds.
+- Tawaf drawing goes anti-clockwise. Religious-review labels removed on the website, as in the app.
+- Website hosted on rattilwasalli.com (Bluehost), with the privacy policy at /privacy-policy.html and support at /ar/help/.
+- Unchanged: Quran text, tashkeel and all religious content.
+
 ## [1.0.16] — Video search, nasheeds on the website, khatma planner and worship tracker in More, installable website — 2026-11-13
 ### Added
 - Videos (app + website): a search box at the top of the videos page. Results are Islamic videos only (Quran recitation, religious lessons, advice/admonitions): the trusted channels first, other channels only when the title is clearly Islamic, never titles with music, songs or entertainment words. Tap a result to play it in the official YouTube player. The viewer's past searches are saved on the device (up to 20, newest first): tap one to search again, × removes it, "مسح السجل" clears them.
