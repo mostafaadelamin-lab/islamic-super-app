@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/domain/quran.dart';
+import 'package:rattil/ui/hajj_hub_screen.dart';
 import 'package:rattil/ui/hajj_screen.dart';
 import 'package:rattil/ui/page_reader_screen.dart';
 import 'package:rattil/ui/quran_index.dart';
@@ -41,6 +42,14 @@ void main() {
     outDir.createSync(recursive: true);
     File('${outDir.path}/$name.png').writeAsBytesSync(bytes);
   }
+
+  testWidgets('Hajj & Umrah section: guide, official crowd links, live audio (owner, 2026-11-14)', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(tester, size: const Size(390, 1100));
+    await shot(tester, 'hajj_hub_home');
+    await pushScreen(tester, const HajjHubScreen());
+    await shot(tester, 'hajj_hub');
+  });
 
   testWidgets('Hajj steps per type and a step explained (owner, 2026-11-14)', (tester) async {
     tester.view.devicePixelRatio = 1;
