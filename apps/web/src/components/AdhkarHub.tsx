@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { withBase } from "@/lib/base-path";
@@ -31,14 +30,19 @@ export const ADHKAR_AUDIO = {
 export function AdhkarHub({ locale }: { locale: Locale }) {
   const chip = ([id, icon]: readonly [string, IconName]) => (
     <li key={id}>
-      <Link className="tile tile-sm" href={`${href(locale, "hisn")}#${id}`} data-testid={`adhkar-hub-${id}`}>
+      {/* A full page load, so Hisn al-Muslim reads the #section on arrival. */}
+      <a
+        className="tile tile-sm"
+        href={withBase(`${href(locale, "hisn")}#${id}`)}
+        data-testid={`adhkar-hub-${id}`}
+      >
         <span className="tile-icon">
           <Icon name={icon} />
         </span>
         <span className="tile-text">
           <strong>{t(locale, `hisn.section.${id}`)}</strong>
         </span>
-      </Link>
+      </a>
     </li>
   );
   return (
