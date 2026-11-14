@@ -12,7 +12,7 @@ test.describe("navigation & language", () => {
     for (const [menu, name, url, h1] of [
       ["The Quran", "Surahs", "/en/quran/", "Quran index"],
       ["Prayer", "Prayer times", "/en/prayer/", "Prayer times"],
-      ["Adhkar & duas", "Morning & evening adhkar", "/en/adhkar/", "Morning & evening adhkar"],
+      ["Adhkar & duas", "Morning & evening adhkar", "/en/adhkar/", "Adhkar"],
       ["The Quran", "Search the Quran", "/en/search/", "Search the Quran"],
       ["The Quran", "Bookmarks", "/en/bookmarks/", "Bookmarks"],
       ["About", "Settings", "/en/settings/", "Settings"],
@@ -53,7 +53,7 @@ test.describe("navigation & language", () => {
     for (const [name, url, h1] of [
       ["Quran", "/en/quran/", "Quran index"],
       ["Prayer", "/en/prayer/", "Prayer times"],
-      ["Adhkar", "/en/adhkar/", "Morning & evening adhkar"],
+      ["Adhkar", "/en/adhkar/", "Adhkar"],
       ["More", "/en/more/", "All sections"],
       ["Home", "/en/", "Peace be upon you"],
     ] as const) {
