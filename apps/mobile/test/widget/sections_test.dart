@@ -347,6 +347,22 @@ void main() {
       expect(find.text(app.services.content.hajj.talbiya), findsWidgets);
     });
 
+    testWidgets('numbered steps graphic and the tawaf map from above (owner, 2026-11-14)', (tester) async {
+      await pumpApp(tester, size: tallPhone);
+      await pushScreen(tester, const HajjScreen());
+      expect(find.byKey(const Key('stepsFlow-umrah')), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.byKey(const Key('tawafPlan')),
+        300,
+        scrollable: find.byType(Scrollable).last,
+      );
+      expect(find.byKey(const Key('tawafPlan')), findsOneWidget);
+      expect(find.byKey(const Key('hajjArt-tawaf')), findsNothing);
+      await tester.tap(find.byKey(const Key('hajjTab-hajj')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('stepsFlow-hajj')), findsOneWidget);
+    });
+
     testWidgets('English UI says the guide is Arabic only', (tester) async {
       await pumpApp(tester, size: tallPhone, locale: 'en');
       await pushScreen(tester, const HajjScreen());

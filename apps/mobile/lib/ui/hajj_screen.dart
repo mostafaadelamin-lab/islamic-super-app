@@ -7,6 +7,8 @@ import 'adhkar_screen.dart';
 import 'hajj_art.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
+import 'steps_flow.dart';
+import 'tawaf_plan.dart';
 import 'adaptive.dart';
 
 /// Hajj & Umrah guide (Arabic text from the prototype, pending review).
@@ -42,7 +44,28 @@ class HajjScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
                   children: [
                     if (!context.isArabic) ReviewNotice(l.adhkarArabicOnly),
-                    for (final b in guide.sections[k] ?? const <HajjBlock>[]) _Block(block: b),
+                    for (final (i, b) in (guide.sections[k] ?? const <HajjBlock>[]).indexed) ...[
+                      // Numbered steps graphic before the first numbered step (owner, 2026-11-14).
+                      if (b.label != null && i == _firstLabelled(guide.sections[k]!))
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(
+                            DesignTokens.spaceLg,
+                            DesignTokens.spaceMd,
+                            DesignTokens.spaceLg,
+                            0,
+                          ),
+                          child: StepsFlow(
+                            key: Key('stepsFlow-$k'),
+                            titles: [
+                              for (final x in guide.sections[k]!)
+                                if (x.label != null) x.title ?? '',
+                            ],
+                            arabic: context.isArabic,
+                            label: k == 'umrah' ? l.hajjUmrah : l.hajjHajj,
+                          ),
+                        ),
+                      _Block(block: b),
+                    ],
                   ],
                 ),
             ],
@@ -52,6 +75,8 @@ class HajjScreen extends StatelessWidget {
     );
   }
 }
+
+int _firstLabelled(List<HajjBlock> blocks) => blocks.indexWhere((b) => b.label != null);
 
 class _Block extends StatelessWidget {
   const _Block({required this.block});
@@ -78,7 +103,19 @@ class _Block extends StatelessWidget {
                   if (hajjSceneFor(b.title) case final scene?)
                     Stack(
                       children: [
-                        HajjArt(key: Key('hajjArt-${scene.name}'), scene: scene),
+                        if (scene == HajjScene.tawaf)
+                          // Tawaf map from above: start at the Black Stone, anti-clockwise (owner).
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                              DesignTokens.spaceSm,
+                              DesignTokens.spaceXl + DesignTokens.spaceSm,
+                              DesignTokens.spaceSm,
+                              0,
+                            ),
+                            child: TawafPlan(arabic: context.isArabic),
+                          )
+                        else
+                          HajjArt(key: Key('hajjArt-${scene.name}'), scene: scene),
                         if (b.label != null)
                           PositionedDirectional(
                             top: DesignTokens.spaceSm,
