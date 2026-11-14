@@ -16,11 +16,14 @@ export function StepsFlow({
   titles,
   idPrefix,
   label,
+  hrefs,
 }: {
   locale: Locale;
   titles: readonly string[];
   idPrefix: string;
   label: string;
+  /** Where each circle jumps (default: #idPrefix-N). */
+  hrefs?: readonly string[];
 }) {
   const h = flowHeight(titles.length);
   return (
@@ -56,7 +59,11 @@ export function StepsFlow({
         const [x, y] = flowPosition(i);
         const lines = twoLines(shortStepTitle(title));
         return (
-          <a key={i} href={`#${idPrefix}-${i + 1}`} data-testid={`steps-flow-${idPrefix}-${i + 1}`}>
+          <a
+            key={i}
+            href={hrefs?.[i] ?? `#${idPrefix}-${i + 1}`}
+            data-testid={`steps-flow-${idPrefix}-${i + 1}`}
+          >
             <circle cx={x} cy={y} r={FLOW_R} className="sf-circle" />
             <text x={x} y={y + 9} textAnchor="middle" className="sf-num">
               {localizeDigits(i + 1, locale)}

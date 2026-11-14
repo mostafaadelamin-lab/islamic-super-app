@@ -3971,3 +3971,34 @@ dd {
   padding: var(--space-xs) 0 0;
   background: none;
 }
+
+/* Official Hajj guide paragraphs, numbered like the steps graphic. */
+.dalil-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+.dalil-list li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  line-height: 1.9;
+  scroll-margin-top: 5rem;
+}
+.dalil-list li:target {
+  background: #f2e3cc;
+}
+.dalil-n {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-top: 0.2rem;
+  border-radius: 50%;
+  background: #e9dcc0;
+  color: #6b4a2b;
+  font-weight: 700;
+}

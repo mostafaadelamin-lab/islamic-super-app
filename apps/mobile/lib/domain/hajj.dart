@@ -2,6 +2,8 @@
 // into assets/content/hajj.v1.json by tool/extract_hajj.mjs.
 // Religious review is pending: the UI shows a visible notice.
 
+import 'hajj_flows.dart';
+
 class HajjDef {
   const HajjDef(this.term, this.detail);
   final String term;
@@ -59,22 +61,32 @@ class HajjBlock {
 }
 
 class HajjGuide {
-  const HajjGuide({required this.talbiya, required this.sections, required this.reviewStatus});
+  const HajjGuide({
+    required this.talbiya,
+    required this.sections,
+    required this.reviewStatus,
+    this.official = OfficialHajjGuide.empty,
+  });
 
-  factory HajjGuide.fromJson(Map<String, dynamic> j) => HajjGuide(
-    talbiya: j['talbiya'] as String,
-    reviewStatus: j['reviewStatus'] as String? ?? '',
-    sections: Map.unmodifiable({
-      for (final e in (j['sections'] as Map<String, dynamic>).entries)
-        e.key: List<HajjBlock>.unmodifiable([
-          for (final b in e.value as List<dynamic>) HajjBlock.fromJson(b as Map<String, dynamic>),
-        ]),
-    }),
-  );
+  factory HajjGuide.fromJson(Map<String, dynamic> j, {OfficialHajjGuide official = OfficialHajjGuide.empty}) =>
+      HajjGuide(
+        official: official,
+        talbiya: j['talbiya'] as String,
+        reviewStatus: j['reviewStatus'] as String? ?? '',
+        sections: Map.unmodifiable({
+          for (final e in (j['sections'] as Map<String, dynamic>).entries)
+            e.key: List<HajjBlock>.unmodifiable([
+              for (final b in e.value as List<dynamic>) HajjBlock.fromJson(b as Map<String, dynamic>),
+            ]),
+        }),
+      );
 
   final String talbiya;
   final String reviewStatus;
 
   /// "umrah", "hajj", "ihram".
   final Map<String, List<HajjBlock>> sections;
+
+  /// The official guide's explanation of each step (shown with the steps per Hajj type).
+  final OfficialHajjGuide official;
 }

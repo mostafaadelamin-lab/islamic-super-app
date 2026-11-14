@@ -42,6 +42,24 @@ void main() {
     File('${outDir.path}/$name.png').writeAsBytesSync(bytes);
   }
 
+  testWidgets('Hajj steps per type and a step explained (owner, 2026-11-14)', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(tester, size: const Size(390, 1000));
+    await pushScreen(tester, const HajjScreen());
+    await tester.tap(find.byKey(const Key('hajjTab-hajj')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('hajjTypes')));
+    await tester.pumpAndSettle();
+    await shot(tester, 'hajj_types_tamattu', overlay: true);
+    await tester.tap(find.byKey(const Key('hajjType-qiran')));
+    await tester.pumpAndSettle();
+    await shot(tester, 'hajj_types_qiran', overlay: true);
+    final flow = tester.getRect(find.byKey(const Key('stepsFlow-hajj-qiran')));
+    await tester.tapAt(flow.topLeft + Offset(300 * flow.width / 360, (50 + 2 * 140) * flow.height / (5 * 140 - 20)));
+    await tester.pumpAndSettle();
+    await shot(tester, 'hajj_types_sheet', overlay: true);
+  });
+
   for (final theme in ['light', 'dark']) {
     testWidgets('icon set screenshots ($theme): home, nav, More, prayer, Quran, settings', (tester) async {
       tester.view.devicePixelRatio = 1;

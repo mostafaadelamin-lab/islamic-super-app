@@ -5281,6 +5281,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A full Hijri year has passed since my wealth reached the nisab'**
   String get zakatYearPassed;
+
+  /// No description provided for @hajjStepsInOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Hajj steps in order'**
+  String get hajjStepsInOrder;
+
+  /// No description provided for @hajjTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Type of Hajj'**
+  String get hajjTypeLabel;
+
+  /// No description provided for @hajjTamattu.
+  ///
+  /// In en, this message translates to:
+  /// **'Tamattu\''**
+  String get hajjTamattu;
+
+  /// No description provided for @hajjQiran.
+  ///
+  /// In en, this message translates to:
+  /// **'Qiran'**
+  String get hajjQiran;
+
+  /// No description provided for @hajjIfrad.
+  ///
+  /// In en, this message translates to:
+  /// **'Ifrad'**
+  String get hajjIfrad;
+
+  /// No description provided for @hajjTapStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a step to read its explanation'**
+  String get hajjTapStep;
+
+  /// No description provided for @hajjOfficialGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'The steps explained, from the official guide (Arabic)'**
+  String get hajjOfficialGuide;
+
+  /// No description provided for @hajjGuideTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'Types of Hajj'**
+  String get hajjGuideTypes;
+
+  /// No description provided for @hajjGuideUmrah.
+  ///
+  /// In en, this message translates to:
+  /// **'How to perform Umrah'**
+  String get hajjGuideUmrah;
+
+  /// No description provided for @hajjGuideHajj.
+  ///
+  /// In en, this message translates to:
+  /// **'How to perform Hajj'**
+  String get hajjGuideHajj;
+
+  /// No description provided for @hajjGuideSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get hajjGuideSource;
+
+  /// No description provided for @hajjGuideCorrections.
+  ///
+  /// In en, this message translates to:
+  /// **'Digitization typos corrected'**
+  String get hajjGuideCorrections;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app_services.dart';
 import '../domain/hajj.dart';
+import '../domain/hajj_flows.dart';
 import '../theme/design_tokens.dart';
 import 'adhkar_screen.dart';
 import 'hajj_art.dart';
@@ -54,18 +55,21 @@ class HajjScreen extends StatelessWidget {
                             DesignTokens.spaceLg,
                             0,
                           ),
-                          child: StepsFlow(
-                            key: Key('stepsFlow-$k'),
-                            titles: [
-                              for (final x in guide.sections[k]!)
-                                if (x.label != null) x.title ?? '',
-                            ],
-                            arabic: context.isArabic,
-                            label: k == 'umrah' ? l.hajjUmrah : l.hajjHajj,
-                          ),
+                          child: k == 'hajj'
+                              ? HajjTypeFlow(guide: guide)
+                              : StepsFlow(
+                                  key: Key('stepsFlow-$k'),
+                                  titles: [
+                                    for (final x in guide.sections[k]!)
+                                      if (x.label != null) x.title ?? '',
+                                  ],
+                                  arabic: context.isArabic,
+                                  label: k == 'umrah' ? l.hajjUmrah : l.hajjHajj,
+                                ),
                         ),
                       _Block(block: b),
                     ],
+                    if (k == 'hajj' && !guide.official.isEmpty) OfficialGuideCard(guide: guide.official),
                   ],
                 ),
             ],
@@ -199,3 +203,195 @@ class _Block extends StatelessWidget {
     return body;
   }
 }
+
+/// Steps 1, 2, 3… for the chosen Hajj type (tamattu' by default); a tap shows the official
+/// guide's own words for that step (owner, 2026-11-14).
+class HajjTypeFlow extends StatefulWidget {
+  const HajjTypeFlow({super.key, required this.guide});
+  final HajjGuide guide;
+
+  @override
+  State<HajjTypeFlow> createState() => _HajjTypeFlowState();
+}
+
+class _HajjTypeFlowState extends State<HajjTypeFlow> {
+  HajjType _type = HajjType.tamattu;
+
+  String _name(HajjType t) => switch (t) {
+    HajjType.tamattu => context.l10n.hajjTamattu,
+    HajjType.qiran => context.l10n.hajjQiran,
+    HajjType.ifrad => context.l10n.hajjIfrad,
+  };
+
+  /// The explanation of a step: a paragraph of the official guide, the types of Hajj, or the
+  /// app guide's farewell tawaf.
+  String _explain(FlowStep step) {
+    final o = widget.guide.official;
+    if (step.ref == 'types') return [for (final (n, t) in o.types) '$n: $t'].join('\n\n');
+    if (step.ref == 'farewell') {
+      for (final b in widget.guide.sections['hajj'] ?? const <HajjBlock>[]) {
+        if ((b.title ?? '').contains('الوداع')) return [...b.paragraphs, ...b.items].join('\n');
+      }
+      return '';
+    }
+    return o.paragraph(step.ref) ?? '';
+  }
+
+  void _show(int i, List<FlowStep> steps) {
+    final step = steps[i];
+    final theme = Theme.of(context);
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (ctx) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.6,
+        maxChildSize: 0.92,
+        builder: (ctx, scroll) => Directionality(
+          textDirection: TextDirection.rtl,
+          child: ListView(
+            key: const Key('hajjStepSheet'),
+            controller: scroll,
+            padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, 0, DesignTokens.spaceLg, DesignTokens.spaceXl),
+            children: [
+              Text('${context.isArabic ? _arabicNum(i + 1) : i + 1}. ${step.title}', style: theme.textTheme.titleLarge),
+              const SizedBox(height: DesignTokens.spaceMd),
+              Text(_explain(step), style: theme.textTheme.bodyLarge?.copyWith(height: 1.9)),
+              const SizedBox(height: DesignTokens.spaceMd),
+              Text('${context.l10n.hajjGuideSource}: ${widget.guide.official.title}', style: theme.textTheme.bodySmall),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final steps = hajjFlows[_type]!;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(l.hajjStepsInOrder, style: Theme.of(context).textTheme.titleMedium),
+        const SizedBox(height: DesignTokens.spaceSm),
+        SegmentedButton<HajjType>(
+          key: const Key('hajjTypes'),
+          showSelectedIcon: false,
+          segments: [
+            for (final t in HajjType.values)
+              ButtonSegment(
+                value: t,
+                label: Text(_name(t), key: Key('hajjType-${t.name}')),
+              ),
+          ],
+          selected: {_type},
+          onSelectionChanged: (v) => setState(() => _type = v.first),
+        ),
+        const SizedBox(height: DesignTokens.spaceSm),
+        StepsFlow(
+          key: Key('stepsFlow-hajj-${_type.name}'),
+          titles: [for (final s in steps) s.title],
+          arabic: context.isArabic,
+          label: '${l.hajjStepsInOrder}: ${_name(_type)}',
+          onStep: (i) => _show(i, steps),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: DesignTokens.spaceXs),
+          child: Text(l.hajjTapStep, style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.center),
+        ),
+      ],
+    );
+  }
+}
+
+/// The official guide's text in full: types of Hajj, then Umrah and Hajj paragraph by paragraph.
+class OfficialGuideCard extends StatelessWidget {
+  const OfficialGuideCard({super.key, required this.guide});
+  final OfficialHajjGuide guide;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    final body = theme.textTheme.bodyLarge?.copyWith(height: 1.9);
+    Widget heading(String s) => Padding(
+      padding: const EdgeInsets.only(top: DesignTokens.spaceMd, bottom: DesignTokens.spaceSm),
+      child: Text(s, style: theme.textTheme.titleMedium),
+    );
+    Widget numbered(int i, String text) => Padding(
+      padding: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 28,
+            height: 28,
+            margin: const EdgeInsets.only(top: 4, left: DesignTokens.spaceSm),
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(color: Color(0xFFE9DCC0), shape: BoxShape.circle),
+            child: Text(
+              context.isArabic ? _arabicNum(i + 1) : '${i + 1}',
+              style: const TextStyle(color: Color(0xFF6B4A2B), fontWeight: FontWeight.w700),
+            ),
+          ),
+          Expanded(child: Text(text, style: body)),
+        ],
+      ),
+    );
+    return Card(
+      key: const Key('officialHajjGuide'),
+      margin: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
+      child: Padding(
+        padding: const EdgeInsets.all(DesignTokens.spaceLg),
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(l.hajjOfficialGuide, style: theme.textTheme.titleLarge),
+              heading(l.hajjGuideTypes),
+              for (final (n, t) in guide.types)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
+                  child: Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: '$n: ',
+                          style: const TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                        TextSpan(text: t),
+                      ],
+                    ),
+                    style: body,
+                  ),
+                ),
+              Text(guide.typesNote, style: body),
+              heading(l.hajjGuideUmrah),
+              for (final (i, p) in guide.umrah.indexed) numbered(i, p),
+              heading(l.hajjGuideHajj),
+              for (final (i, p) in guide.hajj.indexed) numbered(i, p),
+              const SizedBox(height: DesignTokens.spaceSm),
+              Text('${l.hajjGuideSource}: ${guide.title} — ${guide.publisher}', style: theme.textTheme.bodySmall),
+              ExpansionTile(
+                tilePadding: EdgeInsets.zero,
+                title: Text(l.hajjGuideCorrections, style: theme.textTheme.bodySmall),
+                children: [
+                  for (final c in guide.corrections)
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text('• $c', style: theme.textTheme.bodySmall),
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+String _arabicNum(int n) => n.toString().split('').map((d) => '٠١٢٣٤٥٦٧٨٩'[int.parse(d)]).join();

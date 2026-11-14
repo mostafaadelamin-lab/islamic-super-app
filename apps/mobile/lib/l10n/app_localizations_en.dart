@@ -2950,4 +2950,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'A full Hijri year has passed since my wealth reached the nisab';
+
+  @override
+  String get hajjStepsInOrder => 'Hajj steps in order';
+
+  @override
+  String get hajjTypeLabel => 'Type of Hajj';
+
+  @override
+  String get hajjTamattu => 'Tamattu\'';
+
+  @override
+  String get hajjQiran => 'Qiran';
+
+  @override
+  String get hajjIfrad => 'Ifrad';
+
+  @override
+  String get hajjTapStep => 'Tap a step to read its explanation';
+
+  @override
+  String get hajjOfficialGuide => 'The steps explained, from the official guide (Arabic)';
+
+  @override
+  String get hajjGuideTypes => 'Types of Hajj';
+
+  @override
+  String get hajjGuideUmrah => 'How to perform Umrah';
+
+  @override
+  String get hajjGuideHajj => 'How to perform Hajj';
+
+  @override
+  String get hajjGuideSource => 'Source';
+
+  @override
+  String get hajjGuideCorrections => 'Digitization typos corrected';
 }

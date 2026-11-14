@@ -52,8 +52,7 @@ const tawafArrowAngles = [0.0, math.pi * 0.57, math.pi * 1.14, math.pi * 1.71];
 
 /// Screen direction of the tawaf arrow at [a] on an oval of radii [rx]/[ry]: the tangent of
 /// decreasing [a], so the walk is anti-clockwise seen from above (front half left to right).
-double tawafArrowDirection(double a, double rx, double ry) =>
-    math.atan2(-math.cos(a) * ry, math.sin(a) * rx);
+double tawafArrowDirection(double a, double rx, double ry) => math.atan2(-math.cos(a) * ry, math.sin(a) * rx);
 
 /// The drawing on a soft sky band, [height] tall.
 class HajjArt extends StatelessWidget {

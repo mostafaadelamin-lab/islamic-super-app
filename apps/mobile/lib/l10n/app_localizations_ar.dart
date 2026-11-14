@@ -2935,4 +2935,40 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'مرّ عام هجري كامل منذ بلغ مالي النصاب';
+
+  @override
+  String get hajjStepsInOrder => 'خطوات الحج بالترتيب';
+
+  @override
+  String get hajjTypeLabel => 'نوع النسك';
+
+  @override
+  String get hajjTamattu => 'التمتع';
+
+  @override
+  String get hajjQiran => 'القِران';
+
+  @override
+  String get hajjIfrad => 'الإفراد';
+
+  @override
+  String get hajjTapStep => 'اضغط على أي خطوة لقراءة شرحها';
+
+  @override
+  String get hajjOfficialGuide => 'شرح الخطوات من الدليل الرسمي';
+
+  @override
+  String get hajjGuideTypes => 'أنواع النسك';
+
+  @override
+  String get hajjGuideUmrah => 'صفة العمرة';
+
+  @override
+  String get hajjGuideHajj => 'صفة الحج';
+
+  @override
+  String get hajjGuideSource => 'المصدر';
+
+  @override
+  String get hajjGuideCorrections => 'تصحيحات أخطاء الرقمنة';
 }

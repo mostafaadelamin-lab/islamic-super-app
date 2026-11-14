@@ -4326,5 +4326,17 @@
   "zakatYearPassed": "A full Hijri year has passed since my wealth reached the nisab",
   "@zakatYearPassed": {
     "description": "shared key \"zakat.yearPassed\""
-  }
+  },
+  "hajjStepsInOrder": "Hajj steps in order",
+  "hajjTypeLabel": "Type of Hajj",
+  "hajjTamattu": "Tamattu'",
+  "hajjQiran": "Qiran",
+  "hajjIfrad": "Ifrad",
+  "hajjTapStep": "Tap a step to read its explanation",
+  "hajjOfficialGuide": "The steps explained, from the official guide (Arabic)",
+  "hajjGuideTypes": "Types of Hajj",
+  "hajjGuideUmrah": "How to perform Umrah",
+  "hajjGuideHajj": "How to perform Hajj",
+  "hajjGuideSource": "Source",
+  "hajjGuideCorrections": "Digitization typos corrected"
 }

@@ -26,6 +26,15 @@ class StepsFlowLayout {
 
   static double height(int n) => (n / 3).ceil() * rowHeight - 20;
 
+  /// The step whose circle or title is at [p] (layout units), or null.
+  static int? hitTest(Offset p, int n) {
+    for (var i = 0; i < n; i++) {
+      final d = p - position(i);
+      if (d.dx.abs() <= 60 && d.dy >= -50 && d.dy <= 90) return i;
+    }
+    return null;
+  }
+
   /// "٨ ذو الحجة · يوم التروية" -> "يوم التروية".
   static String shortTitle(String title) => title.split('·').last.trim();
 
@@ -77,19 +86,39 @@ class StepsFlowLayout {
 }
 
 class StepsFlow extends StatelessWidget {
-  const StepsFlow({super.key, required this.titles, required this.arabic, required this.label});
+  const StepsFlow({super.key, required this.titles, required this.arabic, required this.label, this.onStep});
   final List<String> titles;
   final bool arabic;
   final String label;
 
+  /// Tap on a step (index from 0), e.g. to show its explanation.
+  final ValueChanged<int>? onStep;
+
   @override
   Widget build(BuildContext context) {
+    final h = StepsFlowLayout.height(titles.length);
+    final paint = CustomPaint(painter: _FlowPainter(titles, arabic));
     return Semantics(
       label: label,
       image: true,
       child: AspectRatio(
-        aspectRatio: StepsFlowLayout.width / StepsFlowLayout.height(titles.length),
-        child: CustomPaint(painter: _FlowPainter(titles, arabic)),
+        aspectRatio: StepsFlowLayout.width / h,
+        child: onStep == null
+            ? paint
+            : LayoutBuilder(
+                builder: (context, box) => GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTapUp: (d) {
+                    final p = Offset(
+                      d.localPosition.dx * StepsFlowLayout.width / box.maxWidth,
+                      d.localPosition.dy * h / box.maxHeight,
+                    );
+                    final i = StepsFlowLayout.hitTest(p, titles.length);
+                    if (i != null) onStep!(i);
+                  },
+                  child: paint,
+                ),
+              ),
       ),
     );
   }

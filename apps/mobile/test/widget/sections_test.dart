@@ -11,6 +11,8 @@ import 'package:rattil/domain/qibla.dart';
 import 'package:rattil/domain/tasbih.dart';
 import 'package:rattil/ui/adhkar_screen.dart';
 import 'package:rattil/ui/hajj_screen.dart';
+import 'package:rattil/domain/hajj_flows.dart';
+import 'package:rattil/ui/steps_flow.dart';
 import 'package:rattil/ui/hisn_screen.dart';
 import 'package:rattil/ui/home_shell.dart';
 import 'package:rattil/ui/qibla_screen.dart';
@@ -360,7 +362,36 @@ void main() {
       expect(find.byKey(const Key('hajjArt-tawaf')), findsNothing);
       await tester.tap(find.byKey(const Key('hajjTab-hajj')));
       await tester.pumpAndSettle();
-      expect(find.byKey(const Key('stepsFlow-hajj')), findsOneWidget);
+      expect(find.byKey(const Key('stepsFlow-hajj-tamattu')), findsOneWidget);
+    });
+
+    testWidgets('Hajj steps per type; a tap shows the official guide text (owner, 2026-11-14)', (tester) async {
+      final app = await pumpApp(tester, size: tallPhone);
+      await pushScreen(tester, const HajjScreen());
+      await tester.tap(find.byKey(const Key('hajjTab-hajj')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('hajjType-ifrad')));
+      await tester.pumpAndSettle();
+      final flow = find.byKey(const Key('stepsFlow-hajj-ifrad'));
+      expect(flow, findsOneWidget);
+      // Step 7 of ifrad = Muzdalifah: row 3 (index 6 -> first column of the third row).
+      final box = tester.getRect(flow);
+      final p = StepsFlowLayout.position(6);
+      final h = StepsFlowLayout.height(hajjFlows[HajjType.ifrad]!.length);
+      await tester.tapAt(box.topLeft + Offset(p.dx * box.width / StepsFlowLayout.width, p.dy * box.height / h));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('hajjStepSheet')), findsOneWidget);
+      expect(find.text('٧. المبيت بمزدلفة'), findsOneWidget);
+      final guide = app.services.content.hajj.official;
+      expect(find.text(guide.hajj[3]), findsOneWidget);
+      Navigator.of(tester.element(find.byKey(const Key('hajjStepSheet')))).pop();
+      await tester.pumpAndSettle();
+      await tester.scrollUntilVisible(
+        find.byKey(const Key('officialHajjGuide')),
+        400,
+        scrollable: find.byType(Scrollable).last,
+      );
+      expect(find.byKey(const Key('officialHajjGuide')), findsOneWidget);
     });
 
     testWidgets('English UI says the guide is Arabic only', (tester) async {

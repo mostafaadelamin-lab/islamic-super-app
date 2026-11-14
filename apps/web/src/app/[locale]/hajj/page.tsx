@@ -7,6 +7,8 @@ import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
 import { RoundCounter } from "@/components/RoundCounter";
 import { TawafPlan, type TawafPlanLabels } from "@/components/TawafPlan";
 import { StepsFlow } from "@/components/StepsFlow";
+import { HajjTypeFlow } from "@/components/HajjTypeFlow";
+import { OfficialHajjGuide } from "@/components/OfficialHajjGuide";
 
 interface Step {
   title: string;
@@ -116,12 +118,7 @@ export default async function HajjPage({ params }: { params: LocaleParams }) {
           ))}
         </dl>
       </section>
-      <StepsFlow
-        locale={locale}
-        titles={hajj.hajj.days.map((s) => s.title)}
-        idPrefix="hajj-stage"
-        label={t(locale, "hajj.flow.hajj")}
-      />
+      <HajjTypeFlow locale={locale} />
       {hajj.hajj.days.map((s, i) => (
         <StepCard
           key={i}
@@ -135,6 +132,7 @@ export default async function HajjPage({ params }: { params: LocaleParams }) {
         <h3 lang="ar">{hajj.hajj.pillars.title}</h3>
         <p lang="ar">{hajj.hajj.pillars.body}</p>
       </section>
+      <OfficialHajjGuide locale={locale} />
 
       <h2 id="ihram">{t(locale, "hajj.ihram")}</h2>
       <section className="card">

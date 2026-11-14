@@ -7,6 +7,7 @@ import '../domain/adhkar.dart';
 import '../domain/app_links.dart';
 import '../domain/audio_queue.dart';
 import '../domain/hajj.dart';
+import '../domain/hajj_flows.dart';
 import '../domain/mushaf_layout.dart';
 import '../domain/prayer.dart';
 import '../domain/quran.dart';
@@ -85,6 +86,7 @@ class AppContent {
   static const hisnAsset = 'assets/content/hisn.json';
   static const hisnSectionsAsset = 'assets/content/hisn-sections.json';
   static const hajjAsset = 'assets/content/hajj.v1.json';
+  static const dalilHajjAsset = 'assets/content/dalil-hajj.v1.json';
   static const recitersAsset = 'assets/schemas/reciters.json';
   static const versionsAsset = 'assets/content/VERSIONS.json';
   static const reelsAsset = 'assets/content/reels.v1.json';
@@ -160,7 +162,7 @@ class AppContent {
         jsonDecode(await bundle.loadString(hisnAsset)) as List<dynamic>,
         await j(hisnSectionsAsset),
       ),
-      hajj: HajjGuide.fromJson(await j(hajjAsset)),
+      hajj: HajjGuide.fromJson(await j(hajjAsset), official: OfficialHajjGuide.fromJson(await j(dalilHajjAsset))),
       integrity: await j(integrityAsset),
       prayerConfig: PrayerConfig.fromJson(await j(methodsAsset)),
       cities: List.unmodifiable([

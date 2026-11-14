@@ -864,5 +864,17 @@
   "zakatWealth": "مالك (بعملتك، والذهب بالجرام)",
   "zakatYearNotPassed": "مالك ({net}) بلغ النصاب ({nisab})، وتجب زكاته حين يمرّ عليه عام هجري كامل.",
   "zakatYearNote": "تجب الزكاة إذا مرّ على المال عام هجري كامل وهو بالغ النصاب، ومقدارها ربع العشر (2.5٪).",
-  "zakatYearPassed": "مرّ عام هجري كامل منذ بلغ مالي النصاب"
+  "zakatYearPassed": "مرّ عام هجري كامل منذ بلغ مالي النصاب",
+  "hajjStepsInOrder": "خطوات الحج بالترتيب",
+  "hajjTypeLabel": "نوع النسك",
+  "hajjTamattu": "التمتع",
+  "hajjQiran": "القِران",
+  "hajjIfrad": "الإفراد",
+  "hajjTapStep": "اضغط على أي خطوة لقراءة شرحها",
+  "hajjOfficialGuide": "شرح الخطوات من الدليل الرسمي",
+  "hajjGuideTypes": "أنواع النسك",
+  "hajjGuideUmrah": "صفة العمرة",
+  "hajjGuideHajj": "صفة الحج",
+  "hajjGuideSource": "المصدر",
+  "hajjGuideCorrections": "تصحيحات أخطاء الرقمنة"
 }

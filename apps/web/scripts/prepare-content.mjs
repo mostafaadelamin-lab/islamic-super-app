@@ -118,7 +118,10 @@ copyFileSync(join(repo, "content/sharawi/dist/sharawi.v1.json"), join(pub, "data
 // Nasheeds (same list as the mobile app, voice-only): munshid list with streamed/saved audio, fetched by /nasheeds.
 copyFileSync(join(repo, "apps/mobile/assets/content/nasheeds.v2.json"), join(pub, "data/nasheeds.json"));
 // Videos function (netlify/functions/videos.mjs): the trusted channels (feed) and the suggested ones (search ranking).
-writeJson(join(gen, "reel-suggestions.json"), readJson("apps/mobile/assets/content/reel-suggestions.v1.json"));
+writeJson(
+  join(gen, "reel-suggestions.json"),
+  readJson("apps/mobile/assets/content/reel-suggestions.v1.json"),
+);
 writeJson(join(app, "netlify/lib/reel-sources.json"), {
   feed: readJson("content/reels/dist/reel-sources.v1.json").sources,
   suggested: readJson("apps/mobile/assets/content/reel-suggestions.v1.json").sources,
@@ -168,6 +171,17 @@ writeJson(
   join(gen, "hajj.json"),
   extractHajj(readFileSync(join(repo, "content/pilgrimage/source-hajj.js"), "utf8")),
 );
+// Official Hajj guide text (owner 2026-11-14): copied verbatim, checked for shape only.
+const dalil = JSON.parse(readFileSync(join(repo, "content/pilgrimage/dalil-hajj.v1.json"), "utf8"));
+if (
+  dalil.schema !== 1 ||
+  dalil.types?.length !== 3 ||
+  dalil.umrah?.length !== 4 ||
+  dalil.hajj?.length !== 9
+) {
+  throw new Error("dalil-hajj.v1.json: unexpected schema");
+}
+writeJson(join(gen, "dalil-hajj.json"), dalil);
 console.log(`content prepared: ${meta.length} surahs`);
 
 /**
