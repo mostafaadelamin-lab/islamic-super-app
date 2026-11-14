@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 /// Public links set by the owner (packages/shared-schemas/app-links.json); null = not set (button hidden).
 class AppLinks {
   const AppLinks({this.contactForm, this.contactEmail, this.website, this.playStore, this.appStore});
@@ -19,6 +21,11 @@ class AppLinks {
   final String? website;
   final String? playStore;
   final String? appStore;
+
+  /// The store page for this device: the App Store on iPhone/iPad, Google Play elsewhere.
+  /// Never the other platform's store (App Review guideline 2.3.10); null hides "Rate the app".
+  String? storeFor(TargetPlatform platform) =>
+      platform == TargetPlatform.iOS || platform == TargetPlatform.macOS ? appStore : playStore;
 }
 
 /// Distinct days of use before the one-time "share Rattil" suggestion.

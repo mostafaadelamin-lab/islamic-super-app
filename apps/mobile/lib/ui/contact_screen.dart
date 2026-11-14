@@ -10,9 +10,6 @@ import 'l10n_ext.dart';
 import 'r_icon.dart';
 import 'widgets.dart';
 
-/// Google Play page of the app (used by "Rate the app" until a store link is set in app-links.json).
-const playStoreUrl = 'https://play.google.com/store/apps/details?id=org.rattil.app';
-
 /// Sends a contact message. The owner's inbox address lives only in the form
 /// service address (app-links.json "contactForm"); it is never shown in the app.
 typedef ContactSender = Future<bool> Function(Uri endpoint, Map<String, String> fields);

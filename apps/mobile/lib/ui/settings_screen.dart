@@ -42,7 +42,7 @@ class SettingsScreen extends StatelessWidget {
           builder: (context, _) {
             final pv = PrayerView.compute(s);
             final links = s.content.links;
-            final store = links.playStore ?? links.appStore;
+            final store = links.storeFor(Theme.of(context).platform);
             return ListView(
               key: const Key('settingsList'),
               children: [
@@ -105,14 +105,15 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 SectionCard(
                   children: [
-                    ListTile(
-                      key: const Key('rateTile'),
-                      contentPadding: EdgeInsets.zero,
-                      leading: const RIcon(RIcons.star),
-                      title: Text(l.helpRate),
-                      trailing: const RIcon(RIcons.chevronForward),
-                      onTap: () => launchUrl(Uri.parse(store ?? playStoreUrl), mode: LaunchMode.externalApplication),
-                    ),
+                    if (store != null)
+                      ListTile(
+                        key: const Key('rateTile'),
+                        contentPadding: EdgeInsets.zero,
+                        leading: const RIcon(RIcons.star),
+                        title: Text(l.helpRate),
+                        trailing: const RIcon(RIcons.chevronForward),
+                        onTap: () => launchUrl(Uri.parse(store), mode: LaunchMode.externalApplication),
+                      ),
                     ListTile(
                       key: const Key('shareTile'),
                       contentPadding: EdgeInsets.zero,

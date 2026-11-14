@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/data/shortcuts.dart';
@@ -23,6 +24,13 @@ void main() {
     expect(sharePromptVisit(['2026-11-01'], false, '2026-11-01').days, ['2026-11-01']);
     expect(sharePromptVisit(days, true, '2026-11-09').show, isFalse);
     expect(AppLinks.fromJson({'contactEmail': ' ', 'website': 'https://x.test'}).contactEmail, isNull);
+  });
+
+  test('rate link: App Store on iPhone/iPad, Google Play on Android, never the other store', () {
+    const links = AppLinks(playStore: 'https://play.test', appStore: null);
+    expect(links.storeFor(TargetPlatform.android), 'https://play.test');
+    expect(links.storeFor(TargetPlatform.iOS), isNull);
+    expect(const AppLinks(appStore: 'https://apps.test').storeFor(TargetPlatform.iOS), 'https://apps.test');
   });
 
   testWidgets('Help: FAQ opens, contact form, share and rate the app', (tester) async {
