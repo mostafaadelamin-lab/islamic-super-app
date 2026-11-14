@@ -53,3 +53,22 @@ export function mushafPage(page: number): ResolvedPage {
   if (!raw || raw.page !== page) throw new RangeError(`mushaf page ${page}`);
   return resolvePage(raw, ayahText);
 }
+
+/** The app's surah card data (apps/mobile/assets/content/surah-info.v1.json, verbatim from a published source). */
+export interface SurahInfoData {
+  n: number;
+  type?: string;
+  order?: string;
+  intro?: string;
+  purposes?: string;
+  asbab?: string;
+  wahidi?: { ayah: number; text: string }[];
+}
+let infoCache: SurahInfoData[] | null = null;
+export function surahInfo(n: number): SurahInfoData | null {
+  if (!infoCache) {
+    const file = join(process.cwd(), "../mobile/assets/content/surah-info.v1.json");
+    infoCache = (JSON.parse(readFileSync(file, "utf8")) as { surahs: SurahInfoData[] }).surahs;
+  }
+  return infoCache.find((s) => s.n === n) ?? null;
+}

@@ -18,9 +18,11 @@ export interface SurahReaderProps {
   meta: SurahMeta;
   ayahs: string[];
   basmala: string | null;
+  /** Shown under the surah header (the app's "about the surah and reasons for revelation"). */
+  info?: React.ReactNode;
 }
 
-export function SurahReader({ locale, meta, ayahs, basmala }: SurahReaderProps) {
+export function SurahReader({ locale, meta, ayahs, basmala, info }: SurahReaderProps) {
   const prefs = useStore(prefsStore);
   const bookmarks = useStore(bookmarksStore);
   const [retry, setRetry] = useState(0);
@@ -93,6 +95,7 @@ export function SurahReader({ locale, meta, ayahs, basmala }: SurahReaderProps) 
           </p>
         ) : null}
         {tr.status === "ready" ? <p className="muted">{t(locale, "quran.translationNote")}</p> : null}
+        {info}
       </header>
 
       <div className="reader" ref={listRef}>

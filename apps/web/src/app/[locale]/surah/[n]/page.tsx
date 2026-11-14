@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { PreloadQuranFont } from "@/components/PreloadQuranFont";
 import { isLocale } from "@/lib/i18n";
 import { SURAHS, surahMeta } from "@/lib/pages";
-import { surahAyahs } from "@/lib/server/content";
+import { surahAyahs, surahInfo } from "@/lib/server/content";
+import { SurahInfo } from "@/components/SurahInfo";
 import { SurahReader } from "@/components/SurahReader";
 
 export const dynamicParams = false;
@@ -30,7 +31,13 @@ export default async function SurahPage({ params }: { params: Params }) {
   return (
     <>
       <PreloadQuranFont />
-      <SurahReader locale={locale} meta={meta} ayahs={surahAyahs(num)} basmala={basmala} />
+      <SurahReader
+        locale={locale}
+        meta={meta}
+        ayahs={surahAyahs(num)}
+        basmala={basmala}
+        info={<SurahInfo locale={locale} meta={meta} info={surahInfo(num)} />}
+      />
     </>
   );
 }

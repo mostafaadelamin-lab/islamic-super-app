@@ -733,5 +733,15 @@
   "hadith.explain": "Simplified explanation",
   "hadith.benefits": "Lessons from the hadith",
   "hadith.explainSource": "The explanation is quoted word for word from a published hadith encyclopedia, not written by the app.",
-  "hadith.grade": "Grade: {grade}"
+  "hadith.grade": "Grade: {grade}",
+  "surahInfo.title": "About the surah",
+  "surahInfo.about": "About the surah",
+  "surahInfo.asbab": "Reasons for revelation",
+  "surahInfo.noAsbab": "The source mentions no specific reason for revelation for this surah.",
+  "surahInfo.order": "Order of revelation",
+  "surahInfo.place": "Revealed in",
+  "surahInfo.ayahs": "Verses",
+  "surahInfo.wahidi": "From al-Wahidi, \"Asbab Nuzul al-Quran\"",
+  "surahInfo.missing": "Information not available.",
+  "surahInfo.ayahN": "Ayah {n}"
 }

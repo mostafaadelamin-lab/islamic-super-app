@@ -3067,3 +3067,31 @@ dd {
 .hadith-explain li {
   line-height: 1.9;
 }
+
+/* Surah page: about the surah and reasons for revelation (as in the app) */
+.surah-info {
+  margin: var(--space-md) 0;
+}
+.surah-info summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--color-primary);
+  display: inline-flex;
+  gap: var(--space-xs);
+  align-items: center;
+}
+.surah-info h2 {
+  font-size: 1.05rem;
+  color: var(--color-primary);
+  margin: var(--space-md) 0 var(--space-xs);
+}
+.surah-info h3 {
+  font-size: 0.95rem;
+  margin: var(--space-sm) 0 var(--space-xs);
+}
+.surah-info p[lang="ar"] {
+  line-height: 1.9;
+}
+.surah-info-chips {
+  margin-top: var(--space-sm);
+}
