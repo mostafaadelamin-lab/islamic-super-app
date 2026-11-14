@@ -765,5 +765,6 @@
   "prayer.autoLocation": "تحديد الموقع تلقائيًا",
   "prayer.autoLocationNote": "يُحدَّث موقعك عند فتح الموقع لتبقى المواقيت صحيحة إذا سافرت (لو كنت سامح للموقع بتحديد مكانك).",
   "prayer.shareCalendar": "مشاركة التقويم",
-  "prayer.calendarCopied": "تم نسخ التقويم"
+  "prayer.calendarCopied": "تم نسخ التقويم",
+  "adhkar.hubTitle": "الأذكار"
 }

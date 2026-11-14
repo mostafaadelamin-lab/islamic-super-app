@@ -17,7 +17,7 @@ export default async function AdhkarPage({ params }: { params: LocaleParams }) {
   const locale = await resolveLocale(params);
   return (
     <>
-      <h1>{t(locale, "adhkar.title")}</h1>
+      <h1>{t(locale, "adhkar.hubTitle")}</h1>
       <p className="row">
         <Link className="btn btn-sm" href={href(locale, "hisn")}>
           {t(locale, "hisn.title")}

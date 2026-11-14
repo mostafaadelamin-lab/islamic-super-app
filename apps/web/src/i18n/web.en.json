@@ -765,5 +765,6 @@
   "prayer.autoLocation": "Detect location automatically",
   "prayer.autoLocationNote": "Your location is refreshed each time you open the site (if you allowed location), so times stay right when you travel.",
   "prayer.shareCalendar": "Share the calendar",
-  "prayer.calendarCopied": "Calendar copied"
+  "prayer.calendarCopied": "Calendar copied",
+  "adhkar.hubTitle": "Adhkar"
 }
