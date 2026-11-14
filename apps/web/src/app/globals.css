@@ -61,7 +61,7 @@
     --hero-soft: var(--color-accent);
     --header-bg: var(--color-surface);
     --header-ink: var(--color-ink);
-  --brand-mark: var(--color-accent);
+    --brand-mark: var(--color-accent);
     --hl-selected: rgb(210 168 106 / 20%);
     --hl-playing: rgb(224 189 106 / 24%);
     --hl-blend: screen;
