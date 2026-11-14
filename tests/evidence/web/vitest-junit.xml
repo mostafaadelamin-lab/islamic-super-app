@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="9" failures="0" errors="0" time="0.211832405">
-    <testsuite name="tests/components/zakat-simple.test.tsx" timestamp="2026-11-14T18:08:22.979Z" hostname="vm" tests="9" failures="0" errors="0" skipped="0" time="0.211832405">
-        <testcase classname="tests/components/zakat-simple.test.tsx" name="simple zakat rules (same as the app&apos;s zakat_simple.dart) &gt; gold: 85 g of 24 carat, 21 carat priced by purity, 2.5%" time="0.001451174">
+<testsuites name="vitest tests" tests="5" failures="0" errors="0" time="0.54359836">
+    <testsuite name="tests/components/adhkar-hub.test.tsx" timestamp="2026-11-14T18:09:54.276Z" hostname="vm" tests="2" failures="0" errors="0" skipped="0" time="0.093508679">
+        <testcase classname="tests/components/adhkar-hub.test.tsx" name="AdhkarHub (the app&apos;s adhkar page) &gt; links daily adhkar and duas to their Hisn al-Muslim sections and plays Alafasy&apos;s adhkar" time="0.068955741">
         </testcase>
-        <testcase classname="tests/components/zakat-simple.test.tsx" name="simple zakat rules (same as the app&apos;s zakat_simple.dart) &gt; silver, money, crops" time="0.000598455">
+        <testcase classname="tests/components/adhkar-hub.test.tsx" name="AdhkarHub (the app&apos;s adhkar page) &gt; Hisn al-Muslim opens the section named in the URL hash" time="0.020889061">
         </testcase>
-        <testcase classname="tests/components/zakat-simple.test.tsx" name="simple zakat rules (same as the app&apos;s zakat_simple.dart) &gt; livestock tables" time="0.001016451">
+    </testsuite>
+    <testsuite name="tests/components/adhkar.test.tsx" timestamp="2026-11-14T18:09:54.278Z" hostname="vm" tests="3" failures="0" errors="0" skipped="0" time="0.450089681">
+        <testcase classname="tests/components/adhkar.test.tsx" name="Hisn sections &gt; filters chapters by section" time="0.338589167">
         </testcase>
-        <testcase classname="tests/components/zakat-simple.test.tsx" name="simple zakat rules (same as the app&apos;s zakat_simple.dart) &gt; reads Arabic digits and decimal commas" time="0.00063066">
+        <testcase classname="tests/components/adhkar.test.tsx" name="cards, share and report &gt; Hisn chapter: cards one at a time; share falls back to copying the unchanged text" time="0.051501995">
         </testcase>
-        <testcase classname="tests/components/zakat-simple.test.tsx" name="ZakatSimple &gt; has the app&apos;s five tabs and no review notice" time="0.060635398">
-        </testcase>
-        <testcase classname="tests/components/zakat-simple.test.tsx" name="ZakatSimple &gt; gold: shows grams and money due, and keeps the value" time="0.060058699">
-        </testcase>
-        <testcase classname="tests/components/zakat-simple.test.tsx" name="ZakatSimple &gt; money asks for the gold price, then compares with the nisab" time="0.018559092">
-        </testcase>
-        <testcase classname="tests/components/zakat-simple.test.tsx" name="ZakatSimple &gt; livestock: camels table" time="0.035932414">
-        </testcase>
-        <testcase classname="tests/components/zakat-simple.test.tsx" name="ZakatSimple &gt; crops: 5% when irrigated by machines" time="0.030289796">
+        <testcase classname="tests/components/adhkar.test.tsx" name="cards, share and report &gt; morning adhkar in cards move on when a dhikr&apos;s count is complete" time="0.056095963">
         </testcase>
     </testsuite>
 </testsuites>

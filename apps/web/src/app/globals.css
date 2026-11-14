@@ -3019,3 +3019,23 @@ dd {
   font-size: 1.1rem;
   margin: 0;
 }
+
+/* Adhkar page: the app's hub (daily adhkar, duas, Alafasy audio) */
+.adhkar-hub h2 {
+  font-size: var(--font-size-md, 1.05rem);
+  margin: var(--space-md) 0 var(--space-sm);
+}
+.tiles.tiles-sm {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+.tile.tile-sm {
+  padding: var(--space-sm) var(--space-md);
+  min-height: 0;
+}
+.adhkar-listen figure {
+  margin: 0;
+}
+.adhkar-listen audio {
+  width: 100%;
+  margin-top: var(--space-sm);
+}

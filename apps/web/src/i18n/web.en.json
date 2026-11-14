@@ -722,5 +722,12 @@
   "zakat.s.unitMusinna": "musinna (2-year cow)",
   "zakat.s.unitSheep": "sheep",
   "zakat.s.unitTabi": "tabi' (1-year calf)",
-  "zakat.s.yearNote": "Due when the amount has stayed at or above the nisab for a full lunar year; the rate is 2.5%."
+  "zakat.s.yearNote": "Due when the amount has stayed at or above the nisab for a full lunar year; the rate is 2.5%.",
+  "adhkar.daily": "Daily adhkar",
+  "adhkar.duas": "Duas",
+  "adhkar.listenHeader": "Listen to the adhkar",
+  "adhkar.alafasy": "Recited by Sheikh Mishary Rashid Alafasy",
+  "adhkar.morningTitle": "Morning adhkar",
+  "adhkar.eveningTitle": "Evening adhkar",
+  "adhkar.morningEvening": "Morning and evening adhkar"
 }

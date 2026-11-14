@@ -43,6 +43,8 @@ for (const file of walk(out).sort()) {
   if (url.startsWith("/data/tafsir/")) continue;
   // Hadith books (~70 MB) are not precached either: each part is kept once it has been read.
   if (url.startsWith("/data/hadith/")) continue;
+  // Alafasy's morning/evening adhkar recordings (~9 MB) stream on demand, like the other long audio.
+  if (url.startsWith("/audio/adhkar_")) continue;
   const heavy = /^\/(ar|en)\/(surah|page|hisn\/\d+)\//.exec(url);
   if (heavy) rest[heavy[1]].push(BASE + url);
   else core.push(BASE + url);

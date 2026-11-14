@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
@@ -22,6 +22,16 @@ export function HisnIndex({
 }) {
   const [q, setQ] = useState("");
   const [section, setSection] = useState<string | null>(null);
+  // /hisn/#sleep opens that section (links from the adhkar page, like the app's adhkar hub).
+  useEffect(() => {
+    const pick = (): void => {
+      const id = decodeURIComponent(window.location.hash.slice(1));
+      if (sections.some((x) => x.id === id)) setSection(id);
+    };
+    pick();
+    window.addEventListener("hashchange", pick);
+    return () => window.removeEventListener("hashchange", pick);
+  }, [sections]);
   const inSection = sections.find((x) => x.id === section)?.chapters;
   const list = filterHisn(q, inSection ? chapters.filter((c) => inSection.includes(c.id)) : chapters);
   return (

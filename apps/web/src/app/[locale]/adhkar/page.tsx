@@ -5,6 +5,7 @@ import { isLocale, t } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
 import { AdhkarView } from "@/components/AdhkarView";
+import { AdhkarHub } from "@/components/AdhkarHub";
 import { adhkarExtras } from "@/lib/dhikr-extras";
 
 export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
@@ -25,6 +26,8 @@ export default async function AdhkarPage({ params }: { params: LocaleParams }) {
           {t(locale, "tasbih.title")}
         </Link>
       </p>
+      <AdhkarHub locale={locale} />
+      <h2 id="adhkar-sessions">{t(locale, "adhkar.morningEvening")}</h2>
       <AdhkarView
         locale={locale}
         items={(adhkar as { items: string[] }).items}

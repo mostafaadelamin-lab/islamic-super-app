@@ -722,5 +722,12 @@
   "zakat.s.unitMusinna": "مُسِنّة",
   "zakat.s.unitSheep": "شاة",
   "zakat.s.unitTabi": "تبيع",
-  "zakat.s.yearNote": "تجب الزكاة إذا مرّ على المال عام هجري كامل وهو بالغ النصاب، ومقدارها ربع العشر (2.5٪)."
+  "zakat.s.yearNote": "تجب الزكاة إذا مرّ على المال عام هجري كامل وهو بالغ النصاب، ومقدارها ربع العشر (2.5٪).",
+  "adhkar.daily": "الأذكار اليومية",
+  "adhkar.duas": "الأدعية",
+  "adhkar.listenHeader": "استمع إلى الأذكار",
+  "adhkar.alafasy": "بصوت الشيخ مشاري راشد العفاسي",
+  "adhkar.morningTitle": "أذكار الصباح",
+  "adhkar.eveningTitle": "أذكار المساء",
+  "adhkar.morningEvening": "أذكار الصباح والمساء"
 }
