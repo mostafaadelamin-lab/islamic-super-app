@@ -743,5 +743,10 @@
   "surahInfo.ayahs": "Verses",
   "surahInfo.wahidi": "From al-Wahidi, \"Asbab Nuzul al-Quran\"",
   "surahInfo.missing": "Information not available.",
-  "surahInfo.ayahN": "Ayah {n}"
+  "surahInfo.ayahN": "Ayah {n}",
+  "stories.rewind": "Back 30 seconds",
+  "stories.forward": "Forward 30 seconds",
+  "stories.watchVideo": "Watch video",
+  "stories.videoBy": "Sheikh Nabil Al-Awadi",
+  "stories.howTo": "For each episode: tap to listen, or \"Watch video\" to watch it."
 }

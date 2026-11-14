@@ -6,7 +6,9 @@ import { surahMeta } from "@/lib/pages";
 import type { SurahInfoData } from "@/lib/server/content";
 
 const all = (
-  JSON.parse(readFileSync("../mobile/assets/content/surah-info.v1.json", "utf8")) as { surahs: SurahInfoData[] }
+  JSON.parse(readFileSync("../mobile/assets/content/surah-info.v1.json", "utf8")) as {
+    surahs: SurahInfoData[];
+  }
 ).surahs;
 const info = (n: number): SurahInfoData => all.find((s) => s.n === n)!;
 

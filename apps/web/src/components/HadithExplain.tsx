@@ -17,7 +17,9 @@ export function HadithExplain({ locale, book, n }: { locale: Locale; book: strin
     };
   }, [book, n]);
   if (!e) return null;
-  const meta = [e.attribution, e.grade ? t(locale, "hadith.grade", { grade: e.grade }) : null].filter(Boolean);
+  const meta = [e.attribution, e.grade ? t(locale, "hadith.grade", { grade: e.grade }) : null].filter(
+    Boolean,
+  );
   return (
     <details className="hadith-explain" data-testid={`hadith-explain-${n}`}>
       <summary>

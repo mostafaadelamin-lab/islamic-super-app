@@ -5,7 +5,15 @@ import type { SurahInfoData } from "@/lib/server/content";
 import { Icon } from "./Icon";
 
 /** The app's surah card: place and order of revelation, introduction and reasons for revelation (verbatim). */
-export function SurahInfo({ locale, meta, info }: { locale: Locale; meta: SurahMeta; info: SurahInfoData | null }) {
+export function SurahInfo({
+  locale,
+  meta,
+  info,
+}: {
+  locale: Locale;
+  meta: SurahMeta;
+  info: SurahInfoData | null;
+}) {
   const paras = (text: string) =>
     text
       .split("\n")
@@ -22,7 +30,8 @@ export function SurahInfo({ locale, meta, info }: { locale: Locale; meta: SurahM
       </summary>
       <p className="row surah-info-chips">
         <span className="chip">
-          {t(locale, "surahInfo.place")}: {t(locale, meta.revelation === "meccan" ? "quran.meccan" : "quran.medinan")}
+          {t(locale, "surahInfo.place")}:{" "}
+          {t(locale, meta.revelation === "meccan" ? "quran.meccan" : "quran.medinan")}
         </span>
         {info?.order ? (
           <span className="chip">

@@ -3095,3 +3095,31 @@ dd {
 .surah-info-chips {
   margin-top: var(--space-sm);
 }
+
+/* Stories: episode videos and 30-second seek (as in the app) */
+.series-video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-width: 720px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #000;
+}
+.series-video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.episode-list li {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+}
+.episode-list li .episode {
+  flex: 1;
+}
+.episode-video {
+  white-space: nowrap;
+}

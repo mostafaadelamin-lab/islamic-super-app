@@ -5,7 +5,8 @@ import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
 import { player } from "@/lib/audio-player";
-import { minutes, type Episode, type Series } from "@/lib/stories";
+import { minutes, STORY_VIDEOS, type Episode, type Series } from "@/lib/stories";
+import { embedVideoUrl } from "@/lib/videos";
 import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { Icon } from "./Icon";
 import { SleepTimer } from "./SleepTimer";
@@ -36,6 +37,7 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
   const episodes = series.episodes;
   const [current, setCurrent] = useState<Episode | null>(null);
   const [error, setError] = useState(false);
+  const [video, setVideo] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const lastSave = useRef(0);
   const L = (x: { ar: string; en: string }): string => (locale === "ar" ? x.ar : x.en);
@@ -109,6 +111,30 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
                   {t(locale, "stories.episodeError")}
                 </p>
               ) : null}
+              <div className="row series-seek">
+                <button
+                  type="button"
+                  className="btn btn-sm"
+                  data-testid="series-rewind"
+                  onClick={() => {
+                    const el = audioRef.current;
+                    if (el) el.currentTime = Math.max(0, el.currentTime - 30);
+                  }}
+                >
+                  {t(locale, "stories.rewind")}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-sm"
+                  data-testid="series-forward"
+                  onClick={() => {
+                    const el = audioRef.current;
+                    if (el) el.currentTime = Math.min(el.duration || Infinity, el.currentTime + 30);
+                  }}
+                >
+                  {t(locale, "stories.forward")}
+                </button>
+              </div>
               <div className="row">
                 <SleepTimer locale={locale} />
                 {current.story ? (
@@ -119,6 +145,31 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
               </div>
             </div>
           ) : null}
+          {video ? (
+            <div className="series-video" data-testid="series-video">
+              <div className="series-video-frame">
+                <iframe
+                  src={embedVideoUrl(video)}
+                  title={`${t(locale, "stories.watchVideo")} — ${t(locale, "stories.videoBy")}`}
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
+              <p className="row">
+                <span className="muted small">{t(locale, "stories.videoBy")}</span>
+                <button
+                  type="button"
+                  className="btn btn-sm"
+                  onClick={() => setVideo(null)}
+                  data-testid="series-video-close"
+                >
+                  {t(locale, "common.close")}
+                </button>
+              </p>
+            </div>
+          ) : null}
+          <p className="muted small">{t(locale, "stories.howTo")}</p>
           <ol className="episode-list">
             {episodes.map((e) => {
               const m = minutes(e.durationSec);
@@ -140,6 +191,21 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
                       </span>
                     </span>
                   </button>
+                  {STORY_VIDEOS[e.id] ? (
+                    <button
+                      type="button"
+                      className="btn btn-sm episode-video"
+                      data-testid={`episode-video-${e.id}`}
+                      aria-pressed={video === STORY_VIDEOS[e.id]}
+                      onClick={() => {
+                        audioRef.current?.pause();
+                        player.stop();
+                        setVideo(STORY_VIDEOS[e.id]!);
+                      }}
+                    >
+                      <Icon name="play" size={16} /> {t(locale, "stories.watchVideo")}
+                    </button>
+                  ) : null}
                 </li>
               );
             })}

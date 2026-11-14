@@ -19,7 +19,10 @@ beforeEach(() => {
   resetExplainedCache();
   vi.stubGlobal("fetch", (url: string) => {
     const ex = /\/data\/hadith\/explained\/([a-z]+)\.json$/.exec(url);
-    if (ex) return Promise.resolve(new Response(readFileSync(`public/data/hadith/explained/${ex[1]}.json`, "utf8")));
+    if (ex)
+      return Promise.resolve(
+        new Response(readFileSync(`public/data/hadith/explained/${ex[1]}.json`, "utf8")),
+      );
     const m = /\/data\/hadith\/([a-z]+)\/(\d+)\.json$/.exec(url)!;
     if (m[1] === "darimi") return Promise.resolve(new Response("", { status: 404 }));
     return Promise.resolve(

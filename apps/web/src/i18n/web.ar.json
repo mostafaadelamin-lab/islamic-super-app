@@ -743,5 +743,10 @@
   "surahInfo.ayahs": "عدد الآيات",
   "surahInfo.wahidi": "من كتاب «أسباب نزول القرآن» للواحدي",
   "surahInfo.missing": "المعلومات غير متاحة الآن.",
-  "surahInfo.ayahN": "الآية {n}"
+  "surahInfo.ayahN": "الآية {n}",
+  "stories.rewind": "رجوع ٣٠ ثانية",
+  "stories.forward": "تقديم ٣٠ ثانية",
+  "stories.watchVideo": "مشاهدة فيديو",
+  "stories.videoBy": "الشيخ نبيل العوضي",
+  "stories.howTo": "لكل حلقة: اضغط للاستماع، أو «مشاهدة فيديو» للمشاهدة."
 }

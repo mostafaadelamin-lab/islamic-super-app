@@ -44,7 +44,9 @@ export function moneyZakat(amount: number, nisab: number): { reached: boolean; d
 }
 
 export function cropsZakat(kg: number, rainFed: boolean): { reached: boolean; dueKg: number } {
-  return kg < CROPS_NISAB_KG ? { reached: false, dueKg: 0 } : { reached: true, dueKg: kg * (rainFed ? 0.1 : 0.05) };
+  return kg < CROPS_NISAB_KG
+    ? { reached: false, dueKg: 0 }
+    : { reached: true, dueKg: kg * (rainFed ? 0.1 : 0.05) };
 }
 
 export type Livestock = "camels" | "cattle" | "sheep";

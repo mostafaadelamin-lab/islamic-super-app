@@ -188,7 +188,9 @@ export function ZakatSimple({ locale }: { locale: Locale }) {
                   : r.reached
                     ? L("zakat.s.dueMoney", { v: fmt(r.due) })
                     : L("zakat.s.belowNisab"),
-                price == null ? undefined : `${L("zakat.s.nisabIs", { v: fmt(nisab, 0) })}\n${L("zakat.s.yearNote")}`,
+                price == null
+                  ? undefined
+                  : `${L("zakat.s.nisabIs", { v: fmt(nisab, 0) })}\n${L("zakat.s.yearNote")}`,
               )
             : null}
           {field("money", L("zakat.s.money"))}
@@ -203,7 +205,9 @@ export function ZakatSimple({ locale }: { locale: Locale }) {
             s.basis,
             (b) => patch({ basis: b }),
           )}
-          {byGold ? field("goldPrice", L("zakat.s.goldPrice")) : field("silverPrice", L("zakat.s.silverPrice"))}
+          {byGold
+            ? field("goldPrice", L("zakat.s.goldPrice"))
+            : field("silverPrice", L("zakat.s.silverPrice"))}
           {rule("zakat.s.moneyRule")}
         </>
       );
@@ -271,7 +275,12 @@ export function ZakatSimple({ locale }: { locale: Locale }) {
 
   return (
     <div className="zakat-simple" data-testid="zakat-simple">
-      <div className="segmented zakat-tabs" role="tablist" aria-label={L("zakat.title")} data-testid="zakat-tabs">
+      <div
+        className="segmented zakat-tabs"
+        role="tablist"
+        aria-label={L("zakat.title")}
+        data-testid="zakat-tabs"
+      >
         {ZAKAT_TABS.map((tab) => (
           <button
             key={tab}

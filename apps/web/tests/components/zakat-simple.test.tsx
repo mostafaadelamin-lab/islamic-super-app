@@ -2,7 +2,14 @@ import { describe, expect, it, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ZakatSimple, parseAmount } from "@/components/ZakatSimple";
-import { cropsZakat, goldZakat, livestockZakat, moneyZakat, silverZakat, simpleZakatStore } from "@/lib/zakat-simple";
+import {
+  cropsZakat,
+  goldZakat,
+  livestockZakat,
+  moneyZakat,
+  silverZakat,
+  simpleZakatStore,
+} from "@/lib/zakat-simple";
 
 describe("simple zakat rules (same as the app's zakat_simple.dart)", () => {
   it("gold: 85 g of 24 carat, 21 carat priced by purity, 2.5%", () => {

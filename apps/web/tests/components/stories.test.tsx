@@ -89,6 +89,25 @@ describe("Sheikh Nabil al-Awadi's series", () => {
     expect(stop).toHaveBeenCalled();
   });
 
+  it("has the app's episode videos and 30-second rewind/forward", async () => {
+    vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
+    vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => undefined);
+    render(<StoriesIndex locale="ar" />);
+    await userEvent.click(screen.getByTestId("episode-video-yusuf"));
+    expect(screen.getByTestId("series-video").querySelector("iframe")?.getAttribute("src")).toContain(
+      "youtube-nocookie.com/embed/eLC6K7YyIIU",
+    );
+    await userEvent.click(screen.getByTestId("series-video-close"));
+    expect(screen.queryByTestId("series-video")).toBeNull();
+    await userEvent.click(screen.getByTestId("episode-yusuf"));
+    const audio = screen.getByTestId("series-audio") as HTMLAudioElement;
+    audio.currentTime = 100;
+    await userEvent.click(screen.getByTestId("series-rewind"));
+    expect(audio.currentTime).toBe(70);
+    await userEvent.click(screen.getByTestId("series-forward"));
+    expect(audio.currentTime).toBe(100);
+  });
+
   it("does not show a reviewer's name on episodes", () => {
     render(<StoriesIndex locale="ar" series={[approved]} />);
     expect(screen.getByTestId("episode-adam").textContent).not.toContain("الشيخ س");
