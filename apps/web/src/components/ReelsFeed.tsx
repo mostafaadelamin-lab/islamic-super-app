@@ -214,11 +214,6 @@ export function ReelsFeed({
                     </div>
                   )}
                 </div>
-                {r.status === "pending" ? (
-                  <p className="reel-banner" role="note" data-testid="reel-pending">
-                    {t(locale, "reels.pending")}
-                  </p>
-                ) : null}
                 <div className="reel-meta">
                   <strong className="reel-title">{title}</strong>
                   {speaker ? <span>{speaker}</span> : null}
@@ -227,11 +222,6 @@ export function ReelsFeed({
                     <span className="reel-chip">{t(locale, `reels.platform.${r.platform}`)}</span>
                     {r.status === "auto" ? (
                       <span className="reel-chip reel-reviewed">{t(locale, "reels.trusted")}</span>
-                    ) : null}
-                    {r.status === "approved" && r.reviewer ? (
-                      <span className="reel-chip reel-reviewed">
-                        {t(locale, "reels.reviewedBy", { name: r.reviewer })}
-                      </span>
                     ) : null}
                   </span>
                   <a href={r.url} target="_blank" rel="noopener noreferrer" className="reel-open">

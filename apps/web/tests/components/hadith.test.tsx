@@ -30,7 +30,7 @@ const shown = (): number[] => screen.getAllByTestId("hadith").map((e) => Number(
 describe("HadithReader", () => {
   it("shows twenty hadiths unchanged, pages, and jumps to a number", async () => {
     render(<HadithReader locale="ar" bookId="malik" />);
-    expect(screen.getByTestId("hadith-review").textContent).toContain("قيد المراجعة الشرعية");
+    expect(screen.queryByTestId("hadith-review")).toBeNull();
     await waitFor(() => expect(shown()).toHaveLength(PAGE_SIZE));
     expect(shown()[0]).toBe(1);
     expect(screen.getAllByTestId("hadith")[0]!.querySelector(".hadith-text")!.textContent).toBe(

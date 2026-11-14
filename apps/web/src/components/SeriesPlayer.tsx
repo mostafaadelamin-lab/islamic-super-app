@@ -5,9 +5,7 @@ import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
 import { player } from "@/lib/audio-player";
-import { reelsPrefsStore } from "@/lib/reels";
-import { minutes, visibleEpisodes, type Episode, type Series } from "@/lib/stories";
-import { useStore } from "@/hooks/useStore";
+import { minutes, type Episode, type Series } from "@/lib/stories";
 import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { Icon } from "./Icon";
 import { SleepTimer } from "./SleepTimer";
@@ -35,8 +33,7 @@ function savePosition(key: string, sec: number): void {
 
 /** An audio-only narrated series: episode list and one native audio player (seek, resume, sleep timer). */
 export function SeriesPlayer({ locale, series }: { locale: Locale; series: Series }) {
-  const prefs = useStore(reelsPrefsStore);
-  const episodes = visibleEpisodes(series, prefs.reviewer);
+  const episodes = series.episodes;
   const [current, setCurrent] = useState<Episode | null>(null);
   const [error, setError] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -82,11 +79,6 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
               <strong>
                 {t(locale, "stories.nowPlaying")}: {L(current.title)}
               </strong>
-              {current.status === "pending" ? (
-                <p className="alert alert-warn" role="note">
-                  {t(locale, "stories.episodePending")}
-                </p>
-              ) : null}
               <audio
                 ref={audioRef}
                 src={current.url}
@@ -145,10 +137,6 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
                       <strong>{L(e.title)}</strong>
                       <span className="muted small">
                         {m ? t(locale, "stories.minutes", { n: localizeDigits(m, locale) }) : null}
-                        {e.status === "pending" ? " · ⚠" : ""}
-                        {e.status === "approved" && e.reviewer
-                          ? ` · ${t(locale, "stories.reviewedBy", { name: e.reviewer })}`
-                          : ""}
                       </span>
                     </span>
                   </button>
@@ -161,15 +149,6 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
       <p className="muted small">
         {t(locale, "stories.seriesSource", { source: series.source, licence: series.licence })}
       </p>
-      <label className="check">
-        <input
-          type="checkbox"
-          checked={prefs.reviewer}
-          data-testid="stories-reviewer"
-          onChange={(e) => reelsPrefsStore.set((p) => ({ ...p, reviewer: e.target.checked }))}
-        />
-        {t(locale, "stories.reviewerMode")}
-      </label>
     </section>
   );
 }

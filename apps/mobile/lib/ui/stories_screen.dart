@@ -207,13 +207,6 @@ class NarrationBar extends StatelessWidget {
                       color: error ? scheme.error : null,
                     ),
                   ),
-                  if (e.isPending)
-                    Text(
-                      l.storiesEpisodePending,
-                      key: const Key('narrationPending'),
-                      maxLines: 2,
-                      style: theme.textTheme.bodySmall?.copyWith(color: scheme.error),
-                    ),
                   if (total != null && total.inSeconds > 0)
                     Row(
                       children: [

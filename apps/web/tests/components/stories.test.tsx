@@ -71,15 +71,10 @@ describe("Sheikh Nabil al-Awadi's series", () => {
     ),
   };
 
-  it("hides unreviewed episodes from users and says why", () => {
+  it("lists every episode with no review labels or reviewer switch (as in the app); playing one stops the recitation", async () => {
     render(<StoriesIndex locale="ar" />);
-    expect(screen.getByTestId("series-hidden").textContent).toContain("نبيل العوضي");
-    expect(screen.queryByTestId("episode-yusuf")).toBeNull();
-  });
-
-  it("reviewer mode lists every episode; playing one shows the pending banner and stops the recitation", async () => {
-    render(<StoriesIndex locale="ar" />);
-    await userEvent.click(screen.getByTestId("stories-reviewer"));
+    expect(screen.queryByTestId("stories-reviewer")).toBeNull();
+    expect(screen.queryByTestId("series-hidden")).toBeNull();
     expect(document.querySelectorAll("[data-episode]")).toHaveLength(19);
     vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
     await userEvent.click(screen.getByTestId("episode-yusuf"));
@@ -87,17 +82,16 @@ describe("Sheikh Nabil al-Awadi's series", () => {
     expect(audio.getAttribute("src")).toMatch(
       /^https:\/\/archive\.org\/download\/prophets_stories_Nabel-ElAwadde\/.+\.mp3$/,
     );
-    expect(screen.getByRole("note")).toBeInTheDocument();
+    expect(screen.queryByRole("note")).toBeNull();
     expect(screen.getByText("اقرأ آيات القصة").closest("a")?.getAttribute("href")).toBe("/ar/stories/yusuf/");
     const stop = vi.spyOn(player, "stop");
     act(() => void audio.dispatchEvent(new Event("play")));
     expect(stop).toHaveBeenCalled();
   });
 
-  it("users see approved episodes with the reviewer's name", () => {
+  it("does not show a reviewer's name on episodes", () => {
     render(<StoriesIndex locale="ar" series={[approved]} />);
-    expect(document.querySelectorAll("[data-episode]")).toHaveLength(1);
-    expect(screen.getByTestId("episode-adam").textContent).toContain("الشيخ س");
+    expect(screen.getByTestId("episode-adam").textContent).not.toContain("الشيخ س");
   });
 
   it("shows an error when the episode cannot load", async () => {

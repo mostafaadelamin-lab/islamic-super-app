@@ -612,13 +612,9 @@ test.describe("qibla compass", () => {
 
 test.describe("Hajj & Umrah guide", () => {
   for (const locale of ["ar", "en"] as const) {
-    test(`${locale}: pending-review notice, sections and round counters`, async ({ page }) => {
+    test(`${locale}: no review notice, sections and round counters`, async ({ page }) => {
       await page.goto(`/${locale}/hajj/`);
-      const notice = page.getByTestId("review-notice");
-      await expect(notice).toBeVisible();
-      await expect(notice).toContainText(
-        locale === "ar" ? "بانتظار المراجعة الشرعية" : "Pending religious review",
-      );
+      await expect(page.getByTestId("review-notice")).toHaveCount(0);
       await expect(page.locator("#umrah")).toBeVisible();
       await expect(page.getByText("لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ").first()).toBeVisible();
       const tawaf = page.getByTestId("rounds-tawaf");

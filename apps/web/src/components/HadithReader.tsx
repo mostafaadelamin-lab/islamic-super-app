@@ -112,9 +112,6 @@ export function HadithReader({ locale, bookId }: { locale: Locale; bookId: strin
   const last = Math.min(from + PAGE_SIZE - 1, book.count);
   return (
     <>
-      <p className="alert alert-warn" role="note" data-testid="hadith-review">
-        {t(locale, "hadith.review")}
-      </p>
       {locale !== "ar" ? <p className="alert">{t(locale, "common.arabicOnly")}</p> : null}
       <section className="card hadith-tools">
         <form

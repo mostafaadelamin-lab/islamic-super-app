@@ -47,9 +47,6 @@ export default async function HajjPage({ params }: { params: LocaleParams }) {
   return (
     <>
       <h1>{t(locale, "hajj.title")}</h1>
-      <p className="alert alert-warn" role="note" data-testid="review-notice">
-        <strong>{t(locale, "hajj.reviewTitle")}</strong> {t(locale, "hajj.reviewBody")}
-      </p>
       {locale !== "ar" ? <p className="alert">{t(locale, "common.arabicOnly")}</p> : null}
       <nav className="row toc" aria-label={t(locale, "hajj.contents")}>
         <a className="btn btn-sm" href="#umrah">

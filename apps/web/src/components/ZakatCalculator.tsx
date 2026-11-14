@@ -28,9 +28,6 @@ export function ZakatCalculator({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <p className="alert alert-warn" role="note" data-testid="zakat-review">
-        {t(locale, "zakat.review")}
-      </p>
       <section className="card" aria-labelledby="zakat-price-h">
         <h2 id="zakat-price-h" className="card-title">
           {t(locale, "zakat.priceTitle")}

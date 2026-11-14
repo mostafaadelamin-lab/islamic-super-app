@@ -19,17 +19,14 @@ test("stories: the narrator's episodes need review; reviewer mode plays one; ver
 
   await page.goto("/ar/stories/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("قصص قرآنية مسموعة");
-  await expect(page.getByTestId("series-hidden")).toContainText("نبيل العوضي");
-  await expect(page.locator("[data-episode]")).toHaveCount(0);
-
-  await page.getByTestId("stories-reviewer").check();
+  await expect(page.getByTestId("series-hidden")).toHaveCount(0);
+  await expect(page.getByTestId("stories-reviewer")).toHaveCount(0);
   await expect(page.locator("[data-episode]")).toHaveCount(19);
   await page.getByTestId("episode-yusuf").click();
   await expect(page.getByTestId("series-audio")).toHaveAttribute(
     "src",
     /^https:\/\/archive\.org\/download\/prophets_stories_Nabel-ElAwadde\/.+\.mp3$/,
   );
-  await expect(page.getByRole("note")).toContainText("لم تتم مراجعة هذه الحلقة");
   await expect(page.getByTestId("series-error")).toHaveCount(0);
   await page.getByTestId("sleep-timer").selectOption("30");
   await expect(page.getByTestId("sleep-left")).toContainText("٣٠");

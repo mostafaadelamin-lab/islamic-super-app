@@ -52,7 +52,7 @@ describe("ReelsFeed", () => {
     expect(players[0]?.getAttribute("src")).toMatch(
       /^https:\/\/www\.youtube-nocookie\.com\/embed\/hTtlD-u4_HI\?/,
     );
-    expect(screen.getAllByText("Reviewed by Reviewer A")).toHaveLength(2);
+    expect(screen.queryByText("Reviewed by Reviewer A")).toBeNull();
     expect(screen.getAllByRole("link", { name: "Open on YouTube" })[0]).toHaveAttribute("href", base.url);
     expect(screen.getByTestId("reels-position")).toHaveTextContent("1 / 2");
   });

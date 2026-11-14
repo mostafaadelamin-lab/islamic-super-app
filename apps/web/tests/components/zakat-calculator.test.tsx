@@ -8,9 +8,9 @@ beforeEach(() => {
 });
 
 describe("ZakatCalculator", () => {
-  it("shows the review notice, the adornment fatwa and every source link", () => {
+  it("shows no review notice, the adornment fatwa and every source link", () => {
     render(<ZakatCalculator locale="ar" />);
-    expect(screen.getByTestId("zakat-review").textContent).toContain("قيد المراجعة الشرعية");
+    expect(screen.queryByTestId("zakat-review")).toBeNull();
     expect(screen.getByTestId("zakat-adornment").textContent).toContain(
       "لا زكاة على المرأة في الذهب الذي تملكه بقصد استعماله في التزيُّنِ به والتحلي",
     );

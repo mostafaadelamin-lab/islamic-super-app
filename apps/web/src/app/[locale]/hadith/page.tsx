@@ -18,9 +18,6 @@ export default async function HadithPage({ params }: { params: LocaleParams }) {
   return (
     <>
       <h1>{t(locale, "hadith.title")}</h1>
-      <p className="alert alert-warn" role="note" data-testid="hadith-review">
-        {t(locale, "hadith.review")}
-      </p>
       <ul className="tiles" data-testid="hadith-books">
         {HADITH_BOOKS.map((b) => (
           <li key={b.id}>
