@@ -15,6 +15,7 @@ import {
   type Reciter,
 } from "@/lib/mp3quran";
 import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
+import { LIVE_RADIOS, isHls } from "@/lib/live-radios";
 import { Icon } from "./Icon";
 import { SleepTimer } from "./SleepTimer";
 
@@ -52,15 +53,39 @@ function NowPlaying({
     setError(false);
     const el = ref.current;
     if (!el) return;
+    let cancelled = false;
+    let hls: { destroy: () => void } | null = null;
     // The user pressed play; a refusal (autoplay policy) leaves the native controls.
     (async (): Promise<void> => {
       try {
+        // Live HLS (the Holy Mosques): native in Safari; elsewhere hls.js feeds the <audio>, sound only.
+        if (isHls(track.url) && !el.canPlayType("application/vnd.apple.mpegurl")) {
+          const { default: Hls } = await import("hls.js");
+          if (cancelled) return;
+          if (!Hls.isSupported()) {
+            setError(true);
+            return;
+          }
+          const h = new Hls({ lowLatencyMode: false });
+          hls = h;
+          h.on(Hls.Events.ERROR, (_e, data) => {
+            if (data.fatal) setError(true);
+          });
+          h.loadSource(track.url);
+          h.attachMedia(el);
+        } else {
+          el.src = track.url;
+        }
         await el.play();
       } catch {
         /* see above */
       }
     })();
-  }, [track.key]);
+    return () => {
+      cancelled = true;
+      hls?.destroy();
+    };
+  }, [track.key, track.url]);
   return (
     <div className="card series-now" data-testid="library-now">
       <strong>
@@ -69,7 +94,6 @@ function NowPlaying({
       </strong>
       <audio
         ref={ref}
-        src={track.url}
         controls
         preload="none"
         data-testid="library-audio"
@@ -314,6 +338,31 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
             </>
           ) : (
             <>
+              <h3 className="small">{t(locale, "library.liveRadios")}</h3>
+              <ul className="episode-list" data-testid="library-live-radios">
+                {LIVE_RADIOS.map((r) => {
+                  const key = `live:${r.id}`;
+                  const title = locale === "ar" ? r.ar : r.en;
+                  return (
+                    <li key={r.id}>
+                      <button
+                        type="button"
+                        className="episode"
+                        aria-pressed={track?.key === key}
+                        onClick={() => setTrack({ key, url: r.url, live: true, title })}
+                        data-testid={`library-live-${r.id}`}
+                      >
+                        <Icon name={track?.key === key ? "pause" : "play"} />
+                        <span className="tile-text">
+                          <strong>{title}</strong>
+                          <span className="muted small">{t(locale, "library.live")}</span>
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+              <h3 className="small">{t(locale, "library.moreRadios")}</h3>
               {radios.length === 0 ? <p className="muted">{t(locale, "library.empty")}</p> : null}
               <ul className="episode-list" data-testid="library-radios">
                 {radios.map((r) => {

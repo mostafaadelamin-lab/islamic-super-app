@@ -156,6 +156,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('radio-eg')), findsOneWidget);
     expect(find.byKey(const Key('radio-sa')), findsOneWidget);
+    expect(find.byKey(const Key('radio-makkah')), findsOneWidget);
+    expect(find.byKey(const Key('radio-madinah')), findsOneWidget);
     await tester.scrollUntilVisible(find.byKey(const Key('radio-1')), 200, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.byKey(const Key('radio-1')));
     await tester.pumpAndSettle();

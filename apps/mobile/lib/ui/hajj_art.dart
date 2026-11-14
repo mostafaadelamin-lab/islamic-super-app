@@ -47,6 +47,14 @@ HajjScene? hajjSceneFor(String? title) {
   return null;
 }
 
+/// Where the tawaf oval carries its direction arrows (radians on the oval, screen coordinates).
+const tawafArrowAngles = [0.0, math.pi * 0.57, math.pi * 1.14, math.pi * 1.71];
+
+/// Screen direction of the tawaf arrow at [a] on an oval of radii [rx]/[ry]: the tangent of
+/// decreasing [a], so the walk is anti-clockwise seen from above (front half left to right).
+double tawafArrowDirection(double a, double rx, double ry) =>
+    math.atan2(-math.cos(a) * ry, math.sin(a) * rx);
+
 /// The drawing on a soft sky band, [height] tall.
 class HajjArt extends StatelessWidget {
   const HajjArt({super.key, required this.scene, this.height = 120});
@@ -223,11 +231,12 @@ class _ScenePainter extends CustomPainter {
   void _orbit(Offset c, double rx, double ry, int dots) {
     final rect = Rect.fromCenter(center: c, width: rx * 2, height: ry * 2);
     _c.drawOval(rect, _line(primary.withValues(alpha: 0.6), 2));
-    // Anti-clockwise, with the Kaaba on the left as in tawaf.
-    for (final a in [math.pi * 0.15, math.pi * 1.15]) {
+    // Anti-clockwise seen from above, with the Kaaba on the walker's left as in tawaf (owner,
+    // 2026-11-14). The oval is the floor seen from the front: its near (lower) half runs from left
+    // to right and its far (upper) half from right to left, i.e. decreasing [a] on screen.
+    for (final a in tawafArrowAngles) {
       final p = c + Offset(math.cos(a) * rx, math.sin(a) * ry);
-      final dir = math.atan2(-math.cos(a) * ry, math.sin(a) * rx) + math.pi;
-      _arrowHead(p, dir);
+      _arrowHead(p, tawafArrowDirection(a, rx, ry), 13);
     }
     for (var i = 0; i < dots; i++) {
       final a = math.pi + i * 2 * math.pi / dots;
@@ -235,8 +244,7 @@ class _ScenePainter extends CustomPainter {
     }
   }
 
-  void _arrowHead(Offset p, double angle) {
-    const len = 10.0;
+  void _arrowHead(Offset p, double angle, [double len = 10]) {
     final path = Path()
       ..moveTo(p.dx + math.cos(angle) * 4, p.dy + math.sin(angle) * 4)
       ..lineTo(p.dx + math.cos(angle + 2.5) * len, p.dy + math.sin(angle + 2.5) * len)

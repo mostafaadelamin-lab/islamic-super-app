@@ -1739,6 +1739,37 @@ body:has(.player) {
 }
 
 /* ---- hajj ---- */
+.tawaf-art {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin: var(--space-sm) auto;
+}
+.tawaf-sky {
+  fill: var(--color-accent-soft);
+}
+.tawaf-ground {
+  fill: color-mix(in srgb, var(--color-accent) 25%, transparent);
+}
+.tawaf-path {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-opacity: 0.6;
+  stroke-width: 2;
+}
+.tawaf-dot {
+  fill: var(--color-accent);
+}
+.tawaf-kaaba {
+  fill: #1b1b1b;
+}
+.tawaf-band {
+  fill: #c9a24a;
+}
+.tawaf-arrow {
+  fill: var(--color-primary);
+}
 .step-label {
   display: inline-block;
   font-size: var(--font-size-xs);

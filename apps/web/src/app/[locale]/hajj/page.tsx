@@ -5,6 +5,7 @@ import { localizeDigits } from "@/lib/digits";
 import { isRoundTool } from "@/lib/rounds";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
 import { RoundCounter } from "@/components/RoundCounter";
+import { TawafArt } from "@/components/TawafArt";
 
 interface Step {
   title: string;
@@ -22,6 +23,7 @@ function StepCard({ locale, label, step }: { locale: Locale; label: string; step
   return (
     <section className="card step">
       <span className="step-label">{label}</span>
+      {step.tool === "tawaf" ? <TawafArt label={t(locale, "hajj.tawafArt")} /> : null}
       <h3 lang="ar">{step.title}</h3>
       <ul lang="ar">
         {step.points.map((p, i) => (

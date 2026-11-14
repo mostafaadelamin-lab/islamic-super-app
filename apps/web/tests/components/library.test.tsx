@@ -41,6 +41,22 @@ describe("RecitationLibrary", () => {
     );
   });
 
+  it("lists the live Holy Mosques radios first and plays the Cairo radio", async () => {
+    serve();
+    render(<RecitationLibrary locale="ar" />);
+    fireEvent.click(await screen.findByTestId("library-tab-radios"));
+    const live = screen.getByTestId("library-live-radios").textContent ?? "";
+    expect(live.indexOf("المسجد الحرام")).toBeGreaterThanOrEqual(0);
+    expect(live.indexOf("المسجد النبوي")).toBeGreaterThan(live.indexOf("المسجد الحرام"));
+    expect(live).not.toMatch(/holol|radiojar/i);
+    fireEvent.click(screen.getByTestId("library-live-eg"));
+    expect(screen.getByTestId("library-audio").getAttribute("src")).toBe(
+      "https://stream.radiojar.com/8s5u5tpdtwzuv",
+    );
+    fireEvent.click(screen.getByTestId("library-live-makkah"));
+    expect(screen.getByTestId("library-now").textContent).toContain("المسجد الحرام");
+  });
+
   it("offline with nothing saved: an error and a retry", async () => {
     vi.stubGlobal("fetch", () => Promise.reject(new Error("offline")));
     render(<RecitationLibrary locale="en" />);
