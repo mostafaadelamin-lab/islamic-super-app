@@ -193,7 +193,7 @@ class QiblaScreenState extends State<QiblaScreen> {
         child: ListView(
           padding: const EdgeInsets.all(DesignTokens.spaceLg),
           children: [
-            // The hero card keeps the Rattil emerald and gold in light and dark mode.
+            // The hero card keeps the Mushaf brown and gold in light and dark mode.
             Container(
               padding: const EdgeInsets.fromLTRB(
                 DesignTokens.spaceLg,
@@ -206,11 +206,11 @@ class QiblaScreenState extends State<QiblaScreen> {
                 gradient: const LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [QiblaColors.emerald, QiblaColors.emeraldDeep],
+                  colors: [QiblaColors.brand, QiblaColors.brandDeep],
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: QiblaColors.emeraldDeep.withValues(alpha: 0.22),
+                    color: QiblaColors.brandDeep.withValues(alpha: 0.22),
                     blurRadius: 28,
                     offset: const Offset(0, 10),
                   ),
@@ -260,7 +260,7 @@ class QiblaScreenState extends State<QiblaScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         if (facing) ...[
-                          const RIcon(RIcons.checkCircle, color: QiblaColors.emeraldDeep, size: 22),
+                          const RIcon(RIcons.checkCircle, color: QiblaColors.brandDeep, size: 22),
                           const SizedBox(width: DesignTokens.spaceSm),
                         ],
                         Flexible(
@@ -269,7 +269,7 @@ class QiblaScreenState extends State<QiblaScreen> {
                             key: live ? const Key('qiblaTurn') : null,
                             textAlign: TextAlign.center,
                             style: (live ? theme.textTheme.titleMedium : theme.textTheme.bodyMedium)?.copyWith(
-                              color: facing ? QiblaColors.emeraldDeep : Colors.white,
+                              color: facing ? QiblaColors.brandDeep : Colors.white,
                               fontWeight: live ? FontWeight.w700 : null,
                             ),
                           ),
@@ -408,8 +408,8 @@ const kaabaLng = 39.8262;
 
 /// Rattil brand colours for the qibla card (same in light and dark mode).
 abstract final class QiblaColors {
-  static const emerald = Color(0xFF0F5C4A);
-  static const emeraldDeep = Color(0xFF073027);
+  static const brand = Color(0xFF8A5A2B);
+  static const brandDeep = Color(0xFF4A2E14);
   static const gold = Color(0xFFD4AF5A);
   static const goldSoft = Color(0xFFF1DFAE);
 }
@@ -531,7 +531,7 @@ class QiblaDialPainter extends CustomPainter {
       r,
       Paint()
         ..shader = const RadialGradient(
-          colors: [Color(0xFF17735E), Color(0xFF0B4538), Color(0xFF062A22)],
+          colors: [Color(0xFF9A6A36), Color(0xFF6B4420), Color(0xFF3F2711)],
           stops: [0, 0.7, 1],
         ).createShader(Rect.fromCircle(center: c, radius: r)),
     );
@@ -635,7 +635,7 @@ class QiblaDialPainter extends CustomPainter {
 
     // Hub.
     canvas.drawCircle(c, 8, Paint()..color = gold);
-    canvas.drawCircle(c, 3.5, Paint()..color = QiblaColors.emeraldDeep);
+    canvas.drawCircle(c, 3.5, Paint()..color = QiblaColors.brandDeep);
 
     // Where the top of the phone points.
     if (showPointer) {

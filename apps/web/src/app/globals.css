@@ -1,4 +1,4 @@
-/* Rattil web — emerald & gold. Every colour, size and radius comes from the design tokens (tokens.css). */
+/* Rattil web — Mushaf cream & brown (owner 2026-11-14). Every colour, size and radius comes from the design tokens (tokens.css). */
 @font-face {
   /* King Fahd Complex font for its Hafs v18 text; distributed unmodified (content/fonts/KFGQPC-HAFS-LICENSE.txt) */
   font-family: "KFGQPC HAFS Uthmanic Script";
@@ -20,8 +20,8 @@
 }
 
 :root {
-  --shadow-sm: 0 1px 2px rgb(16 40 32 / 6%), 0 1px 3px rgb(16 40 32 / 8%);
-  --shadow-md: 0 4px 16px rgb(16 40 32 / 10%);
+  --shadow-sm: 0 1px 2px rgb(60 38 16 / 6%), 0 1px 3px rgb(60 38 16 / 8%);
+  --shadow-md: 0 4px 16px rgb(60 38 16 / 10%);
   --tabbar-h: 0px;
   --player-h: 0px;
   --primary-deep: color-mix(in srgb, var(--color-primary) 72%, #000);
@@ -30,10 +30,12 @@
   --hero-soft: var(--color-accent-soft);
   --header-bg: var(--color-primary);
   --header-ink: var(--color-on-primary);
+  /* header mark: light gold on the brown header */
+  --brand-mark: #e8cb8c;
   --marker-ink: color-mix(in srgb, var(--color-frame) 62%, var(--color-paper-ink));
   --warn-bg: var(--color-accent-soft);
   /* Mushaf highlights: translucent tints blended into the paper, so they can never hide a glyph or mark. */
-  --hl-selected: rgb(15 92 74 / 16%);
+  --hl-selected: rgb(138 90 43 / 16%);
   --hl-playing: rgb(196 140 30 / 30%);
   --hl-blend: multiply;
 }
@@ -45,7 +47,8 @@
   --hero-soft: var(--color-accent);
   --header-bg: var(--color-surface);
   --header-ink: var(--color-ink);
-  --hl-selected: rgb(95 195 166 / 18%);
+  --brand-mark: var(--color-accent);
+  --hl-selected: rgb(210 168 106 / 20%);
   --hl-playing: rgb(224 189 106 / 24%);
   --hl-blend: screen;
 }
@@ -58,7 +61,8 @@
     --hero-soft: var(--color-accent);
     --header-bg: var(--color-surface);
     --header-ink: var(--color-ink);
-    --hl-selected: rgb(95 195 166 / 18%);
+    --brand-mark: var(--color-accent);
+    --hl-selected: rgb(210 168 106 / 20%);
     --hl-playing: rgb(224 189 106 / 24%);
     --hl-blend: screen;
   }
@@ -156,12 +160,12 @@ a {
   height: 26px;
   border-radius: 8px;
   background:
-    radial-gradient(circle at 50% 50%, var(--color-accent) 0 30%, transparent 31%),
+    radial-gradient(circle at 50% 50%, var(--brand-mark) 0 30%, transparent 31%),
     conic-gradient(
       from 45deg,
-      var(--color-accent) 0 25%,
+      var(--brand-mark) 0 25%,
       transparent 0 50%,
-      var(--color-accent) 0 75%,
+      var(--brand-mark) 0 75%,
       transparent 0
     );
   opacity: 0.95;
@@ -1699,11 +1703,15 @@ body:has(.player) {
   overflow: visible;
 }
 .qibla .live-compass {
-  background: linear-gradient(180deg, #0f5c4a, #073027);
+  background: linear-gradient(180deg, #8a5a2b, #4a2e14);
   border-radius: 28px;
   padding: var(--space-lg) var(--space-lg) var(--space-xl);
   color: #fff;
-  box-shadow: 0 10px 28px rgb(7 48 39 / 0.22);
+  box-shadow: 0 10px 28px rgb(74 46 20 / 0.22);
+}
+.qibla .live-compass .btn-primary {
+  background: #d4af5a;
+  color: #3a240f;
 }
 .qibla .live-compass .muted {
   color: rgb(255 255 255 / 0.75);
@@ -1728,7 +1736,7 @@ body:has(.player) {
 }
 .qibla .live-compass.facing .compass-status {
   background: #d4af5a;
-  color: #073027;
+  color: #3a240f;
 }
 .qibla .compass-status:empty {
   display: none;
@@ -1978,7 +1986,7 @@ dd {
   align-items: center;
   justify-content: center;
   opacity: 1;
-  background: linear-gradient(160deg, var(--color-primary), #06140f);
+  background: linear-gradient(160deg, var(--color-primary), #1a120a);
   color: #fff;
 }
 .reel-poster-blank svg {
