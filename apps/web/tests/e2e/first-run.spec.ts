@@ -34,6 +34,12 @@ test("phone width: the tour fits without horizontal scroll", async ({ page }) =>
   await expect(page.getByRole("dialog")).toBeVisible();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(overflow).toBeLessThanOrEqual(0);
+  // Skip still leads to the setup (location + adhan are always asked on first open).
   await page.getByTestId("tour-skip").click();
+  await expect(page.getByTestId("tour-setup")).toBeVisible();
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth),
+  ).toBeLessThanOrEqual(0);
+  await page.getByTestId("tour-start").click();
   await expect(page.getByTestId("first-run")).toHaveCount(0);
 });
