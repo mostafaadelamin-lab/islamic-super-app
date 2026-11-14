@@ -232,6 +232,20 @@ describe("PrayerView day navigation, monthly calendar and clock", () => {
     expect(document.documentElement).not.toHaveClass("print-month");
   });
 
+  it("shares the month's timetable as text (the app shares it as a picture)", async () => {
+    const share = vi.fn().mockResolvedValue(undefined);
+    vi.stubGlobal("navigator", Object.assign(Object.create(navigator), { share }));
+    const u = user();
+    render(<PrayerView locale="en" />);
+    await screen.findByTestId("month-table");
+    await u.click(screen.getByTestId("month-share"));
+    expect(share).toHaveBeenCalledOnce();
+    const arg = share.mock.calls[0]![0] as { title: string; text: string };
+    expect(arg.title).toContain("·");
+    expect(arg.text.split("\n").length).toBeGreaterThan(28);
+    expect(arg.text).toContain("Fajr");
+  });
+
   it("12-hour clock with AM/PM (ص/م in Arabic)", async () => {
     const u = user();
     render(<PrayerView locale="en" />);

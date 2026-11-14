@@ -1,21 +1,68 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="7" failures="0" errors="0" time="0.070912191">
-    <testsuite name="tests/components/qibla-view.test.tsx" timestamp="2026-11-14T18:16:41.938Z" hostname="vm" tests="1" failures="0" errors="0" skipped="0" time="0.056647973">
-        <testcase classname="tests/components/qibla-view.test.tsx" name="QiblaView (as in the app) &gt; shows the distance to the Kaaba, tips and the Google Qibla Finder check" time="0.054083119">
+<testsuites name="vitest tests" tests="20" failures="0" errors="0" time="2.694001666">
+    <testsuite name="tests/components/prayer.test.tsx" timestamp="2026-11-14T18:18:14.812Z" hostname="vm" tests="20" failures="0" errors="0" skipped="0" time="2.694001666">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows today&apos;s six times for the default city (Makkah) and the next prayer" time="0.289819735">
         </testcase>
-    </testsuite>
-    <testsuite name="tests/unit/mosques.test.ts" timestamp="2026-11-14T18:16:41.939Z" hostname="vm" tests="6" failures="0" errors="0" skipped="0" time="0.014264218">
-        <testcase classname="tests/unit/mosques.test.ts" name="nearby mosques (OpenStreetMap / Overpass) &gt; asks for Muslim places of worship around the point" time="0.001837846">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; changes city, method and asr, and persists them" time="0.267995125">
         </testcase>
-        <testcase classname="tests/unit/mosques.test.ts" name="nearby mosques (OpenStreetMap / Overpass) &gt; distance (haversine)" time="0.000733471">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; manual adjustments: buttons, input, limits and reset" time="0.368413297">
         </testcase>
-        <testcase classname="tests/unit/mosques.test.ts" name="nearby mosques (OpenStreetMap / Overpass) &gt; parses, de-duplicates, drops malformed elements and sorts by distance" time="0.001392617">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows the qibla bearing and compass" time="0.071401196">
+            <system-err>
+An update to MuezzinPicker inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() =&gt; {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you&apos;re testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to MuezzinPicker inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() =&gt; {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you&apos;re testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+            </system-err>
         </testcase>
-        <testcase classname="tests/unit/mosques.test.ts" name="nearby mosques (OpenStreetMap / Overpass) &gt; caps the list" time="0.001209432">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows the high-latitude note for London in midsummer" time="0.143019135">
         </testcase>
-        <testcase classname="tests/unit/mosques.test.ts" name="nearby mosques (OpenStreetMap / Overpass) &gt; falls back to the second Overpass server, then throws when both fail" time="0.005805238">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; use my location: success" time="0.224182611">
         </testcase>
-        <testcase classname="tests/unit/mosques.test.ts" name="nearby mosques (OpenStreetMap / Overpass) &gt; links" time="0.000732356">
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; use my location: permission denied is reported" time="0.110175022">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; use my location: no geolocation API" time="0.101302712">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; geoErrorKey" time="0.001466005">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; shows an error for a polar location" time="0.046677308">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView &gt; countdown ticks every second" time="0.087038001">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView day navigation, monthly calendar and clock &gt; moves between days, shows the Hijri date and returns to today" time="0.212704028">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView day navigation, monthly calendar and clock &gt; monthly table: every day of the month, today highlighted, month arrows" time="0.213422861">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView day navigation, monthly calendar and clock &gt; Hijri month: the days of the Umm al-Qura month, the user&apos;s offset, and printing" time="0.229790314">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView day navigation, monthly calendar and clock &gt; shares the month&apos;s timetable as text (the app shares it as a picture)" time="0.090768027">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="PrayerView day navigation, monthly calendar and clock &gt; 12-hour clock with AM/PM (ص/م in Arabic)" time="0.130789891">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="NextPrayerCard &gt; shows next prayer and countdown in Arabic digits" time="0.032021196">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="NextPrayerCard &gt; after Isha: tomorrow&apos;s times are listed with Fajr marked as next" time="0.023922196">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="NextPrayerCard &gt; says how long ago the last adhan was during the first half hour" time="0.021830564">
+        </testcase>
+        <testcase classname="tests/components/prayer.test.tsx" name="NextPrayerCard &gt; shows an error for impossible locations" time="0.022292268">
         </testcase>
     </testsuite>
 </testsuites>

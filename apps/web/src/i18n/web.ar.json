@@ -761,5 +761,9 @@
   "qibla.placeNote": "اتجاه القبلة محسوب لهذا الموقع. اضغط زر الموقع إن كنت في مكان آخر.",
   "qibla.tipsTitle": "لقراءة دقيقة",
   "qibla.mapCheck": "تأكّد من الاتجاه على خريطة جوجل للقبلة",
-  "mosques.onGoogleMaps": "افتح المساجد القريبة على خرائط جوجل"
+  "mosques.onGoogleMaps": "افتح المساجد القريبة على خرائط جوجل",
+  "prayer.autoLocation": "تحديد الموقع تلقائيًا",
+  "prayer.autoLocationNote": "يُحدَّث موقعك عند فتح الموقع لتبقى المواقيت صحيحة إذا سافرت (لو كنت سامح للموقع بتحديد مكانك).",
+  "prayer.shareCalendar": "مشاركة التقويم",
+  "prayer.calendarCopied": "تم نسخ التقويم"
 }

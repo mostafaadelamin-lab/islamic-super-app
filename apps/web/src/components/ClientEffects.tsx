@@ -4,6 +4,7 @@ import type { Locale } from "@/lib/i18n";
 import { prefsStore, type Preferences } from "@/lib/settings";
 import { useStore } from "@/hooks/useStore";
 import { registerServiceWorker } from "@/lib/sw-client";
+import { refreshAutoLocation } from "@/lib/auto-location";
 
 export function applyPrefs(p: Preferences, root: HTMLElement = document.documentElement): void {
   if (p.theme === "system") root.removeAttribute("data-theme");
@@ -22,6 +23,7 @@ export function ClientEffects({ locale }: { locale: Locale }) {
   }, [locale]);
   useEffect(() => {
     registerServiceWorker();
+    void refreshAutoLocation(); // the app's "detect my location automatically"
     // Marks the page as interactive (React has hydrated); used by e2e tests to
     // avoid interacting with server-rendered controls before handlers exist.
     document.documentElement.dataset.hydrated = "true";

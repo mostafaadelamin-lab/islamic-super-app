@@ -20,6 +20,7 @@ import { addDays, formatClock, formatCountdown, isoDate, localDateInTz } from "@
 import { gregorianDay, hijriDate, weekdayName } from "@/lib/dates";
 import { prayerStore, prefsStore } from "@/lib/settings";
 import { useStore } from "@/hooks/useStore";
+import { autoLocationStore } from "@/lib/auto-location";
 import { useNow } from "@/hooks/useNow";
 import { Compass } from "./Compass";
 import { AdhanSettings } from "./AdhanAlerts";
@@ -35,6 +36,7 @@ export function geoErrorKey(code: number | undefined): string {
 
 export function PrayerView({ locale }: { locale: Locale }) {
   const prefs = useStore(prayerStore);
+  const autoLocation = useStore(autoLocationStore);
   const now = useNow();
   const display = useStore(prefsStore);
   const [geo, setGeo] = useState<GeoState>({ kind: "idle" });
@@ -150,6 +152,18 @@ export function PrayerView({ locale }: { locale: Locale }) {
               {t(locale, geo.key)}
             </p>
           ) : null}
+          <label className="check" data-testid="auto-location">
+            <input
+              type="checkbox"
+              checked={autoLocation}
+              onChange={(e) => {
+                autoLocationStore.set(e.target.checked);
+                if (e.target.checked) locateMe();
+              }}
+            />
+            {t(locale, "prayer.autoLocation")}
+          </label>
+          <p className="muted small">{t(locale, "prayer.autoLocationNote")}</p>
           <p className="muted">{t(locale, "prayer.tz", { tz: loc.tz })}</p>
         </section>
 

@@ -119,6 +119,7 @@ export function PrayerMonth({ locale }: { locale: Locale }) {
   const today = now ? localDateInTz(now, loc.tz) : null;
   const [delta, setDelta] = useState(0);
   const [kind, setKind] = useState<CalendarKind>("gregorian");
+  const [shared, setShared] = useState(false);
   const offset = display.hijriOffset;
   const ym = today ? shiftMonth({ year: today.year, month: today.month }, delta) : null;
 
@@ -166,6 +167,29 @@ export function PrayerMonth({ locale }: { locale: Locale }) {
         }).format(new Date(Date.UTC(ym.year, ym.month - 1, MID_MONTH_DAY)));
   const name = (k: PrayerKey): string => t(locale, `prayer.${k}`);
   const dayNumber = (d: LocalDate): number => (kind === "hijri" ? (hijriOf(d, offset)?.day ?? d.day) : d.day);
+  /** The app shares the month (there as a picture); the site shares it as text, or copies it. */
+  const shareMonth = async (): Promise<void> => {
+    const place = loc.city ? (locale === "ar" ? loc.city.nameAr : loc.city.nameEn) : t(locale, "home.myPlace");
+    const title = `${t(locale, "prayer.monthTitle")} · ${monthTitle} · ${place}`;
+    const lines = rows.map(({ date, pd }) =>
+      [
+        localizeDigits(dayNumber(date), locale),
+        ...PRAYER_KEYS.map((k) =>
+          pd ? `${name(k)} ${localizeDigits(formatClock(pd.times[k], loc.tz, display.clock, locale), locale)}` : "—",
+        ),
+      ].join(" | "),
+    );
+    const text = [title, ...lines].join("\n");
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) await navigator.share({ title, text });
+      else {
+        await navigator.clipboard.writeText(text);
+        setShared(true);
+      }
+    } catch {
+      /* the viewer closed the share sheet */
+    }
+  };
   const switchKind = (k: CalendarKind): void => {
     setKind(k);
     setDelta(0);
@@ -193,6 +217,14 @@ export function PrayerMonth({ locale }: { locale: Locale }) {
         <button type="button" className="btn" onClick={printMonth} data-testid="month-print">
           {t(locale, "prayer.printMonth")}
         </button>
+        <button type="button" className="btn" onClick={() => void shareMonth()} data-testid="month-share">
+          {t(locale, "prayer.shareCalendar")}
+        </button>
+        {shared ? (
+          <span className="muted small" role="status">
+            {t(locale, "prayer.calendarCopied")}
+          </span>
+        ) : null}
       </div>
       <div className="day-nav">
         <button
