@@ -3159,6 +3159,8 @@ dd {
 .segmented button[role="tab"][aria-selected="true"] {
   background: var(--color-primary);
   color: var(--color-on-primary);
+}
+
 /* Nasheeds: the player sits under the nasheed that is playing (owner 2026-11-14). */
 .nasheed-slot {
   flex-basis: 100%;
