@@ -5,7 +5,8 @@ import { localizeDigits } from "@/lib/digits";
 import { isRoundTool } from "@/lib/rounds";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
 import { RoundCounter } from "@/components/RoundCounter";
-import { TawafArt } from "@/components/TawafArt";
+import { TawafPlan, type TawafPlanLabels } from "@/components/TawafPlan";
+import { StepsFlow } from "@/components/StepsFlow";
 
 interface Step {
   title: string;
@@ -19,11 +20,28 @@ export async function generateMetadata({ params }: { params: LocaleParams }): Pr
   return { title: t(isLocale(locale) ? locale : "ar", "hajj.title") };
 }
 
-function StepCard({ locale, label, step }: { locale: Locale; label: string; step: Step }) {
+function planLabels(locale: Locale): TawafPlanLabels {
+  const k = [
+    "title",
+    "kaaba",
+    "blackStone",
+    "yemeni",
+    "shami",
+    "iraqi",
+    "door",
+    "hijr",
+    "maqam",
+    "start",
+    "direction",
+  ] as const;
+  return Object.fromEntries(k.map((x) => [x, t(locale, `hajj.plan.${x}`)])) as unknown as TawafPlanLabels;
+}
+
+function StepCard({ locale, label, step, id }: { locale: Locale; label: string; step: Step; id: string }) {
   return (
-    <section className="card step">
+    <section className="card step" id={id}>
       <span className="step-label">{label}</span>
-      {step.tool === "tawaf" ? <TawafArt label={t(locale, "hajj.tawafArt")} /> : null}
+      {step.tool === "tawaf" ? <TawafPlan l={planLabels(locale)} /> : null}
       <h3 lang="ar">{step.title}</h3>
       <ul lang="ar">
         {step.points.map((p, i) => (
@@ -62,8 +80,20 @@ export default async function HajjPage({ params }: { params: LocaleParams }) {
 
       <h2 id="umrah">{t(locale, "hajj.umrah")}</h2>
       <p lang="ar">{hajj.umrah.intro}</p>
+      <StepsFlow
+        locale={locale}
+        titles={hajj.umrah.steps.map((s) => s.title)}
+        idPrefix="umrah-step"
+        label={t(locale, "hajj.flow.umrah")}
+      />
       {hajj.umrah.steps.map((s, i) => (
-        <StepCard key={i} locale={locale} label={t(locale, "hajj.step", { n: n(i) })} step={s} />
+        <StepCard
+          key={i}
+          id={`umrah-step-${i + 1}`}
+          locale={locale}
+          label={t(locale, "hajj.step", { n: n(i) })}
+          step={s}
+        />
       ))}
       <section className="card">
         <h3 lang="ar">{hajj.madinah.title}</h3>
@@ -86,8 +116,20 @@ export default async function HajjPage({ params }: { params: LocaleParams }) {
           ))}
         </dl>
       </section>
+      <StepsFlow
+        locale={locale}
+        titles={hajj.hajj.days.map((s) => s.title)}
+        idPrefix="hajj-stage"
+        label={t(locale, "hajj.flow.hajj")}
+      />
       {hajj.hajj.days.map((s, i) => (
-        <StepCard key={i} locale={locale} label={t(locale, "hajj.stage", { n: n(i) })} step={s} />
+        <StepCard
+          key={i}
+          id={`hajj-stage-${i + 1}`}
+          locale={locale}
+          label={t(locale, "hajj.stage", { n: n(i) })}
+          step={s}
+        />
       ))}
       <section className="card">
         <h3 lang="ar">{hajj.hajj.pillars.title}</h3>

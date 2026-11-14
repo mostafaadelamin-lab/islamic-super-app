@@ -1747,36 +1747,126 @@ body:has(.player) {
 }
 
 /* ---- hajj ---- */
-.tawaf-art {
+/* Hajj drawings (owner, 2026-11-14): cream and brown, same colours in light and dark themes. */
+.tawaf-plan,
+.steps-flow {
   display: block;
   width: 100%;
-  max-width: 420px;
+  max-width: 480px;
   height: auto;
   margin: var(--space-sm) auto;
+  font-family: inherit;
+  /* Label anchors are laid out left-to-right; each Arabic label still reads right to left. */
+  direction: ltr;
 }
-.tawaf-sky {
-  fill: var(--color-accent-soft);
+.tp-bg {
+  fill: #f6eedc;
 }
-.tawaf-ground {
-  fill: color-mix(in srgb, var(--color-accent) 25%, transparent);
-}
-.tawaf-path {
+.tp-path {
   fill: none;
-  stroke: var(--color-primary);
-  stroke-opacity: 0.6;
+  stroke: #8a6a45;
+  stroke-width: 2;
+  stroke-dasharray: 5 5;
+}
+.tp-arrow {
+  fill: #b5652b;
+}
+.tp-hijr {
+  fill: none;
+  stroke: #c9b48c;
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+.tp-kaaba {
+  fill: #1c1a17;
+}
+.tp-band {
+  fill: none;
+  stroke: #c9a24a;
   stroke-width: 2;
 }
-.tawaf-dot {
-  fill: var(--color-accent);
-}
-.tawaf-kaaba {
-  fill: #1b1b1b;
-}
-.tawaf-band {
+.tp-door {
   fill: #c9a24a;
 }
-.tawaf-arrow {
-  fill: var(--color-primary);
+.tp-maqam {
+  fill: #c9a24a;
+  stroke: #8a6a45;
+  stroke-width: 1.5;
+}
+.tp-corner {
+  fill: #b5652b;
+}
+.tp-start-line {
+  stroke: #b5652b;
+  stroke-width: 2.5;
+  stroke-dasharray: 4 3;
+}
+.tp-stone-frame {
+  fill: #c9ccd1;
+}
+.tp-stone {
+  fill: #2b2b2b;
+}
+.tp-start {
+  fill: #b5652b;
+  stroke: #fff;
+  stroke-width: 2;
+}
+.tp-start-num {
+  fill: #fff;
+  font-size: 13px;
+  font-weight: 700;
+}
+.tp-label {
+  fill: #4a3726;
+  font-size: 11px;
+  font-weight: 600;
+}
+.tp-strong {
+  fill: #8a3f12;
+  font-weight: 800;
+}
+.tp-muted {
+  fill: #7a6650;
+  font-weight: 500;
+}
+.tp-kaaba-label {
+  fill: #f6eedc;
+  font-size: 12px;
+  font-weight: 700;
+}
+.tp-kaaba-small {
+  fill: #e8d6a8;
+  font-size: 9px;
+}
+.steps-flow {
+  background: #f6eedc;
+  border-radius: 14px;
+}
+.sf-link {
+  fill: none;
+  stroke: #b5652b;
+  stroke-width: 2.5;
+  stroke-dasharray: 2 5;
+  stroke-linecap: round;
+}
+.sf-arrowhead {
+  fill: #b5652b;
+}
+.sf-circle {
+  fill: #e9dcc0;
+  stroke: #8a6a45;
+  stroke-width: 2;
+}
+.sf-num {
+  fill: #6b4a2b;
+  font-size: 26px;
+  font-weight: 800;
+}
+.sf-title {
+  fill: #4a3726;
+  font-size: 12px;
+  font-weight: 700;
 }
 .step-label {
   display: inline-block;
