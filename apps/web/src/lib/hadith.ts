@@ -139,3 +139,42 @@ export function toggleFavourite(book: string, n: number): void {
     keys: s.keys.includes(key) ? s.keys.filter((k) => k !== key) : [key, ...s.keys],
   }));
 }
+
+/** A simplified explanation quoted from a published hadith encyclopedia (same data as the app). */
+export interface HadithExplanation {
+  title: string;
+  explanation: string;
+  grade?: string | null;
+  attribution?: string | null;
+  hints?: string[];
+}
+interface ExplainedBook {
+  map: Record<string, string>;
+  entries: Record<string, HadithExplanation>;
+}
+const explainedCache = new Map<string, Promise<ExplainedBook | null>>();
+
+/** Loads one book's explanations once (null when the file cannot be fetched). */
+export function loadExplained(book: string): Promise<ExplainedBook | null> {
+  let p = explainedCache.get(book);
+  if (!p) {
+    p = fetch(withBase(`/data/hadith/explained/${book}.json`))
+      .then((r) => (r.ok ? (r.json() as Promise<ExplainedBook>) : null))
+      .catch(() => null);
+    explainedCache.set(book, p);
+    void p.then((v) => {
+      if (v === null) explainedCache.delete(book); // try again next time (e.g. back online)
+    });
+  }
+  return p;
+}
+
+export function explanationOf(data: ExplainedBook | null, n: number): HadithExplanation | null {
+  const id = data?.map[String(n)];
+  return (id && data?.entries[id]) || null;
+}
+
+/** Tests only. */
+export function resetExplainedCache(): void {
+  explainedCache.clear();
+}

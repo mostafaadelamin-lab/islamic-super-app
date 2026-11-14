@@ -3039,3 +3039,31 @@ dd {
   width: 100%;
   margin-top: var(--space-sm);
 }
+
+/* Hadith: simplified explanation (as in the app) */
+.hadith-explain {
+  margin-top: var(--space-sm);
+  border-top: 1px solid var(--color-line);
+  padding-top: var(--space-sm);
+}
+.hadith-explain summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-primary);
+  display: inline-flex;
+  gap: var(--space-xs);
+  align-items: center;
+}
+.hadith-explain h3 {
+  font-size: 1rem;
+  margin: var(--space-sm) 0 var(--space-xs);
+}
+.hadith-explain h4 {
+  font-size: 0.95rem;
+  color: var(--color-primary);
+  margin: var(--space-md) 0 var(--space-xs);
+}
+.hadith-explain-text,
+.hadith-explain li {
+  line-height: 1.9;
+}

@@ -729,5 +729,9 @@
   "adhkar.alafasy": "Recited by Sheikh Mishary Rashid Alafasy",
   "adhkar.morningTitle": "Morning adhkar",
   "adhkar.eveningTitle": "Evening adhkar",
-  "adhkar.morningEvening": "Morning and evening adhkar"
+  "adhkar.morningEvening": "Morning and evening adhkar",
+  "hadith.explain": "Simplified explanation",
+  "hadith.benefits": "Lessons from the hadith",
+  "hadith.explainSource": "The explanation is quoted word for word from a published hadith encyclopedia, not written by the app.",
+  "hadith.grade": "Grade: {grade}"
 }

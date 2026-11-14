@@ -131,6 +131,22 @@ for (const b of hadith.books) {
     copyFileSync(join(repo, "content/hadith/dist", b.id, `${k}.json`), dest);
   }
 }
+// Simplified explanations (quoted from a published hadith encyclopedia, same file as the app's
+// assets/hadith/explained.v1.json), split per book: /data/hadith/explained/<book>.json = { map: {n: id}, entries }.
+{
+  const ex = readJson("content/hadith/dist/explained.v1.json");
+  const perBook = {};
+  for (const [key, id] of Object.entries(ex.map)) {
+    const [book, n] = key.split(":");
+    const b = (perBook[book] ??= { map: {}, entries: {} });
+    b.map[n] = id;
+    b.entries[id] = ex.entries[id];
+  }
+  mkdirSync(join(pub, "data/hadith/explained"), { recursive: true });
+  for (const [book, b] of Object.entries(perBook)) {
+    writeFileSync(join(pub, "data/hadith/explained", `${book}.json`), JSON.stringify(b));
+  }
+}
 
 const tafsir = readJson("content/tafsir/dist/muyassar.v1.json");
 if (

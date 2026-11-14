@@ -18,6 +18,7 @@ import {
 } from "@/lib/hadith";
 import { useStore } from "@/hooks/useStore";
 import { DhikrTools } from "./DhikrTools";
+import { HadithExplain } from "./HadithExplain";
 
 /** Hadiths shown per screen. */
 export const PAGE_SIZE = 20;
@@ -56,6 +57,7 @@ export function HadithCard({ locale, book, item }: { locale: Locale; book: Hadit
         where={source}
         testId="hadith"
       />
+      <HadithExplain locale={locale} book={book.id} n={item.n} />
     </article>
   );
 }

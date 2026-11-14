@@ -1,7 +1,8 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { readRepoJson } from "../repo";
 import { HadithFavourites, HadithReader, PAGE_SIZE } from "@/components/HadithReader";
-import { hadithFavStore } from "@/lib/hadith";
+import { readFileSync } from "node:fs";
+import { hadithFavStore, resetExplainedCache } from "@/lib/hadith";
 
 interface Chunk {
   ahadith: string[];
@@ -15,7 +16,10 @@ beforeEach(() => {
   localStorage.clear();
   hadithFavStore.reload();
   window.location.hash = "";
+  resetExplainedCache();
   vi.stubGlobal("fetch", (url: string) => {
+    const ex = /\/data\/hadith\/explained\/([a-z]+)\.json$/.exec(url);
+    if (ex) return Promise.resolve(new Response(readFileSync(`public/data/hadith/explained/${ex[1]}.json`, "utf8")));
     const m = /\/data\/hadith\/([a-z]+)\/(\d+)\.json$/.exec(url)!;
     if (m[1] === "darimi") return Promise.resolve(new Response("", { status: 404 }));
     return Promise.resolve(
@@ -28,6 +32,15 @@ afterEach(() => vi.unstubAllGlobals());
 const shown = (): number[] => screen.getAllByTestId("hadith").map((e) => Number(e.dataset.n));
 
 describe("HadithReader", () => {
+  it("shows the app's simplified explanation, grade and benefits where there is one", async () => {
+    render(<HadithReader locale="ar" bookId="malik" />);
+    const ex = await screen.findByTestId("hadith-explain-4");
+    expect(ex.textContent).toContain("الشرح المبسّط");
+    expect(ex.textContent).toContain("الدرجة: صحيح");
+    expect(ex.textContent).toContain("من فوائد الحديث");
+    expect(screen.queryByTestId("hadith-explain-1")).toBeNull();
+  });
+
   it("shows twenty hadiths unchanged, pages, and jumps to a number", async () => {
     render(<HadithReader locale="ar" bookId="malik" />);
     expect(screen.queryByTestId("hadith-review")).toBeNull();
