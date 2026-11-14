@@ -2986,3 +2986,36 @@ dd {
   width: 20px;
   background: var(--color-primary);
 }
+
+/* Zakat calculator: the app's five tabs (ZakatSimple) */
+.zakat-tabs {
+  display: flex;
+  margin-bottom: var(--space-md);
+}
+.zakat-simple-body .segmented {
+  margin-bottom: var(--space-md);
+}
+.zakat-simple-body .field > span:first-child,
+.zakat-simple .field-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  margin: 0 0 var(--space-xs);
+}
+.zakat-simple-body input {
+  min-width: 0;
+  flex: 1;
+  max-width: 320px;
+}
+.zakat-simple-result {
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+.zakat-simple-result.reached {
+  border-color: var(--color-success);
+  background: color-mix(in srgb, var(--color-success) 8%, var(--color-surface));
+}
+.zakat-simple-answer {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 0;
+}

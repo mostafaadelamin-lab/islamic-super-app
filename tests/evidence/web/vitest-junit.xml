@@ -1,113 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="20" failures="0" errors="0" time="2.306199564">
-    <testsuite name="tests/components/hadith.test.tsx" timestamp="2026-11-14T18:06:20.947Z" hostname="vm" tests="4" failures="0" errors="0" skipped="0" time="1.353270536">
-        <testcase classname="tests/components/hadith.test.tsx" name="HadithReader &gt; shows twenty hadiths unchanged, pages, and jumps to a number" time="0.204587292">
+<testsuites name="vitest tests" tests="9" failures="0" errors="0" time="0.211832405">
+    <testsuite name="tests/components/zakat-simple.test.tsx" timestamp="2026-11-14T18:08:22.979Z" hostname="vm" tests="9" failures="0" errors="0" skipped="0" time="0.211832405">
+        <testcase classname="tests/components/zakat-simple.test.tsx" name="simple zakat rules (same as the app&apos;s zakat_simple.dart) &gt; gold: 85 g of 24 carat, 21 carat priced by purity, 2.5%" time="0.001451174">
         </testcase>
-        <testcase classname="tests/components/hadith.test.tsx" name="HadithReader &gt; searches the book and goes back" time="1.089290075">
+        <testcase classname="tests/components/zakat-simple.test.tsx" name="simple zakat rules (same as the app&apos;s zakat_simple.dart) &gt; silver, money, crops" time="0.000598455">
         </testcase>
-        <testcase classname="tests/components/hadith.test.tsx" name="HadithReader &gt; says so when a part can&apos;t load" time="0.007198471">
+        <testcase classname="tests/components/zakat-simple.test.tsx" name="simple zakat rules (same as the app&apos;s zakat_simple.dart) &gt; livestock tables" time="0.001016451">
         </testcase>
-        <testcase classname="tests/components/hadith.test.tsx" name="HadithFavourites &gt; saves a hadith and lists it with its book" time="0.049094204">
+        <testcase classname="tests/components/zakat-simple.test.tsx" name="simple zakat rules (same as the app&apos;s zakat_simple.dart) &gt; reads Arabic digits and decimal commas" time="0.00063066">
         </testcase>
-    </testsuite>
-    <testsuite name="tests/components/reels.test.tsx" timestamp="2026-11-14T18:06:20.950Z" hostname="vm" tests="8" failures="0" errors="0" skipped="0" time="0.40343372">
-        <testcase classname="tests/components/reels.test.tsx" name="ReelsFeed &gt; shows an empty state when nothing is reviewed" time="0.03309084">
-            <system-err>
-An update to ReelsFeed inside a test was not wrapped in act(...).
-
-When testing, code that causes React state updates should be wrapped into act(...):
-
-act(() =&gt; {
-  /* fire events that update state */
-});
-/* assert on the output */
-
-This ensures that you&apos;re testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
-
-            </system-err>
+        <testcase classname="tests/components/zakat-simple.test.tsx" name="ZakatSimple &gt; has the app&apos;s five tabs and no review notice" time="0.060635398">
         </testcase>
-        <testcase classname="tests/components/reels.test.tsx" name="ReelsFeed &gt; plays only the reel in view, through the official embed" time="0.092423355">
-            <system-err>
-An update to ReelsFeed inside a test was not wrapped in act(...).
-
-When testing, code that causes React state updates should be wrapped into act(...):
-
-act(() =&gt; {
-  /* fire events that update state */
-});
-/* assert on the output */
-
-This ensures that you&apos;re testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
-
-            </system-err>
+        <testcase classname="tests/components/zakat-simple.test.tsx" name="ZakatSimple &gt; gold: shows grams and money due, and keeps the value" time="0.060058699">
         </testcase>
-        <testcase classname="tests/components/reels.test.tsx" name="ReelsFeed &gt; never shows pending (unreviewed) reels and has no reviewer switch (owner, 2026-11-13)" time="0.015014421">
-            <system-err>
-An update to ReelsFeed inside a test was not wrapped in act(...).
-
-When testing, code that causes React state updates should be wrapped into act(...):
-
-act(() =&gt; {
-  /* fire events that update state */
-});
-/* assert on the output */
-
-This ensures that you&apos;re testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
-
-            </system-err>
+        <testcase classname="tests/components/zakat-simple.test.tsx" name="ZakatSimple &gt; money asks for the gold price, then compares with the nisab" time="0.018559092">
         </testcase>
-        <testcase classname="tests/components/reels.test.tsx" name="ReelsFeed &gt; plays Instagram reels through Instagram&apos;s official embed, with a blank poster off-screen" time="0.053654613">
+        <testcase classname="tests/components/zakat-simple.test.tsx" name="ZakatSimple &gt; livestock: camels table" time="0.035932414">
         </testcase>
-        <testcase classname="tests/components/reels.test.tsx" name="ReelsFeed &gt; arrow keys move between reels" time="0.036221538">
-        </testcase>
-        <testcase classname="tests/components/reels.test.tsx" name="ReelsFeed: automatic reels from trusted channels &gt; asks the API for the feed and shows the channel&apos;s newest reels first, marked trusted" time="0.055460681">
-        </testcase>
-        <testcase classname="tests/components/reels.test.tsx" name="ReelsFeed: automatic reels from trusted channels &gt; hides a channel, with undo" time="0.079065748">
-        </testcase>
-        <testcase classname="tests/components/reels.test.tsx" name="ReelsFeed: automatic reels from trusted channels &gt; server unreachable: says so and retries" time="0.035686242">
-        </testcase>
-    </testsuite>
-    <testsuite name="tests/components/stories.test.tsx" timestamp="2026-11-14T18:06:20.954Z" hostname="vm" tests="6" failures="0" errors="0" skipped="0" time="0.43343789">
-        <testcase classname="tests/components/stories.test.tsx" name="StoriesIndex &gt; lists the verse stories by category with links" time="0.10022717">
-        </testcase>
-        <testcase classname="tests/components/stories.test.tsx" name="Sheikh Nabil al-Awadi&apos;s series &gt; lists every episode with no review labels or reviewer switch (as in the app); playing one stops the recitation" time="0.143226836">
-        </testcase>
-        <testcase classname="tests/components/stories.test.tsx" name="Sheikh Nabil al-Awadi&apos;s series &gt; does not show a reviewer&apos;s name on episodes" time="0.034055085">
-        </testcase>
-        <testcase classname="tests/components/stories.test.tsx" name="Sheikh Nabil al-Awadi&apos;s series &gt; shows an error when the episode cannot load" time="0.071759016">
-        </testcase>
-        <testcase classname="tests/components/stories.test.tsx" name="StoryView &gt; shows only the verses of every range, with their source (no text of ours)" time="0.026758448">
-        </testcase>
-        <testcase classname="tests/components/stories.test.tsx" name="StoryView &gt; listen plays the story&apos;s ranges in order and highlights the recited ayah" time="0.054445262">
-            <system-err>
-An update to StoryView inside a test was not wrapped in act(...).
-
-When testing, code that causes React state updates should be wrapped into act(...):
-
-act(() =&gt; {
-  /* fire events that update state */
-});
-/* assert on the output */
-
-This ensures that you&apos;re testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
-An update to StoryView inside a test was not wrapped in act(...).
-
-When testing, code that causes React state updates should be wrapped into act(...):
-
-act(() =&gt; {
-  /* fire events that update state */
-});
-/* assert on the output */
-
-This ensures that you&apos;re testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
-
-            </system-err>
-        </testcase>
-    </testsuite>
-    <testsuite name="tests/components/zakat-calculator.test.tsx" timestamp="2026-11-14T18:06:20.956Z" hostname="vm" tests="2" failures="0" errors="0" skipped="0" time="0.116057418">
-        <testcase classname="tests/components/zakat-calculator.test.tsx" name="ZakatCalculator &gt; shows no review notice, the adornment fatwa and every source link" time="0.041648886">
-        </testcase>
-        <testcase classname="tests/components/zakat-calculator.test.tsx" name="ZakatCalculator &gt; works out the zakat as the user types, with Arabic digits too, and keeps the numbers" time="0.071853633">
+        <testcase classname="tests/components/zakat-simple.test.tsx" name="ZakatSimple &gt; crops: 5% when irrigated by machines" time="0.030289796">
         </testcase>
     </testsuite>
 </testsuites>

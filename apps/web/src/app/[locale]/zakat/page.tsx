@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { isLocale, t } from "@/lib/i18n";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
-import { ZakatCalculator } from "@/components/ZakatCalculator";
+import { ZakatSimple } from "@/components/ZakatSimple";
 
 export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
   const { locale } = await params;
@@ -13,7 +13,7 @@ export default async function ZakatPage({ params }: { params: LocaleParams }) {
   return (
     <>
       <h1>{t(locale, "zakat.title")}</h1>
-      <ZakatCalculator locale={locale} />
+      <ZakatSimple locale={locale} />
     </>
   );
 }
