@@ -67,7 +67,7 @@ void main() {
     expect(find.byKey(const Key('story-yusuf')), findsNothing, reason: 'verse stories removed');
   });
 
-  testWidgets('plays an approved episode, resumes where it stopped, and stops the recitation', (tester) async {
+  testWidgets('plays an approved episode, resumes where it stopped, and pauses the recitation', (tester) async {
     final narration = FakeNarrationBackend();
     final audio = FakeAudioBackend();
     final app = await pumpApp(
@@ -86,7 +86,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(narration.loaded.single, contains('archive.org/download/prophets_stories_Nabel-ElAwadde/'));
     expect(narration.calls, containsAllInOrder(['load', 'seek:600', 'play']));
-    expect(app.services.recitation.isActive, isFalse, reason: 'one voice at a time');
+    // One sound at a time: the recitation pauses and keeps its ayah (owner 2026-11-14).
+    expect(app.services.recitation.isPlaying, isFalse, reason: 'one voice at a time');
+    expect(app.services.recitation.wasInterrupted, isTrue);
+    expect(app.services.recitation.currentRef, const AyahRef(105, 1));
     expect(find.byKey(const Key('narrationBar')), findsOneWidget);
     expect(find.byKey(const Key('narrationPending')), findsNothing);
 

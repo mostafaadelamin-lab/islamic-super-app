@@ -19,16 +19,52 @@ import 'r_icon.dart';
 /// copy; share as an image), then its Tafsir al-Muyassar (previous / next ayah).
 /// [readAsList] is kept for callers but no longer adds an action. [onAyahChanged] is told when the
 /// reader moves to another ayah inside the sheet.
+///
+/// [overPage] (the Mushaf page, owner 2026-11-14): the page must stay in view, so the sheet is
+/// smaller and does not dim the page; on a wide screen it opens as a panel beside the page.
 Future<void> showAyahSheet(
   BuildContext context,
   AyahRef ref, {
   ValueChanged<AyahRef>? onAyahChanged,
   bool readAsList = true,
-}) => showModalBottomSheet<void>(
-  context: context,
-  isScrollControlled: true,
-  builder: (_) => AyahSheet(initial: ref, onAyahChanged: onAyahChanged, readAsList: readAsList),
-);
+  bool overPage = false,
+}) {
+  Widget sheet({double heightFactor = 0.85}) =>
+      AyahSheet(initial: ref, onAyahChanged: onAyahChanged, readAsList: readAsList, heightFactor: heightFactor);
+  if (overPage && ayahSidePanel(MediaQuery.sizeOf(context))) {
+    return showGeneralDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: Colors.transparent,
+      pageBuilder: (context, _, _) => Align(
+        alignment: AlignmentDirectional.centerEnd,
+        child: Padding(
+          padding: const EdgeInsets.all(DesignTokens.spaceSm),
+          child: Material(
+            key: const Key('ayahSidePanel'),
+            elevation: 6,
+            borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+            clipBehavior: Clip.antiAlias,
+            child: SizedBox(width: ayahPanelWidth, child: sheet(heightFactor: 0.92)),
+          ),
+        ),
+      ),
+    );
+  }
+  return showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    barrierColor: overPage ? Colors.transparent : null,
+    builder: (_) => sheet(heightFactor: overPage ? 0.48 : 0.85),
+  );
+}
+
+/// Width of the ayah panel beside the Mushaf page on wide screens.
+const double ayahPanelWidth = 380;
+
+/// A screen wide enough (tablet sideways, desktop) to show the ayah panel beside the page.
+bool ayahSidePanel(Size size) => size.width >= 900 && size.width > size.height;
 
 /// The ayah before / after [r] across surah boundaries, or null at 1:1 / 114:6.
 AyahRef? stepAyah(QuranContent q, AyahRef r, int delta) {
@@ -41,8 +77,17 @@ AyahRef? stepAyah(QuranContent q, AyahRef r, int delta) {
 }
 
 class AyahSheet extends StatefulWidget {
-  const AyahSheet({super.key, required this.initial, this.onAyahChanged, this.readAsList = true});
+  const AyahSheet({
+    super.key,
+    required this.initial,
+    this.onAyahChanged,
+    this.readAsList = true,
+    this.heightFactor = 0.85,
+  });
   final AyahRef initial;
+
+  /// The most of the screen height the sheet may take.
+  final double heightFactor;
   final ValueChanged<AyahRef>? onAyahChanged;
   final bool readAsList;
 
@@ -79,7 +124,7 @@ class AyahSheetState extends State<AyahSheet> {
     final canNext = stepAyah(q, _ref, 1) != null;
     return SafeArea(
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height * 0.85),
+        constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height * widget.heightFactor),
         child: Column(
           key: const Key('ayahSheet'),
           mainAxisSize: MainAxisSize.min,
@@ -226,13 +271,17 @@ class _Actions extends StatelessWidget {
       listenable: s.bookmarks,
       builder: (context, _) {
         final marked = s.bookmarks.isBookmarked(ref);
-        Widget action(String key, RIconData icon, String label, VoidCallback onPressed) => ListTile(
+        // Small buttons that wrap (owner 2026-11-14: the list of actions covered the whole page).
+        Widget action(String key, RIconData icon, String label, VoidCallback onPressed) => OutlinedButton.icon(
           key: Key(key),
-          dense: true,
-          visualDensity: VisualDensity.compact,
-          leading: RIcon(icon, size: 22, color: Theme.of(context).colorScheme.primary),
-          title: Text(label),
-          onTap: onPressed,
+          style: OutlinedButton.styleFrom(
+            visualDensity: VisualDensity.compact,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            minimumSize: const Size(0, 40),
+          ),
+          icon: RIcon(icon, size: 18, color: Theme.of(context).colorScheme.primary),
+          label: Text(label),
+          onPressed: onPressed,
         );
         void play(AyahRef from, PlayScope scope, {bool tafsir = false}) {
           Navigator.of(context).pop();
@@ -241,10 +290,11 @@ class _Actions extends StatelessWidget {
         }
 
         return Padding(
-          padding: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
-          child: Column(
+          padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceSm),
+          child: Wrap(
             key: const Key('ayahActions'),
-            mainAxisSize: MainAxisSize.min,
+            spacing: DesignTokens.spaceXs,
+            runSpacing: DesignTokens.spaceXs,
             children: [
               action('ayahPlayOne', RIcons.playCircle, l.ayahListenOne, () => play(ref, PlayScope.ayah)),
               action(

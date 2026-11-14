@@ -1958,9 +1958,17 @@
   "@nasheedsLoadError": {
     "description": "shared key \"nasheeds.loadError\""
   },
+  "nasheedsNext": "Next nasheed",
+  "@nasheedsNext": {
+    "description": "shared key \"nasheeds.next\""
+  },
   "nasheedsNote": "Listen to any nasheed online, or tap the download icon to keep it for offline listening.",
   "@nasheedsNote": {
     "description": "shared key \"nasheeds.note\""
+  },
+  "nasheedsPrev": "Previous nasheed",
+  "@nasheedsPrev": {
+    "description": "shared key \"nasheeds.prev\""
   },
   "nasheedsSearch": "Find a nasheed or munshid",
   "@nasheedsSearch": {
@@ -2767,6 +2775,10 @@
   "@readerFontSmaller": {
     "description": "shared key \"reader.fontSmaller\""
   },
+  "readerFullHint": "To turn pages, swipe the page or press the arrows at the bottom. Tap the page to show listening and tools.",
+  "@readerFullHint": {
+    "description": "shared key \"reader.fullHint\""
+  },
   "readerHelp": "Help",
   "@readerHelp": {
     "description": "shared key \"reader.help\""
@@ -2786,6 +2798,10 @@
   "readerHelpTitle": "How to use",
   "@readerHelpTitle": {
     "description": "shared key \"reader.helpTitle\""
+  },
+  "readerHintClose": "Got it",
+  "@readerHintClose": {
+    "description": "shared key \"reader.hintClose\""
   },
   "readerIndex": "Index",
   "@readerIndex": {

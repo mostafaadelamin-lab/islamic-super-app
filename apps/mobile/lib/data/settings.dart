@@ -290,6 +290,10 @@ class SettingsController extends ChangeNotifier {
 
   // --- First run ---------------------------------------------------------------------
   /// True once the welcome tour and the permissions setup were finished or skipped.
+  /// How many times the Mushaf's full-screen hint (how to turn pages) was shown.
+  int get readerHintShown => _prefs.getInt('reader.hintShown') ?? 0;
+  Future<void> setReaderHintShown(int n) => _prefs.setInt('reader.hintShown', n);
+
   bool get onboardingDone => _prefs.getBool('onboarding.done') ?? false;
   Future<void> setOnboardingDone(bool v) async {
     await _prefs.setBool('onboarding.done', v);

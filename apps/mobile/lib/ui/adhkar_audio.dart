@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
 import '../app_services.dart';
+import '../data/audio_focus.dart';
 import '../data/media_session.dart';
 import '../domain/nasheeds.dart';
 import '../theme/design_tokens.dart';
@@ -102,10 +103,15 @@ class _AssetPlayerState extends State<_AssetPlayer> {
   @override
   void initState() {
     super.initState();
+    // One sound at a time: this recording pauses the recitation, and the other way round.
+    AudioFocus.register(this, () {
+      if (_playing) unawaited(_a.pause());
+    });
     _subs
       ..add(_a.position.listen((p) => setState(() => _pos = p)))
       ..add(
         _a.playing.listen((p) {
+          if (p) AudioFocus.claim(this);
           setState(() => _playing = p);
           _media.playing = p;
         }),
@@ -137,6 +143,7 @@ class _AssetPlayerState extends State<_AssetPlayer> {
 
   @override
   void dispose() {
+    AudioFocus.unregister(this);
     for (final s in _subs) {
       s.cancel();
     }

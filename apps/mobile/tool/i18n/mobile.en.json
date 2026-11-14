@@ -734,5 +734,9 @@
   "adhan.playOnSilentHint": "The adhan plays at alarm volume even on silent or vibrate, like an alarm clock. Applies to the full adhan only.",
   "settings.permissions": "Permissions and background",
   "settings.permissionsHint": "Location, notifications, battery and adhan on silent",
-  "settings.tour": "App tour"
+  "settings.tour": "App tour",
+  "reader.fullHint": "To turn pages, swipe the page or press the arrows at the bottom. Tap the page to show listening and tools.",
+  "reader.hintClose": "Got it",
+  "nasheeds.prev": "Previous nasheed",
+  "nasheeds.next": "Next nasheed"
 }

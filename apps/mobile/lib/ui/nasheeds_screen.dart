@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../app_services.dart';
+import '../data/recitation.dart';
 import '../domain/nasheeds.dart';
 import '../domain/stories.dart';
 import '../theme/design_tokens.dart';
@@ -10,7 +11,7 @@ import 'audio_widgets.dart';
 import 'l10n_ext.dart';
 import 'library_screen.dart' show PlayTile;
 import 'r_icon.dart';
-import 'stories_screen.dart' show NarrationBar;
+import 'stories_screen.dart' show NarrationBar, SleepTimerButton;
 
 Future<List<Munshid>> loadNasheeds() async =>
     Munshid.parse(await rootBundle.loadString('assets/content/nasheeds.v2.json'));
@@ -21,6 +22,140 @@ String _norm(String s) =>
 /// Episode for the shared audio player (streams, or plays the offline copy).
 Episode nasheedEpisode(Nasheed n) =>
     Episode(id: 'nasheed-${n.id}', titleAr: n.title, titleEn: n.title, url: n.url, status: ReviewStatus.approved);
+
+/// A nasheed in a list: its play tile and, while it is the one playing, the player right under it
+/// (owner 2026-11-14: not in a bar away from the list).
+class NasheedTile extends StatelessWidget {
+  const NasheedTile({super.key, required this.nasheed, required this.playlist, this.subtitle});
+  final Nasheed nasheed;
+  final List<Episode>? playlist;
+  final String? subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    final n = context.services.narration;
+    final e = nasheedEpisode(nasheed);
+    final on = n.seriesId == 'nasheeds' && n.episode?.id == e.id && n.isActive;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        PlayTile(
+          key: Key('nasheed-${nasheed.id}'),
+          series: 'nasheeds',
+          remember: false,
+          offline: true,
+          title: nasheed.title,
+          subtitle: subtitle,
+          episode: e,
+          playlist: playlist,
+        ),
+        if (on) const NasheedInlinePlayer(),
+      ],
+    );
+  }
+}
+
+/// Seek bar, previous / play-pause / next, sleep timer and stop for the nasheed playing.
+class NasheedInlinePlayer extends StatelessWidget {
+  const NasheedInlinePlayer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final n = context.services.narration;
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final total = n.duration;
+    final error = n.state == RecitationState.error;
+    String fmt(Duration d) => context.numLtr('${d.inMinutes}:${(d.inSeconds % 60).toString().padLeft(2, '0')}');
+    return Container(
+      key: const Key('nasheedInlinePlayer'),
+      margin: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceSm),
+      padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm, vertical: DesignTokens.spaceXs),
+      decoration: BoxDecoration(
+        color: scheme.primaryContainer.withValues(alpha: 0.45),
+        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+        border: Border.all(color: scheme.primary.withValues(alpha: 0.35)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (error)
+            Text(l.storiesEpisodeError, style: TextStyle(color: scheme.error))
+          else if (total != null && total.inSeconds > 0)
+            Row(
+              children: [
+                Text(fmt(n.position), style: theme.textTheme.bodySmall),
+                Expanded(
+                  child: Slider(
+                    key: const Key('nasheedSlider'),
+                    value: n.position.inSeconds.clamp(0, total.inSeconds).toDouble(),
+                    max: total.inSeconds.toDouble(),
+                    onChanged: (v) => n.seekBy(Duration(seconds: v.round()) - n.position),
+                  ),
+                ),
+                Text(fmt(total), style: theme.textTheme.bodySmall),
+              ],
+            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                key: const Key('nasheedPrev'),
+                tooltip: l.nasheedsPrev,
+                icon: const RIcon(RIcons.prev),
+                onPressed: n.hasPrevious ? n.previous : null,
+              ),
+              IconButton.filled(
+                key: const Key('nasheedToggle'),
+                tooltip: n.isPlaying ? l.storiesPause : l.storiesPlay,
+                icon: RIcon(n.isPlaying ? RIcons.pause : RIcons.play),
+                onPressed: () => n.isPlaying ? n.pause() : n.resume(),
+              ),
+              IconButton(
+                key: const Key('nasheedNext'),
+                tooltip: l.nasheedsNext,
+                icon: const RIcon(RIcons.next),
+                onPressed: n.hasNext ? n.next : null,
+              ),
+              const SleepTimerButton(),
+              IconButton(
+                key: const Key('nasheedStop'),
+                tooltip: l.storiesStop,
+                icon: const RIcon(RIcons.stop),
+                onPressed: n.stop,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The app's narration bar, except while the nasheed playing is listed on this screen
+/// (its player is then under it).
+class _BottomPlayers extends StatelessWidget {
+  const _BottomPlayers({required this.listed});
+  final bool Function(String episodeId) listed;
+
+  @override
+  Widget build(BuildContext context) {
+    final n = context.services.narration;
+    return ListenableBuilder(
+      listenable: n,
+      builder: (context, _) {
+        final e = n.episode;
+        final inline = n.seriesId == 'nasheeds' && e != null && listed(e.id);
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [if (!inline) const NarrationBar(), const MiniPlayer()],
+        );
+      },
+    );
+  }
+}
 
 /// Every munshid with his nasheeds count; search finds nasheeds by title too.
 class NasheedsScreen extends StatefulWidget {
@@ -34,6 +169,7 @@ class NasheedsScreen extends StatefulWidget {
 class _NasheedsScreenState extends State<NasheedsScreen> {
   late final Future<List<Munshid>> _future = widget.loader();
   String _query = '';
+  Set<String> _listed = const {};
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +177,7 @@ class _NasheedsScreenState extends State<NasheedsScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(title: Text(l.nasheedsTitle)),
-      bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
+      bottomNavigationBar: _BottomPlayers(listed: (id) => _listed.contains(id)),
       body: ReadableWidth(
         child: FutureBuilder<List<Munshid>>(
           future: _future,
@@ -61,6 +197,7 @@ class _NasheedsScreenState extends State<NasheedsScreen> {
                       for (final n in m.items)
                         if (_norm(n.title).contains(q)) (m, n),
                   ];
+            _listed = {for (final (_, n) in hits) nasheedEpisode(n).id};
             return ListenableBuilder(
               listenable: context.services.narration,
               builder: (context, _) => ListView(
@@ -106,16 +243,7 @@ class _NasheedsScreenState extends State<NasheedsScreen> {
                         ).push(MaterialPageRoute<void>(builder: (_) => MunshidScreen(munshid: m))),
                       ),
                     ),
-                  for (final (m, n) in hits)
-                    PlayTile(
-                      key: Key('nasheed-${n.id}'),
-                      series: 'nasheeds',
-                      remember: false,
-                      offline: true,
-                      title: n.title,
-                      subtitle: m.name,
-                      episode: nasheedEpisode(n),
-                    ),
+                  for (final (m, n) in hits) NasheedTile(nasheed: n, playlist: null, subtitle: m.name),
                 ],
               ),
             );
@@ -135,7 +263,7 @@ class MunshidScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(munshid.name)),
-      bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
+      bottomNavigationBar: _BottomPlayers(listed: (id) => munshid.items.any((n) => nasheedEpisode(n).id == id)),
       body: ReadableWidth(
         child: ListenableBuilder(
           listenable: context.services.narration,
@@ -147,16 +275,7 @@ class MunshidScreen extends StatelessWidget {
               itemCount: munshid.items.length,
               separatorBuilder: (_, _) => const Divider(height: 1),
               itemBuilder: (context, i) {
-                final n = munshid.items[i];
-                return PlayTile(
-                  key: Key('nasheed-${n.id}'),
-                  series: 'nasheeds',
-                  remember: false,
-                  offline: true,
-                  title: n.title,
-                  episode: episodes[i],
-                  playlist: episodes,
-                );
+                return NasheedTile(nasheed: munshid.items[i], playlist: episodes);
               },
             );
           },

@@ -2396,11 +2396,23 @@ abstract class AppLocalizations {
   /// **'Couldn\'t load the nasheeds list.'**
   String get nasheedsLoadError;
 
+  /// shared key "nasheeds.next"
+  ///
+  /// In en, this message translates to:
+  /// **'Next nasheed'**
+  String get nasheedsNext;
+
   /// shared key "nasheeds.note"
   ///
   /// In en, this message translates to:
   /// **'Listen to any nasheed online, or tap the download icon to keep it for offline listening.'**
   String get nasheedsNote;
+
+  /// shared key "nasheeds.prev"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous nasheed'**
+  String get nasheedsPrev;
 
   /// shared key "nasheeds.search"
   ///
@@ -3350,6 +3362,12 @@ abstract class AppLocalizations {
   /// **'Smaller text'**
   String get readerFontSmaller;
 
+  /// shared key "reader.fullHint"
+  ///
+  /// In en, this message translates to:
+  /// **'To turn pages, swipe the page or press the arrows at the bottom. Tap the page to show listening and tools.'**
+  String get readerFullHint;
+
   /// shared key "reader.help"
   ///
   /// In en, this message translates to:
@@ -3379,6 +3397,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'How to use'**
   String get readerHelpTitle;
+
+  /// shared key "reader.hintClose"
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get readerHintClose;
 
   /// shared key "reader.index"
   ///
