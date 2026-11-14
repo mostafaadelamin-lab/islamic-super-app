@@ -12,6 +12,7 @@ import 'data/account.dart';
 import 'data/bookmarks.dart';
 import 'data/content.dart';
 import 'data/devotions.dart';
+import 'data/device_setup.dart';
 import 'data/khatma_store.dart';
 import 'data/worship_store.dart';
 import 'data/downloads.dart';
@@ -61,7 +62,8 @@ class AppServices {
     this.sharer = const SystemImageSharer(),
     required this.reelsFeed,
     this.media,
-  });
+    DeviceSetup? deviceSetup,
+  }) : deviceSetup = deviceSetup ?? PlatformDeviceSetup();
 
   factory AppServices.create({
     required AppContent content,
@@ -80,6 +82,7 @@ class AppServices {
     Future<Directory> Function()? storageRoot,
     Duration adhanRetryDelay = const Duration(seconds: 2),
     MediaSession? mediaSession,
+    DeviceSetup? deviceSetup,
   }) {
     final c = clock ?? DateTime.now;
     final settings = SettingsController(prefs, defaultCityId: content.cities.first.id);
@@ -208,8 +211,12 @@ class AppServices {
         session: mediaSession ?? const NoMediaSession(),
         narration: narration,
       ),
+      deviceSetup: deviceSetup,
     );
   }
+
+  /// Permission / background status for the first-run setup (see device_setup.dart).
+  final DeviceSetup deviceSetup;
 
   final AppContent content;
   final SettingsController settings;

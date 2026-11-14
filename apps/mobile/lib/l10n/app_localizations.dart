@@ -398,6 +398,18 @@ abstract class AppLocalizations {
   /// **'Scheduled ahead on this device and works even when the app is closed; opening the app renews them. If an alert is late, allow \"Alarms & reminders\" and turn off battery optimisation for the app.'**
   String get adhanNote;
 
+  /// shared key "adhan.playOnSilent"
+  ///
+  /// In en, this message translates to:
+  /// **'Play the adhan when the phone is silent'**
+  String get adhanPlayOnSilent;
+
+  /// shared key "adhan.playOnSilentHint"
+  ///
+  /// In en, this message translates to:
+  /// **'The adhan plays at alarm volume even on silent or vibrate, like an alarm clock. Applies to the full adhan only.'**
+  String get adhanPlayOnSilentHint;
+
   /// shared key "adhan.pre"
   ///
   /// In en, this message translates to:
@@ -3806,6 +3818,18 @@ abstract class AppLocalizations {
   /// **'More apps coming soon, God willing'**
   String get settingsOurAppsSoon;
 
+  /// shared key "settings.permissions"
+  ///
+  /// In en, this message translates to:
+  /// **'Permissions and background'**
+  String get settingsPermissions;
+
+  /// shared key "settings.permissionsHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Location, notifications, battery and adhan on silent'**
+  String get settingsPermissionsHint;
+
   /// shared key "settings.prayerAutoHint"
   ///
   /// In en, this message translates to:
@@ -3853,6 +3877,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'System'**
   String get settingsThemeSystem;
+
+  /// shared key "settings.tour"
+  ///
+  /// In en, this message translates to:
+  /// **'App tour'**
+  String get settingsTour;
+
+  /// shared key "setup.appPage"
+  ///
+  /// In en, this message translates to:
+  /// **'App page'**
+  String get setupAppPage;
+
+  /// shared key "setup.batteryAction"
+  ///
+  /// In en, this message translates to:
+  /// **'Open battery settings'**
+  String get setupBatteryAction;
+
+  /// shared key "setup.batteryBody"
+  ///
+  /// In en, this message translates to:
+  /// **'So battery saving does not stop the adhan while the app is closed: in the list choose Rattil wa Salli, then \"Don\'t optimize\" or \"Unrestricted\".'**
+  String get setupBatteryBody;
+
+  /// shared key "setup.batteryOem"
+  ///
+  /// In en, this message translates to:
+  /// **'On some phones (Xiaomi, Oppo, Realme, Huawei, Vivo) also turn on \"Autostart\" or \"Background activity\" on the app\'s page.'**
+  String get setupBatteryOem;
+
+  /// shared key "setup.batteryTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Run in the background'**
+  String get setupBatteryTitle;
+
+  /// shared key "setup.done"
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get setupDone;
+
+  /// shared key "setup.exactBody"
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on \"Alarms & reminders\" for this app, otherwise Android may delay the adhan by a few minutes.'**
+  String get setupExactBody;
+
+  /// shared key "setup.exactTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhan on the minute'**
+  String get setupExactTitle;
+
+  /// shared key "setup.intro"
+  ///
+  /// In en, this message translates to:
+  /// **'A few steps so prayer times are right and the adhan reaches you on time, even with the app closed. You can change all of this later in Settings.'**
+  String get setupIntro;
+
+  /// shared key "setup.locationBody"
+  ///
+  /// In en, this message translates to:
+  /// **'For the prayer times and qibla where you are. Used only while the app is open.'**
+  String get setupLocationBody;
+
+  /// shared key "setup.locationCity"
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a city'**
+  String get setupLocationCity;
+
+  /// shared key "setup.locationDenied"
+  ///
+  /// In en, this message translates to:
+  /// **'Location was not allowed. You can choose your city instead.'**
+  String get setupLocationDenied;
+
+  /// shared key "setup.locationTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get setupLocationTitle;
+
+  /// shared key "setup.locationUnavailable"
+  ///
+  /// In en, this message translates to:
+  /// **'Could not find your location now. Check that location is on, or choose your city.'**
+  String get setupLocationUnavailable;
+
+  /// shared key "setup.locationUse"
+  ///
+  /// In en, this message translates to:
+  /// **'Use my location'**
+  String get setupLocationUse;
+
+  /// shared key "setup.notifAction"
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on the adhan'**
+  String get setupNotifAction;
+
+  /// shared key "setup.notifBody"
+  ///
+  /// In en, this message translates to:
+  /// **'Allow notifications so the adhan and reminders reach you.'**
+  String get setupNotifBody;
+
+  /// shared key "setup.notifDenied"
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are not allowed. Open the app settings and turn them on.'**
+  String get setupNotifDenied;
+
+  /// shared key "setup.notifTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhan alert'**
+  String get setupNotifTitle;
+
+  /// shared key "setup.openSettings"
+  ///
+  /// In en, this message translates to:
+  /// **'Open settings'**
+  String get setupOpenSettings;
+
+  /// shared key "setup.silentIos"
+  ///
+  /// In en, this message translates to:
+  /// **'On iPhone the system lets no app play a notification sound while the silent switch is on (Apple allows it only for emergency and health apps). The adhan alert then shows without sound; keep the silent switch off to hear it.'**
+  String get setupSilentIos;
+
+  /// shared key "setup.silentTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhan when the phone is silent'**
+  String get setupSilentTitle;
+
+  /// shared key "setup.start"
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get setupStart;
+
+  /// shared key "setup.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Set up the app'**
+  String get setupTitle;
 
   /// shared key "sharawi.ayah"
   ///
@@ -4423,6 +4597,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Vibration'**
   String get tasbihVibrate;
+
+  /// shared key "tour.adhkarBody"
+  ///
+  /// In en, this message translates to:
+  /// **'Morning and evening adhkar and Hisn al-Muslim with audio, a tasbih counter, the hadith books and the Names of Allah.'**
+  String get tourAdhkarBody;
+
+  /// shared key "tour.adhkarTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhkar and hadith'**
+  String get tourAdhkarTitle;
+
+  /// shared key "tour.back"
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get tourBack;
+
+  /// shared key "tour.listenBody"
+  ///
+  /// In en, this message translates to:
+  /// **'Quran radios, Sha\'rawi\'s audio tafsir, stories of the Quran, and lessons and clips from trusted channels.'**
+  String get tourListenBody;
+
+  /// shared key "tour.listenTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen and learn'**
+  String get tourListenTitle;
+
+  /// shared key "tour.next"
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get tourNext;
+
+  /// shared key "tour.page"
+  ///
+  /// In en, this message translates to:
+  /// **'Page {n} of {total}'**
+  String tourPage(String n, String total);
+
+  /// shared key "tour.prayerBody"
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer times for where you are, an adhan alert in the muezzin\'s voice you choose, the qibla and nearby mosques.'**
+  String get tourPrayerBody;
+
+  /// shared key "tour.prayerTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer times and adhan'**
+  String get tourPrayerTitle;
+
+  /// shared key "tour.quranBody"
+  ///
+  /// In en, this message translates to:
+  /// **'The King Fahd Complex Mushaf, page by page, recitations by many reciters, Tafsir al-Muyassar and a khatma planner.'**
+  String get tourQuranBody;
+
+  /// shared key "tour.quranTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'The Holy Quran'**
+  String get tourQuranTitle;
+
+  /// shared key "tour.skip"
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get tourSkip;
+
+  /// shared key "tour.welcomeBody"
+  ///
+  /// In en, this message translates to:
+  /// **'A free app for the sake of Allah, with no ads and no subscriptions: the Quran, prayer and adhkar in one place.'**
+  String get tourWelcomeBody;
+
+  /// shared key "tour.welcomeTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Rattil wa Salli'**
+  String get tourWelcomeTitle;
 
   /// shared key "videos.clearHistory"
   ///

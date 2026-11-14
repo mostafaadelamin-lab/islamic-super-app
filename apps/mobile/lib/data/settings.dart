@@ -288,7 +288,23 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  // --- First run ---------------------------------------------------------------------
+  /// True once the welcome tour and the permissions setup were finished or skipped.
+  bool get onboardingDone => _prefs.getBool('onboarding.done') ?? false;
+  Future<void> setOnboardingDone(bool v) async {
+    await _prefs.setBool('onboarding.done', v);
+    notifyListeners();
+  }
+
   // --- Adhan notifications --------------------------------------------------------
+  /// Android: play the full adhan even when the phone is on silent / vibrate (on the
+  /// alarm volume, like an alarm clock). Off by default. iOS does not allow it.
+  bool get adhanPlayOnSilent => _prefs.getBool('adhan.playOnSilent') ?? false;
+  Future<void> setAdhanPlayOnSilent(bool v) async {
+    await _prefs.setBool('adhan.playOnSilent', v);
+    notifyListeners();
+  }
+
   bool get adhanEnabled => _prefs.getBool('adhan.enabled') ?? false;
 
   /// False until the user has touched the adhan switch (nothing to cancel then).

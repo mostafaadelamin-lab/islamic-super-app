@@ -17,6 +17,7 @@ import 'prayer_model.dart';
 import 'prayer_screen.dart';
 import 'l10n_ext.dart';
 import 'muezzin_screen.dart';
+import 'onboarding_screen.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
@@ -103,6 +104,31 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                SectionCard(
+                  children: [
+                    ListTile(
+                      key: const Key('permissionsTile'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const RIcon(RIcons.bell),
+                      title: Text(l.settingsPermissions),
+                      subtitle: Text(l.settingsPermissionsHint),
+                      trailing: const RIcon(RIcons.chevronForward),
+                      onTap: () => _push(context, const PermissionsScreen()),
+                    ),
+                    ListTile(
+                      key: const Key('tourTile'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const RIcon(RIcons.info),
+                      title: Text(l.settingsTour),
+                      trailing: const RIcon(RIcons.chevronForward),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (c) => OnboardingScreen(replay: true, onDone: () => Navigator.of(c).pop()),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 SectionCard(
                   children: [
                     if (store != null)
@@ -233,6 +259,17 @@ class AdhanSettingsCard extends StatelessWidget {
               onSelectionChanged: (v) => settings.setAdhanSound(v.first),
             ),
           ),
+          // Owner (2026-11-14): the adhan may ring when the phone is silent. Android only:
+          // iOS lets no app sound a notification with the silent switch on.
+          if (Theme.of(context).platform == TargetPlatform.android)
+            SwitchListTile(
+              key: const Key('adhanPlayOnSilent'),
+              contentPadding: EdgeInsets.zero,
+              title: Text(l.adhanPlayOnSilent),
+              subtitle: Text(l.adhanPlayOnSilentHint, style: small),
+              value: settings.adhanPlayOnSilent,
+              onChanged: settings.setAdhanPlayOnSilent,
+            ),
           const SizedBox(height: DesignTokens.spaceMd),
           _VoiceRow(fajr: false, id: settings.adhanVoice),
           _VoiceRow(fajr: true, id: settings.adhanFajrVoice),
@@ -262,7 +299,11 @@ class AdhanSettingsCard extends StatelessWidget {
               ),
             ],
           ),
-          if (Theme.of(context).platform == TargetPlatform.iOS) Text(l.adhanIosNote, style: small),
+          if (Theme.of(context).platform == TargetPlatform.iOS) ...[
+            Text(l.adhanIosNote, style: small),
+            const SizedBox(height: DesignTokens.spaceXs),
+            Text(l.setupSilentIos, key: const Key('adhanSilentIosNote'), style: small),
+          ],
         ],
         const SizedBox(height: DesignTokens.spaceXs),
         Text(l.adhanNote, style: small),

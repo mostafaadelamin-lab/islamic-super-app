@@ -11,6 +11,7 @@ import { Footer } from "@/components/Footer";
 import { ClientEffects } from "@/components/ClientEffects";
 import { AdhanAlerts } from "@/components/AdhanAlerts";
 import { PlayerBar } from "@/components/PlayerBar";
+import { FirstRunTour } from "@/components/FirstRunTour";
 import { withBase } from "@/lib/base-path";
 
 export const dynamicParams = false;
@@ -75,6 +76,7 @@ export default async function LocaleLayout({
         <PlayerBar locale={locale} />
         <ClientEffects locale={locale} />
         <AdhanAlerts locale={locale} />
+        <FirstRunTour locale={locale} />
       </body>
     </html>
   );

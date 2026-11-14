@@ -9,6 +9,7 @@ import { AccountSync } from "@/components/AccountSync";
 import { OfflineStatus } from "@/components/OfflineStatus";
 import { AudioSettings } from "@/components/AudioSettings";
 import { AudioDownloads } from "@/components/AudioDownloads";
+import { TourReplayButton } from "@/components/FirstRunTour";
 
 export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
   const { locale } = await params;
@@ -25,6 +26,7 @@ export default async function SettingsPage({ params }: { params: LocaleParams })
       <AudioDownloads locale={locale} />
       <AccountSync locale={locale} />
       <OfflineStatus locale={locale} />
+      <TourReplayButton locale={locale} />
       <p>
         <Link className="btn" href={href(locale, "about")}>
           {t(locale, "settings.about")}

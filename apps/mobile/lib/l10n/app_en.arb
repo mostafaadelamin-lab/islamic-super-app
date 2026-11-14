@@ -275,6 +275,14 @@
   "@adhanNote": {
     "description": "shared key \"adhan.note\""
   },
+  "adhanPlayOnSilent": "Play the adhan when the phone is silent",
+  "@adhanPlayOnSilent": {
+    "description": "shared key \"adhan.playOnSilent\""
+  },
+  "adhanPlayOnSilentHint": "The adhan plays at alarm volume even on silent or vibrate, like an alarm clock. Applies to the full adhan only.",
+  "@adhanPlayOnSilentHint": {
+    "description": "shared key \"adhan.playOnSilentHint\""
+  },
   "adhanPre": "Reminder before the adhan",
   "@adhanPre": {
     "description": "shared key \"adhan.pre\""
@@ -3117,6 +3125,14 @@
   "@settingsOurAppsSoon": {
     "description": "shared key \"settings.ourAppsSoon\""
   },
+  "settingsPermissions": "Permissions and background",
+  "@settingsPermissions": {
+    "description": "shared key \"settings.permissions\""
+  },
+  "settingsPermissionsHint": "Location, notifications, battery and adhan on silent",
+  "@settingsPermissionsHint": {
+    "description": "shared key \"settings.permissionsHint\""
+  },
   "settingsPrayerAutoHint": "From your location and your country's calculation method",
   "@settingsPrayerAutoHint": {
     "description": "shared key \"settings.prayerAutoHint\""
@@ -3148,6 +3164,106 @@
   "settingsThemeSystem": "System",
   "@settingsThemeSystem": {
     "description": "shared key \"settings.themeSystem\""
+  },
+  "settingsTour": "App tour",
+  "@settingsTour": {
+    "description": "shared key \"settings.tour\""
+  },
+  "setupAppPage": "App page",
+  "@setupAppPage": {
+    "description": "shared key \"setup.appPage\""
+  },
+  "setupBatteryAction": "Open battery settings",
+  "@setupBatteryAction": {
+    "description": "shared key \"setup.batteryAction\""
+  },
+  "setupBatteryBody": "So battery saving does not stop the adhan while the app is closed: in the list choose Rattil wa Salli, then \"Don't optimize\" or \"Unrestricted\".",
+  "@setupBatteryBody": {
+    "description": "shared key \"setup.batteryBody\""
+  },
+  "setupBatteryOem": "On some phones (Xiaomi, Oppo, Realme, Huawei, Vivo) also turn on \"Autostart\" or \"Background activity\" on the app's page.",
+  "@setupBatteryOem": {
+    "description": "shared key \"setup.batteryOem\""
+  },
+  "setupBatteryTitle": "Run in the background",
+  "@setupBatteryTitle": {
+    "description": "shared key \"setup.batteryTitle\""
+  },
+  "setupDone": "Done",
+  "@setupDone": {
+    "description": "shared key \"setup.done\""
+  },
+  "setupExactBody": "Turn on \"Alarms & reminders\" for this app, otherwise Android may delay the adhan by a few minutes.",
+  "@setupExactBody": {
+    "description": "shared key \"setup.exactBody\""
+  },
+  "setupExactTitle": "Adhan on the minute",
+  "@setupExactTitle": {
+    "description": "shared key \"setup.exactTitle\""
+  },
+  "setupIntro": "A few steps so prayer times are right and the adhan reaches you on time, even with the app closed. You can change all of this later in Settings.",
+  "@setupIntro": {
+    "description": "shared key \"setup.intro\""
+  },
+  "setupLocationBody": "For the prayer times and qibla where you are. Used only while the app is open.",
+  "@setupLocationBody": {
+    "description": "shared key \"setup.locationBody\""
+  },
+  "setupLocationCity": "Choose a city",
+  "@setupLocationCity": {
+    "description": "shared key \"setup.locationCity\""
+  },
+  "setupLocationDenied": "Location was not allowed. You can choose your city instead.",
+  "@setupLocationDenied": {
+    "description": "shared key \"setup.locationDenied\""
+  },
+  "setupLocationTitle": "Location",
+  "@setupLocationTitle": {
+    "description": "shared key \"setup.locationTitle\""
+  },
+  "setupLocationUnavailable": "Could not find your location now. Check that location is on, or choose your city.",
+  "@setupLocationUnavailable": {
+    "description": "shared key \"setup.locationUnavailable\""
+  },
+  "setupLocationUse": "Use my location",
+  "@setupLocationUse": {
+    "description": "shared key \"setup.locationUse\""
+  },
+  "setupNotifAction": "Turn on the adhan",
+  "@setupNotifAction": {
+    "description": "shared key \"setup.notifAction\""
+  },
+  "setupNotifBody": "Allow notifications so the adhan and reminders reach you.",
+  "@setupNotifBody": {
+    "description": "shared key \"setup.notifBody\""
+  },
+  "setupNotifDenied": "Notifications are not allowed. Open the app settings and turn them on.",
+  "@setupNotifDenied": {
+    "description": "shared key \"setup.notifDenied\""
+  },
+  "setupNotifTitle": "Adhan alert",
+  "@setupNotifTitle": {
+    "description": "shared key \"setup.notifTitle\""
+  },
+  "setupOpenSettings": "Open settings",
+  "@setupOpenSettings": {
+    "description": "shared key \"setup.openSettings\""
+  },
+  "setupSilentIos": "On iPhone the system lets no app play a notification sound while the silent switch is on (Apple allows it only for emergency and health apps). The adhan alert then shows without sound; keep the silent switch off to hear it.",
+  "@setupSilentIos": {
+    "description": "shared key \"setup.silentIos\""
+  },
+  "setupSilentTitle": "Adhan when the phone is silent",
+  "@setupSilentTitle": {
+    "description": "shared key \"setup.silentTitle\""
+  },
+  "setupStart": "Start",
+  "@setupStart": {
+    "description": "shared key \"setup.start\""
+  },
+  "setupTitle": "Set up the app",
+  "@setupTitle": {
+    "description": "shared key \"setup.title\""
   },
   "sharawiAyah": "Ayah {n}",
   "@sharawiAyah": {
@@ -3646,6 +3762,70 @@
   "tasbihVibrate": "Vibration",
   "@tasbihVibrate": {
     "description": "shared key \"tasbih.vibrate\""
+  },
+  "tourAdhkarBody": "Morning and evening adhkar and Hisn al-Muslim with audio, a tasbih counter, the hadith books and the Names of Allah.",
+  "@tourAdhkarBody": {
+    "description": "shared key \"tour.adhkarBody\""
+  },
+  "tourAdhkarTitle": "Adhkar and hadith",
+  "@tourAdhkarTitle": {
+    "description": "shared key \"tour.adhkarTitle\""
+  },
+  "tourBack": "Back",
+  "@tourBack": {
+    "description": "shared key \"tour.back\""
+  },
+  "tourListenBody": "Quran radios, Sha'rawi's audio tafsir, stories of the Quran, and lessons and clips from trusted channels.",
+  "@tourListenBody": {
+    "description": "shared key \"tour.listenBody\""
+  },
+  "tourListenTitle": "Listen and learn",
+  "@tourListenTitle": {
+    "description": "shared key \"tour.listenTitle\""
+  },
+  "tourNext": "Next",
+  "@tourNext": {
+    "description": "shared key \"tour.next\""
+  },
+  "tourPage": "Page {n} of {total}",
+  "@tourPage": {
+    "description": "shared key \"tour.page\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "tourPrayerBody": "Prayer times for where you are, an adhan alert in the muezzin's voice you choose, the qibla and nearby mosques.",
+  "@tourPrayerBody": {
+    "description": "shared key \"tour.prayerBody\""
+  },
+  "tourPrayerTitle": "Prayer times and adhan",
+  "@tourPrayerTitle": {
+    "description": "shared key \"tour.prayerTitle\""
+  },
+  "tourQuranBody": "The King Fahd Complex Mushaf, page by page, recitations by many reciters, Tafsir al-Muyassar and a khatma planner.",
+  "@tourQuranBody": {
+    "description": "shared key \"tour.quranBody\""
+  },
+  "tourQuranTitle": "The Holy Quran",
+  "@tourQuranTitle": {
+    "description": "shared key \"tour.quranTitle\""
+  },
+  "tourSkip": "Skip",
+  "@tourSkip": {
+    "description": "shared key \"tour.skip\""
+  },
+  "tourWelcomeBody": "A free app for the sake of Allah, with no ads and no subscriptions: the Quran, prayer and adhkar in one place.",
+  "@tourWelcomeBody": {
+    "description": "shared key \"tour.welcomeBody\""
+  },
+  "tourWelcomeTitle": "Welcome to Rattil wa Salli",
+  "@tourWelcomeTitle": {
+    "description": "shared key \"tour.welcomeTitle\""
   },
   "videosClearHistory": "Clear history",
   "@videosClearHistory": {

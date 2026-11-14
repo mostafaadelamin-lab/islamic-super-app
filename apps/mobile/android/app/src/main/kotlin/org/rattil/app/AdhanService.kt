@@ -25,7 +25,9 @@ import androidx.core.app.NotificationCompat
  * prayer time, with a notification that has a Stop button. A notification sound alone can be cut short by the
  * system; a media-playback foreground service plays the recording to the end. It stops by itself when the adhan
  * ends, when the user taps Stop or swipes the notification, when another app takes the audio (e.g. a phone
- * call), and after a safety timeout. When the phone is on silent or vibrate it shows the notification only.
+ * call), and after a safety timeout. When the phone is on silent or vibrate it shows the notification only, unless
+ * the user chose "adhan even when the phone is on silent": then it plays on the ALARM stream (alarm volume), which
+ * Android lets ring in silent mode, like an alarm clock.
  */
 class AdhanService : Service() {
     private var player: MediaPlayer? = null
@@ -51,7 +53,8 @@ class AdhanService : Service() {
             startForeground(NOTIFICATION_ID, notification)
         }
         val audio = getSystemService(AudioManager::class.java)
-        if (audio.ringerMode != AudioManager.RINGER_MODE_NORMAL) {
+        val playOnSilent = intent?.getBooleanExtra(EXTRA_SILENT, false) ?: false
+        if (audio.ringerMode != AudioManager.RINGER_MODE_NORMAL && !playOnSilent) {
             // Silent / vibrate: keep the notification, no sound.
             stopForeground(STOP_FOREGROUND_DETACH)
             stopSelf()
@@ -133,6 +136,7 @@ class AdhanService : Service() {
         const val EXTRA_BODY = "body"
         const val EXTRA_STOP = "stop"
         const val EXTRA_VOICE = "voice"
+        const val EXTRA_SILENT = "playOnSilent"
 
         /**
          * The chosen muezzin: a recording the user downloaded (absolute path inside the app's own storage), or a

@@ -123,10 +123,16 @@ void main() {
       expect(fake.cancels, 2);
       expect(fake.scheduled.every((e) => e.sound == 'tone'), isTrue);
       expect(() => settings.setAdhanSound('loud'), throwsArgumentError);
+      // "Adhan when the phone is silent" (Android) re-plans so the alarms carry it.
+      expect(settings.adhanPlayOnSilent, isFalse);
+      await settings.setAdhanPlayOnSilent(true);
+      await sch.sync();
+      expect(fake.cancels, 3);
+      expect(settings.adhanPlayOnSilent, isTrue);
       // Turning it off cancels everything.
       await settings.setAdhanEnabled(false);
       await sch.sync();
-      expect(fake.cancels, 3);
+      expect(fake.cancels, 4);
       expect(fake.scheduled, isEmpty);
     });
   });

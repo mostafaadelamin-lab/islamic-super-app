@@ -26,6 +26,7 @@ class MainActivity : AudioServiceActivity() {
                                 body = call.argument<String>("body") ?: "",
                                 stopLabel = call.argument<String>("stopLabel") ?: "Stop",
                                 voice = call.argument<String>("voice") ?: "adhan",
+                                playOnSilent = call.argument<Boolean>("playOnSilent") ?: false,
                             ),
                         )
                         result.success(null)
@@ -36,6 +37,13 @@ class MainActivity : AudioServiceActivity() {
                     }
                     "pending" -> result.success(AdhanAlarms.load(applicationContext).size)
                     "canScheduleExact" -> result.success(AdhanAlarms.canScheduleExact(applicationContext))
+                    // First-run setup and Settings > "Permissions and background" (DeviceSetup.kt).
+                    "notificationsEnabled" -> result.success(DeviceSetup.notificationsEnabled(this))
+                    "ignoringBatteryOptimizations" -> result.success(DeviceSetup.ignoringBatteryOptimizations(this))
+                    "openBatterySettings" -> result.success(DeviceSetup.openBatterySettings(this))
+                    "openExactAlarmSettings" -> result.success(DeviceSetup.openExactAlarmSettings(this))
+                    "openAppSettings" -> result.success(DeviceSetup.openAppSettings(this))
+                    "openNotificationSettings" -> result.success(DeviceSetup.openNotificationSettings(this))
                     else -> result.notImplemented()
                 }
             } catch (e: Exception) {

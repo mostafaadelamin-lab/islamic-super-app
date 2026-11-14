@@ -28,6 +28,16 @@ export default defineConfig({
     trace: "retain-on-failure",
     // Service workers are exercised in offline.spec.ts; elsewhere they would precache ~26 MB per test.
     serviceWorkers: "block",
+    // The first-visit tour covers the page; it has its own spec (first-run.spec.ts), elsewhere it is already seen.
+    storageState: {
+      cookies: [],
+      origins: [
+        {
+          origin: `http://127.0.0.1:${PORT}`,
+          localStorage: [{ name: "rattil.firstRun", value: JSON.stringify({ done: true }) }],
+        },
+      ],
+    },
     launchOptions: process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {},
   },
   projects: BROWSERS.map((name) => ({ name, use: { ...deviceFor[name] } })),
