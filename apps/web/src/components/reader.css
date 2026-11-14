@@ -806,7 +806,7 @@ body:has(.rd-full) .player,
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
   border-radius: 14px;
-  background: color-mix(in srgb, var(--color-ink) 86%, transparent);
+  background: var(--color-paper-ink);
   color: var(--color-paper);
   font-size: var(--font-size-sm);
   line-height: 1.6;
@@ -815,6 +815,11 @@ body:has(.rd-full) .player,
 }
 .rd-hint span {
   flex: 1;
+}
+.rd-hint .btn {
+  background: var(--color-paper);
+  color: var(--color-paper-ink);
+  border-color: transparent;
 }
 
 /* ---- Recitation volume (website) ---- */
