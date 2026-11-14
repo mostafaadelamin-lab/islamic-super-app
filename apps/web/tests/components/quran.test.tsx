@@ -186,6 +186,25 @@ describe("PageReader (15-line Mushaf)", () => {
     expect(screen.getByTestId("juz")).toHaveTextContent("الجزء ٣٠");
     expect(lastReadStore.get()).toMatchObject({ surah: 112, ayah: 1, page: 604 });
   });
+  it("full screen: arrows at the sides turn pages (RTL: next on the left) and a hint says how", async () => {
+    localStorage.removeItem("rattil.readerHint");
+    render(<PageReader locale="ar" initial={initial(2)} />);
+    expect(screen.getByTestId("reader-hint")).toHaveTextContent("السهمين");
+    const next = screen.getByTestId("turn-next");
+    expect(next.className).toContain("rd-turn-left");
+    expect(screen.getByTestId("turn-prev").className).toContain("rd-turn-right");
+    await userEvent.click(next);
+    expect(routerPush).toHaveBeenLastCalledWith("/ar/page/3/");
+    // A tap on the page shows the controls; the arrows give way to the page slider.
+    await userEvent.click(screen.getByTestId("mushaf-stage"));
+    expect(screen.queryByTestId("turn-arrows")).toBeNull();
+  });
+  it("the full-screen hint is shown only the first few times", () => {
+    localStorage.setItem("rattil.readerHint", "3");
+    render(<PageReader locale="ar" initial={initial(5)} />);
+    expect(screen.queryByTestId("reader-hint")).toBeNull();
+    expect(screen.getByTestId("turn-arrows")).toBeInTheDocument();
+  });
   it("prev/next buttons and arrow keys turn pages (RTL: left = next) but not while typing", async () => {
     render(<PageReader locale="ar" initial={initial(2)} />);
     fireEvent.keyDown(window, { key: "ArrowLeft" });

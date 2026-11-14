@@ -136,6 +136,9 @@ class RIcons {
   );
   static const trash = RIconData('M4.5 7h15M10 3.8h4M6.5 7l1 13h9l1-13M10 11v5.5M14 11v5.5');
   static const undo = RIconData('M9 7 4 12l5 5M4 12h11a5 5 0 0 1 0 10h-2');
+  static const volume = RIconData(
+    'M4 9.5h3.5L12 6v12l-4.5-3.5H4a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1Z M15.5 9a4 4 0 0 1 0 6 M18 6.5a7.5 7.5 0 0 1 0 11',
+  );
   static const zakat = RIconData(
     'M12 4c3.9 0 7 1.3 7 3s-3.1 3-7 3-7-1.3-7-3 3.1-3 7-3ZM5 7v4.5c0 1.7 3.1 3 7 3s7-1.3 7-3V7M5 11.5V16c0 1.7 3.1 3 7 3s7-1.3 7-3v-4.5',
   );

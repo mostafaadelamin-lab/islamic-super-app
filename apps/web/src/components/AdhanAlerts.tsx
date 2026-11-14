@@ -27,6 +27,7 @@ import { localizeDigits } from "@/lib/digits";
 import { OBLIGATORY } from "@/lib/next-prayer";
 import { withBase } from "@/lib/base-path";
 import { useStore } from "@/hooks/useStore";
+import { registerAudio } from "@/lib/audio-focus";
 import type { PrayerKey } from "@/lib/prayer";
 
 // --- One shared <audio> for the alert and the "listen" button -----------------
@@ -44,6 +45,12 @@ function audioEl(src: string): HTMLAudioElement {
     audio = new Audio(src);
     audio.preload = "none";
     audio.addEventListener("ended", () => {
+      playing = false;
+      emit();
+    });
+    // The adhan pauses whatever else is playing (the recitation resumes later from its ayah).
+    registerAudio(audio, () => {
+      audio?.pause();
       playing = false;
       emit();
     });

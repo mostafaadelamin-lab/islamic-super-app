@@ -37,5 +37,8 @@
   "reader.khatmaDone": "أتممت الختمة، تقبّل الله منك.",
   "reader.khatmaStart": "ابدأ ختمة جديدة من الفاتحة",
   "reader.khatmaContinue": "تابع من الصفحة {page}",
-  "reader.khatmaReset": "إلغاء الختمة"
+  "reader.khatmaReset": "إلغاء الختمة",
+  "reader.fullHint": "للتقليب: اسحب الصفحة أو اضغط السهمين على الجانبين. المس الصفحة لإظهار الاستماع والأدوات.",
+  "reader.volume": "مستوى الصوت",
+  "reader.hintClose": "فهمت"
 }

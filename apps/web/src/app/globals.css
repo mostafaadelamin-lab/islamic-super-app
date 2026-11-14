@@ -3159,4 +3159,40 @@ dd {
 .segmented button[role="tab"][aria-selected="true"] {
   background: var(--color-primary);
   color: var(--color-on-primary);
+/* Nasheeds: the player sits under the nasheed that is playing (owner 2026-11-14). */
+.nasheed-slot {
+  flex-basis: 100%;
+  margin-top: calc(-1 * var(--space-sm));
+}
+.nasheed-now {
+  scroll-margin-bottom: calc(var(--tabbar-h) + var(--player-h) + var(--space-lg));
+}
+.nasheed-now {
+  display: grid;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-accent);
+  border-top: 0;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  background: var(--color-accent-soft);
+}
+.nasheed-now-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+.nasheed-now-row input[type="range"] {
+  flex: 1;
+  min-width: 60px;
+  accent-color: var(--color-primary);
+}
+.nasheed-time {
+  font-variant-numeric: tabular-nums;
+  min-width: 2.6em;
+  text-align: center;
+}
+.nasheed-now-top .nasheed-now {
+  border: 0;
+  padding: var(--space-xs) 0 0;
+  background: none;
 }

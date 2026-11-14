@@ -37,5 +37,8 @@
   "reader.khatmaDone": "Khatma complete. May Allah accept it from you.",
   "reader.khatmaStart": "Start a new khatma from al-Fatihah",
   "reader.khatmaContinue": "Continue from page {page}",
-  "reader.khatmaReset": "Cancel the khatma"
+  "reader.khatmaReset": "Cancel the khatma",
+  "reader.fullHint": "To turn pages, swipe the page or press the arrows at the sides. Tap the page to show listening and tools.",
+  "reader.volume": "Volume",
+  "reader.hintClose": "Got it"
 }

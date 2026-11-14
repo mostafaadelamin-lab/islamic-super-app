@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
-import { player } from "@/lib/audio-player";
+import { pauseOthers } from "@/lib/audio-focus";
 import { normalizeArabic } from "@/lib/search";
 import { SURAHS } from "@/lib/pages";
 import {
@@ -99,7 +99,7 @@ function NowPlaying({
         data-testid="library-audio"
         onPlay={(e) => {
           setError(false);
-          player.stop();
+          pauseOthers(e.currentTarget); // one sound at a time
           const next = stepTrack(track, 1);
           const prev = stepTrack(track, -1);
           claimMediaSession(e.currentTarget, {

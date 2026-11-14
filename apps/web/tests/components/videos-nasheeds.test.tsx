@@ -101,6 +101,26 @@ describe("Nasheeds on the website", () => {
     await user.type(screen.getByTestId("nasheeds-search"), n.title);
     expect(screen.getByTestId("nasheeds-hits")).toHaveTextContent(n.title);
   });
+
+  it("shows the player under the nasheed that is playing, not at the top of the page", async () => {
+    const user = userEvent.setup();
+    vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
+    const first = nasheeds[0]!;
+    const [a, b] = first.items;
+    render(<NasheedsView locale="ar" loader={() => Promise.resolve(nasheeds)} />);
+    await user.click(await screen.findByText(first.name));
+    await user.click(await screen.findByTestId(`nasheed-${a!.id}`));
+    const now = screen.getByTestId("nasheeds-now");
+    expect(screen.getByTestId(`nasheed-${a!.id}`).closest("li")).toContainElement(now);
+    await user.click(screen.getByTestId("nasheeds-next"));
+    expect(screen.getByTestId("nasheeds-audio").getAttribute("src")).toBe(b!.url);
+    expect(screen.getByTestId(`nasheed-${b!.id}`).closest("li")).toContainElement(
+      screen.getByTestId("nasheeds-now"),
+    );
+    // Its munshid closed: the controls stay reachable at the top.
+    await user.click(screen.getByText(nasheeds[1]!.name));
+    expect(screen.getByTestId("nasheeds-now").closest(".nasheed-now-top")).not.toBeNull();
+  });
 });
 
 describe("Install as an app (Windows desktop shortcut)", () => {

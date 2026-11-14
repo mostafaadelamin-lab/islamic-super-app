@@ -186,3 +186,46 @@ describe("recitation player", () => {
     }
   });
 });
+
+describe("one sound at a time (owner 2026-11-14)", () => {
+  it("another sound pauses the recitation, which keeps its ayah and resumes from it", async () => {
+    const { registerAudio, pauseOthers, resetAudioFocusForTests } = await import("@/lib/audio-focus");
+    const { lastReadStore } = await import("@/lib/settings");
+    resetAudioFocusForTests();
+    player.play({ kind: "from", surah: 2, ayah: 255 });
+    const a = FakeAudio.last!;
+    Object.defineProperty(a, "paused", { value: false, configurable: true });
+    a.dispatchEvent(new Event("playing"));
+    expect(player.get().status).toBe("playing");
+
+    // An adhkar recording starts.
+    const dhikr = new EventTarget() as unknown as HTMLAudioElement;
+    Object.defineProperty(dhikr, "paused", { value: false });
+    const dhikrPause = vi.fn();
+    registerAudio(dhikr, dhikrPause);
+    pauseOthers(dhikr);
+    expect(player.get().status).toBe("paused");
+    expect(player.wasInterrupted()).toBe(true);
+    expect(player.current()).toMatchObject({ kind: "ayah", s: 2, a: 255 });
+    expect(lastReadStore.get()).toMatchObject({ surah: 2, ayah: 255, page: 42 });
+    expect(dhikrPause).not.toHaveBeenCalled();
+
+    // Back to the recitation: it continues (same ayah, no reload) and the adhkar pause.
+    const played = a.played.length;
+    player.toggle();
+    expect(player.wasInterrupted()).toBe(false);
+    expect(a.played).toHaveLength(played + 1);
+    expect(a.played.at(-1)).toBe(URL_OF("002255"));
+    a.dispatchEvent(new Event("play"));
+    expect(dhikrPause).toHaveBeenCalled();
+    resetAudioFocusForTests();
+  });
+
+  it("applies the volume from the reader's slider", () => {
+    audioStore.set((p) => ({ ...p, volume: 0.35 }));
+    player.play({ kind: "ayah", surah: 1, ayah: 1 });
+    expect((FakeAudio.last as unknown as { volume: number }).volume).toBe(0.35);
+    audioStore.set((p) => ({ ...p, volume: 0.8 }));
+    expect((FakeAudio.last as unknown as { volume: number }).volume).toBe(0.8);
+  });
+});

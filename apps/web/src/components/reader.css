@@ -749,3 +749,192 @@ body:has(.rd-full) .player,
     inset 0 0 0 4px var(--color-paper),
     inset 0 0 0 5px color-mix(in srgb, var(--color-frame) 70%, transparent);
 }
+
+/* ---- Full screen: page-turn arrows at the sides and a short how-to (owner 2026-11-14) ---- */
+.rd-turn-btn {
+  position: fixed;
+  z-index: 24;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 64px;
+  border: 1px solid color-mix(in srgb, var(--color-frame) 45%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--color-paper) 78%, transparent);
+  color: var(--color-primary);
+  opacity: 0.8;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 8%);
+}
+.rd-turn-btn:hover,
+.rd-turn-btn:focus-visible {
+  opacity: 1;
+}
+.rd-turn-btn:disabled {
+  visibility: hidden;
+}
+.rd-turn-left {
+  left: max(6px, env(safe-area-inset-left));
+}
+.rd-turn-right {
+  right: max(6px, env(safe-area-inset-right));
+}
+/* Phones: small and low, beside the page number, so they never sit on the text. */
+@media (max-width: 720px) {
+  .rd-turn-btn {
+    top: auto;
+    bottom: max(4px, env(safe-area-inset-bottom));
+    transform: none;
+    width: 40px;
+    height: 32px;
+    border-radius: 10px;
+    opacity: 0.7;
+  }
+}
+.rd-hint {
+  position: fixed;
+  z-index: 27;
+  inset-inline: var(--space-md);
+  top: max(var(--space-md), env(safe-area-inset-top));
+  max-width: 560px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--color-ink) 86%, transparent);
+  color: var(--color-paper);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  box-shadow: 0 6px 24px rgb(0 0 0 / 20%);
+  pointer-events: auto;
+}
+.rd-hint span {
+  flex: 1;
+}
+
+/* ---- Recitation volume (website) ---- */
+.rdp-volume {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-inline-start: auto;
+  color: var(--color-primary);
+}
+.rdp-volume input[type="range"] {
+  width: 96px;
+  accent-color: var(--color-primary);
+}
+.rdp-volume + .rdp-now {
+  margin-inline-start: var(--space-xs);
+}
+@media (max-width: 420px) {
+  .rdp-volume input[type="range"] {
+    width: 64px;
+  }
+}
+
+/* ---- Ayah actions on phones: one compact row, short tafsir, so the page stays in view ---- */
+@media (max-width: 720px) {
+  /* The sheet has its own listen buttons: the player, slider and bar step aside while it is open. */
+  .rd:has(> .ayah-sheet) .rd-dock {
+    display: none;
+  }
+  .rd .ayah-sheet {
+    bottom: max(var(--space-xs), env(safe-area-inset-bottom));
+    max-height: min(42vh, 380px);
+    padding: var(--space-sm);
+  }
+  .rd .ayah-sheet .tafsir-text {
+    font-size: var(--font-size-sm);
+  }
+  .rd .ayah-sheet .aa-buttons {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .rd .ayah-sheet .aa-buttons .btn {
+    flex: none;
+    white-space: nowrap;
+  }
+  .rd .ayah-sheet .tafsir {
+    margin-top: var(--space-xs);
+  }
+  .rd .ayah-sheet .tafsir-text {
+    max-height: 6.5em;
+    overflow-y: auto;
+  }
+  :root:has(.rd .ayah-sheet) main {
+    padding-bottom: calc(min(42vh, 380px) + var(--space-md));
+  }
+  .rd:has(.ayah-sheet) .seg,
+  .rd:has(.ayah-sheet) .ayah-end {
+    scroll-margin-bottom: calc(min(42vh, 380px) + var(--space-md));
+  }
+}
+
+/*
+ * ---- Wide screens: the player, page slider and tools in a column beside the page (owner 2026-11-14) ----
+ * Showing the controls or an ayah's actions never covers or shrinks the page. Same query as SIDE_PANEL_QUERY.
+ */
+@media (min-width: 1024px) and (min-height: 560px) and (orientation: landscape) {
+  .rd {
+    --rd-side-w: 340px;
+    --rd-side-end: max(var(--space-md), calc((100vw - 1100px) / 2 + var(--space-lg)));
+  }
+  .mushaf-reader.rd:not(.rd-full) {
+    max-width: none;
+    padding-inline-end: calc(var(--rd-side-w) + var(--space-lg));
+  }
+  :root:has(.rd:not(.rd-full)) main {
+    padding-bottom: var(--space-lg);
+  }
+  .rd:not(.rd-full) .rd-dock {
+    inset-inline: auto var(--rd-side-end);
+    bottom: var(--space-md);
+    width: var(--rd-side-w);
+    max-width: none;
+    margin: 0;
+  }
+  .rd:not(.rd-full) .rd-dock .rd-player {
+    margin: 0 0 var(--space-xs);
+  }
+  .rd:not(.rd-full) .rd-dock .rd-pager {
+    margin: 0 0 var(--space-xs);
+    border-radius: 18px;
+  }
+  .rd:not(.rd-full) .rd-dock .rd-bar {
+    border-radius: 18px;
+    border: 1px solid var(--color-line);
+  }
+  .rd .ayah-sheet {
+    inset-inline: auto var(--rd-side-end);
+    width: var(--rd-side-w);
+    max-width: none;
+    margin: 0;
+    bottom: calc(var(--rd-panel-h, 220px) + var(--space-md) + var(--space-xs));
+    max-height: calc(100dvh - var(--rd-panel-h, 220px) - 96px);
+  }
+  .rd .ayah-sheet .aa-buttons .btn {
+    flex: 1 1 auto;
+  }
+  .rd:not(.rd-full) .rd-dock .rdp-top {
+    flex-wrap: wrap;
+  }
+  .rd:not(.rd-full) .rd-dock .rdp-volume {
+    order: 5;
+    flex-basis: 100%;
+    margin: 0;
+  }
+  .rd:not(.rd-full) .rd-dock .rdp-volume input[type="range"] {
+    flex: 1;
+  }
+  :root:has(.rd .ayah-sheet) main {
+    padding-bottom: var(--space-lg);
+  }
+}

@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
-import { player } from "@/lib/audio-player";
+import { pauseOthers } from "@/lib/audio-focus";
 import { surahName } from "@/lib/pages";
 import { offlineSupported } from "@/lib/audio-offline";
 import {
@@ -115,7 +115,7 @@ export function SharawiView({
             preload="metadata"
             data-testid="sharawi-audio"
             onPlay={(e) => {
-              player.stop();
+              pauseOthers(e.currentTarget); // one sound at a time
               const next = stepLesson(1);
               const prev = stepLesson(-1);
               claimMediaSession(e.currentTarget, {

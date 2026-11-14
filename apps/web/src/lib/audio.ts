@@ -169,6 +169,8 @@ export interface AudioPrefs {
   tafsir: boolean;
   /** Playback rate, one of SPEED_CHOICES. */
   speed: number;
+  /** Loudness of the recitation, 0–1 (the reader's volume slider). */
+  volume: number;
 }
 export const DEFAULT_AUDIO: AudioPrefs = {
   reciter: DEFAULT_RECITER,
@@ -176,6 +178,7 @@ export const DEFAULT_AUDIO: AudioPrefs = {
   follow: true,
   tafsir: false,
   speed: 1,
+  volume: 1,
 };
 
 export function sanitizeAudio(raw: unknown): AudioPrefs {
@@ -186,6 +189,8 @@ export function sanitizeAudio(raw: unknown): AudioPrefs {
     follow: r.follow !== false,
     tafsir: r.tafsir === true,
     speed: typeof r.speed === "number" && SPEED_CHOICES.includes(r.speed) ? r.speed : 1,
+    volume:
+      typeof r.volume === "number" && Number.isFinite(r.volume) ? Math.min(1, Math.max(0, r.volume)) : 1,
   };
 }
 

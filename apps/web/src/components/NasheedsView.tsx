@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
-import { player } from "@/lib/audio-player";
+import { pauseOthers } from "@/lib/audio-focus";
 import { offlineSupported } from "@/lib/audio-offline";
 import {
   deleteNasheed,
@@ -23,6 +23,93 @@ interface Playing {
   m: Munshid;
 }
 
+interface Progress {
+  playing: boolean;
+  position: number;
+  duration: number;
+}
+
+function clock(sec: number, locale: Locale): string {
+  const v = Math.max(0, Math.floor(Number.isFinite(sec) ? sec : 0));
+  return localizeDigits(`${Math.floor(v / 60)}:${String(v % 60).padStart(2, "0")}`, locale);
+}
+
+/** The player's buttons, shown right under the nasheed that is playing (owner 2026-11-14). */
+function NowPlaying({
+  locale,
+  audio,
+  progress,
+  onPrev,
+  onNext,
+}: {
+  locale: Locale;
+  audio: RefObject<HTMLAudioElement | null>;
+  progress: Progress;
+  onPrev: (() => void) | null;
+  onNext: (() => void) | null;
+}) {
+  const toggle = (): void => {
+    const el = audio.current;
+    if (!el) return;
+    if (el.paused) void Promise.resolve(el.play()).catch(() => undefined);
+    else el.pause();
+  };
+  return (
+    <div
+      className="nasheed-now"
+      role="group"
+      aria-label={t(locale, "audio.player")}
+      data-testid="nasheeds-now"
+    >
+      <div className="nasheed-now-row">
+        <button
+          type="button"
+          className="btn btn-sm btn-icon"
+          aria-label={t(locale, "nasheeds.prev")}
+          data-testid="nasheeds-prev"
+          disabled={!onPrev}
+          onClick={() => onPrev?.()}
+        >
+          <Icon name={locale === "ar" ? "next" : "prev"} size={18} />
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary btn-icon nasheed-play"
+          aria-label={progress.playing ? t(locale, "audio.pause") : t(locale, "audio.play")}
+          data-testid="nasheeds-toggle"
+          onClick={toggle}
+        >
+          <Icon name={progress.playing ? "pause" : "play"} size={22} />
+        </button>
+        <button
+          type="button"
+          className="btn btn-sm btn-icon"
+          aria-label={t(locale, "nasheeds.next")}
+          data-testid="nasheeds-next"
+          disabled={!onNext}
+          onClick={() => onNext?.()}
+        >
+          <Icon name={locale === "ar" ? "prev" : "next"} size={18} />
+        </button>
+        <span className="small nasheed-time">{clock(progress.position, locale)}</span>
+        <input
+          type="range"
+          min={0}
+          max={Math.max(1, Math.round(progress.duration))}
+          value={Math.round(progress.position)}
+          aria-label={t(locale, "dhikr.seek")}
+          data-testid="nasheeds-seek"
+          onChange={(e) => {
+            if (audio.current) audio.current.currentTime = Number(e.target.value);
+          }}
+        />
+        <span className="small nasheed-time">{clock(progress.duration, locale)}</span>
+      </div>
+      <SleepTimer locale={locale} />
+    </div>
+  );
+}
+
 /** Nasheeds: pick a munshid, then a nasheed; one native audio player; save any nasheed for offline listening. */
 export function NasheedsView({
   locale,
@@ -37,6 +124,7 @@ export function NasheedsView({
   const [open, setOpen] = useState<number | null>(null);
   const [current, setCurrent] = useState<Playing | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [progress, setProgress] = useState<Progress>({ playing: false, position: 0, duration: 0 });
   const saved = useStore(nasheedsSavedStore);
   const [busy, setBusy] = useState<Record<number, "saving" | "error">>({});
   const canSave = typeof window !== "undefined" && offlineSupported();
@@ -47,7 +135,16 @@ export function NasheedsView({
   }, [loader]);
   useEffect(() => {
     const el = audioRef.current;
+    setProgress((x) => ({ ...x, position: 0, duration: 0 }));
     if (current && el) void Promise.resolve(el.play()).catch(() => undefined);
+  }, [current]);
+
+  // Keep the playing nasheed and its controls in view.
+  useEffect(() => {
+    if (!current) return;
+    document
+      .querySelector<HTMLElement>("[data-testid='nasheeds-now']")
+      ?.scrollIntoView?.({ block: "nearest", behavior: "smooth" });
   }, [current]);
 
   const toggleSave = async (x: Nasheed): Promise<void> => {
@@ -87,6 +184,24 @@ export function NasheedsView({
     return i < 0 || !next ? null : { n: next, m: current.m };
   };
 
+  // The controls go under the playing nasheed where it is listed; otherwise (its munshid closed, a search that
+  // does not list it) at the top, so they are always reachable.
+  const listed =
+    !!current &&
+    ((open === current.m.id && singers.some((m) => m.id === current.m.id)) ||
+      hits.some((h) => h.n.id === current.n.id));
+  const prev = step(-1);
+  const next = step(1);
+  const controls = current ? (
+    <NowPlaying
+      locale={locale}
+      audio={audioRef}
+      progress={progress}
+      onPrev={prev ? () => setCurrent(prev) : null}
+      onNext={next ? () => setCurrent(next) : null}
+    />
+  ) : null;
+
   const row = (p: Playing, withSinger: boolean) => {
     const on = current?.n.id === p.n.id;
     const isSaved = saved.includes(p.n.id);
@@ -98,14 +213,20 @@ export function NasheedsView({
           className="episode"
           data-testid={`nasheed-${p.n.id}`}
           aria-pressed={on}
-          onClick={() => setCurrent(p)}
+          onClick={() => {
+            const el = audioRef.current;
+            if (!on) setCurrent(p);
+            else if (el?.paused) void Promise.resolve(el.play()).catch(() => undefined);
+            else el?.pause();
+          }}
         >
-          <Icon name={on ? "pause" : "play"} />
+          <Icon name={on && progress.playing ? "pause" : "play"} />
           <span className="tile-text">
             <strong>{p.n.title}</strong>
             {withSinger ? <span className="muted small">{p.m.name}</span> : null}
           </span>
         </button>
+        {on && listed ? <div className="nasheed-slot">{controls}</div> : null}
         {canSave ? (
           <button
             type="button"
@@ -133,20 +254,17 @@ export function NasheedsView({
         {t(locale, "nasheeds.note")}
       </p>
       {current ? (
-        <section className="card series-now" data-testid="nasheeds-now">
-          <strong>
-            {current.n.title} · {current.m.name}
-          </strong>
+        <>
+          {/* One hidden element plays; its buttons sit under the playing nasheed (NowPlaying). */}
           <audio
             ref={audioRef}
             src={current.n.url}
-            controls
             preload="metadata"
+            hidden
             data-testid="nasheeds-audio"
             onPlay={(e) => {
-              player.stop();
-              const next = step(1);
-              const prev = step(-1);
+              pauseOthers(e.currentTarget); // one sound at a time
+              setProgress((x) => ({ ...x, playing: true }));
               claimMediaSession(e.currentTarget, {
                 title: `${current.n.title} · ${current.m.name}`,
                 next: next ? () => setCurrent(next) : undefined,
@@ -154,16 +272,32 @@ export function NasheedsView({
               });
               mediaSessionState(true);
             }}
-            onPause={() => mediaSessionState(false)}
+            onPause={() => {
+              setProgress((x) => ({ ...x, playing: false }));
+              mediaSessionState(false);
+            }}
+            onTimeUpdate={(e) => {
+              const position = e.currentTarget.currentTime;
+              setProgress((x) => ({ ...x, position }));
+            }}
+            onDurationChange={(e) => {
+              const d = e.currentTarget.duration;
+              setProgress((x) => ({ ...x, duration: Number.isFinite(d) ? d : 0 }));
+            }}
             onEnded={() => {
-              const next = step(1);
+              setProgress((x) => ({ ...x, playing: false }));
               if (next) setCurrent(next);
             }}
           />
-          <div className="row">
-            <SleepTimer locale={locale} />
-          </div>
-        </section>
+          {listed ? null : (
+            <section className="card series-now nasheed-now-top">
+              <strong>
+                {current.n.title} · {current.m.name}
+              </strong>
+              {controls}
+            </section>
+          )}
+        </>
       ) : null}
       <input
         type="search"
