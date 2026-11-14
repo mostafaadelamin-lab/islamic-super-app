@@ -1179,21 +1179,105 @@
   "@hadithUnsave": {
     "description": "shared key \"hadith.unsave\""
   },
+  "hajjCrowdBody": "The General Authority for the Care of the Two Holy Mosques shows live crowd levels for tawaf and sa'i, and so does the official Nusuk app. Tap to open the official source.",
+  "@hajjCrowdBody": {
+    "description": "shared key \"hajj.crowd.body\""
+  },
+  "hajjCrowdNote": "Opens outside the app. The Authority page may only open from inside Saudi Arabia.",
+  "@hajjCrowdNote": {
+    "description": "shared key \"hajj.crowd.note\""
+  },
+  "hajjCrowdNusuk": "Nusuk app",
+  "@hajjCrowdNusuk": {
+    "description": "shared key \"hajj.crowd.nusuk\""
+  },
+  "hajjCrowdOfficial": "Official Authority page",
+  "@hajjCrowdOfficial": {
+    "description": "shared key \"hajj.crowd.official\""
+  },
+  "hajjCrowdTitle": "Crowd levels at the Mataf and Mas'a now",
+  "@hajjCrowdTitle": {
+    "description": "shared key \"hajj.crowd.title\""
+  },
+  "hajjGuideCorrections": "Digitization typos corrected",
+  "@hajjGuideCorrections": {
+    "description": "shared key \"hajj.guideCorrections\""
+  },
+  "hajjGuideHajj": "How to perform Hajj",
+  "@hajjGuideHajj": {
+    "description": "shared key \"hajj.guideHajj\""
+  },
+  "hajjGuideSource": "Source",
+  "@hajjGuideSource": {
+    "description": "shared key \"hajj.guideSource\""
+  },
+  "hajjGuideTypes": "Types of Hajj",
+  "@hajjGuideTypes": {
+    "description": "shared key \"hajj.guideTypes\""
+  },
+  "hajjGuideUmrah": "How to perform Umrah",
+  "@hajjGuideUmrah": {
+    "description": "shared key \"hajj.guideUmrah\""
+  },
   "hajjHajj": "Hajj",
   "@hajjHajj": {
     "description": "shared key \"hajj.hajj\""
+  },
+  "hajjHubDuas": "Hajj & Umrah duas",
+  "@hajjHubDuas": {
+    "description": "shared key \"hajj.hub.duas\""
+  },
+  "hajjHubHajj": "Hajj rites",
+  "@hajjHubHajj": {
+    "description": "shared key \"hajj.hub.hajj\""
+  },
+  "hajjHubUmrah": "Umrah steps and tawaf map",
+  "@hajjHubUmrah": {
+    "description": "shared key \"hajj.hub.umrah\""
+  },
+  "hajjIfrad": "Ifrad",
+  "@hajjIfrad": {
+    "description": "shared key \"hajj.ifrad\""
   },
   "hajjIhram": "Ihram",
   "@hajjIhram": {
     "description": "shared key \"hajj.ihram\""
   },
+  "hajjLiveTitle": "Live from the Two Holy Mosques (audio)",
+  "@hajjLiveTitle": {
+    "description": "shared key \"hajj.live.title\""
+  },
+  "hajjOfficialGuide": "The steps explained, from the official guide (Arabic)",
+  "@hajjOfficialGuide": {
+    "description": "shared key \"hajj.officialGuide\""
+  },
+  "hajjQiran": "Qiran",
+  "@hajjQiran": {
+    "description": "shared key \"hajj.qiran\""
+  },
   "hajjReviewNotice": "Pending religious review: this guide has not yet been reviewed by a qualified scholar. Check with a trusted scholar before relying on it.",
   "@hajjReviewNotice": {
     "description": "shared key \"hajj.reviewNotice\""
   },
+  "hajjStepsInOrder": "Hajj steps in order",
+  "@hajjStepsInOrder": {
+    "description": "shared key \"hajj.stepsInOrder\""
+  },
+  "hajjTamattu": "Tamattu'",
+  "@hajjTamattu": {
+    "description": "shared key \"hajj.tamattu\""
+  },
+  "hajjTapStep": "Tap a step to read its explanation",
+  "@hajjTapStep": {
+    "description": "shared key \"hajj.tapStep\""
+  },
   "hajjTitle": "Hajj & Umrah",
   "@hajjTitle": {
     "description": "shared key \"hajj.title\""
+  },
+  "hajjTypeLabel": "Type of Hajj",
+  "@hajjTypeLabel": {
+    "description": "shared key \"hajj.typeLabel\""
   },
   "hajjUmrah": "Umrah",
   "@hajjUmrah": {
@@ -1366,6 +1450,10 @@
   "homeBigAdhkar": "Adhkar & Dua",
   "@homeBigAdhkar": {
     "description": "shared key \"home.big.adhkar\""
+  },
+  "homeBigHajj": "Hajj & Umrah",
+  "@homeBigHajj": {
+    "description": "shared key \"home.big.hajj\""
   },
   "homeBigPrayer": "Prayer times",
   "@homeBigPrayer": {
@@ -4326,17 +4414,5 @@
   "zakatYearPassed": "A full Hijri year has passed since my wealth reached the nisab",
   "@zakatYearPassed": {
     "description": "shared key \"zakat.yearPassed\""
-  },
-  "hajjStepsInOrder": "Hajj steps in order",
-  "hajjTypeLabel": "Type of Hajj",
-  "hajjTamattu": "Tamattu'",
-  "hajjQiran": "Qiran",
-  "hajjIfrad": "Ifrad",
-  "hajjTapStep": "Tap a step to read its explanation",
-  "hajjOfficialGuide": "The steps explained, from the official guide (Arabic)",
-  "hajjGuideTypes": "Types of Hajj",
-  "hajjGuideUmrah": "How to perform Umrah",
-  "hajjGuideHajj": "How to perform Hajj",
-  "hajjGuideSource": "Source",
-  "hajjGuideCorrections": "Digitization typos corrected"
+  }
 }

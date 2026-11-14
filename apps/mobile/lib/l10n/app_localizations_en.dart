@@ -801,17 +801,81 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hadithUnsave => 'Remove from saved';
 
   @override
+  String get hajjCrowdBody =>
+      'The General Authority for the Care of the Two Holy Mosques shows live crowd levels for tawaf and sa\'i, and so does the official Nusuk app. Tap to open the official source.';
+
+  @override
+  String get hajjCrowdNote => 'Opens outside the app. The Authority page may only open from inside Saudi Arabia.';
+
+  @override
+  String get hajjCrowdNusuk => 'Nusuk app';
+
+  @override
+  String get hajjCrowdOfficial => 'Official Authority page';
+
+  @override
+  String get hajjCrowdTitle => 'Crowd levels at the Mataf and Mas\'a now';
+
+  @override
+  String get hajjGuideCorrections => 'Digitization typos corrected';
+
+  @override
+  String get hajjGuideHajj => 'How to perform Hajj';
+
+  @override
+  String get hajjGuideSource => 'Source';
+
+  @override
+  String get hajjGuideTypes => 'Types of Hajj';
+
+  @override
+  String get hajjGuideUmrah => 'How to perform Umrah';
+
+  @override
   String get hajjHajj => 'Hajj';
 
   @override
+  String get hajjHubDuas => 'Hajj & Umrah duas';
+
+  @override
+  String get hajjHubHajj => 'Hajj rites';
+
+  @override
+  String get hajjHubUmrah => 'Umrah steps and tawaf map';
+
+  @override
+  String get hajjIfrad => 'Ifrad';
+
+  @override
   String get hajjIhram => 'Ihram';
+
+  @override
+  String get hajjLiveTitle => 'Live from the Two Holy Mosques (audio)';
+
+  @override
+  String get hajjOfficialGuide => 'The steps explained, from the official guide (Arabic)';
+
+  @override
+  String get hajjQiran => 'Qiran';
 
   @override
   String get hajjReviewNotice =>
       'Pending religious review: this guide has not yet been reviewed by a qualified scholar. Check with a trusted scholar before relying on it.';
 
   @override
+  String get hajjStepsInOrder => 'Hajj steps in order';
+
+  @override
+  String get hajjTamattu => 'Tamattu\'';
+
+  @override
+  String get hajjTapStep => 'Tap a step to read its explanation';
+
+  @override
   String get hajjTitle => 'Hajj & Umrah';
+
+  @override
+  String get hajjTypeLabel => 'Type of Hajj';
 
   @override
   String get hajjUmrah => 'Umrah';
@@ -947,6 +1011,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeBigAdhkar => 'Adhkar & Dua';
+
+  @override
+  String get homeBigHajj => 'Hajj & Umrah';
 
   @override
   String get homeBigPrayer => 'Prayer times';
@@ -2950,40 +3017,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'A full Hijri year has passed since my wealth reached the nisab';
-
-  @override
-  String get hajjStepsInOrder => 'Hajj steps in order';
-
-  @override
-  String get hajjTypeLabel => 'Type of Hajj';
-
-  @override
-  String get hajjTamattu => 'Tamattu\'';
-
-  @override
-  String get hajjQiran => 'Qiran';
-
-  @override
-  String get hajjIfrad => 'Ifrad';
-
-  @override
-  String get hajjTapStep => 'Tap a step to read its explanation';
-
-  @override
-  String get hajjOfficialGuide => 'The steps explained, from the official guide (Arabic)';
-
-  @override
-  String get hajjGuideTypes => 'Types of Hajj';
-
-  @override
-  String get hajjGuideUmrah => 'How to perform Umrah';
-
-  @override
-  String get hajjGuideHajj => 'How to perform Hajj';
-
-  @override
-  String get hajjGuideSource => 'Source';
-
-  @override
-  String get hajjGuideCorrections => 'Digitization typos corrected';
 }

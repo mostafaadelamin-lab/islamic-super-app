@@ -14,7 +14,10 @@ import 'adaptive.dart';
 
 /// Hajj & Umrah guide (Arabic text from the prototype, pending review).
 class HajjScreen extends StatelessWidget {
-  const HajjScreen({super.key});
+  const HajjScreen({super.key, this.initialTab = 0});
+
+  /// Tab opened first (0 Umrah, 1 Hajj, 2 Ihram), from the Hajj & Umrah section.
+  final int initialTab;
 
   static const sections = ['umrah', 'hajj', 'ihram'];
 
@@ -29,6 +32,7 @@ class HajjScreen extends StatelessWidget {
     };
     return DefaultTabController(
       length: sections.length,
+      initialIndex: initialTab.clamp(0, sections.length - 1),
       child: Scaffold(
         appBar: AppBar(
           title: Text(l.hajjTitle),

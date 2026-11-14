@@ -5,7 +5,7 @@ import 'asma_screen.dart';
 import 'radio_screen.dart';
 import 'nasheeds_screen.dart';
 import 'hadith_screen.dart';
-import 'hajj_screen.dart';
+import 'hajj_hub_screen.dart';
 import 'khatma_screen.dart';
 import 'worship_screen.dart';
 import 'help_screen.dart';
@@ -55,7 +55,7 @@ class MoreScreen extends StatelessWidget {
                 tile('qibla', RIcons.compass, l.qiblaTitle, () => const QiblaScreen()),
                 tile('mosques', RIcons.location, l.mosquesTitle, () => const MosquesScreen()),
                 tile('zakat', RIcons.zakat, l.zakatTitle, () => const ZakatScreen()),
-                tile('hajj', RIcons.kaaba, l.hajjTitle, () => const HajjScreen()),
+                tile('hajj', RIcons.kaaba, l.hajjTitle, () => const HajjHubScreen()),
               ],
             ),
             SectionCard(

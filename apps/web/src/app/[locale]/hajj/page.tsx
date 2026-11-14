@@ -9,6 +9,7 @@ import { TawafPlan, type TawafPlanLabels } from "@/components/TawafPlan";
 import { StepsFlow } from "@/components/StepsFlow";
 import { HajjTypeFlow } from "@/components/HajjTypeFlow";
 import { OfficialHajjGuide } from "@/components/OfficialHajjGuide";
+import { HajjServices } from "@/components/HajjServices";
 
 interface Step {
   title: string;
@@ -64,10 +65,12 @@ function StepCard({ locale, label, step, id }: { locale: Locale; label: string; 
 export default async function HajjPage({ params }: { params: LocaleParams }) {
   const locale = await resolveLocale(params);
   const n = (i: number): string => localizeDigits(i + 1, locale);
+  const tawaf = hajj.umrah.steps.findIndex((s) => s.tool === "tawaf");
   return (
     <>
       <h1>{t(locale, "hajj.title")}</h1>
       {locale !== "ar" ? <p className="alert">{t(locale, "common.arabicOnly")}</p> : null}
+      <HajjServices locale={locale} tawafHref={tawaf < 0 ? null : `#umrah-step-${tawaf + 1}`} />
       <nav className="row toc" aria-label={t(locale, "hajj.contents")}>
         <a className="btn btn-sm" href="#umrah">
           {t(locale, "hajj.umrah")}

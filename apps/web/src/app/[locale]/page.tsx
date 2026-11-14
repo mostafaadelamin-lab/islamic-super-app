@@ -120,6 +120,21 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
         <Tiles locale={locale} list={BIG} kind="big" />
         <Tiles locale={locale} list={WIDE} kind="wide" />
       </div>
+      <div className="home-col">
+        {/* Hajj & Umrah has its own entry on the home page (owner, 2026-11-14). */}
+        <Link className="card home-hajj" href={href(locale, "hajj")} data-testid="home-hajj">
+          <span className="home-hajj-icon">
+            <Icon name="kaaba" size={34} />
+          </span>
+          <span className="home-hajj-text">
+            <strong>{t(locale, "home.hajjBanner")}</strong>
+            <span className="muted small">{t(locale, "home.hajjBannerSub")}</span>
+          </span>
+          <span className="home-more-chevron">
+            <Icon name="chevron" size={20} />
+          </span>
+        </Link>
+      </div>
       <Explore locale={locale} />
       <section className="home-col home-radio-wrap" aria-labelledby="home-radio-h">
         <div className="desktop-only home-radio-intro">

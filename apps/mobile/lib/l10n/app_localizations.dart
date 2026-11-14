@@ -1454,11 +1454,95 @@ abstract class AppLocalizations {
   /// **'Remove from saved'**
   String get hadithUnsave;
 
+  /// shared key "hajj.crowd.body"
+  ///
+  /// In en, this message translates to:
+  /// **'The General Authority for the Care of the Two Holy Mosques shows live crowd levels for tawaf and sa\'i, and so does the official Nusuk app. Tap to open the official source.'**
+  String get hajjCrowdBody;
+
+  /// shared key "hajj.crowd.note"
+  ///
+  /// In en, this message translates to:
+  /// **'Opens outside the app. The Authority page may only open from inside Saudi Arabia.'**
+  String get hajjCrowdNote;
+
+  /// shared key "hajj.crowd.nusuk"
+  ///
+  /// In en, this message translates to:
+  /// **'Nusuk app'**
+  String get hajjCrowdNusuk;
+
+  /// shared key "hajj.crowd.official"
+  ///
+  /// In en, this message translates to:
+  /// **'Official Authority page'**
+  String get hajjCrowdOfficial;
+
+  /// shared key "hajj.crowd.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Crowd levels at the Mataf and Mas\'a now'**
+  String get hajjCrowdTitle;
+
+  /// shared key "hajj.guideCorrections"
+  ///
+  /// In en, this message translates to:
+  /// **'Digitization typos corrected'**
+  String get hajjGuideCorrections;
+
+  /// shared key "hajj.guideHajj"
+  ///
+  /// In en, this message translates to:
+  /// **'How to perform Hajj'**
+  String get hajjGuideHajj;
+
+  /// shared key "hajj.guideSource"
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get hajjGuideSource;
+
+  /// shared key "hajj.guideTypes"
+  ///
+  /// In en, this message translates to:
+  /// **'Types of Hajj'**
+  String get hajjGuideTypes;
+
+  /// shared key "hajj.guideUmrah"
+  ///
+  /// In en, this message translates to:
+  /// **'How to perform Umrah'**
+  String get hajjGuideUmrah;
+
   /// shared key "hajj.hajj"
   ///
   /// In en, this message translates to:
   /// **'Hajj'**
   String get hajjHajj;
+
+  /// shared key "hajj.hub.duas"
+  ///
+  /// In en, this message translates to:
+  /// **'Hajj & Umrah duas'**
+  String get hajjHubDuas;
+
+  /// shared key "hajj.hub.hajj"
+  ///
+  /// In en, this message translates to:
+  /// **'Hajj rites'**
+  String get hajjHubHajj;
+
+  /// shared key "hajj.hub.umrah"
+  ///
+  /// In en, this message translates to:
+  /// **'Umrah steps and tawaf map'**
+  String get hajjHubUmrah;
+
+  /// shared key "hajj.ifrad"
+  ///
+  /// In en, this message translates to:
+  /// **'Ifrad'**
+  String get hajjIfrad;
 
   /// shared key "hajj.ihram"
   ///
@@ -1466,17 +1550,59 @@ abstract class AppLocalizations {
   /// **'Ihram'**
   String get hajjIhram;
 
+  /// shared key "hajj.live.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Live from the Two Holy Mosques (audio)'**
+  String get hajjLiveTitle;
+
+  /// shared key "hajj.officialGuide"
+  ///
+  /// In en, this message translates to:
+  /// **'The steps explained, from the official guide (Arabic)'**
+  String get hajjOfficialGuide;
+
+  /// shared key "hajj.qiran"
+  ///
+  /// In en, this message translates to:
+  /// **'Qiran'**
+  String get hajjQiran;
+
   /// shared key "hajj.reviewNotice"
   ///
   /// In en, this message translates to:
   /// **'Pending religious review: this guide has not yet been reviewed by a qualified scholar. Check with a trusted scholar before relying on it.'**
   String get hajjReviewNotice;
 
+  /// shared key "hajj.stepsInOrder"
+  ///
+  /// In en, this message translates to:
+  /// **'Hajj steps in order'**
+  String get hajjStepsInOrder;
+
+  /// shared key "hajj.tamattu"
+  ///
+  /// In en, this message translates to:
+  /// **'Tamattu\''**
+  String get hajjTamattu;
+
+  /// shared key "hajj.tapStep"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a step to read its explanation'**
+  String get hajjTapStep;
+
   /// shared key "hajj.title"
   ///
   /// In en, this message translates to:
   /// **'Hajj & Umrah'**
   String get hajjTitle;
+
+  /// shared key "hajj.typeLabel"
+  ///
+  /// In en, this message translates to:
+  /// **'Type of Hajj'**
+  String get hajjTypeLabel;
 
   /// shared key "hajj.umrah"
   ///
@@ -1735,6 +1861,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Adhkar & Dua'**
   String get homeBigAdhkar;
+
+  /// shared key "home.big.hajj"
+  ///
+  /// In en, this message translates to:
+  /// **'Hajj & Umrah'**
+  String get homeBigHajj;
 
   /// shared key "home.big.prayer"
   ///
@@ -5281,78 +5413,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A full Hijri year has passed since my wealth reached the nisab'**
   String get zakatYearPassed;
-
-  /// No description provided for @hajjStepsInOrder.
-  ///
-  /// In en, this message translates to:
-  /// **'Hajj steps in order'**
-  String get hajjStepsInOrder;
-
-  /// No description provided for @hajjTypeLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Type of Hajj'**
-  String get hajjTypeLabel;
-
-  /// No description provided for @hajjTamattu.
-  ///
-  /// In en, this message translates to:
-  /// **'Tamattu\''**
-  String get hajjTamattu;
-
-  /// No description provided for @hajjQiran.
-  ///
-  /// In en, this message translates to:
-  /// **'Qiran'**
-  String get hajjQiran;
-
-  /// No description provided for @hajjIfrad.
-  ///
-  /// In en, this message translates to:
-  /// **'Ifrad'**
-  String get hajjIfrad;
-
-  /// No description provided for @hajjTapStep.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap a step to read its explanation'**
-  String get hajjTapStep;
-
-  /// No description provided for @hajjOfficialGuide.
-  ///
-  /// In en, this message translates to:
-  /// **'The steps explained, from the official guide (Arabic)'**
-  String get hajjOfficialGuide;
-
-  /// No description provided for @hajjGuideTypes.
-  ///
-  /// In en, this message translates to:
-  /// **'Types of Hajj'**
-  String get hajjGuideTypes;
-
-  /// No description provided for @hajjGuideUmrah.
-  ///
-  /// In en, this message translates to:
-  /// **'How to perform Umrah'**
-  String get hajjGuideUmrah;
-
-  /// No description provided for @hajjGuideHajj.
-  ///
-  /// In en, this message translates to:
-  /// **'How to perform Hajj'**
-  String get hajjGuideHajj;
-
-  /// No description provided for @hajjGuideSource.
-  ///
-  /// In en, this message translates to:
-  /// **'Source'**
-  String get hajjGuideSource;
-
-  /// No description provided for @hajjGuideCorrections.
-  ///
-  /// In en, this message translates to:
-  /// **'Digitization typos corrected'**
-  String get hajjGuideCorrections;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

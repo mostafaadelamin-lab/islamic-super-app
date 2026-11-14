@@ -904,6 +904,31 @@ input[type="radio"] {
   display: inline-flex;
   color: var(--color-primary);
 }
+.home-hajj {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-height: 76px;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.home-hajj-icon {
+  display: inline-flex;
+  color: var(--color-primary);
+}
+.home-hajj-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.home-hajj-text strong {
+  font-size: var(--font-size-md);
+}
+.hajj-crowd .row {
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
 [dir="ltr"] .home-more-chevron {
   transform: scaleX(-1);
 }
