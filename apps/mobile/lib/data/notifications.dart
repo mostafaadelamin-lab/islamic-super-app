@@ -178,6 +178,9 @@ class LocalNotificationsBackend implements NotificationsBackend {
   /// downloaded file's path (set by the scheduler, per prayer).
   String voice = 'adhan_haram';
 
+  /// Android: play the full adhan even in silent / vibrate mode (set by the scheduler).
+  bool playOnSilent = false;
+
   @override
   Future<void> schedule({
     required int id,
@@ -195,6 +198,7 @@ class LocalNotificationsBackend implements NotificationsBackend {
         'body': body,
         'stopLabel': stopLabel,
         'voice': voice,
+        'playOnSilent': playOnSilent,
       });
       return;
     }
@@ -300,6 +304,7 @@ class AdhanScheduler {
   String get _signature => [
     settings.adhanPrayers.toList()..sort(),
     settings.adhanSound,
+    settings.adhanPlayOnSilent,
     [for (final p in obligatoryPrayers) nativeVoiceFor(p)],
     [for (final p in obligatoryPrayers) settings.adhanSoundFor(p)],
     settings.sunriseAlert,
@@ -350,7 +355,10 @@ class AdhanScheduler {
       if (items.isEmpty) return;
       final l = lookupAppLocalizations(Locale(settings.locale.languageCode));
       final b = backend;
-      if (b is LocalNotificationsBackend) b.stopLabel = l.adhanStop;
+      if (b is LocalNotificationsBackend) {
+        b.stopLabel = l.adhanStop;
+        b.playOnSilent = settings.adhanPlayOnSilent;
+      }
       final city = resolveCity(content, settings).name(settings.isArabic);
       for (final n in items) {
         final name = _prayerName(l, n.prayer);
@@ -394,6 +402,7 @@ class AdhanScheduler {
     if (b is LocalNotificationsBackend) {
       b.stopLabel = l.adhanStop;
       b.voice = nativeVoiceFor('dhuhr');
+      b.playOnSilent = settings.adhanPlayOnSilent;
     }
     await backend.schedule(
       id: adhanTestNotificationId,

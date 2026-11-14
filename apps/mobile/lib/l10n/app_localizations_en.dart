@@ -197,6 +197,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Scheduled ahead on this device and works even when the app is closed; opening the app renews them. If an alert is late, allow \"Alarms & reminders\" and turn off battery optimisation for the app.';
 
   @override
+  String get adhanPlayOnSilent => 'Play the adhan when the phone is silent';
+
+  @override
+  String get adhanPlayOnSilentHint =>
+      'The adhan plays at alarm volume even on silent or vibrate, like an alarm clock. Applies to the full adhan only.';
+
+  @override
   String get adhanPre => 'Reminder before the adhan';
 
   @override
@@ -2116,6 +2123,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsOurAppsSoon => 'More apps coming soon, God willing';
 
   @override
+  String get settingsPermissions => 'Permissions and background';
+
+  @override
+  String get settingsPermissionsHint => 'Location, notifications, battery and adhan on silent';
+
+  @override
   String get settingsPrayerAutoHint => 'From your location and your country\'s calculation method';
 
   @override
@@ -2138,6 +2151,87 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsThemeSystem => 'System';
+
+  @override
+  String get settingsTour => 'App tour';
+
+  @override
+  String get setupAppPage => 'App page';
+
+  @override
+  String get setupBatteryAction => 'Open battery settings';
+
+  @override
+  String get setupBatteryBody =>
+      'So battery saving does not stop the adhan while the app is closed: in the list choose Rattil wa Salli, then \"Don\'t optimize\" or \"Unrestricted\".';
+
+  @override
+  String get setupBatteryOem =>
+      'On some phones (Xiaomi, Oppo, Realme, Huawei, Vivo) also turn on \"Autostart\" or \"Background activity\" on the app\'s page.';
+
+  @override
+  String get setupBatteryTitle => 'Run in the background';
+
+  @override
+  String get setupDone => 'Done';
+
+  @override
+  String get setupExactBody =>
+      'Turn on \"Alarms & reminders\" for this app, otherwise Android may delay the adhan by a few minutes.';
+
+  @override
+  String get setupExactTitle => 'Adhan on the minute';
+
+  @override
+  String get setupIntro =>
+      'A few steps so prayer times are right and the adhan reaches you on time, even with the app closed. You can change all of this later in Settings.';
+
+  @override
+  String get setupLocationBody => 'For the prayer times and qibla where you are. Used only while the app is open.';
+
+  @override
+  String get setupLocationCity => 'Choose a city';
+
+  @override
+  String get setupLocationDenied => 'Location was not allowed. You can choose your city instead.';
+
+  @override
+  String get setupLocationTitle => 'Location';
+
+  @override
+  String get setupLocationUnavailable =>
+      'Could not find your location now. Check that location is on, or choose your city.';
+
+  @override
+  String get setupLocationUse => 'Use my location';
+
+  @override
+  String get setupNotifAction => 'Turn on the adhan';
+
+  @override
+  String get setupNotifBody => 'Allow notifications so the adhan and reminders reach you.';
+
+  @override
+  String get setupNotifDenied => 'Notifications are not allowed. Open the app settings and turn them on.';
+
+  @override
+  String get setupNotifTitle => 'Adhan alert';
+
+  @override
+  String get setupOpenSettings => 'Open settings';
+
+  @override
+  String get setupSilentIos =>
+      'On iPhone the system lets no app play a notification sound while the silent switch is on (Apple allows it only for emergency and health apps). The adhan alert then shows without sound; keep the silent switch off to hear it.';
+
+  @override
+  String get setupSilentTitle => 'Adhan when the phone is silent';
+
+  @override
+  String get setupStart => 'Start';
+
+  @override
+  String get setupTitle => 'Set up the app';
 
   @override
   String sharawiAyah(String n) {
@@ -2468,6 +2562,55 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tasbihVibrate => 'Vibration';
+
+  @override
+  String get tourAdhkarBody =>
+      'Morning and evening adhkar and Hisn al-Muslim with audio, a tasbih counter, the hadith books and the Names of Allah.';
+
+  @override
+  String get tourAdhkarTitle => 'Adhkar and hadith';
+
+  @override
+  String get tourBack => 'Back';
+
+  @override
+  String get tourListenBody =>
+      'Quran radios, Sha\'rawi\'s audio tafsir, stories of the Quran, and lessons and clips from trusted channels.';
+
+  @override
+  String get tourListenTitle => 'Listen and learn';
+
+  @override
+  String get tourNext => 'Next';
+
+  @override
+  String tourPage(String n, String total) {
+    return 'Page $n of $total';
+  }
+
+  @override
+  String get tourPrayerBody =>
+      'Prayer times for where you are, an adhan alert in the muezzin\'s voice you choose, the qibla and nearby mosques.';
+
+  @override
+  String get tourPrayerTitle => 'Prayer times and adhan';
+
+  @override
+  String get tourQuranBody =>
+      'The King Fahd Complex Mushaf, page by page, recitations by many reciters, Tafsir al-Muyassar and a khatma planner.';
+
+  @override
+  String get tourQuranTitle => 'The Holy Quran';
+
+  @override
+  String get tourSkip => 'Skip';
+
+  @override
+  String get tourWelcomeBody =>
+      'A free app for the sake of Allah, with no ads and no subscriptions: the Quran, prayer and adhkar in one place.';
+
+  @override
+  String get tourWelcomeTitle => 'Welcome to Rattil wa Salli';
 
   @override
   String get videosClearHistory => 'Clear history';

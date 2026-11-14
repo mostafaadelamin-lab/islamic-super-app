@@ -12,6 +12,7 @@ import { adhkarViewStore } from "@/lib/dhikr-share";
 import { sharePromptStore } from "@/lib/app-links";
 import { videoHistoryStore } from "@/lib/videos";
 import { nasheedsSavedStore } from "@/lib/nasheeds";
+import { firstRunStore } from "@/lib/first-run";
 
 export function resetStores(): void {
   localStorage.clear();
@@ -33,6 +34,7 @@ export function resetStores(): void {
     adhkarStore,
     adhkarViewStore,
     sharePromptStore,
+    firstRunStore,
   ])
     s.reload();
 }

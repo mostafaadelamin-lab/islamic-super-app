@@ -10,6 +10,7 @@ import 'theme/app_theme.dart';
 import 'ui/background_audio.dart';
 import 'ui/dhikr_audio.dart';
 import 'ui/home_shell.dart';
+import 'ui/onboarding_screen.dart';
 
 class RattilApp extends StatefulWidget {
   const RattilApp({super.key, required this.services});
@@ -83,7 +84,10 @@ class _RattilAppState extends State<RattilApp> with WidgetsBindingObserver {
           themeMode: services.settings.themeMode,
           theme: AppTheme.build(Brightness.light),
           darkTheme: AppTheme.build(Brightness.dark),
-          home: const HomeShell(),
+          // First run: the welcome tour and the permissions setup, once.
+          home: services.settings.onboardingDone
+              ? const HomeShell()
+              : OnboardingScreen(onDone: () => services.settings.setOnboardingDone(true)),
         ),
       ),
     );

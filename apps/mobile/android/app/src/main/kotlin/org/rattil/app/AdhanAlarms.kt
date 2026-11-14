@@ -24,15 +24,17 @@ object AdhanAlarms {
         val body: String,
         val stopLabel: String,
         val voice: String = "adhan",
+        /** Play the adhan even when the phone is on silent / vibrate (the user's choice, off by default). */
+        val playOnSilent: Boolean = false,
     ) {
         fun toJson(): JSONObject = JSONObject()
             .put("id", id).put("at", atMillis).put("title", title).put("body", body).put("stop", stopLabel)
-            .put("voice", voice)
+            .put("voice", voice).put("silent", playOnSilent)
 
         companion object {
             fun fromJson(o: JSONObject) = Alarm(
                 o.getInt("id"), o.getLong("at"), o.optString("title"), o.optString("body"), o.optString("stop", "Stop"),
-                o.optString("voice", "adhan"),
+                o.optString("voice", "adhan"), o.optBoolean("silent", false),
             )
         }
     }

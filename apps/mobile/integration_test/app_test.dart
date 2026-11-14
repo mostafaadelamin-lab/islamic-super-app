@@ -34,6 +34,7 @@ void main() {
       final prefs = await SharedPreferences.getInstance();
       await prefs.clear();
       await prefs.setString('locale', 'en');
+      await prefs.setBool('onboarding.done', true);
       final services = await app.bootstrap();
       await tester.pumpWidget(RattilApp(services: services));
       await tester.pumpAndSettle();

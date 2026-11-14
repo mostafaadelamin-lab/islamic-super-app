@@ -1,0 +1,175 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:rattil/data/location.dart';
+import 'package:rattil/ui/onboarding_screen.dart';
+
+import '../helpers.dart';
+
+/// First run (owner 2026-11-14): feature tour, then location, adhan notifications,
+/// exact alarms, battery and "adhan when the phone is silent".
+void main() {
+  setUpAll(loadContent);
+
+  const firstRun = <String, Object>{'onboarding.done': false};
+
+  Future<void> toSetup(WidgetTester tester) async {
+    for (var i = 0; i < 5; i++) {
+      await tester.tap(find.byKey(const Key('tourNext')));
+      await tester.pumpAndSettle();
+    }
+    expect(find.byKey(const Key('setupPage')), findsOneWidget);
+  }
+
+  Future<void> tapVisible(WidgetTester tester, Key key) async {
+    await tester.scrollUntilVisible(find.byKey(key), 200, scrollable: find.byType(Scrollable).last);
+    await tester.tap(find.byKey(key));
+    await tester.pumpAndSettle();
+  }
+
+  testWidgets('first start shows the tour; Skip goes to the home screen and is remembered', (tester) async {
+    final app = await pumpApp(tester, prefs: firstRun, size: tallPhone);
+    expect(find.byKey(const Key('onboarding')), findsOneWidget);
+    expect(find.text('أهلًا بك في «رتّل وصلِّ»'), findsOneWidget);
+    expect(find.byKey(const Key('navBar')), findsNothing);
+    await tester.tap(find.byKey(const Key('tourSkip')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('navBar')), findsOneWidget);
+    expect(app.prefs.getBool('onboarding.done'), isTrue);
+  });
+
+  testWidgets('a later start goes straight to the home screen', (tester) async {
+    await pumpApp(tester, size: tallPhone);
+    expect(find.byKey(const Key('onboarding')), findsNothing);
+    expect(find.byKey(const Key('navBar')), findsOneWidget);
+  });
+
+  testWidgets('Android setup: location, adhan, battery, silent switch, then Start', (tester) async {
+    final notifications = FakeNotifications();
+    final device = FakeDeviceSetup(notifications: false, exact: false);
+    final app = await pumpApp(
+      tester,
+      prefs: firstRun,
+      size: tallPhone,
+      locale: 'en',
+      notifications: notifications,
+      deviceSetup: device,
+      location: const FakeLocation(LocationFound(30.0445, 31.2357)),
+    );
+    // The tour's slides, in order.
+    for (final title in ['Welcome to Rattil wa Salli', 'The Holy Quran', 'Prayer times and adhan']) {
+      expect(find.text(title), findsOneWidget);
+      await tester.tap(find.byKey(const Key('tourNext')));
+      await tester.pumpAndSettle();
+    }
+    await tester.tap(find.byKey(const Key('tourBack')));
+    await tester.pumpAndSettle();
+    expect(find.text('Prayer times and adhan'), findsOneWidget);
+    for (var i = 0; i < 3; i++) {
+      await tester.tap(find.byKey(const Key('tourNext')));
+      await tester.pumpAndSettle();
+    }
+    expect(find.byKey(const Key('setupPage')), findsOneWidget);
+    expect(find.byKey(const Key('tourSkip')), findsNothing);
+
+    // Location.
+    await tapVisible(tester, const Key('setupLocationUse'));
+    expect(app.services.settings.cityId, 'gps');
+    expect(
+      find.descendant(of: find.byKey(const Key('setupLocation')), matching: find.byKey(const Key('stepDone'))),
+      findsOneWidget,
+    );
+
+    // Notifications: asks the system, turns the adhan on.
+    device.notifications = true;
+    await tapVisible(tester, const Key('setupNotifAction'));
+    expect(notifications.permissionRequests, 1);
+    expect(app.services.settings.adhanEnabled, isTrue);
+    expect(find.byKey(const Key('setupNotifAction')), findsNothing);
+
+    // Exact alarms and battery open the system screens (no direct battery dialog).
+    await tapVisible(tester, const Key('setupExactAction'));
+    await tapVisible(tester, const Key('setupBatteryAction'));
+    await tapVisible(tester, const Key('setupAppPage'));
+    expect(device.opened, ['exact', 'battery', 'app']);
+
+    // Adhan when the phone is silent.
+    expect(app.services.settings.adhanPlayOnSilent, isFalse);
+    await tapVisible(tester, const Key('setupSilent'));
+    expect(app.services.settings.adhanPlayOnSilent, isTrue);
+
+    await tester.tap(find.byKey(const Key('tourStart')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('navBar')), findsOneWidget);
+    expect(app.prefs.getBool('onboarding.done'), isTrue);
+  });
+
+  testWidgets('location refused: says so and offers the city list', (tester) async {
+    await pumpApp(
+      tester,
+      prefs: firstRun,
+      size: tallPhone,
+      locale: 'en',
+      location: const FakeLocation(LocationDenied()),
+    );
+    await toSetup(tester);
+    await tapVisible(tester, const Key('setupLocationUse'));
+    expect(find.text('Location was not allowed. You can choose your city instead.'), findsOneWidget);
+    expect(find.byKey(const Key('setupLocationCity')), findsOneWidget);
+  });
+
+  testWidgets('iPhone: no battery or exact-alarm steps; explains the silent switch honestly', (tester) async {
+    await pumpApp(
+      tester,
+      prefs: firstRun,
+      size: tallPhone,
+      locale: 'en',
+      deviceSetup: FakeDeviceSetup(isAndroid: false, isIos: true, exact: false),
+    );
+    await toSetup(tester);
+    expect(find.byKey(const Key('setupBattery')), findsNothing);
+    expect(find.byKey(const Key('setupExact')), findsNothing);
+    expect(find.byKey(const Key('setupSilent')), findsNothing);
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('setupSilentIos')),
+      200,
+      scrollable: find.byType(Scrollable).last,
+    );
+    expect(find.textContaining('Apple allows it only for emergency and health apps'), findsOneWidget);
+  });
+
+  testWidgets('Arabic tour and setup are accessible', (tester) async {
+    await pumpApp(tester, prefs: firstRun, size: tallPhone);
+    await expectAccessible(tester);
+    await toSetup(tester);
+    await expectAccessible(tester);
+  });
+
+  testWidgets('Settings: permissions screen and the tour again', (tester) async {
+    final device = FakeDeviceSetup();
+    await pumpApp(tester, size: tallPhone, locale: 'en', deviceSetup: device);
+    await openSettings(tester);
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('permissionsTile')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const Key('permissionsTile')));
+    await tester.pumpAndSettle();
+    expect(find.byType(PermissionsScreen), findsOneWidget);
+    expect(find.byKey(const Key('setupBattery')), findsOneWidget);
+    await goBack(tester);
+    await tester.tap(find.byKey(const Key('tourTile')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('onboarding')), findsOneWidget);
+    // Replay: the tour only, no setup page; Done closes it.
+    for (var i = 0; i < 4; i++) {
+      await tester.tap(find.byKey(const Key('tourNext')));
+      await tester.pumpAndSettle();
+    }
+    expect(find.byKey(const Key('setupPage')), findsNothing);
+    await tester.tap(find.byKey(const Key('tourStart')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('onboarding')), findsNothing);
+    expect(find.byKey(const Key('permissionsTile')), findsOneWidget);
+  });
+}

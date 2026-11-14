@@ -196,6 +196,13 @@ class AppLocalizationsAr extends AppLocalizations {
       'تُجدول على هذا الجهاز مسبقًا وتشتغل حتى لو التطبيق مقفول، ويجدّدها فتح التطبيق. لو التنبيه اتأخر، اسمح للتطبيق بـ«المنبّهات والتذكيرات» وأوقف توفير البطارية له.';
 
   @override
+  String get adhanPlayOnSilent => 'تشغيل الأذان والهاتف صامت';
+
+  @override
+  String get adhanPlayOnSilentHint =>
+      'يعمل الأذان بصوت المنبّه حتى لو كان الهاتف على الصامت أو الاهتزاز، مثل ساعة المنبّه. يخص الأذان الكامل فقط.';
+
+  @override
   String get adhanPre => 'تنبيه قبل الأذان';
 
   @override
@@ -2108,6 +2115,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsOurAppsSoon => 'تطبيقات أخرى قريبًا إن شاء الله';
 
   @override
+  String get settingsPermissions => 'الصلاحيات والعمل في الخلفية';
+
+  @override
+  String get settingsPermissionsHint => 'الموقع، الإشعارات، البطارية، والأذان والهاتف صامت';
+
+  @override
   String get settingsPrayerAutoHint => 'حسب موقعك وطريقة الحساب المعتمدة في بلدك';
 
   @override
@@ -2130,6 +2143,85 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsThemeSystem => 'حسب الجهاز';
+
+  @override
+  String get settingsTour => 'جولة تعريفية بالتطبيق';
+
+  @override
+  String get setupAppPage => 'صفحة التطبيق';
+
+  @override
+  String get setupBatteryAction => 'فتح إعداد البطارية';
+
+  @override
+  String get setupBatteryBody =>
+      'حتى لا يوقف توفير البطارية الأذان والتطبيق مغلق: من القائمة اختر «رتّل وصلِّ» ثم «عدم التحسين» أو «غير مقيّد».';
+
+  @override
+  String get setupBatteryOem =>
+      'في بعض الهواتف (شاومي، أوبو، ريلمي، هواوي، فيفو) فعّل كذلك «التشغيل التلقائي» أو «النشاط في الخلفية» من صفحة التطبيق.';
+
+  @override
+  String get setupBatteryTitle => 'العمل في الخلفية';
+
+  @override
+  String get setupDone => 'تم';
+
+  @override
+  String get setupExactBody => 'فعّل «المنبّهات والتذكيرات» لهذا التطبيق، وإلا قد يؤخر أندرويد الأذان بضع دقائق.';
+
+  @override
+  String get setupExactTitle => 'الأذان في الدقيقة نفسها';
+
+  @override
+  String get setupIntro =>
+      'خطوات قليلة حتى تكون المواقيت صحيحة ويصلك الأذان في وقته حتى والتطبيق مغلق. يمكنك تغيير كل ذلك لاحقًا من الإعدادات.';
+
+  @override
+  String get setupLocationBody => 'لحساب مواقيت الصلاة واتجاه القبلة لمكانك. يُستخدم أثناء فتح التطبيق فقط.';
+
+  @override
+  String get setupLocationCity => 'اختيار مدينة';
+
+  @override
+  String get setupLocationDenied => 'لم يُسمح بالموقع. يمكنك اختيار مدينتك بدلًا منه.';
+
+  @override
+  String get setupLocationTitle => 'الموقع';
+
+  @override
+  String get setupLocationUnavailable => 'تعذّر تحديد الموقع الآن. تأكد من تشغيل الموقع في الهاتف أو اختر مدينتك.';
+
+  @override
+  String get setupLocationUse => 'استخدم موقعي';
+
+  @override
+  String get setupNotifAction => 'تفعيل الأذان';
+
+  @override
+  String get setupNotifBody => 'اسمح بالإشعارات حتى يصلك الأذان والتذكيرات.';
+
+  @override
+  String get setupNotifDenied => 'الإشعارات غير مسموح بها. افتح إعدادات التطبيق وفعّلها.';
+
+  @override
+  String get setupNotifTitle => 'تنبيه الأذان';
+
+  @override
+  String get setupOpenSettings => 'فتح الإعدادات';
+
+  @override
+  String get setupSilentIos =>
+      'على الآيفون لا يسمح النظام لأي تطبيق بتشغيل صوت الإشعار وزر الصامت مفعّل (تسمح Apple بذلك لتطبيقات الطوارئ والصحة فقط). يظهر تنبيه الأذان بلا صوت؛ اترك زر الصامت مغلقًا لتسمع الأذان.';
+
+  @override
+  String get setupSilentTitle => 'الأذان والهاتف صامت';
+
+  @override
+  String get setupStart => 'ابدأ';
+
+  @override
+  String get setupTitle => 'تجهيز التطبيق';
 
   @override
   String sharawiAyah(String n) {
@@ -2458,6 +2550,54 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tasbihVibrate => 'اهتزاز';
+
+  @override
+  String get tourAdhkarBody => 'أذكار الصباح والمساء وحصن المسلم مسموعة، والمسبحة، وكتب الحديث، وأسماء الله الحسنى.';
+
+  @override
+  String get tourAdhkarTitle => 'الأذكار والحديث';
+
+  @override
+  String get tourBack => 'السابق';
+
+  @override
+  String get tourListenBody =>
+      'إذاعات القرآن الكريم، وتفسير الشعراوي الصوتي، وقصص القرآن، ودروس ومقاطع من قنوات موثوقة.';
+
+  @override
+  String get tourListenTitle => 'استمع وتعلّم';
+
+  @override
+  String get tourNext => 'التالي';
+
+  @override
+  String tourPage(String n, String total) {
+    return 'الصفحة $n من $total';
+  }
+
+  @override
+  String get tourPrayerBody =>
+      'مواقيت الصلاة حسب موقعك، وتنبيه بالأذان بصوت المؤذن الذي تختاره، واتجاه القبلة والمساجد القريبة.';
+
+  @override
+  String get tourPrayerTitle => 'مواقيت الصلاة والأذان';
+
+  @override
+  String get tourQuranBody =>
+      'مصحف مجمع الملك فهد بصفحاته كاملة، والاستماع بأصوات عدد من القرّاء، والتفسير الميسر، وخطة لختم القرآن.';
+
+  @override
+  String get tourQuranTitle => 'المصحف الشريف';
+
+  @override
+  String get tourSkip => 'تخطي';
+
+  @override
+  String get tourWelcomeBody =>
+      'تطبيق مجاني لوجه الله تعالى، بلا إعلانات ولا اشتراكات: القرآن الكريم والصلاة والأذكار في مكان واحد.';
+
+  @override
+  String get tourWelcomeTitle => 'أهلًا بك في «رتّل وصلِّ»';
 
   @override
   String get videosClearHistory => 'مسح السجل';

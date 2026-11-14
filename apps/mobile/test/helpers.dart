@@ -11,6 +11,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:rattil/app.dart';
 import 'package:rattil/app_services.dart';
 import 'package:rattil/data/content.dart';
+import 'package:rattil/data/device_setup.dart';
 import 'package:rattil/data/location.dart';
 import 'package:rattil/data/notifications.dart';
 import 'package:rattil/data/recitation.dart';
@@ -109,9 +110,11 @@ Future<TestApp> pumpApp(
   LocationProvider? location,
   FakeSharer? sharer,
   Directory? storage,
+  DeviceSetup? deviceSetup,
 }) async {
   final c = content ?? _content!;
-  SharedPreferences.setMockInitialValues({'locale': locale, ...prefs});
+  // The first-run tour is tested on its own (onboarding_test.dart); other tests start on the home screen.
+  SharedPreferences.setMockInitialValues({'locale': locale, 'onboarding.done': true, ...prefs});
   final p = await SharedPreferences.getInstance();
   final services = AppServices.create(
     content: c,
@@ -129,6 +132,7 @@ Future<TestApp> pumpApp(
     hadith: hadith ?? testHadith(c),
     location: location ?? const FakeLocation(LocationUnavailable()),
     sharer: sharer ?? FakeSharer(),
+    deviceSetup: deviceSetup ?? FakeDeviceSetup(),
   );
   if (size != null) {
     tester.view.physicalSize = size * tester.view.devicePixelRatio;
@@ -432,4 +436,43 @@ class FakeSensors implements CompassSensors {
   final Stream<Vec3> accelerometer;
   @override
   final Stream<Vec3> magnetometer;
+}
+
+/// Permission state for the first-run setup, without the platform.
+class FakeDeviceSetup implements DeviceSetup {
+  FakeDeviceSetup({
+    this.isAndroid = true,
+    this.isIos = false,
+    this.location = false,
+    this.notifications = true,
+    this.exact = true,
+    this.battery = false,
+  });
+
+  @override
+  bool isAndroid;
+  @override
+  bool isIos;
+  bool location;
+  bool notifications;
+  bool exact;
+  bool battery;
+  final opened = <String>[];
+
+  @override
+  Future<bool> locationAllowed() async => location;
+  @override
+  Future<bool> notificationsAllowed() async => notifications;
+  @override
+  Future<bool> exactAlarmsAllowed() async => exact;
+  @override
+  Future<bool> batteryUnrestricted() async => battery;
+  @override
+  Future<void> openExactAlarmSettings() async => opened.add('exact');
+  @override
+  Future<void> openBatterySettings() async => opened.add('battery');
+  @override
+  Future<void> openAppSettings() async => opened.add('app');
+  @override
+  Future<void> openNotificationSettings() async => opened.add('notifications');
 }
