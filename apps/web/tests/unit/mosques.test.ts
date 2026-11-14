@@ -2,6 +2,8 @@ import {
   directionsLink,
   distanceM,
   fetchMosques,
+  googleMapsMosque,
+  googleMapsNearby,
   MAX_RESULTS,
   osmLink,
   overpassQuery,
@@ -88,6 +90,12 @@ describe("nearby mosques (OpenStreetMap / Overpass)", () => {
   it("links", () => {
     expect(osmLink({ lat: 30.045, lng: 31.2357 })).toBe(
       "https://www.openstreetmap.org/?mlat=30.045000&mlon=31.235700#map=18/30.045000/31.235700",
+    );
+    expect(googleMapsNearby(30.0444, 31.2357, true)).toBe(
+      "https://www.google.com/maps/search/%D9%85%D8%B3%D8%AC%D8%AF/@30.044400,31.235700,15z",
+    );
+    expect(googleMapsMosque({ lat: 1, lng: 2, name: "مسجد النور" })).toBe(
+      "https://www.google.com/maps/search/?api=1&query=%D9%85%D8%B3%D8%AC%D8%AF+%D8%A7%D9%84%D9%86%D9%88%D8%B1+1.000000%2C2.000000",
     );
     expect(directionsLink({ lat: 1, lng: 2 }, true)).toBe("https://maps.apple.com/?daddr=1.000000,2.000000");
     expect(directionsLink({ lat: 1, lng: 2 }, false)).toBe("geo:1.000000,2.000000?q=1.000000,2.000000");

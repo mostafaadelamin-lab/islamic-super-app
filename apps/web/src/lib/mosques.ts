@@ -138,3 +138,14 @@ export function directionsLink(m: Pick<Mosque, "lat" | "lng">, ios: boolean): st
     ? `https://maps.apple.com/?daddr=${m.lat.toFixed(6)},${m.lng.toFixed(6)}`
     : `geo:${m.lat.toFixed(6)},${m.lng.toFixed(6)}?q=${m.lat.toFixed(6)},${m.lng.toFixed(6)}`;
 }
+
+/** Nearby mosques on Google Maps (same link as the app's googleMapsNearbyUri). */
+export function googleMapsNearby(lat: number, lng: number, arabic: boolean): string {
+  return `https://www.google.com/maps/search/${encodeURIComponent(arabic ? "مسجد" : "mosque")}/@${lat.toFixed(6)},${lng.toFixed(6)},15z`;
+}
+
+/** One mosque on Google Maps, by its name next to its position (the app opens Google Maps on tap). */
+export function googleMapsMosque(m: Pick<Mosque, "lat" | "lng" | "name">): string {
+  const p = `${m.lat.toFixed(6)},${m.lng.toFixed(6)}`;
+  return `https://www.google.com/maps/search/?${new URLSearchParams({ api: "1", query: m.name ? `${m.name} ${p}` : p }).toString()}`;
+}

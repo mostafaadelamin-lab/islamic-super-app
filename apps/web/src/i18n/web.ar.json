@@ -756,5 +756,10 @@
   "reels.searchChannel": "ابحث عن قناة",
   "reels.searchNone": "لا توجد نتائج، أو لا يوجد اتصال بالإنترنت.",
   "reels.suggested": "قنوات إسلامية مقترحة لك",
-  "reels.added": "تمت الإضافة"
+  "reels.added": "تمت الإضافة",
+  "qibla.distance": "المسافة إلى الكعبة",
+  "qibla.placeNote": "اتجاه القبلة محسوب لهذا الموقع. اضغط زر الموقع إن كنت في مكان آخر.",
+  "qibla.tipsTitle": "لقراءة دقيقة",
+  "qibla.mapCheck": "تأكّد من الاتجاه على خريطة جوجل للقبلة",
+  "mosques.onGoogleMaps": "افتح المساجد القريبة على خرائط جوجل"
 }

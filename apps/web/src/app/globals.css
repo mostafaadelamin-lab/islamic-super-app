@@ -3152,3 +3152,7 @@ dd {
   padding: var(--space-xs) 0;
   border-bottom: 1px solid var(--color-line);
 }
+.qibla-tips-h {
+  font-size: 0.95rem;
+  margin: var(--space-md) 0 var(--space-xs);
+}

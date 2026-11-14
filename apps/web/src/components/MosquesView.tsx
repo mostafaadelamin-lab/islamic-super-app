@@ -6,7 +6,7 @@ import { resolveLocation } from "@/lib/cities";
 import { prayerStore } from "@/lib/settings";
 import { readJson, writeJson } from "@/lib/storage";
 import { useStore } from "@/hooks/useStore";
-import { DEFAULT_RADIUS_M, fetchMosques, osmLink, RADII_M, type Mosque } from "@/lib/mosques";
+import { DEFAULT_RADIUS_M, fetchMosques, googleMapsMosque, googleMapsNearby, RADII_M, type Mosque } from "@/lib/mosques";
 
 type Status = "idle" | "loading" | "done" | "error";
 interface Point {
@@ -143,10 +143,21 @@ export function MosquesView({ locale }: { locale: Locale }) {
           {t(locale, "mosques.retry")}
         </button>
       ) : null}
+      <p>
+        <a
+          className="btn btn-sm"
+          href={googleMapsNearby(point.lat, point.lng, locale === "ar")}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-testid="mosques-google"
+        >
+          {t(locale, "mosques.onGoogleMaps")}
+        </a>
+      </p>
       <ul className="mosque-list" data-testid="mosque-list">
         {items.map((m) => (
           <li key={m.id} data-testid="mosque">
-            <a href={osmLink(m)} target="_blank" rel="noopener noreferrer">
+            <a href={googleMapsMosque(m)} target="_blank" rel="noopener noreferrer">
               <strong>{m.name ?? t(locale, "mosques.unnamed")}</strong>
             </a>{" "}
             <span className="muted" data-testid="mosque-distance">

@@ -5,7 +5,12 @@ import { resolveLocation } from "@/lib/cities";
 import { qiblaBearing } from "@/lib/prayer";
 import { prayerStore } from "@/lib/settings";
 import { useStore } from "@/hooks/useStore";
+import { distanceM } from "@/lib/mosques";
 import { LiveCompass } from "./LiveCompass";
+import { Icon } from "./Icon";
+
+/** The Kaaba, Makkah (for the distance, as in the app). */
+const KAABA = { lat: 21.4225, lng: 39.8262 };
 
 export function QiblaView({ locale }: { locale: Locale }) {
   const prefs = useStore(prayerStore);
@@ -21,7 +26,28 @@ export function QiblaView({ locale }: { locale: Locale }) {
         {t(locale, "prayer.qiblaDeg", { deg: localizeDigits(bearing.toFixed(1), locale) })}
       </p>
       <LiveCompass locale={locale} bearing={bearing} lat={loc.lat} lng={loc.lng} />
+      <p className="row qibla-facts">
+        <span className="chip" data-testid="qibla-distance">
+          {t(locale, "qibla.distance")}:{" "}
+          {t(locale, "mosques.km", {
+            n: localizeDigits(Math.round(distanceM(loc.lat, loc.lng, KAABA.lat, KAABA.lng) / 1000), locale),
+          })}
+        </span>
+      </p>
+      <p className="muted small">{t(locale, "qibla.placeNote")}</p>
+      <h3 className="qibla-tips-h">{t(locale, "qibla.tipsTitle")}</h3>
       <p className="muted small">{t(locale, "qibla.note")}</p>
+      <p>
+        <a
+          className="btn btn-sm"
+          href="https://qiblafinder.withgoogle.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-testid="qibla-map-check"
+        >
+          <Icon name="external" size={16} /> {t(locale, "qibla.mapCheck")}
+        </a>
+      </p>
     </section>
   );
 }
