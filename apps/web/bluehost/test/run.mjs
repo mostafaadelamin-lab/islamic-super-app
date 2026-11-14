@@ -14,5 +14,7 @@ const trusted = new Set([...sources.feed, ...sources.suggested].map(s=>s.channel
 const out = {};
 out.feed = await V.buildFeed(sources.feed, get);
 for (const q of ["قرآن","اغنية","  ", "test"]) out["q"+q] = await V.searchVideos(q, get, trusted);
+out.ch = [await V.channelReels("UCYuUcfXvsHapABTcPRWCEoQ", get), await V.channelReels("bad", get)];
+out.cs = await V.searchChannels("قرآن", get);
 out.norm = ["القُرْآنُ الكريمـ", "إيمانٌ ةى"].map(V.normalize);
 console.log(JSON.stringify(out));

@@ -118,6 +118,7 @@ copyFileSync(join(repo, "content/sharawi/dist/sharawi.v1.json"), join(pub, "data
 // Nasheeds (same list as the mobile app, voice-only): munshid list with streamed/saved audio, fetched by /nasheeds.
 copyFileSync(join(repo, "apps/mobile/assets/content/nasheeds.v2.json"), join(pub, "data/nasheeds.json"));
 // Videos function (netlify/functions/videos.mjs): the trusted channels (feed) and the suggested ones (search ranking).
+writeJson(join(gen, "reel-suggestions.json"), readJson("apps/mobile/assets/content/reel-suggestions.v1.json"));
 writeJson(join(app, "netlify/lib/reel-sources.json"), {
   feed: readJson("content/reels/dist/reel-sources.v1.json").sources,
   suggested: readJson("apps/mobile/assets/content/reel-suggestions.v1.json").sources,

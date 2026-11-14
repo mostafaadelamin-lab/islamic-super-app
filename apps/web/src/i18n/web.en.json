@@ -748,5 +748,13 @@
   "stories.forward": "Forward 30 seconds",
   "stories.watchVideo": "Watch video",
   "stories.videoBy": "Sheikh Nabil Al-Awadi",
-  "stories.howTo": "For each episode: tap to listen, or \"Watch video\" to watch it."
+  "stories.howTo": "For each episode: tap to listen, or \"Watch video\" to watch it.",
+  "reels.myChannels": "Your channels",
+  "reels.addChannel": "Add channel",
+  "reels.removeChannel": "Remove channel",
+  "reels.searchChannelHint": "Channel or sheikh name",
+  "reels.searchChannel": "Find a channel",
+  "reels.searchNone": "No results, or no internet connection.",
+  "reels.suggested": "Suggested Islamic channels",
+  "reels.added": "Added"
 }

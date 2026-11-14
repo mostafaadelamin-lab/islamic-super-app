@@ -15,6 +15,8 @@ import {
   type Reel,
 } from "@/lib/reels";
 import { VIDEO_API } from "@/lib/videos";
+import { fetchChannelReels, userChannelsStore } from "@/lib/reel-channels";
+import { ChannelManager } from "./ChannelManager";
 import { useStore } from "@/hooks/useStore";
 import { Icon } from "./Icon";
 
@@ -59,17 +61,41 @@ export function ReelsFeed({
     void refresh(false);
   }, [refresh]);
 
+  // The viewer's own channels (as in the app): each one's newest videos join the feed.
+  const myChannels = useStore(userChannelsStore);
+  const [channelReels, setChannelReels] = useState<Record<string, Reel[]>>({});
+  useEffect(() => {
+    const f = fetchImpl ?? (typeof fetch === "function" ? fetch.bind(globalThis) : null);
+    if (!f) return;
+    let live = true;
+    for (const ch of myChannels) {
+      if (channelReels[ch.channelId]) continue;
+      void fetchChannelReels(ch, f).then((items) => {
+        if (live) setChannelReels((m) => ({ ...m, [ch.channelId]: items }));
+      });
+    }
+    return () => {
+      live = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [myChannels, fetchImpl]);
+
   const hidden = new Set(prefs.hidden);
   const autoItems = (cache?.items ?? []).filter((r) => !hidden.has(r.sourceId ?? ""));
   const bySource = new Map<string, Reel[]>();
   for (const r of autoItems) bySource.set(r.sourceId ?? "", [...(bySource.get(r.sourceId ?? "") ?? []), r]);
+  for (const ch of myChannels) {
+    const id = `yt-${ch.channelId}`;
+    if (!hidden.has(id) && !bySource.has(id)) bySource.set(id, channelReels[ch.channelId] ?? []);
+  }
   const seen = new Set<string>();
   const list = [...mixReels([...bySource.values()]), ...visibleReels(reels, false)].filter((r) =>
     seen.has(r.id) ? false : (seen.add(r.id), true),
   );
   const sourceName = (id: string | null | undefined): string => {
     const s = cache?.sources.find((x) => x.id === id);
-    return s ? (locale === "ar" ? s.name.ar : s.name.en) : "";
+    if (s) return locale === "ar" ? s.name.ar : s.name.en;
+    return myChannels.find((c) => `yt-${c.channelId}` === id)?.name ?? "";
   };
   const hide = (r: Reel): void => {
     if (!r.sourceId) return;
@@ -125,6 +151,13 @@ export function ReelsFeed({
 
   return (
     <div className="reels">
+      <ChannelManager
+        locale={locale}
+        fetchImpl={fetchImpl}
+        feedChannelIds={
+          new Set((cache?.sources ?? []).map((s) => s.channelId).filter((c): c is string => !!c))
+        }
+      />
       {undo ? (
         <p className="reels-undo" role="status" data-testid="reels-hidden">
           {t(locale, "reels.hidden", { name: undo.name })}{" "}

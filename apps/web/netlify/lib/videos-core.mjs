@@ -381,3 +381,42 @@ export async function searchVideos(query, get, trustedChannelIds) {
     items: hits.map((h) => ({ ...h, trusted: trusted(h) === 0 })),
   };
 }
+
+/** Channels on YouTube's channel-search page (same parsing as the app's ReelsFeed.parseChannelSearch). */
+export function parseChannelSearch(html, max = 15) {
+  const out = [];
+  const seen = new Set();
+  const re =
+    /"channelRenderer":\{"channelId":"(UC[A-Za-z0-9_-]{22})","title":\{"simpleText":"((?:[^"\\]|\\.)*)"/g;
+  let m;
+  while ((m = re.exec(html)) && out.length < max) {
+    if (seen.has(m[1])) continue;
+    seen.add(m[1]);
+    const after = html.slice(re.lastIndex, re.lastIndex + 4000);
+    const subs = /"subscriberCountText":\{[^}]*?"simpleText":"([^"]+)"/.exec(after);
+    out.push({ id: m[1], title: jsonString(m[2]), subs: subs ? jsonString(subs[1]) : null });
+  }
+  return out;
+}
+
+export const channelSearchPage = (q) =>
+  `https://www.youtube.com/results?${new URLSearchParams({ search_query: q, sp: "EgIQAg==", hl: "ar" }).toString()}`;
+
+/** GET /api/channels/search?q=…: channels the viewer can add to their videos (as in the app). */
+export async function searchChannels(query, get) {
+  const q = String(query ?? "")
+    .trim()
+    .slice(0, 120);
+  if (!q || isBlocked(q)) return { schema: "channel-search.v1", query: q, items: [] };
+  const page = await get(channelSearchPage(q));
+  if (page == null) throw new Error("youtube unreachable");
+  return { schema: "channel-search.v1", query: q, items: parseChannelSearch(page) };
+}
+
+/** GET /api/v1/reels/channel?id=UC…: one channel the viewer added (same reel shape as the feed). */
+export async function channelReels(cid, get) {
+  if (!CHANNEL_ID.test(String(cid ?? ""))) return null;
+  const src = { id: `yt-${cid}`, channelId: cid, name: { ar: "", en: "" }, category: "lesson" };
+  const feed = await buildFeed([src], get);
+  return { schema: "reels-channel.v1", channelId: cid, items: feed.items };
+}

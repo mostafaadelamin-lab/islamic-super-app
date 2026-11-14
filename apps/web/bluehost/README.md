@@ -6,6 +6,8 @@ The site is a static export; only the videos feed/search needs a server. On Netl
 
 - `/api/v1/reels/feed` -> `api/videos.php?route=feed` (cache 3 h in `api/cache/`, last good copy served if YouTube fails)
 - `/api/videos/search?q=` -> `api/videos.php?route=search` (cache 1 h)
+- `/api/channels/search?q=` -> `api/videos.php?route=channels` (channel search for "your channels", cache 1 h)
+- `/api/v1/reels/channel?id=UC…` -> `api/videos.php?route=channel` (one added channel's videos, cache 3 h)
 
 `.htaccess` also forces https://rattilwasalli.com (no www), serves `/404.html`, adds `/` to page folders,
 and sets cache headers (hashed `_next/static` 1 year; pages, `sw.js` and the manifest `no-cache`).

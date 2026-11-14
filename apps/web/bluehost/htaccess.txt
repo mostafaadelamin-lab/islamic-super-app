@@ -19,6 +19,8 @@ ErrorDocument 404 /404.html
   # Video API (same paths the website already calls on Netlify).
   RewriteRule ^api/v1/reels/feed/?$ api/videos.php?route=feed [L,QSA]
   RewriteRule ^api/videos/search/?$ api/videos.php?route=search [L,QSA]
+  RewriteRule ^api/v1/reels/channel/?$ api/videos.php?route=channel [L,QSA]
+  RewriteRule ^api/channels/search/?$ api/videos.php?route=channels [L,QSA]
 
   # Pages are folders with index.html (Next.js trailingSlash): /ar/help -> /ar/help/
   RewriteCond %{REQUEST_FILENAME} !-f

@@ -4,6 +4,8 @@
  * PHP port of netlify/lib/videos-core.mjs + netlify/functions/videos.mjs, same rules and same JSON:
  *  - GET /api/v1/reels/feed            -> newest videos of the trusted channels (schema reels-feed.v1)
  *  - GET /api/videos/search?q=...      -> Islamic videos only, trusted channels first (schema video-search.v1)
+ *  - GET /api/channels/search?q=...    -> channels the viewer can add to their videos (schema channel-search.v1)
+ *  - GET /api/v1/reels/channel?id=UC.. -> newest videos of one channel the viewer added (schema reels-channel.v1)
  * Browsers cannot read YouTube directly (no CORS), so this file does it on the server. No API key, no account.
  * Results are cached in api/cache/ (feed 3 h, search 1 h); when YouTube cannot be reached the last good copy is served.
  */
@@ -335,6 +337,52 @@ function searchVideos(string $query, callable $get, array $trusted): array
     ];
 }
 
+/** Channels on YouTube's channel-search page (same parsing as the app and videos-core.mjs). */
+function parseChannelSearch(string $page, int $max = 15): array
+{
+    $out = [];
+    $seen = [];
+    preg_match_all(
+        '/"channelRenderer":\{"channelId":"(UC[A-Za-z0-9_-]{22})","title":\{"simpleText":"((?:[^"\\\\]|\\\\.)*)"/',
+        $page,
+        $all,
+        PREG_SET_ORDER | PREG_OFFSET_CAPTURE,
+    );
+    foreach ($all as $m) {
+        if (count($out) >= $max) break;
+        $id = $m[1][0];
+        if (isset($seen[$id])) continue;
+        $seen[$id] = true;
+        $end = $m[0][1] + strlen($m[0][0]);
+        $after = substr($page, $end, 4000);
+        $subs = preg_match('/"subscriberCountText":\{[^}]*?"simpleText":"([^"]+)"/', $after, $s) ? jsonString($s[1]) : null;
+        $out[] = ['id' => $id, 'title' => jsonString($m[2][0]), 'subs' => $subs];
+    }
+    return $out;
+}
+
+function channelSearchPage(string $q): string
+{
+    return 'https://www.youtube.com/results?' . http_build_query(['search_query' => $q, 'sp' => 'EgIQAg==', 'hl' => 'ar'], '', '&', PHP_QUERY_RFC3986);
+}
+
+function searchChannels(string $query, callable $get): array
+{
+    $q = mb_substr(trim($query), 0, 120, 'UTF-8');
+    if ($q === '' || isBlocked($q)) return ['schema' => 'channel-search.v1', 'query' => $q, 'items' => []];
+    $page = $get(['s' => channelSearchPage($q)])['s'] ?? null;
+    if ($page === null) throw new RuntimeException('youtube unreachable');
+    return ['schema' => 'channel-search.v1', 'query' => $q, 'items' => parseChannelSearch($page)];
+}
+
+function channelReels(string $cid, callable $get): ?array
+{
+    if (!preg_match(CHANNEL_ID, $cid)) return null;
+    $src = ['id' => "yt-$cid", 'channelId' => $cid, 'name' => ['ar' => '', 'en' => ''], 'category' => 'lesson'];
+    $feed = buildFeed([$src], $get);
+    return ['schema' => 'reels-channel.v1', 'channelId' => $cid, 'items' => $feed['items']];
+}
+
 // ---------------------------------------------------------------------------------------------------------------
 // HTTP entry point (skipped when a test includes this file).
 
@@ -395,6 +443,17 @@ if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') === __FILE__) {
             }
             $key = 'q:' . mb_strtolower(trim($q), 'UTF-8');
             send(cached($key, SEARCH_TTL, fn() => searchVideos($q, 'getMany', $trusted), fn() => true), 200, SEARCH_TTL);
+        } elseif ($route === 'channel') {
+            $id = is_string($_GET['id'] ?? null) ? $_GET['id'] : '';
+            if (!preg_match(CHANNEL_ID, $id)) {
+                send(['error' => 'bad channel'], 400, 0);
+            } else {
+                send(cached("ch:$id", FEED_TTL, fn() => channelReels($id, 'getMany'), fn($b) => count($b['items']) > 0), 200, FEED_TTL);
+            }
+        } elseif ($route === 'channels') {
+            $q = is_string($_GET['q'] ?? null) ? $_GET['q'] : '';
+            $key = 'cs:' . mb_strtolower(trim($q), 'UTF-8');
+            send(cached($key, SEARCH_TTL, fn() => searchChannels($q, 'getMany'), fn() => true), 200, SEARCH_TTL);
         } else {
             send(['error' => 'not found'], 404, 0);
         }

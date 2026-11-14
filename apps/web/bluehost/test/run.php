@@ -14,5 +14,7 @@ $trusted = [];
 foreach (array_merge($sources['feed'], $sources['suggested']) as $s) if (!empty($s['channelId'])) $trusted[$s['channelId']] = true;
 $out = ['feed' => buildFeed($sources['feed'], $get)];
 foreach (["قرآن","اغنية","  ","test"] as $q) $out["q$q"] = searchVideos($q, $get, $trusted);
+$out['ch'] = [channelReels('UCYuUcfXvsHapABTcPRWCEoQ', $get), channelReels('bad', $get)];
+$out['cs'] = searchChannels('قرآن', $get);
 $out['norm'] = array_map('normalize', ["القُرْآنُ الكريمـ", "إيمانٌ ةى"]);
 echo json_encode($out, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
