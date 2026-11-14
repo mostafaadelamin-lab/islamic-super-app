@@ -5,6 +5,7 @@ import { prefsStore, type Preferences } from "@/lib/settings";
 import { useStore } from "@/hooks/useStore";
 import { registerServiceWorker } from "@/lib/sw-client";
 import { refreshAutoLocation } from "@/lib/auto-location";
+import { installAudioFocus } from "@/lib/audio-focus";
 
 export function applyPrefs(p: Preferences, root: HTMLElement = document.documentElement): void {
   if (p.theme === "system") root.removeAttribute("data-theme");
@@ -24,6 +25,7 @@ export function ClientEffects({ locale }: { locale: Locale }) {
   useEffect(() => {
     registerServiceWorker();
     void refreshAutoLocation(); // the app's "detect my location automatically"
+    installAudioFocus(); // one sound at a time across the app
     // Marks the page as interactive (React has hydrated); used by e2e tests to
     // avoid interacting with server-rendered controls before handlers exist.
     document.documentElement.dataset.hydrated = "true";

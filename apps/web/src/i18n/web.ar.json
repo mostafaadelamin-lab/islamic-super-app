@@ -621,6 +621,8 @@
   "nasheeds.count": "{n} نشيد",
   "nasheeds.loadError": "تعذّر تحميل قائمة الأناشيد.",
   "nasheeds.noMatch": "لا توجد نتائج.",
+  "nasheeds.prev": "النشيد السابق",
+  "nasheeds.next": "النشيد التالي",
   "videos.search": "بحث",
   "videos.searchHint": "ابحث عن تلاوة أو درس أو موعظة",
   "videos.searchNote": "نتائج البحث فيديوهات إسلامية فقط (تلاوات ودروس ومواعظ)، والقنوات الموثوقة أولًا.",

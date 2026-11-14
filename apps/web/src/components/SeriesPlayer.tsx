@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
-import { player } from "@/lib/audio-player";
 import { minutes, STORY_VIDEOS, type Episode, type Series } from "@/lib/stories";
 import { embedVideoUrl } from "@/lib/videos";
+import { pauseOthers } from "@/lib/audio-focus";
 import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { Icon } from "./Icon";
 import { SleepTimer } from "./SleepTimer";
@@ -100,7 +100,7 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
                 onEnded={() => savePosition(posKey(current), 0)}
                 onPlay={(e) => {
                   setError(false);
-                  player.stop(); // one voice at a time
+                  pauseOthers(e.currentTarget); // one sound at a time
                   claimMediaSession(e.currentTarget, { title: L(current.title), artist: L(series.narrator) });
                   mediaSessionState(true);
                 }}
@@ -199,7 +199,7 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
                       aria-pressed={video === STORY_VIDEOS[e.id]}
                       onClick={() => {
                         audioRef.current?.pause();
-                        player.stop();
+                        pauseOthers(null); // the video plays alone
                         setVideo(STORY_VIDEOS[e.id]!);
                       }}
                     >

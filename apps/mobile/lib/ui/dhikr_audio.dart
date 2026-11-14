@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
 import '../app_services.dart';
+import '../data/audio_focus.dart';
 import 'l10n_ext.dart';
 import 'r_icon.dart';
 
@@ -86,7 +87,12 @@ UrlAudio Function()? debugUrlAudioFactory;
 /// The dhikr recording now loaded: plays once to the end (never loops), can be
 /// paused, resumed, sought and stopped from [DhikrPlayerBar].
 class DhikrPlayer extends ChangeNotifier {
-  DhikrPlayer._();
+  DhikrPlayer._() {
+    // One sound at a time: the recitation or a nasheed starting pauses the dhikr.
+    AudioFocus.register(this, () {
+      if (playing || loading) unawaited(pause());
+    });
+  }
   static final instance = DhikrPlayer._();
 
   UrlAudio? _audio;
@@ -128,6 +134,7 @@ class DhikrPlayer extends ChangeNotifier {
       await stop();
       return;
     }
+    AudioFocus.claim(this); // pauses the recitation, which resumes later from its ayah
     url = u;
     loading = true;
     failed = false;
@@ -151,6 +158,7 @@ class DhikrPlayer extends ChangeNotifier {
 
   Future<void> resume() async {
     if (_audio == null || url == null) return;
+    AudioFocus.claim(this);
     await _a.resume();
   }
 

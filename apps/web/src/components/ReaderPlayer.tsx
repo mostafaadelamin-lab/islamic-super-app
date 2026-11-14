@@ -61,6 +61,20 @@ export function ReaderPlayer({ locale, page }: { locale: Locale; page: number })
             <ReaderIcon name="chevronDown" size={16} />
           </span>
         </label>
+        <label className="rdp-volume" title={t(locale, "reader.volume")}>
+          <Icon name="volume" size={18} />
+          <span className="sr-only">{t(locale, "reader.volume")}</span>
+          <input
+            type="range"
+            min={0}
+            max={100}
+            step={5}
+            value={Math.round(prefs.volume * 100)}
+            data-testid="player-volume"
+            aria-valuetext={`${localizeDigits(Math.round(prefs.volume * 100), locale)}${locale === "ar" ? "٪" : "%"}`}
+            onChange={(e) => audioStore.set((p) => ({ ...p, volume: Number(e.target.value) / 100 }))}
+          />
+        </label>
         <span className="rdp-now" data-testid="player-now" aria-live="polite">
           {now}
         </span>

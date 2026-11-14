@@ -6,6 +6,7 @@ import 'package:just_audio/just_audio.dart';
 import '../domain/audio_queue.dart';
 import '../domain/quran.dart';
 import '../domain/stories.dart';
+import 'audio_focus.dart';
 import 'content.dart';
 import 'settings.dart';
 
@@ -85,7 +86,9 @@ class RecitationController extends ChangeNotifier {
   }) : _content = content,
        _settings = settings,
        _factory = backendFactory,
-       _localFile = localFile;
+       _localFile = localFile {
+    AudioFocus.register(this, () => unawaited(interrupt()));
+  }
 
   /// A downloaded copy of an item's file, played instead of streaming.
   final Future<String?> Function(String reciter, QueueItem item)? _localFile;
@@ -107,6 +110,11 @@ class RecitationController extends ChangeNotifier {
   PlayScope get scope => _scope;
   bool get isActive => _state != RecitationState.idle;
   bool get isPlaying => _state == RecitationState.playing || _state == RecitationState.loading;
+
+  bool _interrupted = false;
+
+  /// Another sound (adhkar, a nasheed…) paused the recitation; the Mushaf reopens at its ayah.
+  bool get wasInterrupted => _interrupted && _state == RecitationState.paused;
 
   QueueItem? get current => _state == RecitationState.idle || _queue.isEmpty ? null : _queue[_index];
 
@@ -174,6 +182,8 @@ class RecitationController extends ChangeNotifier {
   /// background service) alive between ayahs.
   Future<void> _playCurrent({bool advancing = false}) async {
     final gen = ++_generation;
+    _interrupted = false;
+    if (!advancing) AudioFocus.claim(this);
     final item = _queue[_index];
     _state = RecitationState.loading;
     notifyListeners();
@@ -227,8 +237,24 @@ class RecitationController extends ChangeNotifier {
     await _backend?.pause();
   }
 
+  /// Another sound started: pause and remember the ayah as the place to come back to.
+  Future<void> interrupt() async {
+    if (!isPlaying) return;
+    final ref = current?.isBasmala == false ? current!.ref : null;
+    if (_state == RecitationState.loading) {
+      _generation++; // the file still loading must not start playing
+    }
+    _state = RecitationState.paused;
+    _interrupted = true;
+    notifyListeners();
+    await _backend?.pause();
+    if (ref != null) await _settings.setLastRead(ref);
+  }
+
   Future<void> resume() async {
+    _interrupted = false;
     if (_state == RecitationState.paused) {
+      AudioFocus.claim(this);
       _state = RecitationState.playing;
       notifyListeners();
       await _backend?.play();
@@ -270,12 +296,14 @@ class RecitationController extends ChangeNotifier {
   }
 
   Future<void> stop() async {
+    _interrupted = false;
     _finish();
     await _backend?.stop();
   }
 
   @override
   void dispose() {
+    AudioFocus.unregister(this);
     _generation++;
     unawaited(_completedSub?.cancel());
     unawaited(_backend?.dispose());
@@ -348,6 +376,7 @@ class NarrationController extends ChangeNotifier {
        _recitation = recitation,
        _factory = backendFactory {
     _recitation.addListener(_onRecitation);
+    AudioFocus.register(this, () => unawaited(pause()));
   }
 
   final SettingsController _settings;
@@ -425,7 +454,8 @@ class NarrationController extends ChangeNotifier {
     bool fromStart = false,
   }) async {
     final gen = ++_generation;
-    if (_recitation.isActive) await _recitation.stop();
+    // One sound at a time: the recitation pauses (and later resumes from its ayah).
+    AudioFocus.claim(this);
     _remember = remember;
     if (playlist != null) _playlist = List.unmodifiable(playlist);
     if (playlist == null && _seriesId != seriesId) _playlist = const [];
@@ -499,7 +529,7 @@ class NarrationController extends ChangeNotifier {
     if (e == null) return;
     if (_state == RecitationState.error) return playEpisode(_seriesId!, e, remember: _remember);
     if (_state != RecitationState.paused) return;
-    if (_recitation.isActive) await _recitation.stop();
+    AudioFocus.claim(this);
     _state = RecitationState.playing;
     notifyListeners();
     await _backend?.play();
@@ -548,6 +578,7 @@ class NarrationController extends ChangeNotifier {
   @override
   void dispose() {
     _generation++;
+    AudioFocus.unregister(this);
     _recitation.removeListener(_onRecitation);
     unawaited(_posSub?.cancel());
     unawaited(_doneSub?.cancel());

@@ -54,6 +54,10 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   // Full-screen reading: the controls stay hidden until the page is tapped.
   bool _controls = !PageReaderScreen.startFullScreen;
   bool? _immersiveUi;
+  // Full screen: a short "how to turn pages / show the controls" note, the first few times.
+  bool _hint = false;
+  Timer? _hintTimer;
+  static const _hintShows = 3;
 
   int get page => _page;
   AyahRef? get selected => _selected;
@@ -73,7 +77,21 @@ class PageReaderScreenState extends State<PageReaderScreen> {
       ScaffoldMessenger.maybeOf(context)?.removeCurrentSnackBar();
       _recitation = context.services.recitation..addListener(_onRecitation);
       _lastAudioPage = _recitation!.currentPage;
+      // The recitation was paused by another sound (adhkar…): open at the ayah it stopped at.
+      final held = _recitation!.wasInterrupted ? _recitation!.currentPage : null;
+      if (held != null && held != _page) _jump(held);
       _scheduleKhatma();
+      _maybeShowHint();
+    });
+  }
+
+  void _maybeShowHint() {
+    final settings = context.services.settings;
+    if (!fullScreen || settings.readerHintShown >= _hintShows) return;
+    unawaited(settings.setReaderHintShown(settings.readerHintShown + 1));
+    setState(() => _hint = true);
+    _hintTimer = Timer(const Duration(seconds: 7), () {
+      if (mounted) setState(() => _hint = false);
     });
   }
 
@@ -88,6 +106,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   void dispose() {
     if (_immersiveUi == true) unawaited(SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge));
     _khatmaTimer?.cancel();
+    _hintTimer?.cancel();
     _recitation?.removeListener(_onRecitation);
     _controller.dispose();
     super.dispose();
@@ -173,6 +192,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
     await showAyahSheet(
       context,
       r,
+      overPage: _tab == ReaderTab.mushaf,
       onAyahChanged: (next) {
         if (!mounted) return;
         setState(() => _selected = next);
@@ -295,65 +315,193 @@ class PageReaderScreenState extends State<PageReaderScreen> {
             if (full) const SizedBox.shrink(key: Key('readerFullScreen')),
             Expanded(
               key: const Key('readerBody'),
-              child: ListenableBuilder(
-                listenable: Listenable.merge([s.recitation, s.settings]),
-                builder: (context, _) {
-                  final split = _tab == ReaderTab.mushaf && s.settings.tafsirWithRecitation && s.recitation.isActive;
-                  if (split) return const SplitRecitationView();
-                  final controller = _tab == ReaderTab.mushaf ? _pageController() : _controller;
-                  return switch (_tab) {
-                    ReaderTab.mushaf => PageView.builder(
-                      key: const Key('mushafPageView'),
-                      controller: controller,
-                      itemCount: _count,
-                      onPageChanged: _onPageChanged,
-                      itemBuilder: (context, i) => BookPage(
-                        index: i,
-                        controller: controller,
-                        child: TabletPage(
-                          child: ZoomedPage(
-                            zoom: s.settings.mushafZoom,
-                            child: MushafPageView(
-                              page: i + 1,
-                              selected: _selected,
-                              playing: s.recitation.currentRef,
-                              onAyahTap: _onAyahTap,
-                              immersive: full,
-                              onBackgroundTap: () => setState(() {
-                                _controls = !_controls; // a tap shows or hides the controls
-                                _selected = null;
-                              }),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    ReaderTab.ayat => ReadableWidth(
-                      child: PageAyahList(
-                        key: ValueKey('ayat-$_page'),
-                        page: _page,
-                        withTafsir: false,
-                        selected: _selected,
-                        onAyahTap: _onAyahTap,
-                      ),
-                    ),
-                    ReaderTab.tafsir => ReadableWidth(
-                      child: PageAyahList(
-                        key: ValueKey('tafsir-$_page'),
-                        page: _page,
-                        withTafsir: true,
-                        selected: _selected,
-                        onAyahTap: _onAyahTap,
-                      ),
-                    ),
-                  };
-                },
+              child: _withSidePanel(
+                side: !full && ayahSidePanel(size),
+                child: Stack(
+                  children: [
+                    Positioned.fill(child: _pages(context)),
+                    if (full) ..._turnArrows(context),
+                    if (full && _hint) _hintBanner(context),
+                  ],
+                ),
               ),
             ),
-            if (!full) ...[ReaderPlayerCard(page: _page), _sliderRow(context), _bottomBar(context)],
+            if (!full && !ayahSidePanel(size)) ..._controlsList(),
           ],
         ),
       ),
+    );
+  }
+
+  List<Widget> _controlsList() => [ReaderPlayerCard(page: _page), _sliderRow(context), _bottomBar(context)];
+
+  /// Wide screens (tablet sideways): the player, slider and bar in a column beside the page,
+  /// so showing them never shrinks or covers it (owner 2026-11-14).
+  Widget _withSidePanel({required bool side, required Widget child}) {
+    if (!side) return child;
+    return Row(
+      key: const Key('readerSidePanel'),
+      children: [
+        Expanded(child: child),
+        SizedBox(
+          width: ayahPanelWidth,
+          child: Column(mainAxisAlignment: MainAxisAlignment.end, children: _controlsList()),
+        ),
+      ],
+    );
+  }
+
+  /// Turns one page with the book animation (+1 = next).
+  void _turn(int delta) {
+    final p = _page + delta;
+    if (p < 1 || p > _count) return;
+    if (_controller.hasClients) {
+      unawaited(_controller.animateToPage(p - 1, duration: const Duration(milliseconds: 380), curve: Curves.easeInOut));
+    } else {
+      _setPage(p);
+    }
+  }
+
+  /// Full screen: two arrows to turn pages (the next page is on the left in Arabic, like a printed Mushaf).
+  /// Phones: small, at the bottom corners beside the page number, never on the text.
+  List<Widget> _turnArrows(BuildContext context) {
+    final l = context.l10n;
+    final scheme = Theme.of(context).colorScheme;
+    final rtl = Directionality.of(context) == TextDirection.rtl;
+    final phone = MediaQuery.sizeOf(context).width < 600;
+    Widget arrow({required bool next, required bool left}) {
+      final enabled = next ? _page < _count : _page > 1;
+      final button = Opacity(
+        opacity: enabled ? 0.8 : 0,
+        child: Material(
+          color: scheme.surface.withValues(alpha: 0.85),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(phone ? 10 : 14),
+            side: BorderSide(color: scheme.primary.withValues(alpha: 0.35)),
+          ),
+          child: InkWell(
+            key: Key(next ? 'turnNext' : 'turnPrev'),
+            borderRadius: BorderRadius.circular(phone ? 10 : 14),
+            onTap: enabled ? () => _turn(next ? 1 : -1) : null,
+            child: Tooltip(
+              message: next ? l.quranNextPage : l.quranPrevPage,
+              child: SizedBox(
+                width: phone ? 40 : 44,
+                height: phone ? 32 : 64,
+                child: Icon(
+                  left ? Icons.chevron_left : Icons.chevron_right,
+                  textDirection: TextDirection.ltr,
+                  color: scheme.primary,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      return phone
+          ? Positioned(bottom: 2, left: left ? 4 : null, right: left ? null : 4, child: button)
+          : Positioned(
+              top: 0,
+              bottom: 0,
+              left: left ? 4 : null,
+              right: left ? null : 4,
+              child: Center(child: button),
+            );
+    }
+
+    return [arrow(next: true, left: rtl), arrow(next: false, left: !rtl)];
+  }
+
+  Widget _hintBanner(BuildContext context) {
+    final l = context.l10n;
+    final scheme = Theme.of(context).colorScheme;
+    return Positioned(
+      top: DesignTokens.spaceSm,
+      left: DesignTokens.spaceMd,
+      right: DesignTokens.spaceMd,
+      child: Material(
+        key: const Key('readerHint'),
+        color: scheme.inverseSurface.withValues(alpha: 0.92),
+        borderRadius: BorderRadius.circular(14),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            DesignTokens.spaceMd,
+            DesignTokens.spaceXs,
+            DesignTokens.spaceXs,
+            DesignTokens.spaceXs,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(l.readerFullHint, style: TextStyle(color: scheme.onInverseSurface, height: 1.5)),
+              ),
+              TextButton(
+                onPressed: () => setState(() => _hint = false),
+                child: Text(l.readerHintClose, style: TextStyle(color: scheme.inversePrimary)),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _pages(BuildContext context) {
+    final s = context.services;
+    final full = fullScreen;
+    return ListenableBuilder(
+      listenable: Listenable.merge([s.recitation, s.settings]),
+      builder: (context, _) {
+        final split = _tab == ReaderTab.mushaf && s.settings.tafsirWithRecitation && s.recitation.isActive;
+        if (split) return const SplitRecitationView();
+        final controller = _tab == ReaderTab.mushaf ? _pageController() : _controller;
+        return switch (_tab) {
+          ReaderTab.mushaf => PageView.builder(
+            key: const Key('mushafPageView'),
+            controller: controller,
+            itemCount: _count,
+            onPageChanged: _onPageChanged,
+            itemBuilder: (context, i) => BookPage(
+              index: i,
+              controller: controller,
+              child: TabletPage(
+                child: ZoomedPage(
+                  zoom: s.settings.mushafZoom,
+                  child: MushafPageView(
+                    page: i + 1,
+                    selected: _selected,
+                    playing: s.recitation.currentRef,
+                    onAyahTap: _onAyahTap,
+                    immersive: full,
+                    onBackgroundTap: () => setState(() {
+                      _controls = !_controls; // a tap shows or hides the controls
+                      _selected = null;
+                    }),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          ReaderTab.ayat => ReadableWidth(
+            child: PageAyahList(
+              key: ValueKey('ayat-$_page'),
+              page: _page,
+              withTafsir: false,
+              selected: _selected,
+              onAyahTap: _onAyahTap,
+            ),
+          ),
+          ReaderTab.tafsir => ReadableWidth(
+            child: PageAyahList(
+              key: ValueKey('tafsir-$_page'),
+              page: _page,
+              withTafsir: true,
+              selected: _selected,
+              onAyahTap: _onAyahTap,
+            ),
+          ),
+        };
+      },
     );
   }
 

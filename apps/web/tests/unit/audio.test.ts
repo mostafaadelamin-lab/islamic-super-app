@@ -146,6 +146,7 @@ describe("audio settings", () => {
       follow: true,
       tafsir: false,
       speed: 1,
+      volume: 1,
     });
     expect(sanitizeAudio({ reciter: "Husary_128kbps", repeat: 3, follow: false, tafsir: true })).toEqual({
       reciter: "Husary_128kbps",
@@ -153,7 +154,11 @@ describe("audio settings", () => {
       follow: false,
       tafsir: true,
       speed: 1,
+      volume: 1,
     });
+    expect(sanitizeAudio({ volume: 0.4 }).volume).toBe(0.4);
+    expect(sanitizeAudio({ volume: 3 }).volume).toBe(1);
+    expect(sanitizeAudio({ volume: "loud" }).volume).toBe(1);
     // "tafsir with recitation" is off unless explicitly true
     expect(sanitizeAudio({ tafsir: "yes" }).tafsir).toBe(false);
     expect(sanitizeAudio({ tafsir: 1 }).tafsir).toBe(false);

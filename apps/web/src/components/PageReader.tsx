@@ -75,6 +75,20 @@ const FIT = {
   /** Sub-pixel rounding margin so the widest line never overflows. */
   safetyPx: 2,
 } as const;
+/**
+ * Wide screens (laptops, tablets sideways): the player, page slider and tools sit in a column beside the page
+ * instead of under it, so showing them never shrinks or covers the Mushaf page. Same query as reader.css.
+ */
+export const SIDE_PANEL_QUERY = "(min-width: 1024px) and (min-height: 560px) and (orientation: landscape)";
+export function sidePanel(): boolean {
+  return typeof window !== "undefined" && typeof window.matchMedia === "function"
+    ? window.matchMedia(SIDE_PANEL_QUERY).matches
+    : false;
+}
+/** How many times the full-screen hint (how to turn pages, how to show the controls) is shown. */
+const HINT_SHOWS = 3;
+const HINT_KEY = "rattil.readerHint";
+const HINT_MS = 7000;
 const DRAG_START_PX = 8;
 const TURN_MS = 220;
 const TILT_DIVISOR = 40;
@@ -113,15 +127,21 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full
     }
     // Fit between the page's top and the floating player / page slider / bottom bar.
     const top = frame.getBoundingClientRect().top + window.scrollY;
-    const dock = document.querySelector<HTMLElement>(".rd-dock")?.offsetHeight ?? 0;
+    const dock = sidePanel() ? 0 : (document.querySelector<HTMLElement>(".rd-dock")?.offsetHeight ?? 0);
     const frameChrome = frame.offsetHeight - el.offsetHeight;
     const room = Math.max(FIT.minHeight, window.innerHeight - top - dock - frameChrome - FIT.bottomGap);
     // The frame fills the room (pages 1–2 are centred in it, like the printed Mushaf).
     frame.style.setProperty("--m-min-h", `${Math.floor(room + frameChrome)}px`);
     const byHeight =
       room / (Math.max(1, el.querySelectorAll(".m-line").length || FIT.lines) * FIT.lineHeight);
-    const size = Math.min(byWidth, byHeight, available / (FIT.lineEms * FIT.capRatio));
+    let size = Math.min(byWidth, byHeight, available / (FIT.lineEms * FIT.capRatio));
     el.style.setProperty("--m-size", `${size.toFixed(2)}px`);
+    // Pages 1–2 (few centred lines under a tall surah band) can still come out taller than the room: shrink to fit.
+    const tall = el.offsetHeight;
+    if (tall > room + 1) {
+      size = (size * room) / tall;
+      el.style.setProperty("--m-size", `${size.toFixed(2)}px`);
+    }
     // Full screen: when the width limits the size, spread the 15 lines over the whole height (like the printed page).
     const lineCount = el.querySelectorAll(".m-line").length;
     if (full && !isCentredPage(page) && byHeight > size && lineCount) {
@@ -205,6 +225,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const [sheet, setSheet] = useState<"help" | "khatma" | null>(null);
   // Full-screen reading: the controls stay hidden until the page is tapped.
   const [chrome, setChrome] = useState(false);
+  const [hint, setHint] = useState(false);
   const dockRef = useRef<HTMLDivElement>(null);
   const pageEl = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLInputElement>(null);
@@ -240,9 +261,32 @@ export function PageReader({ locale, initial }: PageReaderProps) {
 
   // Remember the reading position.
   useEffect(() => {
+    // Recitation paused by another sound (adhkar…): keep its ayah as the place to come back to.
+    const held = player.wasInterrupted() ? player.current() : null;
+    if (held?.kind === "ayah" && itemPage(held) === view.page) {
+      lastReadStore.set({ surah: held.s, ayah: held.a, page: view.page, at: Date.now() });
+      return;
+    }
     const first = pageAyahRefs(view)[0];
     if (first) lastReadStore.set({ surah: first[0], ayah: first[1], page: view.page, at: Date.now() });
   }, [view]);
+
+  // Full screen: say how to turn pages and how to bring the controls back (the first few times).
+  useEffect(() => {
+    if (!fullScreen) return;
+    let shown = 0;
+    try {
+      shown = Number(window.localStorage.getItem(HINT_KEY) ?? "0") || 0;
+      if (shown >= HINT_SHOWS) return;
+      window.localStorage.setItem(HINT_KEY, String(shown + 1));
+    } catch {
+      // storage blocked: still show it this time
+    }
+    setHint(true);
+    const id = window.setTimeout(() => setHint(false), HINT_MS);
+    return () => window.clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once per visit, when full screen first shows
+  }, []);
 
   // An ayah in the URL hash (#a-2-255, from search or bookmarks) is selected on arrival.
   useEffect(() => {
@@ -286,13 +330,19 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     const el = dockRef.current;
     if (!el) return;
     const root = document.documentElement;
-    const publish = (): void => root.style.setProperty("--rd-dock-h", `${Math.ceil(el.offsetHeight)}px`);
+    const publish = (): void => {
+      const h = Math.ceil(el.offsetHeight);
+      // Beside the page (wide screens) the dock takes no height from it; the sheets stack above it there.
+      root.style.setProperty("--rd-dock-h", `${sidePanel() ? 0 : h}px`);
+      root.style.setProperty("--rd-panel-h", `${h}px`);
+    };
     publish();
     const ro = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(publish);
     ro?.observe(el);
     return () => {
       ro?.disconnect();
       root.style.removeProperty("--rd-dock-h");
+      root.style.removeProperty("--rd-panel-h");
     };
   }, []);
 
@@ -302,6 +352,14 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     const id = window.setTimeout(() => khatmaStore.set((k) => markRead(k, page)), KHATMA_DWELL_MS);
     return () => window.clearTimeout(id);
   }, [page]);
+
+  // A selected ayah stays in view above its actions (phones: the actions sheet covers the lower part).
+  useEffect(() => {
+    if (!selected || tab !== "mushaf") return;
+    document
+      .querySelector<HTMLElement>(`.mushaf-stage [data-ayah="${selected}"]`)
+      ?.scrollIntoView?.({ block: "nearest", behavior: "smooth" });
+  }, [selected, tab]);
 
   // In the verse and tafsir lists, keep the recited ayah in view.
   useEffect(() => {
@@ -582,6 +640,46 @@ export function PageReader({ locale, initial }: PageReaderProps) {
           </div>
         </div>
       </div>
+
+      {fullScreen ? (
+        <div className="rd-turn" data-testid="turn-arrows">
+          {(["next", "prev"] as const).map((which) => {
+            const target = which === "next" ? page + 1 : page - 1;
+            // RTL: the next page is on the left, like a printed Mushaf.
+            const side = (which === "next") === (dir === "rtl") ? "left" : "right";
+            return (
+              <button
+                key={which}
+                type="button"
+                className={`rd-turn-btn rd-turn-${side}`}
+                data-testid={`turn-${which}`}
+                aria-label={t(locale, which === "next" ? "quran.nextPage" : "quran.prevPage")}
+                disabled={target < 1 || target > PAGE_COUNT}
+                onClick={() => goTo(target)}
+              >
+                <svg width={26} height={26} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path
+                    d={side === "left" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2.2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
+      {fullScreen && hint ? (
+        <div className="rd-hint" role="status" data-testid="reader-hint">
+          <span>{t(locale, "reader.fullHint")}</span>
+          <button type="button" className="btn btn-sm" onClick={() => setHint(false)}>
+            {t(locale, "reader.hintClose")}
+          </button>
+        </div>
+      ) : null}
 
       {tab === "ayat" ? (
         <section aria-label={t(locale, "reader.ayatOfPage", { page: localizeDigits(page, locale) })}>

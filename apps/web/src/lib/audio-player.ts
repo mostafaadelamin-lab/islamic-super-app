@@ -2,7 +2,7 @@
  * The single recitation player of the app (one HTMLAudioElement). State lives in a small observable store so
  * the player bar and the Mushaf reader (highlight, auto page turn) stay in sync across client navigations.
  */
-import { surahName } from "./pages";
+import { pageForAyah, surahName } from "./pages";
 import { downloadsStore, isSaved, savedSource } from "./audio-offline";
 import {
   afterEnded,
@@ -15,6 +15,8 @@ import {
   type PlayScope,
   type QueueItem,
 } from "./audio";
+import { registerAudio } from "./audio-focus";
+import { lastReadStore } from "./settings";
 
 export type PlayerStatus = "idle" | "loading" | "playing" | "paused" | "error";
 export type PlayerError = "offline" | "network" | "blocked";
@@ -44,6 +46,8 @@ let unsubscribeSpeed: (() => void) | null = null;
 let blobUrl: string | null = null;
 /** What the element was given for the current item (the stream URL, or a blob: URL of a saved copy). */
 let elementSrc: string | null = null;
+/** True while the recitation is paused because another sound started (adhkar, a nasheed, a lesson…). */
+let interrupted = false;
 
 const ICON_SIZES = ["192", "512"] as const;
 
@@ -114,13 +118,19 @@ export const player = {
   current(): QueueItem | null {
     return state.queue[state.cursor.index] ?? null;
   },
+  /** True when another sound paused the recitation; the Mushaf then reopens at the ayah it stopped at. */
+  wasInterrupted(): boolean {
+    return interrupted && state.status === "paused";
+  },
   play(scope: PlayScope): void {
+    interrupted = false;
     const queue = buildQueue(scope);
     if (queue.length === 0) return;
     setState({ queue, cursor: { index: 0, plays: 0 }, error: null });
     load();
   },
   toggle(): void {
+    interrupted = false;
     if (state.status === "playing" || state.status === "loading") {
       audio?.pause();
       setState({ status: "paused" });
@@ -130,6 +140,7 @@ export const player = {
     }
   },
   stop(): void {
+    interrupted = false;
     if (audio) {
       audio.pause();
       audio.removeAttribute("src");
@@ -174,9 +185,22 @@ function element(): HTMLAudioElement {
     fail(typeof navigator !== "undefined" && navigator.onLine === false ? "offline" : "network");
   });
   audio = el;
+  registerAudio(el, interrupt);
   unsubscribeSpeed = audioStore.subscribe(() => applySpeed(el));
   bindMediaKeys();
   return el;
+}
+
+/** Another sound started: pause here and remember the ayah, so reading and listening go on from it. */
+function interrupt(): void {
+  if (state.status !== "playing" && state.status !== "loading") return;
+  audio?.pause();
+  interrupted = true;
+  setState({ status: "paused" });
+  const item = state.queue[state.cursor.index];
+  if (item?.kind === "ayah") {
+    lastReadStore.set({ surah: item.s, ayah: item.a, page: pageForAyah(item.s, item.a), at: Date.now() });
+  }
 }
 
 function fail(error: PlayerError): void {
@@ -186,9 +210,10 @@ function fail(error: PlayerError): void {
 
 /** Applies the chosen playback speed (kept across items: a new src resets playbackRate in some browsers). */
 function applySpeed(el: HTMLAudioElement): void {
-  const { speed } = audioStore.get();
+  const { speed, volume } = audioStore.get();
   el.defaultPlaybackRate = speed;
   el.playbackRate = speed;
+  el.volume = volume;
 }
 
 async function resume(): Promise<void> {
@@ -244,6 +269,7 @@ function load(): void {
 
 /** Test hook: forget the audio element and state. */
 export function resetPlayerForTests(): void {
+  interrupted = false;
   blobUrl = null;
   elementSrc = null;
   unsubscribeSpeed?.();

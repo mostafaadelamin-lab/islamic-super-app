@@ -3,6 +3,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import type { DhikrHadith } from "@/lib/dhikr-extras";
+import { registerAudio } from "@/lib/audio-focus";
 import { Icon } from "./Icon";
 
 /** One shared player for dhikr recordings: starting one stops the previous; the end stops (no loop). */
@@ -37,6 +38,8 @@ function audio(): HTMLAudioElement {
   el.addEventListener("error", () => {
     if (state.url) update({ failed: true, playing: false });
   });
+  // One sound at a time: a dhikr pauses the Quran recitation (which resumes from its ayah) and vice versa.
+  registerAudio(el);
   return el;
 }
 

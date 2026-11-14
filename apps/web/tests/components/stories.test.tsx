@@ -1,4 +1,5 @@
 import { act, render, screen } from "@testing-library/react";
+import { registerAudio } from "@/lib/audio-focus";
 import userEvent from "@testing-library/user-event";
 import { StoriesIndex } from "@/components/StoriesIndex";
 import { StoryView, type StorySegmentText } from "@/components/StoryView";
@@ -71,7 +72,7 @@ describe("Sheikh Nabil al-Awadi's series", () => {
     ),
   };
 
-  it("lists every episode with no review labels or reviewer switch (as in the app); playing one stops the recitation", async () => {
+  it("lists every episode with no review labels or reviewer switch (as in the app); playing one pauses the other sound", async () => {
     render(<StoriesIndex locale="ar" />);
     expect(screen.queryByTestId("stories-reviewer")).toBeNull();
     expect(screen.queryByTestId("series-hidden")).toBeNull();
@@ -84,9 +85,14 @@ describe("Sheikh Nabil al-Awadi's series", () => {
     );
     expect(screen.queryByRole("note")).toBeNull();
     expect(screen.getByText("اقرأ آيات القصة").closest("a")?.getAttribute("href")).toBe("/ar/stories/yusuf/");
-    const stop = vi.spyOn(player, "stop");
+    // One sound at a time: another playing sound (e.g. the recitation) pauses.
+    const other = new Audio();
+    Object.defineProperty(other, "paused", { value: false });
+    const pauseOther = vi.fn();
+    const unregister = registerAudio(other, pauseOther);
     act(() => void audio.dispatchEvent(new Event("play")));
-    expect(stop).toHaveBeenCalled();
+    expect(pauseOther).toHaveBeenCalled();
+    unregister();
   });
 
   it("has the app's episode videos and 30-second rewind/forward", async () => {

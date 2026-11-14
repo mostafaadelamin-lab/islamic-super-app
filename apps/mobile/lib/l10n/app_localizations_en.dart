@@ -1327,7 +1327,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nasheedsLoadError => 'Couldn\'t load the nasheeds list.';
 
   @override
+  String get nasheedsNext => 'Next nasheed';
+
+  @override
   String get nasheedsNote => 'Listen to any nasheed online, or tap the download icon to keep it for offline listening.';
+
+  @override
+  String get nasheedsPrev => 'Previous nasheed';
 
   @override
   String get nasheedsSearch => 'Find a nasheed or munshid';
@@ -1870,6 +1876,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerFontSmaller => 'Smaller text';
 
   @override
+  String get readerFullHint =>
+      'To turn pages, swipe the page or press the arrows at the bottom. Tap the page to show listening and tools.';
+
+  @override
   String get readerHelp => 'Help';
 
   @override
@@ -1884,6 +1894,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readerHelpTitle => 'How to use';
+
+  @override
+  String get readerHintClose => 'Got it';
 
   @override
   String get readerIndex => 'Index';

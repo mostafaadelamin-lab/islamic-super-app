@@ -1321,7 +1321,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get nasheedsLoadError => 'تعذّر تحميل قائمة الأناشيد.';
 
   @override
+  String get nasheedsNext => 'النشيد التالي';
+
+  @override
   String get nasheedsNote => 'استمع لأي نشيد مباشرة، أو اضغط أيقونة التحميل لتسمعه بدون إنترنت.';
+
+  @override
+  String get nasheedsPrev => 'النشيد السابق';
 
   @override
   String get nasheedsSearch => 'ابحث عن نشيد أو منشد';
@@ -1864,6 +1870,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerFontSmaller => 'تصغير الخط';
 
   @override
+  String get readerFullHint => 'للتقليب: اسحب الصفحة أو اضغط السهمين في الأسفل. المس الصفحة لإظهار الاستماع والأدوات.';
+
+  @override
   String get readerHelp => 'مساعدة';
 
   @override
@@ -1877,6 +1886,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get readerHelpTitle => 'طريقة الاستخدام';
+
+  @override
+  String get readerHintClose => 'فهمت';
 
   @override
   String get readerIndex => 'الفهرس';
