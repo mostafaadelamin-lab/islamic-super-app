@@ -6,6 +6,8 @@ import { NextPrayerCard } from "@/components/NextPrayerCard";
 import { QuranRadio } from "@/components/QuranRadio";
 import { SharePrompt } from "@/components/ShareApp";
 import { Icon, type IconName } from "@/components/Icon";
+import { MosqueArt } from "@/components/MosqueArt";
+import { SITE_GROUPS, sectionOf } from "@/lib/site-map";
 
 interface HomeTile {
   path: string;
@@ -43,19 +45,89 @@ function Tiles({ locale, list, kind }: { locale: Locale; list: readonly HomeTile
   );
 }
 
+/** Website home sections (wide screens): a card per menu group listing its pages. */
+function Explore({ locale }: { locale: Locale }) {
+  return (
+    <section className="home-explore desktop-only" aria-labelledby="home-explore-h" data-testid="home-explore">
+      <h2 id="home-explore-h" className="site-section-title">
+        {t(locale, "site.explore")}
+      </h2>
+      <ul className="explore-grid">
+        {SITE_GROUPS.slice(0, 4).map((g) => (
+          <li key={g.title} className="explore-card">
+            <Link className="explore-card-head" href={href(locale, g.path)}>
+              <span className="explore-card-icon">
+                <Icon name={g.icon} size={28} />
+              </span>
+              <span>
+                <strong>{t(locale, g.title)}</strong>
+                <span className="muted small">{t(locale, g.sub)}</span>
+              </span>
+            </Link>
+            <ul className="explore-links">
+              {g.items.map((p) => {
+                const s = sectionOf(p);
+                return (
+                  <li key={p}>
+                    <Link href={href(locale, p)} data-section={p}>
+                      <Icon name={s.icon} size={18} />
+                      <span>{t(locale, s.title)}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 export default async function HomePage({ params }: { params: LocaleParams }) {
   const locale = await resolveLocale(params);
   return (
     <div className="home">
       <h1 className="sr-only">{t(locale, "home.title")}</h1>
-      <div className="home-col">
+      <section className="site-hero desktop-only" aria-labelledby="site-hero-h">
+        <div className="site-hero-text">
+          <p className="site-hero-kicker">{t(locale, "home.title")}</p>
+          <h2 id="site-hero-h">{t(locale, "site.hero.title")}</h2>
+          <p className="site-hero-lead">{t(locale, "site.hero.lead")}</p>
+          <p className="site-hero-actions">
+            <Link className="btn btn-hero" href={href(locale, "page/1")}>
+              <Icon name="quran" size={20} />
+              {t(locale, "site.hero.read")}
+            </Link>
+            <Link className="btn btn-hero-ghost" href={href(locale, "prayer")}>
+              <Icon name="clock" size={20} />
+              {t(locale, "site.hero.prayer")}
+            </Link>
+          </p>
+        </div>
+        <div className="site-hero-art" aria-hidden="true">
+          <MosqueArt />
+        </div>
+      </section>
+      <div className="home-col home-prayer">
         <NextPrayerCard locale={locale} />
       </div>
-      <div className="home-col" data-testid="home-tiles">
+      <div className="home-col mobile-only" data-testid="home-tiles">
         <Tiles locale={locale} list={BIG} kind="big" />
         <Tiles locale={locale} list={WIDE} kind="wide" />
+      </div>
+      <Explore locale={locale} />
+      <section className="home-col home-radio-wrap" aria-labelledby="home-radio-h">
+        <div className="desktop-only home-radio-intro">
+          <h2 id="home-radio-h" className="site-section-title">
+            {t(locale, "site.radioTitle")}
+          </h2>
+          <p className="muted">{t(locale, "site.radioLead")}</p>
+        </div>
         <QuranRadio locale={locale} />
-        <Link className="card home-more" href={href(locale, "more")} data-testid="home-more">
+      </section>
+      <div className="home-col">
+        <Link className="card home-more mobile-only" href={href(locale, "more")} data-testid="home-more">
           <Icon name="more" size={26} />
           <strong>{t(locale, "home.mainSections")}</strong>
           <span className="home-more-chevron">

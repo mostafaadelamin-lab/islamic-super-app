@@ -8,6 +8,7 @@ import { dirOf, isLocale, LOCALES, t, type Locale } from "@/lib/i18n";
 import { THEME_SCRIPT } from "../theme-script";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ClientEffects } from "@/components/ClientEffects";
 import { AdhanAlerts } from "@/components/AdhanAlerts";
 import { PlayerBar } from "@/components/PlayerBar";
@@ -70,6 +71,7 @@ export default async function LocaleLayout({
         </a>
         <Header locale={locale} />
         <main id="main" tabIndex={-1}>
+          <Breadcrumbs locale={locale} />
           {children}
         </main>
         <Footer locale={locale} />
