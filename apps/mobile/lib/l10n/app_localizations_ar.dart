@@ -796,17 +796,81 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hadithUnsave => 'إلغاء الحفظ';
 
   @override
+  String get hajjCrowdBody =>
+      'الهيئة العامة للعناية بشؤون المسجد الحرام والمسجد النبوي تعرض نسب الزحام في المطاف والمسعى لحظة بلحظة، وكذلك تطبيق نُسك الرسمي. اضغط لفتح المصدر الرسمي.';
+
+  @override
+  String get hajjCrowdNote => 'تفتح خارج التطبيق. صفحة الهيئة قد لا تفتح إلا من داخل المملكة العربية السعودية.';
+
+  @override
+  String get hajjCrowdNusuk => 'تطبيق نُسك';
+
+  @override
+  String get hajjCrowdOfficial => 'صفحة الهيئة الرسمية';
+
+  @override
+  String get hajjCrowdTitle => 'حالة الزحام في المطاف والمسعى الآن';
+
+  @override
+  String get hajjGuideCorrections => 'تصحيحات أخطاء الرقمنة';
+
+  @override
+  String get hajjGuideHajj => 'صفة الحج';
+
+  @override
+  String get hajjGuideSource => 'المصدر';
+
+  @override
+  String get hajjGuideTypes => 'أنواع النسك';
+
+  @override
+  String get hajjGuideUmrah => 'صفة العمرة';
+
+  @override
   String get hajjHajj => 'الحج';
 
   @override
+  String get hajjHubDuas => 'أدعية الحج والعمرة';
+
+  @override
+  String get hajjHubHajj => 'مناسك الحج';
+
+  @override
+  String get hajjHubUmrah => 'خطوات العمرة وخريطة الطواف';
+
+  @override
+  String get hajjIfrad => 'الإفراد';
+
+  @override
   String get hajjIhram => 'الإحرام';
+
+  @override
+  String get hajjLiveTitle => 'بث مباشر من الحرمين (صوت)';
+
+  @override
+  String get hajjOfficialGuide => 'شرح الخطوات من الدليل الرسمي';
+
+  @override
+  String get hajjQiran => 'القِران';
 
   @override
   String get hajjReviewNotice =>
       'بانتظار المراجعة الشرعية: لم يراجع هذا الدليلَ عالمٌ مختص بعد. تحقّق من عالم موثوق قبل الاعتماد عليه.';
 
   @override
+  String get hajjStepsInOrder => 'خطوات الحج بالترتيب';
+
+  @override
+  String get hajjTamattu => 'التمتع';
+
+  @override
+  String get hajjTapStep => 'اضغط على أي خطوة لقراءة شرحها';
+
+  @override
   String get hajjTitle => 'الحج والعمرة';
+
+  @override
+  String get hajjTypeLabel => 'نوع النسك';
 
   @override
   String get hajjUmrah => 'العمرة';
@@ -941,6 +1005,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get homeBigAdhkar => 'الأذكار والدعاء';
+
+  @override
+  String get homeBigHajj => 'الحج والعمرة';
 
   @override
   String get homeBigPrayer => 'مواقيت الصلاة';
@@ -2935,40 +3002,4 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'مرّ عام هجري كامل منذ بلغ مالي النصاب';
-
-  @override
-  String get hajjStepsInOrder => 'خطوات الحج بالترتيب';
-
-  @override
-  String get hajjTypeLabel => 'نوع النسك';
-
-  @override
-  String get hajjTamattu => 'التمتع';
-
-  @override
-  String get hajjQiran => 'القِران';
-
-  @override
-  String get hajjIfrad => 'الإفراد';
-
-  @override
-  String get hajjTapStep => 'اضغط على أي خطوة لقراءة شرحها';
-
-  @override
-  String get hajjOfficialGuide => 'شرح الخطوات من الدليل الرسمي';
-
-  @override
-  String get hajjGuideTypes => 'أنواع النسك';
-
-  @override
-  String get hajjGuideUmrah => 'صفة العمرة';
-
-  @override
-  String get hajjGuideHajj => 'صفة الحج';
-
-  @override
-  String get hajjGuideSource => 'المصدر';
-
-  @override
-  String get hajjGuideCorrections => 'تصحيحات أخطاء الرقمنة';
 }

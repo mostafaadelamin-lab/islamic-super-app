@@ -50,7 +50,15 @@ export const SITE_GROUPS: readonly SiteGroup[] = [
     sub: "site.group.librarySub",
     icon: "book",
     path: "hadith",
-    items: ["hadith", "sharawi", "stories", "nasheeds", "reels", "hajj", "zakat"],
+    items: ["hadith", "sharawi", "stories", "nasheeds", "reels", "zakat"],
+  },
+  {
+    // Its own menu (owner, 2026-11-14): the guide, live crowd levels (official link) and live audio.
+    title: "site.group.hajj",
+    sub: "site.group.hajjSub",
+    icon: "kaaba",
+    path: "hajj",
+    items: ["hajj", "hajj-crowd", "hajj-live"],
   },
   {
     title: "site.group.about",
@@ -63,6 +71,22 @@ export const SITE_GROUPS: readonly SiteGroup[] = [
 
 /** Menu entries that are a part of a page rather than a page of their own (owner, 2026-11-14: adhan alerts). */
 const EXTRA: Readonly<Record<string, Section & { page: string; hash: string }>> = {
+  "hajj-crowd": {
+    path: "hajj-crowd",
+    page: "hajj",
+    hash: "crowd",
+    title: "nav.hajjCrowd",
+    sub: "nav.hajjCrowdSub",
+    icon: "kaaba",
+  },
+  "hajj-live": {
+    path: "hajj-live",
+    page: "hajj",
+    hash: "live",
+    title: "nav.hajjLive",
+    sub: "nav.hajjLiveSub",
+    icon: "radio",
+  },
   adhan: {
     path: "adhan",
     page: "prayer",
