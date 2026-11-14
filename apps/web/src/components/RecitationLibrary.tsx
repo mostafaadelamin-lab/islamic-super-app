@@ -38,7 +38,7 @@ export function stepTrack(track: Track, delta: 1 | -1): Track | null {
 type Tab = "reciters" | "radios";
 
 /** One native audio player for the chosen surah or radio (stops the app's recitation player: one voice at a time). */
-function NowPlaying({
+export function NowPlaying({
   locale,
   track,
   onTrack,

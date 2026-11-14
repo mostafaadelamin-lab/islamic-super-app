@@ -11,6 +11,7 @@ import '../domain/hijri.dart';
 import '../domain/prayer_schedule.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
+import 'hajj_hub_screen.dart';
 import 'prayer_calendar_screen.dart';
 import 'prayer_model.dart';
 import 'qibla_screen.dart';
@@ -116,6 +117,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   a: _WideTile('reels', RIcons.reels, l.homeBigReels, () => _push(const ReelsScreen())),
                   b: _WideTile('stories', RIcons.headphones, l.homeBigStories, () => _push(const StoriesScreen())),
                 ),
+                const SizedBox(height: DesignTokens.spaceSm),
+                // Hajj & Umrah has its own entry on the home screen (owner, 2026-11-14).
+                _WideRow(a: _WideTile('hajj', RIcons.kaaba, l.homeBigHajj, () => _push(const HajjHubScreen()))),
                 const SizedBox(height: DesignTokens.spaceMd),
                 const QuranRadioCard(),
                 const SizedBox(height: DesignTokens.spaceMd),
@@ -513,9 +517,11 @@ class _WideTile {
 }
 
 class _WideRow extends StatelessWidget {
-  const _WideRow({required this.a, required this.b});
+  const _WideRow({required this.a, this.b});
   final _WideTile a;
-  final _WideTile b;
+
+  /// Second tile; without it [a] takes the whole row.
+  final _WideTile? b;
 
   Widget _tile(BuildContext context, _WideTile t) => _Panel(
     child: InkWell(
@@ -547,8 +553,7 @@ class _WideRow extends StatelessWidget {
   Widget build(BuildContext context) => Row(
     children: [
       Expanded(child: _tile(context, a)),
-      const SizedBox(width: DesignTokens.spaceSm),
-      Expanded(child: _tile(context, b)),
+      if (b case final b?) ...[const SizedBox(width: DesignTokens.spaceSm), Expanded(child: _tile(context, b))],
     ],
   );
 }

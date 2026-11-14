@@ -10,6 +10,7 @@ import 'package:rattil/domain/adhkar.dart';
 import 'package:rattil/domain/qibla.dart';
 import 'package:rattil/domain/tasbih.dart';
 import 'package:rattil/ui/adhkar_screen.dart';
+import 'package:rattil/ui/hajj_hub_screen.dart';
 import 'package:rattil/ui/hajj_screen.dart';
 import 'package:rattil/domain/hajj_flows.dart';
 import 'package:rattil/ui/steps_flow.dart';
@@ -394,6 +395,34 @@ void main() {
       expect(find.byKey(const Key('officialHajjGuide')), findsOneWidget);
     });
 
+    testWidgets('own section from home: official crowd links, live Haram audio, guide tabs (owner, 2026-11-14)', (
+      tester,
+    ) async {
+      await pumpApp(tester, size: tallPhone);
+      await tester.ensureVisible(find.byKey(const Key('home.tile-hajj')));
+      await tester.tap(find.byKey(const Key('home.tile-hajj')));
+      await tester.pumpAndSettle();
+      expect(find.byType(HajjHubScreen), findsOneWidget);
+      // Crowd levels are never shown as numbers of our own: only buttons to the official sources.
+      for (final k in [
+        'hajjHub.crowdOfficial',
+        'hajjHub.crowdNusuk',
+        'hajjHub.radio-makkah',
+        'hajjHub.radio-madinah',
+      ]) {
+        await tester.scrollUntilVisible(find.byKey(Key(k)), 200, scrollable: find.byType(Scrollable).first);
+        expect(find.byKey(Key(k)), findsOneWidget, reason: k);
+      }
+      await tester.scrollUntilVisible(
+        find.byKey(const Key('hajjHub.hajj')),
+        -200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.tap(find.byKey(const Key('hajjHub.hajj')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('hajjTypes')), findsOneWidget, reason: 'opens on the Hajj tab');
+    });
+
     testWidgets('English UI says the guide is Arabic only', (tester) async {
       await pumpApp(tester, size: tallPhone, locale: 'en');
       await pushScreen(tester, const HajjScreen());
@@ -434,7 +463,7 @@ void main() {
         expect(find.byType(type), findsOneWidget, reason: id);
         await goBack(tester);
       }
-      for (final (id, type) in [('hajj', HajjScreen), ('zakat', ZakatScreen)]) {
+      for (final (id, type) in [('hajj', HajjHubScreen), ('zakat', ZakatScreen)]) {
         await goToTab(tester, 5);
         await tester.tap(find.byKey(Key('more.$id')));
         await tester.pumpAndSettle();
