@@ -836,86 +836,136 @@ body:has(.rd-full) .player,
 }
 
 /*
- * ---- Wide screens: the player, page slider and tools in a column beside the page (owner 2026-11-14) ----
- * Showing the controls or an ayah's actions never covers or shrinks the page. Same query as SIDE_PANEL_QUERY.
+ * ---- Wide screens (owner 2026-11-15): the Mushaf page takes the screen and ONE full-width strip under it
+ * holds the page slider, the player with the reader options (listen with tafsir) and the index /
+ * bookmarks / khatma / search buttons. Same query as SIDE_PANEL_QUERY.
  */
 @media (min-width: 1024px) and (min-height: 560px) and (orientation: landscape) {
-  .rd {
-    --rd-side-w: 340px;
-    /* the page body's own edge on wide screens (main: max-width --site-max, padding --space-xl), so the
-       side column never slides over the page or the "listen with tafsir" view */
-    --rd-side-end: calc(max(0px, (100vw - var(--site-max, 1100px)) / 2) + var(--space-xl));
-  }
   .mushaf-reader.rd:not(.rd-full) {
-    max-width: none;
-    padding-inline-end: calc(var(--rd-side-w) + var(--space-lg));
-  }
-  :root:has(.rd:not(.rd-full)) main {
-    padding-bottom: var(--space-lg);
+    max-width: calc(var(--site-max, 1100px) - 2 * var(--space-xl));
   }
   .rd:not(.rd-full) .rd-dock {
-    inset-inline: auto var(--rd-side-end);
-    bottom: var(--space-md);
-    width: var(--rd-side-w);
+    inset-inline: 0;
+    bottom: 0;
     max-width: none;
     margin: 0;
+    padding: 0 max(var(--space-xl), (100vw - var(--site-max, 1100px)) / 2 + var(--space-xl));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "pager pager" "player bar";
+    align-items: center;
+    column-gap: var(--space-lg);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-line);
+    box-shadow: 0 -4px 18px rgb(0 0 0 / 8%);
+    pointer-events: auto;
   }
-  .rd:not(.rd-full) .rd-dock .rd-player {
-    margin: 0 0 var(--space-xs);
-  }
+  /* page slider: a thin full-width line along the top of the strip */
   .rd:not(.rd-full) .rd-dock .rd-pager {
-    margin: 0 0 var(--space-xs);
-    border-radius: 18px;
+    grid-area: pager;
+    margin: 0;
+    padding: 4px 0 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
   }
-  .rd:not(.rd-full) .rd-dock .rd-bar {
-    border-radius: 18px;
+  /* player: one row, no card */
+  .rd:not(.rd-full) .rd-dock .rd-player {
+    grid-area: player;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin: 0;
+    padding: 2px 0 var(--space-xs);
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    flex-wrap: wrap;
+  }
+  .rd:not(.rd-full) .rd-dock .rdp-top {
+    flex: 0 1 auto;
+    min-width: 0;
+    margin: 0;
+  }
+  .rd:not(.rd-full) .rd-dock .rdp-row {
+    flex: 1 1 auto;
+    justify-content: center;
+    margin: 0;
+  }
+  .rd:not(.rd-full) .rd-dock .rdp-tafsir {
+    order: 10;
     border: 1px solid var(--color-line);
   }
-  .rd .ayah-sheet {
-    inset-inline: auto var(--rd-side-end);
-    width: var(--rd-side-w);
+  .rd:not(.rd-full) .rd-dock .rdp-btn-label {
     max-width: none;
+    white-space: nowrap;
+  }
+  .rd:not(.rd-full) .rd-dock .rd-player > :not(.rdp-top):not(.rdp-row) {
+    flex-basis: 100%;
+  }
+  /* index / bookmarks / khatma / search at the strip's end */
+  .rd:not(.rd-full) .rd-dock .rd-bar {
+    grid-area: bar;
     margin: 0;
-    bottom: calc(var(--rd-panel-h, 220px) + var(--space-md) + var(--space-xs));
-    max-height: calc(100dvh - var(--rd-panel-h, 220px) - 96px);
+    padding: 0 0 var(--space-xs);
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .rd .ayah-sheet {
+    max-width: 760px;
   }
   .rd .ayah-sheet .aa-buttons .btn {
     flex: 1 1 auto;
   }
-  .rd:not(.rd-full) .rd-dock .rdp-top {
-    flex-wrap: wrap;
+
+  /* "Listen with tafsir": two halves — the whole Mushaf page and the page's tafsir (follows the recitation) */
+  .mushaf-reader.rd.rd-duo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: var(--space-lg);
+    align-items: start;
   }
-  .rd:not(.rd-full) .rd-dock .rdp-volume {
-    order: 5;
-    flex-basis: 100%;
-    margin: 0;
+  .rd-duo > * {
+    grid-column: 1 / -1;
   }
-  .rd:not(.rd-full) .rd-dock .rdp-volume input[type="range"] {
-    flex: 1;
+  .rd-duo > .rd-duo-tafsir {
+    grid-column: 1;
+    grid-row: 3;
   }
-  :root:has(.rd .ayah-sheet) main {
-    padding-bottom: var(--space-lg);
+  .rd-duo > .mushaf-stage {
+    grid-column: 2;
+    grid-row: 3;
   }
-  /* "Listen with tafsir" button on its own full-width row in the narrow side column, so its label fits */
-  .rd:not(.rd-full) .rd-dock .rdp-row {
-    flex-wrap: wrap;
-  }
-  .rd:not(.rd-full) .rd-dock .rdp-tafsir {
-    order: 10;
-    flex-basis: 100%;
+  .rd-duo-tafsir {
+    height: calc(100dvh - var(--rd-dock-h, 140px) - 236px);
+    min-height: 320px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: var(--space-sm) var(--space-md);
     border: 1px solid var(--color-line);
+    border-radius: var(--rd-radius);
+    background: var(--color-surface);
   }
-  .rd:not(.rd-full) .rd-dock .rdp-tafsir .rdp-btn-label {
-    max-width: none;
+  .rd-duo-head {
+    position: sticky;
+    top: calc(-1 * var(--space-sm));
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin: calc(-1 * var(--space-sm)) calc(-1 * var(--space-md)) var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-primary);
   }
-  /* "Listen with tafsir" beside the side column: the recited ayah on top (as tall as it needs, up to
-     half), its tafsir right under it, both filling the screen height (owner 2026-11-15). */
-  .rd-split {
-    grid-template-columns: 1fr;
-    grid-template-rows: fit-content(50%) minmax(0, 1fr);
-    height: max(440px, calc(100dvh - 236px));
-  }
-  .rd-split .rd-half-ayah {
-    padding-bottom: var(--space-md);
+  .rd-duo-tafsir .rd-ayah.playing {
+    outline: 2px solid var(--color-primary);
   }
 }

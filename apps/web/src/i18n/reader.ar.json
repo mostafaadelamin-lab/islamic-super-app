@@ -40,5 +40,6 @@
   "reader.khatmaReset": "إلغاء الختمة",
   "reader.fullHint": "للتقليب: اسحب الصفحة أو اضغط السهمين على الجانبين. المس الصفحة لإظهار الاستماع والأدوات.",
   "reader.volume": "مستوى الصوت",
-  "reader.hintClose": "فهمت"
+  "reader.hintClose": "فهمت",
+  "reader.hideTafsir": "إخفاء التفسير"
 }

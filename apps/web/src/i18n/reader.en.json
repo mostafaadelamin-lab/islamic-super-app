@@ -40,5 +40,6 @@
   "reader.khatmaReset": "Cancel the khatma",
   "reader.fullHint": "To turn pages, swipe the page or press the arrows at the sides. Tap the page to show listening and tools.",
   "reader.volume": "Volume",
-  "reader.hintClose": "Got it"
+  "reader.hintClose": "Got it",
+  "reader.hideTafsir": "Hide tafsir"
 }

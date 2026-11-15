@@ -76,14 +76,22 @@ const FIT = {
   safetyPx: 2,
 } as const;
 /**
- * Wide screens (laptops, tablets sideways): the player, page slider and tools sit in a column beside the page
- * instead of under it, so showing them never shrinks or covers the Mushaf page. Same query as reader.css.
+ * Wide screens (laptops, tablets sideways): the page takes the full width and the player, page slider and
+ * tools sit in one low band under it. Same query as reader.css.
  */
 export const SIDE_PANEL_QUERY = "(min-width: 1024px) and (min-height: 560px) and (orientation: landscape)";
-export function sidePanel(): boolean {
-  return typeof window !== "undefined" && typeof window.matchMedia === "function"
-    ? window.matchMedia(SIDE_PANEL_QUERY).matches
-    : false;
+/** True on wide screens (SIDE_PANEL_QUERY); follows window resizes. */
+function useWide(): boolean {
+  const [wide, setWide] = useState(false);
+  useEffect(() => {
+    if (typeof window.matchMedia !== "function") return;
+    const mq = window.matchMedia(SIDE_PANEL_QUERY);
+    const on = (): void => setWide(mq.matches);
+    on();
+    mq.addEventListener?.("change", on);
+    return () => mq.removeEventListener?.("change", on);
+  }, []);
+  return wide;
 }
 /** How many times the full-screen hint (how to turn pages, how to show the controls) is shown. */
 const HINT_SHOWS = 3;
@@ -95,7 +103,12 @@ const TILT_DIVISOR = 40;
 const REBOUND = 0.35;
 
 /** Sizes the Quran font so the widest line of the page exactly fills the frame (no wrapping, no overflow). */
-function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full = false): void {
+function useFitFont(
+  pageEl: RefObject<HTMLDivElement | null>,
+  page: number,
+  full = false,
+  layout = "",
+): void {
   const fit = useCallback(() => {
     const el = pageEl.current;
     const frame = el?.parentElement;
@@ -127,9 +140,11 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full
     }
     // Fit between the page's top and the floating player / page slider / bottom bar.
     const top = frame.getBoundingClientRect().top + window.scrollY;
-    const dock = sidePanel() ? 0 : (document.querySelector<HTMLElement>(".rd-dock")?.offsetHeight ?? 0);
+    // The dock floats a little above the bottom edge on wide screens, so measure where it starts.
+    const dockEl = document.querySelector<HTMLElement>(".rd-dock");
+    const dockTop = dockEl && dockEl.offsetHeight > 0 ? dockEl.getBoundingClientRect().top : window.innerHeight;
     const frameChrome = frame.offsetHeight - el.offsetHeight;
-    const room = Math.max(FIT.minHeight, window.innerHeight - top - dock - frameChrome - FIT.bottomGap);
+    const room = Math.max(FIT.minHeight, dockTop + window.scrollY - top - frameChrome - FIT.bottomGap);
     // The frame fills the room (pages 1–2 are centred in it, like the printed Mushaf).
     frame.style.setProperty("--m-min-h", `${Math.floor(room + frameChrome)}px`);
     const byHeight =
@@ -152,7 +167,8 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full
       const ems = Math.max(widestEms, FIT.lineEms * FIT.capRatio);
       frame.style.setProperty("--m-width", `${Math.ceil(size * ems + chrome + FIT.safetyPx)}px`);
     }
-  }, [pageEl, page, full]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- layout only marks a change of the page's width
+  }, [pageEl, page, full, layout]);
 
   useLayoutEffect(() => {
     fit();
@@ -249,7 +265,10 @@ export function PageReader({ locale, initial }: PageReaderProps) {
 
   const fullScreen =
     tab === "mushaf" && !chrome && !selected && sheet === null && !(audioPrefs.tafsir && active);
-  useFitFont(pageEl, page, fullScreen);
+  const wide = useWide();
+  // "Listen with tafsir" on a wide screen: the whole Mushaf page on one half, the page's tafsir on the other.
+  const duo = wide && tab === "mushaf" && audioPrefs.tafsir && active && !selected;
+  useFitFont(pageEl, page, fullScreen, duo ? "duo" : "");
 
   useEffect(() => {
     let alive = true;
@@ -339,9 +358,11 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     const root = document.documentElement;
     const publish = (): void => {
       const h = Math.ceil(el.offsetHeight);
-      // Beside the page (wide screens) the dock takes no height from it; the sheets stack above it there.
-      root.style.setProperty("--rd-dock-h", `${sidePanel() ? 0 : h}px`);
+      const changed = root.style.getPropertyValue("--rd-dock-h") !== `${h}px`;
+      root.style.setProperty("--rd-dock-h", `${h}px`);
       root.style.setProperty("--rd-panel-h", `${h}px`);
+      // The page is sized to end where the dock starts: size it again when the dock grows or shrinks.
+      if (changed) window.dispatchEvent(new Event("resize"));
     };
     publish();
     const ro = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(publish);
@@ -370,11 +391,22 @@ export function PageReader({ locale, initial }: PageReaderProps) {
 
   // In the verse and tafsir lists, keep the recited ayah in view.
   useEffect(() => {
-    if (tab === "mushaf" || !playingKey) return;
+    if (!playingKey) return;
+    if (duo) {
+      // Beside the page: scroll only the tafsir half, never the page itself.
+      const box = document.querySelector<HTMLElement>(".rd-duo-tafsir");
+      const item = box?.querySelector<HTMLElement>(`[data-ayah="${playingKey}"]`);
+      if (box && item) {
+        const y = item.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop;
+        box.scrollTo?.({ top: Math.max(0, y - 56), behavior: "smooth" });
+      }
+      return;
+    }
+    if (tab === "mushaf") return;
     document
       .querySelector<HTMLElement>(`.rd-list [data-ayah="${playingKey}"]`)
       ?.scrollIntoView?.({ block: "nearest", behavior: "smooth" });
-  }, [tab, playingKey]);
+  }, [tab, playingKey, duo]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent): void => {
@@ -520,7 +552,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const recitedAyah: Ref | null = current?.kind === "ayah" ? [current.s, current.a] : null;
   // "Listen with tafsir": while reciting, the Mushaf tab shows the recited ayah and its tafsir in two halves
   // (unless the reader has selected an ayah themselves, whose sheet then wins).
-  const split = tab === "mushaf" && audioPrefs.tafsir && active && !sel;
+  const split = tab === "mushaf" && audioPrefs.tafsir && active && !sel && !duo;
   const playWithTafsir = (s: number, a: number): void => {
     audioStore.set((p) => ({ ...p, tafsir: true }));
     setSelected(null);
@@ -532,7 +564,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
 
   return (
     <div
-      className={fullScreen ? "mushaf-reader rd rd-full" : "mushaf-reader rd"}
+      className={["mushaf-reader rd", fullScreen ? "rd-full" : "", duo ? "rd-duo" : ""].filter(Boolean).join(" ")}
       data-tab={tab}
       data-split={split ? "true" : "false"}
       style={{ "--rd-fs": `${prefs.fontSize}px` } as CSSProperties}
@@ -613,6 +645,34 @@ export function PageReader({ locale, initial }: PageReaderProps) {
           fallbackText={recitedAyah ? ayahTextOnPage(view, recitedAyah) : null}
           onShowPage={() => audioStore.set((p) => ({ ...p, tafsir: false }))}
         />
+      ) : null}
+
+      {duo ? (
+        <aside
+          className="rd-duo-tafsir"
+          aria-label={t(locale, "reader.tafsirOfPage", { page: localizeDigits(page, locale) })}
+          data-testid="duo-tafsir"
+        >
+          <div className="rd-duo-head">
+            <strong>{t(locale, "reader.listenWithTafsir")}</strong>
+            <button
+              type="button"
+              className="btn btn-sm"
+              data-testid="duo-close"
+              onClick={() => audioStore.set((p) => ({ ...p, tafsir: false }))}
+            >
+              {t(locale, "reader.hideTafsir")}
+            </button>
+          </div>
+          <PageTafsirList
+            locale={locale}
+            refs={refs}
+            data={data}
+            selected={selected}
+            playing={playingKey}
+            onSelect={([s, a]) => playWithTafsir(s, a)}
+          />
+        </aside>
       ) : null}
 
       <div
