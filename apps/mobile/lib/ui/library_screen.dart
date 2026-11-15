@@ -6,6 +6,7 @@ import '../data/recitation.dart';
 import '../domain/mp3quran.dart';
 import '../domain/stories.dart';
 import '../theme/design_tokens.dart';
+import 'play_origin.dart';
 import 'adaptive.dart';
 import 'audio_widgets.dart';
 import 'l10n_ext.dart';
@@ -284,6 +285,7 @@ class PlayTile extends StatelessWidget {
           n.resume();
         } else {
           onPlay?.call();
+          PlayOrigin.remember(context, series);
           n.playEpisode(series, episode, remember: remember, playlist: playlist);
         }
       },

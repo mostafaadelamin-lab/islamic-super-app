@@ -2630,6 +2630,12 @@ abstract class AppLocalizations {
   /// **'Saved on the phone — tap to delete'**
   String get offlineSavedDelete;
 
+  /// shared key "player.open"
+  ///
+  /// In en, this message translates to:
+  /// **'Back to what is playing'**
+  String get playerOpen;
+
   /// shared key "prayer.adjust"
   ///
   /// In en, this message translates to:

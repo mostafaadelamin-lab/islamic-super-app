@@ -1445,6 +1445,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get offlineSavedDelete => 'Saved on the phone — tap to delete';
 
   @override
+  String get playerOpen => 'Back to what is playing';
+
+  @override
   String get prayerAdjust => 'Manual adjustment (minutes)';
 
   @override

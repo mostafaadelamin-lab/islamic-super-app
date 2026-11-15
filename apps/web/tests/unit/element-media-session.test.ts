@@ -1,9 +1,12 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { claimMediaSession } from "@/lib/element-media-session";
+import { claimMediaSession, resetElementMediaSessionForTests } from "@/lib/element-media-session";
 import { stepTrack, type Track } from "@/components/RecitationLibrary";
 
 describe("background audio on the website (owner, 2026-11-12)", () => {
-  afterEach(() => vi.unstubAllGlobals());
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    resetElementMediaSessionForTests();
+  });
 
   it("a library surah is followed by the next one; the last has no next", () => {
     const list: Track[] = [1, 2, 3].map((n) => ({
@@ -42,5 +45,36 @@ describe("background audio on the website (owner, 2026-11-12)", () => {
     claimMediaSession(el, { title: "إذاعة" });
     expect(handlers.get("nexttrack")).toBeNull();
     expect(typeof handlers.get("pause")).toBe("function");
+  });
+
+  it("the lock screen shows the elapsed time and length, and its seek bar moves the audio (owner 2026-11-15)", () => {
+    const handlers = new Map<string, (d: { seekTime?: number; seekOffset?: number }) => void>();
+    const states: unknown[] = [];
+    const ms = {
+      metadata: null as unknown,
+      playbackState: "none",
+      setActionHandler: (a: string, fn: (d: { seekTime?: number }) => void) => handlers.set(a, fn),
+      setPositionState: (s?: unknown) => states.push(s),
+    };
+    vi.stubGlobal("navigator", { mediaSession: ms });
+    const el = document.createElement("audio");
+    let duration = Number.NaN;
+    Object.defineProperty(el, "duration", { get: () => duration });
+    claimMediaSession(el, { title: "سورة البقرة" });
+    expect(states.at(-1)).toBeUndefined(); // no length yet: no bar
+    duration = 8600;
+    el.currentTime = 120;
+    el.dispatchEvent(new Event("durationchange"));
+    expect(states.at(-1)).toEqual({ duration: 8600, position: 120, playbackRate: 1 });
+    handlers.get("seekto")!({ seekTime: 600 });
+    expect(el.currentTime).toBe(600);
+    el.dispatchEvent(new Event("seeked"));
+    expect(states.at(-1)).toEqual({ duration: 8600, position: 600, playbackRate: 1 });
+    // Another player takes the session: the first one no longer updates it.
+    const other = document.createElement("audio");
+    claimMediaSession(other, { title: "إذاعة" });
+    const n = states.length;
+    el.dispatchEvent(new Event("seeked"));
+    expect(states.length).toBe(n);
   });
 });

@@ -7,6 +7,8 @@ import '../domain/quran.dart';
 import '../domain/tafsir.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
+import 'page_reader_screen.dart';
+import 'play_origin.dart';
 import 'review_notice.dart';
 import 'widgets.dart';
 import 'r_icon.dart';
@@ -58,28 +60,35 @@ class MiniPlayer extends StatelessWidget {
                     onPressed: () => settings.setTafsirWithRecitation(!withTafsir),
                   ),
                   Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          error ? l.audioOffline : title,
-                          key: const Key('miniPlayerTitle'),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: error ? scheme.error : null,
-                          ),
-                        ),
-                        if (!error)
+                    child: InkWell(
+                      key: const Key('miniPlayerOpen'),
+                      // Back to the mushaf at the ayah being recited (owner 2026-11-15).
+                      onTap: () => openRecitedPage(context),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
                           Text(
-                            rec.state == RecitationState.loading ? l.audioLoading : rec.reciter.name(context.isArabic),
-                            maxLines: 1,
+                            error ? l.audioOffline : title,
+                            key: const Key('miniPlayerTitle'),
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: error ? scheme.error : null,
+                            ),
                           ),
-                      ],
+                          if (!error)
+                            Text(
+                              rec.state == RecitationState.loading
+                                  ? l.audioLoading
+                                  : rec.reciter.name(context.isArabic),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                   if (!error)
@@ -141,6 +150,13 @@ class MiniPlayer extends StatelessWidget {
       },
     );
   }
+}
+
+/// Opens the mushaf on the page being recited, or goes back to the reader when it is open.
+void openRecitedPage(BuildContext context) {
+  if (PlayOrigin.backToReader(context)) return;
+  final page = context.services.recitation.currentPage ?? 1;
+  Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => PageReaderScreen(initialPage: page)));
 }
 
 /// Docked above the mini player while "Tafsir with recitation" is on: the

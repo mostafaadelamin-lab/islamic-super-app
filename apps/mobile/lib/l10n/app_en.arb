@@ -2114,6 +2114,10 @@
   "@offlineSavedDelete": {
     "description": "shared key \"offline.savedDelete\""
   },
+  "playerOpen": "Back to what is playing",
+  "@playerOpen": {
+    "description": "shared key \"player.open\""
+  },
   "prayerAdjust": "Manual adjustment (minutes)",
   "@prayerAdjust": {
     "description": "shared key \"prayer.adjust\""

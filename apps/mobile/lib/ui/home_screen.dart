@@ -11,6 +11,7 @@ import '../domain/hijri.dart';
 import '../domain/prayer_schedule.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
+import 'play_origin.dart';
 import 'hajj_hub_screen.dart';
 import 'prayer_calendar_screen.dart';
 import 'prayer_model.dart';
@@ -614,6 +615,7 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
               await n.resume();
             } else {
               s.sleepTimer.set(_chosen == 0 ? null : _chosen);
+              PlayOrigin.remember(context, 'radio');
               await n.playEpisode('radio', live, remember: false);
             }
             return;

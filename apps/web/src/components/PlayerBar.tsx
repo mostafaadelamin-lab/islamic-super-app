@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { href } from "@/lib/locale-path";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
-import { surahName } from "@/lib/pages";
+import { pageForAyah, surahName } from "@/lib/pages";
 import { audioStore, RECITERS, REPEAT_CHOICES, SPEED_CHOICES } from "@/lib/audio";
 import { player } from "@/lib/audio-player";
 import { useStore } from "@/hooks/useStore";
@@ -46,7 +48,20 @@ export function PlayerBar({ locale }: { locale: Locale }) {
     <section ref={barRef} className="player" aria-label={t(locale, "audio.player")} data-testid="player">
       <div className="player-row">
         <div className="player-now">
-          <strong data-testid="player-now">{label}</strong>
+          {item ? (
+            // Back to the Mushaf at the ayah being recited (owner 2026-11-15: no way back after leaving it).
+            <Link
+              className="player-open"
+              href={`${href(locale, `page/${pageForAyah(item.s, Math.max(item.a, 1))}`)}#a-${item.s}-${Math.max(item.a, 1)}`}
+              title={t(locale, "audio.openPage")}
+              data-testid="player-open"
+            >
+              <strong data-testid="player-now">{label}</strong>
+              <Icon name="chevron" />
+            </Link>
+          ) : (
+            <strong data-testid="player-now">{label}</strong>
+          )}
           <span className="muted small" data-testid="player-status">
             {ps.status === "loading" ? t(locale, "audio.loading") : t(locale, "audio.onlineOnly")}
           </span>

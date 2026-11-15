@@ -4027,3 +4027,24 @@ dd {
   color: #6b4a2b;
   font-weight: 700;
 }
+
+/* The recitation's title in the bottom player opens the Mushaf at that ayah. */
+.player-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: inherit;
+  text-decoration: none;
+  min-height: 32px;
+}
+.player-open:hover strong,
+.player-open:focus-visible strong {
+  text-decoration: underline;
+}
+.player-open .icon {
+  color: var(--color-primary);
+  flex: none;
+}
+[dir="ltr"] .player-open .icon {
+  transform: scaleX(-1);
+}

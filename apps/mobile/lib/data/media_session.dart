@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
 
@@ -14,6 +16,9 @@ class NowPlaying {
     required this.artist,
     required this.playing,
     this.canSkip = true,
+    this.duration,
+    this.position = Duration.zero,
+    this.speed = 1.0,
   });
   final String id;
   final String title;
@@ -23,6 +28,15 @@ class NowPlaying {
   /// Show the previous / next buttons (off for live radio and single recordings).
   final bool canSkip;
 
+  /// Length of the recording (null for live radio and per-ayah recitation): the lock screen
+  /// then shows the elapsed time, the length and a seek bar that moves.
+  final Duration? duration;
+
+  /// Where playback is now. Not part of ==: the system moves its own bar from the last
+  /// position it was given, so it only needs a new one when playback jumps (see the bridge).
+  final Duration position;
+  final double speed;
+
   @override
   bool operator ==(Object other) =>
       other is NowPlaying &&
@@ -30,16 +44,19 @@ class NowPlaying {
       other.title == title &&
       other.artist == artist &&
       other.playing == playing &&
-      other.canSkip == canSkip;
+      other.canSkip == canSkip &&
+      other.duration == duration &&
+      other.speed == speed;
 
   @override
-  int get hashCode => Object.hash(id, title, artist, playing, canSkip);
+  int get hashCode => Object.hash(id, title, artist, playing, canSkip, duration, speed);
 }
 
 /// The system media controls (lock screen, notification, headset buttons).
 abstract class MediaSession {
-  /// [onAction] receives 'play', 'pause', 'next', 'previous' and 'stop'.
-  void bind(void Function(String action) onAction);
+  /// [onAction] receives 'play', 'pause', 'next', 'previous' and 'stop';
+  /// [onSeek] the position picked on the lock-screen seek bar.
+  void bind(void Function(String action) onAction, {void Function(Duration to)? onSeek});
   void show(NowPlaying? now);
 }
 
@@ -47,7 +64,7 @@ abstract class MediaSession {
 class NoMediaSession implements MediaSession {
   const NoMediaSession();
   @override
-  void bind(void Function(String action) onAction) {}
+  void bind(void Function(String action) onAction, {void Function(Duration to)? onSeek}) {}
   @override
   void show(NowPlaying? now) {}
 }
@@ -74,7 +91,7 @@ class RecitationMediaBridge {
     required this.session,
     NarrationController? narration,
   }) {
-    session.bind(_onAction);
+    session.bind(_onAction, onSeek: _onSeek);
     _sources.add(_RecitationSource(this));
     if (narration != null) _sources.add(_NarrationSource(narration, settings));
     for (final src in _sources) {
@@ -89,6 +106,11 @@ class RecitationMediaBridge {
   final _sources = <MediaSource>[];
   MediaSource? _active;
   NowPlaying? _last;
+  DateTime _lastAt = DateTime.now();
+
+  /// The clock (tests replace it).
+  @visibleForTesting
+  DateTime Function() clock = DateTime.now;
 
   /// What is shown now (null when nothing plays).
   NowPlaying? get nowPlaying => _last;
@@ -157,12 +179,28 @@ class RecitationMediaBridge {
       }
     }
     _active = pick;
-    if (now == _last) return;
+    if (now == _last && !_jumped(now)) return;
     _last = now;
+    _lastAt = clock();
     session.show(now);
   }
 
+  /// True when the position is not where the lock screen's own bar would be by now
+  /// (a seek, ±30 s, or the saved position restored after loading).
+  bool _jumped(NowPlaying? now) {
+    final last = _last;
+    if (now == null || last == null || now.duration == null) return false;
+    final elapsed = last.playing ? clock().difference(_lastAt) * last.speed : Duration.zero;
+    final expected = last.position + elapsed;
+    return (now.position - expected).abs() > const Duration(seconds: 2);
+  }
+
   void _onAction(String action) => _active?.act(action);
+
+  void _onSeek(Duration to) {
+    final src = _active;
+    if (src is _NarrationSource) unawaited(src.narration.seekBy(to - src.narration.position));
+  }
 
   void dispose() {
     for (final src in _sources) {
@@ -201,19 +239,12 @@ class _RecitationSource extends ChangeNotifier implements MediaSource {
 /// Live radio stations, the recitation library, al-Sha'rawi, stories and nasheeds.
 class _NarrationSource extends ChangeNotifier implements MediaSource {
   _NarrationSource(this.narration, this.settings) {
-    narration.addListener(_changed);
+    // Every position tick too: the bridge only updates the controls when something changed
+    // or the position jumped.
+    narration.addListener(notifyListeners);
   }
   final NarrationController narration;
   final SettingsController settings;
-  NowPlaying? _last;
-
-  // The narrator notifies on every position tick; the controls only change with these.
-  void _changed() {
-    final d = describe();
-    if (d == _last) return;
-    _last = d;
-    notifyListeners();
-  }
 
   @override
   NowPlaying? describe() {
@@ -226,6 +257,8 @@ class _NarrationSource extends ChangeNotifier implements MediaSource {
       artist: ar ? 'رتّل وصلِّ' : 'Rattil wa Salli',
       playing: narration.isPlaying,
       canSkip: narration.hasNext || narration.hasPrevious,
+      duration: narration.isLive ? null : narration.duration,
+      position: narration.position,
     );
   }
 
@@ -249,6 +282,7 @@ class _NarrationSource extends ChangeNotifier implements MediaSource {
 /// audio_service implementation of [MediaSession].
 class AudioServiceMediaSession extends BaseAudioHandler implements MediaSession {
   void Function(String action)? _onAction;
+  void Function(Duration to)? _onSeek;
 
   /// Starts the Android media service / iOS remote commands. Call once from main().
   static Future<AudioServiceMediaSession> init({required String channelName}) => AudioService.init(
@@ -263,7 +297,10 @@ class AudioServiceMediaSession extends BaseAudioHandler implements MediaSession 
   );
 
   @override
-  void bind(void Function(String action) onAction) => _onAction = onAction;
+  void bind(void Function(String action) onAction, {void Function(Duration to)? onSeek}) {
+    _onAction = onAction;
+    _onSeek = onSeek;
+  }
 
   @override
   void show(NowPlaying? now) {
@@ -272,7 +309,9 @@ class AudioServiceMediaSession extends BaseAudioHandler implements MediaSession 
       mediaItem.add(null);
       return;
     }
-    mediaItem.add(MediaItem(id: now.id, title: now.title, artist: now.artist, album: 'Rattil wa Salli'));
+    final d = now.duration;
+    final seekable = d != null && d > Duration.zero;
+    mediaItem.add(MediaItem(id: now.id, title: now.title, artist: now.artist, album: 'Rattil wa Salli', duration: d));
     playbackState.add(
       PlaybackState(
         controls: [
@@ -285,10 +324,13 @@ class AudioServiceMediaSession extends BaseAudioHandler implements MediaSession 
           if (now.canSkip) MediaAction.skipToPrevious,
           if (now.canSkip) MediaAction.skipToNext,
           MediaAction.stop,
+          if (seekable) MediaAction.seek,
         },
         androidCompactActionIndices: now.canSkip ? const [0, 1, 2] : const [0, 1],
         processingState: AudioProcessingState.ready,
         playing: now.playing,
+        updatePosition: now.position,
+        speed: now.speed,
       ),
     );
   }
@@ -301,6 +343,8 @@ class AudioServiceMediaSession extends BaseAudioHandler implements MediaSession 
   Future<void> skipToNext() async => _onAction?.call('next');
   @override
   Future<void> skipToPrevious() async => _onAction?.call('previous');
+  @override
+  Future<void> seek(Duration position) async => _onSeek?.call(position);
   @override
   Future<void> stop() async {
     _onAction?.call('stop');

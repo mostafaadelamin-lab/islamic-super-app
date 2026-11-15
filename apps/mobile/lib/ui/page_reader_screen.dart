@@ -10,6 +10,7 @@ import '../domain/page_khatma.dart';
 import '../domain/quran.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
+import 'play_origin.dart';
 import 'ayah_sheet.dart';
 import 'bookmarks_screen.dart';
 import 'adaptive.dart';
@@ -75,6 +76,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
       // A message left over from the previous screen (e.g. "Bookmarked") floats over
       // this screen's bottom controls on small phones; clear it when the reader opens.
       ScaffoldMessenger.maybeOf(context)?.removeCurrentSnackBar();
+      PlayOrigin.readerOpened(context);
       _recitation = context.services.recitation..addListener(_onRecitation);
       _lastAudioPage = _recitation!.currentPage;
       // The recitation was paused by another sound (adhkar…): open at the ayah it stopped at.

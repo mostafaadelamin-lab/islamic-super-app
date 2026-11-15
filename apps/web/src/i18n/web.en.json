@@ -141,6 +141,7 @@
   "mushaf.slider": "Choose a page",
   "mushaf.hint": "Swipe the page to turn it (right = next, like a printed Mushaf in the Arabic layout), or use the arrow keys. Tap an ayah to select it.",
   "mushaf.listView": "Read as a list with translation ({ref})",
+  "audio.openPage": "Open the Mushaf at the ayah being recited",
   "audio.player": "Recitation player",
   "audio.play": "Play",
   "audio.pause": "Pause",

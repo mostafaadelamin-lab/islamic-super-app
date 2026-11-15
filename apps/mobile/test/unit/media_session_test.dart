@@ -12,8 +12,13 @@ import '../helpers.dart';
 class RecordingSession implements MediaSession {
   final shown = <NowPlaying?>[];
   void Function(String action)? press;
+  void Function(Duration to)? seek;
   @override
-  void bind(void Function(String action) onAction) => press = onAction;
+  void bind(void Function(String action) onAction, {void Function(Duration to)? onSeek}) {
+    press = onAction;
+    seek = onSeek;
+  }
+
   @override
   void show(NowPlaying? now) => shown.add(now);
 }

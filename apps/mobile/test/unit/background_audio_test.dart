@@ -14,8 +14,13 @@ import '../helpers.dart';
 class RecordingSession implements MediaSession {
   final shown = <NowPlaying?>[];
   void Function(String action)? press;
+  void Function(Duration to)? seek;
   @override
-  void bind(void Function(String action) onAction) => press = onAction;
+  void bind(void Function(String action) onAction, {void Function(Duration to)? onSeek}) {
+    press = onAction;
+    seek = onSeek;
+  }
+
   @override
   void show(NowPlaying? now) => shown.add(now);
 }
@@ -147,5 +152,39 @@ void main() {
     src.loaded = false;
     bridge.detach(src);
     expect(session.shown.last, isNull);
+  });
+
+  /// Owner, 2026-11-15: the lock screen showed 00:00 / 00:00 while a surah from the library played.
+  test('the lock screen gets the length, the position and a working seek bar', () async {
+    var now = DateTime(2026, 11, 15, 12);
+    bridge.clock = () => now;
+    await narration.playEpisode('mp3quran-1', ep('2'));
+    await settle();
+    expect(session.shown.last!.duration, const Duration(minutes: 25));
+    final shownBefore = session.shown.length;
+    // Normal playback: the system moves its own bar, nothing new is sent.
+    now = now.add(const Duration(seconds: 1));
+    voice.emit(const Duration(seconds: 1));
+    await settle();
+    now = now.add(const Duration(seconds: 1));
+    voice.emit(const Duration(seconds: 2));
+    await settle();
+    expect(session.shown.length, shownBefore);
+    // A jump (+30 s) is sent with the new position.
+    await narration.seekBy(const Duration(seconds: 30));
+    await settle();
+    expect(session.shown.length, shownBefore + 1);
+    expect(session.shown.last!.position, const Duration(seconds: 32));
+    // Dragging the lock-screen bar seeks the player.
+    session.seek!(const Duration(minutes: 10));
+    await settle();
+    expect(voice.calls.last, 'seek:600');
+    expect(narration.position, const Duration(minutes: 10));
+  });
+
+  test('live radio has no length or seek bar on the lock screen', () async {
+    await narration.playEpisode('radio', ep('cairo'), remember: false);
+    await settle();
+    expect(session.shown.last!.duration, isNull);
   });
 }

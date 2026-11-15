@@ -11,6 +11,7 @@ import 'widgets.dart';
 import 'youtube_player.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
+import 'play_origin.dart';
 
 /// Prophets' stories: the narrated series (audio only, Sheikh Nabil al-Awadi's
 /// "Stories of the Prophets"), every episode shown (owner: no review step).
@@ -156,6 +157,7 @@ class _EpisodeTile extends StatelessWidget {
         } else if (on && s.narration.state == RecitationState.paused) {
           s.narration.resume();
         } else {
+          PlayOrigin.remember(context, seriesId);
           s.narration.playEpisode(seriesId, episode);
         }
       },
@@ -197,14 +199,17 @@ class NarrationBar extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    error ? l.storiesEpisodeError : '${l.storiesNowPlaying}: ${e.title(context.isArabic)}',
-                    key: const Key('narrationTitle'),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: error ? scheme.error : null,
+                  _OpenOrigin(
+                    canOpen: PlayOrigin.canReturn(context, n.seriesId),
+                    child: Text(
+                      error ? l.storiesEpisodeError : '${l.storiesNowPlaying}: ${e.title(context.isArabic)}',
+                      key: const Key('narrationTitle'),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: error ? scheme.error : null,
+                      ),
                     ),
                   ),
                   if (total != null && total.inSeconds > 0)
@@ -256,6 +261,41 @@ class NarrationBar extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+/// The player's title; when the item was started on another screen, tapping it (or the
+/// arrow beside it) goes back to that screen.
+class _OpenOrigin extends StatelessWidget {
+  const _OpenOrigin({required this.canOpen, required this.child});
+  final bool canOpen;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!canOpen) return child;
+    final l = context.l10n;
+    return Semantics(
+      button: true,
+      label: l.playerOpen,
+      child: InkWell(
+        key: const Key('narrationOpen'),
+        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+        onTap: () => PlayOrigin.open(context),
+        child: Row(
+          children: [
+            Expanded(child: child),
+            Tooltip(
+              message: l.playerOpen,
+              child: Padding(
+                padding: const EdgeInsets.all(DesignTokens.spaceXs),
+                child: RIcon(RIcons.chevronForward, color: Theme.of(context).colorScheme.primary),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

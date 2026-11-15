@@ -423,6 +423,7 @@
   "offlineDownload": "تحميل للاستماع بدون إنترنت",
   "offlineFailed": "تعذّر التحميل، تحقّق من الإنترنت وحاول مرة أخرى",
   "offlineSavedDelete": "محفوظة على الهاتف — اضغط للحذف",
+  "playerOpen": "ارجع لشاشة اللي شغال",
   "prayerAdjust": "تعديل يدوي (بالدقائق)",
   "prayerAsr": "العصر",
   "prayerAsrHanafi": "الحنفي",

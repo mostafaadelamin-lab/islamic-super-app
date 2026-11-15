@@ -1439,6 +1439,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get offlineSavedDelete => 'محفوظة على الهاتف — اضغط للحذف';
 
   @override
+  String get playerOpen => 'ارجع لشاشة اللي شغال';
+
+  @override
   String get prayerAdjust => 'تعديل يدوي (بالدقائق)';
 
   @override
