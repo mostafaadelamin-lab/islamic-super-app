@@ -1327,6 +1327,10 @@
   "@hajjReviewNotice": {
     "description": "shared key \"hajj.reviewNotice\""
   },
+  "hajjSayTitle": "What is said at this step",
+  "@hajjSayTitle": {
+    "description": "shared key \"hajj.say.title\""
+  },
   "hajjStepNext": "Next",
   "@hajjStepNext": {
     "description": "shared key \"hajj.stepNext\""

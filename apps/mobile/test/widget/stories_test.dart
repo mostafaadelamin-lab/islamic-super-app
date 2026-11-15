@@ -32,6 +32,7 @@ AppContent withApproved(AppContent c, int n) {
     reciters: c.reciters,
     adhkar: c.adhkar,
     hajj: c.hajj,
+    stepDuas: c.stepDuas,
     integrity: c.integrity,
     prayerConfig: c.prayerConfig,
     cities: c.cities,

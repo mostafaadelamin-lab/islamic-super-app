@@ -909,6 +909,9 @@ class AppLocalizationsAr extends AppLocalizations {
       'بانتظار المراجعة الشرعية: لم يراجع هذا الدليلَ عالمٌ مختص بعد. تحقّق من عالم موثوق قبل الاعتماد عليه.';
 
   @override
+  String get hajjSayTitle => 'ما يُقال في هذه الخطوة';
+
+  @override
   String get hajjStepNext => 'التالي';
 
   @override

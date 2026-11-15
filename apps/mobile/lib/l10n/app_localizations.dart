@@ -1676,6 +1676,12 @@ abstract class AppLocalizations {
   /// **'Pending religious review: this guide has not yet been reviewed by a qualified scholar. Check with a trusted scholar before relying on it.'**
   String get hajjReviewNotice;
 
+  /// shared key "hajj.say.title"
+  ///
+  /// In en, this message translates to:
+  /// **'What is said at this step'**
+  String get hajjSayTitle;
+
   /// shared key "hajj.stepNext"
   ///
   /// In en, this message translates to:

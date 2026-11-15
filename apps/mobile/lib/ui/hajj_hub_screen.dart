@@ -56,6 +56,8 @@ class HajjHubScreen extends StatelessWidget {
                     trailing: const RIcon(RIcons.chevronForward),
                     onTap: () => push(PilgrimageScreen(kind: k)),
                   ),
+                // Types, the stages by day, pillars and Madinah, in full (dropped by mistake 2026-11-15).
+                tile('hajj', RIcons.flag, l.hajjHubHajj, () => const HajjScreen(sections: ['hajj'])),
                 tile('ihram', RIcons.info, l.hajjHubIhram, () => const HajjScreen(sections: ['ihram'])),
                 tile('duas', RIcons.dua, l.hajjHubDuas, () => HisnScreen(section: 'hajj', title: l.hajjHubDuas)),
               ],

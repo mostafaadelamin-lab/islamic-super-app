@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
+import '../domain/step_duas.dart';
 import '../domain/declination.dart';
 import '../domain/adhkar.dart';
 import '../domain/app_links.dart';
@@ -62,6 +63,7 @@ class AppContent {
     required this.reciters,
     required this.adhkar,
     required this.hajj,
+    this.stepDuas = StepDuas.empty,
     required this.integrity,
     required this.prayerConfig,
     required this.cities,
@@ -87,6 +89,7 @@ class AppContent {
   static const hisnSectionsAsset = 'assets/content/hisn-sections.json';
   static const hajjAsset = 'assets/content/hajj.v1.json';
   static const dalilHajjAsset = 'assets/content/dalil-hajj.v1.json';
+  static const stepDuasAsset = 'assets/content/step-duas.v1.json';
   static const recitersAsset = 'assets/schemas/reciters.json';
   static const versionsAsset = 'assets/content/VERSIONS.json';
   static const reelsAsset = 'assets/content/reels.v1.json';
@@ -107,6 +110,9 @@ class AppContent {
   final ReciterCatalog reciters;
   final AdhkarContent adhkar;
   final HajjGuide hajj;
+
+  /// What is said at each place of Umrah and Hajj (Hisn al-Muslim and Quran references, resolved).
+  final StepDuas stepDuas;
   final Map<String, dynamic> integrity;
   final PrayerConfig prayerConfig;
   final List<City> cities;
@@ -153,15 +159,17 @@ class AppContent {
     final pagesJson = await j(pagesAsset);
     final citiesJson = await j(citiesAsset);
     final quran = QuranContent.fromJson(quranJson, pagesJson);
+    final adhkar = AdhkarContent.fromJson(
+      await j(adhkarAsset),
+      jsonDecode(await bundle.loadString(hisnAsset)) as List<dynamic>,
+      await j(hisnSectionsAsset),
+    );
     return AppContent(
       quran: quran,
       mushaf: MushafLayout.fromJson(await j(mushafLinesAsset)),
       reciters: ReciterCatalog.fromJson(await j(recitersAsset)),
-      adhkar: AdhkarContent.fromJson(
-        await j(adhkarAsset),
-        jsonDecode(await bundle.loadString(hisnAsset)) as List<dynamic>,
-        await j(hisnSectionsAsset),
-      ),
+      adhkar: adhkar,
+      stepDuas: StepDuas.fromJson(await j(stepDuasAsset), adhkar.hisn),
       hajj: HajjGuide.fromJson(await j(hajjAsset), official: OfficialHajjGuide.fromJson(await j(dalilHajjAsset))),
       integrity: await j(integrityAsset),
       prayerConfig: PrayerConfig.fromJson(await j(methodsAsset)),

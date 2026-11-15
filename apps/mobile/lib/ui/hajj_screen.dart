@@ -9,6 +9,7 @@ import 'dua_text.dart';
 import 'hajj_art.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
+import 'step_say.dart';
 import 'steps_flow.dart';
 import 'tawaf_plan.dart';
 import 'adaptive.dart';
@@ -300,6 +301,8 @@ class HajjBlockCard extends StatelessWidget {
                             child: CopyButton(text: b.dua!),
                           ),
                         ],
+                        // Every dua and ayah said at this step, in full (owner 2026-11-15).
+                        if (b.label != null && b.title != null) StepSay(title: b.title!),
                       ],
                     ),
                   ),

@@ -472,6 +472,57 @@ void main() {
       expect(find.byType(DuaText), findsWidgets);
     });
 
+    testWidgets('nothing of the guide is left out: the Hajj days, kinds, pillars and Madinah are reachable', (
+      tester,
+    ) async {
+      await pumpApp(tester, size: tallPhone);
+      await pushScreen(tester, const HajjHubScreen());
+      await tester.tap(find.byKey(const Key('hajjHub.hajj')));
+      await tester.pumpAndSettle();
+      final guide = tester.element(find.byType(HajjScreen)).services.content.hajj;
+      final blocks = guide.sections['hajj']!;
+      expect(blocks.where((b) => b.label != null).length, 5, reason: 'the five stages by day');
+      final list = find.byKey(const Key('hajjList-hajj'));
+      for (final b in blocks) {
+        if (b.label != null || b.title == null) continue;
+        await tester.scrollUntilVisible(
+          find.text(b.title!),
+          300,
+          scrollable: find.descendant(of: list, matching: find.byType(Scrollable)).first,
+        );
+        expect(find.text(b.title!), findsWidgets, reason: b.title);
+      }
+      // The Umrah screen keeps its intro and the Madinah visit.
+      await pushScreen(tester, const PilgrimageScreen(kind: PilgrimageKind.umrah));
+      final madinah = guide.sections['umrah']!.lastWhere((b) => b.label == null).title!;
+      await tester.scrollUntilVisible(find.text(madinah), 300, scrollable: find.byType(Scrollable).last);
+      expect(find.text(madinah), findsOneWidget);
+    });
+
+    testWidgets('each step shows its picture and what is said there in full (owner 2026-11-15)', (tester) async {
+      await pumpApp(tester, size: tallPhone);
+      await pushScreen(tester, const PilgrimageScreen(kind: PilgrimageKind.umrah));
+      await tester.tap(find.byKey(const Key('stepStrip-umrah-2')));
+      await tester.pumpAndSettle();
+      final list = find.byType(Scrollable).last;
+      await tester.scrollUntilVisible(find.byKey(const Key('sayQuran')), 300, scrollable: list);
+      expect(find.byKey(const Key('stepSay')), findsOneWidget);
+      expect(find.textContaining('رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً'), findsWidgets);
+      // A kind of Hajj: Arafah has its picture and its dua.
+      await pushScreen(tester, const PilgrimageScreen(kind: PilgrimageKind.tamattu));
+      final arafah = hajjFlows[HajjType.tamattu]!.indexWhere((s) => s.title.contains('عرفة'));
+      final next = find.byKey(const Key('stepNext-tamattu'));
+      for (var n = 0; n < arafah; n++) {
+        await tester.scrollUntilVisible(next, 300, scrollable: find.byType(Scrollable).last);
+        await tester.tap(next);
+        await tester.pumpAndSettle();
+      }
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('hajjArt-arafah')), findsOneWidget);
+      await tester.scrollUntilVisible(find.byKey(const Key('stepSay')), 300, scrollable: find.byType(Scrollable).last);
+      expect(find.textContaining('خَيْرُ الدُّعَاءِ دُعَاءُ يَوْمِ عَرَفَةَ'), findsOneWidget);
+    });
+
     testWidgets('English UI says the guide is Arabic only', (tester) async {
       await pumpApp(tester, size: tallPhone, locale: 'en');
       await pushScreen(tester, const HajjScreen());

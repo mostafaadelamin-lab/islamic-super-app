@@ -8,7 +8,8 @@ import { Icon } from "@/components/Icon";
 import { OfficialHajjGuide } from "@/components/OfficialHajjGuide";
 import { HajjServices } from "@/components/HajjServices";
 import { DuaText } from "@/components/DuaText";
-import { KIND_TITLE, PILGRIMAGE_KINDS } from "@/components/HajjGuide";
+import { KIND_TITLE, PILGRIMAGE_KINDS, StepCard } from "@/components/HajjGuide";
+import { localizeDigits } from "@/lib/digits";
 
 export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
   const { locale } = await params;
@@ -64,6 +65,17 @@ export default async function HajjPage({ params }: { params: LocaleParams }) {
           ))}
         </dl>
       </section>
+      {/* The stages of Hajj by day, in full (shown again: dropped by mistake 2026-11-15). */}
+      <h2 id="hajj">{t(locale, "hajj.hajj")}</h2>
+      {hajj.hajj.days.map((s, i) => (
+        <StepCard
+          key={i}
+          id={`hajj-stage-${i + 1}`}
+          locale={locale}
+          label={t(locale, "hajj.stage", { n: localizeDigits(i + 1, locale) })}
+          step={s}
+        />
+      ))}
       <section className="card">
         <h3 lang="ar">{hajj.hajj.pillars.title}</h3>
         <p lang="ar">{hajj.hajj.pillars.body}</p>

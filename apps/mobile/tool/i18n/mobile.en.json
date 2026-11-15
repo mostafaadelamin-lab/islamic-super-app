@@ -781,6 +781,7 @@
   "hajj.kind.ifrad": "Hajj Ifrad",
   "hajj.kind.sub": "The steps in order, one at a time",
   "hajj.hub.umrahSub": "Umrah one step at a time",
+  "hajj.say.title": "What is said at this step",
   "hajj.hub.ihram": "Miqat and ihram rules",
   "adhkar.reportTitle": "Mistake in a dhikr",
   "reader.hideTafsir": "Hide tafsir"

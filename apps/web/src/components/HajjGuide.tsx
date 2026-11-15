@@ -5,7 +5,7 @@ import { isRoundTool } from "@/lib/rounds";
 import { localizeDigits } from "@/lib/digits";
 import { HAJJ_FLOWS, type HajjType } from "@/lib/hajj-flows";
 import { RoundCounter } from "./RoundCounter";
-import { TawafPlan, type TawafPlanLabels } from "./TawafPlan";
+import { HajjPicture, StepSay, pictureFor } from "./HajjStepExtras";
 import { DuaText } from "./DuaText";
 
 /** One page per kind of pilgrimage (owner 2026-11-15): Umrah and the three kinds of Hajj. */
@@ -26,23 +26,6 @@ export interface Step {
   tool: string | null;
 }
 
-function planLabels(locale: Locale): TawafPlanLabels {
-  const k = [
-    "title",
-    "kaaba",
-    "blackStone",
-    "yemeni",
-    "shami",
-    "iraqi",
-    "door",
-    "hijr",
-    "maqam",
-    "start",
-    "direction",
-  ] as const;
-  return Object.fromEntries(k.map((x) => [x, t(locale, `hajj.plan.${x}`)])) as unknown as TawafPlanLabels;
-}
-
 export function StepCard({
   locale,
   label,
@@ -57,8 +40,8 @@ export function StepCard({
   return (
     <section className="card step" id={id}>
       <span className="step-label">{label}</span>
-      {step.tool === "tawaf" ? <TawafPlan l={planLabels(locale)} /> : null}
       <h3 lang="ar">{step.title}</h3>
+      <StepPicture title={step.title} umrah locale={locale} />
       <ul lang="ar">
         {step.points.map((p, i) => (
           <li key={i}>
@@ -66,11 +49,13 @@ export function StepCard({
           </li>
         ))}
       </ul>
+      {/* The step's own dhikr always stays; what is said at its places follows below in full. */}
       {step.dhikr ? (
         <p className="dua" lang="ar">
           {step.dhikr}
         </p>
       ) : null}
+      <StepSay title={step.title} locale={locale} />
       {isRoundTool(step.tool) ? <RoundCounter locale={locale} tool={step.tool} /> : null}
     </section>
   );
@@ -130,13 +115,21 @@ export function TypeStepCard({
       <h3 lang="ar" data-testid="hajj-step-title">
         {step.title}
       </h3>
+      <StepPicture title={step.title} umrah={false} locale={locale} />
       <p lang="ar" className="hajj-step-text" data-testid="hajj-step-text">
         <DuaText text={step.text} />
       </p>
+      <StepSay title={step.title} locale={locale} />
       <p className="muted small">
         {t(locale, "hajj.guide.source")}: <span lang="ar">{dalil.source.title}</span>
       </p>
       {toolOf(step.title) ? <RoundCounter locale={locale} tool={toolOf(step.title)!} /> : null}
     </section>
   );
+}
+
+/** The picture of where a step happens (owner 2026-11-15: every step has one again). */
+function StepPicture({ title, umrah, locale }: { title: string; umrah: boolean; locale: Locale }) {
+  const pic = pictureFor(title, umrah);
+  return pic ? <HajjPicture pic={pic} locale={locale} /> : null;
 }

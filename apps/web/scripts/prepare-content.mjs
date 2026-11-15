@@ -182,6 +182,35 @@ if (
   throw new Error("dalil-hajj.v1.json: unexpected schema");
 }
 writeJson(join(gen, "dalil-hajj.json"), dalil);
+// What is said at each place of Umrah and Hajj (owner 2026-11-15): references into Hisn al-Muslim and the
+// Quran, resolved here; a 'part' must be an exact substring of its chapter, or the build fails.
+{
+  const map = JSON.parse(readFileSync(join(repo, "content/pilgrimage/step-duas.v1.json"), "utf8"));
+  const hisnBook = JSON.parse(readFileSync(join(repo, "content/adhkar/hisn.json"), "utf8"));
+  const chapter = (id) => {
+    const c = hisnBook[id - 1];
+    if (!c) throw new Error(`step-duas: no Hisn chapter ${id}`);
+    return { title: c[0], text: c[1].join("\n") };
+  };
+  const places = {};
+  for (const [key, groups] of Object.entries(map.places)) {
+    places[key] = groups.map((g) => ({
+      title: chapter(g.hisn).title,
+      say: g.say.map((x) => {
+        if (x.quran) {
+          const [s, a] = x.quran;
+          const text = quran.surahs[s - 1]?.ayahs[a - 1];
+          if (!text) throw new Error(`step-duas: no ayah ${s}:${a}`);
+          return { kind: x.kind, quran: [s, a], text };
+        }
+        const full = chapter(x.hisn).text;
+        if (x.part && !full.includes(x.part)) throw new Error(`step-duas: part not in Hisn ${x.hisn}: ${x.part}`);
+        return { kind: x.kind, text: x.part ?? full };
+      }),
+    }));
+  }
+  writeJson(join(gen, "hajj-duas.json"), { places, rules: map.rules });
+}
 console.log(`content prepared: ${meta.length} surahs`);
 
 /**

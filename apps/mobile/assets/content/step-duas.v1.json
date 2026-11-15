@@ -1,0 +1,158 @@
+{
+ "_doc": "What is said at each place of Umrah and Hajj (owner 2026-11-15: every dua, ayah or surah written in full where it is said). References only: no text is written here except exact substrings ('part') of the Hisn al-Muslim chapter they point to. 'hisn' = chapter id (1-based, book order) of content/adhkar/hisn.json; its title is the heading. 'quran' = [surah, ayah] shown in full from the canonical KFGQPC text. Each place shows its whole Hisn al-Muslim text first (never shortened); parts and ayahs follow as what to say. kind: dua = to be said (shaded), hadith = how the Prophet did it, note = a short line of the hadith. Steps get places by the words of their titles ('rules', every matching rule adds; 'stop' ends the search).",
+ "places": {
+  "ihram": [
+   {
+    "hisn": 117,
+    "say": [
+     {
+      "hisn": 117,
+      "kind": "dua"
+     }
+    ]
+   }
+  ],
+  "tawaf": [
+   {
+    "hisn": 118,
+    "say": [
+     {
+      "hisn": 118,
+      "kind": "hadith"
+     }
+    ]
+   },
+   {
+    "hisn": 119,
+    "say": [
+     {
+      "hisn": 119,
+      "kind": "dua"
+     },
+     {
+      "quran": [
+       2,
+       201
+      ],
+      "kind": "dua"
+     }
+    ]
+   }
+  ],
+  "sai": [
+   {
+    "hisn": 120,
+    "say": [
+     {
+      "hisn": 120,
+      "kind": "hadith"
+     },
+     {
+      "quran": [
+       2,
+       158
+      ],
+      "kind": "dua"
+     },
+     {
+      "hisn": 120,
+      "part": "أَبْدَأُ بِمَا بَدَأَ اللَّهُ بِهِ",
+      "kind": "dua"
+     },
+     {
+      "hisn": 120,
+      "part": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ ، أَنْجَزَ وَعْدَهُ ، وَنَصَرَ عَبْدَهُ ، وَهَزَمَ الْأَحْزَابَ وَحْدَهُ",
+      "kind": "dua"
+     }
+    ]
+   }
+  ],
+  "arafah": [
+   {
+    "hisn": 121,
+    "say": [
+     {
+      "hisn": 121,
+      "kind": "hadith"
+     },
+     {
+      "hisn": 121,
+      "part": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+      "kind": "dua"
+     }
+    ]
+   }
+  ],
+  "muzdalifah": [
+   {
+    "hisn": 122,
+    "say": [
+     {
+      "hisn": 122,
+      "kind": "hadith"
+     }
+    ]
+   }
+  ],
+  "jamarat": [
+   {
+    "hisn": 123,
+    "say": [
+     {
+      "hisn": 123,
+      "kind": "hadith"
+     }
+    ]
+   }
+  ]
+ },
+ "rules": [
+  {
+   "contains": "البقاء على الإحرام",
+   "places": [],
+   "stop": true
+  },
+  {
+   "contains": "الإحرام",
+   "places": [
+    "ihram"
+   ]
+  },
+  {
+   "contains": "منى يوم التروية",
+   "places": [
+    "ihram"
+   ]
+  },
+  {
+   "contains": "طواف",
+   "places": [
+    "tawaf"
+   ]
+  },
+  {
+   "contains": "سعي",
+   "places": [
+    "sai"
+   ]
+  },
+  {
+   "contains": "عرفة",
+   "places": [
+    "arafah"
+   ]
+  },
+  {
+   "contains": "مزدلفة",
+   "places": [
+    "muzdalifah"
+   ]
+  },
+  {
+   "contains": "رمي",
+   "places": [
+    "jamarat"
+   ]
+  }
+ ]
+}

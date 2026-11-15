@@ -137,7 +137,7 @@ a {
   box-shadow: var(--shadow-sm);
 }
 .app-header-inner {
-  max-width: 1100px;
+  max-width: none;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -212,13 +212,13 @@ a {
   font-size: var(--font-size-sm);
 }
 main {
-  max-width: 1100px;
+  max-width: none;
   margin: 0 auto;
   padding: var(--space-lg);
   padding-bottom: calc(var(--space-xxl) + var(--tabbar-h) + var(--player-h));
 }
 .app-footer {
-  max-width: 1100px;
+  max-width: none;
   margin: 0 auto;
   padding: var(--space-lg);
   padding-bottom: calc(var(--space-lg) + var(--tabbar-h) + var(--player-h));
@@ -522,7 +522,7 @@ input[type="radio"] {
   display: grid;
   gap: var(--space-md);
   grid-template-columns: 1fr;
-  max-width: 1100px;
+  max-width: none;
   margin-inline: auto;
 }
 @media (min-width: 960px) {
@@ -3537,7 +3537,9 @@ dd {
    website, not a mobile app"). Phones (≤720px) keep the app look with the bottom tab bar.
    ===================================================================================== */
 :root {
-  --site-max: 1240px;
+  /* Full screen width on every device (owner 2026-11-15: no empty sides); side padding grows with the screen. */
+  --site-max: 100vw;
+  --site-pad: clamp(16px, 2.5vw, 48px);
   /* gold text on the dark-green header/footer: light gold in light mode, the accent in dark mode */
   --site-gold: var(--hero-soft);
   --header-deep: color-mix(in srgb, var(--header-bg) 80%, #000);
@@ -3636,7 +3638,7 @@ dd {
   .site-topbar-inner {
     max-width: var(--site-max);
     margin: 0 auto;
-    padding: 0 var(--space-xl);
+    padding: 0 var(--site-pad);
     min-height: 34px;
     display: flex;
     align-items: center;
@@ -3672,7 +3674,7 @@ dd {
   }
   .app-header-inner {
     max-width: var(--site-max);
-    padding: var(--space-sm) var(--space-xl);
+    padding: var(--space-sm) var(--site-pad);
     min-height: 76px;
     gap: var(--space-lg);
   }
@@ -3832,7 +3834,7 @@ dd {
   /* page body */
   main {
     max-width: var(--site-max);
-    padding: var(--space-xl);
+    padding: var(--space-xl) var(--site-pad);
     padding-bottom: calc(var(--space-xxl) * 2 + var(--player-h));
   }
   .site-crumbs {
@@ -3881,7 +3883,7 @@ dd {
     gap: var(--space-xxl);
     max-width: var(--site-max);
     margin: 0 auto;
-    padding: 48px var(--space-xl) var(--space-xxl);
+    padding: 48px var(--site-pad) var(--space-xxl);
   }
   .site-footer-brand {
     display: inline-flex;
@@ -3934,7 +3936,7 @@ dd {
     gap: var(--space-md);
     max-width: var(--site-max);
     margin: 0 auto;
-    padding: var(--space-lg) var(--space-xl);
+    padding: var(--space-lg) var(--site-pad);
     border-top: 1px solid color-mix(in srgb, var(--header-ink) 18%, transparent);
     font-size: var(--font-size-xs);
   }
@@ -4381,4 +4383,138 @@ dd {
 .episode-list li.has-player {
   flex-wrap: wrap;
   row-gap: 0;
+}
+
+/* ---- Hajj step pictures and what is said at each place (owner 2026-11-15) ---- */
+.hajj-pic-wrap {
+  margin: var(--space-sm) 0;
+}
+.hajj-pic {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  margin: 0 auto;
+  direction: ltr;
+}
+.hp-bg {
+  fill: var(--color-surface-2);
+}
+.hp-road {
+  stroke: color-mix(in srgb, var(--color-primary) 40%, var(--color-surface-2));
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+.hp-miqat-line {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+}
+.hp-dot {
+  fill: var(--color-surface);
+  stroke: var(--color-primary);
+  stroke-width: 2.5;
+}
+.hp-on .hp-dot {
+  fill: var(--color-accent);
+  stroke: var(--color-primary);
+}
+.hp-off {
+  opacity: 0.6;
+}
+.hp-label {
+  fill: var(--color-ink);
+  font-size: 12px;
+  font-weight: 600;
+}
+.hp-on .hp-label,
+.hp-strong {
+  fill: var(--color-primary);
+  font-weight: 800;
+}
+.hp-hint {
+  fill: var(--color-primary);
+  font-size: 12px;
+  font-weight: 700;
+}
+.hp-small {
+  fill: var(--color-muted);
+  font-size: 10px;
+  font-weight: 600;
+}
+.hp-lane {
+  fill: var(--color-surface);
+  stroke: color-mix(in srgb, var(--color-primary) 35%, var(--color-surface-2));
+}
+.hp-green {
+  fill: color-mix(in srgb, #2e8b57 45%, var(--color-surface));
+}
+.hp-hill {
+  fill: color-mix(in srgb, var(--brand-gold) 55%, var(--color-surface-2));
+  stroke: var(--color-primary);
+  stroke-width: 1;
+}
+.hp-way {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2.5;
+}
+.hp-arrowhead {
+  fill: var(--color-accent);
+}
+.hp-pillar {
+  fill: color-mix(in srgb, var(--color-primary) 70%, var(--color-surface-2));
+}
+.hp-basin {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 2;
+}
+.step-say {
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px dashed var(--color-frame);
+}
+.step-say-title {
+  margin: 0 0 var(--space-sm);
+  color: var(--color-primary);
+}
+.say-group h5 {
+  margin: var(--space-md) 0 var(--space-xs);
+  font-size: 15px;
+}
+.say-dua {
+  margin: var(--space-sm) 0 0;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--color-verse-highlight);
+  font-size: 19px;
+  line-height: 2;
+}
+.say-quran-text {
+  font-family: var(--font-quran);
+  font-size: 22px;
+}
+.say-ref {
+  display: block;
+  margin-top: var(--space-xs);
+  font-size: 13px;
+  color: var(--color-muted);
+}
+.say-hadith {
+  margin: var(--space-sm) 0 0;
+  padding: var(--space-sm) var(--space-md);
+  border-inline-start: 3px solid var(--color-accent);
+  line-height: 1.9;
+}
+.say-note {
+  margin: var(--space-xs) 0 0;
+}
+/* Phones: the steps strip bleeds exactly to the screen edges (page padding is 12px), no sideways scroll. */
+@media (max-width: 720px) {
+  .step-strip-wrap {
+    margin-inline: calc(-1 * var(--space-md));
+    padding-inline: var(--space-md);
+  }
 }

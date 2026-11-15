@@ -914,6 +914,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Pending religious review: this guide has not yet been reviewed by a qualified scholar. Check with a trusted scholar before relying on it.';
 
   @override
+  String get hajjSayTitle => 'What is said at this step';
+
+  @override
   String get hajjStepNext => 'Next';
 
   @override

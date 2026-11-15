@@ -6,9 +6,12 @@ import '../domain/hajj_flows.dart';
 import '../theme/design_tokens.dart';
 import 'adaptive.dart';
 import 'dua_text.dart';
+import 'hajj_art.dart';
 import 'hajj_screen.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
+import 'step_say.dart';
+import 'tawaf_plan.dart';
 
 /// Umrah and the three kinds of Hajj, each on its own screen.
 enum PilgrimageKind { umrah, tamattu, qiran, ifrad }
@@ -85,12 +88,21 @@ class _PilgrimageScreenState extends State<PilgrimageScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(s.title, key: const Key('hajjStepTitle'), style: theme.textTheme.titleLarge),
+                // The picture of where the step happens (owner 2026-11-15: every step has one again).
+                if (hajjSceneForStep(s.title) case final scene?) ...[
+                  const SizedBox(height: DesignTokens.spaceSm),
+                  if (scene == HajjScene.tawaf)
+                    TawafPlan(arabic: context.isArabic)
+                  else
+                    HajjArt(key: Key('hajjArt-${scene.name}'), scene: scene),
+                ],
                 const SizedBox(height: DesignTokens.spaceMd),
                 DuaText(
                   explainHajjStep(guide, s),
                   textKey: const Key('hajjStepText'),
                   style: theme.textTheme.bodyLarge?.copyWith(height: 1.9),
                 ),
+                StepSay(title: s.title),
                 const SizedBox(height: DesignTokens.spaceMd),
                 Text('${l.hajjGuideSource}: ${guide.official.title}', style: theme.textTheme.bodySmall),
               ],
@@ -119,6 +131,10 @@ class _PilgrimageScreenState extends State<PilgrimageScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg),
                     child: StepNav(index: i, count: count, onGo: go, id: kind.name),
                   ),
+                  // The Umrah intro and the Madinah visit stay with the Umrah, in full.
+                  if (kind == PilgrimageKind.umrah)
+                    for (final b in guide.sections['umrah'] ?? const <HajjBlock>[])
+                      if (b.label == null) HajjBlockCard(block: b),
                 ],
               ),
             ),
