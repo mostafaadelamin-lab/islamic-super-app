@@ -1938,12 +1938,12 @@ body:has(.player) {
 }
 /* The step on show (owner, 2026-11-15: one step at a time). */
 .sf-active .sf-circle {
-  fill: #8a6a45;
-  stroke: #6b4a2b;
+  fill: var(--color-primary);
+  stroke: var(--brand-hero-deep);
   stroke-width: 3;
 }
 .sf-active .sf-num {
-  fill: #fffaf0;
+  fill: var(--color-on-primary);
 }
 .sf-step {
   cursor: pointer;
