@@ -7,7 +7,6 @@ import { NO_BASMALA_BEFORE } from "@/lib/audio";
 import { ayahEndMark, renderQuranText } from "@/lib/quran-render";
 import { loadTafsirSurah } from "@/lib/tafsir";
 import type { MushafData } from "@/lib/mushaf-data";
-import { TafsirPanel } from "./TafsirPanel";
 
 const key = ([s, a]: Ref): string => `${s}:${a}`;
 
@@ -154,70 +153,5 @@ export function PageTafsirList({ locale, refs, data, selected, playing, onSelect
       </ol>
       <p className="tafsir-source muted small">{t(locale, "tafsir.source")}</p>
     </div>
-  );
-}
-
-export interface SplitProps {
-  locale: Locale;
-  data: MushafData | null;
-  /** The ayah being recited; null while the basmala is recited or before playing. */
-  ayah: Ref | null;
-  basmala: boolean;
-  /** The ayah's text from the page already shown, used until the full text is loaded. */
-  fallbackText?: string | null;
-  onShowPage: () => void;
-}
-
-/**
- * "Listen with tafsir": the screen in two halves — the ayah being recited (highlighted) and, under it (beside
- * it on wide screens), its short tafsir (al-Muyassar). Both follow the recitation ayah by ayah.
- */
-export function SplitRecitation({
-  locale,
-  data,
-  ayah,
-  basmala,
-  fallbackText = null,
-  onShowPage,
-}: SplitProps) {
-  const text = ayah ? (ayahText(data, ayah) ?? fallbackText) : null;
-  let label = t(locale, "reader.waiting");
-  if (ayah)
-    label = t(locale, "quran.ayahRef", {
-      surah: surahName(ayah[0], locale),
-      ayah: localizeDigits(ayah[1], locale),
-    });
-  else if (basmala) label = t(locale, "reader.basmalaNow");
-  return (
-    <section className="rd-split" data-testid="split-view" aria-label={t(locale, "reader.listenWithTafsir")}>
-      <div className="rd-half rd-half-ayah" data-testid="split-ayah" data-ayah={ayah ? key(ayah) : ""}>
-        <div className="rd-half-head">
-          <strong>{t(locale, "reader.splitTitle")}</strong>
-          <span className="muted small">{label}</span>
-          <button type="button" className="btn btn-sm" data-testid="split-show-page" onClick={onShowPage}>
-            {t(locale, "reader.showPage")}
-          </button>
-        </div>
-        {ayah && text ? (
-          <p className="rd-split-quran" lang="ar" dir="rtl" data-testid="split-ayah-text">
-            <span className="rd-split-hl">{text}</span> <span className="rd-num">{ayahEndMark(ayah[1])}</span>
-          </p>
-        ) : null}
-        {!ayah && basmala ? (
-          <p className="rd-split-quran" lang="ar" dir="rtl">
-            <span className="rd-split-hl">{ayahText(data, [1, 1])}</span>
-          </p>
-        ) : null}
-      </div>
-      <div
-        className="rd-half rd-half-tafsir"
-        data-testid="recitation-tafsir"
-        role="region"
-        aria-label={t(locale, "reader.splitTafsir")}
-        tabIndex={0} // scrollable: reachable by keyboard
-      >
-        {ayah ? <TafsirPanel locale={locale} surah={ayah[0]} ayah={ayah[1]} showNav={false} /> : null}
-      </div>
-    </section>
   );
 }

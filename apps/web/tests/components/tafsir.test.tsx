@@ -170,40 +170,34 @@ describe("tafsir with recitation", () => {
     expect(screen.queryByTestId("tafsir")).toBeNull();
   });
 
-  it("on: the screen splits in two (recited ayah | its tafsir) and follows the recitation; 'Show the page' turns it off", async () => {
+  it("on: the page and its tafsir in two halves, following the recitation; 'Hide tafsir' turns it off", async () => {
     serveTafsir();
     audioStore.set((p) => ({ ...p, tafsir: true }));
     render(<PageReader locale="en" initial={resolvePage(lines.pages[1]!, lookup)} />);
-    expect(screen.queryByTestId("split-view")).toBeNull(); // nothing is playing yet
+    expect(screen.queryByTestId("duo-tafsir")).toBeNull(); // nothing is playing yet
     act(() => player.play({ kind: "page", page: 2 }));
-    expect(screen.getByTestId("split-view")).toBeInTheDocument();
-    expect(screen.getByTestId("mushaf-stage")).not.toBeVisible();
-    expect(screen.getByTestId("split-ayah")).toHaveTextContent("Reciting the basmala");
-    expect(screen.queryByTestId("tafsir")).toBeNull(); // the basmala has no tafsir entry
+    expect(screen.getByTestId("duo-tafsir")).toBeInTheDocument();
+    expect(screen.getByTestId("mushaf-stage")).toBeVisible(); // the whole page stays on screen
     end();
-    const half = screen.getByTestId("recitation-tafsir");
-    expect(half).toHaveAccessibleName("Short tafsir");
-    expect((await screen.findByText(entry(2, 1))).dataset.testid).toBe("tafsir-text");
-    expect(screen.getByTestId("split-ayah")).toHaveAttribute("data-ayah", "2:1");
-    expect((await screen.findByTestId("split-ayah-text")).textContent).toContain(
-      renderQuranText(lookup(2, 1)),
-    );
-    expect(screen.queryByTestId("tafsir-next")).toBeNull(); // the player has its own next/previous
+    expect(await screen.findByText(entry(2, 1))).toBeInTheDocument();
+    const playing = (): string | null =>
+      screen.getByTestId("duo-tafsir").querySelector(".rd-ayah.playing")?.getAttribute("data-ayah") ?? null;
+    expect(playing()).toBe("2:1");
     end();
-    expect((await screen.findByText(entry(2, 2))).dataset.testid).toBe("tafsir-text");
-    expect(screen.getByTestId("tafsir")).toHaveAttribute("data-ayah", "2:2");
-    expect(screen.getByTestId("split-ayah")).toHaveAttribute("data-ayah", "2:2");
-    await userEvent.click(screen.getByTestId("split-show-page"));
+    expect(playing()).toBe("2:2");
+    await userEvent.click(screen.getByTestId("duo-close"));
     expect(audioStore.get().tafsir).toBe(false);
-    expect(screen.queryByTestId("split-view")).toBeNull();
+    expect(screen.queryByTestId("duo-tafsir")).toBeNull();
     expect(screen.getByTestId("mushaf-stage")).toBeVisible();
   });
 
-  it("tapping an ayah: listen to it alone, or 'Listen with tafsir' from it (splits the screen)", async () => {
+  it("tapping an ayah: listen to it alone, or 'Listen with tafsir' from it (page and tafsir halves)", async () => {
     serveTafsir();
     render(<PageReader locale="en" initial={resolvePage(lines.pages[2]!, lookup)} />);
     await userEvent.click(screen.getByRole("button", { name: "Al-Baqarah, ayah 7 — ayah options" }));
     // Simple menu (owner 2026-11-15): five buttons; the ways to listen open from "Listen".
+    // ... in the bottom strip with the player and the page slider, not floating over the page.
+    expect(screen.getByTestId("ayah-sheet").closest(".rd-dock")).not.toBeNull();
     expect(screen.queryByTestId("act-play-ayah")).toBeNull();
     await userEvent.click(screen.getByTestId("act-tafsir"));
     expect(await screen.findByText(entry(2, 7))).toBeInTheDocument(); // its tafsir is in the sheet
@@ -214,7 +208,10 @@ describe("tafsir with recitation", () => {
     expect(audioStore.get().tafsir).toBe(true);
     expect(player.current()).toEqual({ kind: "ayah", s: 2, a: 7 });
     expect(screen.queryByTestId("ayah-sheet")).toBeNull();
-    expect(screen.getByTestId("split-ayah")).toHaveAttribute("data-ayah", "2:7");
-    expect((await screen.findByText(entry(2, 7))).dataset.testid).toBe("tafsir-text");
+    expect(screen.getByTestId("duo-tafsir").querySelector(".rd-ayah.playing")).toHaveAttribute(
+      "data-ayah",
+      "2:7",
+    );
+    expect(await screen.findByText(entry(2, 7))).toBeInTheDocument();
   });
 });

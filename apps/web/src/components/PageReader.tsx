@@ -41,7 +41,7 @@ import { TafsirPanel } from "./TafsirPanel";
 import { ReaderPlayer } from "./ReaderPlayer";
 import { ReaderIcon } from "./ReaderIcon";
 import { KhatmaSheet } from "./KhatmaSheet";
-import { PageAyahList, PageTafsirList, SplitRecitation } from "./ReaderViews";
+import { PageAyahList, PageTafsirList } from "./ReaderViews";
 import "./reader.css";
 
 export interface PageReaderProps {
@@ -166,7 +166,7 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full
       const ems = Math.max(widestEms, FIT.lineEms * FIT.capRatio);
       frame.style.setProperty("--m-width", `${Math.ceil(size * ems + chrome + FIT.safetyPx)}px`);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- layout only marks a change of the page's width
+    // layout only marks a change of the page's width
   }, [pageEl, page, full, layout]);
 
   useLayoutEffect(() => {
@@ -557,10 +557,6 @@ export function PageReader({ locale, initial }: PageReaderProps) {
 
   const tilt = drag.dx / TILT_DIVISOR;
   const refs = pageAyahRefs(view);
-  const recitedAyah: Ref | null = current?.kind === "ayah" ? [current.s, current.a] : null;
-  // "Listen with tafsir": while reciting, the Mushaf tab shows the recited ayah and its tafsir in two halves
-  // (unless the reader has selected an ayah themselves, whose sheet then wins).
-  const split = tab === "mushaf" && audioPrefs.tafsir && active && !sel && !duo;
   const playWithTafsir = (s: number, a: number): void => {
     audioStore.set((p) => ({ ...p, tafsir: true }));
     setSelected(null);
@@ -576,7 +572,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
         .filter(Boolean)
         .join(" ")}
       data-tab={tab}
-      data-split={split ? "true" : "false"}
+      data-split={duo ? "true" : "false"}
       style={{ "--rd-fs": `${prefs.fontSize}px` } as CSSProperties}
     >
       <div className="rd-top">
@@ -646,17 +642,6 @@ export function PageReader({ locale, initial }: PageReaderProps) {
         </span>
       </header>
 
-      {split ? (
-        <SplitRecitation
-          locale={locale}
-          data={data}
-          ayah={recitedAyah}
-          basmala={current?.kind === "basmala"}
-          fallbackText={recitedAyah ? ayahTextOnPage(view, recitedAyah) : null}
-          onShowPage={() => audioStore.set((p) => ({ ...p, tafsir: false }))}
-        />
-      ) : null}
-
       {duo ? (
         <aside
           className="rd-duo-tafsir"
@@ -689,7 +674,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
         className="mushaf-stage"
         data-testid="mushaf-stage"
         data-ready={data ? "true" : "false"}
-        hidden={tab !== "mushaf" || split}
+        hidden={tab !== "mushaf"}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={endGesture}
