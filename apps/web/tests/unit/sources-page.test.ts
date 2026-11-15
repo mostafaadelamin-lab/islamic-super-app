@@ -30,7 +30,7 @@ describe("hidden sources page", () => {
   });
 
   it("links only to licence files that ship with the site", () => {
-    const local = [...html.matchAll(/href="(\/[^"#]+)"/g)].map((m) => m[1]);
+    const local = [...html.matchAll(/href="(\/[^"#]+)"/g)].map((m) => m[1] ?? "");
     expect(local.length).toBeGreaterThan(0);
     for (const p of local) expect(existsSync(join(pub, p)), p).toBe(true);
   });

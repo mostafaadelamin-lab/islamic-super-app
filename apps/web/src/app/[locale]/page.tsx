@@ -102,20 +102,12 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
           <h2 id="site-hero-h">{t(locale, "site.hero.title")}</h2>
           <p className="site-hero-lead">{t(locale, "site.hero.lead")}</p>
           <p className="site-hero-actions">
-            {/* The surah index first, not straight into Al-Fatiha (owner, 2026-11-15). */}
+            {/* Only «اقرأ القرآن» here; it opens the surah index (owner, 2026-11-15). Prayer times and the
+                radio follow right below the hero. */}
             <Link className="btn btn-hero" href={href(locale, "quran")} data-testid="hero-read">
               <Icon name="quran" size={20} />
               {t(locale, "site.hero.read")}
             </Link>
-            <Link className="btn btn-hero-ghost" href={href(locale, "prayer")} data-testid="hero-prayer">
-              <Icon name="clock" size={20} />
-              {t(locale, "site.hero.prayer")}
-            </Link>
-            {/* Radio beside the two main buttons (owner, 2026-11-15): goes to the home radio below. */}
-            <a className="btn btn-hero-ghost" href="#home-radio" data-testid="hero-radio">
-              <Icon name="radio" size={20} />
-              {t(locale, "site.hero.radio")}
-            </a>
           </p>
         </div>
         <div className="site-hero-art" aria-hidden="true">
@@ -145,7 +137,6 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
           </span>
         </Link>
       </div>
-      <Explore locale={locale} />
       <section className="home-col home-radio-wrap" id="home-radio" aria-labelledby="home-radio-h">
         <div className="desktop-only home-radio-intro">
           <h2 id="home-radio-h" className="site-section-title">
@@ -155,6 +146,7 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
         </div>
         <QuranRadio locale={locale} />
       </section>
+      <Explore locale={locale} />
       <div className="home-col">
         <Link className="card home-more mobile-only" href={href(locale, "more")} data-testid="home-more">
           <Icon name="more" size={26} />
