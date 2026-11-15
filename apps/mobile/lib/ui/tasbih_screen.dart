@@ -74,7 +74,7 @@ class _TasbihScreenState extends State<TasbihScreen> {
           builder: (context, _) {
             final b = t.book;
             final st = b.current;
-            final color = Color(tasbihColors[b.color] ?? tasbihColors['brown']!);
+            final color = Color(tasbihColors[b.color] ?? tasbihColors['emerald']!);
             final today = b.history[isoDay(DateTime.now())]?[b.phrase] ?? 0;
             final rows = b.historyRows().take(30).toList();
             final dark = HSLColor.fromColor(color).withLightness(0.22).toColor();

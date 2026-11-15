@@ -14,7 +14,7 @@
   "prayer.next": "الصلاة القادمة: {name}", "prayer.in": "بعد {time}", "prayer.city": "المدينة", "prayer.method": "طريقة الحساب", "prayer.asrMethod": "مذهب العصر",
   "prayer.asrStandard": "الجمهور (الشافعي والمالكي والحنبلي)", "prayer.asrHanafi": "الحنفي", "prayer.qibla": "اتجاه القبلة", "prayer.qiblaDeg": "{deg}° من الشمال الجغرافي",
   "prayer.highLat": "طُبّقت قاعدة خطوط العرض العليا على: {list}", "prayer.adjust": "تعديل يدوي (بالدقائق)",
-  "settings.language": "اللغة", "settings.theme": "المظهر", "settings.themeSystem": "حسب الجهاز", "settings.themeLight": "فاتح", "settings.themeDark": "داكن",
+  "settings.language": "اللغة", "settings.theme": "المظهر", "settings.themeSystem": "حسب الجهاز", "settings.themeLight": "فاتح", "settings.themeDark": "داكن", "settings.palette": "لون التصميم", "settings.paletteEmerald": "زمردي وذهبي", "settings.paletteMadinah": "ليل المدينة",
   "settings.fontSize": "حجم خط المصحف", "settings.about": "عن التطبيق", "settings.free": "تطبيق مجاني تم إنشاؤه لوجه الله تعالى، بدون مقابل وبدون إعلانات.",
   "settings.sources": "مصادر المحتوى", "bookmarks.empty": "لا توجد علامات بعد",
   "common.retry": "إعادة المحاولة", "common.offline": "أنت غير متصل — يُعرض المحتوى المحفوظ", "common.error": "حدث خطأ",

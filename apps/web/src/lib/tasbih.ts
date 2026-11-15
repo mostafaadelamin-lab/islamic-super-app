@@ -9,7 +9,7 @@ export const TASBIH_TARGETS: readonly number[] = [T33, T99, T100, T1000];
 export const TASBIH_PHRASES: readonly string[] = ["tasbih", "tahmid", "takbir", "tahlil", "istighfar"];
 export type TasbihMode = "button" | "beads";
 export const TASBIH_MODES: readonly TasbihMode[] = ["button", "beads"];
-/** Bead colours (same values in the mobile app); the first is the Mushaf brown (default since 2026-11-14). */
+/** Bead colours (same values in the mobile app); default is the emerald of colour style 1 (since 2026-11-15). */
 export const TASBIH_COLORS: Readonly<Record<string, string>> = {
   brown: "#8A5A2B",
   emerald: "#0F5C4A",
@@ -64,7 +64,7 @@ export const DEFAULT_TASBIH: TasbihState = {
   counters: {},
   custom: [],
   mode: "button",
-  color: "brown",
+  color: "emerald",
   sound: false,
   vibrate: true,
   history: {},
@@ -120,7 +120,7 @@ export function sanitizeTasbih(raw: unknown): TasbihState {
     counters,
     custom,
     mode: (TASBIH_MODES as readonly unknown[]).includes(r.mode) ? (r.mode as TasbihMode) : "button",
-    color: typeof r.color === "string" && r.color in TASBIH_COLORS ? r.color : "brown",
+    color: typeof r.color === "string" && r.color in TASBIH_COLORS ? r.color : "emerald",
     sound: r.sound === true,
     vibrate: r.vibrate !== false,
     history,

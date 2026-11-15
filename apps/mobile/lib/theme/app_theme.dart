@@ -7,8 +7,18 @@ import 'design_tokens.dart';
 class AppTheme {
   AppTheme._();
 
-  static Color token(Brightness b, String name) =>
-      (b == Brightness.dark ? DesignTokens.dark : DesignTokens.light)[name]!;
+  /// The colour style the user picked in Settings (owner 2026-11-15: style 1 emerald & gold,
+  /// style 2 Madinah night). Set by the app before it builds its themes.
+  static String palette = DesignTokens.defaultPalette;
+
+  static Map<String, Map<String, Color>> get _pal =>
+      DesignTokens.palettes[palette] ?? DesignTokens.palettes[DesignTokens.defaultPalette]!;
+
+  static Color token(Brightness b, String name) => _pal[b == Brightness.dark ? 'dark' : 'light']![name]!;
+
+  /// Brand colours of the current style that stay the same in light and dark mode
+  /// (hero banners, qibla card, splash): heroTop, heroBottom, heroDeep, heroAccent, gold, goldSoft, dial1..3.
+  static Color brand(String name) => _pal['brand']![name]!;
 
   static ThemeData build(Brightness b, {Map<String, Color>? overrides}) {
     Color t(String n) => overrides?[n] ?? token(b, n);

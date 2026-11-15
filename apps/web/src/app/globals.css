@@ -1,4 +1,4 @@
-/* Rattil web — Mushaf cream & brown (owner 2026-11-14). Every colour, size and radius comes from the design tokens (tokens.css). */
+/* Rattil web — colour styles from the design tokens (owner 2026-11-15: style 1 emerald & gold, style 2 Madinah night; Mushaf pages keep cream & brown). Every colour, size and radius comes from tokens.css. */
 @font-face {
   /* King Fahd Complex font for its Hafs v18 text; distributed unmodified (content/fonts/KFGQPC-HAFS-LICENSE.txt) */
   font-family: "KFGQPC HAFS Uthmanic Script";
@@ -20,8 +20,8 @@
 }
 
 :root {
-  --shadow-sm: 0 1px 2px rgb(60 38 16 / 6%), 0 1px 3px rgb(60 38 16 / 8%);
-  --shadow-md: 0 4px 16px rgb(60 38 16 / 10%);
+  --shadow-sm: 0 1px 2px rgb(var(--brand-shadow-rgb) / 6%), 0 1px 3px rgb(var(--brand-shadow-rgb) / 8%);
+  --shadow-md: 0 4px 16px rgb(var(--brand-shadow-rgb) / 10%);
   --tabbar-h: 0px;
   --player-h: 0px;
   --primary-deep: color-mix(in srgb, var(--color-primary) 72%, #000);
@@ -30,12 +30,12 @@
   --hero-soft: var(--color-accent-soft);
   --header-bg: var(--color-primary);
   --header-ink: var(--color-on-primary);
-  /* header mark: light gold on the brown header */
-  --brand-mark: #e8cb8c;
+  /* header mark: light gold on the brand header */
+  --brand-mark: var(--brand-gold-soft);
   --marker-ink: color-mix(in srgb, var(--color-frame) 62%, var(--color-paper-ink));
   --warn-bg: var(--color-accent-soft);
   /* Mushaf highlights: translucent tints blended into the paper, so they can never hide a glyph or mark. */
-  --hl-selected: rgb(138 90 43 / 16%);
+  --hl-selected: color-mix(in srgb, var(--color-primary) 16%, transparent);
   --hl-playing: rgb(196 140 30 / 30%);
   --hl-blend: multiply;
 }
@@ -1781,15 +1781,15 @@ body:has(.player) {
   overflow: visible;
 }
 .qibla .live-compass {
-  background: linear-gradient(180deg, #8a5a2b, #4a2e14);
+  background: linear-gradient(180deg, var(--brand-hero-top), var(--brand-hero-deep));
   border-radius: 28px;
   padding: var(--space-lg) var(--space-lg) var(--space-xl);
   color: #fff;
-  box-shadow: 0 10px 28px rgb(74 46 20 / 0.22);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--brand-hero-deep) 22%, transparent);
 }
 .qibla .live-compass .btn-primary {
-  background: #d4af5a;
-  color: #3a240f;
+  background: var(--brand-gold);
+  color: var(--brand-hero-deep);
 }
 .qibla .live-compass .muted {
   color: rgb(255 255 255 / 0.75);
@@ -1813,8 +1813,8 @@ body:has(.player) {
   background: rgb(255 255 255 / 0.1);
 }
 .qibla .live-compass.facing .compass-status {
-  background: #d4af5a;
-  color: #3a240f;
+  background: var(--brand-gold);
+  color: var(--brand-hero-deep);
 }
 .qibla .compass-status:empty {
   display: none;
@@ -2208,7 +2208,7 @@ dd {
   align-items: center;
   justify-content: center;
   opacity: 1;
-  background: linear-gradient(160deg, var(--color-primary), #1a120a);
+  background: linear-gradient(160deg, var(--brand-hero-top), var(--brand-hero-deep));
   color: #fff;
 }
 .reel-poster-blank svg {
@@ -4126,7 +4126,7 @@ dd {
   scroll-margin-top: 5rem;
 }
 .dalil-list li:target {
-  background: #f2e3cc;
+  background: var(--color-accent-soft);
 }
 .dalil-n {
   flex: none;
@@ -4136,8 +4136,8 @@ dd {
   height: 1.8rem;
   margin-top: 0.2rem;
   border-radius: 50%;
-  background: #e9dcc0;
-  color: #6b4a2b;
+  background: var(--color-surface-2);
+  color: var(--color-primary);
   font-weight: 700;
 }
 
@@ -4160,4 +4160,53 @@ dd {
 }
 [dir="ltr"] .player-open .icon {
   transform: scaleX(-1);
+}
+/* Colour style picker (Settings › Display) */
+.palette-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-sm);
+}
+.palette-choice {
+  display: grid;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+}
+.palette-choice.on {
+  border: 2px solid var(--color-primary);
+}
+.palette-choice input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.palette-choice:has(input:focus-visible) {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+.palette-band {
+  height: 34px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  padding-inline: var(--space-sm);
+}
+.palette-band i {
+  width: 28px;
+  height: 6px;
+  border-radius: 3px;
+}
+.palette-dots {
+  display: flex;
+  gap: 4px;
+}
+.palette-dots i {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--color-line);
 }

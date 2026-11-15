@@ -201,7 +201,7 @@ describe("tasbih", () => {
       vibrate: false,
       history: { "2026-11-09": { c9: 4 } },
     });
-    expect(sanitizeTasbih({ mode: "x", color: "neon" })).toMatchObject({ mode: "button", color: "brown" });
+    expect(sanitizeTasbih({ mode: "x", color: "neon" })).toMatchObject({ mode: "button", color: "emerald" });
     tasbihStore.set((p) => tap(p, D1).next);
     tasbihStore.reload();
     expect(current(tasbihStore.get()).count).toBe(1);

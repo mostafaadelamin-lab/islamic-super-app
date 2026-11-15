@@ -4064,6 +4064,24 @@ abstract class AppLocalizations {
   /// **'More apps coming soon, God willing'**
   String get settingsOurAppsSoon;
 
+  /// shared key "settings.palette"
+  ///
+  /// In en, this message translates to:
+  /// **'Colour style'**
+  String get settingsPalette;
+
+  /// shared key "settings.paletteEmerald"
+  ///
+  /// In en, this message translates to:
+  /// **'Emerald & gold'**
+  String get settingsPaletteEmerald;
+
+  /// shared key "settings.paletteMadinah"
+  ///
+  /// In en, this message translates to:
+  /// **'Madinah night'**
+  String get settingsPaletteMadinah;
+
   /// shared key "settings.permissions"
   ///
   /// In en, this message translates to:

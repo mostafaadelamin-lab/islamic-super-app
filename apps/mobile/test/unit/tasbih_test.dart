@@ -138,7 +138,7 @@ void main() {
       expect(bad.custom, isEmpty);
       expect(bad.counters, isEmpty);
       expect(bad.mode, TasbihMode.beads);
-      expect(bad.color, 'brown');
+      expect(bad.color, 'emerald');
       expect(bad.history, {
         '2026-11-09': {'takbir': 3},
       });

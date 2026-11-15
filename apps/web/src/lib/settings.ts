@@ -5,6 +5,12 @@ import type { ClockStyle } from "./time";
 import { clampAdjustment, METHOD_IDS, PRAYER_KEYS, type Adjustments } from "./prayer";
 
 export type ThemePref = "system" | "light" | "dark";
+/** Colour style (owner 2026-11-15): style 1 "emerald" (default) or style 2 "madinah". */
+export type PalettePref = keyof typeof tokens.palettes;
+export const PALETTES = Object.keys(tokens.palettes) as PalettePref[];
+export const DEFAULT_PALETTE = tokens.defaultPalette as PalettePref;
+const isPalette = (v: unknown): v is PalettePref =>
+  typeof v === "string" && (PALETTES as string[]).includes(v);
 export const FONT_MIN = tokens.fontSize.quranMin;
 export const FONT_MAX = tokens.fontSize.quranMax;
 export const FONT_DEFAULT = tokens.fontSize.quran;
@@ -12,6 +18,7 @@ export const FONT_DEFAULT = tokens.fontSize.quran;
 export interface Preferences {
   locale: Locale | null;
   theme: ThemePref;
+  palette: PalettePref;
   fontSize: number;
   translation: boolean;
   /** 24 h or 12 h clock for prayer times. */
@@ -22,6 +29,7 @@ export interface Preferences {
 export const DEFAULT_PREFS: Preferences = {
   locale: null,
   theme: "system",
+  palette: DEFAULT_PALETTE,
   fontSize: FONT_DEFAULT,
   translation: false,
   clock: "24",
@@ -48,6 +56,7 @@ export function sanitizePrefs(raw: unknown): Preferences {
   return {
     locale: isLocale(r.locale) ? r.locale : null,
     theme: r.theme === "light" || r.theme === "dark" ? r.theme : "system",
+    palette: isPalette(r.palette) ? r.palette : DEFAULT_PALETTE,
     fontSize: r.fontSize === undefined ? FONT_DEFAULT : clampFontSize(r.fontSize),
     translation: r.translation === true,
     clock: r.clock === "12" ? "12" : "24",

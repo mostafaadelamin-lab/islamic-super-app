@@ -11,6 +11,7 @@ import '../data/sensors.dart';
 import '../domain/declination.dart';
 import '../domain/mosques.dart' show distanceM;
 import '../domain/qibla.dart';
+import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'locate.dart';
@@ -172,8 +173,8 @@ class QiblaScreenState extends State<QiblaScreen> {
     final km = distanceM(pv.city.lat, pv.city.lng, kaabaLat, kaabaLng) / 1000;
     final dial = switch (m) {
       CompassMode.live => QiblaDial(key: const Key('qiblaMode-live'), qibla: qibla, heading: _heading!, live: true),
-      CompassMode.waiting => const SizedBox.square(
-        key: Key('qiblaMode-waiting'),
+      CompassMode.waiting => SizedBox.square(
+        key: const Key('qiblaMode-waiting'),
         dimension: 280,
         child: Center(child: CircularProgressIndicator(color: QiblaColors.gold)),
       ),
@@ -203,7 +204,7 @@ class QiblaScreenState extends State<QiblaScreen> {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(28),
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [QiblaColors.brand, QiblaColors.brandDeep],
@@ -220,7 +221,7 @@ class QiblaScreenState extends State<QiblaScreen> {
                 children: [
                   Row(
                     children: [
-                      const RIcon(RIcons.location, color: QiblaColors.goldSoft, size: 20),
+                      RIcon(RIcons.location, color: QiblaColors.goldSoft, size: 20),
                       const SizedBox(width: DesignTokens.spaceXs),
                       Expanded(
                         child: Text(
@@ -260,7 +261,7 @@ class QiblaScreenState extends State<QiblaScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         if (facing) ...[
-                          const RIcon(RIcons.checkCircle, color: QiblaColors.brandDeep, size: 22),
+                          RIcon(RIcons.checkCircle, color: QiblaColors.brandDeep, size: 22),
                           const SizedBox(width: DesignTokens.spaceSm),
                         ],
                         Flexible(
@@ -408,10 +409,10 @@ const kaabaLng = 39.8262;
 
 /// Rattil brand colours for the qibla card (same in light and dark mode).
 abstract final class QiblaColors {
-  static const brand = Color(0xFF8A5A2B);
-  static const brandDeep = Color(0xFF4A2E14);
-  static const gold = Color(0xFFD4AF5A);
-  static const goldSoft = Color(0xFFF1DFAE);
+  static Color get brand => AppTheme.brand('heroTop');
+  static Color get brandDeep => AppTheme.brand('heroDeep');
+  static Color get gold => AppTheme.brand('gold');
+  static Color get goldSoft => AppTheme.brand('goldSoft');
 }
 
 class _InfoTile extends StatelessWidget {
@@ -511,7 +512,7 @@ class QiblaDialPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    const gold = QiblaColors.gold;
+    final gold = QiblaColors.gold;
     final c = size.center(Offset.zero);
     final r = size.shortestSide / 2 - 16;
 
@@ -530,8 +531,8 @@ class QiblaDialPainter extends CustomPainter {
       c,
       r,
       Paint()
-        ..shader = const RadialGradient(
-          colors: [Color(0xFF9A6A36), Color(0xFF6B4420), Color(0xFF3F2711)],
+        ..shader = RadialGradient(
+          colors: [AppTheme.brand('dial1'), AppTheme.brand('dial2'), AppTheme.brand('dial3')],
           stops: [0, 0.7, 1],
         ).createShader(Rect.fromCircle(center: c, radius: r)),
     );

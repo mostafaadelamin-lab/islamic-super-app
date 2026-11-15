@@ -62,6 +62,39 @@ class SettingsScreen extends StatelessWidget {
                   ],
                 ),
                 SectionCard(
+                  title: l.settingsTheme,
+                  children: [
+                    Text(l.settingsPalette, style: Theme.of(context).textTheme.titleSmall),
+                    const SizedBox(height: DesignTokens.spaceSm),
+                    Row(
+                      children: [
+                        for (final id in DesignTokens.paletteIds) ...[
+                          if (id != DesignTokens.paletteIds.first) const SizedBox(width: DesignTokens.spaceSm),
+                          Expanded(
+                            child: PaletteChoice(
+                              id: id,
+                              label: id == 'madinah' ? l.settingsPaletteMadinah : l.settingsPaletteEmerald,
+                              selected: settings.palette == id,
+                              onTap: () => settings.setPalette(id),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                    const SizedBox(height: DesignTokens.spaceLg),
+                    SegmentedButton<ThemeMode>(
+                      key: const Key('themeSelector'),
+                      segments: [
+                        ButtonSegment(value: ThemeMode.system, label: Text(l.settingsThemeSystem)),
+                        ButtonSegment(value: ThemeMode.light, label: Text(l.settingsThemeLight)),
+                        ButtonSegment(value: ThemeMode.dark, label: Text(l.settingsThemeDark)),
+                      ],
+                      selected: {settings.themeMode},
+                      onSelectionChanged: (v) => settings.setThemeMode(v.single),
+                    ),
+                  ],
+                ),
+                SectionCard(
                   title: l.settingsPrayerTimes,
                   children: [
                     SwitchListTile(
@@ -397,6 +430,71 @@ class HijriOffsetCard extends StatelessWidget {
         ),
         Text(l.settingsHijriOffsetHint, style: Theme.of(context).textTheme.bodySmall),
       ],
+    );
+  }
+}
+
+/// One colour style in Settings: a small preview (brand colour, gold, light and dark backgrounds) and its name.
+class PaletteChoice extends StatelessWidget {
+  const PaletteChoice({super.key, required this.id, required this.label, required this.selected, required this.onTap});
+  final String id;
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = DesignTokens.palettes[id]!;
+    final cs = Theme.of(context).colorScheme;
+    Widget dot(Color c) => Container(
+      width: 22,
+      height: 22,
+      margin: const EdgeInsetsDirectional.only(end: 4),
+      decoration: BoxDecoration(
+        color: c,
+        shape: BoxShape.circle,
+        border: Border.all(color: cs.outline),
+      ),
+    );
+    return Semantics(
+      selected: selected,
+      button: true,
+      child: InkWell(
+        key: Key('palette.$id'),
+        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(DesignTokens.spaceMd),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+            border: Border.all(color: selected ? cs.primary : cs.outline, width: selected ? 2 : 1),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 36,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
+                  gradient: LinearGradient(colors: [p['brand']!['heroTop']!, p['brand']!['heroDeep']!]),
+                ),
+                alignment: AlignmentDirectional.centerStart,
+                padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm),
+                child: Container(width: 28, height: 6, color: p['brand']!['gold']),
+              ),
+              const SizedBox(height: DesignTokens.spaceSm),
+              Row(children: [dot(p['light']!['bg']!), dot(p['dark']!['bg']!), dot(p['light']!['accent']!)]),
+              const SizedBox(height: DesignTokens.spaceSm),
+              Row(
+                children: [
+                  if (selected) ...[RIcon(RIcons.checkCircle, color: cs.primary, size: 18), const SizedBox(width: 4)],
+                  Expanded(child: Text(label, style: Theme.of(context).textTheme.labelLarge)),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

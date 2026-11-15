@@ -439,10 +439,10 @@ class OfficialGuideCard extends StatelessWidget {
             height: 28,
             margin: const EdgeInsets.only(top: 4, left: DesignTokens.spaceSm),
             alignment: Alignment.center,
-            decoration: const BoxDecoration(color: Color(0xFFE9DCC0), shape: BoxShape.circle),
+            decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainer, shape: BoxShape.circle),
             child: Text(
               context.isArabic ? _arabicNum(i + 1) : '${i + 1}',
-              style: const TextStyle(color: Color(0xFF6B4A2B), fontWeight: FontWeight.w700),
+              style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w700),
             ),
           ),
           Expanded(child: Text(text, style: body)),

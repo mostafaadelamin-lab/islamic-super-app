@@ -2241,6 +2241,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsOurAppsSoon => 'تطبيقات أخرى قريبًا إن شاء الله';
 
   @override
+  String get settingsPalette => 'لون التصميم';
+
+  @override
+  String get settingsPaletteEmerald => 'زمردي وذهبي';
+
+  @override
+  String get settingsPaletteMadinah => 'ليل المدينة';
+
+  @override
   String get settingsPermissions => 'الصلاحيات والعمل في الخلفية';
 
   @override

@@ -15,11 +15,17 @@ const BRAND_FONT_PX = 28;
 const HEADER_SPACE = 140;
 const FOOTER_SPACE = 190;
 const MIN_HEIGHT = 1080;
-/** Mushaf cream and brown from the design tokens (packages/design-tokens). */
+/** Mushaf cream paper; reference and brand line use the chosen colour style (packages/design-tokens). */
 const PAPER = "#FBF6EA";
 const INK = "#141414";
-const PRIMARY = "#8A5A2B";
+const FALLBACK_PRIMARY = "#0F6B50";
 const GOLD = "#A8773E";
+/** The current colour style's deep brand colour (style 1 emerald, style 2 navy). */
+function brandColour(): string {
+  if (typeof document === "undefined") return FALLBACK_PRIMARY;
+  const v = getComputedStyle(document.documentElement).getPropertyValue("--brand-hero-top").trim();
+  return v || FALLBACK_PRIMARY;
+}
 const QURAN_FONT = "'KFGQPC HAFS Uthmanic Script', serif";
 const UI_FONT = "'IBM Plex Sans Arabic', system-ui, sans-serif";
 
@@ -88,7 +94,7 @@ function drawCard(card: AyahCard): HTMLCanvasElement {
   const top = HEADER_SPACE + (height - HEADER_SPACE - FOOTER_SPACE - lines.length * step) * HALF;
   lines.forEach((line, i) => ctx.fillText(line, CENTER_X, top + step * (i + HALF)));
 
-  ctx.fillStyle = PRIMARY;
+  ctx.fillStyle = brandColour();
   ctx.font = `600 ${REF_FONT_PX}px ${UI_FONT}`;
   ctx.fillText(card.reference, CENTER_X, height - FOOTER_SPACE + REF_FONT_PX);
   ctx.fillStyle = GOLD;

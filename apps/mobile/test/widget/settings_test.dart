@@ -5,6 +5,7 @@ import 'package:rattil/app_services.dart';
 import 'package:rattil/ui/about_screen.dart';
 import 'package:rattil/ui/contact_screen.dart';
 import 'package:rattil/ui/prayer_screen.dart';
+import 'package:rattil/theme/design_tokens.dart';
 import 'package:rattil/ui/settings_screen.dart';
 
 import '../helpers.dart';
@@ -17,6 +18,26 @@ void main() {
     await openSettings(tester);
     return app;
   }
+
+  testWidgets('colour style and light/dark (owner 2026-11-15): style 2 and dark are kept and applied', (tester) async {
+    final app = await open(tester);
+    Color primary() => Theme.of(tester.element(find.byType(SettingsScreen))).colorScheme.primary;
+    expect(primary(), DesignTokens.palettes['emerald']!['light']!['primary']);
+    await tester.ensureVisible(find.byKey(const Key('palette.madinah')));
+    await tester.tap(find.byKey(const Key('palette.madinah')));
+    await tester.pumpAndSettle();
+    expect(app.prefs.getString('palette'), 'madinah');
+    expect(primary(), DesignTokens.palettes['madinah']!['light']!['primary']);
+    await tester.tap(find.text('داكن'));
+    await tester.pumpAndSettle();
+    expect(app.prefs.getString('theme'), 'dark');
+    expect(primary(), DesignTokens.palettes['madinah']!['dark']!['primary']);
+    // Still on the settings screen after the change (no navigation reset).
+    expect(find.byType(SettingsScreen), findsOneWidget);
+    await tester.tap(find.byKey(const Key('palette.emerald')));
+    await tester.pumpAndSettle();
+    expect(primary(), DesignTokens.palettes['emerald']!['dark']!['primary']);
+  });
 
   testWidgets('language switch: ar -> en -> ar, direction follows, choice persists', (tester) async {
     final app = await open(tester);

@@ -9,6 +9,7 @@ import '../domain/audio_queue.dart';
 import '../domain/gregorian_names.dart';
 import '../domain/hijri.dart';
 import '../domain/prayer_schedule.dart';
+import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'play_origin.dart';
@@ -24,14 +25,14 @@ import 'tasbih_screen.dart';
 import 'widgets.dart';
 import 'r_icon.dart';
 
-/// Hero colours (Mushaf brown with white text and cream accents), kept for the
-/// banners that still use them; contrast checked in theme_contrast_test.dart.
+/// Hero colours of the chosen colour style (deep brand colour with white text and light gold
+/// accents), kept for the banners that use them; contrast checked in theme_contrast_test.dart.
 class HeroColors {
   HeroColors._();
-  static const top = Color(0xFF8A5A2B);
-  static const bottom = Color(0xFF5E3B1A);
+  static Color get top => AppTheme.brand('heroTop');
+  static Color get bottom => AppTheme.brand('heroBottom');
   static const text = Color(0xFFFFFFFF);
-  static const accent = Color(0xFFEFE3CB);
+  static Color get accent => AppTheme.brand('heroAccent');
 }
 
 /// The five obligatory prayers shown as cards on the home screen.
