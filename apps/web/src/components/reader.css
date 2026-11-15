@@ -28,7 +28,7 @@ body:has(.rd) .app-footer {
 /* ---- top: back, المصحف / الآيات / التفسير, help ---- */
 .rd-top {
   display: grid;
-  grid-template-columns: 44px 1fr 44px;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: var(--space-xs);
   margin-bottom: var(--space-xs);
@@ -958,14 +958,14 @@ body:has(.rd-full) .player,
  */
 @media (min-width: 1024px) and (min-height: 560px) and (orientation: landscape) {
   .mushaf-reader.rd:not(.rd-full) {
-    max-width: calc(var(--site-max, 1100px) - 2 * var(--space-xl));
+    max-width: none;
   }
   .rd:not(.rd-full) .rd-dock {
     inset-inline: 0;
     bottom: 0;
     max-width: none;
     margin: 0;
-    padding: 0 max(var(--space-xl), (100vw - var(--site-max, 1100px)) / 2 + var(--space-xl));
+    padding: 0 var(--site-pad, var(--space-xl));
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas: "actions actions" "pager pager" "player bar";
@@ -1034,13 +1034,13 @@ body:has(.rd-full) .player,
   }
   .rd:not(.rd-full) .rd-dock .rd-actions {
     grid-area: actions;
-    margin: 0 calc(-1 * max(var(--space-xl), (100vw - var(--site-max, 1100px)) / 2 + var(--space-xl)));
-    padding: var(--space-xs) max(var(--space-xl), (100vw - var(--site-max, 1100px)) / 2 + var(--space-xl));
+    margin: 0 calc(-1 * var(--site-pad, var(--space-xl)));
+    padding: var(--space-xs) var(--site-pad, var(--space-xl));
   }
   /* one line on wide screens: the ayah, its five actions, close */
   .rd-dock .rd-actions .aa-simple {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: auto minmax(0, 1fr);
     grid-template-areas: "head row";
     align-items: center;
     column-gap: var(--space-lg);
@@ -1050,7 +1050,13 @@ body:has(.rd-full) .player,
   }
   .rd-dock .rd-actions .aa-row {
     grid-area: row;
-    grid-template-columns: repeat(5, 104px);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  /* The actions row has one fixed height: the page keeps this room free above the strip (FIT.actionsRow). */
+  .rd:not(.rd-full) .rd-dock .rd-actions:not([data-tafsir="open"]) {
+    box-sizing: border-box;
+    height: 72px;
+    overflow: hidden;
   }
   .rd-dock .rd-actions .aa-simple > :not(.aa-head):not(.aa-row) {
     grid-column: 1 / -1;
@@ -1065,7 +1071,7 @@ body:has(.rd-full) .player,
   /* "Listen with tafsir": two halves — the whole Mushaf page and the page's tafsir (follows the recitation) */
   .mushaf-reader.rd.rd-duo {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) var(--duo-w, 50%);
     column-gap: var(--space-lg);
     align-items: start;
   }
@@ -1082,13 +1088,89 @@ body:has(.rd-full) .player,
   }
   .rd-duo > .rd-duo-tafsir {
     margin: 0;
-    height: calc(100dvh - var(--rd-dock-h, 140px) - 236px);
+    height: calc(100dvh - var(--rd-dock-h, 140px) - var(--rd-chrome-top, 190px));
     min-height: 320px;
     padding: 0 var(--space-md) var(--space-sm);
   }
+  /* The page fills its half: lines as wide as the column, scrolling inside it and following the recitation. */
   .rd-duo > .mushaf-stage {
-    height: auto;
-    min-height: 0;
-    overflow: visible;
+    height: calc(100dvh - var(--rd-dock-h, 140px) - var(--rd-chrome-top, 190px));
+    min-height: 320px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+/* ---- Simpler touches (owner 2026-11-15): full screen from a button, back with a visible button ---- */
+.rd-exit-full {
+  position: fixed;
+  z-index: 28;
+  top: max(var(--space-md), env(safe-area-inset-top));
+  inset-inline-end: var(--space-md);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  color: var(--color-primary);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
+  cursor: pointer;
+}
+.rd-guide h2 {
+  margin: 0 0 var(--space-sm);
+  font-size: var(--font-size-lg);
+  color: var(--color-primary);
+}
+.rd-guide ol {
+  list-style: arabic-indic;
+  margin: 0 0 var(--space-md);
+  padding-inline-start: 1.4em;
+  line-height: 1.9;
+  text-align: start;
+}
+.rd-guide li + li {
+  margin-top: var(--space-xs);
+}
+
+.rd-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+/* Wide screens: the surah, page and juz sit in the same row as the tabs, so the page gets that height. */
+@media (min-width: 1024px) and (min-height: 560px) and (orientation: landscape) {
+  .mushaf-reader.rd:not(.rd-full) {
+    position: relative;
+  }
+  .mushaf-reader.rd:not(.rd-full) > .mushaf-head {
+    position: absolute;
+    top: 0;
+    inset-inline: 56px 104px;
+    height: 44px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    pointer-events: none;
+  }
+  .mushaf-reader.rd:not(.rd-full) > .mushaf-head .mh-page {
+    order: 2;
+    margin-inline-start: auto;
+  }
+  .mushaf-reader.rd:not(.rd-full) > .mushaf-head .mh-juz {
+    order: 3;
+  }
+  .rd .mh-surah,
+  .rd .mh-page {
+    font-size: var(--font-size-sm);
+  }
+  .mushaf-reader.rd:not(.rd-full) > .rd-top {
+    min-height: 44px;
+    margin-bottom: var(--space-sm);
   }
 }

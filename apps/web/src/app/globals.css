@@ -4518,3 +4518,42 @@ dd {
     padding-inline: var(--space-md);
   }
 }
+
+/*
+ * Big screens (owner 2026-11-15: on a large screen the text and the shapes looked too small once the site took
+ * the full width). Type and spacing grow in steps with the screen width; phones and laptops are unchanged.
+ */
+@media (min-width: 1600px) {
+  :root {
+    --font-size-xs: 13px;
+    --font-size-sm: 15px;
+    --font-size-md: 18px;
+    --font-size-lg: 22px;
+    --font-size-xl: 28px;
+    --space-sm: 10px;
+    --space-md: 14px;
+    --space-lg: 20px;
+    --space-xl: 28px;
+    --space-xxl: 40px;
+  }
+  html {
+    font-size: 17px;
+  }
+}
+@media (min-width: 2200px) {
+  :root {
+    --font-size-xs: 15px;
+    --font-size-sm: 17px;
+    --font-size-md: 20px;
+    --font-size-lg: 25px;
+    --font-size-xl: 32px;
+    --space-sm: 12px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 34px;
+    --space-xxl: 48px;
+  }
+  html {
+    font-size: 19px;
+  }
+}

@@ -13,6 +13,8 @@ export type ReaderIconName = Extract<
   | "repeat"
   | "split"
   | "reciter"
+  | "expand"
+  | "shrink"
 >;
 
 export function ReaderIcon({ name, size }: { name: ReaderIconName; size?: number }) {

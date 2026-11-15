@@ -71,6 +71,12 @@ const FIT = {
   /** Height kept below the page (besides the measured dock) when fitting it on a screen. */
   bottomGap: 12,
   minHeight: 360,
+  /** Height of the selected ayah's actions row in the wide strip (reader.css .rd-actions, wide). */
+  actionsRow: 72,
+  /** Wide listen-with-tafsir: the page may be this much taller than its column (it scrolls there)… */
+  duoScroll: 1.4,
+  /** …and take at most this share of the reader's width. */
+  duoShare: 0.55,
   defaultProbe: 20,
   /** Sub-pixel rounding margin so the widest line never overflows. */
   safetyPx: 2,
@@ -96,6 +102,8 @@ function useWide(): boolean {
 /** How many times the full-screen hint (how to turn pages, how to show the controls) is shown. */
 const HINT_SHOWS = 3;
 const HINT_KEY = "rattil.readerHint";
+/** Set once the first-open guide to the Mushaf's touches was closed. */
+const GUIDE_KEY = "rattil.readerGuide";
 const HINT_MS = 7000;
 const DRAG_START_PX = 8;
 const TURN_MS = 220;
@@ -127,6 +135,23 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full
       : available / FIT.lineEms;
     // Full screen on a phone turned sideways: the lines take the whole width and the page scrolls down.
     // ... and on a phone listening with tafsir, where the page sits in the top half and scrolls there.
+    // Wide "listen with tafsir": the page takes as much of its half as it can, a little taller than the column
+    // (it scrolls there and follows the recitation), and the tafsir takes the rest of the width.
+    const root = frame.closest<HTMLElement>(".mushaf-reader");
+    const stage = frame.closest<HTMLElement>(".mushaf-stage");
+    if (layout === "duo-wide" && root && stage) {
+      const frameChrome = frame.offsetHeight - el.offsetHeight;
+      const lines = Math.max(1, el.querySelectorAll(".m-line").length || FIT.lines);
+      const byRoom = ((stage.clientHeight - frameChrome) / (lines * FIT.lineHeight)) * FIT.duoScroll;
+      const col = root.clientWidth * FIT.duoShare - chrome - FIT.safetyPx;
+      const byCol = widths.length ? fitFontSize(widths, probe, col) : col / FIT.lineEms;
+      const size = Math.min(byCol, byRoom, col / (FIT.lineEms * FIT.capRatio));
+      const ems = Math.max(widestEms, FIT.lineEms * FIT.capRatio);
+      el.style.setProperty("--m-size", `${size.toFixed(2)}px`);
+      root.style.setProperty("--duo-w", `${Math.ceil(size * ems + chrome + FIT.safetyPx)}px`);
+      return;
+    }
+    root?.style.removeProperty("--duo-w");
     if ((full && isLandscapePhone()) || layout === "duo") {
       el.style.setProperty(
         "--m-size",
@@ -138,10 +163,15 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full
     const top = frame.getBoundingClientRect().top + window.scrollY;
     // The dock floats a little above the bottom edge on wide screens, so measure where it starts.
     const dockEl = document.querySelector<HTMLElement>(".rd-dock");
-    // The selected ayah's actions open on top of the strip without resizing the page.
+    // The selected ayah's actions open as the first row of the strip. On wide screens their row is always
+    // kept free above the strip, so the page neither shrinks nor gets covered when an ayah is chosen
+    // (owner 2026-11-15); elsewhere they open over the strip without resizing the page.
     const actions = dockEl?.querySelector<HTMLElement>(".rd-actions")?.offsetHeight ?? 0;
+    const reserve = !full && window.matchMedia?.(SIDE_PANEL_QUERY).matches ? FIT.actionsRow : 0;
     const dockTop =
-      dockEl && dockEl.offsetHeight > 0 ? dockEl.getBoundingClientRect().top + actions : window.innerHeight;
+      dockEl && dockEl.offsetHeight > 0
+        ? dockEl.getBoundingClientRect().top + actions - reserve
+        : window.innerHeight;
     const frameChrome = frame.offsetHeight - el.offsetHeight;
     const room = Math.max(FIT.minHeight, dockTop + window.scrollY - top - frameChrome - FIT.bottomGap);
     // The frame fills the room (pages 1–2 are centred in it, like the printed Mushaf).
@@ -245,9 +275,11 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const [drag, setDrag] = useState<{ dx: number; anim: boolean }>({ dx: 0, anim: false });
   const [tab, setTab] = useState<ReaderTab>("mushaf");
   const [sheet, setSheet] = useState<"help" | "khatma" | null>(null);
-  // Full-screen reading: the controls stay hidden until the page is tapped.
-  const [chrome, setChrome] = useState(false);
+  // Full screen only from its own button, and back with the exit button (owner 2026-11-15: one tap to
+  // full screen, another to shrink, a long press for options was confusing). A tap on an ayah opens its row.
+  const [chrome, setChrome] = useState(true);
   const [hint, setHint] = useState(false);
+  const [guide, setGuide] = useState(false);
   const dockRef = useRef<HTMLDivElement>(null);
   const pageEl = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLInputElement>(null);
@@ -298,8 +330,10 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   }, [view]);
 
   // Full screen: say how to turn pages and how to bring the controls back (the first few times).
+  const hinted = useRef(false);
   useEffect(() => {
-    if (!fullScreen) return;
+    if (!fullScreen || hinted.current) return;
+    hinted.current = true;
     let shown = 0;
     try {
       shown = Number(window.localStorage.getItem(HINT_KEY) ?? "0") || 0;
@@ -311,8 +345,25 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     setHint(true);
     const id = window.setTimeout(() => setHint(false), HINT_MS);
     return () => window.clearTimeout(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- once per visit, when full screen first shows
+  }, [fullScreen]);
+
+  // The first time the Mushaf opens: a short guide to the touches (owner 2026-11-15).
+  useEffect(() => {
+    try {
+      if (window.localStorage.getItem(GUIDE_KEY)) return;
+    } catch {
+      return;
+    }
+    setGuide(true);
   }, []);
+  const closeGuide = (): void => {
+    setGuide(false);
+    try {
+      window.localStorage.setItem(GUIDE_KEY, "1");
+    } catch {
+      // storage blocked: shown again next time
+    }
+  };
 
   // An ayah in the URL hash (#a-2-255, from search or bookmarks) is selected on arrival.
   useEffect(() => {
@@ -491,18 +542,10 @@ export function PageReader({ locale, initial }: PageReaderProps) {
       suppressClick.current = false;
       return;
     }
-    // Full screen: a tap brings the controls back; a tap on an ayah number still opens that ayah.
-    if (fullScreen && !(e.target as HTMLElement).closest(".ayah-end")) {
-      setChrome(true);
-      return;
-    }
+    // One rule everywhere: a tap on an ayah opens its row of actions; a tap beside the text closes it.
     const hit = (e.target as HTMLElement).closest<HTMLElement>("[data-ayah]");
     const key = hit?.dataset.ayah ?? null;
-    // A tap beside the text with nothing selected hides the controls again.
-    if (!key && !selected) {
-      setChrome(false);
-      return;
-    }
+    if (!key && !selected) return;
     setSelected((cur) => (key && key !== cur ? key : null));
   };
 
@@ -599,31 +642,49 @@ export function PageReader({ locale, initial }: PageReaderProps) {
             </button>
           ))}
         </div>
-        {tab === "mushaf" ? (
-          <button
-            type="button"
-            className="rd-icon-btn"
-            aria-label={t(locale, "reader.help")}
-            aria-expanded={sheet === "help"}
-            data-testid="reader-help"
-            onClick={() => setSheet((v) => (v === "help" ? null : "help"))}
-          >
-            <ReaderIcon name="help" />
-          </button>
-        ) : (
-          <button
-            type="button"
-            className="rd-icon-btn rd-font"
-            aria-label={t(locale, "reader.fontSize", { size: localizeDigits(prefs.fontSize, locale) })}
-            data-testid="reader-font"
-            onClick={() => prefsStore.set((p) => ({ ...p, fontSize: nextFontSize(p.fontSize) }))}
-          >
-            <span aria-hidden="true">ع</span>
-            <span aria-hidden="true" className="rd-font-label">
-              {t(locale, "reader.font")}
-            </span>
-          </button>
-        )}
+        <div className="rd-tools">
+          {tab === "mushaf" ? (
+            <button
+              type="button"
+              className="rd-icon-btn"
+              aria-label={t(locale, "reader.help")}
+              aria-expanded={sheet === "help"}
+              data-testid="reader-help"
+              onClick={() => setSheet((v) => (v === "help" ? null : "help"))}
+            >
+              <ReaderIcon name="help" />
+            </button>
+          ) : null}
+          {tab === "mushaf" ? (
+            <button
+              type="button"
+              className="rd-icon-btn rd-full-btn"
+              aria-label={t(locale, "reader.fullScreen")}
+              title={t(locale, "reader.fullScreen")}
+              data-testid="reader-full"
+              onClick={() => {
+                setSelected(null);
+                setSheet(null);
+                setChrome(false);
+              }}
+            >
+              <ReaderIcon name="expand" />
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="rd-icon-btn rd-font"
+              aria-label={t(locale, "reader.fontSize", { size: localizeDigits(prefs.fontSize, locale) })}
+              data-testid="reader-font"
+              onClick={() => prefsStore.set((p) => ({ ...p, fontSize: nextFontSize(p.fontSize) }))}
+            >
+              <span aria-hidden="true">ع</span>
+              <span aria-hidden="true" className="rd-font-label">
+                {t(locale, "reader.font")}
+              </span>
+            </button>
+          )}
+        </div>
       </div>
 
       <header className="mushaf-head">
@@ -734,6 +795,37 @@ export function PageReader({ locale, initial }: PageReaderProps) {
           })}
         </div>
       ) : null}
+      {fullScreen ? (
+        <button
+          type="button"
+          className="rd-exit-full"
+          data-testid="reader-exit-full"
+          onClick={() => setChrome(true)}
+        >
+          <ReaderIcon name="shrink" size={18} />
+          <span>{t(locale, "reader.exitFull")}</span>
+        </button>
+      ) : null}
+      {guide ? (
+        <div className="rd-modal" role="dialog" aria-labelledby="rd-guide-title" data-testid="reader-guide">
+          <div className="rd-modal-card rd-guide">
+            <h2 id="rd-guide-title">{t(locale, "reader.guideTitle")}</h2>
+            <ol>
+              {(["guide1", "guide2", "guide3", "guide4"] as const).map((k) => (
+                <li key={k}>{t(locale, `reader.${k}`)}</li>
+              ))}
+            </ol>
+            <button
+              type="button"
+              className="btn btn-primary kh-go"
+              data-testid="reader-guide-ok"
+              onClick={closeGuide}
+            >
+              {t(locale, "reader.hintClose")}
+            </button>
+          </div>
+        </div>
+      ) : null}
       {fullScreen && hint ? (
         <div className="rd-hint" role="status" data-testid="reader-hint">
           <span>{t(locale, "reader.fullHint")}</span>
@@ -787,9 +879,9 @@ export function PageReader({ locale, initial }: PageReaderProps) {
             </button>
           </div>
           <ul>
-            <li>{t(locale, "reader.help1")}</li>
-            <li>{t(locale, "reader.help2")}</li>
-            <li>{t(locale, "reader.help3")}</li>
+            {(["guide1", "guide2", "guide3", "guide4"] as const).map((k) => (
+              <li key={k}>{t(locale, `reader.${k}`)}</li>
+            ))}
           </ul>
           <GoToPage locale={locale} />
           {first ? (

@@ -38,8 +38,15 @@
   "reader.khatmaStart": "Start a new khatma from al-Fatihah",
   "reader.khatmaContinue": "Continue from page {page}",
   "reader.khatmaReset": "Cancel the khatma",
-  "reader.fullHint": "To turn pages, swipe the page or press the arrows at the sides. Tap the page to show listening and tools.",
+  "reader.fullHint": "To turn pages, swipe the page or press the arrows at the sides. To show the tools, press “Show tools”.",
   "reader.volume": "Volume",
   "reader.hintClose": "Got it",
-  "reader.hideTafsir": "Hide tafsir"
+  "reader.hideTafsir": "Hide tafsir",
+  "reader.fullScreen": "Full screen",
+  "reader.exitFull": "Show tools",
+  "reader.guideTitle": "How to use the Mushaf",
+  "reader.guide1": "Tap any ayah to show its options under the page: listen, ayah tafsir, bookmark, copy, share.",
+  "reader.guide2": "To turn pages: swipe the page, or use the page slider under it.",
+  "reader.guide3": "“Full screen” at the top hides the tools; “Show tools” brings them back.",
+  "reader.guide4": "“Listen with tafsir” shows the page and its tafsir side by side while it is recited."
 }
