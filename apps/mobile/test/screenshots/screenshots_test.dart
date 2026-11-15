@@ -90,6 +90,11 @@ void main() {
     await shot(tester, 'hajj_tamattu_arafah');
     await pushScreen(tester, const HajjScreen(sections: ['ihram']));
     await shot(tester, 'hajj_miqat');
+    await pushScreen(tester, const HajjScreen(sections: ['hajj']));
+    final list = find.descendant(of: find.byKey(const Key('hajjList-hajj')), matching: find.byType(Scrollable)).first;
+    await tester.scrollUntilVisible(find.byKey(const Key('hajjPillars')), 1500, scrollable: list);
+    await tester.pumpAndSettle();
+    await shot(tester, 'hajj_pillars');
   });
 
   for (final theme in ['light', 'dark']) {

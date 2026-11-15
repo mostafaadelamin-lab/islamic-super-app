@@ -62,7 +62,7 @@ export interface Guide {
   subs: Record<string, GuideSub>;
   steps: Record<string, GuideStep>;
   flows: Record<PilgrimageKind, FlowStep[]>;
-  hub: { umrahIntro: string; days: string[]; ihram: string[]; madinah: string };
+  hub: { umrahIntro: string; days: string[]; ihram: string[]; madinah: string; pillars: string };
   official: {
     title: string;
     types: { name: string; segs: Seg[] }[];

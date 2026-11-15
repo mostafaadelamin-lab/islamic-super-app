@@ -47,15 +47,16 @@ describe("Hajj and Umrah guide from its sources (owner 2026-11-16)", () => {
     }
   });
 
-  it("a quoted part of an ayah shows only those words (Muslim 1218 quotes part of al-Baqarah 125)", () => {
+  it("Maqam Ibrahim: the hadith quotes part of al-Baqarah 125, then the full ayah follows (owner 2026-11-16)", () => {
     render(<GuideStepCard locale="ar" id="x" label="x" stepId="tawaf-first" />);
-    const q = within(screen.getByTestId("hg-sub-to-maqam")).getByTestId("hg-quran");
+    const [inHadith, full] = within(screen.getByTestId("hg-sub-to-maqam")).getAllByTestId("hg-quran");
     const it = GUIDE.subs["to-maqam"]!.items[0]!;
     const seg = "segs" in it ? it.segs.find((x) => x.t === "quran") : undefined;
     const part = seg?.t === "quran" ? seg.part : undefined;
     expect(part).toBeTruthy();
-    expect(q.textContent).toContain(renderQuranText(part!));
-    expect(q.textContent).not.toContain(renderQuranText("وَإِذۡ جَعَلۡنَا"));
+    expect(inHadith!.textContent).toContain(renderQuranText(part!));
+    expect(inHadith!.textContent).not.toContain(renderQuranText("وَإِذۡ جَعَلۡنَا"));
+    expect(full!.textContent).toContain(renderQuranText(ayah(2, 125)));
   });
 
   it("the two rak'ahs have al-Fatiha, al-Kafirun and al-Ikhlas written in full", () => {
@@ -142,6 +143,8 @@ describe("Hajj and Umrah guide from its sources (owner 2026-11-16)", () => {
       expect(card.getAttribute("data-step")).toBe(d);
     });
     expect(document.getElementById("hajj-madinah")).not.toBeNull();
+    // The pillars of Hajj, in Ibn Baz's words (owner 2026-11-16: from a reference, not our own text).
+    expect(document.getElementById("hajj-pillars")!.textContent).toContain("وأركان الحج أربعة");
     expect(document.body.textContent).toContain("لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ");
     expect(screen.getByTestId("hg-sources")).toBeInTheDocument();
   });

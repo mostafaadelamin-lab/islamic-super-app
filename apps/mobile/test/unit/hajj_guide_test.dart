@@ -49,6 +49,20 @@ void main() {
     }
   });
 
+  test('Maqam Ibrahim: after the hadith, al-Baqarah 125 in full (owner 2026-11-16)', () {
+    final items = c.hajjGuide.subs['to-maqam']!.items;
+    expect(items.last.quran?.texts, [c.quran.surah(2).ayahs[124]]);
+    expect(items.last.quran?.part, isNull);
+  });
+
+  test('the pillars of Hajj come from Ibn Baz\'s fatwa, word for word (owner 2026-11-16)', () {
+    final fatwa = File('$repoRoot/content/pilgrimage/upstream/binbaz-fatwa-14833.txt').readAsStringSync();
+    final it = c.hajjGuide.subs[c.hajjGuide.steps[c.hajjGuide.pillars]!.subs.single]!.items.single;
+    final text = (it.segs.single as TextSeg).text;
+    expect(text, startsWith('وأركان الحج أربعة'));
+    expect(fatwa.contains(text), isTrue);
+  });
+
   test('the sentence on women visiting graves is left out (owner chose to remove it)', () {
     final raw = File('assets/content/hajj-guide.v2.json').readAsStringSync();
     expect(raw.contains('زوارات'), isFalse);
