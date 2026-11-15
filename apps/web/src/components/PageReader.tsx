@@ -103,12 +103,7 @@ const TILT_DIVISOR = 40;
 const REBOUND = 0.35;
 
 /** Sizes the Quran font so the widest line of the page exactly fills the frame (no wrapping, no overflow). */
-function useFitFont(
-  pageEl: RefObject<HTMLDivElement | null>,
-  page: number,
-  full = false,
-  layout = "",
-): void {
+function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full = false, layout = ""): void {
   const fit = useCallback(() => {
     const el = pageEl.current;
     const frame = el?.parentElement;
@@ -131,7 +126,8 @@ function useFitFont(
       ? fitFontSize(widths, probe, available - FIT.safetyPx)
       : available / FIT.lineEms;
     // Full screen on a phone turned sideways: the lines take the whole width and the page scrolls down.
-    if (full && isLandscapePhone()) {
+    // ... and on a phone listening with tafsir, where the page sits in the top half and scrolls there.
+    if ((full && isLandscapePhone()) || layout === "duo") {
       el.style.setProperty(
         "--m-size",
         `${Math.min(byWidth, available / (FIT.lineEms * FIT.capRatio)).toFixed(2)}px`,
@@ -142,7 +138,10 @@ function useFitFont(
     const top = frame.getBoundingClientRect().top + window.scrollY;
     // The dock floats a little above the bottom edge on wide screens, so measure where it starts.
     const dockEl = document.querySelector<HTMLElement>(".rd-dock");
-    const dockTop = dockEl && dockEl.offsetHeight > 0 ? dockEl.getBoundingClientRect().top : window.innerHeight;
+    // The selected ayah's actions open on top of the strip without resizing the page.
+    const actions = dockEl?.querySelector<HTMLElement>(".rd-actions")?.offsetHeight ?? 0;
+    const dockTop =
+      dockEl && dockEl.offsetHeight > 0 ? dockEl.getBoundingClientRect().top + actions : window.innerHeight;
     const frameChrome = frame.offsetHeight - el.offsetHeight;
     const room = Math.max(FIT.minHeight, dockTop + window.scrollY - top - frameChrome - FIT.bottomGap);
     // The frame fills the room (pages 1–2 are centred in it, like the printed Mushaf).
@@ -266,9 +265,10 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const fullScreen =
     tab === "mushaf" && !chrome && !selected && sheet === null && !(audioPrefs.tafsir && active);
   const wide = useWide();
-  // "Listen with tafsir" on a wide screen: the whole Mushaf page on one half, the page's tafsir on the other.
-  const duo = wide && tab === "mushaf" && audioPrefs.tafsir && active && !selected;
-  useFitFont(pageEl, page, fullScreen, duo ? "duo" : "");
+  // "Listen with tafsir": the whole Mushaf page on one half, the page's tafsir on the other (owner 2026-11-15);
+  // side by side on wide screens, one above the other on phones.
+  const duo = tab === "mushaf" && audioPrefs.tafsir && active && !selected;
+  useFitFont(pageEl, page, fullScreen, duo ? `duo${wide ? "-wide" : ""}` : "");
 
   useEffect(() => {
     let alive = true;
@@ -381,6 +381,11 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     return () => window.clearTimeout(id);
   }, [page]);
 
+  // One panel at a time: choosing an ayah closes the khatma / help panel.
+  useEffect(() => {
+    if (selected) setSheet(null);
+  }, [selected]);
+
   // A selected ayah stays in view above its actions (phones: the actions sheet covers the lower part).
   useEffect(() => {
     if (!selected || tab !== "mushaf") return;
@@ -393,13 +398,16 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   useEffect(() => {
     if (!playingKey) return;
     if (duo) {
-      // Beside the page: scroll only the tafsir half, never the page itself.
-      const box = document.querySelector<HTMLElement>(".rd-duo-tafsir");
-      const item = box?.querySelector<HTMLElement>(`[data-ayah="${playingKey}"]`);
-      if (box && item) {
+      // Scroll only inside each half (the tafsir, and the page on phones), never the whole page.
+      const follow = (boxSel: string, gap: number): void => {
+        const box = document.querySelector<HTMLElement>(boxSel);
+        const item = box?.querySelector<HTMLElement>(`[data-ayah="${playingKey}"]`);
+        if (!box || !item || box.scrollHeight <= box.clientHeight) return;
         const y = item.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop;
-        box.scrollTo?.({ top: Math.max(0, y - 56), behavior: "smooth" });
-      }
+        box.scrollTo?.({ top: Math.max(0, y - gap), behavior: "smooth" });
+      };
+      follow(".rd-duo-tafsir", 56);
+      follow(".rd-duo .mushaf-stage", 40);
       return;
     }
     if (tab === "mushaf") return;
@@ -564,7 +572,9 @@ export function PageReader({ locale, initial }: PageReaderProps) {
 
   return (
     <div
-      className={["mushaf-reader rd", fullScreen ? "rd-full" : "", duo ? "rd-duo" : ""].filter(Boolean).join(" ")}
+      className={["mushaf-reader rd", fullScreen ? "rd-full" : "", duo ? "rd-duo" : ""]
+        .filter(Boolean)
+        .join(" ")}
       data-tab={tab}
       data-split={split ? "true" : "false"}
       style={{ "--rd-fs": `${prefs.fontSize}px` } as CSSProperties}
@@ -817,126 +827,130 @@ export function PageReader({ locale, initial }: PageReaderProps) {
         />
       ) : null}
 
-      {sel ? (
-        <div className="ayah-sheet" data-testid="ayah-sheet" data-tafsir={showTafsir ? "open" : "closed"}>
-          {/* Simple ayah menu (owner, 2026-11-15): one row of five buttons; the ways to listen and the
-              tafsir open only when asked for. */}
+      <div className="rd-dock" ref={dockRef}>
+        {/* The selected ayah's actions sit in the bottom strip with the other bars (owner 2026-11-15). */}
+        {sel ? (
           <div
-            className="ayah-actions aa-simple"
-            role="toolbar"
-            aria-label={t(locale, "mushaf.actions")}
-            data-testid="ayah-actions"
+            className="ayah-sheet rd-actions"
+            data-testid="ayah-sheet"
+            data-tafsir={showTafsir ? "open" : "closed"}
           >
-            <div className="aa-head">
-              <strong className="aa-ref">{ref(sel[0], sel[1])}</strong>
-              <button
-                type="button"
-                className="rd-icon-btn aa-close"
-                data-testid="act-close"
-                aria-label={t(locale, "common.close")}
-                onClick={() => setSelected(null)}
-              >
-                <Icon name="close" size={18} />
-              </button>
-            </div>
-            <div className="aa-row">
-              <button
-                type="button"
-                className="aa-btn"
-                aria-expanded={listenOpen}
-                data-testid="act-listen"
-                onClick={() => setListenOpen((v) => !v)}
-              >
-                <Icon name="play" size={22} />
-                <span>{t(locale, "mushaf.listen")}</span>
-              </button>
-              <button
-                type="button"
-                className="aa-btn"
-                aria-pressed={showTafsir}
-                data-testid="act-tafsir"
-                onClick={() => setShowTafsir((v) => !v)}
-              >
-                <Icon name="openBook" size={22} />
-                <span>{t(locale, "mushaf.tafsir")}</span>
-              </button>
-              <button
-                type="button"
-                className="aa-btn"
-                data-testid="act-bookmark"
-                data-bookmarked={selBookmarked}
-                aria-pressed={selBookmarked}
-                onClick={() => bookmarksStore.set((s) => toggleBookmark(s, sel[0], sel[1], Date.now()))}
-              >
-                <Icon name="bookmark" size={22} />
-                <span>{selBookmarked ? t(locale, "mushaf.unmark") : t(locale, "mushaf.mark")}</span>
-              </button>
-              <button
-                type="button"
-                className="aa-btn"
-                data-testid="act-copy"
-                onClick={() => void copySelected()}
-              >
-                <Icon name="copy" size={22} />
-                <span>{t(locale, "mushaf.copy")}</span>
-              </button>
-              <button
-                type="button"
-                className="aa-btn"
-                data-testid="act-share-image"
-                onClick={() => void shareImage()}
-              >
-                <Icon name="share" size={22} />
-                <span>{t(locale, "mushaf.share")}</span>
-              </button>
-            </div>
-            {listenOpen ? (
-              <div className="aa-listen" role="group" aria-label={t(locale, "mushaf.listenOptions")}>
+            {/* Simple ayah menu (owner, 2026-11-15): one row of five buttons; the ways to listen and the
+                tafsir open only when asked for. */}
+            <div
+              className="ayah-actions aa-simple"
+              role="toolbar"
+              aria-label={t(locale, "mushaf.actions")}
+              data-testid="ayah-actions"
+            >
+              <div className="aa-head">
+                <strong className="aa-ref">{ref(sel[0], sel[1])}</strong>
                 <button
                   type="button"
-                  className="btn btn-primary btn-sm"
-                  data-testid="act-play-ayah"
-                  onClick={() => player.play({ kind: "ayah", surah: sel[0], ayah: sel[1] })}
+                  className="rd-icon-btn aa-close"
+                  data-testid="act-close"
+                  aria-label={t(locale, "common.close")}
+                  onClick={() => setSelected(null)}
                 >
-                  {t(locale, "reader.playAyahOnly")}
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-sm"
-                  data-testid="act-play"
-                  onClick={() => player.play({ kind: "from", surah: sel[0], ayah: sel[1] })}
-                >
-                  {t(locale, "reader.playFrom")}
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-sm"
-                  data-testid="play-surah"
-                  onClick={() => player.play({ kind: "surah", surah: sel[0] })}
-                >
-                  {t(locale, "reader.playWholeSurah")}
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-sm"
-                  data-testid="act-play-tafsir"
-                  onClick={() => playWithTafsir(sel[0], sel[1])}
-                >
-                  {t(locale, "reader.playTafsirShort")}
+                  <Icon name="close" size={18} />
                 </button>
               </div>
+              <div className="aa-row">
+                <button
+                  type="button"
+                  className="aa-btn"
+                  aria-expanded={listenOpen}
+                  data-testid="act-listen"
+                  onClick={() => setListenOpen((v) => !v)}
+                >
+                  <Icon name="play" size={22} />
+                  <span>{t(locale, "mushaf.listen")}</span>
+                </button>
+                <button
+                  type="button"
+                  className="aa-btn"
+                  aria-pressed={showTafsir}
+                  data-testid="act-tafsir"
+                  onClick={() => setShowTafsir((v) => !v)}
+                >
+                  <Icon name="openBook" size={22} />
+                  <span>{t(locale, "mushaf.tafsir")}</span>
+                </button>
+                <button
+                  type="button"
+                  className="aa-btn"
+                  data-testid="act-bookmark"
+                  data-bookmarked={selBookmarked}
+                  aria-pressed={selBookmarked}
+                  onClick={() => bookmarksStore.set((s) => toggleBookmark(s, sel[0], sel[1], Date.now()))}
+                >
+                  <Icon name="bookmark" size={22} />
+                  <span>{selBookmarked ? t(locale, "mushaf.unmark") : t(locale, "mushaf.mark")}</span>
+                </button>
+                <button
+                  type="button"
+                  className="aa-btn"
+                  data-testid="act-copy"
+                  onClick={() => void copySelected()}
+                >
+                  <Icon name="copy" size={22} />
+                  <span>{t(locale, "mushaf.copy")}</span>
+                </button>
+                <button
+                  type="button"
+                  className="aa-btn"
+                  data-testid="act-share-image"
+                  onClick={() => void shareImage()}
+                >
+                  <Icon name="share" size={22} />
+                  <span>{t(locale, "mushaf.share")}</span>
+                </button>
+              </div>
+              {listenOpen ? (
+                <div className="aa-listen" role="group" aria-label={t(locale, "mushaf.listenOptions")}>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    data-testid="act-play-ayah"
+                    onClick={() => player.play({ kind: "ayah", surah: sel[0], ayah: sel[1] })}
+                  >
+                    {t(locale, "reader.playAyahOnly")}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm"
+                    data-testid="act-play"
+                    onClick={() => player.play({ kind: "from", surah: sel[0], ayah: sel[1] })}
+                  >
+                    {t(locale, "reader.playFrom")}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm"
+                    data-testid="play-surah"
+                    onClick={() => player.play({ kind: "surah", surah: sel[0] })}
+                  >
+                    {t(locale, "reader.playWholeSurah")}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm"
+                    data-testid="act-play-tafsir"
+                    onClick={() => playWithTafsir(sel[0], sel[1])}
+                  >
+                    {t(locale, "reader.playTafsirShort")}
+                  </button>
+                </div>
+              ) : null}
+              <p className="aa-notice" role="status" data-testid="mushaf-notice">
+                {notice}
+              </p>
+            </div>
+            {showTafsir ? (
+              <TafsirPanel locale={locale} surah={sel[0]} ayah={sel[1]} onStep={selectRef} />
             ) : null}
-            <p className="aa-notice" role="status" data-testid="mushaf-notice">
-              {notice}
-            </p>
           </div>
-          {showTafsir ? (
-            <TafsirPanel locale={locale} surah={sel[0]} ayah={sel[1]} onStep={selectRef} />
-          ) : null}
-        </div>
-      ) : null}
-
-      <div className="rd-dock" ref={dockRef}>
+        ) : null}
         <ReaderPlayer locale={locale} page={page} />
         <nav className="pager rd-pager" aria-label={t(locale, "quran.pageNav")}>
           <button
@@ -989,7 +1003,10 @@ export function PageReader({ locale, initial }: PageReaderProps) {
             type="button"
             data-testid="bar-khatma"
             aria-expanded={sheet === "khatma"}
-            onClick={() => setSheet((v) => (v === "khatma" ? null : "khatma"))}
+            onClick={() => {
+              setSelected(null);
+              setSheet((v) => (v === "khatma" ? null : "khatma"));
+            }}
           >
             <ReaderIcon name="openBook" />
             <span>{t(locale, "reader.khatma")}</span>

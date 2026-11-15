@@ -836,6 +836,184 @@ body:has(.rd-full) .player,
 }
 
 /*
+ * ---- Phones and tablets (owner 2026-11-15): the controls are one strip across the bottom (no floating card),
+ * and "listen with tafsir" puts the whole Mushaf page on top and the page's tafsir under it.
+ */
+.rd:not(.rd-full) .rd-dock {
+  max-width: none;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-line);
+  box-shadow: 0 -4px 18px rgb(0 0 0 / 8%);
+  pointer-events: auto;
+}
+.rd:not(.rd-full) .rd-dock .rd-player {
+  margin: 0;
+  padding: 2px var(--space-md) 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.rd:not(.rd-full) .rd-dock .rd-pager {
+  background: none;
+}
+.rd:not(.rd-full) .rd-dock .rd-bar {
+  border: 0;
+  border-top: 1px solid var(--color-line);
+  border-radius: 0;
+}
+.mushaf-reader.rd.rd-duo {
+  display: flex;
+  flex-direction: column;
+}
+.rd-duo > .mushaf-stage {
+  order: 3;
+  height: calc((100dvh - var(--rd-dock-h, 200px) - 120px) * 0.5);
+  min-height: 200px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.rd-duo > .rd-duo-tafsir {
+  order: 4;
+  margin-top: var(--space-xs);
+  height: calc((100dvh - var(--rd-dock-h, 200px) - 120px) * 0.5);
+  min-height: 200px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 var(--space-sm) var(--space-sm);
+  border: 1px solid var(--color-line);
+  border-radius: var(--rd-radius);
+  background: var(--color-surface);
+}
+.rd-duo-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin: 0 calc(-1 * var(--space-sm)) var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-line);
+  color: var(--color-primary);
+}
+.rd-duo-tafsir .rd-ayah.playing {
+  outline: 2px solid var(--color-primary);
+}
+.rd-duo-tafsir {
+  --rd-fs: 22px;
+}
+.rd-duo > .rd-top {
+  order: 1;
+}
+.rd-duo > .mushaf-head {
+  order: 2;
+}
+
+/* The selected ayah's actions: the first row of the bottom strip, not a floating card */
+.rd .rd-dock .rd-actions {
+  position: static;
+  inset: auto;
+  z-index: auto;
+  width: auto;
+  max-width: none;
+  max-height: min(42vh, 380px);
+  margin: 0;
+  padding: var(--space-xs) var(--space-md);
+  overflow-y: auto;
+  border: 0;
+  border-bottom: 1px solid var(--color-line);
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--color-surface);
+}
+.rd-actions .aa-btn {
+  min-height: 48px;
+  border-color: transparent;
+  background: var(--color-surface-2);
+}
+
+/* Khatma: one centred panel over a dimmed page */
+.rd-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: var(--space-md);
+  background: rgb(0 0 0 / 38%);
+}
+.rd-modal-card {
+  width: min(440px, 100%);
+  max-height: calc(100dvh - 2 * var(--space-md));
+  overflow-y: auto;
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
+  border-radius: 20px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 18px 48px rgb(0 0 0 / 24%);
+}
+.rd-modal-card .rd-sheet-head h2 {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+.kh-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  margin: var(--space-md) 0;
+}
+.kh-ring {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background: conic-gradient(var(--color-primary) var(--kh-pct, 0%), var(--color-surface-2) 0);
+}
+.kh-ring span {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.kh-facts p {
+  margin: 2px 0;
+}
+.kh-main {
+  font-weight: 700;
+  color: var(--color-ink);
+}
+.kh-go {
+  width: 100%;
+  min-height: 48px;
+  justify-content: center;
+}
+.kh-reset {
+  display: block;
+  margin: var(--space-sm) auto 0;
+  padding: var(--space-xs) var(--space-sm);
+  border: 0;
+  background: none;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/*
  * ---- Wide screens (owner 2026-11-15): the Mushaf page takes the screen and ONE full-width strip under it
  * holds the page slider, the player with the reader options (listen with tafsir) and the index /
  * bookmarks / khatma / search buttons. Same query as SIDE_PANEL_QUERY.
@@ -852,7 +1030,7 @@ body:has(.rd-full) .player,
     padding: 0 max(var(--space-xl), (100vw - var(--site-max, 1100px)) / 2 + var(--space-xl));
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas: "pager pager" "player bar";
+    grid-template-areas: "actions actions" "pager pager" "player bar";
     align-items: center;
     column-gap: var(--space-lg);
     background: var(--color-surface);
@@ -916,6 +1094,29 @@ body:has(.rd-full) .player,
     background: none;
     box-shadow: none;
   }
+  .rd:not(.rd-full) .rd-dock .rd-actions {
+    grid-area: actions;
+    margin: 0 calc(-1 * max(var(--space-xl), (100vw - var(--site-max, 1100px)) / 2 + var(--space-xl)));
+    padding: var(--space-xs) max(var(--space-xl), (100vw - var(--site-max, 1100px)) / 2 + var(--space-xl));
+  }
+  /* one line on wide screens: the ayah, its five actions, close */
+  .rd-dock .rd-actions .aa-simple {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "head row";
+    align-items: center;
+    column-gap: var(--space-lg);
+  }
+  .rd-dock .rd-actions .aa-head {
+    grid-area: head;
+  }
+  .rd-dock .rd-actions .aa-row {
+    grid-area: row;
+    grid-template-columns: repeat(5, 92px);
+  }
+  .rd-dock .rd-actions .aa-simple > :not(.aa-head):not(.aa-row) {
+    grid-column: 1 / -1;
+  }
   .rd .ayah-sheet {
     max-width: 760px;
   }
@@ -941,31 +1142,15 @@ body:has(.rd-full) .player,
     grid-column: 2;
     grid-row: 3;
   }
-  .rd-duo-tafsir {
+  .rd-duo > .rd-duo-tafsir {
+    margin: 0;
     height: calc(100dvh - var(--rd-dock-h, 140px) - 236px);
     min-height: 320px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    padding: var(--space-sm) var(--space-md);
-    border: 1px solid var(--color-line);
-    border-radius: var(--rd-radius);
-    background: var(--color-surface);
+    padding: 0 var(--space-md) var(--space-sm);
   }
-  .rd-duo-head {
-    position: sticky;
-    top: calc(-1 * var(--space-sm));
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-sm);
-    margin: calc(-1 * var(--space-sm)) calc(-1 * var(--space-md)) var(--space-sm);
-    padding: var(--space-sm) var(--space-md);
-    background: var(--color-surface);
-    border-bottom: 1px solid var(--color-line);
-    color: var(--color-primary);
-  }
-  .rd-duo-tafsir .rd-ayah.playing {
-    outline: 2px solid var(--color-primary);
+  .rd-duo > .mushaf-stage {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
   }
 }
