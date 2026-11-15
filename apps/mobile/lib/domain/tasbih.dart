@@ -60,7 +60,7 @@ const tasbihPhrases = {
   'istighfar': 'أستغفر الله',
 };
 
-/// Bead colours (same values as the website); the first is the Mushaf brown (default since 2026-11-14).
+/// Bead colours (same values as the website); default is the emerald of colour style 1 (since 2026-11-15).
 const tasbihColors = {
   'brown': 0xFF8A5A2B,
   'emerald': 0xFF0F5C4A,
@@ -91,7 +91,7 @@ class TasbihBook {
     this.counters = const {},
     this.custom = const [],
     this.mode = TasbihMode.beads,
-    this.color = 'brown',
+    this.color = 'emerald',
     this.sound = false,
     this.vibrate = true,
     this.history = const {},
@@ -261,7 +261,7 @@ class TasbihBook {
       counters: counters,
       custom: custom,
       mode: raw['mode'] == 'button' ? TasbihMode.button : TasbihMode.beads,
-      color: raw['color'] is String && tasbihColors.containsKey(raw['color']) ? raw['color'] as String : 'brown',
+      color: raw['color'] is String && tasbihColors.containsKey(raw['color']) ? raw['color'] as String : 'emerald',
       sound: raw['sound'] == true,
       vibrate: raw['vibrate'] != false,
       history: history,

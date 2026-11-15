@@ -2203,6 +2203,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsOurAppsSoon => 'More apps coming soon, God willing';
 
   @override
+  String get settingsPalette => 'Colour style';
+
+  @override
+  String get settingsPaletteEmerald => 'Emerald & gold';
+
+  @override
+  String get settingsPaletteMadinah => 'Madinah night';
+
+  @override
   String get settingsPermissions => 'Permissions and background';
 
   @override

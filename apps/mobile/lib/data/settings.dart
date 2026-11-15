@@ -9,6 +9,7 @@ import '../domain/hijri.dart';
 import '../domain/page_khatma.dart';
 import '../domain/prayer_schedule.dart';
 import '../domain/quran.dart';
+import '../theme/design_tokens.dart';
 
 /// User preferences, persisted in shared_preferences.
 class SettingsController extends ChangeNotifier {
@@ -56,6 +57,18 @@ class SettingsController extends ChangeNotifier {
   };
   Future<void> setThemeMode(ThemeMode m) async {
     await _prefs.setString('theme', m.name);
+    notifyListeners();
+  }
+
+  /// Colour style (owner 2026-11-15): 'emerald' (style 1, default) or 'madinah' (style 2).
+  String get palette {
+    final v = _prefs.getString('palette');
+    return DesignTokens.paletteIds.contains(v) ? v! : DesignTokens.defaultPalette;
+  }
+
+  Future<void> setPalette(String id) async {
+    if (!DesignTokens.paletteIds.contains(id)) throw ArgumentError(id);
+    await _prefs.setString('palette', id);
     notifyListeners();
   }
 

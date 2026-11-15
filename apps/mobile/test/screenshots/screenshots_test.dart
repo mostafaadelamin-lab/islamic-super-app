@@ -43,6 +43,19 @@ void main() {
     File('${outDir.path}/$name.png').writeAsBytesSync(bytes);
   }
 
+  testWidgets('colour styles 1 and 2, light and dark (owner 2026-11-15)', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    for (final palette in ['emerald', 'madinah']) {
+      for (final mode in ['light', 'dark']) {
+        await pumpApp(tester, size: const Size(390, 860), prefs: {'palette': palette, 'theme': mode});
+        await shot(tester, 'style_${palette}_${mode}_home');
+      }
+    }
+    await pumpApp(tester, size: tallPhone, prefs: {'palette': 'madinah', 'theme': 'light'});
+    await openSettings(tester);
+    await shot(tester, 'style_settings');
+  });
+
   testWidgets('Hajj & Umrah section: guide, official crowd links, live audio (owner, 2026-11-14)', (tester) async {
     tester.view.devicePixelRatio = 1;
     await pumpApp(tester, size: const Size(390, 1100));

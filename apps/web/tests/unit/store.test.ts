@@ -87,12 +87,16 @@ describe("settings sanitisers", () => {
     ).toEqual({
       locale: "en",
       theme: "dark",
+      palette: "emerald",
       fontSize: FONT_MAX,
       translation: true,
       clock: "12",
       hijriOffset: 0,
     });
     expect(sanitizePrefs({ clock: "13" }).clock).toBe("24");
+    // colour styles (owner 2026-11-15): style 1 emerald is the default, style 2 madinah can be picked
+    expect(sanitizePrefs({ palette: "madinah" }).palette).toBe("madinah");
+    expect(sanitizePrefs({ palette: "neon" }).palette).toBe("emerald");
     expect(sanitizePrefs({ locale: "fr", theme: "neon", fontSize: 2 })).toMatchObject({
       locale: null,
       theme: "system",

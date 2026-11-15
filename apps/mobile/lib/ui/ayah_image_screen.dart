@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../app_services.dart';
 import '../domain/quran.dart';
 import '../domain/text.dart';
+import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'share_capture.dart';
@@ -44,7 +45,7 @@ class _AyahImageScreenState extends State<AyahImageScreen> {
   Widget build(BuildContext context) {
     final s = context.services;
     final l = context.l10n;
-    final c = DesignTokens.light;
+    final c = DesignTokens.palettes[AppTheme.palette]!['light']!;
     final text = s.content.renderMap.forDisplay(s.content.quran.text(widget.ayah));
     return Scaffold(
       appBar: AppBar(title: Text(l.mushafShareImageTitle)),

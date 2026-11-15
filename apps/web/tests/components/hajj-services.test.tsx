@@ -12,6 +12,8 @@ describe("HajjServices", () => {
     expect(screen.queryByTestId("library-now")).toBeNull();
     fireEvent.click(screen.getByTestId("hajj-live-makkah"));
     expect(screen.getByTestId("library-now")).toBeTruthy();
-    expect(screen.getByText("خريطة الطواف وعدّاد الأشواط").closest("a")?.getAttribute("href")).toBe("#umrah-step-2");
+    expect(screen.getByText("خريطة الطواف وعدّاد الأشواط").closest("a")?.getAttribute("href")).toBe(
+      "#umrah-step-2",
+    );
   });
 });

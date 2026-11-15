@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- design token "primary" (packages/design-tokens/tokens.json) -->
-    <color name="rattil_emerald">#8A5A2B</color>
+    <color name="rattil_emerald">#0F6B50</color>
 </resources>

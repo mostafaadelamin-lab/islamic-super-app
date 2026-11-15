@@ -7,6 +7,7 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 import '../app_services.dart';
 import '../domain/reels.dart';
+import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'adaptive.dart';
@@ -292,11 +293,11 @@ class _ReelPage extends StatelessWidget {
           else
             DecoratedBox(
               key: Key('reel.poster.${reel.id}'),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Color(0xFF8A5A2B), Color(0xFF1A120A)],
+                  colors: [AppTheme.brand('heroTop'), AppTheme.brand('heroDeep')],
                 ),
               ),
               child: const Center(child: RIcon(RIcons.playCircle, color: Colors.white70, size: 64)),

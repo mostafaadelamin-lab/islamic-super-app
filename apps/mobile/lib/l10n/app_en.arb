@@ -3229,6 +3229,18 @@
   "@settingsOurAppsSoon": {
     "description": "shared key \"settings.ourAppsSoon\""
   },
+  "settingsPalette": "Colour style",
+  "@settingsPalette": {
+    "description": "shared key \"settings.palette\""
+  },
+  "settingsPaletteEmerald": "Emerald & gold",
+  "@settingsPaletteEmerald": {
+    "description": "shared key \"settings.paletteEmerald\""
+  },
+  "settingsPaletteMadinah": "Madinah night",
+  "@settingsPaletteMadinah": {
+    "description": "shared key \"settings.paletteMadinah\""
+  },
   "settingsPermissions": "Permissions and background",
   "@settingsPermissions": {
     "description": "shared key \"settings.permissions\""

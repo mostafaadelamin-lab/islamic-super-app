@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
-<!-- Rattil app icon (our own design): gold mihrab arch, star and an open Mushaf on a rehal, on emerald. Full-bleed square; platforms apply their own mask. -->
-<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#17795F"/><stop offset="1" stop-color="#0A3D32"/></linearGradient></defs>
+<!-- Rattil app icon (our own design): gold mihrab arch, star and an open Mushaf on a rehal, on an emerald-to-navy gradient (colour styles 1 and 2, 2026-11-15). Full-bleed square; platforms apply their own mask. -->
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#17795F"/><stop offset="0.5" stop-color="#0E4F55"/><stop offset="1" stop-color="#16305A"/></linearGradient></defs>
 <rect width="1024" height="1024" fill="url(#bg)"/>
 <circle cx="512" cy="512" r="430" fill="none" stroke="#E0BD6A" stroke-opacity=".14" stroke-width="6"/>
 <g id="mark" fill="none" stroke-linecap="round" stroke-linejoin="round">

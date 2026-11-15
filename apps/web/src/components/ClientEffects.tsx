@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import type { Locale } from "@/lib/i18n";
-import { prefsStore, type Preferences } from "@/lib/settings";
+import { DEFAULT_PALETTE, prefsStore, type Preferences } from "@/lib/settings";
 import { useStore } from "@/hooks/useStore";
 import { registerServiceWorker } from "@/lib/sw-client";
 import { refreshAutoLocation } from "@/lib/auto-location";
@@ -10,6 +10,8 @@ import { installAudioFocus } from "@/lib/audio-focus";
 export function applyPrefs(p: Preferences, root: HTMLElement = document.documentElement): void {
   if (p.theme === "system") root.removeAttribute("data-theme");
   else root.setAttribute("data-theme", p.theme);
+  if (p.palette === DEFAULT_PALETTE) root.removeAttribute("data-palette");
+  else root.setAttribute("data-palette", p.palette);
   root.style.setProperty("--quran-size", `${p.fontSize}px`);
 }
 

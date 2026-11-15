@@ -10,9 +10,11 @@ import {
   FONT_MAX,
   FONT_MIN,
   HIJRI_OFFSET_MAX,
+  PALETTES,
   prefsStore,
   type ThemePref,
 } from "@/lib/settings";
+import { tokens } from "@/generated/tokens";
 import { hijriDate } from "@/lib/dates";
 import { useStore } from "@/hooks/useStore";
 
@@ -67,6 +69,43 @@ export function DisplaySettings({ locale, preview }: { locale: Locale; preview: 
               {t(locale, th.key)}
             </label>
           ))}
+        </div>
+      </fieldset>
+      <fieldset className="field" style={{ border: 0, padding: 0 }}>
+        <legend className="label">{t(locale, "settings.palette")}</legend>
+        <div className="palette-row">
+          {PALETTES.map((id) => {
+            const p = tokens.palettes[id];
+            return (
+              <label
+                className={`palette-choice${prefs.palette === id ? " on" : ""}`}
+                key={id}
+                data-testid={`palette-${id}`}
+              >
+                <input
+                  type="radio"
+                  name="palette"
+                  value={id}
+                  checked={prefs.palette === id}
+                  onChange={() => prefsStore.set((q) => ({ ...q, palette: id }))}
+                />
+                <span
+                  className="palette-band"
+                  style={{ background: `linear-gradient(90deg, ${p.brand.heroTop}, ${p.brand.heroDeep})` }}
+                >
+                  <i style={{ background: p.brand.gold }} />
+                </span>
+                <span className="palette-dots" aria-hidden="true">
+                  <i style={{ background: p.light.bg }} />
+                  <i style={{ background: p.dark.bg }} />
+                  <i style={{ background: p.light.accent }} />
+                </span>
+                <span>
+                  {t(locale, id === "madinah" ? "settings.paletteMadinah" : "settings.paletteEmerald")}
+                </span>
+              </label>
+            );
+          })}
         </div>
       </fieldset>
       <div className="field">
