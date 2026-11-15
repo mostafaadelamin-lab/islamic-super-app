@@ -890,7 +890,9 @@ body:has(.rd-full) .player,
 @media (min-width: 1024px) and (min-height: 560px) and (orientation: landscape) {
   .rd {
     --rd-side-w: 340px;
-    --rd-side-end: max(var(--space-md), calc((100vw - 1100px) / 2 + var(--space-lg)));
+    /* the page body's own edge on wide screens (main: max-width --site-max, padding --space-xl), so the
+       side column never slides over the page or the "listen with tafsir" view */
+    --rd-side-end: calc(max(0px, (100vw - var(--site-max, 1100px)) / 2) + var(--space-xl));
   }
   .mushaf-reader.rd:not(.rd-full) {
     max-width: none;
@@ -941,5 +943,27 @@ body:has(.rd-full) .player,
   }
   :root:has(.rd .ayah-sheet) main {
     padding-bottom: var(--space-lg);
+  }
+  /* "Listen with tafsir" button on its own full-width row in the narrow side column, so its label fits */
+  .rd:not(.rd-full) .rd-dock .rdp-row {
+    flex-wrap: wrap;
+  }
+  .rd:not(.rd-full) .rd-dock .rdp-tafsir {
+    order: 10;
+    flex-basis: 100%;
+    border: 1px solid var(--color-line);
+  }
+  .rd:not(.rd-full) .rd-dock .rdp-tafsir .rdp-btn-label {
+    max-width: none;
+  }
+  /* "Listen with tafsir" beside the side column: the recited ayah on top (as tall as it needs, up to
+     half), its tafsir right under it, both filling the screen height (owner 2026-11-15). */
+  .rd-split {
+    grid-template-columns: 1fr;
+    grid-template-rows: fit-content(50%) minmax(0, 1fr);
+    height: max(440px, calc(100dvh - 236px));
+  }
+  .rd-split .rd-half-ayah {
+    padding-bottom: var(--space-md);
   }
 }
