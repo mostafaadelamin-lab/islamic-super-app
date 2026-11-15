@@ -7,8 +7,7 @@ import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
 import { Icon } from "@/components/Icon";
 import { OfficialHajjGuide } from "@/components/OfficialHajjGuide";
 import { HajjServices } from "@/components/HajjServices";
-import { DuaText } from "@/components/DuaText";
-import { KIND_TITLE, PILGRIMAGE_KINDS, StepCard } from "@/components/HajjGuide";
+import { GUIDE, GuideSources, GuideStepCard, KIND_TITLE, PILGRIMAGE_KINDS } from "@/components/HajjGuide";
 import { localizeDigits } from "@/lib/digits";
 
 export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
@@ -16,15 +15,17 @@ export async function generateMetadata({ params }: { params: LocaleParams }): Pr
   return { title: t(isLocale(locale) ? locale : "ar", "hajj.title") };
 }
 
-/** Hajj & Umrah guide from content/pilgrimage/source-hajj.js (Arabic). Religious review is pending. */
+/**
+ * The Hajj & Umrah hub (owner 2026-11-16): pick Umrah or a kind of Hajj; under it the days of Hajj in full,
+ * the miqat and ihram, and the visit to Madinah, every text from its source (content/pilgrimage/dist).
+ */
 export default async function HajjPage({ params }: { params: LocaleParams }) {
   const locale = await resolveLocale(params);
-  const tawaf = hajj.umrah.steps.findIndex((s) => s.tool === "tawaf");
+  const tawaf = GUIDE.flows.umrah.findIndex((s) => s.step === "tawaf-first");
   return (
     <>
       <h1>{t(locale, "hajj.title")}</h1>
       {locale !== "ar" ? <p className="alert">{t(locale, "common.arabicOnly")}</p> : null}
-      {/* One page per kind (owner 2026-11-15): pick Umrah or a kind of Hajj, then go step by step. */}
       <nav className="hajj-kinds" aria-label={t(locale, "hajj.contents")} data-testid="hajj-kinds">
         {PILGRIMAGE_KINDS.map((k) => (
           <Link
@@ -52,83 +53,34 @@ export default async function HajjPage({ params }: { params: LocaleParams }) {
         locale={locale}
         tawafHref={tawaf < 0 ? null : `${href(locale, "hajj/umrah")}#umrah-step-${tawaf + 1}`}
       />
-      <section className="card">
-        <h3 lang="ar">{hajj.hajj.typesTitle}</h3>
-        <dl lang="ar">
-          {hajj.hajj.types.map((x) => (
-            <div key={x.name}>
-              <dt>{x.name}</dt>
-              <dd>
-                <DuaText text={x.body} />
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-      {/* The stages of Hajj by day, in full (shown again: dropped by mistake 2026-11-15). */}
+      <h2 id="ihram">{t(locale, "hajj.ihram")}</h2>
+      {GUIDE.hub.ihram.map((s) => (
+        <GuideStepCard key={s} locale={locale} id={`hajj-${s}`} label={t(locale, "hajj.ihram")} stepId={s} />
+      ))}
+      {/* The stages of Hajj by day, in full. */}
       <h2 id="hajj">{t(locale, "hajj.hajj")}</h2>
-      {hajj.hajj.days.map((s, i) => (
-        <StepCard
-          key={i}
+      {GUIDE.hub.days.map((s, i) => (
+        <GuideStepCard
+          key={s}
           id={`hajj-stage-${i + 1}`}
           locale={locale}
           label={t(locale, "hajj.stage", { n: localizeDigits(i + 1, locale) })}
-          step={s}
+          stepId={s}
         />
       ))}
       <section className="card">
         <h3 lang="ar">{hajj.hajj.pillars.title}</h3>
         <p lang="ar">{hajj.hajj.pillars.body}</p>
       </section>
-      <section className="card">
-        <h3 lang="ar">{hajj.madinah.title}</h3>
-        <ul lang="ar">
-          {hajj.madinah.points.map((p, i) => (
-            <li key={i}>
-              <DuaText text={p} />
-            </li>
-          ))}
-        </ul>
-      </section>
+      <h2 id="madinah">{GUIDE.steps[GUIDE.hub.madinah]?.title}</h2>
+      <GuideStepCard
+        locale={locale}
+        id="hajj-madinah"
+        label={t(locale, "hajj.madinah")}
+        stepId={GUIDE.hub.madinah}
+      />
       <OfficialHajjGuide locale={locale} />
-
-      <h2 id="ihram">{t(locale, "hajj.ihram")}</h2>
-      <section className="card">
-        <h3 lang="ar">{hajj.ihram.miqatTitle}</h3>
-        <dl lang="ar">
-          {hajj.ihram.miqat.map((x) => (
-            <div key={x.name}>
-              <dt>{x.name}</dt>
-              <dd>
-                <DuaText text={x.body} />
-              </dd>
-            </div>
-          ))}
-        </dl>
-        <p className="muted" lang="ar">
-          {hajj.ihram.miqatNote}
-        </p>
-      </section>
-      <section className="card">
-        <h3 lang="ar">{hajj.ihram.prohibitionsTitle}</h3>
-        <ul lang="ar">
-          {hajj.ihram.prohibitions.map((p, i) => (
-            <li key={i}>
-              <DuaText text={p} />
-            </li>
-          ))}
-        </ul>
-        <p className="muted" lang="ar">
-          {hajj.ihram.prohibitionsNote}
-        </p>
-      </section>
-      <section className="card">
-        <h3 lang="ar">{hajj.talbiya.title}</h3>
-        <p className="dua" lang="ar">
-          {hajj.talbiya.text}
-        </p>
-      </section>
-      <p className="muted small">{t(locale, "hajj.source")}</p>
+      <GuideSources locale={locale} />
     </>
   );
 }

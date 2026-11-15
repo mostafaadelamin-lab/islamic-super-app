@@ -1,19 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import hajj from "@/generated/hajj.json";
 import { isLocale, t } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
 import { StepPager } from "@/components/StepPager";
-import {
-  EXPLAINED,
-  KIND_TITLE,
-  PILGRIMAGE_KINDS,
-  StepCard,
-  TypeStepCard,
-  isPilgrimageKind,
-} from "@/components/HajjGuide";
+import { GUIDE, GuideStepCard, KIND_TITLE, PILGRIMAGE_KINDS, isPilgrimageKind } from "@/components/HajjGuide";
 
 export const dynamicParams = false;
 
@@ -30,13 +22,19 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 }
 
 /**
- * One kind of pilgrimage on its own page (owner 2026-11-15): the numbered steps pinned at the top, and
- * only the chosen step under them, so a pilgrim always knows where they are.
+ * One kind of pilgrimage on its own page (owner 2026-11-15): the numbered steps pinned at the top, and only
+ * the chosen step under them. Each step (owner 2026-11-16): its picture, the official guide's words, then
+ * every sunnah, dhikr and ayah of it in full, each with its reference (content/pilgrimage/dist/hajj-guide.v2.json).
  */
 export default async function PilgrimagePage({ params }: { params: Params }) {
   const { locale, kind } = await params;
   if (!isLocale(locale) || !isPilgrimageKind(kind)) notFound();
-  const n = (i: number): string => localizeDigits(i + 1, locale);
+  const flow = GUIDE.flows[kind];
+  const prefix = kind === "umrah" ? "umrah-step" : `hajj-${kind}`;
+  const label =
+    kind === "umrah"
+      ? t(locale, "hajj.flow.umrah")
+      : `${t(locale, "hajj.flow.hajj")}: ${t(locale, `hajj.flow.${kind}`)}`;
   return (
     <>
       <p>
@@ -47,37 +45,27 @@ export default async function PilgrimagePage({ params }: { params: Params }) {
       <h1 data-testid="hajj-kind-title">{t(locale, KIND_TITLE[kind])}</h1>
       {locale !== "ar" ? <p className="alert">{t(locale, "common.arabicOnly")}</p> : null}
       {kind === "umrah" ? (
-        <>
-          <p lang="ar">{hajj.umrah.intro}</p>
-          <StepPager
-            locale={locale}
-            titles={hajj.umrah.steps.map((s) => s.title)}
-            idPrefix="umrah-step"
-            label={t(locale, "hajj.flow.umrah")}
-          >
-            {hajj.umrah.steps.map((s, i) => (
-              <StepCard
-                key={i}
-                id={`umrah-step-${i + 1}-card`}
-                locale={locale}
-                label={t(locale, "hajj.step", { n: n(i) })}
-                step={s}
-              />
-            ))}
-          </StepPager>
-        </>
-      ) : (
-        <StepPager
+        <GuideStepCard
           locale={locale}
-          titles={EXPLAINED[kind].map((s) => s.title)}
-          idPrefix={`hajj-${kind}`}
-          label={`${t(locale, "hajj.flow.hajj")}: ${t(locale, `hajj.flow.${kind}`)}`}
-        >
-          {EXPLAINED[kind].map((s, i) => (
-            <TypeStepCard key={i} locale={locale} index={i} step={s} kind={kind} />
-          ))}
-        </StepPager>
-      )}
+          id="umrah-intro"
+          label={t(locale, "hajj.umrah")}
+          stepId={GUIDE.hub.umrahIntro}
+        />
+      ) : null}
+      <StepPager locale={locale} titles={flow.map((s) => s.title)} idPrefix={prefix} label={label}>
+        {flow.map((s, i) => (
+          <GuideStepCard
+            key={i}
+            locale={locale}
+            id={`${prefix}-${i + 1}-card`}
+            label={t(locale, "hajj.step", { n: localizeDigits(i + 1, locale) })}
+            stepId={s.step}
+            title={s.title}
+            dalil={s.dalil}
+            kind={kind}
+          />
+        ))}
+      </StepPager>
     </>
   );
 }

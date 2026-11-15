@@ -859,5 +859,12 @@
   "reader.playTafsirShort": "With tafsir",
   "mushaf.mark": "Mark",
   "mushaf.unmark": "Unmark",
-  "hajj.say.title": "What is said at this step"
+  "hajj.say.title": "What is said at this step",
+  "hajj.ref": "Reference",
+  "hajj.times": "{n} times",
+  "hajj.sources": "Sources of this guide",
+  "hajj.madinah": "Visiting Madinah",
+  "hajj.tag.men": "Men",
+  "hajj.tag.women": "Women",
+  "hajj.tag.first": "First tawaf only"
 }

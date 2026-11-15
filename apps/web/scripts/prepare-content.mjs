@@ -211,6 +211,17 @@ writeJson(join(gen, "dalil-hajj.json"), dalil);
   }
   writeJson(join(gen, "hajj-duas.json"), { places, rules: map.rules });
 }
+// The sourced Hajj & Umrah guide (owner 2026-11-16): every text is cut from its published source by
+// content/pilgrimage/build-guide.mjs, and the 3D pictures are drawn by build-scenes.mjs. Copied as is.
+{
+  const guide = readJson("content/pilgrimage/dist/hajj-guide.v2.json");
+  if (guide.schema !== "hajj-guide.v2") throw new Error("hajj-guide.v2.json: unexpected schema");
+  const scenes = readJson("content/pilgrimage/dist/hajj-scenes.v1.json");
+  if (scenes.schema !== "hajj-scenes.v1") throw new Error("hajj-scenes.v1.json: unexpected schema");
+  writeJson(join(gen, "hajj-guide.json"), guide);
+  writeJson(join(gen, "hajj-scenes.json"), scenes);
+  writeJson(join(gen, "scene-roles.json"), readJson("content/pilgrimage/scene-roles.v1.json"));
+}
 console.log(`content prepared: ${meta.length} surahs`);
 
 /**
