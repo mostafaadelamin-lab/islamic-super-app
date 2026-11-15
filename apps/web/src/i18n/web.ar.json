@@ -870,5 +870,12 @@
   "update.reload": "تحديث",
   "update.later": "لاحقًا",
   "settings.offlineAsk": "الموقع يعمل الآن بالإنترنت، وتُحفظ كل صفحة تفتحها. لتعمل كل الصفحات بدون إنترنت احفظ الموقع كاملًا على جهازك (حوالي {mb} ميجابايت).",
-  "settings.offlineSave": "احفظ الموقع كاملًا للعمل بدون إنترنت"
+  "settings.offlineSave": "احفظ الموقع كاملًا للعمل بدون إنترنت",
+  "hajj.ref": "المرجع",
+  "hajj.times": "{n} مرات",
+  "hajj.sources": "مصادر الدليل",
+  "hajj.madinah": "زيارة المدينة",
+  "hajj.tag.men": "للرجال",
+  "hajj.tag.women": "للنساء",
+  "hajj.tag.first": "في الطواف الأول فقط"
 }

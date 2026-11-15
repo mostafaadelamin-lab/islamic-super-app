@@ -9,6 +9,7 @@ import '../domain/app_links.dart';
 import '../domain/audio_queue.dart';
 import '../domain/hajj.dart';
 import '../domain/hajj_flows.dart';
+import '../domain/hajj_guide.dart';
 import '../domain/mushaf_layout.dart';
 import '../domain/prayer.dart';
 import '../domain/quran.dart';
@@ -63,6 +64,8 @@ class AppContent {
     required this.reciters,
     required this.adhkar,
     required this.hajj,
+    this.hajjGuide = SourcedHajjGuide.empty,
+    this.hajjScenes = HajjScenes.empty,
     this.stepDuas = StepDuas.empty,
     required this.integrity,
     required this.prayerConfig,
@@ -90,6 +93,9 @@ class AppContent {
   static const hajjAsset = 'assets/content/hajj.v1.json';
   static const dalilHajjAsset = 'assets/content/dalil-hajj.v1.json';
   static const stepDuasAsset = 'assets/content/step-duas.v1.json';
+  static const hajjGuideAsset = 'assets/content/hajj-guide.v2.json';
+  static const hajjScenesAsset = 'assets/content/hajj-scenes.v1.json';
+  static const sceneRolesAsset = 'assets/content/scene-roles.v1.json';
   static const recitersAsset = 'assets/schemas/reciters.json';
   static const versionsAsset = 'assets/content/VERSIONS.json';
   static const reelsAsset = 'assets/content/reels.v1.json';
@@ -113,6 +119,10 @@ class AppContent {
 
   /// What is said at each place of Umrah and Hajj (Hisn al-Muslim and Quran references, resolved).
   final StepDuas stepDuas;
+
+  /// The sourced Hajj & Umrah guide (owner 2026-11-16) and its 3D pictures.
+  final SourcedHajjGuide hajjGuide;
+  final HajjScenes hajjScenes;
   final Map<String, dynamic> integrity;
   final PrayerConfig prayerConfig;
   final List<City> cities;
@@ -170,6 +180,8 @@ class AppContent {
       reciters: ReciterCatalog.fromJson(await j(recitersAsset)),
       adhkar: adhkar,
       stepDuas: StepDuas.fromJson(await j(stepDuasAsset), adhkar.hisn),
+      hajjGuide: SourcedHajjGuide.fromJson(await j(hajjGuideAsset)),
+      hajjScenes: HajjScenes.fromJson(await j(hajjScenesAsset), await j(sceneRolesAsset)),
       hajj: HajjGuide.fromJson(await j(hajjAsset), official: OfficialHajjGuide.fromJson(await j(dalilHajjAsset))),
       integrity: await j(integrityAsset),
       prayerConfig: PrayerConfig.fromJson(await j(methodsAsset)),

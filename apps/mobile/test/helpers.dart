@@ -212,6 +212,8 @@ AppContent withPolarCity(AppContent c) => AppContent(
   adhkar: c.adhkar,
   hajj: c.hajj,
   stepDuas: c.stepDuas,
+  hajjGuide: c.hajjGuide,
+  hajjScenes: c.hajjScenes,
   integrity: c.integrity,
   prayerConfig: c.prayerConfig,
   cities: [

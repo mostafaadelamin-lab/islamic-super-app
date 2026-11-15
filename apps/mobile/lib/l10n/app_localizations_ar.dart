@@ -913,10 +913,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hajjLiveTitle => 'بث مباشر من الحرمين (صوت)';
 
   @override
+  String get hajjMadinah => 'زيارة المدينة';
+
+  @override
   String get hajjOfficialGuide => 'شرح الخطوات من الدليل الرسمي';
 
   @override
   String get hajjQiran => 'القِران';
+
+  @override
+  String get hajjRef => 'المرجع';
 
   @override
   String get hajjReviewNotice =>
@@ -924,6 +930,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get hajjSayTitle => 'ما يُقال في هذه الخطوة';
+
+  @override
+  String get hajjSources => 'مصادر الدليل';
+
+  @override
+  String hajjStage(String n) {
+    return 'المرحلة $n';
+  }
 
   @override
   String get hajjStepNext => 'التالي';
@@ -940,6 +954,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hajjStepsInOrder => 'خطوات الحج بالترتيب';
 
   @override
+  String get hajjTagFirst => 'في الطواف الأول فقط';
+
+  @override
+  String get hajjTagMen => 'للرجال';
+
+  @override
+  String get hajjTagWomen => 'للنساء';
+
+  @override
   String get hajjTamattu => 'التمتع';
 
   @override
@@ -947,6 +970,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get hajjTapStepOne => 'اضغط على رقم الخطوة لعرضها';
+
+  @override
+  String hajjTimes(String n) {
+    return '$n مرات';
+  }
 
   @override
   String get hajjTitle => 'الحج والعمرة';

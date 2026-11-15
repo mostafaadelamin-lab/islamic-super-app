@@ -19,6 +19,8 @@ AppContent withReels(AppContent c, List<Map<String, dynamic>> items) => AppConte
   adhkar: c.adhkar,
   hajj: c.hajj,
   stepDuas: c.stepDuas,
+  hajjGuide: c.hajjGuide,
+  hajjScenes: c.hajjScenes,
   integrity: c.integrity,
   prayerConfig: c.prayerConfig,
   cities: c.cities,

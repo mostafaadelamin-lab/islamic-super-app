@@ -796,5 +796,13 @@
   "hajj.say.title": "ما يُقال في هذه الخطوة",
   "hajj.hub.ihram": "المواقيت ومحظورات الإحرام",
   "adhkar.reportTitle": "خطأ في ذكر",
-  "reader.hideTafsir": "إخفاء التفسير"
+  "reader.hideTafsir": "إخفاء التفسير",
+  "hajj.ref": "المرجع",
+  "hajj.times": "{n} مرات",
+  "hajj.sources": "مصادر الدليل",
+  "hajj.madinah": "زيارة المدينة",
+  "hajj.tag.men": "للرجال",
+  "hajj.tag.women": "للنساء",
+  "hajj.tag.first": "في الطواف الأول فقط",
+  "hajj.stage": "المرحلة {n}"
 }

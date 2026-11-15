@@ -4675,3 +4675,130 @@ dd {
     bottom: var(--space-lg);
   }
 }
+
+/* Sourced Hajj & Umrah guide (owner 2026-11-16): 3D pictures, every text in full with its reference. */
+.hajj-scene {
+  margin: var(--space-md) 0;
+  background: var(--color-surface-2);
+  border-radius: var(--radius-md);
+  padding: var(--space-xs);
+}
+.hajj-scene svg {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  margin: 0 auto;
+  font-family: var(--font-ui);
+}
+.hg-official {
+  margin: var(--space-md) 0;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-line);
+  line-height: 1.9;
+}
+.hg-official h4,
+.hg-sub h4 {
+  margin: 0 0 var(--space-xs);
+  color: var(--color-primary);
+}
+.hg-sub {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px dashed var(--color-line);
+}
+.hg-item {
+  margin: var(--space-sm) 0;
+}
+.hg-text {
+  margin: 0;
+  line-height: 1.9;
+  white-space: pre-line;
+}
+.hg-hadith {
+  margin: 0;
+  padding: var(--space-sm) var(--space-md);
+  border-inline-start: 3px solid var(--color-accent);
+  line-height: 1.9;
+}
+.hg-say {
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--color-verse-highlight);
+}
+.hg-say-text {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 2;
+  white-space: pre-line;
+}
+.hg-times {
+  display: inline-block;
+  margin-inline-start: var(--space-sm);
+  padding: 0 var(--space-sm);
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  vertical-align: middle;
+}
+.hg-quran-block {
+  margin: 0;
+  line-height: 2.1;
+}
+.hg-quran-text {
+  font-family: var(--font-quran);
+  font-size: 22px;
+  font-weight: 400;
+}
+.hg-quran-ref {
+  font-size: 13px;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+.hg-src {
+  margin: var(--space-xs) 0 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+.hg-notes {
+  margin: var(--space-xs) 0 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+  list-style: none;
+  padding: 0;
+}
+.hg-tags {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+  margin: 0 0 var(--space-xs);
+}
+.hg-tag {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  padding: 0 var(--space-sm);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-soft);
+}
+.hg-table-wrap {
+  overflow-x: auto;
+  margin: var(--space-sm) 0;
+}
+.hg-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+.hg-table th,
+.hg-table td {
+  border: 1px solid var(--color-line);
+  padding: var(--space-xs) var(--space-sm);
+  text-align: start;
+}
+.hg-table th {
+  background: var(--color-surface-2);
+}
