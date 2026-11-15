@@ -75,6 +75,13 @@ export async function loadRange(book: HadithBook, from: number, to: number): Pro
     .filter((h) => h.n >= a && h.n <= b);
 }
 
+/** The hadiths numbered `ns` (any order; read from their parts). */
+export async function loadItems(book: HadithBook, ns: readonly number[]): Promise<HadithItem[]> {
+  const ok = ns.filter((n) => n >= 1 && n <= book.count);
+  const texts = await Promise.all(ok.map((n) => loadChunk(book.id, chunkOf(n))));
+  return ok.map((n, i) => ({ n, text: texts[i]![(n - 1) % HADITH.chunkSize] ?? "" }));
+}
+
 /** Text for display: the source's own words, without the spaces around them. */
 export const displayText = (text: string): string => text.trim();
 
@@ -172,6 +179,14 @@ export function loadExplained(book: string): Promise<ExplainedBook | null> {
 export function explanationOf(data: ExplainedBook | null, n: number): HadithExplanation | null {
   const id = data?.map[String(n)];
   return (id && data?.entries[id]) || null;
+}
+
+/** Numbers of the hadiths in a book that have an explanation, in order. */
+export function explainedNumbers(data: ExplainedBook | null): number[] {
+  return Object.keys(data?.map ?? {})
+    .map(Number)
+    .filter((n) => Number.isInteger(n) && n > 0)
+    .sort((a, b) => a - b);
 }
 
 /** Tests only. */

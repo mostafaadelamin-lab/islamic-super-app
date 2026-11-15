@@ -752,8 +752,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hadithExplain => 'Simplified explanation';
 
   @override
+  String get hadithExplainLess => 'Show less';
+
+  @override
+  String get hadithExplainMore => 'Read the full explanation';
+
+  @override
   String get hadithExplainSource =>
       'The explanation is quoted word for word from a published hadith encyclopedia, not written by the app.';
+
+  @override
+  String hadithExplainedCount(String count) {
+    return '$count hadiths in this book have a simplified explanation';
+  }
+
+  @override
+  String get hadithExplainedOnly => 'Explained hadiths';
 
   @override
   String get hadithFavourites => 'Saved hadiths';

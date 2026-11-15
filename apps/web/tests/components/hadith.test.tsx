@@ -39,9 +39,34 @@ describe("HadithReader", () => {
     render(<HadithReader locale="ar" bookId="malik" />);
     const ex = await screen.findByTestId("hadith-explain-4");
     expect(ex.textContent).toContain("الشرح المبسّط");
+    expect(ex.querySelector(".hadith-explain-text")!.textContent!.length).toBeGreaterThan(20);
+    expect(ex.textContent).not.toContain("من فوائد الحديث");
+    fireEvent.click(screen.getByTestId("hadith-explain-more-4"));
     expect(ex.textContent).toContain("الدرجة: صحيح");
     expect(ex.textContent).toContain("من فوائد الحديث");
     expect(screen.queryByTestId("hadith-explain-1")).toBeNull();
+  });
+
+  it("lists only the hadiths that have a simplified explanation", async () => {
+    const map = JSON.parse(readFileSync("public/data/hadith/explained/malik.json", "utf8")) as {
+      map: Record<string, string>;
+    };
+    const nums = Object.keys(map.map)
+      .map(Number)
+      .sort((a, b) => a - b);
+    render(<HadithReader locale="ar" bookId="malik" />);
+    const count = await screen.findByTestId("hadith-explained-count", {}, { timeout: 5000 });
+    expect(count.textContent).toContain("لها شرح مبسّط");
+    fireEvent.click(screen.getByTestId("hadith-explained-only"));
+    await waitFor(() => expect(shown()).toEqual(nums.slice(0, PAGE_SIZE)), { timeout: 5000 });
+    for (const k of shown()) expect(await screen.findByTestId(`hadith-explain-${k}`)).toBeTruthy();
+    expect(screen.getAllByTestId("hadith")[0]!.querySelector(".hadith-text")!.textContent).toBe(
+      text("malik", nums[0]!).trim(),
+    );
+    fireEvent.click(screen.getByTestId("hadith-explained-next"));
+    await waitFor(() => expect(shown()[0]).toBe(nums[PAGE_SIZE]));
+    fireEvent.click(screen.getByText("العودة إلى الكتاب"));
+    await waitFor(() => expect(shown()[0]).toBe(1));
   });
 
   it("shows twenty hadiths unchanged, pages, and jumps to a number", async () => {

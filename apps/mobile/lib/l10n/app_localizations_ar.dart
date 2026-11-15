@@ -748,7 +748,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hadithExplain => 'الشرح المبسّط';
 
   @override
+  String get hadithExplainLess => 'إخفاء بقية الشرح';
+
+  @override
+  String get hadithExplainMore => 'اقرأ الشرح كاملًا';
+
+  @override
   String get hadithExplainSource => 'الشرح منقول بنصّه من موسوعة حديثية منشورة، وليس من كتابة التطبيق.';
+
+  @override
+  String hadithExplainedCount(String count) {
+    return '$count حديثًا في هذا الكتاب لها شرح مبسّط';
+  }
+
+  @override
+  String get hadithExplainedOnly => 'الأحاديث المشروحة';
 
   @override
   String get hadithFavourites => 'الأحاديث المحفوظة';
