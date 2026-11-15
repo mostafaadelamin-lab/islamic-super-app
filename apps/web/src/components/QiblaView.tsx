@@ -1,4 +1,5 @@
 "use client";
+import { usePlaceName } from "@/hooks/usePlaceName";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import { resolveLocation } from "@/lib/cities";
@@ -16,7 +17,8 @@ export function QiblaView({ locale }: { locale: Locale }) {
   const prefs = useStore(prayerStore);
   const loc = resolveLocation(prefs);
   const bearing = qiblaBearing(loc.lat, loc.lng);
-  const cityName = locale === "ar" ? loc.city?.nameAr : loc.city?.nameEn;
+  const gpsPlace = usePlaceName(locale);
+  const cityName = gpsPlace ?? (locale === "ar" ? loc.city?.nameAr : loc.city?.nameEn);
   return (
     <section className="card qibla" aria-labelledby="qibla-h">
       <h2 id="qibla-h" className="card-title">

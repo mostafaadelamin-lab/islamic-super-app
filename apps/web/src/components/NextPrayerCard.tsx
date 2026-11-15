@@ -1,4 +1,5 @@
 "use client";
+import { usePlaceName } from "@/hooks/usePlaceName";
 import Link from "next/link";
 import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
@@ -53,7 +54,8 @@ export function NextPrayerCard({ locale }: { locale: Locale }) {
   const loc = resolveLocation(prefs);
   const city = loc.city;
   const cityLabel = locale === "ar" && city ? `${city.countryAr} - ${city.nameAr}` : city?.nameEn;
-  const place = cityLabel ?? t(locale, "home.myPlace");
+  const gpsPlace = usePlaceName(locale);
+  const place = gpsPlace ?? cityLabel ?? t(locale, "home.myPlace");
   const q = { ...loc, asr: prefs.asr, adjustments: prefs.adjustments };
 
   let computed: Computed | null = null;

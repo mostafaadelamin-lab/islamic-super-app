@@ -13,6 +13,7 @@ import { sharePromptStore } from "@/lib/app-links";
 import { videoHistoryStore } from "@/lib/videos";
 import { nasheedsSavedStore } from "@/lib/nasheeds";
 import { firstRunStore } from "@/lib/first-run";
+import { placeNameStore } from "@/lib/place-names";
 
 export function resetStores(): void {
   localStorage.clear();
@@ -20,6 +21,7 @@ export function resetStores(): void {
     bookmarksStore,
     lastReadStore,
     prayerStore,
+    placeNameStore,
     prefsStore,
     accountStore,
     adhanStore,

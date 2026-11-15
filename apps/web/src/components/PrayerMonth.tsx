@@ -1,4 +1,5 @@
 "use client";
+import { usePlaceName } from "@/hooks/usePlaceName";
 import { useMemo, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
@@ -113,6 +114,7 @@ function printMonth(): void {
 /** Monthly prayer timetable (Gregorian or Hijri month) for the chosen location; today's row is highlighted. */
 export function PrayerMonth({ locale }: { locale: Locale }) {
   const prefs = useStore(prayerStore);
+  const gpsPlace = usePlaceName(locale);
   const display = useStore(prefsStore);
   const now = useNow();
   const loc = resolveLocation(prefs);
@@ -169,11 +171,9 @@ export function PrayerMonth({ locale }: { locale: Locale }) {
   const dayNumber = (d: LocalDate): number => (kind === "hijri" ? (hijriOf(d, offset)?.day ?? d.day) : d.day);
   /** The app shares the month (there as a picture); the site shares it as text, or copies it. */
   const shareMonth = async (): Promise<void> => {
-    const place = loc.city
-      ? locale === "ar"
-        ? loc.city.nameAr
-        : loc.city.nameEn
-      : t(locale, "home.myPlace");
+    const place =
+      gpsPlace ??
+      (loc.city ? (locale === "ar" ? loc.city.nameAr : loc.city.nameEn) : t(locale, "home.myPlace"));
     const title = `${t(locale, "prayer.monthTitle")} · ${monthTitle} · ${place}`;
     const lines = rows.map(({ date, pd }) =>
       [

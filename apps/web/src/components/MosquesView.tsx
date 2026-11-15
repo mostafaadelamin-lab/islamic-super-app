@@ -1,4 +1,5 @@
 "use client";
+import { usePlaceName } from "@/hooks/usePlaceName";
 import { useCallback, useEffect, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
@@ -40,6 +41,7 @@ function formatDistance(m: number, locale: Locale): string {
 /** Nearby mosques from OpenStreetMap around the prayer location (or the device location on request). */
 export function MosquesView({ locale }: { locale: Locale }) {
   const prefs = useStore(prayerStore);
+  const gpsPlace = usePlaceName(locale);
   const loc = resolveLocation(prefs);
   const [here, setHere] = useState<Point | null>(null);
   const [radius, setRadius] = useState<number>(DEFAULT_RADIUS_M);
@@ -105,7 +107,7 @@ export function MosquesView({ locale }: { locale: Locale }) {
 
   const placeName = here
     ? t(locale, "mosques.myLocation")
-    : ((locale === "ar" ? loc.city?.nameAr : loc.city?.nameEn) ?? t(locale, "home.myPlace"));
+    : (gpsPlace ?? (locale === "ar" ? loc.city?.nameAr : loc.city?.nameEn) ?? t(locale, "home.myPlace"));
 
   return (
     <section className="card" aria-labelledby="mosques-h" data-testid="mosques">
