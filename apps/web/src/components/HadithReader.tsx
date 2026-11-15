@@ -7,8 +7,11 @@ import { localizeDigits } from "@/lib/digits";
 import {
   bookName,
   displayText,
+  explainedNumbers,
   hadithBook,
   hadithFavStore,
+  loadExplained,
+  loadItems,
   loadRange,
   searchBook,
   SEARCH_LIMIT,
@@ -72,6 +75,11 @@ export function HadithReader({ locale, bookId }: { locale: Locale; bookId: strin
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<HadithItem[] | null>(null);
   const [progress, setProgress] = useState<[number, number] | null>(null);
+  /** Numbers of the hadiths with a simplified explanation (null until known). */
+  const [explained, setExplained] = useState<number[] | null>(null);
+  /** Page of the "explained hadiths" list being shown, or null for the book. */
+  const [exPage, setExPage] = useState<number | null>(null);
+  const [exItems, setExItems] = useState<HadithItem[] | null>(null);
   const n = (v: number): string => localizeDigits(v, locale);
 
   const open = useCallback(
@@ -79,6 +87,7 @@ export function HadithReader({ locale, bookId }: { locale: Locale; bookId: strin
       const s = Math.min(Math.max(1, start), book.count);
       setFrom(firstOfPage(s));
       setResults(null);
+      setExPage(null);
       if (typeof window !== "undefined") history.replaceState(null, "", `#${s}`);
     },
     [book.count],
@@ -101,7 +110,38 @@ export function HadithReader({ locale, bookId }: { locale: Locale; bookId: strin
     };
   }, [book, from]);
 
+  useEffect(() => {
+    let live = true;
+    const load = async (): Promise<void> => {
+      const list = explainedNumbers(await loadExplained(book.id));
+      if (live) setExplained(list);
+    };
+    void load();
+    return () => {
+      live = false;
+    };
+  }, [book.id]);
+
+  useEffect(() => {
+    if (exPage === null || explained === null) return;
+    let live = true;
+    setExItems(null);
+    const load = async (): Promise<void> => {
+      try {
+        const list = await loadItems(book, explained.slice(exPage * PAGE_SIZE, (exPage + 1) * PAGE_SIZE));
+        if (live) setExItems(list);
+      } catch {
+        if (live) setError(true);
+      }
+    };
+    void load();
+    return () => {
+      live = false;
+    };
+  }, [book, exPage, explained]);
+
   const runSearch = async (): Promise<void> => {
+    setExPage(null);
     setProgress([0, book.chunks]);
     try {
       setResults(await searchBook(book, query, (d, total) => setProgress([d, total])));
@@ -168,6 +208,25 @@ export function HadithReader({ locale, bookId }: { locale: Locale; bookId: strin
             {t(locale, "hadith.searching", { done: n(progress[0]), total: n(progress[1]) })}
           </p>
         ) : null}
+        {explained && explained.length > 0 ? (
+          <div className="hadith-explained-bar">
+            <button
+              type="button"
+              className="btn btn-sm"
+              aria-pressed={exPage !== null}
+              onClick={() => {
+                setResults(null);
+                setExPage(exPage === null ? 0 : null);
+              }}
+              data-testid="hadith-explained-only"
+            >
+              {t(locale, "hadith.explainedOnly")}
+            </button>
+            <span className="muted small" data-testid="hadith-explained-count">
+              {t(locale, "hadith.explainedCount", { count: n(explained.length) })}
+            </span>
+          </div>
+        ) : null}
       </section>
       {error ? (
         <p className="alert alert-error" role="alert" data-testid="hadith-error">
@@ -194,6 +253,39 @@ export function HadithReader({ locale, bookId }: { locale: Locale; bookId: strin
           {results.map((h) => (
             <HadithCard key={h.n} locale={locale} book={book} item={h} />
           ))}
+        </section>
+      ) : exPage !== null && explained ? (
+        <section aria-live="polite" data-testid="hadith-explained-list">
+          <h2>{t(locale, "hadith.explainedOnly")}</h2>
+          <p>
+            <button type="button" className="btn btn-sm" onClick={() => setExPage(null)}>
+              {t(locale, "hadith.backToBook")}
+            </button>
+          </p>
+          {exItems === null && !error ? <p className="muted">{t(locale, "common.loading")}</p> : null}
+          {exItems?.map((h) => (
+            <HadithCard key={h.n} locale={locale} book={book} item={h} />
+          ))}
+          <nav className="row pager" aria-label={t(locale, "hadith.pager")}>
+            <button
+              type="button"
+              className="btn"
+              disabled={exPage <= 0}
+              onClick={() => setExPage(exPage - 1)}
+              data-testid="hadith-explained-prev"
+            >
+              {t(locale, "hadith.prev")}
+            </button>
+            <button
+              type="button"
+              className="btn"
+              disabled={(exPage + 1) * PAGE_SIZE >= explained.length}
+              onClick={() => setExPage(exPage + 1)}
+              data-testid="hadith-explained-next"
+            >
+              {t(locale, "hadith.next")}
+            </button>
+          </nav>
         </section>
       ) : (
         <section aria-live="polite">

@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/data/content.dart';
 import 'package:rattil/data/hadith.dart';
 import 'package:rattil/domain/hadith.dart';
+import 'package:rattil/ui/hadith_explain.dart';
 import 'package:rattil/ui/hadith_screen.dart';
 
 import '../helpers.dart';
@@ -137,6 +138,34 @@ void main() {
     expect(find.byKey(const Key('hadith-1')), findsOneWidget);
     await tester.tap(find.byKey(const Key('hadith1Share')));
     await tester.tap(find.byKey(const Key('hadithClear')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('hadithRange')), findsOneWidget);
+  });
+
+  testWidgets('the simplified explanation shows under the hadith, and a list of explained hadiths', (tester) async {
+    final ex = HadithExplanations.parse(File('assets/hadith/explained.v1.json').readAsStringSync());
+    HadithExplanations.debugUse(ex);
+    final nums = ex.numbers('malik');
+    expect(nums, contains(4));
+    expect(nums, isNot(contains(1)));
+    await pumpApp(tester, size: tallPhone);
+    await pushScreen(tester, HadithBookScreen(book: catalog.book('malik')!, start: 4));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('hadithExplain-4')), findsOneWidget);
+    expect(find.text('الشرح المبسّط'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('hadithExplainMore-4')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('hadithExplainSheet')), findsOneWidget);
+    expect(find.text('من فوائد الحديث'), findsOneWidget);
+    await tester.tapAt(const Offset(10, 10));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('hadithExplainedOnly')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('hadithExplainedList')), findsOneWidget);
+    expect(find.byKey(const Key('hadithExplainedCount')), findsOneWidget);
+    expect(find.byKey(Key('hadith-${nums.first}')), findsOneWidget);
+    expect(find.byKey(Key('hadithExplain-${nums.first}')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('hadithExplainedBack')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('hadithRange')), findsOneWidget);
   });

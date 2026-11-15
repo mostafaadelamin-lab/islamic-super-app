@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -35,12 +36,27 @@ class HadithExplanations {
 
   static Future<HadithExplanations> load() => _loading ??= rootBundle.loadString(asset).then(parse);
 
+  /// Tests: use [e] instead of reading the asset.
+  @visibleForTesting
+  static void debugUse(HadithExplanations e) => _loading = SynchronousFuture(e);
+
   static HadithExplanations parse(String raw) {
     final j = jsonDecode(raw) as Map<String, dynamic>;
     return HadithExplanations(j['entries'] as Map<String, dynamic>, j['map'] as Map<String, dynamic>);
   }
 
   int get length => _map.length;
+
+  /// Numbers of the hadiths of [book] that have an explanation, in order.
+  List<int> numbers(String book) {
+    final prefix = '$book:';
+    return _map.keys
+        .where((k) => k.startsWith(prefix))
+        .map((k) => int.tryParse(k.substring(prefix.length)))
+        .whereType<int>()
+        .toList()
+      ..sort();
+  }
 
   HadithExplanation? of(String book, int n) {
     final id = _map['$book:$n'] as String?;
@@ -74,6 +90,76 @@ class HadithExplainButton extends StatelessWidget {
           icon: const RIcon(RIcons.book, size: 20),
           label: Text(context.l10n.hadithExplain),
           onPressed: () => showHadithExplanation(context, e),
+        );
+      },
+    );
+  }
+}
+
+/// «الشرح المبسّط» shown under a hadith (owner 2026-11-15: visible, not
+/// hidden behind a button): the start of the explanation, and the whole text
+/// with the grade and benefits on «اقرأ الشرح كاملًا». Hidden when there is none.
+class HadithExplainSection extends StatelessWidget {
+  const HadithExplainSection({super.key, required this.book, required this.n});
+  final String book;
+  final int n;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<HadithExplanations>(
+      future: HadithExplanations.load(),
+      builder: (context, snap) {
+        final e = snap.data?.of(book, n);
+        if (e == null) return const SizedBox.shrink();
+        final l = context.l10n;
+        final theme = Theme.of(context);
+        final scheme = theme.colorScheme;
+        return Container(
+          key: Key('hadithExplain-$n'),
+          margin: const EdgeInsets.only(top: DesignTokens.spaceMd),
+          padding: const EdgeInsetsDirectional.fromSTEB(
+            DesignTokens.spaceMd,
+            DesignTokens.spaceSm,
+            DesignTokens.spaceMd,
+            0,
+          ),
+          decoration: BoxDecoration(
+            color: scheme.primary.withValues(alpha: 0.07),
+            borderRadius: BorderRadius.circular(10),
+            border: BorderDirectional(start: BorderSide(color: scheme.primary, width: 3)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  RIcon(RIcons.book, size: 18, color: scheme.primary),
+                  const SizedBox(width: DesignTokens.spaceXs),
+                  Text(
+                    l.hadithExplain,
+                    style: theme.textTheme.titleSmall?.copyWith(color: scheme.primary, fontWeight: FontWeight.w700),
+                  ),
+                ],
+              ),
+              const SizedBox(height: DesignTokens.spaceXs),
+              Text(
+                e.explanation.trim(),
+                key: Key('hadithExplainText-$n'),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                textDirection: TextDirection.rtl,
+                style: theme.textTheme.bodyMedium?.copyWith(height: 1.8),
+              ),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: TextButton(
+                  key: Key('hadithExplainMore-$n'),
+                  onPressed: () => showHadithExplanation(context, e),
+                  child: Text(l.hadithExplainMore),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

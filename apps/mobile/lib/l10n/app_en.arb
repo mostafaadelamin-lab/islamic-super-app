@@ -1074,9 +1074,30 @@
   "@hadithExplain": {
     "description": "shared key \"hadith.explain\""
   },
+  "hadithExplainLess": "Show less",
+  "@hadithExplainLess": {
+    "description": "shared key \"hadith.explainLess\""
+  },
+  "hadithExplainMore": "Read the full explanation",
+  "@hadithExplainMore": {
+    "description": "shared key \"hadith.explainMore\""
+  },
   "hadithExplainSource": "The explanation is quoted word for word from a published hadith encyclopedia, not written by the app.",
   "@hadithExplainSource": {
     "description": "shared key \"hadith.explainSource\""
+  },
+  "hadithExplainedCount": "{count} hadiths in this book have a simplified explanation",
+  "@hadithExplainedCount": {
+    "description": "shared key \"hadith.explainedCount\"",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithExplainedOnly": "Explained hadiths",
+  "@hadithExplainedOnly": {
+    "description": "shared key \"hadith.explainedOnly\""
   },
   "hadithFavourites": "Saved hadiths",
   "@hadithFavourites": {

@@ -9,6 +9,7 @@ import 'adhkar_screen.dart';
 import 'dhikr_tools.dart';
 import 'hadith_explain.dart';
 import 'l10n_ext.dart';
+import 'r_icon.dart';
 import 'review_notice.dart';
 
 /// Western digits for Arabic-Indic ones, so "١٠٠٠" in the number box works too.
@@ -107,6 +108,10 @@ class HadithCard extends StatelessWidget {
               padding: const EdgeInsetsDirectional.only(end: DesignTokens.spaceSm),
               child: Text(text, textDirection: TextDirection.rtl, style: duaStyle(context)),
             ),
+            Padding(
+              padding: const EdgeInsetsDirectional.only(end: DesignTokens.spaceSm),
+              child: HadithExplainSection(book: book.id, n: item.n),
+            ),
             Wrap(
               alignment: WrapAlignment.end,
               children: [
@@ -140,6 +145,19 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
   (int, int)? _progress;
   bool _searchFailed = false;
   bool _tools = false;
+
+  /// Showing only the hadiths that have a simplified explanation.
+  bool _explainedOnly = false;
+  List<int>? _explained;
+
+  @override
+  void initState() {
+    super.initState();
+    HadithExplanations.load().then((e) {
+      if (mounted) setState(() => _explained = e.numbers(widget.book.id));
+    }, onError: (_) {});
+  }
+
   final _go = TextEditingController();
   final _query = TextEditingController();
 
@@ -161,6 +179,7 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
     final target = n.clamp(1, widget.book.count);
     setState(() {
       _results = null;
+      _explainedOnly = false;
       _n = target;
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -279,16 +298,80 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
     );
   }
 
+  Widget _explainedList(BuildContext context, List<int> numbers) {
+    final l = context.l10n;
+    return ListView.builder(
+      key: const Key('hadithExplainedList'),
+      padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+      itemCount: numbers.length + 1,
+      itemBuilder: (context, i) {
+        if (i == 0) {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l.hadithExplainedCount(context.num(numbers.length)),
+                    key: const Key('hadithExplainedCount'),
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ),
+                TextButton(
+                  key: const Key('hadithExplainedBack'),
+                  onPressed: () => setState(() => _explainedOnly = false),
+                  child: Text(l.hadithBackToBook),
+                ),
+              ],
+            ),
+          );
+        }
+        final n = numbers[i - 1];
+        return FutureBuilder<List<HadithItem>>(
+          future: _block(n),
+          builder: (context, snap) {
+            final item = snap.data?.where((h) => h.n == n).firstOrNull;
+            if (item == null) {
+              return snap.hasError
+                  ? const SizedBox.shrink()
+                  : const Padding(
+                      padding: EdgeInsets.all(DesignTokens.spaceLg),
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+            }
+            return InkWell(
+              onTap: () => _open(n),
+              child: HadithCard(book: widget.book, item: item),
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final book = widget.book;
     final results = _results;
+    final explained = _explained;
+    final explainedOnly = _explainedOnly && explained != null && results == null;
     final ar = context.isArabic;
     return Scaffold(
       appBar: AppBar(
         title: Text(book.name(ar)),
         actions: [
+          if (explained != null && explained.isNotEmpty)
+            IconButton(
+              key: const Key('hadithExplainedOnly'),
+              tooltip: l.hadithExplainedOnly,
+              isSelected: _explainedOnly,
+              icon: const RIcon(RIcons.book),
+              onPressed: () => setState(() {
+                _results = null;
+                _explainedOnly = !_explainedOnly;
+              }),
+            ),
           IconButton(
             key: const Key('hadithTools'),
             tooltip: l.hadithSearch(book.name(ar)),
@@ -305,6 +388,8 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
             Expanded(
               child: results != null
                   ? _resultsList(context, results)
+                  : explainedOnly
+                  ? _explainedList(context, explained)
                   : AnimatedBuilder(
                       animation: _pager,
                       builder: (context, _) {
@@ -324,7 +409,7 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
                       },
                     ),
             ),
-            if (results == null)
+            if (results == null && !explainedOnly)
               Padding(
                 padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceSm),
                 child: Row(
@@ -488,11 +573,17 @@ class _BookPage extends StatelessWidget {
                   Expanded(
                     child: SingleChildScrollView(
                       padding: const EdgeInsets.all(DesignTokens.spaceLg),
-                      child: Text(
-                        text,
-                        textDirection: TextDirection.rtl,
-                        textAlign: TextAlign.justify,
-                        style: duaStyle(context),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            text,
+                            textDirection: TextDirection.rtl,
+                            textAlign: TextAlign.justify,
+                            style: duaStyle(context),
+                          ),
+                          HadithExplainSection(book: book.id, n: item.n),
+                        ],
                       ),
                     ),
                   ),
@@ -500,7 +591,6 @@ class _BookPage extends StatelessWidget {
                   Wrap(
                     alignment: WrapAlignment.center,
                     children: [
-                      HadithExplainButton(book: book.id, n: item.n),
                       CopyButton(text: text),
                       DhikrActions(text: text, source: source, where: source, keyPrefix: 'hadith${item.n}'),
                     ],

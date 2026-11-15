@@ -1394,11 +1394,35 @@ abstract class AppLocalizations {
   /// **'Simplified explanation'**
   String get hadithExplain;
 
+  /// shared key "hadith.explainLess"
+  ///
+  /// In en, this message translates to:
+  /// **'Show less'**
+  String get hadithExplainLess;
+
+  /// shared key "hadith.explainMore"
+  ///
+  /// In en, this message translates to:
+  /// **'Read the full explanation'**
+  String get hadithExplainMore;
+
   /// shared key "hadith.explainSource"
   ///
   /// In en, this message translates to:
   /// **'The explanation is quoted word for word from a published hadith encyclopedia, not written by the app.'**
   String get hadithExplainSource;
+
+  /// shared key "hadith.explainedCount"
+  ///
+  /// In en, this message translates to:
+  /// **'{count} hadiths in this book have a simplified explanation'**
+  String hadithExplainedCount(String count);
+
+  /// shared key "hadith.explainedOnly"
+  ///
+  /// In en, this message translates to:
+  /// **'Explained hadiths'**
+  String get hadithExplainedOnly;
 
   /// shared key "hadith.favourites"
   ///

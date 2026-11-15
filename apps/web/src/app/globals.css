@@ -3412,23 +3412,22 @@ dd {
   margin-top: var(--space-sm);
 }
 
-/* Hadith: simplified explanation (as in the app) */
+/* Hadith: simplified explanation under each hadith (as in the app) */
 .hadith-explain {
   margin-top: var(--space-sm);
-  border-top: 1px solid var(--color-line);
-  padding-top: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-primary) 7%, transparent);
+  border-inline-start: 3px solid var(--color-primary);
 }
-.hadith-explain summary {
-  cursor: pointer;
-  font-weight: 600;
+.hadith-explain-label {
+  font-size: 0.95rem;
+  font-weight: 700;
   color: var(--color-primary);
-  display: inline-flex;
+  display: flex;
   gap: var(--space-xs);
   align-items: center;
-}
-.hadith-explain h3 {
-  font-size: 1rem;
-  margin: var(--space-sm) 0 var(--space-xs);
+  margin: 0 0 var(--space-xs);
 }
 .hadith-explain h4 {
   font-size: 0.95rem;
@@ -3438,6 +3437,26 @@ dd {
 .hadith-explain-text,
 .hadith-explain li {
   line-height: 1.9;
+}
+.hadith-explain-text {
+  margin: 0;
+  white-space: pre-line;
+}
+.hadith-explain:not(.is-open) .hadith-explain-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.hadith-explain-more {
+  margin: var(--space-xs) 0 0;
+  font-weight: 600;
+}
+.hadith-explained-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
 }
 
 /* Surah page: about the surah and reasons for revelation (as in the app) */
