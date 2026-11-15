@@ -782,5 +782,6 @@
   "hajj.kind.sub": "The steps in order, one at a time",
   "hajj.hub.umrahSub": "Umrah one step at a time",
   "hajj.hub.ihram": "Miqat and ihram rules",
-  "adhkar.reportTitle": "Mistake in a dhikr"
+  "adhkar.reportTitle": "Mistake in a dhikr",
+  "reader.hideTafsir": "Hide tafsir"
 }

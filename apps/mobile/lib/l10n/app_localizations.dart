@@ -3662,6 +3662,12 @@ abstract class AppLocalizations {
   /// **'How to use'**
   String get readerHelpTitle;
 
+  /// shared key "reader.hideTafsir"
+  ///
+  /// In en, this message translates to:
+  /// **'Hide tafsir'**
+  String get readerHideTafsir;
+
   /// shared key "reader.hintClose"
   ///
   /// In en, this message translates to:

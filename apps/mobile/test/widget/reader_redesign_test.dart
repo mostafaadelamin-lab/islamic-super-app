@@ -107,10 +107,16 @@ void main() {
     await tester.pumpAndSettle();
     expect(app.services.settings.tafsirWithRecitation, isTrue);
     expect(find.byKey(const Key('splitView')), findsOneWidget);
-    expect(tester.widget<Text>(find.byKey(const Key('recitationTafsirText'))).data, source(2, 7));
+    // Two halves (owner 2026-11-15): the whole page and the page's tafsir, following the recitation.
+    expect(find.byKey(const Key('mushafPage-3')), findsOneWidget);
+    String? tafsirOf(int s, int a) =>
+        tester.widget<Text>(find.descendant(of: find.byKey(Key('listTafsir-$s-$a')), matching: find.byType(Text))).data;
+    expect(tafsirOf(2, 7), source(2, 7));
+    expect(app.services.recitation.currentRef, const AyahRef(2, 7));
     audio.finish();
     await tester.pumpAndSettle();
-    expect(tester.widget<Text>(find.byKey(const Key('recitationTafsirText'))).data, source(2, 8));
+    expect(app.services.recitation.currentRef, const AyahRef(2, 8));
+    expect(tafsirOf(2, 8), source(2, 8));
   });
 
   testWidgets('"listen with tafsir" on the player starts the page when nothing plays', (tester) async {

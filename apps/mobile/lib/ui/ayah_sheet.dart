@@ -7,6 +7,7 @@ import '../domain/bookmark.dart';
 import '../domain/quran.dart';
 import '../domain/tafsir.dart';
 import '../domain/text.dart';
+import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import 'ayah_image_screen.dart';
 import 'l10n_ext.dart';
@@ -83,8 +84,12 @@ class AyahSheet extends StatefulWidget {
     this.onAyahChanged,
     this.readAsList = true,
     this.heightFactor = 0.85,
+    this.onClose,
   });
   final AyahRef initial;
+
+  /// In the reader's bottom strip (owner 2026-11-15): a close button in the title row.
+  final VoidCallback? onClose;
 
   /// The most of the screen height the sheet may take.
   final double heightFactor;
@@ -104,6 +109,13 @@ class AyahSheetState extends State<AyahSheet> {
 
   /// The ayah the sheet is showing.
   AyahRef get ref => _ref;
+
+  @override
+  void didUpdateWidget(AyahSheet oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Another ayah tapped on the page while the actions are open.
+    if (widget.initial != oldWidget.initial && widget.initial != _ref) _ref = widget.initial;
+  }
 
   void _step(int delta) {
     final next = stepAyah(context.services.content.quran, _ref, delta);
@@ -151,6 +163,13 @@ class AyahSheetState extends State<AyahSheet> {
                     icon: const RIcon(RIcons.chevronForward),
                     onPressed: canNext ? () => _step(1) : null,
                   ),
+                  if (widget.onClose != null)
+                    IconButton(
+                      key: const Key('ayahSheetClose'),
+                      tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+                      icon: const Icon(Icons.close),
+                      onPressed: widget.onClose,
+                    ),
                 ],
               ),
             ),
@@ -158,6 +177,7 @@ class AyahSheetState extends State<AyahSheet> {
               ref: _ref,
               readAsList: widget.readAsList,
               tafsirOpen: _showTafsir,
+              onClose: widget.onClose,
               onTafsir: () => setState(() {
                 _showTafsir = !_showTafsir;
                 // Loaded only when first opened.
@@ -268,8 +288,18 @@ class _TafsirCard extends StatelessWidget {
 /// Simple ayah menu (owner, 2026-11-15): one row of five buttons (listen, tafsir, mark, copy,
 /// share); the ways to listen open under it only when "listen" is tapped.
 class _Actions extends StatefulWidget {
-  const _Actions({required this.ref, required this.readAsList, required this.tafsirOpen, required this.onTafsir});
+  const _Actions({
+    required this.ref,
+    required this.readAsList,
+    required this.tafsirOpen,
+    required this.onTafsir,
+    this.onClose,
+  });
   final AyahRef ref;
+
+  /// Set when the actions sit in the reader's bottom strip: there is no sheet to pop, and the
+  /// buttons look like the bar under them.
+  final VoidCallback? onClose;
   final bool readAsList;
   final bool tafsirOpen;
   final VoidCallback onTafsir;
@@ -291,14 +321,22 @@ class _ActionsState extends State<_Actions> {
       listenable: s.bookmarks,
       builder: (context, _) {
         final marked = s.bookmarks.isBookmarked(ref);
+        final inline = widget.onClose != null;
+        // In the strip the sheet stays; as a sheet it closes after an action.
+        void closeSheet(NavigatorState nav) {
+          if (!inline) nav.pop();
+        }
+
         Widget action(String key, RIconData icon, String label, VoidCallback onPressed, {bool on = false}) => Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 2),
             child: Material(
-              color: on ? scheme.secondaryContainer : scheme.surfaceContainerLow,
+              color: on
+                  ? (inline ? AppTheme.of(context, 'accentSoft') : scheme.secondaryContainer)
+                  : (inline ? Colors.transparent : scheme.surfaceContainerLow),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-                side: BorderSide(color: on ? scheme.primary : scheme.outlineVariant),
+                side: inline ? BorderSide.none : BorderSide(color: on ? scheme.primary : scheme.outlineVariant),
               ),
               child: InkWell(
                 key: Key(key),
@@ -315,7 +353,9 @@ class _ActionsState extends State<_Actions> {
                         label,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.labelSmall,
+                        style: inline
+                            ? TextStyle(fontSize: 12, color: scheme.primary)
+                            : Theme.of(context).textTheme.labelSmall,
                       ),
                     ],
                   ),
@@ -335,7 +375,11 @@ class _ActionsState extends State<_Actions> {
           child: Text(label),
         );
         void play(AyahRef from, PlayScope scope, {bool tafsir = false}) {
-          Navigator.of(context).pop();
+          if (inline) {
+            widget.onClose!();
+          } else {
+            Navigator.of(context).pop();
+          }
           s.settings.setTafsirWithRecitation(tafsir);
           s.recitation.playFrom(from, scope: scope);
         }
@@ -365,7 +409,7 @@ class _ActionsState extends State<_Actions> {
                     } else {
                       await s.bookmarks.add(ref);
                     }
-                    nav.pop();
+                    closeSheet(nav);
                     messenger.showSnackBar(
                       SnackBar(content: Text(marked ? l.quranBookmarkRemoved : l.quranBookmarked)),
                     );
@@ -378,12 +422,12 @@ class _ActionsState extends State<_Actions> {
                     await Clipboard.setData(
                       ClipboardData(text: '${q.text(ref)} ﴿${q.surah(ref.surah).nameAr}: ${toArabicIndic(ref.ayah)}﴾'),
                     );
-                    nav.pop();
+                    closeSheet(nav);
                     messenger.showSnackBar(SnackBar(content: Text(l.mushafCopied)));
                   }),
                   action('ayahShareImage', RIcons.share, l.ayahShare, () {
                     final nav = Navigator.of(context);
-                    nav.pop();
+                    closeSheet(nav);
                     nav.push(MaterialPageRoute<void>(builder: (_) => AyahImageScreen(ayah: ref)));
                   }),
                 ],

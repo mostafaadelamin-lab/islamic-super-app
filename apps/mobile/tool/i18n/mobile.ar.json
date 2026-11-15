@@ -782,5 +782,6 @@
   "hajj.kind.sub": "الخطوات بالترتيب، خطوة خطوة",
   "hajj.hub.umrahSub": "خطوات العمرة خطوة خطوة",
   "hajj.hub.ihram": "المواقيت ومحظورات الإحرام",
-  "adhkar.reportTitle": "خطأ في ذكر"
+  "adhkar.reportTitle": "خطأ في ذكر",
+  "reader.hideTafsir": "إخفاء التفسير"
 }

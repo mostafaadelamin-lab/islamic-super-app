@@ -2031,6 +2031,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerHelpTitle => 'How to use';
 
   @override
+  String get readerHideTafsir => 'Hide tafsir';
+
+  @override
   String get readerHintClose => 'Got it';
 
   @override

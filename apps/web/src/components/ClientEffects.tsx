@@ -13,6 +13,28 @@ export function applyPrefs(p: Preferences, root: HTMLElement = document.document
   if (p.palette === DEFAULT_PALETTE) root.removeAttribute("data-palette");
   else root.setAttribute("data-palette", p.palette);
   root.style.setProperty("--quran-size", `${p.fontSize}px`);
+  syncThemeColor(root);
+}
+
+/**
+ * The browser bar and the title bar of the installed app (Windows / Android PWA) take the chosen
+ * style's colour (owner 2026-11-15), not the fixed default from the page head.
+ */
+export function syncThemeColor(root: HTMLElement = document.documentElement): void {
+  const css = getComputedStyle(root);
+  const dark =
+    root.getAttribute("data-theme") === "dark" ||
+    (root.getAttribute("data-theme") !== "light" &&
+      window.matchMedia?.("(prefers-color-scheme: dark)").matches);
+  const color = (css.getPropertyValue(dark ? "--color-bg" : "--color-primary") || "").trim();
+  if (!color) return;
+  const metas = [...document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]')];
+  const meta =
+    metas[0] ??
+    document.head.appendChild(Object.assign(document.createElement("meta"), { name: "theme-color" }));
+  metas.slice(1).forEach((m) => m.remove());
+  meta.removeAttribute("media");
+  meta.content = color;
 }
 
 /** Applies persisted preferences, remembers the current locale and registers the service worker. */

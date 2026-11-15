@@ -59,19 +59,29 @@ void main() {
     expect(find.byKey(const Key('ayahCopy')), findsOneWidget);
   });
 
-  testWidgets('tablet sideways: player and tools beside the page; the ayah opens in a side panel', (tester) async {
+  testWidgets('tablet sideways: one strip under the page; the ayah actions open in it', (tester) async {
     const size = Size(1280, 800);
     await pumpApp(tester, size: size);
     await pushScreen(tester, const PageReaderScreen(initialPage: 42));
-    expect(find.byKey(const Key('readerSidePanel')), findsOneWidget);
+    // owner 2026-11-15: the page has the width, everything else is one strip across the bottom
+    final strip = tester.getRect(find.byKey(const Key('readerStrip')));
+    expect(strip.width, closeTo(size.width, 0.5));
     final page = tester.getRect(find.byKey(const Key('mushafPage-42')));
-    final controls = tester.getRect(find.byKey(const Key('mushafControls')));
-    expect(page.overlaps(controls), isFalse);
+    expect(page.bottom, lessThanOrEqualTo(strip.top + 0.5));
+    final player = tester.getRect(find.byKey(const Key('miniPlayer')));
+    final bar = tester.getRect(find.byKey(const Key('mushafControls')));
+    expect((player.center.dy - bar.center.dy).abs(), lessThan(60), reason: 'player and bar side by side');
     await tester.tap(find.byKey(const Key('pageAyah-2-255')));
     await tester.pumpAndSettle();
-    final panel = tester.getRect(find.byKey(const Key('ayahSidePanel')));
-    expect(panel.width, lessThanOrEqualTo(400));
-    expect(panel.left, lessThan(size.width / 2), reason: 'Arabic: the panel is on the left, the page on the right');
+    final actions = tester.getRect(find.byKey(const Key('stripAyahActions')));
+    expect(actions.top, greaterThanOrEqualTo(page.top));
+    expect(
+      find.descendant(of: find.byKey(const Key('readerStrip')), matching: find.byKey(const Key('ayahListen'))),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const Key('ayahSheetClose')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('stripAyahActions')), findsNothing);
   });
 
   testWidgets('adhkar pause the recitation; the Mushaf reopens at the ayah it stopped at', (tester) async {

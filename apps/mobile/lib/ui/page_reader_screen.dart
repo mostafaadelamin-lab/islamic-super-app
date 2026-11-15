@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../app_services.dart';
 import '../data/recitation.dart';
 import '../data/settings.dart';
+import '../domain/audio_queue.dart';
 import '../domain/page_khatma.dart';
 import '../domain/quran.dart';
 import '../theme/app_theme.dart';
@@ -191,6 +193,8 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   Future<void> _onAyahTap(AyahRef r) async {
     setState(() => _selected = r);
     unawaited(context.services.settings.setLastRead(r));
+    // On the Mushaf page the actions open in the bottom strip with the other bars (owner 2026-11-15).
+    if (_tab == ReaderTab.mushaf) return;
     await showAyahSheet(
       context,
       r,
@@ -317,39 +321,65 @@ class PageReaderScreenState extends State<PageReaderScreen> {
             if (full) const SizedBox.shrink(key: Key('readerFullScreen')),
             Expanded(
               key: const Key('readerBody'),
-              child: _withSidePanel(
-                side: !full && ayahSidePanel(size),
-                child: Stack(
-                  children: [
-                    Positioned.fill(child: _pages(context)),
-                    if (full) ..._turnArrows(context),
-                    if (full && _hint) _hintBanner(context),
-                  ],
-                ),
+              child: Stack(
+                children: [
+                  Positioned.fill(child: _pages(context)),
+                  if (full) ..._turnArrows(context),
+                  if (full && _hint) _hintBanner(context),
+                ],
               ),
             ),
-            if (!full && !ayahSidePanel(size)) ..._controlsList(),
+            if (!full) _controlsStrip(context, wide: ayahSidePanel(size)),
           ],
         ),
       ),
     );
   }
 
-  List<Widget> _controlsList() => [ReaderPlayerCard(page: _page), _sliderRow(context), _bottomBar(context)];
-
-  /// Wide screens (tablet sideways): the player, slider and bar in a column beside the page,
-  /// so showing them never shrinks or covers it (owner 2026-11-14).
-  Widget _withSidePanel({required bool side, required Widget child}) {
-    if (!side) return child;
-    return Row(
-      key: const Key('readerSidePanel'),
-      children: [
-        Expanded(child: child),
-        SizedBox(
-          width: ayahPanelWidth,
-          child: Column(mainAxisAlignment: MainAxisAlignment.end, children: _controlsList()),
-        ),
-      ],
+  /// One strip across the bottom (owner 2026-11-15): the selected ayah's actions, the page slider,
+  /// the player and index / bookmarks / khatma / search. Wide screens put the player and the bar
+  /// side by side so the page keeps the height.
+  Widget _controlsStrip(BuildContext context, {required bool wide}) {
+    final scheme = Theme.of(context).colorScheme;
+    final sel = _selected;
+    final actions = sel != null && _tab == ReaderTab.mushaf
+        ? AyahSheet(
+            key: const Key('stripAyahActions'),
+            initial: sel,
+            heightFactor: 0.4,
+            onClose: () => setState(() => _selected = null),
+            onAyahChanged: (next) {
+              setState(() => _selected = next);
+              final p = context.services.content.quran.pageOf(next);
+              if (p != _page) _jump(p);
+            },
+          )
+        : null;
+    return Material(
+      key: const Key('readerStrip'),
+      color: scheme.surface,
+      elevation: 8,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (actions != null) ...[actions, Divider(height: 1, color: scheme.outlineVariant)],
+          if (wide) ...[
+            _sliderRow(context),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(child: ReaderPlayerCard(page: _page, flat: true)),
+                SizedBox(width: ayahPanelWidth, child: _bottomBar(context)),
+              ],
+            ),
+          ] else ...[
+            ReaderPlayerCard(page: _page, flat: true),
+            _sliderRow(context),
+            _bottomBar(context),
+          ],
+        ],
+      ),
     );
   }
 
@@ -455,7 +485,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
       listenable: Listenable.merge([s.recitation, s.settings]),
       builder: (context, _) {
         final split = _tab == ReaderTab.mushaf && s.settings.tafsirWithRecitation && s.recitation.isActive;
-        if (split) return const SplitRecitationView();
+        if (split) return _duo(context);
         final controller = _tab == ReaderTab.mushaf ? _pageController() : _controller;
         return switch (_tab) {
           ReaderTab.mushaf => PageView.builder(
@@ -504,6 +534,94 @@ class PageReaderScreenState extends State<PageReaderScreen> {
           ),
         };
       },
+    );
+  }
+
+  /// "Listen with tafsir" (owner 2026-11-15): the whole Mushaf page and the page's tafsir in two
+  /// halves, both following the recitation: side by side on wide screens, page on top on phones
+  /// (the page fills the width there and scrolls to the recited ayah).
+  Widget _duo(BuildContext context) {
+    final s = context.services;
+    final l = context.l10n;
+    final scheme = Theme.of(context).colorScheme;
+    final wide = ayahSidePanel(MediaQuery.sizeOf(context));
+    final playing = s.recitation.currentRef;
+    final pageOfPlaying = playing == null ? _page : s.content.quran.pageOf(playing);
+    if (pageOfPlaying != _page) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _setPage(pageOfPlaying);
+      });
+    }
+    final page = MushafPageView(page: _page, playing: playing, selected: _selected, onAyahTap: _onAyahTap);
+    final tafsir = Container(
+      key: const Key('duoTafsir'),
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+        border: Border.all(color: scheme.outlineVariant),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(DesignTokens.spaceMd, 2, DesignTokens.spaceXs, 2),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l.readerListenWithTafsir,
+                    style: TextStyle(color: scheme.primary, fontWeight: FontWeight.w700),
+                  ),
+                ),
+                TextButton(
+                  key: const Key('duoHideTafsir'),
+                  onPressed: () => unawaited(s.settings.setTafsirWithRecitation(false)),
+                  child: Text(l.readerHideTafsir),
+                ),
+              ],
+            ),
+          ),
+          Divider(height: 1, color: scheme.outlineVariant),
+          Expanded(
+            child: PageAyahList(
+              key: ValueKey('duo-$_page'),
+              page: _page,
+              withTafsir: true,
+              fontSize: math.min(s.settings.quranFontSize, 22),
+              onAyahTap: (r) => unawaited(s.recitation.playFrom(r, scope: PlayScope.surah)),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (wide) {
+      return Padding(
+        key: const Key('splitView'),
+        padding: const EdgeInsets.all(DesignTokens.spaceSm),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(child: tafsir),
+            const SizedBox(width: DesignTokens.spaceSm),
+            Expanded(child: page),
+          ],
+        ),
+      );
+    }
+    return Padding(
+      key: const Key('splitView'),
+      padding: const EdgeInsets.fromLTRB(DesignTokens.spaceSm, 0, DesignTokens.spaceSm, DesignTokens.spaceXs),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: _DuoPage(page: _page, playing: playing, child: page),
+          ),
+          const SizedBox(height: DesignTokens.spaceXs),
+          Expanded(child: tafsir),
+        ],
+      ),
     );
   }
 
@@ -627,7 +745,10 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                 if (p != null && mounted) _jump(p);
               }),
               item('barBookmarks', RIcons.bookmarks, l.readerBookmarks, () => push(const BookmarksScreen())),
-              item('barKhatma', RIcons.quran, l.readerKhatma, () => unawaited(showKhatmaSheet(context, onGo: _jump))),
+              item('barKhatma', RIcons.quran, l.readerKhatma, () {
+                setState(() => _selected = null); // one panel at a time
+                unawaited(showKhatmaSheet(context, onGo: _jump));
+              }),
               item('barSearch', RIcons.search, l.readerSearch, () => push(const SearchScreen())),
             ],
           ),
@@ -749,4 +870,58 @@ class _ZoomedPageState extends State<ZoomedPage> {
       },
     );
   }
+}
+
+/// The Mushaf page in the top half on a phone: as wide as the screen (readable size) and scrolled
+/// so the recited ayah stays in view.
+class _DuoPage extends StatefulWidget {
+  const _DuoPage({required this.page, required this.playing, required this.child});
+  final int page;
+  final AyahRef? playing;
+  final Widget child;
+
+  /// Height of a page laid out at the screen's width (15 lines plus the header and footer).
+  static const heightPerWidth = 1.5;
+
+  @override
+  State<_DuoPage> createState() => _DuoPageState();
+}
+
+class _DuoPageState extends State<_DuoPage> {
+  final _scroll = ScrollController();
+
+  @override
+  void didUpdateWidget(_DuoPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.playing != oldWidget.playing || widget.page != oldWidget.page) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _follow());
+    }
+  }
+
+  void _follow() {
+    final r = widget.playing;
+    if (!mounted || r == null || !_scroll.hasClients) return;
+    final ctx = context;
+    final refs = ctx.services.content.quran.ayahsOnPage(widget.page);
+    final i = refs.indexOf(r);
+    if (i < 0) return;
+    final max = _scroll.position.maxScrollExtent;
+    final target = (max * i / math.max(1, refs.length - 1)).clamp(0.0, max);
+    unawaited(_scroll.animateTo(target, duration: const Duration(milliseconds: 300), curve: Curves.easeOut));
+  }
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, c) => SingleChildScrollView(
+      key: const Key('duoPage'),
+      controller: _scroll,
+      child: SizedBox(height: math.max(c.maxHeight, c.maxWidth * _DuoPage.heightPerWidth), child: widget.child),
+    ),
+  );
 }

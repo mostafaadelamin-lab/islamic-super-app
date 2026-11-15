@@ -85,8 +85,11 @@ class ReaderTabs extends StatelessWidget {
 /// tafsir", previous / play-pause / next, repeat count and stop. While nothing
 /// is queued, play starts the current page.
 class ReaderPlayerCard extends StatelessWidget {
-  const ReaderPlayerCard({super.key, required this.page});
+  const ReaderPlayerCard({super.key, required this.page, this.flat = false});
   final int page;
+
+  /// Inside the reader's bottom strip (owner 2026-11-15): no card of its own.
+  final bool flat;
 
   @override
   Widget build(BuildContext context) {
@@ -128,14 +131,18 @@ class ReaderPlayerCard extends StatelessWidget {
         final compact = MediaQuery.sizeOf(context).height < 700;
         return Container(
           key: const Key('miniPlayer'),
-          margin: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceXs),
+          margin: flat
+              ? EdgeInsets.zero
+              : const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceXs),
           padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, DesignTokens.spaceXs, DesignTokens.spaceMd, 0),
-          decoration: BoxDecoration(
-            color: scheme.surface,
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: scheme.outline),
-            boxShadow: const [BoxShadow(color: Color(0x24000000), blurRadius: 18, offset: Offset(0, 4))],
-          ),
+          decoration: flat
+              ? null
+              : BoxDecoration(
+                  color: scheme.surface,
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: scheme.outline),
+                  boxShadow: const [BoxShadow(color: Color(0x24000000), blurRadius: 18, offset: Offset(0, 4))],
+                ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -383,8 +390,18 @@ class AyahTextBlock extends StatelessWidget {
 /// box under each when [withTafsir]). Tapping an ayah calls [onAyahTap]; the
 /// recited ayah is highlighted and kept in view.
 class PageAyahList extends StatefulWidget {
-  const PageAyahList({super.key, required this.page, required this.withTafsir, required this.onAyahTap, this.selected});
+  const PageAyahList({
+    super.key,
+    required this.page,
+    required this.withTafsir,
+    required this.onAyahTap,
+    this.selected,
+    this.fontSize,
+  });
   final int page;
+
+  /// Quran text size; the reader's setting when null (smaller beside the page in "listen with tafsir").
+  final double? fontSize;
   final bool withTafsir;
   final ValueChanged<AyahRef> onAyahTap;
   final AyahRef? selected;
@@ -426,12 +443,14 @@ class _PageAyahListState extends State<PageAyahList> {
       builder: (context, _) {
         final playing = s.recitation.currentRef;
         _follow(playing);
-        final size = s.settings.quranFontSize;
+        final size = widget.fontSize ?? s.settings.quranFontSize;
         return FutureBuilder<TafsirContent>(
           future: _tafsir,
           initialData: s.tafsir.loaded,
           builder: (context, snap) => ListView.builder(
             key: Key(widget.withTafsir ? 'tafsirList' : 'ayatList'),
+            // A page has few ayahs: build them all, so the recited one can always be scrolled to.
+            cacheExtent: 100000,
             padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceLg),
             itemCount: refs.length,
             itemBuilder: (context, i) {
@@ -500,266 +519,170 @@ class _PageAyahListState extends State<PageAyahList> {
   }
 }
 
-/// "Listen with tafsir": the screen in two halves — the ayah being recited
-/// (highlighted) and its Tafsir al-Muyassar under it. Follows the recitation.
-class SplitRecitationView extends StatefulWidget {
-  const SplitRecitationView({super.key});
-
-  @override
-  State<SplitRecitationView> createState() => _SplitRecitationViewState();
-}
-
-class _SplitRecitationViewState extends State<SplitRecitationView> {
-  Future<TafsirContent>? _tafsir;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _tafsir ??= context.services.tafsir.load();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final s = context.services;
-    final l = context.l10n;
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-    return ListenableBuilder(
-      listenable: s.recitation,
-      builder: (context, _) {
-        final item = s.recitation.current;
-        final basmala = item?.isBasmala ?? false;
-        final ref = item == null || basmala ? null : item.ref;
-        final size = s.settings.quranFontSize + 4;
-        final hl = AppTheme.of(context, 'accentSoft');
-        final label = ref != null ? ayahLabel(context, ref) : (basmala ? l.readerBasmalaNow : '');
-        return Padding(
-          key: const Key('splitView'),
-          padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceSm),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Container(
-                  key: const Key('splitAyah'),
-                  decoration: BoxDecoration(
-                    color: AppTheme.of(context, 'paper'),
-                    borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-                    border: Border.all(color: scheme.primary, width: 2),
+/// "الختمة": progress of the current khatma and where to continue. A centred panel over the dimmed
+/// page, alone on screen (owner 2026-11-15): a progress ring, pages read / left, the start date,
+/// one big "continue" button.
+Future<void> showKhatmaSheet(BuildContext context, {required ValueChanged<int> onGo}) => showDialog<void>(
+  context: context,
+  builder: (dialogContext) {
+    final s = dialogContext.services;
+    return Dialog(
+      insetPadding: const EdgeInsets.all(DesignTokens.spaceMd),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 440),
+        child: SingleChildScrollView(
+          child: ListenableBuilder(
+            listenable: s.settings,
+            builder: (context, _) {
+              final l = context.l10n;
+              final theme = Theme.of(context);
+              final scheme = theme.colorScheme;
+              final k = s.settings.khatma;
+              final children = <Widget>[
+                Row(
+                  children: [
+                    RIcon(RIcons.quran, color: scheme.primary),
+                    const SizedBox(width: DesignTokens.spaceXs),
+                    Expanded(
+                      child: Text(
+                        l.readerKhatmaTitle,
+                        style: theme.textTheme.titleLarge?.copyWith(color: scheme.primary, fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                    IconButton(
+                      key: const Key('khatmaClose'),
+                      tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                ),
+              ];
+              if (k == null) {
+                children.addAll([
+                  const SizedBox(height: DesignTokens.spaceSm),
+                  Text(l.readerKhatmaNone),
+                  const SizedBox(height: DesignTokens.spaceMd),
+                  FilledButton(
+                    key: const Key('khatmaStart'),
+                    style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+                    onPressed: () async {
+                      await s.settings.startKhatma(DateTime.now());
+                      if (context.mounted) Navigator.of(context).pop();
+                      onGo(1);
+                    },
+                    child: Text(l.readerKhatmaStart),
                   ),
-                  padding: const EdgeInsets.fromLTRB(
-                    DesignTokens.spaceMd,
-                    DesignTokens.spaceXs,
-                    DesignTokens.spaceMd,
-                    0,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                ]);
+              } else {
+                final next = k.next;
+                final date = MaterialLocalizations.of(context).formatMediumDate(k.startedAt);
+                children.addAll([
+                  const SizedBox(height: DesignTokens.spaceMd),
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Text(l.readerSplitTitle, style: theme.textTheme.labelLarge?.copyWith(color: scheme.primary)),
-                          const SizedBox(width: DesignTokens.spaceSm),
-                          Expanded(
-                            child: Text(
-                              label,
-                              key: const Key('splitAyahLabel'),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                      SizedBox(
+                        key: const Key('khatmaRing'),
+                        width: 96,
+                        height: 96,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            CircularProgressIndicator(
+                              value: k.done / k.pageCount,
+                              strokeWidth: 12,
+                              backgroundColor: scheme.surfaceContainerHighest,
+                              color: scheme.primary,
+                            ),
+                            Center(
+                              child: Text(
+                                '${context.num(k.percent)}٪',
+                                style: theme.textTheme.titleLarge?.copyWith(
+                                  color: scheme.primary,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: DesignTokens.spaceLg),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              l.readerKhatmaProgress(context.num(k.done), context.num(k.percent)),
+                              key: const Key('khatmaProgress'),
+                              style: const TextStyle(fontWeight: FontWeight.w700),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              next == null ? l.readerKhatmaDone : l.readerKhatmaLeft(context.num(k.left)),
                               style: theme.textTheme.bodySmall,
                             ),
-                          ),
-                          TextButton(
-                            key: const Key('splitShowPage'),
-                            onPressed: () => s.settings.setTafsirWithRecitation(false),
-                            child: Text(l.readerShowPage),
-                          ),
-                        ],
-                      ),
-                      Expanded(
-                        child: SingleChildScrollView(
-                          key: ValueKey('splitAyahScroll-$ref'),
-                          child: Center(
-                            child: ref != null
-                                ? AyahTextBlock(key: const Key('splitAyahText'), ref: ref, size: size, highlight: hl)
-                                : (basmala
-                                      ? Text(
-                                          s.content.renderMap.forDisplay(s.content.quran.text(const AyahRef(1, 1))),
-                                          textDirection: TextDirection.rtl,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontFamily: DesignTokens.fontQuran,
-                                            fontSize: size,
-                                            height: 2,
-                                            backgroundColor: hl,
-                                            color: AppTheme.of(context, 'paperInk'),
-                                          ),
-                                        )
-                                      : const SizedBox.shrink()),
-                          ),
+                            Text(l.readerKhatmaSince(date), style: theme.textTheme.bodySmall),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                ),
-              ),
-              const SizedBox(height: DesignTokens.spaceSm),
-              Expanded(
-                child: Container(
-                  key: const Key('recitationTafsir'),
-                  decoration: BoxDecoration(
-                    color: scheme.surfaceContainer,
-                    borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-                    border: Border.all(color: scheme.outlineVariant),
-                  ),
-                  padding: const EdgeInsets.all(DesignTokens.spaceMd),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        l.tafsirTitle,
-                        key: const Key('recitationTafsirTitle'),
-                        style: theme.textTheme.titleSmall?.copyWith(color: scheme.primary, fontWeight: FontWeight.w600),
-                      ),
-                      Text(l.tafsirSource, style: theme.textTheme.bodySmall),
-                      if (!context.isArabic)
-                        Text(
-                          l.tafsirArabicOnly,
-                          style: theme.textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
-                        ),
-                      const SizedBox(height: DesignTokens.spaceXs),
-                      Expanded(
-                        child: FutureBuilder<TafsirContent>(
-                          future: _tafsir,
-                          initialData: s.tafsir.loaded,
-                          builder: (context, snap) {
-                            if (ref == null) return const SizedBox.shrink();
-                            final text = snap.data?.text(ref.surah, ref.ayah);
-                            if (text == null) {
-                              return Text(
-                                snap.hasError ? l.tafsirError : l.tafsirLoading,
-                                key: const Key('recitationTafsirStatus'),
-                              );
-                            }
-                            return SingleChildScrollView(
-                              key: ValueKey('recitationTafsirScroll-${ref.surah}-${ref.ayah}'),
-                              child: Text(
-                                text,
-                                key: const Key('recitationTafsirText'),
-                                textDirection: TextDirection.rtl,
-                                style: duaStyle(context, size: 17),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-/// "الختمة": progress of the current khatma and where to continue.
-Future<void> showKhatmaSheet(BuildContext context, {required ValueChanged<int> onGo}) => showModalBottomSheet<void>(
-  context: context,
-  builder: (sheetContext) {
-    final s = sheetContext.services;
-    return SafeArea(
-      child: ListenableBuilder(
-        listenable: s.settings,
-        builder: (context, _) {
-          final l = context.l10n;
-          final theme = Theme.of(context);
-          final k = s.settings.khatma;
-          final children = <Widget>[Text(l.readerKhatmaTitle, style: theme.textTheme.titleLarge)];
-          if (k == null) {
-            children.addAll([
-              const SizedBox(height: DesignTokens.spaceSm),
-              Text(l.readerKhatmaNone),
-              const SizedBox(height: DesignTokens.spaceMd),
-              FilledButton(
-                key: const Key('khatmaStart'),
-                onPressed: () async {
-                  await s.settings.startKhatma(DateTime.now());
-                  if (context.mounted) Navigator.of(context).pop();
-                  onGo(1);
-                },
-                child: Text(l.readerKhatmaStart),
-              ),
-            ]);
-          } else {
-            final next = k.next;
-            final date = MaterialLocalizations.of(context).formatMediumDate(k.startedAt);
-            children.addAll([
-              const SizedBox(height: DesignTokens.spaceMd),
-              LinearProgressIndicator(
-                value: k.done / k.pageCount,
-                minHeight: 10,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              const SizedBox(height: DesignTokens.spaceSm),
-              Text(
-                l.readerKhatmaProgress(context.num(k.done), context.num(k.percent)),
-                key: const Key('khatmaProgress'),
-              ),
-              Text(
-                '${next == null ? l.readerKhatmaDone : l.readerKhatmaLeft(context.num(k.left))} · ${l.readerKhatmaSince(date)}',
-                style: theme.textTheme.bodySmall,
-              ),
-              const SizedBox(height: DesignTokens.spaceMd),
-              Wrap(
-                spacing: DesignTokens.spaceSm,
-                children: [
+                  const SizedBox(height: DesignTokens.spaceMd),
                   if (next != null)
                     FilledButton(
                       key: const Key('khatmaContinue'),
+                      style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(48)),
                       onPressed: () {
                         Navigator.of(context).pop();
                         onGo(next);
                       },
                       child: Text(l.readerKhatmaContinue(context.num(next))),
                     ),
-                  OutlinedButton(
-                    key: const Key('khatmaReset'),
-                    onPressed: s.settings.clearKhatma,
-                    child: Text(l.readerKhatmaReset),
+                  Center(
+                    child: TextButton(
+                      key: const Key('khatmaReset'),
+                      onPressed: s.settings.clearKhatma,
+                      child: Text(
+                        l.readerKhatmaReset,
+                        style: TextStyle(color: scheme.outline, decoration: TextDecoration.underline),
+                      ),
+                    ),
                   ),
-                ],
-              ),
-            ]);
-          }
-          children.addAll([
-            const SizedBox(height: DesignTokens.spaceSm),
-            const Divider(),
-            ListTile(
-              key: const Key('khatmaPlanner'),
-              contentPadding: EdgeInsets.zero,
-              leading: const RIcon(RIcons.khatma),
-              title: Text(l.khatmaOpenPlanner),
-              subtitle: Text(l.khatmaOpenPlannerSub),
-              trailing: const RIcon(RIcons.chevronForward),
-              onTap: () {
-                final nav = Navigator.of(context)..pop();
-                nav.push(MaterialPageRoute<void>(builder: (_) => const KhatmaScreen()));
-              },
-            ),
-          ]);
-          return Padding(
-            padding: const EdgeInsets.all(DesignTokens.spaceLg),
-            child: Column(
-              key: const Key('khatmaSheet'),
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: children,
-            ),
-          );
-        },
+                ]);
+              }
+              children.addAll([
+                const Divider(),
+                ListTile(
+                  key: const Key('khatmaPlanner'),
+                  contentPadding: EdgeInsets.zero,
+                  leading: const RIcon(RIcons.khatma),
+                  title: Text(l.khatmaOpenPlanner),
+                  subtitle: Text(l.khatmaOpenPlannerSub),
+                  trailing: const RIcon(RIcons.chevronForward),
+                  onTap: () {
+                    final nav = Navigator.of(context)..pop();
+                    nav.push(MaterialPageRoute<void>(builder: (_) => const KhatmaScreen()));
+                  },
+                ),
+              ]);
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  DesignTokens.spaceLg,
+                  DesignTokens.spaceSm,
+                  DesignTokens.spaceSm,
+                  DesignTokens.spaceMd,
+                ),
+                child: Column(
+                  key: const Key('khatmaSheet'),
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: children,
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   },

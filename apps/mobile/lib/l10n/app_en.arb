@@ -2983,6 +2983,10 @@
   "@readerHelpTitle": {
     "description": "shared key \"reader.helpTitle\""
   },
+  "readerHideTafsir": "Hide tafsir",
+  "@readerHideTafsir": {
+    "description": "shared key \"reader.hideTafsir\""
+  },
   "readerHintClose": "Got it",
   "@readerHintClose": {
     "description": "shared key \"reader.hintClose\""
