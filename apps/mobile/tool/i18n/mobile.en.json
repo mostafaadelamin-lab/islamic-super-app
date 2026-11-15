@@ -775,5 +775,11 @@
   "ayah.onlyThis": "This ayah",
   "ayah.toPageEnd": "To page end",
   "ayah.toSurahEnd": "To surah end",
-  "ayah.withTafsir": "With tafsir"
+  "ayah.withTafsir": "With tafsir",
+  "hajj.kind.tamattu": "Hajj Tamattu'",
+  "hajj.kind.qiran": "Hajj Qiran",
+  "hajj.kind.ifrad": "Hajj Ifrad",
+  "hajj.kind.sub": "The steps in order, one at a time",
+  "hajj.hub.umrahSub": "Umrah one step at a time",
+  "hajj.hub.ihram": "Miqat and ihram rules"
 }

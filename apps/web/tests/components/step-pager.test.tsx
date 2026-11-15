@@ -1,15 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { StepPager, stepFromHash } from "@/components/StepPager";
-import { HajjTypeFlow, typeFromHash } from "@/components/HajjTypeFlow";
-
-const flows = {
-  tamattu: [
-    { title: "الأولى", text: "نص ١" },
-    { title: "الثانية", text: "نص ٢" },
-  ],
-  qiran: [{ title: "قران", text: "نص ق" }],
-  ifrad: [{ title: "إفراد", text: "نص إ" }],
-};
 
 describe("one step at a time (owner 2026-11-15)", () => {
   it("shows only the chosen step, with next / previous", () => {
@@ -33,21 +23,9 @@ describe("one step at a time (owner 2026-11-15)", () => {
     expect(screen.getByTestId("steps-flow-umrah-step-3")).toHaveAttribute("aria-current", "step");
   });
 
-  it("reads #umrah-step-N and #hajj-<type> links", () => {
+  it("reads #umrah-step-N links", () => {
     expect(stepFromHash("#umrah-step-2", "umrah-step", 4)).toBe(1);
     expect(stepFromHash("#umrah-step-9", "umrah-step", 4)).toBeNull();
     expect(stepFromHash("#umrah", "umrah-step", 4)).toBeNull();
-    expect(typeFromHash("#hajj-ifrad")).toBe("ifrad");
-    expect(typeFromHash("#hajj-stage-2")).toBeNull();
-  });
-
-  it("Hajj types: a step shows the guide's words alone; next goes on", () => {
-    render(<HajjTypeFlow locale="ar" flows={flows} source="دليل" />);
-    expect(screen.getByTestId("hajj-step-text")).toHaveTextContent("نص ١");
-    fireEvent.click(screen.getByTestId("step-next-hajj-tamattu"));
-    expect(screen.getByTestId("hajj-step-text")).toHaveTextContent("نص ٢");
-    fireEvent.click(screen.getByTestId("hajj-type-qiran"));
-    expect(screen.getByTestId("hajj-step-text")).toHaveTextContent("نص ق");
-    expect(screen.queryByText("نص ١")).toBeNull();
   });
 });

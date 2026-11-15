@@ -147,37 +147,6 @@ class AppTheme {
     return o?.colors(b)[name] ?? token(b, name);
   }
 
-  /// Mushaf reader colours (owner's reference, 2026-11-13): cream paper, brown frame and ornaments, black text.
-  static const mushafLight = <String, Color>{
-    'bg': Color(0xFFF6EFE0),
-    'surface': Color(0xFFFFFAF1),
-    'surface2': Color(0xFFF6EFE0),
-    'ink': Color(0xFF2F2418),
-    'muted': Color(0xFF7A6750),
-    'line': Color(0xFFE3D3B5),
-    'primary': Color(0xFF8A5A2B),
-    'onPrimary': Color(0xFFFFFFFF),
-    'accent': Color(0xFFB98A4E),
-    'accentSoft': Color(0xFFEFE3CB),
-    'verseHighlight': Color(0xFFF0E3C8),
-    'paper': Color(0xFFFBF6EA),
-    'paperInk': Color(0xFF141414),
-    'frame': Color(0xFFA8773E),
-  };
-  static const mushafDark = <String, Color>{
-    'bg': Color(0xFF15110D),
-    'surface': Color(0xFF201A14),
-    'surface2': Color(0xFF1A1510),
-    'line': Color(0xFF3A2F22),
-    'primary': Color(0xFFD2A86A),
-    'onPrimary': Color(0xFF15110D),
-    'accentSoft': Color(0xFF3A2D1A),
-    'verseHighlight': Color(0xFF3A2D1A),
-    'paper': Color(0xFF1C1712),
-    'paperInk': Color(0xFFECE3D0),
-    'frame': Color(0xFF9C7A45),
-  };
-
   /// Text style for Quran text (Amiri Quran) at the user's chosen size.
   static TextStyle quran(BuildContext context, double size) => TextStyle(
     fontFamily: DesignTokens.fontQuran,
@@ -199,22 +168,12 @@ class TokenOverrides extends InheritedWidget {
   bool updateShouldNotify(TokenOverrides old) => old.light != light || old.dark != dark;
 }
 
-/// The Mushaf reader's colours: a theme and token overrides for everything below it.
+/// The Mushaf reader's colours: since 2026-11-15 (owner) the page and its controls follow the chosen colour
+/// style, whose tokens carry the paper, ink and frame colours, so nothing is replaced here any more.
 class MushafColors extends StatelessWidget {
   const MushafColors({super.key, required this.child});
   final Widget child;
 
   @override
-  Widget build(BuildContext context) {
-    final b = Theme.of(context).brightness;
-    final o = b == Brightness.dark ? AppTheme.mushafDark : AppTheme.mushafLight;
-    return TokenOverrides(
-      light: AppTheme.mushafLight,
-      dark: AppTheme.mushafDark,
-      child: Theme(
-        data: AppTheme.build(b, overrides: o),
-        child: child,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => child;
 }

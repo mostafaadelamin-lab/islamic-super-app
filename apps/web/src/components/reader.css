@@ -662,58 +662,10 @@ body:has(.rd) .app-footer {
   scroll-margin-bottom: calc(var(--rd-dock-h, 220px) + var(--space-md));
 }
 
-/* ---- Mushaf colours (owner's reference, 2026-11-13): cream paper, brown frame and ornaments, black text ---- */
-:root:not([data-theme="dark"]) .rd {
-  --color-bg: #f6efe0;
-  --color-surface: #fffaf1;
-  --color-surface-2: #f2e7d2;
-  --color-ink: #2f2418;
-  --color-muted: #7a6750;
-  --color-line: #e3d3b5;
-  --color-primary: #8a5a2b;
-  --color-on-primary: #ffffff;
-  --color-accent: #b98a4e;
-  --color-accent-soft: #efe3cb;
-  --color-verse-highlight: #f0e3c8;
-  --color-paper: #fbf6ea;
-  --color-paper-ink: #141414;
-  --color-frame: #a8773e;
-  --primary-deep: #6b4420;
-  --marker-ink: #8a5a2b;
-  --hl-selected: rgb(138 90 43 / 16%);
-  --hl-playing: rgb(185 138 78 / 30%);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .rd {
-    --color-bg: #15110d;
-    --color-surface: #201a14;
-    --color-surface-2: #2a2219;
-    --color-line: #3a2f22;
-    --color-primary: #d2a86a;
-    --color-on-primary: #15110d;
-    --color-paper: #1c1712;
-    --color-paper-ink: #ece3d0;
-    --color-frame: #9c7a45;
-    --marker-ink: #d2a86a;
-  }
-}
-:root[data-theme="dark"] .rd {
-  --color-bg: #15110d;
-  --color-surface: #201a14;
-  --color-surface-2: #2a2219;
-  --color-line: #3a2f22;
-  --color-primary: #d2a86a;
-  --color-on-primary: #15110d;
-  --color-paper: #1c1712;
-  --color-paper-ink: #ece3d0;
-  --color-frame: #9c7a45;
-  --marker-ink: #d2a86a;
-}
+/* ---- Mushaf colours: the page and its controls follow the chosen colour style (owner 2026-11-15);
+   paper, ink and frame come from the style's tokens ---- */
 body:has(.rd) {
   background: var(--color-paper);
-}
-:root:not([data-theme="dark"]) body:has(.rd) {
-  background: #fbf6ea;
 }
 
 /* ---- Full screen: only the page; one tap brings the controls back ---- */

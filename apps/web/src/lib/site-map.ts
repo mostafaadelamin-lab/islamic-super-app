@@ -74,32 +74,32 @@ export const SITE_GROUPS: readonly SiteGroup[] = [
 const EXTRA: Readonly<Record<string, Section & { page: string; hash: string }>> = {
   "hajj-umrah": {
     path: "hajj-umrah",
-    page: "hajj",
-    hash: "umrah",
+    page: "hajj/umrah",
+    hash: "",
     title: "nav.hajjUmrah",
     sub: "nav.hajjUmrahSub",
     icon: "kaaba",
   },
   "hajj-ifrad": {
     path: "hajj-ifrad",
-    page: "hajj",
-    hash: "hajj-ifrad",
+    page: "hajj/ifrad",
+    hash: "",
     title: "nav.hajjIfrad",
     sub: "nav.hajjTypeSub",
     icon: "kaaba",
   },
   "hajj-qiran": {
     path: "hajj-qiran",
-    page: "hajj",
-    hash: "hajj-qiran",
+    page: "hajj/qiran",
+    hash: "",
     title: "nav.hajjQiran",
     sub: "nav.hajjTypeSub",
     icon: "kaaba",
   },
   "hajj-tamattu": {
     path: "hajj-tamattu",
-    page: "hajj",
-    hash: "hajj-tamattu",
+    page: "hajj/tamattu",
+    hash: "",
     title: "nav.hajjTamattu",
     sub: "nav.hajjTypeSub",
     icon: "kaaba",
@@ -138,7 +138,7 @@ const BY_PATH: ReadonlyMap<string, Section> = new Map([
 /** Link of a menu entry (a page, or a page plus an anchor). */
 export function itemHref(locale: Locale, path: string): string {
   const x = EXTRA[path];
-  return x ? `${href(locale, x.page)}#${x.hash}` : href(locale, path);
+  return x ? `${href(locale, x.page)}${x.hash ? `#${x.hash}` : ""}` : href(locale, path);
 }
 
 export function sectionOf(path: string): Section {
@@ -149,7 +149,7 @@ export function sectionOf(path: string): Section {
 
 /** First URL segment(s) of a group, for the active state of its menu. */
 export function groupSegments(g: SiteGroup): string[] {
-  return [...g.items.map((p) => EXTRA[p]?.page ?? p.split("/")[0]!), ...(g.also ?? [])];
+  return [...g.items.map((p) => (EXTRA[p]?.page ?? p).split("/")[0]!), ...(g.also ?? [])];
 }
 
 /** The group and section a path (without the locale prefix, e.g. "surah/2/") belongs to. */

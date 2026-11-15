@@ -1592,11 +1592,23 @@ abstract class AppLocalizations {
   /// **'Hajj rites'**
   String get hajjHubHajj;
 
+  /// shared key "hajj.hub.ihram"
+  ///
+  /// In en, this message translates to:
+  /// **'Miqat and ihram rules'**
+  String get hajjHubIhram;
+
   /// shared key "hajj.hub.umrah"
   ///
   /// In en, this message translates to:
   /// **'Umrah steps and tawaf map'**
   String get hajjHubUmrah;
+
+  /// shared key "hajj.hub.umrahSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Umrah one step at a time'**
+  String get hajjHubUmrahSub;
 
   /// shared key "hajj.ifrad"
   ///
@@ -1609,6 +1621,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ihram'**
   String get hajjIhram;
+
+  /// shared key "hajj.kind.ifrad"
+  ///
+  /// In en, this message translates to:
+  /// **'Hajj Ifrad'**
+  String get hajjKindIfrad;
+
+  /// shared key "hajj.kind.qiran"
+  ///
+  /// In en, this message translates to:
+  /// **'Hajj Qiran'**
+  String get hajjKindQiran;
+
+  /// shared key "hajj.kind.sub"
+  ///
+  /// In en, this message translates to:
+  /// **'The steps in order, one at a time'**
+  String get hajjKindSub;
+
+  /// shared key "hajj.kind.tamattu"
+  ///
+  /// In en, this message translates to:
+  /// **'Hajj Tamattu\''**
+  String get hajjKindTamattu;
 
   /// shared key "hajj.live.title"
   ///

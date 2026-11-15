@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'l10n_ext.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'rattil_logo.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -21,6 +22,8 @@ class AboutScreen extends StatelessWidget {
             SectionCard(
               title: l.appName,
               children: [
+                const Align(alignment: AlignmentDirectional.centerStart, child: RattilLogo(size: 64)),
+                const SizedBox(height: 12),
                 Text(l.settingsFree, key: const Key('freeStatement'), style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 8),
                 Text(l.aboutOpenSource),

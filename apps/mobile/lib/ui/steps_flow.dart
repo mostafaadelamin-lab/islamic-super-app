@@ -139,6 +139,7 @@ class _FlowPainter extends CustomPainter {
   final List<String> titles;
   final bool arabic;
   final int? active;
+  final String style = HajjDrawingColors.style;
 
   static const _arabicDigits = '٠١٢٣٤٥٦٧٨٩';
   String _num(int n) => arabic ? n.toString().split('').map((d) => _arabicDigits[int.parse(d)]).join() : '$n';
@@ -208,5 +209,6 @@ class _FlowPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_FlowPainter old) => old.titles != titles || old.arabic != arabic || old.active != active;
+  bool shouldRepaint(_FlowPainter old) =>
+      old.titles != titles || old.arabic != arabic || old.active != active || old.style != style;
 }

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { withBase } from "@/lib/base-path";
-import { HARAM_CROWD_LINKS } from "@/lib/haram-crowd";
+import { HARAM_CROWD_LINKS, SHOW_HARAM_CROWD } from "@/lib/haram-crowd";
 import { LIVE_RADIOS } from "@/lib/live-radios";
 import { Icon } from "./Icon";
 import { NowPlaying, type Track } from "./RecitationLibrary";
@@ -21,33 +21,35 @@ export function HajjServices({ locale, tawafHref }: { locale: Locale; tawafHref:
       <h2 id="hajj-services-h" className="sr-only">
         {t(locale, "hajj.services.title")}
       </h2>
-      <section className="card hajj-crowd" id="crowd" data-testid="hajj-crowd">
-        <h3>
-          <Icon name="kaaba" /> {t(locale, "hajj.crowd.title")}
-        </h3>
-        <p>{t(locale, "hajj.crowd.body")}</p>
-        <p className="row">
-          <a
-            className="btn btn-primary"
-            href={HARAM_CROWD_LINKS.official}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-testid="hajj-crowd-official"
-          >
-            {t(locale, "hajj.crowd.official")} <Icon name="external" size={18} />
-          </a>
-          <a
-            className="btn"
-            href={HARAM_CROWD_LINKS.nusuk}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-testid="hajj-crowd-nusuk"
-          >
-            {t(locale, "hajj.crowd.nusuk")} <Icon name="external" size={18} />
-          </a>
-        </p>
-        <p className="muted small">{t(locale, "hajj.crowd.note")}</p>
-      </section>
+      {SHOW_HARAM_CROWD ? (
+        <section className="card hajj-crowd" id="crowd" data-testid="hajj-crowd">
+          <h3>
+            <Icon name="kaaba" /> {t(locale, "hajj.crowd.title")}
+          </h3>
+          <p>{t(locale, "hajj.crowd.body")}</p>
+          <p className="row">
+            <a
+              className="btn btn-primary"
+              href={HARAM_CROWD_LINKS.official}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="hajj-crowd-official"
+            >
+              {t(locale, "hajj.crowd.official")} <Icon name="external" size={18} />
+            </a>
+            <a
+              className="btn"
+              href={HARAM_CROWD_LINKS.nusuk}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="hajj-crowd-nusuk"
+            >
+              {t(locale, "hajj.crowd.nusuk")} <Icon name="external" size={18} />
+            </a>
+          </p>
+          <p className="muted small">{t(locale, "hajj.crowd.note")}</p>
+        </section>
+      ) : null}
       <section className="card" id="live" data-testid="hajj-live">
         <h3>{t(locale, "hajj.live.title")}</h3>
         <ul className="episode-list">
@@ -78,8 +80,7 @@ export function HajjServices({ locale, tawafHref }: { locale: Locale; tawafHref:
       <ul className="tiles" data-testid="hajj-links">
         {(
           [
-            ["#umrah", "hajj.links.umrah", "kaaba"],
-            ["#hajj", "hajj.links.hajj", "flag"],
+            // Umrah and the kinds of Hajj have their own pages, linked above (owner 2026-11-15).
             ...(tawafHref ? ([[tawafHref, "hajj.links.tawaf", "refresh"]] as const) : []),
           ] as const
         ).map(([to, key, icon]) => (

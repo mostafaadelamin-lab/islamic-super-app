@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app_services.dart';
 import '../domain/hadith.dart';
+import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import 'adaptive.dart';
 import 'adhkar_screen.dart';
@@ -403,8 +404,8 @@ class _BookPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final scheme = Theme.of(context).colorScheme;
-    final dark = Theme.of(context).brightness == Brightness.dark;
-    final paper = dark ? const Color(0xFF26231D) : const Color(0xFFFBF6EA);
+    // The style's paper colour (owner 2026-11-15: every colour follows the chosen style).
+    final paper = AppTheme.of(context, 'paper');
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         DesignTokens.spaceLg,

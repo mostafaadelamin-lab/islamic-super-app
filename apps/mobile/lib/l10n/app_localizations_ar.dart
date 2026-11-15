@@ -866,13 +866,31 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hajjHubHajj => 'مناسك الحج';
 
   @override
+  String get hajjHubIhram => 'المواقيت ومحظورات الإحرام';
+
+  @override
   String get hajjHubUmrah => 'خطوات العمرة وخريطة الطواف';
+
+  @override
+  String get hajjHubUmrahSub => 'خطوات العمرة خطوة خطوة';
 
   @override
   String get hajjIfrad => 'الإفراد';
 
   @override
   String get hajjIhram => 'الإحرام';
+
+  @override
+  String get hajjKindIfrad => 'حج الإفراد';
+
+  @override
+  String get hajjKindQiran => 'حج القِران';
+
+  @override
+  String get hajjKindSub => 'الخطوات بالترتيب، خطوة خطوة';
+
+  @override
+  String get hajjKindTamattu => 'حج التمتع';
 
   @override
   String get hajjLiveTitle => 'بث مباشر من الحرمين (صوت)';

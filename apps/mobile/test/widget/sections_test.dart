@@ -12,6 +12,8 @@ import 'package:rattil/domain/tasbih.dart';
 import 'package:rattil/ui/adhkar_screen.dart';
 import 'package:rattil/ui/hajj_hub_screen.dart';
 import 'package:rattil/ui/hajj_screen.dart';
+import 'package:rattil/ui/pilgrimage_screen.dart';
+import 'package:rattil/ui/dua_text.dart';
 import 'package:rattil/domain/hajj_flows.dart';
 import 'package:rattil/ui/steps_flow.dart';
 import 'package:rattil/ui/hisn_screen.dart';
@@ -399,7 +401,7 @@ void main() {
       expect(find.byKey(const Key('hajjStepCard')), findsOneWidget);
       expect(find.text('٧. المبيت بمزدلفة'), findsOneWidget);
       final guide = app.services.content.hajj.official;
-      expect(tester.widget<Text>(find.byKey(const Key('hajjStepText'))).data, guide.hajj[3]);
+      expect(tester.widget<Text>(find.byKey(const Key('hajjStepText'))).textSpan!.toPlainText(), guide.hajj[3]);
       await tester.scrollUntilVisible(
         find.byKey(const Key('stepNext-hajj-ifrad')),
         300,
@@ -417,32 +419,57 @@ void main() {
       expect(find.byKey(const Key('officialHajjGuide')), findsOneWidget);
     });
 
-    testWidgets('own section from home: official crowd links, live Haram audio, guide tabs (owner, 2026-11-14)', (
-      tester,
-    ) async {
+    testWidgets(
+      'own section from home: no crowd card for now, live Haram audio, a screen per kind (owner, 2026-11-14)',
+      (tester) async {
+        await pumpApp(tester, size: tallPhone);
+        await tester.ensureVisible(find.byKey(const Key('home.tile-hajj')));
+        await tester.tap(find.byKey(const Key('home.tile-hajj')));
+        await tester.pumpAndSettle();
+        expect(find.byType(HajjHubScreen), findsOneWidget);
+        // The crowd card is hidden until a live source is found (owner 2026-11-15).
+        expect(find.byKey(const Key('hajjHub.crowdOfficial')), findsNothing);
+        for (final k in ['hajjHub.radio-makkah', 'hajjHub.radio-madinah']) {
+          await tester.scrollUntilVisible(find.byKey(Key(k)), 200, scrollable: find.byType(Scrollable).first);
+          expect(find.byKey(Key(k)), findsOneWidget, reason: k);
+        }
+        await tester.scrollUntilVisible(
+          find.byKey(const Key('hajjHub.tamattu')),
+          -200,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.tap(find.byKey(const Key('hajjHub.tamattu')));
+        await tester.pumpAndSettle();
+        // Its own screen: the steps pinned on top, one step under them (owner 2026-11-15).
+        expect(find.byType(PilgrimageScreen), findsOneWidget);
+        expect(find.byKey(const Key('stepStrip-tamattu')), findsOneWidget);
+        expect(find.byKey(const Key('stepCard-tamattu-1')), findsOneWidget);
+        await tester.tap(find.byKey(const Key('stepStrip-tamattu-3')));
+        await tester.pumpAndSettle();
+        expect(find.byKey(const Key('stepCard-tamattu-3')), findsOneWidget);
+        expect(find.byKey(const Key('stepCard-tamattu-1')), findsNothing);
+        expect(find.text('سعي العمرة'), findsWidgets);
+        // The strip stays put while the step scrolls.
+        final top = tester.getRect(find.byKey(const Key('stepStrip-tamattu'))).top;
+        await tester.drag(find.byKey(const Key('pilgrimage-tamattu')), const Offset(0, -300));
+        await tester.pumpAndSettle();
+        expect(tester.getRect(find.byKey(const Key('stepStrip-tamattu'))).top, top);
+      },
+    );
+
+    testWidgets('Umrah screen: shaded duas, Next moves one step (owner 2026-11-15)', (tester) async {
       await pumpApp(tester, size: tallPhone);
-      await tester.ensureVisible(find.byKey(const Key('home.tile-hajj')));
-      await tester.tap(find.byKey(const Key('home.tile-hajj')));
-      await tester.pumpAndSettle();
-      expect(find.byType(HajjHubScreen), findsOneWidget);
-      // Crowd levels are never shown as numbers of our own: only buttons to the official sources.
-      for (final k in [
-        'hajjHub.crowdOfficial',
-        'hajjHub.crowdNusuk',
-        'hajjHub.radio-makkah',
-        'hajjHub.radio-madinah',
-      ]) {
-        await tester.scrollUntilVisible(find.byKey(Key(k)), 200, scrollable: find.byType(Scrollable).first);
-        expect(find.byKey(Key(k)), findsOneWidget, reason: k);
-      }
+      await pushScreen(tester, const PilgrimageScreen(kind: PilgrimageKind.umrah));
+      expect(find.byKey(const Key('stepCard-umrah-1')), findsOneWidget);
       await tester.scrollUntilVisible(
-        find.byKey(const Key('hajjHub.hajj')),
-        -200,
-        scrollable: find.byType(Scrollable).first,
+        find.byKey(const Key('stepNext-umrah')),
+        300,
+        scrollable: find.byType(Scrollable).last,
       );
-      await tester.tap(find.byKey(const Key('hajjHub.hajj')));
+      await tester.tap(find.byKey(const Key('stepNext-umrah')));
       await tester.pumpAndSettle();
-      expect(find.byKey(const Key('hajjTypes')), findsOneWidget, reason: 'opens on the Hajj tab');
+      expect(find.byKey(const Key('stepCard-umrah-2')), findsOneWidget);
+      expect(find.byType(DuaText), findsWidgets);
     });
 
     testWidgets('English UI says the guide is Arabic only', (tester) async {

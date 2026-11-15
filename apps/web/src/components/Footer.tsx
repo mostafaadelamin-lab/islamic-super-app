@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
-import { withBase } from "@/lib/base-path";
+import { BrandLogo } from "./BrandLogo";
 import { SITE_GROUPS, itemHref, sectionOf } from "@/lib/site-map";
 
 /** Website footer: about column + a site map column per menu group, then a bottom bar. */
@@ -11,8 +11,7 @@ export function Footer({ locale }: { locale: Locale }) {
       <div className="site-footer-inner">
         <div className="site-footer-about">
           <Link className="site-footer-brand" href={href(locale)}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={withBase("/icon.svg")} alt="" width={44} height={44} />
+            <BrandLogo size={44} />
             <strong>{t(locale, "appName")}</strong>
           </Link>
           <p>{t(locale, "settings.free")}</p>

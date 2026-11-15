@@ -24,6 +24,7 @@ import 'locate.dart';
 import 'tasbih_screen.dart';
 import 'widgets.dart';
 import 'r_icon.dart';
+import 'rattil_logo.dart';
 
 /// Hero colours of the chosen colour style (deep brand colour with white text and light gold
 /// accents), kept for the banners that use them; contrast checked in theme_contrast_test.dart.
@@ -88,6 +89,29 @@ class _HomeScreenState extends State<HomeScreen> {
                 DesignTokens.spaceXl,
               ),
               children: [
+                // Logo in the chosen colour style and the app name (as in the style designs, owner 2026-11-15).
+                Padding(
+                  key: const Key('home.brand'),
+                  padding: const EdgeInsets.only(bottom: DesignTokens.spaceMd),
+                  child: Row(
+                    children: [
+                      const RattilLogo(size: 44),
+                      const SizedBox(width: DesignTokens.spaceSm),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(l.homeWelcome, style: Theme.of(context).textTheme.bodySmall),
+                            Text(
+                              l.appName,
+                              style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 _Hero(pv: pv, onTap: () => widget.onSelectTab(2)),
                 const SizedBox(height: DesignTokens.spaceMd),
                 _DayCard(

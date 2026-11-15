@@ -17,9 +17,9 @@ class DesignTokens {
     'success': Color(0xFF2F7D55),
     'danger': Color(0xFFB4472F),
     'verseHighlight': Color(0xFFF0E3C8),
-    'paper': Color(0xFFFBF6EA),
+    'paper': Color(0xFFFBF8EF),
     'paperInk': Color(0xFF141414),
-    'frame': Color(0xFFA8773E),
+    'frame': Color(0xFF0F6B50),
   };
   static const dark = <String, Color>{
     'bg': Color(0xFF0B1512),
@@ -35,9 +35,9 @@ class DesignTokens {
     'success': Color(0xFF6CC596),
     'danger': Color(0xFFE98A72),
     'verseHighlight': Color(0xFF3A2D1A),
-    'paper': Color(0xFF1C1712),
+    'paper': Color(0xFF12201A),
     'paperInk': Color(0xFFECE3D0),
-    'frame': Color(0xFF9C7A45),
+    'frame': Color(0xFFD4AF5A),
   };
   static const defaultPalette = 'emerald';
   static const paletteIds = <String>['emerald', 'madinah'];
@@ -61,9 +61,9 @@ class DesignTokens {
         'success': Color(0xFF2F7D55),
         'danger': Color(0xFFB4472F),
         'verseHighlight': Color(0xFFF0E3C8),
-        'paper': Color(0xFFFBF6EA),
+        'paper': Color(0xFFFBF8EF),
         'paperInk': Color(0xFF141414),
-        'frame': Color(0xFFA8773E),
+        'frame': Color(0xFF0F6B50),
       },
       'dark': {
         'bg': Color(0xFF0B1512),
@@ -79,9 +79,9 @@ class DesignTokens {
         'success': Color(0xFF6CC596),
         'danger': Color(0xFFE98A72),
         'verseHighlight': Color(0xFF3A2D1A),
-        'paper': Color(0xFF1C1712),
+        'paper': Color(0xFF12201A),
         'paperInk': Color(0xFFECE3D0),
-        'frame': Color(0xFF9C7A45),
+        'frame': Color(0xFFD4AF5A),
       },
       'brand': {
         'heroTop': Color(0xFF0F6B50),
@@ -111,9 +111,9 @@ class DesignTokens {
         'success': Color(0xFF2F7D55),
         'danger': Color(0xFFB4472F),
         'verseHighlight': Color(0xFFF0E3C8),
-        'paper': Color(0xFFFBF6EA),
+        'paper': Color(0xFFFAF9F4),
         'paperInk': Color(0xFF141414),
-        'frame': Color(0xFFA8773E),
+        'frame': Color(0xFF1D3A64),
       },
       'dark': {
         'bg': Color(0xFF0A111E),
@@ -129,9 +129,9 @@ class DesignTokens {
         'success': Color(0xFF6CC596),
         'danger': Color(0xFFE98A72),
         'verseHighlight': Color(0xFF3A2D1A),
-        'paper': Color(0xFF1C1712),
-        'paperInk': Color(0xFFECE3D0),
-        'frame': Color(0xFF9C7A45),
+        'paper': Color(0xFF121B2B),
+        'paperInk': Color(0xFFE9E4D6),
+        'frame': Color(0xFFD9B25E),
       },
       'brand': {
         'heroTop': Color(0xFF1D3A64),

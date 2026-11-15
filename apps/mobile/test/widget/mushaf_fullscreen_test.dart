@@ -58,12 +58,12 @@ void main() {
     expect(find.byType(SingleChildScrollView), findsWidgets);
   });
 
-  testWidgets('the reader uses the Mushaf colours (cream paper, brown frame)', (tester) async {
+  testWidgets('the reader follows the chosen colour style (owner 2026-11-15)', (tester) async {
     await open(tester, 3);
     final ctx = tester.element(find.byKey(const Key('mushafPage-3')));
-    expect(AppTheme.of(ctx, 'paper'), AppTheme.mushafLight['paper']);
-    expect(AppTheme.of(ctx, 'frame'), AppTheme.mushafLight['frame']);
-    expect(Theme.of(ctx).colorScheme.primary, AppTheme.mushafLight['primary']);
+    expect(AppTheme.of(ctx, 'paper'), AppTheme.token(Brightness.light, 'paper'));
+    expect(AppTheme.of(ctx, 'frame'), AppTheme.token(Brightness.light, 'frame'));
+    expect(Theme.of(ctx).colorScheme.primary, AppTheme.token(Brightness.light, 'primary'));
   });
 
   test('landscape fit only for phones held sideways', () {

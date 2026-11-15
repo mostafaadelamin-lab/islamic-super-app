@@ -91,9 +91,9 @@ export const tokens = {
     "success": "#2F7D55",
     "danger": "#B4472F",
     "verseHighlight": "#F0E3C8",
-    "paper": "#FBF6EA",
+    "paper": "#FBF8EF",
     "paperInk": "#141414",
-    "frame": "#A8773E"
+    "frame": "#0F6B50"
    },
    "dark": {
     "bg": "#0B1512",
@@ -109,9 +109,9 @@ export const tokens = {
     "success": "#6CC596",
     "danger": "#E98A72",
     "verseHighlight": "#3A2D1A",
-    "paper": "#1C1712",
+    "paper": "#12201A",
     "paperInk": "#ECE3D0",
-    "frame": "#9C7A45"
+    "frame": "#D4AF5A"
    },
    "brand": {
     "heroTop": "#0F6B50",
@@ -146,9 +146,9 @@ export const tokens = {
     "success": "#2F7D55",
     "danger": "#B4472F",
     "verseHighlight": "#F0E3C8",
-    "paper": "#FBF6EA",
+    "paper": "#FAF9F4",
     "paperInk": "#141414",
-    "frame": "#A8773E"
+    "frame": "#1D3A64"
    },
    "dark": {
     "bg": "#0A111E",
@@ -164,9 +164,9 @@ export const tokens = {
     "success": "#6CC596",
     "danger": "#E98A72",
     "verseHighlight": "#3A2D1A",
-    "paper": "#1C1712",
-    "paperInk": "#ECE3D0",
-    "frame": "#9C7A45"
+    "paper": "#121B2B",
+    "paperInk": "#E9E4D6",
+    "frame": "#D9B25E"
    },
    "brand": {
     "heroTop": "#1D3A64",

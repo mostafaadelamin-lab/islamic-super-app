@@ -871,13 +871,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hajjHubHajj => 'Hajj rites';
 
   @override
+  String get hajjHubIhram => 'Miqat and ihram rules';
+
+  @override
   String get hajjHubUmrah => 'Umrah steps and tawaf map';
+
+  @override
+  String get hajjHubUmrahSub => 'Umrah one step at a time';
 
   @override
   String get hajjIfrad => 'Ifrad';
 
   @override
   String get hajjIhram => 'Ihram';
+
+  @override
+  String get hajjKindIfrad => 'Hajj Ifrad';
+
+  @override
+  String get hajjKindQiran => 'Hajj Qiran';
+
+  @override
+  String get hajjKindSub => 'The steps in order, one at a time';
+
+  @override
+  String get hajjKindTamattu => 'Hajj Tamattu\'';
 
   @override
   String get hajjLiveTitle => 'Live from the Two Holy Mosques (audio)';

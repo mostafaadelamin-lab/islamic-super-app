@@ -5,6 +5,7 @@ import '../domain/hajj.dart';
 import '../domain/hajj_flows.dart';
 import '../theme/design_tokens.dart';
 import 'adhkar_screen.dart';
+import 'dua_text.dart';
 import 'hajj_art.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
@@ -14,12 +15,16 @@ import 'adaptive.dart';
 
 /// Hajj & Umrah guide (Arabic text from the prototype, pending review).
 class HajjScreen extends StatelessWidget {
-  const HajjScreen({super.key, this.initialTab = 0});
+  const HajjScreen({super.key, this.initialTab = 0, this.sections = allSections});
 
-  /// Tab opened first (0 Umrah, 1 Hajj, 2 Ihram), from the Hajj & Umrah section.
+  /// Tab opened first (0 Umrah, 1 Hajj, 2 Ihram).
   final int initialTab;
 
-  static const sections = ['umrah', 'hajj', 'ihram'];
+  /// The parts shown; the Hajj & Umrah section opens only 'ihram' here (Umrah and each kind of Hajj
+  /// have their own step-by-step screens since 2026-11-15).
+  final List<String> sections;
+
+  static const allSections = ['umrah', 'hajj', 'ihram'];
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +40,12 @@ class HajjScreen extends StatelessWidget {
       initialIndex: initialTab.clamp(0, sections.length - 1),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(l.hajjTitle),
-          bottom: TabBar(
-            tabs: [for (final k in sections) Tab(key: Key('hajjTab-$k'), text: label(k))],
-          ),
+          title: Text(sections.length == 1 ? label(sections.first) : l.hajjTitle),
+          bottom: sections.length == 1
+              ? null
+              : TabBar(
+                  tabs: [for (final k in sections) Tab(key: Key('hajjTab-$k'), text: label(k))],
+                ),
         ),
         body: ReadableWidth(
           child: TabBarView(
@@ -62,9 +69,9 @@ class HajjScreen extends StatelessWidget {
                             ),
                             child: HajjTypeFlow(guide: guide),
                           ),
-                        _Block(block: b),
+                        HajjBlockCard(block: b),
                       ] else if (b.label == null)
-                        _Block(block: b)
+                        HajjBlockCard(block: b)
                       else if (i == _firstLabelled(guide.sections[k]!))
                         // One step at a time with Previous / Next (owner, 2026-11-15).
                         StepPager(
@@ -76,7 +83,8 @@ class HajjScreen extends StatelessWidget {
                           label: k == 'umrah' ? l.hajjUmrah : l.hajjHajj,
                           section: k,
                         ),
-                    if (k == 'hajj' && !guide.official.isEmpty) OfficialGuideCard(guide: guide.official),
+                    if ((k == 'hajj' || sections.length == 1) && !guide.official.isEmpty)
+                      OfficialGuideCard(guide: guide.official),
                   ],
                 ),
             ],
@@ -130,7 +138,7 @@ class _StepPagerState extends State<StepPager> {
         ),
         KeyedSubtree(
           key: Key('stepCard-${widget.section}-${_active + 1}'),
-          child: _Block(block: b[_active]),
+          child: HajjBlockCard(block: b[_active]),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg),
@@ -181,8 +189,8 @@ class StepNav extends StatelessWidget {
   }
 }
 
-class _Block extends StatelessWidget {
-  const _Block({required this.block});
+class HajjBlockCard extends StatelessWidget {
+  const HajjBlockCard({super.key, required this.block});
   final HajjBlock block;
 
   @override
@@ -195,7 +203,7 @@ class _Block extends StatelessWidget {
       child: b.kind == 'intro'
           ? Padding(
               padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
-              child: Text(b.text ?? '', style: theme.textTheme.bodyLarge),
+              child: DuaText(b.text ?? '', style: theme.textTheme.bodyLarge),
             )
           : Card(
               margin: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
@@ -268,14 +276,14 @@ class _Block extends StatelessWidget {
                                   child: Icon(Icons.circle, size: 7, color: scheme.secondary),
                                 ),
                                 const SizedBox(width: DesignTokens.spaceSm),
-                                Expanded(child: Text(item, style: const TextStyle(height: 1.7))),
+                                Expanded(child: DuaText(item, style: const TextStyle(height: 1.7))),
                               ],
                             ),
                           ),
                         for (final p in b.paragraphs)
                           Padding(
                             padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
-                            child: Text(p, style: theme.textTheme.bodyMedium),
+                            child: DuaText(p, style: theme.textTheme.bodyMedium),
                           ),
                         if (b.dua != null) ...[
                           const SizedBox(height: DesignTokens.spaceMd),
@@ -322,19 +330,7 @@ class _HajjTypeFlowState extends State<HajjTypeFlow> {
     HajjType.ifrad => context.l10n.hajjIfrad,
   };
 
-  /// The explanation of a step: a paragraph of the official guide, the types of Hajj, or the
-  /// app guide's farewell tawaf.
-  String _explain(FlowStep step) {
-    final o = widget.guide.official;
-    if (step.ref == 'types') return [for (final (n, t) in o.types) '$n: $t'].join('\n\n');
-    if (step.ref == 'farewell') {
-      for (final b in widget.guide.sections['hajj'] ?? const <HajjBlock>[]) {
-        if ((b.title ?? '').contains('الوداع')) return [...b.paragraphs, ...b.items].join('\n');
-      }
-      return '';
-    }
-    return o.paragraph(step.ref) ?? '';
-  }
+  String _explain(FlowStep step) => explainHajjStep(widget.guide, step);
 
   int _active = 0;
 
@@ -397,9 +393,9 @@ class _HajjTypeFlowState extends State<HajjTypeFlow> {
                     style: theme.textTheme.titleLarge,
                   ),
                   const SizedBox(height: DesignTokens.spaceMd),
-                  Text(
+                  DuaText(
                     _explain(step),
-                    key: const Key('hajjStepText'),
+                    textKey: const Key('hajjStepText'),
                     style: theme.textTheme.bodyLarge?.copyWith(height: 1.9),
                   ),
                   const SizedBox(height: DesignTokens.spaceMd),
@@ -504,3 +500,17 @@ class OfficialGuideCard extends StatelessWidget {
 }
 
 String _arabicNum(int n) => n.toString().split('').map((d) => '٠١٢٣٤٥٦٧٨٩'[int.parse(d)]).join();
+
+/// The explanation of a Hajj step: a paragraph of the official guide, the types of Hajj, or the app
+/// guide's farewell tawaf.
+String explainHajjStep(HajjGuide guide, FlowStep step) {
+  final o = guide.official;
+  if (step.ref == 'types') return [for (final (n, t) in o.types) '$n: $t'].join('\n\n');
+  if (step.ref == 'farewell') {
+    for (final b in guide.sections['hajj'] ?? const <HajjBlock>[]) {
+      if ((b.title ?? '').contains('الوداع')) return [...b.paragraphs, ...b.items].join('\n');
+    }
+    return '';
+  }
+  return o.paragraph(step.ref) ?? '';
+}

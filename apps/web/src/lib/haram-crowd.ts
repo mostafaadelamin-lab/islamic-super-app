@@ -9,3 +9,9 @@ export const HARAM_CROWD_LINKS = {
   /** Nusuk, the official Hajj and Umrah platform (its app shows tawaf and sa'i occupancy). */
   nusuk: "https://www.nusuk.sa/",
 } as const;
+
+/**
+ * Hidden for now (owner 2026-11-15): no public live feed of the Mataf / Mas'a crowd levels was found, so the
+ * crowd card stays out of the app and the website until one is. Set to true to show the links again.
+ */
+export const SHOW_HARAM_CROWD = false;

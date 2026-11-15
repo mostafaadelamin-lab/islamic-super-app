@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
-import { withBase } from "@/lib/base-path";
+import { BrandLogo } from "./BrandLogo";
 import { MainNav } from "./MainNav";
 import { SiteNav } from "./SiteNav";
 import { HeaderPrayer } from "./HeaderPrayer";
@@ -27,8 +27,7 @@ export function Header({ locale }: { locale: Locale }) {
       </div>
       <div className="app-header-inner">
         <Link className="brand" href={href(locale)}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="brand-logo" src={withBase("/icon.svg")} alt="" width={40} height={40} />
+          <BrandLogo className="brand-logo" size={44} />
           <span className="brand-text">
             <span className="brand-name">{t(locale, "appName")}</span>
             <span className="brand-tagline" aria-hidden="true">

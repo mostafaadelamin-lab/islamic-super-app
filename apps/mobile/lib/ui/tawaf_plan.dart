@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 
 typedef _G = TawafPlanGeometry;
@@ -90,18 +91,23 @@ class TawafPlanLabels {
   );
 }
 
-/// Cream and brown colours of the Hajj drawings (same as the website).
+/// Colours of the Hajj drawings, from the chosen colour style (owner 2026-11-15: every colour follows the
+/// style; same tokens as the website). Drawn on a light card in both themes.
 class HajjDrawingColors {
   HajjDrawingColors._();
-  static const bg = Color(0xFFF6EEDC);
-  static const path = Color(0xFF8A6A45);
-  static const accent = Color(0xFFB5652B);
-  static const ink = Color(0xFF4A3726);
-  static const strong = Color(0xFF8A3F12);
-  static const gold = Color(0xFFC9A24A);
-  static const hijr = Color(0xFFC9B48C);
-  static const circle = Color(0xFFE9DCC0);
-  static const number = Color(0xFF6B4A2B);
+  static Color _t(String k) => AppTheme.token(Brightness.light, k);
+  static Color get bg => _t('surface2');
+  static Color get path => _t('primary');
+  static Color get accent => _t('accent');
+  static Color get ink => _t('ink');
+  static Color get strong => _t('primary');
+  static Color get gold => AppTheme.brand('gold');
+  static Color get hijr => Color.lerp(_t('primary'), _t('surface2'), 0.65)!;
+  static Color get circle => _t('accentSoft');
+  static Color get number => _t('primary');
+
+  /// Changes whenever the colour style does, so the drawings repaint.
+  static String get style => AppTheme.palette;
 }
 
 class TawafPlan extends StatelessWidget {
@@ -127,6 +133,7 @@ enum _Anchor { start, middle, end }
 class _PlanPainter extends CustomPainter {
   _PlanPainter(this.l);
   final TawafPlanLabels l;
+  final String style = HajjDrawingColors.style;
 
   late Canvas _c;
 
@@ -138,18 +145,17 @@ class _PlanPainter extends CustomPainter {
     ..strokeCap = StrokeCap.round;
 
   /// Text whose baseline-ish bottom sits at [p.dy], anchored like SVG text-anchor (left to right).
-  void _text(
-    String s,
-    Offset p,
-    _Anchor a, {
-    Color color = HajjDrawingColors.ink,
-    double size = 11,
-    FontWeight weight = FontWeight.w600,
-  }) {
+  void _text(String s, Offset p, _Anchor a, {Color? color, double size = 11, FontWeight weight = FontWeight.w600}) {
     final tp = TextPainter(
       text: TextSpan(
         text: s,
-        style: TextStyle(fontFamily: DesignTokens.fontUi, color: color, fontSize: size, fontWeight: weight, height: 1),
+        style: TextStyle(
+          fontFamily: DesignTokens.fontUi,
+          color: color ?? HajjDrawingColors.ink,
+          fontSize: size,
+          fontWeight: weight,
+          height: 1,
+        ),
       ),
       textDirection: TextDirection.rtl,
     )..layout();
@@ -296,5 +302,5 @@ class _PlanPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_PlanPainter old) => old.l != l;
+  bool shouldRepaint(_PlanPainter old) => old.l != l || old.style != style;
 }

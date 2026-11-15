@@ -1271,9 +1271,17 @@
   "@hajjHubHajj": {
     "description": "shared key \"hajj.hub.hajj\""
   },
+  "hajjHubIhram": "Miqat and ihram rules",
+  "@hajjHubIhram": {
+    "description": "shared key \"hajj.hub.ihram\""
+  },
   "hajjHubUmrah": "Umrah steps and tawaf map",
   "@hajjHubUmrah": {
     "description": "shared key \"hajj.hub.umrah\""
+  },
+  "hajjHubUmrahSub": "Umrah one step at a time",
+  "@hajjHubUmrahSub": {
+    "description": "shared key \"hajj.hub.umrahSub\""
   },
   "hajjIfrad": "Ifrad",
   "@hajjIfrad": {
@@ -1282,6 +1290,22 @@
   "hajjIhram": "Ihram",
   "@hajjIhram": {
     "description": "shared key \"hajj.ihram\""
+  },
+  "hajjKindIfrad": "Hajj Ifrad",
+  "@hajjKindIfrad": {
+    "description": "shared key \"hajj.kind.ifrad\""
+  },
+  "hajjKindQiran": "Hajj Qiran",
+  "@hajjKindQiran": {
+    "description": "shared key \"hajj.kind.qiran\""
+  },
+  "hajjKindSub": "The steps in order, one at a time",
+  "@hajjKindSub": {
+    "description": "shared key \"hajj.kind.sub\""
+  },
+  "hajjKindTamattu": "Hajj Tamattu'",
+  "@hajjKindTamattu": {
+    "description": "shared key \"hajj.kind.tamattu\""
   },
   "hajjLiveTitle": "Live from the Two Holy Mosques (audio)",
   "@hajjLiveTitle": {

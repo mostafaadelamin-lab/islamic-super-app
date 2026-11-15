@@ -775,5 +775,11 @@
   "ayah.onlyThis": "الآية فقط",
   "ayah.toPageEnd": "لآخر الصفحة",
   "ayah.toSurahEnd": "لآخر السورة",
-  "ayah.withTafsir": "مع التفسير"
+  "ayah.withTafsir": "مع التفسير",
+  "hajj.kind.tamattu": "حج التمتع",
+  "hajj.kind.qiran": "حج القِران",
+  "hajj.kind.ifrad": "حج الإفراد",
+  "hajj.kind.sub": "الخطوات بالترتيب، خطوة خطوة",
+  "hajj.hub.umrahSub": "خطوات العمرة خطوة خطوة",
+  "hajj.hub.ihram": "المواقيت ومحظورات الإحرام"
 }

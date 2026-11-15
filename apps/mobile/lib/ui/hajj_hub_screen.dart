@@ -10,6 +10,7 @@ import 'hajj_screen.dart';
 import 'hisn_screen.dart';
 import 'l10n_ext.dart';
 import 'library_screen.dart' show PlayTile;
+import 'pilgrimage_screen.dart';
 import 'r_icon.dart';
 import 'radio_screen.dart' show haramainRadios;
 import 'stories_screen.dart' show NarrationBar;
@@ -45,34 +46,43 @@ class HajjHubScreen extends StatelessWidget {
           children: [
             SectionCard(
               children: [
-                tile('umrah', RIcons.kaaba, l.hajjHubUmrah, () => const HajjScreen()),
-                tile('hajj', RIcons.flag, l.hajjHubHajj, () => const HajjScreen(initialTab: 1)),
-                tile('ihram', RIcons.info, l.hajjIhram, () => const HajjScreen(initialTab: 2)),
+                // One screen per kind, step by step (owner 2026-11-15).
+                for (final k in PilgrimageKind.values)
+                  ListTile(
+                    key: Key('hajjHub.${k.name}'),
+                    leading: RIconBadge(k == PilgrimageKind.umrah ? RIcons.kaaba : RIcons.flag),
+                    title: Text(pilgrimageTitle(context, k)),
+                    subtitle: Text(k == PilgrimageKind.umrah ? l.hajjHubUmrahSub : l.hajjKindSub),
+                    trailing: const RIcon(RIcons.chevronForward),
+                    onTap: () => push(PilgrimageScreen(kind: k)),
+                  ),
+                tile('ihram', RIcons.info, l.hajjHubIhram, () => const HajjScreen(sections: ['ihram'])),
                 tile('duas', RIcons.dua, l.hajjHubDuas, () => HisnScreen(section: 'hajj', title: l.hajjHubDuas)),
               ],
             ),
-            SectionCard(
-              title: l.hajjCrowdTitle,
-              children: [
-                Text(l.hajjCrowdBody, style: theme.textTheme.bodyMedium),
-                const SizedBox(height: DesignTokens.spaceMd),
-                FilledButton.icon(
-                  key: const Key('hajjHub.crowdOfficial'),
-                  onPressed: () => open(HaramCrowdLinks.official),
-                  icon: const RIcon(RIcons.external),
-                  label: Text(l.hajjCrowdOfficial),
-                ),
-                const SizedBox(height: DesignTokens.spaceSm),
-                OutlinedButton.icon(
-                  key: const Key('hajjHub.crowdNusuk'),
-                  onPressed: () => open(HaramCrowdLinks.nusuk),
-                  icon: const RIcon(RIcons.external),
-                  label: Text(l.hajjCrowdNusuk),
-                ),
-                const SizedBox(height: DesignTokens.spaceSm),
-                Text(l.hajjCrowdNote, style: theme.textTheme.bodySmall?.copyWith(color: scheme.onSurfaceVariant)),
-              ],
-            ),
+            if (HaramCrowdLinks.visible)
+              SectionCard(
+                title: l.hajjCrowdTitle,
+                children: [
+                  Text(l.hajjCrowdBody, style: theme.textTheme.bodyMedium),
+                  const SizedBox(height: DesignTokens.spaceMd),
+                  FilledButton.icon(
+                    key: const Key('hajjHub.crowdOfficial'),
+                    onPressed: () => open(HaramCrowdLinks.official),
+                    icon: const RIcon(RIcons.external),
+                    label: Text(l.hajjCrowdOfficial),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceSm),
+                  OutlinedButton.icon(
+                    key: const Key('hajjHub.crowdNusuk'),
+                    onPressed: () => open(HaramCrowdLinks.nusuk),
+                    icon: const RIcon(RIcons.external),
+                    label: Text(l.hajjCrowdNusuk),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceSm),
+                  Text(l.hajjCrowdNote, style: theme.textTheme.bodySmall?.copyWith(color: scheme.onSurfaceVariant)),
+                ],
+              ),
             SectionCard(
               title: l.hajjLiveTitle,
               children: [

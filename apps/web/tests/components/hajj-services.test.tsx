@@ -1,14 +1,13 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { HajjServices } from "@/components/HajjServices";
-import { HARAM_CROWD_LINKS } from "@/lib/haram-crowd";
+import { HARAM_CROWD_LINKS, SHOW_HARAM_CROWD } from "@/lib/haram-crowd";
 
 describe("HajjServices", () => {
-  it("opens the official crowd sources in a new tab and plays the Haram live audio", () => {
+  it("hides the crowd card for now (owner 2026-11-15) and plays the Haram live audio", () => {
+    expect(SHOW_HARAM_CROWD).toBe(false);
     render(<HajjServices locale="ar" tawafHref="#umrah-step-2" />);
-    const official = screen.getByTestId("hajj-crowd-official");
-    expect(official.getAttribute("href")).toBe(HARAM_CROWD_LINKS.official);
-    expect(official.getAttribute("target")).toBe("_blank");
-    expect(screen.getByTestId("hajj-crowd-nusuk").getAttribute("href")).toBe(HARAM_CROWD_LINKS.nusuk);
+    expect(screen.queryByTestId("hajj-crowd")).toBeNull();
+    expect(HARAM_CROWD_LINKS.official).toContain("alharamain.gov.sa");
     expect(screen.queryByTestId("library-now")).toBeNull();
     fireEvent.click(screen.getByTestId("hajj-live-makkah"));
     expect(screen.getByTestId("library-now")).toBeTruthy();

@@ -621,8 +621,10 @@ test.describe("Hajj & Umrah guide", () => {
     test(`${locale}: no review notice, sections and round counters`, async ({ page }) => {
       await page.goto(`/${locale}/hajj/`);
       await expect(page.getByTestId("review-notice")).toHaveCount(0);
-      await expect(page.locator("#umrah")).toBeVisible();
       await expect(page.getByText("لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ").first()).toBeVisible();
+      // Each kind has its own page (owner 2026-11-15).
+      await page.getByTestId("hajj-kind-umrah").click();
+      await expect(page).toHaveURL(`/${locale}/hajj/umrah/`);
       // One step at a time (owner 2026-11-15): the tawaf counter is on step 2.
       await expect(page.getByTestId("step-count-umrah-step")).toBeVisible();
       await page.getByTestId("steps-flow-umrah-step-2").click();

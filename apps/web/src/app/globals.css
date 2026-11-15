@@ -1838,20 +1838,20 @@ body:has(.player) {
   direction: ltr;
 }
 .tp-bg {
-  fill: #f6eedc;
+  fill: var(--color-surface-2);
 }
 .tp-path {
   fill: none;
-  stroke: #8a6a45;
+  stroke: var(--color-primary);
   stroke-width: 2;
   stroke-dasharray: 5 5;
 }
 .tp-arrow {
-  fill: #b5652b;
+  fill: var(--color-accent);
 }
 .tp-hijr {
   fill: none;
-  stroke: #c9b48c;
+  stroke: color-mix(in srgb, var(--color-primary) 35%, var(--color-surface-2));
   stroke-width: 7;
   stroke-linecap: round;
 }
@@ -1860,22 +1860,22 @@ body:has(.player) {
 }
 .tp-band {
   fill: none;
-  stroke: #c9a24a;
+  stroke: var(--brand-gold);
   stroke-width: 2;
 }
 .tp-door {
-  fill: #c9a24a;
+  fill: var(--brand-gold);
 }
 .tp-maqam {
-  fill: #c9a24a;
-  stroke: #8a6a45;
+  fill: var(--brand-gold);
+  stroke: var(--color-primary);
   stroke-width: 1.5;
 }
 .tp-corner {
-  fill: #b5652b;
+  fill: var(--color-accent);
 }
 .tp-start-line {
-  stroke: #b5652b;
+  stroke: var(--color-accent);
   stroke-width: 2.5;
   stroke-dasharray: 4 3;
 }
@@ -1886,7 +1886,7 @@ body:has(.player) {
   fill: #2b2b2b;
 }
 .tp-start {
-  fill: #b5652b;
+  fill: var(--color-accent);
   stroke: #fff;
   stroke-width: 2;
 }
@@ -1896,16 +1896,16 @@ body:has(.player) {
   font-weight: 700;
 }
 .tp-label {
-  fill: #4a3726;
+  fill: var(--color-ink);
   font-size: 11px;
   font-weight: 600;
 }
 .tp-strong {
-  fill: #8a3f12;
+  fill: var(--color-primary);
   font-weight: 800;
 }
 .tp-muted {
-  fill: #7a6650;
+  fill: var(--color-muted);
   font-weight: 500;
 }
 .tp-kaaba-label {
@@ -1914,26 +1914,26 @@ body:has(.player) {
   font-weight: 700;
 }
 .tp-kaaba-small {
-  fill: #e8d6a8;
+  fill: var(--brand-gold-soft);
   font-size: 9px;
 }
 .steps-flow {
-  background: #f6eedc;
+  background: var(--color-surface-2);
   border-radius: 14px;
 }
 .sf-link {
   fill: none;
-  stroke: #b5652b;
+  stroke: var(--color-accent);
   stroke-width: 2.5;
   stroke-dasharray: 2 5;
   stroke-linecap: round;
 }
 .sf-arrowhead {
-  fill: #b5652b;
+  fill: var(--color-accent);
 }
 .sf-circle {
-  fill: #e9dcc0;
-  stroke: #8a6a45;
+  fill: var(--color-accent-soft);
+  stroke: var(--color-primary);
   stroke-width: 2;
 }
 /* The step on show (owner, 2026-11-15: one step at a time). */
@@ -1948,16 +1948,148 @@ body:has(.player) {
 .sf-step {
   cursor: pointer;
 }
+/* Hajj & Umrah: one card per kind, each opens its own page (owner 2026-11-15). */
+.hajj-kinds {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+@media (min-width: 721px) {
+  .hajj-kinds {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1101px) {
+  .hajj-kinds {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.hajj-kind {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin: 0;
+  color: inherit;
+  text-decoration: none;
+}
+.hajj-kind > span:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.hajj-kind strong {
+  color: var(--color-primary);
+  font-size: var(--font-size-lg);
+}
+.hajj-kind-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  flex: none;
+}
+.hajj-kind:hover {
+  border-color: var(--color-primary);
+}
+/* Pinned steps of a Hajj / Umrah page (owner 2026-11-15): stay under the header while a step is read. */
+.step-strip-wrap {
+  position: sticky;
+  z-index: 15;
+  margin: 0 calc(-1 * var(--space-lg)) var(--space-md);
+  padding: var(--space-sm) var(--space-lg);
+  background: color-mix(in srgb, var(--color-bg) 94%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-line);
+}
+.step-strip {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 2px 0;
+}
+.step-strip::-webkit-scrollbar {
+  display: none;
+}
+.ss-step {
+  position: relative;
+  flex: 1 0 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 76px;
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: var(--font-size-xs);
+  line-height: 1.3;
+  text-align: center;
+  cursor: pointer;
+}
+/* dotted line to the next step */
+.ss-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 19px;
+  inset-inline-start: calc(50% + 22px);
+  inset-inline-end: calc(-50% + 22px);
+  border-top: 2px dotted var(--color-accent);
+}
+.ss-num {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary);
+  background: var(--color-accent-soft);
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: var(--font-size-md);
+}
+.ss-done .ss-num {
+  background: color-mix(in srgb, var(--color-primary) 18%, var(--color-surface));
+}
+.ss-active .ss-num {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary) 22%, transparent);
+}
+.ss-active {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+.ss-name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+@media (min-width: 721px) {
+  .step-strip-wrap {
+    margin-inline: 0;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-line);
+  }
+}
 .step-pager-hint {
   text-align: center;
   margin: 0 0 var(--space-sm);
 }
 .step-pager {
-  scroll-margin-top: 90px;
+  scroll-margin-top: 190px;
 }
 @media (min-width: 721px) {
   .step-pager {
-    scroll-margin-top: 150px;
+    scroll-margin-top: 250px;
   }
 }
 .step-pager .step {
@@ -1991,12 +2123,12 @@ body:has(.player) {
   height: 0;
 }
 .sf-num {
-  fill: #6b4a2b;
+  fill: var(--color-primary);
   font-size: 26px;
   font-weight: 800;
 }
 .sf-title {
-  fill: #4a3726;
+  fill: var(--color-ink);
   font-size: 12px;
   font-weight: 700;
 }
@@ -2013,6 +2145,16 @@ body:has(.player) {
 .card ul {
   margin: 0;
   padding-inline-start: 22px;
+}
+/* A dua inside a Hajj / Umrah step, shaded (owner 2026-11-15). */
+mark.dua-inline {
+  background: var(--color-verse-highlight);
+  color: inherit;
+  border-radius: 6px;
+  padding: 0.1em 0.3em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  font-weight: 600;
 }
 .dua {
   margin: var(--space-md) 0 0;
@@ -3403,6 +3545,37 @@ dd {
 .brand-logo {
   display: none;
 }
+/* The logo in the chosen colour style (owner 2026-11-15): brand gradient tile, gold mark. */
+.brand-mark-logo {
+  display: inline-flex;
+  flex: none;
+  border-radius: 22%;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    var(--brand-dial-1) 0%,
+    var(--brand-dial-2) 55%,
+    var(--brand-dial-3) 100%
+  );
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-gold) 35%, transparent);
+}
+.brand-mark-logo .bl-ring {
+  stroke: var(--brand-gold);
+  stroke-opacity: 0.14;
+}
+.brand-mark-logo .bl-gold {
+  stroke: var(--brand-gold);
+}
+.brand-mark-logo .bl-gold-fill {
+  fill: var(--brand-gold);
+}
+.brand-mark-logo .bl-book {
+  fill: var(--brand-hero-accent);
+  stroke: var(--brand-gold);
+}
+.brand-mark-logo .bl-spine {
+  stroke: color-mix(in srgb, var(--brand-gold) 78%, #000);
+}
 .brand-text {
   display: inline-flex;
   flex-direction: column;
@@ -3507,11 +3680,7 @@ dd {
     display: none;
   }
   .brand-logo {
-    display: block;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: #fff;
+    display: inline-flex;
   }
   .brand-name {
     font-size: 22px;
@@ -3723,10 +3892,7 @@ dd {
     font-size: var(--font-size-lg);
     margin-bottom: var(--space-md);
   }
-  .site-footer-brand img {
-    border-radius: 12px;
-    background: #fff;
-  }
+
   .site-footer-about p {
     line-height: 1.8;
     margin-bottom: var(--space-md);
