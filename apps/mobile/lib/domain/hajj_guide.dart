@@ -149,6 +149,7 @@ class SourcedHajjGuide {
     required this.days,
     required this.ihram,
     required this.madinah,
+    this.pillars = '',
     required this.officialTitle,
     required this.officialTypes,
     required this.officialTypesNote,
@@ -200,6 +201,7 @@ class SourcedHajjGuide {
       days: strings(hub['days']),
       ihram: strings(hub['ihram']),
       madinah: hub['madinah'] as String,
+      pillars: hub['pillars'] as String? ?? '',
       officialTitle: off['title'] as String,
       officialTypes: [
         for (final t in off['types'] as List<dynamic>)
@@ -239,6 +241,9 @@ class SourcedHajjGuide {
   final List<String> days;
   final List<String> ihram;
   final String madinah;
+
+  /// The pillars of Hajj (Ibn Baz's fatwa, owner 2026-11-16).
+  final String pillars;
   final String officialTitle;
   final List<({String name, List<GuideSeg> segs})> officialTypes;
   final List<GuideSeg> officialTypesNote;

@@ -1,6 +1,14 @@
 {
  "_doc": "References only (owner 2026-11-15/16). Built into dist/hajj-guide.v2.json by build-guide.mjs, which cuts the exact words out of the sources. b = page of Ibn Baz's book with the first (from) and last (to) words of the passage; h = book:number (al-Alamiyya numbering of the bundled hadith) with std = the well-known number; hisn = Hisn al-Muslim chapter (1-based); quran = [surah, first ayah, last ayah]; say = shown shaded as words to say; q = ayahs of {...} written without a reference. Titles of steps and sub-steps are the project's own labels; they hold no rulings. The sentence on women visiting graves (p91) is left out by the owner's choice (2026-11-16).",
  "sources": {
+  "binbaz14833": {
+   "id": "binbaz14833",
+   "file": "content/pilgrimage/upstream/binbaz-fatwa-14833.txt",
+   "short": "ابن باز، فتاوى نور على الدرب: «أركان الحج وواجباته»، الموقع الرسمي binbaz.org.sa/fatwas/14833",
+   "title": "فتوى «أركان الحج وواجباته» — نور على الدرب",
+   "author": "الشيخ عبد العزيز بن عبد الله بن باز",
+   "publisher": "الموقع الرسمي لسماحة الشيخ ابن باز (binbaz.org.sa/fatwas/14833)"
+  },
   "ibnbaz": {
    "id": "ibnbaz",
    "file": "content/pilgrimage/upstream/ibn-baz-tahqiq-shamela-31235.txt",
@@ -224,7 +232,14 @@
    "title": "التوجه إلى مقام إبراهيم",
    "scene": "maqam",
    "items": [
-    { "h": "muslim:2137", "std": 1218, "narrator": "عن جابر رضي الله عنه", "from": "ثُمَّ نَفَذَ إِلَى مَقَامِ إِبْرَاهِيمَ", "to": "فَجَعَلَ الْمَقَامَ بَيْنَهُ وَبَيْنَ الْبَيْتِ", "q": [[2, 125]] }
+    { "h": "muslim:2137", "std": 1218, "narrator": "عن جابر رضي الله عنه", "from": "ثُمَّ نَفَذَ إِلَى مَقَامِ إِبْرَاهِيمَ", "to": "فَجَعَلَ الْمَقَامَ بَيْنَهُ وَبَيْنَ الْبَيْتِ", "q": [[2, 125]] },
+    { "quran": [2, 125, 125] }
+   ]
+  },
+  "pillars": {
+   "title": "أركان الحج الأربعة",
+   "items": [
+    { "f": "binbaz14833", "from": "وأركان الحج أربعة:", "to": "هذه أربعة أركان للحج." }
    ]
   },
   "two-rakahs": {
@@ -575,7 +590,8 @@
    "scene": "tawaf",
    "subs": ["farewell", "no-ramal", "black-stone", "between-corners", "each-stone", "two-rakahs"]
   },
-  "madinah": { "title": "زيارة المسجد النبوي", "scene": "madinah", "subs": ["madinah-virtue", "madinah-enter", "madinah-salam", "madinah-adab", "quba-baqi"] }
+  "madinah": { "title": "زيارة المسجد النبوي", "scene": "madinah", "subs": ["madinah-virtue", "madinah-enter", "madinah-salam", "madinah-adab", "quba-baqi"] },
+  "pillars": { "title": "أركان الحج", "scene": null, "subs": ["pillars"] }
  },
  "flows": {
   "umrah": [
@@ -637,6 +653,7 @@
   "umrahIntro": "umrah-intro",
   "days": ["tarwiyah-ihram", "tarwiyah-mina", "arafah", "muzdalifah", "aqaba", "hady", "halq-hajj", "ifadah-tamattu", "tashriq-mina", "tashriq-rami", "farewell"],
   "ihram": ["miqat"],
-  "madinah": "madinah"
+  "madinah": "madinah",
+  "pillars": "pillars"
  }
 }

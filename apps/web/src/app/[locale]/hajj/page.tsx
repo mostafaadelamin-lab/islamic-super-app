@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import hajj from "@/generated/hajj.json";
 import { isLocale, t } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
@@ -68,10 +67,12 @@ export default async function HajjPage({ params }: { params: LocaleParams }) {
           stepId={s}
         />
       ))}
-      <section className="card">
-        <h3 lang="ar">{hajj.hajj.pillars.title}</h3>
-        <p lang="ar">{hajj.hajj.pillars.body}</p>
-      </section>
+      <GuideStepCard
+        locale={locale}
+        id="hajj-pillars"
+        label={t(locale, "hajj.hajj")}
+        stepId={GUIDE.hub.pillars}
+      />
       <h2 id="madinah">{GUIDE.steps[GUIDE.hub.madinah]?.title}</h2>
       <GuideStepCard
         locale={locale}

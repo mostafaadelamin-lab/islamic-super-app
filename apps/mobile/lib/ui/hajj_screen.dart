@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../app_services.dart';
-import '../domain/hajj.dart';
 import '../theme/design_tokens.dart';
 import 'adaptive.dart';
 import 'hajj_guide_view.dart';
@@ -62,53 +61,16 @@ class HajjScreen extends StatelessWidget {
 
   static List<Widget> _hajj(BuildContext context) {
     final l = context.l10n;
-    final c = context.services.content;
-    final g = c.hajjGuide;
+    final g = context.services.content.hajjGuide;
     String num(int n) => context.isArabic ? _arabicNum(n) : '$n';
-    final pillars = [
-      for (final b in c.hajj.sections['hajj'] ?? const <HajjBlock>[])
-        if (b.title?.contains('أركان') ?? false) b,
-    ];
     return [
       for (final (i, s) in g.days.indexed)
         GuideStepView(key: Key('hajjStage-${i + 1}'), stepId: s, label: l.hajjStage(num(i + 1))),
-      for (final b in pillars) _PillarsCard(block: b),
+      GuideStepView(key: const Key('hajjPillars'), stepId: g.pillars, label: l.hajjHajj),
       GuideStepView(stepId: g.madinah, label: l.hajjMadinah),
       const OfficialGuideCard(),
       const GuideSourcesCard(),
     ];
-  }
-}
-
-/// The pillars of Hajj card, as it was (the project's own wording; flagged to the owner 2026-11-16).
-class _PillarsCard extends StatelessWidget {
-  const _PillarsCard({required this.block});
-  final HajjBlock block;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Card(
-      key: const Key('hajjPillars'),
-      margin: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
-      child: Padding(
-        padding: const EdgeInsets.all(DesignTokens.spaceLg),
-        child: Directionality(
-          textDirection: TextDirection.rtl,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (block.title case final t?) Text(t, style: theme.textTheme.titleMedium),
-              for (final p in [...block.items, ...block.paragraphs])
-                Padding(
-                  padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
-                  child: Text(p, style: theme.textTheme.bodyLarge?.copyWith(height: 1.9)),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
 

@@ -231,6 +231,19 @@ function item(it) {
       ...(it.times ? { times: it.times } : {}),
     };
   }
+  if (it.f) {
+    // A passage of another saved source file (e.g. an Ibn Baz fatwa from binbaz.org.sa), cut by its first
+    // and last words.
+    const meta = src.sources[it.f] ?? fail(`no source ${it.f}`);
+    const t = read(meta.file).normalize("NFC");
+    const from = it.from.normalize("NFC");
+    const to = it.to.normalize("NFC");
+    const i = t.indexOf(from);
+    if (i < 0) fail(`${it.f}: start not found: ${it.from}`);
+    const j = t.indexOf(to, i);
+    if (j < 0) fail(`${it.f}: end not found: ${it.to}`);
+    return { k: it.say ? "say" : "text", segs: segments(t.slice(i, j + to.length), it.q), src: meta.short };
+  }
   if (it.hisn) {
     const c = hisn[it.hisn - 1] ?? fail(`no Hisn chapter ${it.hisn}`);
     const full = c[1].join("\n").normalize("NFC");
@@ -290,7 +303,7 @@ const SCENES = new Set(src.scenes);
 const steps = {};
 const subs = {};
 for (const [id, s] of Object.entries(src.steps)) {
-  if (!SCENES.has(s.scene)) fail(`step ${id}: unknown scene ${s.scene}`);
+  if (s.scene !== null && !SCENES.has(s.scene)) fail(`step ${id}: unknown scene ${s.scene}`);
   for (const key of s.subs) {
     subs[key] ??= sub(key);
     if (subs[key].scene && !SCENES.has(subs[key].scene)) fail(`sub ${key}: unknown scene`);
@@ -301,7 +314,7 @@ for (const key of Object.keys(src.subs)) if (!subs[key]) fail(`sub-step ${key} i
 for (const [kind, list] of Object.entries(src.flows)) {
   for (const f of list) if (!steps[f.step]) fail(`flow ${kind}: no step ${f.step}`);
 }
-for (const id of [...src.hub.days, ...src.hub.ihram, src.hub.madinah, src.hub.umrahIntro]) {
+for (const id of [...src.hub.days, ...src.hub.ihram, src.hub.madinah, src.hub.umrahIntro, src.hub.pillars]) {
   if (!steps[id]) fail(`hub: no step ${id}`);
 }
 
