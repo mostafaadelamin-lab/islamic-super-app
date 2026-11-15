@@ -100,7 +100,7 @@ export function TafsirPanel({ locale, surah, ayah, onStep, showNav = true }: Taf
           </div>
         ) : null}
         {shown.status === "ready" ? (
-          <p className="tafsir-text" lang="ar" dir="rtl" data-testid="tafsir-text">
+          <p className="tafsir-text" lang="ar" dir="rtl" data-testid="tafsir-text" tabIndex={0}>
             {shown.text}
           </p>
         ) : null}

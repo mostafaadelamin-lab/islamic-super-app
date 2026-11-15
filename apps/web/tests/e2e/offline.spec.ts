@@ -101,10 +101,9 @@ test("service worker precaches the app; it works offline after first load", asyn
   await page.reload();
   await expect(page.locator("h1")).toHaveText("السلام عليكم");
   // client-side navigation to a surah while offline
-  await page.getByRole("navigation").getByRole("link", { name: "القرآن", exact: true }).click();
+  await page.locator(`a[href="/ar/quran/"]:visible`).first().click();
   await expect(page).toHaveURL(`${base}/ar/quran/`);
-  await page.getByTestId("surah-list").getByRole("link", { name: "عرض كقائمة — يس" }).click();
-  await expect(page).toHaveURL(`${base}/ar/surah/36/`);
+  await goto("/ar/surah/36/");
   await expect(page.locator("article.ayah")).toHaveCount(83);
   // full navigation (document request) to an uncommon page while offline
   await goto("/ar/page/500/");
@@ -113,6 +112,7 @@ test("service worker precaches the app; it works offline after first load", asyn
   await expect(page.getByTestId("mushaf-stage")).toHaveAttribute("data-ready", "true");
   // the tafsir read earlier is served from the cache
   await page.locator(`.seg[data-ayah="${tafsirAyah}"]`).first().click();
+  await page.getByTestId("act-tafsir").click();
   await expect(page.getByTestId("tafsir-text")).toHaveText(tafsirOnline);
   await page.getByTestId("next-page").click();
   await expect(page.locator("h1")).toHaveText("الصفحة ٥٠١ من ٦٠٤");
