@@ -126,6 +126,13 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
   /// The dhikr shown in the one-per-page view.
   int _at = 0;
   AdhkarSession get session => _session!;
+  final _autoExit = AdhkarAutoExit();
+
+  @override
+  void dispose() {
+    _autoExit.dispose();
+    super.dispose();
+  }
 
   @override
   void didChangeDependencies() {
@@ -176,6 +183,7 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
             listenable: Listenable.merge([s.adhkar, s.settings]),
             builder: (context, _) {
               final p = s.adhkar.progress(session);
+              _autoExit.update(this.context, complete: p.items.isNotEmpty && p.completedItems == p.items.length);
               final header = <Widget>[
                 Padding(
                   padding: const EdgeInsets.fromLTRB(
@@ -202,6 +210,7 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
                     onSelectionChanged: (v) => setState(() {
                       _session = v.single;
                       _at = 0;
+                      _autoExit.restart();
                     }),
                   ),
                 ),

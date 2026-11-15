@@ -7,6 +7,7 @@
 - Contact us (app + website): a form with request title, name, phone, WhatsApp and message. No email address is shown.
 - Website: everything the app had that the website lacked (adhkar hub, five-tab zakat calculator, hadith explanations, surah "about" cards, story videos, "your channels" in videos, qibla distance and tips, automatic location and shared monthly timetable).
 - Website on a computer: top bar, drop-down menus, website home, breadcrumbs and a site-map footer. Phones keep the app look.
+- Adhkar (app + website): finishing the last dhikr of a list closes it by itself. The "done" tick shows for about a second, then the app goes back to the adhkar list (morning, evening and every Hisn al-Muslim chapter in the one-card view); the website scrolls back up to the adhkar list, and a Hisn chapter returns to the chapter list. A list already finished today opens normally. The website's Hisn chapters now have the same tap counter as the app in the one-card view.
 - Reader (app + website): page-turn arrows and a hint in full screen; on tablets held sideways and wide screens, the player and tools sit beside the page; the ayah sheet no longer covers the page; one sound at a time (adhkar pause the Quran, which resumes from its ayah); the nasheed player sits under the playing nasheed.
 ### Changed
 - Colours: the app and website follow the Mushaf's cream, brown and gold palette instead of green, in light and dark mode.

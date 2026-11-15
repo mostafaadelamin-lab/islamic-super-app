@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AdhkarView } from "@/components/AdhkarView";
 import { HisnIndex } from "@/components/HisnIndex";
@@ -6,6 +6,10 @@ import { HisnItems } from "@/components/HisnItems";
 import adhkar from "@/generated/adhkar.json";
 import { HISN, HISN_SECTIONS } from "@/lib/hisn";
 import { resetStores } from "./reset";
+import { ADHKAR_AUTO_EXIT_MS } from "@/hooks/useAutoExit";
+import { adhkarStore, countOne, sessionItems } from "@/lib/adhkar";
+import { isoDate } from "@/lib/time";
+import { countStatedIn } from "@/lib/hisn-count";
 
 const ITEMS = (adhkar as { items: string[] }).items;
 const TRAVEL_CHAPTER = 98;
@@ -63,5 +67,86 @@ describe("cards, share and report", () => {
     const total = Number(counter.textContent!.split("/")[1]!.trim());
     for (let k = 0; k < total; k++) await userEvent.click(screen.getByTestId("dhikr-count"));
     expect(screen.getByTestId("card-pos")).toHaveTextContent(/^2 \//);
+  });
+});
+
+describe("finishing a list goes back by itself", () => {
+  const today = (): string => {
+    const d = new Date();
+    return isoDate({ year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate() });
+  };
+
+  it("morning: the last tap shows the tick, then scrolls back up to the adhkar list", async () => {
+    const scrollTo = vi.fn();
+    vi.stubGlobal("scrollTo", scrollTo);
+    const list = sessionItems(ITEMS, "morning");
+    // Everything but the last tap of the last dhikr.
+    adhkarStore.set((p) => {
+      let cur = p;
+      for (const d of list) {
+        const n = d === list[list.length - 1] ? d.count - 1 : d.count;
+        for (let k = 0; k < n; k++) cur = countOne(cur, today(), "morning", d);
+      }
+      return cur;
+    });
+    render(<AdhkarView locale="en" items={ITEMS} />);
+    await userEvent.click(screen.getByTestId("view-list"));
+    vi.useFakeTimers();
+    try {
+      const counters = screen.getAllByTestId("dhikr-count");
+      act(() => counters[counters.length - 1]!.click());
+      expect(scrollTo).not.toHaveBeenCalled();
+      act(() => vi.advanceTimersByTime(ADHKAR_AUTO_EXIT_MS));
+      expect(scrollTo).toHaveBeenCalledWith(expect.objectContaining({ top: 0 }));
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("a list already finished today does not jump", async () => {
+    const scrollTo = vi.fn();
+    vi.stubGlobal("scrollTo", scrollTo);
+    adhkarStore.set((p) => {
+      let cur = p;
+      for (const d of sessionItems(ITEMS, "morning"))
+        for (let k = 0; k < d.count; k++) cur = countOne(cur, today(), "morning", d);
+      return cur;
+    });
+    vi.useFakeTimers();
+    try {
+      render(<AdhkarView locale="en" items={ITEMS} />);
+      act(() => vi.advanceTimersByTime(ADHKAR_AUTO_EXIT_MS * 2));
+      expect(scrollTo).not.toHaveBeenCalled();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("Hisn chapter cards: counters like the app; the last one goes back to the chapter list", async () => {
+    const assign = vi.fn();
+    vi.stubGlobal("location", { ...window.location, assign, origin: window.location.origin });
+    render(<HisnItems locale="en" chapterId={TRAVEL_CHAPTER} title={TRAVEL.title} items={TRAVEL.items} />);
+    await userEvent.click(screen.getByTestId("view-cards"));
+    vi.useFakeTimers();
+    try {
+      for (let i = 0; i < TRAVEL.items.length; i++) {
+        for (let k = 0; k < countStatedIn(TRAVEL.items[i]!); k++)
+          act(() => screen.getByTestId(`hisn-count-${i + 1}`).click());
+        if (i < TRAVEL.items.length - 1) act(() => screen.getByTestId("card-next").click());
+      }
+      expect(assign).not.toHaveBeenCalled();
+      act(() => vi.advanceTimersByTime(ADHKAR_AUTO_EXIT_MS));
+      expect(assign).toHaveBeenCalledWith(expect.stringMatching(/hisn\/?$/));
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+});
+
+describe("countStatedIn", () => {
+  it("reads the count a Hisn text states, ignoring diacritics; 1 otherwise", () => {
+    expect(countStatedIn("سُبْحَانَ اللهِ (ثَلاثَ مَرَّاتٍ)")).toBe(3);
+    expect(countStatedIn("لا إله إلا الله (مائة مرة)")).toBe(100);
+    expect(countStatedIn("بسم الله")).toBe(1);
   });
 });

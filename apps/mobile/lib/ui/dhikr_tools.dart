@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../app_services.dart';
@@ -74,6 +76,46 @@ class AdhkarViewToggle extends StatelessWidget {
       },
     );
   }
+}
+
+/// How long the "done" tick stays on screen before a finished adhkar list closes by itself.
+const adhkarAutoExitDelay = Duration(milliseconds: 1200);
+
+/// Owner 2026-11-15: when the reader completes the last dhikr of a list, the screen goes back to the
+/// list it was opened from by itself, after a short moment so the last tap is seen to count.
+/// Only a completion that happens while the screen is open triggers it (a list that was already
+/// finished today opens normally), and undoing it (reset) before the delay cancels it.
+class AdhkarAutoExit {
+  Timer? _timer;
+  bool? _wasComplete;
+
+  /// Call on every rebuild with whether everything in the list is done now.
+  void update(BuildContext context, {required bool complete}) {
+    final was = _wasComplete;
+    _wasComplete = complete;
+    if (!complete) {
+      _timer?.cancel();
+      _timer = null;
+    } else if (was == false) {
+      _timer?.cancel();
+      _timer = Timer(adhkarAutoExitDelay, () {
+        if (!context.mounted) return;
+        final route = ModalRoute.of(context);
+        // Leave only when this screen is on top (not under a sheet or another page).
+        if (route != null && !route.isCurrent) return;
+        unawaited(Navigator.of(context).maybePop());
+      });
+    }
+  }
+
+  /// Forget the state, e.g. when the screen switches to another list (morning ↔ evening).
+  void restart() {
+    _timer?.cancel();
+    _timer = null;
+    _wasComplete = null;
+  }
+
+  void dispose() => _timer?.cancel();
 }
 
 /// One item at a time with previous / next and the position.

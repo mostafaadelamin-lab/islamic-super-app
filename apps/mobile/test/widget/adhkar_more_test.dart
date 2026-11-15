@@ -70,6 +70,58 @@ void main() {
     expect(find.textContaining('٢ /'), findsOneWidget);
   });
 
+  testWidgets('finishing the last morning dhikr shows the tick, then goes back to the adhkar list', (tester) async {
+    final app = await pumpApp(tester, size: tallPhone);
+    await pushScreen(tester, const AdhkarSessionScreen(initial: AdhkarSession.morning));
+    final items = app.services.adhkar.progress(AdhkarSession.morning).items;
+    // Everything but the last tap of the last dhikr, done in the store directly.
+    for (final d in items) {
+      final n = d == items.last ? d.meta.count - 1 : d.meta.count;
+      for (var k = 0; k < n; k++) {
+        await app.services.adhkar.tap(AdhkarSession.morning, d);
+      }
+    }
+    await tester.pumpAndSettle();
+    expect(find.byType(AdhkarSessionScreen), findsOneWidget, reason: 'not finished yet: stays open');
+    await app.services.adhkar.tap(AdhkarSession.morning, items.last);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.byType(AdhkarSessionScreen), findsOneWidget, reason: 'the done tick shows for a moment');
+    await tester.pump(adhkarAutoExitDelay);
+    await tester.pumpAndSettle();
+    expect(find.byType(AdhkarSessionScreen), findsNothing, reason: 'back to the list it came from');
+  });
+
+  testWidgets('a list already finished today opens normally and does not close by itself', (tester) async {
+    final app = await pumpApp(tester, size: tallPhone);
+    for (final d in app.services.adhkar.progress(AdhkarSession.evening).items) {
+      for (var k = 0; k < d.meta.count; k++) {
+        await app.services.adhkar.tap(AdhkarSession.evening, d);
+      }
+    }
+    await pushScreen(tester, const AdhkarSessionScreen(initial: AdhkarSession.evening));
+    await tester.pump(adhkarAutoExitDelay * 2);
+    await tester.pumpAndSettle();
+    expect(find.byType(AdhkarSessionScreen), findsOneWidget);
+  });
+
+  testWidgets('a Hisn chapter closes by itself after its last counter is done', (tester) async {
+    final app = await pumpApp(tester, size: tallPhone);
+    await app.services.settings.setAdhkarCards(true);
+    final chapter = app.services.content.adhkar.hisn[97];
+    expect(chapter.items.length, 1);
+    await pushScreen(tester, HisnChapterScreen(chapter: chapter));
+    final target = countStatedIn(chapter.items[0]);
+    for (var k = 0; k < target; k++) {
+      await tester.tap(find.byKey(const Key('hisnCounter-0')));
+      await tester.pump();
+    }
+    expect(find.byType(HisnChapterScreen), findsOneWidget);
+    await tester.pump(adhkarAutoExitDelay);
+    await tester.pumpAndSettle();
+    expect(find.byType(HisnChapterScreen), findsNothing);
+  });
+
   testWidgets('morning and evening reminders are scheduled daily at the chosen time', (tester) async {
     final notes = FakeNotifications();
     final app = await pumpApp(tester, size: tallPhone, notifications: notes, locale: 'en');

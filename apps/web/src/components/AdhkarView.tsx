@@ -15,6 +15,7 @@ import {
 import { isoDate } from "@/lib/time";
 import { adhkarViewStore } from "@/lib/dhikr-share";
 import { useStore } from "@/hooks/useStore";
+import { useAutoExit } from "@/hooks/useAutoExit";
 import { Icon } from "./Icon";
 import { CardDeck, ModeSwitch } from "./CardDeck";
 import { DhikrTools } from "./DhikrTools";
@@ -50,6 +51,16 @@ export function AdhkarView({
   const list = sessionItems(items, session);
   const progress = progressFor(stored, today);
   const summary = sessionSummary(stored, today, session, list);
+  // Finishing the last dhikr goes back up to the adhkar list at the top of the page (the app closes
+  // the screen and shows its adhkar list).
+  useAutoExit(
+    today !== "" && summary.total > 0 && summary.completed === summary.total,
+    `${session}:${today}`,
+    () => {
+      const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+      window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+    },
+  );
   const choose = (s: Session): void => {
     setSession(s);
     window.history.replaceState(window.history.state, "", `#${s}`);

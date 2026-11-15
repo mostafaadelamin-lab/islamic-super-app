@@ -112,9 +112,34 @@ class _HisnScreenState extends State<HisnScreen> {
   }
 }
 
-class HisnChapterScreen extends StatelessWidget {
+class HisnChapterScreen extends StatefulWidget {
   const HisnChapterScreen({super.key, required this.chapter});
   final HisnChapter chapter;
+
+  @override
+  State<HisnChapterScreen> createState() => _HisnChapterScreenState();
+}
+
+class _HisnChapterScreenState extends State<HisnChapterScreen> {
+  HisnChapter get chapter => widget.chapter;
+
+  /// Taps per dhikr in the one-per-page view (kept here so a counter scrolled away keeps its count).
+  late final List<int> _taps = List.filled(chapter.items.length, 0);
+  late final List<int> _targets = [for (final t in chapter.items) countStatedIn(t)];
+  final _autoExit = AdhkarAutoExit();
+
+  bool _isDone(int i) => _taps[i] >= _targets[i];
+
+  void _tap(int i) {
+    HapticFeedback.selectionClick();
+    setState(() => _taps[i] = _isDone(i) ? 0 : _taps[i] + 1);
+  }
+
+  @override
+  void dispose() {
+    _autoExit.dispose();
+    super.dispose();
+  }
 
   Widget _item(BuildContext context, int i) {
     final l = context.l10n;
@@ -134,7 +159,7 @@ class HisnChapterScreen extends StatelessWidget {
               builder: (context, url) => Center(child: DhikrListenButton(url: url, compact: true)),
             ),
             if (context.services.settings.adhkarCards)
-              HisnCounter(key: Key('hisnCounter-$i'), target: countStatedIn(chapter.items[i])),
+              HisnCounter(key: Key('hisnCounter-$i'), target: _targets[i], count: _taps[i], onTap: () => _tap(i)),
             Wrap(
               alignment: WrapAlignment.end,
               children: [
@@ -167,23 +192,31 @@ class HisnChapterScreen extends StatelessWidget {
         body: ReadableWidth(
           child: ListenableBuilder(
             listenable: settings,
-            builder: (context, _) => settings.adhkarCards
-                ? Column(
-                    children: [
-                      Expanded(
-                        child: CardPager(
-                          count: chapter.items.length,
-                          builder: _item,
-                          onIndex: (_) => unawaited(DhikrPlayer.instance.stop()),
+            builder: (context, _) {
+              // Counters exist only in the one-per-page view; there, finishing the last one goes back.
+              _autoExit.update(
+                this.context,
+                complete:
+                    settings.adhkarCards && _taps.isNotEmpty && Iterable<int>.generate(_taps.length).every(_isDone),
+              );
+              return settings.adhkarCards
+                  ? Column(
+                      children: [
+                        Expanded(
+                          child: CardPager(
+                            count: chapter.items.length,
+                            builder: _item,
+                            onIndex: (_) => unawaited(DhikrPlayer.instance.stop()),
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                : ListView(
-                    key: const Key('hisnChapter'),
-                    padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-                    children: [for (var i = 0; i < chapter.items.length; i++) _item(context, i)],
-                  ),
+                      ],
+                    )
+                  : ListView(
+                      key: const Key('hisnChapter'),
+                      padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+                      children: [for (var i = 0; i < chapter.items.length; i++) _item(context, i)],
+                    );
+            },
           ),
         ),
       ),
@@ -209,29 +242,22 @@ String hisnSectionName(AppLocalizations l, String id) => switch (id) {
 };
 
 /// Tap counter under a Hisn al-Muslim dhikr in the one-per-page view (target from the text, else 1).
-class HisnCounter extends StatefulWidget {
-  const HisnCounter({super.key, required this.target});
+/// The count lives in the chapter screen, so it survives paging and tells the screen when all are done.
+class HisnCounter extends StatelessWidget {
+  const HisnCounter({super.key, required this.target, required this.count, required this.onTap});
   final int target;
-
-  @override
-  State<HisnCounter> createState() => _HisnCounterState();
-}
-
-class _HisnCounterState extends State<HisnCounter> {
-  int _n = 0;
+  final int count;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final done = _n >= widget.target;
+    final done = count >= target;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceMd),
       child: Center(
         child: InkResponse(
-          onTap: () {
-            HapticFeedback.selectionClick();
-            setState(() => _n = done ? 0 : _n + 1);
-          },
+          onTap: onTap,
           radius: 70,
           child: Container(
             width: 120,
@@ -245,7 +271,7 @@ class _HisnCounterState extends State<HisnCounter> {
             child: done
                 ? RIcon(RIcons.check, size: 48, color: scheme.onPrimary)
                 : Text(
-                    '${context.num(_n)} / ${context.num(widget.target)}',
+                    '${context.num(count)} / ${context.num(target)}',
                     style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: scheme.onPrimaryContainer),
                   ),
           ),
