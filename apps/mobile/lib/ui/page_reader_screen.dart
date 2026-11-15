@@ -31,9 +31,9 @@ import 'r_icon.dart';
 /// bookmark, copy). With "Listen with tafsir" the Mushaf tab splits in two:
 /// the ayah being recited and its tafsir.
 class PageReaderScreen extends StatefulWidget {
-  /// The Mushaf opens full screen (only the page; a tap shows the controls).
-  /// Widget tests that drive the controls set this to false.
-  static bool startFullScreen = true;
+  /// The Mushaf opens with its tools; full screen only from its button (owner 2026-11-15: tap to enlarge,
+  /// tap to shrink was confusing). Tests that start in full screen set this to true.
+  static bool startFullScreen = false;
 
   const PageReaderScreen({super.key, this.initialPage = 1, this.highlight});
   final int initialPage;
@@ -61,6 +61,8 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   bool _hint = false;
   Timer? _hintTimer;
   static const _hintShows = 3;
+  static const _exitButtonRoom = 48.0;
+  static const _actionsRoom = 120.0;
 
   int get page => _page;
   AyahRef? get selected => _selected;
@@ -86,7 +88,24 @@ class PageReaderScreenState extends State<PageReaderScreen> {
       if (held != null && held != _page) _jump(held);
       _scheduleKhatma();
       _maybeShowHint();
+      _maybeShowGuide();
     });
+  }
+
+  /// The first time the Mushaf opens: a short guide to its touches.
+  void _maybeShowGuide() {
+    final settings = context.services.settings;
+    if (settings.readerGuideDone) return;
+    unawaited(showReaderGuide(context).then((_) => settings.setReaderGuideDone()));
+  }
+
+  /// Full screen from its button: only the page, with a visible way back.
+  void enterFullScreen() {
+    setState(() {
+      _controls = false;
+      _selected = null;
+    });
+    _maybeShowHint();
   }
 
   void _maybeShowHint() {
@@ -326,6 +345,12 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                   Positioned.fill(child: _pages(context)),
                   if (full) ..._turnArrows(context),
                   if (full && _hint) _hintBanner(context),
+                  if (full)
+                    PositionedDirectional(
+                      top: DesignTokens.spaceSm,
+                      end: DesignTokens.spaceSm,
+                      child: _exitFullButton(context),
+                    ),
                 ],
               ),
             ),
@@ -363,7 +388,25 @@ class PageReaderScreenState extends State<PageReaderScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (actions != null) ...[actions, Divider(height: 1, color: scheme.outlineVariant)],
+          if (wide && _tab == ReaderTab.mushaf) ...[
+            // Wide screens keep the room for the ayah row, so the page never shrinks when it shows.
+            ConstrainedBox(
+              key: const Key('stripAyahRoom'),
+              constraints: const BoxConstraints(minHeight: _actionsRoom),
+              child: actions ??
+                  SizedBox(
+                    height: _actionsRoom,
+                    child: Center(
+                      child: Text(
+                        context.l10n.readerPickAyah,
+                        key: const Key('stripPickAyah'),
+                        style: TextStyle(color: scheme.onSurfaceVariant),
+                      ),
+                    ),
+                  ),
+            ),
+            Divider(height: 1, color: scheme.outlineVariant),
+          ] else if (actions != null) ...[actions, Divider(height: 1, color: scheme.outlineVariant)],
           if (wide) ...[
             _sliderRow(context),
             Row(
@@ -444,11 +487,36 @@ class PageReaderScreenState extends State<PageReaderScreen> {
     return [arrow(next: true, left: rtl), arrow(next: false, left: !rtl)];
   }
 
+  Widget _exitFullButton(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Material(
+      color: scheme.surface.withValues(alpha: 0.94),
+      shape: StadiumBorder(side: BorderSide(color: scheme.primary.withValues(alpha: 0.3))),
+      elevation: 2,
+      child: InkWell(
+        key: const Key('readerExitFull'),
+        customBorder: const StadiumBorder(),
+        onTap: () => setState(() => _controls = true),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: DesignTokens.spaceSm),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RIcon(RIcons.shrink, size: 18, color: scheme.primary),
+              const SizedBox(width: 6),
+              Text(context.l10n.readerExitFull, style: TextStyle(color: scheme.primary, fontWeight: FontWeight.w600)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _hintBanner(BuildContext context) {
     final l = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     return Positioned(
-      top: DesignTokens.spaceSm,
+      top: DesignTokens.spaceSm + _exitButtonRoom,
       left: DesignTokens.spaceMd,
       right: DesignTokens.spaceMd,
       child: Material(
@@ -505,10 +573,8 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                     playing: s.recitation.currentRef,
                     onAyahTap: _onAyahTap,
                     immersive: full,
-                    onBackgroundTap: () => setState(() {
-                      _controls = !_controls; // a tap shows or hides the controls
-                      _selected = null;
-                    }),
+                    // A tap beside the text only closes the ayah's actions (no show/hide toggling).
+                    onBackgroundTap: () => setState(() => _selected = null),
                   ),
                 ),
               ),
@@ -602,9 +668,12 @@ class PageReaderScreenState extends State<PageReaderScreen> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(child: tafsir),
+            Expanded(flex: 45, child: tafsir),
             const SizedBox(width: DesignTokens.spaceSm),
-            Expanded(child: page),
+            Expanded(
+              flex: 55,
+              child: _DuoPage(page: _page, playing: playing, maxScroll: _DuoPage.wideScroll, child: page),
+            ),
           ],
         ),
       );
@@ -750,6 +819,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                 unawaited(showKhatmaSheet(context, onGo: _jump));
               }),
               item('barSearch', RIcons.search, l.readerSearch, () => push(const SearchScreen())),
+              if (_tab == ReaderTab.mushaf) item('readerFull', RIcons.expand, l.readerFullScreen, enterFullScreen),
             ],
           ),
         ),
@@ -875,10 +945,15 @@ class _ZoomedPageState extends State<ZoomedPage> {
 /// The Mushaf page in the top half on a phone: as wide as the screen (readable size) and scrolled
 /// so the recited ayah stays in view.
 class _DuoPage extends StatefulWidget {
-  const _DuoPage({required this.page, required this.playing, required this.child});
+  const _DuoPage({required this.page, required this.playing, required this.child, this.maxScroll});
   final int page;
   final AyahRef? playing;
   final Widget child;
+
+  /// Wide screens (owner 2026-11-15): the page is big but at most this many screen heights tall,
+  /// so it reads large beside the tafsir and scrolls with the recitation.
+  final double? maxScroll;
+  static const wideScroll = 1.4;
 
   /// Height of a page laid out at the screen's width (15 lines plus the header and footer).
   static const heightPerWidth = 1.5;
@@ -916,12 +991,19 @@ class _DuoPageState extends State<_DuoPage> {
     super.dispose();
   }
 
+  double _height(BoxConstraints c) {
+    final byWidth = c.maxWidth * _DuoPage.heightPerWidth;
+    final cap = widget.maxScroll;
+    final h = cap == null ? byWidth : math.min(byWidth, c.maxHeight * cap);
+    return math.max(c.maxHeight, h);
+  }
+
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, c) => SingleChildScrollView(
       key: const Key('duoPage'),
       controller: _scroll,
-      child: SizedBox(height: math.max(c.maxHeight, c.maxWidth * _DuoPage.heightPerWidth), child: widget.child),
+      child: SizedBox(height: _height(c), child: widget.child),
     ),
   );
 }

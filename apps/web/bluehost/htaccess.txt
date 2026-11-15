@@ -22,6 +22,12 @@ ErrorDocument 404 /404.html
   RewriteRule ^api/v1/reels/channel/?$ api/videos.php?route=channel [L,QSA]
   RewriteRule ^api/channels/search/?$ api/videos.php?route=channels [L,QSA]
 
+  # A page's data file (.../index.txt) opened as a page shows raw text (Next.js does this after an
+  # upload while an older page is open). Browsers asking for a page get the page itself instead.
+  RewriteCond %{HTTP:Sec-Fetch-Dest} =document [OR]
+  RewriteCond %{HTTP_ACCEPT} text/html
+  RewriteRule ^(.*/)?index\.txt$ /$1 [L,R=302]
+
   # Pages are folders with index.html (Next.js trailingSlash): /ar/help -> /ar/help/
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME}/index.html -f
@@ -51,7 +57,12 @@ AddType audio/mpeg .mp3
   </If>
   # Pages, the service worker and the manifest must always be checked again, so updates show at once.
   <FilesMatch "(\.html|\.txt|sw\.js|\.webmanifest)$">
-    Header set Cache-Control "no-cache"
+    Header set Cache-Control "no-cache, must-revalidate"
+    Header unset Expires
+  </FilesMatch>
+  # Page data files differ from the page itself: never mix them up in a cache.
+  <FilesMatch "\.txt$">
+    Header merge Vary "Accept, RSC, Next-Router-State-Tree, Next-Router-Prefetch"
   </FilesMatch>
 </IfModule>
 

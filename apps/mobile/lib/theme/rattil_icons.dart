@@ -46,6 +46,7 @@ class RIcons {
     'M8 21v-4.5L4.5 12V5.5a1.5 1.5 0 0 1 3 0V10M16 21v-4.5l3.5-4.5V5.5a1.5 1.5 0 0 0-3 0V10M7.5 10l2.6 2.8c.6.6.9 1.4.9 2.2V21M16.5 10l-2.6 2.8c-.6.6-.9 1.4-.9 2.2V21',
   );
   static const edit = RIconData('M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4');
+  static const expand = RIconData('M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5');
   static const external = RIconData('M14 4h6v6M20 4l-9 9M18 14v6H4V6h6');
   static const eyeOff = RIconData(
     'M3 12c2-4 5.5-6 9-6 1.4 0 2.8.3 4 .9M21 12c-2 4-5.5 6-9 6-1.4 0-2.8-.3-4-.9M9.9 9.9a3 3 0 0 0 4.2 4.2M4 4l16 16',
@@ -112,6 +113,7 @@ class RIcons {
   static const share = RIconData(
     'M17.5 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM6.5 9.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM17.5 15.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM8.7 10.8l6.6-3.6M8.7 13.2l6.6 3.6',
   );
+  static const shrink = RIconData('M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5');
   static const split = RIconData('M4 4h16v16H4zM4 12h16M7 8h10M7 16h6');
   static const star = RIconData('M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8L3.5 9.7l5.9-.8z');
   static const stop = RIconData('M6 6h12v12H6z', filled: true);

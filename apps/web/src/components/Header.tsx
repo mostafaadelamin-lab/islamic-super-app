@@ -7,6 +7,7 @@ import { SiteNav } from "./SiteNav";
 import { HeaderPrayer } from "./HeaderPrayer";
 import { LanguageSwitch } from "./LanguageSwitch";
 import { Icon } from "./Icon";
+import { TopbarTools } from "./TopbarTools";
 
 /**
  * Site header. Wide screens (website): a thin top bar (dates, next prayer, contact, language) and the main
@@ -20,6 +21,7 @@ export function Header({ locale }: { locale: Locale }) {
         <div className="site-topbar-inner">
           <HeaderPrayer locale={locale} />
           <span className="topbar-links">
+            <TopbarTools locale={locale} />
             <Link href={href(locale, "help")}>{t(locale, "help.contact")}</Link>
             <Link href={href(locale, "about")}>{t(locale, "nav.about")}</Link>
           </span>

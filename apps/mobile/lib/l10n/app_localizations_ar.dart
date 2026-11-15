@@ -609,7 +609,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ayahShareImage => 'مشاركة كصورة';
 
   @override
-  String get ayahTafsir => 'التفسير';
+  String get ayahTafsir => 'تفسير الآية';
 
   @override
   String get ayahToPageEnd => 'لآخر الصفحة';
@@ -2008,6 +2008,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerBookmarks => 'إشارات مرجعية';
 
   @override
+  String get readerExitFull => 'إظهار الأدوات';
+
+  @override
   String get readerFont => 'حجم الخط';
 
   @override
@@ -2022,7 +2025,25 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerFontSmaller => 'تصغير الخط';
 
   @override
-  String get readerFullHint => 'للتقليب: اسحب الصفحة أو اضغط السهمين في الأسفل. المس الصفحة لإظهار الاستماع والأدوات.';
+  String get readerFullHint => 'للتقليب: اسحب الصفحة أو اضغط السهمين. لإظهار الأدوات اضغط «إظهار الأدوات».';
+
+  @override
+  String get readerFullScreen => 'ملء الشاشة';
+
+  @override
+  String get readerGuide1 => 'اضغط على أي آية لتظهر خياراتها تحت الصفحة: استماع، تفسير الآية، علامة، نسخ، مشاركة.';
+
+  @override
+  String get readerGuide2 => 'للتقليب: اسحب الصفحة، أو استخدم شريط الصفحات تحتها.';
+
+  @override
+  String get readerGuide3 => 'زر «ملء الشاشة» في الشريط السفلي يخفي الأدوات، وزر «إظهار الأدوات» أعلى الصفحة يرجعها.';
+
+  @override
+  String get readerGuide4 => '«استماع مع التفسير» يعرض الصفحة وتفسيرها معًا أثناء التلاوة.';
+
+  @override
+  String get readerGuideTitle => 'طريقة استخدام المصحف';
 
   @override
   String get readerHelp => 'مساعدة';
@@ -2088,6 +2109,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get readerListenWithTafsir => 'استماع مع التفسير';
+
+  @override
+  String get readerPickAyah => 'اضغط على أي آية لتظهر خياراتها هنا';
 
   @override
   String get readerPlayAyah => 'استمع للآية';

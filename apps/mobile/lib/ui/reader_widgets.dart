@@ -688,6 +688,39 @@ Future<void> showKhatmaSheet(BuildContext context, {required ValueChanged<int> o
   },
 );
 
+/// Short guide shown the first time the Mushaf opens.
+Future<void> showReaderGuide(BuildContext context) => showDialog<void>(
+  context: context,
+  builder: (context) {
+    final l = context.l10n;
+    final points = [l.readerGuide1, l.readerGuide2, l.readerGuide3, l.readerGuide4];
+    return AlertDialog(
+      key: const Key('readerGuide'),
+      title: Text(l.readerGuideTitle),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            for (final (i, p) in points.indexed)
+              Padding(
+                padding: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
+                child: Text('${i + 1}. $p', style: const TextStyle(height: 1.6)),
+              ),
+          ],
+        ),
+      ),
+      actions: [
+        FilledButton(
+          key: const Key('readerGuideOk'),
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l.readerHintClose),
+        ),
+      ],
+    );
+  },
+);
+
 /// Help sheet: how to use the reader, and go to a page by number.
 Future<void> showReaderHelp(BuildContext context, {required int pageCount, required ValueChanged<int> onGo}) =>
     showModalBottomSheet<void>(
@@ -741,7 +774,7 @@ class _HelpBodyState extends State<_HelpBody> {
         children: [
           Text(l.readerHelpTitle, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: DesignTokens.spaceSm),
-          for (final h in [l.readerHelp1, l.readerHelp2, l.readerHelp3])
+          for (final h in [l.readerGuide1, l.readerGuide2, l.readerGuide3, l.readerGuide4])
             Padding(
               padding: const EdgeInsets.only(bottom: DesignTokens.spaceXs),
               child: Text('• $h'),

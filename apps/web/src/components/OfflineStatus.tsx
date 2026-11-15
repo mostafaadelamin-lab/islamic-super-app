@@ -5,6 +5,7 @@ import { localizeDigits } from "@/lib/digits";
 import {
   currentOfflineStatus,
   requestOfflineStatus,
+  saveSiteOffline,
   subscribeOfflineStatus,
   type OfflineStatus as Status,
 } from "@/lib/sw-client";
@@ -23,6 +24,7 @@ export function OfflineStatus({ locale }: { locale: Locale }) {
   let text: string;
   if (!supported || !s.supported) text = t(locale, "settings.offlineUnsupported");
   else if (s.complete) text = t(locale, "settings.offlineComplete");
+  else if (s.total > 0 && !s.saved) text = t(locale, "settings.offlineAsk", { mb: localizeDigits(s.mb, locale) });
   else if (s.total > 0)
     text = t(locale, "settings.offlineProgress", {
       done: localizeDigits(s.done, locale),
@@ -37,7 +39,20 @@ export function OfflineStatus({ locale }: { locale: Locale }) {
       <p role="status" data-testid="offline-status">
         {text}
       </p>
-      {s.total > 0 && !s.complete ? (
+      {supported && s.supported && s.total > 0 && !s.saved && !s.complete ? (
+        <button
+          type="button"
+          className="btn btn-primary"
+          data-testid="offline-save"
+          onClick={() => {
+            setS((x) => ({ ...x, saved: true }));
+            saveSiteOffline();
+          }}
+        >
+          {t(locale, "settings.offlineSave")}
+        </button>
+      ) : null}
+      {s.saved && s.total > 0 && !s.complete ? (
         <progress
           max={s.total}
           value={s.done}

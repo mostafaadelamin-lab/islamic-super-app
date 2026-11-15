@@ -30,6 +30,11 @@ function walk(dir) {
 const hash = createHash("sha256");
 const core = [];
 const rest = { ar: [], en: [] };
+const extra = [];
+const restBytes = { ar: 0, en: 0 };
+let extraBytes = 0;
+// The shell: code, styles, fonts, icons, the two home pages and the error page.
+const SHELL = /^\/(_next\/static\/|fonts\/|icons?\/|[^/]+\.(webmanifest|png|svg|ico)$|404\.html$|(ar|en)\/$)/;
 let bytes = 0;
 for (const file of walk(out).sort()) {
   // URL-encode each segment so keys match request URLs (e.g. /_next/.../%5Blocale%5D/...).
@@ -45,18 +50,30 @@ for (const file of walk(out).sort()) {
   if (url.startsWith("/data/hadith/")) continue;
   // Alafasy's morning/evening adhkar recordings (~9 MB) stream on demand, like the other long audio.
   if (url.startsWith("/audio/adhkar_")) continue;
-  const heavy = /^\/(ar|en)\/(surah|page|hisn\/\d+)\//.exec(url);
-  if (heavy) rest[heavy[1]].push(BASE + url);
-  else core.push(BASE + url);
+  // Owner 2026-11-15 (site slow after an upload): the worker installs only the app shell. Everything else
+  // (pages, recordings, data) is kept once opened, or all at once only when the visitor asks to save the
+  // whole site for offline use in Settings.
+  const page = /^\/(ar|en)\//.exec(url);
+  if (SHELL.test(url)) core.push(BASE + url);
+  else if (page) rest[page[1]].push(BASE + url);
+  else extra.push(BASE + url);
+  if (!SHELL.test(url)) {
+    const size = statSync(file).size;
+    if (page) restBytes[page[1]] += size;
+    else extraBytes += size;
+  }
 }
+const mb = (n) => Math.round(n / 1048576);
 const version = hash.digest("hex").slice(0, 16);
 const template = readFileSync(join(app, "scripts/sw-template.js"), "utf8");
 const sw = template
   .replace("__VERSION__", version)
   .replaceAll("__BASE__", BASE)
   .replace("__CORE__", JSON.stringify(core))
-  .replace("__REST__", JSON.stringify(rest));
+  .replace("__REST__", JSON.stringify(rest))
+  .replace("__EXTRA__", JSON.stringify(extra))
+  .replace("__FULL_MB__", JSON.stringify({ ar: mb(extraBytes + restBytes.ar), en: mb(extraBytes + restBytes.en) }));
 writeFileSync(join(out, "sw.js"), sw);
 console.log(
-  `sw.js: version ${version}, ${core.length} core + ${rest.ar.length}/${rest.en.length} ar/en route files, ${(bytes / 1048576).toFixed(1)} MB total`,
+  `sw.js: version ${version}, shell ${core.length} files, +${extra.length} shared + ${rest.ar.length}/${rest.en.length} ar/en page files on request, ${(bytes / 1048576).toFixed(1)} MB total`,
 );

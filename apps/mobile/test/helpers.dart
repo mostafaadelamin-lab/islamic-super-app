@@ -114,7 +114,7 @@ Future<TestApp> pumpApp(
 }) async {
   final c = content ?? _content!;
   // The first-run tour is tested on its own (onboarding_test.dart); other tests start on the home screen.
-  SharedPreferences.setMockInitialValues({'locale': locale, 'onboarding.done': true, ...prefs});
+  SharedPreferences.setMockInitialValues({'locale': locale, 'onboarding.done': true, 'reader.guideDone': true, ...prefs});
   final p = await SharedPreferences.getInstance();
   final services = AppServices.create(
     content: c,

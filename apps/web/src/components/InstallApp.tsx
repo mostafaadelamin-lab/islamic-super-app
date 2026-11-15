@@ -30,8 +30,8 @@ const standalone = (): boolean =>
   (window.matchMedia?.("(display-mode: standalone)").matches === true ||
     (navigator as Navigator & { standalone?: boolean }).standalone === true);
 
-/** "Install as an app": Windows desktop/Start menu shortcut (and Android/macOS) through the browser's install. */
-export function InstallApp({ locale }: { locale: Locale }) {
+/** Shared install state: installed already, and whether the browser offers its own install prompt. */
+export function useInstall(): { installed: boolean; canPrompt: boolean; install: () => Promise<boolean> } {
   const [, force] = useState(0);
   const [installed, setInstalled] = useState(false);
   useEffect(() => {
@@ -45,7 +45,28 @@ export function InstallApp({ locale }: { locale: Locale }) {
       listeners.delete(l);
     };
   }, []);
+  const install = async (): Promise<boolean> => {
+    const ev = deferred;
+    if (!ev) return false;
+    await ev.prompt();
+    const { outcome } = await ev.userChoice;
+    if (outcome !== "accepted") return false;
+    deferred = null;
+    setInstalled(true);
+    return true;
+  };
+  return { installed, canPrompt: deferred !== null, install };
+}
 
+/** iPhone / iPad Safari has no install prompt: the site is added from the Share menu. */
+export const isIos = (): boolean =>
+  typeof navigator !== "undefined" &&
+  (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1));
+
+/** "Install as an app": Windows desktop/Start menu shortcut (and Android/macOS) through the browser's install. */
+export function InstallApp({ locale }: { locale: Locale }) {
+  const { installed, canPrompt, install } = useInstall();
   return (
     <section className="card" data-testid="install-app" aria-labelledby="install-h">
       <h2 id="install-h" className="card-title">
@@ -56,22 +77,13 @@ export function InstallApp({ locale }: { locale: Locale }) {
       ) : (
         <>
           <p>{t(locale, "pwa.installSub")}</p>
-          {deferred ? (
+          {canPrompt ? (
             <p>
               <button
                 type="button"
                 className="btn btn-primary"
                 data-testid="install-button"
-                onClick={async () => {
-                  const ev = deferred;
-                  if (!ev) return;
-                  await ev.prompt();
-                  const { outcome } = await ev.userChoice;
-                  if (outcome === "accepted") {
-                    deferred = null;
-                    setInstalled(true);
-                  }
-                }}
+                onClick={() => void install()}
               >
                 {t(locale, "pwa.install")}
               </button>

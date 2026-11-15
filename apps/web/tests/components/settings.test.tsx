@@ -220,7 +220,13 @@ describe("OfflineStatus", () => {
     const ready = new Promise(() => undefined);
     vi.stubGlobal("navigator", { ...navigator, serviceWorker: { ready } });
     render(<OfflineStatus locale="en" />);
-    act(() => handleSwMessage({ type: "precache-progress", done: 5, total: 10, complete: false }));
+    // Not saved yet: it offers to save the whole site (nothing downloads by itself, owner 2026-11-15).
+    act(() => handleSwMessage({ type: "precache-progress", done: 2, total: 10, complete: false, saved: false, mb: 140 }));
+    expect(screen.getByTestId("offline-status")).toHaveTextContent("about 140 MB");
+    expect(screen.getByTestId("offline-save")).toBeInTheDocument();
+    expect(screen.queryByRole("progressbar")).toBeNull();
+    act(() => handleSwMessage({ type: "precache-progress", done: 5, total: 10, complete: false, saved: true }));
+    expect(screen.queryByTestId("offline-save")).toBeNull();
     expect(screen.getByTestId("offline-status")).toHaveTextContent("5 of 10 files");
     expect(screen.getByRole("progressbar")).toHaveAttribute("value", "5");
     act(() => handleSwMessage({ type: "precache-progress", done: 10, total: 10, complete: true }));

@@ -141,14 +141,17 @@ void main() {
     expect(find.text('صفحة ٣٠٠'), findsOneWidget);
   });
 
-  testWidgets('tapping the margin hides and shows the controls', (tester) async {
+  testWidgets('full screen button hides the tools; «show tools» brings them back; a margin tap changes nothing', (tester) async {
     await open(tester, 5);
     expect(find.byKey(const Key('mushafControls')), findsOneWidget);
     await tester.tapAt(tester.getTopLeft(find.byKey(const Key('mushafPage-5'))) + const Offset(3, 3));
     await tester.pumpAndSettle();
+    expect(find.byKey(const Key('mushafControls')), findsOneWidget, reason: 'no tap-to-hide (owner 2026-11-15)');
+    await tester.tap(find.byKey(const Key('readerFull')));
+    await tester.pumpAndSettle();
     expect(reader(tester).controlsVisible, isFalse);
     expect(find.byKey(const Key('mushafControls')), findsNothing);
-    await tester.tapAt(tester.getTopLeft(find.byKey(const Key('mushafPage-5'))) + const Offset(3, 3));
+    await tester.tap(find.byKey(const Key('readerExitFull')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('mushafControls')), findsOneWidget);
   });

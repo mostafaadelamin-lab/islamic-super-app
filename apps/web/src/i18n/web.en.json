@@ -863,5 +863,12 @@
   "reader.playTafsirShort": "With tafsir",
   "mushaf.mark": "Mark",
   "mushaf.unmark": "Unmark",
-  "hajj.say.title": "What is said at this step"
+  "hajj.say.title": "What is said at this step",
+  "pwa.installShort": "Install the app",
+  "pwa.iosHowTo": "On iPhone and iPad: open the site in Safari, tap the Share button, then “Add to Home Screen”.",
+  "update.available": "A new version of the site is available",
+  "update.reload": "Update",
+  "update.later": "Later",
+  "settings.offlineAsk": "The site works online now and keeps each page you open. To use every page without the internet, save the whole site on this device (about {mb} MB).",
+  "settings.offlineSave": "Save the whole site for offline use"
 }

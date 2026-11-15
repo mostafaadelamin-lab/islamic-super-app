@@ -39,6 +39,11 @@ test("service worker precaches the app; it works offline after first load", asyn
   browserName,
 }) => {
   test.setTimeout(240_000);
+  // This test runs on its own port, so the first-visit tour is marked as seen here.
+  await page.addInitScript(() => {
+    localStorage.setItem("rattil.firstRun", JSON.stringify({ done: true }));
+    localStorage.setItem("rattil.readerGuide", "1");
+  });
   const goto = (path: string) => page.goto(base + path);
   await goto("/ar/");
   await page.evaluate(async () => {
@@ -46,6 +51,8 @@ test("service worker precaches the app; it works offline after first load", asyn
   });
   // The settings page shows precache progress reported by the worker.
   await goto("/ar/settings/");
+  // Nothing big downloads by itself (owner 2026-11-15: site slow); the visitor asks to save the site.
+  await page.getByTestId("offline-save").click();
   await expect(page.getByTestId("offline-status")).toContainText("حُفظ التطبيق كاملًا", { timeout: 200_000 });
   const cached = await page.evaluate(async () => {
     const keys = await caches.keys();

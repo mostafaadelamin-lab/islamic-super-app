@@ -10,6 +10,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ClientEffects } from "@/components/ClientEffects";
+import { UpdateBanner } from "@/components/UpdateBanner";
 import { AdhanAlerts } from "@/components/AdhanAlerts";
 import { PlayerBar } from "@/components/PlayerBar";
 import { FirstRunTour } from "@/components/FirstRunTour";
@@ -77,6 +78,7 @@ export default async function LocaleLayout({
         <Footer locale={locale} />
         <PlayerBar locale={locale} />
         <ClientEffects locale={locale} />
+        <UpdateBanner locale={locale} />
         <AdhanAlerts locale={locale} />
         <FirstRunTour locale={locale} />
       </body>

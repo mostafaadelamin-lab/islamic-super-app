@@ -15,6 +15,7 @@ import {
   handleSwMessage,
   registerServiceWorker,
   requestOfflineStatus,
+  saveSiteOffline,
   subscribeOfflineStatus,
 } from "@/lib/sw-client";
 
@@ -159,15 +160,15 @@ describe("service worker client", () => {
     handleSwMessage({ type: "other" });
     expect(l).not.toHaveBeenCalled();
     handleSwMessage({ type: "precache-progress", done: 3, total: 10, complete: false });
-    expect(currentOfflineStatus()).toEqual({ supported: true, done: 3, total: 10, complete: false });
+    expect(currentOfflineStatus()).toEqual({ supported: true, done: 3, total: 10, complete: false, saved: false, mb: 0 });
     handleSwMessage({ type: "precache-progress", done: "x", complete: true });
-    expect(currentOfflineStatus()).toEqual({ supported: true, done: 0, total: 0, complete: true });
+    expect(currentOfflineStatus()).toEqual({ supported: true, done: 0, total: 0, complete: true, saved: false, mb: 0 });
     expect(l).toHaveBeenCalledTimes(2);
     unsub();
   });
-  it("registers the worker and requests a full precache for the page locale", async () => {
+  it("registers the worker and asks for a status report only; the visitor saves the site on request", async () => {
     const post = vi.fn();
-    const reg = { active: { postMessage: post } };
+    const reg = { active: { postMessage: post }, update: vi.fn().mockResolvedValue(undefined) };
     const listeners: Record<string, (e: MessageEvent) => void> = {};
     const nav = {
       serviceWorker: {
@@ -181,13 +182,17 @@ describe("service worker client", () => {
     registerServiceWorker(nav); // idempotent
     await new Promise((r) => setTimeout(r, 0));
     expect(nav.serviceWorker.register).toHaveBeenCalledTimes(1);
-    expect(post).toHaveBeenCalledWith({ type: "precache-all", locale: "en" });
+    expect(post).toHaveBeenCalledWith({ type: "precache-status", locale: "en" });
+    expect(post).not.toHaveBeenCalledWith(expect.objectContaining({ type: "precache-all" }));
     listeners.message?.({
       data: { type: "precache-progress", done: 1, total: 2, complete: false },
     } as MessageEvent);
     expect(currentOfflineStatus().total).toBe(2);
     document.documentElement.lang = "ar";
     requestOfflineStatus(nav);
+    await new Promise((r) => setTimeout(r, 0));
+    expect(post).toHaveBeenLastCalledWith({ type: "precache-status", locale: "ar" });
+    saveSiteOffline(nav);
     await new Promise((r) => setTimeout(r, 0));
     expect(post).toHaveBeenLastCalledWith({ type: "precache-all", locale: "ar" });
     requestOfflineStatus({} as Navigator);

@@ -1145,7 +1145,7 @@ abstract class AppLocalizations {
   /// shared key "ayah.tafsir"
   ///
   /// In en, this message translates to:
-  /// **'Tafsir'**
+  /// **'Ayah tafsir'**
   String get ayahTafsir;
 
   /// shared key "ayah.toPageEnd"
@@ -3632,6 +3632,12 @@ abstract class AppLocalizations {
   /// **'Bookmarks'**
   String get readerBookmarks;
 
+  /// shared key "reader.exitFull"
+  ///
+  /// In en, this message translates to:
+  /// **'Show tools'**
+  String get readerExitFull;
+
   /// shared key "reader.font"
   ///
   /// In en, this message translates to:
@@ -3659,8 +3665,44 @@ abstract class AppLocalizations {
   /// shared key "reader.fullHint"
   ///
   /// In en, this message translates to:
-  /// **'To turn pages, swipe the page or press the arrows at the bottom. Tap the page to show listening and tools.'**
+  /// **'To turn pages, swipe the page or press the arrows. To show the tools, press “Show tools”.'**
   String get readerFullHint;
+
+  /// shared key "reader.fullScreen"
+  ///
+  /// In en, this message translates to:
+  /// **'Full screen'**
+  String get readerFullScreen;
+
+  /// shared key "reader.guide1"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap any ayah to show its options under the page: listen, ayah tafsir, bookmark, copy, share.'**
+  String get readerGuide1;
+
+  /// shared key "reader.guide2"
+  ///
+  /// In en, this message translates to:
+  /// **'To turn pages: swipe the page, or use the page slider under it.'**
+  String get readerGuide2;
+
+  /// shared key "reader.guide3"
+  ///
+  /// In en, this message translates to:
+  /// **'“Full screen” in the bottom bar hides the tools; “Show tools” at the top of the page brings them back.'**
+  String get readerGuide3;
+
+  /// shared key "reader.guide4"
+  ///
+  /// In en, this message translates to:
+  /// **'“Listen with tafsir” shows the page and its tafsir together while it is recited.'**
+  String get readerGuide4;
+
+  /// shared key "reader.guideTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'How to use the Mushaf'**
+  String get readerGuideTitle;
 
   /// shared key "reader.help"
   ///
@@ -3775,6 +3817,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Listen with tafsir'**
   String get readerListenWithTafsir;
+
+  /// shared key "reader.pickAyah"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap any ayah to show its options here'**
+  String get readerPickAyah;
 
   /// shared key "reader.playAyah"
   ///

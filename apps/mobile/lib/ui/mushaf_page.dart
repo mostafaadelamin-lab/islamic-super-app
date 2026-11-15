@@ -189,7 +189,8 @@ class MushafPageView extends StatelessWidget {
                         decoration: BoxDecoration(color: hl, borderRadius: BorderRadius.circular(4)),
                         child: word,
                       );
-              } else if (!immersive) {
+              } else {
+                // Tapping an ayah shows its options, in full screen too (owner 2026-11-15).
                 word = MetaData(metaData: w.ref, behavior: HitTestBehavior.opaque, child: word);
               }
               if (layout.centered) {

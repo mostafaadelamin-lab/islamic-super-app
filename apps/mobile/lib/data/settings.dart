@@ -307,6 +307,10 @@ class SettingsController extends ChangeNotifier {
   int get readerHintShown => _prefs.getInt('reader.hintShown') ?? 0;
   Future<void> setReaderHintShown(int n) => _prefs.setInt('reader.hintShown', n);
 
+  /// True once the first-open guide to the Mushaf's touches was closed (owner 2026-11-15).
+  bool get readerGuideDone => _prefs.getBool('reader.guideDone') ?? false;
+  Future<void> setReaderGuideDone() => _prefs.setBool('reader.guideDone', true);
+
   bool get onboardingDone => _prefs.getBool('onboarding.done') ?? false;
   Future<void> setOnboardingDone(bool v) async {
     await _prefs.setBool('onboarding.done', v);

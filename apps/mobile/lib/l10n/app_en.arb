@@ -878,7 +878,7 @@
   "@ayahShareImage": {
     "description": "shared key \"ayah.shareImage\""
   },
-  "ayahTafsir": "Tafsir",
+  "ayahTafsir": "Ayah tafsir",
   "@ayahTafsir": {
     "description": "shared key \"ayah.tafsir\""
   },
@@ -2963,6 +2963,10 @@
   "@readerBookmarks": {
     "description": "shared key \"reader.bookmarks\""
   },
+  "readerExitFull": "Show tools",
+  "@readerExitFull": {
+    "description": "shared key \"reader.exitFull\""
+  },
   "readerFont": "Text size",
   "@readerFont": {
     "description": "shared key \"reader.font\""
@@ -2984,9 +2988,33 @@
   "@readerFontSmaller": {
     "description": "shared key \"reader.fontSmaller\""
   },
-  "readerFullHint": "To turn pages, swipe the page or press the arrows at the bottom. Tap the page to show listening and tools.",
+  "readerFullHint": "To turn pages, swipe the page or press the arrows. To show the tools, press “Show tools”.",
   "@readerFullHint": {
     "description": "shared key \"reader.fullHint\""
+  },
+  "readerFullScreen": "Full screen",
+  "@readerFullScreen": {
+    "description": "shared key \"reader.fullScreen\""
+  },
+  "readerGuide1": "Tap any ayah to show its options under the page: listen, ayah tafsir, bookmark, copy, share.",
+  "@readerGuide1": {
+    "description": "shared key \"reader.guide1\""
+  },
+  "readerGuide2": "To turn pages: swipe the page, or use the page slider under it.",
+  "@readerGuide2": {
+    "description": "shared key \"reader.guide2\""
+  },
+  "readerGuide3": "“Full screen” in the bottom bar hides the tools; “Show tools” at the top of the page brings them back.",
+  "@readerGuide3": {
+    "description": "shared key \"reader.guide3\""
+  },
+  "readerGuide4": "“Listen with tafsir” shows the page and its tafsir together while it is recited.",
+  "@readerGuide4": {
+    "description": "shared key \"reader.guide4\""
+  },
+  "readerGuideTitle": "How to use the Mushaf",
+  "@readerGuideTitle": {
+    "description": "shared key \"reader.guideTitle\""
   },
   "readerHelp": "Help",
   "@readerHelp": {
@@ -3086,6 +3114,10 @@
   "readerListenWithTafsir": "Listen with tafsir",
   "@readerListenWithTafsir": {
     "description": "shared key \"reader.listenWithTafsir\""
+  },
+  "readerPickAyah": "Tap any ayah to show its options here",
+  "@readerPickAyah": {
+    "description": "shared key \"reader.pickAyah\""
   },
   "readerPlayAyah": "Listen to this ayah",
   "@readerPlayAyah": {

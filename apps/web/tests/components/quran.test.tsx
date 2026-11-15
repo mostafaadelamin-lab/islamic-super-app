@@ -189,19 +189,25 @@ describe("PageReader (15-line Mushaf)", () => {
   it("full screen: arrows at the sides turn pages (RTL: next on the left) and a hint says how", async () => {
     localStorage.removeItem("rattil.readerHint");
     render(<PageReader locale="ar" initial={initial(2)} />);
+    // Full screen only from its button (owner 2026-11-15).
+    expect(screen.queryByTestId("turn-arrows")).toBeNull();
+    await userEvent.click(screen.getByTestId("reader-full"));
     expect(screen.getByTestId("reader-hint")).toHaveTextContent("السهمين");
     const next = screen.getByTestId("turn-next");
     expect(next.className).toContain("rd-turn-left");
     expect(screen.getByTestId("turn-prev").className).toContain("rd-turn-right");
     await userEvent.click(next);
     expect(routerPush).toHaveBeenLastCalledWith("/ar/page/3/");
-    // A tap on the page shows the controls; the arrows give way to the page slider.
+    // A tap on the page does not leave full screen; «إظهار الأدوات» does.
     await userEvent.click(screen.getByTestId("mushaf-stage"));
+    expect(screen.getByTestId("turn-arrows")).toBeInTheDocument();
+    await userEvent.click(screen.getByTestId("reader-exit-full"));
     expect(screen.queryByTestId("turn-arrows")).toBeNull();
   });
-  it("the full-screen hint is shown only the first few times", () => {
+  it("the full-screen hint is shown only the first few times", async () => {
     localStorage.setItem("rattil.readerHint", "3");
     render(<PageReader locale="ar" initial={initial(5)} />);
+    await userEvent.click(screen.getByTestId("reader-full"));
     expect(screen.queryByTestId("reader-hint")).toBeNull();
     expect(screen.getByTestId("turn-arrows")).toBeInTheDocument();
   });
@@ -256,11 +262,10 @@ describe("PageReader (15-line Mushaf)", () => {
     expect(screen.getByTestId("act-bookmark")).toHaveAttribute("data-bookmarked", "true");
     await userEvent.click(screen.getByTestId("act-close"));
     expect(screen.queryByTestId("ayah-actions")).toBeNull();
-    // full screen again: the first tap only shows the controls, then tapping words of an ayah selects it
-    expect(document.querySelector(".rd")).toHaveClass("rd-full");
-    fireEvent.click(document.querySelector('.seg[data-ayah="2:10"]')!);
-    expect(screen.queryByTestId("ayah-actions")).toBeNull();
+    // One tap on the words of an ayah selects it, also in full screen.
     expect(document.querySelector(".rd")).not.toHaveClass("rd-full");
+    await userEvent.click(screen.getByTestId("reader-full"));
+    expect(document.querySelector(".rd")).toHaveClass("rd-full");
     fireEvent.click(document.querySelector('.seg[data-ayah="2:10"]')!);
     expect(screen.getByTestId("ayah-actions")).toHaveTextContent("Al-Baqarah, ayah 10");
   });
@@ -343,15 +348,23 @@ describe("Mushaf full screen", () => {
   const initial = (page: number) => resolvePage(lines.pages[page - 1]!, lookup);
   beforeEach(() => resetStores());
 
-  it("opens full screen; a tap shows the controls and a tap beside the text hides them", () => {
+  it("opens with the tools; full screen only from its button, back with «إظهار الأدوات»; a guide the first time", () => {
+    localStorage.removeItem("rattil.readerGuide");
     render(<PageReader locale="ar" initial={initial(3)} />);
+    expect(screen.getByTestId("reader-guide")).toHaveTextContent("اضغط على أي آية");
+    fireEvent.click(screen.getByTestId("reader-guide-ok"));
+    expect(screen.queryByTestId("reader-guide")).toBeNull();
+    expect(localStorage.getItem("rattil.readerGuide")).toBe("1");
     const rd = document.querySelector(".rd")!;
-    expect(rd).toHaveClass("rd-full");
+    expect(rd).not.toHaveClass("rd-full");
     fireEvent.click(screen.getByTestId("mushaf-stage"));
     expect(rd).not.toHaveClass("rd-full");
-    expect(screen.queryByTestId("ayah-actions")).toBeNull();
+    fireEvent.click(screen.getByTestId("reader-full"));
+    expect(rd).toHaveClass("rd-full");
     fireEvent.click(screen.getByTestId("mushaf-stage"));
     expect(rd).toHaveClass("rd-full");
+    fireEvent.click(screen.getByTestId("reader-exit-full"));
+    expect(rd).not.toHaveClass("rd-full");
   });
 
   it("other tabs are never full screen", async () => {

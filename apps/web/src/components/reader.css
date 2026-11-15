@@ -1174,3 +1174,14 @@ body:has(.rd-full) .player,
     margin-bottom: var(--space-sm);
   }
 }
+/* Narrow phones: back, three tabs, help and full screen fit in one row (no sideways scroll). */
+@media (max-width: 420px) {
+  .rd-top {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 2px;
+  }
+  .rd-tab {
+    min-width: 0;
+    padding: 0 var(--space-sm);
+  }
+}

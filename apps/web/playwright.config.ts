@@ -34,7 +34,11 @@ export default defineConfig({
       origins: [
         {
           origin: `http://127.0.0.1:${PORT}`,
-          localStorage: [{ name: "rattil.firstRun", value: JSON.stringify({ done: true }) }],
+          // The first-visit tour and the Mushaf's first-open guide have their own tests; elsewhere they are seen.
+          localStorage: [
+            { name: "rattil.firstRun", value: JSON.stringify({ done: true }) },
+            { name: "rattil.readerGuide", value: "1" },
+          ],
         },
       ],
     },

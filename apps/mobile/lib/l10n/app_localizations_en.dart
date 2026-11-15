@@ -611,7 +611,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ayahShareImage => 'Share as an image';
 
   @override
-  String get ayahTafsir => 'Tafsir';
+  String get ayahTafsir => 'Ayah tafsir';
 
   @override
   String get ayahToPageEnd => 'To page end';
@@ -2014,6 +2014,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerBookmarks => 'Bookmarks';
 
   @override
+  String get readerExitFull => 'Show tools';
+
+  @override
   String get readerFont => 'Text size';
 
   @override
@@ -2029,7 +2032,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readerFullHint =>
-      'To turn pages, swipe the page or press the arrows at the bottom. Tap the page to show listening and tools.';
+      'To turn pages, swipe the page or press the arrows. To show the tools, press “Show tools”.';
+
+  @override
+  String get readerFullScreen => 'Full screen';
+
+  @override
+  String get readerGuide1 =>
+      'Tap any ayah to show its options under the page: listen, ayah tafsir, bookmark, copy, share.';
+
+  @override
+  String get readerGuide2 => 'To turn pages: swipe the page, or use the page slider under it.';
+
+  @override
+  String get readerGuide3 =>
+      '“Full screen” in the bottom bar hides the tools; “Show tools” at the top of the page brings them back.';
+
+  @override
+  String get readerGuide4 => '“Listen with tafsir” shows the page and its tafsir together while it is recited.';
+
+  @override
+  String get readerGuideTitle => 'How to use the Mushaf';
 
   @override
   String get readerHelp => 'Help';
@@ -2096,6 +2119,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readerListenWithTafsir => 'Listen with tafsir';
+
+  @override
+  String get readerPickAyah => 'Tap any ayah to show its options here';
 
   @override
   String get readerPlayAyah => 'Listen to this ayah';

@@ -3,20 +3,28 @@
 const VERSION = "__VERSION__";
 const CORE = __CORE__;
 const REST = __REST__;
+// Shared files (recordings, data) saved only when the visitor saves the whole site for offline use.
+const EXTRA = __EXTRA__;
+const FULL_MB = __FULL_MB__;
+// Marks that this visitor asked to save the whole site (kept across new uploads).
+const OPT_IN = "__BASE__/__offline-saved";
 const CACHE = "rattil-" + VERSION;
 // Recitations the user saved for offline listening (src/lib/audio-offline.ts); kept across versions.
 const AUDIO_CACHE = "rattil-audio";
 // Surah and Mushaf-page routes are precached for the locale the user reads in.
 let locale = "ar";
-let ALL = CORE.concat(REST.ar);
-let progress = { type: "precache-progress", done: 0, total: ALL.length, complete: false, locale };
+let ALL = CORE.concat(EXTRA, REST.ar);
+let progress = newProgress();
+function newProgress() {
+  return { type: "precache-progress", done: 0, total: ALL.length, complete: false, locale, saved: false, mb: FULL_MB[locale] };
+}
 let filling = null;
 
 function setLocale(l) {
   if ((l !== "ar" && l !== "en") || l === locale) return;
   locale = l;
-  ALL = CORE.concat(REST[l]);
-  progress = { type: "precache-progress", done: 0, total: ALL.length, complete: false, locale };
+  ALL = CORE.concat(EXTRA, REST[l]);
+  progress = newProgress();
 }
 
 async function broadcast() {
@@ -55,9 +63,28 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
-      for (const k of await caches.keys())
-        if (k !== CACHE && k !== AUDIO_CACHE && k.startsWith("rattil-")) await caches.delete(k);
+      const cache = await caches.open(CACHE);
+      let saved = false;
+      for (const k of await caches.keys()) {
+        if (k === CACHE || k === AUDIO_CACHE || !k.startsWith("rattil-")) continue;
+        const old = await caches.open(k);
+        if (await old.match(OPT_IN)) saved = true;
+        // Unchanged code files have the same hashed names: keep them instead of downloading again.
+        for (const req of await old.keys()) {
+          const path = new URL(req.url).pathname;
+          if (path.startsWith("__BASE__/_next/static/") && !(await cache.match(path))) {
+            const res = await old.match(req);
+            if (res) await cache.put(path, res);
+          }
+        }
+        await caches.delete(k);
+      }
       await self.clients.claim();
+      // A visitor who saved the site for offline use gets the new upload saved too, slowly, in the background.
+      if (saved) {
+        await cache.put(OPT_IN, new Response("1"));
+        fillAll();
+      }
     })(),
   );
 });
@@ -75,7 +102,7 @@ function fillAll() {
     progress.done = ALL.length - todo.length;
     await broadcast();
     let n = 0;
-    await cacheList(cache, todo, 6, () => {
+    await cacheList(cache, todo, 3, () => {
       progress.done++;
       if (++n % 40 === 0) broadcast();
     });
@@ -93,9 +120,30 @@ function fillAll() {
 self.addEventListener("message", (event) => {
   const data = event.data || {};
   if (data.type === "precache-all") {
+    // The visitor asked to save the whole site for offline use.
     setLocale(data.locale);
-    if (progress.complete) broadcast();
-    else event.waitUntil(fillAll());
+    event.waitUntil(
+      (async () => {
+        await (await caches.open(CACHE)).put(OPT_IN, new Response("1"));
+        progress.saved = true;
+        if (progress.complete) await broadcast();
+        else await fillAll();
+      })(),
+    );
+  } else if (data.type === "precache-status") {
+    // Report only; keep saving if the visitor had asked for it before.
+    setLocale(data.locale);
+    event.waitUntil(
+      (async () => {
+        const cache = await caches.open(CACHE);
+        progress.saved = !!(await cache.match(OPT_IN));
+        if (progress.saved && !progress.complete) return fillAll();
+        const have = await cachedPaths(cache);
+        progress.done = ALL.filter((u) => have.has(u)).length;
+        progress.complete = progress.done === ALL.length;
+        await broadcast();
+      })(),
+    );
   }
 });
 
@@ -123,6 +171,37 @@ self.addEventListener("fetch", (event) => {
   }
   // Live data from the site's functions (videos feed and search) always goes to the network.
   if (url.pathname.startsWith("__BASE__/api/")) return;
+  const isDoc = req.mode === "navigate" || req.destination === "document";
+  // Next.js, on a version mismatch, sends the browser to the page's ".../index.txt" data file, which then
+  // shows as raw text (owner's iPhone, 2026-11-15). A document request for that file goes to the page.
+  if (isDoc && url.pathname.endsWith("/index.txt")) {
+    event.respondWith(Response.redirect(url.pathname.slice(0, -"index.txt".length), 302));
+    return;
+  }
+  // Pages and their data files: the network first, so the page and its data are always the same version
+  // (a cached page from an older upload with newer data broke the Mushaf); the saved copy when offline.
+  if (isDoc || url.pathname.endsWith(".txt")) {
+    event.respondWith(
+      (async () => {
+        const cache = await caches.open(CACHE);
+        const key = cacheKey(req, url);
+        try {
+          const res = await fetch(req);
+          if (res.ok && res.type === "basic" && !res.redirected) cache.put(key, res.clone());
+          return res;
+        } catch (err) {
+          const hit = await cache.match(key, { ignoreSearch: true, ignoreVary: true });
+          if (hit) return hit;
+          if (isDoc) {
+            const fallback = (await cache.match("__BASE__/404.html")) || (await cache.match("__BASE__/"));
+            if (fallback) return fallback;
+          }
+          return new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain" } });
+        }
+      })(),
+    );
+    return;
+  }
   event.respondWith(
     (async () => {
       const cache = await caches.open(CACHE);

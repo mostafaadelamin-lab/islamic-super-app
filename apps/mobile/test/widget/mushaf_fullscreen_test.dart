@@ -20,7 +20,7 @@ void main() {
     await pushScreen(tester, PageReaderScreen(initialPage: page));
   }
 
-  testWidgets('opens full screen: only the page; a tap on the words shows the controls, a second tap hides them', (
+  testWidgets('full screen: only the page; tapping an ayah shows its options; «show tools» brings the tools back', (
     tester,
   ) async {
     await open(tester, 3);
@@ -28,16 +28,22 @@ void main() {
     expect(find.byKey(const Key('readerFullScreen')), findsOneWidget);
     expect(find.byKey(const Key('readerBack')), findsNothing);
     expect(find.byKey(const Key('mushafControls')), findsNothing);
-    // A tap on the words does not select an ayah in full screen: it brings the controls back.
+    expect(find.byKey(const Key('readerExitFull')), findsOneWidget);
+    // A tap on the words selects that ayah and shows its options.
     await tester.tap(find.byKey(const Key('pageAyah-2-10')));
     await tester.pumpAndSettle();
+    expect(reader(tester).selected, const AyahRef(2, 10));
+    expect(find.byKey(const Key('ayahSheet')), findsOneWidget);
+    // A tap beside the text closes them and stays in full screen (no tap-to-toggle).
+    await tester.tapAt(tester.getTopLeft(find.byKey(const Key('mushafPage-3'))) + const Offset(3, 3));
+    await tester.pumpAndSettle();
     expect(reader(tester).selected, isNull);
+    expect(reader(tester).fullScreen, isTrue);
+    await tester.tap(find.byKey(const Key('readerExitFull')));
+    await tester.pumpAndSettle();
     expect(reader(tester).fullScreen, isFalse);
     expect(find.byKey(const Key('readerBack')), findsOneWidget);
     expect(find.byKey(const Key('mushafControls')), findsOneWidget);
-    await tester.tapAt(tester.getTopLeft(find.byKey(const Key('mushafPage-3'))) + const Offset(3, 3));
-    await tester.pumpAndSettle();
-    expect(reader(tester).fullScreen, isTrue);
   });
 
   testWidgets('full screen: an ayah number still opens that ayah', (tester) async {
