@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>مصادر المحتوى — رتّل وصلِّ | Content sources</title>
+    <!-- Not linked from any menu, footer or sitemap (owner, 2026-11-15): shown only on request.
+         Kept in step with docs/CONTENT_SOURCES.md. -->
+    <style>
+      :root {
+        --bg: #fbf8f1;
+        --fg: #1d2b26;
+        --muted: #5b6b64;
+        --accent: #0f5c46;
+        --line: #e4dccb;
+        --card: #fffdf8;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0f1714;
+          --fg: #e9efe9;
+          --muted: #a3b2ab;
+          --accent: #d4b062;
+          --line: #25332d;
+          --card: #14201b;
+        }
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font:
+          16px/1.75 "IBM Plex Sans Arabic",
+          system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 32px 16px 64px;
+      }
+      h1 {
+        color: var(--accent);
+        font-size: 1.7rem;
+        margin: 0 0 4px;
+      }
+      h2 {
+        color: var(--accent);
+        font-size: 1.2rem;
+        margin: 36px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--line);
+      }
+      p,
+      li {
+        margin: 6px 0;
+      }
+      a {
+        color: var(--accent);
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      nav.toc ol {
+        columns: 2;
+        padding-inline-start: 20px;
+      }
+      .table-wrap {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--card);
+        font-size: 0.95rem;
+      }
+      th,
+      td {
+        border: 1px solid var(--line);
+        padding: 8px 10px;
+        text-align: start;
+        vertical-align: top;
+      }
+      th {
+        color: var(--accent);
+        font-weight: 600;
+      }
+      td:first-child {
+        font-weight: 600;
+        width: 26%;
+      }
+      td:last-child {
+        width: 24%;
+      }
+      .notice {
+        border: 1px solid var(--accent);
+        border-radius: 10px;
+        padding: 12px 16px;
+        margin: 14px 0;
+        background: var(--card);
+      }
+      .notice[lang="en"] {
+        direction: ltr;
+        text-align: left;
+      }
+      [lang="en"] {
+        unicode-bidi: isolate;
+      }
+      @media (max-width: 600px) {
+        nav.toc ol {
+          columns: 1;
+        }
+        td:first-child,
+        td:last-child {
+          width: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>مصادر المحتوى في «رتّل وصلِّ»</h1>
+      <p class="muted">
+        آخر تحديث: 15 نوفمبر 2026 · تطبيق «رتّل وصلِّ» (Android و iPhone) وموقع rattilwasalli.com
+      </p>
+      <p>
+        هذه الصفحة تجمع مصادر كل المحتوى المعروض في التطبيق والموقع وتراخيصها. النصوص الدينية تُنقل كما نُشرت
+        في مصادرها دون إضافة أو تغيير.
+      </p>
+
+      <nav class="toc" aria-label="المحتويات">
+        <ol>
+          <li><a href="#quran">القرآن الكريم ونص المصحف</a></li>
+          <li><a href="#mushaf-lines">ترتيب أسطر المصحف (Waqf GPL)</a></li>
+          <li><a href="#tafsir">التفسير ومعلومات السور</a></li>
+          <li><a href="#hadith">الحديث الشريف</a></li>
+          <li><a href="#adhkar">الأذكار وأسماء الله الحسنى</a></li>
+          <li><a href="#audio">التلاوات والإذاعات والدروس الصوتية</a></li>
+          <li><a href="#adhan">أصوات الأذان</a></li>
+          <li><a href="#video">الفيديوهات والأناشيد</a></li>
+          <li><a href="#hajj">الحج والعمرة</a></li>
+          <li><a href="#tools">المواقيت والقبلة والمساجد والزكاة</a></li>
+          <li><a href="#fonts">الخطوط والتصميم</a></li>
+          <li><a href="#licences">ملفات التراخيص</a></li>
+        </ol>
+      </nav>
+
+      <h2 id="quran">القرآن الكريم ونص المصحف</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>نص القرآن الكريم (الرسم العثماني، رواية حفص عن عاصم، 6236 آية)</td>
+              <td>
+                مجمع الملك فهد لطباعة المصحف الشريف، ملف «Hafs Uthmanic Data» الإصدار 18 (<span lang="en"
+                  >hafsData_v18.json</span
+                >). يُستخدم كما هو، ويُتحقق آليًا من مطابقة كل آية لملف المجمع حرفًا بحرف.
+              </td>
+              <td>منشور من المجمع للاستخدام المجاني، ويُوزّع دون تعديل</td>
+            </tr>
+            <tr>
+              <td>صفحات مصحف المدينة (طبعة 1441هـ، 604 صفحات)</td>
+              <td>عمود الصفحة في ملف المجمع نفسه (الإصدار 18)</td>
+              <td>كما سبق</td>
+            </tr>
+            <tr>
+              <td>أرباع الأحزاب (240 ربعًا)</td>
+              <td>
+                بيانات Tanzil عبر حزمة <span lang="en">quran-meta@7.0.0</span>، مع مطابقتها لعلامات ۞ في نص
+                المجمع
+              </td>
+              <td><span lang="en">MIT</span> — <a href="/licenses/quran-meta-LICENSE.txt">نص الترخيص</a></td>
+            </tr>
+            <tr>
+              <td>أسماء السور</td>
+              <td><span lang="en">quran-json@3.1.2</span> (الأسماء فقط، وليس نص القرآن)</td>
+              <td>
+                <span lang="en">CC BY-SA 4.0</span> —
+                <a href="/licenses/quran-json-LICENSE.txt">نص الترخيص</a>
+              </td>
+            </tr>
+            <tr>
+              <td>ترجمة معاني القرآن إلى الإنجليزية (اختيارية)</td>
+              <td>
+                ترجمة <span lang="en">Saheeh International</span> عبر حزمة
+                <span lang="en">quran-json@3.1.2</span>. تُعرض مساعدةً على الفهم فقط ولا تحل محل النص العربي.
+              </td>
+              <td>حقوق الترجمة لناشرها</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="mushaf-lines">ترتيب أسطر مصحف المدينة (15 سطرًا)</h2>
+      <p>
+        تُستخدم بيانات أسطر مصحف المدينة (Madina-1441H) من مشروع
+        <span lang="en">quran-madina-html</span> للمهندس طارق الديب (الإصدار 2.2.2) لتحديد مواضع نهاية كل سطر
+        فقط. النص المعروض هو نص المجمع نفسه، ويتحقق البناء من أن كل كلمة تظهر مرة واحدة وبالترتيب، وأن صفحة كل
+        آية وأول سطر وآخر سطر فيها تطابق ملف المجمع.
+      </p>
+      <div class="notice" lang="en" dir="ltr">
+        <strong>Licence notice.</strong> Mushaf line-layout data from <em>quran-madina-html</em> 2.2.2 by
+        Tarek Eldeeb (database Madina-1441H). "Code and assets are licensed under the
+        <a href="https://github.com/ojuba-org/waqf/tree/master/2.0">“Waqf” General Public License 2.0</a>, 3
+        Muharram 1435." Original notice:
+        <a href="/licenses/quran-madina-html-LICENSE.txt">quran-madina-html-LICENSE.txt</a>. Source of the
+        data: npm package <a href="https://www.npmjs.com/package/quran-madina-html">quran-madina-html</a> and
+        <a href="https://github.com/tarekeldeeb/quran-madina-html">github.com/tarekeldeeb/quran-madina-html</a
+        >. Our derived file (<code>/data/mushaf-lines.json</code>, word ranges per line) is shared under the
+        same licence.
+      </div>
+      <div class="notice">
+        <strong>إشعار الترخيص:</strong> بيانات ترتيب الأسطر مأخوذة من مشروع
+        <span lang="en">quran-madina-html</span> وهي مرخّصة برخصة «وقف» العامة الإصدار 2.0 (<span lang="en"
+          >Waqf GPL 2.0</span
+        >)، والملف المشتق منها في الموقع (<span lang="en">/data/mushaf-lines.json</span>) متاح بالرخصة نفسها.
+      </div>
+
+      <h2 id="tafsir">التفسير ومعلومات السور</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>التفسير الميسر</td>
+              <td>
+                مجمع الملك فهد لطباعة المصحف الشريف، نسخة Tanzil (<span lang="en">ar.muyassar</span>) عبر حزمة
+                <span lang="en">@muslimjs/ar.muyassar@1.0.0</span>، دون تعديل
+              </td>
+              <td>استخدام مجاني غير تجاري مع نسبة المصدر ودون تعديل (شروط Tanzil)</td>
+            </tr>
+            <tr>
+              <td>تعريف السور وأسباب النزول (الواحدي)</td>
+              <td>موسوعة Quranpedia</td>
+              <td>يسمح ترخيصها بالاستخدام داخل التطبيق</td>
+            </tr>
+            <tr>
+              <td>تفسير الشيخ محمد متولي الشعراوي (صوتي، 1116 درسًا)</td>
+              <td>
+                أرشيف الإنترنت <span lang="en">archive.org</span>، مجموعة «خواطر الشيخ محمد متولي الشعراوي
+                للقرآن الكريم» (<span lang="en">20240104_20240104_0645</span>)، تُشغّل من الأرشيف مباشرة
+              </td>
+              <td>علامة الملكية العامة (<span lang="en">Public Domain Mark</span>)</td>
+            </tr>
+            <tr>
+              <td>القصص القرآني (25 قصة)</td>
+              <td>نطاقات آيات من نص المجمع، مع التلاوة والتفسير الميسر المذكورين هنا</td>
+              <td>كما في مصادرها</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="hadith">الحديث الشريف</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                كتب الحديث التسعة: صحيح البخاري، صحيح مسلم، سنن أبي داود، جامع الترمذي، سنن النسائي، سنن ابن
+                ماجه، موطأ مالك، مسند أحمد، سنن الدارمي (بالتشكيل وترقيم العالمية)
+              </td>
+              <td>
+                <a href="https://github.com/mhashim6/Open-Hadith-Data" lang="en">Open-Hadith-Data</a> (عمود
+                النص فقط، دون تعديل). أصل النصوص: مشروع <span lang="en">hadith-islamware</span> (© Islam Ware
+                2006-2014)
+              </td>
+              <td>
+                <span lang="en">ODbL 1.0</span> لقاعدة البيانات و<span lang="en">DbCL 1.0</span> للمحتوى
+              </td>
+            </tr>
+            <tr>
+              <td>شرح الأحاديث المختصر (العنوان، الشرح، الفوائد، الدرجة)</td>
+              <td>موسوعة الأحاديث النبوية <span lang="en">HadeethEnc.com</span>، منقول بنصه</td>
+              <td>بحسب شروط الموسوعة</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="adhkar">الأذكار وأسماء الله الحسنى</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>أذكار الصباح والمساء، حصن المسلم، الأربعون النووية</td>
+              <td>
+                النسخة الرقمية من بيانات <span lang="en">Kazi Shariar</span>. «حصن المسلم» للشيخ سعيد بن علي
+                بن وهف القحطاني، و«الأربعون النووية» للإمام النووي. ضُبط التشكيل على النص المشكول لحصن المسلم
+                (تغيير الحركات فقط دون الحروف)
+              </td>
+              <td><span lang="en">CC BY 4.0</span> (للنسخة الرقمية)</td>
+            </tr>
+            <tr>
+              <td>تخريج كل ذكر وفضله ومرجعه</td>
+              <td>
+                قاعدة <span lang="en">Morning-And-Evening-Adhkar-DB</span> (<span lang="en">Seen-Arabic</span
+                >)، وأحاديث من موسوعة <span lang="en">HadeethEnc</span>، منقولة بنصها
+              </td>
+              <td><span lang="en">MIT</span> / شروط الموسوعة</td>
+            </tr>
+            <tr>
+              <td>صوت كل ذكر من حصن المسلم</td>
+              <td>موقع حصن المسلم <span lang="en">hisnmuslim.com</span>، تشغيل مباشر</td>
+              <td>متاح مجانًا من الموقع</td>
+            </tr>
+            <tr>
+              <td>أذكار الصباح والمساء بصوت الشيخ مشاري العفاسي (دون إنترنت)</td>
+              <td>الصوتيات الإسلامية بموقع إسلام ويب <span lang="en">audio.islamweb.net</span></td>
+              <td>متاح للتنزيل المجاني من الموقع</td>
+            </tr>
+            <tr>
+              <td>أسماء الله الحسنى وشرحها المبسط</td>
+              <td>موقع <span lang="en">surahquran.com</span>، صفحة أسماء الله الحسنى ومعانيها</td>
+              <td>متاح مجانًا من الموقع</td>
+            </tr>
+            <tr>
+              <td>دروس أسماء الله الحسنى (صوتي)</td>
+              <td>
+                موقع الدكتور محمد راتب النابلسي <span lang="en">nabulsi.com</span>، سلسلتا «أسماء الله الحسنى»
+                2008 و1996، تشغيل مباشر من الموقع
+              </td>
+              <td>متاح مجانًا من الموقع</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="audio">التلاوات والإذاعات والدروس الصوتية</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>تلاوة آية بآية (13 قارئًا)</td>
+              <td><span lang="en">EveryAyah.com</span>، تشغيل مباشر</td>
+              <td>متاح للاستماع مجانًا؛ حقوق التسجيلات لناشريها</td>
+            </tr>
+            <tr>
+              <td>مكتبة التلاوات (السور كاملة بكل الروايات) وإذاعات القرآن</td>
+              <td>واجهة <span lang="en">mp3quran.net</span> العامة (الإصدار 3)، تشغيل مباشر</td>
+              <td>يسمح الموقع بنسخ المواد واستخدام الروابط</td>
+            </tr>
+            <tr>
+              <td>إذاعة القرآن الكريم من القاهرة وإذاعة القرآن الكريم السعودية</td>
+              <td>البث المباشر للإذاعتين (<span lang="en">radiojar.com</span>)</td>
+              <td>بث عام</td>
+            </tr>
+            <tr>
+              <td>بث مباشر من الحرمين (صوت)</td>
+              <td>البث الرسمي لقناتي القرآن الكريم والسنة النبوية (<span lang="en">holol.com</span>)</td>
+              <td>بث عام</td>
+            </tr>
+            <tr>
+              <td>قصص الأنبياء (صوتي) — الشيخ نبيل العوضي</td>
+              <td>أرشيف الإنترنت (<span lang="en">prophets_stories_Nabel-ElAwadde</span>)، تشغيل مباشر</td>
+              <td>مجاني لكل مسلم للاستخدام غير التجاري (بحسب الرفع)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="adhan">أصوات الأذان</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>التسجيل</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>أذان المسجد الحرام (2013)</td>
+              <td><span lang="en">Wikimedia Commons</span> — <span lang="en">Seyfula Islam</span></td>
+              <td><span lang="en">CC BY 3.0</span></td>
+            </tr>
+            <tr>
+              <td>أذان الفجر (مسجد مالمو 2012)</td>
+              <td><span lang="en">Wikimedia Commons</span> — <span lang="en">Islamic Center Malmö</span></td>
+              <td><span lang="en">CC BY 3.0</span></td>
+            </tr>
+            <tr>
+              <td>أذان المسجد النبوي</td>
+              <td><span lang="en">Wikimedia Commons</span> — <span lang="en">ejaz215</span></td>
+              <td><span lang="en">CC BY 3.0</span></td>
+            </tr>
+            <tr>
+              <td>أذان صباح فخري</td>
+              <td><span lang="en">Wikimedia Commons</span></td>
+              <td>ملكية عامة</td>
+            </tr>
+            <tr>
+              <td>أذان «Beautiful adhan»</td>
+              <td><span lang="en">Wikimedia Commons</span> — <span lang="en">Adam-synagda</span></td>
+              <td><span lang="en">CC0 1.0</span></td>
+            </tr>
+            <tr>
+              <td>أذان عاقب عزيز</td>
+              <td><span lang="en">Wikimedia Commons</span> — <span lang="en">Atcovi</span></td>
+              <td><span lang="en">CC BY-SA 4.0</span></td>
+            </tr>
+            <tr>
+              <td>
+                أصوات المؤذنين: علي ملا، أذان مكة المكرمة، عصام بخاري، مصطفى إسماعيل، محمود علي البنا، محمد
+                رفعت، عبد الباسط عبد الصمد، وأذان الفجر لحمد الدغريري ومشاري العفاسي
+              </td>
+              <td>الصوتيات الإسلامية بموقع إسلام ويب <span lang="en">audio.islamweb.net</span></td>
+              <td>متاح للتنزيل المجاني من الموقع</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="video">الفيديوهات والأناشيد</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>الفيديوهات القصيرة (تلاوات، دروس، مواعظ)</td>
+              <td>
+                قنوات موثوقة على <span lang="en">YouTube</span> و<span lang="en">Instagram</span>، تُعرض
+                بالمشغل الرسمي لكل منصة دون تنزيل أو إعادة رفع
+              </td>
+              <td>الحقوق لأصحاب القنوات؛ العرض بحسب شروط كل منصة</td>
+            </tr>
+            <tr>
+              <td>فيديوهات قصص الأنبياء</td>
+              <td>قناة دروس الشيخ نبيل العوضي على <span lang="en">YouTube</span></td>
+              <td>المشغل الرسمي لـ YouTube</td>
+            </tr>
+            <tr>
+              <td>الأناشيد (القنوات الرسمية للمنشدين)</td>
+              <td>
+                القنوات الرسمية على <span lang="en">YouTube</span>: محمد طارق، محمد يوسف، نصر الدين طوبار، سيد
+                النقشبندي، مشاري العفاسي، أحمد بوخاطر، أبو علي، محمد المقيط (نسخ صوتية بدون موسيقى)
+              </td>
+              <td>المشغل الرسمي لـ YouTube</td>
+            </tr>
+            <tr>
+              <td>مكتبة الأناشيد (516 نشيدًا لـ 34 منشدًا)</td>
+              <td>موقع <span lang="en">anasheed.info</span>، والملفات مستضافة على أرشيف الإنترنت</td>
+              <td>متاح مجانًا من الموقع</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="hajj">الحج والعمرة</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>خطوات العمرة وأنواع الحج (الإفراد، القِران، التمتع) وصفة الحج</td>
+              <td>
+                «دليل الحاج والمعتمر وزائر مسجد الرسول ﷺ»، وزارة الشؤون الإسلامية والدعوة والإرشاد بالمملكة
+                العربية السعودية (هيئة التوعية الإسلامية في الحج)، نسخة المكتبة الشاملة كما يعرضها
+                <a href="https://usul.ai/t/dalil-al-hajj-wal-mutamir-wa-zair-masjid-al-rasul" lang="en"
+                  >usul.ai</a
+                >
+              </td>
+              <td>منشور رسمي للتوعية، يُنقل بنصه مع تصحيح أخطاء الرقمنة الظاهرة</td>
+            </tr>
+            <tr>
+              <td>مستوى الزحام في الحرمين</td>
+              <td>
+                رابط إلى المصدر الرسمي: الهيئة العامة للعناية بشؤون المسجد الحرام والمسجد النبوي (<a
+                  href="https://alharamain.gov.sa/public/"
+                  lang="en"
+                  >alharamain.gov.sa</a
+                >) ومنصة
+                <a href="https://www.nusuk.sa/" lang="en">نسك</a>
+              </td>
+              <td>روابط فقط، دون نسخ بيانات</td>
+            </tr>
+            <tr>
+              <td>رسومات خطوات الحج والعمرة</td>
+              <td>مرسومة بالكود داخل التطبيق</td>
+              <td>من عملنا</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="tools">المواقيت والقبلة والمساجد والزكاة</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>طرق حساب مواقيت الصلاة</td>
+              <td>
+                المعاملات المنشورة لكل جهة (رابطة العالم الإسلامي، الهيئة المصرية العامة للمساحة، أم القرى،
+                كراتشي، ISNA، دبي، الكويت، قطر، UOIF)، ومراجعتها مع مكتبة <span lang="en">adhan-js</span>
+              </td>
+              <td>حقائق منشورة / <span lang="en">adhan-js</span>: <span lang="en">MIT</span></td>
+            </tr>
+            <tr>
+              <td>التقويم الهجري وتواريخ رمضان</td>
+              <td>تقويم أم القرى الرسمي (<span lang="en">ICU islamic-umalqura</span>)</td>
+              <td>حقائق منشورة</td>
+            </tr>
+            <tr>
+              <td>الانحراف المغناطيسي لبوصلة القبلة</td>
+              <td>
+                النموذج المغناطيسي العالمي <span lang="en">WMM 2025</span> (NOAA NCEI وهيئة المساحة الجيولوجية
+                البريطانية)
+              </td>
+              <td>ملكية عامة (عمل حكومي أمريكي)</td>
+            </tr>
+            <tr>
+              <td>المساجد القريبة وأسماء الأماكن</td>
+              <td>
+                <span lang="en">OpenStreetMap</span> عبر <span lang="en">Overpass API</span> و<span lang="en"
+                  >Nominatim</span
+                >، استعلام مباشر وقت الطلب
+              </td>
+              <td><span lang="en">ODbL 1.0</span> — © OpenStreetMap contributors</td>
+            </tr>
+            <tr>
+              <td>
+                حاسبة الزكاة (النصاب 85 جرامًا من ذهب عيار 21، 2.5%، الحول القمري، ذهب الزينة، عروض التجارة،
+                الشهادات، الأسهم، الديون)
+              </td>
+              <td>
+                فتاوى دار الإفتاء المصرية المنشورة، أرقام 7506 و8426 و6231 و6203 و8848 و8115 و8087 و6423 و3133
+                و6318 (<a href="https://www.dar-alifta.org/" lang="en">dar-alifta.org</a>)
+              </td>
+              <td>اقتباسات قصيرة بنصها مع رابط كل فتوى</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="fonts">الخطوط والتصميم</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>خط المصحف</td>
+              <td>
+                <span lang="en">KFGQPC HAFS Uthmanic Script v18</span>، خط مجمع الملك فهد الخاص بهذا النص
+                (يُستخدم دون تعديل)
+              </td>
+              <td>
+                رخصة المجمع: استخدام ونسخ وتوزيع مجاني، دون تعديل أو بيع —
+                <a href="/fonts/KFGQPC-HAFS-LICENSE.txt">نص الرخصة</a>
+              </td>
+            </tr>
+            <tr>
+              <td>خط الواجهة</td>
+              <td><span lang="en">IBM Plex Sans Arabic</span></td>
+              <td>
+                <span lang="en">SIL Open Font License 1.1</span> —
+                <a href="/fonts/OFL-IBMPlexSansArabic.txt">نص الرخصة</a>
+              </td>
+            </tr>
+            <tr>
+              <td>شعار التطبيق والأيقونات والألوان</td>
+              <td>من تصميمنا</td>
+              <td>من عملنا</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="licences">ملفات التراخيص</h2>
+      <ul>
+        <li><a href="/licenses/quran-madina-html-LICENSE.txt">quran-madina-html — Waqf GPL 2.0</a></li>
+        <li><a href="/licenses/quran-meta-LICENSE.txt">quran-meta — MIT</a></li>
+        <li><a href="/licenses/quran-json-LICENSE.txt">quran-json — CC BY-SA 4.0</a></li>
+        <li><a href="/fonts/KFGQPC-HAFS-LICENSE.txt">KFGQPC HAFS Uthmanic Script — رخصة المجمع</a></li>
+        <li><a href="/fonts/OFL-IBMPlexSansArabic.txt">IBM Plex Sans Arabic — SIL OFL 1.1</a></li>
+      </ul>
+      <p class="muted">«رتّل وصلِّ» تطبيق مجاني لوجه الله، بدون إعلانات ولا اشتراكات.</p>
+    </main>
+  </body>
+</html>
