@@ -250,8 +250,12 @@ class PlayTile extends StatelessWidget {
     this.leading,
     this.onPlay,
     this.playlist,
+    this.inline = true,
   });
   final VoidCallback? onPlay;
+
+  /// Show the player's buttons right under this row while it plays.
+  final bool inline;
 
   /// The list this item belongs to: when it ends the next one plays.
   final List<Episode>? playlist;
@@ -270,7 +274,7 @@ class PlayTile extends StatelessWidget {
     final on = n.episode?.id == episode.id && n.episode?.url == episode.url;
     final playing = on && n.isPlaying;
     final scheme = Theme.of(context).colorScheme;
-    return ListTile(
+    final tile = ListTile(
       selected: on,
       leading: leading ?? Icon(playing ? Icons.pause_circle : Icons.play_circle, color: scheme.primary),
       title: Text(title ?? episode.title(context.isArabic)),
@@ -289,6 +293,12 @@ class PlayTile extends StatelessWidget {
           n.playEpisode(series, episode, remember: remember, playlist: playlist);
         }
       },
+    );
+    if (!inline || !on || !n.isActive) return tile;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [tile, const InlineNarrationPlayer()],
     );
   }
 }

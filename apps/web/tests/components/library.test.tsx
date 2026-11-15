@@ -33,12 +33,29 @@ describe("RecitationLibrary", () => {
       "https://cdn.mp3quran.net/warsh/036.mp3",
     );
     expect(screen.getByTestId("library-now").textContent).toContain("سورة يس");
+    // Owner 2026-11-15: the player sits in the row of the surah playing, not at the top of the page.
+    const row = screen.getByTestId("library-surah-36").closest("li")!;
+    expect(row.contains(screen.getByTestId("library-now"))).toBe(true);
+    expect(screen.queryByTestId("library-now-top")).toBeNull();
+    expect((screen.getByTestId("library-next") as HTMLButtonElement).disabled).toBe(true);
+    fireEvent.click(screen.getByTestId("library-prev"));
+    expect(screen.getByTestId("library-audio").getAttribute("src")).toBe(
+      "https://cdn.mp3quran.net/warsh/001.mp3",
+    );
+    expect(
+      screen.getByTestId("library-surah-1").closest("li")!.contains(screen.getByTestId("library-now")),
+    ).toBe(true);
     fireEvent.click(screen.getByTestId("library-back"));
+    // Its row is no longer listed: the buttons stay reachable at the top.
+    expect(screen.getByTestId("library-now-top").textContent).toContain("سورة الفاتحة");
     fireEvent.click(screen.getByTestId("library-tab-radios"));
     fireEvent.click(screen.getByTestId("library-radio-1"));
     expect(screen.getByTestId("library-audio").getAttribute("src")).toBe(
       "https://backup.qurango.net/radio/ibrahim_alakdar",
     );
+    expect(
+      screen.getByTestId("library-radio-1").closest("li")!.contains(screen.getByTestId("library-now")),
+    ).toBe(true);
   });
 
   it("lists the live Holy Mosques radios first and plays the Cairo radio", async () => {

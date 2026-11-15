@@ -148,9 +148,17 @@ void main() {
     await tester.tap(find.byKey(const Key('surah-36')));
     await tester.pumpAndSettle();
     expect(app.services.narration.episode?.url, 'https://cdn.mp3quran.net/warsh/036.mp3');
-    expect(find.byKey(const Key('narrationBar')), findsOneWidget);
+    // Owner 2026-11-15: the player is under the surah playing, not in a bar away from it.
+    expect(
+      find.descendant(of: find.byKey(const Key('surah-36')), matching: find.byKey(const Key('inlinePlayer'))),
+      findsOneWidget,
+    );
+    expect(find.byKey(const Key('narrationBar')), findsNothing);
 
     await goBack(tester);
+    await tester.pumpAndSettle();
+    // Leaving the reciter's page: the bar at the bottom takes over.
+    expect(find.byKey(const Key('narrationBar')), findsOneWidget);
     await goBack(tester);
     await pushScreen(tester, const RadioScreen());
     await tester.pumpAndSettle();
@@ -162,6 +170,11 @@ void main() {
     await tester.tap(find.byKey(const Key('radio-1')));
     await tester.pumpAndSettle();
     expect(app.services.narration.episode?.url, 'https://backup.qurango.net/radio/ibrahim_alakdar');
+    expect(
+      find.descendant(of: find.byKey(const Key('radio-1')), matching: find.byKey(const Key('inlinePlayer'))),
+      findsOneWidget,
+    );
+    expect(find.byKey(const Key('inlineSlider')), findsNothing, reason: 'a live station has no seek bar');
     await app.services.narration.stop();
     expect(app.services.settings.storyPosition('radio/radio-1'), 0);
   });

@@ -44,6 +44,7 @@ class NasheedTile extends StatelessWidget {
           key: Key('nasheed-${nasheed.id}'),
           series: 'nasheeds',
           remember: false,
+          inline: false,
           offline: true,
           title: nasheed.title,
           subtitle: subtitle,
