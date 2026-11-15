@@ -1,4 +1,4 @@
-import { reportBody, reportMailto, shareBody, adhkarViewStore } from "@/lib/dhikr-share";
+import { reportBody, reportFormHref, shareBody, adhkarViewStore } from "@/lib/dhikr-share";
 import { HISN, HISN_SECTIONS } from "@/lib/hisn";
 
 const LONG = 200;
@@ -19,14 +19,16 @@ describe("sharing and reporting a dhikr", () => {
     expect(shareBody("سُبْحَانَ اللَّهِ", "Hisn al-Muslim")).toBe("سُبْحَانَ اللَّهِ\n\n— Hisn al-Muslim");
   });
 
-  it("quotes at most 80 characters in a report and builds a mail link without a recipient", () => {
+  it("quotes at most 80 characters in a report and links to the contact form with it filled in", () => {
     const text = "ا".repeat(LONG);
     const body = reportBody("Chapter 3 · 1", text, "Intro");
     expect(body).toContain(`«${"ا".repeat(QUOTE)}…»`);
     expect(body.startsWith("Intro\n\nChapter 3 · 1\n")).toBe(true);
-    const url = reportMailto("Subject & more", body);
-    expect(url.startsWith("mailto:?subject=Subject%20%26%20more&body=")).toBe(true);
-    expect(decodeURIComponent(url.split("&body=")[1]!)).toBe(body);
+    const url = reportFormHref("/ar/help/", "Subject & more", body);
+    expect(url.startsWith("/ar/help/?title=Subject%20%26%20more&message=")).toBe(true);
+    expect(url.endsWith("#contact")).toBe(true);
+    const q = new URLSearchParams(url.slice(url.indexOf("?"), url.indexOf("#")));
+    expect(q.get("message")).toBe(body);
   });
 
   it("remembers list or cards, defaulting to list", () => {

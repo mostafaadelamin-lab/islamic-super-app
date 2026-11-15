@@ -412,6 +412,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhkarReportIntro => 'I think there is a mistake in this dhikr (please describe it below):';
 
   @override
+  String get adhkarReportTitle => 'Mistake in a dhikr';
+
+  @override
   String get adhkarReset => 'Start again';
 
   @override

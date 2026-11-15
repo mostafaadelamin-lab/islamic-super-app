@@ -1,5 +1,5 @@
 "use client";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { APP_LINKS } from "@/lib/app-links";
 
@@ -36,6 +36,17 @@ export function contactPayload(f: ContactFields): Record<string, string> {
   };
 }
 
+/** Title and message handed over in the address (?title=…&message=…), e.g. by "report a mistake". */
+export function prefillFromSearch(search: string): Partial<ContactFields> {
+  const q = new URLSearchParams(search);
+  const out: Partial<ContactFields> = {};
+  const title = q.get("title");
+  const message = q.get("message");
+  if (title) out.title = title.slice(0, 200);
+  if (message) out.message = message.slice(0, 2000);
+  return out;
+}
+
 const EMPTY: ContactFields = { title: "", name: "", phone: "", whatsapp: "", message: "" };
 const MIN_MESSAGE = 3;
 
@@ -52,6 +63,15 @@ export function ContactForm({
   const [f, setF] = useState<ContactFields>(EMPTY);
   const [state, setState] = useState<"idle" | "sending" | "sent" | "failed">("idle");
   const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    const pre = prefillFromSearch(window.location.search);
+    if (pre.title || pre.message) {
+      setF((cur) => ({ ...cur, ...pre }));
+      if (window.location.hash === "#contact") {
+        document.getElementById("contact")?.scrollIntoView?.({ block: "start" });
+      }
+    }
+  }, []);
 
   if (!endpoint) return <p className="muted">{t(locale, "help.contactPending")}</p>;
   if (state === "sent") {

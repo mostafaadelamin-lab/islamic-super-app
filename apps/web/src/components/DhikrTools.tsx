@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
-import { reportBody, reportMailto, shareBody, shareDhikr } from "@/lib/dhikr-share";
+import { reportBody, reportFormHref, shareBody, shareDhikr } from "@/lib/dhikr-share";
+import { href } from "@/lib/locale-path";
+import { withBase } from "@/lib/base-path";
 import type { DhikrExtra } from "@/lib/dhikr-extras";
 import { DhikrHadithButton, DhikrListen } from "./DhikrAudio";
 
@@ -28,7 +30,8 @@ export function DhikrTools({
     else if (r === "failed") setNotice(t(locale, "dhikr.shareFailed"));
     else setNotice("");
   };
-  const mail = reportMailto(
+  const report = reportFormHref(
+    withBase(href(locale, "help")),
     t(locale, "dhikr.reportSubject"),
     reportBody(where, text, t(locale, "dhikr.reportIntro")),
   );
@@ -44,7 +47,7 @@ export function DhikrTools({
       >
         {t(locale, "dhikr.share")}
       </button>
-      <a className="btn btn-sm" href={mail} data-testid={`${testId}-report`}>
+      <a className="btn btn-sm" href={report} data-testid={`${testId}-report`}>
         {t(locale, "dhikr.report")}
       </a>
       <span className="muted small" role="status">

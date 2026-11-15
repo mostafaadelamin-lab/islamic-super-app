@@ -45,8 +45,14 @@ void main() {
     expect(sharer.texts.single, startsWith(chapter.items[0]));
     expect(sharer.texts.single, contains('الباب ٩٨'));
     await tester.tap(find.byKey(const Key('hisn0Report')));
-    await tester.pump();
-    expect(sharer.texts.last, contains('أظن أن في هذا الذكر خطأ'));
+    await tester.pumpAndSettle();
+    final title = tester.widget<TextFormField>(find.byKey(const Key('contactTitle'))).controller!.text;
+    final message = tester.widget<TextFormField>(find.byKey(const Key('contactMessage'))).controller!.text;
+    expect(title, 'خطأ في ذكر');
+    expect(message, contains('أظن أن في هذا الذكر خطأ'));
+    expect(message, contains('الباب ٩٨'));
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('adhkarViewMode')));
     await tester.pumpAndSettle();
     expect(app.services.settings.adhkarCards, isFalse, reason: 'cards are the default now');

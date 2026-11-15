@@ -30,9 +30,12 @@ export function reportBody(where: string, text: string, intro: string): string {
   return `${intro}\n\n${where}\n«${quote}»\n\n`;
 }
 
-/** mailto: link with no recipient: the reader picks the address (the project contact page lists it). */
-export const reportMailto = (subject: string, body: string): string =>
-  `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+/**
+ * "Report a mistake" opens the contact form on the help page (owner 2026-11-15), its title and message
+ * filled in; `helpPath` is the help page's path (with the site base).
+ */
+export const reportFormHref = (helpPath: string, title: string, body: string): string =>
+  `${helpPath}?title=${encodeURIComponent(title)}&message=${encodeURIComponent(body)}#contact`;
 
 export type ShareResult = "shared" | "copied" | "cancelled" | "failed";
 

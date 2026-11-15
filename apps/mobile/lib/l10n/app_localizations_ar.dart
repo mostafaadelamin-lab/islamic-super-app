@@ -411,6 +411,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhkarReportIntro => 'أظن أن في هذا الذكر خطأ (اكتب التفاصيل بالأسفل):';
 
   @override
+  String get adhkarReportTitle => 'خطأ في ذكر';
+
+  @override
   String get adhkarReset => 'البدء من جديد';
 
   @override

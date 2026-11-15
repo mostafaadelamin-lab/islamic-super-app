@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../app_services.dart';
+import 'contact_screen.dart';
 import 'l10n_ext.dart';
 import 'r_icon.dart';
 
@@ -16,8 +17,7 @@ String dhikrReportBody(String intro, String where, String text) {
   return '$intro\n\n$where\n«$quote»\n\n';
 }
 
-/// Share and "report a mistake" for one dhikr, through the system share sheet
-/// (the reader picks email, messages, …).
+/// Share (system share sheet) and "report a mistake" (the contact form) for one dhikr.
 class DhikrActions extends StatelessWidget {
   const DhikrActions({
     super.key,
@@ -46,7 +46,15 @@ class DhikrActions extends StatelessWidget {
         ),
         TextButton.icon(
           key: Key('${keyPrefix}Report'),
-          onPressed: () => sharer.shareText(dhikrReportBody(l.adhkarReportIntro, where, text)),
+          // Opens the contact form, its title and message filled in (owner 2026-11-15).
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (_) => ContactScreen(
+                initialTitle: l.adhkarReportTitle,
+                initialMessage: dhikrReportBody(l.adhkarReportIntro, where, text),
+              ),
+            ),
+          ),
           icon: const RIcon(RIcons.flag, size: 18),
           label: Text(l.adhkarReport),
         ),

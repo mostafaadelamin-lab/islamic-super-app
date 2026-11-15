@@ -776,6 +776,12 @@ abstract class AppLocalizations {
   /// **'I think there is a mistake in this dhikr (please describe it below):'**
   String get adhkarReportIntro;
 
+  /// shared key "adhkar.reportTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Mistake in a dhikr'**
+  String get adhkarReportTitle;
+
   /// shared key "adhkar.reset"
   ///
   /// In en, this message translates to:

@@ -55,7 +55,7 @@ describe("cards, share and report", () => {
     expect(writeText).toHaveBeenCalledWith(expect.stringContaining(HISN[1]!.items[1]!));
     expect(screen.getByText("Copied — paste it where you like.")).toBeInTheDocument();
     const report = screen.getByTestId("hisn-2-report");
-    expect(report.getAttribute("href")).toMatch(/^mailto:\?subject=/);
+    expect(report.getAttribute("href")).toMatch(/\/en\/help\/?\?title=Mistake%20in%20a%20dhikr&message=.*#contact$/);
     expect(decodeURIComponent(report.getAttribute("href")!)).toContain("(chapter 2) · 2");
   });
 

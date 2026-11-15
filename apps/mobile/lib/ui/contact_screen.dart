@@ -31,8 +31,12 @@ Future<bool> postContactForm(Uri endpoint, Map<String, String> fields) async {
 
 /// "Contact us" (owner, 2026-11-11): a form; the message is emailed to the team.
 class ContactScreen extends StatefulWidget {
-  const ContactScreen({super.key, this.sender = postContactForm});
+  const ContactScreen({super.key, this.sender = postContactForm, this.initialTitle = '', this.initialMessage = ''});
   final ContactSender sender;
+
+  /// Filled in by "report a mistake" (owner 2026-11-15): the reader only adds the details.
+  final String initialTitle;
+  final String initialMessage;
 
   @override
   State<ContactScreen> createState() => _ContactScreenState();
@@ -40,11 +44,11 @@ class ContactScreen extends StatefulWidget {
 
 class _ContactScreenState extends State<ContactScreen> {
   final _form = GlobalKey<FormState>();
-  final _title = TextEditingController();
+  late final _title = TextEditingController(text: widget.initialTitle);
   final _name = TextEditingController();
   final _phone = TextEditingController();
   final _whatsapp = TextEditingController();
-  final _message = TextEditingController();
+  late final _message = TextEditingController(text: widget.initialMessage);
   bool _sending = false;
   bool _sent = false;
 

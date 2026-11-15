@@ -32,7 +32,7 @@ export default async function HelpPage({ params }: { params: LocaleParams }) {
           </details>
         ))}
       </section>
-      <section className="card" aria-labelledby="contact-h">
+      <section className="card" id="contact" aria-labelledby="contact-h">
         <h2 id="contact-h" className="card-title">
           {t(locale, "help.contact")}
         </h2>

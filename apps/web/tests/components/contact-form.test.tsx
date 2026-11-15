@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { ContactForm, contactPayload } from "@/components/ContactForm";
+import { ContactForm, contactPayload, prefillFromSearch } from "@/components/ContactForm";
 
 describe("contact form (owner, 2026-11-13)", () => {
   it("needs a title and a message, then sends title, name, phone, WhatsApp and message", async () => {
@@ -44,5 +44,15 @@ describe("contact form (owner, 2026-11-13)", () => {
       phone: "-",
       whatsapp: "-",
     });
+  });
+
+  it("fills the title and message handed over by «report a mistake»", async () => {
+    expect(prefillFromSearch("?title=A%20b&message=x%0Ay")).toEqual({ title: "A b", message: "x\ny" });
+    expect(prefillFromSearch("")).toEqual({});
+    window.history.replaceState(null, "", "/en/help/?title=Mistake&message=Morning%20%C2%B7%201");
+    render(<ContactForm locale="en" endpoint="https://example.test/form" send={async () => true} />);
+    await waitFor(() => expect(screen.getByTestId("contact-title")).toHaveValue("Mistake"));
+    expect(screen.getByTestId("contact-message")).toHaveValue("Morning · 1");
+    window.history.replaceState(null, "", "/");
   });
 });

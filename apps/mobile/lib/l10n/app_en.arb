@@ -596,6 +596,10 @@
   "@adhkarReportIntro": {
     "description": "shared key \"adhkar.reportIntro\""
   },
+  "adhkarReportTitle": "Mistake in a dhikr",
+  "@adhkarReportTitle": {
+    "description": "shared key \"adhkar.reportTitle\""
+  },
   "adhkarReset": "Start again",
   "@adhkarReset": {
     "description": "shared key \"adhkar.reset\""

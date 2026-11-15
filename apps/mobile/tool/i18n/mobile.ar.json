@@ -781,5 +781,6 @@
   "hajj.kind.ifrad": "حج الإفراد",
   "hajj.kind.sub": "الخطوات بالترتيب، خطوة خطوة",
   "hajj.hub.umrahSub": "خطوات العمرة خطوة خطوة",
-  "hajj.hub.ihram": "المواقيت ومحظورات الإحرام"
+  "hajj.hub.ihram": "المواقيت ومحظورات الإحرام",
+  "adhkar.reportTitle": "خطأ في ذكر"
 }
