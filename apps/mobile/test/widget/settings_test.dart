@@ -92,19 +92,15 @@ void main() {
     expect(find.byType(AboutScreen), findsOneWidget);
   });
 
-  testWidgets('about: free-forever statement and content sources/licences', (tester) async {
+  testWidgets('about: free-forever statement, no content sources (owner 2026-11-15)', (tester) async {
     await open(tester, locale: 'en');
     await tester.scrollUntilVisible(find.byKey(const Key('aboutTile')), 200, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.byKey(const Key('aboutTile')));
     await tester.pumpAndSettle();
     expect(find.text('A free app made for the sake of Allah: no charge and no ads.'), findsOneWidget);
-    expect(find.textContaining('hafsData_v18'), findsOneWidget);
-    expect(find.textContaining('Saheeh International'), findsOneWidget);
-    expect(find.textContaining('Waqf General Public License'), findsOneWidget);
-    expect(find.textContaining('SIL Open Font License'), findsOneWidget);
-    expect(find.textContaining('adhan-js'), findsOneWidget);
-    expect(find.textContaining('IANA'), findsOneWidget);
-    expect(find.text('Quran 2.0.0 · Pages 1441H-1'), findsOneWidget);
+    // Content sources hidden from the app (owner, 2026-11-15); kept in docs/CONTENT_SOURCES.md.
+    expect(find.textContaining('hafsData_v18'), findsNothing);
+    expect(find.textContaining('Saheeh International'), findsNothing);
     expect(find.text('Version 1.0.0'), findsOneWidget);
   });
 
@@ -114,7 +110,7 @@ void main() {
     await tester.tap(find.byKey(const Key('aboutTile')));
     await tester.pumpAndSettle();
     expect(find.text('تطبيق مجاني تم إنشاؤه لوجه الله تعالى، بدون مقابل وبدون إعلانات.'), findsOneWidget);
-    expect(find.text('مصادر المحتوى'), findsOneWidget);
+    expect(find.text('مصادر المحتوى'), findsNothing);
     expect(find.text('الإصدار ١.٠.٠'), findsOneWidget);
   });
 

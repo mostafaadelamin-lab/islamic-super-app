@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../app_services.dart';
 import 'l10n_ext.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
@@ -13,7 +12,6 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final v = context.services.content.versions;
     return Scaffold(
       appBar: AppBar(title: Text(l.settingsAbout)),
       body: ReadableWidth(
@@ -28,23 +26,9 @@ class AboutScreen extends StatelessWidget {
                 Text(l.aboutOpenSource),
                 const SizedBox(height: 8),
                 Text(l.aboutVersion(context.num(appVersion))),
-                Text('Quran ${v['quran']} · Pages ${v['pages']}', textDirection: TextDirection.ltr),
               ],
             ),
-            SectionCard(
-              title: l.settingsSources,
-              children: [
-                for (final t in [
-                  l.aboutQuranText,
-                  l.aboutTranslation,
-                  l.aboutPages,
-                  l.aboutFonts,
-                  l.aboutPrayerAlgo,
-                  l.aboutTzdb,
-                ])
-                  Padding(padding: const EdgeInsets.symmetric(vertical: 6), child: Text(t)),
-              ],
-            ),
+            // No "content sources" card (owner, 2026-11-15): kept in docs/CONTENT_SOURCES.md.
           ],
         ),
       ),

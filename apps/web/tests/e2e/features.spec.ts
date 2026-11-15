@@ -400,18 +400,15 @@ test.describe("account (no server)", () => {
   });
 });
 
-test("about page: free-forever statement and sources", async ({ page }) => {
+test("about page: free-forever statement, no content sources", async ({ page }) => {
   await page.goto("/en/about/");
   await expect(page.getByTestId("free-statement")).toContainText(
     "no ads, no subscriptions, no in-app purchases",
   );
-  await expect(page.getByText(/hafsData_v18/)).toBeVisible();
-  await expect(page.getByText(/Saheeh International/)).toBeVisible();
-  await expect(page.getByText("Madinah Mushaf KFGQPC new edition (1441H)")).toBeVisible();
-  const [lic] = await Promise.all([
-    page.waitForResponse(/KFGQPC-HAFS-LICENSE\.txt/),
-    page.getByRole("link", { name: "KFGQPC HAFS Uthmanic Script v18 — EULA" }).click(),
-  ]);
+  // Content sources hidden (owner, 2026-11-15); the font licence still ships next to the font.
+  await expect(page.getByText(/hafsData_v18/)).toHaveCount(0);
+  await expect(page.getByText(/Saheeh International/)).toHaveCount(0);
+  const lic = await page.request.get("/fonts/KFGQPC-HAFS-LICENSE.txt");
   expect(lic.status()).toBe(200);
 });
 
