@@ -310,7 +310,7 @@ function ReciterView({
           const key = `${moshaf.id}:${n}`;
           const on = current === key;
           return (
-            <li key={n}>
+            <li key={n} className={on ? "has-player" : undefined}>
               <button
                 type="button"
                 className="episode"
@@ -468,7 +468,7 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
                   const key = `live:${r.id}`;
                   const title = locale === "ar" ? r.ar : r.en;
                   return (
-                    <li key={r.id}>
+                    <li key={r.id} className={track?.key === key ? "has-player" : undefined}>
                       <button
                         type="button"
                         className="episode"
@@ -493,7 +493,7 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
                 {radios.map((r) => {
                   const key = `radio:${r.id}`;
                   return (
-                    <li key={r.id}>
+                    <li key={r.id} className={track?.key === key ? "has-player" : undefined}>
                       <button
                         type="button"
                         className="episode"

@@ -4210,3 +4210,9 @@ dd {
   border-radius: 50%;
   border: 1px solid var(--color-line);
 }
+
+/* Recitation library and radios: the player goes under the row playing (owner 2026-11-15). */
+.episode-list li.has-player {
+  flex-wrap: wrap;
+  row-gap: 0;
+}
