@@ -86,10 +86,20 @@ class StepsFlowLayout {
 }
 
 class StepsFlow extends StatelessWidget {
-  const StepsFlow({super.key, required this.titles, required this.arabic, required this.label, this.onStep});
+  const StepsFlow({
+    super.key,
+    required this.titles,
+    required this.arabic,
+    required this.label,
+    this.onStep,
+    this.active,
+  });
   final List<String> titles;
   final bool arabic;
   final String label;
+
+  /// The step on show (index from 0), drawn filled (owner, 2026-11-15: one step at a time).
+  final int? active;
 
   /// Tap on a step (index from 0), e.g. to show its explanation.
   final ValueChanged<int>? onStep;
@@ -97,7 +107,7 @@ class StepsFlow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final h = StepsFlowLayout.height(titles.length);
-    final paint = CustomPaint(painter: _FlowPainter(titles, arabic));
+    final paint = CustomPaint(painter: _FlowPainter(titles, arabic, active));
     return Semantics(
       label: label,
       image: true,
@@ -125,9 +135,10 @@ class StepsFlow extends StatelessWidget {
 }
 
 class _FlowPainter extends CustomPainter {
-  _FlowPainter(this.titles, this.arabic);
+  _FlowPainter(this.titles, this.arabic, this.active);
   final List<String> titles;
   final bool arabic;
+  final int? active;
 
   static const _arabicDigits = '٠١٢٣٤٥٦٧٨٩';
   String _num(int n) => arabic ? n.toString().split('').map((d) => _arabicDigits[int.parse(d)]).join() : '$n';
@@ -177,16 +188,17 @@ class _FlowPainter extends CustomPainter {
     }
     for (var i = 0; i < titles.length; i++) {
       final p = _L.position(i);
-      canvas.drawCircle(p, _L.radius, Paint()..color = HajjDrawingColors.circle);
+      final on = i == active;
+      canvas.drawCircle(p, _L.radius, Paint()..color = on ? HajjDrawingColors.path : HajjDrawingColors.circle);
       canvas.drawCircle(
         p,
         _L.radius,
         Paint()
-          ..color = HajjDrawingColors.path
+          ..color = on ? HajjDrawingColors.number : HajjDrawingColors.path
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 2,
+          ..strokeWidth = on ? 3 : 2,
       );
-      _text(canvas, _num(i + 1), p, 26, HajjDrawingColors.number, FontWeight.w800);
+      _text(canvas, _num(i + 1), p, 26, on ? HajjDrawingColors.bg : HajjDrawingColors.number, FontWeight.w800);
       final lines = _L.twoLines(_L.shortTitle(titles[i]));
       for (var k = 0; k < lines.length; k++) {
         _text(canvas, lines[k], p + Offset(0, _L.radius + 14 + k * 16), 12, HajjDrawingColors.ink, FontWeight.w700);
@@ -196,5 +208,5 @@ class _FlowPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_FlowPainter old) => old.titles != titles || old.arabic != arabic;
+  bool shouldRepaint(_FlowPainter old) => old.titles != titles || old.arabic != arabic || old.active != active;
 }

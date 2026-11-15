@@ -6,8 +6,10 @@ import { isRoundTool } from "@/lib/rounds";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
 import { RoundCounter } from "@/components/RoundCounter";
 import { TawafPlan, type TawafPlanLabels } from "@/components/TawafPlan";
-import { StepsFlow } from "@/components/StepsFlow";
-import { HajjTypeFlow } from "@/components/HajjTypeFlow";
+import { StepPager } from "@/components/StepPager";
+import { HajjTypeFlow, type ExplainedStep } from "@/components/HajjTypeFlow";
+import dalil from "@/generated/dalil-hajj.json";
+import { HAJJ_FLOWS, type HajjType } from "@/lib/hajj-flows";
 import { OfficialHajjGuide } from "@/components/OfficialHajjGuide";
 import { HajjServices } from "@/components/HajjServices";
 
@@ -61,6 +63,26 @@ function StepCard({ locale, label, step, id }: { locale: Locale; label: string; 
   );
 }
 
+/** The official guide's words for a step of the Hajj graphic (its anchor in lib/hajj-flows.ts). */
+function explain(anchor: string): string {
+  const u = /^#dalil-u(\d+)$/.exec(anchor);
+  if (u) return dalil.umrah[Number(u[1]) - 1] ?? "";
+  const h = /^#dalil-h(\d+)$/.exec(anchor);
+  if (h) return dalil.hajj[Number(h[1]) - 1] ?? "";
+  if (anchor === "#dalil-types") return dalil.types.map((x) => `${x.name}: ${x.text}`).join("\n\n");
+  const st = /^#hajj-stage-(\d+)$/.exec(anchor);
+  if (st) return (hajj.hajj.days[Number(st[1]) - 1]?.points ?? []).join("\n");
+  return "";
+}
+
+const explained = (k: HajjType): readonly ExplainedStep[] =>
+  HAJJ_FLOWS[k].map((s) => ({ title: s.title, text: explain(s.href) }));
+const EXPLAINED: Record<HajjType, readonly ExplainedStep[]> = {
+  tamattu: explained("tamattu"),
+  qiran: explained("qiran"),
+  ifrad: explained("ifrad"),
+};
+
 /** Hajj & Umrah guide from content/pilgrimage/source-hajj.js (Arabic). Religious review is pending. */
 export default async function HajjPage({ params }: { params: LocaleParams }) {
   const locale = await resolveLocale(params);
@@ -85,21 +107,22 @@ export default async function HajjPage({ params }: { params: LocaleParams }) {
 
       <h2 id="umrah">{t(locale, "hajj.umrah")}</h2>
       <p lang="ar">{hajj.umrah.intro}</p>
-      <StepsFlow
+      <StepPager
         locale={locale}
         titles={hajj.umrah.steps.map((s) => s.title)}
         idPrefix="umrah-step"
         label={t(locale, "hajj.flow.umrah")}
-      />
-      {hajj.umrah.steps.map((s, i) => (
-        <StepCard
-          key={i}
-          id={`umrah-step-${i + 1}`}
-          locale={locale}
-          label={t(locale, "hajj.step", { n: n(i) })}
-          step={s}
-        />
-      ))}
+      >
+        {hajj.umrah.steps.map((s, i) => (
+          <StepCard
+            key={i}
+            id={`umrah-step-${i + 1}-card`}
+            locale={locale}
+            label={t(locale, "hajj.step", { n: n(i) })}
+            step={s}
+          />
+        ))}
+      </StepPager>
       <section className="card">
         <h3 lang="ar">{hajj.madinah.title}</h3>
         <ul lang="ar">
@@ -121,7 +144,7 @@ export default async function HajjPage({ params }: { params: LocaleParams }) {
           ))}
         </dl>
       </section>
-      <HajjTypeFlow locale={locale} />
+      <HajjTypeFlow locale={locale} flows={EXPLAINED} source={dalil.source.title} />
       {hajj.hajj.days.map((s, i) => (
         <StepCard
           key={i}

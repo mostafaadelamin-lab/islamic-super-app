@@ -113,7 +113,105 @@ export function PrayerView({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <div className="two-col">
+      <section className="card" aria-labelledby="times-h">
+        <h2 id="times-h" style={{ marginTop: 0 }}>
+          {t(locale, dayOffset === 0 ? "prayer.timesTable" : "prayer.timesTableDay")}
+        </h2>
+        <div className="day-nav" data-testid="day-nav">
+          <button
+            type="button"
+            className="btn day-nav-btn"
+            aria-label={t(locale, "prayer.prevDay")}
+            onClick={() => setDayOffset((o) => o - 1)}
+            data-testid="day-prev"
+          >
+            {locale === "ar" ? "›" : "‹"}
+          </button>
+          <div className="day-nav-label" data-testid="day-label">
+            {computed && "day" in computed ? (
+              <>
+                <strong>
+                  {weekdayName(computed.day.times.dhuhr, loc.tz, locale)}{" "}
+                  {gregorianDay(computed.day.times.dhuhr, loc.tz, locale)}
+                </strong>
+                <span className="muted" data-testid="day-hijri">
+                  {hijriDate(computed.day.times.dhuhr, loc.tz, locale) ?? ""}
+                </span>
+              </>
+            ) : dateKey ? (
+              localizeDigits(dateKey, locale)
+            ) : null}
+          </div>
+          <button
+            type="button"
+            className="btn day-nav-btn"
+            aria-label={t(locale, "prayer.nextDay")}
+            onClick={() => setDayOffset((o) => o + 1)}
+            data-testid="day-next"
+          >
+            {locale === "ar" ? "‹" : "›"}
+          </button>
+        </div>
+        {dayOffset !== 0 ? (
+          <button
+            type="button"
+            className="btn btn-link"
+            onClick={() => setDayOffset(0)}
+            data-testid="day-today"
+          >
+            {t(locale, "prayer.backToToday")}
+          </button>
+        ) : null}
+        {!computed ? <p className="muted">{t(locale, "prayer.loading")}</p> : null}
+        {computed && "error" in computed ? (
+          <p className="alert alert-error" role="alert">
+            {t(locale, "prayer.error", { msg: computed.error })}
+          </p>
+        ) : null}
+        {computed && "day" in computed ? (
+          <>
+            {next && now ? (
+              <div data-testid="next-prayer">
+                <p style={{ margin: 0 }}>{t(locale, "prayer.next", { name: name(next.key) })}</p>
+                <p className="countdown" data-testid="countdown">
+                  {localizeDigits(formatCountdown(next.at.getTime() - now.getTime()), locale)}
+                </p>
+              </div>
+            ) : null}
+            <table className="times" data-testid="times">
+              <thead>
+                <tr>
+                  <th scope="col">{t(locale, "prayer.name")}</th>
+                  <th scope="col">{t(locale, "prayer.time")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {PRAYER_KEYS.map((k) => {
+                  const at = computed.day.times[k];
+                  const isNext = next?.key === k && next.at.getTime() === at.getTime();
+                  return (
+                    <tr key={k} className={isNext ? "next" : undefined} data-prayer={k}>
+                      <th scope="row">{name(k)}</th>
+                      <td className="time">{clock(at)}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            {computed.day.highLatitudeAdjusted.length > 0 ? (
+              <p className="alert" data-testid="highlat-note">
+                {t(locale, "prayer.highLatNote")}{" "}
+                {t(locale, "prayer.highLat", {
+                  list: computed.day.highLatitudeAdjusted.map(name).join(locale === "ar" ? "، " : ", "),
+                })}
+              </p>
+            ) : null}
+          </>
+        ) : null}
+      </section>
+
+      {/* The page opens on the times; location and calculation settings come below them (owner, 2026-11-15). */}
+      <div className="two-col" id="prayer-settings">
         <section className="card" aria-labelledby="loc-h">
           <h2 id="loc-h" style={{ marginTop: 0 }}>
             {t(locale, "prayer.location")}
@@ -216,103 +314,6 @@ export function PrayerView({ locale }: { locale: Locale }) {
           </div>
         </section>
       </div>
-
-      <section className="card" aria-labelledby="times-h">
-        <h2 id="times-h" style={{ marginTop: 0 }}>
-          {t(locale, dayOffset === 0 ? "prayer.timesTable" : "prayer.timesTableDay")}
-        </h2>
-        <div className="day-nav" data-testid="day-nav">
-          <button
-            type="button"
-            className="btn day-nav-btn"
-            aria-label={t(locale, "prayer.prevDay")}
-            onClick={() => setDayOffset((o) => o - 1)}
-            data-testid="day-prev"
-          >
-            {locale === "ar" ? "›" : "‹"}
-          </button>
-          <div className="day-nav-label" data-testid="day-label">
-            {computed && "day" in computed ? (
-              <>
-                <strong>
-                  {weekdayName(computed.day.times.dhuhr, loc.tz, locale)}{" "}
-                  {gregorianDay(computed.day.times.dhuhr, loc.tz, locale)}
-                </strong>
-                <span className="muted" data-testid="day-hijri">
-                  {hijriDate(computed.day.times.dhuhr, loc.tz, locale) ?? ""}
-                </span>
-              </>
-            ) : dateKey ? (
-              localizeDigits(dateKey, locale)
-            ) : null}
-          </div>
-          <button
-            type="button"
-            className="btn day-nav-btn"
-            aria-label={t(locale, "prayer.nextDay")}
-            onClick={() => setDayOffset((o) => o + 1)}
-            data-testid="day-next"
-          >
-            {locale === "ar" ? "‹" : "›"}
-          </button>
-        </div>
-        {dayOffset !== 0 ? (
-          <button
-            type="button"
-            className="btn btn-link"
-            onClick={() => setDayOffset(0)}
-            data-testid="day-today"
-          >
-            {t(locale, "prayer.backToToday")}
-          </button>
-        ) : null}
-        {!computed ? <p className="muted">{t(locale, "prayer.loading")}</p> : null}
-        {computed && "error" in computed ? (
-          <p className="alert alert-error" role="alert">
-            {t(locale, "prayer.error", { msg: computed.error })}
-          </p>
-        ) : null}
-        {computed && "day" in computed ? (
-          <>
-            {next && now ? (
-              <div data-testid="next-prayer">
-                <p style={{ margin: 0 }}>{t(locale, "prayer.next", { name: name(next.key) })}</p>
-                <p className="countdown" data-testid="countdown">
-                  {localizeDigits(formatCountdown(next.at.getTime() - now.getTime()), locale)}
-                </p>
-              </div>
-            ) : null}
-            <table className="times" data-testid="times">
-              <thead>
-                <tr>
-                  <th scope="col">{t(locale, "prayer.name")}</th>
-                  <th scope="col">{t(locale, "prayer.time")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {PRAYER_KEYS.map((k) => {
-                  const at = computed.day.times[k];
-                  const isNext = next?.key === k && next.at.getTime() === at.getTime();
-                  return (
-                    <tr key={k} className={isNext ? "next" : undefined} data-prayer={k}>
-                      <th scope="row">{name(k)}</th>
-                      <td className="time">{clock(at)}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-            {computed.day.highLatitudeAdjusted.length > 0 ? (
-              <p className="alert" data-testid="highlat-note">
-                {t(locale, "prayer.highLatNote")}{" "}
-                {t(locale, "prayer.highLat", {
-                  list: computed.day.highLatitudeAdjusted.map(name).join(locale === "ar" ? "، " : ", "),
-                })}
-              </p>
-            ) : null}
-          </>
-        ) : null}
-      </section>
 
       <AdhanSettings locale={locale} />
 

@@ -761,5 +761,19 @@
   "hajj.guideHajj": "How to perform Hajj",
   "hajj.guideSource": "Source",
   "hajj.guideCorrections": "Digitization typos corrected",
-  "player.open": "Back to what is playing"
+  "player.open": "Back to what is playing",
+  "hajj.stepOf": "Step {n} of {total}",
+  "hajj.stepPrev": "Previous",
+  "hajj.stepNext": "Next",
+  "hajj.tapStepOne": "Tap a step number to show it",
+  "ayah.listen": "Listen",
+  "ayah.tafsir": "Tafsir",
+  "ayah.share": "Share",
+  "ayah.copyShort": "Copy",
+  "ayah.markShort": "Mark",
+  "ayah.unmarkShort": "Unmark",
+  "ayah.onlyThis": "This ayah",
+  "ayah.toPageEnd": "To page end",
+  "ayah.toSurahEnd": "To surah end",
+  "ayah.withTafsir": "With tafsir"
 }

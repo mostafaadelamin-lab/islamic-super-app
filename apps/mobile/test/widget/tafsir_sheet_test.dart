@@ -37,6 +37,13 @@ void main() {
     return app;
   }
 
+  /// Simple ayah menu (owner, 2026-11-15): the tafsir opens from its button.
+  Future<void> openTafsir(WidgetTester tester) async {
+    expect(find.byKey(const Key('tafsirCard')), findsNothing);
+    await tester.tap(find.byKey(const Key('ayahTafsir')));
+    await tester.pumpAndSettle();
+  }
+
   Future<TestApp> openSurah(
     WidgetTester tester,
     int surah,
@@ -53,6 +60,7 @@ void main() {
     final app = await openMushaf(tester, 42);
     await tester.tap(find.byKey(const Key('pageAyah-2-255')));
     await tester.pumpAndSettle();
+    await openTafsir(tester);
     expect(find.byKey(const Key('ayahSheet')), findsOneWidget);
     expect(find.text('التفسير الميسر'), findsOneWidget);
     expect(find.text('مجمع الملك فهد لطباعة المصحف الشريف'), findsOneWidget);
@@ -60,10 +68,10 @@ void main() {
     expect(shown(tester).data, source(2, 255));
     expect(shown(tester).style?.fontFamily, DesignTokens.fontUi);
     expect(shown(tester).style?.fontFamily, isNot(DesignTokens.fontQuran));
-    // The list of actions comes first (owner's request), then the tafsir.
+    // The row of actions comes first (owner's request), then the tafsir.
     expect(
       tester.getTopLeft(find.byKey(const Key('tafsirCard'))).dy,
-      greaterThan(tester.getTopLeft(find.byKey(const Key('ayahPlayOne'))).dy),
+      greaterThan(tester.getTopLeft(find.byKey(const Key('ayahListen'))).dy),
     );
     expect(app.services.content.quran.text(const AyahRef(2, 255)), isNot(contains(shown(tester).data!)));
   });
@@ -72,6 +80,7 @@ void main() {
     final app = await openSurah(tester, 112, 1);
     await tester.tap(find.byKey(const Key('ayah-112-1')));
     await tester.pumpAndSettle();
+    await openTafsir(tester);
     expect(find.byKey(const Key('ayahSheet')), findsOneWidget);
     expect(shown(tester).data, source(112, 1));
     expect(find.text('الإخلاص : ١'), findsOneWidget);
@@ -84,6 +93,7 @@ void main() {
     await openMushaf(tester, 42);
     await tester.tap(find.byKey(const Key('pageAyah-2-255')));
     await tester.pumpAndSettle();
+    await openTafsir(tester);
     await tester.tap(find.byKey(const Key('tafsirNext')));
     await tester.pumpAndSettle();
     expect(sheetRef(tester), const AyahRef(2, 256));
@@ -102,6 +112,7 @@ void main() {
     await openSurah(tester, 1, 7);
     await tester.tap(find.byKey(const Key('ayah-1-7')));
     await tester.pumpAndSettle();
+    await openTafsir(tester);
     await tester.tap(find.byKey(const Key('tafsirNext')));
     await tester.pumpAndSettle();
     expect(sheetRef(tester), const AyahRef(2, 1));
@@ -122,6 +133,7 @@ void main() {
     final app = await openMushaf(tester, 42);
     await tester.tap(find.byKey(const Key('pageAyah-2-255')));
     await tester.pumpAndSettle();
+    await openTafsir(tester);
     await tester.tap(find.byKey(const Key('tafsirNext')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('ayahBookmark')));
@@ -143,11 +155,12 @@ void main() {
       // 2:282 is taller than a small screen: tap its heading row (on the ayah-number label).
       await tester.tapAt(tester.getTopRight(find.byKey(const Key('ayah-2-282'))) + const Offset(-60, 24));
       await tester.pumpAndSettle();
+      await openTafsir(tester);
       expect(tester.takeException(), isNull);
       expect(shown(tester).data, source(2, 282));
       final sheet = tester.getRect(find.byKey(const Key('ayahSheet')));
       expect(sheet.bottom, lessThanOrEqualTo(size.height + 0.01));
-      for (final k in ['tafsirCard', 'ayahPlayOne', 'ayahCopy', 'tafsirNext']) {
+      for (final k in ['tafsirCard', 'ayahListen', 'ayahCopy', 'tafsirNext']) {
         final r = tester.getRect(find.byKey(Key(k)));
         expect(r.left, greaterThanOrEqualTo(-0.01), reason: k);
         expect(r.right, lessThanOrEqualTo(size.width + 0.01), reason: k);
@@ -167,6 +180,7 @@ void main() {
     await openMushaf(tester, 42, locale: 'en');
     await tester.tap(find.byKey(const Key('pageAyah-2-255')));
     await tester.pumpAndSettle();
+    await openTafsir(tester);
     expect(find.text('Al-Tafsir al-Muyassar'), findsOneWidget);
     expect(find.text('This tafsir is available in Arabic only.'), findsOneWidget);
     expect(shown(tester).data, source(2, 255));
@@ -185,6 +199,9 @@ void main() {
     await tester.tap(find.byKey(const Key('pageAyah-2-255')));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
+    expect(started, 0, reason: 'the sheet loads it only when the tafsir is opened');
+    await tester.tap(find.byKey(const Key('ayahTafsir')));
+    await tester.pump();
     expect(started, 1);
     expect(find.byKey(const Key('tafsirLoading')), findsOneWidget);
     done.complete(testTafsir);
@@ -198,6 +215,7 @@ void main() {
     final app = await openMushaf(tester, 42, tafsir: store);
     await tester.tap(find.byKey(const Key('pageAyah-2-255')));
     await tester.pumpAndSettle();
+    await openTafsir(tester);
     expect(find.byKey(const Key('tafsirError')), findsOneWidget);
     await tester.tap(find.byKey(const Key('ayahBookmark')));
     await tester.pumpAndSettle();

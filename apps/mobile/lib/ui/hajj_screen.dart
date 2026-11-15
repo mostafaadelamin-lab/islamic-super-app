@@ -49,30 +49,33 @@ class HajjScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
                   children: [
                     if (!context.isArabic) ReviewNotice(l.adhkarArabicOnly),
-                    for (final (i, b) in (guide.sections[k] ?? const <HajjBlock>[]).indexed) ...[
-                      // Numbered steps graphic before the first numbered step (owner, 2026-11-14).
-                      if (b.label != null && i == _firstLabelled(guide.sections[k]!))
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            DesignTokens.spaceLg,
-                            DesignTokens.spaceMd,
-                            DesignTokens.spaceLg,
-                            0,
+                    for (final (i, b) in (guide.sections[k] ?? const <HajjBlock>[]).indexed)
+                      if (k == 'hajj') ...[
+                        // Numbered steps graphic before the first numbered step (owner, 2026-11-14).
+                        if (b.label != null && i == _firstLabelled(guide.sections[k]!))
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                              DesignTokens.spaceLg,
+                              DesignTokens.spaceMd,
+                              DesignTokens.spaceLg,
+                              0,
+                            ),
+                            child: HajjTypeFlow(guide: guide),
                           ),
-                          child: k == 'hajj'
-                              ? HajjTypeFlow(guide: guide)
-                              : StepsFlow(
-                                  key: Key('stepsFlow-$k'),
-                                  titles: [
-                                    for (final x in guide.sections[k]!)
-                                      if (x.label != null) x.title ?? '',
-                                  ],
-                                  arabic: context.isArabic,
-                                  label: k == 'umrah' ? l.hajjUmrah : l.hajjHajj,
-                                ),
+                        _Block(block: b),
+                      ] else if (b.label == null)
+                        _Block(block: b)
+                      else if (i == _firstLabelled(guide.sections[k]!))
+                        // One step at a time with Previous / Next (owner, 2026-11-15).
+                        StepPager(
+                          key: Key('stepPager-$k'),
+                          blocks: [
+                            for (final x in guide.sections[k]!)
+                              if (x.label != null) x,
+                          ],
+                          label: k == 'umrah' ? l.hajjUmrah : l.hajjHajj,
+                          section: k,
                         ),
-                      _Block(block: b),
-                    ],
                     if (k == 'hajj' && !guide.official.isEmpty) OfficialGuideCard(guide: guide.official),
                   ],
                 ),
@@ -85,6 +88,98 @@ class HajjScreen extends StatelessWidget {
 }
 
 int _firstLabelled(List<HajjBlock> blocks) => blocks.indexWhere((b) => b.label != null);
+
+/// The numbered steps graphic, then only the chosen step's card with Previous / Next
+/// (owner, 2026-11-15: a tap on step 1 used to show every step).
+class StepPager extends StatefulWidget {
+  const StepPager({super.key, required this.blocks, required this.label, required this.section});
+  final List<HajjBlock> blocks;
+  final String label;
+  final String section;
+
+  @override
+  State<StepPager> createState() => _StepPagerState();
+}
+
+class _StepPagerState extends State<StepPager> {
+  int _active = 0;
+
+  void _go(int i) => setState(() => _active = i.clamp(0, widget.blocks.length - 1));
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final b = widget.blocks;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
+          child: StepsFlow(
+            key: Key('stepsFlow-${widget.section}'),
+            titles: [for (final x in b) x.title ?? ''],
+            arabic: context.isArabic,
+            label: widget.label,
+            active: _active,
+            onStep: _go,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: DesignTokens.spaceXs),
+          child: Text(l.hajjTapStepOne, style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.center),
+        ),
+        KeyedSubtree(
+          key: Key('stepCard-${widget.section}-${_active + 1}'),
+          child: _Block(block: b[_active]),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg),
+          child: StepNav(index: _active, count: b.length, onGo: _go, id: widget.section),
+        ),
+      ],
+    );
+  }
+}
+
+/// "Step n of N" between Previous and Next.
+class StepNav extends StatelessWidget {
+  const StepNav({super.key, required this.index, required this.count, required this.onGo, required this.id});
+  final int index;
+  final int count;
+  final ValueChanged<int> onGo;
+  final String id;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    String num(int n) => context.isArabic ? _arabicNum(n) : '$n';
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceMd),
+      child: Row(
+        children: [
+          OutlinedButton(
+            key: Key('stepPrev-$id'),
+            onPressed: index > 0 ? () => onGo(index - 1) : null,
+            child: Text(l.hajjStepPrev),
+          ),
+          Expanded(
+            child: Text(
+              l.hajjStepOf(num(index + 1), num(count)),
+              key: Key('stepCount-$id'),
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.primary),
+            ),
+          ),
+          FilledButton(
+            key: Key('stepNext-$id'),
+            onPressed: index < count - 1 ? () => onGo(index + 1) : null,
+            child: Text(l.hajjStepNext),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class _Block extends StatelessWidget {
   const _Block({required this.block});
@@ -208,8 +303,8 @@ class _Block extends StatelessWidget {
   }
 }
 
-/// Steps 1, 2, 3… for the chosen Hajj type (tamattu' by default); a tap shows the official
-/// guide's own words for that step (owner, 2026-11-14).
+/// Steps 1, 2, 3… for the chosen Hajj type (tamattu' by default); the chosen step is shown alone
+/// in the official guide's own words, with Previous / Next (owner, 2026-11-14 / 2026-11-15).
 class HajjTypeFlow extends StatefulWidget {
   const HajjTypeFlow({super.key, required this.guide});
   final HajjGuide guide;
@@ -241,44 +336,20 @@ class _HajjTypeFlowState extends State<HajjTypeFlow> {
     return o.paragraph(step.ref) ?? '';
   }
 
-  void _show(int i, List<FlowStep> steps) {
-    final step = steps[i];
-    final theme = Theme.of(context);
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
-      builder: (ctx) => DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: 0.6,
-        maxChildSize: 0.92,
-        builder: (ctx, scroll) => Directionality(
-          textDirection: TextDirection.rtl,
-          child: ListView(
-            key: const Key('hajjStepSheet'),
-            controller: scroll,
-            padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, 0, DesignTokens.spaceLg, DesignTokens.spaceXl),
-            children: [
-              Text('${context.isArabic ? _arabicNum(i + 1) : i + 1}. ${step.title}', style: theme.textTheme.titleLarge),
-              const SizedBox(height: DesignTokens.spaceMd),
-              Text(_explain(step), style: theme.textTheme.bodyLarge?.copyWith(height: 1.9)),
-              const SizedBox(height: DesignTokens.spaceMd),
-              Text('${context.l10n.hajjGuideSource}: ${widget.guide.official.title}', style: theme.textTheme.bodySmall),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  int _active = 0;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final theme = Theme.of(context);
     final steps = hajjFlows[_type]!;
+    final i = _active.clamp(0, steps.length - 1);
+    final step = steps[i];
+    void go(int n) => setState(() => _active = n.clamp(0, steps.length - 1));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(l.hajjStepsInOrder, style: Theme.of(context).textTheme.titleMedium),
+        Text(l.hajjStepsInOrder, style: theme.textTheme.titleMedium),
         const SizedBox(height: DesignTokens.spaceSm),
         SegmentedButton<HajjType>(
           key: const Key('hajjTypes'),
@@ -291,7 +362,10 @@ class _HajjTypeFlowState extends State<HajjTypeFlow> {
               ),
           ],
           selected: {_type},
-          onSelectionChanged: (v) => setState(() => _type = v.first),
+          onSelectionChanged: (v) => setState(() {
+            _type = v.first;
+            _active = 0;
+          }),
         ),
         const SizedBox(height: DesignTokens.spaceSm),
         StepsFlow(
@@ -299,12 +373,43 @@ class _HajjTypeFlowState extends State<HajjTypeFlow> {
           titles: [for (final s in steps) s.title],
           arabic: context.isArabic,
           label: '${l.hajjStepsInOrder}: ${_name(_type)}',
-          onStep: (i) => _show(i, steps),
+          active: i,
+          onStep: go,
         ),
         Padding(
           padding: const EdgeInsets.only(top: DesignTokens.spaceXs),
-          child: Text(l.hajjTapStep, style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.center),
+          child: Text(l.hajjTapStepOne, style: theme.textTheme.bodySmall, textAlign: TextAlign.center),
         ),
+        // Only the chosen step, in the official guide's words (owner, 2026-11-15).
+        Card(
+          key: const Key('hajjStepCard'),
+          margin: const EdgeInsets.only(top: DesignTokens.spaceMd),
+          child: Padding(
+            padding: const EdgeInsets.all(DesignTokens.spaceLg),
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    '${context.isArabic ? _arabicNum(i + 1) : i + 1}. ${step.title}',
+                    key: const Key('hajjStepTitle'),
+                    style: theme.textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMd),
+                  Text(
+                    _explain(step),
+                    key: const Key('hajjStepText'),
+                    style: theme.textTheme.bodyLarge?.copyWith(height: 1.9),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMd),
+                  Text('${l.hajjGuideSource}: ${widget.guide.official.title}', style: theme.textTheme.bodySmall),
+                ],
+              ),
+            ),
+          ),
+        ),
+        StepNav(index: i, count: steps.length, onGo: go, id: 'hajj-${_type.name}'),
       ],
     );
   }

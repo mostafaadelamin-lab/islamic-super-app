@@ -10,13 +10,18 @@ import {
   twoLines,
 } from "@/lib/steps-flow";
 
-/** Numbered steps 1, 2, 3… joined by dotted arrows; each circle jumps to its step. */
+/**
+ * Numbered steps 1, 2, 3… joined by dotted arrows; each circle jumps to its step. With [onStep] (StepPager)
+ * a tap shows that one step instead of following the link, and [active] marks the step on show.
+ */
 export function StepsFlow({
   locale,
   titles,
   idPrefix,
   label,
   hrefs,
+  active,
+  onStep,
 }: {
   locale: Locale;
   titles: readonly string[];
@@ -24,6 +29,9 @@ export function StepsFlow({
   label: string;
   /** Where each circle jumps (default: #idPrefix-N). */
   hrefs?: readonly string[];
+  /** Index (from 0) of the step on show. */
+  active?: number;
+  onStep?: (i: number) => void;
 }) {
   const h = flowHeight(titles.length);
   return (
@@ -63,6 +71,16 @@ export function StepsFlow({
             key={i}
             href={hrefs?.[i] ?? `#${idPrefix}-${i + 1}`}
             data-testid={`steps-flow-${idPrefix}-${i + 1}`}
+            aria-current={active === i ? "step" : undefined}
+            className={active === i ? "sf-step sf-active" : "sf-step"}
+            onClick={
+              onStep
+                ? (e) => {
+                    e.preventDefault();
+                    onStep(i);
+                  }
+                : undefined
+            }
           >
             <circle cx={x} cy={y} r={FLOW_R} className="sf-circle" />
             <text x={x} y={y + 9} textAnchor="middle" className="sf-num">

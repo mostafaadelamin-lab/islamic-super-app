@@ -20,7 +20,11 @@ async function openMushaf(page: Page, path: string): Promise<void> {
   await expect(page.getByTestId("mushaf-stage")).toHaveAttribute("data-ready", "true");
 }
 /** Taps an ayah's end marker (its accessible name is "<ref> — ayah options"). */
-const tapAyah = (page: Page, name: string) => page.getByRole("button", { name, exact: true }).click();
+/** …and opens its tafsir from the simple ayah menu (owner 2026-11-15: the tafsir is folded until asked for). */
+async function tapAyah(page: Page, name: string): Promise<void> {
+  await page.getByRole("button", { name, exact: true }).click();
+  await page.getByTestId("act-tafsir").click();
+}
 
 async function expectTafsir(page: Page, s: number, a: number): Promise<void> {
   await expect(page.getByTestId("tafsir")).toHaveAttribute("data-ayah", `${s}:${a}`);
@@ -116,6 +120,7 @@ test.describe("tafsir al-Muyassar in the Mushaf", () => {
     await openMushaf(page, "/en/page/50/");
     await context.setOffline(true);
     await page.locator(".seg").first().click();
+    await page.getByTestId("act-tafsir").click();
     const error = page.getByTestId("tafsir-error");
     await expect(error).toBeVisible();
     await expect(error).toHaveAttribute("role", "alert");

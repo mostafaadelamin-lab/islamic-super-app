@@ -247,6 +247,7 @@ test.describe("recitation player logic (fake media element: the test dispatches 
     await fakeMedia(page);
     await readyMushaf(page, "/ar/page/2/");
     await page.getByRole("button", { name: "البقرة، الآية ٥ — خيارات الآية" }).click();
+    await page.getByTestId("act-listen").click();
     await page.getByTestId("act-play").click();
     await expect(page.getByTestId("player-now")).toHaveText("البقرة، الآية ٥");
     await isPlaying(page);
@@ -622,12 +623,16 @@ test.describe("Hajj & Umrah guide", () => {
       await expect(page.getByTestId("review-notice")).toHaveCount(0);
       await expect(page.locator("#umrah")).toBeVisible();
       await expect(page.getByText("لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ").first()).toBeVisible();
+      // One step at a time (owner 2026-11-15): the tawaf counter is on step 2.
+      await expect(page.getByTestId("step-count-umrah-step")).toBeVisible();
+      await page.getByTestId("steps-flow-umrah-step-2").click();
       const tawaf = page.getByTestId("rounds-tawaf");
       const add = tawaf.getByRole("button").first();
       for (let i = 0; i < 7; i++) await add.click();
       await expect(add).toBeDisabled();
       await expect(page.getByTestId("rounds-tawaf-status")).toHaveClass(/alert-ok/);
       await page.reload();
+      await page.getByTestId("step-next-umrah-step").click();
       await expect(tawaf.getByRole("button").first()).toBeDisabled();
       await tawaf.getByRole("button").nth(2).click();
       await expect(tawaf.getByRole("button").first()).toBeEnabled();

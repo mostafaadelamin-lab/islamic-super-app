@@ -1313,6 +1313,59 @@ input[type="radio"] {
   flex-wrap: wrap;
   gap: var(--space-xs);
 }
+/* Simple ayah menu (owner, 2026-11-15): reference + close, then five equal buttons with a label under each. */
+.aa-simple {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-xs);
+}
+.aa-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+.aa-head .aa-ref {
+  flex: 1;
+}
+.aa-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-xs);
+}
+.aa-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-xs) 2px;
+  min-height: 56px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  color: var(--color-primary);
+  font: inherit;
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+}
+.aa-btn span {
+  color: var(--color-ink);
+  line-height: 1.2;
+  text-align: center;
+}
+.aa-btn[aria-pressed="true"],
+.aa-btn[aria-expanded="true"] {
+  background: var(--color-verse-highlight);
+  border-color: var(--color-primary);
+}
+.aa-listen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+.aa-listen .btn {
+  flex: 1 1 auto;
+}
 .aa-notice {
   margin: 0;
   font-size: var(--font-size-sm);
@@ -1882,6 +1935,60 @@ body:has(.player) {
   fill: #e9dcc0;
   stroke: #8a6a45;
   stroke-width: 2;
+}
+/* The step on show (owner, 2026-11-15: one step at a time). */
+.sf-active .sf-circle {
+  fill: #8a6a45;
+  stroke: #6b4a2b;
+  stroke-width: 3;
+}
+.sf-active .sf-num {
+  fill: #fffaf0;
+}
+.sf-step {
+  cursor: pointer;
+}
+.step-pager-hint {
+  text-align: center;
+  margin: 0 0 var(--space-sm);
+}
+.step-pager {
+  scroll-margin-top: 90px;
+}
+@media (min-width: 721px) {
+  .step-pager {
+    scroll-margin-top: 150px;
+  }
+}
+.step-pager .step {
+  margin-bottom: var(--space-sm);
+}
+.hajj-step {
+  border-top: 1px solid var(--color-line);
+  padding-top: var(--space-md);
+  margin-top: var(--space-sm);
+}
+.hajj-step-text {
+  white-space: pre-line;
+  line-height: 1.9;
+}
+.step-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin: var(--space-md) 0;
+}
+.step-nav .btn {
+  min-width: 96px;
+}
+.step-nav-count {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+.anchor-target {
+  display: block;
+  height: 0;
 }
 .sf-num {
   fill: #6b4a2b;
@@ -3796,7 +3903,8 @@ dd {
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    /* Five cards since Hajj & Umrah joined them (owner, 2026-11-15). */
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: var(--space-lg);
   }
   .explore-card {
@@ -3878,6 +3986,11 @@ dd {
   }
   .home-col:empty {
     display: none;
+  }
+}
+@media (min-width: 1101px) and (max-width: 1360px) {
+  .explore-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 @media (min-width: 721px) and (max-width: 1100px) {

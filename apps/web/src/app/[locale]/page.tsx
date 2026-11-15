@@ -45,6 +45,9 @@ function Tiles({ locale, list, kind }: { locale: Locale; list: readonly HomeTile
   );
 }
 
+/** Home cards: Quran, Prayer, Adhkar, Library and Hajj & Umrah as the fifth (owner, 2026-11-15). */
+const EXPLORE_GROUPS = SITE_GROUPS.filter((g) => g.path !== "about");
+
 /** Website home sections (wide screens): a card per menu group listing its pages. */
 function Explore({ locale }: { locale: Locale }) {
   return (
@@ -57,7 +60,7 @@ function Explore({ locale }: { locale: Locale }) {
         {t(locale, "site.explore")}
       </h2>
       <ul className="explore-grid">
-        {SITE_GROUPS.slice(0, 4).map((g) => (
+        {EXPLORE_GROUPS.map((g) => (
           <li key={g.title} className="explore-card">
             <Link className="explore-card-head" href={href(locale, g.path)}>
               <span className="explore-card-icon">
@@ -99,14 +102,20 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
           <h2 id="site-hero-h">{t(locale, "site.hero.title")}</h2>
           <p className="site-hero-lead">{t(locale, "site.hero.lead")}</p>
           <p className="site-hero-actions">
-            <Link className="btn btn-hero" href={href(locale, "page/1")}>
+            {/* The surah index first, not straight into Al-Fatiha (owner, 2026-11-15). */}
+            <Link className="btn btn-hero" href={href(locale, "quran")} data-testid="hero-read">
               <Icon name="quran" size={20} />
               {t(locale, "site.hero.read")}
             </Link>
-            <Link className="btn btn-hero-ghost" href={href(locale, "prayer")}>
+            <Link className="btn btn-hero-ghost" href={href(locale, "prayer")} data-testid="hero-prayer">
               <Icon name="clock" size={20} />
               {t(locale, "site.hero.prayer")}
             </Link>
+            {/* Radio beside the two main buttons (owner, 2026-11-15): goes to the home radio below. */}
+            <a className="btn btn-hero-ghost" href="#home-radio" data-testid="hero-radio">
+              <Icon name="radio" size={20} />
+              {t(locale, "site.hero.radio")}
+            </a>
           </p>
         </div>
         <div className="site-hero-art" aria-hidden="true">
@@ -121,8 +130,9 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
         <Tiles locale={locale} list={WIDE} kind="wide" />
       </div>
       <div className="home-col">
-        {/* Hajj & Umrah has its own entry on the home page (owner, 2026-11-14). */}
-        <Link className="card home-hajj" href={href(locale, "hajj")} data-testid="home-hajj">
+        {/* Phones: Hajj & Umrah has its own entry. Wide screens: it is the fifth card of the sections below
+            (owner, 2026-11-15), so no separate banner there. */}
+        <Link className="card home-hajj mobile-only" href={href(locale, "hajj")} data-testid="home-hajj">
           <span className="home-hajj-icon">
             <Icon name="kaaba" size={34} />
           </span>
@@ -136,7 +146,7 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
         </Link>
       </div>
       <Explore locale={locale} />
-      <section className="home-col home-radio-wrap" aria-labelledby="home-radio-h">
+      <section className="home-col home-radio-wrap" id="home-radio" aria-labelledby="home-radio-h">
         <div className="desktop-only home-radio-intro">
           <h2 id="home-radio-h" className="site-section-title">
             {t(locale, "site.radioTitle")}

@@ -274,7 +274,8 @@ describe("NextPrayerCard", () => {
     expect(screen.getByTestId("home-hijri")).toHaveTextContent(/١٤٤٧ هـ/);
     expect(screen.getByTestId("home-gregorian")).toHaveTextContent(/٢٠٢٦/);
     expect(screen.getByRole("link", { name: "تقويم الصلاة" })).toHaveAttribute("href", "/ar/prayer/#month");
-    expect(screen.getByRole("link", { name: "الإعدادات" })).toHaveAttribute("href", "/ar/settings/");
+    // No settings button on the home prayer card (owner, 2026-11-15).
+    expect(screen.queryByRole("link", { name: "الإعدادات" })).toBeNull();
   });
   it("after Isha: tomorrow's times are listed with Fajr marked as next", async () => {
     vi.setSystemTime(new Date("2026-11-07T17:43:00Z")); // 20:43 in Makkah, after Isha

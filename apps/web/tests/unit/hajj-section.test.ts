@@ -2,9 +2,11 @@ import { HARAM_CROWD_LINKS } from "@/lib/haram-crowd";
 import { SITE_GROUPS, itemHref, locate } from "@/lib/site-map";
 
 describe("Hajj & Umrah section", () => {
-  it("has its own menu with the guide, crowd levels and live audio", () => {
+  it("has its own menu: Umrah, the three kinds of Hajj and live audio (owner 2026-11-15)", () => {
     const g = SITE_GROUPS.find((x) => x.path === "hajj");
-    expect(g?.items).toEqual(["hajj", "hajj-crowd", "hajj-live"]);
+    expect(g?.items).toEqual(["hajj-umrah", "hajj-ifrad", "hajj-qiran", "hajj-tamattu", "hajj-live"]);
+    expect(itemHref("ar", "hajj-umrah").endsWith("/hajj/#umrah")).toBe(true);
+    expect(itemHref("ar", "hajj-ifrad").endsWith("/hajj/#hajj-ifrad")).toBe(true);
     expect(itemHref("ar", "hajj-crowd").endsWith("/hajj/#crowd")).toBe(true);
     expect(itemHref("ar", "hajj-live").endsWith("/hajj/#live")).toBe(true);
     expect(locate("hajj/")?.group.path).toBe("hajj");

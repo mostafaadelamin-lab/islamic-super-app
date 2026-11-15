@@ -830,6 +830,14 @@
   "@ayahCopy": {
     "description": "shared key \"ayah.copy\""
   },
+  "ayahCopyShort": "Copy",
+  "@ayahCopyShort": {
+    "description": "shared key \"ayah.copyShort\""
+  },
+  "ayahListen": "Listen",
+  "@ayahListen": {
+    "description": "shared key \"ayah.listen\""
+  },
   "ayahListenOne": "Listen to this ayah only",
   "@ayahListenOne": {
     "description": "shared key \"ayah.listenOne\""
@@ -846,13 +854,45 @@
   "@ayahListenToSurahEnd": {
     "description": "shared key \"ayah.listenToSurahEnd\""
   },
+  "ayahMarkShort": "Mark",
+  "@ayahMarkShort": {
+    "description": "shared key \"ayah.markShort\""
+  },
+  "ayahOnlyThis": "This ayah",
+  "@ayahOnlyThis": {
+    "description": "shared key \"ayah.onlyThis\""
+  },
   "ayahSaveMark": "Save a mark on this ayah",
   "@ayahSaveMark": {
     "description": "shared key \"ayah.saveMark\""
   },
+  "ayahShare": "Share",
+  "@ayahShare": {
+    "description": "shared key \"ayah.share\""
+  },
   "ayahShareImage": "Share as an image",
   "@ayahShareImage": {
     "description": "shared key \"ayah.shareImage\""
+  },
+  "ayahTafsir": "Tafsir",
+  "@ayahTafsir": {
+    "description": "shared key \"ayah.tafsir\""
+  },
+  "ayahToPageEnd": "To page end",
+  "@ayahToPageEnd": {
+    "description": "shared key \"ayah.toPageEnd\""
+  },
+  "ayahToSurahEnd": "To surah end",
+  "@ayahToSurahEnd": {
+    "description": "shared key \"ayah.toSurahEnd\""
+  },
+  "ayahUnmarkShort": "Unmark",
+  "@ayahUnmarkShort": {
+    "description": "shared key \"ayah.unmarkShort\""
+  },
+  "ayahWithTafsir": "With tafsir",
+  "@ayahWithTafsir": {
+    "description": "shared key \"ayah.withTafsir\""
   },
   "bookmarksDelete": "Delete bookmark for {label}",
   "@bookmarksDelete": {
@@ -1259,6 +1299,26 @@
   "@hajjReviewNotice": {
     "description": "shared key \"hajj.reviewNotice\""
   },
+  "hajjStepNext": "Next",
+  "@hajjStepNext": {
+    "description": "shared key \"hajj.stepNext\""
+  },
+  "hajjStepOf": "Step {n} of {total}",
+  "@hajjStepOf": {
+    "description": "shared key \"hajj.stepOf\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "hajjStepPrev": "Previous",
+  "@hajjStepPrev": {
+    "description": "shared key \"hajj.stepPrev\""
+  },
   "hajjStepsInOrder": "Hajj steps in order",
   "@hajjStepsInOrder": {
     "description": "shared key \"hajj.stepsInOrder\""
@@ -1270,6 +1330,10 @@
   "hajjTapStep": "Tap a step to read its explanation",
   "@hajjTapStep": {
     "description": "shared key \"hajj.tapStep\""
+  },
+  "hajjTapStepOne": "Tap a step number to show it",
+  "@hajjTapStepOne": {
+    "description": "shared key \"hajj.tapStepOne\""
   },
   "hajjTitle": "Hajj & Umrah",
   "@hajjTitle": {

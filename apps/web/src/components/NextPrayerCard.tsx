@@ -42,7 +42,7 @@ const PRAYER_ICON: Record<PrayerKey, IconName> = {
 };
 
 /**
- * Home top (owner's mockup, 2026-11-09): place + settings, mosque art, next prayer with its time and a live
+ * Home top (owner's mockup, 2026-11-09): place, mosque art, next prayer with its time and a live
  * countdown; then the day card (weekday, Gregorian + Hijri dates, prayer calendar link), the five prayers and
  * sunrise / sunset.
  */
@@ -88,14 +88,7 @@ export function NextPrayerCard({ locale }: { locale: Locale }) {
               <strong data-testid="home-place">{place}</strong>
             </span>
           </div>
-          <Link
-            className="home-settings"
-            href={href(locale, "settings")}
-            aria-label={t(locale, "settings.title")}
-            title={t(locale, "settings.title")}
-          >
-            <Icon name="settings" size={26} />
-          </Link>
+          {/* No settings button here (owner, 2026-11-15): the prayer settings are on the prayer page. */}
         </div>
         <div className="home-hero-body">
           <MosqueArt />

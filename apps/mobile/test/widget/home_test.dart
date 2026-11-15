@@ -6,7 +6,6 @@ import 'package:rattil/ui/more_screen.dart';
 import 'package:rattil/ui/prayer_screen.dart';
 import 'package:rattil/ui/qibla_screen.dart';
 import 'package:rattil/ui/reels_screen.dart';
-import 'package:rattil/ui/settings_screen.dart';
 import 'package:rattil/ui/stories_screen.dart';
 import 'package:rattil/ui/surah_list_screen.dart';
 import 'package:rattil/ui/tasbih_screen.dart';
@@ -50,12 +49,9 @@ void main() {
     expect(find.byType(PrayerCalendarScreen), findsOneWidget);
   });
 
-  testWidgets('settings icon opens Settings; main sections opens More', (tester) async {
+  testWidgets('no settings icon on the prayer card (owner 2026-11-15); main sections opens More', (tester) async {
     await pumpApp(tester, size: tallPhone);
-    await tester.tap(find.byKey(const Key('home.settings')));
-    await tester.pumpAndSettle();
-    expect(find.byType(SettingsScreen), findsOneWidget);
-    await goBack(tester);
+    expect(find.byKey(const Key('home.settings')), findsNothing);
     await tester.ensureVisible(find.byKey(const Key('home.mainSections')));
     await tester.tap(find.byKey(const Key('home.mainSections')));
     await tester.pumpAndSettle();

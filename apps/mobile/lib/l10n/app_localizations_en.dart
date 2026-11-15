@@ -575,6 +575,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ayahCopy => 'Copy the ayah';
 
   @override
+  String get ayahCopyShort => 'Copy';
+
+  @override
+  String get ayahListen => 'Listen';
+
+  @override
   String get ayahListenOne => 'Listen to this ayah only';
 
   @override
@@ -587,10 +593,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ayahListenToSurahEnd => 'Listen from here to the end of the surah';
 
   @override
+  String get ayahMarkShort => 'Mark';
+
+  @override
+  String get ayahOnlyThis => 'This ayah';
+
+  @override
   String get ayahSaveMark => 'Save a mark on this ayah';
 
   @override
+  String get ayahShare => 'Share';
+
+  @override
   String get ayahShareImage => 'Share as an image';
+
+  @override
+  String get ayahTafsir => 'Tafsir';
+
+  @override
+  String get ayahToPageEnd => 'To page end';
+
+  @override
+  String get ayahToSurahEnd => 'To surah end';
+
+  @override
+  String get ayahUnmarkShort => 'Unmark';
+
+  @override
+  String get ayahWithTafsir => 'With tafsir';
 
   @override
   String bookmarksDelete(String label) {
@@ -863,6 +893,17 @@ class AppLocalizationsEn extends AppLocalizations {
       'Pending religious review: this guide has not yet been reviewed by a qualified scholar. Check with a trusted scholar before relying on it.';
 
   @override
+  String get hajjStepNext => 'Next';
+
+  @override
+  String hajjStepOf(String n, String total) {
+    return 'Step $n of $total';
+  }
+
+  @override
+  String get hajjStepPrev => 'Previous';
+
+  @override
   String get hajjStepsInOrder => 'Hajj steps in order';
 
   @override
@@ -870,6 +911,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hajjTapStep => 'Tap a step to read its explanation';
+
+  @override
+  String get hajjTapStepOne => 'Tap a step number to show it';
 
   @override
   String get hajjTitle => 'Hajj & Umrah';

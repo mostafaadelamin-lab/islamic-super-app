@@ -94,6 +94,9 @@ describe("tafsir in the readers", () => {
     const lookup = lookupFrom(quran.surahs.map((x) => x.ayahs));
     render(<PageReader locale="ar" initial={resolvePage(lines.pages[1]!, lookup)} />);
     await userEvent.click(screen.getByRole("button", { name: "البقرة، الآية ٤ — خيارات الآية" }));
+    // Simple menu (owner 2026-11-15): the tafsir opens from its button.
+    expect(screen.queryByTestId("tafsir-text")).toBeNull();
+    await userEvent.click(screen.getByTestId("act-tafsir"));
     expect((await screen.findByTestId("tafsir-text")).textContent).toBe(entry(2, 4));
     await userEvent.click(screen.getByTestId("tafsir-next"));
     expect((await screen.findByText(entry(2, 5))).dataset.testid).toBe("tafsir-text");
@@ -200,7 +203,11 @@ describe("tafsir with recitation", () => {
     serveTafsir();
     render(<PageReader locale="en" initial={resolvePage(lines.pages[2]!, lookup)} />);
     await userEvent.click(screen.getByRole("button", { name: "Al-Baqarah, ayah 7 — ayah options" }));
+    // Simple menu (owner 2026-11-15): five buttons; the ways to listen open from "Listen".
+    expect(screen.queryByTestId("act-play-ayah")).toBeNull();
+    await userEvent.click(screen.getByTestId("act-tafsir"));
     expect(await screen.findByText(entry(2, 7))).toBeInTheDocument(); // its tafsir is in the sheet
+    await userEvent.click(screen.getByTestId("act-listen"));
     await userEvent.click(screen.getByTestId("act-play-ayah"));
     expect(player.get().queue).toEqual([{ kind: "ayah", s: 2, a: 7 }]);
     await userEvent.click(screen.getByTestId("act-play-tafsir"));

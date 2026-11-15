@@ -220,6 +220,13 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const [selected, setSelected] = useState<string | null>(null);
   const [slider, setSlider] = useState(initial.page);
   const [notice, setNotice] = useState<string | null>(null);
+  // Simple ayah menu: the ways to listen and the tafsir stay folded until asked for.
+  const [listenOpen, setListenOpen] = useState(false);
+  const [showTafsir, setShowTafsir] = useState(false);
+  useEffect(() => {
+    setListenOpen(false);
+    if (!selected) setShowTafsir(false);
+  }, [selected]);
   const [drag, setDrag] = useState<{ dx: number; anim: boolean }>({ dx: 0, anim: false });
   const [tab, setTab] = useState<ReaderTab>("mushaf");
   const [sheet, setSheet] = useState<"help" | "khatma" | null>(null);
@@ -751,88 +758,121 @@ export function PageReader({ locale, initial }: PageReaderProps) {
       ) : null}
 
       {sel ? (
-        <div className="ayah-sheet" data-testid="ayah-sheet">
+        <div className="ayah-sheet" data-testid="ayah-sheet" data-tafsir={showTafsir ? "open" : "closed"}>
+          {/* Simple ayah menu (owner, 2026-11-15): one row of five buttons; the ways to listen and the
+              tafsir open only when asked for. */}
           <div
-            className="ayah-actions"
+            className="ayah-actions aa-simple"
             role="toolbar"
             aria-label={t(locale, "mushaf.actions")}
             data-testid="ayah-actions"
           >
-            <strong className="aa-ref">{ref(sel[0], sel[1])}</strong>
-            <div className="aa-buttons">
+            <div className="aa-head">
+              <strong className="aa-ref">{ref(sel[0], sel[1])}</strong>
               <button
                 type="button"
-                className="btn btn-primary btn-sm"
-                data-testid="act-play-ayah"
-                onClick={() => player.play({ kind: "ayah", surah: sel[0], ayah: sel[1] })}
-              >
-                <Icon name="play" size={16} /> {t(locale, "reader.playAyah")}
-              </button>
-              <button
-                type="button"
-                className="btn btn-sm"
-                data-testid="act-play"
-                onClick={() => player.play({ kind: "from", surah: sel[0], ayah: sel[1] })}
-              >
-                <Icon name="play" size={16} /> {t(locale, "audio.playFromHere")}
-              </button>
-              <button
-                type="button"
-                className="btn btn-sm"
-                data-testid="act-play-tafsir"
-                onClick={() => playWithTafsir(sel[0], sel[1])}
-              >
-                <ReaderIcon name="split" size={16} /> {t(locale, "reader.playWithTafsir")}
-              </button>
-              <button
-                type="button"
-                className="btn btn-sm"
-                data-testid="play-surah"
-                onClick={() => player.play({ kind: "surah", surah: sel[0] })}
-              >
-                <Icon name="play" size={16} /> {t(locale, "audio.playSurah", { surah: name(sel[0]) })}
-              </button>
-              <button
-                type="button"
-                className="btn btn-sm"
-                data-testid="act-bookmark"
-                data-bookmarked={selBookmarked}
-                onClick={() => bookmarksStore.set((s) => toggleBookmark(s, sel[0], sel[1], Date.now()))}
-              >
-                <Icon name="bookmark" size={16} />{" "}
-                {selBookmarked ? t(locale, "quran.removeBookmark") : t(locale, "quran.bookmark")}
-              </button>
-              <button
-                type="button"
-                className="btn btn-sm"
-                data-testid="act-copy"
-                onClick={() => void copySelected()}
-              >
-                <Icon name="copy" size={16} /> {t(locale, "mushaf.copy")}
-              </button>
-              <button
-                type="button"
-                className="btn btn-sm"
-                data-testid="act-share-image"
-                onClick={() => void shareImage()}
-              >
-                <Icon name="image" size={16} /> {t(locale, "mushaf.shareImage")}
-              </button>
-              <button
-                type="button"
-                className="btn btn-sm btn-icon"
+                className="rd-icon-btn aa-close"
                 data-testid="act-close"
                 aria-label={t(locale, "common.close")}
                 onClick={() => setSelected(null)}
               >
-                <Icon name="close" size={16} />
+                <Icon name="close" size={18} />
               </button>
             </div>
+            <div className="aa-row">
+              <button
+                type="button"
+                className="aa-btn"
+                aria-expanded={listenOpen}
+                data-testid="act-listen"
+                onClick={() => setListenOpen((v) => !v)}
+              >
+                <Icon name="play" size={22} />
+                <span>{t(locale, "mushaf.listen")}</span>
+              </button>
+              <button
+                type="button"
+                className="aa-btn"
+                aria-pressed={showTafsir}
+                data-testid="act-tafsir"
+                onClick={() => setShowTafsir((v) => !v)}
+              >
+                <Icon name="openBook" size={22} />
+                <span>{t(locale, "mushaf.tafsir")}</span>
+              </button>
+              <button
+                type="button"
+                className="aa-btn"
+                data-testid="act-bookmark"
+                data-bookmarked={selBookmarked}
+                aria-pressed={selBookmarked}
+                onClick={() => bookmarksStore.set((s) => toggleBookmark(s, sel[0], sel[1], Date.now()))}
+              >
+                <Icon name="bookmark" size={22} />
+                <span>{selBookmarked ? t(locale, "mushaf.unmark") : t(locale, "mushaf.mark")}</span>
+              </button>
+              <button
+                type="button"
+                className="aa-btn"
+                data-testid="act-copy"
+                onClick={() => void copySelected()}
+              >
+                <Icon name="copy" size={22} />
+                <span>{t(locale, "mushaf.copy")}</span>
+              </button>
+              <button
+                type="button"
+                className="aa-btn"
+                data-testid="act-share-image"
+                onClick={() => void shareImage()}
+              >
+                <Icon name="share" size={22} />
+                <span>{t(locale, "mushaf.share")}</span>
+              </button>
+            </div>
+            {listenOpen ? (
+              <div className="aa-listen" role="group" aria-label={t(locale, "mushaf.listenOptions")}>
+                <button
+                  type="button"
+                  className="btn btn-primary btn-sm"
+                  data-testid="act-play-ayah"
+                  onClick={() => player.play({ kind: "ayah", surah: sel[0], ayah: sel[1] })}
+                >
+                  {t(locale, "reader.playAyahOnly")}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-sm"
+                  data-testid="act-play"
+                  onClick={() => player.play({ kind: "from", surah: sel[0], ayah: sel[1] })}
+                >
+                  {t(locale, "reader.playFrom")}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-sm"
+                  data-testid="play-surah"
+                  onClick={() => player.play({ kind: "surah", surah: sel[0] })}
+                >
+                  {t(locale, "reader.playWholeSurah")}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-sm"
+                  data-testid="act-play-tafsir"
+                  onClick={() => playWithTafsir(sel[0], sel[1])}
+                >
+                  {t(locale, "reader.playTafsirShort")}
+                </button>
+              </div>
+            ) : null}
             <p className="aa-notice" role="status" data-testid="mushaf-notice">
               {notice}
             </p>
           </div>
-          <TafsirPanel locale={locale} surah={sel[0]} ayah={sel[1]} onStep={selectRef} />
+          {showTafsir ? (
+            <TafsirPanel locale={locale} surah={sel[0]} ayah={sel[1]} onStep={selectRef} />
+          ) : null}
         </div>
       ) : null}
 

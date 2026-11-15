@@ -14,9 +14,9 @@ import 'review_notice.dart';
 import 'widgets.dart';
 import 'r_icon.dart';
 
-/// Opens the sheet for a tapped ayah: a list of actions (listen to the ayah,
-/// with tafsir, to the end of the page, to the end of the surah; save a mark;
-/// copy; share as an image), then its Tafsir al-Muyassar (previous / next ayah).
+/// Opens the sheet for a tapped ayah: five simple buttons (listen, which opens the ways to listen:
+/// the ayah, to the end of the page or surah, with tafsir; tafsir, which opens Tafsir al-Muyassar;
+/// mark; copy; share as an image) under the ayah's name with previous / next ayah.
 /// [readAsList] is kept for callers but no longer adds an action. [onAyahChanged] is told when the
 /// reader moves to another ayah inside the sheet.
 ///
@@ -99,14 +99,11 @@ class AyahSheetState extends State<AyahSheet> {
   late AyahRef _ref = widget.initial;
   Future<TafsirContent>? _tafsir;
 
+  /// Simple menu (owner, 2026-11-15): the tafsir stays folded until its button is tapped.
+  bool _showTafsir = false;
+
   /// The ayah the sheet is showing.
   AyahRef get ref => _ref;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _tafsir ??= context.services.tafsir.load();
-  }
 
   void _step(int delta) {
     final next = stepAyah(context.services.content.quran, _ref, delta);
@@ -157,15 +154,25 @@ class AyahSheetState extends State<AyahSheet> {
                 ],
               ),
             ),
-            _Actions(ref: _ref, readAsList: widget.readAsList),
-            Flexible(
-              child: FutureBuilder<TafsirContent>(
-                future: _tafsir,
-                initialData: s.tafsir.loaded,
-                builder: (context, snap) =>
-                    _TafsirCard(text: snap.data?.text(_ref.surah, _ref.ayah), failed: snap.hasError),
-              ),
+            _Actions(
+              ref: _ref,
+              readAsList: widget.readAsList,
+              tafsirOpen: _showTafsir,
+              onTafsir: () => setState(() {
+                _showTafsir = !_showTafsir;
+                // Loaded only when first opened.
+                _tafsir ??= s.tafsir.load()..ignore(); // the card below shows a failure; nothing else waits on it
+              }),
             ),
+            if (_showTafsir)
+              Flexible(
+                child: FutureBuilder<TafsirContent>(
+                  future: _tafsir,
+                  initialData: s.tafsir.loaded,
+                  builder: (context, snap) =>
+                      _TafsirCard(text: snap.data?.text(_ref.surah, _ref.ayah), failed: snap.hasError),
+                ),
+              ),
           ],
         ),
       ),
@@ -258,30 +265,74 @@ class _TafsirCard extends StatelessWidget {
   }
 }
 
-class _Actions extends StatelessWidget {
-  const _Actions({required this.ref, required this.readAsList});
+/// Simple ayah menu (owner, 2026-11-15): one row of five buttons (listen, tafsir, mark, copy,
+/// share); the ways to listen open under it only when "listen" is tapped.
+class _Actions extends StatefulWidget {
+  const _Actions({required this.ref, required this.readAsList, required this.tafsirOpen, required this.onTafsir});
   final AyahRef ref;
   final bool readAsList;
+  final bool tafsirOpen;
+  final VoidCallback onTafsir;
+
+  @override
+  State<_Actions> createState() => _ActionsState();
+}
+
+class _ActionsState extends State<_Actions> {
+  bool _listen = false;
 
   @override
   Widget build(BuildContext context) {
     final s = context.services;
     final l = context.l10n;
+    final ref = widget.ref;
+    final scheme = Theme.of(context).colorScheme;
     return ListenableBuilder(
       listenable: s.bookmarks,
       builder: (context, _) {
         final marked = s.bookmarks.isBookmarked(ref);
-        // Small buttons that wrap (owner 2026-11-14: the list of actions covered the whole page).
-        Widget action(String key, RIconData icon, String label, VoidCallback onPressed) => OutlinedButton.icon(
+        Widget action(String key, RIconData icon, String label, VoidCallback onPressed, {bool on = false}) => Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 2),
+            child: Material(
+              color: on ? scheme.secondaryContainer : scheme.surfaceContainerLow,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+                side: BorderSide(color: on ? scheme.primary : scheme.outlineVariant),
+              ),
+              child: InkWell(
+                key: Key(key),
+                borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+                onTap: onPressed,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      RIcon(icon, size: 22, color: scheme.primary),
+                      const SizedBox(height: 2),
+                      Text(
+                        label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+        Widget way(String key, String label, VoidCallback onPressed) => OutlinedButton(
           key: Key(key),
           style: OutlinedButton.styleFrom(
             visualDensity: VisualDensity.compact,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            minimumSize: const Size(0, 40),
+            minimumSize: const Size(0, 38),
           ),
-          icon: RIcon(icon, size: 18, color: Theme.of(context).colorScheme.primary),
-          label: Text(label),
           onPressed: onPressed,
+          child: Text(label),
         );
         void play(AyahRef from, PlayScope scope, {bool tafsir = false}) {
           Navigator.of(context).pop();
@@ -291,47 +342,68 @@ class _Actions extends StatelessWidget {
 
         return Padding(
           padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceSm),
-          child: Wrap(
+          child: Column(
             key: const Key('ayahActions'),
-            spacing: DesignTokens.spaceXs,
-            runSpacing: DesignTokens.spaceXs,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              action('ayahPlayOne', RIcons.playCircle, l.ayahListenOne, () => play(ref, PlayScope.ayah)),
-              action(
-                'ayahPlayTafsir',
-                RIcons.split,
-                l.ayahListenTafsir,
-                () => play(ref, PlayScope.surah, tafsir: true),
+              Row(
+                children: [
+                  action(
+                    'ayahListen',
+                    RIcons.playCircle,
+                    l.ayahListen,
+                    () => setState(() => _listen = !_listen),
+                    on: _listen,
+                  ),
+                  action('ayahTafsir', RIcons.openBook, l.ayahTafsir, widget.onTafsir, on: widget.tafsirOpen),
+                  action('ayahBookmark', RIcons.bookmark, marked ? l.ayahUnmarkShort : l.ayahMarkShort, () async {
+                    final messenger = ScaffoldMessenger.of(context);
+                    final nav = Navigator.of(context);
+                    if (marked) {
+                      await s.bookmarks.remove(Bookmark.idFor(ref.surah, ref.ayah));
+                    } else {
+                      await s.bookmarks.add(ref);
+                    }
+                    nav.pop();
+                    messenger.showSnackBar(
+                      SnackBar(content: Text(marked ? l.quranBookmarkRemoved : l.quranBookmarked)),
+                    );
+                  }, on: marked),
+                  action('ayahCopy', RIcons.copy, l.ayahCopyShort, () async {
+                    final messenger = ScaffoldMessenger.of(context);
+                    final nav = Navigator.of(context);
+                    final q = s.content.quran;
+                    // The canonical stored text (no display glyph map) and its reference.
+                    await Clipboard.setData(
+                      ClipboardData(text: '${q.text(ref)} ﴿${q.surah(ref.surah).nameAr}: ${toArabicIndic(ref.ayah)}﴾'),
+                    );
+                    nav.pop();
+                    messenger.showSnackBar(SnackBar(content: Text(l.mushafCopied)));
+                  }),
+                  action('ayahShareImage', RIcons.share, l.ayahShare, () {
+                    final nav = Navigator.of(context);
+                    nav.pop();
+                    nav.push(MaterialPageRoute<void>(builder: (_) => AyahImageScreen(ayah: ref)));
+                  }),
+                ],
               ),
-              action('ayahPlayPage', RIcons.pages, l.ayahListenToPageEnd, () => play(ref, PlayScope.page)),
-              action('ayahPlaySurah', RIcons.playlist, l.ayahListenToSurahEnd, () => play(ref, PlayScope.surah)),
-              action('ayahBookmark', RIcons.bookmark, marked ? l.quranRemoveBookmark : l.ayahSaveMark, () async {
-                final messenger = ScaffoldMessenger.of(context);
-                final nav = Navigator.of(context);
-                if (marked) {
-                  await s.bookmarks.remove(Bookmark.idFor(ref.surah, ref.ayah));
-                } else {
-                  await s.bookmarks.add(ref);
-                }
-                nav.pop();
-                messenger.showSnackBar(SnackBar(content: Text(marked ? l.quranBookmarkRemoved : l.quranBookmarked)));
-              }),
-              action('ayahCopy', RIcons.copy, l.ayahCopy, () async {
-                final messenger = ScaffoldMessenger.of(context);
-                final nav = Navigator.of(context);
-                final q = s.content.quran;
-                // The canonical stored text (no display glyph map) and its reference.
-                await Clipboard.setData(
-                  ClipboardData(text: '${q.text(ref)} ﴿${q.surah(ref.surah).nameAr}: ${toArabicIndic(ref.ayah)}﴾'),
-                );
-                nav.pop();
-                messenger.showSnackBar(SnackBar(content: Text(l.mushafCopied)));
-              }),
-              action('ayahShareImage', RIcons.image, l.ayahShareImage, () {
-                final nav = Navigator.of(context);
-                nav.pop();
-                nav.push(MaterialPageRoute<void>(builder: (_) => AyahImageScreen(ayah: ref)));
-              }),
+              if (_listen)
+                Padding(
+                  padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
+                  child: Wrap(
+                    key: const Key('ayahListenWays'),
+                    spacing: DesignTokens.spaceXs,
+                    runSpacing: DesignTokens.spaceXs,
+                    alignment: WrapAlignment.center,
+                    children: [
+                      way('ayahPlayOne', l.ayahOnlyThis, () => play(ref, PlayScope.ayah)),
+                      way('ayahPlayPage', l.ayahToPageEnd, () => play(ref, PlayScope.page)),
+                      way('ayahPlaySurah', l.ayahToSurahEnd, () => play(ref, PlayScope.surah)),
+                      way('ayahPlayTafsir', l.ayahWithTafsir, () => play(ref, PlayScope.surah, tafsir: true)),
+                    ],
+                  ),
+                ),
             ],
           ),
         );

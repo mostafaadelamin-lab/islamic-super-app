@@ -89,6 +89,8 @@ void main() {
       // The sheet starts loading Tafsir al-Muyassar in a background isolate; wait for it in real time.
       final tafsir = (await tester.runAsync(() => services.tafsir.load()))!;
       await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('ayahTafsir')));
+      await tester.pumpAndSettle();
       String shownTafsir() => tester.widget<Text>(find.byKey(const Key('tafsirText'))).data!;
       expect(shownTafsir(), tafsir.text(first.surah, first.ayah));
       expect(find.byKey(const Key('tafsirArabicOnly')), findsOneWidget);

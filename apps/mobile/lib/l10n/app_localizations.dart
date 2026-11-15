@@ -1070,6 +1070,18 @@ abstract class AppLocalizations {
   /// **'Copy the ayah'**
   String get ayahCopy;
 
+  /// shared key "ayah.copyShort"
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get ayahCopyShort;
+
+  /// shared key "ayah.listen"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen'**
+  String get ayahListen;
+
   /// shared key "ayah.listenOne"
   ///
   /// In en, this message translates to:
@@ -1094,17 +1106,65 @@ abstract class AppLocalizations {
   /// **'Listen from here to the end of the surah'**
   String get ayahListenToSurahEnd;
 
+  /// shared key "ayah.markShort"
+  ///
+  /// In en, this message translates to:
+  /// **'Mark'**
+  String get ayahMarkShort;
+
+  /// shared key "ayah.onlyThis"
+  ///
+  /// In en, this message translates to:
+  /// **'This ayah'**
+  String get ayahOnlyThis;
+
   /// shared key "ayah.saveMark"
   ///
   /// In en, this message translates to:
   /// **'Save a mark on this ayah'**
   String get ayahSaveMark;
 
+  /// shared key "ayah.share"
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get ayahShare;
+
   /// shared key "ayah.shareImage"
   ///
   /// In en, this message translates to:
   /// **'Share as an image'**
   String get ayahShareImage;
+
+  /// shared key "ayah.tafsir"
+  ///
+  /// In en, this message translates to:
+  /// **'Tafsir'**
+  String get ayahTafsir;
+
+  /// shared key "ayah.toPageEnd"
+  ///
+  /// In en, this message translates to:
+  /// **'To page end'**
+  String get ayahToPageEnd;
+
+  /// shared key "ayah.toSurahEnd"
+  ///
+  /// In en, this message translates to:
+  /// **'To surah end'**
+  String get ayahToSurahEnd;
+
+  /// shared key "ayah.unmarkShort"
+  ///
+  /// In en, this message translates to:
+  /// **'Unmark'**
+  String get ayahUnmarkShort;
+
+  /// shared key "ayah.withTafsir"
+  ///
+  /// In en, this message translates to:
+  /// **'With tafsir'**
+  String get ayahWithTafsir;
 
   /// shared key "bookmarks.delete"
   ///
@@ -1574,6 +1634,24 @@ abstract class AppLocalizations {
   /// **'Pending religious review: this guide has not yet been reviewed by a qualified scholar. Check with a trusted scholar before relying on it.'**
   String get hajjReviewNotice;
 
+  /// shared key "hajj.stepNext"
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get hajjStepNext;
+
+  /// shared key "hajj.stepOf"
+  ///
+  /// In en, this message translates to:
+  /// **'Step {n} of {total}'**
+  String hajjStepOf(String n, String total);
+
+  /// shared key "hajj.stepPrev"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get hajjStepPrev;
+
   /// shared key "hajj.stepsInOrder"
   ///
   /// In en, this message translates to:
@@ -1591,6 +1669,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap a step to read its explanation'**
   String get hajjTapStep;
+
+  /// shared key "hajj.tapStepOne"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a step number to show it'**
+  String get hajjTapStepOne;
 
   /// shared key "hajj.title"
   ///

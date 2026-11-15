@@ -18,7 +18,6 @@ import 'prayer_model.dart';
 import 'qibla_screen.dart';
 import 'radio_screen.dart';
 import 'reels_screen.dart';
-import 'settings_screen.dart';
 import 'stories_screen.dart';
 import 'locate.dart';
 import 'tasbih_screen.dart';
@@ -38,7 +37,7 @@ class HeroColors {
 /// The five obligatory prayers shown as cards on the home screen.
 const homePrayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
 
-/// Home screen after the owner's mockup (2026-11-09): place + settings, mosque
+/// Home screen after the owner's mockup (2026-11-09): place (no settings icon since 2026-11-15), mosque
 /// art with the next prayer, its time and a live countdown; the day card
 /// (weekday, Gregorian + Hijri dates, prayer calendar, the five prayers,
 /// sunrise and sunset); big tiles; Quran radio; "main sections".
@@ -88,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 DesignTokens.spaceXl,
               ),
               children: [
-                _Hero(pv: pv, onTap: () => widget.onSelectTab(2), onSettings: () => _push(const SettingsScreen())),
+                _Hero(pv: pv, onTap: () => widget.onSelectTab(2)),
                 const SizedBox(height: DesignTokens.spaceMd),
                 _DayCard(
                   pv: pv,
@@ -179,10 +178,9 @@ class _Panel extends StatelessWidget {
 }
 
 class _Hero extends StatelessWidget {
-  const _Hero({required this.pv, required this.onTap, required this.onSettings});
+  const _Hero({required this.pv, required this.onTap});
   final PrayerView pv;
   final VoidCallback onTap;
-  final VoidCallback onSettings;
 
   @override
   Widget build(BuildContext context) {
@@ -220,12 +218,6 @@ class _Hero extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            IconButton(
-              key: const Key('home.settings'),
-              tooltip: l.navSettings,
-              onPressed: onSettings,
-              icon: RIcon(RIcons.settings, color: primary, size: 28),
             ),
           ],
         ),

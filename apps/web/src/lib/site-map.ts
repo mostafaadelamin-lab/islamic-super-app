@@ -53,12 +53,13 @@ export const SITE_GROUPS: readonly SiteGroup[] = [
     items: ["hadith", "sharawi", "stories", "nasheeds", "reels", "zakat"],
   },
   {
-    // Its own menu (owner, 2026-11-14): the guide, live crowd levels (official link) and live audio.
+    // Its own menu (owner, 2026-11-14) and the fifth home card (owner, 2026-11-15): Umrah, then the three
+    // kinds of Hajj, then live audio from the Two Holy Mosques.
     title: "site.group.hajj",
     sub: "site.group.hajjSub",
     icon: "kaaba",
     path: "hajj",
-    items: ["hajj", "hajj-crowd", "hajj-live"],
+    items: ["hajj-umrah", "hajj-ifrad", "hajj-qiran", "hajj-tamattu", "hajj-live"],
   },
   {
     title: "site.group.about",
@@ -71,6 +72,38 @@ export const SITE_GROUPS: readonly SiteGroup[] = [
 
 /** Menu entries that are a part of a page rather than a page of their own (owner, 2026-11-14: adhan alerts). */
 const EXTRA: Readonly<Record<string, Section & { page: string; hash: string }>> = {
+  "hajj-umrah": {
+    path: "hajj-umrah",
+    page: "hajj",
+    hash: "umrah",
+    title: "nav.hajjUmrah",
+    sub: "nav.hajjUmrahSub",
+    icon: "kaaba",
+  },
+  "hajj-ifrad": {
+    path: "hajj-ifrad",
+    page: "hajj",
+    hash: "hajj-ifrad",
+    title: "nav.hajjIfrad",
+    sub: "nav.hajjTypeSub",
+    icon: "kaaba",
+  },
+  "hajj-qiran": {
+    path: "hajj-qiran",
+    page: "hajj",
+    hash: "hajj-qiran",
+    title: "nav.hajjQiran",
+    sub: "nav.hajjTypeSub",
+    icon: "kaaba",
+  },
+  "hajj-tamattu": {
+    path: "hajj-tamattu",
+    page: "hajj",
+    hash: "hajj-tamattu",
+    title: "nav.hajjTamattu",
+    sub: "nav.hajjTypeSub",
+    icon: "kaaba",
+  },
   "hajj-crowd": {
     path: "hajj-crowd",
     page: "hajj",

@@ -74,6 +74,7 @@ test("service worker precaches the app; it works offline after first load", asyn
   await expect(page.getByTestId("mushaf-stage")).toHaveAttribute("data-ready", "true");
   const tafsirAyah = (await page.locator(".seg").first().getAttribute("data-ayah"))!;
   await page.locator(".seg").first().click();
+  await page.getByTestId("act-tafsir").click();
   await expect(page.getByTestId("tafsir-text")).toBeVisible();
   const tafsirOnline = (await page.getByTestId("tafsir-text").textContent())!;
   expect(tafsirOnline.length).toBeGreaterThan(20);

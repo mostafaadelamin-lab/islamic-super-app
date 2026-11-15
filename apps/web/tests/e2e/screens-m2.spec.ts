@@ -18,7 +18,10 @@ for (const [name, path] of [
     await page.evaluate(() => document.fonts.ready);
     if (name.startsWith("mushaf") || name === "tafsir")
       await expect(page.getByTestId("mushaf-stage")).toHaveAttribute("data-ready", "true");
-    if (name === "tafsir") await expect(page.getByTestId("tafsir-text")).toBeVisible();
+    if (name === "tafsir") {
+      await page.getByTestId("act-tafsir").click();
+      await expect(page.getByTestId("tafsir-text")).toBeVisible();
+    }
     await page.waitForTimeout(400);
     await page.screenshot({ path: `${SHOTS}/m2-web-${name}.png` });
     await ctx.close();
@@ -38,6 +41,7 @@ for (const [name, path, marker, tafsir] of [
     await expect(page.getByTestId("mushaf-stage")).toHaveAttribute("data-ready", "true");
     await page.evaluate(() => document.fonts.ready);
     await page.getByRole("button", { name: marker, exact: true }).click();
+    await page.getByTestId("act-listen").click();
     await page.getByTestId("act-play").click();
     await page.getByTestId("act-close").click();
     await isPlaying(page);

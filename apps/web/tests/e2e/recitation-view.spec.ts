@@ -23,6 +23,7 @@ async function openMushaf(page: Page, path: string): Promise<void> {
 /** Selects an ayah by its end marker and plays from it, then closes the ayah sheet. */
 async function playFrom(page: Page, marker: string): Promise<void> {
   await page.getByRole("button", { name: marker, exact: true }).click();
+  await page.getByTestId("act-listen").click();
   await page.getByTestId("act-play").click();
   await page.getByTestId("act-close").click();
   await isPlaying(page);
@@ -126,6 +127,7 @@ test.describe("recitation highlight never hides text (fake media element)", () =
       // the selected-ayah highlight follows the same rules
       await page.getByRole("button", { name: marker, exact: true }).click();
       expectContained(await paints(page, ".mushaf-page .seg.selected"), "multiply");
+      await page.getByTestId("act-listen").click();
       await page.getByTestId("act-play").click();
       await page.getByTestId("act-close").click();
       await isPlaying(page);
@@ -276,6 +278,7 @@ test.describe("tafsir with recitation: split screen (fake media element)", () =>
     await page.getByTestId("tab-ayat").click();
     await page.locator('[data-testid="ayat-item"][data-ayah="113:2"] button').click();
     await expect(page.getByTestId("split-view")).toHaveCount(0);
+    await page.getByTestId("act-tafsir").click();
     await expect(page.getByTestId("ayah-sheet").getByTestId("tafsir")).toHaveAttribute("data-ayah", "113:2");
     await page.getByTestId("act-close").click();
     await page.getByTestId("tab-mushaf").click();

@@ -110,7 +110,12 @@ test.describe("navigation & language", () => {
     await expect(page.getByTestId("home-tiles")).toBeHidden();
     await expect(page.getByRole("heading", { name: "رتّل وصلِّ", level: 2 })).toBeVisible();
     const explore = page.getByTestId("home-explore");
-    await expect(explore.locator("a[data-section]")).toHaveCount(22);
+    // Five cards since Hajj & Umrah joined them (owner 2026-11-15): 21 pages + 5 Hajj & Umrah links.
+    await expect(explore.locator("a[data-section]")).toHaveCount(26);
+    await expect(explore.locator('a[data-section="hajj-ifrad"]')).toHaveAttribute(
+      "href",
+      "/ar/hajj/#hajj-ifrad",
+    );
     await expect(explore.locator('a[data-section="adhan"]')).toHaveAttribute("href", "/ar/prayer/#adhan");
     await expect(page.getByTestId("radio-station")).toHaveValue("eg");
     await expect(page.getByRole("contentinfo").getByRole("link", { name: "تنبيه الأذان" })).toBeVisible();

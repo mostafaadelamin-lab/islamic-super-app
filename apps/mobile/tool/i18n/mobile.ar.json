@@ -761,5 +761,19 @@
   "hajj.guideHajj": "صفة الحج",
   "hajj.guideSource": "المصدر",
   "hajj.guideCorrections": "تصحيحات أخطاء الرقمنة",
-  "player.open": "ارجع لشاشة اللي شغال"
+  "player.open": "ارجع لشاشة اللي شغال",
+  "hajj.stepOf": "الخطوة {n} من {total}",
+  "hajj.stepPrev": "السابق",
+  "hajj.stepNext": "التالي",
+  "hajj.tapStepOne": "اضغط على رقم الخطوة لعرضها",
+  "ayah.listen": "استماع",
+  "ayah.tafsir": "التفسير",
+  "ayah.share": "مشاركة",
+  "ayah.copyShort": "نسخ",
+  "ayah.markShort": "علامة",
+  "ayah.unmarkShort": "حذف العلامة",
+  "ayah.onlyThis": "الآية فقط",
+  "ayah.toPageEnd": "لآخر الصفحة",
+  "ayah.toSurahEnd": "لآخر السورة",
+  "ayah.withTafsir": "مع التفسير"
 }

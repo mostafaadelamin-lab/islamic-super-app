@@ -84,7 +84,13 @@ void main() {
     final (app, audio) = await open(tester, 3);
     await tester.tap(find.byKey(const Key('pageAyah-2-7')));
     await tester.pumpAndSettle();
+    // Simple menu (owner 2026-11-15): tafsir and the ways to listen open from their buttons.
+    expect(find.byKey(const Key('ayahPlayOne')), findsNothing);
+    await tester.tap(find.byKey(const Key('ayahTafsir')));
+    await tester.pumpAndSettle();
     expect(find.byKey(const Key('tafsirText')), findsOneWidget, reason: 'the sheet shows its tafsir');
+    await tester.tap(find.byKey(const Key('ayahListen')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('ayahPlayOne')));
     await tester.pumpAndSettle();
     expect(audio.loaded.last, endsWith('/002007.mp3'));
@@ -94,6 +100,8 @@ void main() {
     expect(app.services.recitation.isActive, isFalse, reason: 'only that ayah');
 
     await tester.tap(find.byKey(const Key('pageAyah-2-7')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('ayahListen')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('ayahPlayTafsir')));
     await tester.pumpAndSettle();
