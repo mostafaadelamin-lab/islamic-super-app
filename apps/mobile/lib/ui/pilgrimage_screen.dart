@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../app_services.dart';
-import '../domain/hajj.dart';
-import '../domain/hajj_flows.dart';
+import '../domain/hajj_guide.dart';
 import '../theme/design_tokens.dart';
 import 'adaptive.dart';
-import 'dua_text.dart';
-import 'hajj_art.dart';
-import 'hajj_screen.dart';
+import 'hajj_guide_view.dart';
+import 'hajj_screen.dart' show StepNav;
 import 'l10n_ext.dart';
 import 'review_notice.dart';
-import 'step_say.dart';
-import 'tawaf_plan.dart';
 
 /// Umrah and the three kinds of Hajj, each on its own screen.
 enum PilgrimageKind { umrah, tamattu, qiran, ifrad }
@@ -49,67 +45,15 @@ class _PilgrimageScreenState extends State<PilgrimageScreen> {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final theme = Theme.of(context);
-    final guide = context.services.content.hajj;
+    final guide = context.services.content.hajjGuide;
     final kind = widget.kind;
-    final umrah = [
-      for (final b in guide.sections['umrah'] ?? const <HajjBlock>[])
-        if (b.label != null) b,
-    ];
-    final flow = switch (kind) {
-      PilgrimageKind.umrah => const <FlowStep>[],
-      PilgrimageKind.tamattu => hajjFlows[HajjType.tamattu]!,
-      PilgrimageKind.qiran => hajjFlows[HajjType.qiran]!,
-      PilgrimageKind.ifrad => hajjFlows[HajjType.ifrad]!,
-    };
-    final titles = kind == PilgrimageKind.umrah
-        ? [for (final b in umrah) b.title ?? '']
-        : [for (final s in flow) s.title];
+    final flow = guide.flows[kind.name] ?? const <GuideFlowStep>[];
+    final titles = [for (final s in flow) s.title];
     final count = titles.length;
-    final i = _active.clamp(0, count - 1);
+    final i = count == 0 ? 0 : _active.clamp(0, count - 1);
     void go(int n) {
       setState(() => _active = n.clamp(0, count - 1));
       if (_scroll.hasClients) _scroll.jumpTo(0);
-    }
-
-    final Widget step;
-    if (kind == PilgrimageKind.umrah) {
-      step = HajjBlockCard(block: umrah[i]);
-    } else {
-      final s = flow[i];
-      step = Card(
-        key: const Key('hajjStepCard'),
-        margin: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
-        child: Padding(
-          padding: const EdgeInsets.all(DesignTokens.spaceLg),
-          child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(s.title, key: const Key('hajjStepTitle'), style: theme.textTheme.titleLarge),
-                // The picture of where the step happens (owner 2026-11-15: every step has one again).
-                if (hajjSceneForStep(s.title) case final scene?) ...[
-                  const SizedBox(height: DesignTokens.spaceSm),
-                  if (scene == HajjScene.tawaf)
-                    TawafPlan(arabic: context.isArabic)
-                  else
-                    HajjArt(key: Key('hajjArt-${scene.name}'), scene: scene),
-                ],
-                const SizedBox(height: DesignTokens.spaceMd),
-                DuaText(
-                  explainHajjStep(guide, s),
-                  textKey: const Key('hajjStepText'),
-                  style: theme.textTheme.bodyLarge?.copyWith(height: 1.9),
-                ),
-                StepSay(title: s.title),
-                const SizedBox(height: DesignTokens.spaceMd),
-                Text('${l.hajjGuideSource}: ${guide.official.title}', style: theme.textTheme.bodySmall),
-              ],
-            ),
-          ),
-        ),
-      );
     }
 
     return Scaffold(
@@ -126,15 +70,25 @@ class _PilgrimageScreenState extends State<PilgrimageScreen> {
                 padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
                 children: [
                   if (!context.isArabic) ReviewNotice(l.adhkarArabicOnly),
-                  KeyedSubtree(key: Key('stepCard-${kind.name}-${i + 1}'), child: step),
+                  // Umrah in short, before its steps.
+                  if (kind == PilgrimageKind.umrah && i == 0)
+                    GuideStepView(stepId: guide.umrahIntro, label: l.hajjUmrah),
+                  if (count > 0)
+                    KeyedSubtree(
+                      key: Key('stepCard-${kind.name}-${i + 1}'),
+                      child: GuideStepView(
+                        key: const Key('hajjStepCard'),
+                        stepId: flow[i].step,
+                        title: flow[i].title,
+                        dalil: flow[i].dalil,
+                        kind: kind.name,
+                        label: l.hajjStepOf(_num(context, i + 1), _num(context, count)),
+                      ),
+                    ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg),
                     child: StepNav(index: i, count: count, onGo: go, id: kind.name),
                   ),
-                  // The Umrah intro and the Madinah visit stay with the Umrah, in full.
-                  if (kind == PilgrimageKind.umrah)
-                    for (final b in guide.sections['umrah'] ?? const <HajjBlock>[])
-                      if (b.label == null) HajjBlockCard(block: b),
                 ],
               ),
             ),
@@ -143,6 +97,9 @@ class _PilgrimageScreenState extends State<PilgrimageScreen> {
       ),
     );
   }
+
+  static String _num(BuildContext context, int n) =>
+      context.isArabic ? n.toString().split('').map((d) => '٠١٢٣٤٥٦٧٨٩'[int.parse(d)]).join() : '$n';
 }
 
 /// The pinned steps: numbered circles joined by a dotted line, the chosen one filled, its short name under

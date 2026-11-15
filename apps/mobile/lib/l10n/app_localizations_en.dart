@@ -904,10 +904,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hajjLiveTitle => 'Live from the Two Holy Mosques (audio)';
 
   @override
+  String get hajjMadinah => 'Visiting Madinah';
+
+  @override
   String get hajjOfficialGuide => 'The steps explained, from the official guide (Arabic)';
 
   @override
   String get hajjQiran => 'Qiran';
+
+  @override
+  String get hajjRef => 'Reference';
 
   @override
   String get hajjReviewNotice =>
@@ -915,6 +921,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hajjSayTitle => 'What is said at this step';
+
+  @override
+  String get hajjSources => 'Sources of this guide';
+
+  @override
+  String hajjStage(String n) {
+    return 'Stage $n';
+  }
 
   @override
   String get hajjStepNext => 'Next';
@@ -931,6 +945,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hajjStepsInOrder => 'Hajj steps in order';
 
   @override
+  String get hajjTagFirst => 'First tawaf only';
+
+  @override
+  String get hajjTagMen => 'Men';
+
+  @override
+  String get hajjTagWomen => 'Women';
+
+  @override
   String get hajjTamattu => 'Tamattu\'';
 
   @override
@@ -938,6 +961,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hajjTapStepOne => 'Tap a step number to show it';
+
+  @override
+  String hajjTimes(String n) {
+    return '$n times';
+  }
 
   @override
   String get hajjTitle => 'Hajj & Umrah';

@@ -1658,6 +1658,12 @@ abstract class AppLocalizations {
   /// **'Live from the Two Holy Mosques (audio)'**
   String get hajjLiveTitle;
 
+  /// shared key "hajj.madinah"
+  ///
+  /// In en, this message translates to:
+  /// **'Visiting Madinah'**
+  String get hajjMadinah;
+
   /// shared key "hajj.officialGuide"
   ///
   /// In en, this message translates to:
@@ -1670,6 +1676,12 @@ abstract class AppLocalizations {
   /// **'Qiran'**
   String get hajjQiran;
 
+  /// shared key "hajj.ref"
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get hajjRef;
+
   /// shared key "hajj.reviewNotice"
   ///
   /// In en, this message translates to:
@@ -1681,6 +1693,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What is said at this step'**
   String get hajjSayTitle;
+
+  /// shared key "hajj.sources"
+  ///
+  /// In en, this message translates to:
+  /// **'Sources of this guide'**
+  String get hajjSources;
+
+  /// shared key "hajj.stage"
+  ///
+  /// In en, this message translates to:
+  /// **'Stage {n}'**
+  String hajjStage(String n);
 
   /// shared key "hajj.stepNext"
   ///
@@ -1706,6 +1730,24 @@ abstract class AppLocalizations {
   /// **'Hajj steps in order'**
   String get hajjStepsInOrder;
 
+  /// shared key "hajj.tag.first"
+  ///
+  /// In en, this message translates to:
+  /// **'First tawaf only'**
+  String get hajjTagFirst;
+
+  /// shared key "hajj.tag.men"
+  ///
+  /// In en, this message translates to:
+  /// **'Men'**
+  String get hajjTagMen;
+
+  /// shared key "hajj.tag.women"
+  ///
+  /// In en, this message translates to:
+  /// **'Women'**
+  String get hajjTagWomen;
+
   /// shared key "hajj.tamattu"
   ///
   /// In en, this message translates to:
@@ -1723,6 +1765,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap a step number to show it'**
   String get hajjTapStepOne;
+
+  /// shared key "hajj.times"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} times'**
+  String hajjTimes(String n);
 
   /// shared key "hajj.title"
   ///

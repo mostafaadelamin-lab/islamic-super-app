@@ -1315,6 +1315,10 @@
   "@hajjLiveTitle": {
     "description": "shared key \"hajj.live.title\""
   },
+  "hajjMadinah": "Visiting Madinah",
+  "@hajjMadinah": {
+    "description": "shared key \"hajj.madinah\""
+  },
   "hajjOfficialGuide": "The steps explained, from the official guide (Arabic)",
   "@hajjOfficialGuide": {
     "description": "shared key \"hajj.officialGuide\""
@@ -1323,6 +1327,10 @@
   "@hajjQiran": {
     "description": "shared key \"hajj.qiran\""
   },
+  "hajjRef": "Reference",
+  "@hajjRef": {
+    "description": "shared key \"hajj.ref\""
+  },
   "hajjReviewNotice": "Pending religious review: this guide has not yet been reviewed by a qualified scholar. Check with a trusted scholar before relying on it.",
   "@hajjReviewNotice": {
     "description": "shared key \"hajj.reviewNotice\""
@@ -1330,6 +1338,19 @@
   "hajjSayTitle": "What is said at this step",
   "@hajjSayTitle": {
     "description": "shared key \"hajj.say.title\""
+  },
+  "hajjSources": "Sources of this guide",
+  "@hajjSources": {
+    "description": "shared key \"hajj.sources\""
+  },
+  "hajjStage": "Stage {n}",
+  "@hajjStage": {
+    "description": "shared key \"hajj.stage\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
   },
   "hajjStepNext": "Next",
   "@hajjStepNext": {
@@ -1355,6 +1376,18 @@
   "@hajjStepsInOrder": {
     "description": "shared key \"hajj.stepsInOrder\""
   },
+  "hajjTagFirst": "First tawaf only",
+  "@hajjTagFirst": {
+    "description": "shared key \"hajj.tag.first\""
+  },
+  "hajjTagMen": "Men",
+  "@hajjTagMen": {
+    "description": "shared key \"hajj.tag.men\""
+  },
+  "hajjTagWomen": "Women",
+  "@hajjTagWomen": {
+    "description": "shared key \"hajj.tag.women\""
+  },
   "hajjTamattu": "Tamattu'",
   "@hajjTamattu": {
     "description": "shared key \"hajj.tamattu\""
@@ -1366,6 +1399,15 @@
   "hajjTapStepOne": "Tap a step number to show it",
   "@hajjTapStepOne": {
     "description": "shared key \"hajj.tapStepOne\""
+  },
+  "hajjTimes": "{n} times",
+  "@hajjTimes": {
+    "description": "shared key \"hajj.times\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
   },
   "hajjTitle": "Hajj & Umrah",
   "@hajjTitle": {

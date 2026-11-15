@@ -13,9 +13,6 @@ import 'package:rattil/ui/adhkar_screen.dart';
 import 'package:rattil/ui/hajj_hub_screen.dart';
 import 'package:rattil/ui/hajj_screen.dart';
 import 'package:rattil/ui/pilgrimage_screen.dart';
-import 'package:rattil/ui/dua_text.dart';
-import 'package:rattil/domain/hajj_flows.dart';
-import 'package:rattil/ui/steps_flow.dart';
 import 'package:rattil/ui/hisn_screen.dart';
 import 'package:rattil/ui/home_shell.dart';
 import 'package:rattil/ui/qibla_screen.dart';
@@ -341,82 +338,24 @@ void main() {
   });
 
   group('Hajj & Umrah', () {
-    testWidgets('three tabs, no review notice', (tester) async {
-      final app = await pumpApp(tester, size: tallPhone);
-      await pushScreen(tester, const HajjScreen());
-      expect(find.byKey(const Key('hajjNotice')), findsNothing);
-      expect(find.text('الإحرام من الميقات'), findsOneWidget);
-      await tester.tap(find.byKey(const Key('hajjTab-ihram')));
-      await tester.pumpAndSettle();
-      expect(find.text('محظورات الإحرام'), findsOneWidget);
-      expect(find.text(app.services.content.hajj.talbiya), findsWidgets);
-    });
-
-    testWidgets('numbered steps graphic and the tawaf map from above (owner, 2026-11-14)', (tester) async {
+    testWidgets('the ihram tab: the miqat of each country and the talbiyah, no review notice', (tester) async {
       await pumpApp(tester, size: tallPhone);
       await pushScreen(tester, const HajjScreen());
-      expect(find.byKey(const Key('stepsFlow-umrah')), findsOneWidget);
-      // One step at a time (owner, 2026-11-15): step 1 alone, the tawaf map is on step 2.
-      expect(find.byKey(const Key('stepCard-umrah-1')), findsOneWidget);
-      expect(find.byKey(const Key('tawafPlan')), findsNothing);
-      expect(find.byKey(const Key('stepPrev-umrah')), findsOneWidget);
+      expect(find.byKey(const Key('hajjNotice')), findsNothing);
+      await tester.tap(find.byKey(const Key('hajjTab-ihram')));
+      await tester.pumpAndSettle();
+      final list = find
+          .descendant(of: find.byKey(const Key('hajjList-ihram')), matching: find.byType(Scrollable))
+          .first;
+      await tester.scrollUntilVisible(find.byKey(const Key('guideTable')), 300, scrollable: list);
+      final table = tester.widget<Table>(find.byKey(const Key('guideTable')));
+      expect(table.children.length, 6, reason: 'heading + the five miqat');
       await tester.scrollUntilVisible(
-        find.byKey(const Key('stepNext-umrah')),
+        find.textContaining('لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ').first,
         300,
-        scrollable: find.byType(Scrollable).last,
+        scrollable: list,
       );
-      await tester.tap(find.byKey(const Key('stepNext-umrah')));
-      await tester.pumpAndSettle();
-      expect(find.byKey(const Key('stepCard-umrah-1')), findsNothing);
-      expect(find.byKey(const Key('stepCard-umrah-2')), findsOneWidget);
-      expect(find.text('الخطوة ٢ من ٤'), findsOneWidget);
-      await tester.scrollUntilVisible(
-        find.byKey(const Key('tawafPlan')),
-        300,
-        scrollable: find.byType(Scrollable).last,
-      );
-      expect(find.byKey(const Key('tawafPlan')), findsOneWidget);
-      expect(find.byKey(const Key('hajjArt-tawaf')), findsNothing);
-      await tester.tap(find.byKey(const Key('hajjTab-hajj')));
-      await tester.pumpAndSettle();
-      expect(find.byKey(const Key('stepsFlow-hajj-tamattu')), findsOneWidget);
-    });
-
-    testWidgets('Hajj steps per type; a tap shows the official guide text (owner, 2026-11-14)', (tester) async {
-      final app = await pumpApp(tester, size: tallPhone);
-      await pushScreen(tester, const HajjScreen());
-      await tester.tap(find.byKey(const Key('hajjTab-hajj')));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const Key('hajjType-ifrad')));
-      await tester.pumpAndSettle();
-      final flow = find.byKey(const Key('stepsFlow-hajj-ifrad'));
-      expect(flow, findsOneWidget);
-      // Step 7 of ifrad = Muzdalifah: row 3 (index 6 -> first column of the third row).
-      final box = tester.getRect(flow);
-      final p = StepsFlowLayout.position(6);
-      final h = StepsFlowLayout.height(hajjFlows[HajjType.ifrad]!.length);
-      await tester.tapAt(box.topLeft + Offset(p.dx * box.width / StepsFlowLayout.width, p.dy * box.height / h));
-      await tester.pumpAndSettle();
-      // The step is shown alone under the graphic, with Previous / Next (owner, 2026-11-15).
-      expect(find.byKey(const Key('hajjStepCard')), findsOneWidget);
-      expect(find.text('٧. المبيت بمزدلفة'), findsOneWidget);
-      final guide = app.services.content.hajj.official;
-      expect(tester.widget<Text>(find.byKey(const Key('hajjStepText'))).textSpan!.toPlainText(), guide.hajj[3]);
-      await tester.scrollUntilVisible(
-        find.byKey(const Key('stepNext-hajj-ifrad')),
-        300,
-        scrollable: find.byType(Scrollable).last,
-      );
-      await tester.tap(find.byKey(const Key('stepNext-hajj-ifrad')));
-      await tester.pumpAndSettle();
-      expect(find.text('٨. رمي جمرة العقبة'), findsOneWidget);
-      expect(find.text('٧. المبيت بمزدلفة'), findsNothing);
-      await tester.scrollUntilVisible(
-        find.byKey(const Key('officialHajjGuide')),
-        400,
-        scrollable: find.byType(Scrollable).last,
-      );
-      expect(find.byKey(const Key('officialHajjGuide')), findsOneWidget);
+      expect(find.textContaining('لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ'), findsWidgets);
     });
 
     testWidgets(
@@ -427,7 +366,6 @@ void main() {
         await tester.tap(find.byKey(const Key('home.tile-hajj')));
         await tester.pumpAndSettle();
         expect(find.byType(HajjHubScreen), findsOneWidget);
-        // The crowd card is hidden until a live source is found (owner 2026-11-15).
         expect(find.byKey(const Key('hajjHub.crowdOfficial')), findsNothing);
         for (final k in ['hajjHub.radio-makkah', 'hajjHub.radio-madinah']) {
           await tester.scrollUntilVisible(find.byKey(Key(k)), 200, scrollable: find.byType(Scrollable).first);
@@ -440,7 +378,6 @@ void main() {
         );
         await tester.tap(find.byKey(const Key('hajjHub.tamattu')));
         await tester.pumpAndSettle();
-        // Its own screen: the steps pinned on top, one step under them (owner 2026-11-15).
         expect(find.byType(PilgrimageScreen), findsOneWidget);
         expect(find.byKey(const Key('stepStrip-tamattu')), findsOneWidget);
         expect(find.byKey(const Key('stepCard-tamattu-1')), findsOneWidget);
@@ -448,8 +385,7 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.byKey(const Key('stepCard-tamattu-3')), findsOneWidget);
         expect(find.byKey(const Key('stepCard-tamattu-1')), findsNothing);
-        expect(find.text('سعي العمرة'), findsWidgets);
-        // The strip stays put while the step scrolls.
+        expect(find.byKey(const Key('hajjScene-sai')), findsOneWidget);
         final top = tester.getRect(find.byKey(const Key('stepStrip-tamattu'))).top;
         await tester.drag(find.byKey(const Key('pilgrimage-tamattu')), const Offset(0, -300));
         await tester.pumpAndSettle();
@@ -457,8 +393,8 @@ void main() {
       },
     );
 
-    testWidgets('Umrah screen: shaded duas, Next moves one step (owner 2026-11-15)', (tester) async {
-      await pumpApp(tester, size: tallPhone);
+    testWidgets('Umrah: Next moves one step; the tawaf step has the two rak\'ahs\' surahs in full', (tester) async {
+      final app = await pumpApp(tester, size: tallPhone);
       await pushScreen(tester, const PilgrimageScreen(kind: PilgrimageKind.umrah));
       expect(find.byKey(const Key('stepCard-umrah-1')), findsOneWidget);
       await tester.scrollUntilVisible(
@@ -469,58 +405,67 @@ void main() {
       await tester.tap(find.byKey(const Key('stepNext-umrah')));
       await tester.pumpAndSettle();
       expect(find.byKey(const Key('stepCard-umrah-2')), findsOneWidget);
-      expect(find.byType(DuaText), findsWidgets);
+      expect(find.byKey(const Key('hajjScene-tawaf')), findsOneWidget);
+      final c = app.services.content;
+      final kafirun = c.renderMap.forDisplay(c.quran.surah(109).ayahs.last);
+      await tester.scrollUntilVisible(
+        find.byKey(const Key('guideSub-rakah-1')),
+        300,
+        scrollable: find.byType(Scrollable).last,
+      );
+      final rich = find.descendant(of: find.byKey(const Key('guideSub-rakah-1')), matching: find.byType(RichText));
+      final all = [for (final e in rich.evaluate()) (e.widget as RichText).text.toPlainText()].join();
+      expect(all, contains(kafirun));
     });
 
-    testWidgets('nothing of the guide is left out: the Hajj days, kinds, pillars and Madinah are reachable', (
-      tester,
-    ) async {
-      await pumpApp(tester, size: tallPhone);
+    testWidgets('Umrah shows no picture of Mina, Arafah, Muzdalifah or the Jamarat (owner)', (tester) async {
+      final app = await pumpApp(tester, size: tallPhone);
+      final g = app.services.content.hajjGuide;
+      final scenes = app.services.content.hajjScenes.scenes;
+      for (final f in [...g.flows['umrah']!.map((s) => s.step), g.umrahIntro]) {
+        for (final sc in g.scenesOf(f)) {
+          for (final p in scenes[sc]!.places) {
+            expect(['mina', 'arafah', 'muzdalifah', 'jamarat'], isNot(contains(p)), reason: '$f -> $sc');
+          }
+        }
+      }
+    });
+
+    testWidgets('the Hajj tab: the days of Hajj, pillars, Madinah, the official guide and sources', (tester) async {
+      final app = await pumpApp(tester, size: tallPhone);
       await pushScreen(tester, const HajjHubScreen());
       await tester.tap(find.byKey(const Key('hajjHub.hajj')));
       await tester.pumpAndSettle();
-      final guide = tester.element(find.byType(HajjScreen)).services.content.hajj;
-      final blocks = guide.sections['hajj']!;
-      expect(blocks.where((b) => b.label != null).length, 5, reason: 'the five stages by day');
-      final list = find.byKey(const Key('hajjList-hajj'));
-      for (final b in blocks) {
-        if (b.label != null || b.title == null) continue;
-        await tester.scrollUntilVisible(
-          find.text(b.title!),
-          300,
-          scrollable: find.descendant(of: list, matching: find.byType(Scrollable)).first,
-        );
-        expect(find.text(b.title!), findsWidgets, reason: b.title);
+      final g = app.services.content.hajjGuide;
+      final list = find.descendant(of: find.byKey(const Key('hajjList-hajj')), matching: find.byType(Scrollable)).first;
+      for (final (i, _) in g.days.indexed) {
+        await tester.scrollUntilVisible(find.byKey(Key('hajjStage-${i + 1}')), 600, scrollable: list);
       }
-      // The Umrah screen keeps its intro and the Madinah visit.
-      await pushScreen(tester, const PilgrimageScreen(kind: PilgrimageKind.umrah));
-      final madinah = guide.sections['umrah']!.lastWhere((b) => b.label == null).title!;
-      await tester.scrollUntilVisible(find.text(madinah), 300, scrollable: find.byType(Scrollable).last);
-      expect(find.text(madinah), findsOneWidget);
+      for (final k in ['hajjPillars', 'guideStep-${g.madinah}', 'officialHajjGuide', 'guideSources']) {
+        await tester.scrollUntilVisible(find.byKey(Key(k)), 600, scrollable: list);
+        expect(find.byKey(Key(k)), findsOneWidget, reason: k);
+      }
     });
 
-    testWidgets('each step shows its picture and what is said there in full (owner 2026-11-15)', (tester) async {
-      await pumpApp(tester, size: tallPhone);
-      await pushScreen(tester, const PilgrimageScreen(kind: PilgrimageKind.umrah));
-      await tester.tap(find.byKey(const Key('stepStrip-umrah-2')));
-      await tester.pumpAndSettle();
-      final list = find.byType(Scrollable).last;
-      await tester.scrollUntilVisible(find.byKey(const Key('sayQuran')), 300, scrollable: list);
-      expect(find.byKey(const Key('stepSay')), findsOneWidget);
-      expect(find.textContaining('رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً'), findsWidgets);
-      // A kind of Hajj: Arafah has its picture and its dua.
+    testWidgets('a kind of Hajj: Arafah has its picture, the official words and the Arafah dua', (tester) async {
+      final app = await pumpApp(tester, size: tallPhone);
       await pushScreen(tester, const PilgrimageScreen(kind: PilgrimageKind.tamattu));
-      final arafah = hajjFlows[HajjType.tamattu]!.indexWhere((s) => s.title.contains('عرفة'));
+      final flow = app.services.content.hajjGuide.flows['tamattu']!;
+      final arafah = flow.indexWhere((s) => s.step == 'arafah');
       final next = find.byKey(const Key('stepNext-tamattu'));
       for (var n = 0; n < arafah; n++) {
-        await tester.scrollUntilVisible(next, 300, scrollable: find.byType(Scrollable).last);
+        await tester.scrollUntilVisible(next, 600, scrollable: find.byType(Scrollable).last);
         await tester.tap(next);
         await tester.pumpAndSettle();
       }
-      await tester.pumpAndSettle();
-      expect(find.byKey(const Key('hajjArt-arafah')), findsOneWidget);
-      await tester.scrollUntilVisible(find.byKey(const Key('stepSay')), 300, scrollable: find.byType(Scrollable).last);
-      expect(find.textContaining('خَيْرُ الدُّعَاءِ دُعَاءُ يَوْمِ عَرَفَةَ'), findsOneWidget);
+      expect(find.byKey(const Key('hajjScene-arafah')), findsOneWidget);
+      expect(find.byKey(const Key('guideOfficial')), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.textContaining('خَيْرُ الدُّعَاءِ دُعَاءُ يَوْمِ عَرَفَةَ').first,
+        300,
+        scrollable: find.byType(Scrollable).last,
+      );
+      expect(find.textContaining('خَيْرُ الدُّعَاءِ دُعَاءُ يَوْمِ عَرَفَةَ'), findsWidgets);
     });
 
     testWidgets('English UI says the guide is Arabic only', (tester) async {

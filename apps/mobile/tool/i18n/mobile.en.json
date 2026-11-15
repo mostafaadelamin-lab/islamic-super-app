@@ -784,5 +784,13 @@
   "hajj.say.title": "What is said at this step",
   "hajj.hub.ihram": "Miqat and ihram rules",
   "adhkar.reportTitle": "Mistake in a dhikr",
-  "reader.hideTafsir": "Hide tafsir"
+  "reader.hideTafsir": "Hide tafsir",
+  "hajj.ref": "Reference",
+  "hajj.times": "{n} times",
+  "hajj.sources": "Sources of this guide",
+  "hajj.madinah": "Visiting Madinah",
+  "hajj.tag.men": "Men",
+  "hajj.tag.women": "Women",
+  "hajj.tag.first": "First tawaf only",
+  "hajj.stage": "Stage {n}"
 }

@@ -11,6 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/domain/quran.dart';
 import 'package:rattil/ui/hajj_hub_screen.dart';
 import 'package:rattil/ui/hajj_screen.dart';
+import 'package:rattil/ui/pilgrimage_screen.dart';
 import 'package:rattil/ui/page_reader_screen.dart';
 import 'package:rattil/ui/quran_index.dart';
 import 'package:rattil/ui/surah_reader_screen.dart';
@@ -64,22 +65,31 @@ void main() {
     await shot(tester, 'hajj_hub');
   });
 
-  testWidgets('Hajj steps per type and a step explained (owner, 2026-11-14)', (tester) async {
+  testWidgets('Hajj & Umrah guide from its sources: 3D pictures, every text in full (owner, 2026-11-16)', (
+    tester,
+  ) async {
     tester.view.devicePixelRatio = 1;
-    await pumpApp(tester, size: const Size(390, 1000));
-    await pushScreen(tester, const HajjScreen());
-    await tester.tap(find.byKey(const Key('hajjTab-hajj')));
+    await pumpApp(tester, size: const Size(390, 2400));
+    await pushScreen(tester, const PilgrimageScreen(kind: PilgrimageKind.umrah));
+    await tester.tap(find.byKey(const Key('stepStrip-umrah-2')));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.byKey(const Key('hajjTypes')));
+    await shot(tester, 'hajj_umrah_tawaf');
+    await pushScreen(tester, const PilgrimageScreen(kind: PilgrimageKind.tamattu));
+    // Step 7 of tamattu': Arafah.
+    for (var n = 0; n < 6; n++) {
+      await tester.scrollUntilVisible(
+        find.byKey(const Key('stepNext-tamattu')),
+        800,
+        scrollable: find.byType(Scrollable).last,
+      );
+      await tester.tap(find.byKey(const Key('stepNext-tamattu')));
+      await tester.pumpAndSettle();
+    }
+    await tester.drag(find.byKey(const Key('pilgrimage-tamattu')), const Offset(0, 5000));
     await tester.pumpAndSettle();
-    await shot(tester, 'hajj_types_tamattu', overlay: true);
-    await tester.tap(find.byKey(const Key('hajjType-qiran')));
-    await tester.pumpAndSettle();
-    await shot(tester, 'hajj_types_qiran', overlay: true);
-    final flow = tester.getRect(find.byKey(const Key('stepsFlow-hajj-qiran')));
-    await tester.tapAt(flow.topLeft + Offset(300 * flow.width / 360, (50 + 2 * 140) * flow.height / (5 * 140 - 20)));
-    await tester.pumpAndSettle();
-    await shot(tester, 'hajj_types_sheet', overlay: true);
+    await shot(tester, 'hajj_tamattu_arafah');
+    await pushScreen(tester, const HajjScreen(sections: ['ihram']));
+    await shot(tester, 'hajj_miqat');
   });
 
   for (final theme in ['light', 'dark']) {
