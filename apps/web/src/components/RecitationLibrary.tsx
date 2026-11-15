@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import { pauseOthers } from "@/lib/audio-focus";
@@ -37,25 +38,42 @@ export function stepTrack(track: Track, delta: 1 | -1): Track | null {
 
 type Tab = "reciters" | "radios";
 
-/** One native audio player for the chosen surah or radio (stops the app's recitation player: one voice at a time). */
+function clock(sec: number, locale: Locale): string {
+  const v = Math.max(0, Math.floor(Number.isFinite(sec) ? sec : 0));
+  return localizeDigits(`${Math.floor(v / 60)}:${String(v % 60).padStart(2, "0")}`, locale);
+}
+
+/**
+ * The player for the chosen surah or radio (one sound at a time). One hidden <audio> element plays (it stays
+ * mounted, so going on to the next surah keeps working in the background); its buttons are shown in `slot`,
+ * the row of the item playing (owner 2026-11-15: not at the top of the page), or at the top when that row is
+ * not on screen (e.g. back on the reciters list).
+ */
 export function NowPlaying({
   locale,
   track,
   onTrack,
+  slot = null,
 }: {
   locale: Locale;
   track: Track;
   onTrack: (t: Track) => void;
+  slot?: HTMLElement | null;
 }) {
   const ref = useRef<HTMLAudioElement>(null);
   const [error, setError] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [position, setPosition] = useState(0);
+  const [duration, setDuration] = useState(0);
   useEffect(() => {
     setError(false);
+    setPosition(0);
+    setDuration(0);
     const el = ref.current;
     if (!el) return;
     let cancelled = false;
     let hls: { destroy: () => void } | null = null;
-    // The user pressed play; a refusal (autoplay policy) leaves the native controls.
+    // The user pressed play; a refusal (autoplay policy) leaves the play button.
     (async (): Promise<void> => {
       try {
         // Live HLS (the Holy Mosques): native in Safari; elsewhere hls.js feeds the <audio>, sound only.
@@ -86,36 +104,86 @@ export function NowPlaying({
       hls?.destroy();
     };
   }, [track.key, track.url]);
-  return (
-    <div className="card series-now" data-testid="library-now">
-      <strong>
-        {t(locale, "library.nowPlaying")}: {track.title}
-        {track.live ? ` · ${t(locale, "library.live")}` : ""}
-      </strong>
-      <audio
-        ref={ref}
-        controls
-        preload="none"
-        data-testid="library-audio"
-        onPlay={(e) => {
-          setError(false);
-          pauseOthers(e.currentTarget); // one sound at a time
-          const next = stepTrack(track, 1);
-          const prev = stepTrack(track, -1);
-          claimMediaSession(e.currentTarget, {
-            title: track.title,
-            next: next ? () => onTrack(next) : undefined,
-            previous: prev ? () => onTrack(prev) : undefined,
-          });
-          mediaSessionState(true);
-        }}
-        onPause={() => mediaSessionState(false)}
-        onEnded={() => {
-          const next = stepTrack(track, 1);
-          if (next) onTrack(next);
-        }}
-        onError={() => setError(true)}
-      />
+  // Keep the playing item and its buttons in view.
+  useEffect(() => {
+    slot?.scrollIntoView?.({ block: "nearest", behavior: "smooth" });
+  }, [slot]);
+
+  const next = stepTrack(track, 1);
+  const prev = stepTrack(track, -1);
+  const toggle = (): void => {
+    const el = ref.current;
+    if (!el) return;
+    if (el.paused) void Promise.resolve(el.play()).catch(() => undefined);
+    else el.pause();
+  };
+  const seekable = !track.live && duration > 0;
+  const controls = (
+    <div
+      className="nasheed-now"
+      role="group"
+      aria-label={t(locale, "audio.player")}
+      data-testid="library-now"
+    >
+      {slot ? (
+        <span className="sr-only">
+          {t(locale, "library.nowPlaying")}: {track.title}
+        </span>
+      ) : null}
+      <div className="nasheed-now-row">
+        {track.playlist ? (
+          <button
+            type="button"
+            className="btn btn-sm btn-icon"
+            aria-label={t(locale, "nasheeds.prev")}
+            data-testid="library-prev"
+            disabled={!prev}
+            onClick={() => prev && onTrack(prev)}
+          >
+            <Icon name={locale === "ar" ? "next" : "prev"} size={18} />
+          </button>
+        ) : null}
+        <button
+          type="button"
+          className="btn btn-primary btn-icon nasheed-play"
+          aria-label={playing ? t(locale, "audio.pause") : t(locale, "audio.play")}
+          data-testid="library-toggle"
+          onClick={toggle}
+        >
+          <Icon name={playing ? "pause" : "play"} size={22} />
+        </button>
+        {track.playlist ? (
+          <button
+            type="button"
+            className="btn btn-sm btn-icon"
+            aria-label={t(locale, "nasheeds.next")}
+            data-testid="library-next"
+            disabled={!next}
+            onClick={() => next && onTrack(next)}
+          >
+            <Icon name={locale === "ar" ? "prev" : "next"} size={18} />
+          </button>
+        ) : null}
+        {seekable ? (
+          <>
+            <span className="small nasheed-time">{clock(position, locale)}</span>
+            <input
+              type="range"
+              min={0}
+              max={Math.max(1, Math.round(duration))}
+              value={Math.round(position)}
+              aria-label={t(locale, "dhikr.seek")}
+              data-testid="library-seek"
+              onChange={(e) => {
+                if (ref.current) ref.current.currentTime = Number(e.target.value);
+              }}
+            />
+            <span className="small nasheed-time">{clock(duration, locale)}</span>
+          </>
+        ) : track.live ? (
+          <span className="small muted">{t(locale, "library.live")}</span>
+        ) : null}
+      </div>
       {error ? (
         <p className="alert alert-error" role="alert" data-testid="library-play-error">
           {t(locale, "library.playError")}
@@ -124,6 +192,57 @@ export function NowPlaying({
       <SleepTimer locale={locale} />
     </div>
   );
+  return (
+    <>
+      <audio
+        ref={ref}
+        preload="none"
+        hidden
+        data-testid="library-audio"
+        onPlay={(e) => {
+          setError(false);
+          setPlaying(true);
+          pauseOthers(e.currentTarget); // one sound at a time
+          claimMediaSession(e.currentTarget, {
+            title: track.title,
+            next: next ? () => onTrack(next) : undefined,
+            previous: prev ? () => onTrack(prev) : undefined,
+          });
+          mediaSessionState(true);
+        }}
+        onPause={() => {
+          setPlaying(false);
+          mediaSessionState(false);
+        }}
+        onTimeUpdate={(e) => setPosition(e.currentTarget.currentTime)}
+        onDurationChange={(e) => {
+          const d = e.currentTarget.duration;
+          setDuration(Number.isFinite(d) ? d : 0);
+        }}
+        onEnded={() => {
+          setPlaying(false);
+          if (next) onTrack(next);
+        }}
+        onError={() => setError(true)}
+      />
+      {slot ? (
+        createPortal(controls, slot)
+      ) : (
+        <section className="card series-now nasheed-now-top" data-testid="library-now-top">
+          <strong>
+            {t(locale, "library.nowPlaying")}: {track.title}
+            {track.live ? ` · ${t(locale, "library.live")}` : ""}
+          </strong>
+          {controls}
+        </section>
+      )}
+    </>
+  );
+}
+
+/** Where the player's buttons go: under the row of the item playing. */
+export function PlayerSlot({ onSlot }: { onSlot: (el: HTMLElement | null) => void }) {
+  return <div className="nasheed-slot" ref={onSlot} data-testid="library-slot" />;
 }
 
 function ReciterView({
@@ -133,6 +252,7 @@ function ReciterView({
   current,
   onPlay,
   onBack,
+  onSlot,
 }: {
   locale: Locale;
   reciter: Reciter;
@@ -140,6 +260,7 @@ function ReciterView({
   current: string | null;
   onPlay: (t: Track) => void;
   onBack: () => void;
+  onSlot: (el: HTMLElement | null) => void;
 }) {
   const first = reciter.moshafs.find((m) => m.rewayaId === rewaya) ?? reciter.moshafs[0]!;
   const [moshafId, setMoshafId] = useState(first.id);
@@ -189,7 +310,7 @@ function ReciterView({
           const key = `${moshaf.id}:${n}`;
           const on = current === key;
           return (
-            <li key={n}>
+            <li key={n} className={on ? "has-player" : undefined}>
               <button
                 type="button"
                 className="episode"
@@ -204,6 +325,7 @@ function ReciterView({
                   </strong>
                 </span>
               </button>
+              {on ? <PlayerSlot onSlot={onSlot} /> : null}
             </li>
           );
         })}
@@ -221,6 +343,7 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
   const [rewaya, setRewaya] = useState<number | null>(null);
   const [reciter, setReciter] = useState<Reciter | null>(null);
   const [track, setTrack] = useState<Track | null>(null);
+  const [slot, setSlot] = useState<HTMLElement | null>(null);
 
   const load = async (refresh: boolean): Promise<void> => {
     setFailed(false);
@@ -257,7 +380,7 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
   const radios = filterRadios(lib, query, normalizeArabic);
   return (
     <>
-      {track ? <NowPlaying locale={locale} track={track} onTrack={setTrack} /> : null}
+      {track ? <NowPlaying locale={locale} track={track} onTrack={setTrack} slot={slot} /> : null}
       {reciter ? (
         <ReciterView
           key={reciter.id}
@@ -267,6 +390,7 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
           current={track?.key ?? null}
           onPlay={setTrack}
           onBack={() => setReciter(null)}
+          onSlot={setSlot}
         />
       ) : (
         <section className="card">
@@ -344,7 +468,7 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
                   const key = `live:${r.id}`;
                   const title = locale === "ar" ? r.ar : r.en;
                   return (
-                    <li key={r.id}>
+                    <li key={r.id} className={track?.key === key ? "has-player" : undefined}>
                       <button
                         type="button"
                         className="episode"
@@ -358,6 +482,7 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
                           <span className="muted small">{t(locale, "library.live")}</span>
                         </span>
                       </button>
+                      {track?.key === key ? <PlayerSlot onSlot={setSlot} /> : null}
                     </li>
                   );
                 })}
@@ -368,7 +493,7 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
                 {radios.map((r) => {
                   const key = `radio:${r.id}`;
                   return (
-                    <li key={r.id}>
+                    <li key={r.id} className={track?.key === key ? "has-player" : undefined}>
                       <button
                         type="button"
                         className="episode"
@@ -382,6 +507,7 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
                           <span className="muted small">{t(locale, "library.live")}</span>
                         </span>
                       </button>
+                      {track?.key === key ? <PlayerSlot onSlot={setSlot} /> : null}
                     </li>
                   );
                 })}

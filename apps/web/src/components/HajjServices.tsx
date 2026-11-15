@@ -6,7 +6,7 @@ import { withBase } from "@/lib/base-path";
 import { HARAM_CROWD_LINKS, SHOW_HARAM_CROWD } from "@/lib/haram-crowd";
 import { LIVE_RADIOS } from "@/lib/live-radios";
 import { Icon } from "./Icon";
-import { NowPlaying, type Track } from "./RecitationLibrary";
+import { NowPlaying, PlayerSlot, type Track } from "./RecitationLibrary";
 
 const HARAMAIN = LIVE_RADIOS.filter((r) => r.id === "makkah" || r.id === "madinah");
 
@@ -16,6 +16,7 @@ const HARAMAIN = LIVE_RADIOS.filter((r) => r.id === "makkah" || r.id === "madina
  */
 export function HajjServices({ locale, tawafHref }: { locale: Locale; tawafHref: string | null }) {
   const [track, setTrack] = useState<Track | null>(null);
+  const [slot, setSlot] = useState<HTMLElement | null>(null);
   return (
     <section aria-labelledby="hajj-services-h" data-testid="hajj-services">
       <h2 id="hajj-services-h" className="sr-only">
@@ -57,7 +58,7 @@ export function HajjServices({ locale, tawafHref }: { locale: Locale; tawafHref:
             const key = `live:${r.id}`;
             const title = locale === "ar" ? r.ar : r.en;
             return (
-              <li key={r.id}>
+              <li key={r.id} className={track?.key === key ? "has-player" : undefined}>
                 <button
                   type="button"
                   className="episode"
@@ -71,11 +72,12 @@ export function HajjServices({ locale, tawafHref }: { locale: Locale; tawafHref:
                     <span className="muted small">{t(locale, "library.live")}</span>
                   </span>
                 </button>
+                {track?.key === key ? <PlayerSlot onSlot={setSlot} /> : null}
               </li>
             );
           })}
         </ul>
-        {track ? <NowPlaying locale={locale} track={track} onTrack={setTrack} /> : null}
+        {track ? <NowPlaying locale={locale} track={track} onTrack={setTrack} slot={slot} /> : null}
       </section>
       <ul className="tiles" data-testid="hajj-links">
         {(

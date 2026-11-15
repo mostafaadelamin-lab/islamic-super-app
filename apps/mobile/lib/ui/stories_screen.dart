@@ -175,10 +175,12 @@ class NarrationBar extends StatelessWidget {
     final s = context.services;
     final n = s.narration;
     return ListenableBuilder(
-      listenable: n,
+      listenable: Listenable.merge([n, InlinePlayers.shown]),
       builder: (context, _) {
         final e = n.episode;
         if (!n.isActive || e == null) return const SizedBox.shrink();
+        // Its buttons are already under the item playing on this screen.
+        if (InlinePlayers.on(ModalRoute.of(context))) return const SizedBox.shrink();
         final l = context.l10n;
         final theme = Theme.of(context);
         final scheme = theme.colorScheme;
@@ -296,6 +298,165 @@ class _OpenOrigin extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Screens where the narration's buttons are shown under the item playing
+/// (owner 2026-11-15: in the recitation library and the radios, the player
+/// belongs with the surah / station playing, not in a bar away from it).
+/// The bottom [NarrationBar] steps aside there; it comes back when that row
+/// scrolls far out of view or the user leaves the screen.
+class InlinePlayers {
+  InlinePlayers._();
+  static final _routes = <Route<dynamic>, int>{};
+
+  /// Changes whenever an inline player appears or goes away.
+  static final shown = ValueNotifier<int>(0);
+
+  static bool on(Route<dynamic>? r) => r != null && (_routes[r] ?? 0) > 0;
+
+  static void _changed() {
+    // Not while the tree is being built or torn down.
+    WidgetsBinding.instance.addPostFrameCallback((_) => shown.value++);
+    WidgetsBinding.instance.scheduleFrame();
+  }
+
+  static void add(Route<dynamic> r) {
+    _routes[r] = (_routes[r] ?? 0) + 1;
+    _changed();
+  }
+
+  static void remove(Route<dynamic> r) {
+    final c = (_routes[r] ?? 1) - 1;
+    if (c <= 0) {
+      _routes.remove(r);
+    } else {
+      _routes[r] = c;
+    }
+    _changed();
+  }
+}
+
+/// The narration's seek bar, previous / play-pause / next, sleep timer and stop,
+/// shown right under the item playing (recitation library, radios, al-Sha'rawi).
+class InlineNarrationPlayer extends StatefulWidget {
+  const InlineNarrationPlayer({super.key});
+
+  @override
+  State<InlineNarrationPlayer> createState() => _InlineNarrationPlayerState();
+}
+
+class _InlineNarrationPlayerState extends State<InlineNarrationPlayer> {
+  Route<dynamic>? _route;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final r = ModalRoute.of(context);
+    if (r == _route) return;
+    if (_route != null) InlinePlayers.remove(_route!);
+    _route = r;
+    if (r != null) InlinePlayers.add(r);
+  }
+
+  @override
+  void dispose() {
+    if (_route != null) InlinePlayers.remove(_route!);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final n = context.services.narration;
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    return ListenableBuilder(
+      listenable: n,
+      builder: (context, _) {
+        final total = n.duration;
+        final error = n.state == RecitationState.error;
+        final skip = n.hasNext || n.hasPrevious;
+        String fmt(Duration d) => context.numLtr('${d.inMinutes}:${(d.inSeconds % 60).toString().padLeft(2, '0')}');
+        return Container(
+          key: const Key('inlinePlayer'),
+          margin: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceSm),
+          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm, vertical: DesignTokens.spaceXs),
+          decoration: BoxDecoration(
+            color: scheme.primaryContainer.withValues(alpha: 0.45),
+            borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+            border: Border.all(color: scheme.primary.withValues(alpha: 0.35)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (error)
+                Text(l.storiesEpisodeError, style: TextStyle(color: scheme.error))
+              else if (!n.isLive && total != null && total.inSeconds > 0)
+                Row(
+                  children: [
+                    Text(fmt(n.position), style: theme.textTheme.bodySmall),
+                    Expanded(
+                      child: Slider(
+                        key: const Key('inlineSlider'),
+                        value: n.position.inSeconds.clamp(0, total.inSeconds).toDouble(),
+                        max: total.inSeconds.toDouble(),
+                        onChanged: (v) => n.seekBy(Duration(seconds: v.round()) - n.position),
+                      ),
+                    ),
+                    Text(fmt(total), style: theme.textTheme.bodySmall),
+                  ],
+                ),
+              Wrap(
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  if (skip)
+                    IconButton(
+                      key: const Key('inlinePrev'),
+                      tooltip: l.nasheedsPrev,
+                      icon: const RIcon(RIcons.prev),
+                      onPressed: n.hasPrevious ? n.previous : null,
+                    ),
+                  if (!n.isLive)
+                    IconButton(
+                      tooltip: l.storiesRewind,
+                      icon: const Icon(Icons.replay_30),
+                      onPressed: () => n.seekBy(const Duration(seconds: -30)),
+                    ),
+                  IconButton.filled(
+                    key: const Key('inlineToggle'),
+                    tooltip: n.isPlaying ? l.storiesPause : l.storiesPlay,
+                    icon: RIcon(n.isPlaying ? RIcons.pause : RIcons.play),
+                    onPressed: () => n.isPlaying ? n.pause() : n.resume(),
+                  ),
+                  if (!n.isLive)
+                    IconButton(
+                      tooltip: l.storiesForward,
+                      icon: const Icon(Icons.forward_30),
+                      onPressed: () => n.seekBy(const Duration(seconds: 30)),
+                    ),
+                  if (skip)
+                    IconButton(
+                      key: const Key('inlineNext'),
+                      tooltip: l.nasheedsNext,
+                      icon: const RIcon(RIcons.next),
+                      onPressed: n.hasNext ? n.next : null,
+                    ),
+                  const SleepTimerButton(),
+                  IconButton(
+                    key: const Key('inlineStop'),
+                    tooltip: l.storiesStop,
+                    icon: const RIcon(RIcons.stop),
+                    onPressed: n.stop,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
