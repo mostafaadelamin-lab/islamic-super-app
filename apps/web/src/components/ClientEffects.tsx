@@ -28,13 +28,18 @@ export function syncThemeColor(root: HTMLElement = document.documentElement): vo
       window.matchMedia?.("(prefers-color-scheme: dark)").matches);
   const color = (css.getPropertyValue(dark ? "--color-bg" : "--color-primary") || "").trim();
   if (!color) return;
+  // Never remove these tags: Next.js/React own them and crash on the next page change if one is gone
+  // (2026-11-16: every link stopped working). Give each one the chosen colour instead.
   const metas = [...document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]')];
-  const meta =
-    metas[0] ??
-    document.head.appendChild(Object.assign(document.createElement("meta"), { name: "theme-color" }));
-  metas.slice(1).forEach((m) => m.remove());
-  meta.removeAttribute("media");
-  meta.content = color;
+  if (!metas.length) {
+    metas.push(
+      document.head.appendChild(Object.assign(document.createElement("meta"), { name: "theme-color" })),
+    );
+  }
+  for (const meta of metas) {
+    meta.removeAttribute("media");
+    meta.content = color;
+  }
 }
 
 /** Applies persisted preferences, remembers the current locale and registers the service worker. */

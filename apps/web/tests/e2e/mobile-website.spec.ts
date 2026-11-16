@@ -107,3 +107,20 @@ test.describe("Mushaf on a phone", () => {
     await expect(page.getByTestId("mushaf-frame")).not.toHaveAttribute("style", /scale\(/);
   });
 });
+
+test("links move between pages without a script error (theme-colour tags stay in place)", async ({
+  page,
+}) => {
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto("/ar/about/");
+  for (const to of ["/ar/help/", "/ar/settings/", "/ar/"]) {
+    await page
+      .locator(`a[href="${to}"]`)
+      .first()
+      .evaluate((a: HTMLAnchorElement) => a.click());
+    await expect(page).toHaveURL(new RegExp(`${to}$`));
+    await expect(page.locator("main h1").first()).toBeAttached();
+  }
+  expect(errors).toEqual([]);
+});
