@@ -1,7 +1,16 @@
 # Changelog
 
-## [Unreleased] — Sheikh Mohamed Ahmed Shabib in the recitation library — 2026-11-16
+## [1.2.0] — App Store release — 2026-11-16
+Everything since the 1.1.0 build of 2026-11-14 (that build was never uploaded to a store).
 ### Added
+- Colour styles (app + website): emerald and gold, and Madinah night, each in light and dark, picked in Settings; the app icon follows the style.
+- Mushaf (app + website): pinch to zoom the page (up to 3x); page and tafsir halves on every screen; one bottom strip with the ayah actions; a tap on an ayah opens its options; first-open guide.
+- Hajj and Umrah guide from its sources (Ibn Baz's Tahqiq with page numbers, the official guide, hadith, Hisn al-Muslim, the Quran text as printed), with pictures and every dua in full at each step; each Hajj kind on its own page.
+- Hadith: the simplified explanation under each hadith, and a list of explained hadiths.
+- Players: the lock screen shows elapsed time, length and a seek bar; the bottom player takes you back to what is playing; in the library and radios the player sits under the item playing.
+- Adhkar: finishing the last dhikr goes back to the adhkar list by itself.
+- "Report a mistake" opens the contact form with the title and message filled in.
+- Website: the website look on phones too (☰ menu), the area name of the viewer's position, and a simpler home page.
 - Recitation library (app + website): Sheikh «محمد أحمد شبيب» is a reciter inside the library's reciters list (in name order, like every other reciter; not a separate section or More entry). Tapping him opens his recitations inside the library. No complete 114-surah recording of the sheikh exists, so he has what is available: 16 murattal recordings (Hafs; 11 are a passage of the surah, marked «ما تيسّر من») and 70 mujawwad recordings (Quran al-Fajr, radio, evening gatherings; ordered by surah), about 44 hours. Search by surah, the next recording plays by itself, and each one can be downloaded for offline listening. Sources are not shown.
 - Website: the player's buttons sit right under the recitation playing (Sheikh Shabib's list and al-Sha'rawi's lessons), as in the reciters' surah lists and the nasheeds, not at the top of the page. The app already did this.
 - Unchanged: Quran text and all other religious content.
