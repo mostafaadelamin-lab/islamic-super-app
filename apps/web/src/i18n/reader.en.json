@@ -48,5 +48,6 @@
   "reader.guide1": "Tap any ayah to show its options under the page: listen, ayah tafsir, bookmark, copy, share.",
   "reader.guide2": "To turn pages: swipe the page, or use the page slider under it.",
   "reader.guide3": "“Full screen” at the top hides the tools; “Show tools” brings them back.",
-  "reader.guide4": "“Listen with tafsir” shows the page and its tafsir side by side while it is recited."
+  "reader.guide4": "“Listen with tafsir” shows the page and its tafsir side by side while it is recited.",
+  "reader.zoomReset": "{pct}% · Normal size"
 }

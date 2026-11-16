@@ -109,10 +109,13 @@ const DRAG_START_PX = 8;
 const TURN_MS = 220;
 const TILT_DIVISOR = 40;
 const REBOUND = 0.35;
+/** Pinch zoom of the page: up to 3×; letting go under 108% goes back to 100%. */
+const ZOOM_MAX = 3;
+const ZOOM_SNAP = 1.08;
 
 /** Sizes the Quran font so the widest line of the page exactly fills the frame (no wrapping, no overflow). */
 function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full = false, layout = ""): void {
-  const fit = useCallback(() => {
+  const measure = useCallback(() => {
     const el = pageEl.current;
     const frame = el?.parentElement;
     if (!el || !frame) return;
@@ -198,6 +201,17 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full
     }
     // layout only marks a change of the page's width
   }, [pageEl, page, full, layout]);
+  // Measure at 100%: the reader's own pinch zoom (a scale on the frame) is lifted while measuring.
+  const fit = useCallback(() => {
+    const frame = pageEl.current?.parentElement;
+    const scaled = frame?.style.transform.startsWith("scale(") ? frame.style.transform : "";
+    if (frame && scaled) frame.style.transform = "";
+    try {
+      measure();
+    } finally {
+      if (frame && scaled) frame.style.transform = scaled;
+    }
+  }, [pageEl, measure]);
 
   useLayoutEffect(() => {
     fit();
@@ -285,6 +299,15 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const sliderRef = useRef<HTMLInputElement>(null);
   const gesture = useRef<Gesture | null>(null);
   const suppressClick = useRef(false);
+  // Pinch to zoom the page in and out (owner 2026-11-16). Our own zoom, since the page swipe owns the
+  // horizontal touch; while zoomed the page scrolls in both directions and the arrows turn pages.
+  const [zoom, setZoom] = useState(1);
+  // The page's unscaled size; the zoom box takes that size times the zoom so the stage can scroll over it.
+  const [zoomBase, setZoomBase] = useState<{ w: number; h: number } | null>(null);
+  const zoomRef = useRef(1);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const pinch = useRef<{ d0: number; z0: number } | null>(null);
+  const focus = useRef<{ fx: number; fy: number; mx: number; my: number; rtl: boolean } | null>(null);
   const bookmarks = useStore(bookmarksStore);
   const audioPrefs = useStore(audioStore);
   const prefs = useStore(prefsStore);
@@ -495,14 +518,99 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     return () => el.removeEventListener("change", onChange);
   }, [goTo]);
 
+  // ---- pinch zoom (two fingers) ----
+  useEffect(() => {
+    zoomRef.current = zoom;
+  }, [zoom]);
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const two = (t: TouchList): [Touch, Touch] | null => {
+      const a = t.item(0);
+      const b = t.item(1);
+      return a && b ? [a, b] : null;
+    };
+    const dist = ([a, b]: [Touch, Touch]): number =>
+      Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) || 1;
+    const onStart = (e: TouchEvent): void => {
+      const pts = e.touches.length === 2 ? two(e.touches) : null;
+      if (!pts) return;
+      pinch.current = { d0: dist(pts), z0: zoomRef.current };
+      const frame = pageEl.current?.parentElement;
+      if (frame && zoomRef.current === 1) setZoomBase({ w: frame.offsetWidth, h: frame.offsetHeight });
+      gesture.current = null;
+      setDrag({ dx: 0, anim: false });
+    };
+    const onMove = (e: TouchEvent): void => {
+      const p = pinch.current;
+      const pts = e.touches.length === 2 ? two(e.touches) : null;
+      if (!p || !pts) return;
+      e.preventDefault();
+      const z = Math.min(ZOOM_MAX, Math.max(1, (p.z0 * dist(pts)) / p.d0));
+      // keep the point between the fingers where it is
+      const r = stage.getBoundingClientRect();
+      const mx = (pts[0].clientX + pts[1].clientX) / 2 - r.left;
+      const my = (pts[0].clientY + pts[1].clientY) / 2 - r.top;
+      // Content fractions under the fingers, before the zoom (RTL scrollLeft runs from -max to 0).
+      const rtl = getComputedStyle(stage).direction === "rtl";
+      const maxX = stage.scrollWidth - stage.clientWidth;
+      const left = rtl ? stage.scrollLeft + maxX : stage.scrollLeft;
+      const fx = (left + mx) / Math.max(1, stage.scrollWidth);
+      const fy = (stage.scrollTop + my) / Math.max(1, stage.scrollHeight);
+      focus.current = { fx, fy, mx, my, rtl };
+      zoomRef.current = z;
+      setZoom(z);
+    };
+    const onEnd = (e: TouchEvent): void => {
+      if (!pinch.current || e.touches.length >= 2) return;
+      pinch.current = null;
+      suppressClick.current = true;
+      if (zoomRef.current < ZOOM_SNAP) setZoom(1);
+    };
+    stage.addEventListener("touchstart", onStart, { passive: true });
+    stage.addEventListener("touchmove", onMove, { passive: false });
+    stage.addEventListener("touchend", onEnd);
+    stage.addEventListener("touchcancel", onEnd);
+    return () => {
+      stage.removeEventListener("touchstart", onStart);
+      stage.removeEventListener("touchmove", onMove);
+      stage.removeEventListener("touchend", onEnd);
+      stage.removeEventListener("touchcancel", onEnd);
+    };
+  }, [tab]);
+  // After the zoom is laid out, scroll so the point between the fingers stays under them.
+  useLayoutEffect(() => {
+    const stage = stageRef.current;
+    const f = focus.current;
+    focus.current = null;
+    if (!stage || !f) return;
+    const nx = f.fx * stage.scrollWidth - f.mx;
+    const nMax = stage.scrollWidth - stage.clientWidth;
+    stage.scrollLeft = f.rtl ? nx - nMax : nx;
+    stage.scrollTop = f.fy * stage.scrollHeight - f.my;
+  }, [zoom]);
+  // A new page starts at its top (and may have a slightly different size).
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage || zoomRef.current <= 1) return;
+    const id = requestAnimationFrame(() => {
+      const frame = pageEl.current?.parentElement;
+      if (frame) setZoomBase({ w: frame.offsetWidth, h: frame.offsetHeight });
+      stage.scrollTo({ top: 0, left: 0 });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [page]);
+
   // ---- swipe / drag like a book ----
   const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>): void => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
+    // Zoomed in: one finger moves around the page instead of turning it.
+    if (zoomRef.current > 1 || pinch.current) return;
     gesture.current = { x: e.clientX, y: e.clientY, t: performance.now(), active: false };
   };
   const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>): void => {
     const g = gesture.current;
-    if (!g) return;
+    if (!g || pinch.current) return;
     const dx = e.clientX - g.x;
     const dy = e.clientY - g.y;
     if (!g.active) {
@@ -732,7 +840,8 @@ export function PageReader({ locale, initial }: PageReaderProps) {
       ) : null}
 
       <div
-        className="mushaf-stage"
+        ref={stageRef}
+        className={`mushaf-stage${zoom > 1 ? " is-zoomed" : ""}`}
         data-testid="mushaf-stage"
         data-ready={data ? "true" : "false"}
         hidden={tab !== "mushaf"}
@@ -743,26 +852,49 @@ export function PageReader({ locale, initial }: PageReaderProps) {
         onClick={onPageClick}
       >
         <div
-          className="mushaf-frame"
-          data-testid="mushaf-frame"
-          style={{
-            transform: drag.dx ? `translateX(${drag.dx}px) rotateY(${-tilt}deg)` : undefined,
-            transition: drag.anim ? `transform ${TURN_MS}ms ease-out` : "none",
-          }}
+          className="mushaf-zoom"
+          style={zoom > 1 && zoomBase ? { width: zoomBase.w * zoom, height: zoomBase.h * zoom } : undefined}
         >
-          <MushafPage
-            data={view}
-            selected={selected}
-            playing={playingKey}
-            playingBasmala={playingBasmala}
-            markerLabel={markerLabel}
-            pageRef={pageEl}
-          />
-          <div className="mushaf-folio" aria-hidden="true">
-            {localizeDigits(page, "ar")}
+          <div
+            className="mushaf-frame"
+            data-testid="mushaf-frame"
+            style={{
+              transform:
+                zoom > 1
+                  ? `scale(${zoom.toFixed(3)})`
+                  : drag.dx
+                    ? `translateX(${drag.dx}px) rotateY(${-tilt}deg)`
+                    : undefined,
+              transition: drag.anim && zoom === 1 ? `transform ${TURN_MS}ms ease-out` : "none",
+            }}
+          >
+            <MushafPage
+              data={view}
+              selected={selected}
+              playing={playingKey}
+              playingBasmala={playingBasmala}
+              markerLabel={markerLabel}
+              pageRef={pageEl}
+            />
+            <div className="mushaf-folio" aria-hidden="true">
+              {localizeDigits(page, "ar")}
+            </div>
           </div>
         </div>
       </div>
+      {zoom > 1 ? (
+        <button
+          type="button"
+          className="rd-zoom-reset"
+          data-testid="reader-zoom-reset"
+          onClick={() => setZoom(1)}
+        >
+          <ReaderIcon name="shrink" size={16} />
+          <span>
+            {t(locale, "reader.zoomReset", { pct: localizeDigits(Math.round(zoom * 100), locale) })}
+          </span>
+        </button>
+      ) : null}
 
       {fullScreen ? (
         <div className="rd-turn" data-testid="turn-arrows">

@@ -59,3 +59,51 @@ for (const [name, device] of PHONES) {
     });
   });
 }
+
+test.describe("Mushaf on a phone", () => {
+  test.use({ ...{ viewport: devices["iPhone 13"].viewport, isMobile: true, hasTouch: true } });
+
+  test("pinch zooms the page, one finger then pans instead of turning, and the button resets", async ({
+    page,
+    browserName,
+  }) => {
+    test.skip(browserName !== "chromium", "touch input via CDP");
+    await page.addInitScript(() => {
+      localStorage.setItem("rattil.readerGuide", "1");
+      localStorage.setItem("rattil.readerHint", "9");
+    });
+    await page.goto("/ar/page/3/");
+    await expect(page.getByTestId("mushaf-page").first()).toBeVisible();
+    await page.getByTestId("reader-full").click();
+    // the "show tools" button sits above the page, not over its first line
+    const exitBox = await page.getByTestId("reader-exit-full").boundingBox();
+    const frameBox = await page.getByTestId("mushaf-frame").boundingBox();
+    expect(exitBox!.y + exitBox!.height).toBeLessThanOrEqual(frameBox!.y + 1);
+
+    const cdp = await page.context().newCDPSession(page);
+    const two = (d: number) => [
+      { x: 195 - d, y: 330, id: 1 },
+      { x: 195 + d, y: 330, id: 2 },
+    ];
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: two(40) });
+    for (let d = 45; d <= 100; d += 5) {
+      await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: two(d) });
+    }
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    const reset = page.getByTestId("reader-zoom-reset");
+    await expect(reset).toBeVisible();
+    await expect(page.getByTestId("mushaf-frame")).toHaveAttribute("style", /scale\(/);
+
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: 100, y: 400 }] });
+    for (let x = 120; x <= 300; x += 20) {
+      await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x, y: 400 }] });
+    }
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await page.waitForTimeout(500);
+    await expect(page).toHaveURL(/\/ar\/page\/3\/?$/);
+
+    await reset.click();
+    await expect(reset).toBeHidden();
+    await expect(page.getByTestId("mushaf-frame")).not.toHaveAttribute("style", /scale\(/);
+  });
+});

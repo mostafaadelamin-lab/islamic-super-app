@@ -1102,15 +1102,23 @@ body:has(.rd-full) .player,
 }
 
 /* ---- Simpler touches (owner 2026-11-15): full screen from a button, back with a visible button ---- */
+/* Owner 2026-11-16: the button covered the first line, so it sits in a strip kept free above the page. */
+.rd-full .mushaf-stage {
+  padding-top: var(--rd-exit-h);
+}
+:root {
+  --rd-exit-h: 36px;
+}
 .rd-exit-full {
   position: fixed;
   z-index: 28;
-  top: max(var(--space-md), env(safe-area-inset-top));
+  top: max(3px, env(safe-area-inset-top));
   inset-inline-end: var(--space-md);
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
+  min-height: 30px;
+  padding: 2px 12px;
   border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
   border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--color-surface) 92%, transparent);
@@ -1184,4 +1192,47 @@ body:has(.rd-full) .player,
     min-width: 0;
     padding: 0 var(--space-sm);
   }
+}
+
+/* ---- Pinch zoom of the page (owner 2026-11-16) ---- */
+.mushaf-zoom {
+  width: 100%;
+}
+/* Zoomed: the box has the scaled size; the page (laid out at 100%) is scaled from its top-left corner. */
+.is-zoomed .mushaf-zoom {
+  direction: ltr;
+  flex: none;
+}
+.is-zoomed .mushaf-frame {
+  direction: rtl;
+  margin: 0;
+  transform-origin: 0 0;
+}
+.mushaf-stage.is-zoomed {
+  overflow: auto;
+  max-height: 100dvh;
+  touch-action: pan-x pan-y;
+  overscroll-behavior: contain;
+  perspective: none;
+}
+.rd-zoom-reset {
+  position: fixed;
+  z-index: 28;
+  bottom: calc(var(--rd-dock-h, 0px) + var(--space-md) + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 4px 14px;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-surface) 94%, transparent);
+  color: var(--color-primary);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 14%);
+  cursor: pointer;
 }
