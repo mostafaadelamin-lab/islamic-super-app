@@ -80,7 +80,8 @@ class SettingsController extends ChangeNotifier {
 
   /// Mushaf page zoom (1 = fits the screen; owner asked for bigger/smaller Quran text).
   static const mushafZoomMin = 1.0;
-  static const mushafZoomMax = 2.0;
+  // Up to 3× since pinch zoom came (owner 2026-11-16), same as the website.
+  static const mushafZoomMax = 3.0;
   double get mushafZoom => (_prefs.getDouble('mushafZoom') ?? 1.0).clamp(mushafZoomMin, mushafZoomMax);
   Future<void> setMushafZoom(double v) async {
     await _prefs.setDouble('mushafZoom', v.clamp(mushafZoomMin, mushafZoomMax));

@@ -10,6 +10,7 @@ import '../data/settings.dart';
 import '../domain/audio_queue.dart';
 import '../domain/page_khatma.dart';
 import '../domain/quran.dart';
+import '../domain/text.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import 'play_origin.dart';
@@ -62,6 +63,15 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   Timer? _hintTimer;
   static const _hintShows = 3;
   static const _exitButtonRoom = 48.0;
+  // Full screen: a free strip above the page holds «إظهار الأدوات», so it never covers the first line
+  // (owner 2026-11-16).
+  static const _exitStrip = 40.0;
+  // Pinch zoom (owner 2026-11-16): two fingers zoom the page live; the size is saved when they lift.
+  final Map<int, Offset> _touches = {};
+  double? _pinchStartDistance;
+  double _pinchStartZoom = 1;
+  double? _liveZoom;
+  static const _zoomSnap = 1.08;
   static const _actionsRoom = 120.0;
 
   int get page => _page;
@@ -342,14 +352,16 @@ class PageReaderScreenState extends State<PageReaderScreen> {
               key: const Key('readerBody'),
               child: Stack(
                 children: [
-                  Positioned.fill(child: _pages(context)),
+                  Positioned.fill(top: full ? _exitStrip : 0, child: _pinchZoom(context, _pages(context))),
                   if (full) ..._turnArrows(context),
                   if (full && _hint) _hintBanner(context),
-                  if (full)
-                    PositionedDirectional(
-                      top: DesignTokens.spaceSm,
-                      end: DesignTokens.spaceSm,
-                      child: _exitFullButton(context),
+                  if (full) PositionedDirectional(top: 3, end: DesignTokens.spaceSm, child: _exitFullButton(context)),
+                  if (_tab == ReaderTab.mushaf && (_liveZoom ?? context.services.settings.mushafZoom) > 1)
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: DesignTokens.spaceMd,
+                      child: Center(child: _zoomResetChip(context)),
                     ),
                 ],
               ),
@@ -393,7 +405,8 @@ class PageReaderScreenState extends State<PageReaderScreen> {
             ConstrainedBox(
               key: const Key('stripAyahRoom'),
               constraints: const BoxConstraints(minHeight: _actionsRoom),
-              child: actions ??
+              child:
+                  actions ??
                   SizedBox(
                     height: _actionsRoom,
                     child: Center(
@@ -406,7 +419,10 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                   ),
             ),
             Divider(height: 1, color: scheme.outlineVariant),
-          ] else if (actions != null) ...[actions, Divider(height: 1, color: scheme.outlineVariant)],
+          ] else if (actions != null) ...[
+            actions,
+            Divider(height: 1, color: scheme.outlineVariant),
+          ],
           if (wide) ...[
             _sliderRow(context),
             Row(
@@ -498,13 +514,94 @@ class PageReaderScreenState extends State<PageReaderScreen> {
         customBorder: const StadiumBorder(),
         onTap: () => setState(() => _controls = true),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: DesignTokens.spaceSm),
+          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: 6),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               RIcon(RIcons.shrink, size: 18, color: scheme.primary),
               const SizedBox(width: 6),
-              Text(context.l10n.readerExitFull, style: TextStyle(color: scheme.primary, fontWeight: FontWeight.w600)),
+              Text(
+                context.l10n.readerExitFull,
+                style: TextStyle(color: scheme.primary, fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Two fingers on the Mushaf page zoom it (1×–3×); one finger keeps turning pages / panning.
+  /// A raw [Listener], so the page view keeps its own drag; it is locked while two fingers are down.
+  Widget _pinchZoom(BuildContext context, Widget child) {
+    if (_tab != ReaderTab.mushaf) return child;
+    final settings = context.services.settings;
+    double spread() {
+      final p = _touches.values.take(2).toList();
+      return (p[0] - p[1]).distance;
+    }
+
+    void end(PointerEvent e) {
+      _touches.remove(e.pointer);
+      if (_touches.length >= 2 || _pinchStartDistance == null) return;
+      final z = _liveZoom ?? settings.mushafZoom;
+      _pinchStartDistance = null;
+      unawaited(settings.setMushafZoom(z < _zoomSnap ? 1.0 : (z * 20).roundToDouble() / 20));
+      setState(() => _liveZoom = null);
+    }
+
+    return Listener(
+      key: const Key('mushafPinch'),
+      onPointerDown: (e) {
+        _touches[e.pointer] = e.position;
+        if (_touches.length == 2) {
+          setState(() {
+            _pinchStartDistance = spread();
+            _pinchStartZoom = settings.mushafZoom;
+            _liveZoom = _pinchStartZoom;
+          });
+        }
+      },
+      onPointerMove: (e) {
+        if (!_touches.containsKey(e.pointer)) return;
+        _touches[e.pointer] = e.position;
+        final d0 = _pinchStartDistance;
+        if (d0 == null || _touches.length < 2 || d0 <= 0) return;
+        final z = (_pinchStartZoom * spread() / d0).clamp(
+          SettingsController.mushafZoomMin,
+          SettingsController.mushafZoomMax,
+        );
+        if ((z - (_liveZoom ?? 0)).abs() > 0.01) setState(() => _liveZoom = z);
+      },
+      onPointerUp: end,
+      onPointerCancel: end,
+      child: child,
+    );
+  }
+
+  Widget _zoomResetChip(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final z = _liveZoom ?? context.services.settings.mushafZoom;
+    final pct = (z * 100).round();
+    return Material(
+      color: scheme.surface.withValues(alpha: 0.94),
+      shape: StadiumBorder(side: BorderSide(color: scheme.primary.withValues(alpha: 0.3))),
+      elevation: 2,
+      child: InkWell(
+        key: const Key('mushafZoomReset'),
+        customBorder: const StadiumBorder(),
+        onTap: () => unawaited(context.services.settings.setMushafZoom(1)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: 8),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RIcon(RIcons.shrink, size: 16, color: scheme.primary),
+              const SizedBox(width: 6),
+              Text(
+                context.l10n.readerZoomReset(context.l10n.localeName == 'ar' ? toArabicIndic(pct) : '$pct'),
+                style: TextStyle(color: scheme.primary, fontWeight: FontWeight.w600),
+              ),
             ],
           ),
         ),
@@ -559,6 +656,8 @@ class PageReaderScreenState extends State<PageReaderScreen> {
           ReaderTab.mushaf => PageView.builder(
             key: const Key('mushafPageView'),
             controller: controller,
+            // Two fingers down = pinch zoom, not a page turn.
+            physics: _touches.length >= 2 ? const NeverScrollableScrollPhysics() : null,
             itemCount: _count,
             onPageChanged: _onPageChanged,
             itemBuilder: (context, i) => BookPage(
@@ -566,7 +665,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
               controller: controller,
               child: TabletPage(
                 child: ZoomedPage(
-                  zoom: s.settings.mushafZoom,
+                  zoom: _liveZoom ?? s.settings.mushafZoom,
                   child: MushafPageView(
                     page: i + 1,
                     selected: _selected,

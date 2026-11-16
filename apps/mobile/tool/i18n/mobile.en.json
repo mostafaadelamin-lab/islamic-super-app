@@ -742,6 +742,7 @@
   "reader.fullHint": "To turn pages, swipe the page or press the arrows. To show the tools, press “Show tools”.",
   "reader.fullScreen": "Full screen",
   "reader.exitFull": "Show tools",
+  "reader.zoomReset": "{pct}% · Normal size",
   "reader.guideTitle": "How to use the Mushaf",
   "reader.guide1": "Tap any ayah to show its options under the page: listen, ayah tafsir, bookmark, copy, share.",
   "reader.guide2": "To turn pages: swipe the page, or use the page slider under it.",

@@ -3932,6 +3932,12 @@ abstract class AppLocalizations {
   /// **'Tafsir'**
   String get readerTabTafsir;
 
+  /// shared key "reader.zoomReset"
+  ///
+  /// In en, this message translates to:
+  /// **'{pct}% · Normal size'**
+  String readerZoomReset(String pct);
+
   /// shared key "reels.addChannel"
   ///
   /// In en, this message translates to:

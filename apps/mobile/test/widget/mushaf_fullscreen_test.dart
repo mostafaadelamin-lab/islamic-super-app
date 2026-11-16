@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rattil/app_services.dart';
 import 'package:rattil/domain/quran.dart';
 import 'package:rattil/theme/app_theme.dart';
 import 'package:rattil/ui/mushaf_page.dart';
@@ -76,5 +77,37 @@ void main() {
     expect(isLandscapePhone(const Size(844, 390)), isTrue);
     expect(isLandscapePhone(const Size(390, 844)), isFalse);
     expect(isLandscapePhone(const Size(1180, 820)), isFalse);
+  });
+
+  testWidgets('«show tools» sits in a strip above the page, not over its first line', (tester) async {
+    await open(tester, 3);
+    final button = tester.getRect(find.byKey(const Key('readerExitFull')));
+    final pageTop = tester.getTopLeft(find.byKey(const Key('mushafPageView'))).dy;
+    expect(button.bottom, lessThanOrEqualTo(pageTop + 0.5));
+  });
+
+  testWidgets('two fingers zoom the page; the size is kept, and «normal size» resets it', (tester) async {
+    await open(tester, 3);
+    final settings = tester.element(find.byType(PageReaderScreen)).services.settings;
+    expect(settings.mushafZoom, 1.0);
+    final c = tester.getCenter(find.byKey(const Key('mushafPageView')));
+    final a = await tester.startGesture(c - const Offset(40, 0), pointer: 1);
+    final b = await tester.startGesture(c + const Offset(40, 0), pointer: 2);
+    await tester.pump();
+    for (var i = 1; i <= 8; i++) {
+      await a.moveTo(c - Offset(40.0 + i * 10, 0));
+      await b.moveTo(c + Offset(40.0 + i * 10, 0));
+      await tester.pump();
+    }
+    await a.up();
+    await b.up();
+    await tester.pumpAndSettle();
+    expect(reader(tester).page, 3, reason: 'a pinch does not turn the page');
+    expect(settings.mushafZoom, closeTo(3.0, 0.06));
+    expect(find.byKey(const Key('mushafZoomV')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('mushafZoomReset')));
+    await tester.pumpAndSettle();
+    expect(settings.mushafZoom, 1.0);
+    expect(find.byKey(const Key('mushafZoomReset')), findsNothing);
   });
 }

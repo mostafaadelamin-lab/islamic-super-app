@@ -3206,6 +3206,15 @@
   "@readerTabTafsir": {
     "description": "shared key \"reader.tabTafsir\""
   },
+  "readerZoomReset": "{pct}% · Normal size",
+  "@readerZoomReset": {
+    "description": "shared key \"reader.zoomReset\"",
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
   "reelsAddChannel": "Add channel",
   "@reelsAddChannel": {
     "description": "shared key \"reels.addChannel\""

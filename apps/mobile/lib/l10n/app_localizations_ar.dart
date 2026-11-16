@@ -2174,6 +2174,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerTabTafsir => 'التفسير';
 
   @override
+  String readerZoomReset(String pct) {
+    return '$pct٪ · الحجم العادي';
+  }
+
+  @override
   String get reelsAddChannel => 'أضف القناة';
 
   @override
