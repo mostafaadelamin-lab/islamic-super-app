@@ -1,9 +1,7 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import Link from "next/link";
 import { t, type Locale } from "@/lib/i18n";
-import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
 import { pauseOthers } from "@/lib/audio-focus";
 import { normalizeArabic } from "@/lib/search";
@@ -20,6 +18,7 @@ import {
 import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { LIVE_RADIOS, isHls } from "@/lib/live-radios";
 import { Icon } from "./Icon";
+import { ShabibView } from "./ShabibView";
 import { SleepTimer } from "./SleepTimer";
 
 export interface Track {
@@ -39,6 +38,9 @@ export function stepTrack(track: Track, delta: 1 | -1): Track | null {
 }
 
 type Tab = "reciters" | "radios";
+
+/** mp3quran riwaya id of Hafs from Asim (murattal). */
+const HAFS_REWAYA = 1;
 
 function clock(sec: number, locale: Locale): string {
   const v = Math.max(0, Math.floor(Number.isFinite(sec) ? sec : 0));
@@ -344,6 +346,7 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
   const [query, setQuery] = useState("");
   const [rewaya, setRewaya] = useState<number | null>(null);
   const [reciter, setReciter] = useState<Reciter | null>(null);
+  const [shabibOpen, setShabibOpen] = useState(false);
   const [track, setTrack] = useState<Track | null>(null);
   const [slot, setSlot] = useState<HTMLElement | null>(null);
 
@@ -380,13 +383,50 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
 
   const reciters = filterReciters(lib, query, rewaya, normalizeArabic);
   const radios = filterRadios(lib, query, normalizeArabic);
-  // Sheikh Mohamed Ahmed Shabib has no complete recording, so he has his own page (owner 2026-11-16).
+  // Sheikh Mohamed Ahmed Shabib is listed with the other reciters (owner 2026-11-16). He has no complete
+  // recording, so his row opens his own list (available murattal + mujawwad) instead of a moshaf.
   const q = normalizeArabic(query.trim());
-  const showShabib = rewaya === null && (!q || normalizeArabic(t(locale, "shabib.title")).includes(q));
+  const shabibName = t(locale, "shabib.name");
+  const showShabib =
+    (rewaya === null || rewaya === HAFS_REWAYA) && (!q || normalizeArabic(shabibName).includes(q));
+  const shabibAt = showShabib ? reciters.filter((r) => r.name < shabibName).length : -1;
+  const shabibRow = (
+    <li>
+      <button
+        type="button"
+        className="episode"
+        onClick={() => setShabibOpen(true)}
+        data-testid="library-reciter-shabib"
+      >
+        <Icon name="headphones" />
+        <span className="tile-text">
+          <strong>{shabibName}</strong>
+          <span className="muted small">{t(locale, "shabib.moshafs")}</span>
+        </span>
+      </button>
+    </li>
+  );
   return (
     <>
       {track ? <NowPlaying locale={locale} track={track} onTrack={setTrack} slot={slot} /> : null}
-      {reciter ? (
+      {shabibOpen ? (
+        <section className="card" data-testid="library-shabib" aria-labelledby="library-shabib-h">
+          <p>
+            <button
+              type="button"
+              className="btn btn-sm"
+              onClick={() => setShabibOpen(false)}
+              data-testid="library-back"
+            >
+              {t(locale, "library.back")}
+            </button>
+          </p>
+          <h2 className="card-title" id="library-shabib-h">
+            {shabibName}
+          </h2>
+          <ShabibView locale={locale} />
+        </section>
+      ) : reciter ? (
         <ReciterView
           key={reciter.id}
           locale={locale}
@@ -440,44 +480,35 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
                   ))}
                 </select>
               </label>
-              {showShabib ? (
-                <ul className="episode-list">
-                  <li>
-                    <Link className="episode" href={href(locale, "shabib")} data-testid="library-shabib">
-                      <Icon name="headphones" />
-                      <span className="tile-text">
-                        <strong>{t(locale, "shabib.title")}</strong>
-                        <span className="muted small">{t(locale, "shabib.libraryNote")}</span>
-                      </span>
-                    </Link>
-                  </li>
-                </ul>
-              ) : null}
               {reciters.length === 0 && !showShabib ? (
                 <p className="muted">{t(locale, "library.empty")}</p>
               ) : null}
               <ul className="episode-list" data-testid="library-reciters">
-                {reciters.map((r) => (
-                  <li key={r.id}>
-                    <button
-                      type="button"
-                      className="episode"
-                      onClick={() => setReciter(r)}
-                      data-testid={`library-reciter-${r.id}`}
-                    >
-                      <Icon name="headphones" />
-                      <span className="tile-text">
-                        <strong>{r.name}</strong>
-                        <span className="muted small">
-                          {r.moshafs
-                            .filter((m) => rewaya === null || m.rewayaId === rewaya)
-                            .map((m) => m.name)
-                            .join(" · ")}
+                {reciters.map((r, i) => (
+                  <Fragment key={r.id}>
+                    {i === shabibAt ? shabibRow : null}
+                    <li>
+                      <button
+                        type="button"
+                        className="episode"
+                        onClick={() => setReciter(r)}
+                        data-testid={`library-reciter-${r.id}`}
+                      >
+                        <Icon name="headphones" />
+                        <span className="tile-text">
+                          <strong>{r.name}</strong>
+                          <span className="muted small">
+                            {r.moshafs
+                              .filter((m) => rewaya === null || m.rewayaId === rewaya)
+                              .map((m) => m.name)
+                              .join(" · ")}
+                          </span>
                         </span>
-                      </span>
-                    </button>
-                  </li>
+                      </button>
+                    </li>
+                  </Fragment>
                 ))}
+                {shabibAt === reciters.length ? shabibRow : null}
               </ul>
             </>
           ) : (

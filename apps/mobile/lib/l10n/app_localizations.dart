@@ -4478,17 +4478,17 @@ abstract class AppLocalizations {
   /// **'From Surah {name}'**
   String shabibFromSurah(String name);
 
-  /// shared key "shabib.libraryNote"
-  ///
-  /// In en, this message translates to:
-  /// **'No complete Quran recording exists; here is what is available'**
-  String get shabibLibraryNote;
-
   /// shared key "shabib.loadError"
   ///
   /// In en, this message translates to:
   /// **'Couldn\'t load the recitations list.'**
   String get shabibLoadError;
+
+  /// shared key "shabib.moshafs"
+  ///
+  /// In en, this message translates to:
+  /// **'Hafs from Asim - Murattal (selections) · Mujawwad'**
+  String get shabibMoshafs;
 
   /// shared key "shabib.mujawwad"
   ///
@@ -4513,6 +4513,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hafs from Asim. Some are a passage of the surah, not the whole surah.'**
   String get shabibMurattalNote;
+
+  /// shared key "shabib.name"
+  ///
+  /// In en, this message translates to:
+  /// **'Mohamed Ahmed Shabib'**
+  String get shabibName;
 
   /// shared key "shabib.noMatch"
   ///
@@ -4567,12 +4573,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Radio recording'**
   String get shabibTagRadio;
-
-  /// shared key "shabib.title"
-  ///
-  /// In en, this message translates to:
-  /// **'Sheikh Mohamed Ahmed Shabib'**
-  String get shabibTitle;
 
   /// shared key "sharawi.ayah"
   ///

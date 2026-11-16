@@ -8,6 +8,7 @@ import 'package:http/testing.dart';
 import 'package:rattil/data/mp3quran.dart';
 import 'package:rattil/domain/mp3quran.dart';
 import 'package:rattil/ui/library_screen.dart';
+import 'package:rattil/ui/shabib_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattil/ui/radio_screen.dart';
@@ -125,6 +126,32 @@ void main() {
       expect((await make(_api(fail: true)).load('ar')).radios, hasLength(1)); // stale cache, offline
       await expectLater(make(_api(fail: true)).load('eng'), throwsA(isA<SocketException>()));
     });
+  });
+
+  testWidgets('Sheikh Mohamed Ahmed Shabib sits with the reciters in name order and opens his recitations', (
+    tester,
+  ) async {
+    await pumpApp(tester, httpClient: _api(), size: tallPhone);
+    await pushScreen(tester, const LibraryScreen());
+    await tester.pumpAndSettle();
+    final row = find.byKey(const Key('reciter-shabib'));
+    expect(row, findsOneWidget);
+    expect(find.text('محمد أحمد شبيب'), findsOneWidget);
+    final tiles = tester.widgetList<ListTile>(find.byType(ListTile)).toList();
+    final names = [
+      for (final t in tiles)
+        if (t.key is ValueKey<String> && (t.key! as ValueKey<String>).value.startsWith('reciter-'))
+          ((t.title! as Text).data!),
+    ];
+    expect(names, contains('محمد أحمد شبيب'));
+    expect(names, orderedEquals([...names]..sort()));
+    await tester.enterText(find.byKey(const Key('librarySearch')), 'شبيب');
+    await tester.pumpAndSettle();
+    expect(row, findsOneWidget);
+    await tester.tap(row);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.byType(ShabibScreen), findsOneWidget);
   });
 
   testWidgets('library: filter by riwaya, play a surah, play a radio', (tester) async {

@@ -24,9 +24,9 @@ describe("Sheikh Mohamed Ahmed Shabib", () => {
     expect([...firsts].sort((a, b) => a - b)).toEqual(firsts);
   });
 
-  it("is in the recitation library menu", () => {
-    expect(SECTIONS.some((s) => s.path === "shabib")).toBe(true);
-    expect(SITE_GROUPS.some((g) => g.items.includes("shabib"))).toBe(true);
+  it("is not a section of its own (owner 2026-11-16: he sits inside the recitation library)", () => {
+    expect(SECTIONS.some((s) => s.path === "shabib")).toBe(false);
+    expect(SITE_GROUPS.some((g) => g.items.includes("shabib"))).toBe(false);
   });
 
   it("titles say when a murattal track is only part of the surah", () => {

@@ -2462,10 +2462,10 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get shabibLibraryNote => 'لا يوجد له مصحف كامل؛ هنا كل ما تيسّر من تلاواته';
+  String get shabibLoadError => 'تعذّر تحميل قائمة التلاوات.';
 
   @override
-  String get shabibLoadError => 'تعذّر تحميل قائمة التلاوات.';
+  String get shabibMoshafs => 'حفص عن عاصم - مرتل (ما تيسّر) · تلاوات مجودة';
 
   @override
   String get shabibMujawwad => 'تلاوات مجودة';
@@ -2478,6 +2478,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get shabibMurattalNote => 'برواية حفص عن عاصم. بعضها مقطع من السورة وليس السورة كاملة.';
+
+  @override
+  String get shabibName => 'محمد أحمد شبيب';
 
   @override
   String get shabibNoMatch => 'لا توجد تلاوات لهذه السورة.';
@@ -2511,9 +2514,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get shabibTagRadio => 'تسجيل إذاعي';
-
-  @override
-  String get shabibTitle => 'تلاوات الشيخ محمد أحمد شبيب';
 
   @override
   String sharawiAyah(String n) {

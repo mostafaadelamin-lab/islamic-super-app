@@ -19,6 +19,28 @@ const serve = (): void => {
 };
 
 describe("RecitationLibrary", () => {
+  it("lists Sheikh Mohamed Ahmed Shabib with the reciters, in name order, and opens him inside the library", async () => {
+    serve();
+    render(<RecitationLibrary locale="ar" />);
+    const row = await screen.findByTestId("library-reciter-shabib");
+    const names = [...screen.getByTestId("library-reciters").querySelectorAll("li strong")].map(
+      (x) => x.textContent!,
+    );
+    expect(names).toContain("محمد أحمد شبيب");
+    expect([...names].sort((a, b) => (a < b ? -1 : Number(a > b)))).toEqual(names);
+    // only for Hafs (or all riwayat)
+    fireEvent.change(screen.getByTestId("library-rewaya"), { target: { value: "2" } });
+    expect(screen.queryByTestId("library-reciter-shabib")).toBeNull();
+    fireEvent.change(screen.getByTestId("library-rewaya"), { target: { value: "" } });
+    fireEvent.change(screen.getByTestId("library-search"), { target: { value: "شبيب" } });
+    expect(screen.getByTestId("library-reciters").querySelectorAll("li")).toHaveLength(1);
+    fireEvent.click(screen.getByTestId("library-reciter-shabib"));
+    expect(screen.getByTestId("library-shabib").textContent).toContain("محمد أحمد شبيب");
+    fireEvent.click(screen.getByTestId("library-back"));
+    expect(screen.getByTestId("library-reciters")).toBeTruthy();
+    expect(row).toBeTruthy();
+  });
+
   it("filters by riwaya, opens a reciter, plays a surah and a radio", async () => {
     serve();
     render(<RecitationLibrary locale="ar" />);

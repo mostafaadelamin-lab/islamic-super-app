@@ -36,7 +36,7 @@ void main() {
     await pumpApp(tester, size: tallPhone);
     final data = _read();
     await pushScreen(tester, ShabibScreen(loader: () async => data));
-    expect(find.text('تلاوات الشيخ محمد أحمد شبيب'), findsWidgets);
+    expect(find.text('محمد أحمد شبيب'), findsWidgets);
     expect(find.byKey(const Key('shabibNote')), findsOneWidget);
     expect(find.text('ما تيسّر من سورة البقرة'), findsOneWidget);
     expect(find.text('سورة الإخلاص'), findsOneWidget);
@@ -56,13 +56,12 @@ void main() {
     await expectAccessible(tester);
   });
 
-  testWidgets('Sheikh Shabib is its own entry under More', (tester) async {
+  testWidgets('not a section of its own under More (owner 2026-11-16: he sits inside the recitation library)', (
+    tester,
+  ) async {
     await pumpApp(tester, size: tallPhone);
     await goToTab(tester, 5);
-    await tester.scrollUntilVisible(find.byKey(const Key('more.shabib')), 200);
-    await tester.tap(find.byKey(const Key('more.shabib')));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 400));
-    expect(find.byType(ShabibScreen), findsOneWidget);
+    await tester.scrollUntilVisible(find.byKey(const Key('more.library')), 200);
+    expect(find.byKey(const Key('more.shabib')), findsNothing);
   });
 }

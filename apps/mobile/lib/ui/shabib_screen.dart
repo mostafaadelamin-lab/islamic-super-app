@@ -64,7 +64,8 @@ Episode shabibEpisode(BuildContext context, ShabibTrack x) {
   );
 }
 
-/// "تلاوات الشيخ محمد أحمد شبيب": his murattal surahs and his mujawwad recitations.
+/// Sheikh Mohamed Ahmed Shabib, opened from his row in the recitation library: his murattal surahs and his
+/// mujawwad recitations.
 class ShabibScreen extends StatefulWidget {
   const ShabibScreen({super.key, this.loader = loadShabib});
   final Future<ShabibRecitations> Function() loader;
@@ -83,7 +84,7 @@ class _ShabibScreenState extends State<ShabibScreen> {
     final l = context.l10n;
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(l.shabibTitle)),
+      appBar: AppBar(title: Text(l.shabibName)),
       bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
       body: ReadableWidth(
         child: FutureBuilder<ShabibRecitations>(

@@ -2475,10 +2475,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get shabibLibraryNote => 'No complete Quran recording exists; here is what is available';
+  String get shabibLoadError => 'Couldn\'t load the recitations list.';
 
   @override
-  String get shabibLoadError => 'Couldn\'t load the recitations list.';
+  String get shabibMoshafs => 'Hafs from Asim - Murattal (selections) · Mujawwad';
 
   @override
   String get shabibMujawwad => 'Mujawwad';
@@ -2491,6 +2491,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shabibMurattalNote => 'Hafs from Asim. Some are a passage of the surah, not the whole surah.';
+
+  @override
+  String get shabibName => 'Mohamed Ahmed Shabib';
 
   @override
   String get shabibNoMatch => 'No recitations for this surah.';
@@ -2524,9 +2527,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shabibTagRadio => 'Radio recording';
-
-  @override
-  String get shabibTitle => 'Sheikh Mohamed Ahmed Shabib';
 
   @override
   String sharawiAyah(String n) {

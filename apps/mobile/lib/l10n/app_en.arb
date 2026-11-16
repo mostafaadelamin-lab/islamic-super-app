@@ -3598,13 +3598,13 @@
       }
     }
   },
-  "shabibLibraryNote": "No complete Quran recording exists; here is what is available",
-  "@shabibLibraryNote": {
-    "description": "shared key \"shabib.libraryNote\""
-  },
   "shabibLoadError": "Couldn't load the recitations list.",
   "@shabibLoadError": {
     "description": "shared key \"shabib.loadError\""
+  },
+  "shabibMoshafs": "Hafs from Asim - Murattal (selections) · Mujawwad",
+  "@shabibMoshafs": {
+    "description": "shared key \"shabib.moshafs\""
   },
   "shabibMujawwad": "Mujawwad",
   "@shabibMujawwad": {
@@ -3621,6 +3621,10 @@
   "shabibMurattalNote": "Hafs from Asim. Some are a passage of the surah, not the whole surah.",
   "@shabibMurattalNote": {
     "description": "shared key \"shabib.murattalNote\""
+  },
+  "shabibName": "Mohamed Ahmed Shabib",
+  "@shabibName": {
+    "description": "shared key \"shabib.name\""
   },
   "shabibNoMatch": "No recitations for this surah.",
   "@shabibNoMatch": {
@@ -3675,10 +3679,6 @@
   "shabibTagRadio": "Radio recording",
   "@shabibTagRadio": {
     "description": "shared key \"shabib.tag.radio\""
-  },
-  "shabibTitle": "Sheikh Mohamed Ahmed Shabib",
-  "@shabibTitle": {
-    "description": "shared key \"shabib.title\""
   },
   "sharawiAyah": "Ayah {n}",
   "@sharawiAyah": {

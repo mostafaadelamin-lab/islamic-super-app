@@ -14,6 +14,9 @@ import 'l10n_ext.dart';
 import 'stories_screen.dart';
 import 'widgets.dart';
 
+/// mp3quran riwaya id of Hafs from Asim (murattal).
+const _hafsRewaya = 1;
+
 const _bottomPlayers = Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]);
 
 /// mp3quran.net reciters (every riwaya), streamed or saved for offline listening.
@@ -98,8 +101,19 @@ class _LibraryScreenState extends State<LibraryScreen> {
     final l = context.l10n;
     final norm = context.services.content.normalizer.normalize;
     final list = lib.filterReciters(_query, _rewaya, norm);
+    // Sheikh Mohamed Ahmed Shabib is listed with the other reciters (owner 2026-11-16). He has no complete
+    // recording, so his row opens his own list (available murattal + mujawwad) instead of a moshaf.
     final q = norm(_query.trim());
-    final showShabib = _rewaya == null && (q.isEmpty || norm(l.shabibTitle).contains(q));
+    final showShabib = (_rewaya == null || _rewaya == _hafsRewaya) && (q.isEmpty || norm(l.shabibName).contains(q));
+    final shabibAt = showShabib ? list.where((r) => r.name.compareTo(l.shabibName) < 0).length : -1;
+    final shabibRow = ListTile(
+      key: const Key('reciter-shabib'),
+      leading: const Icon(Icons.record_voice_over_outlined),
+      title: Text(l.shabibName),
+      subtitle: Text(l.shabibMoshafs, maxLines: 2, overflow: TextOverflow.ellipsis),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ShabibScreen())),
+    );
     return ListView(
       key: const Key('libraryReciters'),
       children: [
@@ -123,19 +137,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
               onChanged: (v) => setState(() => _rewaya = v),
             ),
           ),
-        // Sheikh Mohamed Ahmed Shabib has no complete recording, so he has his own page (owner 2026-11-16).
-        if (showShabib)
-          ListTile(
-            key: const Key('libraryShabib'),
-            leading: const Icon(Icons.record_voice_over_outlined),
-            title: Text(l.shabibTitle),
-            subtitle: Text(l.shabibLibraryNote, maxLines: 2, overflow: TextOverflow.ellipsis),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ShabibScreen())),
-          ),
         if (list.isEmpty && !showShabib)
           Padding(padding: const EdgeInsets.all(DesignTokens.spaceXl), child: Text(l.libraryEmpty)),
-        for (final r in list)
+        for (final (i, r) in list.indexed) ...[
+          if (i == shabibAt) shabibRow,
           ListTile(
             key: Key('reciter-${r.id}'),
             leading: const Icon(Icons.record_voice_over_outlined),
@@ -155,6 +160,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
               ),
             ),
           ),
+        ],
+        if (shabibAt == list.length) shabibRow,
         _source(context),
       ],
     );
