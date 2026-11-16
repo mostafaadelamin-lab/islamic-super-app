@@ -7,6 +7,7 @@ import '../domain/mp3quran.dart';
 import '../domain/stories.dart';
 import '../theme/design_tokens.dart';
 import 'play_origin.dart';
+import 'shabib_screen.dart';
 import 'adaptive.dart';
 import 'audio_widgets.dart';
 import 'l10n_ext.dart';
@@ -97,6 +98,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
     final l = context.l10n;
     final norm = context.services.content.normalizer.normalize;
     final list = lib.filterReciters(_query, _rewaya, norm);
+    final q = norm(_query.trim());
+    final showShabib = _rewaya == null && (q.isEmpty || norm(l.shabibTitle).contains(q));
     return ListView(
       key: const Key('libraryReciters'),
       children: [
@@ -120,7 +123,18 @@ class _LibraryScreenState extends State<LibraryScreen> {
               onChanged: (v) => setState(() => _rewaya = v),
             ),
           ),
-        if (list.isEmpty) Padding(padding: const EdgeInsets.all(DesignTokens.spaceXl), child: Text(l.libraryEmpty)),
+        // Sheikh Mohamed Ahmed Shabib has no complete recording, so he has his own page (owner 2026-11-16).
+        if (showShabib)
+          ListTile(
+            key: const Key('libraryShabib'),
+            leading: const Icon(Icons.record_voice_over_outlined),
+            title: Text(l.shabibTitle),
+            subtitle: Text(l.shabibLibraryNote, maxLines: 2, overflow: TextOverflow.ellipsis),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ShabibScreen())),
+          ),
+        if (list.isEmpty && !showShabib)
+          Padding(padding: const EdgeInsets.all(DesignTokens.spaceXl), child: Text(l.libraryEmpty)),
         for (final r in list)
           ListTile(
             key: Key('reciter-${r.id}'),

@@ -2457,6 +2457,65 @@ class AppLocalizationsAr extends AppLocalizations {
   String get setupTitle => 'تجهيز التطبيق';
 
   @override
+  String shabibFromSurah(String name) {
+    return 'ما تيسّر من سورة $name';
+  }
+
+  @override
+  String get shabibLibraryNote => 'لا يوجد له مصحف كامل؛ هنا كل ما تيسّر من تلاواته';
+
+  @override
+  String get shabibLoadError => 'تعذّر تحميل قائمة التلاوات.';
+
+  @override
+  String get shabibMujawwad => 'تلاوات مجودة';
+
+  @override
+  String get shabibMujawwadNote => 'تسجيلات حية من قرآن الفجر والإذاعة والأمسيات، مرتبة حسب السور.';
+
+  @override
+  String get shabibMurattal => 'مرتل';
+
+  @override
+  String get shabibMurattalNote => 'برواية حفص عن عاصم. بعضها مقطع من السورة وليس السورة كاملة.';
+
+  @override
+  String get shabibNoMatch => 'لا توجد تلاوات لهذه السورة.';
+
+  @override
+  String shabibNote(String m, String j) {
+    return 'لا يوجد للشيخ محمد أحمد شبيب رحمه الله تسجيل كامل للمصحف، فجمعنا هنا ما تيسّر من تلاواته: $m تلاوة مرتلة و$j تلاوة مجودة. استمع مباشرة أو اضغط أيقونة التحميل لتسمع بدون إنترنت.';
+  }
+
+  @override
+  String get shabibReciter => 'الشيخ محمد أحمد شبيب';
+
+  @override
+  String get shabibShortSurahs => 'قصار السور';
+
+  @override
+  String shabibSurah(String name) {
+    return 'سورة $name';
+  }
+
+  @override
+  String shabibSurahs(String names) {
+    return 'سور $names';
+  }
+
+  @override
+  String get shabibTagFajr => 'قرآن الفجر';
+
+  @override
+  String get shabibTagOct73 => 'فجر ٦ أكتوبر ١٩٧٣';
+
+  @override
+  String get shabibTagRadio => 'تسجيل إذاعي';
+
+  @override
+  String get shabibTitle => 'تلاوات الشيخ محمد أحمد شبيب';
+
+  @override
   String sharawiAyah(String n) {
     return 'الآية $n';
   }

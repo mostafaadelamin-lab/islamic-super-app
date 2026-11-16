@@ -2526,6 +2526,11 @@ dd {
   text-align: start;
   cursor: pointer;
 }
+/* a link styled as a list row (e.g. Sheikh Shabib's page at the top of the reciters) */
+a.episode {
+  text-decoration: none;
+  border-color: var(--color-accent);
+}
 .episode[aria-pressed="true"] {
   border-color: var(--color-accent);
   background: var(--color-accent-soft);

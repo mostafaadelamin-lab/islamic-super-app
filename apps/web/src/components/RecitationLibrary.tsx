@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import Link from "next/link";
 import { t, type Locale } from "@/lib/i18n";
+import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
 import { pauseOthers } from "@/lib/audio-focus";
 import { normalizeArabic } from "@/lib/search";
@@ -378,6 +380,9 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
 
   const reciters = filterReciters(lib, query, rewaya, normalizeArabic);
   const radios = filterRadios(lib, query, normalizeArabic);
+  // Sheikh Mohamed Ahmed Shabib has no complete recording, so he has his own page (owner 2026-11-16).
+  const q = normalizeArabic(query.trim());
+  const showShabib = rewaya === null && (!q || normalizeArabic(t(locale, "shabib.title")).includes(q));
   return (
     <>
       {track ? <NowPlaying locale={locale} track={track} onTrack={setTrack} slot={slot} /> : null}
@@ -435,7 +440,22 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
                   ))}
                 </select>
               </label>
-              {reciters.length === 0 ? <p className="muted">{t(locale, "library.empty")}</p> : null}
+              {showShabib ? (
+                <ul className="episode-list">
+                  <li>
+                    <Link className="episode" href={href(locale, "shabib")} data-testid="library-shabib">
+                      <Icon name="headphones" />
+                      <span className="tile-text">
+                        <strong>{t(locale, "shabib.title")}</strong>
+                        <span className="muted small">{t(locale, "shabib.libraryNote")}</span>
+                      </span>
+                    </Link>
+                  </li>
+                </ul>
+              ) : null}
+              {reciters.length === 0 && !showShabib ? (
+                <p className="muted">{t(locale, "library.empty")}</p>
+              ) : null}
               <ul className="episode-list" data-testid="library-reciters">
                 {reciters.map((r) => (
                   <li key={r.id}>

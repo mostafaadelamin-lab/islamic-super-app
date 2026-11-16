@@ -3589,6 +3589,97 @@
   "@setupTitle": {
     "description": "shared key \"setup.title\""
   },
+  "shabibFromSurah": "From Surah {name}",
+  "@shabibFromSurah": {
+    "description": "shared key \"shabib.fromSurah\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "shabibLibraryNote": "No complete Quran recording exists; here is what is available",
+  "@shabibLibraryNote": {
+    "description": "shared key \"shabib.libraryNote\""
+  },
+  "shabibLoadError": "Couldn't load the recitations list.",
+  "@shabibLoadError": {
+    "description": "shared key \"shabib.loadError\""
+  },
+  "shabibMujawwad": "Mujawwad",
+  "@shabibMujawwad": {
+    "description": "shared key \"shabib.mujawwad\""
+  },
+  "shabibMujawwadNote": "Live recordings (dawn prayers, radio, evening gatherings), ordered by surah.",
+  "@shabibMujawwadNote": {
+    "description": "shared key \"shabib.mujawwadNote\""
+  },
+  "shabibMurattal": "Murattal",
+  "@shabibMurattal": {
+    "description": "shared key \"shabib.murattal\""
+  },
+  "shabibMurattalNote": "Hafs from Asim. Some are a passage of the surah, not the whole surah.",
+  "@shabibMurattalNote": {
+    "description": "shared key \"shabib.murattalNote\""
+  },
+  "shabibNoMatch": "No recitations for this surah.",
+  "@shabibNoMatch": {
+    "description": "shared key \"shabib.noMatch\""
+  },
+  "shabibNote": "No complete Quran recording of Sheikh Mohamed Ahmed Shabib exists, so here is what is available: {m} murattal and {j} mujawwad recitations. Listen online or tap the download icon to listen offline.",
+  "@shabibNote": {
+    "description": "shared key \"shabib.note\"",
+    "placeholders": {
+      "m": {
+        "type": "String"
+      },
+      "j": {
+        "type": "String"
+      }
+    }
+  },
+  "shabibReciter": "Sheikh Mohamed Ahmed Shabib",
+  "@shabibReciter": {
+    "description": "shared key \"shabib.reciter\""
+  },
+  "shabibShortSurahs": "Short surahs",
+  "@shabibShortSurahs": {
+    "description": "shared key \"shabib.shortSurahs\""
+  },
+  "shabibSurah": "Surah {name}",
+  "@shabibSurah": {
+    "description": "shared key \"shabib.surah\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "shabibSurahs": "Surahs {names}",
+  "@shabibSurahs": {
+    "description": "shared key \"shabib.surahs\"",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "shabibTagFajr": "Dawn recitation",
+  "@shabibTagFajr": {
+    "description": "shared key \"shabib.tag.fajr\""
+  },
+  "shabibTagOct73": "Dawn of 6 October 1973",
+  "@shabibTagOct73": {
+    "description": "shared key \"shabib.tag.oct73\""
+  },
+  "shabibTagRadio": "Radio recording",
+  "@shabibTagRadio": {
+    "description": "shared key \"shabib.tag.radio\""
+  },
+  "shabibTitle": "Sheikh Mohamed Ahmed Shabib",
+  "@shabibTitle": {
+    "description": "shared key \"shabib.title\""
+  },
   "sharawiAyah": "Ayah {n}",
   "@sharawiAyah": {
     "description": "shared key \"sharawi.ayah\"",

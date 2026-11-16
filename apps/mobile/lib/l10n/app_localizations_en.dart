@@ -2470,6 +2470,65 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupTitle => 'Set up the app';
 
   @override
+  String shabibFromSurah(String name) {
+    return 'From Surah $name';
+  }
+
+  @override
+  String get shabibLibraryNote => 'No complete Quran recording exists; here is what is available';
+
+  @override
+  String get shabibLoadError => 'Couldn\'t load the recitations list.';
+
+  @override
+  String get shabibMujawwad => 'Mujawwad';
+
+  @override
+  String get shabibMujawwadNote => 'Live recordings (dawn prayers, radio, evening gatherings), ordered by surah.';
+
+  @override
+  String get shabibMurattal => 'Murattal';
+
+  @override
+  String get shabibMurattalNote => 'Hafs from Asim. Some are a passage of the surah, not the whole surah.';
+
+  @override
+  String get shabibNoMatch => 'No recitations for this surah.';
+
+  @override
+  String shabibNote(String m, String j) {
+    return 'No complete Quran recording of Sheikh Mohamed Ahmed Shabib exists, so here is what is available: $m murattal and $j mujawwad recitations. Listen online or tap the download icon to listen offline.';
+  }
+
+  @override
+  String get shabibReciter => 'Sheikh Mohamed Ahmed Shabib';
+
+  @override
+  String get shabibShortSurahs => 'Short surahs';
+
+  @override
+  String shabibSurah(String name) {
+    return 'Surah $name';
+  }
+
+  @override
+  String shabibSurahs(String names) {
+    return 'Surahs $names';
+  }
+
+  @override
+  String get shabibTagFajr => 'Dawn recitation';
+
+  @override
+  String get shabibTagOct73 => 'Dawn of 6 October 1973';
+
+  @override
+  String get shabibTagRadio => 'Radio recording';
+
+  @override
+  String get shabibTitle => 'Sheikh Mohamed Ahmed Shabib';
+
+  @override
   String sharawiAyah(String n) {
     return 'Ayah $n';
   }

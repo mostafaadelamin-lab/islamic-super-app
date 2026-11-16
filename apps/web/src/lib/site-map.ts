@@ -28,7 +28,7 @@ export const SITE_GROUPS: readonly SiteGroup[] = [
     sub: "site.group.quranSub",
     icon: "quran",
     path: "quran",
-    items: ["page/1", "quran", "search", "khatma", "bookmarks", "library"],
+    items: ["page/1", "quran", "search", "khatma", "bookmarks", "library", "shabib"],
     also: ["surah", "page"],
   },
   {

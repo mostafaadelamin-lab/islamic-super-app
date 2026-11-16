@@ -9,11 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/domain/quran.dart';
+import 'package:rattil/domain/shabib.dart';
 import 'package:rattil/ui/hajj_hub_screen.dart';
 import 'package:rattil/ui/hajj_screen.dart';
 import 'package:rattil/ui/pilgrimage_screen.dart';
 import 'package:rattil/ui/page_reader_screen.dart';
 import 'package:rattil/ui/quran_index.dart';
+import 'package:rattil/ui/shabib_screen.dart';
 import 'package:rattil/ui/surah_reader_screen.dart';
 import 'package:rattil/ui/tasbih_screen.dart';
 
@@ -43,6 +45,17 @@ void main() {
     outDir.createSync(recursive: true);
     File('${outDir.path}/$name.png').writeAsBytesSync(bytes);
   }
+
+  testWidgets('Sheikh Mohamed Ahmed Shabib: murattal and mujawwad (owner, 2026-11-16)', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    final data = ShabibRecitations.parse(File('assets/content/shabib.v1.json').readAsStringSync());
+    await pumpApp(tester, size: const Size(390, 1100));
+    await pushScreen(tester, ShabibScreen(loader: () async => data));
+    await shot(tester, 'shabib_murattal');
+    await tester.tap(find.textContaining('تلاوات مجودة'));
+    await tester.pumpAndSettle();
+    await shot(tester, 'shabib_mujawwad');
+  });
 
   testWidgets('colour styles 1 and 2, light and dark (owner 2026-11-15)', (tester) async {
     tester.view.devicePixelRatio = 1;

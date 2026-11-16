@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased] — Sheikh Mohamed Ahmed Shabib in the recitation library — 2026-11-16
+### Added
+- Recitation library (app + website): «تلاوات الشيخ محمد أحمد شبيب», its own page at the top of the reciters list (also in More on the app and in the Quran menu on the website). No complete 114-surah recording of the sheikh exists, so the page has what is available: 16 murattal recordings (Hafs; 11 are a passage of the surah, marked «ما تيسّر من») and 70 mujawwad recordings (Quran al-Fajr, radio, evening gatherings; ordered by surah), about 44 hours. Search by surah, the next recording plays by itself, and each one can be downloaded for offline listening. Sources are not shown.
+- Unchanged: Quran text and all other religious content.
+
 ## [1.1.0] — First store release (App Store, then Google Play) — 2026-11-14
 ### Added
 - First run (app): a short tour, then a setup that asks for location and adhan notifications straight away, plus exact alarms, battery and adhan on silent (Android only; iPhone cannot play sound on silent).

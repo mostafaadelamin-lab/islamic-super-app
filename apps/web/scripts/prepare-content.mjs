@@ -115,6 +115,8 @@ copyFileSync(join(repo, "content/quran/dist/mushaf-lines.v1.json"), join(pub, "d
 // Hadith books (Open-Hadith-Data, ODbL): book list in src/generated, text chunks served from /data/hadith/<book>/<k>.json.
 // Al-Sha'rawi audio tafsir: lesson list (audio streamed per lesson), fetched by the /sharawi page.
 copyFileSync(join(repo, "content/sharawi/dist/sharawi.v1.json"), join(pub, "data/sharawi.json"));
+// Sheikh Mohamed Ahmed Shabib: track list (audio streamed per track), fetched by the /shabib page.
+copyFileSync(join(repo, "content/shabib/dist/shabib.v1.json"), join(pub, "data/shabib.json"));
 // Nasheeds (same list as the mobile app, voice-only): munshid list with streamed/saved audio, fetched by /nasheeds.
 copyFileSync(join(repo, "apps/mobile/assets/content/nasheeds.v2.json"), join(pub, "data/nasheeds.json"));
 // Videos function (netlify/functions/videos.mjs): the trusted channels (feed) and the suggested ones (search ranking).
@@ -204,7 +206,8 @@ writeJson(join(gen, "dalil-hajj.json"), dalil);
           return { kind: x.kind, quran: [s, a], text };
         }
         const full = chapter(x.hisn).text;
-        if (x.part && !full.includes(x.part)) throw new Error(`step-duas: part not in Hisn ${x.hisn}: ${x.part}`);
+        if (x.part && !full.includes(x.part))
+          throw new Error(`step-duas: part not in Hisn ${x.hisn}: ${x.part}`);
         return { kind: x.kind, text: x.part ?? full };
       }),
     }));

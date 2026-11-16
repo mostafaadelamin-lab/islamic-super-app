@@ -4472,6 +4472,108 @@ abstract class AppLocalizations {
   /// **'Set up the app'**
   String get setupTitle;
 
+  /// shared key "shabib.fromSurah"
+  ///
+  /// In en, this message translates to:
+  /// **'From Surah {name}'**
+  String shabibFromSurah(String name);
+
+  /// shared key "shabib.libraryNote"
+  ///
+  /// In en, this message translates to:
+  /// **'No complete Quran recording exists; here is what is available'**
+  String get shabibLibraryNote;
+
+  /// shared key "shabib.loadError"
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the recitations list.'**
+  String get shabibLoadError;
+
+  /// shared key "shabib.mujawwad"
+  ///
+  /// In en, this message translates to:
+  /// **'Mujawwad'**
+  String get shabibMujawwad;
+
+  /// shared key "shabib.mujawwadNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Live recordings (dawn prayers, radio, evening gatherings), ordered by surah.'**
+  String get shabibMujawwadNote;
+
+  /// shared key "shabib.murattal"
+  ///
+  /// In en, this message translates to:
+  /// **'Murattal'**
+  String get shabibMurattal;
+
+  /// shared key "shabib.murattalNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Hafs from Asim. Some are a passage of the surah, not the whole surah.'**
+  String get shabibMurattalNote;
+
+  /// shared key "shabib.noMatch"
+  ///
+  /// In en, this message translates to:
+  /// **'No recitations for this surah.'**
+  String get shabibNoMatch;
+
+  /// shared key "shabib.note"
+  ///
+  /// In en, this message translates to:
+  /// **'No complete Quran recording of Sheikh Mohamed Ahmed Shabib exists, so here is what is available: {m} murattal and {j} mujawwad recitations. Listen online or tap the download icon to listen offline.'**
+  String shabibNote(String m, String j);
+
+  /// shared key "shabib.reciter"
+  ///
+  /// In en, this message translates to:
+  /// **'Sheikh Mohamed Ahmed Shabib'**
+  String get shabibReciter;
+
+  /// shared key "shabib.shortSurahs"
+  ///
+  /// In en, this message translates to:
+  /// **'Short surahs'**
+  String get shabibShortSurahs;
+
+  /// shared key "shabib.surah"
+  ///
+  /// In en, this message translates to:
+  /// **'Surah {name}'**
+  String shabibSurah(String name);
+
+  /// shared key "shabib.surahs"
+  ///
+  /// In en, this message translates to:
+  /// **'Surahs {names}'**
+  String shabibSurahs(String names);
+
+  /// shared key "shabib.tag.fajr"
+  ///
+  /// In en, this message translates to:
+  /// **'Dawn recitation'**
+  String get shabibTagFajr;
+
+  /// shared key "shabib.tag.oct73"
+  ///
+  /// In en, this message translates to:
+  /// **'Dawn of 6 October 1973'**
+  String get shabibTagOct73;
+
+  /// shared key "shabib.tag.radio"
+  ///
+  /// In en, this message translates to:
+  /// **'Radio recording'**
+  String get shabibTagRadio;
+
+  /// shared key "shabib.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Sheikh Mohamed Ahmed Shabib'**
+  String get shabibTitle;
+
   /// shared key "sharawi.ayah"
   ///
   /// In en, this message translates to:
