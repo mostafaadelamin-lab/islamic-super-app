@@ -23,7 +23,8 @@ describe("Sha'rawi audio tafsir", () => {
     expect(SECTIONS.some((s) => s.path === "sharawi")).toBe(true);
   });
 
-  it("filters surahs, opens a surah and plays a lesson", async () => {
+  it("filters surahs, opens a surah and plays a lesson with the player under it", async () => {
+    vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
     const user = userEvent.setup();
     render(<SharawiView locale="ar" loader={() => Promise.resolve(data)} />);
     expect(await screen.findByTestId("sharawi-note")).toHaveTextContent("١١١٦");
@@ -32,9 +33,14 @@ describe("Sha'rawi audio tafsir", () => {
     expect(surahs.querySelectorAll("li > details")).toHaveLength(1);
     await user.click(screen.getByText("البقرة"));
     await user.click(await screen.findByTestId("sharawi-9"));
-    const audio = screen.getByTestId("sharawi-audio") as HTMLAudioElement;
+    const audio = screen.getByTestId("library-audio") as HTMLAudioElement;
     expect(audio.getAttribute("src")).toBe(data[2]!.lessons[0]!.url);
-    expect(screen.getByTestId("sharawi-now")).toHaveTextContent("الدرس ١");
+    // Owner 2026-11-16: the player sits under the lesson playing, not at the top of the page.
+    const row = screen.getByTestId("sharawi-9").closest("li")!;
+    expect(row.contains(screen.getByTestId("library-now"))).toBe(true);
+    expect(screen.queryByTestId("library-now-top")).toBeNull();
+    expect(screen.getByTestId("library-now")).toBeTruthy();
+    vi.restoreAllMocks();
   });
 });
 

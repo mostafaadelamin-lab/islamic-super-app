@@ -56,6 +56,23 @@ void main() {
     await expectAccessible(tester);
   });
 
+  testWidgets('the player sits under the recitation playing, not in a bar away from it (owner 2026-11-16)', (
+    tester,
+  ) async {
+    final app = await pumpApp(tester, narration: FakeNarrationBackend(), size: tallPhone);
+    final data = _read();
+    await pushScreen(tester, ShabibScreen(loader: () async => data));
+    final first = data.murattal.first;
+    await tester.tap(find.byKey(Key('shabib-${first.id}')));
+    await tester.pumpAndSettle();
+    expect(app.services.narration.episode?.url, first.url);
+    expect(
+      find.descendant(of: find.byKey(Key('shabib-${first.id}')), matching: find.byKey(const Key('inlinePlayer'))),
+      findsOneWidget,
+    );
+    expect(find.byKey(const Key('narrationBar')), findsNothing);
+  });
+
   testWidgets('not a section of its own under More (owner 2026-11-16: he sits inside the recitation library)', (
     tester,
   ) async {

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ShabibView, shabibSubtitle, shabibTitle } from "@/components/ShabibView";
+import { ShabibView, shabibKey, shabibSubtitle, shabibTitle } from "@/components/ShabibView";
 import { SECTIONS } from "@/components/SectionTiles";
 import { SITE_GROUPS } from "@/lib/site-map";
 import { parseShabib } from "@/lib/shabib";
@@ -39,9 +39,16 @@ describe("Sheikh Mohamed Ahmed Shabib", () => {
     expect(shabibSubtitle(oct, "ar")).toContain("فجر ٦ أكتوبر ١٩٧٣");
   });
 
-  it("switches to the mujawwad tab, filters by surah and plays a track", async () => {
+  it("switches to the mujawwad tab, filters by surah and plays a track with the player under its row", async () => {
     const user = userEvent.setup();
-    render(<ShabibView locale="ar" loader={() => Promise.resolve(data)} />);
+    const onPlay = vi.fn();
+    const props = {
+      locale: "ar" as const,
+      loader: () => Promise.resolve(data),
+      onPlay,
+      onSlot: () => undefined,
+    };
+    const { rerender } = render(<ShabibView {...props} />);
     expect(await screen.findByTestId("shabib-note")).toHaveTextContent("١٦");
     expect(screen.getByTestId("shabib-list-murattal").children).toHaveLength(16);
     await user.click(screen.getByTestId("shabib-tab-mujawwad"));
@@ -50,8 +57,20 @@ describe("Sheikh Mohamed Ahmed Shabib", () => {
     const yusuf = data.mujawwad.filter((x) => x.surahs.includes(12));
     expect(list.children).toHaveLength(yusuf.length);
     await user.click(screen.getByTestId(`shabib-${yusuf[0]!.id}`));
-    const audio = screen.getByTestId("shabib-audio") as HTMLAudioElement;
-    expect(audio.getAttribute("src")).toBe(yusuf[0]!.url);
-    expect(screen.getByTestId("shabib-now")).toHaveTextContent("سورة يوسف");
+    const played = onPlay.mock.calls[0]![0] as {
+      key: string;
+      url: string;
+      title: string;
+      playlist: unknown[];
+    };
+    expect(played.key).toBe(shabibKey(yusuf[0]!));
+    expect(played.url).toBe(yusuf[0]!.url);
+    expect(played.title).toContain("سورة يوسف");
+    expect(played.playlist).toHaveLength(70); // the next recitation plays by itself
+    expect(screen.queryByTestId("library-slot")).toBeNull();
+    rerender(<ShabibView {...props} current={played.key} />);
+    // Owner 2026-11-16: the player sits under the recitation playing, not at the top of the page.
+    const row = screen.getByTestId(`shabib-${yusuf[0]!.id}`).closest("li")!;
+    expect(row.contains(screen.getByTestId("library-slot"))).toBe(true);
   });
 });

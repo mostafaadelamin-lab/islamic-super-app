@@ -424,7 +424,7 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
           <h2 className="card-title" id="library-shabib-h">
             {shabibName}
           </h2>
-          <ShabibView locale={locale} />
+          <ShabibView locale={locale} current={track?.key ?? null} onPlay={setTrack} onSlot={setSlot} />
         </section>
       ) : reciter ? (
         <ReciterView

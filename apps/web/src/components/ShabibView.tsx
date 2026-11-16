@@ -1,8 +1,7 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
-import { pauseOthers } from "@/lib/audio-focus";
 import { surahName } from "@/lib/pages";
 import { normalizeArabic } from "@/lib/search";
 import { offlineSupported } from "@/lib/audio-offline";
@@ -16,9 +15,11 @@ import {
   type ShabibTrack,
 } from "@/lib/shabib";
 import { useStore } from "@/hooks/useStore";
-import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { Icon } from "./Icon";
-import { SleepTimer } from "./SleepTimer";
+import type { Track } from "./RecitationLibrary";
+
+/** The library track key of one recitation. */
+export const shabibKey = (x: ShabibTrack): string => `shabib:${x.id}`;
 
 /** "سورة يوسف" / "ما تيسر من سورة البقرة" / "سور الصف والجمعة" / "قصار السور". */
 export function shabibTitle(x: ShabibTrack, locale: Locale): string {
@@ -40,20 +41,28 @@ export function shabibSubtitle(x: ShabibTrack, locale: Locale): string {
     .join(" · ");
 }
 
-/** Sheikh Mohamed Ahmed Shabib: his murattal surahs and his mujawwad recitations; one native audio player. */
+/**
+ * Sheikh Mohamed Ahmed Shabib inside the recitation library: his murattal surahs and his mujawwad recitations.
+ * The library's player plays them; its buttons sit under the recitation playing (owner 2026-11-16: not at the top).
+ */
 export function ShabibView({
   locale,
   loader = loadShabib,
+  current = null,
+  onPlay,
+  onSlot,
 }: {
   locale: Locale;
   loader?: () => Promise<Shabib>;
+  /** Key of the library track playing. */
+  current?: string | null;
+  onPlay: (t: Track) => void;
+  onSlot: (el: HTMLElement | null) => void;
 }) {
   const [data, setData] = useState<Shabib | null>(null);
   const [failed, setFailed] = useState(false);
   const [kind, setKind] = useState<ShabibKind>("murattal");
   const [query, setQuery] = useState("");
-  const [current, setCurrent] = useState<ShabibTrack | null>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
   const saved = useStore(shabibSavedStore);
   const [busy, setBusy] = useState<Record<string, "saving" | "error">>({});
   const canSave = typeof window !== "undefined" && offlineSupported();
@@ -62,11 +71,6 @@ export function ShabibView({
   useEffect(() => {
     loader().then(setData, () => setFailed(true));
   }, [loader]);
-
-  useEffect(() => {
-    const el = audioRef.current;
-    if (current && el) void Promise.resolve(el.play()).catch(() => undefined); // a refusal leaves the native controls
-  }, [current]);
 
   const list = useMemo(() => {
     const all = data?.[kind] ?? [];
@@ -97,50 +101,24 @@ export function ShabibView({
       setBusy((b) => ({ ...b, [x.id]: "error" }));
     }
   };
-  /** The track after (or before) the current one in its list: one goes straight on to the next. */
-  const step = (delta: 1 | -1): ShabibTrack | null => {
-    if (!current) return null;
-    const own = data[current.kind];
-    const i = own.findIndex((x) => x.id === current.id);
-    return i < 0 ? null : (own[i + delta] ?? null);
+  /** Library tracks, the whole list of one kind in order: one recitation goes straight on to the next. */
+  const tracksOf = (k: ShabibKind): Track[] => {
+    const own: Track[] = data[k].map((x) => ({
+      key: shabibKey(x),
+      title: `${t(locale, "shabib.reciter")} · ${shabibTitle(x, locale)}`,
+      url: x.url,
+      live: false,
+    }));
+    own.forEach((x) => (x.playlist = own));
+    return own;
   };
+  const tracks = tracksOf(kind);
 
   return (
     <>
       <p className="muted" data-testid="shabib-note">
         {t(locale, "shabib.note", { m: n(data.murattal.length), j: n(data.mujawwad.length) })}
       </p>
-      {current ? (
-        <section className="card series-now" data-testid="shabib-now">
-          <strong>{shabibTitle(current, locale)}</strong>
-          <audio
-            ref={audioRef}
-            src={current.url}
-            controls
-            preload="metadata"
-            data-testid="shabib-audio"
-            onPlay={(e) => {
-              pauseOthers(e.currentTarget); // one sound at a time
-              const next = step(1);
-              const prev = step(-1);
-              claimMediaSession(e.currentTarget, {
-                title: `${t(locale, "shabib.reciter")} · ${shabibTitle(current, locale)}`,
-                next: next ? () => setCurrent(next) : undefined,
-                previous: prev ? () => setCurrent(prev) : undefined,
-              });
-              mediaSessionState(true);
-            }}
-            onPause={() => mediaSessionState(false)}
-            onEnded={() => {
-              const next = step(1);
-              if (next) setCurrent(next);
-            }}
-          />
-          <div className="row">
-            <SleepTimer locale={locale} />
-          </div>
-        </section>
-      ) : null}
       <div className="row" role="tablist">
         {(["murattal", "mujawwad"] as const).map((id) => (
           <button
@@ -171,17 +149,20 @@ export function ShabibView({
       {list.length === 0 ? <p className="muted">{t(locale, "shabib.noMatch")}</p> : null}
       <ol className="episode-list" data-testid={`shabib-list-${kind}`}>
         {list.map((x) => {
-          const on = current?.id === x.id;
+          const on = current === shabibKey(x);
           const isSaved = saved.includes(x.id);
           const state = busy[x.id];
           return (
-            <li key={x.id} aria-current={on ? "true" : undefined} className="row">
+            <li key={x.id} aria-current={on ? "true" : undefined} className={on ? "row has-player" : "row"}>
               <button
                 type="button"
                 className="episode"
                 data-testid={`shabib-${x.id}`}
                 aria-pressed={on}
-                onClick={() => setCurrent(x)}
+                onClick={() => {
+                  const tr = tracks.find((y) => y.key === shabibKey(x));
+                  if (tr) onPlay(tr);
+                }}
               >
                 <Icon name={on ? "pause" : "play"} />
                 <span className="tile-text">
@@ -206,6 +187,8 @@ export function ShabibView({
                   {isSaved ? ` ${t(locale, "sharawi.saved")}` : state === "error" ? " ⚠" : ""}
                 </button>
               ) : null}
+              {/* Under the row: the player's buttons (owner 2026-11-16: not at the top of the page). */}
+              {on ? <div className="nasheed-slot" ref={onSlot} data-testid="library-slot" /> : null}
             </li>
           );
         })}

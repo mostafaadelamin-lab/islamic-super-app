@@ -3,6 +3,7 @@
 ## [Unreleased] — Sheikh Mohamed Ahmed Shabib in the recitation library — 2026-11-16
 ### Added
 - Recitation library (app + website): Sheikh «محمد أحمد شبيب» is a reciter inside the library's reciters list (in name order, like every other reciter; not a separate section or More entry). Tapping him opens his recitations inside the library. No complete 114-surah recording of the sheikh exists, so he has what is available: 16 murattal recordings (Hafs; 11 are a passage of the surah, marked «ما تيسّر من») and 70 mujawwad recordings (Quran al-Fajr, radio, evening gatherings; ordered by surah), about 44 hours. Search by surah, the next recording plays by itself, and each one can be downloaded for offline listening. Sources are not shown.
+- Website: the player's buttons sit right under the recitation playing (Sheikh Shabib's list and al-Sha'rawi's lessons), as in the reciters' surah lists and the nasheeds, not at the top of the page. The app already did this.
 - Unchanged: Quran text and all other religious content.
 
 ## [1.1.0] — First store release (App Store, then Google Play) — 2026-11-14

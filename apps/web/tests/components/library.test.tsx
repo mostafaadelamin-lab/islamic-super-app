@@ -1,6 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { RecitationLibrary } from "@/components/RecitationLibrary";
 import { MP3_API } from "../mp3quran-fixture";
+import { readRepoJson } from "../repo";
+
+const SHABIB = readRepoJson<unknown>("content/shabib/dist/shabib.v1.json");
 
 beforeEach(() => {
   localStorage.clear();
@@ -14,6 +17,7 @@ afterEach(() => {
 const serve = (): void => {
   vi.stubGlobal("fetch", (url: string) => {
     const key = url.split("/").pop()!.split("?")[0] as keyof typeof MP3_API;
+    if ((key as string) === "shabib.json") return Promise.resolve(new Response(JSON.stringify(SHABIB)));
     return Promise.resolve(new Response(JSON.stringify(MP3_API[key])));
   });
 };
@@ -36,8 +40,16 @@ describe("RecitationLibrary", () => {
     expect(screen.getByTestId("library-reciters").querySelectorAll("li")).toHaveLength(1);
     fireEvent.click(screen.getByTestId("library-reciter-shabib"));
     expect(screen.getByTestId("library-shabib").textContent).toContain("محمد أحمد شبيب");
+    // Owner 2026-11-16: his recitation's player sits under its row, not at the top of the page.
+    const first = await screen.findByTestId("shabib-m2");
+    fireEvent.click(first);
+    expect(screen.getByTestId("library-now").textContent).toContain("ما تيسّر من سورة البقرة");
+    expect(first.closest("li")!.contains(screen.getByTestId("library-now"))).toBe(true);
+    expect(screen.queryByTestId("library-now-top")).toBeNull();
     fireEvent.click(screen.getByTestId("library-back"));
     expect(screen.getByTestId("library-reciters")).toBeTruthy();
+    // Back on the list: the buttons move to the top so they stay reachable.
+    expect(screen.getByTestId("library-now-top")).toBeTruthy();
     expect(row).toBeTruthy();
   });
 

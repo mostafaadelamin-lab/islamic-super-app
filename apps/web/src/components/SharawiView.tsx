@@ -1,8 +1,7 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
-import { pauseOthers } from "@/lib/audio-focus";
 import { surahName } from "@/lib/pages";
 import { offlineSupported } from "@/lib/audio-offline";
 import {
@@ -14,9 +13,8 @@ import {
   type SharawiSurah,
 } from "@/lib/sharawi";
 import { useStore } from "@/hooks/useStore";
-import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { Icon } from "./Icon";
-import { SleepTimer } from "./SleepTimer";
+import { NowPlaying, PlayerSlot, type Track } from "./RecitationLibrary";
 
 const norm = (s: string): string =>
   s
@@ -26,7 +24,10 @@ const norm = (s: string): string =>
     .replace(/ى/g, "ي")
     .replace(/ة/g, "ه");
 
-/** Al-Sha'rawi audio tafsir: pick a surah, then a lesson; one native audio player (streamed). */
+/**
+ * Al-Sha'rawi audio tafsir: pick a surah, then a lesson. The player's buttons sit under the lesson playing
+ * (owner 2026-11-16: not at the top of the page), or at the top when its surah is closed.
+ */
 export function SharawiView({
   locale,
   loader = loadSharawi,
@@ -38,8 +39,8 @@ export function SharawiView({
   const [failed, setFailed] = useState(false);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState<number | null>(null);
-  const [current, setCurrent] = useState<SharawiLesson | null>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const [track, setTrack] = useState<Track | null>(null);
+  const [slot, setSlot] = useState<HTMLElement | null>(null);
   const saved = useStore(sharawiSavedStore);
   const [busy, setBusy] = useState<Record<number, "saving" | "error">>({});
   const canSave = typeof window !== "undefined" && offlineSupported();
@@ -64,11 +65,6 @@ export function SharawiView({
     loader().then(setData, () => setFailed(true));
   }, [loader]);
 
-  useEffect(() => {
-    const el = audioRef.current;
-    if (current && el) void Promise.resolve(el.play()).catch(() => undefined); // a refusal leaves the native controls
-  }, [current]);
-
   const list = useMemo(() => {
     const q = norm(query.trim());
     if (!data || !q) return data ?? [];
@@ -79,12 +75,18 @@ export function SharawiView({
   if (failed) return <p className="alert alert-error">{t(locale, "sharawi.loadError")}</p>;
   if (!data) return <p className="muted">…</p>;
   const total = data.reduce((a, s) => a + s.lessons.length, 0);
-  /** The lesson after (or before) the current one in its surah: a lesson goes straight on to the next. */
-  const stepLesson = (delta: 1 | -1): SharawiLesson | null => {
-    if (!current) return null;
-    const lessons = data.find((s) => s.surah === current.surah)?.lessons ?? [];
-    const i = lessons.findIndex((x) => x.id === current.id);
-    return i < 0 ? null : (lessons[i + delta] ?? null);
+  const title = (l: SharawiLesson): string =>
+    `${name(l.surah)} · ${t(locale, "sharawi.lesson", { n: n(l.index) })}`;
+  /** A surah's lessons in order: a lesson goes straight on to the next. */
+  const tracksOf = (lessons: SharawiLesson[]): Track[] => {
+    const own: Track[] = lessons.map((l) => ({
+      key: `sharawi:${l.id}`,
+      title: title(l),
+      url: l.url,
+      live: false,
+    }));
+    own.forEach((x) => (x.playlist = own));
+    return own;
   };
   const sub = (l: SharawiLesson): string =>
     [
@@ -103,39 +105,7 @@ export function SharawiView({
       <p className="muted" data-testid="sharawi-note">
         {t(locale, "sharawi.note", { n: n(total) })}
       </p>
-      {current ? (
-        <section className="card series-now" data-testid="sharawi-now">
-          <strong>
-            {name(current.surah)} · {t(locale, "sharawi.lesson", { n: n(current.index) })}
-          </strong>
-          <audio
-            ref={audioRef}
-            src={current.url}
-            controls
-            preload="metadata"
-            data-testid="sharawi-audio"
-            onPlay={(e) => {
-              pauseOthers(e.currentTarget); // one sound at a time
-              const next = stepLesson(1);
-              const prev = stepLesson(-1);
-              claimMediaSession(e.currentTarget, {
-                title: `${name(current.surah)} · ${t(locale, "sharawi.lesson", { n: n(current.index) })}`,
-                next: next ? () => setCurrent(next) : undefined,
-                previous: prev ? () => setCurrent(prev) : undefined,
-              });
-              mediaSessionState(true);
-            }}
-            onPause={() => mediaSessionState(false)}
-            onEnded={() => {
-              const next = stepLesson(1);
-              if (next) setCurrent(next);
-            }}
-          />
-          <div className="row">
-            <SleepTimer locale={locale} />
-          </div>
-        </section>
-      ) : null}
+      {track ? <NowPlaying locale={locale} track={track} onTrack={setTrack} slot={slot} /> : null}
       <input
         type="search"
         className="input"
@@ -164,17 +134,24 @@ export function SharawiView({
               {open === s.surah ? (
                 <ol className="episode-list">
                   {s.lessons.map((l) => {
-                    const on = current?.id === l.id;
+                    const on = track?.key === `sharawi:${l.id}`;
                     const isSaved = saved.includes(l.id);
                     const state = busy[l.id];
                     return (
-                      <li key={l.id} aria-current={on ? "true" : undefined} className="row">
+                      <li
+                        key={l.id}
+                        aria-current={on ? "true" : undefined}
+                        className={on ? "row has-player" : "row"}
+                      >
                         <button
                           type="button"
                           className="episode"
                           data-testid={`sharawi-${l.id}`}
                           aria-pressed={on}
-                          onClick={() => setCurrent(l)}
+                          onClick={() => {
+                            const tr = tracksOf(s.lessons).find((x) => x.key === `sharawi:${l.id}`);
+                            if (tr) setTrack(tr);
+                          }}
                         >
                           <Icon name={on ? "pause" : "play"} />
                           <span className="tile-text">
@@ -203,6 +180,7 @@ export function SharawiView({
                             {isSaved ? ` ${t(locale, "sharawi.saved")}` : state === "error" ? " ⚠" : ""}
                           </button>
                         ) : null}
+                        {on ? <PlayerSlot onSlot={setSlot} /> : null}
                       </li>
                     );
                   })}
