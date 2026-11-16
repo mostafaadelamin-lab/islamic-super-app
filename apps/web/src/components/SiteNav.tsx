@@ -52,6 +52,13 @@ export function SiteNav({ locale }: { locale: Locale }) {
         id="site-nav"
         className={`site-nav${drawer ? " drawer-open" : ""}`}
         aria-label={t(locale, "nav.main")}
+        onClick={(e) => {
+          // Close the phone drawer as soon as a page link is chosen (also when it is the current page).
+          if ((e.target as HTMLElement).closest("a")) {
+            setDrawer(false);
+            setOpen(null);
+          }
+        }}
         onKeyDown={(e) => {
           if (e.key !== "Escape") return;
           setOpen(null);
