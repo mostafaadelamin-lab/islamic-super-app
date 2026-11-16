@@ -55,10 +55,17 @@ workflows:
       - *unit_tests
       - name: Signing (certificate + App Store profile, created on first run)
         script: |
+          set -e
+          # Stop here with a clear message if a secret is missing (otherwise the IPA step fails later with
+          # "No valid code signing certificates were found").
+          for v in APP_STORE_CONNECT_ISSUER_ID APP_STORE_CONNECT_KEY_IDENTIFIER APP_STORE_CONNECT_PRIVATE_KEY CERTIFICATE_PRIVATE_KEY; do
+            if [ -z "${!v}" ]; then echo "Missing $v: add it to the environment variable group app_store_credentials"; exit 1; fi
+          done
           keychain initialize
           app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
           keychain add-certificates
           xcode-project use-profiles
+          test -f /Users/builder/export_options.plist || { echo "No export options: the App Store profile was not applied"; exit 1; }
       - name: Build IPA
         script: |
           flutter build ipa --release \
