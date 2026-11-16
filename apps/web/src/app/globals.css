@@ -932,13 +932,18 @@ input[type="radio"] {
 [dir="ltr"] .home-more-chevron {
   transform: scaleX(-1);
 }
-@media (max-width: 380px) {
+/* Narrow screens: the station picker gets its own full row so «إذاعة القرآن الكريم» is never cut. */
+@media (max-width: 560px) {
   .home-radio {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto 1fr;
+    align-items: center;
   }
-  .radio-play {
+  .radio-reciter {
     grid-column: 1 / -1;
-    order: -1;
+    align-items: stretch;
+  }
+  .radio-reciter .radio-label {
+    text-align: start;
   }
 }
 .section-title {
@@ -3631,16 +3636,12 @@ dd {
 .site-footer-bottom > span {
   display: none;
 }
-@media (max-width: 720px) {
-  .desktop-only {
-    display: none !important;
-  }
+/* Phones get the website look too (owner 2026-11-16: "the phone browser should look like the website, not
+   the app"). The Flutter app keeps the app look; on the web the old app-style pieces stay hidden. */
+.mobile-only {
+  display: none !important;
 }
-
-@media (min-width: 721px) {
-  .mobile-only {
-    display: none !important;
-  }
+@media screen {
   .main-nav {
     display: none;
   }
@@ -4180,7 +4181,7 @@ dd {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
-@media (min-width: 721px) and (max-width: 1100px) {
+@media (max-width: 1100px) {
   .brand-tagline,
   .topbar-left,
   .topbar-hijri {
@@ -4801,4 +4802,221 @@ dd {
 }
 .hg-table th {
   background: var(--color-surface-2);
+}
+
+/* =====================================================================================
+   Website look on phones (owner 2026-11-16): same header, hero, sections and footer as on a computer,
+   with the menus inside a ☰ drawer instead of drop-downs. No app-style bottom tab bar on the web.
+   ===================================================================================== */
+.site-burger,
+.site-drawer-scrim {
+  display: none;
+}
+@media (max-width: 720px) {
+  :root {
+    --tabbar-h: 0px;
+  }
+  .site-topbar-inner {
+    justify-content: center;
+    min-height: 30px;
+  }
+  .site-topbar .topbar-date,
+  .site-topbar .topbar-links {
+    display: none;
+  }
+  .app-header-inner {
+    min-height: 60px;
+    padding: 6px var(--site-pad);
+    gap: var(--space-sm);
+  }
+  .brand {
+    flex: 1;
+    gap: var(--space-sm);
+  }
+  .brand-logo svg,
+  .brand-logo {
+    width: 38px;
+    height: 38px;
+  }
+  .brand-name {
+    font-size: 19px;
+  }
+  .header-actions {
+    gap: 2px;
+  }
+  .header-actions .header-icon-btn[href*="settings"] {
+    display: none;
+  }
+  .site-burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    order: 10;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, currentColor 12%, transparent);
+    color: inherit;
+    cursor: pointer;
+    position: relative;
+    z-index: 61;
+  }
+  .site-burger-lines,
+  .site-burger-lines::before,
+  .site-burger-lines::after {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    position: relative;
+  }
+  .site-burger-lines::before,
+  .site-burger-lines::after {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+  }
+  .site-burger-lines::before {
+    top: -7px;
+  }
+  .site-burger-lines::after {
+    top: 7px;
+  }
+  .site-drawer-open .site-burger {
+    position: fixed;
+    top: 10px;
+    inset-inline-end: 12px;
+    color: var(--color-ink);
+    background: var(--color-surface-2);
+  }
+  .site-drawer-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 59;
+    background: rgb(0 0 0 / 45%);
+  }
+  html.site-drawer-open,
+  html.site-drawer-open body {
+    overflow: hidden;
+  }
+  .site-nav {
+    display: none;
+  }
+  .site-nav.drawer-open {
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    inset-inline-end: 0;
+    z-index: 60;
+    width: min(86vw, 340px);
+    overflow-y: auto;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    padding: 64px var(--space-md) var(--space-xl);
+    box-shadow: 0 0 40px rgb(0 0 0 / 30%);
+  }
+  .site-nav-list {
+    flex-direction: column;
+    gap: 0;
+  }
+  .site-nav-top {
+    width: 100%;
+    justify-content: space-between;
+    min-height: 54px;
+    padding: 0 var(--space-sm);
+    font-size: 17px;
+    border-bottom: 1px solid var(--color-line);
+    border-radius: 0;
+  }
+  .site-nav-top[aria-current="page"],
+  .site-nav-top[data-active] {
+    color: var(--color-primary);
+  }
+  .site-nav-top[aria-current="page"]::after,
+  .site-nav-top[data-active]::after {
+    display: none;
+  }
+  .site-nav-group.open > .site-nav-caret,
+  .site-nav-group.open .site-nav-caret {
+    transform: rotate(-135deg);
+  }
+  .site-menu {
+    position: static;
+    width: auto;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: var(--space-xs) 0 var(--space-sm);
+    background: var(--color-surface-2);
+  }
+  .site-menu::before,
+  .site-menu-head {
+    display: none;
+  }
+  .site-menu-list {
+    grid-template-columns: 1fr;
+  }
+  .site-menu-list a {
+    padding: 10px var(--space-md);
+  }
+  main {
+    padding: var(--space-md) var(--site-pad);
+    padding-bottom: calc(var(--space-xxl) + var(--player-h));
+  }
+  .home {
+    gap: var(--space-lg);
+  }
+  .site-hero {
+    padding: 28px 22px;
+    gap: var(--space-md);
+  }
+  .site-hero h2 {
+    font-size: 28px;
+  }
+  .site-hero-lead {
+    font-size: 16px;
+    margin-bottom: var(--space-lg);
+  }
+  .site-hero-actions .btn-hero {
+    width: 100%;
+    justify-content: center;
+  }
+  .site-section-title {
+    font-size: 21px;
+    margin: var(--space-sm) 0 var(--space-md);
+  }
+  .home-radio-wrap {
+    padding: var(--space-md);
+    gap: var(--space-sm);
+  }
+  .explore-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  .explore-card-head {
+    padding: var(--space-md);
+  }
+  .explore-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 var(--space-xs);
+  }
+  .site-footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl) var(--space-lg);
+    padding: 32px var(--site-pad) var(--space-lg);
+  }
+  .site-footer-about {
+    grid-column: 1 / -1;
+  }
+  .site-footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-xs);
+  }
 }
