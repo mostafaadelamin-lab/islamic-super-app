@@ -20,6 +20,8 @@ import { LIVE_RADIOS, isHls } from "@/lib/live-radios";
 import { Icon } from "./Icon";
 import { ShabibView } from "./ShabibView";
 import { SleepTimer } from "./SleepTimer";
+import { SaveAudioButton } from "./SaveAudioButton";
+import { librarySavedStore } from "@/lib/audio-offline";
 
 export interface Track {
   key: string;
@@ -314,7 +316,7 @@ function ReciterView({
           const key = `${moshaf.id}:${n}`;
           const on = current === key;
           return (
-            <li key={n} className={on ? "has-player" : undefined}>
+            <li key={n} className={on ? "row has-player" : "row"}>
               <button
                 type="button"
                 className="episode"
@@ -329,6 +331,12 @@ function ReciterView({
                   </strong>
                 </span>
               </button>
+              <SaveAudioButton
+                locale={locale}
+                store={librarySavedStore}
+                url={tracks[i]!.url}
+                testId={`library-save-${n}`}
+              />
               {on ? <PlayerSlot onSlot={onSlot} /> : null}
             </li>
           );

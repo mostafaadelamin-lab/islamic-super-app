@@ -570,8 +570,10 @@ test.describe("qibla compass", () => {
       "transform",
       `rotate(${(-trueH).toFixed(2)} 100 100)`,
     );
+    // As the app: which way and how far to turn (positive = clockwise = right).
+    const turn = ((((bearing - trueH) % 360) + 540) % 360) - 180;
     await expect(page.getByTestId("compass-status")).toHaveText(
-      "Turn the device until the gold arrow points up",
+      `Turn ${turn > 0 ? "right" : "left"} ${Math.round(Math.abs(turn))}°`,
     );
     await page.evaluate(
       (b) =>

@@ -2,7 +2,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
-import { headingFromEvent, isFacing, needsPermission, type OrientationLike } from "@/lib/qibla";
+import {
+  accuracyFromEvent,
+  CALIBRATE_ABOVE_DEG,
+  headingFromEvent,
+  isFacing,
+  needsPermission,
+  turnAngle,
+  type OrientationLike,
+} from "@/lib/qibla";
 import { magneticDeclination, decimalYear } from "@/lib/declination";
 import { Compass } from "./Compass";
 
@@ -30,6 +38,10 @@ export function LiveCompass({
 }) {
   const [mode, setMode] = useState<Mode>("idle");
   const [heading, setHeading] = useState<number | null>(null);
+  /** iOS: the compass error in degrees (-1 = uncalibrated); null where the browser does not tell. */
+  const [accuracy, setAccuracy] = useState<number | null>(null);
+  /** The browser said the compass needs calibrating (Chrome's "compassneedscalibration"). */
+  const [needsCal, setNeedsCal] = useState(false);
   const timer = useRef<number | null>(null);
   const cleanup = useRef<(() => void) | null>(null);
 
@@ -43,10 +55,13 @@ export function LiveCompass({
       if (timer.current !== null) window.clearTimeout(timer.current);
       timer.current = null;
       setHeading(h);
+      setAccuracy(accuracyFromEvent(e as unknown as OrientationLike));
       setMode("live");
     };
+    const onCalibrate = (): void => setNeedsCal(true);
     window.addEventListener("deviceorientationabsolute", onEvent);
     window.addEventListener("deviceorientation", onEvent);
+    window.addEventListener("compassneedscalibration", onCalibrate);
     timer.current = window.setTimeout(
       () => setMode((m) => (m === "waiting" ? "unsupported" : m)),
       SENSOR_TIMEOUT_MS,
@@ -54,6 +69,7 @@ export function LiveCompass({
     cleanup.current = () => {
       window.removeEventListener("deviceorientationabsolute", onEvent);
       window.removeEventListener("deviceorientation", onEvent);
+      window.removeEventListener("compassneedscalibration", onCalibrate);
       if (timer.current !== null) window.clearTimeout(timer.current);
     };
   }, []);
@@ -86,6 +102,15 @@ export function LiveCompass({
   const live = mode === "live" && heading !== null ? (((heading + declination) % 360) + 360) % 360 : null;
   const facing = isFacing(bearing, live);
   const deg = localizeDigits(bearing.toFixed(1), locale);
+  const calibrate =
+    live !== null && (needsCal || (accuracy !== null && (accuracy < 0 || accuracy > CALIBRATE_ABOVE_DEG)));
+  /** As the app: "you are facing the Qibla", or which way and how far to turn. */
+  const direction = (): string => {
+    if (live === null || facing) return t(locale, "qibla.facing");
+    const a = turnAngle(bearing, live);
+    const n = localizeDigits(Math.round(Math.abs(a)), locale);
+    return t(locale, a > 0 ? "qibla.turnRight" : "qibla.turnLeft", { deg: n });
+  };
   return (
     <div
       className={facing ? "live-compass facing" : "live-compass"}
@@ -105,7 +130,7 @@ export function LiveCompass({
         ]}
       />
       <p className="compass-status" role="status" data-testid="compass-status">
-        {mode === "live" ? t(locale, facing ? "qibla.facing" : "qibla.turn") : null}
+        {mode === "live" ? direction() : null}
         {mode === "waiting" ? t(locale, "qibla.waiting") : null}
         {mode === "unsupported" ? t(locale, "qibla.fallback") : null}
         {mode === "denied" ? t(locale, "qibla.denied") : null}
@@ -119,6 +144,17 @@ export function LiveCompass({
             })}
           </span>
         </p>
+      ) : null}
+      {live !== null && accuracy !== null && accuracy >= 0 ? (
+        <p className="muted small" data-testid="compass-accuracy">
+          {t(locale, "qibla.accuracy", { n: localizeDigits(Math.round(accuracy), locale) })}
+        </p>
+      ) : null}
+      {calibrate ? (
+        <div className="alert alert-error qibla-calibrate" role="alert" data-testid="compass-calibrate">
+          <strong>{t(locale, "qibla.calibrateTitle")}</strong>
+          <p className="small">{t(locale, "qibla.calibrateBody")}</p>
+        </div>
       ) : null}
       {permissionNeeded && mode !== "live" ? (
         <button

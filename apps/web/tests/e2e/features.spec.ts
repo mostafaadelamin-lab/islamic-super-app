@@ -429,17 +429,18 @@ test("Quran index: surahs and quarters tabs, search, opens the Mushaf page", asy
   w.assertClean();
 });
 
-test("zakat calculator: the app's five tabs, money result kept after reload", async ({ page }) => {
+test("zakat calculator: the app's one page with the total, money result kept after reload", async ({ page }) => {
   await page.goto("/ar/zakat/");
   await expect(page.locator("html[data-hydrated=true]")).toHaveCount(1);
   await expect(page.getByTestId("zakat-review")).toHaveCount(0);
-  await expect(page.getByRole("tab")).toHaveCount(5);
-  await page.getByTestId("zakat-tab-money").click();
+  await expect(page.getByRole("tab")).toHaveCount(0);
+  await expect(page.locator(".zakat-section")).toHaveCount(5);
   await page.getByTestId("zakat-in-money").fill("400000");
   await page.getByTestId("zakat-in-goldPrice").fill("4000");
-  await expect(page.getByTestId("zakat-simple-result")).toContainText("الزكاة الواجبة: ١٠٠٠٠ جنيه");
+  await expect(page.getByTestId("zakat-due-money")).toHaveText("١٠٠٠٠ جنيه");
+  await expect(page.getByTestId("zakat-total-amount")).toHaveText("١٠٠٠٠ جنيه");
   await page.reload();
-  await expect(page.getByTestId("zakat-simple-result")).toHaveAttribute("data-reached", "true");
+  await expect(page.getByTestId("zakat-total")).toHaveAttribute("data-reached", "true");
 });
 
 test("hadith books: open a book, jump, search, save and find it offline-ready", async ({ page }) => {

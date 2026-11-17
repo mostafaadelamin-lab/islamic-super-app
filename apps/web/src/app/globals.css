@@ -1754,14 +1754,36 @@ body:has(.player) {
 .tasbih .segmented {
   margin-bottom: var(--space-md);
 }
+/* Strand beads in the chosen look (BeadDefs, as the app's misbaha); the beads still to count are faded. */
 .strand-bead {
-  fill: var(--color-surface);
-  stroke: var(--tasbih-color, var(--color-accent));
-  stroke-width: 2;
-  transition: r 0.15s;
+  opacity: 0.38;
+  transition: opacity 0.15s;
 }
 .strand-bead.done {
-  fill: var(--tasbih-color, var(--color-accent));
+  opacity: 1;
+}
+.bead-looks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+}
+.bead-look {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md) var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.bead-look[aria-pressed="true"] {
+  border-color: var(--tasbih-color, var(--color-primary));
+  background: color-mix(in srgb, var(--tasbih-color, var(--color-primary)) 12%, var(--color-surface));
+  font-weight: 700;
 }
 .swatches {
   display: flex;
@@ -3402,37 +3424,80 @@ a.episode {
   background: var(--color-primary);
 }
 
-/* Zakat calculator: the app's five tabs (ZakatSimple) */
-.zakat-tabs {
+/* Zakat calculator (ZakatSimple): the app's one page, a card per kind with its due beside the name, then the total */
+.zakat-section {
+  margin-bottom: var(--space-md);
+}
+.zakat-section-head {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
   margin-bottom: var(--space-md);
 }
-.zakat-simple-body .segmented {
+.zakat-section-head h2 {
+  font-size: var(--font-size-md, 1.05rem);
+  margin: 0;
+}
+.zakat-due-badge {
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-md, 10px);
+  font-weight: 700;
+  background: color-mix(in srgb, var(--color-ink) 7%, var(--color-surface));
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+.zakat-due-badge.reached,
+.zakat-total.reached .zakat-total-amount,
+.zakat-total.reached .zakat-total-other {
+  color: var(--zakat-calm);
+}
+.zakat-due-badge.reached {
+  background: color-mix(in srgb, var(--zakat-calm) 14%, var(--color-surface));
+}
+.zakat-simple {
+  --zakat-calm: #2e7d74;
+}
+:root[data-theme="dark"] .zakat-simple {
+  --zakat-calm: #7cc8be;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .zakat-simple {
+    --zakat-calm: #7cc8be;
+  }
+}
+.zakat-simple .segmented {
   margin-bottom: var(--space-md);
 }
-.zakat-simple-body .field > span:first-child,
+.zakat-simple .field > span:first-child,
 .zakat-simple .field-label {
   font-size: var(--font-size-sm);
   font-weight: 600;
   margin: 0 0 var(--space-xs);
 }
-.zakat-simple-body input {
+.zakat-simple input {
   min-width: 0;
   flex: 1;
   max-width: 320px;
 }
-.zakat-simple-result {
+.zakat-total {
   text-align: center;
-  margin-bottom: var(--space-md);
+  border-color: color-mix(in srgb, var(--zakat-calm) 45%, transparent);
+  background: color-mix(in srgb, var(--zakat-calm) 10%, var(--color-surface));
 }
-.zakat-simple-result.reached {
-  border-color: var(--color-success);
-  background: color-mix(in srgb, var(--color-success) 8%, var(--color-surface));
+.zakat-total h2 {
+  font-size: var(--font-size-md, 1.05rem);
+  margin: 0 0 var(--space-sm);
 }
-.zakat-simple-answer {
-  font-weight: 700;
-  font-size: 1.1rem;
+.zakat-total-amount {
+  font-size: 1.8rem;
+  font-weight: 800;
   margin: 0;
+}
+.zakat-total-other,
+.zakat-total-none {
+  font-weight: 700;
+  margin: var(--space-xs) 0;
 }
 
 /* Adhkar page: the app's hub (daily adhkar, duas, Alafasy audio) */

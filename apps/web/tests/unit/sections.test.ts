@@ -187,6 +187,7 @@ describe("tasbih", () => {
       counters: { c9: { count: 1, target: 0 }, nope: { count: 1 } },
       mode: "beads",
       color: "plum",
+      style: "pearl",
       sound: true,
       vibrate: false,
       history: { "2026-11-09": { c9: 4, tasbih: -1, zz: 2 }, junk: { c9: 1 } },
@@ -197,11 +198,16 @@ describe("tasbih", () => {
       counters: { c9: { count: 1, target: 33, rounds: 0 } },
       mode: "beads",
       color: "plum",
+      style: "pearl",
       sound: true,
       vibrate: false,
       history: { "2026-11-09": { c9: 4 } },
     });
-    expect(sanitizeTasbih({ mode: "x", color: "neon" })).toMatchObject({ mode: "button", color: "emerald" });
+    expect(sanitizeTasbih({ mode: "x", color: "neon", style: "gold" })).toMatchObject({
+      mode: "button",
+      color: "emerald",
+      style: "glossy",
+    });
     tasbihStore.set((p) => tap(p, D1).next);
     tasbihStore.reload();
     expect(current(tasbihStore.get()).count).toBe(1);

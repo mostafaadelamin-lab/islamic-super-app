@@ -10,6 +10,8 @@ import { pauseOthers } from "@/lib/audio-focus";
 import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { Icon } from "./Icon";
 import { SleepTimer } from "./SleepTimer";
+import { SaveAudioButton } from "./SaveAudioButton";
+import { storySavedStore } from "@/lib/audio-offline";
 
 const POS_KEY = "rattil.storyPos";
 
@@ -74,7 +76,7 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
         <>
           <p className="muted small">
             {t(locale, "stories.episodes", { count: localizeDigits(episodes.length, locale) })} ·{" "}
-            {t(locale, "stories.onlineOnly")}
+            {t(locale, "stories.offlineNote")}
           </p>
           {current ? (
             <div className="series-now" data-testid="series-now">
@@ -206,6 +208,12 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
                       <Icon name="play" size={16} /> {t(locale, "stories.watchVideo")}
                     </button>
                   ) : null}
+                  <SaveAudioButton
+                    locale={locale}
+                    store={storySavedStore}
+                    url={e.url}
+                    testId={`episode-save-${e.id}`}
+                  />
                 </li>
               );
             })}

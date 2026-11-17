@@ -58,50 +58,74 @@ describe("ZakatSimple", () => {
     simpleZakatStore.reload();
   });
 
-  it("has the app's five tabs and no review notice", () => {
+  it("shows the five kinds on one page, in the app's order, then the total; no review notice", () => {
     render(<ZakatSimple locale="ar" />);
-    for (const label of ["زكاة الفضة", "زكاة الذهب", "زكاة المال", "زكاة الأنعام", "زكاة المحاصيل"]) {
-      expect(screen.getByRole("tab", { name: label })).toBeInTheDocument();
-    }
+    const heads = screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent);
+    expect(heads).toEqual([
+      "زكاة المال",
+      "زكاة الذهب",
+      "زكاة الفضة",
+      "زكاة الأنعام",
+      "زكاة المحاصيل",
+      "إجمالي الزكاة المطلوبة",
+    ]);
+    expect(screen.queryByRole("tab")).toBeNull();
+    expect(screen.getByTestId("zakat-total-empty")).toBeInTheDocument();
     expect(screen.queryByText(/المراجعة الشرعية/)).toBeNull();
   });
 
-  it("gold: shows grams and money due, and keeps the value", async () => {
+  it("gold: shows grams and money due beside the name, and keeps the value", () => {
     const { unmount } = render(<ZakatSimple locale="en" />);
-    await userEvent.click(screen.getByTestId("zakat-tab-gold"));
     fireEvent.change(screen.getByTestId("zakat-in-gold"), { target: { value: "100" } });
     fireEvent.change(screen.getByTestId("zakat-in-goldPrice"), { target: { value: "4000" } });
-    const res = screen.getByTestId("zakat-simple-result");
-    expect(res.dataset.reached).toBe("true");
-    expect(res.textContent).toContain("2.5");
+    const badge = screen.getByTestId("zakat-due-gold");
+    expect(badge.dataset.reached).toBe("true");
+    expect(badge.textContent).toBe("8750 EGP");
+    expect(screen.getByTestId("zakat-result-gold").textContent).toContain("2.5");
     unmount();
     render(<ZakatSimple locale="en" />);
     expect((screen.getByTestId("zakat-in-gold") as HTMLInputElement).value).toBe("100");
   });
 
-  it("money asks for the gold price, then compares with the nisab", async () => {
+  it("money asks for the gold price (typed in the gold card), then compares with the nisab", () => {
     render(<ZakatSimple locale="ar" />);
-    await userEvent.click(screen.getByTestId("zakat-tab-money"));
     fireEvent.change(screen.getByTestId("zakat-in-money"), { target: { value: "400000" } });
-    expect(screen.getByTestId("zakat-simple-result").textContent).toContain("سعر جرام الذهب");
+    expect(screen.getByTestId("zakat-need-price").textContent).toContain("سعر جرام الذهب");
+    expect(screen.getByTestId("zakat-due-money").textContent).toBe("—");
     fireEvent.change(screen.getByTestId("zakat-in-goldPrice"), { target: { value: "4000" } });
-    expect(screen.getByTestId("zakat-simple-result").textContent).toContain("١٠٠٠٠");
+    expect(screen.getByTestId("zakat-due-money").textContent).toBe("١٠٠٠٠ جنيه");
   });
 
   it("livestock: camels table", async () => {
     render(<ZakatSimple locale="ar" />);
-    await userEvent.click(screen.getByTestId("zakat-tab-livestock"));
     await userEvent.click(screen.getByRole("button", { name: "إبل" }));
     fireEvent.change(screen.getByTestId("zakat-in-animals"), { target: { value: "30" } });
-    expect(screen.getByTestId("zakat-simple-result").textContent).toContain("بنت مخاض");
+    expect(screen.getByTestId("zakat-due-livestock").textContent).toContain("بنت مخاض");
   });
 
   it("crops: 5% when irrigated by machines", async () => {
     render(<ZakatSimple locale="ar" />);
-    await userEvent.click(screen.getByTestId("zakat-tab-crops"));
     fireEvent.change(screen.getByTestId("zakat-in-crops"), { target: { value: "1000" } });
-    expect(screen.getByTestId("zakat-simple-result").textContent).toContain("١٠٠");
+    expect(screen.getByTestId("zakat-due-crops").textContent).toBe("١٠٠ كيلو");
     await userEvent.click(screen.getByRole("button", { name: /تُروى بالآلات/ }));
-    expect(screen.getByTestId("zakat-simple-result").textContent).toContain("٥٠");
+    expect(screen.getByTestId("zakat-due-crops").textContent).toBe("٥٠ كيلو");
+  });
+
+  it("the total adds the money of every kind and lists the dues not paid in money (as the app)", async () => {
+    render(<ZakatSimple locale="ar" />);
+    fireEvent.change(screen.getByTestId("zakat-in-money"), { target: { value: "400000" } });
+    fireEvent.change(screen.getByTestId("zakat-in-goldPrice"), { target: { value: "4000" } });
+    fireEvent.change(screen.getByTestId("zakat-in-gold"), { target: { value: "100" } });
+    fireEvent.change(screen.getByTestId("zakat-in-crops"), { target: { value: "1000" } });
+    // 10000 (money) + 8750 (100 g of 21 carat at 4000) = 18750; crops have no price, listed apart.
+    expect(screen.getByTestId("zakat-total").dataset.reached).toBe("true");
+    expect(screen.getByTestId("zakat-total-amount").textContent).toBe("١٨٧٥٠ جنيه");
+    expect(screen.getByTestId("zakat-total-other").textContent).toBe("وأيضًا: ١٠٠ كيلو (زكاة المحاصيل)");
+  });
+
+  it("the total says no zakat when nothing reaches the nisab", () => {
+    render(<ZakatSimple locale="ar" />);
+    fireEvent.change(screen.getByTestId("zakat-in-silver"), { target: { value: "100" } });
+    expect(screen.getByTestId("zakat-total").textContent).toContain("لا زكاة عليك فيما كتبته");
   });
 });

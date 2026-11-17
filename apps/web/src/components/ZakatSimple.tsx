@@ -11,7 +11,6 @@ import {
   SILVER_NISAB_GRAMS,
   silverZakat,
   simpleZakatStore,
-  ZAKAT_TABS,
   type Livestock,
   type SimpleZakatState,
   type ZakatTab,
@@ -41,7 +40,7 @@ export function parseAmount(raw: string): number | null {
   return Number.isFinite(v) && v >= 0 ? v : null;
 }
 
-/** The app's five-tab zakat calculator (silver, gold, money, livestock, crops), same rules and wording. */
+/** The app's zakat calculator: money, gold, silver, livestock and crops on one page, then the total. */
 export function ZakatSimple({ locale }: { locale: Locale }) {
   const s = useStore(simpleZakatStore);
   const L = (key: string, vars?: Record<string, string | number>): string => t(locale, key, vars);
@@ -59,7 +58,7 @@ export function ZakatSimple({ locale }: { locale: Locale }) {
     });
 
   const field = (k: string, label: string, suffix?: string) => (
-    <label className="field" key={`${s.tab}-${k}`}>
+    <label className="field" key={k}>
       <span>{label}</span>
       <span className="row">
         <input
@@ -89,213 +88,229 @@ export function ZakatSimple({ locale }: { locale: Locale }) {
       ))}
     </div>
   );
-  const result = (reached: boolean, text: string, note?: string) => (
-    <div
-      className={`card zakat-simple-result${reached ? " reached" : ""}`}
-      role="status"
-      data-testid="zakat-simple-result"
-      data-reached={reached}
-    >
-      <p className="zakat-simple-answer">
-        {text.split("\n").map((line, i) => (
-          <span key={i}>
-            {i > 0 ? <br /> : null}
-            {line}
-          </span>
-        ))}
-      </p>
-      {note ? (
-        <p className="muted small">
-          {note.split("\n").map((line, i) => (
-            <span key={i}>
-              {i > 0 ? <br /> : null}
-              {line}
-            </span>
-          ))}
-        </p>
-      ) : null}
-    </div>
-  );
   const rule = (key: string) => <p className="muted small">{L(key)}</p>;
 
-  let body: React.ReactNode;
-  switch (s.tab) {
-    case "silver": {
-      const grams = n("silver") ?? 0;
-      const r = silverZakat(grams, n("silverPrice"));
-      body = (
-        <>
-          {grams > 0
-            ? result(
-                r.reached,
-                r.reached
-                  ? L("zakat.s.dueSilver", { g: fmt(r.dueGrams) }) +
-                      (r.dueMoney == null ? "" : `\n${L("zakat.s.dueMoney", { v: fmt(r.dueMoney) })}`)
-                  : L("zakat.s.belowNisab"),
-                L("zakat.s.yearNote"),
-              )
-            : null}
-          {field("silver", L("zakat.s.silverGrams"), L("zakat.s.gram"))}
-          {field("silverPrice", L("zakat.s.silverPrice"))}
-          {rule("zakat.s.silverRule")}
-        </>
-      );
-      break;
-    }
-    case "gold": {
-      const grams = n("gold") ?? 0;
-      const r = goldZakat(grams, s.karat, n("goldPrice"));
-      body = (
-        <>
-          {grams > 0
-            ? result(
-                r.reached,
-                r.reached
-                  ? L("zakat.s.dueGold", { g: fmt(r.dueGrams), k: localizeDigits(s.karat, locale) }) +
-                      (r.dueMoney == null ? "" : `\n${L("zakat.s.dueMoney", { v: fmt(r.dueMoney) })}`)
-                  : L("zakat.s.belowNisab"),
-                L("zakat.s.yearNote"),
-              )
-            : null}
-          {field("gold", L("zakat.s.goldGrams"), L("zakat.s.gram"))}
-          <p className="field-label">{L("zakat.s.karat")}</p>
-          {seg(
-            L("zakat.s.karat"),
-            "karat",
-            ([24, 21, 18] as const).map((k) => [k, localizeDigits(k, locale)] as [24 | 21 | 18, string]),
-            s.karat,
-            (k) => patch({ karat: k }),
-          )}
-          {field("goldPrice", L("zakat.s.goldPrice"))}
-          {rule("zakat.s.goldRule")}
-        </>
-      );
-      break;
-    }
-    case "money": {
-      const byGold = s.basis === "gold";
-      const price = byGold ? n("goldPrice") : n("silverPrice");
-      const amount = n("money") ?? 0;
-      const nisab = price == null ? 0 : price * (byGold ? GOLD_NISAB_GRAMS : SILVER_NISAB_GRAMS);
-      const r = moneyZakat(amount, nisab);
-      body = (
-        <>
-          {amount > 0
-            ? result(
-                r.reached,
-                price == null
-                  ? L(byGold ? "zakat.s.needGoldPrice" : "zakat.s.needSilverPrice")
-                  : r.reached
-                    ? L("zakat.s.dueMoney", { v: fmt(r.due) })
-                    : L("zakat.s.belowNisab"),
-                price == null
-                  ? undefined
-                  : `${L("zakat.s.nisabIs", { v: fmt(nisab, 0) })}\n${L("zakat.s.yearNote")}`,
-              )
-            : null}
-          {field("money", L("zakat.s.money"))}
-          <p className="field-label">{L("zakat.s.basis")}</p>
-          {seg(
-            L("zakat.s.basis"),
-            "basis",
-            [
-              ["gold", L("zakat.s.basisGold")],
-              ["silver", L("zakat.s.basisSilver")],
-            ] as const,
-            s.basis,
-            (b) => patch({ basis: b }),
-          )}
-          {byGold
-            ? field("goldPrice", L("zakat.s.goldPrice"))
-            : field("silverPrice", L("zakat.s.silverPrice"))}
-          {rule("zakat.s.moneyRule")}
-        </>
-      );
-      break;
-    }
-    case "livestock": {
-      const count = Math.floor(n("animals") ?? 0);
-      const due = livestockZakat(s.animal, count);
-      const unit = (u: string): string => L(`zakat.s.unit${u[0]!.toUpperCase()}${u.slice(1)}`);
-      body = (
-        <>
-          {count > 0
-            ? result(
-                due.length > 0,
-                due.length === 0
-                  ? L("zakat.s.belowNisab")
-                  : L("zakat.s.dueAnimals", {
-                      v: due.map(([k, u]) => `${localizeDigits(k, locale)} ${unit(u)}`).join(" + "),
-                    }),
-                L("zakat.s.livestockNote"),
-              )
-            : null}
-          {seg(
-            L("zakat.s.tabLivestock"),
-            "animal",
-            ANIMALS.map(([a, k]) => [a, L(k)] as [Livestock, string]),
-            s.animal,
-            (a) => patch({ animal: a }),
-          )}
-          {field("animals", L("zakat.s.animalCount"))}
-          {rule("zakat.s.livestockRule")}
-        </>
-      );
-      break;
-    }
-    case "crops": {
-      const kg = n("crops") ?? 0;
-      const r = cropsZakat(kg, s.rain);
-      body = (
-        <>
-          {kg > 0
-            ? result(
-                r.reached,
-                r.reached ? L("zakat.s.dueCrops", { kg: fmt(r.dueKg) }) : L("zakat.s.belowNisab"),
-                L("zakat.s.cropsNote"),
-              )
-            : null}
-          {field("crops", L("zakat.s.cropsKg"), L("zakat.s.kg"))}
-          {seg(
-            L("zakat.s.tabCrops"),
-            "rain",
-            [
-              [true, L("zakat.s.rain")],
-              [false, L("zakat.s.irrigated")],
-            ] as const,
-            s.rain,
-            (v) => patch({ rain: v }),
-          )}
-          {rule("zakat.s.cropsRule")}
-        </>
-      );
-      break;
-    }
-  }
+  // One page, every kind under the other, the total at the bottom (as the app, owner 2026-11-17).
+  const dash = L("zakat.s.dueEmpty");
+  const money = (v: number): string => L("zakat.s.shortMoney", { v: fmt(v, 0) });
+  const grams = (v: number): string => L("zakat.s.shortGrams", { g: fmt(v) });
+  let totalMoney = 0;
+  const totalOther: string[] = [];
+  let anyEntered = false;
+  const add = (m: number | null, other: string | null, entered: boolean): void => {
+    if (m != null) totalMoney += m;
+    if (other != null) totalOther.push(other);
+    anyEntered = anyEntered || entered;
+  };
+  const section = (id: ZakatTab, due: string, reached: boolean, children: React.ReactNode) => (
+    <section
+      className="card zakat-section"
+      key={id}
+      aria-labelledby={`zakat-h-${id}`}
+      data-testid={`zakat-section-${id}`}
+    >
+      <div className="zakat-section-head">
+        <h2 id={`zakat-h-${id}`}>{L(TAB_KEY[id])}</h2>
+        <span
+          className={`zakat-due-badge${reached ? " reached" : ""}`}
+          data-testid={`zakat-due-${id}`}
+          data-reached={reached}
+        >
+          {due}
+        </span>
+      </div>
+      {children}
+    </section>
+  );
 
+  // Money: its nisab from the gold or silver price typed in those cards.
+  const byGold = s.basis === "gold";
+  const moneyPrice = byGold ? n("goldPrice") : n("silverPrice");
+  const amount = n("money") ?? 0;
+  const nisab = moneyPrice == null ? 0 : moneyPrice * (byGold ? GOLD_NISAB_GRAMS : SILVER_NISAB_GRAMS);
+  const mr = moneyZakat(amount, nisab);
+  const moneyReached = amount > 0 && moneyPrice != null && mr.reached;
+  add(moneyReached ? mr.due : null, null, amount > 0);
+  const moneyCard = section(
+    "money",
+    amount <= 0 || moneyPrice == null ? dash : moneyReached ? money(mr.due) : L("zakat.s.dueNone"),
+    moneyReached,
+    <>
+      {field("money", L("zakat.s.money"))}
+      <p className="field-label">{L("zakat.s.basis")}</p>
+      {seg(
+        L("zakat.s.basis"),
+        "basis",
+        [
+          ["gold", L("zakat.s.basisGold")],
+          ["silver", L("zakat.s.basisSilver")],
+        ] as const,
+        s.basis,
+        (b) => patch({ basis: b }),
+      )}
+      {amount > 0 && moneyPrice == null ? (
+        <p className="alert alert-error small" data-testid="zakat-need-price">
+          {L(byGold ? "zakat.s.needGoldPrice" : "zakat.s.needSilverPrice")}
+        </p>
+      ) : moneyPrice != null ? (
+        <p className="muted small">{L("zakat.s.nisabIs", { v: fmt(nisab, 0) })}</p>
+      ) : null}
+      {rule("zakat.s.moneyRule")}
+    </>,
+  );
+
+  const goldG = n("gold") ?? 0;
+  const gr = goldZakat(goldG, s.karat, n("goldPrice"));
+  const goldReached = goldG > 0 && gr.reached;
+  add(
+    goldReached ? gr.dueMoney : null,
+    goldReached && gr.dueMoney == null ? `${grams(gr.dueGrams)} (${L("zakat.s.tabGold")})` : null,
+    goldG > 0,
+  );
+  const goldCard = section(
+    "gold",
+    goldG <= 0
+      ? dash
+      : !gr.reached
+        ? L("zakat.s.dueNone")
+        : gr.dueMoney != null
+          ? money(gr.dueMoney)
+          : grams(gr.dueGrams),
+    goldReached,
+    <>
+      {field("gold", L("zakat.s.goldGrams"), L("zakat.s.gram"))}
+      <p className="field-label">{L("zakat.s.karat")}</p>
+      {seg(
+        L("zakat.s.karat"),
+        "karat",
+        ([24, 21, 18] as const).map((k) => [k, localizeDigits(k, locale)] as [24 | 21 | 18, string]),
+        s.karat,
+        (k) => patch({ karat: k }),
+      )}
+      {field("goldPrice", L("zakat.s.goldPrice"))}
+      {goldReached ? (
+        <p data-testid="zakat-result-gold">
+          {L("zakat.s.dueGold", { g: fmt(gr.dueGrams), k: localizeDigits(s.karat, locale) })}
+        </p>
+      ) : null}
+      {rule("zakat.s.goldRule")}
+    </>,
+  );
+
+  const silverG = n("silver") ?? 0;
+  const sr = silverZakat(silverG, n("silverPrice"));
+  const silverReached = silverG > 0 && sr.reached;
+  add(
+    silverReached ? sr.dueMoney : null,
+    silverReached && sr.dueMoney == null ? `${grams(sr.dueGrams)} (${L("zakat.s.tabSilver")})` : null,
+    silverG > 0,
+  );
+  const silverCard = section(
+    "silver",
+    silverG <= 0
+      ? dash
+      : !sr.reached
+        ? L("zakat.s.dueNone")
+        : sr.dueMoney != null
+          ? money(sr.dueMoney)
+          : grams(sr.dueGrams),
+    silverReached,
+    <>
+      {field("silver", L("zakat.s.silverGrams"), L("zakat.s.gram"))}
+      {field("silverPrice", L("zakat.s.silverPrice"))}
+      {silverReached ? (
+        <p data-testid="zakat-result-silver">{L("zakat.s.dueSilver", { g: fmt(sr.dueGrams) })}</p>
+      ) : null}
+      {rule("zakat.s.silverRule")}
+    </>,
+  );
+
+  const count = Math.floor(n("animals") ?? 0);
+  const animals = livestockZakat(s.animal, count);
+  const unit = (u: string): string => L(`zakat.s.unit${u[0]!.toUpperCase()}${u.slice(1)}`);
+  const animalsText = animals.map(([k, u]) => `${localizeDigits(k, locale)} ${unit(u)}`).join(" + ");
+  add(null, animals.length === 0 ? null : animalsText, count > 0);
+  const livestockCard = section(
+    "livestock",
+    count <= 0 ? dash : animals.length === 0 ? L("zakat.s.dueNone") : animalsText,
+    animals.length > 0,
+    <>
+      {seg(
+        L("zakat.s.tabLivestock"),
+        "animal",
+        ANIMALS.map(([a, k]) => [a, L(k)] as [Livestock, string]),
+        s.animal,
+        (a) => patch({ animal: a }),
+      )}
+      {field("animals", L("zakat.s.animalCount"))}
+      {rule("zakat.s.livestockRule")}
+      {count > 0 ? rule("zakat.s.livestockNote") : null}
+    </>,
+  );
+
+  const kg = n("crops") ?? 0;
+  const cr = cropsZakat(kg, s.rain);
+  const cropsReached = kg > 0 && cr.reached;
+  const cropsShort = L("zakat.s.shortKg", { kg: fmt(cr.dueKg) });
+  add(null, cropsReached ? `${cropsShort} (${L("zakat.s.tabCrops")})` : null, kg > 0);
+  const cropsCard = section(
+    "crops",
+    kg <= 0 ? dash : cropsReached ? cropsShort : L("zakat.s.dueNone"),
+    cropsReached,
+    <>
+      {field("crops", L("zakat.s.cropsKg"), L("zakat.s.kg"))}
+      {seg(
+        L("zakat.s.tabCrops"),
+        "rain",
+        [
+          [true, L("zakat.s.rain")],
+          [false, L("zakat.s.irrigated")],
+        ] as const,
+        s.rain,
+        (v) => patch({ rain: v }),
+      )}
+      {rule("zakat.s.cropsRule")}
+      {kg > 0 ? rule("zakat.s.cropsNote") : null}
+    </>,
+  );
+
+  const hasDue = totalMoney > 0 || totalOther.length > 0;
   return (
     <div className="zakat-simple" data-testid="zakat-simple">
-      <div
-        className="segmented zakat-tabs"
-        role="tablist"
-        aria-label={L("zakat.title")}
-        data-testid="zakat-tabs"
+      {moneyCard}
+      {goldCard}
+      {silverCard}
+      {livestockCard}
+      {cropsCard}
+      <section
+        className={`card zakat-total${hasDue ? " reached" : ""}`}
+        role="status"
+        aria-live="polite"
+        data-testid="zakat-total"
+        data-reached={hasDue}
       >
-        {ZAKAT_TABS.map((tab) => (
-          <button
-            key={tab}
-            type="button"
-            role="tab"
-            aria-selected={s.tab === tab}
-            data-testid={`zakat-tab-${tab}`}
-            onClick={() => patch({ tab })}
-          >
-            {L(TAB_KEY[tab])}
-          </button>
-        ))}
-      </div>
-      <section className="card zakat-simple-body" role="tabpanel" data-testid={`zakat-panel-${s.tab}`}>
-        {body}
+        <h2>{L("zakat.s.totalTitle")}</h2>
+        {!anyEntered ? (
+          <p data-testid="zakat-total-empty">{L("zakat.s.totalEmpty")}</p>
+        ) : !hasDue ? (
+          <p className="zakat-total-none">{L("zakat.s.totalNone")}</p>
+        ) : (
+          <>
+            {totalMoney > 0 ? (
+              <p className="zakat-total-amount" data-testid="zakat-total-amount">
+                {money(totalMoney)}
+              </p>
+            ) : null}
+            {totalOther.length > 0 ? (
+              <p className="zakat-total-other" data-testid="zakat-total-other">
+                {totalMoney > 0
+                  ? L("zakat.s.totalAlso", { v: totalOther.join(locale === "ar" ? "، " : ", ") })
+                  : totalOther.join(locale === "ar" ? "، " : ", ")}
+              </p>
+            ) : null}
+          </>
+        )}
+        <p className="muted small">{L("zakat.s.yearNote")}</p>
       </section>
     </div>
   );

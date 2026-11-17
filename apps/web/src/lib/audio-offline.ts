@@ -6,7 +6,7 @@
  * If everyayah.com answers with CORS headers the saved file is played from a blob: URL; otherwise the
  * (opaque) copy is served to the <audio> element by the service worker, which looks in the same cache.
  */
-import { createStore } from "./store";
+import { createStore, type Store } from "./store";
 import { audioUrl, BASMALA_REF, needsBasmala } from "./audio";
 import { surahMeta } from "./pages";
 
@@ -144,4 +144,30 @@ export async function savedSource(url: string): Promise<string | null> {
   if (!hit) return null;
   if (hit.type === "opaque") return url;
   return URL.createObjectURL(await hit.blob());
+}
+
+/**
+ * Single recordings (a story episode, a reciter's surah from the library) saved for offline listening: the file
+ * goes into the same "rattil-audio" cache, which the service worker answers .mp3 requests from, so the normal
+ * player plays the saved copy with no change. Each list keeps the saved URLs in its own small store.
+ */
+export const createSavedUrls = (key: string): Store<string[]> =>
+  createStore<string[]>(key, [], (raw) =>
+    Array.isArray(raw) ? raw.filter((v): v is string => typeof v === "string" && /^https?:\/\//.test(v)) : [],
+  );
+
+/** Episodes of the audio stories (the app saves them too). */
+export const storySavedStore = createSavedUrls("rattil.storySaved");
+/** Surahs of any reciter in the recitation library (the app saves them too). */
+export const librarySavedStore = createSavedUrls("rattil.librarySaved");
+
+export async function saveAudioFile(store: Store<string[]>, url: string): Promise<void> {
+  const cache = await caches.open(AUDIO_CACHE);
+  if (!(await cache.match(url))) await cache.put(url, await fetchFile(url));
+  store.set((urls) => (urls.includes(url) ? urls : [...urls, url]));
+}
+
+export async function deleteAudioFile(store: Store<string[]>, url: string): Promise<void> {
+  if (offlineSupported()) await (await caches.open(AUDIO_CACHE)).delete(url);
+  store.set((urls) => urls.filter((u) => u !== url));
 }

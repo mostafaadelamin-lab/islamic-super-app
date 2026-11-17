@@ -8,6 +8,7 @@ import { PRAYER_KEYS, prayerTimes, type LocalDate, type PrayerDay, type PrayerKe
 import { addDays, formatClock, localDateInTz } from "@/lib/time";
 import { prayerStore, prefsStore } from "@/lib/settings";
 import { useStore } from "@/hooks/useStore";
+import { shareMonthImage } from "@/lib/month-image";
 import { useNow } from "@/hooks/useNow";
 
 const MONTHS_PER_YEAR = 12;
@@ -121,7 +122,7 @@ export function PrayerMonth({ locale }: { locale: Locale }) {
   const today = now ? localDateInTz(now, loc.tz) : null;
   const [delta, setDelta] = useState(0);
   const [kind, setKind] = useState<CalendarKind>("gregorian");
-  const [shared, setShared] = useState(false);
+  const [shared, setShared] = useState<"copied" | "saved" | null>(null);
   const offset = display.hijriOffset;
   const ym = today ? shiftMonth({ year: today.year, month: today.month }, delta) : null;
 
@@ -169,28 +170,53 @@ export function PrayerMonth({ locale }: { locale: Locale }) {
         }).format(new Date(Date.UTC(ym.year, ym.month - 1, MID_MONTH_DAY)));
   const name = (k: PrayerKey): string => t(locale, `prayer.${k}`);
   const dayNumber = (d: LocalDate): number => (kind === "hijri" ? (hijriOf(d, offset)?.day ?? d.day) : d.day);
-  /** The app shares the month (there as a picture); the site shares it as text, or copies it. */
+  /** As the app: the month goes out as a picture (share sheet, or a download); text only if drawing fails. */
   const shareMonth = async (): Promise<void> => {
     const place =
       gpsPlace ??
       (loc.city ? (locale === "ar" ? loc.city.nameAr : loc.city.nameEn) : t(locale, "home.myPlace"));
+    const time = (pd: PrayerDay | null, k: PrayerKey): string =>
+      pd ? localizeDigits(formatClock(pd.times[k], loc.tz, display.clock, locale), locale) : "—";
+    try {
+      const outcome = await shareMonthImage(
+        {
+          title: `${t(locale, "prayer.monthTitle")} · ${monthTitle}`,
+          place,
+          head: [
+            t(locale, "prayer.day"),
+            t(locale, kind === "hijri" ? "prayer.gregorianCol" : "prayer.hijriCol"),
+            ...PRAYER_KEYS.map(name),
+          ],
+          rows: rows.map(({ date, pd }) => ({
+            cells: [
+              localizeDigits(dayNumber(date), locale),
+              localizeDigits(dayLabel(date, kind, offset, locale), locale),
+              ...PRAYER_KEYS.map((k) => time(pd, k)),
+            ],
+            today: sameDay(today, date),
+          })),
+          brand: t(locale, "appName"),
+          rtl: locale === "ar",
+        },
+        `prayer-times-${ym?.year}-${ym?.month}.png`,
+      );
+      if (outcome === "downloaded") setShared("saved");
+      return;
+    } catch {
+      /* no canvas here: share the month as text instead */
+    }
     const title = `${t(locale, "prayer.monthTitle")} · ${monthTitle} · ${place}`;
     const lines = rows.map(({ date, pd }) =>
-      [
-        localizeDigits(dayNumber(date), locale),
-        ...PRAYER_KEYS.map((k) =>
-          pd
-            ? `${name(k)} ${localizeDigits(formatClock(pd.times[k], loc.tz, display.clock, locale), locale)}`
-            : "—",
-        ),
-      ].join(" | "),
+      [localizeDigits(dayNumber(date), locale), ...PRAYER_KEYS.map((k) => `${name(k)} ${time(pd, k)}`)].join(
+        " | ",
+      ),
     );
     const text = [title, ...lines].join("\n");
     try {
       if (typeof navigator !== "undefined" && navigator.share) await navigator.share({ title, text });
       else {
         await navigator.clipboard.writeText(text);
-        setShared(true);
+        setShared("copied");
       }
     } catch {
       /* the viewer closed the share sheet */
@@ -228,7 +254,7 @@ export function PrayerMonth({ locale }: { locale: Locale }) {
         </button>
         {shared ? (
           <span className="muted small" role="status">
-            {t(locale, "prayer.calendarCopied")}
+            {t(locale, shared === "saved" ? "prayer.calendarSaved" : "prayer.calendarCopied")}
           </span>
         ) : null}
       </div>

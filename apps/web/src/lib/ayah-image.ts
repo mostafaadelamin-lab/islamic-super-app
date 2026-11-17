@@ -21,7 +21,7 @@ const INK = "#141414";
 const FALLBACK_PRIMARY = "#0F6B50";
 const GOLD = "#A8773E";
 /** The current colour style's deep brand colour (style 1 emerald, style 2 navy). */
-function brandColour(): string {
+export function brandColour(): string {
   if (typeof document === "undefined") return FALLBACK_PRIMARY;
   const v = getComputedStyle(document.documentElement).getPropertyValue("--brand-hero-top").trim();
   return v || FALLBACK_PRIMARY;

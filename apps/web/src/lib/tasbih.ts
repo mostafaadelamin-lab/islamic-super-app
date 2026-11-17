@@ -9,6 +9,9 @@ export const TASBIH_TARGETS: readonly number[] = [T33, T99, T100, T1000];
 export const TASBIH_PHRASES: readonly string[] = ["tasbih", "tahmid", "takbir", "tahlil", "istighfar"];
 export type TasbihMode = "button" | "beads";
 export const TASBIH_MODES: readonly TasbihMode[] = ["button", "beads"];
+/** Look of the beads (same five as the app's misbaha). */
+export type BeadStyle = "glossy" | "marble" | "wood" | "pearl" | "crystal";
+export const BEAD_STYLES: readonly BeadStyle[] = ["glossy", "marble", "wood", "pearl", "crystal"];
 /** Bead colours (same values in the mobile app); default is the emerald of colour style 1 (since 2026-11-15). */
 export const TASBIH_COLORS: Readonly<Record<string, string>> = {
   brown: "#8A5A2B",
@@ -52,6 +55,7 @@ export interface TasbihState {
   custom: CustomDhikr[];
   mode: TasbihMode;
   color: string;
+  style: BeadStyle;
   sound: boolean;
   vibrate: boolean;
   /** Taps per day ("YYYY-MM-DD") and dhikr. */
@@ -65,6 +69,7 @@ export const DEFAULT_TASBIH: TasbihState = {
   custom: [],
   mode: "button",
   color: "emerald",
+  style: "glossy",
   sound: false,
   vibrate: true,
   history: {},
@@ -121,6 +126,7 @@ export function sanitizeTasbih(raw: unknown): TasbihState {
     custom,
     mode: (TASBIH_MODES as readonly unknown[]).includes(r.mode) ? (r.mode as TasbihMode) : "button",
     color: typeof r.color === "string" && r.color in TASBIH_COLORS ? r.color : "emerald",
+    style: (BEAD_STYLES as readonly unknown[]).includes(r.style) ? (r.style as BeadStyle) : "glossy",
     sound: r.sound === true,
     vibrate: r.vibrate !== false,
     history,

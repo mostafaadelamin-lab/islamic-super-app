@@ -14,6 +14,7 @@ import {
   setTarget,
   tap,
   tasbihStore,
+  BEAD_STYLES,
   TASBIH_COLORS,
   TASBIH_MODES,
   TASBIH_PHRASES,
@@ -24,6 +25,7 @@ import {
 import { isoDate } from "@/lib/time";
 import { useStore } from "@/hooks/useStore";
 import { Icon } from "./Icon";
+import { Bead, BeadDefs } from "./BeadDefs";
 
 const VIBRATE_TAP = 15;
 const [BUZZ_MS, GAP_MS] = [60, 40] as const;
@@ -88,7 +90,7 @@ export function TasbihView({ locale }: { locale: Locale }) {
   const [draft, setDraft] = useState("");
   const c = current(s);
   const progress = c.count / c.target;
-  const color = TASBIH_COLORS[s.color] ?? TASBIH_COLORS.emerald;
+  const color = TASBIH_COLORS[s.color] ?? TASBIH_COLORS.emerald ?? "#0F5C4A";
   const todayCount = s.history[today()]?.[s.phrase] ?? 0;
   const onTap = (): void => {
     const r = tap(tasbihStore.get(), today());
@@ -156,18 +158,23 @@ export function TasbihView({ locale }: { locale: Locale }) {
         </span>
         <svg viewBox="0 0 200 200" aria-hidden="true">
           {s.mode === "beads" ? (
-            Array.from({ length: strand }, (_, i) => {
-              const a = (TURN * i) / strand - QUARTER_TURN;
-              return (
-                <circle
-                  key={i}
-                  cx={CENTER + RING_R * Math.cos(a)}
-                  cy={CENTER + RING_R * Math.sin(a)}
-                  r={i === onStrand ? BEAD_R + CURRENT_BEAD_GROW : BEAD_R}
-                  className={i < onStrand ? "strand-bead done" : "strand-bead"}
-                />
-              );
-            })
+            <>
+              <BeadDefs id="tb" color={color} />
+              {Array.from({ length: strand }, (_, i) => {
+                const a = (TURN * i) / strand - QUARTER_TURN;
+                return (
+                  <Bead
+                    key={i}
+                    id="tb"
+                    look={s.style}
+                    cx={CENTER + RING_R * Math.cos(a)}
+                    cy={CENTER + RING_R * Math.sin(a)}
+                    r={i === onStrand ? BEAD_R + CURRENT_BEAD_GROW : BEAD_R}
+                    className={i < onStrand ? "strand-bead done" : "strand-bead"}
+                  />
+                );
+              })}
+            </>
           ) : (
             <>
               <circle cx={CENTER} cy={CENTER} r={RING_R} className="ring-bg" />
@@ -231,6 +238,27 @@ export function TasbihView({ locale }: { locale: Locale }) {
         </div>
       </fieldset>
 
+      <fieldset className="field">
+        <legend className="label">{t(locale, "tasbih.style")}</legend>
+        <div className="bead-looks" data-testid="tasbih-styles">
+          {BEAD_STYLES.map((look) => (
+            <button
+              key={look}
+              type="button"
+              className="bead-look"
+              aria-pressed={s.style === look}
+              data-testid={`tasbih-style-${look}`}
+              onClick={() => tasbihStore.set((p) => ({ ...p, style: look, mode: "beads" }))}
+            >
+              <svg viewBox="0 0 28 28" width="26" height="26" aria-hidden="true">
+                <BeadDefs id={`bl-${look}`} color={color} />
+                <Bead id={`bl-${look}`} look={look} cx={14} cy={14} r={12} />
+              </svg>
+              {t(locale, `tasbih.styles.${look}`)}
+            </button>
+          ))}
+        </div>
+      </fieldset>
       <fieldset className="field">
         <legend className="label">{t(locale, "tasbih.color")}</legend>
         <div className="swatches">

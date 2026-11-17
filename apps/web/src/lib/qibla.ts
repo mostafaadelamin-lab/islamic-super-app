@@ -21,6 +21,23 @@ export interface OrientationLike {
   absolute?: boolean;
   /** iOS Safari: degrees clockwise from magnetic north. */
   webkitCompassHeading?: number;
+  /** iOS Safari: ± degrees of the heading; negative when the compass is not calibrated. */
+  webkitCompassAccuracy?: number;
+}
+
+/** Above this error (degrees) the compass asks to be calibrated, as in the app. */
+export const CALIBRATE_ABOVE_DEG = 25;
+
+/** The reading's error in degrees (iOS only), -1 when the compass reports it is uncalibrated, null when unknown. */
+export function accuracyFromEvent(e: OrientationLike): number | null {
+  const a = e.webkitCompassAccuracy;
+  if (typeof a !== "number" || !Number.isFinite(a)) return null;
+  return a < 0 ? -1 : a;
+}
+
+/** "Turn right/left N°" as the app says it: positive = turn right (clockwise). */
+export function turnAngle(bearing: number, heading: number): number {
+  return angleDiff(bearing, heading);
 }
 
 /**

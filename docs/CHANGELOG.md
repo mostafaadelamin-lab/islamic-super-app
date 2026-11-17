@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.8] — website matches the app — 2026-11-17
+Owner rule: every feature on Android, iPhone and the website. A code comparison of 1.2.2 (report in E:\Quaran-App-Project\reports) found six app features missing on the website; all six are now there. The app is unchanged (its recitation library already has the sleep timer, in the player under the surah playing).
+### Added (website)
+- Audio stories: a download button beside every episode, to listen offline (as in the app).
+- Recitation library: a download button beside every surah of every reciter, to listen offline (as in the app).
+- Tasbih: the app's five bead looks (glossy, marble, wood, pearl, crystal) in every colour; picking one shows the beads.
+- Qibla: «استدر يمينًا / يسارًا N°» while the compass is live, the compass accuracy where the phone reports it (iPhone), and the app's «البوصلة تحتاج معايرة» card when it is poor.
+- Prayer times: «مشاركة التقويم» sends the month as a picture (as in the app), or downloads it where the browser cannot share files.
+### Changed (website)
+- Zakat: every kind on one page (money, gold, silver, livestock, crops) with its due beside its name and «إجمالي الزكاة المطلوبة» at the bottom, the same as the app (the five tabs are gone).
+- Unchanged: Quran text and all other religious content.
+
 ## [1.2.7] — driving mode for the morning / evening adhkar — 2026-11-17
 ### Added
 - Driving mode (Android + iPhone): «استمع أثناء القيادة» in the Adhkar tab (morning / evening) and a car button on the morning / evening adhkar page. The app plays every dhikr in Sheikh Alafasy's voice as many times as Hisn al-Muslim says (e.g. 100) and counts for the driver; a soft sound between repetitions and a different one when a dhikr is complete (can be turned off); optionally the count said out loud every 10 or 33 (phone text-to-speech). One reading of each dhikr is cut from the same recording the «listen» card plays (clip times in content/adhkar/drive-clips.json, checked one by one); the counts come only from Hisn al-Muslim. Items the recording does not read (al-Hamdu lillah wahdah, last two ayat of al-Baqarah) are skipped; the evening «أستغفر الله وأتوب إليه» is taken from the morning recording.
