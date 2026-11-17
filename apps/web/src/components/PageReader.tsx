@@ -39,7 +39,8 @@ import { GoToPage } from "./GoToPage";
 import { Icon } from "./Icon";
 import { shareAyahImage } from "@/lib/ayah-image";
 import { TafsirPanel } from "./TafsirPanel";
-import { ReaderPlayer } from "./ReaderPlayer";
+import { ReaderPlayer, ReaderPlayerMini } from "./ReaderPlayer";
+import { dockSwipe, readerDockMinStore } from "@/lib/reader-dock";
 import { ReaderIcon } from "./ReaderIcon";
 import { KhatmaSheet } from "./KhatmaSheet";
 import { PageAyahList, PageButtons, PageTafsirList, SurahFlow, usePageSwipe } from "./ReaderViews";
@@ -301,6 +302,9 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const [hint, setHint] = useState(false);
   const [guide, setGuide] = useState(false);
   const dockRef = useRef<HTMLDivElement>(null);
+  const dockMin = useStore(readerDockMinStore);
+  const handleY = useRef<number | null>(null);
+  const swiped = useRef(false);
   const pageEl = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLInputElement>(null);
   const gesture = useRef<Gesture | null>(null);
@@ -1143,7 +1147,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
         />
       ) : null}
 
-      <div className="rd-dock" ref={dockRef}>
+      <div className="rd-dock" ref={dockRef} data-min={dockMin ? "true" : "false"}>
         {/* The selected ayah's actions sit in the bottom strip with the other bars (owner 2026-11-15). */}
         {sel ? (
           <div
@@ -1267,7 +1271,43 @@ export function PageReader({ locale, initial }: PageReaderProps) {
             ) : null}
           </div>
         ) : null}
-        <ReaderPlayer locale={locale} page={page} />
+        <div className="rd-handle-row">
+          <button
+            type="button"
+            className="rd-handle"
+            data-testid="dock-handle"
+            aria-expanded={!dockMin}
+            aria-label={t(locale, dockMin ? "reader.playerShow" : "reader.playerHide")}
+            title={t(locale, dockMin ? "reader.playerShow" : "reader.playerHide")}
+            onPointerDown={(e) => {
+              handleY.current = e.clientY;
+            }}
+            onPointerUp={(e) => {
+              const start = handleY.current;
+              handleY.current = null;
+              if (start == null) return;
+              const next = dockSwipe(e.clientY - start, dockMin);
+              if (next !== null) {
+                swiped.current = true;
+                readerDockMinStore.set(next);
+              }
+            }}
+            onClick={() => {
+              if (swiped.current) {
+                swiped.current = false;
+                return;
+              }
+              readerDockMinStore.set(!dockMin);
+            }}
+          >
+            <span className="rd-handle-grip" aria-hidden="true" />
+            <span className="rd-handle-chev" aria-hidden="true">
+              <ReaderIcon name="chevronDown" size={18} />
+            </span>
+          </button>
+          {dockMin ? <ReaderPlayerMini locale={locale} page={page} /> : null}
+        </div>
+        {dockMin ? null : <ReaderPlayer locale={locale} page={page} />}
         <nav className="pager rd-pager" aria-label={t(locale, "quran.pageNav")}>
           <button
             type="button"

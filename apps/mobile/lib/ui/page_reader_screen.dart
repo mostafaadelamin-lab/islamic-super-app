@@ -404,7 +404,11 @@ class PageReaderScreenState extends State<PageReaderScreen> {
             if (!compact && !full) zoomRow,
             if (full) const SizedBox.shrink(key: Key('readerFullScreen')),
             Expanded(key: const Key('readerBody'), child: body),
-            if (!full) _controlsStrip(context, wide: ayahSidePanel(size)),
+            if (!full)
+              ListenableBuilder(
+                listenable: context.services.settings,
+                builder: (context, _) => _controlsStrip(context, wide: ayahSidePanel(size)),
+              ),
           ],
         ),
       ),
@@ -416,6 +420,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   /// side by side so the page keeps the height.
   Widget _controlsStrip(BuildContext context, {required bool wide}) {
     final scheme = Theme.of(context).colorScheme;
+    final playerMin = context.services.settings.readerPlayerMin;
     final sel = _selected;
     final actions = sel != null && _tab == ReaderTab.mushaf
         ? AyahSheet(
@@ -461,18 +466,20 @@ class PageReaderScreenState extends State<PageReaderScreen> {
             actions,
             Divider(height: 1, color: scheme.outlineVariant),
           ],
+          // A handle slides the player and the page slider down to one thin row (owner 2026-11-17).
+          ReaderPlayerHandle(page: _page),
           if (wide) ...[
-            _sliderRow(context),
+            if (!playerMin) _sliderRow(context),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Expanded(child: ReaderPlayerCard(page: _page, flat: true)),
+                Expanded(child: playerMin ? const SizedBox.shrink() : ReaderPlayerCard(page: _page, flat: true)),
                 SizedBox(width: ayahPanelWidth, child: _bottomBar(context)),
               ],
             ),
           ] else ...[
-            ReaderPlayerCard(page: _page, flat: true),
-            _sliderRow(context),
+            if (!playerMin) ReaderPlayerCard(page: _page, flat: true),
+            if (!playerMin) _sliderRow(context),
             _bottomBar(context),
           ],
         ],

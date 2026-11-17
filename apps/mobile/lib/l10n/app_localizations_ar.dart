@@ -3326,4 +3326,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'مرّ عام هجري كامل منذ بلغ مالي النصاب';
+
+  @override
+  String get readerPlayerHide => 'إخفاء المشغّل';
+
+  @override
+  String get readerPlayerShow => 'إظهار المشغّل';
 }

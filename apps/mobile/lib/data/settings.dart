@@ -273,6 +273,13 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// The Mushaf reader's player slid down to a thin strip (owner 2026-11-17), so it stops covering the page.
+  bool get readerPlayerMin => _prefs.getBool('reader.playerMin') ?? false;
+  Future<void> setReaderPlayerMin(bool on) async {
+    await _prefs.setBool('reader.playerMin', on);
+    notifyListeners();
+  }
+
   // --- Khatma (see domain/khatma.dart) ----------------------------------------------
   /// The current khatma, or null when none was started.
   PageKhatma? get khatma {

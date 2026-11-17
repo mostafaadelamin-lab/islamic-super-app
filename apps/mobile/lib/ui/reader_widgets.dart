@@ -874,3 +874,136 @@ class _HelpBodyState extends State<_HelpBody> {
     );
   }
 }
+
+/// The handle on top of the reader's player (owner 2026-11-17): tap it, or drag it down / up, to slide the
+/// player and page slider down to one thin row and bring them back, so they stop covering the Mushaf page.
+class ReaderPlayerHandle extends StatelessWidget {
+  const ReaderPlayerHandle({super.key, required this.page});
+  final int page;
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.services.settings;
+    return ListenableBuilder(
+      listenable: settings,
+      builder: (context, _) {
+        final l = context.l10n;
+        final scheme = Theme.of(context).colorScheme;
+        final min = settings.readerPlayerMin;
+        final handle = Semantics(
+          button: true,
+          expanded: !min,
+          label: min ? l.readerPlayerShow : l.readerPlayerHide,
+          child: Tooltip(
+            message: min ? l.readerPlayerShow : l.readerPlayerHide,
+            child: InkWell(
+              key: const Key('playerHandle'),
+              borderRadius: BorderRadius.circular(14),
+              onTap: () => unawaited(settings.setReaderPlayerMin(!min)),
+              child: SizedBox(
+                width: 72,
+                height: min ? 44 : 30,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: scheme.primary.withValues(alpha: 0.45),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    AnimatedRotation(
+                      turns: min ? 0.5 : 0,
+                      duration: const Duration(milliseconds: 200),
+                      child: RIcon(RIcons.chevronDown, size: 18, color: scheme.primary),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+        return GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onVerticalDragEnd: (d) {
+            final v = d.primaryVelocity ?? 0;
+            if (v > 0 && !min) unawaited(settings.setReaderPlayerMin(true));
+            if (v < 0 && min) unawaited(settings.setReaderPlayerMin(false));
+          },
+          child: min
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd),
+                  child: Row(
+                    children: [
+                      Expanded(child: ReaderPlayerMini(page: page)),
+                      handle,
+                    ],
+                  ),
+                )
+              : Center(child: handle),
+        );
+      },
+    );
+  }
+}
+
+/// The player slid down: play / pause and what is playing, in one thin row.
+class ReaderPlayerMini extends StatelessWidget {
+  const ReaderPlayerMini({super.key, required this.page});
+  final int page;
+
+  @override
+  Widget build(BuildContext context) {
+    final s = context.services;
+    final rec = s.recitation;
+    return ListenableBuilder(
+      listenable: rec,
+      builder: (context, _) {
+        final l = context.l10n;
+        final scheme = Theme.of(context).colorScheme;
+        final active = rec.isActive;
+        final error = rec.state == RecitationState.error;
+        final item = rec.current;
+        String now = rec.reciter.name(context.isArabic);
+        if (item != null && item.isBasmala) {
+          now = '${l.audioBasmala} · ${surahName(context, s.content.quran.surah(item.ref.surah))}';
+        } else if (item != null) {
+          now = ayahLabel(context, item.ref);
+        }
+        final playing = active && rec.state == RecitationState.playing;
+        return Row(
+          key: const Key('miniPlayerStrip'),
+          children: [
+            IconButton.filled(
+              key: const Key('miniStripPlay'),
+              tooltip: playing ? l.audioPause : l.audioPlay,
+              iconSize: 20,
+              onPressed: () {
+                if (!active) {
+                  unawaited(rec.playOnFrom(page));
+                } else if (playing) {
+                  unawaited(rec.pause());
+                } else {
+                  unawaited(rec.resume());
+                }
+              },
+              icon: RIcon(playing ? RIcons.pause : (error ? RIcons.refresh : RIcons.play), size: 20),
+            ),
+            const SizedBox(width: DesignTokens.spaceSm),
+            Expanded(
+              child: Text(
+                error ? l.audioOffline : now,
+                key: const Key('miniStripTitle'),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: error ? scheme.error : scheme.onSurface),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}

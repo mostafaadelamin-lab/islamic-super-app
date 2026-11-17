@@ -1306,3 +1306,111 @@ body:has(.rd-full) .player,
     height: 40px;
   }
 }
+
+/*
+ * ---- Slide the player down (owner 2026-11-17): a handle on top of the bottom strip hides the player and the
+ * page slider, leaving one thin row (play / pause + what is playing) so the Mushaf page is not covered.
+ * Tap the handle or drag it down / up. The page refits itself because the dock publishes its height.
+ */
+.rd-handle-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-height: 26px;
+  padding: 0 var(--space-md);
+}
+.rd-handle {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 26px;
+  margin-inline: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0 0 14px 14px;
+  background: none;
+  color: var(--color-primary);
+  cursor: pointer;
+  touch-action: none;
+}
+.rd-handle-grip {
+  width: 40px;
+  height: 4px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--color-primary) 45%, transparent);
+}
+.rd-handle-chev {
+  display: flex;
+  line-height: 0;
+  margin-top: -1px;
+  transition: transform 0.2s ease;
+}
+.rd-dock[data-min="true"] .rd-handle-chev {
+  transform: rotate(180deg);
+}
+.rd-handle:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+.rd-dock[data-min="true"] .rd-pager {
+  display: none;
+}
+.rd-dock[data-min="true"] .rd-handle-row {
+  padding-block: 4px;
+}
+/* collapsed: handle on the start side, mini player fills the row */
+.rd-dock[data-min="true"] .rd-handle {
+  order: 2;
+  margin-inline: 0;
+}
+.rdp-mini {
+  order: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.rdp-mini-play {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-on-primary, #fff);
+  cursor: pointer;
+}
+.rdp-mini-now {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+.rd-dock:not([data-min="true"]) .rd-handle-row {
+  min-height: 22px;
+}
+.rd-dock:not([data-min="true"]) .rd-handle {
+  height: 22px;
+}
+@media (min-width: 1024px) and (min-height: 560px) and (orientation: landscape) {
+  .rd:not(.rd-full) .rd-dock {
+    grid-template-areas: "actions actions" "handle handle" "pager pager" "player bar";
+  }
+  .rd:not(.rd-full) .rd-dock .rd-handle-row {
+    grid-area: handle;
+    padding: 0;
+  }
+  .rd:not(.rd-full) .rd-dock[data-min="true"] {
+    grid-template-areas: "actions actions" "handle bar";
+  }
+}

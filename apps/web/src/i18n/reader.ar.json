@@ -56,5 +56,7 @@
   "reader.nextSurah": "السورة التالية",
   "reader.prevSurah": "السورة السابقة",
   "reader.fontUp": "تكبير الخط",
-  "reader.fontDown": "تصغير الخط"
+  "reader.fontDown": "تصغير الخط",
+  "reader.playerHide": "إخفاء المشغّل",
+  "reader.playerShow": "إظهار المشغّل"
 }

@@ -4887,5 +4887,9 @@
   "zakatYearPassed": "A full Hijri year has passed since my wealth reached the nisab",
   "@zakatYearPassed": {
     "description": "shared key \"zakat.yearPassed\""
-  }
+  },
+  "readerPlayerHide": "Hide player",
+  "readerPlayerShow": "Show player",
+  "@readerPlayerHide": {"description": "Handle above the Mushaf player that slides it down"},
+  "@readerPlayerShow": {"description": "Handle that brings the slid-down Mushaf player back"}
 }

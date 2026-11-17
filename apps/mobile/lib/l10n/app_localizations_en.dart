@@ -3344,4 +3344,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'A full Hijri year has passed since my wealth reached the nisab';
+
+  @override
+  String get readerPlayerHide => 'Hide player';
+
+  @override
+  String get readerPlayerShow => 'Show player';
 }

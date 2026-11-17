@@ -202,3 +202,50 @@ export function ReaderPlayer({ locale, page }: { locale: Locale; page: number })
     </section>
   );
 }
+
+/**
+ * The player slid down (owner 2026-11-17): one thin strip with what is playing and play / pause,
+ * so the Mushaf page gets the room back while recitation keeps going.
+ */
+export function ReaderPlayerMini({ locale, page }: { locale: Locale; page: number }) {
+  const ps = useSyncExternalStore(player.subscribe, player.get, player.getServer);
+  const prefs = useStore(audioStore);
+  const active = ps.status !== "idle";
+  const playing = ps.status === "playing" || ps.status === "loading";
+  const reciter = RECITERS.find((r) => r.folder === prefs.reciter) ?? RECITERS[0]!;
+  const item = active ? ps.queue[ps.cursor.index] : undefined;
+  const surah = item ? surahName(item.s, locale) : "";
+  let now = locale === "ar" ? reciter.ar : reciter.en;
+  if (item?.kind === "ayah")
+    now = t(locale, "quran.ayahRef", { surah, ayah: localizeDigits(item.a, locale) });
+  if (item?.kind === "basmala") now = t(locale, "audio.basmala", { surah });
+  return (
+    <section className="rdp-mini" aria-label={t(locale, "audio.player")} data-testid="reader-player-mini">
+      {active ? (
+        <button
+          type="button"
+          className="rdp-mini-play"
+          aria-label={playing ? t(locale, "audio.pause") : t(locale, "audio.play")}
+          data-testid="mini-toggle"
+          data-state={ps.status}
+          onClick={() => player.toggle()}
+        >
+          <Icon name={playing ? "pause" : "play"} size={18} />
+        </button>
+      ) : (
+        <button
+          type="button"
+          className="rdp-mini-play"
+          aria-label={t(locale, "audio.playPage")}
+          data-testid="mini-play-page"
+          onClick={() => player.play({ kind: "pageOn", page })}
+        >
+          <Icon name="play" size={18} />
+        </button>
+      )}
+      <span className="rdp-mini-now" data-testid="mini-now">
+        {now}
+      </span>
+    </section>
+  );
+}

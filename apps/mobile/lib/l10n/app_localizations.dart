@@ -6001,6 +6001,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A full Hijri year has passed since my wealth reached the nisab'**
   String get zakatYearPassed;
+
+  /// Handle above the Mushaf player that slides it down
+  ///
+  /// In en, this message translates to:
+  /// **'Hide player'**
+  String get readerPlayerHide;
+
+  /// Handle that brings the slid-down Mushaf player back
+  ///
+  /// In en, this message translates to:
+  /// **'Show player'**
+  String get readerPlayerShow;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
