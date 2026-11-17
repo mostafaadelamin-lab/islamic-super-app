@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.2] — Mushaf player slides down — 2026-11-17
+### Added
+- Mushaf (app + website, phones and tablets): a handle with an arrow on top of the player. Tap it or drag it down and the player and the page slider slide down to one thin row (play / pause and what is playing), so the Mushaf page gets the room back; tap or drag up to bring them back. The choice is remembered.
+
 ## [1.2.1] — smaller app, owner's screen changes — 2026-11-17
 ### Added
 - Mushaf (app + website): «السورة كاملة», the whole surah on one scrolling screen on the Mushaf paper with A+ / A− (the same KFGQPC text, no change to letters or tashkeel); next/previous page buttons and a sideways swipe at the end of the verses and tafsir views.
