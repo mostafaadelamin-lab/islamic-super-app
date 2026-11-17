@@ -61,6 +61,7 @@ class TasbihController extends ChangeNotifier {
   Future<void> removeCustom(String id) => _set(_book.removeCustom(id));
   Future<void> setMode(TasbihMode m) => _set(_book.copyWith(mode: m));
   Future<void> setColor(String c) => _set(tasbihColors.containsKey(c) ? _book.copyWith(color: c) : _book);
+  Future<void> setStyle(BeadStyle v) => _set(_book.copyWith(style: v));
   Future<void> setSound(bool on) => _set(_book.copyWith(sound: on));
   Future<void> setVibrate(bool on) => _set(_book.copyWith(vibrate: on));
   Future<void> clearHistory() => _set(_book.copyWith(history: const {}));

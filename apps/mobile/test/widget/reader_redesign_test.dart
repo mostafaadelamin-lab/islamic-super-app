@@ -165,4 +165,54 @@ void main() {
       expect(tester.takeException(), isNull, reason: t);
     }
   });
+
+  testWidgets('whole surah: the surah\'s canonical text flows on one screen; A+ enlarges it; next surah', (
+    tester,
+  ) async {
+    final (app, _) = await open(tester, 3);
+    await tester.tap(find.byKey(const Key('readerTab-surah')));
+    await tester.pumpAndSettle();
+    expect(reader(tester).tab, ReaderTab.surah);
+    expect(find.byKey(const Key('surahFlow-2')), findsOneWidget);
+    expect(find.byKey(const Key('surahFlowAyah-2-6')), findsOneWidget, reason: 'opens at the reader\'s page');
+    // Every ayah is the stored text with only the display map applied.
+    final q = app.services.content.quran;
+    final rich = tester
+        .widgetList<RichText>(
+          find.descendant(of: find.byKey(const Key('surahFlow-2')), matching: find.byType(RichText)),
+        )
+        .map((r) => r.text.toPlainText())
+        .join();
+    expect(rich, contains(app.services.content.renderMap.forDisplay(q.text(const AyahRef(2, 6)))));
+    final before = app.services.settings.quranFontSize;
+    await tester.tap(find.byKey(const Key('readerFontUp')));
+    await tester.pumpAndSettle();
+    expect(app.services.settings.quranFontSize, before + 2);
+    await tester.tap(find.byKey(const Key('surahFlowAyah-2-6')));
+    await tester.pumpAndSettle();
+    expect(reader(tester).selected, const AyahRef(2, 6));
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('phone held sideways: the page keeps the height, the tools move to a side column; full screen opens', (
+    tester,
+  ) async {
+    final audio = FakeAudioBackend();
+    await pumpApp(tester, audio: audio, locale: 'ar', size: const Size(956, 440));
+    await pushScreen(tester, const PageReaderScreen(initialPage: 154));
+    expect(find.byKey(const Key('readerSide')), findsOneWidget);
+    final body = tester.getSize(find.byKey(const Key('readerBody')));
+    expect(body.height, greaterThan(400));
+    expect(body.width, greaterThan(500));
+    await tester.tap(find.byKey(const Key('audioTafsirToggle')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('splitView')), findsOneWidget);
+    await tester.ensureVisible(find.byKey(const Key('readerFull')));
+    await tester.tap(find.byKey(const Key('readerFull')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('readerFullScreen')), findsOneWidget, reason: 'opens while listening with tafsir');
+    expect(find.byKey(const Key('splitView')), findsNothing);
+    expect(find.byKey(const Key('readerSide')), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
 }

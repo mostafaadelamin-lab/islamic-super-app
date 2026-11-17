@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
 import '../app_services.dart';
+import '../data/adhkar_audio_files.dart';
 import '../data/audio_focus.dart';
 import '../data/media_session.dart';
+import '../l10n/app_localizations.dart';
 import '../domain/nasheeds.dart';
 import '../theme/design_tokens.dart';
 import 'background_audio.dart';
@@ -13,16 +15,18 @@ import 'l10n_ext.dart';
 import 'r_icon.dart';
 import 'youtube_player.dart';
 
-/// Sheikh Mishary Alafasy's morning and evening adhkar ship inside the app
-/// (offline); the others play from his official channel.
+/// Sheikh Mishary Alafasy's morning and evening adhkar are downloaded the first
+/// time they are played and then play offline (AdhkarAudioFiles); the others
+/// play from his official channel.
 const offlineAdhkarAudio = <AdhkarAudio, String>{
-  AdhkarAudio.morning: 'assets/audio/adhkar_morning_alafasy.mp3',
-  AdhkarAudio.evening: 'assets/audio/adhkar_evening_alafasy.mp3',
+  AdhkarAudio.morning: 'adhkar_morning_alafasy',
+  AdhkarAudio.evening: 'adhkar_evening_alafasy',
 };
 
 /// The player the sheet uses; replaced in widget tests.
 abstract class AssetAudio {
-  Future<Duration?> load(String asset);
+  /// [source]: a bundled asset ("assets/...") or a file on the phone.
+  Future<Duration?> load(String source);
   Future<void> play();
   Future<void> pause();
   Future<void> seek(Duration d);
@@ -34,7 +38,7 @@ abstract class AssetAudio {
 class JustAudioAsset implements AssetAudio {
   final _p = AudioPlayer();
   @override
-  Future<Duration?> load(String asset) => _p.setAsset(asset);
+  Future<Duration?> load(String source) => source.startsWith('assets/') ? _p.setAsset(source) : _p.setFilePath(source);
   @override
   Future<void> play() async => unawaited(_p.play());
   @override
@@ -56,8 +60,8 @@ AssetAudio Function()? debugAssetAudioFactory;
 /// Opens the right player: offline for morning/evening, YouTube otherwise.
 Future<void> openAdhkarAudio(BuildContext context, AdhkarAudio a, String title) {
   final l = context.l10n;
-  final asset = offlineAdhkarAudio[a];
-  if (asset == null) {
+  final file = offlineAdhkarAudio[a];
+  if (file == null) {
     return showYouTubeSheet(context, videoId: adhkarAudioVideo[a]!, title: title, subtitle: l.adhkarAlafasy);
   }
   final s = context.services;
@@ -67,14 +71,33 @@ Future<void> openAdhkarAudio(BuildContext context, AdhkarAudio a, String title) 
     context: context,
     showDragHandle: true,
     builder: (_) => SafeArea(
-      child: _AssetPlayer(asset: asset, title: title, subtitle: l.adhkarAlafasy),
+      child: _AssetPlayer(
+        files: s.adhkarAudio,
+        file: file,
+        videoId: adhkarAudioVideo[a],
+        title: title,
+        subtitle: l.adhkarAlafasy,
+      ),
     ),
   );
 }
 
 class _AssetPlayer extends StatefulWidget {
-  const _AssetPlayer({required this.asset, required this.title, required this.subtitle});
-  final String asset;
+  const _AssetPlayer({
+    required this.files,
+    required this.file,
+    this.videoId,
+    required this.title,
+    required this.subtitle,
+  });
+
+  final AdhkarAudioFiles files;
+
+  /// Name of the recording (AdhkarAudioFiles).
+  final String file;
+
+  /// The same recording on the official channel, offered when the download fails.
+  final String? videoId;
   final String title;
   final String subtitle;
 
@@ -91,7 +114,7 @@ class _AssetPlayerState extends State<_AssetPlayer> {
 
   /// Lock screen / notification entry, so the recording goes on in the background.
   late final SimpleMediaSource _media = SimpleMediaSource(
-    id: 'adhkar/${widget.asset}',
+    id: 'adhkar/${widget.file}',
     title: widget.title,
     artist: widget.subtitle,
     onAction: (a) {
@@ -130,14 +153,46 @@ class _AssetPlayerState extends State<_AssetPlayer> {
     _bridge = b?..attach(_media);
   }
 
+  /// null: looking for the file; true: downloading it; false: ready (or failed, see [_failed]).
+  bool? _downloading;
+  bool _failed = false;
+
   Future<void> _start() async {
+    final files = widget.files;
+    if (_failed) {
+      setState(() {
+        _failed = false;
+        _downloading = null;
+      });
+    }
     try {
-      final d = await _a.load(widget.asset);
+      var path = await files.local(widget.file);
+      if (path == null) {
+        if (!mounted) return;
+        setState(() => _downloading = true);
+        path = await files.fetch(widget.file);
+      }
+      if (!mounted) return;
+      if (path == null) {
+        setState(() {
+          _downloading = false;
+          _failed = true;
+        });
+        return;
+      }
+      setState(() => _downloading = false);
+      final d = await _a.load(path);
       if (!mounted) return;
       setState(() => _total = d ?? Duration.zero);
       await _a.play();
     } catch (e) {
       debugPrint('adhkar audio failed: $e');
+      if (mounted) {
+        setState(() {
+          _downloading = false;
+          _failed = true;
+        });
+      }
     }
   }
 
@@ -160,7 +215,6 @@ class _AssetPlayerState extends State<_AssetPlayer> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final theme = Theme.of(context);
-    final max = _total.inMilliseconds.toDouble();
     return Padding(
       key: const Key('adhkarAudioSheet'),
       padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, 0, DesignTokens.spaceLg, DesignTokens.spaceLg),
@@ -170,26 +224,54 @@ class _AssetPlayerState extends State<_AssetPlayer> {
         children: [
           Text(widget.title, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
           Text(widget.subtitle, style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
-          Slider(
-            key: const Key('adhkarAudioSeek'),
-            value: max <= 0 ? 0 : _pos.inMilliseconds.clamp(0, max).toDouble(),
-            max: max <= 0 ? 1 : max,
-            onChanged: max <= 0 ? null : (v) => _a.seek(Duration(milliseconds: v.round())),
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(_fmt(_pos)), Text(_fmt(_total))]),
-          Center(
-            child: IconButton.filled(
-              key: const Key('adhkarAudioPlay'),
-              iconSize: 36,
-              tooltip: _playing ? l.audioPause : l.audioPlay,
-              icon: RIcon(_playing ? RIcons.pause : RIcons.play, color: theme.colorScheme.onPrimary),
-              onPressed: () => _playing ? _a.pause() : _a.play(),
-            ),
-          ),
-          const SizedBox(height: DesignTokens.spaceXs),
-          Text(l.adhkarOfflineNote, textAlign: TextAlign.center, style: theme.textTheme.bodySmall),
+          if (_downloading ?? true) ...[
+            const SizedBox(height: DesignTokens.spaceLg),
+            const Center(child: CircularProgressIndicator(key: Key('adhkarAudioLoading'))),
+            const SizedBox(height: DesignTokens.spaceSm),
+            if (_downloading == true) Text(l.adhkarAudioDownloading, textAlign: TextAlign.center),
+          ] else if (_failed) ...[
+            const SizedBox(height: DesignTokens.spaceLg),
+            Text(l.adhkarAudioDownloadFailed, key: const Key('adhkarAudioFailed'), textAlign: TextAlign.center),
+            const SizedBox(height: DesignTokens.spaceSm),
+            FilledButton(key: const Key('adhkarAudioRetry'), onPressed: _start, child: Text(l.commonRetry)),
+            if (widget.videoId case final id?)
+              TextButton(
+                key: const Key('adhkarAudioYouTube'),
+                onPressed: () {
+                  final nav = Navigator.of(context);
+                  nav.pop();
+                  showYouTubeSheet(nav.context, videoId: id, title: widget.title, subtitle: widget.subtitle);
+                },
+                child: Text(l.adhkarAudioWatchOnline),
+              ),
+          ] else
+            ..._player(l, theme),
         ],
       ),
     );
+  }
+
+  List<Widget> _player(AppLocalizations l, ThemeData theme) {
+    final max = _total.inMilliseconds.toDouble();
+    return [
+      Slider(
+        key: const Key('adhkarAudioSeek'),
+        value: max <= 0 ? 0 : _pos.inMilliseconds.clamp(0, max).toDouble(),
+        max: max <= 0 ? 1 : max,
+        onChanged: max <= 0 ? null : (v) => _a.seek(Duration(milliseconds: v.round())),
+      ),
+      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(_fmt(_pos)), Text(_fmt(_total))]),
+      Center(
+        child: IconButton.filled(
+          key: const Key('adhkarAudioPlay'),
+          iconSize: 36,
+          tooltip: _playing ? l.audioPause : l.audioPlay,
+          icon: RIcon(_playing ? RIcons.pause : RIcons.play, color: theme.colorScheme.onPrimary),
+          onPressed: () => _playing ? _a.pause() : _a.play(),
+        ),
+      ),
+      const SizedBox(height: DesignTokens.spaceXs),
+      Text(l.adhkarOfflineNote, textAlign: TextAlign.center, style: theme.textTheme.bodySmall),
+    ];
   }
 }

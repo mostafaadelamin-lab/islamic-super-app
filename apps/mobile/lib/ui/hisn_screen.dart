@@ -184,7 +184,6 @@ class _HisnChapterScreenState extends State<HisnChapterScreen> {
     final settings = context.services.settings;
     return StopDhikrAudioOnExit(
       child: Scaffold(
-        bottomNavigationBar: const DhikrPlayerBar(),
         appBar: AppBar(
           title: Text(chapter.title, textDirection: TextDirection.rtl),
           actions: const [AdhkarViewToggle()],

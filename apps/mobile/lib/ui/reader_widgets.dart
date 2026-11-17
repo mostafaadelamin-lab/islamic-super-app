@@ -18,8 +18,8 @@ import 'review_notice.dart';
 import 'widgets.dart';
 import 'r_icon.dart';
 
-/// المصحف / الآيات / التفسير.
-enum ReaderTab { mushaf, ayat, tafsir }
+/// المصحف / السورة كاملة / الآيات / التفسير.
+enum ReaderTab { mushaf, surah, ayat, tafsir }
 
 /// Segmented control at the top of the Mushaf reader.
 class ReaderTabs extends StatelessWidget {
@@ -33,6 +33,7 @@ class ReaderTabs extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final labels = {
       ReaderTab.mushaf: l.readerTabMushaf,
+      ReaderTab.surah: l.readerTabSurah,
       ReaderTab.ayat: l.readerTabAyat,
       ReaderTab.tafsir: l.readerTabTafsir,
     };
@@ -42,34 +43,42 @@ class ReaderTabs extends StatelessWidget {
         color: Color.alphaBlend(scheme.onSurface.withValues(alpha: 0.08), scheme.surface),
         borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
       ),
+      // The tabs share the row's width (a long label takes two lines) instead of shrinking the whole row,
+      // so every tab stays a full-size tap target with large text too.
       child: Row(
-        mainAxisSize: MainAxisSize.min,
         children: [
           for (final e in labels.entries)
-            Semantics(
-              selected: e.key == tab,
-              button: true,
-              child: InkWell(
-                key: Key('readerTab-${e.key.name}'),
-                borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
-                onTap: () => onChanged(e.key),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 160),
-                  constraints: const BoxConstraints(minWidth: 60, minHeight: 54),
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm + 4),
-                  decoration: BoxDecoration(
-                    color: e.key == tab ? scheme.surface : Colors.transparent,
-                    borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
-                    boxShadow: e.key == tab
-                        ? const [BoxShadow(color: Color(0x22000000), blurRadius: 3, offset: Offset(0, 1))]
-                        : null,
-                  ),
-                  child: Text(
-                    e.value,
-                    style: TextStyle(
-                      fontWeight: e.key == tab ? FontWeight.w600 : FontWeight.w400,
-                      color: e.key == tab ? scheme.primary : scheme.onSurface,
+            Expanded(
+              flex: e.key == ReaderTab.surah ? 5 : 4,
+              child: Semantics(
+                selected: e.key == tab,
+                button: true,
+                child: InkWell(
+                  key: Key('readerTab-${e.key.name}'),
+                  borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
+                  onTap: () => onChanged(e.key),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 160),
+                    constraints: const BoxConstraints(minHeight: 54),
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: e.key == tab ? scheme.surface : Colors.transparent,
+                      borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
+                      boxShadow: e.key == tab
+                          ? const [BoxShadow(color: Color(0x22000000), blurRadius: 3, offset: Offset(0, 1))]
+                          : null,
+                    ),
+                    child: Text(
+                      e.value,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        height: 1.15,
+                        fontWeight: e.key == tab ? FontWeight.w600 : FontWeight.w400,
+                        color: e.key == tab ? scheme.primary : scheme.onSurface,
+                      ),
                     ),
                   ),
                 ),
@@ -397,8 +406,13 @@ class PageAyahList extends StatefulWidget {
     required this.onAyahTap,
     this.selected,
     this.fontSize,
+    this.onPage,
   });
   final int page;
+
+  /// Turns to another page from the list itself (buttons at the end, or a swipe), so ayah-by-ayah
+  /// reading goes on without going back to the Mushaf (owner, 2026-11-17). Null: no page turning here.
+  final ValueChanged<int>? onPage;
 
   /// Quran text size; the reader's setting when null (smaller beside the page in "listen with tafsir").
   final double? fontSize;
@@ -447,74 +461,126 @@ class _PageAyahListState extends State<PageAyahList> {
         return FutureBuilder<TafsirContent>(
           future: _tafsir,
           initialData: s.tafsir.loaded,
-          builder: (context, snap) => ListView.builder(
-            key: Key(widget.withTafsir ? 'tafsirList' : 'ayatList'),
-            // A page has few ayahs: build them all, so the recited one can always be scrolled to.
-            cacheExtent: 100000,
-            padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceLg),
-            itemCount: refs.length,
-            itemBuilder: (context, i) {
-              final r = refs[i];
-              final isPlaying = r == playing;
-              final isSelected = r == widget.selected;
-              final tafsir = snap.data?.text(r.surah, r.ayah);
-              return Container(
-                key: _keys.putIfAbsent(r, GlobalKey.new),
-                margin: const EdgeInsets.only(top: DesignTokens.spaceSm),
-                decoration: BoxDecoration(
-                  color: isPlaying ? scheme.secondaryContainer : null,
-                  borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-                  border: Border.all(color: isSelected ? scheme.primary : Colors.transparent, width: 2),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (r.ayah == 1) ...[
-                      SizedBox(
-                        height: size * 1.9,
-                        child: SurahBand(surah: r.surah, font: size, height: size * 1.9),
-                      ),
-                      if (basmalaBeforeSurah(r.surah))
-                        Text(
-                          s.content.renderMap.forDisplay(q.text(const AyahRef(1, 1))),
-                          textAlign: TextAlign.center,
-                          textDirection: TextDirection.rtl,
-                          style: TextStyle(fontFamily: DesignTokens.fontQuran, fontSize: size * 0.9, height: 2),
+          builder: (context, snap) => _swipe(
+            context,
+            ListView.builder(
+              key: Key(widget.withTafsir ? 'tafsirList' : 'ayatList'),
+              // A page has few ayahs: build them all, so the recited one can always be scrolled to.
+              cacheExtent: 100000,
+              padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceLg),
+              itemCount: refs.length + (widget.onPage == null ? 0 : 1),
+              itemBuilder: (context, i) {
+                if (i == refs.length) return _pageButtons(context, q.pageCount);
+                final r = refs[i];
+                final isPlaying = r == playing;
+                final isSelected = r == widget.selected;
+                final tafsir = snap.data?.text(r.surah, r.ayah);
+                return Container(
+                  key: _keys.putIfAbsent(r, GlobalKey.new),
+                  margin: const EdgeInsets.only(top: DesignTokens.spaceSm),
+                  decoration: BoxDecoration(
+                    color: isPlaying ? scheme.secondaryContainer : null,
+                    borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+                    border: Border.all(color: isSelected ? scheme.primary : Colors.transparent, width: 2),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (r.ayah == 1) ...[
+                        SizedBox(
+                          height: size * 1.9,
+                          child: SurahBand(surah: r.surah, font: size, height: size * 1.9),
                         ),
+                        if (basmalaBeforeSurah(r.surah))
+                          Text(
+                            s.content.renderMap.forDisplay(q.text(const AyahRef(1, 1))),
+                            textAlign: TextAlign.center,
+                            textDirection: TextDirection.rtl,
+                            style: TextStyle(fontFamily: DesignTokens.fontQuran, fontSize: size * 0.9, height: 2),
+                          ),
+                      ],
+                      InkWell(
+                        key: Key('listAyah-${r.surah}-${r.ayah}'),
+                        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+                        onTap: () => widget.onAyahTap(r),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceXs),
+                          child: AyahTextBlock(ref: r, size: size),
+                        ),
+                      ),
+                      if (widget.withTafsir)
+                        Container(
+                          key: Key('listTafsir-${r.surah}-${r.ayah}'),
+                          margin: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
+                          padding: const EdgeInsets.all(DesignTokens.spaceMd),
+                          decoration: BoxDecoration(
+                            color: scheme.surfaceContainer,
+                            borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+                          ),
+                          child: Text(
+                            tafsir ?? (snap.hasError ? context.l10n.tafsirError : context.l10n.tafsirLoading),
+                            textDirection: TextDirection.rtl,
+                            style: duaStyle(context, size: (size * 0.66).clamp(14, 26)),
+                          ),
+                        )
+                      else
+                        Divider(color: scheme.outlineVariant),
                     ],
-                    InkWell(
-                      key: Key('listAyah-${r.surah}-${r.ayah}'),
-                      borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-                      onTap: () => widget.onAyahTap(r),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceXs),
-                        child: AyahTextBlock(ref: r, size: size),
-                      ),
-                    ),
-                    if (widget.withTafsir)
-                      Container(
-                        key: Key('listTafsir-${r.surah}-${r.ayah}'),
-                        margin: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
-                        padding: const EdgeInsets.all(DesignTokens.spaceMd),
-                        decoration: BoxDecoration(
-                          color: scheme.surfaceContainer,
-                          borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-                        ),
-                        child: Text(
-                          tafsir ?? (snap.hasError ? context.l10n.tafsirError : context.l10n.tafsirLoading),
-                          textDirection: TextDirection.rtl,
-                          style: duaStyle(context, size: (size * 0.66).clamp(14, 26)),
-                        ),
-                      )
-                    else
-                      Divider(color: scheme.outlineVariant),
-                  ],
-                ),
-              );
-            },
+                  ),
+                );
+              },
+            ),
           ),
         );
       },
+    );
+  }
+
+  /// A swipe turns the page like the Mushaf: left to right = next page, right to left = previous.
+  Widget _swipe(BuildContext context, Widget child) {
+    final go = widget.onPage;
+    if (go == null) return child;
+    final rtl = Directionality.of(context) == TextDirection.rtl;
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onHorizontalDragEnd: (d) {
+        final v = d.primaryVelocity ?? 0;
+        if (v.abs() < 300) return;
+        final forward = rtl ? v > 0 : v < 0;
+        final p = widget.page + (forward ? 1 : -1);
+        if (p >= 1 && p <= context.services.content.quran.pageCount) go(p);
+      },
+      child: child,
+    );
+  }
+
+  Widget _pageButtons(BuildContext context, int count) {
+    final l = context.l10n;
+    final go = widget.onPage!;
+    return Padding(
+      key: const Key('ayahListPageButtons'),
+      padding: const EdgeInsets.only(top: DesignTokens.spaceLg),
+      child: Row(
+        children: [
+          Expanded(
+            child: OutlinedButton.icon(
+              key: const Key('ayahListPrevPage'),
+              onPressed: widget.page <= 1 ? null : () => go(widget.page - 1),
+              icon: const RIcon(RIcons.chevron),
+              label: Text(l.readerPrevPage),
+            ),
+          ),
+          const SizedBox(width: DesignTokens.spaceSm),
+          Expanded(
+            child: FilledButton.icon(
+              key: const Key('ayahListNextPage'),
+              onPressed: widget.page >= count ? null : () => go(widget.page + 1),
+              icon: const RIcon(RIcons.chevronForward),
+              label: Text(l.readerNextPage),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

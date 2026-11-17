@@ -22,6 +22,7 @@ import 'mushaf_page.dart';
 import 'quran_index_entry.dart';
 import 'reader_widgets.dart';
 import 'search_screen.dart';
+import 'surah_flow.dart';
 import 'surah_info_sheet.dart';
 import 'r_icon.dart';
 
@@ -183,6 +184,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   void _setPage(int p) {
     setState(() {
       _page = p;
+      _flowSurah = null;
       _sliderValue = null;
     });
     final q = context.services.content.quran;
@@ -216,8 +218,18 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   }
 
   void _setTab(ReaderTab t) {
-    if (t != _tab) setState(() => _tab = t);
+    if (t != _tab) {
+      setState(() {
+        _tab = t;
+        _flowSurah = null;
+      });
+    }
   }
+
+  /// The surah of "السورة كاملة": the one picked with its buttons, else the selected ayah's, else the page's first.
+  int? _flowSurah;
+  int get _surahShown =>
+      _flowSurah ?? _selected?.surah ?? context.services.content.quran.ayahsOnPage(_page).first.surah;
 
   Future<void> _onAyahTap(AyahRef r) async {
     setState(() => _selected = r);
@@ -240,9 +252,9 @@ class PageReaderScreenState extends State<PageReaderScreen> {
 
   /// True while only the Mushaf page is shown (no tabs, player or bars).
   bool get fullScreen {
-    final s = context.services;
-    final split = s.settings.tafsirWithRecitation && s.recitation.isActive;
-    return _tab == ReaderTab.mushaf && !_controls && _selected == null && !split;
+    // «ملء الشاشة» works while listening with tafsir too (owner 2026-11-17): the page alone, the recited
+    // ayah highlighted; a tap brings the controls and the tafsir half back.
+    return _tab == ReaderTab.mushaf && !_controls && _selected == null;
   }
 
   @override
@@ -267,105 +279,131 @@ class PageReaderScreenState extends State<PageReaderScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _syncSystemUi(full);
     });
+    final header = Padding(
+      padding: const EdgeInsets.fromLTRB(DesignTokens.spaceXs, DesignTokens.spaceXs, DesignTokens.spaceXs, 0),
+      child: Row(
+        children: [
+          BackButton(key: const Key('readerBack'), color: scheme.primary),
+          Expanded(
+            child: ReaderTabs(tab: _tab, onChanged: _setTab),
+          ),
+          if (compact)
+            PopupMenuButton<int>(
+              key: const Key('readerMore'),
+              tooltip: l.readerHelp,
+              icon: RIcon(RIcons.help, color: scheme.primary),
+              onSelected: (v) {
+                final st = s.settings;
+                switch (v) {
+                  case 0:
+                    unawaited(st.setMushafZoom(st.mushafZoom + 0.25));
+                  case 1:
+                    unawaited(st.setMushafZoom(st.mushafZoom - 0.25));
+                  case 2:
+                    showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah);
+                  default:
+                    showReaderHelp(context, pageCount: _count, onGo: _jump);
+                }
+              },
+              itemBuilder: (_) => [
+                PopupMenuItem(value: 0, child: Text('A+  ${l.readerFontBigger}')),
+                PopupMenuItem(value: 1, child: Text('A−  ${l.readerFontSmaller}')),
+                PopupMenuItem(value: 2, child: Text(l.surahInfoTitle)),
+                PopupMenuItem(value: 3, child: Text(l.readerHelp)),
+              ],
+            )
+          else if (_tab == ReaderTab.mushaf)
+            IconButton(
+              key: const Key('readerHelp'),
+              tooltip: l.readerHelp,
+              color: scheme.primary,
+              icon: const RIcon(RIcons.help),
+              onPressed: () => showReaderHelp(context, pageCount: _count, onGo: _jump),
+            )
+          else
+            const SizedBox(width: 48),
+        ],
+      ),
+    );
+    final zoomRow = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm),
+      child: Row(
+        children: [
+          _ZoomButtons(mushaf: _tab == ReaderTab.mushaf),
+          const SizedBox(width: DesignTokens.spaceSm),
+          Expanded(
+            child: Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: TextButton.icon(
+                key: const Key('readerSurahInfo'),
+                icon: const RIcon(RIcons.info, size: 20),
+                label: Text(l.surahInfoTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
+                onPressed: () => showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+    final body = Stack(
+      children: [
+        Positioned.fill(top: full ? _exitStrip : 0, child: _pinchZoom(context, _pages(context))),
+        if (full) ..._turnArrows(context),
+        if (full && _hint) _hintBanner(context),
+        if (full) PositionedDirectional(top: 3, end: DesignTokens.spaceSm, child: _exitFullButton(context)),
+        if (_tab == ReaderTab.mushaf && (_liveZoom ?? context.services.settings.mushafZoom) > 1)
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: DesignTokens.spaceMd,
+            child: Center(child: _zoomResetChip(context)),
+          ),
+      ],
+    );
+    // A phone held sideways (owner 2026-11-17): the page keeps the whole height and fills its width
+    // (scrolling down); the tabs, ayah actions, player and bar share a slim side column.
+    if (!full && isLandscapePhone(size)) {
+      return Scaffold(
+        body: SafeArea(
+          child: Row(
+            children: [
+              Expanded(key: const Key('readerBody'), child: body),
+              Material(
+                key: const Key('readerSide'),
+                color: scheme.surface,
+                elevation: 8,
+                child: SizedBox(
+                  width: math.min(360, size.width * 0.4),
+                  child: Column(
+                    children: [
+                      header,
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [zoomRow, _controlsStrip(context, wide: false)],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: full ? AppTheme.of(context, 'surface2') : null,
       body: SafeArea(
         bottom: false,
         child: Column(
           children: [
-            if (!full)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(DesignTokens.spaceXs, DesignTokens.spaceXs, DesignTokens.spaceXs, 0),
-                child: Row(
-                  children: [
-                    BackButton(key: const Key('readerBack'), color: scheme.primary),
-                    Expanded(
-                      child: Center(
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: ReaderTabs(tab: _tab, onChanged: _setTab),
-                        ),
-                      ),
-                    ),
-                    if (compact)
-                      PopupMenuButton<int>(
-                        key: const Key('readerMore'),
-                        tooltip: l.readerHelp,
-                        icon: RIcon(RIcons.help, color: scheme.primary),
-                        onSelected: (v) {
-                          final st = s.settings;
-                          switch (v) {
-                            case 0:
-                              unawaited(st.setMushafZoom(st.mushafZoom + 0.25));
-                            case 1:
-                              unawaited(st.setMushafZoom(st.mushafZoom - 0.25));
-                            case 2:
-                              showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah);
-                            default:
-                              showReaderHelp(context, pageCount: _count, onGo: _jump);
-                          }
-                        },
-                        itemBuilder: (_) => [
-                          PopupMenuItem(value: 0, child: Text('A+  ${l.readerFontBigger}')),
-                          PopupMenuItem(value: 1, child: Text('A−  ${l.readerFontSmaller}')),
-                          PopupMenuItem(value: 2, child: Text(l.surahInfoTitle)),
-                          PopupMenuItem(value: 3, child: Text(l.readerHelp)),
-                        ],
-                      )
-                    else if (_tab == ReaderTab.mushaf)
-                      IconButton(
-                        key: const Key('readerHelp'),
-                        tooltip: l.readerHelp,
-                        color: scheme.primary,
-                        icon: const RIcon(RIcons.help),
-                        onPressed: () => showReaderHelp(context, pageCount: _count, onGo: _jump),
-                      )
-                    else
-                      const SizedBox(width: 48),
-                  ],
-                ),
-              ),
-            if (!compact && !full)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm),
-                child: Row(
-                  children: [
-                    _ZoomButtons(mushaf: _tab == ReaderTab.mushaf),
-                    const SizedBox(width: DesignTokens.spaceSm),
-                    Expanded(
-                      child: Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: TextButton.icon(
-                          key: const Key('readerSurahInfo'),
-                          icon: const RIcon(RIcons.info, size: 20),
-                          label: Text(l.surahInfoTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
-                          onPressed: () =>
-                              showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            if (!full) header,
+            if (!compact && !full) zoomRow,
             if (full) const SizedBox.shrink(key: Key('readerFullScreen')),
-            Expanded(
-              key: const Key('readerBody'),
-              child: Stack(
-                children: [
-                  Positioned.fill(top: full ? _exitStrip : 0, child: _pinchZoom(context, _pages(context))),
-                  if (full) ..._turnArrows(context),
-                  if (full && _hint) _hintBanner(context),
-                  if (full) PositionedDirectional(top: 3, end: DesignTokens.spaceSm, child: _exitFullButton(context)),
-                  if (_tab == ReaderTab.mushaf && (_liveZoom ?? context.services.settings.mushafZoom) > 1)
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: DesignTokens.spaceMd,
-                      child: Center(child: _zoomResetChip(context)),
-                    ),
-                ],
-              ),
-            ),
+            Expanded(key: const Key('readerBody'), child: body),
             if (!full) _controlsStrip(context, wide: ayahSidePanel(size)),
           ],
         ),
@@ -649,9 +687,23 @@ class PageReaderScreenState extends State<PageReaderScreen> {
     return ListenableBuilder(
       listenable: Listenable.merge([s.recitation, s.settings]),
       builder: (context, _) {
-        final split = _tab == ReaderTab.mushaf && s.settings.tafsirWithRecitation && s.recitation.isActive;
+        final split = !full && _tab == ReaderTab.mushaf && s.settings.tafsirWithRecitation && s.recitation.isActive;
         if (split) return _duo(context);
         final controller = _tab == ReaderTab.mushaf ? _pageController() : _controller;
+        Widget mushafPage(int i) => TabletPage(
+          child: ZoomedPage(
+            zoom: _liveZoom ?? s.settings.mushafZoom,
+            child: MushafPageView(
+              page: i + 1,
+              selected: _selected,
+              playing: s.recitation.currentRef,
+              onAyahTap: _onAyahTap,
+              immersive: full,
+              // A tap beside the text only closes the ayah's actions (no show/hide toggling).
+              onBackgroundTap: () => setState(() => _selected = null),
+            ),
+          ),
+        );
         return switch (_tab) {
           ReaderTab.mushaf => PageView.builder(
             key: const Key('mushafPageView'),
@@ -663,20 +715,22 @@ class PageReaderScreenState extends State<PageReaderScreen> {
             itemBuilder: (context, i) => BookPage(
               index: i,
               controller: controller,
-              child: TabletPage(
-                child: ZoomedPage(
-                  zoom: _liveZoom ?? s.settings.mushafZoom,
-                  child: MushafPageView(
-                    page: i + 1,
-                    selected: _selected,
-                    playing: s.recitation.currentRef,
-                    onAyahTap: _onAyahTap,
-                    immersive: full,
-                    // A tap beside the text only closes the ayah's actions (no show/hide toggling).
-                    onBackgroundTap: () => setState(() => _selected = null),
-                  ),
-                ),
-              ),
+              under: i + 1 < _count ? mushafPage(i + 1) : null,
+              child: mushafPage(i),
+            ),
+          ),
+          ReaderTab.surah => ReadableWidth(
+            child: SurahFlow(
+              key: ValueKey('surahFlowView-$_surahShown'),
+              surah: _surahShown,
+              page: _page,
+              selected: _selected,
+              playing: s.recitation.currentRef,
+              onAyahTap: _onAyahTap,
+              onSurah: (n) {
+                _setPage(s.content.quran.pageOf(AyahRef(n, 1)));
+                setState(() => _flowSurah = n);
+              },
             ),
           ),
           ReaderTab.ayat => ReadableWidth(
@@ -686,6 +740,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
               withTafsir: false,
               selected: _selected,
               onAyahTap: _onAyahTap,
+              onPage: _setPage,
             ),
           ),
           ReaderTab.tafsir => ReadableWidth(
@@ -695,6 +750,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
               withTafsir: true,
               selected: _selected,
               onAyahTap: _onAyahTap,
+              onPage: _setPage,
             ),
           ),
         };
@@ -709,7 +765,9 @@ class PageReaderScreenState extends State<PageReaderScreen> {
     final s = context.services;
     final l = context.l10n;
     final scheme = Theme.of(context).colorScheme;
-    final wide = ayahSidePanel(MediaQuery.sizeOf(context));
+    final size = MediaQuery.sizeOf(context);
+    // A phone held sideways stacks the halves too: the page fills the width and scrolls to the recited ayah.
+    final wide = ayahSidePanel(size) && !isLandscapePhone(size);
     final playing = s.recitation.currentRef;
     final pageOfPlaying = playing == null ? _page : s.content.quran.pageOf(playing);
     if (pageOfPlaying != _page) {

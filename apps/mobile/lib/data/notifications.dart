@@ -85,7 +85,7 @@ class LocalNotificationsBackend implements NotificationsBackend {
   // channel (the user can still fine-tune each one in the system settings).
   static AndroidNotificationDetails _android(String sound, String stopLabel, String voiceName) {
     // A downloaded recording cannot be a channel sound: the channel keeps the default adhan.
-    final voice = voiceName.startsWith('/') ? 'adhan_haram' : voiceName;
+    final voice = voiceName.startsWith('/') ? 'adhan_mulla' : voiceName;
     return switch (sound) {
       'tone' => const AndroidNotificationDetails(
         'adhan_tone',
@@ -176,7 +176,7 @@ class LocalNotificationsBackend implements NotificationsBackend {
 
   /// The muezzin for the next schedule() call: an Android res/raw name or a
   /// downloaded file's path (set by the scheduler, per prayer).
-  String voice = 'adhan_haram';
+  String voice = 'adhan_mulla';
 
   /// Android: play the full adhan even in silent / vibrate mode (set by the scheduler).
   bool playOnSilent = false;
@@ -277,7 +277,8 @@ class AdhanScheduler {
     final fajr = prayer == 'fajr';
     final v = voices;
     if (v != null) return v.nativeVoice(id, fajr: fajr);
-    return (bundledAdhanVoice(id) ?? bundledAdhanVoice(fajr ? defaultFajrVoice : defaultAdhanVoice)!).raw!;
+    final b = findAdhanVoice(id);
+    return (b != null && b.bundled ? b : findAdhanVoice(fajr ? defaultFajrVoice : defaultAdhanVoice)!).raw!;
   }
 
   /// Pending slots kept for the repeating reminders (khatma, adhkar, Friday),
@@ -465,7 +466,7 @@ class JustAudioAdhanPlayer implements AdhanPlayer {
 
 class AdhanPreview extends ChangeNotifier {
   AdhanPreview(this._player, {Future<String?> Function(String voiceId)? source})
-    : _source = source ?? ((id) async => bundledAdhanVoice(id)?.asset) {
+    : _source = source ?? ((id) async => findAdhanVoice(id)?.asset) {
     _sub = _player.completed.listen((_) => _set(null));
   }
 

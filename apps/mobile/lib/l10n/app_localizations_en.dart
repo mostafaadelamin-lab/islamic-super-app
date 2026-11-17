@@ -308,6 +308,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhkarArabicOnly => 'This content is available in Arabic only.';
 
   @override
+  String get adhkarAudioDownloadFailed => 'Couldn\'t download the recording. Check your internet and try again.';
+
+  @override
+  String get adhkarAudioDownloading =>
+      'Downloading the recording for the first time (about 4 MB); after that it plays without internet.';
+
+  @override
+  String get adhkarAudioWatchOnline => 'Listen online';
+
+  @override
   String get adhkarCards => 'One card at a time';
 
   @override
@@ -366,7 +376,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhkarNextCard => 'Next';
 
   @override
-  String get adhkarOfflineNote => 'Saved in the app; plays without internet.';
+  String get adhkarOfflineNote => 'Saved on your phone; plays without internet.';
 
   @override
   String adhkarPercentDone(String p) {
@@ -1126,6 +1136,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeBigHajj => 'Hajj & Umrah';
 
   @override
+  String get homeBigLibrary => 'Recitations library';
+
+  @override
+  String get homeBigNasheeds => 'Nasheeds';
+
+  @override
   String get homeBigPrayer => 'Prayer times';
 
   @override
@@ -1135,7 +1151,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeBigQuran => 'The Holy Quran';
 
   @override
-  String get homeBigReels => 'Islamic reels';
+  String get homeBigReels => 'Short Islamic videos';
 
   @override
   String get homeBigStories => 'Prophets\' stories';
@@ -2149,6 +2165,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerListenWithTafsir => 'Listen with tafsir';
 
   @override
+  String get readerNextPage => 'Next page';
+
+  @override
+  String get readerNextSurah => 'Next surah';
+
+  @override
   String get readerPickAyah => 'Tap any ayah to show its options here';
 
   @override
@@ -2156,6 +2178,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readerPlayWithTafsir => 'Listen with tafsir';
+
+  @override
+  String get readerPrevPage => 'Previous page';
+
+  @override
+  String get readerPrevSurah => 'Previous surah';
 
   @override
   String readerRepeatN(String n) {
@@ -2179,6 +2207,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readerTabMushaf => 'Mushaf';
+
+  @override
+  String get readerTabSurah => 'Whole surah';
 
   @override
   String get readerTabTafsir => 'Tafsir';
@@ -2777,6 +2808,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tasbihCancel => 'Cancel';
 
   @override
+  String get tasbihChangeDhikr => 'Change dhikr';
+
+  @override
+  String get tasbihChangeLook => 'Bead style';
+
+  @override
   String get tasbihClear => 'Clear';
 
   @override
@@ -2789,6 +2826,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tasbihColor => 'Colour';
 
   @override
+  String get tasbihCount => 'Count';
+
+  @override
   String tasbihCounter(String count, String target) {
     return 'Count $count of $target';
   }
@@ -2798,6 +2838,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tasbihHistoryEmpty => 'Nothing counted yet.';
+
+  @override
+  String get tasbihHistoryOpen => 'Tasbih history';
 
   @override
   String get tasbihMine => 'My adhkar';
@@ -2815,7 +2858,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tasbihNewDhikr => 'Type a dhikr to count';
 
   @override
+  String tasbihOfTarget(String n) {
+    return 'of $n';
+  }
+
+  @override
   String get tasbihPhrase => 'Dhikr';
+
+  @override
+  String get tasbihPickDhikr => 'Choose a dhikr';
 
   @override
   String tasbihRemove(String name) {
@@ -2834,10 +2885,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tasbihSound => 'Sound on each count';
 
   @override
+  String get tasbihStyle => 'Bead style';
+
+  @override
+  String get tasbihStyleCrystal => 'Crystal';
+
+  @override
+  String get tasbihStyleGlossy => 'Glossy';
+
+  @override
+  String get tasbihStyleMarble => 'Marble';
+
+  @override
+  String get tasbihStylePearl => 'Pearl';
+
+  @override
+  String get tasbihStyleWood => 'Wood';
+
+  @override
   String get tasbihTap => 'Tap to count';
 
   @override
   String get tasbihTarget => 'Target';
+
+  @override
+  String tasbihTimes(String n) {
+    return '$n times';
+  }
 
   @override
   String get tasbihTitle => 'Tasbih';
@@ -2857,6 +2931,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tasbihVibrate => 'Vibration';
+
+  @override
+  String get tasbihVirtueSource => 'Hisn al-Muslim';
 
   @override
   String get tourAdhkarBody =>
@@ -3035,6 +3112,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get zakatDueEmpty => '—';
+
+  @override
   String zakatDueGold(String g, String k) {
     return 'Zakat due: $g g of $k-carat gold';
   }
@@ -3042,6 +3122,24 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String zakatDueMoney(String v) {
     return 'Zakat due: $v';
+  }
+
+  @override
+  String get zakatDueNone => 'No zakat';
+
+  @override
+  String zakatDueShortGrams(String g) {
+    return '$g g';
+  }
+
+  @override
+  String zakatDueShortKg(String kg) {
+    return '$kg kg';
+  }
+
+  @override
+  String zakatDueShortMoney(String v) {
+    return '$v EGP';
   }
 
   @override
@@ -3196,6 +3294,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zakatTitle => 'Zakat calculator';
+
+  @override
+  String zakatTotalAlso(String v) {
+    return 'Also: $v';
+  }
+
+  @override
+  String get zakatTotalEmpty => 'Fill in what you have above to see the total here.';
+
+  @override
+  String get zakatTotalNone => 'No zakat is due on what you entered';
+
+  @override
+  String get zakatTotalTitle => 'Total zakat due';
 
   @override
   String get zakatUnitBintLabun => 'bint labun (2-year camel)';

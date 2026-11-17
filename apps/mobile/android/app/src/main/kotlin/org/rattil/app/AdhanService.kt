@@ -21,7 +21,7 @@ import android.os.PowerManager
 import androidx.core.app.NotificationCompat
 
 /**
- * Foreground service that plays the whole adhan (res/raw/adhan.ogg, CC0, see assets/audio/ADHAN_AUDIO.md) at
+ * Foreground service that plays the whole adhan (res/raw/adhan_mulla.ogg or a downloaded recording, see assets/audio/ADHAN_AUDIO.md) at
  * prayer time, with a notification that has a Stop button. A notification sound alone can be cut short by the
  * system; a media-playback foreground service plays the recording to the end. It stops by itself when the adhan
  * ends, when the user taps Stop or swipes the notification, when another app takes the audio (e.g. a phone
@@ -141,7 +141,7 @@ class AdhanService : Service() {
         /**
          * The chosen muezzin: a recording the user downloaded (absolute path inside the app's own storage), or a
          * res/raw recording by name (adhan*). Anything else, or a file that is gone, falls back to the default
-         * Haram adhan.
+         * adhan (Sheikh Ali Mulla, Makkah Haram; the only bundled ones are adhan_mulla and adhan_daghriri_fajr).
          */
         fun voiceUri(ctx: Context, name: String?): Uri {
             if (name != null && name.startsWith("/")) {
@@ -152,16 +152,16 @@ class AdhanService : Service() {
             return Uri.parse("android.resource://${ctx.packageName}/${rawVoice(ctx, name)}")
         }
 
-        /** The res/raw recording called [name] (only adhan* names), else the default Haram adhan. */
+        /** The res/raw recording called [name] (only adhan* names), else the default adhan (adhan_mulla). */
         fun rawVoice(ctx: Context, name: String?): Int {
-            if (name == null || !name.matches(Regex("adhan[a-z0-9_]*"))) return R.raw.adhan_haram
+            if (name == null || !name.matches(Regex("adhan[a-z0-9_]*"))) return R.raw.adhan_mulla
             val id = ctx.resources.getIdentifier(name, "raw", ctx.packageName)
-            return if (id != 0) id else R.raw.adhan_haram
+            return if (id != 0) id else R.raw.adhan_mulla
         }
         const val ACTION_STOP = "org.rattil.app.ADHAN_STOP"
         private const val NOTIFICATION_ID = 7_000_001
         private const val PLAYING_CHANNEL = "adhan_full"
-        private const val FALLBACK_CHANNEL = "adhan_voice_adhan_haram"
+        private const val FALLBACK_CHANNEL = "adhan_voice_adhan_mulla"
         private const val MAX_PLAY_MS = 6 * 60 * 1000L
 
         /** The playing notification's channel has no sound of its own: the service plays the adhan. */
@@ -186,7 +186,7 @@ class AdhanService : Service() {
                 val attrs = AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION).build()
                 nm.createNotificationChannel(
                     NotificationChannel(FALLBACK_CHANNEL, "الأذان · Adhan", NotificationManager.IMPORTANCE_HIGH).apply {
-                        setSound(Uri.parse("android.resource://${ctx.packageName}/${R.raw.adhan_haram}"), attrs)
+                        setSound(Uri.parse("android.resource://${ctx.packageName}/${R.raw.adhan_mulla}"), attrs)
                     },
                 )
             }

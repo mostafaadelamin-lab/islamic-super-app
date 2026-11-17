@@ -14,6 +14,8 @@ import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'play_origin.dart';
 import 'hajj_hub_screen.dart';
+import 'library_screen.dart';
+import 'nasheeds_screen.dart';
 import 'prayer_calendar_screen.dart';
 import 'prayer_model.dart';
 import 'qibla_screen.dart';
@@ -129,6 +131,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       Expanded(child: _BigTile('adhkar', RIcons.dua, l.homeBigAdhkar, () => widget.onSelectTab(3))),
                       const SizedBox(width: DesignTokens.spaceSm),
                       Expanded(child: _BigTile('prayer', RIcons.clock, l.homeBigPrayer, () => widget.onSelectTab(2))),
+                      const SizedBox(width: DesignTokens.spaceSm),
+                      // Hajj & Umrah next to the prayer times (owner, 2026-11-17).
+                      Expanded(
+                        child: _BigTile('hajj', RIcons.kaaba, l.homeBigHajj, () => _push(const HajjHubScreen())),
+                      ),
                     ],
                   ),
                 ),
@@ -143,8 +150,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   b: _WideTile('stories', RIcons.headphones, l.homeBigStories, () => _push(const StoriesScreen())),
                 ),
                 const SizedBox(height: DesignTokens.spaceSm),
-                // Hajj & Umrah has its own entry on the home screen (owner, 2026-11-14).
-                _WideRow(a: _WideTile('hajj', RIcons.kaaba, l.homeBigHajj, () => _push(const HajjHubScreen()))),
+                // Recitations library under the videos, nasheeds under the stories (owner, 2026-11-17).
+                _WideRow(
+                  a: _WideTile('library', RIcons.reciter, l.homeBigLibrary, () => _push(const LibraryScreen())),
+                  b: _WideTile('nasheeds', RIcons.playlist, l.homeBigNasheeds, () => _push(const NasheedsScreen())),
+                ),
                 const SizedBox(height: DesignTokens.spaceMd),
                 const QuranRadioCard(),
                 const SizedBox(height: DesignTokens.spaceMd),
@@ -664,49 +674,75 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
                       children: [
                         Text(l.radioTitle, style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
                         const SizedBox(height: 6),
-                        _Box(
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              key: const Key('radio.station'),
-                              value: station,
-                              isExpanded: true,
-                              icon: const RIcon(RIcons.chevronDown),
-                              items: [
-                                for (final r in featuredRadios)
-                                  DropdownMenuItem(
-                                    value: r.id,
-                                    child: Text(
-                                      context.isArabic ? r.nameAr : r.nameEn,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                if (!featuredRadios.any((r) => r.id == station) && station != 'mushaf')
-                                  DropdownMenuItem(
+                        // The player sits in the same row as the station (owner, 2026-11-17): play, or while the
+                        // live radio plays, pause, the sleep timer and ✕ to close it.
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _Box(
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    key: const Key('radio.station'),
                                     value: station,
-                                    child: Text(
-                                      s.settings.radioStationName ?? station,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                DropdownMenuItem(
-                                  value: 'mushaf',
-                                  child: Text(
-                                    l.radioMushaf,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+                                    isExpanded: true,
+                                    icon: const RIcon(RIcons.chevronDown),
+                                    items: [
+                                      for (final r in featuredRadios)
+                                        DropdownMenuItem(
+                                          value: r.id,
+                                          child: Text(
+                                            context.isArabic ? r.nameAr : r.nameEn,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      if (!featuredRadios.any((r) => r.id == station) && station != 'mushaf')
+                                        DropdownMenuItem(
+                                          value: station,
+                                          child: Text(
+                                            s.settings.radioStationName ?? station,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      DropdownMenuItem(
+                                        value: 'mushaf',
+                                        child: Text(
+                                          l.radioMushaf,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ],
+                                    onChanged: (v) async {
+                                      if (v == null || v == station) return;
+                                      if (livePlaying) await n.stop();
+                                      if (isRadio) await rec.stop();
+                                      await s.settings.setRadioStation(v);
+                                    },
                                   ),
                                 ),
-                              ],
-                              onChanged: (v) async {
-                                if (v == null || v == station) return;
-                                if (livePlaying) await n.stop();
-                                if (isRadio) await rec.stop();
-                                await s.settings.setRadioStation(v);
-                              },
+                              ),
                             ),
-                          ),
+                            const SizedBox(width: DesignTokens.spaceXs),
+                            if (liveOn && n.isActive) ...[
+                              const InlinePlayerMarker(),
+                              IconButton(
+                                key: const Key('inlineStop'),
+                                tooltip: l.storiesStop,
+                                icon: const RIcon(RIcons.close),
+                                onPressed: n.stop,
+                              ),
+                              const SleepTimerButton(),
+                            ],
+                            IconButton.filled(
+                              key: const Key('radio.play'),
+                              tooltip: (playing || livePlaying) ? l.radioPause : l.radioListen,
+                              onPressed: onPlay,
+                              iconSize: 28,
+                              icon: RIcon((playing || livePlaying) ? RIcons.pause : RIcons.play),
+                            ),
+                          ],
                         ),
                         if (station == 'mushaf') ...[
                           const SizedBox(height: 6),
@@ -747,20 +783,6 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(width: DesignTokens.spaceSm),
-                  Column(
-                    children: [
-                      Text(l.radioListen, style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
-                      const SizedBox(height: 6),
-                      IconButton.filled(
-                        key: const Key('radio.play'),
-                        tooltip: (playing || livePlaying) ? l.radioPause : l.radioListen,
-                        onPressed: onPlay,
-                        iconSize: 30,
-                        icon: RIcon((playing || livePlaying) ? RIcons.pause : RIcons.play),
-                      ),
-                    ],
                   ),
                 ],
               ),

@@ -30,8 +30,15 @@ class _RattilAppState extends State<RattilApp> with WidgetsBindingObserver {
     services.settings.addListener(_syncAdhan);
     services.adhanVoices.addListener(_syncAdhan);
     // Renew the next days of adhan notifications on every start (once the
-    // downloaded muezzin recordings are known).
-    unawaited(services.adhanVoices.init().whenComplete(() => services.adhan.sync(force: true)));
+    // downloaded muezzin recordings are known). A chosen muezzin that is not on the phone (only the
+    // defaults are bundled since 1.2.1) is then downloaded quietly; until then the default one sounds.
+    unawaited(
+      services.adhanVoices.init().whenComplete(() async {
+        await services.adhan.sync(force: true);
+        final s = services.settings;
+        await services.adhanVoices.fetchMissing([s.adhanVoice, s.adhanFajrVoice]);
+      }),
+    );
     unawaited(_widget.sync(force: true));
     // Dhikr recordings also show on the lock screen and keep playing in the background.
     services.media?.attach(_dhikrSource);

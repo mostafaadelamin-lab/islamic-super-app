@@ -10,6 +10,7 @@ import {
   useSyncExternalStore,
   type PointerEvent as ReactPointerEvent,
   type CSSProperties,
+  type ReactNode,
   type RefObject,
 } from "react";
 import { dirOf, t, type Locale } from "@/lib/i18n";
@@ -41,7 +42,7 @@ import { TafsirPanel } from "./TafsirPanel";
 import { ReaderPlayer } from "./ReaderPlayer";
 import { ReaderIcon } from "./ReaderIcon";
 import { KhatmaSheet } from "./KhatmaSheet";
-import { PageAyahList, PageTafsirList } from "./ReaderViews";
+import { PageAyahList, PageButtons, PageTafsirList, SurahFlow, usePageSwipe } from "./ReaderViews";
 import "./reader.css";
 
 export interface PageReaderProps {
@@ -107,8 +108,6 @@ const GUIDE_KEY = "rattil.readerGuide";
 const HINT_MS = 7000;
 const DRAG_START_PX = 8;
 const TURN_MS = 220;
-const TILT_DIVISOR = 40;
-const REBOUND = 0.35;
 /** Pinch zoom of the page: up to 3×; letting go under 108% goes back to 100%. */
 const ZOOM_MAX = 3;
 const ZOOM_SNAP = 1.08;
@@ -256,9 +255,10 @@ export function ayahTextOnPage(p: ResolvedPage, [s, a]: Ref): string | null {
   return parts.length ? parts.map((g) => g.text).join(" ") : null;
 }
 
-export type ReaderTab = "mushaf" | "ayat" | "tafsir";
+export type ReaderTab = "mushaf" | "surah" | "ayat" | "tafsir";
 const TABS: readonly { id: ReaderTab; key: string }[] = [
   { id: "mushaf", key: "reader.tabMushaf" },
+  { id: "surah", key: "reader.tabSurah" },
   { id: "ayat", key: "reader.tabAyat" },
   { id: "tafsir", key: "reader.tabTafsir" },
 ];
@@ -287,7 +287,13 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     if (!selected) setShowTafsir(false);
   }, [selected]);
   const [drag, setDrag] = useState<{ dx: number; anim: boolean }>({ dx: 0, anim: false });
-  const [tab, setTab] = useState<ReaderTab>("mushaf");
+  const [tab, setTabState] = useState<ReaderTab>("mushaf");
+  // "السورة كاملة": the surah picked with its buttons; otherwise the selected ayah's, else the page's first.
+  const [flowSurah, setFlowSurah] = useState<number | null>(null);
+  const setTab = (next: ReaderTab): void => {
+    setTabState(next);
+    setFlowSurah(null);
+  };
   const [sheet, setSheet] = useState<"help" | "khatma" | null>(null);
   // Full screen only from its own button, and back with the exit button (owner 2026-11-15: one tap to
   // full screen, another to shrink, a long press for options was confusing). A tap on an ayah opens its row.
@@ -637,11 +643,12 @@ export function PageReader({ locale, initial }: PageReaderProps) {
       setDrag({ dx: 0, anim: true });
       return;
     }
+    // The leaf finishes its turn (forward: it folds over the spine; back: the previous leaf lies down),
+    // then the reader shows the new page with nothing moving.
     setDrag({ dx: Math.sign(dx) * width, anim: true });
     window.setTimeout(() => {
       goTo(target);
-      setDrag({ dx: -Math.sign(dx) * width * REBOUND, anim: false });
-      requestAnimationFrame(() => requestAnimationFrame(() => setDrag({ dx: 0, anim: true })));
+      setDrag({ dx: 0, anim: false });
     }, TURN_MS);
   };
 
@@ -706,7 +713,55 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     }
   };
 
-  const tilt = drag.dx / TILT_DIVISOR;
+  // Turning like a paper Mushaf (owner 2026-11-17): the leaf is hinged on the spine (the right edge in Arabic)
+  // and follows the finger. Forward, this page is the leaf and the next one lies still underneath; back, the
+  // previous leaf comes down over this page.
+  const turn = ((): { forward: boolean; other: ResolvedPage; angle: number; shade: number } | null => {
+    if (!drag.dx || zoom > 1 || !data) return null;
+    const forward = dir === "rtl" ? drag.dx > 0 : drag.dx < 0;
+    const other = data.page(page + (forward ? 1 : -1));
+    if (!other) return null;
+    const width = stageRef.current?.clientWidth || 400;
+    const p = Math.min(1, Math.abs(drag.dx) / width);
+    const progress = forward ? p : 1 - p; // how far the leaf has turned away (0 flat, 1 folded over)
+    return { forward, other, angle: (dir === "rtl" ? 1 : -1) * progress * 88, shade: 0.18 * (1 - progress) };
+  })();
+  const spine = dir === "rtl" ? "right center" : "left center";
+  /** The other page of a turn, drawn at the same size as this one (the fitted sizes are copied over). */
+  const turnLayer = (other: ResolvedPage, role: "under" | "leaf"): ReactNode => {
+    const el = pageEl.current;
+    const frame = el?.parentElement;
+    const vars: Record<string, string> = {};
+    for (const [node, names] of [
+      [el, ["--m-size", "--m-lh"]],
+      [frame, ["--m-width", "--m-min-h"]],
+    ] as const) {
+      for (const n of names) {
+        const v = node?.style.getPropertyValue(n);
+        if (v) vars[n] = v;
+      }
+    }
+    return (
+      <div className={`mushaf-turn-layer is-${role}`} aria-hidden="true" data-testid={`mushaf-turn-${role}`}>
+        <div
+          className="mushaf-frame"
+          style={
+            {
+              ...vars,
+              transformOrigin: spine,
+              transform:
+                role === "leaf" && turn ? `perspective(1400px) rotateY(${turn.angle}deg)` : undefined,
+              transition: drag.anim ? `transform ${TURN_MS}ms ease-out` : "none",
+            } as CSSProperties
+          }
+        >
+          <MushafPage data={other} markerLabel={markerLabel} />
+          <div className="mushaf-folio">{localizeDigits(other.page, "ar")}</div>
+          {role === "under" && turn ? <div className="mushaf-shade" style={{ opacity: turn.shade }} /> : null}
+        </div>
+      </div>
+    );
+  };
   const refs = pageAyahRefs(view);
   const playWithTafsir = (s: number, a: number): void => {
     audioStore.set((p) => ({ ...p, tafsir: true }));
@@ -714,6 +769,13 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     setTab("mushaf");
     player.play({ kind: "from", surah: s, ayah: a });
   };
+  const flowShown = flowSurah ?? (sel ? sel[0] : (refs[0]?.[0] ?? 1));
+  /** A list page change starts the new page at its top. */
+  const goToTop = (p: number): void => {
+    goTo(p);
+    window.scrollTo({ top: 0 });
+  };
+  const listSwipe = usePageSwipe(page, dir, goToTop);
   const onListSelect = ([s, a]: Ref): void =>
     setSelected((cur) => (cur === `${s}:${a}` ? null : `${s}:${a}`));
 
@@ -779,18 +841,33 @@ export function PageReader({ locale, initial }: PageReaderProps) {
               <ReaderIcon name="expand" />
             </button>
           ) : (
-            <button
-              type="button"
-              className="rd-icon-btn rd-font"
-              aria-label={t(locale, "reader.fontSize", { size: localizeDigits(prefs.fontSize, locale) })}
-              data-testid="reader-font"
-              onClick={() => prefsStore.set((p) => ({ ...p, fontSize: nextFontSize(p.fontSize) }))}
-            >
-              <span aria-hidden="true">ع</span>
-              <span aria-hidden="true" className="rd-font-label">
-                {t(locale, "reader.font")}
-              </span>
-            </button>
+            // A− / A+ (owner 2026-11-17): the text size of the whole-surah view and the lists.
+            <span className="rd-font-pair">
+              <button
+                type="button"
+                className="rd-icon-btn rd-font"
+                aria-label={t(locale, "reader.fontDown")}
+                data-testid="reader-font-down"
+                disabled={prefs.fontSize <= FONT_MIN}
+                onClick={() =>
+                  prefsStore.set((p) => ({ ...p, fontSize: Math.max(FONT_MIN, p.fontSize - FONT_STEP) }))
+                }
+              >
+                <span aria-hidden="true">A−</span>
+              </button>
+              <button
+                type="button"
+                className="rd-icon-btn rd-font"
+                aria-label={t(locale, "reader.fontUp")}
+                data-testid="reader-font"
+                disabled={prefs.fontSize >= FONT_MAX}
+                onClick={() =>
+                  prefsStore.set((p) => ({ ...p, fontSize: Math.min(FONT_MAX, p.fontSize + FONT_STEP) }))
+                }
+              >
+                <span aria-hidden="true">A+</span>
+              </button>
+            </span>
           )}
         </div>
       </div>
@@ -855,15 +932,17 @@ export function PageReader({ locale, initial }: PageReaderProps) {
           className="mushaf-zoom"
           style={zoom > 1 && zoomBase ? { width: zoomBase.w * zoom, height: zoomBase.h * zoom } : undefined}
         >
+          {turn?.forward ? turnLayer(turn.other, "under") : null}
           <div
             className="mushaf-frame"
             data-testid="mushaf-frame"
             style={{
+              transformOrigin: turn ? spine : undefined,
               transform:
                 zoom > 1
                   ? `scale(${zoom.toFixed(3)})`
-                  : drag.dx
-                    ? `translateX(${drag.dx}px) rotateY(${-tilt}deg)`
+                  : turn?.forward
+                    ? `perspective(1400px) rotateY(${turn.angle}deg)`
                     : undefined,
               transition: drag.anim && zoom === 1 ? `transform ${TURN_MS}ms ease-out` : "none",
             }}
@@ -879,7 +958,9 @@ export function PageReader({ locale, initial }: PageReaderProps) {
             <div className="mushaf-folio" aria-hidden="true">
               {localizeDigits(page, "ar")}
             </div>
+            {turn && !turn.forward ? <div className="mushaf-shade" style={{ opacity: turn.shade }} /> : null}
           </div>
+          {turn && !turn.forward ? turnLayer(turn.other, "leaf") : null}
         </div>
       </div>
       {zoom > 1 ? (
@@ -967,8 +1048,29 @@ export function PageReader({ locale, initial }: PageReaderProps) {
         </div>
       ) : null}
 
+      {tab === "surah" ? (
+        <section aria-label={t(locale, "reader.tabSurah")}>
+          <SurahFlow
+            key={flowShown}
+            locale={locale}
+            surah={flowShown}
+            page={page}
+            data={data}
+            selected={selected}
+            playing={playingKey}
+            onSelect={onListSelect}
+            onSurah={(n) => {
+              goTo(pageForAyah(n, 1));
+              setFlowSurah(n);
+            }}
+          />
+        </section>
+      ) : null}
       {tab === "ayat" ? (
-        <section aria-label={t(locale, "reader.ayatOfPage", { page: localizeDigits(page, locale) })}>
+        <section
+          aria-label={t(locale, "reader.ayatOfPage", { page: localizeDigits(page, locale) })}
+          {...listSwipe}
+        >
           <PageAyahList
             locale={locale}
             refs={refs}
@@ -977,10 +1079,14 @@ export function PageReader({ locale, initial }: PageReaderProps) {
             playing={playingKey}
             onSelect={onListSelect}
           />
+          <PageButtons locale={locale} page={page} onPage={goToTop} />
         </section>
       ) : null}
       {tab === "tafsir" ? (
-        <section aria-label={t(locale, "reader.tafsirOfPage", { page: localizeDigits(page, locale) })}>
+        <section
+          aria-label={t(locale, "reader.tafsirOfPage", { page: localizeDigits(page, locale) })}
+          {...listSwipe}
+        >
           <PageTafsirList
             locale={locale}
             refs={refs}
@@ -989,6 +1095,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
             playing={playingKey}
             onSelect={onListSelect}
           />
+          <PageButtons locale={locale} page={page} onPage={goToTop} />
         </section>
       ) : null}
 

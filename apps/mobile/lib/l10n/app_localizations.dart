@@ -596,6 +596,24 @@ abstract class AppLocalizations {
   /// **'This content is available in Arabic only.'**
   String get adhkarArabicOnly;
 
+  /// shared key "adhkar.audioDownloadFailed"
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t download the recording. Check your internet and try again.'**
+  String get adhkarAudioDownloadFailed;
+
+  /// shared key "adhkar.audioDownloading"
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading the recording for the first time (about 4 MB); after that it plays without internet.'**
+  String get adhkarAudioDownloading;
+
+  /// shared key "adhkar.audioWatchOnline"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen online'**
+  String get adhkarAudioWatchOnline;
+
   /// shared key "adhkar.cards"
   ///
   /// In en, this message translates to:
@@ -707,7 +725,7 @@ abstract class AppLocalizations {
   /// shared key "adhkar.offlineNote"
   ///
   /// In en, this message translates to:
-  /// **'Saved in the app; plays without internet.'**
+  /// **'Saved on your phone; plays without internet.'**
   String get adhkarOfflineNote;
 
   /// shared key "adhkar.percentDone"
@@ -2072,6 +2090,18 @@ abstract class AppLocalizations {
   /// **'Hajj & Umrah'**
   String get homeBigHajj;
 
+  /// shared key "home.big.library"
+  ///
+  /// In en, this message translates to:
+  /// **'Recitations library'**
+  String get homeBigLibrary;
+
+  /// shared key "home.big.nasheeds"
+  ///
+  /// In en, this message translates to:
+  /// **'Nasheeds'**
+  String get homeBigNasheeds;
+
   /// shared key "home.big.prayer"
   ///
   /// In en, this message translates to:
@@ -2093,7 +2123,7 @@ abstract class AppLocalizations {
   /// shared key "home.big.reels"
   ///
   /// In en, this message translates to:
-  /// **'Islamic reels'**
+  /// **'Short Islamic videos'**
   String get homeBigReels;
 
   /// shared key "home.big.stories"
@@ -3866,6 +3896,18 @@ abstract class AppLocalizations {
   /// **'Listen with tafsir'**
   String get readerListenWithTafsir;
 
+  /// shared key "reader.nextPage"
+  ///
+  /// In en, this message translates to:
+  /// **'Next page'**
+  String get readerNextPage;
+
+  /// shared key "reader.nextSurah"
+  ///
+  /// In en, this message translates to:
+  /// **'Next surah'**
+  String get readerNextSurah;
+
   /// shared key "reader.pickAyah"
   ///
   /// In en, this message translates to:
@@ -3883,6 +3925,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Listen with tafsir'**
   String get readerPlayWithTafsir;
+
+  /// shared key "reader.prevPage"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous page'**
+  String get readerPrevPage;
+
+  /// shared key "reader.prevSurah"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous surah'**
+  String get readerPrevSurah;
 
   /// shared key "reader.repeatN"
   ///
@@ -3925,6 +3979,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mushaf'**
   String get readerTabMushaf;
+
+  /// shared key "reader.tabSurah"
+  ///
+  /// In en, this message translates to:
+  /// **'Whole surah'**
+  String get readerTabSurah;
 
   /// shared key "reader.tabTafsir"
   ///
@@ -5000,6 +5060,18 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get tasbihCancel;
 
+  /// shared key "tasbih.changeDhikr"
+  ///
+  /// In en, this message translates to:
+  /// **'Change dhikr'**
+  String get tasbihChangeDhikr;
+
+  /// shared key "tasbih.changeLook"
+  ///
+  /// In en, this message translates to:
+  /// **'Bead style'**
+  String get tasbihChangeLook;
+
   /// shared key "tasbih.clear"
   ///
   /// In en, this message translates to:
@@ -5024,6 +5096,12 @@ abstract class AppLocalizations {
   /// **'Colour'**
   String get tasbihColor;
 
+  /// shared key "tasbih.count"
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get tasbihCount;
+
   /// shared key "tasbih.counter"
   ///
   /// In en, this message translates to:
@@ -5041,6 +5119,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing counted yet.'**
   String get tasbihHistoryEmpty;
+
+  /// shared key "tasbih.historyOpen"
+  ///
+  /// In en, this message translates to:
+  /// **'Tasbih history'**
+  String get tasbihHistoryOpen;
 
   /// shared key "tasbih.mine"
   ///
@@ -5072,11 +5156,23 @@ abstract class AppLocalizations {
   /// **'Type a dhikr to count'**
   String get tasbihNewDhikr;
 
+  /// shared key "tasbih.ofTarget"
+  ///
+  /// In en, this message translates to:
+  /// **'of {n}'**
+  String tasbihOfTarget(String n);
+
   /// shared key "tasbih.phrase"
   ///
   /// In en, this message translates to:
   /// **'Dhikr'**
   String get tasbihPhrase;
+
+  /// shared key "tasbih.pickDhikr"
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a dhikr'**
+  String get tasbihPickDhikr;
 
   /// shared key "tasbih.remove"
   ///
@@ -5102,6 +5198,42 @@ abstract class AppLocalizations {
   /// **'Sound on each count'**
   String get tasbihSound;
 
+  /// shared key "tasbih.style"
+  ///
+  /// In en, this message translates to:
+  /// **'Bead style'**
+  String get tasbihStyle;
+
+  /// shared key "tasbih.style.crystal"
+  ///
+  /// In en, this message translates to:
+  /// **'Crystal'**
+  String get tasbihStyleCrystal;
+
+  /// shared key "tasbih.style.glossy"
+  ///
+  /// In en, this message translates to:
+  /// **'Glossy'**
+  String get tasbihStyleGlossy;
+
+  /// shared key "tasbih.style.marble"
+  ///
+  /// In en, this message translates to:
+  /// **'Marble'**
+  String get tasbihStyleMarble;
+
+  /// shared key "tasbih.style.pearl"
+  ///
+  /// In en, this message translates to:
+  /// **'Pearl'**
+  String get tasbihStylePearl;
+
+  /// shared key "tasbih.style.wood"
+  ///
+  /// In en, this message translates to:
+  /// **'Wood'**
+  String get tasbihStyleWood;
+
   /// shared key "tasbih.tap"
   ///
   /// In en, this message translates to:
@@ -5113,6 +5245,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Target'**
   String get tasbihTarget;
+
+  /// shared key "tasbih.times"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} times'**
+  String tasbihTimes(String n);
 
   /// shared key "tasbih.title"
   ///
@@ -5143,6 +5281,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Vibration'**
   String get tasbihVibrate;
+
+  /// shared key "tasbih.virtueSource"
+  ///
+  /// In en, this message translates to:
+  /// **'Hisn al-Muslim'**
+  String get tasbihVirtueSource;
 
   /// shared key "tour.adhkarBody"
   ///
@@ -5444,6 +5588,12 @@ abstract class AppLocalizations {
   /// **'One fortieth (2.5%) of {net}; the nisab is {nisab}.'**
   String zakatDueDetail(String net, String nisab);
 
+  /// shared key "zakat.dueEmpty"
+  ///
+  /// In en, this message translates to:
+  /// **'—'**
+  String get zakatDueEmpty;
+
   /// shared key "zakat.dueGold"
   ///
   /// In en, this message translates to:
@@ -5455,6 +5605,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Zakat due: {v}'**
   String zakatDueMoney(String v);
+
+  /// shared key "zakat.dueNone"
+  ///
+  /// In en, this message translates to:
+  /// **'No zakat'**
+  String get zakatDueNone;
+
+  /// shared key "zakat.dueShortGrams"
+  ///
+  /// In en, this message translates to:
+  /// **'{g} g'**
+  String zakatDueShortGrams(String g);
+
+  /// shared key "zakat.dueShortKg"
+  ///
+  /// In en, this message translates to:
+  /// **'{kg} kg'**
+  String zakatDueShortKg(String kg);
+
+  /// shared key "zakat.dueShortMoney"
+  ///
+  /// In en, this message translates to:
+  /// **'{v} EGP'**
+  String zakatDueShortMoney(String v);
 
   /// shared key "zakat.dueSilver"
   ///
@@ -5737,6 +5911,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Zakat calculator'**
   String get zakatTitle;
+
+  /// shared key "zakat.totalAlso"
+  ///
+  /// In en, this message translates to:
+  /// **'Also: {v}'**
+  String zakatTotalAlso(String v);
+
+  /// shared key "zakat.totalEmpty"
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in what you have above to see the total here.'**
+  String get zakatTotalEmpty;
+
+  /// shared key "zakat.totalNone"
+  ///
+  /// In en, this message translates to:
+  /// **'No zakat is due on what you entered'**
+  String get zakatTotalNone;
+
+  /// shared key "zakat.totalTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Total zakat due'**
+  String get zakatTotalTitle;
 
   /// shared key "zakat.unitBintLabun"
   ///

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- The adhan recordings (one per muezzin: adhan, adhan_*) are referenced only by name, from Dart
+<!-- The adhan recordings (adhan_mulla, adhan_daghriri_fajr) are referenced only by name, from Dart
      (RawResourceAndroidNotificationSound) and AdhanService.rawVoice, so resource shrinking must keep them. -->
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@raw/adhan,@raw/adhan_*,@drawable/ic_stat_rattil" />
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@raw/adhan_*,@drawable/ic_stat_rattil" />

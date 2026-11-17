@@ -6,6 +6,8 @@ import 'package:rattil/ui/zakat_screen.dart';
 
 import '../helpers.dart';
 
+final _zakatScroll = find.descendant(of: find.byKey(const Key('zakatList')), matching: find.byType(Scrollable)).first;
+
 void main() {
   late ZakatGuide guide;
   setUpAll(() async => guide = (await loadContent()).zakat);
@@ -72,18 +74,26 @@ void main() {
     });
   });
 
-  testWidgets('zakat screen: five tabs; gold result and the value is kept', (tester) async {
+  testWidgets('zakat screen: every kind on one screen, each with its zakat, and the total', (tester) async {
     await pumpApp(tester, locale: 'en', size: tallPhone);
     await pushScreen(tester, const ZakatScreen());
-    for (final t in ['Silver', 'Gold', 'Money', 'Livestock', 'Crops']) {
-      expect(find.text(t), findsOneWidget, reason: t);
+    for (final id in ['money', 'gold', 'silver', 'livestock', 'crops']) {
+      await tester.scrollUntilVisible(find.byKey(Key('zakatSection-$id')), 200, scrollable: _zakatScroll);
+      expect(find.byKey(Key('zakatSection-$id')), findsOneWidget, reason: id);
     }
-    await tester.tap(find.text('Gold'));
-    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.byKey(const Key('zakat.gold')), -200, scrollable: _zakatScroll);
     await tester.enterText(find.byKey(const Key('zakat.gold')), '100');
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('zakatResult')), findsOneWidget);
     expect(find.textContaining('Zakat due: 2.5 g of 21-carat gold'), findsOneWidget);
+    expect(find.descendant(of: find.byKey(const Key('zakatDue-gold')), matching: find.text('2.5 g')), findsOneWidget);
+    await tester.scrollUntilVisible(find.byKey(const Key('zakat.goldPrice')), 200, scrollable: _zakatScroll);
+    await tester.enterText(find.byKey(const Key('zakat.goldPrice')), '4000');
+    await tester.scrollUntilVisible(find.byKey(const Key('zakat.money')), -200, scrollable: _zakatScroll);
+    await tester.enterText(find.byKey(const Key('zakat.money')), '400000');
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.byKey(const Key('zakatTotal')), 300, scrollable: _zakatScroll);
+    // 400000 × 2.5% = 10000, and 2.5 g × 21/24 × 4000 = 8750.
+    expect(find.descendant(of: find.byKey(const Key('zakatTotal')), matching: find.text('18750 EGP')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

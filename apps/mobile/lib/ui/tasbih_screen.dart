@@ -11,8 +11,9 @@ import 'adaptive.dart';
 import 'misbaha.dart';
 import 'r_icon.dart';
 
-/// Tasbih: a counter per dhikr (built-in or the user's own), big-button or
-/// beads mode, nine colours, sound/vibration and a per-day history.
+/// Tasbih: a counter per dhikr (built-in or the user's own), big beads in the middle (several bead styles and
+/// colours, all drawn by the app) or a big button, the count beside them, the dhikr and its virtue (Hisn
+/// al-Muslim) on top; change dhikr, history and the look in sheets (owner, 2026-11-17).
 class TasbihScreen extends StatefulWidget {
   const TasbihScreen({super.key});
 
@@ -61,213 +62,448 @@ class _TasbihScreenState extends State<TasbihScreen> {
     if (ok == true && mounted) await context.services.tasbih.clearHistory();
   }
 
+  /// The virtue of a built-in dhikr, quoted as printed in Hisn al-Muslim («فضل التسبيح والتحميد،
+  /// والتهليل، والتكبير»); none for the others (owner rule: religious text only from a published source).
+  static const _virtueItem = {'tasbih': 4, 'tahmid': 7, 'takbir': 3, 'tahlil': 10};
+  static const _virtueChapter = 'فضل التسبيح والتحميد ، والتهليل ، والتكبير';
+
+  String? _virtue(String id) {
+    final k = _virtueItem[id];
+    if (k == null) return null;
+    for (final ch in context.services.content.adhkar.hisn) {
+      if (ch.title == _virtueChapter && k < ch.items.length) return ch.items[k];
+    }
+    return null;
+  }
+
+  String _styleName(BeadStyle v) {
+    final l = context.l10n;
+    return switch (v) {
+      BeadStyle.glossy => l.tasbihStyleGlossy,
+      BeadStyle.marble => l.tasbihStyleMarble,
+      BeadStyle.wood => l.tasbihStyleWood,
+      BeadStyle.pearl => l.tasbihStylePearl,
+      BeadStyle.crystal => l.tasbihStyleCrystal,
+    };
+  }
+
+  Future<void> _sheet(Key key, Widget Function(BuildContext context) body) => showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    showDragHandle: true,
+    builder: (ctx) => ListenableBuilder(
+      listenable: context.services.tasbih,
+      builder: (ctx, _) => SafeArea(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(ctx).height * 0.85),
+          child: SingleChildScrollView(
+            key: key,
+            padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, 0, DesignTokens.spaceLg, DesignTokens.spaceLg),
+            child: body(ctx),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  /// Bead style, colour, counter shape, sound and vibration.
+  Future<void> _lookSheet() => _sheet(const Key('tasbihLookSheet'), (ctx) {
+    final l = context.l10n;
+    final t = context.services.tasbih;
+    final b = t.book;
+    final theme = Theme.of(ctx);
+    final scheme = theme.colorScheme;
+    final color = Color(tasbihColors[b.color] ?? tasbihColors['emerald']!);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(l.tasbihStyle, style: theme.textTheme.titleMedium),
+        const SizedBox(height: DesignTokens.spaceSm),
+        Wrap(
+          spacing: DesignTokens.spaceSm,
+          runSpacing: DesignTokens.spaceSm,
+          children: [
+            for (final v in BeadStyle.values)
+              ChoiceChip(
+                key: Key('tasbihStyle-${v.name}'),
+                avatar: BeadSwatch(color: color, style: v, size: 26),
+                label: Text(_styleName(v)),
+                selected: b.style == v,
+                showCheckmark: false,
+                onSelected: (_) => t.setStyle(v),
+              ),
+          ],
+        ),
+        const SizedBox(height: DesignTokens.spaceMd),
+        Text(l.tasbihColor, style: theme.textTheme.titleMedium),
+        const SizedBox(height: DesignTokens.spaceSm),
+        Wrap(
+          spacing: DesignTokens.spaceSm,
+          runSpacing: DesignTokens.spaceSm,
+          children: [
+            for (final e in tasbihColors.entries)
+              Semantics(
+                selected: b.color == e.key,
+                button: true,
+                label: e.key,
+                child: InkWell(
+                  key: Key('tasbihColor-${e.key}'),
+                  customBorder: const CircleBorder(),
+                  onTap: () => t.setColor(e.key),
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: b.color == e.key ? scheme.onSurface : Colors.transparent, width: 2.5),
+                    ),
+                    child: BeadSwatch(color: Color(e.value), style: b.style, size: 38),
+                  ),
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: DesignTokens.spaceMd),
+        Center(
+          child: SegmentedButton<TasbihMode>(
+            key: const Key('tasbihMode'),
+            segments: [
+              ButtonSegment(value: TasbihMode.beads, label: Text(l.tasbihModeBeads)),
+              ButtonSegment(value: TasbihMode.button, label: Text(l.tasbihModeButton)),
+            ],
+            selected: {b.mode},
+            onSelectionChanged: (v) => t.setMode(v.first),
+          ),
+        ),
+        SwitchListTile(
+          key: const Key('tasbihSound'),
+          contentPadding: EdgeInsets.zero,
+          title: Text(l.tasbihSound),
+          value: b.sound,
+          onChanged: t.setSound,
+        ),
+        SwitchListTile(
+          key: const Key('tasbihVibrate'),
+          contentPadding: EdgeInsets.zero,
+          title: Text(l.tasbihVibrate),
+          value: b.vibrate,
+          onChanged: t.setVibrate,
+        ),
+      ],
+    );
+  });
+
+  /// The list of adhkar with their counts, the target, and the user's own adhkar.
+  Future<void> _dhikrSheet() => _sheet(const Key('tasbihDhikrSheet'), (ctx) {
+    final l = context.l10n;
+    final t = context.services.tasbih;
+    final b = t.book;
+    final theme = Theme.of(ctx);
+    final scheme = theme.colorScheme;
+    final color = Color(tasbihColors[b.color] ?? tasbihColors['emerald']!);
+    return StatefulBuilder(
+      builder: (ctx, setLocal) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(l.tasbihPickDhikr, textAlign: TextAlign.center, style: theme.textTheme.titleMedium),
+          const SizedBox(height: DesignTokens.spaceSm),
+          for (final id in b.ids)
+            Material(
+              color: b.phrase == id ? color.withValues(alpha: 0.14) : Colors.transparent,
+              borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+              child: ListTile(
+                key: Key('tasbihPick-$id'),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(DesignTokens.radiusMd)),
+                title: Text(b.textOf(id), style: theme.textTheme.titleMedium),
+                subtitle: (b.counters[id]?.count ?? 0) > 0
+                    ? Text(l.tasbihCounter(context.num(b.counters[id]!.count), context.num(b.counters[id]!.target)))
+                    : null,
+                trailing: id.startsWith('c')
+                    ? IconButton(
+                        key: Key('tasbihRemove-$id'),
+                        tooltip: l.tasbihRemove(b.textOf(id)),
+                        icon: const RIcon(RIcons.trash),
+                        onPressed: () => t.removeCustom(id),
+                      )
+                    : Text(
+                        l.tasbihTimes(context.num(b.counters[id]?.target ?? 33)),
+                        style: theme.textTheme.labelLarge?.copyWith(color: scheme.onSurfaceVariant),
+                      ),
+                onTap: () {
+                  t.select(id);
+                  Navigator.of(ctx).pop();
+                },
+              ),
+            ),
+          const Divider(height: DesignTokens.spaceLg),
+          Text(l.tasbihTarget, style: theme.textTheme.titleSmall),
+          const SizedBox(height: DesignTokens.spaceXs),
+          Wrap(
+            spacing: DesignTokens.spaceSm,
+            children: [
+              for (final n in TasbihState.targets)
+                ChoiceChip(
+                  key: Key('tasbihTarget-$n'),
+                  label: Text(context.num(n)),
+                  shape: const StadiumBorder(),
+                  showCheckmark: false,
+                  selectedColor: color.withValues(alpha: 0.18),
+                  selected: t.state.target == n,
+                  onSelected: (_) => t.setTarget(n),
+                ),
+            ],
+          ),
+          const SizedBox(height: DesignTokens.spaceMd),
+          Text(l.tasbihMine, style: theme.textTheme.titleSmall),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  key: const Key('tasbihNew'),
+                  controller: _draft,
+                  maxLength: maxCustomText,
+                  decoration: InputDecoration(hintText: l.tasbihNewDhikr, counterText: ''),
+                  onChanged: (_) => setLocal(() {}),
+                ),
+              ),
+              const SizedBox(width: DesignTokens.spaceSm),
+              FilledButton(
+                key: const Key('tasbihAdd'),
+                onPressed: _draft.text.trim().isEmpty || b.custom.length >= maxCustomAdhkar
+                    ? null
+                    : () async {
+                        await t.addCustom(_draft.text);
+                        _draft.clear();
+                        setLocal(() {});
+                      },
+                child: Text(l.tasbihAdd),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  });
+
+  /// Taps per day and dhikr, with "clear".
+  Future<void> _historySheet() => _sheet(const Key('tasbihHistorySheet'), (ctx) {
+    final l = context.l10n;
+    final b = context.services.tasbih.book;
+    final theme = Theme.of(ctx);
+    final rows = b.historyRows().take(60).toList();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(l.tasbihHistoryOpen, textAlign: TextAlign.center, style: theme.textTheme.titleMedium),
+        if (rows.isEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceLg),
+            child: Text(l.tasbihHistoryEmpty, key: const Key('tasbihHistoryEmpty'), textAlign: TextAlign.center),
+          )
+        else ...[
+          for (final (day, id, n) in rows)
+            ListTile(
+              dense: true,
+              contentPadding: EdgeInsets.zero,
+              title: Text(b.textOf(id)),
+              subtitle: Text(context.num(day)),
+              trailing: Text(context.num(n), style: theme.textTheme.titleMedium),
+            ),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: TextButton.icon(
+              key: const Key('tasbihClearHistory'),
+              onPressed: _confirmClear,
+              icon: const RIcon(RIcons.trash),
+              label: Text(l.tasbihClearHistory),
+            ),
+          ),
+        ],
+      ],
+    );
+  });
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final t = context.services.tasbih;
-    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(title: Text(l.tasbihTitle)),
-      body: ReadableWidth(
-        child: ListenableBuilder(
-          listenable: t,
-          builder: (context, _) {
-            final b = t.book;
-            final st = b.current;
-            final color = Color(tasbihColors[b.color] ?? tasbihColors['emerald']!);
-            final today = b.history[isoDay(DateTime.now())]?[b.phrase] ?? 0;
-            final rows = b.historyRows().take(30).toList();
-            final dark = HSLColor.fromColor(color).withLightness(0.22).toColor();
-            final theme = Theme.of(context);
-            return LayoutBuilder(
-              builder: (context, c) {
-                final dial = math.max(180.0, math.min(280.0, math.min(c.maxWidth - 96, c.maxHeight * 0.45)));
-                return ListView(
-                  padding: const EdgeInsets.fromLTRB(
-                    DesignTokens.spaceLg,
-                    DesignTokens.spaceSm,
-                    DesignTokens.spaceLg,
-                    DesignTokens.spaceXl,
-                  ),
-                  children: [
-                    // Dhikr picker: a row of pills.
-                    SizedBox(
-                      height: 44,
-                      child: ListView(
-                        key: const Key('tasbihPhrase'),
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          for (final id in b.ids)
-                            Padding(
-                              padding: const EdgeInsetsDirectional.only(end: DesignTokens.spaceSm),
-                              child: ChoiceChip(
-                                key: Key('tasbihPick-$id'),
-                                label: ConstrainedBox(
-                                  constraints: const BoxConstraints(maxWidth: 180),
-                                  child: Text(b.textOf(id), overflow: TextOverflow.ellipsis),
+      appBar: AppBar(
+        title: Text(l.tasbihTitle),
+        actions: [
+          IconButton(
+            key: const Key('tasbihLook'),
+            tooltip: l.tasbihChangeLook,
+            icon: const RIcon(RIcons.palette),
+            onPressed: _lookSheet,
+          ),
+        ],
+      ),
+      body: ListenableBuilder(
+        listenable: t,
+        builder: (context, _) {
+          final b = t.book;
+          final st = b.current;
+          final color = Color(tasbihColors[b.color] ?? tasbihColors['emerald']!);
+          final deep = HSLColor.fromColor(color).withLightness(0.24).toColor();
+          final today = b.history[isoDay(DateTime.now())]?[b.phrase] ?? 0;
+          final theme = Theme.of(context);
+          final scheme = theme.colorScheme;
+          final virtue = _virtue(b.phrase);
+          final counter = Semantics(
+            button: true,
+            label: l.tasbihCounter(context.num(st.count), context.num(st.target)),
+            hint: l.tasbihTap,
+            excludeSemantics: true,
+            child: b.mode == TasbihMode.beads
+                ? KeyedSubtree(
+                    key: const Key('tasbihButton'),
+                    child: RealMisbaha(count: st.count, target: st.target, onCount: _tap, bead: color, style: b.style),
+                  )
+                : Center(
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: CustomPaint(
+                        key: const Key('tasbihDial-button'),
+                        painter: _RingPainter(st.count / st.target, color, color.withValues(alpha: 0.18)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Material(
+                            color: color,
+                            shape: const CircleBorder(),
+                            clipBehavior: Clip.antiAlias,
+                            elevation: 4,
+                            child: InkWell(
+                              key: const Key('tasbihButton'),
+                              onTap: _tap,
+                              child: Center(
+                                child: Text(
+                                  l.tasbihTap,
+                                  textAlign: TextAlign.center,
+                                  style: theme.textTheme.titleMedium?.copyWith(color: Colors.white),
                                 ),
-                                selected: b.phrase == id,
-                                showCheckmark: false,
-                                selectedColor: color.withValues(alpha: 0.18),
-                                shape: const StadiumBorder(),
-                                onSelected: (_) => t.select(id),
                               ),
                             ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: DesignTokens.spaceMd),
-                    // The counter: a gradient card with the ring and the big tap button.
-                    Container(
-                      key: const Key('tasbihHero'),
-                      padding: const EdgeInsets.fromLTRB(
-                        DesignTokens.spaceLg,
-                        DesignTokens.spaceXl,
-                        DesignTokens.spaceLg,
-                        DesignTokens.spaceLg,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(28),
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [color, dark],
+                          ),
                         ),
-                        boxShadow: [
-                          BoxShadow(color: color.withValues(alpha: 0.35), blurRadius: 24, offset: const Offset(0, 10)),
-                        ],
                       ),
-                      child: Column(
-                        children: [
-                          Text(
-                            b.textOf(b.phrase),
-                            key: const Key('tasbihPhraseText'),
-                            textAlign: TextAlign.center,
-                            style: theme.textTheme.headlineSmall?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              height: 1.5,
+                    ),
+                  ),
+          );
+          return DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [color.withValues(alpha: 0.10), scheme.surface, color.withValues(alpha: 0.08)],
+              ),
+            ),
+            child: ReadableWidth(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  DesignTokens.spaceLg,
+                  DesignTokens.spaceSm,
+                  DesignTokens.spaceLg,
+                  DesignTokens.spaceMd,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      b.textOf(b.phrase),
+                      key: const Key('tasbihPhraseText'),
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700, height: 1.5),
+                    ),
+                    if (virtue != null) ...[
+                      const SizedBox(height: DesignTokens.spaceSm),
+                      Container(
+                        key: const Key('tasbihVirtue'),
+                        padding: const EdgeInsets.all(DesignTokens.spaceMd),
+                        decoration: BoxDecoration(
+                          color: scheme.surfaceContainerLowest,
+                          borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
+                          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 10)],
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              virtue,
+                              textAlign: TextAlign.center,
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                              textDirection: TextDirection.rtl,
+                              style: theme.textTheme.bodyMedium?.copyWith(height: 1.6),
                             ),
-                          ),
-                          const SizedBox(height: DesignTokens.spaceLg),
-                          if (b.mode == TasbihMode.beads)
-                            Semantics(
-                              button: true,
-                              label: l.tasbihCounter(context.num(st.count), context.num(st.target)),
-                              hint: l.tasbihTap,
-                              excludeSemantics: true,
-                              child: Column(
-                                children: [
-                                  Text(
-                                    '${context.num(st.count)} / ${context.num(st.target)}',
+                            Text(
+                              l.tasbihVirtueSource,
+                              style: theme.textTheme.labelSmall?.copyWith(color: scheme.onSurfaceVariant),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: DesignTokens.spaceSm),
+                    Expanded(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(flex: 5, child: counter),
+                          const SizedBox(width: DesignTokens.spaceSm),
+                          Expanded(
+                            flex: 3,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(l.tasbihCount, textAlign: TextAlign.center, style: theme.textTheme.titleSmall),
+                                FittedBox(
+                                  child: Text(
+                                    context.num(st.count),
                                     key: const Key('tasbihCount'),
-                                    style: theme.textTheme.displaySmall?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  const SizedBox(height: DesignTokens.spaceSm),
-                                  Container(
-                                    key: const Key('tasbihButton'),
-                                    height: dial * 1.55,
-                                    width: dial,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(24),
-                                      gradient: const RadialGradient(
-                                        center: Alignment(0, -0.3),
-                                        radius: 1.1,
-                                        colors: [Color(0xFF2E2A26), Color(0xFF14110F)],
-                                      ),
-                                    ),
-                                    child: RealMisbaha(count: st.count, target: st.target, onCount: _tap),
-                                  ),
-                                ],
-                              ),
-                            )
-                          else
-                            Semantics(
-                              button: true,
-                              label: l.tasbihCounter(context.num(st.count), context.num(st.target)),
-                              hint: l.tasbihTap,
-                              excludeSemantics: true,
-                              child: SizedBox.square(
-                                dimension: dial,
-                                child: CustomPaint(
-                                  key: Key('tasbihDial-${b.mode.name}'),
-                                  painter: b.mode == TasbihMode.beads
-                                      ? _BeadsPainter(
-                                          st.count,
-                                          st.target,
-                                          Colors.white,
-                                          Colors.white.withValues(alpha: 0.15),
-                                        )
-                                      : _RingPainter(
-                                          st.count / st.target,
-                                          Colors.white,
-                                          Colors.white.withValues(alpha: 0.2),
-                                        ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(b.mode == TasbihMode.beads ? 36 : 20),
-                                    child: Material(
-                                      color: Colors.white,
-                                      shape: const CircleBorder(),
-                                      clipBehavior: Clip.antiAlias,
-                                      child: InkWell(
-                                        key: const Key('tasbihButton'),
-                                        onTap: _tap,
-                                        splashColor: color.withValues(alpha: 0.2),
-                                        child: Center(
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              FittedBox(
-                                                child: Text(
-                                                  context.num(st.count),
-                                                  key: const Key('tasbihCount'),
-                                                  style: theme.textTheme.displayLarge?.copyWith(
-                                                    color: dark,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                                ),
-                                              ),
-                                              Text(
-                                                '/ ${context.num(st.target)}',
-                                                style: theme.textTheme.titleMedium?.copyWith(color: color),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                    style: theme.textTheme.displayLarge?.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: color,
                                     ),
                                   ),
                                 ),
-                              ),
+                                Text(
+                                  l.tasbihOfTarget(context.num(st.target)),
+                                  style: theme.textTheme.titleSmall?.copyWith(color: deep),
+                                ),
+                                const SizedBox(height: DesignTokens.spaceMd),
+                                _RoundAction(
+                                  key: const Key('tasbihUndo'),
+                                  icon: RIcons.undo,
+                                  label: l.tasbihUndo,
+                                  onTap: st.count == 0 ? null : t.undo,
+                                ),
+                                const SizedBox(height: DesignTokens.spaceSm),
+                                _RoundAction(
+                                  key: const Key('tasbihReset'),
+                                  icon: RIcons.reset,
+                                  label: l.tasbihReset,
+                                  onTap: t.reset,
+                                ),
+                                const SizedBox(height: DesignTokens.spaceSm),
+                                InkWell(
+                                  key: const Key('tasbihLookSmall'),
+                                  borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+                                  onTap: _lookSheet,
+                                  child: Column(
+                                    children: [
+                                      BeadSwatch(color: color, style: b.style, size: 34),
+                                      Text(l.tasbihChangeLook, style: theme.textTheme.labelMedium),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                          const SizedBox(height: DesignTokens.spaceMd),
-                          Text(l.tasbihTap, style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70)),
-                          const SizedBox(height: DesignTokens.spaceMd),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              _HeroAction(
-                                key: const Key('tasbihUndo'),
-                                icon: RIcons.undo,
-                                label: l.tasbihUndo,
-                                onTap: st.count == 0 ? null : t.undo,
-                              ),
-                              const SizedBox(width: DesignTokens.spaceXl),
-                              _HeroAction(
-                                key: const Key('tasbihReset'),
-                                icon: RIcons.reset,
-                                label: l.tasbihReset,
-                                onTap: t.reset,
-                              ),
-                            ],
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: DesignTokens.spaceLg),
+                    const SizedBox(height: DesignTokens.spaceSm),
                     Row(
                       children: [
                         _Stat(
@@ -281,204 +517,110 @@ class _TasbihScreenState extends State<TasbihScreen> {
                         _Stat(key: const Key('tasbihToday'), text: l.tasbihToday(context.num(today)), color: color),
                       ],
                     ),
-                    const SizedBox(height: DesignTokens.spaceLg),
-                    _Panel(
+                    const SizedBox(height: DesignTokens.spaceSm),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Center(
-                          child: SegmentedButton<TasbihMode>(
-                            key: const Key('tasbihMode'),
-                            segments: [
-                              ButtonSegment(value: TasbihMode.button, label: Text(l.tasbihModeButton)),
-                              ButtonSegment(value: TasbihMode.beads, label: Text(l.tasbihModeBeads)),
-                            ],
-                            selected: {b.mode},
-                            onSelectionChanged: (v) => t.setMode(v.first),
-                          ),
+                        _BigAction(
+                          key: const Key('tasbihChangeDhikr'),
+                          icon: RIcons.beads,
+                          label: l.tasbihChangeDhikr,
+                          color: color,
+                          onTap: _dhikrSheet,
                         ),
-                        const SizedBox(height: DesignTokens.spaceMd),
-                        Wrap(
-                          spacing: DesignTokens.spaceSm,
-                          alignment: WrapAlignment.center,
-                          children: [
-                            for (final n in TasbihState.targets)
-                              ChoiceChip(
-                                key: Key('tasbihTarget-$n'),
-                                label: Text(context.num(n)),
-                                shape: const StadiumBorder(),
-                                showCheckmark: false,
-                                selectedColor: color.withValues(alpha: 0.18),
-                                selected: st.target == n,
-                                onSelected: (_) => t.setTarget(n),
-                              ),
-                          ],
+                        _BigAction(
+                          key: const Key('tasbihHistoryOpen'),
+                          icon: RIcons.calendarCheck,
+                          label: l.tasbihHistoryOpen,
+                          color: color,
+                          onTap: _historySheet,
                         ),
-                        const SizedBox(height: DesignTokens.spaceMd),
-                        Text(l.tasbihColor, style: theme.textTheme.titleSmall),
-                        const SizedBox(height: DesignTokens.spaceSm),
-                        Wrap(
-                          spacing: DesignTokens.spaceSm,
-                          runSpacing: DesignTokens.spaceSm,
-                          children: [
-                            for (final e in tasbihColors.entries)
-                              Semantics(
-                                selected: b.color == e.key,
-                                button: true,
-                                label: e.key,
-                                child: InkWell(
-                                  key: Key('tasbihColor-${e.key}'),
-                                  customBorder: const CircleBorder(),
-                                  onTap: () => t.setColor(e.key),
-                                  child: Container(
-                                    width: 36,
-                                    height: 36,
-                                    decoration: BoxDecoration(
-                                      color: Color(e.value),
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: b.color == e.key ? scheme.onSurface : Colors.transparent,
-                                        width: 3,
-                                      ),
-                                    ),
-                                    child: b.color == e.key
-                                        ? const RIcon(RIcons.check, color: Colors.white, size: 18)
-                                        : null,
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                        SwitchListTile(
-                          key: const Key('tasbihSound'),
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(l.tasbihSound),
-                          value: b.sound,
-                          onChanged: t.setSound,
-                        ),
-                        SwitchListTile(
-                          key: const Key('tasbihVibrate'),
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(l.tasbihVibrate),
-                          value: b.vibrate,
-                          onChanged: t.setVibrate,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: DesignTokens.spaceMd),
-                    _Panel(
-                      children: [
-                        Text(l.tasbihMine, style: theme.textTheme.titleMedium),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                key: const Key('tasbihNew'),
-                                controller: _draft,
-                                maxLength: maxCustomText,
-                                decoration: InputDecoration(hintText: l.tasbihNewDhikr, counterText: ''),
-                                onChanged: (_) => setState(() {}),
-                              ),
-                            ),
-                            const SizedBox(width: DesignTokens.spaceSm),
-                            FilledButton(
-                              key: const Key('tasbihAdd'),
-                              onPressed: _draft.text.trim().isEmpty || b.custom.length >= maxCustomAdhkar
-                                  ? null
-                                  : () async {
-                                      await t.addCustom(_draft.text);
-                                      _draft.clear();
-                                      setState(() {});
-                                    },
-                              child: Text(l.tasbihAdd),
-                            ),
-                          ],
-                        ),
-                        for (final cd in b.custom)
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(cd.text),
-                            trailing: IconButton(
-                              key: Key('tasbihRemove-${cd.id}'),
-                              tooltip: l.tasbihRemove(cd.text),
-                              icon: const RIcon(RIcons.trash),
-                              onPressed: () => t.removeCustom(cd.id),
-                            ),
-                          ),
-                      ],
-                    ),
-                    const SizedBox(height: DesignTokens.spaceMd),
-                    _Panel(
-                      children: [
-                        Text(l.tasbihHistory, style: theme.textTheme.titleMedium),
-                        if (rows.isEmpty)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
-                            child: Text(l.tasbihHistoryEmpty, key: const Key('tasbihHistoryEmpty')),
-                          )
-                        else ...[
-                          for (final (day, id, n) in rows)
-                            ListTile(
-                              dense: true,
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(b.textOf(id)),
-                              subtitle: Text(context.num(day)),
-                              trailing: Text(context.num(n), style: theme.textTheme.titleMedium),
-                            ),
-                          Align(
-                            alignment: AlignmentDirectional.centerStart,
-                            child: TextButton.icon(
-                              key: const Key('tasbihClearHistory'),
-                              onPressed: _confirmClear,
-                              icon: const RIcon(RIcons.trash),
-                              label: Text(l.tasbihClearHistory),
-                            ),
-                          ),
-                        ],
                       ],
                     ),
                   ],
-                );
-              },
-            );
-          },
-        ),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
 }
 
-/// A round translucent button under the counter (undo, reset).
-class _HeroAction extends StatelessWidget {
-  const _HeroAction({super.key, required this.icon, required this.label, required this.onTap});
+/// A small round button with its label under it (undo, reset).
+class _RoundAction extends StatelessWidget {
+  const _RoundAction({super.key, required this.icon, required this.label, required this.onTap});
   final RIconData icon;
   final String label;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    final fg = onTap == null ? Colors.white38 : Colors.white;
+    final scheme = Theme.of(context).colorScheme;
     return Semantics(
       button: true,
       label: label,
+      excludeSemantics: true,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(24),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: DesignTokens.spaceSm),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RIcon(icon, color: fg, size: 20),
-              const SizedBox(width: DesignTokens.spaceXs),
-              Text(
-                label,
-                style: TextStyle(color: fg, fontWeight: FontWeight.w600),
-              ),
-            ],
-          ),
+        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(color: scheme.surfaceContainerHighest, shape: BoxShape.circle),
+              child: RIcon(icon, size: 20, color: onTap == null ? scheme.outline : scheme.onSurface),
+            ),
+            Text(label, style: Theme.of(context).textTheme.labelMedium),
+          ],
         ),
       ),
     );
   }
+}
+
+/// A big round button with its label under it (change dhikr, history).
+class _BigAction extends StatelessWidget {
+  const _BigAction({super.key, required this.icon, required this.label, required this.color, required this.onTap});
+  final RIconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    button: true,
+    label: label,
+    excludeSemantics: true,
+    child: InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
+      child: Padding(
+        padding: const EdgeInsets.all(DesignTokens.spaceXs),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 56,
+              height: 56,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceContainerLowest,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(color: Colors.black.withValues(alpha: 0.10), blurRadius: 8, offset: const Offset(0, 3)),
+                ],
+              ),
+              child: RIcon(icon, color: color, size: 28),
+            ),
+            const SizedBox(height: DesignTokens.spaceXs),
+            Text(label, style: Theme.of(context).textTheme.titleSmall),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 class _Stat extends StatelessWidget {
@@ -497,21 +639,6 @@ class _Stat extends StatelessWidget {
         style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
       ),
     ),
-  );
-}
-
-class _Panel extends StatelessWidget {
-  const _Panel({required this.children});
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(DesignTokens.spaceLg),
-    decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.surfaceContainerLow,
-      borderRadius: BorderRadius.circular(20),
-    ),
-    child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
   );
 }
 
@@ -549,41 +676,4 @@ class _RingPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_RingPainter old) => old.fraction != fraction || old.color != color;
-}
-
-/// A strand of up to 33 beads around the button; beads already counted are filled.
-class _BeadsPainter extends CustomPainter {
-  _BeadsPainter(this.count, this.target, this.color, this.empty);
-  final int count;
-  final int target;
-  final Color color;
-  final Color empty;
-
-  static const strand = 33;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final n = math.min(target, strand);
-    final on = count % n;
-    final center = size.center(Offset.zero);
-    final r = size.shortestSide / 2 - 14;
-    const bead = 9.0;
-    for (var i = 0; i < n; i++) {
-      final a = 2 * math.pi * i / n - math.pi / 2;
-      final p = center + Offset(math.cos(a), math.sin(a)) * r;
-      final radius = i == on ? bead + 3 : bead;
-      canvas.drawCircle(p, radius, Paint()..color = i < on ? color : empty);
-      canvas.drawCircle(
-        p,
-        radius,
-        Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 2
-          ..color = color,
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(_BeadsPainter old) => old.count != count || old.target != target || old.color != color;
 }

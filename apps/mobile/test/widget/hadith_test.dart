@@ -13,7 +13,11 @@ import 'package:rattil/ui/hadith_screen.dart';
 import '../helpers.dart';
 
 List<String> _part(String book, int k) => [
-  for (final t in (readAppJson('assets/hadith/$book/$k.json')['ahadith'] as List<dynamic>)) t as String,
+  for (final t
+      in ((jsonDecode(gunzipText(File('assets/hadith/$book/$k.json.gz').readAsBytesSync()))
+              as Map<String, dynamic>)['ahadith']
+          as List<dynamic>))
+    t as String,
 ];
 
 void main() {
@@ -143,7 +147,7 @@ void main() {
   });
 
   testWidgets('the simplified explanation shows under the hadith, and a list of explained hadiths', (tester) async {
-    final ex = HadithExplanations.parse(File('assets/hadith/explained.v1.json').readAsStringSync());
+    final ex = HadithExplanations.parse(gunzipText(File(HadithExplanations.asset).readAsBytesSync()));
     HadithExplanations.debugUse(ex);
     final nums = ex.numbers('malik');
     expect(nums, contains(4));
@@ -182,7 +186,7 @@ void main() {
     var fail = true;
     final lib = HadithLibrary(catalog, (key) async {
       if (fail) throw const FileSystemException('x');
-      return File(key).readAsStringSync();
+      return gunzipText(File(key).readAsBytesSync());
     }, isolate: false);
     await expectLater(lib.part('malik', 0), throwsA(isA<FileSystemException>()));
     fail = false;

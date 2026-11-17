@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../data/hadith.dart' show loadGzipAsset;
 import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'r_icon.dart';
@@ -31,10 +32,10 @@ class HadithExplanations {
   final Map<String, dynamic> _entries;
   final Map<String, dynamic> _map;
 
-  static const asset = 'assets/hadith/explained.v1.json';
+  static const asset = 'assets/hadith/explained.v1.json.gz';
   static Future<HadithExplanations>? _loading;
 
-  static Future<HadithExplanations> load() => _loading ??= rootBundle.loadString(asset).then(parse);
+  static Future<HadithExplanations> load() => _loading ??= loadGzipAsset(rootBundle, asset).then(parse);
 
   /// Tests: use [e] instead of reading the asset.
   @visibleForTesting

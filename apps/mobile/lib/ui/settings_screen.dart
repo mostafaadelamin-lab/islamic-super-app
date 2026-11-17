@@ -4,7 +4,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../app_services.dart';
 import '../data/content.dart';
-import '../domain/adhan_voices.dart';
 import '../domain/hijri.dart';
 import '../domain/prayer_schedule.dart';
 import '../theme/design_tokens.dart';
@@ -340,19 +339,7 @@ class AdhanSettingsCard extends StatelessWidget {
         ],
         const SizedBox(height: DesignTokens.spaceXs),
         Text(l.adhanNote, style: small),
-        ExpansionTile(
-          key: const Key('adhanCredits'),
-          tilePadding: EdgeInsets.zero,
-          title: Text(l.adhanCredit, key: const Key('adhanCredit'), style: small),
-          children: [
-            for (final v in bundledAdhanVoices)
-              if (v.credit != null)
-                Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: Text('• ${v.name(context.isArabic)}: ${v.credit}', style: small),
-                ),
-          ],
-        ),
+        // The recordings' credits moved to the About page (owner, 2026-11-17).
       ],
     );
   }

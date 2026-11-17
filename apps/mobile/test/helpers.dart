@@ -49,7 +49,7 @@ TafsirContent? _tafsir;
 
 /// The bundled hadith books, read straight from apps/mobile/assets (no isolates in widget tests).
 HadithLibrary testHadith(AppContent c) =>
-    HadithLibrary(c.hadith, (key) async => File(key).readAsStringSync(), isolate: false);
+    HadithLibrary(c.hadith, (key) async => gunzipText(File(key).readAsBytesSync()), isolate: false);
 
 /// The bundled Tafsir al-Muyassar, decoded by [loadContent].
 TafsirContent get testTafsir => _tafsir!;
@@ -114,7 +114,12 @@ Future<TestApp> pumpApp(
 }) async {
   final c = content ?? _content!;
   // The first-run tour is tested on its own (onboarding_test.dart); other tests start on the home screen.
-  SharedPreferences.setMockInitialValues({'locale': locale, 'onboarding.done': true, 'reader.guideDone': true, ...prefs});
+  SharedPreferences.setMockInitialValues({
+    'locale': locale,
+    'onboarding.done': true,
+    'reader.guideDone': true,
+    ...prefs,
+  });
   final p = await SharedPreferences.getInstance();
   final services = AppServices.create(
     content: c,

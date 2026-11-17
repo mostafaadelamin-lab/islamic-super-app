@@ -1,28 +1,24 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 import '../domain/adhan_voices.dart';
 
-/// The muezzin collection and the recordings downloaded from it. A recording
-/// is downloaded once, when the user picks it, and kept in the app's own
-/// storage (`adhan/iw<id>.mp3`) so the adhan sounds without internet.
+/// The muezzins and the recordings downloaded for them. Only the defaults are
+/// bundled; any other recording is downloaded once, when the user picks or
+/// plays it, and kept in the app's own storage (`adhan/<id>.mp3`) so the adhan
+/// sounds without internet afterwards.
 class AdhanVoiceFiles extends ChangeNotifier {
   AdhanVoiceFiles({
     required http.Client httpClient,
     required Future<Directory> Function() root,
-    AssetBundle? bundle,
     this.retryDelay = const Duration(seconds: 2),
   }) : _http = httpClient,
-       _root = root,
-       _bundle = bundle ?? rootBundle;
+       _root = root;
 
   final http.Client _http;
   final Future<Directory> Function() _root;
-  final AssetBundle _bundle;
 
   /// Wait between attempts (the server often answers 502 at the first try).
   final Duration retryDelay;
@@ -35,31 +31,18 @@ class AdhanVoiceFiles extends ChangeNotifier {
   final Set<String> _have = {};
   final Set<String> _downloading = {};
   final Set<String> _failed = {};
-  List<AdhanVoice>? _catalog;
 
   bool isDownloading(String id) => _downloading.contains(id);
   bool hasFailed(String id) => _failed.contains(id);
 
   /// Bundled voices are always there; others once downloaded.
-  bool isReady(String id) => bundledAdhanVoice(id) != null || _have.contains(id);
+  bool isReady(String id) => (findAdhanVoice(id)?.bundled ?? false) || _have.contains(id);
 
-  /// Bundled voices first, then the collection (loaded once from the app's assets).
-  Future<List<AdhanVoice>> catalog() async {
-    final c = _catalog;
-    if (c != null) return c;
-    final raw = jsonDecode(await _bundle.loadString('assets/content/adhan_catalog.json')) as List<dynamic>;
-    return _catalog = [...bundledAdhanVoices, for (final j in raw) AdhanVoice.fromCatalog(j as Map<String, dynamic>)];
-  }
+  /// Every muezzin, bundled first in the list order.
+  Future<List<AdhanVoice>> catalog() async => allAdhanVoices;
 
-  /// A voice by id (bundled or from the collection), or null.
-  Future<AdhanVoice?> voice(String id) async {
-    final b = bundledAdhanVoice(id);
-    if (b != null) return b;
-    for (final v in await catalog()) {
-      if (v.id == id) return v;
-    }
-    return null;
-  }
+  /// A voice by id, or null.
+  Future<AdhanVoice?> voice(String id) async => findAdhanVoice(id);
 
   Future<Directory> _folder() async {
     final d = _dir ??= Directory('${(await _root()).path}/adhan');
@@ -86,8 +69,8 @@ class AdhanVoiceFiles extends ChangeNotifier {
 
   /// What the in-app player plays: the bundled asset or the downloaded file (downloading it first).
   Future<String?> playable(String id) async {
-    final b = bundledAdhanVoice(id);
-    if (b != null) return b.asset;
+    final b = findAdhanVoice(id);
+    if (b != null && b.bundled) return b.asset;
     if (!_have.contains(id) && !await download(id)) return null;
     return localPath(id);
   }
@@ -95,16 +78,29 @@ class AdhanVoiceFiles extends ChangeNotifier {
   /// What the Android alarm plays: a res/raw name or the downloaded file's
   /// path. A voice that is not on the phone falls back to the default one.
   String nativeVoice(String id, {required bool fajr}) {
-    final b = bundledAdhanVoice(id);
-    if (b != null) return b.raw!;
-    return localPath(id) ?? bundledAdhanVoice(fajr ? defaultFajrVoice : defaultAdhanVoice)!.raw!;
+    final b = findAdhanVoice(id);
+    if (b != null && b.bundled) return b.raw!;
+    return localPath(id) ?? findAdhanVoice(fajr ? defaultFajrVoice : defaultAdhanVoice)!.raw!;
   }
 
-  /// Downloads a recording of the collection; true when it is on the phone.
+  /// Downloads, quietly, the chosen muezzins that are not on the phone yet (e.g. after an update that stopped
+  /// bundling them). Each is tried once per app start.
+  Future<void> fetchMissing(Iterable<String> ids) async {
+    for (final id in ids.toSet()) {
+      if (!isReady(id) && !_tried.contains(id)) {
+        _tried.add(id);
+        await download(id);
+      }
+    }
+  }
+
+  final Set<String> _tried = {};
+
+  /// Downloads a muezzin's recording (website first, then its original source); true when it is on the phone.
   Future<bool> download(String id) async {
     if (isReady(id)) return true;
-    final remote = remoteAdhanId(id);
-    if (remote == null || _downloading.contains(id)) return false;
+    final uris = findAdhanVoice(id)?.downloadUris ?? const <Uri>[];
+    if (uris.isEmpty || _downloading.contains(id)) return false;
     _downloading.add(id);
     _failed.remove(id);
     notifyListeners();
@@ -112,12 +108,14 @@ class AdhanVoiceFiles extends ChangeNotifier {
       final d = await _folder();
       for (var attempt = 1; attempt <= _attempts; attempt++) {
         try {
-          final res = await _http.get(adhanDownloadUri(remote)).timeout(const Duration(minutes: 2));
+          // Alternate between the addresses, so one that is down does not use up every attempt.
+          final uri = uris[(attempt - 1) % uris.length];
+          final res = await _http.get(uri).timeout(const Duration(minutes: 2));
           final bytes = res.bodyBytes;
           if (res.statusCode == 200 && bytes.length >= _minBytes && _looksLikeMp3(bytes)) {
             final tmp = File('${d.path}/$id.part');
-            await tmp.writeAsBytes(bytes, flush: true);
-            await tmp.rename('${d.path}/$id.mp3');
+            tmp.writeAsBytesSync(bytes, flush: true);
+            tmp.renameSync('${d.path}/$id.mp3');
             _have.add(id);
             return true;
           }

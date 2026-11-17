@@ -85,3 +85,17 @@ On 2026-11-11 the owner chose these eight recordings from the audio.islamweb.net
 The two Abdul Basit recordings were added in 1.0.9 (owner's request, 2026-11-11), same transcodes (web: MP3 64 kbit/s mono).
 
 Defaults since 1.0.8: `mulla` for the five prayers and `daghriri_fajr` for Fajr. The Commons recordings above stay available.
+
+## Since 1.2.1 (2026-11-17): only the defaults are bundled
+
+To keep the app small (owner's decision, 2026-11-17), the app ships only `mulla` (default) and
+`daghriri_fajr` (default Fajr): `res/raw/adhan_<id>.ogg` and `assets/audio/adhan_<id>.m4a`. Every other muezzin
+is downloaded once, when the user chooses or plays it, into the app's own storage (`adhan/<id>.mp3`) and works
+offline afterwards. It is fetched from the website copy, `https://rattilwasalli.com/audio/adhan_<id>.mp3`
+(the `apps/web/public/audio` files listed above), and, when the website does not answer, from the original source
+(the islamweb download URL above, or the Wikimedia Commons MP3 for `fakhry` and `v2`). The other Android and
+in-app transcodes were deleted from the app; their originals and the web MP3s are unchanged. iPhone
+notifications still use `ios/Runner/adhan_short.caf`.
+
+Alafasy's morning/evening adhkar (`adhkar_{morning,evening}_alafasy.mp3`) are no longer bundled either: the app
+downloads them from `https://rattilwasalli.com/audio/` the first time they are played (lib/data/adhkar_audio_files.dart).

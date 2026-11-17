@@ -158,7 +158,6 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
     final s = context.services;
     return StopDhikrAudioOnExit(
       child: Scaffold(
-        bottomNavigationBar: const DhikrPlayerBar(),
         appBar: AppBar(
           title: Text(session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle),
           actions: [

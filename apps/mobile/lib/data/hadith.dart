@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io' show gzip;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -7,13 +8,14 @@ import '../domain/hadith.dart';
 import '../domain/text.dart';
 
 /// Reads the bundled hadith books part by part (500 hadiths a file), only when they are opened.
+/// The part files are stored gzip-compressed (BOOK/K.json.gz) to keep the app small.
 class HadithLibrary {
   /// [isolate]: decode large part files off the UI thread (off in widget tests, where isolates
   /// don't run under the fake clock).
   HadithLibrary(this.catalog, this._read, {this.isolate = true});
 
   factory HadithLibrary.asset(HadithCatalog catalog, AssetBundle bundle) =>
-      HadithLibrary(catalog, (key) => bundle.loadString(key, cache: false));
+      HadithLibrary(catalog, (key) => loadGzipAsset(bundle, key));
 
   static const catalogAsset = 'assets/hadith/books.v1.json';
 
@@ -29,7 +31,7 @@ class HadithLibrary {
   /// The texts of part [k] of [book] (kept in memory once read; a failed read is retried next time).
   Future<List<String>> part(String book, int k) {
     final key = '$book/$k';
-    return _parts[key] ??= _read('assets/hadith/$key.json').then(
+    return _parts[key] ??= _read('assets/hadith/$key.json.gz').then(
       (raw) => isolate && raw.length > 100000 ? compute(_decode, raw) : _decode(raw),
       onError: (Object e, StackTrace st) {
         _parts.remove(key);
@@ -74,3 +76,12 @@ class HadithLibrary {
     return hits;
   }
 }
+
+/// The UTF-8 text of the gzip-compressed asset [key] (a .json.gz file).
+Future<String> loadGzipAsset(AssetBundle bundle, String key) async {
+  final data = await bundle.load(key);
+  return gunzipText(data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+}
+
+/// Decompresses gzip [bytes] holding UTF-8 text.
+String gunzipText(List<int> bytes) => utf8.decode(gzip.decode(bytes));

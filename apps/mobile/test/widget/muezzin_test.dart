@@ -1,23 +1,57 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:mocktail/mocktail.dart';
 import 'package:rattil/domain/adhan_voices.dart';
 import 'package:rattil/ui/muezzin_screen.dart';
 
 import '../helpers.dart';
 
 void main() {
-  setUpAll(loadContent);
+  setUpAll(() async {
+    registerFallbackValue(Uri());
+    await loadContent();
+  });
 
-  test('only the bundled, openly licensed voices are valid', () {
+  test('the muezzins; only the Makkah Haram defaults are bundled, the others download from the website', () {
     expect(isAdhanVoiceId('haram'), isTrue);
     expect(isAdhanVoiceId('madinah'), isTrue);
     expect(isAdhanVoiceId('iw426698'), isFalse);
     expect(isAdhanVoiceId('../x'), isFalse);
-    expect(remoteAdhanId('iw122646'), isNull);
-    expect(bundledAdhanVoice(defaultFajrVoice)!.fajr, isTrue);
-    expect(bundledAdhanVoice(defaultAdhanVoice)!.fajr, isFalse);
+    expect(findAdhanVoice(defaultFajrVoice)!.fajr, isTrue);
+    expect(findAdhanVoice(defaultAdhanVoice)!.fajr, isFalse);
+    expect(
+      [
+        for (final v in allAdhanVoices)
+          if (v.bundled) v.id,
+      ],
+      [defaultAdhanVoice, defaultFajrVoice],
+    );
+    for (final v in allAdhanVoices) {
+      if (v.bundled) {
+        expect(File('assets/audio/${v.raw}.m4a').existsSync(), isTrue, reason: v.id);
+        expect(File('android/app/src/main/res/raw/${v.raw}.ogg').existsSync(), isTrue, reason: v.id);
+        expect(v.downloadUris, isEmpty, reason: v.id);
+      } else {
+        expect(v.raw, isNull, reason: v.id);
+        expect(v.downloadUris.first, Uri.parse('https://rattilwasalli.com/audio/${v.remote}.mp3'), reason: v.id);
+        // The website serves the same file (apps/web/public/audio).
+        expect(File('../web/public/audio/${v.remote}.mp3').existsSync(), isTrue, reason: v.id);
+        for (final u in v.downloadUris) {
+          expect(u.scheme, 'https', reason: v.id);
+        }
+      }
+    }
+    // Nothing else is shipped.
+    expect(Directory('android/app/src/main/res/raw').listSync().map((f) => f.uri.pathSegments.last).toSet(), {
+      'adhan_mulla.ogg',
+      'adhan_daghriri_fajr.ogg',
+      'keep.xml',
+    });
     // Openly licensed recordings carry their credit; the owner's picks never show a source.
-    for (final v in bundledAdhanVoices) {
+    for (final v in allAdhanVoices) {
       final owners = [
         'mulla',
         'makkah',
@@ -32,8 +66,8 @@ void main() {
       ];
       expect(v.credit == null, owners.contains(v.id), reason: v.id);
     }
-    expect(bundledAdhanVoice('afasy_fajr')!.fajr, isTrue);
-    expect(bundledAdhanVoice('rifaat')!.fajr, isFalse);
+    expect(findAdhanVoice('afasy_fajr')!.fajr, isTrue);
+    expect(findAdhanVoice('rifaat')!.fajr, isFalse);
   });
 
   testWidgets('defaults: Ali Mulla (Makkah Haram), and Al-Daghriri for Fajr', (tester) async {
@@ -49,8 +83,17 @@ void main() {
     expect(s.adhanVoice, 'mulla');
   });
 
-  testWidgets('Fajr list shows only Fajr adhans; the main list the others; tapping one chooses it', (tester) async {
-    final app = await pumpApp(tester, size: tallPhone, locale: 'en');
+  testWidgets('Fajr list shows only Fajr adhans; the main list the others; tapping one downloads and chooses it', (
+    tester,
+  ) async {
+    final storage = Directory.systemTemp.createTempSync('rattil-muezzin');
+    final client = MockHttpClient();
+    final asked = <Uri>[];
+    when(() => client.get(any())).thenAnswer((i) async {
+      asked.add(i.positionalArguments.first as Uri);
+      return http.Response.bytes([0x49, 0x44, 0x33, ...List.filled(64 * 1024, 0)], 200);
+    });
+    final app = await pumpApp(tester, size: tallPhone, locale: 'en', httpClient: client, storage: storage);
     await tester.runAsync(app.services.adhanVoices.catalog);
     await pushScreen(tester, const MuezzinScreen(fajr: true));
     for (final id in ['daghriri_fajr', 'afasy_fajr', 'haram_fajr']) {
@@ -79,8 +122,9 @@ void main() {
     expect(find.byKey(const Key('muezzin-afasy_fajr')), findsNothing);
     await tester.tap(find.byKey(const Key('muezzin-madinah')));
     await tester.pumpAndSettle();
+    expect(asked, [Uri.parse('https://rattilwasalli.com/audio/adhan_madinah.mp3')]);
     expect(app.services.settings.adhanVoice, 'madinah');
-    expect(app.services.adhan.nativeVoiceFor('dhuhr'), 'adhan_madinah');
+    expect(app.services.adhan.nativeVoiceFor('dhuhr'), '${storage.path}/adhan/madinah.mp3');
     expect(app.services.adhan.nativeVoiceFor('fajr'), 'adhan_daghriri_fajr');
   });
 }

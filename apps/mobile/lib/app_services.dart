@@ -17,6 +17,7 @@ import 'data/khatma_store.dart';
 import 'data/worship_store.dart';
 import 'data/downloads.dart';
 import 'data/adhan_voice_files.dart';
+import 'data/adhkar_audio_files.dart';
 import 'data/location.dart';
 import 'data/place_names.dart';
 import 'data/media_session.dart';
@@ -45,6 +46,7 @@ class AppServices {
     required this.adhan,
     required this.adhanPreview,
     required this.adhanVoices,
+    required this.adhkarAudio,
     required this.tasbih,
     required this.adhkar,
     required this.sensors,
@@ -184,6 +186,11 @@ class AppServices {
       ),
       adhanPreview: AdhanPreview(adhanPlayer ?? JustAudioAdhanPlayer(), source: adhanVoices.playable),
       adhanVoices: adhanVoices,
+      adhkarAudio: AdhkarAudioFiles(
+        httpClient: httpClient,
+        root: storageRoot ?? getApplicationSupportDirectory,
+        retryDelay: adhanRetryDelay,
+      ),
       tasbih: TasbihController(settings),
       adhkar: AdhkarController(content, settings, localToday),
       sensors: sensors ?? const DeviceCompassSensors(),
@@ -231,6 +238,9 @@ class AppServices {
 
   /// The muezzin collection and the recordings downloaded from it.
   final AdhanVoiceFiles adhanVoices;
+
+  /// Alafasy's morning / evening adhkar recordings, downloaded on first play.
+  final AdhkarAudioFiles adhkarAudio;
   final TasbihController tasbih;
   final AdhkarController adhkar;
   final CompassSensors sensors;

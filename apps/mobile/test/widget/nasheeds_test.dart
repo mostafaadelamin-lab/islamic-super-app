@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:mocktail/mocktail.dart';
 import 'package:rattil/domain/nasheeds.dart';
 import 'package:rattil/ui/adhkar_audio.dart';
 import 'package:rattil/ui/adhkar_screen.dart';
@@ -13,7 +15,10 @@ import 'package:rattil/ui/youtube_player.dart';
 import '../helpers.dart';
 
 void main() {
-  setUpAll(loadContent);
+  setUpAll(() async {
+    registerFallbackValue(Uri());
+    await loadContent();
+  });
   setUp(() => debugYouTubeEmbedBuilder = (_, id) => ColoredBox(key: Key('fakeEmbed-$id'), color: Colors.black));
   setUp(() => debugAssetAudioFactory = _FakeAudio.new);
   tearDown(() {
@@ -68,8 +73,7 @@ void main() {
     await expectAccessible(tester);
   });
 
-  testWidgets('adhkar: only morning and evening recordings, played offline', (tester) async {
-    await pumpApp(tester, size: tallPhone);
+  Future<void> openMorning(WidgetTester tester) async {
     await pushScreen(tester, const AdhkarScreen());
     await tester.scrollUntilVisible(
       find.byKey(const Key('adhkarAudio.morning')),
@@ -79,12 +83,48 @@ void main() {
     expect(find.byKey(const Key('adhkarAudio.sleep')), findsNothing);
     await tester.tap(find.byKey(const Key('adhkarAudio.morning')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('adhkarAudioSheet')), findsOneWidget, reason: 'morning plays offline');
-    expect(_FakeAudio.loaded, ['assets/audio/adhkar_morning_alafasy.mp3']);
+    expect(find.byKey(const Key('adhkarAudioSheet')), findsOneWidget);
+  }
+
+  testWidgets('adhkar: morning recording downloads on first play, then plays from the phone', (tester) async {
+    final storage = Directory.systemTemp.createTempSync('rattil-adhkar');
+    final client = MockHttpClient();
+    final asked = <Uri>[];
+    when(() => client.get(any())).thenAnswer((i) async {
+      asked.add(i.positionalArguments.first as Uri);
+      return http.Response.bytes([0x49, 0x44, 0x33, ...List.filled(300 * 1024, 0)], 200);
+    });
+    await pumpApp(tester, size: tallPhone, httpClient: client, storage: storage);
+    await openMorning(tester);
+    expect(asked, [Uri.parse('https://rattilwasalli.com/audio/adhkar_morning_alafasy.mp3')]);
+    final file = '${storage.path}/adhkar/adhkar_morning_alafasy.mp3';
+    expect(File(file).existsSync(), isTrue);
+    expect(_FakeAudio.loaded, [file]);
     expect(find.text('18:41'), findsOneWidget);
     await tester.tap(find.byKey(const Key('adhkarAudioPlay')));
     await tester.pump();
     expect(_FakeAudio.last!.isPlaying, isFalse);
+    // Second time: no download.
+    Navigator.of(tester.element(find.byKey(const Key('adhkarAudioSheet')))).pop();
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('adhkarAudio.morning')));
+    await tester.pumpAndSettle();
+    expect(asked, hasLength(1));
+    expect(_FakeAudio.loaded, [file, file]);
+  });
+
+  testWidgets('adhkar: a failed download offers retry and the online recording', (tester) async {
+    final storage = Directory.systemTemp.createTempSync('rattil-adhkar');
+    final client = MockHttpClient();
+    when(() => client.get(any())).thenAnswer((_) async => http.Response('blocked', 403));
+    await pumpApp(tester, size: tallPhone, httpClient: client, storage: storage);
+    await openMorning(tester);
+    expect(find.byKey(const Key('adhkarAudioFailed')), findsOneWidget);
+    expect(find.byKey(const Key('adhkarAudioRetry')), findsOneWidget);
+    expect(_FakeAudio.loaded, isEmpty);
+    await tester.tap(find.byKey(const Key('adhkarAudioYouTube')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(Key('fakeEmbed-${adhkarAudioVideo[AdhkarAudio.morning]}')), findsOneWidget);
   });
 }
 

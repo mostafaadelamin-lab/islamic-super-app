@@ -51,6 +51,9 @@ class CustomDhikr {
 
 enum TasbihMode { button, beads }
 
+/// How the beads are drawn (all painted by the app; colour from [tasbihColors]).
+enum BeadStyle { glossy, marble, wood, pearl, crystal }
+
 /// Built-in adhkar (keys shared with the website) and their wording.
 const tasbihPhrases = {
   'tasbih': 'سبحان الله',
@@ -92,6 +95,7 @@ class TasbihBook {
     this.custom = const [],
     this.mode = TasbihMode.beads,
     this.color = 'emerald',
+    this.style = BeadStyle.glossy,
     this.sound = false,
     this.vibrate = true,
     this.history = const {},
@@ -102,6 +106,7 @@ class TasbihBook {
   final List<CustomDhikr> custom;
   final TasbihMode mode;
   final String color;
+  final BeadStyle style;
   final bool sound;
   final bool vibrate;
 
@@ -121,6 +126,7 @@ class TasbihBook {
     List<CustomDhikr>? custom,
     TasbihMode? mode,
     String? color,
+    BeadStyle? style,
     bool? sound,
     bool? vibrate,
     Map<String, Map<String, int>>? history,
@@ -130,6 +136,7 @@ class TasbihBook {
     custom: custom ?? this.custom,
     mode: mode ?? this.mode,
     color: color ?? this.color,
+    style: style ?? this.style,
     sound: sound ?? this.sound,
     vibrate: vibrate ?? this.vibrate,
     history: history ?? this.history,
@@ -213,6 +220,7 @@ class TasbihBook {
     ],
     'mode': mode.name,
     'color': color,
+    'style': style.name,
     'sound': sound,
     'vibrate': vibrate,
     'history': history,
@@ -262,6 +270,7 @@ class TasbihBook {
       custom: custom,
       mode: raw['mode'] == 'button' ? TasbihMode.button : TasbihMode.beads,
       color: raw['color'] is String && tasbihColors.containsKey(raw['color']) ? raw['color'] as String : 'emerald',
+      style: BeadStyle.values.where((v) => v.name == raw['style']).firstOrNull ?? BeadStyle.glossy,
       sound: raw['sound'] == true,
       vibrate: raw['vibrate'] != false,
       history: history,

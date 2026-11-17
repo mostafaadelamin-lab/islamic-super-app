@@ -49,5 +49,12 @@
   "reader.guide2": "للتقليب: اسحب الصفحة، أو استخدم شريط الصفحات تحتها.",
   "reader.guide3": "زر «ملء الشاشة» في الأعلى يخفي الأدوات، وزر «إظهار الأدوات» يرجعها.",
   "reader.guide4": "«استماع مع التفسير» يعرض الصفحة وتفسيرها جنبًا إلى جنب أثناء التلاوة.",
-  "reader.zoomReset": "{pct}٪ · الحجم العادي"
+  "reader.zoomReset": "{pct}٪ · الحجم العادي",
+  "reader.tabSurah": "السورة كاملة",
+  "reader.nextPage": "الصفحة التالية ←",
+  "reader.prevPage": "الصفحة السابقة",
+  "reader.nextSurah": "السورة التالية",
+  "reader.prevSurah": "السورة السابقة",
+  "reader.fontUp": "تكبير الخط",
+  "reader.fontDown": "تصغير الخط"
 }

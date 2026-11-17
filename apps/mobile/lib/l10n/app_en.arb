@@ -435,6 +435,18 @@
   "@adhkarArabicOnly": {
     "description": "shared key \"adhkar.arabicOnly\""
   },
+  "adhkarAudioDownloadFailed": "Couldn't download the recording. Check your internet and try again.",
+  "@adhkarAudioDownloadFailed": {
+    "description": "shared key \"adhkar.audioDownloadFailed\""
+  },
+  "adhkarAudioDownloading": "Downloading the recording for the first time (about 4 MB); after that it plays without internet.",
+  "@adhkarAudioDownloading": {
+    "description": "shared key \"adhkar.audioDownloading\""
+  },
+  "adhkarAudioWatchOnline": "Listen online",
+  "@adhkarAudioWatchOnline": {
+    "description": "shared key \"adhkar.audioWatchOnline\""
+  },
   "adhkarCards": "One card at a time",
   "@adhkarCards": {
     "description": "shared key \"adhkar.cards\""
@@ -520,7 +532,7 @@
   "@adhkarNextCard": {
     "description": "shared key \"adhkar.nextCard\""
   },
-  "adhkarOfflineNote": "Saved in the app; plays without internet.",
+  "adhkarOfflineNote": "Saved on your phone; plays without internet.",
   "@adhkarOfflineNote": {
     "description": "shared key \"adhkar.offlineNote\""
   },
@@ -1614,6 +1626,14 @@
   "@homeBigHajj": {
     "description": "shared key \"home.big.hajj\""
   },
+  "homeBigLibrary": "Recitations library",
+  "@homeBigLibrary": {
+    "description": "shared key \"home.big.library\""
+  },
+  "homeBigNasheeds": "Nasheeds",
+  "@homeBigNasheeds": {
+    "description": "shared key \"home.big.nasheeds\""
+  },
   "homeBigPrayer": "Prayer times",
   "@homeBigPrayer": {
     "description": "shared key \"home.big.prayer\""
@@ -1626,7 +1646,7 @@
   "@homeBigQuran": {
     "description": "shared key \"home.big.quran\""
   },
-  "homeBigReels": "Islamic reels",
+  "homeBigReels": "Short Islamic videos",
   "@homeBigReels": {
     "description": "shared key \"home.big.reels\""
   },
@@ -3157,6 +3177,14 @@
   "@readerListenWithTafsir": {
     "description": "shared key \"reader.listenWithTafsir\""
   },
+  "readerNextPage": "Next page",
+  "@readerNextPage": {
+    "description": "shared key \"reader.nextPage\""
+  },
+  "readerNextSurah": "Next surah",
+  "@readerNextSurah": {
+    "description": "shared key \"reader.nextSurah\""
+  },
   "readerPickAyah": "Tap any ayah to show its options here",
   "@readerPickAyah": {
     "description": "shared key \"reader.pickAyah\""
@@ -3168,6 +3196,14 @@
   "readerPlayWithTafsir": "Listen with tafsir",
   "@readerPlayWithTafsir": {
     "description": "shared key \"reader.playWithTafsir\""
+  },
+  "readerPrevPage": "Previous page",
+  "@readerPrevPage": {
+    "description": "shared key \"reader.prevPage\""
+  },
+  "readerPrevSurah": "Previous surah",
+  "@readerPrevSurah": {
+    "description": "shared key \"reader.prevSurah\""
   },
   "readerRepeatN": "Repeat: {n}",
   "@readerRepeatN": {
@@ -3201,6 +3237,10 @@
   "readerTabMushaf": "Mushaf",
   "@readerTabMushaf": {
     "description": "shared key \"reader.tabMushaf\""
+  },
+  "readerTabSurah": "Whole surah",
+  "@readerTabSurah": {
+    "description": "shared key \"reader.tabSurah\""
   },
   "readerTabTafsir": "Tafsir",
   "@readerTabTafsir": {
@@ -4054,6 +4094,14 @@
   "@tasbihCancel": {
     "description": "shared key \"tasbih.cancel\""
   },
+  "tasbihChangeDhikr": "Change dhikr",
+  "@tasbihChangeDhikr": {
+    "description": "shared key \"tasbih.changeDhikr\""
+  },
+  "tasbihChangeLook": "Bead style",
+  "@tasbihChangeLook": {
+    "description": "shared key \"tasbih.changeLook\""
+  },
   "tasbihClear": "Clear",
   "@tasbihClear": {
     "description": "shared key \"tasbih.clear\""
@@ -4069,6 +4117,10 @@
   "tasbihColor": "Colour",
   "@tasbihColor": {
     "description": "shared key \"tasbih.color\""
+  },
+  "tasbihCount": "Count",
+  "@tasbihCount": {
+    "description": "shared key \"tasbih.count\""
   },
   "tasbihCounter": "Count {count} of {target}",
   "@tasbihCounter": {
@@ -4090,6 +4142,10 @@
   "@tasbihHistoryEmpty": {
     "description": "shared key \"tasbih.historyEmpty\""
   },
+  "tasbihHistoryOpen": "Tasbih history",
+  "@tasbihHistoryOpen": {
+    "description": "shared key \"tasbih.historyOpen\""
+  },
   "tasbihMine": "My adhkar",
   "@tasbihMine": {
     "description": "shared key \"tasbih.mine\""
@@ -4110,9 +4166,22 @@
   "@tasbihNewDhikr": {
     "description": "shared key \"tasbih.newDhikr\""
   },
+  "tasbihOfTarget": "of {n}",
+  "@tasbihOfTarget": {
+    "description": "shared key \"tasbih.ofTarget\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
   "tasbihPhrase": "Dhikr",
   "@tasbihPhrase": {
     "description": "shared key \"tasbih.phrase\""
+  },
+  "tasbihPickDhikr": "Choose a dhikr",
+  "@tasbihPickDhikr": {
+    "description": "shared key \"tasbih.pickDhikr\""
   },
   "tasbihRemove": "Delete “{name}”",
   "@tasbihRemove": {
@@ -4140,6 +4209,30 @@
   "@tasbihSound": {
     "description": "shared key \"tasbih.sound\""
   },
+  "tasbihStyle": "Bead style",
+  "@tasbihStyle": {
+    "description": "shared key \"tasbih.style\""
+  },
+  "tasbihStyleCrystal": "Crystal",
+  "@tasbihStyleCrystal": {
+    "description": "shared key \"tasbih.style.crystal\""
+  },
+  "tasbihStyleGlossy": "Glossy",
+  "@tasbihStyleGlossy": {
+    "description": "shared key \"tasbih.style.glossy\""
+  },
+  "tasbihStyleMarble": "Marble",
+  "@tasbihStyleMarble": {
+    "description": "shared key \"tasbih.style.marble\""
+  },
+  "tasbihStylePearl": "Pearl",
+  "@tasbihStylePearl": {
+    "description": "shared key \"tasbih.style.pearl\""
+  },
+  "tasbihStyleWood": "Wood",
+  "@tasbihStyleWood": {
+    "description": "shared key \"tasbih.style.wood\""
+  },
   "tasbihTap": "Tap to count",
   "@tasbihTap": {
     "description": "shared key \"tasbih.tap\""
@@ -4147,6 +4240,15 @@
   "tasbihTarget": "Target",
   "@tasbihTarget": {
     "description": "shared key \"tasbih.target\""
+  },
+  "tasbihTimes": "{n} times",
+  "@tasbihTimes": {
+    "description": "shared key \"tasbih.times\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
   },
   "tasbihTitle": "Tasbih",
   "@tasbihTitle": {
@@ -4177,6 +4279,10 @@
   "tasbihVibrate": "Vibration",
   "@tasbihVibrate": {
     "description": "shared key \"tasbih.vibrate\""
+  },
+  "tasbihVirtueSource": "Hisn al-Muslim",
+  "@tasbihVirtueSource": {
+    "description": "shared key \"tasbih.virtueSource\""
   },
   "tourAdhkarBody": "Morning and evening adhkar and Hisn al-Muslim with audio, a tasbih counter, the hadith books and the Names of Allah.",
   "@tourAdhkarBody": {
@@ -4437,6 +4543,10 @@
       }
     }
   },
+  "zakatDueEmpty": "—",
+  "@zakatDueEmpty": {
+    "description": "shared key \"zakat.dueEmpty\""
+  },
   "zakatDueGold": "Zakat due: {g} g of {k}-carat gold",
   "@zakatDueGold": {
     "description": "shared key \"zakat.dueGold\"",
@@ -4452,6 +4562,37 @@
   "zakatDueMoney": "Zakat due: {v}",
   "@zakatDueMoney": {
     "description": "shared key \"zakat.dueMoney\"",
+    "placeholders": {
+      "v": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatDueNone": "No zakat",
+  "@zakatDueNone": {
+    "description": "shared key \"zakat.dueNone\""
+  },
+  "zakatDueShortGrams": "{g} g",
+  "@zakatDueShortGrams": {
+    "description": "shared key \"zakat.dueShortGrams\"",
+    "placeholders": {
+      "g": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatDueShortKg": "{kg} kg",
+  "@zakatDueShortKg": {
+    "description": "shared key \"zakat.dueShortKg\"",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatDueShortMoney": "{v} EGP",
+  "@zakatDueShortMoney": {
+    "description": "shared key \"zakat.dueShortMoney\"",
     "placeholders": {
       "v": {
         "type": "String"
@@ -4673,6 +4814,27 @@
   "zakatTitle": "Zakat calculator",
   "@zakatTitle": {
     "description": "shared key \"zakat.title\""
+  },
+  "zakatTotalAlso": "Also: {v}",
+  "@zakatTotalAlso": {
+    "description": "shared key \"zakat.totalAlso\"",
+    "placeholders": {
+      "v": {
+        "type": "String"
+      }
+    }
+  },
+  "zakatTotalEmpty": "Fill in what you have above to see the total here.",
+  "@zakatTotalEmpty": {
+    "description": "shared key \"zakat.totalEmpty\""
+  },
+  "zakatTotalNone": "No zakat is due on what you entered",
+  "@zakatTotalNone": {
+    "description": "shared key \"zakat.totalNone\""
+  },
+  "zakatTotalTitle": "Total zakat due",
+  "@zakatTotalTitle": {
+    "description": "shared key \"zakat.totalTitle\""
   },
   "zakatUnitBintLabun": "bint labun (2-year camel)",
   "@zakatUnitBintLabun": {

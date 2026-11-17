@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
-import { surahMeta, surahName, type Ref } from "@/lib/pages";
+import { PAGE_COUNT, ayahsOnPage, surahMeta, surahName, type Ref } from "@/lib/pages";
 import { NO_BASMALA_BEFORE } from "@/lib/audio";
 import { ayahEndMark, renderQuranText } from "@/lib/quran-render";
 import { loadTafsirSurah } from "@/lib/tafsir";
@@ -152,6 +152,161 @@ export function PageTafsirList({ locale, refs, data, selected, playing, onSelect
         })}
       </ol>
       <p className="tafsir-source muted small">{t(locale, "tafsir.source")}</p>
+    </div>
+  );
+}
+
+/** "الصفحة السابقة / التالية" under the ayah lists, so the reader never has to go back to the Mushaf page. */
+export function PageButtons({
+  locale,
+  page,
+  onPage,
+}: {
+  locale: Locale;
+  page: number;
+  onPage: (p: number) => void;
+}) {
+  return (
+    <div className="rd-page-btns" data-testid="list-page-buttons">
+      <button
+        type="button"
+        className="btn"
+        data-testid="list-prev-page"
+        disabled={page <= 1}
+        onClick={() => onPage(page - 1)}
+      >
+        {t(locale, "reader.prevPage")}
+      </button>
+      <button
+        type="button"
+        className="btn btn-primary"
+        data-testid="list-next-page"
+        disabled={page >= PAGE_COUNT}
+        onClick={() => onPage(page + 1)}
+      >
+        {t(locale, "reader.nextPage")}
+      </button>
+    </div>
+  );
+}
+
+/**
+ * A horizontal swipe on the lists turns the page like the Mushaf: in Arabic a swipe from left to right goes to
+ * the next page. Vertical scrolling is left alone.
+ */
+export function usePageSwipe(page: number, dir: "rtl" | "ltr", onPage: (p: number) => void) {
+  const start = useRef<{ x: number; y: number; t: number } | null>(null);
+  return {
+    onPointerDown: (e: ReactPointerEvent<HTMLElement>) => {
+      if (e.pointerType === "mouse") return;
+      start.current = { x: e.clientX, y: e.clientY, t: performance.now() };
+    },
+    onPointerUp: (e: ReactPointerEvent<HTMLElement>) => {
+      const g = start.current;
+      start.current = null;
+      if (!g) return;
+      const dx = e.clientX - g.x;
+      const dy = e.clientY - g.y;
+      if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+      const forward = dir === "rtl" ? dx > 0 : dx < 0;
+      const target = page + (forward ? 1 : -1);
+      if (target >= 1 && target <= PAGE_COUNT) onPage(target);
+    },
+    onPointerCancel: () => {
+      start.current = null;
+    },
+  };
+}
+
+interface SurahFlowProps {
+  locale: Locale;
+  surah: number;
+  /** The Mushaf page the reader is on: the view opens at its first ayah of the surah. */
+  page: number;
+  data: MushafData | null;
+  selected: string | null;
+  playing: string | null;
+  onSelect: (ref: Ref) => void;
+  onSurah: (s: number) => void;
+}
+
+/**
+ * "السورة كاملة" (owner 2026-11-17): the whole surah as one flowing text on the Mushaf paper, read by scrolling.
+ * Every ayah is the canonical KFGQPC text (only the display glyph map is applied), closed by its number.
+ */
+export function SurahFlow({
+  locale,
+  surah,
+  page,
+  data,
+  selected,
+  playing,
+  onSelect,
+  onSurah,
+}: SurahFlowProps) {
+  const meta = surahMeta(surah);
+  const count = meta?.ayahCount ?? 0;
+  const box = useRef<HTMLDivElement>(null);
+  // Open at the reader's page (once per surah), so the place being read stays in view.
+  const opened = useRef<number | null>(null);
+  useEffect(() => {
+    if (!data || opened.current === surah) return;
+    opened.current = surah;
+    const first = ayahsOnPage(page).find(([s]) => s === surah);
+    if (!first || first[1] === 1) return;
+    const el = box.current?.querySelector(`[data-ayah="${surah}:${first[1]}"]`);
+    if (el) window.scrollBy({ top: el.getBoundingClientRect().top - 140 });
+  }, [data, surah, page]);
+  return (
+    <div className="rd-surah-flow" data-testid="surah-flow" data-surah={surah} ref={box}>
+      <SurahStart s={surah} data={data} />
+      <p className="rd-flow" lang="ar" dir="rtl">
+        {Array.from({ length: count }, (_, i) => {
+          const r: Ref = [surah, i + 1];
+          const k = key(r);
+          const cls = ["seg", k === selected ? "selected" : "", k === playing ? "playing" : ""]
+            .filter(Boolean)
+            .join(" ");
+          return (
+            <span key={k}>
+              <span
+                className={cls}
+                data-ayah={k}
+                data-testid="flow-ayah"
+                role="button"
+                tabIndex={0}
+                onClick={() => onSelect(r)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") onSelect(r);
+                }}
+              >
+                {ayahText(data, r) ?? "…"}
+              </span>{" "}
+              <span className="rd-num">{ayahEndMark(i + 1)}</span>{" "}
+            </span>
+          );
+        })}
+      </p>
+      <div className="rd-page-btns">
+        <button
+          type="button"
+          className="btn"
+          data-testid="flow-prev-surah"
+          disabled={surah <= 1}
+          onClick={() => onSurah(surah - 1)}
+        >
+          {t(locale, "reader.prevSurah")}
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary"
+          data-testid="flow-next-surah"
+          disabled={surah >= 114}
+          onClick={() => onSurah(surah + 1)}
+        >
+          {t(locale, "reader.nextSurah")}
+        </button>
+      </div>
     </div>
   );
 }

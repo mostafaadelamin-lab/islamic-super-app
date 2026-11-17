@@ -137,7 +137,7 @@ class MushafPageView extends StatelessWidget {
           final display = [
             for (final w in words) [for (final x in w) s.content.renderMap.forDisplay(x.text)],
           ];
-          final sideways = immersive && isLandscapePhone(Size(c.maxWidth, c.maxHeight));
+          final sideways = isLandscapePhone(Size(c.maxWidth, c.maxHeight));
           var lineH = math.max(minLineHeight, (c.maxHeight - chrome) / 15);
           var font = sideways ? double.infinity : MushafMetrics.fitHeight(lineH);
           for (var i = 0; i < words.length; i++) {
@@ -154,9 +154,14 @@ class MushafPageView extends StatelessWidget {
           final totalH = math.max(c.maxHeight, lineH * 15 + chrome);
           final firstKeyed = <AyahRef>{};
 
+          // Clearly visible on the cream page (owner, 2026-11-17): warm honey for the chosen ayah, a soft
+          // green for the one being recited. Never red.
+          final dark = Theme.of(context).brightness == Brightness.dark;
           Color? highlightOf(AyahRef r) => r == playing
-              ? AppTheme.of(context, 'verseHighlight').withValues(alpha: highlightAlpha)
-              : (r == selected ? AppTheme.of(context, 'accentSoft').withValues(alpha: highlightAlpha) : null);
+              ? (dark ? const Color(0xFF2F6B5A) : const Color(0xFFB9E2CF)).withValues(alpha: highlightAlpha)
+              : (r == selected
+                    ? (dark ? const Color(0xFF8A6A1E) : const Color(0xFFF3C969)).withValues(alpha: highlightAlpha)
+                    : null);
 
           // A text line is laid out twice with identical widgets: once as the
           // highlight layer (transparent glyphs, translucent boxes exactly one
@@ -522,51 +527,58 @@ class _BandPainter extends CustomPainter {
   bool shouldRepaint(_BandPainter old) => old.frame != frame || old.fill != fill;
 }
 
-/// Book-like page turn for a PageView: pages stay in place; the page with
-/// the higher index swings about the spine (right edge in RTL) like a leaf,
-/// while the page under it is shaded.
+/// Book-like page turn for a PageView: pages stay in place; the page being
+/// turned swings about the spine (right edge in RTL) like a leaf, following the
+/// finger, while the page under it is shaded.
 class BookPage extends StatelessWidget {
-  const BookPage({super.key, required this.index, required this.controller, required this.child});
+  const BookPage({super.key, required this.index, required this.controller, required this.child, this.under});
   final int index;
   final PageController controller;
   final Widget child;
+
+  /// The next page, drawn under this one while it turns (the page view paints later pages on top,
+  /// so the uncovered page is painted here, beneath the leaf, and hidden in its own slot).
+  final Widget? under;
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, c) => AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
-        if (!controller.hasClients || !controller.position.hasContentDimensions) return child!;
+        // One page view at a time (a second one can attach briefly while the layout changes).
+        if (controller.positions.length != 1 || !controller.position.hasContentDimensions) return child!;
         final page = controller.page ?? controller.initialPage.toDouble();
-        final d = index - page; // > 0: this page lies on top, swinging in/out.
+        // d < 0: the page being turned away (the leaf, on top); d > 0: the page it uncovers, lying still
+        // underneath. Like a paper Mushaf (owner, 2026-11-17): the leaf follows the finger, hinged on the
+        // spine (the right edge in Arabic), so a swipe from left to right turns to the next page.
+        final d = index - page;
         if (d.abs() >= 1 || d == 0) return child!;
         final rtl = Directionality.of(context) == TextDirection.rtl;
         // Cancel the PageView's own slide so that both pages stay put.
         final dx = d * c.maxWidth * (rtl ? 1 : -1);
-        if (d < 0) {
-          // The page underneath: shade it while the leaf covers it.
-          return Transform.translate(
-            offset: Offset(dx, 0),
-            child: Stack(
-              fit: StackFit.passthrough,
-              children: [
-                child!,
+        // The page underneath is drawn by the leaf (below it), so its own slot stays empty.
+        if (d > 0) return const SizedBox.expand();
+        final angle = -d * math.pi / 2 * 0.98;
+        final m = Matrix4.identity()
+          ..setEntry(3, 2, 0.0012)
+          ..rotateY(rtl ? angle : -angle);
+        return Transform.translate(
+          offset: Offset(dx, 0),
+          child: Stack(
+            fit: StackFit.passthrough,
+            children: [
+              if (under != null) ...[
+                under!,
+                // Shaded while the leaf still covers it.
                 Positioned.fill(
                   child: IgnorePointer(
-                    child: ColoredBox(color: Colors.black.withValues(alpha: 0.16 * (1 + d))),
+                    child: ColoredBox(color: Colors.black.withValues(alpha: 0.16 * -d)),
                   ),
                 ),
               ],
-            ),
-          );
-        }
-        final angle = d * math.pi / 2 * 0.98;
-        final m = Matrix4.identity()
-          ..setEntry(3, 2, 0.0012)
-          ..rotateY(rtl ? -angle : angle);
-        return Transform.translate(
-          offset: Offset(dx, 0),
-          child: Transform(alignment: rtl ? Alignment.centerRight : Alignment.centerLeft, transform: m, child: child),
+              Transform(alignment: rtl ? Alignment.centerRight : Alignment.centerLeft, transform: m, child: child),
+            ],
+          ),
         );
       },
       child: child,

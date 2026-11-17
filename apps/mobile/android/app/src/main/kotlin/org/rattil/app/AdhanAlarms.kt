@@ -11,7 +11,7 @@ import org.json.JSONObject
 /**
  * Prayer-time alarms that play the FULL adhan (guideline: Android AlarmManager exact alarms + a foreground
  * service). Each alarm is an exact, allow-while-idle AlarmManager alarm that wakes AdhanAlarmReceiver, which
- * starts AdhanService (a media-playback foreground service) to play res/raw/adhan.ogg to the end, with a Stop
+ * starts AdhanService (a media-playback foreground service) to play the chosen adhan (res/raw/adhan_mulla.ogg, adhan_daghriri_fajr.ogg or a downloaded recording) to the end, with a Stop
  * button. Alarms are kept in SharedPreferences so they are set again after a reboot, an app update or a clock /
  * time-zone change (AlarmManager forgets them).
  */

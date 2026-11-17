@@ -8,8 +8,8 @@ import '../theme/design_tokens.dart';
 import 'adaptive.dart';
 import 'l10n_ext.dart';
 
-/// Zakat calculator, simplified on the owner's request (2026-11-11): five tabs only:
-/// silver, gold, money, livestock, crops. Rules: lib/domain/zakat_simple.dart.
+/// Zakat calculator, simplified on the owner's request (2026-11-11): money, gold, silver, livestock and
+/// crops; since 2026-11-17 all on one screen, each with its zakat beside it and the total at the bottom. Rules: lib/domain/zakat_simple.dart.
 class ZakatScreen extends StatefulWidget {
   const ZakatScreen({super.key});
 
@@ -68,54 +68,78 @@ class _ZakatScreenState extends State<ZakatScreen> {
     return b.toString();
   }
 
-  Widget _result(BuildContext context, {required bool reached, required String text, String? note}) {
-    final scheme = Theme.of(context).colorScheme;
+  /// One kind of zakat as a card: its name with the zakat due on it beside it, then its fields.
+  Widget _section(BuildContext context, String id, String title, String due, bool reached, List<Widget> children) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
     return Card(
-      key: const Key('zakatResult'),
-      color: reached ? scheme.primaryContainer : scheme.surfaceContainer,
+      key: Key('zakatSection-$id'),
       margin: const EdgeInsets.only(bottom: DesignTokens.spaceMd),
       child: Padding(
-        padding: const EdgeInsets.all(DesignTokens.spaceLg),
+        padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              text,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-                color: reached ? scheme.onPrimaryContainer : null,
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(title, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
+                ),
+                Container(
+                  key: Key('zakatDue-$id'),
+                  padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: DesignTokens.spaceXs),
+                  decoration: BoxDecoration(
+                    color: reached ? _calm(scheme).withValues(alpha: 0.14) : scheme.surfaceContainerHighest,
+                    borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+                  ),
+                  child: Text(
+                    due,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: reached ? _calm(scheme) : scheme.onSurfaceVariant,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            if (note != null) ...[
-              const SizedBox(height: DesignTokens.spaceXs),
-              Text(note, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall),
-            ],
+            const SizedBox(height: DesignTokens.spaceMd),
+            ...children,
+            const SizedBox(height: DesignTokens.spaceMd),
           ],
         ),
       ),
     );
   }
 
-  Widget _page(List<Widget> children) =>
-      ListView(padding: const EdgeInsets.all(DesignTokens.spaceLg), children: children);
+  /// The distinct, calm colour of the amounts due (a soft teal, readable in light and dark).
+  static Color _calm(ColorScheme scheme) =>
+      scheme.brightness == Brightness.dark ? const Color(0xFF7CC8BE) : const Color(0xFF2E7D74);
 
-  Widget _gold(BuildContext context) {
+  String _g(BuildContext context, double v) => context.l10n.zakatDueShortGrams(_fmt(context, v));
+  String _m(BuildContext context, double v) => context.l10n.zakatDueShortMoney(_fmt(context, v, digits: 0));
+
+  /// What is due on each kind, for its header and the total: money (EGP) and the dues not priced in money.
+  ({double money, List<String> other, bool any}) _totals = (money: 0, other: const [], any: false);
+
+  Widget _gold(BuildContext context, void Function(double? money, String? other, bool entered) add) {
     final l = context.l10n;
     final grams = _d('gold') ?? 0;
     final karat = (_v['karat'] as int?) ?? 21;
     final r = goldZakat(grams, karat, _d('goldPrice'));
-    return _page([
-      if (grams > 0)
-        _result(
-          context,
-          reached: r.reached,
-          text: r.reached
-              ? l.zakatDueGold(_fmt(context, r.dueGrams), context.num(karat)) +
-                    (r.dueMoney == null ? '' : '\n${l.zakatDueMoney(_fmt(context, r.dueMoney!))}')
-              : l.zakatBelowNisab,
-          note: l.zakatYearNote,
-        ),
+    final reached = grams > 0 && r.reached;
+    add(
+      reached ? r.dueMoney : null,
+      reached && r.dueMoney == null ? '${_g(context, r.dueGrams)} (${l.zakatTabGold})' : null,
+      grams > 0,
+    );
+    final due = grams <= 0
+        ? l.zakatDueEmpty
+        : !r.reached
+        ? l.zakatDueNone
+        : r.dueMoney != null
+        ? _m(context, r.dueMoney!)
+        : _g(context, r.dueGrams);
+    return _section(context, 'gold', l.zakatTabGold, due, reached, [
       _number('gold', l.zakatGoldGrams, suffix: l.zakatGram),
       Text(l.zakatKarat, style: Theme.of(context).textTheme.titleSmall),
       const SizedBox(height: DesignTokens.spaceXs),
@@ -129,50 +153,53 @@ class _ZakatScreenState extends State<ZakatScreen> {
       ),
       const SizedBox(height: DesignTokens.spaceMd),
       _number('goldPrice', l.zakatGoldPrice),
+      if (reached) Text(l.zakatDueGold(_fmt(context, r.dueGrams), context.num(karat)), key: const Key('zakatResult')),
       Text(l.zakatGoldRule, style: Theme.of(context).textTheme.bodySmall),
     ]);
   }
 
-  Widget _silver(BuildContext context) {
+  Widget _silver(BuildContext context, void Function(double? money, String? other, bool entered) add) {
     final l = context.l10n;
     final grams = _d('silver') ?? 0;
     final r = silverZakat(grams, _d('silverPrice'));
-    return _page([
-      if (grams > 0)
-        _result(
-          context,
-          reached: r.reached,
-          text: r.reached
-              ? l.zakatDueSilver(_fmt(context, r.dueGrams)) +
-                    (r.dueMoney == null ? '' : '\n${l.zakatDueMoney(_fmt(context, r.dueMoney!))}')
-              : l.zakatBelowNisab,
-          note: l.zakatYearNote,
-        ),
+    final reached = grams > 0 && r.reached;
+    add(
+      reached ? r.dueMoney : null,
+      reached && r.dueMoney == null ? '${_g(context, r.dueGrams)} (${l.zakatTabSilver})' : null,
+      grams > 0,
+    );
+    final due = grams <= 0
+        ? l.zakatDueEmpty
+        : !r.reached
+        ? l.zakatDueNone
+        : r.dueMoney != null
+        ? _m(context, r.dueMoney!)
+        : _g(context, r.dueGrams);
+    return _section(context, 'silver', l.zakatTabSilver, due, reached, [
       _number('silver', l.zakatSilverGrams, suffix: l.zakatGram),
       _number('silverPrice', l.zakatSilverPrice),
+      if (reached) Text(l.zakatDueSilver(_fmt(context, r.dueGrams)), key: const Key('zakatResult')),
       Text(l.zakatSilverRule, style: Theme.of(context).textTheme.bodySmall),
     ]);
   }
 
-  Widget _money(BuildContext context) {
+  Widget _money(BuildContext context, void Function(double? money, String? other, bool entered) add) {
     final l = context.l10n;
     final byGold = (_v['basis'] as String? ?? 'gold') == 'gold';
     final price = byGold ? _d('goldPrice') : _d('silverPrice');
     final amount = _d('money') ?? 0;
     final nisab = price == null ? 0.0 : price * (byGold ? goldNisabGrams : silverNisabGrams);
     final r = moneyZakat(amount, nisab);
-    return _page([
-      if (amount > 0)
-        _result(
-          context,
-          reached: r.reached,
-          text: price == null
-              ? (byGold ? l.zakatNeedGoldPrice : l.zakatNeedSilverPrice)
-              : r.reached
-              ? l.zakatDueMoney(_fmt(context, r.due))
-              : l.zakatBelowNisab,
-          note: price == null ? null : '${l.zakatNisabIs(_fmt(context, nisab, digits: 0))}\n${l.zakatYearNote}',
-        ),
+    final reached = amount > 0 && price != null && r.reached;
+    add(reached ? r.due : null, null, amount > 0);
+    final due = amount <= 0
+        ? l.zakatDueEmpty
+        : price == null
+        ? l.zakatDueEmpty
+        : reached
+        ? _m(context, r.due)
+        : l.zakatDueNone;
+    return _section(context, 'money', l.zakatTabMoney, due, reached, [
       _number('money', l.zakatMoney),
       Text(l.zakatBasis, style: Theme.of(context).textTheme.titleSmall),
       const SizedBox(height: DesignTokens.spaceXs),
@@ -186,12 +213,19 @@ class _ZakatScreenState extends State<ZakatScreen> {
         onSelectionChanged: (v) => _set('basis', v.single),
       ),
       const SizedBox(height: DesignTokens.spaceMd),
-      if (byGold) _number('goldPrice', l.zakatGoldPrice) else _number('silverPrice', l.zakatSilverPrice),
+      // The price fields are in the gold and silver cards; say which one is needed.
+      if (amount > 0 && price == null)
+        Text(
+          byGold ? l.zakatNeedGoldPrice : l.zakatNeedSilverPrice,
+          style: TextStyle(color: Theme.of(context).colorScheme.error),
+        )
+      else if (price != null)
+        Text(l.zakatNisabIs(_fmt(context, nisab, digits: 0)), style: Theme.of(context).textTheme.bodySmall),
       Text(l.zakatMoneyRule, style: Theme.of(context).textTheme.bodySmall),
     ]);
   }
 
-  Widget _livestock(BuildContext context) {
+  Widget _livestock(BuildContext context, void Function(double? money, String? other, bool entered) add) {
     final l = context.l10n;
     final kind = Livestock.values.byName(_v['animal'] as String? ?? 'sheep');
     final count = (_d('animals') ?? 0).floor();
@@ -206,84 +240,147 @@ class _ZakatScreenState extends State<ZakatScreen> {
       'musinna' => l.zakatUnitMusinna,
       _ => u,
     };
-    return _page([
-      if (count > 0)
-        _result(
-          context,
-          reached: due.isNotEmpty,
-          text: due.isEmpty
-              ? l.zakatBelowNisab
-              : l.zakatDueAnimals(due.map((d) => '${context.num(d.$1)} ${unit(d.$2)}').join(' + ')),
-          note: l.zakatLivestockNote,
+    final text = due.map((d) => '${context.num(d.$1)} ${unit(d.$2)}').join(' + ');
+    add(null, due.isEmpty ? null : text, count > 0);
+    return _section(
+      context,
+      'livestock',
+      l.zakatTabLivestock,
+      count <= 0 ? l.zakatDueEmpty : (due.isEmpty ? l.zakatDueNone : text),
+      due.isNotEmpty,
+      [
+        SegmentedButton<Livestock>(
+          key: const Key('zakat.animal'),
+          segments: [
+            ButtonSegment(value: Livestock.sheep, label: Text(l.zakatSheep)),
+            ButtonSegment(value: Livestock.cattle, label: Text(l.zakatCattle)),
+            ButtonSegment(value: Livestock.camels, label: Text(l.zakatCamels)),
+          ],
+          selected: {kind},
+          onSelectionChanged: (v) => _set('animal', v.single.name),
         ),
-      SegmentedButton<Livestock>(
-        key: const Key('zakat.animal'),
-        segments: [
-          ButtonSegment(value: Livestock.sheep, label: Text(l.zakatSheep)),
-          ButtonSegment(value: Livestock.cattle, label: Text(l.zakatCattle)),
-          ButtonSegment(value: Livestock.camels, label: Text(l.zakatCamels)),
-        ],
-        selected: {kind},
-        onSelectionChanged: (v) => _set('animal', v.single.name),
-      ),
-      const SizedBox(height: DesignTokens.spaceMd),
-      _number('animals', l.zakatAnimalCount),
-      Text(l.zakatLivestockRule, style: Theme.of(context).textTheme.bodySmall),
-    ]);
+        const SizedBox(height: DesignTokens.spaceMd),
+        _number('animals', l.zakatAnimalCount),
+        Text(l.zakatLivestockRule, style: Theme.of(context).textTheme.bodySmall),
+        if (count > 0) Text(l.zakatLivestockNote, style: Theme.of(context).textTheme.bodySmall),
+      ],
+    );
   }
 
-  Widget _crops(BuildContext context) {
+  Widget _crops(BuildContext context, void Function(double? money, String? other, bool entered) add) {
     final l = context.l10n;
     final kg = _d('crops') ?? 0;
     final rain = (_v['rain'] as bool?) ?? true;
     final r = cropsZakat(kg, rainFed: rain);
-    return _page([
-      if (kg > 0)
-        _result(
-          context,
-          reached: r.reached,
-          text: r.reached ? l.zakatDueCrops(_fmt(context, r.dueKg)) : l.zakatBelowNisab,
-          note: l.zakatCropsNote,
+    final reached = kg > 0 && r.reached;
+    final short = l.zakatDueShortKg(_fmt(context, r.dueKg));
+    add(null, reached ? '$short (${l.zakatTabCrops})' : null, kg > 0);
+    return _section(
+      context,
+      'crops',
+      l.zakatTabCrops,
+      kg <= 0 ? l.zakatDueEmpty : (reached ? short : l.zakatDueNone),
+      reached,
+      [
+        _number('crops', l.zakatCropsKg, suffix: l.zakatKg),
+        SegmentedButton<bool>(
+          key: const Key('zakat.rain'),
+          segments: [
+            ButtonSegment(value: true, label: Text(l.zakatRain)),
+            ButtonSegment(value: false, label: Text(l.zakatIrrigated)),
+          ],
+          selected: {rain},
+          onSelectionChanged: (v) => _set('rain', v.single),
         ),
-      _number('crops', l.zakatCropsKg, suffix: l.zakatKg),
-      SegmentedButton<bool>(
-        key: const Key('zakat.rain'),
-        segments: [
-          ButtonSegment(value: true, label: Text(l.zakatRain)),
-          ButtonSegment(value: false, label: Text(l.zakatIrrigated)),
-        ],
-        selected: {rain},
-        onSelectionChanged: (v) => _set('rain', v.single),
+        const SizedBox(height: DesignTokens.spaceMd),
+        Text(l.zakatCropsRule, style: Theme.of(context).textTheme.bodySmall),
+        if (kg > 0) Text(l.zakatCropsNote, style: Theme.of(context).textTheme.bodySmall),
+      ],
+    );
+  }
+
+  /// The total of every kind, at the bottom, the amount in the calm colour.
+  Widget _total(BuildContext context) {
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final t = _totals;
+    final calm = _calm(scheme);
+    final has = t.money > 0 || t.other.isNotEmpty;
+    return Card(
+      key: const Key('zakatTotal'),
+      color: calm.withValues(alpha: 0.10),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
+        side: BorderSide(color: calm.withValues(alpha: 0.45)),
       ),
-      const SizedBox(height: DesignTokens.spaceMd),
-      Text(l.zakatCropsRule, style: Theme.of(context).textTheme.bodySmall),
-    ]);
+      margin: const EdgeInsets.only(bottom: DesignTokens.spaceMd),
+      child: Padding(
+        padding: const EdgeInsets.all(DesignTokens.spaceLg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              l.zakatTotalTitle,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: DesignTokens.spaceSm),
+            if (!t.any)
+              Text(l.zakatTotalEmpty, textAlign: TextAlign.center, style: theme.textTheme.bodyMedium)
+            else if (!has)
+              Text(l.zakatTotalNone, textAlign: TextAlign.center, style: theme.textTheme.titleMedium)
+            else ...[
+              if (t.money > 0)
+                Text(
+                  _m(context, t.money),
+                  key: const Key('zakatTotalAmount'),
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w800, color: calm),
+                ),
+              if (t.other.isNotEmpty)
+                Text(
+                  t.money > 0 ? l.zakatTotalAlso(t.other.join('، ')) : t.other.join('، '),
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700, color: calm),
+                ),
+            ],
+            const SizedBox(height: DesignTokens.spaceSm),
+            Text(l.zakatYearNote, textAlign: TextAlign.center, style: theme.textTheme.bodySmall),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final tabs = [
-      (l.zakatTabSilver, _silver),
-      (l.zakatTabGold, _gold),
-      (l.zakatTabMoney, _money),
-      (l.zakatTabLivestock, _livestock),
-      (l.zakatTabCrops, _crops),
+    var money = 0.0;
+    final other = <String>[];
+    var any = false;
+    void add(double? m, String? o, bool entered) {
+      if (m != null) money += m;
+      if (o != null) other.add(o);
+      any = any || entered;
+    }
+
+    // One screen, every kind under the other (owner, 2026-11-17), the total at the bottom.
+    final sections = [
+      _money(context, add),
+      _gold(context, add),
+      _silver(context, add),
+      _livestock(context, add),
+      _crops(context, add),
     ];
-    return DefaultTabController(
-      length: tabs.length,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(l.zakatTitle),
-          bottom: TabBar(
-            key: const Key('zakatTabs'),
-            isScrollable: true,
-            tabAlignment: TabAlignment.start,
-            tabs: [for (final t in tabs) Tab(text: t.$1)],
-          ),
-        ),
-        body: ReadableWidth(
-          child: TabBarView(children: [for (final t in tabs) Builder(builder: t.$2)]),
+    _totals = (money: money, other: other, any: any);
+    return Scaffold(
+      appBar: AppBar(title: Text(l.zakatTitle)),
+      body: ReadableWidth(
+        child: ListView(
+          key: const Key('zakatList'),
+          padding: const EdgeInsets.all(DesignTokens.spaceLg),
+          children: [...sections, _total(context)],
         ),
       ),
     );

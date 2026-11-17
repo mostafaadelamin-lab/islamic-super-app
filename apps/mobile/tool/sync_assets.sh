@@ -4,6 +4,7 @@
 #   apps/mobile/tool/sync_assets.sh          # copy
 #   apps/mobile/tool/sync_assets.sh --check  # fail if any copy is stale
 # The Quran files are copied byte-for-byte (cp); nothing here edits content.
+# Hadith part files are gzip-compressed on the way (see below); their text is unchanged.
 # assets/content/hajj.v1.json is extracted (not copied) from content/pilgrimage/source-hajj.js by
 # tool/extract_hajj.mjs (node); test/unit/hajj_content_test.dart checks every string against the source.
 set -euo pipefail
@@ -51,31 +52,53 @@ PAIRS=(
   "packages/design-tokens/dist/rattil_icons.dart:lib/theme/rattil_icons.dart"
 )
 
-# Whole folders copied as they are (hadith books: content/hadith/dist, built by tools/build_hadith.py).
-DIRS=(
-  "content/hadith/dist:assets/hadith"
-)
+# Hadith books (content/hadith/dist, built by tools/build_hadith.py): every .json is stored gzip-compressed
+# (.json.gz, gzip -n so the bytes are reproducible) except the small catalog books.v1.json. The text inside
+# is byte-for-byte the source; --check compares the decompressed bytes.
+HADITH_SRC="$ROOT/content/hadith/dist"
+HADITH_DST="$APP/assets/hadith"
 
 stale=0
-for pair in "${DIRS[@]}"; do
-  src="$ROOT/${pair%%:*}"
-  dst="$APP/${pair#*:}"
-  if [[ ! -d "$src" ]]; then
-    echo "missing source folder: $src" >&2
-    exit 1
+if [[ ! -d "$HADITH_SRC" ]]; then
+  echo "missing source folder: $HADITH_SRC" >&2
+  exit 1
+fi
+if [[ "$MODE" != "--check" ]]; then
+  rm -rf "$HADITH_DST"
+  mkdir -p "$HADITH_DST"
+fi
+while IFS= read -r -d '' f; do
+  rel="${f#$HADITH_SRC/}"
+  if [[ "$rel" == "books.v1.json" ]]; then
+    out="$HADITH_DST/$rel"
+  else
+    out="$HADITH_DST/$rel.gz"
   fi
   if [[ "$MODE" == "--check" ]]; then
-    if ! diff -rq "$src" "$dst" >/dev/null 2>&1; then
-      echo "stale: ${pair#*:}/ (differs from ${pair%%:*}/)" >&2
+    if [[ "$out" == *.gz ]]; then
+      if [[ ! -f "$out" ]] || ! gzip -dc "$out" | cmp -s - "$f"; then
+        echo "stale: ${out#$APP/} (differs from content/hadith/dist/$rel)" >&2
+        stale=1
+      fi
+    elif ! cmp -s "$f" "$out"; then
+      echo "stale: ${out#$APP/} (differs from content/hadith/dist/$rel)" >&2
       stale=1
     fi
   else
-    rm -rf "$dst"
-    mkdir -p "$(dirname "$dst")"
-    cp -r "$src" "$dst"
-    echo "copied ${pair%%:*}/ -> ${pair#*:}/"
+    mkdir -p "$(dirname "$out")"
+    if [[ "$out" == *.gz ]]; then gzip -9 -n -c "$f" >"$out"; else cp "$f" "$out"; fi
   fi
-done
+done < <(find "$HADITH_SRC" -type f -name '*.json' -print0 | sort -z)
+if [[ "$MODE" == "--check" ]]; then
+  n_src=$(find "$HADITH_SRC" -type f -name '*.json' | wc -l)
+  n_dst=$(find "$HADITH_DST" -type f | wc -l)
+  if [[ "$n_src" != "$n_dst" ]]; then
+    echo "stale: assets/hadith has $n_dst files, content/hadith/dist has $n_src" >&2
+    stale=1
+  fi
+else
+  echo "compressed content/hadith/dist/ -> assets/hadith/ (gzip)"
+fi
 
 for pair in "${PAIRS[@]}"; do
   src="$ROOT/${pair%%:*}"

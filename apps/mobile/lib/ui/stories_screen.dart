@@ -251,7 +251,7 @@ class NarrationBar extends StatelessWidget {
                       IconButton(
                         key: const Key('narrationStop'),
                         tooltip: l.storiesStop,
-                        icon: const RIcon(RIcons.stop),
+                        icon: const RIcon(RIcons.close),
                         onPressed: n.stop,
                       ),
                       const SleepTimerButton(),
@@ -340,6 +340,38 @@ class InlinePlayers {
 
 /// The narration's seek bar, previous / play-pause / next, sleep timer and stop,
 /// shown right under the item playing (recitation library, radios, al-Sha'rawi).
+/// Marks the current screen as showing its own player (so the bottom narration bar stays hidden),
+/// for screens that draw the controls themselves, such as the radio row on the home screen.
+class InlinePlayerMarker extends StatefulWidget {
+  const InlinePlayerMarker({super.key});
+
+  @override
+  State<InlinePlayerMarker> createState() => _InlinePlayerMarkerState();
+}
+
+class _InlinePlayerMarkerState extends State<InlinePlayerMarker> {
+  Route<dynamic>? _route;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final r = ModalRoute.of(context);
+    if (r == _route) return;
+    if (_route != null) InlinePlayers.remove(_route!);
+    _route = r;
+    if (r != null) InlinePlayers.add(r);
+  }
+
+  @override
+  void dispose() {
+    if (_route != null) InlinePlayers.remove(_route!);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => const SizedBox.shrink();
+}
+
 class InlineNarrationPlayer extends StatefulWidget {
   const InlineNarrationPlayer({super.key});
 
@@ -448,7 +480,7 @@ class _InlineNarrationPlayerState extends State<InlineNarrationPlayer> {
                   IconButton(
                     key: const Key('inlineStop'),
                     tooltip: l.storiesStop,
-                    icon: const RIcon(RIcons.stop),
+                    icon: const RIcon(RIcons.close),
                     onPressed: n.stop,
                   ),
                 ],

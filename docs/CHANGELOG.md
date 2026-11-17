@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.2.1] — smaller app, owner's screen changes — 2026-11-17
+### Added
+- Mushaf (app + website): «السورة كاملة», the whole surah on one scrolling screen on the Mushaf paper with A+ / A− (the same KFGQPC text, no change to letters or tashkeel); next/previous page buttons and a sideways swipe at the end of the verses and tafsir views.
+- Tasbih (app): five drawn bead styles (glossy, marble, wood, pearl, crystal) in every colour, the dhikr and its virtue from Hisn al-Muslim on top, big beads in the middle, the count on the side, change dhikr / history / reset.
+### Changed
+- Mushaf (app + website): the page turns like a paper Mushaf: the leaf, hinged on the spine, follows the finger (left to right = next page). The selected ayah is a clear warm honey tint, the recited one soft green (never red).
+- Mushaf (app): a phone held sideways keeps the page large with the tools in a side column, also while listening with tafsir; full screen opens sideways and while listening with tafsir.
+- Home (app): «فيديوهات إسلامية مختصرة», new «مكتبة التلاوات» and «الأناشيد» tiles, Hajj and Umrah beside prayer times; the radio's pause, sleep timer and ✕ sit in the station row.
+- Adhkar (app): listening keeps the page; a player bar with ✕ shows under that dhikr.
+- Zakat (app): every kind on one screen with its due beside it and a grand total at the bottom.
+- Adhan recordings' credits (app): moved from Settings to About (folded).
+- Hisn al-Muslim (app + website): the typo «صلى الله عيه وسلم» corrected to «عليه» (13 places) and a missing space in «حسنة فسأله» (owner-approved; no other wording changed).
+
+- App size (Android + iPhone): about 90 MB smaller. Nothing is removed for the user, and the texts are unchanged.
+  - Hadith books are stored compressed (gzip) inside the app (77 MB to 12 MB); the text is byte-for-byte the same (checked by sha-256 per book).
+  - Sheikh Mishary Alafasy's morning and evening adhkar recordings download the first time they are played (about 4 MB each, from rattilwasalli.com) and then play offline. If the download fails, the sheet offers retry or the same recording online.
+  - Only the default adhan voices are bundled: Sheikh Ali Mulla (Makkah Haram) and Sheikh Al-Daghriri's Fajr adhan (Haram). Every other muezzin downloads once when chosen or played (from rattilwasalli.com, then the original source), and then works offline. A muezzin chosen before the update downloads by itself on the first start; the default adhan sounds until it is there.
+- Website: no size change (it already loads each recording only when played).
+
 ## [1.2.0] — App Store release — 2026-11-16
 Everything since the 1.1.0 build of 2026-11-14 (that build was never uploaded to a store).
 ### Added

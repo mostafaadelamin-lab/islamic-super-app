@@ -127,6 +127,12 @@ void main() {
       find.descendant(of: find.byKey(const Key('mushafPageView')), matching: find.byType(Transform)),
     );
     expect(transforms.any((t) => t.transform.entry(3, 2) != 0), isTrue, reason: 'perspective rotation in use');
+    // The finger moves right: the page being read (10) is the leaf that turns, like a paper Mushaf.
+    final leaf = find.ancestor(
+      of: find.byKey(const Key('mushafPage-10')),
+      matching: find.byWidgetPredicate((w) => w is Transform && w.transform.entry(3, 2) != 0),
+    );
+    expect(leaf, findsOneWidget, reason: 'the current page turns, not the next one');
     await g.moveBy(const Offset(250, 0));
     await g.up();
     await tester.pumpAndSettle();
@@ -141,7 +147,9 @@ void main() {
     expect(find.text('صفحة ٣٠٠'), findsOneWidget);
   });
 
-  testWidgets('full screen button hides the tools; «show tools» brings them back; a margin tap changes nothing', (tester) async {
+  testWidgets('full screen button hides the tools; «show tools» brings them back; a margin tap changes nothing', (
+    tester,
+  ) async {
     await open(tester, 5);
     expect(find.byKey(const Key('mushafControls')), findsOneWidget);
     await tester.tapAt(tester.getTopLeft(find.byKey(const Key('mushafPage-5'))) + const Offset(3, 3));

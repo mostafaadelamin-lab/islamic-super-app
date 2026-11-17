@@ -35,8 +35,10 @@
   --marker-ink: color-mix(in srgb, var(--color-frame) 62%, var(--color-paper-ink));
   --warn-bg: var(--color-accent-soft);
   /* Mushaf highlights: translucent tints blended into the paper, so they can never hide a glyph or mark. */
-  --hl-selected: color-mix(in srgb, var(--color-primary) 16%, transparent);
-  --hl-playing: rgb(196 140 30 / 30%);
+  /* Clearly visible on the cream page (owner 2026-11-17): warm honey for the chosen ayah, soft green while
+     recited. Never red. */
+  --hl-selected: rgb(240 176 30 / 34%);
+  --hl-playing: rgb(40 160 110 / 30%);
   --hl-blend: multiply;
 }
 :root[data-theme="dark"] {
@@ -48,8 +50,10 @@
   --header-bg: var(--color-surface);
   --header-ink: var(--color-ink);
   --brand-mark: var(--color-accent);
-  --hl-selected: rgb(210 168 106 / 20%);
-  --hl-playing: rgb(224 189 106 / 24%);
+  --hl-selected: rgb(214 168 60 / 32%);
+  --hl-playing: rgb(70 180 140 / 30%);
+  /* the round ayah number keeps its contrast on the dark paper */
+  --hl-marker: rgb(210 168 106 / 18%);
   --hl-blend: screen;
 }
 @media (prefers-color-scheme: dark) {
@@ -62,8 +66,9 @@
     --header-bg: var(--color-surface);
     --header-ink: var(--color-ink);
     --brand-mark: var(--color-accent);
-    --hl-selected: rgb(210 168 106 / 20%);
-    --hl-playing: rgb(224 189 106 / 24%);
+    --hl-selected: rgb(214 168 60 / 32%);
+    --hl-playing: rgb(70 180 140 / 30%);
+    --hl-marker: rgb(210 168 106 / 18%);
     --hl-blend: screen;
   }
 }
@@ -1177,6 +1182,32 @@ input[type="radio"] {
   transform-origin: center center;
   will-change: transform;
 }
+/* Page turn (owner 2026-11-17): the other page of a turn, laid exactly over this one. */
+.mushaf-zoom {
+  position: relative;
+}
+.mushaf-turn-layer {
+  position: absolute;
+  inset: 0;
+  padding: inherit;
+  pointer-events: none;
+}
+.mushaf-turn-layer.is-under {
+  z-index: 0;
+}
+.mushaf-turn-layer.is-leaf {
+  z-index: 2;
+}
+.mushaf-zoom > .mushaf-frame {
+  z-index: 1;
+}
+.mushaf-shade {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #000;
+  pointer-events: none;
+}
 .mushaf-page {
   font-family: var(--font-quran);
   /* before measuring: a 15-line page is ~16.2em wide */
@@ -1275,7 +1306,7 @@ input[type="radio"] {
   border-radius: 50%;
 }
 .ayah-end.selected {
-  background: var(--hl-selected);
+  background: var(--hl-marker, var(--hl-selected));
   mix-blend-mode: var(--hl-blend);
 }
 .mushaf-folio {

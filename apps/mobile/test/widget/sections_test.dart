@@ -126,23 +126,37 @@ void main() {
   });
 
   group('Tasbih', () {
+    Future<void> openSheet(WidgetTester tester, String key) async {
+      await tester.tap(find.byKey(Key(key)));
+      await tester.pumpAndSettle();
+    }
+
+    Future<void> closeSheet(WidgetTester tester) async {
+      await tester.tapAt(const Offset(10, 10));
+      await tester.pumpAndSettle();
+    }
+
     testWidgets('counts, completes a round at 33, changes target, resets; survives a restart', (tester) async {
       final app = await pumpApp(tester, size: tallPhone, locale: 'en');
       await pushScreen(tester, const TasbihScreen());
-      await tester.ensureVisible(find.text('Big button'));
+      await openSheet(tester, 'tasbihLook');
       await tester.tap(find.text('Big button'));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.byKey(const Key('tasbihButton')));
+      await closeSheet(tester);
       for (var i = 0; i < 34; i++) {
         await tester.tap(find.byKey(const Key('tasbihButton')));
         await tester.pump();
       }
-      expect(find.text('1'), findsOneWidget);
+      expect(app.services.tasbih.state.count, 1);
+      expect(tester.widget<Text>(find.byKey(const Key('tasbihCount'))).data, '1');
       expect(find.text('Rounds: 1'), findsOneWidget);
       expect(find.text('Total: 34'), findsOneWidget);
+      await openSheet(tester, 'tasbihChangeDhikr');
+      await tester.ensureVisible(find.byKey(const Key('tasbihTarget-100')));
       await tester.tap(find.byKey(const Key('tasbihTarget-100')));
       await tester.pump();
       expect(app.services.tasbih.state.target, 100);
+      await closeSheet(tester);
       // Restart on the same storage.
       await tester.pumpWidget(const SizedBox());
       final again = AppServices.create(
@@ -163,40 +177,53 @@ void main() {
       expect(find.text('Total: 0'), findsOneWidget);
     });
 
-    testWidgets('beads mode, colour, own dhikr with its own counter, history and clearing it', (tester) async {
+    testWidgets('beads: style and colour change the beads; virtue from Hisn al-Muslim; own dhikr; history', (
+      tester,
+    ) async {
       final app = await pumpApp(tester, size: tallPhone, locale: 'en');
       await pushScreen(tester, const TasbihScreen());
       final t = app.services.tasbih;
       expect(t.book.mode, TasbihMode.beads, reason: 'the realistic misbaha is the default');
       expect(find.byType(RealMisbaha), findsOneWidget);
+      expect(find.byKey(const Key('tasbihVirtue')), findsOneWidget, reason: 'subhan Allah has its virtue');
+      expect(find.textContaining('يُسَبِّحُ مِائَةَ تَسْبِيحَةٍ'), findsOneWidget);
       await tester.tap(find.byKey(const Key('tasbihButton')));
       await tester.pump();
-      await tester.ensureVisible(find.byKey(const Key('tasbihColor-plum')));
+      await openSheet(tester, 'tasbihLook');
       await tester.tap(find.byKey(const Key('tasbihColor-plum')));
       await tester.pump();
+      await tester.tap(find.byKey(const Key('tasbihStyle-marble')));
+      await tester.pump();
       expect(t.book.color, 'plum');
+      expect(t.book.style, BeadStyle.marble);
+      await closeSheet(tester);
+      final m = tester.widget<RealMisbaha>(find.byType(RealMisbaha));
+      expect(m.bead, Color(tasbihColors['plum']!), reason: 'the chosen colour reaches the beads');
+      expect(m.style, BeadStyle.marble);
+      await openSheet(tester, 'tasbihChangeDhikr');
       await tester.ensureVisible(find.byKey(const Key('tasbihNew')));
       await tester.enterText(find.byKey(const Key('tasbihNew')), 'سبحان الله وبحمده');
       await tester.pump();
       await tester.tap(find.byKey(const Key('tasbihAdd')));
       await tester.pumpAndSettle();
       expect(t.book.phrase, 'c1');
+      await closeSheet(tester);
+      expect(find.byKey(const Key('tasbihVirtue')), findsNothing, reason: 'no virtue is written for own adhkar');
       expect(t.state.count, 0);
-      await tester.ensureVisible(find.byKey(const Key('tasbihButton')));
-      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const Key('tasbihButton')));
       await tester.pump();
       expect(t.state.count, 1);
       expect(t.book.counters['tasbih']!.count, 1);
       expect(t.book.historyRows().length, 2);
-      await tester.ensureVisible(find.byKey(const Key('tasbihClearHistory')));
-      await tester.pumpAndSettle();
+      await openSheet(tester, 'tasbihHistoryOpen');
       await tester.tap(find.byKey(const Key('tasbihClearHistory')));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const Key('tasbihClearOk')));
       await tester.pumpAndSettle();
       expect(t.book.history, isEmpty);
       expect(find.byKey(const Key('tasbihHistoryEmpty')), findsOneWidget);
+      await closeSheet(tester);
+      await openSheet(tester, 'tasbihChangeDhikr');
       await tester.tap(find.byKey(const Key('tasbihRemove-c1')));
       await tester.pumpAndSettle();
       expect(t.book.custom, isEmpty);
@@ -649,7 +676,7 @@ void main() {
       expect(t.at, fixedNow.add(const Duration(seconds: 10)));
       expect(t.sound, 'tone');
       expect(find.text('A test alert will arrive in 10 seconds; you can close the app.'), findsOneWidget);
-      expect(find.byKey(const Key('adhanCredit')), findsOneWidget);
+      expect(find.byKey(const Key('adhanCredit')), findsNothing, reason: 'credits live on the About page');
 
       // The preview plays the default muezzin (Ali Mulla, Makkah Haram).
       expect(player.lastAsset, 'assets/audio/adhan_mulla.m4a');

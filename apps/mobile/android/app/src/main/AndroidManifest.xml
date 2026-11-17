@@ -85,7 +85,7 @@
                 <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
             </intent-filter>
         </receiver>
-        <!-- Full adhan: exact alarms (AdhanAlarms.kt) start this foreground service, which plays res/raw/adhan.ogg. -->
+        <!-- Full adhan: exact alarms (AdhanAlarms.kt) start this foreground service, which plays the chosen adhan recording. -->
         <service
             android:name=".AdhanService"
             android:exported="false"

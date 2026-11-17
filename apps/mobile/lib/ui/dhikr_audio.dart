@@ -6,6 +6,7 @@ import 'package:just_audio/just_audio.dart';
 
 import '../app_services.dart';
 import '../data/audio_focus.dart';
+import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'r_icon.dart';
 
@@ -180,9 +181,12 @@ class DhikrPlayer extends ChangeNotifier {
   }
 }
 
-/// Play/pause, progress and stop for the dhikr recording (shown while one is loaded).
+/// Play/pause, progress and ✕ (stop and close) for the dhikr recording (shown while one is loaded).
+/// [inline]: drawn as a rounded strip right under the dhikr playing (adhkar, Hisn al-Muslim; owner
+/// 2026-11-17) instead of a bar at the bottom of the screen.
 class DhikrPlayerBar extends StatelessWidget {
-  const DhikrPlayerBar({super.key});
+  const DhikrPlayerBar({super.key, this.inline = false});
+  final bool inline;
 
   @override
   Widget build(BuildContext context) {
@@ -196,6 +200,49 @@ class DhikrPlayerBar extends StatelessWidget {
         final scheme = theme.colorScheme;
         final total = p.duration;
         String fmt(Duration d) => context.numLtr('${d.inMinutes}:${(d.inSeconds % 60).toString().padLeft(2, '0')}');
+        final row = Row(
+          children: [
+            IconButton.filled(
+              key: const Key('dhikrPlayerToggle'),
+              tooltip: p.playing ? l.storiesPause : l.storiesPlay,
+              icon: p.loading && !p.playing
+                  ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                  : RIcon(p.playing ? RIcons.pause : RIcons.play),
+              onPressed: () => p.playing ? p.pause() : p.resume(),
+            ),
+            Text(fmt(p.position), style: theme.textTheme.bodySmall),
+            Expanded(
+              child: Slider(
+                key: const Key('dhikrPlayerSlider'),
+                value: total == null || total.inMilliseconds == 0
+                    ? 0
+                    : p.position.inMilliseconds.clamp(0, total.inMilliseconds).toDouble(),
+                max: total == null || total.inMilliseconds == 0 ? 1 : total.inMilliseconds.toDouble(),
+                onChanged: total == null ? null : (v) => p.seek(Duration(milliseconds: v.round())),
+              ),
+            ),
+            if (total != null) Text(fmt(total), style: theme.textTheme.bodySmall),
+            IconButton(
+              key: const Key('dhikrPlayerStop'),
+              tooltip: l.storiesStop,
+              icon: const RIcon(RIcons.close),
+              onPressed: p.stop,
+            ),
+          ],
+        );
+        if (inline) {
+          return Container(
+            key: const Key('dhikrPlayerBar'),
+            margin: const EdgeInsets.only(top: DesignTokens.spaceSm),
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            decoration: BoxDecoration(
+              color: scheme.primaryContainer.withValues(alpha: 0.45),
+              borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+              border: Border.all(color: scheme.primary.withValues(alpha: 0.35)),
+            ),
+            child: row,
+          );
+        }
         return Material(
           key: const Key('dhikrPlayerBar'),
           color: scheme.surfaceContainer,
@@ -206,36 +253,7 @@ class DhikrPlayerBar extends StatelessWidget {
                 border: Border(top: BorderSide(color: scheme.outline)),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Row(
-                children: [
-                  IconButton.filled(
-                    key: const Key('dhikrPlayerToggle'),
-                    tooltip: p.playing ? l.storiesPause : l.storiesPlay,
-                    icon: p.loading && !p.playing
-                        ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                        : RIcon(p.playing ? RIcons.pause : RIcons.play),
-                    onPressed: () => p.playing ? p.pause() : p.resume(),
-                  ),
-                  Text(fmt(p.position), style: theme.textTheme.bodySmall),
-                  Expanded(
-                    child: Slider(
-                      key: const Key('dhikrPlayerSlider'),
-                      value: total == null || total.inMilliseconds == 0
-                          ? 0
-                          : p.position.inMilliseconds.clamp(0, total.inMilliseconds).toDouble(),
-                      max: total == null || total.inMilliseconds == 0 ? 1 : total.inMilliseconds.toDouble(),
-                      onChanged: total == null ? null : (v) => p.seek(Duration(milliseconds: v.round())),
-                    ),
-                  ),
-                  if (total != null) Text(fmt(total), style: theme.textTheme.bodySmall),
-                  IconButton(
-                    key: const Key('dhikrPlayerStop'),
-                    tooltip: l.storiesStop,
-                    icon: const RIcon(RIcons.stop),
-                    onPressed: p.stop,
-                  ),
-                ],
-              ),
+              child: row,
             ),
           ),
         );
@@ -246,9 +264,12 @@ class DhikrPlayerBar extends StatelessWidget {
 
 /// "Listen to this dhikr" (streams the recording; needs internet).
 class DhikrListenButton extends StatelessWidget {
-  const DhikrListenButton({super.key, required this.url, this.compact = false});
+  const DhikrListenButton({super.key, required this.url, this.compact = false, this.inlinePlayer = true});
   final String url;
   final bool compact;
+
+  /// Show the player under this button while its recording is loaded.
+  final bool inlinePlayer;
 
   @override
   Widget build(BuildContext context) {
@@ -270,9 +291,19 @@ class DhikrListenButton extends StatelessWidget {
           p.toggle(url);
         }
 
-        return compact
+        final button = compact
             ? TextButton.icon(key: const Key('dhikrListen'), onPressed: onTap, icon: icon, label: Text(label))
             : FilledButton.tonalIcon(key: const Key('dhikrListen'), onPressed: onTap, icon: icon, label: Text(label));
+        // The player shows right here, under the dhikr being heard; the page stays as it is.
+        if (!inlinePlayer || !mine || !p.active) return button;
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Center(child: button),
+            const DhikrPlayerBar(inline: true),
+          ],
+        );
       },
     );
   }
