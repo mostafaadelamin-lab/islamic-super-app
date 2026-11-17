@@ -5,7 +5,11 @@ import type { ClockStyle } from "./time";
 import { clampAdjustment, METHOD_IDS, PRAYER_KEYS, type Adjustments } from "./prayer";
 
 export type ThemePref = "system" | "light" | "dark";
-/** Colour style (owner 2026-11-15): style 1 "emerald" (default) or style 2 "madinah". */
+/**
+ * Colour style (owner 2026-11-15): "emerald" or "madinah". Since 1.2.8 (owner 2026-11-17) «ليل المدينة» is the
+ * default. A palette saved before 1.2.8 (no paletteV) is dropped once, so every visitor starts on the new default;
+ * a style picked after that is kept.
+ */
 export type PalettePref = keyof typeof tokens.palettes;
 export const PALETTES = Object.keys(tokens.palettes) as PalettePref[];
 export const DEFAULT_PALETTE = tokens.defaultPalette as PalettePref;
@@ -25,6 +29,8 @@ export interface Preferences {
   clock: ClockStyle;
   /** Days added to the Umm al-Qura Hijri date to match the locally announced date (moon sighting). */
   hijriOffset: number;
+  /** 2 = the palette was saved under the 1.2.8 default (see PalettePref). */
+  paletteV: 2;
 }
 export const DEFAULT_PREFS: Preferences = {
   locale: null,
@@ -34,6 +40,7 @@ export const DEFAULT_PREFS: Preferences = {
   translation: false,
   clock: "24",
   hijriOffset: 0,
+  paletteV: 2,
 };
 
 export const HIJRI_OFFSET_MAX = 2;
@@ -56,11 +63,12 @@ export function sanitizePrefs(raw: unknown): Preferences {
   return {
     locale: isLocale(r.locale) ? r.locale : null,
     theme: r.theme === "light" || r.theme === "dark" ? r.theme : "system",
-    palette: isPalette(r.palette) ? r.palette : DEFAULT_PALETTE,
+    palette: r.paletteV === 2 && isPalette(r.palette) ? r.palette : DEFAULT_PALETTE,
     fontSize: r.fontSize === undefined ? FONT_DEFAULT : clampFontSize(r.fontSize),
     translation: r.translation === true,
     clock: r.clock === "12" ? "12" : "24",
     hijriOffset: clampHijriOffset(r.hijriOffset ?? 0),
+    paletteV: 2,
   };
 }
 

@@ -40,6 +40,7 @@ import { Icon } from "./Icon";
 import { shareAyahImage } from "@/lib/ayah-image";
 import { TafsirPanel } from "./TafsirPanel";
 import { MeaningsSheet } from "./MeaningsSheet";
+import { SurahInfoSheet } from "./SurahInfoSheet";
 import { ReaderPlayer, ReaderPlayerMini } from "./ReaderPlayer";
 import { dockSwipe, readerDockMinStore } from "@/lib/reader-dock";
 import { ReaderIcon } from "./ReaderIcon";
@@ -296,7 +297,9 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     setTabState(next);
     setFlowSurah(null);
   };
-  const [sheet, setSheet] = useState<"help" | "khatma" | "meanings" | null>(null);
+  const [sheet, setSheet] = useState<"help" | "khatma" | "meanings" | "surahInfo" | null>(null);
+  // «عن السورة وأسباب نزولها» (as in the app): the selected ayah's surah, else the page's first.
+  const [infoSurah, setInfoSurah] = useState<number | null>(null);
   // «معاني الكلمات» of the selected ayah (from its menu); the page's words open as sheet "meanings".
   const [ayahMeanings, setAyahMeanings] = useState<Ref | null>(null);
   // Full screen only from its own button, and back with the exit button (owner 2026-11-15: one tap to
@@ -1162,6 +1165,9 @@ export function PageReader({ locale, initial }: PageReaderProps) {
           }}
         />
       ) : null}
+      {sheet === "surahInfo" && infoSurah ? (
+        <SurahInfoSheet locale={locale} surah={infoSurah} onClose={() => setSheet(null)} />
+      ) : null}
       {ayahMeanings ? (
         <MeaningsSheet locale={locale} refs={[ayahMeanings]} onClose={() => setAyahMeanings(null)} />
       ) : null}
@@ -1406,6 +1412,20 @@ export function PageReader({ locale, initial }: PageReaderProps) {
           >
             <ReaderIcon name="meanings" />
             <span>{t(locale, "meanings.title")}</span>
+          </button>
+          <button
+            type="button"
+            data-testid="bar-surah-info"
+            title={t(locale, "surahInfo.title")}
+            aria-expanded={sheet === "surahInfo"}
+            onClick={() => {
+              setInfoSurah(sel?.[0] ?? refs[0]?.[0] ?? 1);
+              setSelected(null);
+              setSheet((v) => (v === "surahInfo" ? null : "surahInfo"));
+            }}
+          >
+            <ReaderIcon name="info" />
+            <span>{t(locale, "surahInfo.short")}</span>
           </button>
           <Link href={href(locale, "search")} data-testid="bar-search">
             <ReaderIcon name="search" />

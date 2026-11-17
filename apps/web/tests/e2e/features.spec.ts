@@ -124,10 +124,10 @@ test.describe("theme & font size", () => {
     await page.goto("/en/settings/");
     const bg = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
     await page.getByRole("radio", { name: "Light" }).check();
-    expect(await bg()).toBe("rgb(245, 242, 234)"); // --color-bg light #F5F2EA (emerald + gold palette)
+    expect(await bg()).toBe("rgb(243, 245, 249)"); // --color-bg light #F3F5F9 («ليل المدينة», default since 1.2.8)
     await page.getByRole("radio", { name: "Dark" }).check();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
-    expect(await bg()).toBe("rgb(12, 23, 20)"); // --color-bg dark #0C1714
+    expect(await bg()).toBe("rgb(10, 17, 30)"); // --color-bg dark #0A111E
     await page.reload();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
     await page.getByRole("radio", { name: "System" }).check();
@@ -139,7 +139,7 @@ test.describe("theme & font size", () => {
     const page = withHydration(await ctx.newPage());
     await page.goto("/ar/");
     expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(
-      "rgb(12, 23, 20)",
+      "rgb(10, 17, 30)",
     );
     await ctx.close();
   });
@@ -183,6 +183,19 @@ test.describe("Quran", () => {
     await expect(page).toHaveURL("/ar/surah/18/");
     await expect(page.locator("article.ayah")).toHaveCount(110);
     await expect(page.getByTestId("ayah-marker").first()).toHaveText("١");
+  });
+
+  test("Mushaf: «عن السورة» opens the surah card with its reasons for revelation (as in the app)", async ({
+    page,
+  }) => {
+    // the page's first ayah decides the surah (page 293 starts with the end of al-Isra, as in the app)
+    await page.goto("/ar/page/293/");
+    await page.getByTestId("bar-surah-info").click();
+    const sheet = page.getByTestId("surah-info-sheet");
+    await expect(sheet).toContainText("سورة الإسراء");
+    await expect(sheet.getByTestId("surah-info-asbab")).toHaveText("أسباب النزول");
+    await page.getByTestId("surah-info-close").click();
+    await expect(sheet).toHaveCount(0);
   });
 
   test("surah reader: translation toggle, neighbours and Mushaf link", async ({ page }) => {
@@ -429,7 +442,9 @@ test("Quran index: surahs and quarters tabs, search, opens the Mushaf page", asy
   w.assertClean();
 });
 
-test("zakat calculator: the app's one page with the total, money result kept after reload", async ({ page }) => {
+test("zakat calculator: the app's one page with the total, money result kept after reload", async ({
+  page,
+}) => {
   await page.goto("/ar/zakat/");
   await expect(page.locator("html[data-hydrated=true]")).toHaveCount(1);
   await expect(page.getByTestId("zakat-review")).toHaveCount(0);

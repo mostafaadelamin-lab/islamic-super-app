@@ -68,5 +68,9 @@
   "meanings.offline": "You are offline and this surah's word meanings are not saved on this device yet. They are saved once opened.",
   "meanings.nonePage": "No difficult words are explained on this page.",
   "meanings.noneAyah": "No difficult words are explained in this ayah.",
-  "meanings.source": "From «Al-Siraj fi Bayan Gharib al-Quran» by Muhammad al-Khudairi (Arabic)"
+  "meanings.source": "From «Al-Siraj fi Bayan Gharib al-Quran» by Muhammad al-Khudairi (Arabic)",
+  "surahInfo.short": "About surah",
+  "surahInfo.loading": "Loading the surah's information…",
+  "surahInfo.error": "Could not load the surah's information. Check your connection and try again.",
+  "surahInfo.offline": "You are offline and this surah's information is not saved on this device yet. It is saved after you open it once."
 }

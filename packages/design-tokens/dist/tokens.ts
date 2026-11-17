@@ -70,7 +70,7 @@ export const tokens = {
   "pill": 999
  },
  "minTouchTarget": 48,
- "defaultPalette": "emerald",
+ "defaultPalette": "madinah",
  "palettes": {
   "emerald": {
    "label": {

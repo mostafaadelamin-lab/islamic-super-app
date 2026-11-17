@@ -8,6 +8,9 @@ Owner rule: every feature on Android, iPhone and the website. A code comparison 
 - Tasbih: the app's five bead looks (glossy, marble, wood, pearl, crystal) in every colour; picking one shows the beads.
 - Qibla: «استدر يمينًا / يسارًا N°» while the compass is live, the compass accuracy where the phone reports it (iPhone), and the app's «البوصلة تحتاج معايرة» card when it is poor.
 - Prayer times: «مشاركة التقويم» sends the month as a picture (as in the app), or downloads it where the browser cannot share files.
+- Mushaf: «عن السورة» in the bar under the page opens «عن السورة وأسباب نزولها» for the surah of the selected ayah (else the page's first), as in the app: place and order of revelation, introduction and reasons for revelation, the app's text verbatim (before, the website showed it only on the surah list page).
+### Changed (app + website)
+- «ليل المدينة» is now the default colour style (owner 2026-11-17). A style saved before 1.2.8 gives way once, so everyone starts on «ليل المدينة»; a style picked after updating is kept. The browser bar colour and the installed website's colours follow it.
 ### Changed (website)
 - Zakat: every kind on one page (money, gold, silver, livestock, crops) with its due beside its name and «إجمالي الزكاة المطلوبة» at the bottom, the same as the app (the five tabs are gone).
 - Unchanged: Quran text and all other religious content.

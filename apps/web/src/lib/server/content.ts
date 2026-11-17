@@ -1,6 +1,7 @@
 import "server-only";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import type { SurahInfoData } from "../surah-info";
 import { resolvePage, type MushafLinesFile, type ResolvedPage } from "../mushaf";
 
 interface QuranSurah {
@@ -55,15 +56,7 @@ export function mushafPage(page: number): ResolvedPage {
 }
 
 /** The app's surah card data (apps/mobile/assets/content/surah-info.v1.json, verbatim from a published source). */
-export interface SurahInfoData {
-  n: number;
-  type?: string;
-  order?: string;
-  intro?: string;
-  purposes?: string;
-  asbab?: string;
-  wahidi?: { ayah: number; text: string }[];
-}
+export type { SurahInfoData };
 let infoCache: SurahInfoData[] | null = null;
 export function surahInfo(n: number): SurahInfoData | null {
   if (!infoCache) {

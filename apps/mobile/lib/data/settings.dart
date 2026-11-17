@@ -60,15 +60,17 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Colour style (owner 2026-11-15): 'emerald' (style 1, default) or 'madinah' (style 2).
+  /// Colour style (owner 2026-11-15): 'emerald' or 'madinah'. Since 1.2.8 (owner 2026-11-17) «ليل المدينة» is the
+  /// default; a style saved before 1.2.8 is dropped once (no 'paletteV2'), a style picked after that is kept.
   String get palette {
-    final v = _prefs.getString('palette');
+    final v = _prefs.getBool('paletteV2') == true ? _prefs.getString('palette') : null;
     return DesignTokens.paletteIds.contains(v) ? v! : DesignTokens.defaultPalette;
   }
 
   Future<void> setPalette(String id) async {
     if (!DesignTokens.paletteIds.contains(id)) throw ArgumentError(id);
     await _prefs.setString('palette', id);
+    await _prefs.setBool('paletteV2', true);
     notifyListeners();
   }
 

@@ -29,8 +29,8 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ["education", "lifestyle", "books"],
     dir: "rtl",
     lang: "ar",
-    background_color: tokens.color.light.bg,
-    theme_color: tokens.color.light.primary,
+    background_color: tokens.palettes[tokens.defaultPalette].light.bg,
+    theme_color: tokens.palettes[tokens.defaultPalette].light.primary,
     // Long-press shortcuts on the installed app's icon (Android / desktop).
     shortcuts: SHORTCUTS.map(([path, name]) => ({
       name,

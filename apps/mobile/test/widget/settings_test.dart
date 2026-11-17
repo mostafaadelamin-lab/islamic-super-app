@@ -22,12 +22,16 @@ void main() {
   testWidgets('colour style and light/dark (owner 2026-11-15): style 2 and dark are kept and applied', (tester) async {
     final app = await open(tester);
     Color primary() => Theme.of(tester.element(find.byType(SettingsScreen))).colorScheme.primary;
+    // «ليل المدينة» is the default since 1.2.8 (owner 2026-11-17).
+    expect(primary(), DesignTokens.palettes['madinah']!['light']!['primary']);
+    await tester.ensureVisible(find.byKey(const Key('palette.emerald')));
+    await tester.tap(find.byKey(const Key('palette.emerald')));
+    await tester.pumpAndSettle();
+    expect(app.prefs.getString('palette'), 'emerald');
     expect(primary(), DesignTokens.palettes['emerald']!['light']!['primary']);
-    await tester.ensureVisible(find.byKey(const Key('palette.madinah')));
     await tester.tap(find.byKey(const Key('palette.madinah')));
     await tester.pumpAndSettle();
     expect(app.prefs.getString('palette'), 'madinah');
-    expect(primary(), DesignTokens.palettes['madinah']!['light']!['primary']);
     await tester.tap(find.text('داكن'));
     await tester.pumpAndSettle();
     expect(app.prefs.getString('theme'), 'dark');
@@ -37,6 +41,18 @@ void main() {
     await tester.tap(find.byKey(const Key('palette.emerald')));
     await tester.pumpAndSettle();
     expect(primary(), DesignTokens.palettes['emerald']!['dark']!['primary']);
+  });
+
+  testWidgets('a colour style saved before 1.2.8 gives way once to «ليل المدينة»', (tester) async {
+    await open(tester, prefs: {'palette': 'emerald'});
+    Color primary() => Theme.of(tester.element(find.byType(SettingsScreen))).colorScheme.primary;
+    expect(primary(), DesignTokens.palettes['madinah']!['light']!['primary']);
+  });
+
+  testWidgets('a colour style picked after 1.2.8 is kept', (tester) async {
+    await open(tester, prefs: {'palette': 'emerald', 'paletteV2': true});
+    Color primary() => Theme.of(tester.element(find.byType(SettingsScreen))).colorScheme.primary;
+    expect(primary(), DesignTokens.palettes['emerald']!['light']!['primary']);
   });
 
   testWidgets('language switch: ar -> en -> ar, direction follows, choice persists', (tester) async {

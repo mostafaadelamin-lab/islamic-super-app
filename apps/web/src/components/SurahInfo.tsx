@@ -1,11 +1,11 @@
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import type { SurahMeta } from "@/lib/pages";
-import type { SurahInfoData } from "@/lib/server/content";
+import type { SurahInfoData } from "@/lib/surah-info";
 import { Icon } from "./Icon";
 
-/** The app's surah card: place and order of revelation, introduction and reasons for revelation (verbatim). */
-export function SurahInfo({
+/** Place, order and ayah count, then the introduction and the reasons for revelation (verbatim). */
+export function SurahInfoBody({
   locale,
   meta,
   info,
@@ -24,10 +24,7 @@ export function SurahInfo({
         </p>
       ));
   return (
-    <details className="card surah-info" data-testid="surah-info">
-      <summary>
-        <Icon name="info" size={18} /> {t(locale, "surahInfo.title")}
-      </summary>
+    <>
       <p className="row surah-info-chips">
         <span className="chip">
           {t(locale, "surahInfo.place")}:{" "}
@@ -52,7 +49,7 @@ export function SurahInfo({
               {paras(info.intro)}
             </>
           ) : null}
-          <h2>{t(locale, "surahInfo.asbab")}</h2>
+          <h2 data-testid="surah-info-asbab">{t(locale, "surahInfo.asbab")}</h2>
           {info.asbab ? (
             paras(info.asbab)
           ) : info.wahidi && info.wahidi.length > 0 ? (
@@ -70,6 +67,26 @@ export function SurahInfo({
           )}
         </>
       )}
+    </>
+  );
+}
+
+/** The app's surah card: place and order of revelation, introduction and reasons for revelation (verbatim). */
+export function SurahInfo({
+  locale,
+  meta,
+  info,
+}: {
+  locale: Locale;
+  meta: SurahMeta;
+  info: SurahInfoData | null;
+}) {
+  return (
+    <details className="card surah-info" data-testid="surah-info">
+      <summary>
+        <Icon name="info" size={18} /> {t(locale, "surahInfo.title")}
+      </summary>
+      <SurahInfoBody locale={locale} meta={meta} info={info} />
     </details>
   );
 }

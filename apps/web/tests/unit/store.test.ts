@@ -88,16 +88,20 @@ describe("settings sanitisers", () => {
     ).toEqual({
       locale: "en",
       theme: "dark",
-      palette: "emerald",
+      palette: "madinah",
       fontSize: FONT_MAX,
       translation: true,
       clock: "12",
       hijriOffset: 0,
+      paletteV: 2,
     });
     expect(sanitizePrefs({ clock: "13" }).clock).toBe("24");
-    // colour styles (owner 2026-11-15): style 1 emerald is the default, style 2 madinah can be picked
-    expect(sanitizePrefs({ palette: "madinah" }).palette).toBe("madinah");
-    expect(sanitizePrefs({ palette: "neon" }).palette).toBe("emerald");
+    // colour styles: «ليل المدينة» is the default since 1.2.8 (owner 2026-11-17); a style saved before 1.2.8
+    // (no paletteV) is dropped once, a style picked after that is kept
+    expect(DEFAULT_PREFS.palette).toBe("madinah");
+    expect(sanitizePrefs({ palette: "emerald" }).palette).toBe("madinah");
+    expect(sanitizePrefs({ palette: "emerald", paletteV: 2 }).palette).toBe("emerald");
+    expect(sanitizePrefs({ palette: "neon", paletteV: 2 }).palette).toBe("madinah");
     expect(sanitizePrefs({ locale: "fr", theme: "neon", fontSize: 2 })).toMatchObject({
       locale: null,
       theme: "system",
@@ -160,9 +164,23 @@ describe("service worker client", () => {
     handleSwMessage({ type: "other" });
     expect(l).not.toHaveBeenCalled();
     handleSwMessage({ type: "precache-progress", done: 3, total: 10, complete: false });
-    expect(currentOfflineStatus()).toEqual({ supported: true, done: 3, total: 10, complete: false, saved: false, mb: 0 });
+    expect(currentOfflineStatus()).toEqual({
+      supported: true,
+      done: 3,
+      total: 10,
+      complete: false,
+      saved: false,
+      mb: 0,
+    });
     handleSwMessage({ type: "precache-progress", done: "x", complete: true });
-    expect(currentOfflineStatus()).toEqual({ supported: true, done: 0, total: 0, complete: true, saved: false, mb: 0 });
+    expect(currentOfflineStatus()).toEqual({
+      supported: true,
+      done: 0,
+      total: 0,
+      complete: true,
+      saved: false,
+      mb: 0,
+    });
     expect(l).toHaveBeenCalledTimes(2);
     unsub();
   });

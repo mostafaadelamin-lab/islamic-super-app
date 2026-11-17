@@ -648,9 +648,9 @@ test("system dark theme: new pages use the dark tokens", async ({ browser }) => 
   const ctx = await browser.newContext({ colorScheme: "dark" });
   const page = withHydration(await ctx.newPage());
   await page.goto("/ar/page/3/");
-  expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe("rgb(12, 23, 20)");
+  expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe("rgb(18, 27, 43)"); // reader page = paper dark #121B2B («ليل المدينة», default since 1.2.8)
   expect(await page.getByTestId("mushaf-frame").evaluate((e) => getComputedStyle(e).backgroundColor)).toBe(
-    "rgb(18, 26, 23)",
-  ); // --color-paper dark #121A17
+    "rgb(18, 27, 43)",
+  ); // --color-paper dark #121B2B
   await ctx.close();
 });

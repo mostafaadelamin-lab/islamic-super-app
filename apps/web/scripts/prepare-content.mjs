@@ -185,6 +185,12 @@ meanings.surahs.forEach((entries, i) => {
   }
   writeJson(join(pub, "data/meanings/siraj", `${s.n}.json`), entries);
 });
+// «عن السورة وأسباب النزول» (the app's surah card), one file per surah, verbatim from the app's asset.
+const surahInfoAll = readJson("apps/mobile/assets/content/surah-info.v1.json");
+if (!Array.isArray(surahInfoAll.surahs) || surahInfoAll.surahs.length !== quran.surahs.length) {
+  throw new Error("surah-info.v1.json: unexpected shape");
+}
+for (const info of surahInfoAll.surahs) writeJson(join(pub, "data/surah-info", `${info.n}.json`), info);
 writeJson(
   join(gen, "hajj.json"),
   extractHajj(readFileSync(join(repo, "content/pilgrimage/source-hajj.js"), "utf8")),
