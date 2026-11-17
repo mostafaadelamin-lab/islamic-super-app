@@ -890,6 +890,7 @@ class ReaderPlayerHandle extends StatelessWidget {
         final l = context.l10n;
         final scheme = Theme.of(context).colorScheme;
         final min = settings.readerPlayerMin;
+        final compact = MediaQuery.sizeOf(context).height < 700;
         final handle = Semantics(
           button: true,
           expanded: !min,
@@ -901,9 +902,11 @@ class ReaderPlayerHandle extends StatelessWidget {
               borderRadius: BorderRadius.circular(14),
               onTap: () => unawaited(settings.setReaderPlayerMin(!min)),
               child: SizedBox(
-                width: 72,
-                height: min ? 44 : 30,
-                child: Column(
+                width: compact && !min ? 96 : 72,
+                height: min ? 44 : (compact ? 18 : 30),
+                // Short screens: grip and arrow side by side, so the page keeps its 15 lines.
+                child: Flex(
+                  direction: compact && !min ? Axis.horizontal : Axis.vertical,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
@@ -914,10 +917,11 @@ class ReaderPlayerHandle extends StatelessWidget {
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
+                    if (compact && !min) const SizedBox(width: 6),
                     AnimatedRotation(
                       turns: min ? 0.5 : 0,
                       duration: const Duration(milliseconds: 200),
-                      child: RIcon(RIcons.chevronDown, size: 18, color: scheme.primary),
+                      child: RIcon(RIcons.chevronDown, size: compact && !min ? 16 : 18, color: scheme.primary),
                     ),
                   ],
                 ),
