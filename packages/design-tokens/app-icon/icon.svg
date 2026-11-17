@@ -1,13 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
-<!-- Rattil app icon (our own design): gold mihrab arch, star and an open Mushaf on a rehal, on an emerald-to-navy gradient (colour styles 1 and 2, 2026-11-15). Full-bleed square; platforms apply their own mask. -->
-<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#17795F"/><stop offset="0.5" stop-color="#0E4F55"/><stop offset="1" stop-color="#16305A"/></linearGradient></defs>
+<!-- Rattil app icon (our own design, owner pick 2026-11-17 option B "crescent in the mihrab"): gold mihrab arch with a crescent and star over an open Mushaf, on the Madinah-night sky (default colour style). Full-bleed square; platforms apply their own mask. -->
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1"><stop offset="0" stop-color="#24477A"/><stop offset=".55" stop-color="#16305A"/><stop offset="1" stop-color="#0A1830"/></linearGradient>
+<radialGradient id="glow" cx=".5" cy=".42" r=".5"><stop offset="0" stop-color="#D9B25E" stop-opacity=".22"/><stop offset="1" stop-color="#D9B25E" stop-opacity="0"/></radialGradient></defs>
 <rect width="1024" height="1024" fill="url(#bg)"/>
-<circle cx="512" cy="512" r="430" fill="none" stroke="#E0BD6A" stroke-opacity=".14" stroke-width="6"/>
+<circle cx="391" cy="137" r="6" fill="#F1DFAE" opacity="0.5"/>
+<circle cx="109" cy="97" r="3" fill="#F1DFAE" opacity="0.35"/>
+<circle cx="656" cy="89" r="4" fill="#F1DFAE" opacity="0.25"/>
+<circle cx="148" cy="282" r="6" fill="#F1DFAE" opacity="0.25"/>
+<circle cx="306" cy="106" r="6" fill="#F1DFAE" opacity="0.25"/>
+<circle cx="906" cy="349" r="3" fill="#F1DFAE" opacity="0.25"/>
+<circle cx="705" cy="381" r="3" fill="#F1DFAE" opacity="0.5"/>
+<circle cx="659" cy="263" r="3" fill="#F1DFAE" opacity="0.25"/>
+<circle cx="107" cy="345" r="4" fill="#F1DFAE" opacity="0.35"/>
+<circle cx="489" cy="133" r="3" fill="#F1DFAE" opacity="0.5"/>
+<circle cx="375" cy="346" r="4" fill="#F1DFAE" opacity="0.25"/>
+<circle cx="655" cy="352" r="4" fill="#F1DFAE" opacity="0.35"/>
+<circle cx="159" cy="340" r="3" fill="#F1DFAE" opacity="0.5"/>
+<circle cx="121" cy="376" r="4" fill="#F1DFAE" opacity="0.35"/>
+<circle cx="756" cy="332" r="6" fill="#F1DFAE" opacity="0.35"/>
+<circle cx="536" cy="359" r="6" fill="#F1DFAE" opacity="0.35"/>
+<circle cx="366" cy="187" r="4" fill="#F1DFAE" opacity="0.5"/>
+<circle cx="858" cy="184" r="3" fill="#F1DFAE" opacity="0.5"/>
+<circle cx="367" cy="328" r="6" fill="#F1DFAE" opacity="0.35"/>
+<circle cx="806" cy="289" r="5" fill="#F1DFAE" opacity="0.5"/>
+<circle cx="134" cy="120" r="6" fill="#F1DFAE" opacity="0.25"/>
+<circle cx="835" cy="235" r="4" fill="#F1DFAE" opacity="0.35"/>
+<circle cx="491" cy="80" r="3" fill="#F1DFAE" opacity="0.5"/>
+<circle cx="646" cy="220" r="5" fill="#F1DFAE" opacity="0.5"/>
+<circle cx="418" cy="364" r="6" fill="#F1DFAE" opacity="0.5"/>
+<circle cx="876" cy="293" r="3" fill="#F1DFAE" opacity="0.25"/>
+<rect width="1024" height="1024" fill="url(#glow)"/>
 <g id="mark" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M300 812V500C300 392 392 318 512 236C632 318 724 392 724 500V812" stroke="#E0BD6A" stroke-width="36"/>
-  <path d="M512.0 330.0 L523.5 364.3 L555.8 348.2 L539.7 380.5 L574.0 392.0 L539.7 403.5 L555.8 435.8 L523.5 419.7 L512.0 454.0 L500.5 419.7 L468.2 435.8 L484.3 403.5 L450.0 392.0 L484.3 380.5 L468.2 348.2 L500.5 364.3Z" fill="#E0BD6A"/>
-  <path d="M400 660L628 812M624 660L396 812" stroke="#E0BD6A" stroke-width="26"/>
-  <path d="M512 566C466 534 414 524 368 534V676C414 666 466 676 512 708C558 676 610 666 656 676V534C610 524 558 534 512 566Z" fill="#F4EBD3" stroke="#E0BD6A" stroke-width="20"/>
-  <path d="M512 566V708" stroke="#B8923A" stroke-width="14"/>
+  <path d="M282 800V512C282 398 384 314 512 226C640 314 742 398 742 512V800" stroke="#D9B25E" stroke-width="44"/>
+  <path d="M531.1 328.2A84 84 0 1 0 588.9 443.8A66 66 0 0 1 531.1 328.2Z" fill="#D9B25E"/>
+  <path d="M584.0 330.0L580.2 342.8L568.4 336.4L574.8 348.2L562.0 352.0L574.8 355.8L568.4 367.6L580.2 361.2L584.0 374.0L587.8 361.2L599.6 367.6L593.2 355.8L606.0 352.0L593.2 348.2L599.6 336.4L587.8 342.8Z" fill="#F1DFAE"/>
+  <path d="M512 640C458 602 392 592 330 604V770C392 758 458 768 512 806C566 768 632 758 694 770V604C632 592 566 602 512 640Z" fill="#F3E9D2" stroke="#D9B25E" stroke-width="22"/>
+  <path d="M512 640V806" stroke="#A8832F" stroke-width="14"/>
+  <path d="M372 652C412 646 452 652 488 670M372 700C412 694 452 700 488 718M536 670C572 652 612 646 652 652M536 718C572 700 612 694 652 700" stroke="#D9B25E" stroke-opacity=".55" stroke-width="10"/>
 </g>
 </svg>

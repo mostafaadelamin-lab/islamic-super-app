@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Notification (status bar) icon: the Rattil mark as a white silhouette, bolder for 24dp. -->
+<!-- Notification (status bar) icon: the Rattil mark («crescent in the mihrab») as a white silhouette, bolder for 24dp. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp" android:height="24dp"
     android:viewportWidth="1024" android:viewportHeight="1024">
-    <group android:pivotX="512" android:pivotY="524" android:scaleX="1.5" android:scaleY="1.5" android:translateY="-12">
-        <path android:strokeColor="#FFFFFFFF" android:strokeWidth="48" android:strokeLineCap="round" android:strokeLineJoin="round"
-            android:pathData="M300 812V500C300 392 392 318 512 236C632 318 724 392 724 500V812" />
+    <group android:pivotX="512" android:pivotY="516" android:scaleX="1.4" android:scaleY="1.4">
+        <path android:strokeColor="#FFFFFFFF" android:strokeWidth="56" android:strokeLineCap="round" android:strokeLineJoin="round"
+            android:pathData="M282 800V512C282 398 384 314 512 226C640 314 742 398 742 512V800" />
         <path android:fillColor="#FFFFFFFF"
-            android:pathData="M512 316L528 364L574 342L552 388L600 404L552 420L574 466L528 444L512 492L496 444L450 466L472 420L424 404L472 388L450 342L496 364Z" />
-        <path android:strokeColor="#FFFFFFFF" android:strokeWidth="40" android:strokeLineCap="round"
-            android:pathData="M400 660L628 812M624 660L396 812" />
+            android:pathData="M531.1 328.2A84 84 0 1 0 588.9 443.8A66 66 0 0 1 531.1 328.2Z" />
         <path android:fillColor="#FFFFFFFF"
-            android:pathData="M512 566C466 534 414 524 368 534V676C414 666 466 676 512 708C558 676 610 666 656 676V534C610 524 558 534 512 566Z" />
+            android:pathData="M512 640C458 602 392 592 330 604V770C392 758 458 768 512 806C566 768 632 758 694 770V604C632 592 566 602 512 640Z" />
     </group>
 </vector>

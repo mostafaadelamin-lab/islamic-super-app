@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import 'r_icon.dart';
 
-/// The Rattil mark inside the app, in the chosen colour style (owner 2026-11-15): the tile is the style's
-/// brand gradient and the mihrab, star and Mushaf are its gold. Same drawing as the launcher icon
-/// (assets in the platform folders), which stays one shared icon.
+/// The Rattil mark inside the app, in the chosen colour style: the tile is the style's brand gradient and
+/// the mihrab, crescent and Mushaf are its gold. Logo «crescent in the mihrab» (owner pick 2026-11-17).
+/// Same drawing as the launcher icon (assets in the platform folders), which stays one shared icon.
 class RattilLogo extends StatelessWidget {
   const RattilLogo({super.key, this.size = 44});
   final double size;
@@ -28,7 +28,11 @@ class RattilLogo extends StatelessWidget {
             ),
           ),
           child: CustomPaint(
-            painter: _MarkPainter(gold: AppTheme.brand('gold'), page: AppTheme.brand('heroAccent')),
+            painter: _MarkPainter(
+              gold: AppTheme.brand('gold'),
+              goldSoft: AppTheme.brand('goldSoft'),
+              page: AppTheme.brand('heroAccent'),
+            ),
           ),
         ),
       ),
@@ -37,20 +41,26 @@ class RattilLogo extends StatelessWidget {
 }
 
 class _MarkPainter extends CustomPainter {
-  _MarkPainter({required this.gold, required this.page});
+  _MarkPainter({required this.gold, required this.goldSoft, required this.page});
   final Color gold;
+  final Color goldSoft;
   final Color page;
 
-  static final _arch = parseSvgPath('M300 812V500C300 392 392 318 512 236C632 318 724 392 724 500V812');
+  static final _arch = parseSvgPath('M282 800V512C282 398 384 314 512 226C640 314 742 398 742 512V800');
+  static final _crescent = parseSvgPath('M531.1 328.2A84 84 0 1 0 588.9 443.8A66 66 0 0 1 531.1 328.2Z');
   static final _star = parseSvgPath(
-    'M512 330L523.5 364.3L555.8 348.2L539.7 380.5L574 392L539.7 403.5L555.8 435.8L523.5 419.7L512 454'
-    'L500.5 419.7L468.2 435.8L484.3 403.5L450 392L484.3 380.5L468.2 348.2L500.5 364.3Z',
+    'M584.0 330.0L580.2 342.8L568.4 336.4L574.8 348.2L562.0 352.0L574.8 355.8L568.4 367.6L580.2 361.2L584'
+    '.0 374.0L587.8 361.2L599.6 367.6L593.2 355.8L606.0 352.0L593.2 348.2L599.6 336.4L587.8 342.8Z',
   );
-  static final _rehal = parseSvgPath('M400 660L628 812M624 660L396 812');
   static final _book = parseSvgPath(
-    'M512 566C466 534 414 524 368 534V676C414 666 466 676 512 708C558 676 610 666 656 676V534C610 524 558 534 512 566Z',
+    'M512 640C458 602 392 592 330 604V770C392 758 458 768 512 806C566 768 632 758 694 770V604C632 592 566'
+    ' 602 512 640Z',
   );
-  static final _spine = parseSvgPath('M512 566V708');
+  static final _spine = parseSvgPath('M512 640V806');
+  static final _lines = parseSvgPath(
+    'M372 652C412 646 452 652 488 670M372 700C412 694 452 700 488 718M536 670C572 652 612 646 652 652M536'
+    ' 718C572 700 612 694 652 700',
+  );
 
   Paint _stroke(Color c, double w) => Paint()
     ..color = c
@@ -64,16 +74,16 @@ class _MarkPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.save();
     canvas.scale(size.width / 1024);
-    canvas.drawCircle(const Offset(512, 512), 430, _stroke(gold.withValues(alpha: 0.14), 6));
-    canvas.drawPath(_arch, _stroke(gold, 36));
-    canvas.drawPath(_star, Paint()..color = gold);
-    canvas.drawPath(_rehal, _stroke(gold, 26));
+    canvas.drawPath(_arch, _stroke(gold, 44));
+    canvas.drawPath(_crescent, Paint()..color = gold);
+    canvas.drawPath(_star, Paint()..color = goldSoft);
     canvas.drawPath(_book, Paint()..color = page);
-    canvas.drawPath(_book, _stroke(gold, 20));
+    canvas.drawPath(_book, _stroke(gold, 22));
     canvas.drawPath(_spine, _stroke(Color.lerp(gold, Colors.black, 0.22)!, 14));
+    canvas.drawPath(_lines, _stroke(gold.withValues(alpha: 0.55), 10));
     canvas.restore();
   }
 
   @override
-  bool shouldRepaint(_MarkPainter old) => old.gold != gold || old.page != page;
+  bool shouldRepaint(_MarkPainter old) => old.gold != gold || old.goldSoft != goldSoft || old.page != page;
 }

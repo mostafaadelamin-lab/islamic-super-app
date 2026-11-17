@@ -3688,9 +3688,12 @@ a.episode {
   );
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-gold) 35%, transparent);
 }
-.brand-mark-logo .bl-ring {
+.brand-mark-logo .bl-star {
+  fill: var(--brand-gold-soft);
+}
+.brand-mark-logo .bl-lines {
   stroke: var(--brand-gold);
-  stroke-opacity: 0.14;
+  stroke-opacity: 0.55;
 }
 .brand-mark-logo .bl-gold {
   stroke: var(--brand-gold);
