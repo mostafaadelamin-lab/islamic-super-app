@@ -24,6 +24,7 @@ import 'reader_widgets.dart';
 import 'search_screen.dart';
 import 'surah_flow.dart';
 import 'surah_info_sheet.dart';
+import 'word_meanings_sheet.dart';
 import 'r_icon.dart';
 
 /// Madinah Mushaf (1405H) reader: tabs المصحف / الآيات / التفسير; 604 pages of
@@ -981,6 +982,18 @@ class PageReaderScreenState extends State<PageReaderScreen> {
               item('barKhatma', RIcons.quran, l.readerKhatma, () {
                 setState(() => _selected = null); // one panel at a time
                 unawaited(showKhatmaSheet(context, onGo: _jump));
+              }),
+              // «معاني الكلمات» of this page (owner 2026-11-17).
+              item('barMeanings', RIcons.meanings, l.meaningsTitle, () {
+                setState(() => _selected = null); // one panel at a time
+                unawaited(
+                  showWordMeaningsSheet(
+                    context,
+                    refs: context.services.content.quran.ayahsOnPage(_page),
+                    page: _page,
+                    onSelect: (r) => unawaited(_onAyahTap(r)),
+                  ),
+                );
               }),
               item('barSearch', RIcons.search, l.readerSearch, () => push(const SearchScreen())),
               if (_tab == ReaderTab.mushaf) item('readerFull', RIcons.expand, l.readerFullScreen, enterFullScreen),

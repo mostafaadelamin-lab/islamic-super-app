@@ -31,6 +31,7 @@ PAIRS=(
   "content/zakat/dar-alifta.v1.json:assets/content/zakat.v1.json"
   "packages/shared-schemas/app-links.json:assets/schemas/app-links.json"
   "content/tafsir/dist/muyassar.v1.json:assets/content/tafsir-muyassar.v1.json"
+  "content/word-meanings/dist/siraj.v1.json:assets/content/word-meanings-siraj.v1.json"
   "content/VERSIONS.json:assets/content/VERSIONS.json"
   "content/reels/dist/reels.v1.json:assets/content/reels.v1.json"
   "content/reels/dist/reel-sources.v1.json:assets/content/reel-sources.v1.json"

@@ -58,5 +58,15 @@
   "reader.fontUp": "تكبير الخط",
   "reader.fontDown": "تصغير الخط",
   "reader.playerHide": "إخفاء المشغّل",
-  "reader.playerShow": "إظهار المشغّل"
+  "reader.playerShow": "إظهار المشغّل",
+  "meanings.title": "معاني الكلمات",
+  "meanings.ofPage": "معاني كلمات الصفحة {page}",
+  "meanings.ofAyah": "معاني كلمات {ref}",
+  "meanings.short": "المعاني",
+  "meanings.loading": "جارٍ تحميل معاني الكلمات…",
+  "meanings.error": "تعذّر تحميل معاني الكلمات. تحقّق من الاتصال بالإنترنت ثم أعد المحاولة.",
+  "meanings.offline": "أنت غير متصل، ومعاني هذه السورة لم تُحفظ بعد على جهازك. تُحفظ بعد فتحها مرة واحدة.",
+  "meanings.nonePage": "لا توجد كلمات غريبة مشروحة في هذه الصفحة.",
+  "meanings.noneAyah": "لا توجد كلمات غريبة مشروحة في هذه الآية.",
+  "meanings.source": "من كتاب «السراج في بيان غريب القرآن» — محمد بن عبد العزيز الخضيري"
 }

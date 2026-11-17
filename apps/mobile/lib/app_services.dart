@@ -31,6 +31,7 @@ import 'data/sharing.dart';
 import 'data/hadith.dart';
 import 'data/mp3quran.dart';
 import 'data/tafsir.dart';
+import 'data/word_meanings.dart';
 import 'domain/prayer_schedule.dart';
 import 'ui/prayer_model.dart' show resolveCity;
 
@@ -65,7 +66,9 @@ class AppServices {
     required this.reelsFeed,
     this.media,
     DeviceSetup? deviceSetup,
-  }) : deviceSetup = deviceSetup ?? PlatformDeviceSetup();
+    WordMeaningsStore? wordMeanings,
+  }) : deviceSetup = deviceSetup ?? PlatformDeviceSetup(),
+       wordMeanings = wordMeanings ?? WordMeaningsStore.asset(rootBundle);
 
   factory AppServices.create({
     required AppContent content,
@@ -85,6 +88,7 @@ class AppServices {
     Duration adhanRetryDelay = const Duration(seconds: 2),
     MediaSession? mediaSession,
     DeviceSetup? deviceSetup,
+    WordMeaningsStore? wordMeanings,
   }) {
     final c = clock ?? DateTime.now;
     final settings = SettingsController(prefs, defaultCityId: content.cities.first.id);
@@ -219,6 +223,7 @@ class AppServices {
         narration: narration,
       ),
       deviceSetup: deviceSetup,
+      wordMeanings: wordMeanings,
     );
   }
 
@@ -247,6 +252,9 @@ class AppServices {
 
   /// Tafsir al-Muyassar, loaded on first use.
   final TafsirStore tafsir;
+
+  /// «معاني الكلمات» (السراج في بيان غريب القرآن), loaded on first use.
+  final WordMeaningsStore wordMeanings;
 
   /// The hadith books, read part by part when opened.
   final HadithLibrary hadith;

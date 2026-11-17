@@ -71,6 +71,9 @@ class RIcons {
     'M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11Zm0-13.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z',
   );
   static const mail = RIconData('M3.5 6h17v12h-17zM3.5 6.5l8.5 6.5 8.5-6.5');
+  static const meanings = RIconData(
+    'M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4zM5 17a3 3 0 0 1 3-3h11M9 7.5h6M9 10.5h4',
+  );
   static const minus = RIconData('M5 12h14');
   static const moon = RIconData('M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z');
   static const more = RIconData('M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z');

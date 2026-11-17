@@ -3332,4 +3332,35 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get readerPlayerShow => 'إظهار المشغّل';
+
+  @override
+  String get meaningsTitle => 'معاني الكلمات';
+
+  @override
+  String get meaningsShort => 'المعاني';
+
+  @override
+  String meaningsOfPage(String page) {
+    return 'معاني كلمات الصفحة $page';
+  }
+
+  @override
+  String meaningsOfAyah(String ref) {
+    return 'معاني كلمات $ref';
+  }
+
+  @override
+  String get meaningsLoading => 'جارٍ تحميل معاني الكلمات…';
+
+  @override
+  String get meaningsError => 'تعذّر تحميل معاني الكلمات.';
+
+  @override
+  String get meaningsNonePage => 'لا توجد كلمات غريبة مشروحة في هذه الصفحة.';
+
+  @override
+  String get meaningsNoneAyah => 'لا توجد كلمات غريبة مشروحة في هذه الآية.';
+
+  @override
+  String get meaningsSource => 'من كتاب «السراج في بيان غريب القرآن» — محمد بن عبد العزيز الخضيري';
 }

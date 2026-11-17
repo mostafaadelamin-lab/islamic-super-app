@@ -58,5 +58,15 @@
   "reader.fontUp": "Larger text",
   "reader.fontDown": "Smaller text",
   "reader.playerHide": "Hide player",
-  "reader.playerShow": "Show player"
+  "reader.playerShow": "Show player",
+  "meanings.title": "Word meanings",
+  "meanings.ofPage": "Word meanings, page {page}",
+  "meanings.ofAyah": "Word meanings of {ref}",
+  "meanings.short": "Meanings",
+  "meanings.loading": "Loading the word meanings…",
+  "meanings.error": "Could not load the word meanings. Check your connection and try again.",
+  "meanings.offline": "You are offline and this surah's word meanings are not saved on this device yet. They are saved once opened.",
+  "meanings.nonePage": "No difficult words are explained on this page.",
+  "meanings.noneAyah": "No difficult words are explained in this ayah.",
+  "meanings.source": "From «Al-Siraj fi Bayan Gharib al-Quran» by Muhammad al-Khudairi (Arabic)"
 }

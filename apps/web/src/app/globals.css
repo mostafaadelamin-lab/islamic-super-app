@@ -1366,7 +1366,9 @@ input[type="radio"] {
 }
 .aa-row {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  /* One row, as many equal columns as there are buttons (6 in the Mushaf since «المعاني», 2026-11-17). */
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
   gap: var(--space-xs);
 }
 .aa-btn {

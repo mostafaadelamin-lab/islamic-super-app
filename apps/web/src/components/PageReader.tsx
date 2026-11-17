@@ -39,6 +39,7 @@ import { GoToPage } from "./GoToPage";
 import { Icon } from "./Icon";
 import { shareAyahImage } from "@/lib/ayah-image";
 import { TafsirPanel } from "./TafsirPanel";
+import { MeaningsSheet } from "./MeaningsSheet";
 import { ReaderPlayer, ReaderPlayerMini } from "./ReaderPlayer";
 import { dockSwipe, readerDockMinStore } from "@/lib/reader-dock";
 import { ReaderIcon } from "./ReaderIcon";
@@ -295,7 +296,9 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     setTabState(next);
     setFlowSurah(null);
   };
-  const [sheet, setSheet] = useState<"help" | "khatma" | null>(null);
+  const [sheet, setSheet] = useState<"help" | "khatma" | "meanings" | null>(null);
+  // «معاني الكلمات» of the selected ayah (from its menu); the page's words open as sheet "meanings".
+  const [ayahMeanings, setAyahMeanings] = useState<Ref | null>(null);
   // Full screen only from its own button, and back with the exit button (owner 2026-11-15: one tap to
   // full screen, another to shrink, a long press for options was confusing). A tap on an ayah opens its row.
   const [chrome, setChrome] = useState(true);
@@ -1147,6 +1150,22 @@ export function PageReader({ locale, initial }: PageReaderProps) {
         />
       ) : null}
 
+      {sheet === "meanings" ? (
+        <MeaningsSheet
+          locale={locale}
+          refs={refs}
+          page={page}
+          onClose={() => setSheet(null)}
+          onSelect={(r) => {
+            setSheet(null);
+            selectRef(r);
+          }}
+        />
+      ) : null}
+      {ayahMeanings ? (
+        <MeaningsSheet locale={locale} refs={[ayahMeanings]} onClose={() => setAyahMeanings(null)} />
+      ) : null}
+
       <div className="rd-dock" ref={dockRef} data-min={dockMin ? "true" : "false"}>
         {/* The selected ayah's actions sit in the bottom strip with the other bars (owner 2026-11-15). */}
         {sel ? (
@@ -1195,6 +1214,15 @@ export function PageReader({ locale, initial }: PageReaderProps) {
                 >
                   <Icon name="openBook" size={22} />
                   <span>{t(locale, "mushaf.tafsir")}</span>
+                </button>
+                <button
+                  type="button"
+                  className="aa-btn"
+                  data-testid="act-meanings"
+                  onClick={() => setAyahMeanings([sel[0], sel[1]])}
+                >
+                  <Icon name="meanings" size={22} />
+                  <span>{t(locale, "meanings.short")}</span>
                 </button>
                 <button
                   type="button"
@@ -1366,6 +1394,18 @@ export function PageReader({ locale, initial }: PageReaderProps) {
           >
             <ReaderIcon name="openBook" />
             <span>{t(locale, "reader.khatma")}</span>
+          </button>
+          <button
+            type="button"
+            data-testid="bar-meanings"
+            aria-expanded={sheet === "meanings"}
+            onClick={() => {
+              setSelected(null);
+              setSheet((v) => (v === "meanings" ? null : "meanings"));
+            }}
+          >
+            <ReaderIcon name="meanings" />
+            <span>{t(locale, "meanings.title")}</span>
           </button>
           <Link href={href(locale, "search")} data-testid="bar-search">
             <ReaderIcon name="search" />

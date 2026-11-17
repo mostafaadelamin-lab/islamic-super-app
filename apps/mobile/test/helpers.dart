@@ -19,6 +19,7 @@ import 'package:rattil/data/sensors.dart';
 import 'package:rattil/data/sharing.dart';
 import 'package:rattil/data/hadith.dart';
 import 'package:rattil/data/tafsir.dart';
+import 'package:rattil/data/word_meanings.dart';
 import 'package:rattil/domain/qibla.dart';
 import 'package:rattil/domain/tafsir.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,10 +43,15 @@ Future<AppContent> loadContent({bool realFonts = true}) async {
   tzdata.initializeTimeZones();
   if (realFonts) await loadRealFonts();
   _tafsir ??= TafsirContent.parse(await rootBundle.loadString(TafsirStore.assetKey, cache: false));
+  _meanings ??= WordMeaningsContent.parse(await rootBundle.loadString(WordMeaningsStore.assetKey, cache: false));
   return _content ??= await AppContent.load(rootBundle);
 }
 
 TafsirContent? _tafsir;
+WordMeaningsContent? _meanings;
+
+/// The bundled word meanings («السراج في بيان غريب القرآن»), decoded by [loadContent].
+WordMeaningsContent get testMeanings => _meanings!;
 
 /// The bundled hadith books, read straight from apps/mobile/assets (no isolates in widget tests).
 HadithLibrary testHadith(AppContent c) =>
@@ -134,6 +140,7 @@ Future<TestApp> pumpApp(
     adhanPlayer: adhanPlayer ?? FakeAdhanPlayer(),
     sensors: sensors ?? FakeSensors.none(),
     tafsir: tafsir ?? TafsirStore.preloaded(_tafsir!),
+    wordMeanings: WordMeaningsStore.preloaded(_meanings!),
     hadith: hadith ?? testHadith(c),
     location: location ?? const FakeLocation(LocationUnavailable()),
     sharer: sharer ?? FakeSharer(),

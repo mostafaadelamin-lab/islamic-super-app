@@ -986,5 +986,14 @@
   "zakatYearNote": "تجب الزكاة إذا مرّ على المال عام هجري كامل وهو بالغ النصاب، ومقدارها ربع العشر (2.5٪).",
   "zakatYearPassed": "مرّ عام هجري كامل منذ بلغ مالي النصاب",
   "readerPlayerHide": "إخفاء المشغّل",
-  "readerPlayerShow": "إظهار المشغّل"
+  "readerPlayerShow": "إظهار المشغّل",
+  "meaningsTitle": "معاني الكلمات",
+  "meaningsShort": "المعاني",
+  "meaningsOfPage": "معاني كلمات الصفحة {page}",
+  "meaningsOfAyah": "معاني كلمات {ref}",
+  "meaningsLoading": "جارٍ تحميل معاني الكلمات…",
+  "meaningsError": "تعذّر تحميل معاني الكلمات.",
+  "meaningsNonePage": "لا توجد كلمات غريبة مشروحة في هذه الصفحة.",
+  "meaningsNoneAyah": "لا توجد كلمات غريبة مشروحة في هذه الآية.",
+  "meaningsSource": "من كتاب «السراج في بيان غريب القرآن» — محمد بن عبد العزيز الخضيري"
 }

@@ -9,6 +9,7 @@ export type ReaderIconName = Extract<
   | "list"
   | "bookmarks"
   | "openBook"
+  | "meanings"
   | "search"
   | "repeat"
   | "split"

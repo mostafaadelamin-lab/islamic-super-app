@@ -3350,4 +3350,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readerPlayerShow => 'Show player';
+
+  @override
+  String get meaningsTitle => 'Word meanings';
+
+  @override
+  String get meaningsShort => 'Meanings';
+
+  @override
+  String meaningsOfPage(String page) {
+    return 'Word meanings, page $page';
+  }
+
+  @override
+  String meaningsOfAyah(String ref) {
+    return 'Word meanings of $ref';
+  }
+
+  @override
+  String get meaningsLoading => 'Loading the word meanings…';
+
+  @override
+  String get meaningsError => 'Could not load the word meanings.';
+
+  @override
+  String get meaningsNonePage => 'No difficult words are explained on this page.';
+
+  @override
+  String get meaningsNoneAyah => 'No difficult words are explained in this ayah.';
+
+  @override
+  String get meaningsSource => 'From «Al-Siraj fi Bayan Gharib al-Quran» by Muhammad al-Khudairi (Arabic)';
 }

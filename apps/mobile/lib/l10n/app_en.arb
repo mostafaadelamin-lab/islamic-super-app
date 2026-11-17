@@ -4890,6 +4890,33 @@
   },
   "readerPlayerHide": "Hide player",
   "readerPlayerShow": "Show player",
-  "@readerPlayerHide": {"description": "Handle above the Mushaf player that slides it down"},
-  "@readerPlayerShow": {"description": "Handle that brings the slid-down Mushaf player back"}
+  "@readerPlayerHide": {
+    "description": "Handle above the Mushaf player that slides it down"
+  },
+  "@readerPlayerShow": {
+    "description": "Handle that brings the slid-down Mushaf player back"
+  },
+  "meaningsTitle": "Word meanings",
+  "meaningsShort": "Meanings",
+  "meaningsOfPage": "Word meanings, page {page}",
+  "@meaningsOfPage": {
+    "placeholders": {
+      "page": {
+        "type": "String"
+      }
+    }
+  },
+  "meaningsOfAyah": "Word meanings of {ref}",
+  "@meaningsOfAyah": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "meaningsLoading": "Loading the word meanings…",
+  "meaningsError": "Could not load the word meanings.",
+  "meaningsNonePage": "No difficult words are explained on this page.",
+  "meaningsNoneAyah": "No difficult words are explained in this ayah.",
+  "meaningsSource": "From «Al-Siraj fi Bayan Gharib al-Quran» by Muhammad al-Khudairi (Arabic)"
 }

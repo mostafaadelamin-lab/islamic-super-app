@@ -169,6 +169,22 @@ tafsir.surahs.forEach((entries, i) => {
   }
   writeJson(join(pub, "data/tafsir/muyassar", `${s.n}.json`), entries);
 });
+// Word meanings («السراج في بيان غريب القرآن»), one file per surah: [[word, meaning], ...] per ayah, verbatim.
+const meanings = readJson("content/word-meanings/dist/siraj.v1.json");
+if (
+  meanings.schema !== "word-meanings.v1" ||
+  meanings.id !== "siraj" ||
+  meanings.surahs.length !== quran.surahs.length
+) {
+  throw new Error("siraj.v1.json: unexpected schema");
+}
+meanings.surahs.forEach((entries, i) => {
+  const s = quran.surahs[i];
+  if (entries.length !== s.ayahs.length) {
+    throw new Error(`siraj.v1.json: surah ${s.n} does not match the Quran's ayah count`);
+  }
+  writeJson(join(pub, "data/meanings/siraj", `${s.n}.json`), entries);
+});
 writeJson(
   join(gen, "hajj.json"),
   extractHajj(readFileSync(join(repo, "content/pilgrimage/source-hajj.js"), "utf8")),

@@ -13,6 +13,7 @@ import 'ayah_image_screen.dart';
 import 'l10n_ext.dart';
 import 'review_notice.dart';
 import 'widgets.dart';
+import 'word_meanings_sheet.dart';
 import 'r_icon.dart';
 
 /// Opens the sheet for a tapped ayah: five simple buttons (listen, which opens the ways to listen:
@@ -285,8 +286,8 @@ class _TafsirCard extends StatelessWidget {
   }
 }
 
-/// Simple ayah menu (owner, 2026-11-15): one row of five buttons (listen, tafsir, mark, copy,
-/// share); the ways to listen open under it only when "listen" is tapped.
+/// Simple ayah menu (owner, 2026-11-15): one row of buttons (listen, tafsir, word meanings, mark,
+/// copy, share); the ways to listen open under it only when "listen" is tapped.
 class _Actions extends StatefulWidget {
   const _Actions({
     required this.ref,
@@ -401,6 +402,13 @@ class _ActionsState extends State<_Actions> {
                     on: _listen,
                   ),
                   action('ayahTafsir', RIcons.openBook, l.ayahTafsir, widget.onTafsir, on: widget.tafsirOpen),
+                  // «المعاني» (owner 2026-11-17): the difficult words of this ayah.
+                  action(
+                    'ayahMeanings',
+                    RIcons.meanings,
+                    l.meaningsShort,
+                    () => showWordMeaningsSheet(context, refs: [ref]),
+                  ),
                   action('ayahBookmark', RIcons.bookmark, marked ? l.ayahUnmarkShort : l.ayahMarkShort, () async {
                     final messenger = ScaffoldMessenger.of(context);
                     final nav = Navigator.of(context);

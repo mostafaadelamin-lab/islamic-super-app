@@ -6013,6 +6013,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show player'**
   String get readerPlayerShow;
+
+  /// No description provided for @meaningsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Word meanings'**
+  String get meaningsTitle;
+
+  /// No description provided for @meaningsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Meanings'**
+  String get meaningsShort;
+
+  /// No description provided for @meaningsOfPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Word meanings, page {page}'**
+  String meaningsOfPage(String page);
+
+  /// No description provided for @meaningsOfAyah.
+  ///
+  /// In en, this message translates to:
+  /// **'Word meanings of {ref}'**
+  String meaningsOfAyah(String ref);
+
+  /// No description provided for @meaningsLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading the word meanings…'**
+  String get meaningsLoading;
+
+  /// No description provided for @meaningsError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load the word meanings.'**
+  String get meaningsError;
+
+  /// No description provided for @meaningsNonePage.
+  ///
+  /// In en, this message translates to:
+  /// **'No difficult words are explained on this page.'**
+  String get meaningsNonePage;
+
+  /// No description provided for @meaningsNoneAyah.
+  ///
+  /// In en, this message translates to:
+  /// **'No difficult words are explained in this ayah.'**
+  String get meaningsNoneAyah;
+
+  /// No description provided for @meaningsSource.
+  ///
+  /// In en, this message translates to:
+  /// **'From «Al-Siraj fi Bayan Gharib al-Quran» by Muhammad al-Khudairi (Arabic)'**
+  String get meaningsSource;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
