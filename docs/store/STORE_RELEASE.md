@@ -19,7 +19,7 @@
 | Package name (Android) | `org.rattil.app` |
 | اسم التطبيق على الشاشة | رتّل وصلِّ |
 | الإصدار الأول | 1.0.0 (رقم البناء بيزيد تلقائي من Codemagic) |
-| أقل إصدار | iOS 13 · Android 7 (API 24) |
+| أقل إصدار | iOS 14 · Android 7 (API 24) |
 
 ---
 
