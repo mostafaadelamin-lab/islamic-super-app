@@ -738,6 +738,81 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get driveAgain => 'ابدأ من الأول';
+
+  @override
+  String get driveCarHint =>
+      'تتحكم فيه من شاشة العربية أو أزرار الدركسيون أو شاشة القفل: التالي = الذكر اللي بعده، السابق = إعادة الذكر الحالي، والإيقاف يكمّل من نفس العدّة.';
+
+  @override
+  String driveCountOf(String n, String count) {
+    return '$n من $count';
+  }
+
+  @override
+  String get driveCues => 'صوت خفيف بين كل مرة والتانية';
+
+  @override
+  String get driveCuesSub => 'وصوت مختلف لما الذكر يخلص';
+
+  @override
+  String driveDhikrOf(String n, String total) {
+    return 'الذكر $n من $total';
+  }
+
+  @override
+  String get driveFailed => 'تعذّر تنزيل التسجيل. تأكد من الإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get driveFinished => 'انتهت الأذكار، تقبّل الله منك.';
+
+  @override
+  String get driveNext => 'الذكر التالي';
+
+  @override
+  String get driveOpen => 'استمع أثناء القيادة';
+
+  @override
+  String get driveOpenSub => 'يكرر كل ذكر بعدده ويعدّ عنك';
+
+  @override
+  String driveOutOf(String count) {
+    return 'من $count';
+  }
+
+  @override
+  String get drivePause => 'إيقاف مؤقت';
+
+  @override
+  String get drivePlay => 'تشغيل';
+
+  @override
+  String get drivePreparing => 'جارٍ تجهيز التسجيل…';
+
+  @override
+  String get drivePrevious => 'أعد الذكر';
+
+  @override
+  String get driveRetry => 'حاول مرة أخرى';
+
+  @override
+  String get driveSayEvery => 'قول العدد بالصوت';
+
+  @override
+  String driveSayEveryN(String n) {
+    return 'كل $n';
+  }
+
+  @override
+  String get driveSayOff => 'لا';
+
+  @override
+  String get driveSettings => 'إعدادات وضع القيادة';
+
+  @override
+  String get driveTitle => 'وضع القيادة';
+
+  @override
   String hadithAttribution(String name, String licence) {
     return 'الأحاديث بترقيم العالمية، من مشروع $name ($licence).';
   }

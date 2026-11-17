@@ -12,6 +12,8 @@ import 'package:rattil/app.dart';
 import 'package:rattil/app_services.dart';
 import 'package:rattil/data/content.dart';
 import 'package:rattil/data/device_setup.dart';
+import 'package:rattil/data/drive_mode.dart';
+import 'package:rattil/domain/drive_mode.dart';
 import 'package:rattil/data/location.dart';
 import 'package:rattil/data/notifications.dart';
 import 'package:rattil/data/recitation.dart';
@@ -117,6 +119,8 @@ Future<TestApp> pumpApp(
   FakeSharer? sharer,
   Directory? storage,
   DeviceSetup? deviceSetup,
+  DrivePlayer? drivePlayer,
+  DriveCues? driveCues,
 }) async {
   final c = content ?? _content!;
   // The first-run tour is tested on its own (onboarding_test.dart); other tests start on the home screen.
@@ -145,6 +149,8 @@ Future<TestApp> pumpApp(
     location: location ?? const FakeLocation(LocationUnavailable()),
     sharer: sharer ?? FakeSharer(),
     deviceSetup: deviceSetup ?? FakeDeviceSetup(),
+    drivePlayer: () => drivePlayer ?? TestDrivePlayer(),
+    driveCues: () => driveCues ?? TestDriveCues(),
   );
   if (size != null) {
     tester.view.physicalSize = size * tester.view.devicePixelRatio;
@@ -490,4 +496,40 @@ class FakeDeviceSetup implements DeviceSetup {
   Future<void> openAppSettings() async => opened.add('app');
   @override
   Future<void> openNotificationSettings() async => opened.add('notifications');
+}
+
+/// Driving mode player for widget tests: a clip "plays" until [end] (or stop).
+class TestDrivePlayer implements DrivePlayer {
+  String? loaded;
+  final played = <DriveClip>[];
+  Completer<void>? _c;
+  @override
+  Future<void> load(String source) async => loaded = source;
+  @override
+  Future<void> playClip(DriveClip clip) {
+    played.add(clip);
+    return (_c = Completer<void>()).future;
+  }
+
+  void end() {
+    _c?.complete();
+    _c = null;
+  }
+
+  @override
+  Future<void> stop() async => end();
+  @override
+  Future<void> dispose() async => end();
+}
+
+class TestDriveCues implements DriveCues {
+  final log = <String>[];
+  @override
+  Future<void> tick() async => log.add('tick');
+  @override
+  Future<void> done() async => log.add('done');
+  @override
+  Future<void> say(int n, {required bool arabic}) async => log.add('say $n');
+  @override
+  Future<void> dispose() async {}
 }

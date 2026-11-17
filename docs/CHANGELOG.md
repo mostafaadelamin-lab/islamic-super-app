@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.7] — driving mode for the morning / evening adhkar — 2026-11-17
+### Added
+- Driving mode (Android + iPhone): «استمع أثناء القيادة» in the Adhkar tab (morning / evening) and a car button on the morning / evening adhkar page. The app plays every dhikr in Sheikh Alafasy's voice as many times as Hisn al-Muslim says (e.g. 100) and counts for the driver; a soft sound between repetitions and a different one when a dhikr is complete (can be turned off); optionally the count said out loud every 10 or 33 (phone text-to-speech). One reading of each dhikr is cut from the same recording the «listen» card plays (clip times in content/adhkar/drive-clips.json, checked one by one); the counts come only from Hisn al-Muslim. Items the recording does not read (al-Hamdu lillah wahdah, last two ayat of al-Baqarah) are skipped; the evening «أستغفر الله وأتوب إليه» is taken from the morning recording.
+- Lock screen, notification, headset / steering-wheel buttons and the car screen show the dhikr and its live count («سبحان الله وبحمده · ٣٧ من ١٠٠»): next = next dhikr, previous = this dhikr again (twice = the one before), pause resumes at the same count.
+- Android Auto: the app shows on the car screen with «أذكار الصباح» and «أذكار المساء» (driving mode) and Now Playing. CarPlay: Now Playing works through the phone; the app's own CarPlay list needs Apple's CarPlay audio entitlement (requested by the owner, see the CarPlay steps file).
+- Website: not changed (driving mode is for the phone apps).
+
 ## [1.2.6] — Hajj & Umrah round counter in the app — 2026-11-17
 ### Added
 - Hajj & Umrah (app, Android + iPhone): the round counter the website already had: seven rounds of tawaf, seven of sa'i and seven pebbles at the jamarat, under the tawaf (Umrah, arrival, ifadah, farewell), sa'i and stoning steps. «أتممت شوطًا», «تراجع», «تصفير», seven dots that light up, and «اكتمل العدد — تقبّل الله» at seven. The count is kept when the app is closed. The website is unchanged (it has had the counter since the first version).

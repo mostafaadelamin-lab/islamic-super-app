@@ -31,6 +31,10 @@ class RIcons {
   );
   static const calendar = RIconData('M4 6h16v14H4zM4 10h16M8 3.5v4M16 3.5v4M8 14h2M14 14h2M8 17h2');
   static const calendarCheck = RIconData('M4 5h16v15H4zM4 9h16M8 3v4M16 3v4M8.5 14.5l2 2 4.5-4.5');
+  /// Driving mode (1.2.2).
+  static const car = RIconData(
+    'M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1ZM6 17v2M18 17v2M7 14h1M16 14h1',
+  );
   static const check = RIconData('M5 12.5 10 17l9-10');
   static const checkCircle = RIconData('M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18ZM8 12.3l2.7 2.7 5.3-5.5');
   static const chevron = RIconData('M15 6l-6 6 6 6', mirrorInRtl: true);

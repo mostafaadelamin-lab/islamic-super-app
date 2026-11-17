@@ -1057,6 +1057,120 @@
       }
     }
   },
+  "driveAgain": "Start again",
+  "@driveAgain": {
+    "description": "shared key \"drive.again\""
+  },
+  "driveCarHint": "Control it from the car screen, the steering-wheel buttons or the lock screen: next = next dhikr, previous = this dhikr again, pause resumes at the same count.",
+  "@driveCarHint": {
+    "description": "shared key \"drive.carHint\""
+  },
+  "driveCountOf": "{n} of {count}",
+  "@driveCountOf": {
+    "description": "shared key \"drive.countOf\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "driveCues": "Soft sound between repetitions",
+  "@driveCues": {
+    "description": "shared key \"drive.cues\""
+  },
+  "driveCuesSub": "And a different sound when a dhikr is complete",
+  "@driveCuesSub": {
+    "description": "shared key \"drive.cuesSub\""
+  },
+  "driveDhikrOf": "Dhikr {n} of {total}",
+  "@driveDhikrOf": {
+    "description": "shared key \"drive.dhikrOf\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "driveFailed": "The recording could not be downloaded. Check the internet and try again.",
+  "@driveFailed": {
+    "description": "shared key \"drive.failed\""
+  },
+  "driveFinished": "All the adhkar are done. May Allah accept from you.",
+  "@driveFinished": {
+    "description": "shared key \"drive.finished\""
+  },
+  "driveNext": "Next dhikr",
+  "@driveNext": {
+    "description": "shared key \"drive.next\""
+  },
+  "driveOpen": "Listen while driving",
+  "@driveOpen": {
+    "description": "shared key \"drive.open\""
+  },
+  "driveOpenSub": "Repeats each dhikr its full count and counts for you",
+  "@driveOpenSub": {
+    "description": "shared key \"drive.openSub\""
+  },
+  "driveOutOf": "of {count}",
+  "@driveOutOf": {
+    "description": "shared key \"drive.outOf\"",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "drivePause": "Pause",
+  "@drivePause": {
+    "description": "shared key \"drive.pause\""
+  },
+  "drivePlay": "Play",
+  "@drivePlay": {
+    "description": "shared key \"drive.play\""
+  },
+  "drivePreparing": "Getting the recording ready…",
+  "@drivePreparing": {
+    "description": "shared key \"drive.preparing\""
+  },
+  "drivePrevious": "This dhikr again",
+  "@drivePrevious": {
+    "description": "shared key \"drive.previous\""
+  },
+  "driveRetry": "Try again",
+  "@driveRetry": {
+    "description": "shared key \"drive.retry\""
+  },
+  "driveSayEvery": "Say the count out loud",
+  "@driveSayEvery": {
+    "description": "shared key \"drive.sayEvery\""
+  },
+  "driveSayEveryN": "Every {n}",
+  "@driveSayEveryN": {
+    "description": "shared key \"drive.sayEveryN\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "driveSayOff": "Off",
+  "@driveSayOff": {
+    "description": "shared key \"drive.sayOff\""
+  },
+  "driveSettings": "Driving mode settings",
+  "@driveSettings": {
+    "description": "shared key \"drive.settings\""
+  },
+  "driveTitle": "Driving mode",
+  "@driveTitle": {
+    "description": "shared key \"drive.title\""
+  },
   "hadithAttribution": "Hadiths numbered as in al-Alamiyya, from the {name} project ({licence}).",
   "@hadithAttribution": {
     "description": "shared key \"hadith.attribution\"",

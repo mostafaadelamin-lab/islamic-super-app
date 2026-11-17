@@ -743,6 +743,81 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get driveAgain => 'Start again';
+
+  @override
+  String get driveCarHint =>
+      'Control it from the car screen, the steering-wheel buttons or the lock screen: next = next dhikr, previous = this dhikr again, pause resumes at the same count.';
+
+  @override
+  String driveCountOf(String n, String count) {
+    return '$n of $count';
+  }
+
+  @override
+  String get driveCues => 'Soft sound between repetitions';
+
+  @override
+  String get driveCuesSub => 'And a different sound when a dhikr is complete';
+
+  @override
+  String driveDhikrOf(String n, String total) {
+    return 'Dhikr $n of $total';
+  }
+
+  @override
+  String get driveFailed => 'The recording could not be downloaded. Check the internet and try again.';
+
+  @override
+  String get driveFinished => 'All the adhkar are done. May Allah accept from you.';
+
+  @override
+  String get driveNext => 'Next dhikr';
+
+  @override
+  String get driveOpen => 'Listen while driving';
+
+  @override
+  String get driveOpenSub => 'Repeats each dhikr its full count and counts for you';
+
+  @override
+  String driveOutOf(String count) {
+    return 'of $count';
+  }
+
+  @override
+  String get drivePause => 'Pause';
+
+  @override
+  String get drivePlay => 'Play';
+
+  @override
+  String get drivePreparing => 'Getting the recording ready…';
+
+  @override
+  String get drivePrevious => 'This dhikr again';
+
+  @override
+  String get driveRetry => 'Try again';
+
+  @override
+  String get driveSayEvery => 'Say the count out loud';
+
+  @override
+  String driveSayEveryN(String n) {
+    return 'Every $n';
+  }
+
+  @override
+  String get driveSayOff => 'Off';
+
+  @override
+  String get driveSettings => 'Driving mode settings';
+
+  @override
+  String get driveTitle => 'Driving mode';
+
+  @override
   String hadithAttribution(String name, String licence) {
     return 'Hadiths numbered as in al-Alamiyya, from the $name project ($licence).';
   }

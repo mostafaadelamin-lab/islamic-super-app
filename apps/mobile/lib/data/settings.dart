@@ -459,6 +459,20 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Driving mode: a soft sound between repetitions and another when a dhikr is done.
+  bool get driveCues => _prefs.getBool('drive.cues') ?? true;
+  Future<void> setDriveCues(bool v) async {
+    await _prefs.setBool('drive.cues', v);
+    notifyListeners();
+  }
+
+  /// Driving mode: say the count out loud every N repetitions (0 = off).
+  int get driveSayEvery => _prefs.getInt('drive.sayEvery') ?? 0;
+  Future<void> setDriveSayEvery(int v) async {
+    await _prefs.setInt('drive.sayEvery', v);
+    notifyListeners();
+  }
+
   /// Morning / evening adhkar reminders as minutes after midnight, or null when off.
   int? adhkarReminder(bool morning) => _prefs.getInt(morning ? 'alert.adhkarMorning' : 'alert.adhkarEvening');
   Future<void> setAdhkarReminder(bool morning, int? minutes) async {

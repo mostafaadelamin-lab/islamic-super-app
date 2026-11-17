@@ -20,6 +20,7 @@ import 'data/adhan_voice_files.dart';
 import 'data/adhkar_audio_files.dart';
 import 'data/location.dart';
 import 'data/place_names.dart';
+import 'data/drive_mode.dart';
 import 'data/media_session.dart';
 import 'data/notifications.dart';
 import 'data/recitation.dart';
@@ -65,6 +66,7 @@ class AppServices {
     this.sharer = const SystemImageSharer(),
     required this.reelsFeed,
     this.media,
+    this.drive,
     DeviceSetup? deviceSetup,
     WordMeaningsStore? wordMeanings,
   }) : deviceSetup = deviceSetup ?? PlatformDeviceSetup(),
@@ -89,6 +91,8 @@ class AppServices {
     MediaSession? mediaSession,
     DeviceSetup? deviceSetup,
     WordMeaningsStore? wordMeanings,
+    DrivePlayer Function()? drivePlayer,
+    DriveCues Function()? driveCues,
   }) {
     final c = clock ?? DateTime.now;
     final settings = SettingsController(prefs, defaultCityId: content.cities.first.id);
@@ -160,6 +164,28 @@ class AppServices {
       backendFactory: narrationBackend ?? JustAudioNarrationBackend.new,
       offlineFile: downloads.offlineFile,
     );
+    final adhkarAudio = AdhkarAudioFiles(
+      httpClient: httpClient,
+      root: storageRoot ?? getApplicationSupportDirectory,
+      retryDelay: adhanRetryDelay,
+    );
+    final media = RecitationMediaBridge(
+      recitation: recitation,
+      content: content,
+      settings: settings,
+      session: mediaSession ?? const NoMediaSession(),
+      narration: narration,
+    );
+    final drive = DriveModeController(
+      content: content,
+      settings: settings,
+      files: adhkarAudio,
+      clips: DriveModeController.assetClips(rootBundle),
+      player: drivePlayer,
+      cues: driveCues,
+    );
+    media.attach(drive);
+    if (mediaSession case final AudioServiceMediaSession a) a.browser = DriveBrowser(drive, settings);
     return AppServices(
       content: content,
       settings: settings,
@@ -190,11 +216,7 @@ class AppServices {
       ),
       adhanPreview: AdhanPreview(adhanPlayer ?? JustAudioAdhanPlayer(), source: adhanVoices.playable),
       adhanVoices: adhanVoices,
-      adhkarAudio: AdhkarAudioFiles(
-        httpClient: httpClient,
-        root: storageRoot ?? getApplicationSupportDirectory,
-        retryDelay: adhanRetryDelay,
-      ),
+      adhkarAudio: adhkarAudio,
       tasbih: TasbihController(settings),
       adhkar: AdhkarController(content, settings, localToday),
       sensors: sensors ?? const DeviceCompassSensors(),
@@ -215,13 +237,8 @@ class AppServices {
         prefs: prefs,
         clock: c,
       ),
-      media: RecitationMediaBridge(
-        recitation: recitation,
-        content: content,
-        settings: settings,
-        session: mediaSession ?? const NoMediaSession(),
-        narration: narration,
-      ),
+      media: media,
+      drive: drive,
       deviceSetup: deviceSetup,
       wordMeanings: wordMeanings,
     );
@@ -291,6 +308,9 @@ class AppServices {
 
   /// Lock-screen / notification controls for the recitation (and background playback on Android).
   final RecitationMediaBridge? media;
+
+  /// Driving mode for the morning / evening adhkar (counts out loud, car-screen controls).
+  final DriveModeController? drive;
 }
 
 class AppScope extends InheritedWidget {

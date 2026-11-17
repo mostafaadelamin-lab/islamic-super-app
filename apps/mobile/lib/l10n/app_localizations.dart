@@ -1388,6 +1388,138 @@ abstract class AppLocalizations {
   /// **'Space used: {mb} MB'**
   String downloadsUsed(String mb);
 
+  /// shared key "drive.again"
+  ///
+  /// In en, this message translates to:
+  /// **'Start again'**
+  String get driveAgain;
+
+  /// shared key "drive.carHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Control it from the car screen, the steering-wheel buttons or the lock screen: next = next dhikr, previous = this dhikr again, pause resumes at the same count.'**
+  String get driveCarHint;
+
+  /// shared key "drive.countOf"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {count}'**
+  String driveCountOf(String n, String count);
+
+  /// shared key "drive.cues"
+  ///
+  /// In en, this message translates to:
+  /// **'Soft sound between repetitions'**
+  String get driveCues;
+
+  /// shared key "drive.cuesSub"
+  ///
+  /// In en, this message translates to:
+  /// **'And a different sound when a dhikr is complete'**
+  String get driveCuesSub;
+
+  /// shared key "drive.dhikrOf"
+  ///
+  /// In en, this message translates to:
+  /// **'Dhikr {n} of {total}'**
+  String driveDhikrOf(String n, String total);
+
+  /// shared key "drive.failed"
+  ///
+  /// In en, this message translates to:
+  /// **'The recording could not be downloaded. Check the internet and try again.'**
+  String get driveFailed;
+
+  /// shared key "drive.finished"
+  ///
+  /// In en, this message translates to:
+  /// **'All the adhkar are done. May Allah accept from you.'**
+  String get driveFinished;
+
+  /// shared key "drive.next"
+  ///
+  /// In en, this message translates to:
+  /// **'Next dhikr'**
+  String get driveNext;
+
+  /// shared key "drive.open"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen while driving'**
+  String get driveOpen;
+
+  /// shared key "drive.openSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Repeats each dhikr its full count and counts for you'**
+  String get driveOpenSub;
+
+  /// shared key "drive.outOf"
+  ///
+  /// In en, this message translates to:
+  /// **'of {count}'**
+  String driveOutOf(String count);
+
+  /// shared key "drive.pause"
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get drivePause;
+
+  /// shared key "drive.play"
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get drivePlay;
+
+  /// shared key "drive.preparing"
+  ///
+  /// In en, this message translates to:
+  /// **'Getting the recording ready…'**
+  String get drivePreparing;
+
+  /// shared key "drive.previous"
+  ///
+  /// In en, this message translates to:
+  /// **'This dhikr again'**
+  String get drivePrevious;
+
+  /// shared key "drive.retry"
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get driveRetry;
+
+  /// shared key "drive.sayEvery"
+  ///
+  /// In en, this message translates to:
+  /// **'Say the count out loud'**
+  String get driveSayEvery;
+
+  /// shared key "drive.sayEveryN"
+  ///
+  /// In en, this message translates to:
+  /// **'Every {n}'**
+  String driveSayEveryN(String n);
+
+  /// shared key "drive.sayOff"
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get driveSayOff;
+
+  /// shared key "drive.settings"
+  ///
+  /// In en, this message translates to:
+  /// **'Driving mode settings'**
+  String get driveSettings;
+
+  /// shared key "drive.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Driving mode'**
+  String get driveTitle;
+
   /// shared key "hadith.attribution"
   ///
   /// In en, this message translates to:

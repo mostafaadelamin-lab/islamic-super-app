@@ -10,6 +10,7 @@ import '../theme/design_tokens.dart';
 import 'dhikr_audio.dart';
 import 'dhikr_hadith.dart';
 import 'dhikr_tools.dart';
+import 'drive_mode_screen.dart';
 import 'hisn_screen.dart';
 import 'l10n_ext.dart';
 import 'prayer_model.dart';
@@ -103,6 +104,22 @@ class AdhkarScreen extends StatelessWidget {
                   onTap: () => openAdhkarAudio(context, a, title),
                 ),
               ),
+            header(l.driveTitle),
+            for (final (sess, icon, title) in [
+              (AdhkarSession.morning, RIcons.sunHigh, l.adhkarMorningTitle),
+              (AdhkarSession.evening, RIcons.moon, l.adhkarEveningTitle),
+            ])
+              Card(
+                key: Key('adhkarDrive.${sess.name}'),
+                margin: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
+                child: ListTile(
+                  leading: RIcon(RIcons.car, color: Theme.of(context).colorScheme.primary, size: 28),
+                  title: Text('${l.driveOpen} · $title', style: const TextStyle(fontWeight: FontWeight.w600)),
+                  subtitle: Text(l.driveOpenSub),
+                  trailing: RIcon(icon),
+                  onTap: () => openDriveMode(context, sess),
+                ),
+              ),
           ],
         ),
       ),
@@ -161,6 +178,12 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
         appBar: AppBar(
           title: Text(session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle),
           actions: [
+            IconButton(
+              key: const Key('adhkarDriveMode'),
+              tooltip: l.driveOpen,
+              icon: const RIcon(RIcons.car),
+              onPressed: () => openDriveMode(context, session),
+            ),
             const AdhkarViewToggle(),
             IconButton(
               key: const Key('adhkarReminders'),
