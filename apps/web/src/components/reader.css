@@ -496,7 +496,9 @@ body:has(.rd) .app-footer {
 }
 .rd-bar {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  /* one row, however many buttons (index, bookmarks, khatma, meanings, about the surah, search) */
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
   background: var(--color-surface);
   border-top: 1px solid var(--color-line);
   padding-bottom: env(safe-area-inset-bottom, 0px);
