@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Launch screen: Rattil emerald with the gold mark in the middle (same as the app icon). -->
+<!-- Launch screen: Madinah-night navy with the gold mark in the middle (same as the app icon). -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/rattil_emerald" />
     <item>
