@@ -445,6 +445,60 @@ void main() {
       expect(all, contains(kafirun));
     });
 
+    testWidgets('Umrah: tawaf and sa\'i steps have the 7-round counter, kept after closing (owner 2026-11-17)', (
+      tester,
+    ) async {
+      final app = await pumpApp(tester, size: tallPhone);
+      await pushScreen(tester, const PilgrimageScreen(kind: PilgrimageKind.umrah));
+      expect(find.byKey(const Key('rounds-tawaf')), findsNothing); // miqat step: no counter
+      Finder list() => find.descendant(of: find.byKey(const Key('pilgrimage-umrah')), matching: find.byType(Scrollable)).first;
+      Future<void> next() async {
+        final b = find.byKey(const Key('stepNext-umrah'));
+        await tester.scrollUntilVisible(b, 600, scrollable: list());
+        await tester.tap(b);
+        await tester.pumpAndSettle();
+      }
+
+      await next();
+      final add = find.byKey(const Key('rounds-tawaf-add'));
+      await tester.scrollUntilVisible(add, 600, scrollable: list());
+      for (var i = 0; i < 3; i++) {
+        await tester.tap(add);
+        await tester.pumpAndSettle();
+      }
+      expect(find.text('٣ من ٧'), findsOneWidget);
+      await tester.tap(find.byKey(const Key('rounds-tawaf-undo')));
+      await tester.pumpAndSettle();
+      expect(find.text('٢ من ٧'), findsOneWidget);
+      for (var i = 0; i < 6; i++) {
+        if (tester.widget<FilledButton>(add).onPressed == null) break;
+        await tester.tap(add);
+        await tester.pumpAndSettle();
+      }
+      expect(find.text('اكتمل العدد — تقبّل الله'), findsOneWidget);
+      expect(tester.widget<FilledButton>(add).onPressed, isNull);
+      expect(app.services.settings.rawJson('hajj.rounds'), contains('"tawaf":7'));
+
+      await next();
+      await tester.scrollUntilVisible(
+        find.byKey(const Key('rounds-sai')),
+        600,
+        scrollable: list(),
+      );
+      expect(find.byKey(const Key('rounds-sai')), findsOneWidget);
+      expect(find.byKey(const Key('rounds-tawaf')), findsNothing);
+      final saiAdd = find.byKey(const Key('rounds-sai-add'));
+      await tester.ensureVisible(saiAdd);
+      await tester.pumpAndSettle();
+      await tester.tap(saiAdd);
+      await tester.pumpAndSettle();
+      expect(find.text('١ من ٧'), findsOneWidget);
+      await tester.tap(find.byKey(const Key('rounds-sai-reset')));
+      await tester.pumpAndSettle();
+      expect(find.text('٠ من ٧'), findsOneWidget);
+      expect(app.services.settings.rawJson('hajj.rounds'), contains('"tawaf":7'));
+    });
+
     testWidgets('Umrah shows no picture of Mina, Arafah, Muzdalifah or the Jamarat (owner)', (tester) async {
       final app = await pumpApp(tester, size: tallPhone);
       final g = app.services.content.hajjGuide;

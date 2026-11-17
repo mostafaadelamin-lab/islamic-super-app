@@ -9,6 +9,8 @@ import 'hajj_scene_view.dart';
 import 'l10n_ext.dart';
 import 'mushaf_page.dart' show AyahMarker;
 import 'review_notice.dart' show duaStyle;
+import 'round_counter.dart';
+import '../domain/hajj_rounds.dart';
 
 /// The Hajj & Umrah guide's steps (owner 2026-11-16): each step's picture, the official guide's words for
 /// it, then every sunnah, dhikr and ayah of it in full, each with its reference. Only lays out the texts of
@@ -301,7 +303,8 @@ class GuideStepView extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final official = g.official(dalil, kind);
-    return Card(
+    final tools = stepRoundTools[stepId] ?? const <RoundTool>[];
+    final card = Card(
       key: Key('guideStep-$stepId'),
       margin: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
       child: Padding(
@@ -337,6 +340,15 @@ class GuideStepView extends StatelessWidget {
           ),
         ),
       ),
+    );
+    if (tools.isEmpty) return card;
+    // Round counters under the step, as on the website (tawaf 7, sa'i 7, 7 pebbles).
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        card,
+        for (final t in tools) RoundCounter(tool: t),
+      ],
     );
   }
 }

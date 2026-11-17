@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.6] — Hajj & Umrah round counter in the app — 2026-11-17
+### Added
+- Hajj & Umrah (app, Android + iPhone): the round counter the website already had: seven rounds of tawaf, seven of sa'i and seven pebbles at the jamarat, under the tawaf (Umrah, arrival, ifadah, farewell), sa'i and stoning steps. «أتممت شوطًا», «تراجع», «تصفير», seven dots that light up, and «اكتمل العدد — تقبّل الله» at seven. The count is kept when the app is closed. The website is unchanged (it has had the counter since the first version).
+### Fixed
+- App strings: the Mushaf player handle and word-meanings labels now live in tool/i18n/mobile.*.json, so regenerating the ARB files keeps them.
+
 ## [1.2.5] — Word meanings in the Mushaf — 2026-11-17
 ### Added
 - Mushaf (app + website): «معاني الكلمات». A small icon in the bar under the Mushaf opens the difficult words of the page with their meanings, ayah by ayah (tap an ayah's name to select it on the page); the ayah menu has a new «المعاني» button for that ayah's words. Text from «السراج في بيان غريب القرآن» (Muhammad al-Khudairi), copied verbatim from the Quranpedia.net data dump (free for use in apps); built by tools/word_meanings.py into content/word-meanings/dist/siraj.v1.json. The Quran text is unchanged.

@@ -852,6 +852,32 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hadithUnsave => 'إلغاء الحفظ';
 
   @override
+  String get hajjCounterAdd => 'أتممت شوطًا';
+
+  @override
+  String get hajjCounterDone => 'اكتمل العدد — تقبّل الله';
+
+  @override
+  String get hajjCounterJamarat => 'عدّاد حصى الجمرات';
+
+  @override
+  String hajjCounterProgress(String n, String total) {
+    return '$n من $total';
+  }
+
+  @override
+  String get hajjCounterReset => 'تصفير';
+
+  @override
+  String get hajjCounterSai => 'عدّاد أشواط السعي';
+
+  @override
+  String get hajjCounterTawaf => 'عدّاد أشواط الطواف';
+
+  @override
+  String get hajjCounterUndo => 'تراجع';
+
+  @override
   String get hajjCrowdBody =>
       'الهيئة العامة للعناية بشؤون المسجد الحرام والمسجد النبوي تعرض نسب الزحام في المطاف والمسعى لحظة بلحظة، وكذلك تطبيق نُسك الرسمي. اضغط لفتح المصدر الرسمي.';
 
@@ -1383,6 +1409,37 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get libraryTitle => 'مكتبة التلاوات لجميع قراء القرآن الكريم';
+
+  @override
+  String get meaningsError => 'تعذّر تحميل معاني الكلمات.';
+
+  @override
+  String get meaningsLoading => 'جارٍ تحميل معاني الكلمات…';
+
+  @override
+  String get meaningsNoneAyah => 'لا توجد كلمات غريبة مشروحة في هذه الآية.';
+
+  @override
+  String get meaningsNonePage => 'لا توجد كلمات غريبة مشروحة في هذه الصفحة.';
+
+  @override
+  String meaningsOfAyah(String ref) {
+    return 'معاني كلمات $ref';
+  }
+
+  @override
+  String meaningsOfPage(String page) {
+    return 'معاني كلمات الصفحة $page';
+  }
+
+  @override
+  String get meaningsShort => 'المعاني';
+
+  @override
+  String get meaningsSource => 'من كتاب «السراج في بيان غريب القرآن» — محمد بن عبد العزيز الخضيري';
+
+  @override
+  String get meaningsTitle => 'معاني الكلمات';
 
   @override
   String get moreTitle => 'المزيد';
@@ -2167,6 +2224,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get readerPlayWithTafsir => 'استماع مع التفسير';
+
+  @override
+  String get readerPlayerHide => 'إخفاء المشغّل';
+
+  @override
+  String get readerPlayerShow => 'إظهار المشغّل';
 
   @override
   String get readerPrevPage => 'الصفحة السابقة';
@@ -3326,41 +3389,4 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'مرّ عام هجري كامل منذ بلغ مالي النصاب';
-
-  @override
-  String get readerPlayerHide => 'إخفاء المشغّل';
-
-  @override
-  String get readerPlayerShow => 'إظهار المشغّل';
-
-  @override
-  String get meaningsTitle => 'معاني الكلمات';
-
-  @override
-  String get meaningsShort => 'المعاني';
-
-  @override
-  String meaningsOfPage(String page) {
-    return 'معاني كلمات الصفحة $page';
-  }
-
-  @override
-  String meaningsOfAyah(String ref) {
-    return 'معاني كلمات $ref';
-  }
-
-  @override
-  String get meaningsLoading => 'جارٍ تحميل معاني الكلمات…';
-
-  @override
-  String get meaningsError => 'تعذّر تحميل معاني الكلمات.';
-
-  @override
-  String get meaningsNonePage => 'لا توجد كلمات غريبة مشروحة في هذه الصفحة.';
-
-  @override
-  String get meaningsNoneAyah => 'لا توجد كلمات غريبة مشروحة في هذه الآية.';
-
-  @override
-  String get meaningsSource => 'من كتاب «السراج في بيان غريب القرآن» — محمد بن عبد العزيز الخضيري';
 }

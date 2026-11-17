@@ -858,6 +858,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hadithUnsave => 'Remove from saved';
 
   @override
+  String get hajjCounterAdd => 'Add one';
+
+  @override
+  String get hajjCounterDone => 'Complete — may Allah accept it';
+
+  @override
+  String get hajjCounterJamarat => 'Jamarat pebble counter';
+
+  @override
+  String hajjCounterProgress(String n, String total) {
+    return '$n of $total';
+  }
+
+  @override
+  String get hajjCounterReset => 'Reset';
+
+  @override
+  String get hajjCounterSai => 'Sa\'i round counter';
+
+  @override
+  String get hajjCounterTawaf => 'Tawaf round counter';
+
+  @override
+  String get hajjCounterUndo => 'Undo';
+
+  @override
   String get hajjCrowdBody =>
       'The General Authority for the Care of the Two Holy Mosques shows live crowd levels for tawaf and sa\'i, and so does the official Nusuk app. Tap to open the official source.';
 
@@ -1390,6 +1416,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get libraryTitle => 'Recitations library: all Quran reciters';
+
+  @override
+  String get meaningsError => 'Could not load the word meanings.';
+
+  @override
+  String get meaningsLoading => 'Loading the word meanings…';
+
+  @override
+  String get meaningsNoneAyah => 'No difficult words are explained in this ayah.';
+
+  @override
+  String get meaningsNonePage => 'No difficult words are explained on this page.';
+
+  @override
+  String meaningsOfAyah(String ref) {
+    return 'Word meanings of $ref';
+  }
+
+  @override
+  String meaningsOfPage(String page) {
+    return 'Word meanings, page $page';
+  }
+
+  @override
+  String get meaningsShort => 'Meanings';
+
+  @override
+  String get meaningsSource => 'From «Al-Siraj fi Bayan Gharib al-Quran» by Muhammad al-Khudairi (Arabic)';
+
+  @override
+  String get meaningsTitle => 'Word meanings';
 
   @override
   String get moreTitle => 'More';
@@ -2178,6 +2235,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readerPlayWithTafsir => 'Listen with tafsir';
+
+  @override
+  String get readerPlayerHide => 'Hide player';
+
+  @override
+  String get readerPlayerShow => 'Show player';
 
   @override
   String get readerPrevPage => 'Previous page';
@@ -3344,41 +3407,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'A full Hijri year has passed since my wealth reached the nisab';
-
-  @override
-  String get readerPlayerHide => 'Hide player';
-
-  @override
-  String get readerPlayerShow => 'Show player';
-
-  @override
-  String get meaningsTitle => 'Word meanings';
-
-  @override
-  String get meaningsShort => 'Meanings';
-
-  @override
-  String meaningsOfPage(String page) {
-    return 'Word meanings, page $page';
-  }
-
-  @override
-  String meaningsOfAyah(String ref) {
-    return 'Word meanings of $ref';
-  }
-
-  @override
-  String get meaningsLoading => 'Loading the word meanings…';
-
-  @override
-  String get meaningsError => 'Could not load the word meanings.';
-
-  @override
-  String get meaningsNonePage => 'No difficult words are explained on this page.';
-
-  @override
-  String get meaningsNoneAyah => 'No difficult words are explained in this ayah.';
-
-  @override
-  String get meaningsSource => 'From «Al-Siraj fi Bayan Gharib al-Quran» by Muhammad al-Khudairi (Arabic)';
 }

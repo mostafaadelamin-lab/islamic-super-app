@@ -1256,6 +1256,46 @@
   "@hadithUnsave": {
     "description": "shared key \"hadith.unsave\""
   },
+  "hajjCounterAdd": "Add one",
+  "@hajjCounterAdd": {
+    "description": "shared key \"hajj.counter.add\""
+  },
+  "hajjCounterDone": "Complete — may Allah accept it",
+  "@hajjCounterDone": {
+    "description": "shared key \"hajj.counter.done\""
+  },
+  "hajjCounterJamarat": "Jamarat pebble counter",
+  "@hajjCounterJamarat": {
+    "description": "shared key \"hajj.counter.jamarat\""
+  },
+  "hajjCounterProgress": "{n} of {total}",
+  "@hajjCounterProgress": {
+    "description": "shared key \"hajj.counter.progress\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "hajjCounterReset": "Reset",
+  "@hajjCounterReset": {
+    "description": "shared key \"hajj.counter.reset\""
+  },
+  "hajjCounterSai": "Sa'i round counter",
+  "@hajjCounterSai": {
+    "description": "shared key \"hajj.counter.sai\""
+  },
+  "hajjCounterTawaf": "Tawaf round counter",
+  "@hajjCounterTawaf": {
+    "description": "shared key \"hajj.counter.tawaf\""
+  },
+  "hajjCounterUndo": "Undo",
+  "@hajjCounterUndo": {
+    "description": "shared key \"hajj.counter.undo\""
+  },
   "hajjCrowdBody": "The General Authority for the Care of the Two Holy Mosques shows live crowd levels for tawaf and sa'i, and so does the official Nusuk app. Tap to open the official source.",
   "@hajjCrowdBody": {
     "description": "shared key \"hajj.crowd.body\""
@@ -2042,6 +2082,52 @@
   "libraryTitle": "Recitations library: all Quran reciters",
   "@libraryTitle": {
     "description": "shared key \"library.title\""
+  },
+  "meaningsError": "Could not load the word meanings.",
+  "@meaningsError": {
+    "description": "shared key \"meanings.error\""
+  },
+  "meaningsLoading": "Loading the word meanings…",
+  "@meaningsLoading": {
+    "description": "shared key \"meanings.loading\""
+  },
+  "meaningsNoneAyah": "No difficult words are explained in this ayah.",
+  "@meaningsNoneAyah": {
+    "description": "shared key \"meanings.noneAyah\""
+  },
+  "meaningsNonePage": "No difficult words are explained on this page.",
+  "@meaningsNonePage": {
+    "description": "shared key \"meanings.nonePage\""
+  },
+  "meaningsOfAyah": "Word meanings of {ref}",
+  "@meaningsOfAyah": {
+    "description": "shared key \"meanings.ofAyah\"",
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "meaningsOfPage": "Word meanings, page {page}",
+  "@meaningsOfPage": {
+    "description": "shared key \"meanings.ofPage\"",
+    "placeholders": {
+      "page": {
+        "type": "String"
+      }
+    }
+  },
+  "meaningsShort": "Meanings",
+  "@meaningsShort": {
+    "description": "shared key \"meanings.short\""
+  },
+  "meaningsSource": "From «Al-Siraj fi Bayan Gharib al-Quran» by Muhammad al-Khudairi (Arabic)",
+  "@meaningsSource": {
+    "description": "shared key \"meanings.source\""
+  },
+  "meaningsTitle": "Word meanings",
+  "@meaningsTitle": {
+    "description": "shared key \"meanings.title\""
   },
   "moreTitle": "More",
   "@moreTitle": {
@@ -3196,6 +3282,14 @@
   "readerPlayWithTafsir": "Listen with tafsir",
   "@readerPlayWithTafsir": {
     "description": "shared key \"reader.playWithTafsir\""
+  },
+  "readerPlayerHide": "Hide player",
+  "@readerPlayerHide": {
+    "description": "shared key \"reader.playerHide\""
+  },
+  "readerPlayerShow": "Show player",
+  "@readerPlayerShow": {
+    "description": "shared key \"reader.playerShow\""
   },
   "readerPrevPage": "Previous page",
   "@readerPrevPage": {
@@ -4887,36 +4981,5 @@
   "zakatYearPassed": "A full Hijri year has passed since my wealth reached the nisab",
   "@zakatYearPassed": {
     "description": "shared key \"zakat.yearPassed\""
-  },
-  "readerPlayerHide": "Hide player",
-  "readerPlayerShow": "Show player",
-  "@readerPlayerHide": {
-    "description": "Handle above the Mushaf player that slides it down"
-  },
-  "@readerPlayerShow": {
-    "description": "Handle that brings the slid-down Mushaf player back"
-  },
-  "meaningsTitle": "Word meanings",
-  "meaningsShort": "Meanings",
-  "meaningsOfPage": "Word meanings, page {page}",
-  "@meaningsOfPage": {
-    "placeholders": {
-      "page": {
-        "type": "String"
-      }
-    }
-  },
-  "meaningsOfAyah": "Word meanings of {ref}",
-  "@meaningsOfAyah": {
-    "placeholders": {
-      "ref": {
-        "type": "String"
-      }
-    }
-  },
-  "meaningsLoading": "Loading the word meanings…",
-  "meaningsError": "Could not load the word meanings.",
-  "meaningsNonePage": "No difficult words are explained on this page.",
-  "meaningsNoneAyah": "No difficult words are explained in this ayah.",
-  "meaningsSource": "From «Al-Siraj fi Bayan Gharib al-Quran» by Muhammad al-Khudairi (Arabic)"
+  }
 }
