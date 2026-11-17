@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.5] — Word meanings in the Mushaf — 2026-11-17
+### Added
+- Mushaf (app + website): «معاني الكلمات». A small icon in the bar under the Mushaf opens the difficult words of the page with their meanings, ayah by ayah (tap an ayah's name to select it on the page); the ayah menu has a new «المعاني» button for that ayah's words. Text from «السراج في بيان غريب القرآن» (Muhammad al-Khudairi), copied verbatim from the Quranpedia.net data dump (free for use in apps); built by tools/word_meanings.py into content/word-meanings/dist/siraj.v1.json. The Quran text is unchanged.
+
 ## [1.2.2] — Mushaf player slides down — 2026-11-17
 ### Added
 - Mushaf (app + website, phones and tablets): a handle with an arrow on top of the player. Tap it or drag it down and the player and the page slider slide down to one thin row (play / pause and what is playing), so the Mushaf page gets the room back; tap or drag up to bring them back. The choice is remembered.
