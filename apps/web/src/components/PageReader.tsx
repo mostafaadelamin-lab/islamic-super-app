@@ -321,7 +321,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const [hint, setHint] = useState(false);
   const [guide, setGuide] = useState(false);
   const dockRef = useRef<HTMLDivElement>(null);
-  const dockMin = useStore(readerDockMinStore);
+  const savedDockMin = useStore(readerDockMinStore);
   const handleY = useRef<number | null>(null);
   const swiped = useRef(false);
   const pageEl = useRef<HTMLDivElement>(null);
@@ -364,6 +364,15 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   useEffect(() => {
     if (!fullScreen || !pageTafsir) setFocusKey(null);
   }, [fullScreen, pageTafsir, page]);
+  // Phone with the page + tafsir halves (owner 2026-11-18: «زحمة»): the player folds to one row unless
+  // opened here; the saved choice is not changed.
+  const phoneSplit = duo && !wide && !selected;
+  const [splitDockOpen, setSplitDockOpen] = useState(false);
+  const dockMin = phoneSplit ? !splitDockOpen : savedDockMin;
+  const setDockMin = (v: boolean): void => {
+    if (phoneSplit) setSplitDockOpen(!v);
+    else readerDockMinStore.set(v);
+  };
   useFitFont(pageEl, page, fullScreen, duo ? `duo${wide ? "-wide" : ""}` : "");
 
   useEffect(() => {
@@ -1427,7 +1436,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
               const next = dockSwipe(e.clientY - start, dockMin);
               if (next !== null) {
                 swiped.current = true;
-                readerDockMinStore.set(next);
+                setDockMin(next);
               }
             }}
             onClick={() => {
@@ -1435,7 +1444,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
                 swiped.current = false;
                 return;
               }
-              readerDockMinStore.set(!dockMin);
+              setDockMin(!dockMin);
             }}
           >
             <span className="rd-handle-grip" aria-hidden="true" />

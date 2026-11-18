@@ -1,5 +1,5 @@
 import { renderQuranText } from "@/lib/quran-render";
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { readRepoJson } from "../repo";
 import { TafsirPanel } from "@/components/TafsirPanel";
@@ -244,6 +244,19 @@ describe("tafsir with recitation", () => {
     expect(document.querySelector(".mushaf-reader")).not.toHaveClass("rd-full");
   });
 
+  it("phone halves: the player folds to one row by itself and opens from its handle", async () => {
+    serveTafsir();
+    render(<PageReader locale="en" initial={resolvePage(lines.pages[2]!, lookup)} />);
+    expect(screen.getByTestId("reader-player")).toBeInTheDocument();
+    await userEvent.click(screen.getByTestId("reader-side-tafsir"));
+    expect(screen.queryByTestId("reader-player")).toBeNull();
+    expect(screen.getByTestId("reader-player-mini")).toBeInTheDocument();
+    await userEvent.click(screen.getByTestId("dock-handle"));
+    expect(screen.getByTestId("reader-player")).toBeInTheDocument();
+    await userEvent.click(screen.getByTestId("reader-side-tafsir"));
+    expect(screen.getByTestId("reader-player")).toBeInTheDocument(); // the saved choice did not change
+  });
+
   it("full screen while listening with tafsir keeps both halves and a play / pause button", async () => {
     serveTafsir();
     audioStore.set((p) => ({ ...p, tafsir: true }));
@@ -253,7 +266,7 @@ describe("tafsir with recitation", () => {
     await userEvent.click(screen.getByTestId("reader-full"));
     expect(document.querySelector(".mushaf-reader")).toHaveClass("rd-full", "rd-duo");
     expect(screen.getByTestId("duo-tafsir")).toHaveTextContent("Listen with tafsir");
-    expect(screen.getByTestId("mini-toggle")).toBeInTheDocument();
+    expect(within(screen.getByTestId("reader-full-tools")).getByTestId("mini-toggle")).toBeInTheDocument();
     expect(screen.getByTestId("duo-tafsir").querySelector(".rd-ayah.playing")).toHaveAttribute(
       "data-ayah",
       "2:1",

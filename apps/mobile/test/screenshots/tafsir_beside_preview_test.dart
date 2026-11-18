@@ -41,7 +41,12 @@ void main() {
   for (final (name, size) in [('tablet', const Size(1280, 800)), ('phone', const Size(440, 956))]) {
     testWidgets('preview: tafsir beside the page, $name', (tester) async {
       tester.view.devicePixelRatio = 1;
-      await pumpApp(tester, size: size, prefs: const {'theme': 'light', 'reader.hintShown': 9}, audio: FakeAudioBackend());
+      await pumpApp(
+        tester,
+        size: size,
+        prefs: const {'theme': 'light', 'reader.hintShown': 9},
+        audio: FakeAudioBackend(),
+      );
       await pushScreen(tester, const PageReaderScreen(initialPage: 3));
       await tester.tap(find.byKey(const Key('pageAyah-2-6')).first);
       await tester.pumpAndSettle();
@@ -60,4 +65,24 @@ void main() {
       await shot(tester, 'app-$name-3-full-with-tafsir');
     });
   }
+
+  testWidgets('preview: full screen while listening with tafsir, tablet', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(
+      tester,
+      size: const Size(1280, 800),
+      prefs: const {'theme': 'light', 'reader.hintShown': 9},
+      audio: FakeAudioBackend(),
+    );
+    await pushScreen(tester, const PageReaderScreen(initialPage: 3));
+    await tester.tap(find.byKey(const Key('pageAyah-2-8')).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('ayahListen')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('ayahPlayTafsir')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('readerFull')));
+    await tester.pumpAndSettle();
+    await shot(tester, 'app-tablet-4-full-listening-tafsir');
+  });
 }

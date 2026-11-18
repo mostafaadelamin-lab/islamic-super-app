@@ -64,6 +64,9 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   /// without listening (the same halves as «استماع مع التفسير»).
   bool _tafsirBeside = false;
 
+  /// Phone halves: the player stays folded to one row unless opened here (owner 2026-11-18: less crowded).
+  bool _splitPlayerOpen = false;
+
   /// Full screen beside the tafsir: the ayah tapped on the page, shown in the tafsir half.
   AyahRef? _focus;
   bool? _immersiveUi;
@@ -449,7 +452,8 @@ class PageReaderScreenState extends State<PageReaderScreen> {
         child: Column(
           children: [
             if (!full) header,
-            if (!compact && !full) zoomRow,
+            // The page + tafsir halves on a phone leave out A− / A+ and «عن السورة» (less crowded).
+            if (!compact && !full && !(_pageTafsir(context) && !ayahSidePanel(size))) zoomRow,
             if (full) const SizedBox.shrink(key: Key('readerFullScreen')),
             Expanded(key: const Key('readerBody'), child: body),
             if (!full)
@@ -468,7 +472,9 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   /// side by side so the page keeps the height.
   Widget _controlsStrip(BuildContext context, {required bool wide}) {
     final scheme = Theme.of(context).colorScheme;
-    final playerMin = context.services.settings.readerPlayerMin;
+    // Phone with the page + tafsir halves (owner 2026-11-18: «زحمة»): the player folds to one row.
+    final phoneSplit = !wide && _pageTafsir(context) && _selected == null;
+    final playerMin = phoneSplit ? !_splitPlayerOpen : context.services.settings.readerPlayerMin;
     final sel = _selected;
     final actions = sel != null && _tab == ReaderTab.mushaf
         ? AyahSheet(
@@ -518,7 +524,11 @@ class PageReaderScreenState extends State<PageReaderScreen> {
             Divider(height: 1, color: scheme.outlineVariant),
           ],
           // A handle slides the player and the page slider down to one thin row (owner 2026-11-17).
-          ReaderPlayerHandle(page: _page),
+          ReaderPlayerHandle(
+            page: _page,
+            min: phoneSplit ? playerMin : null,
+            onChanged: phoneSplit ? (v) => setState(() => _splitPlayerOpen = !v) : null,
+          ),
           if (wide) ...[
             if (!playerMin) _sliderRow(context),
             Row(

@@ -138,7 +138,8 @@ void main() {
       expect(duoText(tester, 2, 282), source(2, 282));
       final panel = tester.getRect(find.byKey(const Key('duoTafsir')));
       expect(panel.height, greaterThan(size.height * 0.1), reason: 'a real half, not a strip');
-      for (final k in ['duoTafsir', 'duoPage', 'miniPlayer', 'audioTafsirToggle', 'audioStop', 'audioPlayPause']) {
+      // Owner 2026-11-18: with the halves on a phone the player folds to one row (play / pause + the ayah).
+      for (final k in ['duoTafsir', 'duoPage', 'miniPlayerStrip', 'miniStripPlay', 'playerHandle']) {
         final r = tester.getRect(find.byKey(Key(k)));
         expect(r.left, greaterThanOrEqualTo(-0.01), reason: k);
         expect(r.right, lessThanOrEqualTo(size.width + 0.01), reason: k);

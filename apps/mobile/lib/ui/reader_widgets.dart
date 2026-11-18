@@ -878,8 +878,13 @@ class _HelpBodyState extends State<_HelpBody> {
 /// The handle on top of the reader's player (owner 2026-11-17): tap it, or drag it down / up, to slide the
 /// player and page slider down to one thin row and bring them back, so they stop covering the Mushaf page.
 class ReaderPlayerHandle extends StatelessWidget {
-  const ReaderPlayerHandle({super.key, required this.page});
+  const ReaderPlayerHandle({super.key, required this.page, this.min, this.onChanged});
   final int page;
+
+  /// Phone «التفسير بجانب الصفحة» (owner 2026-11-18): the reader folds the player by itself while the halves
+  /// show, without changing the saved choice; [onChanged] then opens / folds it.
+  final bool? min;
+  final ValueChanged<bool>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -889,7 +894,8 @@ class ReaderPlayerHandle extends StatelessWidget {
       builder: (context, _) {
         final l = context.l10n;
         final scheme = Theme.of(context).colorScheme;
-        final min = settings.readerPlayerMin;
+        final min = this.min ?? settings.readerPlayerMin;
+        void set(bool v) => onChanged != null ? onChanged!(v) : unawaited(settings.setReaderPlayerMin(v));
         final compact = MediaQuery.sizeOf(context).height < 700;
         final handle = Semantics(
           button: true,
@@ -900,7 +906,7 @@ class ReaderPlayerHandle extends StatelessWidget {
             child: InkWell(
               key: const Key('playerHandle'),
               borderRadius: BorderRadius.circular(14),
-              onTap: () => unawaited(settings.setReaderPlayerMin(!min)),
+              onTap: () => set(!min),
               child: SizedBox(
                 width: compact && !min ? 96 : 72,
                 height: min ? 44 : (compact ? 18 : 30),
@@ -933,8 +939,8 @@ class ReaderPlayerHandle extends StatelessWidget {
           behavior: HitTestBehavior.translucent,
           onVerticalDragEnd: (d) {
             final v = d.primaryVelocity ?? 0;
-            if (v > 0 && !min) unawaited(settings.setReaderPlayerMin(true));
-            if (v < 0 && min) unawaited(settings.setReaderPlayerMin(false));
+            if (v > 0 && !min) set(true);
+            if (v < 0 && min) set(false);
           },
           child: min
               ? Padding(

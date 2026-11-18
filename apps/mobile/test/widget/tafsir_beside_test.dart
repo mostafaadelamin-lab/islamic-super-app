@@ -62,6 +62,12 @@ void main() {
     await tester.tap(find.byKey(const Key('readerTafsirBeside')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('splitView')), findsOneWidget);
+    // Less crowded (owner 2026-11-18): the player folds to one row, no A−/A+ row; the handle opens it.
+    expect(find.byKey(const Key('miniPlayerStrip')), findsOneWidget);
+    expect(find.byKey(const Key('readerSurahInfo')), findsNothing);
+    await tester.tap(find.byKey(const Key('playerHandle')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('miniPlayerStrip')), findsNothing);
     await tester.tap(find.byKey(const Key('duoHideTafsir')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('splitView')), findsNothing);
