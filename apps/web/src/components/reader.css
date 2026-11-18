@@ -327,17 +327,67 @@ body:has(.rd) .app-footer {
   font-weight: 600;
   color: var(--color-ink);
 }
-.rdp-reciter select {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  opacity: 0;
+.rdp-reciter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  max-width: 100%;
+  padding: 2px 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
   cursor: pointer;
 }
-.rdp-reciter:focus-within {
+.rdp-reciter-btn:hover {
+  background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+}
+.rdp-reciter-btn:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
-  border-radius: 6px;
+}
+/* the reciter list opens upwards from the player (owner 2026-11-18) */
+.rdp-reciter-list {
+  position: absolute;
+  z-index: 40;
+  bottom: calc(100% + 6px);
+  inset-inline-start: 0;
+  min-width: 240px;
+  max-height: min(60vh, 460px);
+  overflow-y: auto;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 18%);
+}
+.rdp-reciter-list button {
+  display: block;
+  width: 100%;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 500;
+  text-align: start;
+  cursor: pointer;
+}
+.rdp-reciter-list button:hover,
+.rdp-reciter-list button:focus-visible {
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  outline: none;
+}
+.rdp-reciter-list button[aria-selected="true"] {
+  background: color-mix(in srgb, var(--color-primary) 16%, transparent);
+  color: var(--color-primary);
+  font-weight: 700;
 }
 .rdp-reciter-name {
   overflow: hidden;
@@ -1550,7 +1600,7 @@ button.mn-ref {
   height: calc((100dvh - var(--rd-exit-h) - var(--space-xs)) * 0.5);
 }
 @media (min-width: 1024px) and (min-height: 560px) and (orientation: landscape) {
-  /* full screen, wide: the whole page on the screen's height, the tafsir takes the rest of the width */
+  /* full screen, wide: a big page that scrolls in its half, the tafsir takes the rest of the width */
   .mushaf-reader.rd.rd-full.rd-duo {
     padding: 0 var(--space-md);
     margin-top: var(--rd-exit-h);
@@ -1561,6 +1611,52 @@ button.mn-ref {
     height: calc(100dvh - var(--rd-exit-h) - var(--space-sm));
   }
   .rd-full.rd-duo > .mushaf-stage {
-    overflow-y: hidden;
+    overflow-y: auto;
   }
+}
+
+/* ---- Page size on wide screens: − 175% + (owner 2026-11-18) ---- */
+.rd-size {
+  position: fixed;
+  z-index: 26;
+  inset-inline-end: var(--space-md);
+  bottom: calc(var(--rd-dock-h, 0px) + var(--space-md));
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  background: var(--color-surface);
+}
+.rd-size-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+.rd-size-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+.rd-size-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.rd-size-val {
+  min-width: 3.4em;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
 }

@@ -285,7 +285,8 @@ test.describe("recitation player logic (fake media element: the test dispatches 
     await page.getByTestId("player-next").click(); // skips past the basmala to ayah 1
     await expect(page.getByTestId("player-now")).toHaveText(/Al-Ikhlas, ayah 1$/);
     await isPlaying(page);
-    await page.getByTestId("player-reciter").selectOption("Husary_128kbps"); // reloads the current ayah
+    await page.getByTestId("player-reciter").click();
+    await page.getByTestId("reciter-option-Husary_128kbps").click(); // reloads the current ayah
     await expect.poll(async () => (await played(page)).at(-1)).toBe("Husary_128kbps/112001.mp3");
     await page.getByTestId("player-next").click();
     await expect(page.getByTestId("player-now")).toHaveText(/Al-Ikhlas, ayah 2$/);

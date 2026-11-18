@@ -10,6 +10,7 @@ import {
   useSyncExternalStore,
   type PointerEvent as ReactPointerEvent,
   type CSSProperties,
+  type ReactElement,
   type ReactNode,
   type RefObject,
 } from "react";
@@ -42,7 +43,13 @@ import { TafsirPanel } from "./TafsirPanel";
 import { MeaningsSheet } from "./MeaningsSheet";
 import { SurahInfoSheet } from "./SurahInfoSheet";
 import { ReaderPlayer, ReaderPlayerMini } from "./ReaderPlayer";
-import { dockSwipe, readerDockMinStore } from "@/lib/reader-dock";
+import {
+  PAGE_SCALES,
+  dockSwipe,
+  readerDockMinStore,
+  readerPageScaleStore,
+  stepPageScale,
+} from "@/lib/reader-dock";
 import { ReaderIcon } from "./ReaderIcon";
 import { KhatmaSheet } from "./KhatmaSheet";
 import { PageAyahList, PageButtons, PageTafsirList, SurahFlow, usePageSwipe } from "./ReaderViews";
@@ -79,9 +86,9 @@ const FIT = {
   actionsRow: 72,
   /**
    * Wide page + tafsir: the page may be this much taller than its column (it scrolls there and follows the
-   * recitation). Owner 2026-11-18: 1.4 left the page too small next to the tafsir.
+   * recitation). Owner 2026-11-18: 1.4, then 2.2, left the page too small next to the tafsir.
    */
-  duoScroll: 2.2,
+  duoScroll: 3,
   /** …and take at most this share of the reader's width. */
   duoShare: 0.55,
   defaultProbe: 20,
@@ -119,7 +126,13 @@ const ZOOM_MAX = 3;
 const ZOOM_SNAP = 1.08;
 
 /** Sizes the Quran font so the widest line of the page exactly fills the frame (no wrapping, no overflow). */
-function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full = false, layout = ""): void {
+function useFitFont(
+  pageEl: RefObject<HTMLDivElement | null>,
+  page: number,
+  full = false,
+  layout = "",
+  scale = 1,
+): void {
   const measure = useCallback(() => {
     const el = pageEl.current;
     const frame = el?.parentElement;
@@ -150,11 +163,10 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full
     if (layout === "duo-wide" && root && stage) {
       const frameChrome = frame.offsetHeight - el.offsetHeight;
       const lines = Math.max(1, el.querySelectorAll(".m-line").length || FIT.lines);
-      // Full screen with the tafsir: the whole page in the screen's height (no scrolling); otherwise a big
-      // page that scrolls in its column.
+      // A big page that scrolls in its column, in full screen too (owner 2026-11-18: the whole page in the
+      // screen's height was still too small beside the tafsir).
       const byRoom =
-        ((stage.clientHeight - stagePad(stage) - frameChrome) / (lines * FIT.lineHeight)) *
-        (full ? 1 : FIT.duoScroll);
+        ((stage.clientHeight - stagePad(stage) - frameChrome) / (lines * FIT.lineHeight)) * FIT.duoScroll;
       const col = root.clientWidth * FIT.duoShare - chrome - FIT.safetyPx;
       const byCol = widths.length ? fitFontSize(widths, probe, col) : col / FIT.lineEms;
       const size = Math.min(byCol, byRoom, col / (FIT.lineEms * FIT.capRatio));
@@ -188,19 +200,21 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full
     const room = Math.max(FIT.minHeight, dockTop + window.scrollY - top - frameChrome - FIT.bottomGap);
     // The frame fills the room (pages 1–2 are centred in it, like the printed Mushaf).
     frame.style.setProperty("--m-min-h", `${Math.floor(room + frameChrome)}px`);
+    // Wide screens: the page may be `scale` times taller than the room (the window scrolls); 1 elsewhere.
+    const tallRoom = room * scale;
     const byHeight =
-      room / (Math.max(1, el.querySelectorAll(".m-line").length || FIT.lines) * FIT.lineHeight);
+      tallRoom / (Math.max(1, el.querySelectorAll(".m-line").length || FIT.lines) * FIT.lineHeight);
     let size = Math.min(byWidth, byHeight, available / (FIT.lineEms * FIT.capRatio));
     el.style.setProperty("--m-size", `${size.toFixed(2)}px`);
     // Pages 1–2 (few centred lines under a tall surah band) can still come out taller than the room: shrink to fit.
     const tall = el.offsetHeight;
-    if (tall > room + 1) {
-      size = (size * room) / tall;
+    if (tall > tallRoom + 1) {
+      size = (size * tallRoom) / tall;
       el.style.setProperty("--m-size", `${size.toFixed(2)}px`);
     }
     // Full screen: when the width limits the size, spread the 15 lines over the whole height (like the printed page).
     const lineCount = el.querySelectorAll(".m-line").length;
-    if (full && !isCentredPage(page) && byHeight > size && lineCount) {
+    if (full && scale === 1 && !isCentredPage(page) && byHeight > size && lineCount) {
       el.style.setProperty("--m-lh", (room / (lineCount * size)).toFixed(3));
     }
     // When the screen height limits the size, narrow the page (border box) so lines are not stretched.
@@ -209,7 +223,7 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full
       frame.style.setProperty("--m-width", `${Math.ceil(size * ems + chrome + FIT.safetyPx)}px`);
     }
     // layout only marks a change of the page's width
-  }, [pageEl, page, full, layout]);
+  }, [pageEl, page, full, layout, scale]);
   // Measure at 100%: the reader's own pinch zoom (a scale on the frame) is lifted while measuring.
   const fit = useCallback(() => {
     const frame = pageEl.current?.parentElement;
@@ -373,7 +387,29 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     if (phoneSplit) setSplitDockOpen(!v);
     else readerDockMinStore.set(v);
   };
-  useFitFont(pageEl, page, fullScreen, duo ? `duo${wide ? "-wide" : ""}` : "");
+  // Size of the page on wide screens (− / + , Ctrl + wheel, touchpad pinch); phones keep the fitted page.
+  const savedScale = useStore(readerPageScaleStore);
+  const pageScale = wide && tab === "mushaf" && !duo ? savedScale : 1;
+  const sizeStep = useCallback((dir: 1 | -1) => {
+    readerPageScaleStore.set((v) => stepPageScale(v, dir));
+  }, []);
+  useFitFont(pageEl, page, fullScreen, duo ? `duo${wide ? "-wide" : ""}` : "", pageScale);
+  // Ctrl + mouse wheel and a laptop touchpad pinch (sent by the browser as Ctrl + wheel) resize the page
+  // instead of zooming the whole site.
+  useEffect(() => {
+    if (!wide || tab !== "mushaf" || duo) return;
+    let acc = 0;
+    const onWheel = (e: WheelEvent): void => {
+      if (!e.ctrlKey) return;
+      e.preventDefault();
+      acc += e.deltaY;
+      if (Math.abs(acc) < 40) return;
+      sizeStep(acc < 0 ? 1 : -1);
+      acc = 0;
+    };
+    window.addEventListener("wheel", onWheel, { passive: false });
+    return () => window.removeEventListener("wheel", onWheel);
+  }, [wide, tab, duo, sizeStep]);
 
   useEffect(() => {
     let alive = true;
@@ -1122,6 +1158,9 @@ export function PageReader({ locale, initial }: PageReaderProps) {
           })}
         </div>
       ) : null}
+      {tab === "mushaf" && wide && !duo && zoom === 1 ? (
+        <PageSizeControl locale={locale} scale={savedScale} onStep={sizeStep} />
+      ) : null}
       {fullScreen ? (
         <div className="rd-full-tools" data-testid="reader-full-tools">
           <button type="button" className="rd-exit-full" data-testid="reader-exit-full" onClick={exitFull}>
@@ -1547,5 +1586,47 @@ export function PageReader({ locale, initial }: PageReaderProps) {
         </nav>
       </div>
     </div>
+  );
+}
+
+/** − 175% + : the page size on wide screens (owner 2026-11-18: «رجّع التكبير والتصغير»). */
+function PageSizeControl({
+  locale,
+  scale,
+  onStep,
+}: {
+  locale: Locale;
+  scale: number;
+  onStep: (dir: 1 | -1) => void;
+}): ReactElement {
+  const pct = `${localizeDigits(Math.round(scale * 100), locale)}${locale === "ar" ? "٪" : "%"}`;
+  return (
+    <span className="rd-size" role="group" aria-label={t(locale, "reader.pageSize")} data-testid="reader-size">
+      <button
+        type="button"
+        className="rd-size-btn"
+        aria-label={t(locale, "reader.pageSmaller")}
+        title={t(locale, "reader.pageSmaller")}
+        data-testid="reader-size-down"
+        disabled={scale <= PAGE_SCALES[0]}
+        onClick={() => onStep(-1)}
+      >
+        <span aria-hidden="true">−</span>
+      </button>
+      <span className="rd-size-val" data-testid="reader-size-value" aria-live="polite">
+        {pct}
+      </span>
+      <button
+        type="button"
+        className="rd-size-btn"
+        aria-label={t(locale, "reader.pageBigger")}
+        title={t(locale, "reader.pageBigger")}
+        data-testid="reader-size-up"
+        disabled={scale >= PAGE_SCALES[PAGE_SCALES.length - 1]!}
+        onClick={() => onStep(1)}
+      >
+        <span aria-hidden="true">+</span>
+      </button>
+    </span>
   );
 }

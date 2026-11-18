@@ -1,5 +1,5 @@
 "use client";
-import { useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import { surahName } from "@/lib/pages";
@@ -37,30 +37,7 @@ export function ReaderPlayer({ locale, page }: { locale: Locale; page: number })
         <span className="rdp-avatar" aria-hidden="true">
           <ReaderIcon name="reciter" size={22} />
         </span>
-        <label className="rdp-reciter">
-          <span className="sr-only">{t(locale, "audio.reciter")}</span>
-          <select
-            value={prefs.reciter}
-            data-testid="player-reciter"
-            onChange={(e) => {
-              const folder = e.target.value;
-              audioStore.set((p) => ({ ...p, reciter: folder }));
-              player.reciterChanged();
-            }}
-          >
-            {RECITERS.map((r) => (
-              <option key={r.folder} value={r.folder}>
-                {locale === "ar" ? r.ar : r.en}
-              </option>
-            ))}
-          </select>
-          <span className="rdp-reciter-name" aria-hidden="true">
-            {reciterName}
-          </span>
-          <span className="rdp-chevron" aria-hidden="true">
-            <ReaderIcon name="chevronDown" size={16} />
-          </span>
-        </label>
+        <ReciterMenu locale={locale} current={prefs.reciter} name={reciterName} />
         <label className="rdp-volume" title={t(locale, "reader.volume")}>
           <Icon name="volume" size={18} />
           <span className="sr-only">{t(locale, "reader.volume")}</span>
@@ -247,5 +224,89 @@ export function ReaderPlayerMini({ locale, page }: { locale: Locale; page: numbe
         {now}
       </span>
     </section>
+  );
+}
+
+/**
+ * The reciter list of the player: our own pop-up list (owner 2026-11-18: on a laptop the hidden native
+ * drop-down did not let them pick a reciter). Opens upwards from the player; Esc or a click outside closes it.
+ */
+function ReciterMenu({ locale, current, name }: { locale: Locale; current: string; name: string }) {
+  const [open, setOpen] = useState(false);
+  const box = useRef<HTMLDivElement>(null);
+  const list = useRef<HTMLUListElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: PointerEvent): void => {
+      if (box.current && !box.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent): void => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    document.addEventListener("keydown", onKey);
+    // Show the chosen reciter and let the arrow keys start from it.
+    list.current?.querySelector<HTMLButtonElement>('[aria-selected="true"]')?.focus();
+    return () => {
+      document.removeEventListener("pointerdown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+  const pick = (folder: string): void => {
+    setOpen(false);
+    if (folder === current) return;
+    audioStore.set((p) => ({ ...p, reciter: folder }));
+    player.reciterChanged();
+  };
+  const move = (e: ReactKeyboardEvent<HTMLUListElement>): void => {
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+    e.preventDefault();
+    const items = [...(list.current?.querySelectorAll<HTMLButtonElement>("button") ?? [])];
+    const i = items.indexOf(document.activeElement as HTMLButtonElement);
+    const next = items[(i + (e.key === "ArrowDown" ? 1 : -1) + items.length) % items.length];
+    next?.focus();
+  };
+  return (
+    <div className="rdp-reciter" ref={box}>
+      <button
+        type="button"
+        className="rdp-reciter-btn"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={`${t(locale, "audio.reciter")}: ${name}`}
+        data-testid="player-reciter"
+        data-value={current}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className="rdp-reciter-name">{name}</span>
+        <span className="rdp-chevron" aria-hidden="true">
+          <ReaderIcon name="chevronDown" size={16} />
+        </span>
+      </button>
+      {open ? (
+        <ul
+          ref={list}
+          className="rdp-reciter-list"
+          role="listbox"
+          aria-label={t(locale, "audio.reciter")}
+          data-testid="player-reciter-list"
+          onKeyDown={move}
+        >
+          {RECITERS.map((r) => (
+            <li key={r.folder} role="presentation">
+              <button
+                type="button"
+                role="option"
+                aria-selected={r.folder === current}
+                data-testid={`reciter-option-${r.folder}`}
+                onClick={() => pick(r.folder)}
+              >
+                {locale === "ar" ? r.ar : r.en}
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
   );
 }

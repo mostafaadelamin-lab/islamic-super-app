@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.11] - 2026-11-18 (website)
+
+- Mushaf on laptops/desktops: the page starts at 200% of the old fitted size and scrolls; − / + buttons (bottom corner), Ctrl + mouse wheel and touchpad pinch change it (100%–300%, saved).
+- Full screen: a big page that scrolls instead of the whole page squeezed into the screen height.
+- Tafsir beside the page: the page takes its full half (normal view and full screen).
+- Player: the reciter list is now our own pop-up list (the hidden native drop-down did not open for the owner on a laptop).
+
 ## [1.2.10] — big Mushaf beside the tafsir, full screen with the tafsir — 2026-11-18
 Owner 2026-11-18 (website on a computer): the Mushaf page became very small when the tafsir was open, full screen did not fill the screen, and full screen could not be used with the tafsir. App + website. (1.2.9 is kept for the CarPlay build.)
 ### Changed (app + website)
