@@ -19,6 +19,8 @@ function newProgress() {
   return { type: "precache-progress", done: 0, total: ALL.length, complete: false, locale, saved: false, mb: FULL_MB[locale] };
 }
 let filling = null;
+// Set when the visitor stops saving the site for offline use; the running download ends at the next file.
+let stopFill = false;
 
 function setLocale(l) {
   if ((l !== "ar" && l !== "en") || l === locale) return;
@@ -36,6 +38,7 @@ async function cacheList(cache, urls, concurrency, onEach) {
   let i = 0;
   async function worker() {
     while (i < urls.length) {
+      if (onEach && stopFill) return;
       const u = urls[i++];
       try {
         const res = await fetch(u, { cache: "no-cache" });
@@ -95,6 +98,7 @@ async function cachedPaths(cache) {
 
 function fillAll() {
   if (filling) return filling;
+  stopFill = false;
   filling = (async () => {
     const cache = await caches.open(CACHE);
     const have = await cachedPaths(cache);
@@ -128,6 +132,17 @@ self.addEventListener("message", (event) => {
         progress.saved = true;
         if (progress.complete) await broadcast();
         else await fillAll();
+      })(),
+    );
+  } else if (data.type === "precache-stop") {
+    // The visitor stops saving the whole site (owner 2026-11-18): what is saved stays, nothing more is downloaded.
+    setLocale(data.locale);
+    stopFill = true;
+    event.waitUntil(
+      (async () => {
+        await (await caches.open(CACHE)).delete(OPT_IN);
+        progress.saved = false;
+        await broadcast();
       })(),
     );
   } else if (data.type === "precache-status") {

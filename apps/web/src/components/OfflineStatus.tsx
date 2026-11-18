@@ -6,6 +6,7 @@ import {
   currentOfflineStatus,
   requestOfflineStatus,
   saveSiteOffline,
+  stopSiteOffline,
   subscribeOfflineStatus,
   type OfflineStatus as Status,
 } from "@/lib/sw-client";
@@ -59,6 +60,20 @@ export function OfflineStatus({ locale }: { locale: Locale }) {
           aria-label={t(locale, "settings.offline")}
           style={{ width: "100%" }}
         />
+      ) : null}
+      {s.saved && s.total > 0 && !s.complete ? (
+        // Owner 2026-11-18: a running offline download must be easy to stop (e.g. on mobile data).
+        <button
+          type="button"
+          className="btn"
+          data-testid="offline-stop"
+          onClick={() => {
+            setS((x) => ({ ...x, saved: false }));
+            stopSiteOffline();
+          }}
+        >
+          {t(locale, "settings.offlineStop")}
+        </button>
       ) : null}
     </section>
   );

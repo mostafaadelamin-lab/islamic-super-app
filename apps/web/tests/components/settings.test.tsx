@@ -229,9 +229,25 @@ describe("OfflineStatus", () => {
     expect(screen.queryByTestId("offline-save")).toBeNull();
     expect(screen.getByTestId("offline-status")).toHaveTextContent("5 of 10 files");
     expect(screen.getByRole("progressbar")).toHaveAttribute("value", "5");
+    expect(screen.getByTestId("offline-stop")).toBeInTheDocument();
     act(() => handleSwMessage({ type: "precache-progress", done: 10, total: 10, complete: true }));
     expect(screen.getByTestId("offline-status")).toHaveTextContent("works offline");
     act(() => handleSwMessage({ type: "precache-progress", done: 0, total: 0, complete: false }));
     expect(screen.getByTestId("offline-status")).toHaveTextContent("Preparing");
+  });
+  it("«إيقاف الحفظ» stops a running offline save (owner 2026-11-18)", async () => {
+    const posted: unknown[] = [];
+    const ready = Promise.resolve({ active: { postMessage: (m: unknown) => posted.push(m) } });
+    vi.stubGlobal("navigator", { ...navigator, serviceWorker: { ready } });
+    render(<OfflineStatus locale="ar" />);
+    act(() => handleSwMessage({ type: "precache-progress", done: 1930, total: 2281, complete: false, saved: true }));
+    await userEvent.click(screen.getByTestId("offline-stop"));
+    await act(async () => {
+      await ready;
+    });
+    expect(posted).toContainEqual({ type: "precache-stop", locale: "ar" });
+    expect(screen.queryByTestId("offline-stop")).toBeNull();
+    expect(screen.queryByRole("progressbar")).toBeNull();
+    expect(screen.getByTestId("offline-save")).toBeInTheDocument();
   });
 });

@@ -23,7 +23,10 @@ async function signIn(page: Page, email: string, register: boolean): Promise<voi
 test("bookmark sync against the real FastAPI backend (LWW + tombstones across two devices)", async ({
   browser,
 }) => {
-  test.skip(!(await apiUp()), "FastAPI not running on :8000 (set API_PYTHON to let Playwright start it)");
+  test.skip(
+    !(await apiUp()) || process.env.NEXT_PUBLIC_ACCOUNT_SYNC !== "1",
+    "FastAPI not running on :8000 or the account card is hidden (NEXT_PUBLIC_ACCOUNT_SYNC=1 shows it)",
+  );
   const email = `e2e-${Date.now()}@example.org`;
 
   // Device A: bookmark two ayahs, register, sync.

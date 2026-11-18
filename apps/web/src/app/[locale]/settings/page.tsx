@@ -11,6 +11,12 @@ import { AudioSettings } from "@/components/AudioSettings";
 import { AudioDownloads } from "@/components/AudioDownloads";
 import { TourReplayButton } from "@/components/FirstRunTour";
 
+/**
+ * The account / bookmark-sync card needs our own sync server, which is not online yet: hidden on the live site
+ * (owner 2026-11-18: «هو ايه اللى بيحصل دا», it showed a developer address). Set NEXT_PUBLIC_ACCOUNT_SYNC=1 to show it.
+ */
+const SHOW_ACCOUNT_SYNC = process.env.NEXT_PUBLIC_ACCOUNT_SYNC === "1";
+
 export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
   const { locale } = await params;
   return { title: t(isLocale(locale) ? locale : "ar", "settings.title") };
@@ -24,7 +30,7 @@ export default async function SettingsPage({ params }: { params: LocaleParams })
       <DisplaySettings locale={locale} preview={surahAyahs(1)[1] as string} />
       <AudioSettings locale={locale} />
       <AudioDownloads locale={locale} />
-      <AccountSync locale={locale} />
+      {SHOW_ACCOUNT_SYNC ? <AccountSync locale={locale} /> : null}
       <OfflineStatus locale={locale} />
       <TourReplayButton locale={locale} />
       <p>

@@ -386,28 +386,11 @@ test.describe("prayer", () => {
   });
 });
 
-test.describe("account (no server)", () => {
-  test("unreachable API shows a visible network/CORS error", async ({ page }) => {
-    await page.goto("/en/settings/");
-    await page.getByLabel("API base URL").fill("http://127.0.0.1:9");
-    await page.getByRole("button", { name: "Save URL" }).click();
-    await expect(page.getByRole("status").filter({ hasText: "Saved." })).toBeVisible();
-    await page.getByLabel("Email").fill("someone@example.org");
-    await page.getByLabel(/^Password/).fill("0123456789");
-    await page.getByRole("button", { name: "Sign in" }).click();
-    await expect(page.getByTestId("account-status").getByRole("alert")).toContainText(
-      "Could not reach the server",
-    );
-  });
-  test("offline sign-in attempt says so", async ({ page, context }) => {
-    await page.goto("/en/settings/");
-    await page.getByLabel("Email").fill("someone@example.org");
-    await page.getByLabel(/^Password/).fill("0123456789");
-    await context.setOffline(true);
-    await page.getByRole("button", { name: "Create account" }).click();
-    await expect(page.getByTestId("account-status").getByRole("alert")).toContainText("You are offline");
-    await context.setOffline(false);
-  });
+test("settings: no account / sync card on the live site (owner 2026-11-18)", async ({ page }) => {
+  await page.goto("/en/settings/");
+  await expect(page.locator("h1")).toBeVisible();
+  await expect(page.getByLabel("API base URL")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Create account" })).toHaveCount(0);
 });
 
 test("about page: free-forever statement, no content sources", async ({ page }) => {

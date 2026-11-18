@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.12] - 2026-11-18 (website)
+
+- Settings: the account / bookmark-sync card (developer server address, email, password) is hidden on the live site; it needs our own sync server, which is not online (NEXT_PUBLIC_ACCOUNT_SYNC=1 shows it). The app never showed it.
+- Settings → «العمل دون اتصال»: the whole-site download still starts only when the visitor taps «احفظ الموقع كاملًا…», and now has «إيقاف الحفظ للعمل بدون إنترنت» to stop it (also stops the re-download after each new upload).
+
 ## [1.2.11] - 2026-11-18 (website)
 
 - Mushaf on laptops/desktops: the page starts at 200% of the old fitted size and scrolls; − / + buttons (bottom corner), Ctrl + mouse wheel and touchpad pinch change it (100%–300%, saved).

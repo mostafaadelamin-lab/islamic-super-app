@@ -113,3 +113,8 @@ export function requestOfflineStatus(nav: Navigator | undefined = globalThis.nav
 export function saveSiteOffline(nav: Navigator | undefined = globalThis.navigator): void {
   postToWorker("precache-all", nav);
 }
+
+/** The visitor stops saving the whole site (no more downloads, also after new uploads). */
+export function stopSiteOffline(nav: Navigator | undefined = globalThis.navigator): void {
+  postToWorker("precache-stop", nav);
+}
