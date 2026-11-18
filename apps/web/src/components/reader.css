@@ -1163,7 +1163,7 @@ body:has(.rd-full) .player,
   .mushaf-reader.rd:not(.rd-full) > .mushaf-head {
     position: absolute;
     top: 0;
-    inset-inline: 56px 104px;
+    inset-inline: 56px 216px; /* back button | help, tafsir beside the page, full screen */
     height: 44px;
     margin: 0;
     display: flex;
@@ -1475,4 +1475,92 @@ button.mn-ref {
 .mn-source {
   margin: var(--space-md) 0 0;
   text-align: center;
+}
+
+/*
+ * ---- Tafsir beside the page and full screen with the tafsir (owner 2026-11-18) ----
+ * «التفسير» in the top bar opens the page's tafsir beside the page without listening; full screen keeps
+ * the tafsir half (listening or only reading) and its buttons sit in one strip above the page.
+ */
+.rd-side-btn {
+  width: auto;
+  min-width: 44px;
+  gap: 6px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
+}
+.rd-side-btn[aria-pressed="true"] {
+  background: var(--color-primary);
+  color: var(--color-on-primary, #fff);
+}
+.rd-side-btn[aria-pressed="true"]:hover {
+  background: var(--color-primary);
+}
+.rd-side-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+@media (max-width: 599px) {
+  .rd-side-label {
+    display: none;
+  }
+  .rd-side-btn {
+    padding: 0;
+  }
+}
+.rd-full-tools {
+  position: fixed;
+  z-index: 28;
+  top: max(3px, env(safe-area-inset-top));
+  inset-inline-end: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  max-width: calc(100vw - 2 * var(--space-md));
+}
+.rd-full-tools .rd-exit-full {
+  position: static;
+  flex: none;
+}
+.rd-full-tools .rd-exit-full[aria-pressed="true"] {
+  background: var(--color-primary);
+  color: var(--color-on-primary, #fff);
+}
+.rd-full-tools .rdp-mini {
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: 30px;
+  padding: 0 10px 0 2px;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
+}
+.rd-full-tools .rdp-mini-play {
+  width: 28px;
+  height: 28px;
+}
+/* phones: the halves share the whole height under the strip */
+.rd-full.rd-duo > .mushaf-stage {
+  padding-top: 0;
+  margin-top: var(--rd-exit-h);
+  height: calc((100dvh - var(--rd-exit-h) - var(--space-xs)) * 0.5);
+}
+.rd-full.rd-duo > .rd-duo-tafsir {
+  height: calc((100dvh - var(--rd-exit-h) - var(--space-xs)) * 0.5);
+}
+@media (min-width: 1024px) and (min-height: 560px) and (orientation: landscape) {
+  /* full screen, wide: the whole page on the screen's height, the tafsir takes the rest of the width */
+  .mushaf-reader.rd.rd-full.rd-duo {
+    padding: 0 var(--space-md);
+    margin-top: var(--rd-exit-h);
+  }
+  .rd-full.rd-duo > .mushaf-stage,
+  .rd-full.rd-duo > .rd-duo-tafsir {
+    margin-top: 0;
+    height: calc(100dvh - var(--rd-exit-h) - var(--space-sm));
+  }
+  .rd-full.rd-duo > .mushaf-stage {
+    overflow-y: hidden;
+  }
 }

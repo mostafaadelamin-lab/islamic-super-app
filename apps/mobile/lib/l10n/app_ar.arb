@@ -659,6 +659,8 @@
   "readerHelp2": "المس أي آية لتستمع إليها وترى تفسيرها.",
   "readerHelp3": "زر «استماع مع التفسير» يقسم الشاشة نصفين: الآية التي تُتلى الآن، وتحتها تفسيرها المختصر.",
   "readerHelpTitle": "طريقة الاستخدام",
+  "readerTafsirBeside": "التفسير بجانب الصفحة",
+  "readerTafsirBesideShort": "التفسير",
   "readerHideTafsir": "إخفاء التفسير",
   "readerHintClose": "فهمت",
   "readerIndex": "الفهرس",

@@ -86,8 +86,17 @@ class AyahSheet extends StatefulWidget {
     this.readAsList = true,
     this.heightFactor = 0.85,
     this.onClose,
+    this.onTafsir,
+    this.tafsirOpen = false,
   });
   final AyahRef initial;
+
+  /// Wide reader (owner 2026-11-18): «تفسير الآية» opens the tafsir beside the page instead of
+  /// under the actions, so the page keeps its size. When set, the sheet shows no tafsir card itself.
+  final VoidCallback? onTafsir;
+
+  /// With [onTafsir]: whether the tafsir beside the page is open (the button shows it pressed).
+  final bool tafsirOpen;
 
   /// In the reader's bottom strip (owner 2026-11-15): a close button in the title row.
   final VoidCallback? onClose;
@@ -177,15 +186,17 @@ class AyahSheetState extends State<AyahSheet> {
             _Actions(
               ref: _ref,
               readAsList: widget.readAsList,
-              tafsirOpen: _showTafsir,
+              tafsirOpen: widget.onTafsir != null ? widget.tafsirOpen : _showTafsir,
               onClose: widget.onClose,
-              onTafsir: () => setState(() {
-                _showTafsir = !_showTafsir;
-                // Loaded only when first opened.
-                _tafsir ??= s.tafsir.load()..ignore(); // the card below shows a failure; nothing else waits on it
-              }),
+              onTafsir:
+                  widget.onTafsir ??
+                  () => setState(() {
+                    _showTafsir = !_showTafsir;
+                    // Loaded only when first opened.
+                    _tafsir ??= s.tafsir.load()..ignore(); // the card below shows a failure; nothing else waits on it
+                  }),
             ),
-            if (_showTafsir)
+            if (_showTafsir && widget.onTafsir == null)
               Flexible(
                 child: FutureBuilder<TafsirContent>(
                   future: _tafsir,

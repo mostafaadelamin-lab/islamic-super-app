@@ -2236,6 +2236,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerHelpTitle => 'طريقة الاستخدام';
 
   @override
+  String get readerTafsirBeside => 'التفسير بجانب الصفحة';
+
+  @override
+  String get readerTafsirBesideShort => 'التفسير';
+
+  @override
   String get readerHideTafsir => 'إخفاء التفسير';
 
   @override

@@ -2247,6 +2247,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerHelpTitle => 'How to use';
 
   @override
+  String get readerTafsirBeside => 'Tafsir beside the page';
+
+  @override
+  String get readerTafsirBesideShort => 'Tafsir';
+
+  @override
   String get readerHideTafsir => 'Hide tafsir';
 
   @override

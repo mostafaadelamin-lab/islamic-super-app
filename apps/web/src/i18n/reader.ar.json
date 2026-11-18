@@ -41,6 +41,8 @@
   "reader.fullHint": "للتقليب: اسحب الصفحة أو اضغط السهمين على الجانبين. لإظهار الأدوات اضغط «إظهار الأدوات».",
   "reader.volume": "مستوى الصوت",
   "reader.hintClose": "فهمت",
+  "reader.tafsirBeside": "التفسير بجانب الصفحة",
+  "reader.tafsirBesideShort": "التفسير",
   "reader.hideTafsir": "إخفاء التفسير",
   "reader.fullScreen": "ملء الشاشة",
   "reader.exitFull": "إظهار الأدوات",

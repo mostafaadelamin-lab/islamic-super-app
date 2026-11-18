@@ -4046,6 +4046,18 @@ abstract class AppLocalizations {
   /// **'How to use'**
   String get readerHelpTitle;
 
+  /// Reader: show the page's tafsir beside the Mushaf page without listening.
+  ///
+  /// In en, this message translates to:
+  /// **'Tafsir beside the page'**
+  String get readerTafsirBeside;
+
+  /// Reader full screen: short label of the tafsir-beside-the-page button.
+  ///
+  /// In en, this message translates to:
+  /// **'Tafsir'**
+  String get readerTafsirBesideShort;
+
   /// shared key "reader.hideTafsir"
   ///
   /// In en, this message translates to:

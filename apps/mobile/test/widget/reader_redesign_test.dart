@@ -211,7 +211,10 @@ void main() {
     await tester.tap(find.byKey(const Key('readerFull')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('readerFullScreen')), findsOneWidget, reason: 'opens while listening with tafsir');
-    expect(find.byKey(const Key('splitView')), findsNothing);
+    // Owner 2026-11-18: full screen keeps the tafsir half, with the exit / tafsir / play buttons above it.
+    expect(find.byKey(const Key('splitView')), findsOneWidget);
+    expect(find.byKey(const Key('readerFullTools')), findsOneWidget);
+    expect(find.byKey(const Key('miniStripPlay')), findsOneWidget);
     expect(find.byKey(const Key('readerSide')), findsNothing);
     expect(tester.takeException(), isNull);
   });

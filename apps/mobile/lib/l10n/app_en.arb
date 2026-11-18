@@ -3298,6 +3298,14 @@
   "@readerHelpTitle": {
     "description": "shared key \"reader.helpTitle\""
   },
+  "readerTafsirBeside": "Tafsir beside the page",
+  "@readerTafsirBeside": {
+    "description": "Reader: show the page's tafsir beside the Mushaf page without listening."
+  },
+  "readerTafsirBesideShort": "Tafsir",
+  "@readerTafsirBesideShort": {
+    "description": "Reader full screen: short label of the tafsir-beside-the-page button."
+  },
   "readerHideTafsir": "Hide tafsir",
   "@readerHideTafsir": {
     "description": "shared key \"reader.hideTafsir\""

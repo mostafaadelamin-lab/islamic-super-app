@@ -59,6 +59,13 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   Timer? _khatmaTimer;
   // Full-screen reading: the controls stay hidden until the page is tapped.
   bool _controls = !PageReaderScreen.startFullScreen;
+
+  /// «التفسير بجانب الصفحة» (owner 2026-11-18): the page and its tafsir in two halves while reading,
+  /// without listening (the same halves as «استماع مع التفسير»).
+  bool _tafsirBeside = false;
+
+  /// Full screen beside the tafsir: the ayah tapped on the page, shown in the tafsir half.
+  AyahRef? _focus;
   bool? _immersiveUi;
   // Full screen: a short "how to turn pages / show the controls" note, the first few times.
   bool _hint = false;
@@ -253,9 +260,29 @@ class PageReaderScreenState extends State<PageReaderScreen> {
 
   /// True while only the Mushaf page is shown (no tabs, player or bars).
   bool get fullScreen {
-    // «ملء الشاشة» works while listening with tafsir too (owner 2026-11-17): the page alone, the recited
-    // ayah highlighted; a tap brings the controls and the tafsir half back.
+    // «ملء الشاشة» works with the tafsir too, listening or only reading (owner 2026-11-18): the page and
+    // the tafsir halves stay; the strip above them has the exit, tafsir and play / pause buttons.
     return _tab == ReaderTab.mushaf && !_controls && _selected == null;
+  }
+
+  /// The page's tafsir is shown beside the page: «التفسير بجانب الصفحة», or listening with tafsir.
+  bool _pageTafsir(BuildContext context) {
+    final s = context.services;
+    return _tab == ReaderTab.mushaf && (_tafsirBeside || (s.settings.tafsirWithRecitation && s.recitation.isActive));
+  }
+
+  /// Tafsir beside the page on / off (off also ends «استماع مع التفسير»).
+  void _toggleTafsirBeside(BuildContext context) {
+    final settings = context.services.settings;
+    if (_pageTafsir(context)) {
+      setState(() {
+        _tafsirBeside = false;
+        _focus = null;
+      });
+      if (settings.tafsirWithRecitation) unawaited(settings.setTafsirWithRecitation(false));
+    } else {
+      setState(() => _tafsirBeside = true);
+    }
   }
 
   @override
@@ -302,6 +329,8 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                     unawaited(st.setMushafZoom(st.mushafZoom - 0.25));
                   case 2:
                     showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah);
+                  case 4:
+                    _toggleTafsirBeside(context);
                   default:
                     showReaderHelp(context, pageCount: _count, onGo: _jump);
                 }
@@ -310,18 +339,30 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                 PopupMenuItem(value: 0, child: Text('A+  ${l.readerFontBigger}')),
                 PopupMenuItem(value: 1, child: Text('A−  ${l.readerFontSmaller}')),
                 PopupMenuItem(value: 2, child: Text(l.surahInfoTitle)),
+                PopupMenuItem(value: 4, key: const Key('menuTafsirBeside'), child: Text(l.readerTafsirBeside)),
                 PopupMenuItem(value: 3, child: Text(l.readerHelp)),
               ],
             )
-          else if (_tab == ReaderTab.mushaf)
+          else if (_tab == ReaderTab.mushaf) ...[
+            // «التفسير بجانب الصفحة»: the page's tafsir beside the page, without listening.
+            IconButton(
+              key: const Key('readerTafsirBeside'),
+              tooltip: l.readerTafsirBeside,
+              isSelected: _pageTafsir(context),
+              color: scheme.primary,
+              selectedIcon: RIcon(RIcons.openBook, color: scheme.onPrimary),
+              style: _pageTafsir(context) ? IconButton.styleFrom(backgroundColor: scheme.primary) : null,
+              icon: const RIcon(RIcons.openBook),
+              onPressed: () => _toggleTafsirBeside(context),
+            ),
             IconButton(
               key: const Key('readerHelp'),
               tooltip: l.readerHelp,
               color: scheme.primary,
               icon: const RIcon(RIcons.help),
               onPressed: () => showReaderHelp(context, pageCount: _count, onGo: _jump),
-            )
-          else
+            ),
+          ] else
             const SizedBox(width: 48),
         ],
       ),
@@ -351,7 +392,13 @@ class PageReaderScreenState extends State<PageReaderScreen> {
         Positioned.fill(top: full ? _exitStrip : 0, child: _pinchZoom(context, _pages(context))),
         if (full) ..._turnArrows(context),
         if (full && _hint) _hintBanner(context),
-        if (full) PositionedDirectional(top: 3, end: DesignTokens.spaceSm, child: _exitFullButton(context)),
+        if (full)
+          PositionedDirectional(
+            top: 3,
+            end: DesignTokens.spaceSm,
+            start: DesignTokens.spaceSm,
+            child: _fullTools(context),
+          ),
         if (_tab == ReaderTab.mushaf && (_liveZoom ?? context.services.settings.mushafZoom) > 1)
           Positioned(
             left: 0,
@@ -428,6 +475,9 @@ class PageReaderScreenState extends State<PageReaderScreen> {
             key: const Key('stripAyahActions'),
             initial: sel,
             heightFactor: 0.4,
+            // Wide screens: «تفسير الآية» opens beside the page, which keeps its size (owner 2026-11-18).
+            onTafsir: wide ? () => _toggleTafsirBeside(context) : null,
+            tafsirOpen: wide && _pageTafsir(context),
             onClose: () => setState(() => _selected = null),
             onAyahChanged: (next) {
               setState(() => _selected = next);
@@ -547,6 +597,86 @@ class PageReaderScreenState extends State<PageReaderScreen> {
     }
 
     return [arrow(next: true, left: rtl), arrow(next: false, left: !rtl)];
+  }
+
+  /// Full screen's strip above the page (owner 2026-11-18): show the tools, the tafsir beside the page
+  /// on / off and, while listening, play / pause.
+  Widget _fullTools(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final l = context.l10n;
+    final on = _pageTafsir(context);
+    final width = MediaQuery.sizeOf(context).width;
+    return Row(
+      key: const Key('readerFullTools'),
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        if (context.services.recitation.isActive)
+          Flexible(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: math.min(260, width * 0.4)),
+              child: Material(
+                color: scheme.surface.withValues(alpha: 0.94),
+                shape: StadiumBorder(side: BorderSide(color: scheme.primary.withValues(alpha: 0.3))),
+                elevation: 2,
+                child: SizedBox(
+                  height: 34,
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.only(end: DesignTokens.spaceSm),
+                    child: ReaderPlayerMini(page: _page),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        const SizedBox(width: DesignTokens.spaceXs),
+        _pill(
+          context,
+          key: const Key('fullTafsirBeside'),
+          icon: RIcons.openBook,
+          label: on ? l.readerHideTafsir : l.readerTafsirBesideShort,
+          selected: on,
+          onTap: () => _toggleTafsirBeside(context),
+        ),
+        const SizedBox(width: DesignTokens.spaceXs),
+        _exitFullButton(context),
+      ],
+    );
+  }
+
+  Widget _pill(
+    BuildContext context, {
+    required Key key,
+    required RIconData icon,
+    required String label,
+    required bool selected,
+    required VoidCallback onTap,
+  }) {
+    final scheme = Theme.of(context).colorScheme;
+    final fg = selected ? scheme.onPrimary : scheme.primary;
+    return Material(
+      color: selected ? scheme.primary : scheme.surface.withValues(alpha: 0.94),
+      shape: StadiumBorder(side: BorderSide(color: scheme.primary.withValues(alpha: 0.3))),
+      elevation: 2,
+      child: InkWell(
+        key: key,
+        customBorder: const StadiumBorder(),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: 6),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RIcon(icon, size: 18, color: fg),
+              const SizedBox(width: 6),
+              Text(
+                label,
+                style: TextStyle(color: fg, fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _exitFullButton(BuildContext context) {
@@ -695,7 +825,8 @@ class PageReaderScreenState extends State<PageReaderScreen> {
     return ListenableBuilder(
       listenable: Listenable.merge([s.recitation, s.settings]),
       builder: (context, _) {
-        final split = !full && _tab == ReaderTab.mushaf && s.settings.tafsirWithRecitation && s.recitation.isActive;
+        // Wide screens keep the halves while an ayah's actions are open (its «تفسير الآية» shows there).
+        final split = _pageTafsir(context) && (_selected == null || ayahSidePanel(MediaQuery.sizeOf(context)));
         if (split) return _duo(context);
         final controller = _tab == ReaderTab.mushaf ? _pageController() : _controller;
         Widget mushafPage(int i) => TabletPage(
@@ -783,7 +914,15 @@ class PageReaderScreenState extends State<PageReaderScreen> {
         if (mounted) _setPage(pageOfPlaying);
       });
     }
-    final page = MushafPageView(page: _page, playing: playing, selected: _selected, onAyahTap: _onAyahTap);
+    final full = fullScreen;
+    final listening = s.settings.tafsirWithRecitation && s.recitation.isActive;
+    final page = MushafPageView(
+      page: _page,
+      playing: playing,
+      selected: _selected ?? _focus,
+      // Full screen: a tap shows that ayah's tafsir in the other half and stays full screen.
+      onAyahTap: full ? (r) => setState(() => _focus = r) : _onAyahTap,
+    );
     final tafsir = Container(
       key: const Key('duoTafsir'),
       decoration: BoxDecoration(
@@ -801,13 +940,14 @@ class PageReaderScreenState extends State<PageReaderScreen> {
               children: [
                 Expanded(
                   child: Text(
-                    l.readerListenWithTafsir,
+                    listening ? l.readerListenWithTafsir : l.readerTafsirBeside,
+                    key: const Key('duoTitle'),
                     style: TextStyle(color: scheme.primary, fontWeight: FontWeight.w700),
                   ),
                 ),
                 TextButton(
                   key: const Key('duoHideTafsir'),
-                  onPressed: () => unawaited(s.settings.setTafsirWithRecitation(false)),
+                  onPressed: () => _toggleTafsirBeside(context),
                   child: Text(l.readerHideTafsir),
                 ),
               ],
@@ -819,8 +959,10 @@ class PageReaderScreenState extends State<PageReaderScreen> {
               key: ValueKey('duo-$_page'),
               page: _page,
               withTafsir: true,
+              selected: _focus ?? _selected,
               fontSize: math.min(s.settings.quranFontSize, 22),
-              onAyahTap: (r) => unawaited(s.recitation.playFrom(r, scope: PlayScope.surah)),
+              onAyahTap: (r) =>
+                  listening ? unawaited(s.recitation.playFrom(r, scope: PlayScope.surah)) : setState(() => _focus = r),
             ),
           ),
         ],
@@ -837,7 +979,8 @@ class PageReaderScreenState extends State<PageReaderScreen> {
             const SizedBox(width: DesignTokens.spaceSm),
             Expanded(
               flex: 55,
-              child: _DuoPage(page: _page, playing: playing, maxScroll: _DuoPage.wideScroll, child: page),
+              // Full screen: the whole page in the screen's height, beside the tafsir.
+              child: _DuoPage(page: _page, playing: playing, maxScroll: full ? 1.0 : _DuoPage.wideScroll, child: page),
             ),
           ],
         ),
@@ -1130,7 +1273,9 @@ class _DuoPage extends StatefulWidget {
   /// Wide screens (owner 2026-11-15): the page is big but at most this many screen heights tall,
   /// so it reads large beside the tafsir and scrolls with the recitation.
   final double? maxScroll;
-  static const wideScroll = 1.4;
+
+  /// Owner 2026-11-18: 1.4 left the page too small beside the tafsir.
+  static const wideScroll = 2.2;
 
   /// Height of a page laid out at the screen's width (15 lines plus the header and footer).
   static const heightPerWidth = 1.5;

@@ -41,6 +41,8 @@
   "reader.fullHint": "To turn pages, swipe the page or press the arrows at the sides. To show the tools, press “Show tools”.",
   "reader.volume": "Volume",
   "reader.hintClose": "Got it",
+  "reader.tafsirBeside": "Tafsir beside the page",
+  "reader.tafsirBesideShort": "Tafsir",
   "reader.hideTafsir": "Hide tafsir",
   "reader.fullScreen": "Full screen",
   "reader.exitFull": "Show tools",

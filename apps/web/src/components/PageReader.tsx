@@ -77,8 +77,11 @@ const FIT = {
   minHeight: 360,
   /** Height of the selected ayah's actions row in the wide strip (reader.css .rd-actions, wide). */
   actionsRow: 72,
-  /** Wide listen-with-tafsir: the page may be this much taller than its column (it scrolls there)… */
-  duoScroll: 1.4,
+  /**
+   * Wide page + tafsir: the page may be this much taller than its column (it scrolls there and follows the
+   * recitation). Owner 2026-11-18: 1.4 left the page too small next to the tafsir.
+   */
+  duoScroll: 2.2,
   /** …and take at most this share of the reader's width. */
   duoShare: 0.55,
   defaultProbe: 20,
@@ -147,7 +150,11 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full
     if (layout === "duo-wide" && root && stage) {
       const frameChrome = frame.offsetHeight - el.offsetHeight;
       const lines = Math.max(1, el.querySelectorAll(".m-line").length || FIT.lines);
-      const byRoom = ((stage.clientHeight - frameChrome) / (lines * FIT.lineHeight)) * FIT.duoScroll;
+      // Full screen with the tafsir: the whole page in the screen's height (no scrolling); otherwise a big
+      // page that scrolls in its column.
+      const byRoom =
+        ((stage.clientHeight - stagePad(stage) - frameChrome) / (lines * FIT.lineHeight)) *
+        (full ? 1 : FIT.duoScroll);
       const col = root.clientWidth * FIT.duoShare - chrome - FIT.safetyPx;
       const byCol = widths.length ? fitFontSize(widths, probe, col) : col / FIT.lineEms;
       const size = Math.min(byCol, byRoom, col / (FIT.lineEms * FIT.capRatio));
@@ -236,6 +243,12 @@ function useFitFont(pageEl: RefObject<HTMLDivElement | null>, page: number, full
       window.removeEventListener("resize", fit);
     };
   }, [fit]);
+}
+
+/** The stage's top + bottom padding (full screen keeps a strip free above the page for its buttons). */
+function stagePad(stage: HTMLElement): number {
+  const cs = getComputedStyle(stage);
+  return (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
 }
 
 /** A phone held sideways: wider than tall and short (tablets and desktops keep the whole page on screen). */
@@ -333,12 +346,24 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const playingKey = current?.kind === "ayah" ? `${current.s}:${current.a}` : null;
   const playingBasmala = current?.kind === "basmala" ? current.s : null;
 
-  const fullScreen =
-    tab === "mushaf" && !chrome && !selected && sheet === null && !(audioPrefs.tafsir && active);
   const wide = useWide();
   // "Listen with tafsir": the whole Mushaf page on one half, the page's tafsir on the other (owner 2026-11-15);
   // side by side on wide screens, one above the other on phones.
-  const duo = tab === "mushaf" && audioPrefs.tafsir && active && !selected;
+  // «التفسير بجانب الصفحة» (owner 2026-11-18): the same halves while reading, without listening.
+  const [sideTafsir, setSideTafsir] = useState(false);
+  const listenTafsir = audioPrefs.tafsir && active;
+  const pageTafsir = tab === "mushaf" && (sideTafsir || listenTafsir);
+  // Wide screens: an ayah's «تفسير الآية» opens beside the page too, so the page keeps its size
+  // (owner 2026-11-18: in the bottom strip it left the page very small).
+  const ayahSide = wide && tab === "mushaf" && !!selected && showTafsir && !pageTafsir;
+  const duo = (pageTafsir && (wide || !selected)) || ayahSide;
+  // Full screen works with the tafsir too, while listening or only reading (owner 2026-11-18).
+  const fullScreen = tab === "mushaf" && !chrome && !selected && sheet === null;
+  // Full screen with the tafsir: a tap on an ayah of the page shows its tafsir in the list (stays full screen).
+  const [focusKey, setFocusKey] = useState<string | null>(null);
+  useEffect(() => {
+    if (!fullScreen || !pageTafsir) setFocusKey(null);
+  }, [fullScreen, pageTafsir, page]);
   useFitFont(pageEl, page, fullScreen, duo ? `duo${wide ? "-wide" : ""}` : "");
 
   useEffect(() => {
@@ -367,6 +392,15 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     const first = pageAyahRefs(view)[0];
     if (first) lastReadStore.set({ surah: first[0], ayah: first[1], page: view.page, at: Date.now() });
   }, [view]);
+
+  // Leaving the browser's full screen (Esc, F11) brings the controls back too.
+  useEffect(() => {
+    const onChange = (): void => {
+      if (!document.fullscreenElement) setChrome(true);
+    };
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
 
   // Full screen: say how to turn pages and how to bring the controls back (the first few times).
   const hinted = useRef(false);
@@ -483,6 +517,17 @@ export function PageReader({ locale, initial }: PageReaderProps) {
       .querySelector<HTMLElement>(`.mushaf-stage [data-ayah="${selected}"]`)
       ?.scrollIntoView?.({ block: "nearest", behavior: "smooth" });
   }, [selected, tab]);
+
+  // Page + tafsir: the chosen ayah (a tap on the page, «تفسير الآية») comes into view in the tafsir half.
+  const shownKey = focusKey ?? (duo ? selected : null);
+  useEffect(() => {
+    if (!shownKey || !duo) return;
+    const box = document.querySelector<HTMLElement>(".rd-duo-tafsir");
+    const item = box?.querySelector<HTMLElement>(`[data-ayah="${shownKey}"]`);
+    if (!box || !item || box.scrollHeight <= box.clientHeight) return;
+    const y = item.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop;
+    box.scrollTo?.({ top: Math.max(0, y - 56), behavior: "smooth" });
+  }, [shownKey, duo]);
 
   // In the verse and tafsir lists, keep the recited ayah in view.
   useEffect(() => {
@@ -662,6 +707,37 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     }, TURN_MS);
   };
 
+  // «ملء الشاشة» also asks the browser for the whole screen (no tabs, address bar or taskbar on a computer),
+  // where it can (owner 2026-11-18). iPhone Safari has no such request: the page alone still fills the window.
+  const enterFull = (): void => {
+    setSelected(null);
+    setSheet(null);
+    setChrome(false);
+    const el = document.documentElement;
+    if (!document.fullscreenElement && typeof el.requestFullscreen === "function") {
+      el.requestFullscreen().catch(() => {
+        // refused (iframe, permissions): the page alone in the window is still shown
+      });
+    }
+  };
+  const exitFull = (): void => {
+    setChrome(true);
+    if (document.fullscreenElement && typeof document.exitFullscreen === "function") {
+      document.exitFullscreen().catch(() => {
+        // already left
+      });
+    }
+  };
+  /** Tafsir beside the page on / off (while listening it also turns «استماع مع التفسير» off). */
+  const toggleSideTafsir = (): void => {
+    if (pageTafsir) {
+      setSideTafsir(false);
+      if (audioPrefs.tafsir) audioStore.set((p) => ({ ...p, tafsir: false }));
+    } else {
+      setSideTafsir(true);
+      setShowTafsir(false);
+    }
+  };
   const onPageClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (suppressClick.current) {
       suppressClick.current = false;
@@ -670,6 +746,11 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     // One rule everywhere: a tap on an ayah opens its row of actions; a tap beside the text closes it.
     const hit = (e.target as HTMLElement).closest<HTMLElement>("[data-ayah]");
     const key = hit?.dataset.ayah ?? null;
+    if (fullScreen && duo) {
+      // Full screen beside the tafsir: show that ayah's tafsir, keep full screen.
+      if (key) setFocusKey(key);
+      return;
+    }
     if (!key && !selected) return;
     setSelected((cur) => (key && key !== cur ? key : null));
   };
@@ -826,6 +907,20 @@ export function PageReader({ locale, initial }: PageReaderProps) {
           {tab === "mushaf" ? (
             <button
               type="button"
+              className="rd-icon-btn rd-side-btn"
+              aria-label={t(locale, "reader.tafsirBeside")}
+              title={t(locale, "reader.tafsirBeside")}
+              aria-pressed={pageTafsir}
+              data-testid="reader-side-tafsir"
+              onClick={() => toggleSideTafsir()}
+            >
+              <ReaderIcon name="openBook" />
+              <span className="rd-side-label">{t(locale, "reader.tafsirBesideShort")}</span>
+            </button>
+          ) : null}
+          {tab === "mushaf" ? (
+            <button
+              type="button"
               className="rd-icon-btn"
               aria-label={t(locale, "reader.help")}
               aria-expanded={sheet === "help"}
@@ -842,11 +937,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
               aria-label={t(locale, "reader.fullScreen")}
               title={t(locale, "reader.fullScreen")}
               data-testid="reader-full"
-              onClick={() => {
-                setSelected(null);
-                setSheet(null);
-                setChrome(false);
-              }}
+              onClick={enterFull}
             >
               <ReaderIcon name="expand" />
             </button>
@@ -905,24 +996,28 @@ export function PageReader({ locale, initial }: PageReaderProps) {
           data-testid="duo-tafsir"
         >
           <div className="rd-duo-head">
-            <strong>{t(locale, "reader.listenWithTafsir")}</strong>
+            <strong>{t(locale, listenTafsir ? "reader.listenWithTafsir" : "reader.tafsirBeside")}</strong>
             <button
               type="button"
               className="btn btn-sm"
               data-testid="duo-close"
-              onClick={() => audioStore.set((p) => ({ ...p, tafsir: false }))}
+              onClick={() => (ayahSide ? setShowTafsir(false) : toggleSideTafsir())}
             >
               {t(locale, "reader.hideTafsir")}
             </button>
           </div>
-          <PageTafsirList
-            locale={locale}
-            refs={refs}
-            data={data}
-            selected={selected}
-            playing={playingKey}
-            onSelect={([s, a]) => playWithTafsir(s, a)}
-          />
+          {ayahSide && sel ? (
+            <TafsirPanel locale={locale} surah={sel[0]} ayah={sel[1]} onStep={selectRef} />
+          ) : (
+            <PageTafsirList
+              locale={locale}
+              refs={refs}
+              data={data}
+              selected={focusKey ?? selected}
+              playing={playingKey}
+              onSelect={([s, a]) => (listenTafsir ? playWithTafsir(s, a) : setFocusKey(`${s}:${a}`))}
+            />
+          )}
         </aside>
       ) : null}
 
@@ -959,7 +1054,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
           >
             <MushafPage
               data={view}
-              selected={selected}
+              selected={selected ?? focusKey}
               playing={playingKey}
               playingBasmala={playingBasmala}
               markerLabel={markerLabel}
@@ -1019,15 +1114,24 @@ export function PageReader({ locale, initial }: PageReaderProps) {
         </div>
       ) : null}
       {fullScreen ? (
-        <button
-          type="button"
-          className="rd-exit-full"
-          data-testid="reader-exit-full"
-          onClick={() => setChrome(true)}
-        >
-          <ReaderIcon name="shrink" size={18} />
-          <span>{t(locale, "reader.exitFull")}</span>
-        </button>
+        <div className="rd-full-tools" data-testid="reader-full-tools">
+          <button type="button" className="rd-exit-full" data-testid="reader-exit-full" onClick={exitFull}>
+            <ReaderIcon name="shrink" size={18} />
+            <span>{t(locale, "reader.exitFull")}</span>
+          </button>
+          <button
+            type="button"
+            className="rd-exit-full"
+            aria-pressed={pageTafsir}
+            data-testid="full-side-tafsir"
+            onClick={toggleSideTafsir}
+          >
+            <ReaderIcon name="openBook" size={18} />
+            <span>{t(locale, pageTafsir ? "reader.hideTafsir" : "reader.tafsirBesideShort")}</span>
+          </button>
+          {/* Listening in full screen: play / pause and the recited ayah, without leaving it. */}
+          <ReaderPlayerMini locale={locale} page={page} />
+        </div>
       ) : null}
       {guide ? (
         <div className="rd-modal" role="dialog" aria-labelledby="rd-guide-title" data-testid="reader-guide">
@@ -1300,7 +1404,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
                 {notice}
               </p>
             </div>
-            {showTafsir ? (
+            {showTafsir && !(wide && duo) ? (
               <TafsirPanel locale={locale} surah={sel[0]} ayah={sel[1]} onStep={selectRef} />
             ) : null}
           </div>

@@ -214,4 +214,49 @@ describe("tafsir with recitation", () => {
     );
     expect(await screen.findByText(entry(2, 7))).toBeInTheDocument();
   });
+  it("«التفسير» beside the page without listening; full screen keeps it, a tap on an ayah shows its tafsir (owner 2026-11-18)", async () => {
+    serveTafsir();
+    render(<PageReader locale="en" initial={resolvePage(lines.pages[2]!, lookup)} />);
+    expect(screen.queryByTestId("duo-tafsir")).toBeNull();
+    await userEvent.click(screen.getByTestId("reader-side-tafsir"));
+    expect(screen.getByTestId("reader-side-tafsir")).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByTestId("duo-tafsir")).toBeInTheDocument();
+    expect(player.get().status).toBe("idle"); // nothing plays
+    expect(await screen.findByText(entry(2, 6))).toBeInTheDocument();
+    expect(screen.getByTestId("duo-tafsir")).toHaveTextContent("Tafsir beside the page");
+    // full screen: the page and the tafsir stay, with their own buttons above the page
+    await userEvent.click(screen.getByTestId("reader-full"));
+    expect(document.querySelector(".mushaf-reader")).toHaveClass("rd-full", "rd-duo");
+    expect(screen.getByTestId("duo-tafsir")).toBeInTheDocument();
+    expect(screen.getByTestId("reader-full-tools")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Al-Baqarah, ayah 9 — ayah options" }));
+    expect(document.querySelector(".mushaf-reader")).toHaveClass("rd-full"); // still full screen
+    expect(screen.queryByTestId("ayah-sheet")).toBeNull();
+    expect(screen.getByTestId("duo-tafsir").querySelector(".rd-ayah.selected")).toHaveAttribute(
+      "data-ayah",
+      "2:9",
+    );
+    // hide the tafsir from the full-screen strip: the page alone, still full screen
+    await userEvent.click(screen.getByTestId("full-side-tafsir"));
+    expect(screen.queryByTestId("duo-tafsir")).toBeNull();
+    expect(document.querySelector(".mushaf-reader")).toHaveClass("rd-full");
+    await userEvent.click(screen.getByTestId("reader-exit-full"));
+    expect(document.querySelector(".mushaf-reader")).not.toHaveClass("rd-full");
+  });
+
+  it("full screen while listening with tafsir keeps both halves and a play / pause button", async () => {
+    serveTafsir();
+    audioStore.set((p) => ({ ...p, tafsir: true }));
+    render(<PageReader locale="en" initial={resolvePage(lines.pages[1]!, lookup)} />);
+    act(() => player.play({ kind: "page", page: 2 }));
+    end();
+    await userEvent.click(screen.getByTestId("reader-full"));
+    expect(document.querySelector(".mushaf-reader")).toHaveClass("rd-full", "rd-duo");
+    expect(screen.getByTestId("duo-tafsir")).toHaveTextContent("Listen with tafsir");
+    expect(screen.getByTestId("mini-toggle")).toBeInTheDocument();
+    expect(screen.getByTestId("duo-tafsir").querySelector(".rd-ayah.playing")).toHaveAttribute(
+      "data-ayah",
+      "2:1",
+    );
+  });
 });
