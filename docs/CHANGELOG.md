@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.10] — big Mushaf beside the tafsir, full screen with the tafsir — 2026-11-18
+Owner 2026-11-18 (website on a computer): the Mushaf page became very small when the tafsir was open, full screen did not fill the screen, and full screen could not be used with the tafsir. App + website. (1.2.9 is kept for the CarPlay build.)
+### Changed (app + website)
+- Wide screens (computer, tablet): «تفسير الآية» opens beside the page instead of under it in the bottom strip, so the page keeps its size.
+- Page beside the tafsir («استماع مع التفسير» and the new button): the page is much bigger (up to 2.2x the column height, scrolling with the recitation; was 1.4x).
+- Full screen works with the tafsir, listening or only reading: the whole page on the screen's height beside the tafsir; above it «إظهار الأدوات», «التفسير» on/off and play/pause with the ayah being recited. A tap on an ayah shows its tafsir and stays full screen.
+- Phones with page + tafsir halves: the player folds to one row by itself (opens from its handle; the saved choice is unchanged) and the A− / A+ row is hidden, so the page and the tafsir get more room.
+### Added (app + website)
+- «التفسير» button by full screen: the page's tafsir beside the page, without listening.
+### Changed (website)
+- Full screen also asks the browser for the whole screen (no tabs, address bar or taskbar); Esc brings the tools back.
+- Unchanged: Quran text, page layout and all other religious content.
+
 ## [1.2.8] — website matches the app — 2026-11-17
 Owner rule: every feature on Android, iPhone and the website. A code comparison of 1.2.2 (report in E:\Quaran-App-Project\reports) found six app features missing on the website; all six are now there. The app is unchanged (its recitation library already has the sleep timer, in the player under the surah playing).
 ### Added (website)
