@@ -4,8 +4,25 @@ import UIKit
 import UserNotifications
 
 @main
-@objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate {
+@objc class AppDelegate: FlutterAppDelegate {
   private var heading: HeadingStreamHandler?
+
+  /// One Flutter engine for the phone screen and CarPlay. CarPlay can start the app with the
+  /// phone locked and no phone screen at all, so the engine runs on its own (headless) and the
+  /// phone screen, when it opens, shows the same engine (SceneDelegate). Driving mode then keeps
+  /// playing and counting whichever screen started it.
+  lazy var engine: FlutterEngine = {
+    let engine = FlutterEngine(name: "rattil", project: nil, allowHeadlessExecution: true)
+    engine.run()
+    GeneratedPluginRegistrant.register(with: engine)
+    // Qibla compass heading channel (HeadingStreamHandler below).
+    if let registrar = engine.registrar(forPlugin: "RattilHeading") {
+      heading = HeadingStreamHandler.register(with: registrar.messenger())
+    }
+    // CarPlay list (CarPlaySceneDelegate.swift).
+    CarPlayChannel.shared.attach(engine.binaryMessenger)
+    return engine
+  }()
 
   override func application(
     _ application: UIApplication,
@@ -13,15 +30,8 @@ import UserNotifications
   ) -> Bool {
     // Lets adhan notifications (flutter_local_notifications) show while the app is in the foreground.
     UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+    _ = engine
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-  }
-
-  func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
-    GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
-    // Qibla compass heading channel (HeadingStreamHandler.swift).
-    if let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "RattilHeading") {
-      heading = HeadingStreamHandler.register(with: registrar.messenger())
-    }
   }
 }
 
