@@ -20,6 +20,7 @@ import 'data/adhan_voice_files.dart';
 import 'data/adhkar_audio_files.dart';
 import 'data/location.dart';
 import 'data/place_names.dart';
+import 'data/carplay.dart';
 import 'data/drive_mode.dart';
 import 'data/media_session.dart';
 import 'data/notifications.dart';
@@ -185,7 +186,11 @@ class AppServices {
       cues: driveCues,
     );
     media.attach(drive);
-    if (mediaSession case final AudioServiceMediaSession a) a.browser = DriveBrowser(drive, settings);
+    if (mediaSession case final AudioServiceMediaSession a) {
+      final browser = DriveBrowser(drive, settings);
+      a.browser = browser; // Android Auto
+      if (defaultTargetPlatform == TargetPlatform.iOS) CarPlayBridge(browser, settings); // CarPlay
+    }
     return AppServices(
       content: content,
       settings: settings,

@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/data/adhkar_audio_files.dart';
 import 'package:rattil/data/audio_focus.dart';
+import 'package:rattil/data/carplay.dart';
 import 'package:rattil/data/content.dart';
 import 'package:rattil/data/drive_mode.dart';
 import 'package:rattil/data/settings.dart';
@@ -277,5 +279,51 @@ void main() {
     expect(drive.session, AdhkarSession.evening);
     expect(drive.isPlaying, isTrue);
     expect(b.children(AudioService.recentRootId).single.id, DriveBrowser.eveningId);
+  });
+
+  test('CarPlay: the car gets the morning / evening list, picking one plays it, a failed download shows a message', () async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    player.auto = false;
+    const channel = MethodChannel(CarPlayBridge.channelName);
+    final messenger = TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+    final sent = <Map<Object?, Object?>>[];
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      if (call.method == 'items') sent.add(call.arguments as Map<Object?, Object?>);
+      return null;
+    });
+    addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
+    Future<Object?> fromCar(String method, [Object? args]) async {
+      Object? reply;
+      await messenger.handlePlatformMessage(
+        CarPlayBridge.channelName,
+        const StandardMethodCodec().encodeMethodCall(MethodCall(method, args)),
+        (data) => reply = data == null ? null : const StandardMethodCodec().decodeEnvelope(data),
+      );
+      return reply;
+    }
+
+    final bridge = CarPlayBridge(DriveBrowser(drive, settings), settings);
+    addTearDown(bridge.dispose);
+    await pump();
+    expect(sent, hasLength(1));
+    expect(sent.single['title'], 'وضع القيادة');
+    final items = (sent.single['items']! as List).cast<Map<Object?, Object?>>();
+    expect(items.map((e) => e['id']), [DriveBrowser.morningId, DriveBrowser.eveningId]);
+    expect(items.map((e) => e['title']), ['أذكار الصباح', 'أذكار المساء']);
+
+    // Language changes: the car list follows.
+    await settings.setLocale('en');
+    await pump();
+    expect(sent.last['title'], 'Driving mode');
+    expect(((sent.last['items']! as List).first as Map)['title'], 'Morning adhkar');
+
+    expect(await fromCar('play', DriveBrowser.eveningId), isNull);
+    await pump();
+    expect(drive.session, AdhkarSession.evening);
+    expect(drive.isPlaying, isTrue);
+
+    await drive.stop();
+    files.ok = false;
+    expect(await fromCar('play', DriveBrowser.morningId), contains('could not be downloaded'));
   });
 }

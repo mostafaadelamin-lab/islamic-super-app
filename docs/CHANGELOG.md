@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.2.13] — next store update: CarPlay + the big Mushaf with tafsir — 2026-11-19
+Phone apps (Android + iPhone) for the stores, to send after Apple approves 1.2.8. It brings together 1.2.9 (CarPlay) and 1.2.10 (Mushaf beside the tafsir, full screen with the tafsir) below; 1.2.11 and 1.2.12 were website-only and are already live. Nothing else changed.
+
 ## [1.2.12] - 2026-11-18 (website)
 
 - Settings: the account / bookmark-sync card (developer server address, email, password) is hidden on the live site; it needs our own sync server, which is not online (NEXT_PUBLIC_ACCOUNT_SYNC=1 shows it). The app never showed it.
@@ -24,6 +27,14 @@ Owner 2026-11-18 (website on a computer): the Mushaf page became very small when
 ### Changed (website)
 - Full screen also asks the browser for the whole screen (no tabs, address bar or taskbar); Esc brings the tools back.
 - Unchanged: Quran text, page layout and all other religious content.
+## [1.2.9] — CarPlay for driving mode — 2026-11-18
+Apple approved the CarPlay audio entitlement (2026-11-17).
+### Added (iPhone)
+- CarPlay: «رتّل وصلِّ» on the car screen with a list «أذكار الصباح» / «أذكار المساء» (driving mode, counted for you). Picking one starts it and opens the car's Now Playing screen with the dhikr and its live count («سبحان الله وبحمده · ٣٧ من ١٠٠») and play / pause / next / previous, the same as Android Auto. It works with the phone locked and the app closed (CarPlay starts the app).
+- iOS project: CarPlay scene (CarPlaySceneDelegate.swift), Runner.entitlements with com.apple.developer.carplay-audio, and one Flutter engine shared by the phone screen and CarPlay.
+- Codemagic ios-testflight stops with a clear message if the App Store profile has no CarPlay Audio entitlement.
+### Unchanged
+- Android (Android Auto already has the list since 1.2.7), the website (CarPlay is for the phone app), and all religious content.
 
 ## [1.2.8] — website matches the app — 2026-11-17
 Owner rule: every feature on Android, iPhone and the website. A code comparison of 1.2.2 (report in E:\Quaran-App-Project\reports) found six app features missing on the website; all six are now there. The app is unchanged (its recitation library already has the sleep timer, in the player under the surah playing).
