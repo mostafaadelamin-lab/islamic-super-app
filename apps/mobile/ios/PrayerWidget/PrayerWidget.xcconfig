@@ -1,0 +1,2 @@
+// FLUTTER_BUILD_NAME / FLUTTER_BUILD_NUMBER: the widget carries the app's version.
+#include "../Flutter/Generated.xcconfig"

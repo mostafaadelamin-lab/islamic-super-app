@@ -25,6 +25,10 @@
 		A1D4B0000000000000000107 /* dhikr_radeetu.caf in Resources */ = {isa = PBXBuildFile; fileRef = A1D4B0000000000000000207 /* dhikr_radeetu.caf */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		C3E6D0000000000000000006 /* PrayerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E6D0000000000000000000 /* PrayerWidget.swift */; };
+		C3E6D0000000000000000007 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3E6D0000000000000000004 /* WidgetKit.framework */; };
+		C3E6D0000000000000000008 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3E6D0000000000000000005 /* SwiftUI.framework */; };
+		C3E6D0000000000000000009 /* PrayerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C3E6D0000000000000000003 /* PrayerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +38,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 97C146ED1CF9000F007C117D;
 			remoteInfo = Runner;
+		};
+		C3E6D0000000000000000017 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C3E6D0000000000000000012;
+			remoteInfo = PrayerWidgetExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -46,6 +57,17 @@
 			files = (
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3E6D0000000000000000016 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C3E6D0000000000000000009 /* PrayerWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -78,6 +100,13 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3E6D0000000000000000000 /* PrayerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerWidget.swift; sourceTree = "<group>"; };
+		C3E6D0000000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3E6D0000000000000000023 /* PrayerWidget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PrayerWidget.xcconfig; sourceTree = "<group>"; };
+		C3E6D0000000000000000002 /* PrayerWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PrayerWidget.entitlements; sourceTree = "<group>"; };
+		C3E6D0000000000000000003 /* PrayerWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PrayerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3E6D0000000000000000004 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		C3E6D0000000000000000005 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +114,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3E6D0000000000000000014 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3E6D0000000000000000008 /* SwiftUI.framework in Frameworks */,
+				C3E6D0000000000000000007 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +155,8 @@
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
 				331C8082294A63A400263BE5 /* RunnerTests */,
+				C3E6D0000000000000000010 /* PrayerWidget */,
+				C3E6D0000000000000000011 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,6 +165,7 @@
 			children = (
 				97C146EE1CF9000F007C117D /* Runner.app */,
 				331C8081294A63A400263BE5 /* RunnerTests.xctest */,
+				C3E6D0000000000000000003 /* PrayerWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -156,6 +197,26 @@
 			path = Runner;
 			sourceTree = "<group>";
 		};
+		C3E6D0000000000000000010 /* PrayerWidget */ = {
+			isa = PBXGroup;
+			children = (
+				C3E6D0000000000000000000 /* PrayerWidget.swift */,
+				C3E6D0000000000000000001 /* Info.plist */,
+				C3E6D0000000000000000002 /* PrayerWidget.entitlements */,
+				C3E6D0000000000000000023 /* PrayerWidget.xcconfig */,
+			);
+			path = PrayerWidget;
+			sourceTree = "<group>";
+		};
+		C3E6D0000000000000000011 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C3E6D0000000000000000004 /* WidgetKit.framework */,
+				C3E6D0000000000000000005 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -185,16 +246,35 @@
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
+				C3E6D0000000000000000016 /* Embed Foundation Extensions */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C3E6D0000000000000000018 /* PBXTargetDependency */,
 			);
 			name = Runner;
 			productName = Runner;
 			productReference = 97C146EE1CF9000F007C117D /* Runner.app */;
 			productType = "com.apple.product-type.application";
+		};
+		C3E6D0000000000000000012 /* PrayerWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3E6D0000000000000000019 /* Build configuration list for PBXNativeTarget "PrayerWidgetExtension" */;
+			buildPhases = (
+				C3E6D0000000000000000013 /* Sources */,
+				C3E6D0000000000000000014 /* Frameworks */,
+				C3E6D0000000000000000015 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PrayerWidgetExtension;
+			productName = PrayerWidgetExtension;
+			productReference = C3E6D0000000000000000003 /* PrayerWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -209,6 +289,9 @@
 					331C8080294A63A400263BE5 = {
 						CreatedOnToolsVersion = 14.0;
 						TestTargetID = 97C146ED1CF9000F007C117D;
+					};
+					C3E6D0000000000000000012 = {
+						CreatedOnToolsVersion = 15.0;
 					};
 					97C146ED1CF9000F007C117D = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -231,6 +314,7 @@
 			targets = (
 				97C146ED1CF9000F007C117D /* Runner */,
 				331C8080294A63A400263BE5 /* RunnerTests */,
+				C3E6D0000000000000000012 /* PrayerWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -260,6 +344,13 @@
 				A1D4B0000000000000000106 /* dhikr_hayy.caf in Resources */,
 				A1D4B0000000000000000107 /* dhikr_radeetu.caf in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3E6D0000000000000000015 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +410,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C3E6D0000000000000000013 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3E6D0000000000000000006 /* PrayerWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -326,6 +425,11 @@
 			isa = PBXTargetDependency;
 			target = 97C146ED1CF9000F007C117D /* Runner */;
 			targetProxy = 331C8085294A63A400263BE5 /* PBXContainerItemProxy */;
+		};
+		C3E6D0000000000000000018 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C3E6D0000000000000000012 /* PrayerWidgetExtension */;
+			targetProxy = C3E6D0000000000000000017 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -626,6 +730,90 @@
 			};
 			name = Release;
 		};
+		C3E6D0000000000000000020 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3E6D0000000000000000023 /* PrayerWidget.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = PrayerWidget/PrayerWidget.entitlements;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PrayerWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.rattil.app.PrayerWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C3E6D0000000000000000021 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3E6D0000000000000000023 /* PrayerWidget.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = PrayerWidget/PrayerWidget.entitlements;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PrayerWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.rattil.app.PrayerWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C3E6D0000000000000000022 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3E6D0000000000000000023 /* PrayerWidget.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = PrayerWidget/PrayerWidget.entitlements;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PrayerWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.rattil.app.PrayerWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Profile;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -655,6 +843,16 @@
 				97C147061CF9000F007C117D /* Debug */,
 				97C147071CF9000F007C117D /* Release */,
 				249021D4217E4FDB00AE95B9 /* Profile */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3E6D0000000000000000019 /* Build configuration list for PBXNativeTarget "PrayerWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3E6D0000000000000000020 /* Debug */,
+				C3E6D0000000000000000021 /* Release */,
+				C3E6D0000000000000000022 /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

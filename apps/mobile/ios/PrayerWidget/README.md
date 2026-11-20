@@ -1,18 +1,35 @@
-# iOS home-screen widget (PrayerWidget)
+# iOS prayer widgets (PrayerWidget)
 
-The Swift code is ready (`PrayerWidget.swift`), but the extension target has to be
-added once in Xcode on a Mac. After that, Codemagic builds it with the app.
+Small (home screen), medium (home screen: the six times) and lock screen (iOS 16+) widgets.
+Code: `PrayerWidget.swift`. The extension target `PrayerWidgetExtension` is in
+`Runner.xcodeproj` (added by `tools/ios_add_widget_target.py`, no Mac needed). The app
+writes the data (`lib/data/home_widget_sync.dart`, key `rattil.widget` in the App Group).
 
-1. Open `ios/Runner.xcworkspace` in Xcode.
-2. File → New → Target → **Widget Extension**. Name it `PrayerWidget` and untick
-   "Include Configuration Intent". Delete the files Xcode generates, then add
-   `PrayerWidget.swift` from this folder to the target.
-3. Runner target → Signing & Capabilities → + **App Groups** → `group.org.rattil.app`.
-   Do the same for the PrayerWidget target.
-4. On developer.apple.com, register the App Group `group.org.rattil.app` and the
-   bundle id `org.rattil.app.PrayerWidget`. Refresh the provisioning profiles
-   (Codemagic: re-fetch the signing files).
-5. Set the PrayerWidget deployment target to iOS 14 or later.
+## One-time setup on developer.apple.com (a browser on any computer)
 
-The app already writes the data (`lib/data/home_widget_sync.dart`, key `rattil.widget`
-in the App Group). Nothing else changes.
+Signing fails until this is done, because the widget and the app share an App Group.
+
+1. Certificates, Identifiers & Profiles → Identifiers → **+** → **App Groups** →
+   description `Rattil`, identifier `group.org.rattil.app` → Register.
+2. Identifiers → `org.rattil.app` → tick **App Groups** → Configure → tick
+   `group.org.rattil.app` → Save (confirm). Keep CarPlay as it is.
+3. Identifiers → **+** → App IDs → App → description `Rattil Widget`, Bundle ID (Explicit)
+   `org.rattil.app.PrayerWidget` → tick **App Groups** → Continue → Register. Then open it,
+   App Groups → Configure → tick `group.org.rattil.app` → Save.
+4. Profiles: step 2 changed the app's capabilities, so its App Store profile must be made
+   again: delete the old `org.rattil.app` App Store profile, **+** → App Store Connect →
+   App ID `org.rattil.app` → certificate → (Entitlements: **CarPlay Audio**) → name → Generate.
+5. Profiles → **+** → App Store Connect → App ID `org.rattil.app.PrayerWidget` →
+   certificate → name → Generate.
+6. Codemagic: run `ios-testflight` again (it fetches both profiles).
+
+## الخطوات بالعربي (مرة واحدة، من أي متصفح)
+
+1. في developer.apple.com ← Identifiers ← زر + ← App Groups ← المعرّف `group.org.rattil.app`.
+2. افتح `org.rattil.app` ← فعّل App Groups ← Configure ← اختار `group.org.rattil.app` ← Save.
+3. زر + ← App IDs ← App ← المعرّف `org.rattil.app.PrayerWidget` ← فعّل App Groups ← Register،
+   وبعدين افتحه ← App Groups ← Configure ← اختار نفس الجروب ← Save.
+4. Profiles: امسح بروفايل App Store القديم بتاع `org.rattil.app` واعمل واحد جديد بنفس الطريقة
+   (مع CarPlay Audio في Entitlements).
+5. اعمل بروفايل App Store جديد لـ `org.rattil.app.PrayerWidget`.
+6. شغّل ios-testflight على Codemagic تاني.

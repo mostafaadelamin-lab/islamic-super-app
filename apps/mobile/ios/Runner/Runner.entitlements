@@ -6,5 +6,10 @@
 	     the CarPlay Audio capability, or signing fails. -->
 	<key>com.apple.developer.carplay-audio</key>
 	<true/>
+	<!-- The prayer widget reads the prayer times the app writes here. -->
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.org.rattil.app</string>
+	</array>
 </dict>
 </plist>

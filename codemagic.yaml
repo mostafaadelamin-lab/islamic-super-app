@@ -63,6 +63,12 @@ workflows:
           done
           keychain initialize
           app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
+          # Prayer widget extension (from 1.2.15): its own App ID org.rattil.app.PrayerWidget with the App Group
+          # group.org.rattil.app, made once by hand in developer.apple.com (ios/PrayerWidget/README.md).
+          app-store-connect fetch-signing-files "$BUNDLE_ID.PrayerWidget" --type IOS_APP_STORE --create || {
+            echo "No App Store profile for $BUNDLE_ID.PrayerWidget: do the developer.apple.com steps in apps/mobile/ios/PrayerWidget/README.md, then build again."
+            exit 1
+          }
           keychain add-certificates
           xcode-project use-profiles
           test -f /Users/builder/export_options.plist || { echo "No export options: the App Store profile was not applied"; exit 1; }
