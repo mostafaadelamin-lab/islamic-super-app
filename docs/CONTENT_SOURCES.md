@@ -137,7 +137,7 @@ All from saaid.org «مكتبة الطفل» (`https://saaid.org/book/list.php?c
 | «احفظ حديث» (600 hadith, 4 levels) | saaid book 19945 «600 حديث للحفظ للأطفال متدرجة حسب الطول ومقسمة إلى أربعة مستويات بالألوان», د. هاني الشيخ جمعة سهل | text taken from the PDF text layer (ToUnicode fixed, visual order fixed, NFC), never typed; levels 1–200 / 201–350 / 351–500 / 501–600 as in the book. The author's introduction asks to be contacted before use in apps: owner told 2026-11-20 |
 | Adhkar cards (boys / girls) | saaid books 19621 and 19622 «بطاقات الأذكار للناشئة (بنين / بنات)», محب الدين علي بن تقي المصري | published card pages 3–10 shown as pictures (no usable text layer) |
 | Wudu and salah steps | saaid book 10436 «هيا نتعلم الوضوء والصلاة», سلسلة العلامتين | pages 6–16 (wudu) and 18–31 (salah) as pictures; the book allows free use when named, so the app/site shows «الصور من كتاب «هيا نتعلم الوضوء والصلاة» – سلسلة العلامتين» |
-| Book shelf (37 books) | saaid books listed below | each page rendered to webp from the PDF (1000 px), hosted at `rattilwasalli.com/kids-books/<id>/<page>.webp`; covers bundled in the app and site; the app saves a book for offline reading on request |
+| Book shelf (43 books) | saaid books listed below | each page rendered to webp from the PDF (1000 px), hosted at `rattilwasalli.com/kids-books/<id>/<page>.webp`; covers bundled in the app and site; the app saves a book for offline reading on request |
 
 Shelf books (saaid id, title, author):
 
@@ -178,6 +178,12 @@ Shelf books (saaid id, title, author):
 - 19607 «تربية أطفال المسلمين بسيرة سيد الأنبياء والمرسلين (صلى الله عليه وسلم)», يزن الغانم (stories)
 - 15108 «للأطفال - مفكرتي (شهر رمضان)», آيات (ramadan)
 - 14700 «رفقا بعقيدتي يا أمي (دليل إرشادي لغرس الإيمان في قلوب الأبناء بدءًا من الحمل إلى البلوغ)», أم عبد الرحمن سوزان بنت مصطفى بخيت (parents)
+- 12897 «من قصص القرآن للأطفال», سيد مبارك (stories); the book says «حقوق الطبع محفوظة»: added on the owner's decision 2026-11-20
+- 12937 «سلسلة قصص الأنبياء للفتيان والفتيات», سيد مبارك (stories); the book says «حقوق الطبع محفوظة»: added on the owner's decision 2026-11-20
+- 13047 «سلسلة العشرة المبشرون بالجنة للفتيان والفتيات», سيد مبارك (stories); the book says «حقوق الطبع محفوظة»: added on the owner's decision 2026-11-20
+- 13048 «سلسلة زوجات الرسول صلى الله عليه وسلم», سيد مبارك (stories); the book says «حقوق الطبع محفوظة»: added on the owner's decision 2026-11-20
+- 14698 «منهاج الطفل المسلم في المسجد والمدرسة والبيت», د. إبراهيم عبدالرحمن العاني (akhlaq); the book says «حقوق الطبع محفوظة»: added on the owner's decision 2026-11-20
+- 16872 «حصن المسلم للأطفال», بدر الفيلكاوي (adhkar); the book says «حقوق الطبع محفوظة»: added on the owner's decision 2026-11-20
 
 ## Tafsir books, i'rab and word meanings (listed here 2026-11-20)
 
