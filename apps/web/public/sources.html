@@ -9,21 +9,21 @@
          Kept in step with docs/CONTENT_SOURCES.md. -->
     <style>
       :root {
-        --bg: #fbf8f1;
-        --fg: #1d2b26;
-        --muted: #5b6b64;
-        --accent: #0f5c46;
-        --line: #e4dccb;
-        --card: #fffdf8;
+        --bg: #f3f5f9;
+        --fg: #121c2c;
+        --muted: #55657c;
+        --accent: #1d3a64;
+        --line: #d8e0ec;
+        --card: #ffffff;
       }
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #0f1714;
-          --fg: #e9efe9;
-          --muted: #a3b2ab;
-          --accent: #d4b062;
-          --line: #25332d;
-          --card: #14201b;
+          --bg: #0a111e;
+          --fg: #e7edf7;
+          --muted: #9aa7bd;
+          --accent: #e3b65c;
+          --line: #243350;
+          --card: #121c2e;
         }
       }
       body {
@@ -117,13 +117,59 @@
           width: auto;
         }
       }
+    
+      /* Madinah-night colours (site default) + a way back to the app (owner 2026-11-19:
+         the installed Windows app had no back button on this page). */
+      .back-bar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 16px;
+        background: #1d3a64;
+        color: #f3e9d2;
+        box-shadow: 0 2px 10px rgb(10 24 48 / 0.25);
+      }
+      .back-bar .brand {
+        font-weight: 700;
+        color: #d9b25e;
+      }
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 0 18px;
+        border-radius: 999px;
+        background: #d9b25e;
+        color: #0a1830;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .back-btn:hover,
+      .back-btn:focus-visible {
+        background: #f1dfae;
+        outline: 2px solid #f3e9d2;
+        outline-offset: 2px;
+      }
+      .back-end {
+        margin-top: 40px;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
+    <header class="back-bar">
+      <a class="back-btn" href="/ar/" data-back>→ رجوع للتطبيق</a>
+      <span class="brand">رتّل وصلِّ</span>
+    </header>
     <main>
       <h1>مصادر المحتوى في «رتّل وصلِّ»</h1>
       <p class="muted">
-        آخر تحديث: 15 نوفمبر 2026 · تطبيق «رتّل وصلِّ» (Android و iPhone) وموقع rattilwasalli.com
+        آخر تحديث: 20 نوفمبر 2026 · تطبيق «رتّل وصلِّ» (Android و iPhone) وموقع rattilwasalli.com
       </p>
       <p>
         هذه الصفحة تجمع مصادر كل المحتوى المعروض في التطبيق والموقع وتراخيصها. النصوص الدينية تُنقل كما نُشرت
@@ -196,6 +242,11 @@
               </td>
               <td>حقوق الترجمة لناشرها</td>
             </tr>
+            <tr>
+              <td>شكل المصحف المطبوع (604 صفحات)</td>
+              <td>خطوط صفحات مصحف المدينة من مجمع الملك فهد (<span lang="en">QCF v2</span>) عبر <span lang="en">static.qurancdn.com</span>، مع موضع كل كلمة وسطرها من واجهة <span lang="en">api.quran.com</span> (الإصدار 4). كل صفحة تبدأ بالآية نفسها في طبعة 1441هـ</td>
+              <td>تُنزَّل الخطوط عند فتح الصفحة أول مرة</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -261,6 +312,26 @@
               <td>القصص القرآني (25 قصة)</td>
               <td>نطاقات آيات من نص المجمع، مع التلاوة والتفسير الميسر المذكورين هنا</td>
               <td>كما في مصادرها</td>
+            </tr>
+            <tr>
+              <td>كتب التفسير: تفسير السعدي، تفسير ابن كثير، تفسير الطبري، تفسير البغوي</td>
+              <td>البيانات المفتوحة لموسوعة <span lang="en">Quranpedia</span> (<span lang="en">quranpedia.net/dumps</span>)، بنصها دون إضافة أو اختصار</td>
+              <td>يسمح ترخيصها بالاستخدام داخل التطبيقات والمواقع</td>
+            </tr>
+            <tr>
+              <td>تفسير القرطبي</td>
+              <td>مستودع <span lang="en">spa5k/tafsir_api</span> العام على GitHub، بنصه</td>
+              <td>MIT</td>
+            </tr>
+            <tr>
+              <td>الإعراب والصرف والبلاغة والفوائد لكل آية</td>
+              <td>«الجدول في إعراب القرآن وصرفه وبيانه» لمحمود صافي، من مستودع <span lang="en">spa5k/tafsir_api</span>، بنصه</td>
+              <td>MIT</td>
+            </tr>
+            <tr>
+              <td>معاني الكلمات (غريب القرآن، 6104 كلمات)</td>
+              <td>«السراج في بيان غريب القرآن» للدكتور محمد بن عبد العزيز الخضيري (الطبعة الأولى 1429هـ)، من البيانات المفتوحة لموسوعة <span lang="en">Quranpedia</span></td>
+              <td>يسمح ترخيصها بالاستخدام داخل التطبيقات؛ الكتاب ملك لمؤلفه</td>
             </tr>
           </tbody>
         </table>
@@ -351,6 +422,31 @@
               </td>
               <td>متاح مجانًا من الموقع</td>
             </tr>
+            <tr>
+              <td>الرقية الشرعية: الآيات المقروءة</td>
+              <td>الشيخ عبد العزيز بن باز، مجموع فتاوى ومقالات متنوعة 6/368 (فتوى «الدواء الشرعي للسحر» رقم 1694، والقائمة نفسها في الفتوى 2492 على binbaz.org.sa). نص الآيات من مصحف المجمع</td>
+              <td>فتاوى منشورة</td>
+            </tr>
+            <tr>
+              <td>الرقية الشرعية: أدعية السنة</td>
+              <td>موسوعة <span lang="en">HadeethEnc</span> (الحديثان 5542 و5650)، منقولة بنصها</td>
+              <td>بحسب شروط الموسوعة</td>
+            </tr>
+            <tr>
+              <td>الرقية الشرعية كاملة بصوت الشيخ مشاري العفاسي</td>
+              <td>أرشيف الإنترنت (<span lang="en">RuqyahAs-shariahBySheikhMisharyRashidAl-afasy</span>)</td>
+              <td>تشغيل مباشر أو حفظ للاستماع دون إنترنت</td>
+            </tr>
+            <tr>
+              <td>رقية الأطفال</td>
+              <td>فتوى موقع الإسلام سؤال وجواب رقم 104454 (البخاري 3371 و5748، الترمذي 2058)، والدعاء من «حصن المسلم» باب «ما يعوذ به الأولاد»، ثم الإخلاص والمعوذتان</td>
+              <td>فتاوى منشورة</td>
+            </tr>
+            <tr>
+              <td>التذكير بالأذكار (صوت الذكر في التنبيه)</td>
+              <td>مقاطع من تسجيل أذكار الصباح بصوت الشيخ مشاري العفاسي المذكور أعلاه، دون تغيير</td>
+              <td>كما في مصدرها</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -367,7 +463,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>تلاوة آية بآية (13 قارئًا)</td>
+              <td>تلاوة آية بآية في المصحف (41 قارئًا، منهم المصحف المعلّم للحصري والمنشاوي مع ترديد الأطفال)</td>
               <td><span lang="en">EveryAyah.com</span>، تشغيل مباشر</td>
               <td>متاح للاستماع مجانًا؛ حقوق التسجيلات لناشريها</td>
             </tr>
@@ -390,6 +486,16 @@
               <td>قصص الأنبياء (صوتي) — الشيخ نبيل العوضي</td>
               <td>أرشيف الإنترنت (<span lang="en">prophets_stories_Nabel-ElAwadde</span>)، تشغيل مباشر</td>
               <td>مجاني لكل مسلم للاستخدام غير التجاري (بحسب الرفع)</td>
+            </tr>
+            <tr>
+              <td>القرّاء المسجّلون بالسورة كاملة في مشغل المصحف (إدريس أبكر، مصطفى إسماعيل مجوّد، محمود علي البنا مجوّد، أحمد عيسى المعصراوي)</td>
+              <td>ملفات السور من <span lang="en">mp3quran.net</span> مع توقيت الآيات من واجهتها المجانية (<span lang="en">ayat_timing</span>)، بعد مراجعته مع التسجيل</td>
+              <td>يسمح الموقع بنسخ المواد واستخدام الروابط</td>
+            </tr>
+            <tr>
+              <td>تلاوات الشيخ محمد أحمد شبيب (16 مرتّلة و70 مجوّدة)</td>
+              <td>المرتّل من <span lang="en">zekr.online</span>، والمجوّد من أرشيف الإنترنت (<span lang="en">20240303</span>). لا يوجد تسجيل كامل للقرآن بصوته في أي مصدر</td>
+              <td>تشغيل مباشر؛ المجوّد بعلامة الملكية العامة</td>
             </tr>
           </tbody>
         </table>
@@ -485,6 +591,21 @@
               <td>موقع <span lang="en">anasheed.info</span>، والملفات مستضافة على أرشيف الإنترنت</td>
               <td>متاح مجانًا من الموقع</td>
             </tr>
+            <tr>
+              <td>قسم الأطفال: قصص الأنبياء (25 حلقة كرتون)</td>
+              <td>أرشيف الإنترنت (<span lang="en">5-2_20210816</span>)</td>
+              <td>تشغيل مباشر أو تنزيل</td>
+            </tr>
+            <tr>
+              <td>قسم الأطفال: قصص الرسول ﷺ للأطفال (الشيخ محمود المصري، 17 حلقة)</td>
+              <td>أرشيف الإنترنت (<span lang="en">qsas-elrasoul-ramdan2019</span>)</td>
+              <td>تشغيل مباشر أو تنزيل</td>
+            </tr>
+            <tr>
+              <td>قسم الأطفال: قصص مصوّرة قصيرة (13)</td>
+              <td>أرشيف الإنترنت (<span lang="en">ramadan-stories-videos-ar</span>)</td>
+              <td>تشغيل مباشر</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -501,15 +622,15 @@
           </thead>
           <tbody>
             <tr>
-              <td>خطوات العمرة وأنواع الحج (الإفراد، القِران، التمتع) وصفة الحج</td>
+              <td>خطوات العمرة وأنواع الحج (الإفراد، القِران، التمتع) والمواقيت وزيارة المدينة</td>
               <td>
-                «دليل الحاج والمعتمر وزائر مسجد الرسول ﷺ»، وزارة الشؤون الإسلامية والدعوة والإرشاد بالمملكة
-                العربية السعودية (هيئة التوعية الإسلامية في الحج)، نسخة المكتبة الشاملة كما يعرضها
-                <a href="https://usul.ai/t/dalil-al-hajj-wal-mutamir-wa-zair-masjid-al-rasul" lang="en"
-                  >usul.ai</a
-                >
+                كتاب «التحقيق والإيضاح لكثير من مسائل الحج والعمرة والزيارة» للشيخ عبد العزيز بن باز (المكتبة
+                الشاملة، كتاب 31235)، مع رقم الصفحة تحت كل نقطة. أركان الحج وواجباته: فتوى الشيخ ابن باز (فتاوى نور على
+                الدرب، binbaz.org.sa، رقم 14833). مواضع من «دليل الحاج والمعتمر وزائر مسجد الرسول ﷺ» (وزارة الشؤون
+                الإسلامية والدعوة والإرشاد بالمملكة العربية السعودية). الأحاديث من الكتب المذكورة أعلاه، والأدعية من «حصن
+                المسلم»، والآيات من مصحف المجمع
               </td>
-              <td>منشور رسمي للتوعية، يُنقل بنصه مع تصحيح أخطاء الرقمنة الظاهرة</td>
+              <td>منقول بنصه مع ذكر المرجع تحت كل نقطة</td>
             </tr>
             <tr>
               <td>مستوى الزحام في الحرمين</td>
@@ -636,6 +757,20 @@
         <li><a href="/fonts/OFL-IBMPlexSansArabic.txt">IBM Plex Sans Arabic — SIL OFL 1.1</a></li>
       </ul>
       <p class="muted">«رتّل وصلِّ» تطبيق مجاني لوجه الله، بدون إعلانات ولا اشتراكات.</p>
+      <p class="back-end"><a class="back-btn" href="/ar/" data-back>→ رجوع للتطبيق · Back to the app</a></p>
     </main>
+    <script>
+      // Go back to the page the visitor came from on this site; otherwise open the app home.
+      document.querySelectorAll("[data-back]").forEach(function (a) {
+        a.addEventListener("click", function (e) {
+          try {
+            if (history.length > 1 && document.referrer && new URL(document.referrer).origin === location.origin) {
+              e.preventDefault();
+              history.back();
+            }
+          } catch (_) {}
+        });
+      });
+    </script>
   </body>
 </html>

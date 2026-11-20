@@ -6,19 +6,19 @@
     <title>سياسة الخصوصية — رتّل وصلِّ | Rattil wa Salli Privacy Policy</title>
     <style>
       :root {
-        --bg: #fbf8f1;
-        --fg: #1d2b26;
-        --muted: #5b6b64;
-        --accent: #0f5c46;
-        --line: #e4dccb;
+        --bg: #f3f5f9;
+        --fg: #121c2c;
+        --muted: #55657c;
+        --accent: #1d3a64;
+        --line: #d8e0ec;
       }
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #0f1714;
-          --fg: #e9efe9;
-          --muted: #a3b2ab;
-          --accent: #d4b062;
-          --line: #25332d;
+          --bg: #0a111e;
+          --fg: #e7edf7;
+          --muted: #9aa7bd;
+          --accent: #e3b65c;
+          --line: #243350;
         }
       }
       body {
@@ -62,9 +62,55 @@
         direction: ltr;
         text-align: left;
       }
+    
+      /* Madinah-night colours (site default) + a way back to the app (owner 2026-11-19:
+         the installed Windows app had no back button on this page). */
+      .back-bar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 16px;
+        background: #1d3a64;
+        color: #f3e9d2;
+        box-shadow: 0 2px 10px rgb(10 24 48 / 0.25);
+      }
+      .back-bar .brand {
+        font-weight: 700;
+        color: #d9b25e;
+      }
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 0 18px;
+        border-radius: 999px;
+        background: #d9b25e;
+        color: #0a1830;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .back-btn:hover,
+      .back-btn:focus-visible {
+        background: #f1dfae;
+        outline: 2px solid #f3e9d2;
+        outline-offset: 2px;
+      }
+      .back-end {
+        margin-top: 40px;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
+    <header class="back-bar">
+      <a class="back-btn" href="/ar/" data-back>→ رجوع للتطبيق</a>
+      <span class="brand">رتّل وصلِّ</span>
+    </header>
     <main>
       <section lang="ar">
         <h1>سياسة الخصوصية لتطبيق وموقع «رتّل وصلِّ»</h1>
@@ -229,6 +275,20 @@
           <a href="/en/help/">Contact us page</a>.
         </p>
       </section>
+      <p class="back-end"><a class="back-btn" href="/ar/" data-back>→ رجوع للتطبيق · Back to the app</a></p>
     </main>
+    <script>
+      // Go back to the page the visitor came from on this site; otherwise open the app home.
+      document.querySelectorAll("[data-back]").forEach(function (a) {
+        a.addEventListener("click", function (e) {
+          try {
+            if (history.length > 1 && document.referrer && new URL(document.referrer).origin === location.origin) {
+              e.preventDefault();
+              history.back();
+            }
+          } catch (_) {}
+        });
+      });
+    </script>
   </body>
 </html>
