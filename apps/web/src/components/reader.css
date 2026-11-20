@@ -1107,8 +1107,9 @@ body:has(.rd-full) .player,
     grid-auto-flow: column;
     grid-auto-columns: minmax(0, 1fr);
   }
-  /* The actions row has one fixed height: the page keeps this room free above the strip (FIT.actionsRow). */
-  .rd:not(.rd-full) .rd-dock .rd-actions:not([data-tafsir="open"]) {
+  /* The actions row has one fixed height: the page keeps this room free above the strip (FIT.actionsRow).
+     The ways to listen open under it in full (owner 2026-11-21: the row was cut off under the player). */
+  .rd:not(.rd-full) .rd-dock .rd-actions:not([data-tafsir="open"]):not([data-listen="open"]) {
     box-sizing: border-box;
     height: 72px;
     overflow: hidden;

@@ -18,6 +18,7 @@ For every surah the script
      pauses whose spacing best matches the ayah lengths (text length) (dynamic programming),
   4. moves each boundary to the quietest moment within 0.4 s, so no syllable is cut.
 A report (per surah: method and score) is printed; surahs that still score badly are listed.
+Surahs listed in overrides.json (re-aligned with dtw_align.py) replace the computed rows.
 """
 import bisect
 import concurrent.futures as cf
@@ -232,6 +233,7 @@ def main():
     lens = [[max(1, len(a.replace(" ", ""))) for a in su["ayahs"]] for su in quran["surahs"]]
     out = {}
     worst = []
+    overrides = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "overrides.json")))
     for folder, (read, url, murattal) in RECITERS.items():
         with cf.ThreadPoolExecutor(8) as ex:
             res = list(
@@ -239,6 +241,9 @@ def main():
             )
         rows = []
         for s, (final, method, s0, sc, ctrl) in enumerate(res, 1):
+            if str(s) in overrides.get(folder, {}):
+                final, method = overrides[folder][str(s)], "override (DTW)"
+                print(f"{folder} {s:3d}: {method}")
             assert len(final) == len(lens[s - 1]) + 1, (folder, s)
             rows.append(final)
             if method != "published" or (len(final) > 4 and sc > 0.6 * ctrl and sc > 0.2):

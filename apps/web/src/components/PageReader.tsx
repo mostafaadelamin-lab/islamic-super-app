@@ -1468,6 +1468,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
             className="ayah-sheet rd-actions"
             data-testid="ayah-sheet"
             data-tafsir={showTafsir ? "open" : "closed"}
+            data-listen={listenOpen ? "open" : "closed"}
           >
             {/* Simple ayah menu (owner, 2026-11-15): one row of five buttons; the ways to listen and the
                 tafsir open only when asked for. */}
