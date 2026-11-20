@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.2.15] — one combined store update + website — 2026-11-20
+Owner 2026-11-20: everything ships together (1.2.14 was never uploaded). Phone apps (Android + iPhone) and website.
+### Added
+- «الرقية الشرعية» and «الرقية الشرعية للأطفال» (read and listen), in adhkar and in the kids section.
+- Kids section («الأطفال», on the home screen instead of the short videos tile; its own menu on the website): prophets' stories (watch, listen, save offline), the teaching Mushaf (Minshawi / Husary with children), stories.
+- Dhikr reminders («تنبيهات الأذكار»): chosen adhkar every N minutes in a daily window, said by Sheikh Mishary Alafasy when the phone is not silent (iPhone: at most 24 a day). Website: while the site is open.
+- Prayer widgets: Android medium widget (day, Hijri + Gregorian dates, six times, countdown). iPhone: small, medium and lock-screen widgets (first time in the iPhone app; needs the Apple App Group setup).
+- Tafsir books: Muyassar (default) + Sa'di, Ibn Kathir, Tabari, Baghawi, Qurtubi; gharib, i'rab, sarf, balagha and fawa'id tabs; «التفسير» page (read, compare, search, offline download). The app reads the books from rattilwasalli.com, so the website goes up with or before the app.
+- Mushaf player: 41 reciters (27 new), 4 of them one file per surah with ayah highlighting.
+### Changed
+- The printed Mushaf look (King Fahd Complex page fonts) is the default; the old look is an option in settings.
+- 12-hour clock by default (24 hours in settings).
+- Driving mode: Ayat al-Kursi and al-Ikhlas no longer cut before their end.
+- Nearby mosques: roads and squares are no longer listed; big «افتح على خرائط جوجل» button on top.
+- About: no source credits shown (on request only); version fixed.
+- Unchanged: Quran text and all other religious content.
+
 ## [1.2.13] — next store update: CarPlay + the big Mushaf with tafsir — 2026-11-19
 Phone apps (Android + iPhone) for the stores, to send after Apple approves 1.2.8. It brings together 1.2.9 (CarPlay) and 1.2.10 (Mushaf beside the tafsir, full screen with the tafsir) below; 1.2.11 and 1.2.12 were website-only and are already live. Nothing else changed.
 
