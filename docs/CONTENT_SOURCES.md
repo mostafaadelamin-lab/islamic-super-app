@@ -128,6 +128,57 @@ None of these source names are shown in the app or on the site (owner's rule). R
 | Interactive teaching Mushaf (2026-11-20) | Quran.com API `api/qdc/audio/reciters/{12,168}/audio_files?chapter=S&segments=true` (ayah + word timings), surah files on download.quranicaudio.com/qdc (Husary Muallim, Minshawi kids_repeat); tap-a-word audio audio.qurancdn.com/wbw/SSS_AAA_WWW.mp3; built by `tools/kids_teacher_timings.py` into `content/kids/dist/teacher-timings.v1.json` | streamed; word positions match KFGQPC v18 words except the «۞» token (mapped); one missing ayah bound (Minshawi 101:3) filled from its neighbours |
 | Printed Mushaf look | King Fahd Complex QCF v2 page fonts (static.qurancdn.com `fonts/quran/hafs/v2/{ttf,woff2}/p{page}`) with the per-word `code_v2` / `line_number` of api.quran.com v4 (`content/quran/printed/pages.json.gz`); `tools/mushaf_printed_build.py` | fonts downloaded per page on first view (or all at once in settings); every one of the 604 pages starts at the same ayah as the 1441H layout |
 
+## Kids learning corner: book shelf, «احفظ حديث», adhkar cards, wudu / salah steps (2026-11-20)
+
+All from saaid.org «مكتبة الطفل» (`https://saaid.org/book/list.php?cat=106`, PDF of each book via `open.php?book=ID`). The site shows no terms of use; each book belongs to its author / publisher (owner's rule: openly published books may be used; no source names in the app, except the wudu/salah book whose own terms ask to be named). Data: `content/kids/learn/`, built by `tools/kids_learn_build.py`; PDF helpers in `tools/kids_hadith600/`.
+
+| What | Source | Notes |
+|---|---|---|
+| «احفظ حديث» (600 hadith, 4 levels) | saaid book 19945 «600 حديث للحفظ للأطفال متدرجة حسب الطول ومقسمة إلى أربعة مستويات بالألوان», د. هاني الشيخ جمعة سهل | text taken from the PDF text layer (ToUnicode fixed, visual order fixed, NFC), never typed; levels 1–200 / 201–350 / 351–500 / 501–600 as in the book. The author's introduction asks to be contacted before use in apps: owner told 2026-11-20 |
+| Adhkar cards (boys / girls) | saaid books 19621 and 19622 «بطاقات الأذكار للناشئة (بنين / بنات)», محب الدين علي بن تقي المصري | published card pages 3–10 shown as pictures (no usable text layer) |
+| Wudu and salah steps | saaid book 10436 «هيا نتعلم الوضوء والصلاة», سلسلة العلامتين | pages 6–16 (wudu) and 18–31 (salah) as pictures; the book allows free use when named, so the app/site shows «الصور من كتاب «هيا نتعلم الوضوء والصلاة» – سلسلة العلامتين» |
+| Book shelf (37 books) | saaid books listed below | each page rendered to webp from the PDF (1000 px), hosted at `rattilwasalli.com/kids-books/<id>/<page>.webp`; covers bundled in the app and site; the app saves a book for offline reading on request |
+
+Shelf books (saaid id, title, author):
+
+- 17385 «الأذكار لأطفالنا الصغار», أبو حازم الأثري (adhkar)
+- 14439 «حصن الطفل المسلم», روض الذهور الصيفي (adhkar)
+- 15340 «العطر الفواح في أذكارالصباح», طالب علم (adhkar)
+- 19866 «الأدعية والأذكار للطفل المسلم سؤال وجواب (حصن طفلك)», يزن الغانم (adhkar)
+- 16856 «حصن الطفل المسلم سؤال وجواب», يزن الغانم (adhkar)
+- 17307 «عقيدة الطفل المسلم للأطفال من عمر 3-6 سنوات», أبو حازم الأثري (aqeedah)
+- 17346 «عقيدة الطفل المسلم», خالد بن سعود البليهد (aqeedah)
+- 10734 «عقيدة الطفل المسلم», راجية الرحمن أم عمر (aqeedah)
+- 10435 «مختصر العقيدة الإسلامية من الكتاب والسنة», محمد بن جميل زينو (aqeedah)
+- 18054 «تعليم الصغار توحيد الغفار (نظام مختصر في اثنين وثلاثين بيتا)», محمد بن عبدالسلام بن علي (aqeedah)
+- 16849 «ما لا يسع أطفال المسلمين جهله», يزن الغانم (aqeedah)
+- 19779 «تربية أطفال المسلمين بمعاني أسماء الله الحميد», يزن الغانم (aqeedah)
+- 16857 «أخلاق الطفل المسلم سؤال وجواب», يزن الغانم (akhlaq)
+- 4943 «الآداب الإسلامية للناشئة», محمد خير فاطمة (akhlaq)
+- 14822 «علمني رسول الله صلى الله عليه وسلم», موقع بطاقات (akhlaq)
+- 19504 «زاد المسلم الصغير», عبدالشكور معلم (akhlaq)
+- 10436 «هيا نتعلم الوضوء والصلاة», موقع سلسلة العلامتين (fiqh)
+- 13437 «مختصر البيان في طهارة وصلاة الفتيان», محمد رفيق مؤمن الشوبكي (fiqh)
+- 19654 «تفسير سورة القدر للأطفال», د.فاطمة عمر نصيف (quran)
+- 19945 «600 حديث للحفظ للأطفال متدرجة حسب الطول ومقسمة إلى أربعة مستويات بالألوان», د.هاني الشيخ جمعة سهل (quran)
+- 10601 «نور البيان في معلم القراءة بالقرآن (كتاب منهجي لأطفال الحضانة ، ودور نحفيظ القرآن )», راجي رحمة الغفور (quran)
+- 13839 «الطريقة المثالية لتعليم القراءة العربية», بكر موسى هارون (quran)
+- 17821 «الحروف الهجائية المنقطة بالتشكيل المستوى الثاني», بكار فيصل المنفي (quran)
+- 10123 «قصص الصحابة1 : الغلام الذي اختار الجنة», سلوى العناني (stories)
+- 10124 «قصص الصحابة2 : صوت من السماء», سلوى العناني (stories)
+- 12884 «رجال ونساء حول الرسول صلى الله عليه وسلم للأطفال», سيد مبارك (stories)
+- 10986 «سلسلة السيرة النبوية للأطفال», سيد مبارك (stories)
+- 11033 «معجزات الرسول للأطفال», سيد مبارك (stories)
+- 13041 «قصة فتي من قريش (قصص إسلامية للأطفال)», سيد مبارك (stories)
+- 20387 «صور مشرقة من حياة الأطفال», السيد مراد سلامة (stories)
+- 19603 «تربية أطفال المسلمين بسير الأئمة الصالحين المصلحين (رضي الله عنهم أجمعين)», يزن الغانم (stories)
+- 19604 «تربية بنات المسلمين بسير خير نساء العالمين», يزن الغانم (stories)
+- 19605 «تربية أطفال المسلمين بسيرة أصحاب سيد الأنبياء والمرسلين (رضي الله عنهم أجمعين)», يزن الغانم (stories)
+- 19606 «تربية أطفال المسلمين بقصص الأنبياء والمرسلين (عليه السلام)», يزن الغانم (stories)
+- 19607 «تربية أطفال المسلمين بسيرة سيد الأنبياء والمرسلين (صلى الله عليه وسلم)», يزن الغانم (stories)
+- 15108 «للأطفال - مفكرتي (شهر رمضان)», آيات (ramadan)
+- 14700 «رفقا بعقيدتي يا أمي (دليل إرشادي لغرس الإيمان في قلوب الأبناء بدءًا من الحمل إلى البلوغ)», أم عبد الرحمن سوزان بنت مصطفى بخيت (parents)
+
 ## Tafsir books, i'rab and word meanings (listed here 2026-11-20)
 
 | What | Source | Notes |
