@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../domain/adhan_voices.dart';
-
 import 'l10n_ext.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
@@ -10,12 +8,12 @@ import 'rattil_logo.dart';
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 
-  static const appVersion = '1.0.0';
+  /// The store version; test/unit/app_version_test.dart keeps it equal to pubspec.yaml.
+  static const appVersion = '1.2.14';
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final small = Theme.of(context).textTheme.bodySmall;
     return Scaffold(
       appBar: AppBar(title: Text(l.settingsAbout)),
       body: ReadableWidth(
@@ -34,25 +32,8 @@ class AboutScreen extends StatelessWidget {
                 Text(l.aboutVersion(context.num(appVersion))),
               ],
             ),
-            // No "content sources" card (owner, 2026-11-15): kept in docs/CONTENT_SOURCES.md. The only credits
-            // left are the ones the recordings' licences (CC BY) require, folded at the bottom (owner, 2026-11-17:
-            // not on the adhan settings).
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ExpansionTile(
-                key: const Key('adhanCredits'),
-                tilePadding: EdgeInsets.zero,
-                title: Text(l.adhanCredit, key: const Key('adhanCredit'), style: small),
-                children: [
-                  for (final v in allAdhanVoices)
-                    if (v.credit != null)
-                      Align(
-                        alignment: AlignmentDirectional.centerStart,
-                        child: Text('• ${v.name(context.isArabic)}: ${v.credit}', style: small),
-                      ),
-                ],
-              ),
-            ),
+            // No sources or credits in the app (owner, 2026-11-15 and 2026-11-20: given on request only);
+            // they are kept in docs/CONTENT_SOURCES.md and apps/mobile/assets/audio/ADHAN_AUDIO.md.
           ],
         ),
       ),

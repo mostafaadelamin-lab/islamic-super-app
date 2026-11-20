@@ -1443,6 +1443,79 @@ class AppLocalizationsAr extends AppLocalizations {
   String get khatmaTitle => 'ختمة القرآن';
 
   @override
+  String get kidsListen => 'استمع';
+
+  @override
+  String kidsMinutes(String n) {
+    return '$n دقيقة';
+  }
+
+  @override
+  String get kidsNote => 'قسم للأطفال: قصص الأنبياء، والمصحف المعلّم، وقصص هادفة، والرقية الشرعية للأطفال.';
+
+  @override
+  String get kidsOfflineNote => 'شاهد أو استمع لأي حلقة مباشرة، أو اضغط أيقونة التحميل لتعمل بدون إنترنت.';
+
+  @override
+  String get kidsOfflinePlaying => 'يعمل من النسخة المحفوظة على الجهاز';
+
+  @override
+  String get kidsProphets => 'قصص الأنبياء';
+
+  @override
+  String get kidsProphetsSub => 'حلقات كرتون، شاهد أو استمع، وحمّلها لتعمل بدون إنترنت';
+
+  @override
+  String get kidsRamadan => 'قصص قصيرة هادفة';
+
+  @override
+  String get kidsRamadanSub => 'كوميكس تعليمي قصير';
+
+  @override
+  String get kidsRasoul => 'قصص الرسول ﷺ للأطفال';
+
+  @override
+  String get kidsRasoulSub => 'مع الشيخ محمود المصري';
+
+  @override
+  String get kidsRuqyahSub => 'مقروءة ومسموعة';
+
+  @override
+  String kidsSize(String n) {
+    return '$n ميجا';
+  }
+
+  @override
+  String get kidsStories => 'قصص دينية وتعليمية';
+
+  @override
+  String get kidsStoriesSub => 'قصص من السيرة وقصص قصيرة هادفة';
+
+  @override
+  String get kidsTeacher => 'المصحف المعلّم للأطفال';
+
+  @override
+  String get kidsTeacherHusary => 'الحصري (المصحف المعلّم)';
+
+  @override
+  String get kidsTeacherMinshawy => 'المنشاوي مع ترديد الأطفال';
+
+  @override
+  String get kidsTeacherNote => 'اختر السورة: الشيخ يقرأ كل آية ثم يرددها الأطفال، ليتعلم طفلك القراءة الصحيحة.';
+
+  @override
+  String get kidsTeacherSub => 'الشيخ يقرأ الآية والأطفال يرددون وراءه';
+
+  @override
+  String get kidsTitle => 'الأطفال';
+
+  @override
+  String get kidsVideoError => 'تعذّر تشغيل الفيديو. تأكد من الاتصال بالإنترنت أو حمّل الحلقة أولًا.';
+
+  @override
+  String get kidsWatch => 'شاهد';
+
+  @override
   String get libraryAllRiwayat => 'كل الروايات';
 
   @override
@@ -2236,12 +2309,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerHelpTitle => 'طريقة الاستخدام';
 
   @override
-  String get readerTafsirBeside => 'التفسير بجانب الصفحة';
-
-  @override
-  String get readerTafsirBesideShort => 'التفسير';
-
-  @override
   String get readerHideTafsir => 'إخفاء التفسير';
 
   @override
@@ -2346,6 +2413,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get readerTabTafsir => 'التفسير';
+
+  @override
+  String get readerTafsirBeside => 'التفسير بجانب الصفحة';
+
+  @override
+  String get readerTafsirBesideShort => 'التفسير';
 
   @override
   String readerZoomReset(String pct) {
@@ -2468,6 +2541,52 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reelsUndo => 'تراجع';
 
   @override
+  String ruqyahAyah(String surah, String n) {
+    return '$surah: الآية $n';
+  }
+
+  @override
+  String get ruqyahDua => 'من السنة';
+
+  @override
+  String ruqyahFrom(String surah, String from, String to) {
+    return '$surah: الآيات $from–$to';
+  }
+
+  @override
+  String get ruqyahFull => 'الرقية كاملة بصوت الشيخ مشاري العفاسي';
+
+  @override
+  String ruqyahFullSub(String n) {
+    return '$n دقيقة · اضغط أيقونة التحميل لتسمعها بدون إنترنت';
+  }
+
+  @override
+  String get ruqyahHeader => 'الرقية الشرعية';
+
+  @override
+  String get ruqyahKidsNote =>
+      'ما كان النبي ﷺ يعوّذ به الحسن والحسين، ثم سور الإخلاص والفلق والناس. اقرأها على طفلك أو استمع لها.';
+
+  @override
+  String get ruqyahKidsTitle => 'الرقية الشرعية للأطفال';
+
+  @override
+  String get ruqyahListenQuran => 'استمع للآيات';
+
+  @override
+  String get ruqyahNote =>
+      'آيات القرآن وأدعية السنة التي يُرقى بها، كما ذكرها أهل العلم. اقرأها أو استمع لها، واضغط على أي آية لترى تفسيرها.';
+
+  @override
+  String ruqyahRepeat(String n) {
+    return 'تُقال $n مرات';
+  }
+
+  @override
+  String get ruqyahTitle => 'الرقية الشرعية';
+
+  @override
   String get settingsAbout => 'عن التطبيق';
 
   @override
@@ -2505,6 +2624,30 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsManual => 'يدوي';
+
+  @override
+  String get settingsMushafPrinted => 'شكل المصحف المطبوع';
+
+  @override
+  String get settingsMushafPrintedDownload => 'حمّل خطوط كل الصفحات للقراءة بدون إنترنت';
+
+  @override
+  String get settingsMushafPrintedFailed => 'تعذّر التحميل، حاول مرة أخرى';
+
+  @override
+  String get settingsMushafPrintedHint =>
+      'كل صفحة بخط مجمع الملك فهد الخاص بها، مثل المصحف الورقي تمامًا. تحتاج الصفحة إلى الإنترنت أول مرة فقط.';
+
+  @override
+  String settingsMushafPrintedProgress(String done, String total) {
+    return 'جارٍ التحميل: $done من $total';
+  }
+
+  @override
+  String get settingsMushafPrintedSaved => 'خطوط كل الصفحات محفوظة على الجهاز';
+
+  @override
+  String get settingsMushafSection => 'المصحف';
 
   @override
   String get settingsOurApps => 'تطبيقاتنا';

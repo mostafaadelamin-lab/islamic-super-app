@@ -10,7 +10,7 @@ export const NAV_ITEMS: readonly { path: string; key: string; icon: IconName; al
   { path: "", key: "nav.home", icon: "home", also: [] },
   { path: "quran", key: "nav.quran", icon: "quran", also: ["surah", "page"] },
   { path: "prayer", key: "nav.prayer", icon: "prayer", also: ["qibla"] },
-  { path: "adhkar", key: "nav.adhkar", icon: "dua", also: ["hisn", "tasbih"] },
+  { path: "adhkar", key: "nav.adhkar", icon: "dua", also: ["hisn", "tasbih", "ruqyah"] },
   {
     path: "more",
     key: "nav.more",
@@ -24,6 +24,7 @@ export const NAV_ITEMS: readonly { path: string; key: string; icon: IconName; al
       "reels",
       "stories",
       "sharawi",
+      "kids",
       "nasheeds",
       "asma",
     ],

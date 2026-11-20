@@ -92,10 +92,17 @@ describe("settings sanitisers", () => {
       fontSize: FONT_MAX,
       translation: true,
       clock: "12",
+      clockV: 2,
       hijriOffset: 0,
       paletteV: 2,
+      mushafPrinted: false,
     });
-    expect(sanitizePrefs({ clock: "13" }).clock).toBe("24");
+    // 12 h is the default since 2026-11-20 (owner); a "24" saved before that was the old default and is dropped.
+    expect(sanitizePrefs({ clock: "24" }).clock).toBe("12");
+    expect(sanitizePrefs({ clock: "24", clockV: 2 }).clock).toBe("24");
+    expect(sanitizePrefs({ mushafPrinted: true }).mushafPrinted).toBe(true);
+    expect(sanitizePrefs({ mushafPrinted: "yes" }).mushafPrinted).toBe(false);
+    expect(sanitizePrefs({ clock: "13" }).clock).toBe("12");
     // colour styles: «ليل المدينة» is the default since 1.2.8 (owner 2026-11-17); a style saved before 1.2.8
     // (no paletteV) is dropped once, a style picked after that is kept
     expect(DEFAULT_PREFS.palette).toBe("madinah");

@@ -48,6 +48,9 @@ let blobUrl: string | null = null;
 let elementSrc: string | null = null;
 /** True while the recitation is paused because another sound started (adhkar, a nasheed, a lesson…). */
 let interrupted = false;
+/** A reciter for this playback only (the kids' teaching Mushaf); the chosen reciter is left as it is. */
+let reciterOverride: string | null = null;
+const activeReciter = (): string => reciterOverride ?? audioStore.get().reciter;
 
 const ICON_SIZES = ["192", "512"] as const;
 
@@ -73,7 +76,7 @@ function syncMediaSession(): void {
   ms.playbackState = state.status === "paused" || state.status === "error" ? "paused" : "playing";
   if (typeof MediaMetadata === "undefined") return;
   const ar = typeof document !== "undefined" && document.documentElement.lang === "ar";
-  const reciter = RECITERS.find((r) => r.folder === audioStore.get().reciter);
+  const reciter = RECITERS.find((r) => r.folder === activeReciter());
   const title =
     `${surahName(item.s, ar ? "ar" : "en")} ${item.kind === "basmala" ? "" : `${item.s}:${item.a}`}`.trim();
   if (ms.metadata?.title === title) return;
@@ -115,6 +118,10 @@ export const player = {
     listeners.add(l);
     return () => listeners.delete(l);
   },
+  /** The reciter override of the current playback, if any. */
+  reciterOverride(): string | null {
+    return reciterOverride;
+  },
   current(): QueueItem | null {
     return state.queue[state.cursor.index] ?? null;
   },
@@ -122,8 +129,9 @@ export const player = {
   wasInterrupted(): boolean {
     return interrupted && state.status === "paused";
   },
-  play(scope: PlayScope): void {
+  play(scope: PlayScope, opts?: { reciter?: string }): void {
     interrupted = false;
+    reciterOverride = opts?.reciter ?? null;
     const queue = buildQueue(scope);
     if (queue.length === 0) return;
     setState({ queue, cursor: { index: 0, plays: 0 }, error: null });
@@ -243,7 +251,7 @@ function start(el: HTMLAudioElement, from: string): void {
 function load(): void {
   const item = state.queue[state.cursor.index];
   if (!item) return;
-  const { reciter } = audioStore.get();
+  const reciter = activeReciter();
   const src = itemUrl(item, reciter);
   const offline = typeof navigator !== "undefined" && navigator.onLine === false;
   if (isSaved(downloadsStore.get(), reciter, item.s)) {

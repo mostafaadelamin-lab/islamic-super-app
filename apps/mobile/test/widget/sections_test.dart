@@ -451,7 +451,8 @@ void main() {
       final app = await pumpApp(tester, size: tallPhone);
       await pushScreen(tester, const PilgrimageScreen(kind: PilgrimageKind.umrah));
       expect(find.byKey(const Key('rounds-tawaf')), findsNothing); // miqat step: no counter
-      Finder list() => find.descendant(of: find.byKey(const Key('pilgrimage-umrah')), matching: find.byType(Scrollable)).first;
+      Finder list() =>
+          find.descendant(of: find.byKey(const Key('pilgrimage-umrah')), matching: find.byType(Scrollable)).first;
       Future<void> next() async {
         final b = find.byKey(const Key('stepNext-umrah'));
         await tester.scrollUntilVisible(b, 600, scrollable: list());
@@ -480,11 +481,7 @@ void main() {
       expect(app.services.settings.rawJson('hajj.rounds'), contains('"tawaf":7'));
 
       await next();
-      await tester.scrollUntilVisible(
-        find.byKey(const Key('rounds-sai')),
-        600,
-        scrollable: list(),
-      );
+      await tester.scrollUntilVisible(find.byKey(const Key('rounds-sai')), 600, scrollable: list());
       expect(find.byKey(const Key('rounds-sai')), findsOneWidget);
       expect(find.byKey(const Key('rounds-tawaf')), findsNothing);
       final saiAdd = find.byKey(const Key('rounds-sai-add'));

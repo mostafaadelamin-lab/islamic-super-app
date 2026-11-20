@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { geoErrorKey, PrayerView } from "@/components/PrayerView";
 import { NextPrayerCard, recentPrayer } from "@/components/NextPrayerCard";
 import { hijriMonthDays, hijriOf } from "@/components/PrayerMonth";
-import { prayerStore } from "@/lib/settings";
+import { prayerStore, prefsStore } from "@/lib/settings";
 import { prayerTimes, qiblaBearing } from "@/lib/prayer";
 import { formatHHMM } from "@/lib/time";
 import { resetStores } from "./reset";
@@ -165,6 +165,7 @@ describe("PrayerView", () => {
 
 describe("PrayerView day navigation, monthly calendar and clock", () => {
   it("moves between days, shows the Hijri date and returns to today", async () => {
+    prefsStore.set((p) => ({ ...p, clock: "24" }));
     const u = user();
     render(<PrayerView locale="en" />);
     await screen.findByTestId("times");
@@ -246,14 +247,18 @@ describe("PrayerView day navigation, monthly calendar and clock", () => {
     expect(arg.text).toContain("Fajr");
   });
 
-  it("12-hour clock with AM/PM (ص/م in Arabic)", async () => {
+  it("12-hour clock with AM/PM by default (owner 2026-11-20); 24-hour when chosen", async () => {
     const u = user();
     render(<PrayerView locale="en" />);
     await screen.findByTestId("times");
-    await u.selectOptions(screen.getByLabelText("Time format"), "12");
-    const rows = within(screen.getByTestId("times")).getAllByRole("row").slice(1);
-    expect(within(rows[0]!).getByRole("cell").textContent).toMatch(/^\d{1,2}:\d\d AM$/);
-    expect(within(rows[4]!).getByRole("cell").textContent).toMatch(/^\d{1,2}:\d\d PM$/);
+    const cell = (i: number) =>
+      within(within(screen.getByTestId("times")).getAllByRole("row").slice(1)[i]!).getByRole("cell")
+        .textContent;
+    expect(cell(0)).toMatch(/^\d{1,2}:\d\d AM$/);
+    expect(cell(4)).toMatch(/^\d{1,2}:\d\d PM$/);
+    await u.selectOptions(screen.getByLabelText("Time format"), "24");
+    expect(cell(4)).toMatch(/^\d\d:\d\d$/);
+    expect(prefsStore.get().clock).toBe("24");
   });
 });
 
@@ -262,12 +267,12 @@ describe("NextPrayerCard", () => {
     render(<NextPrayerCard locale="ar" />);
     expect(await screen.findByTestId("home-countdown")).toHaveTextContent(/^[٠-٩]+:[٠-٩]{2}:[٠-٩]{2}$/);
     expect(screen.getByTestId("home-next-name")).toHaveTextContent("صلاة الظهر");
-    expect(screen.getByTestId("home-next-time")).toHaveTextContent(/^[٠-٩]{2}:[٠-٩]{2}$/);
+    expect(screen.getByTestId("home-next-time")).toHaveTextContent(/^[٠-٩]{1,2}:[٠-٩]{2} [صم]$/);
     // today's five prayers, the next one marked; sunrise and sunset on their own row
     const times = screen.getByTestId("home-times").querySelectorAll("li");
     expect(times).toHaveLength(5);
-    expect(screen.getByTestId("home-sunrise")).toHaveTextContent(/^[٠-٩]{2}:[٠-٩]{2}$/);
-    expect(screen.getByTestId("home-sunset")).toHaveTextContent(/^[٠-٩]{2}:[٠-٩]{2}$/);
+    expect(screen.getByTestId("home-sunrise")).toHaveTextContent(/^[٠-٩]{1,2}:[٠-٩]{2} [صم]$/);
+    expect(screen.getByTestId("home-sunset")).toHaveTextContent(/^[٠-٩]{1,2}:[٠-٩]{2} [صم]$/);
     expect(screen.getByTestId("home-weekday")).not.toBeEmptyDOMElement();
     expect(screen.getByTestId("home-times").querySelector("li.next")).toHaveAttribute("data-prayer", "dhuhr");
     expect(screen.getByTestId("home-place")).toHaveTextContent("مكة المكرمة");

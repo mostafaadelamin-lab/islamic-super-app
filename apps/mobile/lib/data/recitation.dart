@@ -127,7 +127,12 @@ class RecitationController extends ChangeNotifier {
     return c == null ? null : pageForItem(_content.quran, c);
   }
 
-  Reciter get reciter => _content.reciters.byFolder(_settings.reciter);
+  /// A reciter used for this playback only (the kids' teaching Mushaf), without
+  /// changing the reciter chosen in the settings. Cleared by the next ordinary play.
+  String? _reciterOverride;
+  String? get reciterOverride => _reciterOverride;
+
+  Reciter get reciter => _content.reciters.byFolder(_reciterOverride ?? _settings.reciter);
 
   String urlFor(QueueItem item) => _content.reciters.url(reciter.folder, item.audioRef);
 
@@ -141,9 +146,10 @@ class RecitationController extends ChangeNotifier {
 
   /// Plays from [from] to the end of [scope] (page, surah, or on to the end of
   /// the Quran, turning pages as it goes).
-  Future<void> playFrom(AyahRef from, {PlayScope scope = PlayScope.toEnd}) {
+  Future<void> playFrom(AyahRef from, {PlayScope scope = PlayScope.toEnd, String? reciter}) {
     final q = _content.quran;
     _scope = scope;
+    _reciterOverride = reciter;
     return _start(buildQueue(q, from, scopeEnd(q, from, scope), repeat: _settings.repeat));
   }
 
@@ -153,13 +159,15 @@ class RecitationController extends ChangeNotifier {
   /// pages and surahs (owner, 2026-11-12: recitation must not stop at the page end).
   Future<void> playOnFrom(int page) => playFrom(_content.quran.page(page).start, scope: PlayScope.toEnd);
 
-  Future<void> playSurah(int surah) => playFrom(AyahRef(surah, 1), scope: PlayScope.surah);
+  Future<void> playSurah(int surah, {String? reciter}) =>
+      playFrom(AyahRef(surah, 1), scope: PlayScope.surah, reciter: reciter);
 
   /// Plays the verse ranges of a Quranic story one after the other (with the
   /// basmala before an ayah 1, as everywhere).
   Future<void> playRanges(List<StoryRange> ranges) {
     final q = _content.quran;
     _scope = PlayScope.ranges;
+    _reciterOverride = null;
     final queue = [for (final r in ranges) ...buildQueue(q, r.start, r.end, repeat: _settings.repeat)];
     if (queue.isEmpty) return Future.value();
     return _start(queue);
@@ -168,6 +176,7 @@ class RecitationController extends ChangeNotifier {
   /// Quran radio: the whole Mushaf from surah [fromSurah], wrapping round.
   Future<void> playRadio(int fromSurah) {
     _scope = PlayScope.radio;
+    _reciterOverride = null;
     return _start(radioQueue(_content.quran, fromSurah));
   }
 

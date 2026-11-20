@@ -158,7 +158,6 @@ export function AdhkarView({
           {list.map((_, i) => item(i))}
         </ol>
       )}
-      <p className="muted small">{t(locale, "adhkar.source")}</p>
       <DhikrPlayerBar locale={locale} />
     </>
   );

@@ -127,6 +127,9 @@ void main() {
     await tester.tap(find.byKey(const Key('aboutTile')));
     await tester.pumpAndSettle();
     expect(find.byType(AboutScreen), findsOneWidget);
+    // No sources or credits in the app (owner 2026-11-20).
+    expect(find.byKey(const Key('adhanCredits')), findsNothing);
+    expect(find.textContaining('Wikimedia'), findsNothing);
   });
 
   testWidgets('about: free-forever statement, no content sources (owner 2026-11-15)', (tester) async {
@@ -138,7 +141,7 @@ void main() {
     // Content sources hidden from the app (owner, 2026-11-15); kept in docs/CONTENT_SOURCES.md.
     expect(find.textContaining('hafsData_v18'), findsNothing);
     expect(find.textContaining('Saheeh International'), findsNothing);
-    expect(find.text('Version 1.0.0'), findsOneWidget);
+    expect(find.text('Version ${AboutScreen.appVersion}'), findsOneWidget);
   });
 
   testWidgets('about in Arabic', (tester) async {
@@ -148,7 +151,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('تطبيق مجاني تم إنشاؤه لوجه الله تعالى، بدون مقابل وبدون إعلانات.'), findsOneWidget);
     expect(find.text('مصادر المحتوى'), findsNothing);
-    expect(find.text('الإصدار ١.٠.٠'), findsOneWidget);
+    expect(find.text('الإصدار ١.٢.١٤'), findsOneWidget);
   });
 
   testWidgets('Hijri date adjustment: +/- within -2..+2, persisted', (tester) async {

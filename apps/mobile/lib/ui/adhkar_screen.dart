@@ -17,6 +17,7 @@ import 'prayer_model.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
 import 'review_notice.dart' show duaStyle;
+import 'ruqyah_screen.dart';
 import 'adhkar_audio.dart';
 
 /// The Adhkar tab: a vertical list of the daily adhkar (morning, evening,
@@ -86,6 +87,9 @@ class AdhkarScreen extends StatelessWidget {
             hisn('people', RIcons.dua, l.hisnSectionPeople),
             hisn('nature', RIcons.sunrise, l.hisnSectionNature),
             hisn('hajj', RIcons.kaaba, l.hisnSectionHajj),
+            header(l.ruqyahHeader),
+            tile('ruqyah', RIcons.shield, l.ruqyahTitle, () => push(const RuqyahScreen())),
+            tile('ruqyahKids', RIcons.kids, l.ruqyahKidsTitle, () => push(const RuqyahScreen(kids: true))),
             const SizedBox(height: DesignTokens.spaceSm),
             tile('hisn', RIcons.hisn, l.adhkarHisn, () => push(const HisnScreen())),
             header(l.adhkarListenHeader),

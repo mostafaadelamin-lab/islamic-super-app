@@ -49,6 +49,7 @@ const copies = {
   "content/zakat/dar-alifta.v1.json": "zakat.json",
   "content/reels/dist/reels.v1.json": "reels.json",
   "content/stories/dist/stories.v1.json": "stories.json",
+  "content/kids/dist/kids.v1.json": "kids.json",
 };
 for (const [from, to] of Object.entries(copies)) copyFileSync(join(repo, from), join(gen, to));
 
@@ -293,4 +294,12 @@ function extractHajj(src) {
     },
     madinah: { title: m[0], points: data.MADINAH },
   };
+}
+
+// «شكل المصحف المطبوع»: one small layout file per page (glyph codes of the King Fahd Complex page fonts + the
+// ayah of every word; tools/mushaf_printed_build.py). The basmala line uses the canonical text of 1:1.
+{
+  const printed = readJson("content/quran/dist/mushaf-printed.v1.json");
+  const basmala = readJson("content/quran/dist/quran.v1.json").surahs[0].ayahs[0];
+  printed.pages.forEach((lines, i) => writeJson(join(pub, `data/printed/${i + 1}.json`), { lines, basmala }));
 }

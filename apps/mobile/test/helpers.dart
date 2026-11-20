@@ -128,6 +128,8 @@ Future<TestApp> pumpApp(
     'locale': locale,
     'onboarding.done': true,
     'reader.guideDone': true,
+    // Tests read fixed 24-hour times; the 12-hour default (owner 2026-11-20) is tested in prayer_screen_test.
+    'clock': '24',
     ...prefs,
   });
   final p = await SharedPreferences.getInstance();

@@ -5,7 +5,7 @@ import 'package:rattil/ui/home_shell.dart';
 import 'package:rattil/ui/more_screen.dart';
 import 'package:rattil/ui/prayer_screen.dart';
 import 'package:rattil/ui/qibla_screen.dart';
-import 'package:rattil/ui/reels_screen.dart';
+import 'package:rattil/ui/kids_screen.dart';
 import 'package:rattil/ui/stories_screen.dart';
 import 'package:rattil/ui/surah_list_screen.dart';
 import 'package:rattil/ui/tasbih_screen.dart';
@@ -25,7 +25,7 @@ void main() {
     expect(find.text('توقيت'), findsOneWidget);
     expect(tester.widget<Text>(find.byKey(const Key('home.city'))).data, 'مصر - القاهرة');
     expect(find.text('صلاة الظهر'), findsOneWidget);
-    expect(tester.widget<Text>(find.byKey(const Key('home.nextTime'))).data, '١٢:٠٥');
+    expect(tester.widget<Text>(find.byKey(const Key('home.nextTime'))).textSpan!.toPlainText(), '١٢:٠٥');
     expect(find.text('متبقي ${ltr('٠:٠٥:٠٠')}'), findsOneWidget);
     await tester.tap(find.byKey(const Key('home.nextPrayer')));
     await tester.pumpAndSettle();
@@ -58,7 +58,7 @@ void main() {
     expect(find.byType(MoreScreen), findsOneWidget);
   });
 
-  testWidgets('tiles: Quran, adhkar, prayer tabs; tasbih, qibla, reels, stories screens', (tester) async {
+  testWidgets('tiles: Quran, adhkar, prayer tabs; tasbih, qibla, kids, stories screens', (tester) async {
     await pumpApp(tester, size: tallPhone);
     Future<void> tile(String id) async {
       await tester.ensureVisible(find.byKey(Key('home.tile-$id')));
@@ -75,7 +75,7 @@ void main() {
     for (final (id, type) in [
       ('tasbih', TasbihScreen),
       ('qibla', QiblaScreen),
-      ('reels', ReelsScreen),
+      ('kids', KidsScreen),
       ('stories', StoriesScreen),
     ]) {
       await tile(id);

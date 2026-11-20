@@ -1,7 +1,7 @@
 name: rattil
 description: "Rattil wa Salli (رتّل وصلِّ) — free Quran, Mushaf and prayer-times app. No ads, no subscriptions, no purchases."
 publish_to: 'none'
-version: 1.2.13+33
+version: 1.2.14+34
 
 environment:
   sdk: ^3.11.4
@@ -37,6 +37,7 @@ dependencies:
   path_provider: ^2.1.5
   home_widget: ^0.10.0
   flutter_tts: ^4.2.5
+  video_player: ^2.11.1
 
 dev_dependencies:
   flutter_test:

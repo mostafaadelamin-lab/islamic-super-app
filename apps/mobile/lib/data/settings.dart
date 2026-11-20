@@ -168,8 +168,8 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// 12-hour clock (with AM/PM, ص/م) instead of 24-hour for prayer times.
-  bool get clock12 => _prefs.getString('clock') == '12';
+  /// 12-hour clock (with AM/PM, ص/م) for prayer times; the default since 2026-11-20 (owner), 24-hour in settings.
+  bool get clock12 => _prefs.getString('clock') != '24';
   Future<void> setClock12(bool v) async {
     await _prefs.setString('clock', v ? '12' : '24');
     notifyListeners();
@@ -272,6 +272,13 @@ class SettingsController extends ChangeNotifier {
   bool get tafsirWithRecitation => _prefs.getBool('audio.tafsir') ?? false;
   Future<void> setTafsirWithRecitation(bool on) async {
     await _prefs.setBool('audio.tafsir', on);
+    notifyListeners();
+  }
+
+  /// "شكل المصحف المطبوع": Mushaf pages in the King Fahd Complex page fonts (owner 2026-11-20, default off).
+  bool get mushafPrinted => _prefs.getBool('mushaf.printed') ?? false;
+  Future<void> setMushafPrinted(bool on) async {
+    await _prefs.setBool('mushaf.printed', on);
     notifyListeners();
   }
 

@@ -13,10 +13,10 @@ void main() {
     expect(readAppJson('assets/schemas/reciters.json'), readRepoJson('packages/shared-schemas/audio/reciters.json'));
   });
 
-  test('catalogue: 13 reciters, unique folders, default first-class', () {
+  test('catalogue: 14 reciters, unique folders, default first-class', () {
     final r = c.reciters;
-    expect(r.reciters, hasLength(13));
-    expect(r.reciters.map((x) => x.folder).toSet(), hasLength(13));
+    expect(r.reciters, hasLength(14));
+    expect(r.reciters.map((x) => x.folder).toSet(), hasLength(14));
     expect(r.byFolder(null).folder, 'Alafasy_128kbps');
     expect(r.byFolder('nope').folder, 'Alafasy_128kbps');
     expect(r.byFolder('Husary_128kbps').nameAr, 'محمود خليل الحصري (مرتّل)');

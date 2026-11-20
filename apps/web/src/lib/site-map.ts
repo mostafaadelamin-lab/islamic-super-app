@@ -43,7 +43,7 @@ export const SITE_GROUPS: readonly SiteGroup[] = [
     sub: "site.group.adhkarSub",
     icon: "dua",
     path: "adhkar",
-    items: ["adhkar", "hisn", "tasbih", "asma"],
+    items: ["adhkar", "hisn", "ruqyah", "tasbih", "asma"],
   },
   {
     title: "site.group.library",
@@ -51,6 +51,14 @@ export const SITE_GROUPS: readonly SiteGroup[] = [
     icon: "book",
     path: "hadith",
     items: ["hadith", "sharawi", "stories", "nasheeds", "reels", "zakat"],
+  },
+  {
+    // Its own section, not under the library (owner, 2026-11-20).
+    title: "site.group.kids",
+    sub: "site.group.kidsSub",
+    icon: "kids",
+    path: "kids",
+    items: ["kids-prophets", "kids-teacher", "kids-stories", "kids-ruqyah"],
   },
   {
     // Its own menu (owner, 2026-11-14) and the fifth home card (owner, 2026-11-15): Umrah, then the three
@@ -119,6 +127,38 @@ const EXTRA: Readonly<Record<string, Section & { page: string; hash: string }>> 
     title: "nav.hajjLive",
     sub: "nav.hajjLiveSub",
     icon: "radio",
+  },
+  "kids-prophets": {
+    path: "kids-prophets",
+    page: "kids",
+    hash: "prophets",
+    title: "kids.prophets",
+    sub: "kids.prophetsSub",
+    icon: "video",
+  },
+  "kids-teacher": {
+    path: "kids-teacher",
+    page: "kids",
+    hash: "teacher",
+    title: "kids.teacher",
+    sub: "kids.teacherSub",
+    icon: "quran",
+  },
+  "kids-stories": {
+    path: "kids-stories",
+    page: "kids",
+    hash: "stories",
+    title: "kids.stories",
+    sub: "kids.storiesSub",
+    icon: "book",
+  },
+  "kids-ruqyah": {
+    path: "kids-ruqyah",
+    page: "kids/ruqyah",
+    hash: "",
+    title: "ruqyah.kidsTitle",
+    sub: "kids.ruqyahSub",
+    icon: "shield",
   },
   adhan: {
     path: "adhan",

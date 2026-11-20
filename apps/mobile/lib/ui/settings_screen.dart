@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../app_services.dart';
+import '../data/printed_mushaf.dart';
 import '../data/content.dart';
 import '../domain/hijri.dart';
 import '../domain/prayer_schedule.dart';
@@ -93,6 +94,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+                const MushafLookCard(),
                 SectionCard(
                   title: l.settingsPrayerTimes,
                   children: [
@@ -481,6 +483,64 @@ class PaletteChoice extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// "شكل المصحف المطبوع" switch + download of all the page fonts for offline reading.
+class MushafLookCard extends StatelessWidget {
+  const MushafLookCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.services.settings;
+    final l = context.l10n;
+    final pm = PrintedMushaf.instance;
+    return ListenableBuilder(
+      listenable: Listenable.merge([settings, pm]),
+      builder: (context, _) => SectionCard(
+        title: l.settingsMushafSection,
+        children: [
+          SwitchListTile(
+            key: const Key('mushafPrinted'),
+            contentPadding: EdgeInsets.zero,
+            secondary: const RIcon(RIcons.quran),
+            title: Text(l.settingsMushafPrinted),
+            subtitle: Text(l.settingsMushafPrintedHint),
+            value: settings.mushafPrinted,
+            onChanged: settings.setMushafPrinted,
+          ),
+          if (settings.mushafPrinted)
+            pm.bulkDone != null
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          l.settingsMushafPrintedProgress(context.num(pm.bulkDone!), context.num(PrintedMushaf.pages)),
+                        ),
+                        const SizedBox(height: DesignTokens.spaceXs),
+                        LinearProgressIndicator(value: pm.bulkDone! / PrintedMushaf.pages),
+                      ],
+                    ),
+                  )
+                : FutureBuilder<int>(
+                    future: pm.savedCount(),
+                    builder: (context, snap) {
+                      final all = snap.data == PrintedMushaf.pages;
+                      return ListTile(
+                        key: const Key('mushafPrintedDownload'),
+                        contentPadding: EdgeInsets.zero,
+                        leading: RIcon(all ? RIcons.checkCircle : RIcons.download),
+                        title: Text(all ? l.settingsMushafPrintedSaved : l.settingsMushafPrintedDownload),
+                        subtitle: pm.bulkFailed ? Text(l.settingsMushafPrintedFailed) : null,
+                        onTap: all ? null : pm.downloadAll,
+                      );
+                    },
+                  ),
+        ],
       ),
     );
   }

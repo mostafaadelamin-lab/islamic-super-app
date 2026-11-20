@@ -24,7 +24,8 @@ const BIG: readonly HomeTile[] = [
 const WIDE: readonly HomeTile[] = [
   { path: "tasbih", title: "home.big.tasbih", icon: "beads" },
   { path: "qibla", title: "home.big.qibla", icon: "compass" },
-  { path: "reels", title: "home.big.reels", icon: "reels" },
+  // Kids in place of the short videos, which the menu already opens (owner 2026-11-20).
+  { path: "kids", title: "kids.title", icon: "kids" },
   { path: "stories", title: "home.big.stories", icon: "headphones" },
 ];
 

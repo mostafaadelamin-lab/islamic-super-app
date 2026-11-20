@@ -106,7 +106,10 @@ export function NextPrayerCard({ locale }: { locale: Locale }) {
                   {t(locale, "home.prayerOf", { name: t(locale, `prayer.${next.key}`) })}
                 </p>
                 <p className="home-next-time" data-testid="home-next-time">
-                  {hhmm(next.at)}
+                  {/* 12 h (the default): the AM/PM mark small beside the big time, on the same line. */}
+                  {hhmm(next.at)
+                    .split(" ")
+                    .map((part, i) => (i === 0 ? part : <small key={i}> {part}</small>))}
                 </p>
                 <p className="home-left">
                   <span>{t(locale, "home.left")} </span>

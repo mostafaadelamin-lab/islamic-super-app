@@ -7,6 +7,7 @@ import 'nasheeds_screen.dart';
 import 'hadith_screen.dart';
 import 'hajj_hub_screen.dart';
 import 'khatma_screen.dart';
+import 'kids_screen.dart';
 import 'worship_screen.dart';
 import 'help_screen.dart';
 import 'l10n_ext.dart';
@@ -43,6 +44,7 @@ class MoreScreen extends StatelessWidget {
           children: [
             SectionCard(
               children: [
+                tile('kids', RIcons.kids, l.kidsTitle, () => const KidsScreen()),
                 tile('khatma', RIcons.khatma, l.khatmaTitle, () => const KhatmaScreen()),
                 tile('tracker', RIcons.calendarCheck, l.worshipTitle, () => const WorshipScreen()),
                 tile('hadith', RIcons.openBook, l.hadithTitle, () => const HadithScreen()),

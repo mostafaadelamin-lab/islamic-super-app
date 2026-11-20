@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../app_services.dart';
+import '../data/printed_mushaf.dart';
 import '../domain/mushaf_layout.dart';
 import '../domain/quran.dart';
 import '../domain/text.dart';
@@ -72,6 +74,47 @@ class MushafMetrics {
   static double lineHeightFor(double font) => font * _heightAtRef / (0.92 * refSize);
 }
 
+/// Font sizing for a page drawn with its own King Fahd Complex page font (printed look).
+class PrintedMetrics {
+  PrintedMetrics._();
+  static const refSize = 100.0;
+  static final Map<String, double> _widths = {};
+  static final Map<int, double> _heights = {};
+
+  static TextStyle style(int page, double size, Color color) =>
+      TextStyle(fontFamily: PrintedMushaf.family(page), fontSize: size, color: color, height: 1.0);
+
+  static double _measure(int page, String text) => _widths.putIfAbsent('$page|$text', () {
+    final tp = TextPainter(
+      text: TextSpan(text: text, style: style(page, refSize, const Color(0xFF000000))),
+      textDirection: TextDirection.rtl,
+      maxLines: 1,
+    )..layout();
+    _heights[page] ??= tp.height;
+    final w = tp.width;
+    tp.dispose();
+    return w;
+  });
+
+  static double _height(int page) {
+    if (!_heights.containsKey(page)) _measure(page, '\uFC41');
+    return _heights[page]!;
+  }
+
+  /// Largest size at which a line of [words] fits [width] with a small gap between words.
+  static double fitWidth(int page, double width, List<PrintedWord> words) {
+    var w = 0.0;
+    for (final x in words) {
+      w += _measure(page, x.glyph);
+    }
+    final em = w / refSize + 0.08 * math.max(0, words.length - 1);
+    return em <= 0 ? double.infinity : width / em;
+  }
+
+  static double fitHeight(int page, double lineHeight) => lineHeight * 0.95 * refSize / _height(page);
+  static double lineHeightFor(int page, double font) => font * _height(page) / (0.95 * refSize);
+}
+
 /// A phone held sideways: wider than tall and short. Its Mushaf page takes the
 /// whole width and scrolls down (tablets keep the whole page on screen).
 bool isLandscapePhone(Size s) => s.width > s.height && s.height <= 600;
@@ -115,6 +158,23 @@ class MushafPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = context.services;
+    if (!s.settings.mushafPrinted) return _build(context, null);
+    final pm = PrintedMushaf.instance;
+    return ListenableBuilder(
+      listenable: pm,
+      builder: (context, _) {
+        if (!pm.isReady(page)) {
+          // Until the page font is here (first time online), the page shows in the standard font.
+          unawaited(pm.ensure(page));
+          return _build(context, null);
+        }
+        return _build(context, pm.layout!.page(page));
+      },
+    );
+  }
+
+  Widget _build(BuildContext context, List<PrintedLine>? printed) {
+    final s = context.services;
     final q = s.content.quran;
     final layout = s.content.mushaf.page(page);
     final paper = AppTheme.of(context, 'paper');
@@ -131,8 +191,9 @@ class MushafPageView extends StatelessWidget {
           const chrome = 2 * outerPad + headerHeight + footerHeight + 2 * framePad + 8;
           final innerW = c.maxWidth - 2 * outerPad - 2 * framePad - 8;
           final words = [
-            for (final line in layout.lines)
-              line.kind == MushafLineKind.text ? lineWords(q, line) : const <MushafWord>[],
+            if (printed == null)
+              for (final line in layout.lines)
+                line.kind == MushafLineKind.text ? lineWords(q, line) : const <MushafWord>[],
           ];
           final display = [
             for (final w in words) [for (final x in w) s.content.renderMap.forDisplay(x.text)],
@@ -146,8 +207,22 @@ class MushafPageView extends StatelessWidget {
             final ref = MushafMetrics.lineRefWidth(display[i]);
             font = math.min(font, MushafMetrics.fitWidth(innerW * 0.985, ref, words[i].length, markers));
           }
-          if (layout.centered) font *= 0.94;
-          if (sideways) {
+          if (printed != null) {
+            font = sideways ? double.infinity : PrintedMetrics.fitHeight(page, lineH);
+            for (final pl in printed) {
+              if (pl is PrintedText) {
+                font = math.min(font, PrintedMetrics.fitWidth(page, innerW * 0.985, pl.words));
+              }
+            }
+            if (layout.centered) font *= 0.94;
+            if (sideways) {
+              if (!font.isFinite) font = PrintedMetrics.fitHeight(page, lineH);
+              lineH = PrintedMetrics.lineHeightFor(page, font) * 1.3;
+            }
+          } else if (layout.centered) {
+            font *= 0.94;
+          }
+          if (printed == null && sideways) {
             if (!font.isFinite) font = MushafMetrics.fitHeight(lineH);
             lineH = MushafMetrics.lineHeightFor(font) * 1.45;
           }
@@ -252,12 +327,67 @@ class MushafPageView extends StatelessWidget {
             };
           }
 
-          final lines = [
-            for (var i = 0; i < layout.lines.length; i++)
-              SizedBox(key: Key('mushafLine-$page-$i'), height: lineH, child: line(i)),
-          ];
+          Widget printedLine(PrintedLine pl) => switch (pl) {
+            PrintedBand(:final surah) => SurahBand(surah: surah, font: font, height: lineH),
+            PrintedBasmala(:final surah) => Center(
+              key: Key('basmala-$surah'),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  s.content.renderMap.forDisplay(q.text(const AyahRef(1, 1))),
+                  textDirection: TextDirection.rtl,
+                  maxLines: 1,
+                  style: MushafMetrics.style(font * 0.9, ink),
+                ),
+              ),
+            ),
+            PrintedText(:final words) => () {
+              final style = PrintedMetrics.style(page, font, ink);
+              final children = <Widget>[
+                for (final w in words)
+                  MetaData(
+                    metaData: w.ref,
+                    behavior: HitTestBehavior.opaque,
+                    child: Container(
+                      key: firstKeyed.add(w.ref) ? Key('pageAyah-${w.ref.surah}-${w.ref.ayah}') : null,
+                      height: lineH,
+                      alignment: Alignment.center,
+                      decoration: highlightOf(w.ref) == null
+                          ? null
+                          : BoxDecoration(color: highlightOf(w.ref), borderRadius: BorderRadius.circular(3)),
+                      child: Text(
+                        w.glyph,
+                        textDirection: TextDirection.rtl,
+                        maxLines: 1,
+                        softWrap: false,
+                        style: style,
+                      ),
+                    ),
+                  ),
+              ];
+              final row = layout.centered || words.length < 3
+                  ? Center(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Row(mainAxisSize: MainAxisSize.min, children: children),
+                      ),
+                    )
+                  : Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: children);
+              return MergeSemantics(child: row);
+            }(),
+          };
+
+          final lines = printed != null
+              ? [
+                  for (var i = 0; i < printed.length; i++)
+                    SizedBox(key: Key('mushafLine-$page-$i'), height: lineH, child: printedLine(printed[i])),
+                ]
+              : [
+                  for (var i = 0; i < layout.lines.length; i++)
+                    SizedBox(key: Key('mushafLine-$page-$i'), height: lineH, child: line(i)),
+                ];
           final highlighted = [for (final ws in words) ws.any((w) => highlightOf(w.ref) != null)];
-          final highlightLayer = highlighted.contains(true)
+          final highlightLayer = printed == null && highlighted.contains(true)
               ? IgnorePointer(
                   child: ExcludeSemantics(
                     child: Column(

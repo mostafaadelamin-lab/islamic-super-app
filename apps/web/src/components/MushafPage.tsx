@@ -1,7 +1,8 @@
-import { Fragment, type Ref } from "react";
-import { ayahEndMark } from "@/lib/quran-render";
+import { Fragment, type CSSProperties, type Ref } from "react";
+import { ayahEndMark, renderQuranText } from "@/lib/quran-render";
 import { isCentredPage, type Line, type ResolvedPage } from "@/lib/mushaf";
 import { surahMeta } from "@/lib/pages";
+import type { PrintedLine, PrintedPage } from "@/lib/mushaf-printed";
 
 export interface MushafPageProps {
   data: ResolvedPage;
@@ -12,6 +13,8 @@ export interface MushafPageProps {
   playingBasmala?: number | null;
   markerLabel: (s: number, a: number) => string;
   pageRef?: Ref<HTMLDivElement>;
+  /** «شكل المصحف المطبوع»: the page in its own King Fahd Complex font (when loaded). */
+  printed?: PrintedPage | null;
 }
 
 function lineClass(line: Line): string {
@@ -74,6 +77,52 @@ function LineContent({ line, selected, playing, playingBasmala, markerLabel }: L
   );
 }
 
+function PrintedLineContent({
+  line,
+  selected,
+  playing,
+  basmala,
+}: {
+  line: PrintedLine;
+  selected: string | null;
+  playing: string | null;
+  basmala: string;
+}) {
+  if (line[0] === "S") {
+    return (
+      <span className="sura-band" data-testid="sura-band">
+        <span>سورة {surahMeta(line[1] as number)?.nameAr}</span>
+      </span>
+    );
+  }
+  if (line[0] === "B") {
+    return (
+      <span className="m-in printed-basmala" data-testid="basmala">
+        {basmala}
+      </span>
+    );
+  }
+  const words = line as [number, number, string, number][];
+  return (
+    <span className="m-in">
+      {words.map(([s, a, g], j) => {
+        const key = `${s}:${a}`;
+        const cls = ["seg", key === selected ? "selected" : "", key === playing ? "playing" : ""]
+          .filter(Boolean)
+          .join(" ");
+        return (
+          <Fragment key={j}>
+            {j > 0 ? " " : null}
+            <span className={cls} data-ayah={key}>
+              {g}
+            </span>
+          </Fragment>
+        );
+      })}
+    </span>
+  );
+}
+
 /** One Mushaf page: surah bands, basmala lines and justified text lines from the 15-line layout. */
 export function MushafPage({
   data,
@@ -82,8 +131,38 @@ export function MushafPage({
   playingBasmala = null,
   markerLabel,
   pageRef,
+  printed = null,
 }: MushafPageProps) {
   const centred = isCentredPage(data.page);
+  if (printed && printed.page === data.page) {
+    const basmalaText = renderQuranText(printed.basmala);
+    return (
+      <div
+        ref={pageRef}
+        className={centred ? "mushaf-page printed centred" : "mushaf-page printed"}
+        lang="ar"
+        dir="rtl"
+        data-testid="mushaf-page"
+        data-page={data.page}
+        data-printed="true"
+        style={{ "--printed-font": `"${printed.family}"` } as CSSProperties}
+      >
+        {printed.lines.map((line, i) => (
+          <Fragment key={i}>
+            <div
+              className={
+                line[0] === "S" ? "m-line m-sura" : line[0] === "B" ? "m-line m-basmala" : "m-line m-text"
+              }
+              data-line={i + 1}
+            >
+              <PrintedLineContent line={line} selected={selected} playing={playing} basmala={basmalaText} />
+            </div>
+            {"\n"}
+          </Fragment>
+        ))}
+      </div>
+    );
+  }
   return (
     <div
       ref={pageRef}

@@ -1,0 +1,523 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
+
+import '../app_services.dart';
+import '../data/audio_focus.dart';
+import '../domain/kids.dart';
+import '../domain/stories.dart';
+import '../theme/design_tokens.dart';
+import 'adaptive.dart';
+import 'audio_widgets.dart';
+import 'l10n_ext.dart';
+import 'library_screen.dart' show OfflineButton;
+import 'play_origin.dart';
+import 'r_icon.dart';
+import 'ruqyah_screen.dart';
+import 'stories_screen.dart' show NarrationBar;
+import 'widgets.dart';
+
+/// "الأطفال" (owner, 2026-11-20): stories of the prophets (video, listen, offline),
+/// the teaching Mushaf, religious and educational stories, and ruqyah for children.
+class KidsScreen extends StatelessWidget {
+  const KidsScreen({super.key, this.loader = loadKids});
+  final Future<KidsContent> Function() loader;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    void push(Widget w) => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => w));
+    Widget tile(String id, RIconData icon, String title, String sub, VoidCallback onTap) => Card(
+      key: Key('kids.$id'),
+      margin: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceSm),
+        leading: RIconBadge(icon, size: 48),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17)),
+        subtitle: Text(sub),
+        trailing: const RIcon(RIcons.chevronForward),
+        onTap: onTap,
+      ),
+    );
+    return Scaffold(
+      appBar: AppBar(title: Text(l.kidsTitle)),
+      bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
+      body: ReadableWidth(
+        child: FutureBuilder<KidsContent>(
+          future: loader(),
+          builder: (context, snap) {
+            final k = snap.data;
+            if (k == null) return const Center(child: CircularProgressIndicator());
+            final prophets = k.byId('kids-prophets');
+            final rasoul = k.byId('kids-rasoul');
+            final ramadan = k.byId('kids-ramadan');
+            return ListView(
+              key: const Key('kidsHub'),
+              padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                  child: Text(l.kidsNote, style: Theme.of(context).textTheme.bodyMedium),
+                ),
+                if (prophets != null)
+                  tile(
+                    'prophets',
+                    RIcons.video,
+                    l.kidsProphets,
+                    l.kidsProphetsSub,
+                    () => push(KidsSeriesScreen(series: prophets, title: l.kidsProphets)),
+                  ),
+                tile(
+                  'teacher',
+                  RIcons.quran,
+                  l.kidsTeacher,
+                  l.kidsTeacherSub,
+                  () => push(TeacherMushafScreen(content: k)),
+                ),
+                tile(
+                  'stories',
+                  RIcons.book,
+                  l.kidsStories,
+                  l.kidsStoriesSub,
+                  () => push(
+                    KidsStoriesScreen(
+                      parts: [
+                        if (rasoul != null) (rasoul, l.kidsRasoul, l.kidsRasoulSub),
+                        if (ramadan != null) (ramadan, l.kidsRamadan, l.kidsRamadanSub),
+                      ],
+                    ),
+                  ),
+                ),
+                tile(
+                  'ruqyah',
+                  RIcons.shield,
+                  l.ruqyahKidsTitle,
+                  l.kidsRuqyahSub,
+                  () => push(RuqyahScreen(kids: true, loader: loader)),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+/// "قصص دينية وتعليمية": one card per series.
+class KidsStoriesScreen extends StatelessWidget {
+  const KidsStoriesScreen({super.key, required this.parts});
+  final List<(KidsSeries, String, String)> parts;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return Scaffold(
+      appBar: AppBar(title: Text(l.kidsStories)),
+      bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
+      body: ReadableWidth(
+        child: ListView(
+          key: const Key('kidsStories'),
+          padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
+          children: [
+            for (final (s, title, sub) in parts)
+              Card(
+                key: Key('kidsStories.${s.id}'),
+                margin: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
+                child: ListTile(
+                  leading: const RIconBadge(RIcons.video),
+                  title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+                  subtitle: Text('$sub · ${context.num(s.episodes.length)}'),
+                  trailing: const RIcon(RIcons.chevronForward),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => KidsSeriesScreen(series: s, title: title),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+Episode kidsEpisode(KidsEpisode e) => Episode(
+  id: e.id,
+  titleAr: e.title,
+  titleEn: e.title,
+  url: e.url,
+  durationSec: e.seconds,
+  status: ReviewStatus.approved,
+);
+
+/// The episodes of one video series: watch, listen (the sound only, in the background
+/// player), or download for offline (the saved file serves both).
+class KidsSeriesScreen extends StatelessWidget {
+  const KidsSeriesScreen({super.key, required this.series, required this.title});
+  final KidsSeries series;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    final s = context.services;
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
+      body: ReadableWidth(
+        child: ListenableBuilder(
+          listenable: s.narration,
+          builder: (context, _) {
+            final playlist = [for (final e in series.episodes) kidsEpisode(e)];
+            return ListView.builder(
+              key: Key('kidsSeries.${series.id}'),
+              padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+              itemCount: series.episodes.length + 1,
+              itemBuilder: (context, i) {
+                if (i == 0) {
+                  return Padding(
+                    padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                    child: Text(l.kidsOfflineNote, style: theme.textTheme.bodyMedium),
+                  );
+                }
+                final e = series.episodes[i - 1];
+                final ep = playlist[i - 1];
+                final listening = s.narration.episode?.id == ep.id && s.narration.isPlaying;
+                final meta = [
+                  if (e.minutes != null) l.kidsMinutes(context.num(e.minutes!)),
+                  if (e.megabytes != null) l.kidsSize(context.num(e.megabytes!)),
+                ].join(' · ');
+                return Card(
+                  key: Key('kidsEpisode.${e.id}'),
+                  margin: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      DesignTokens.spaceMd,
+                      DesignTokens.spaceSm,
+                      DesignTokens.spaceSm,
+                      DesignTokens.spaceSm,
+                    ),
+                    child: Row(
+                      children: [
+                        CircleAvatar(child: Text(context.num(i))),
+                        const SizedBox(width: DesignTokens.spaceMd),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(e.title, style: const TextStyle(fontWeight: FontWeight.w600)),
+                              if (meta.isNotEmpty) Text(meta, style: theme.textTheme.bodySmall),
+                              const SizedBox(height: DesignTokens.spaceXs),
+                              Wrap(
+                                spacing: DesignTokens.spaceSm,
+                                children: [
+                                  FilledButton.tonalIcon(
+                                    key: Key('kidsWatch.${e.id}'),
+                                    icon: const RIcon(RIcons.play, size: 18),
+                                    label: Text(l.kidsWatch),
+                                    onPressed: () => Navigator.of(context).push(
+                                      MaterialPageRoute<void>(
+                                        builder: (_) => KidsVideoScreen(series: series, episode: e),
+                                      ),
+                                    ),
+                                  ),
+                                  OutlinedButton.icon(
+                                    key: Key('kidsListen.${e.id}'),
+                                    icon: RIcon(listening ? RIcons.pause : RIcons.headphones, size: 18),
+                                    label: Text(l.kidsListen),
+                                    onPressed: () {
+                                      final n = s.narration;
+                                      if (listening) {
+                                        n.pause();
+                                      } else {
+                                        PlayOrigin.remember(context, series.id);
+                                        n.playEpisode(series.id, ep, playlist: playlist);
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        OfflineButton(series: series.id, episode: ep),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+/// Plays one episode's video: the saved copy when there is one, else streamed.
+class KidsVideoScreen extends StatefulWidget {
+  const KidsVideoScreen({super.key, required this.series, required this.episode});
+  final KidsSeries series;
+  final KidsEpisode episode;
+
+  @override
+  State<KidsVideoScreen> createState() => _KidsVideoScreenState();
+}
+
+class _KidsVideoScreenState extends State<KidsVideoScreen> {
+  VideoPlayerController? _c;
+  bool _failed = false;
+  bool _offline = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // One sound at a time: the recitation, adhkar or the listening player pause.
+    AudioFocus.claim(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _open());
+  }
+
+  Future<void> _open() async {
+    final s = context.services;
+    if (s.narration.isPlaying) await s.narration.pause();
+    String? local;
+    try {
+      local = await s.downloads.offlineFile(widget.series.id, widget.episode.id);
+    } catch (_) {}
+    final c = local != null
+        ? VideoPlayerController.file(File(local))
+        : VideoPlayerController.networkUrl(Uri.parse(widget.episode.url));
+    try {
+      await c.initialize();
+      if (!mounted) {
+        await c.dispose();
+        return;
+      }
+      setState(() {
+        _c = c;
+        _offline = local != null;
+      });
+      await c.play();
+    } catch (_) {
+      await c.dispose();
+      if (mounted) setState(() => _failed = true);
+    }
+  }
+
+  @override
+  void dispose() {
+    unawaited(_c?.dispose());
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final c = _c;
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        title: Text(widget.episode.title, maxLines: 1, overflow: TextOverflow.ellipsis),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: _failed
+              ? Padding(
+                  padding: const EdgeInsets.all(DesignTokens.spaceXl),
+                  child: Text(
+                    l.kidsVideoError,
+                    key: const Key('kidsVideoError'),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                )
+              : c == null
+              ? const CircularProgressIndicator(color: Colors.white)
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AspectRatio(
+                      aspectRatio: c.value.aspectRatio,
+                      child: GestureDetector(
+                        onTap: () => setState(() => c.value.isPlaying ? c.pause() : c.play()),
+                        child: VideoPlayer(c),
+                      ),
+                    ),
+                    _VideoControls(controller: c),
+                    if (_offline)
+                      Padding(
+                        padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
+                        child: Text(l.kidsOfflinePlaying, style: const TextStyle(color: Colors.white70, fontSize: 13)),
+                      ),
+                  ],
+                ),
+        ),
+      ),
+    );
+  }
+}
+
+class _VideoControls extends StatelessWidget {
+  const _VideoControls({required this.controller});
+  final VideoPlayerController controller;
+
+  String _t(Duration d) {
+    final m = d.inMinutes;
+    final s = d.inSeconds % 60;
+    return '$m:${s.toString().padLeft(2, '0')}';
+  }
+
+  @override
+  Widget build(BuildContext context) => ValueListenableBuilder<VideoPlayerValue>(
+    valueListenable: controller,
+    builder: (context, v, _) {
+      final total = v.duration.inMilliseconds.toDouble();
+      final pos = v.position.inMilliseconds.clamp(0, total.toInt()).toDouble();
+      return Directionality(
+        textDirection: TextDirection.ltr,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd),
+          child: Row(
+            children: [
+              IconButton(
+                key: const Key('kidsVideoPlay'),
+                color: Colors.white,
+                iconSize: 36,
+                icon: Icon(v.isPlaying ? Icons.pause_circle_filled : Icons.play_circle_fill),
+                onPressed: () => v.isPlaying ? controller.pause() : controller.play(),
+              ),
+              Text(_t(v.position), style: const TextStyle(color: Colors.white70)),
+              Expanded(
+                child: Slider(
+                  value: total > 0 ? pos : 0,
+                  max: total > 0 ? total : 1,
+                  onChanged: total > 0 ? (x) => controller.seekTo(Duration(milliseconds: x.round())) : null,
+                ),
+              ),
+              Text(_t(v.duration), style: const TextStyle(color: Colors.white70)),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+/// "المصحف المعلّم للأطفال": Juz 'Amma and al-Fatiha, read by a teaching reciter (the sheikh
+/// reads each ayah, children repeat), without changing the reciter chosen in the settings.
+class TeacherMushafScreen extends StatefulWidget {
+  const TeacherMushafScreen({super.key, required this.content});
+  final KidsContent content;
+
+  @override
+  State<TeacherMushafScreen> createState() => _TeacherMushafScreenState();
+}
+
+class _TeacherMushafScreenState extends State<TeacherMushafScreen> {
+  late String _reciter = widget.content.teacherReciters.first;
+
+  @override
+  Widget build(BuildContext context) {
+    final s = context.services;
+    final l = context.l10n;
+    final q = s.content.quran;
+    final theme = Theme.of(context);
+    String label(String folder) => folder.startsWith('Minshawy') ? l.kidsTeacherMinshawy : l.kidsTeacherHusary;
+    return Scaffold(
+      appBar: AppBar(title: Text(l.kidsTeacher)),
+      bottomNavigationBar: const MiniPlayer(),
+      body: ReadableWidth(
+        child: ListenableBuilder(
+          listenable: s.recitation,
+          builder: (context, _) {
+            final r = s.recitation;
+            final cur = r.current;
+            return ListView(
+              key: const Key('teacherList'),
+              padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(l.kidsTeacherNote, style: theme.textTheme.bodyMedium),
+                      const SizedBox(height: DesignTokens.spaceMd),
+                      SegmentedButton<String>(
+                        key: const Key('teacherReciter'),
+                        showSelectedIcon: false,
+                        segments: [
+                          for (final f in widget.content.teacherReciters)
+                            ButtonSegment(
+                              value: f,
+                              label: Text(label(f), textAlign: TextAlign.center),
+                            ),
+                        ],
+                        selected: {_reciter},
+                        onSelectionChanged: (v) => setState(() => _reciter = v.single),
+                      ),
+                    ],
+                  ),
+                ),
+                for (final n in widget.content.teacherSurahs)
+                  Builder(
+                    builder: (context) {
+                      final on = cur != null && cur.ref.surah == n && r.reciterOverride == _reciter;
+                      final playing = on && r.isPlaying;
+                      return Card(
+                        key: Key('teacher.$n'),
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: DesignTokens.spaceLg,
+                          vertical: DesignTokens.spaceXs,
+                        ),
+                        child: ListTile(
+                          selected: on,
+                          leading: CircleAvatar(child: Text(context.num(n))),
+                          title: Text(
+                            'سورة ${q.surah(n).nameAr}',
+                            style: const TextStyle(fontFamily: DesignTokens.fontQuran, fontSize: 20),
+                          ),
+                          subtitle: Text(l.storiesAyahs(context.num(q.surah(n).ayahCount))),
+                          trailing: RIcon(playing ? RIcons.pauseCircle : RIcons.playCircle, size: 30),
+                          onTap: () {
+                            if (playing) {
+                              r.pause();
+                            } else if (on) {
+                              r.resume();
+                            } else {
+                              r.playSurah(n, reciter: _reciter);
+                            }
+                          },
+                        ),
+                      );
+                    },
+                  ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+/// Small helper for the home screen and More list.
+Widget kidsEntryTile(BuildContext context) => SectionCard(
+  children: [
+    ListTile(
+      key: const Key('more.kids'),
+      contentPadding: EdgeInsets.zero,
+      leading: const RIconBadge(RIcons.kids),
+      title: Text(context.l10n.kidsTitle),
+      trailing: const RIcon(RIcons.chevronForward),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const KidsScreen())),
+    ),
+  ],
+);

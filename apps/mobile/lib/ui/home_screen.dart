@@ -14,13 +14,13 @@ import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'play_origin.dart';
 import 'hajj_hub_screen.dart';
+import 'kids_screen.dart';
 import 'library_screen.dart';
 import 'nasheeds_screen.dart';
 import 'prayer_calendar_screen.dart';
 import 'prayer_model.dart';
 import 'qibla_screen.dart';
 import 'radio_screen.dart';
-import 'reels_screen.dart';
 import 'stories_screen.dart';
 import 'locate.dart';
 import 'tasbih_screen.dart';
@@ -145,8 +145,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   b: _WideTile('qibla', RIcons.compass, l.homeBigQibla, () => _push(const QiblaScreen())),
                 ),
                 const SizedBox(height: DesignTokens.spaceSm),
+                // Kids section in place of the short videos, which the Videos tab already opens (owner, 2026-11-20).
                 _WideRow(
-                  a: _WideTile('reels', RIcons.reels, l.homeBigReels, () => _push(const ReelsScreen())),
+                  a: _WideTile('kids', RIcons.kids, l.kidsTitle, () => _push(const KidsScreen())),
                   b: _WideTile('stories', RIcons.headphones, l.homeBigStories, () => _push(const StoriesScreen())),
                 ),
                 const SizedBox(height: DesignTokens.spaceSm),
@@ -278,18 +279,36 @@ class _Hero extends StatelessWidget {
                       FittedBox(
                         fit: BoxFit.scaleDown,
                         alignment: AlignmentDirectional.centerStart,
-                        child: Text(
-                          context.num(
-                            nextDay?.clock(next.key, h12: s.settings.clock12, arabic: context.isArabic) ?? '',
-                          ),
-                          key: const Key('home.nextTime'),
-                          textDirection: TextDirection.ltr,
-                          style: theme.displayLarge?.copyWith(
-                            color: primary,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 72,
-                            height: 1.1,
-                          ),
+                        child: Builder(
+                          builder: (context) {
+                            // 12 h (the default since 2026-11-20): the AM/PM mark small beside the big time,
+                            // on its reading side (left of the time in Arabic, right of it in English).
+                            final full = context.num(
+                              nextDay?.clock(next.key, h12: s.settings.clock12, arabic: context.isArabic) ?? '',
+                            );
+                            final cut = full.indexOf(' ');
+                            final time = cut < 0 ? full : full.substring(0, cut);
+                            final mark = cut < 0 ? null : full.substring(cut + 1);
+                            final small = TextSpan(text: mark, style: const TextStyle(fontSize: 28));
+                            return Text.rich(
+                              TextSpan(
+                                children: [
+                                  if (mark != null && context.isArabic) ...[small, const TextSpan(text: ' ')],
+                                  TextSpan(text: time),
+                                  if (mark != null && !context.isArabic) ...[const TextSpan(text: ' '), small],
+                                ],
+                              ),
+                              key: const Key('home.nextTime'),
+                              semanticsLabel: full,
+                              textDirection: TextDirection.ltr,
+                              style: theme.displayLarge?.copyWith(
+                                color: primary,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 72,
+                                height: 1.1,
+                              ),
+                            );
+                          },
                         ),
                       ),
                       Text(

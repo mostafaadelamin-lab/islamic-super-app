@@ -51,6 +51,30 @@ export function AdhkarHub({ locale }: { locale: Locale }) {
       <ul className="tiles tiles-sm">{DAILY.map(chip)}</ul>
       <h2>{t(locale, "adhkar.duas")}</h2>
       <ul className="tiles tiles-sm">{DUAS.map(chip)}</ul>
+      <h2>{t(locale, "ruqyah.title")}</h2>
+      <ul className="tiles tiles-sm">
+        {(
+          [
+            ["ruqyah", "ruqyah.title", "shield"],
+            ["kids/ruqyah", "ruqyah.kidsTitle", "kids"],
+          ] as const
+        ).map(([path, key, icon]) => (
+          <li key={path}>
+            <a
+              className="tile tile-sm"
+              href={withBase(href(locale, path))}
+              data-testid={`adhkar-hub-${path}`}
+            >
+              <span className="tile-icon">
+                <Icon name={icon} />
+              </span>
+              <span className="tile-text">
+                <strong>{t(locale, key)}</strong>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
       <h2>{t(locale, "adhkar.listenHeader")}</h2>
       <div className="grid adhkar-listen">
         {(["morning", "evening"] as const).map((s) => (

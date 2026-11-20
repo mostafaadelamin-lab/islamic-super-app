@@ -25,12 +25,16 @@ export interface Preferences {
   palette: PalettePref;
   fontSize: number;
   translation: boolean;
-  /** 24 h or 12 h clock for prayer times. */
+  /** 12 h (default since 2026-11-20, owner) or 24 h clock for prayer times. */
   clock: ClockStyle;
+  /** 2 = the clock was saved under the 12 h default; a "24" saved before that was only the old default. */
+  clockV: 2;
   /** Days added to the Umm al-Qura Hijri date to match the locally announced date (moon sighting). */
   hijriOffset: number;
   /** 2 = the palette was saved under the 1.2.8 default (see PalettePref). */
   paletteV: 2;
+  /** «شكل المصحف المطبوع»: Mushaf pages in the King Fahd Complex page fonts (owner 2026-11-20). */
+  mushafPrinted: boolean;
 }
 export const DEFAULT_PREFS: Preferences = {
   locale: null,
@@ -38,9 +42,11 @@ export const DEFAULT_PREFS: Preferences = {
   palette: DEFAULT_PALETTE,
   fontSize: FONT_DEFAULT,
   translation: false,
-  clock: "24",
+  clock: "12",
+  clockV: 2,
   hijriOffset: 0,
   paletteV: 2,
+  mushafPrinted: false,
 };
 
 export const HIJRI_OFFSET_MAX = 2;
@@ -66,9 +72,11 @@ export function sanitizePrefs(raw: unknown): Preferences {
     palette: r.paletteV === 2 && isPalette(r.palette) ? r.palette : DEFAULT_PALETTE,
     fontSize: r.fontSize === undefined ? FONT_DEFAULT : clampFontSize(r.fontSize),
     translation: r.translation === true,
-    clock: r.clock === "12" ? "12" : "24",
+    clock: r.clockV === 2 && r.clock === "24" ? "24" : "12",
+    clockV: 2,
     hijriOffset: clampHijriOffset(r.hijriOffset ?? 0),
     paletteV: 2,
+    mushafPrinted: r.mushafPrinted === true,
   };
 }
 

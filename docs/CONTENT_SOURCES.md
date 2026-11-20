@@ -107,3 +107,19 @@ None of these source names are shown in the app (owner's rule).
 | What | Source | Notes |
 |---|---|---|
 | Recorded lesson(s) on each name | Sheikh Muhammad Ratib al-Nabulsi's site nabulsi.com: series "أسماء الله الحسنى 2008" (`content/asma/nabulsi-2008.json`, 100 names x 2 parts) and, for names it lacks, "أسماء الله الحسنى 1996" (`content/asma/nabulsi-1996.json`) | streamed from the site's own audio host, not re-hosted; owner's choice 2026-11-12; `tools/asma_audio.py` maps 91 of the 99 names (the other 8 have no lesson in either series) |
+
+## Ruqyah, kids section and the printed Mushaf look (1.2.14, 2026-11-20)
+
+None of these source names are shown in the app or on the site (owner's rule). References in `content/kids/kids.json`, built by `tools/kids_build.py`.
+
+| What | Source | Notes |
+|---|---|---|
+| Ruqyah: which Quran passages | Ibn Baz, Majmu' Fatawa wa Maqalat 6/368 (binbaz.org.sa fatwa 1694 «الدواء الشرعي للسحر»; same list in fatwa 2492) | Al-Fatiha, Ayat al-Kursi, al-A'raf 117–119, Yunus 79–82, Taha 65–69, al-Kafirun, al-Ikhlas, al-Falaq, an-Nas; text = KFGQPC v18 |
+| Ruqyah: duas of the Sunnah | HadeethEnc ids 5542 and 5650 (`content/hadith/hadeethenc-ar.json`) | dua text copied by the tool (the quoted words of the hadith), never typed |
+| Full ruqyah recording (Alafasy) | archive.org item `RuqyahAs-shariahBySheikhMisharyRashidAl-afasy` | streamed or saved for offline |
+| Kids ruqyah | islamqa.info fatwa 104454 (Bukhari 3371, 5748, Tirmidhi 2058); dua = Hisn al-Muslim «ما يعوذ به الأولاد» (`content/adhkar/hisn.json` 49:0) with its existing recording | then al-Ikhlas, al-Falaq, an-Nas |
+| Prophets' stories (25 cartoon episodes) | archive.org item `5-2_20210816` | ~250 MB each; streamed, listened or downloaded; owner should watch them |
+| Stories of the Prophet ﷺ for kids (Sheikh Mahmoud al-Masri, 17 episodes) | archive.org items `qsas-elrasoul-ramdan2019-ep*` | streamed / downloaded |
+| Short educational comics (13) | archive.org item `ramadan-stories-videos-ar` | hadith content in the comics not checked |
+| Teaching Mushaf | everyayah.com `Minshawy_Teacher_128kbps` (children repeat) and `Husary_Muallim_128kbps` | per-ayah, surahs 1 and 78–114 |
+| Printed Mushaf look | King Fahd Complex QCF v2 page fonts (static.qurancdn.com `fonts/quran/hafs/v2/{ttf,woff2}/p{page}`) with the per-word `code_v2` / `line_number` of api.quran.com v4 (`content/quran/printed/pages.json.gz`); `tools/mushaf_printed_build.py` | fonts downloaded per page on first view (or all at once in settings); every one of the 604 pages starts at the same ayah as the 1441H layout |

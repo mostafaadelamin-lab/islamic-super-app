@@ -391,8 +391,8 @@ test.describe("home", () => {
     const first = await cd.innerText();
     await expect(cd).not.toHaveText(first, { timeout: 3000 });
     await expect(page.getByTestId("home-times").locator("li")).toHaveCount(5);
-    await expect(page.getByTestId("home-sunrise")).toHaveText(/^\d{2}:\d{2}$/);
-    await expect(page.getByTestId("home-sunset")).toHaveText(/^\d{2}:\d{2}$/);
+    await expect(page.getByTestId("home-sunrise")).toHaveText(/^\d{1,2}:\d{2} [AP]M$/);
+    await expect(page.getByTestId("home-sunset")).toHaveText(/^\d{1,2}:\d{2} [AP]M$/);
     await expect(page.getByTestId("home-times").locator("li.next")).toHaveCount(1);
     await expect(page.getByTestId("home-place")).toHaveText("Makkah");
     await expect(page.getByTestId("home-hijri")).toHaveText(/\d{4} AH/);

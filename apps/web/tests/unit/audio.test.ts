@@ -23,7 +23,7 @@ const refs = (q: QueueItem[]): string[] => q.map((x) => (x.kind === "basmala" ? 
 describe("reciters and URLs", () => {
   it("uses the shared reciters list and default", () => {
     expect(RECITERS.map((r) => r.folder)).toEqual(reciters.reciters.map((r) => r.folder));
-    expect(RECITERS).toHaveLength(13);
+    expect(RECITERS).toHaveLength(14);
     expect(DEFAULT_RECITER).toBe("Alafasy_128kbps");
   });
   it("builds everyayah per-ayah URLs with 3-digit padding", () => {

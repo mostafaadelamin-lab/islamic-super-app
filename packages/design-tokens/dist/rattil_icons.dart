@@ -31,6 +31,9 @@ class RIcons {
   );
   static const calendar = RIconData('M4 6h16v14H4zM4 10h16M8 3.5v4M16 3.5v4M8 14h2M14 14h2M8 17h2');
   static const calendarCheck = RIconData('M4 5h16v15H4zM4 9h16M8 3v4M16 3v4M8.5 14.5l2 2 4.5-4.5');
+  static const car = RIconData(
+    'M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1ZM6 17v2M18 17v2M7 14h1M16 14h1',
+  );
   static const check = RIconData('M5 12.5 10 17l9-10');
   static const checkCircle = RIconData('M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18ZM8 12.3l2.7 2.7 5.3-5.5');
   static const chevron = RIconData('M15 6l-6 6 6 6', mirrorInRtl: true);
@@ -66,6 +69,9 @@ class RIcons {
   static const info = RIconData('M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18ZM12 11v6M12 7.5v.5');
   static const kaaba = RIconData('M4 8l8-4 8 4v10l-8 3-8-3zM4 8l8 3 8-3M12 11v10M4 12.5l8 3 8-3');
   static const khatma = RIconData('M12 3a9 9 0 1 0 9 9M12 3v4M21 12h-4M8.5 12.5l2.5 2.5 5-5');
+  static const kids = RIconData(
+    'M8.5 5.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM16 8a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM3.5 20v-1.5a5 5 0 0 1 10 0V20M13.5 15.5a4 4 0 0 1 7 2.6V20',
+  );
   static const list = RIconData('M9 6h11M9 12h11M9 18h11M4.5 6h.5M4.5 12h.5M4.5 18h.5');
   static const location = RIconData(
     'M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11Zm0-13.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z',
@@ -116,6 +122,9 @@ class RIcons {
   static const share = RIconData(
     'M17.5 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM6.5 9.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM17.5 15.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM8.7 10.8l6.6-3.6M8.7 13.2l6.6 3.6',
   );
+  static const shield = RIconData(
+    'M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6Zm-3 9 2.2 2.2L15.5 10',
+  );
   static const shrink = RIconData('M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5');
   static const split = RIconData('M4 4h16v16H4zM4 12h16M7 8h10M7 16h6');
   static const star = RIconData('M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8L3.5 9.7l5.9-.8z');
@@ -141,6 +150,9 @@ class RIcons {
   );
   static const trash = RIconData('M4.5 7h15M10 3.8h4M6.5 7l1 13h9l1-13M10 11v5.5M14 11v5.5');
   static const undo = RIconData('M9 7 4 12l5 5M4 12h11a5 5 0 0 1 0 10h-2');
+  static const video = RIconData(
+    'M4 6.5h11a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 16V8A1.5 1.5 0 0 1 4 6.5ZM16.5 10.5l5-3v9l-5-3',
+  );
   static const volume = RIconData(
     'M4 9.5h3.5L12 6v12l-4.5-3.5H4a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1Z M15.5 9a4 4 0 0 1 0 6 M18 6.5a7.5 7.5 0 0 1 0 11',
   );

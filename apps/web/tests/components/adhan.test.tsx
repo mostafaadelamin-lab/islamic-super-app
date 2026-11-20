@@ -191,7 +191,7 @@ describe("AdhanSettings", () => {
     expect(adhanStore.get().prayers).toEqual({ asr: false });
     await u.click(screen.getByTestId("adhan-sound"));
     expect(adhanStore.get().sound).toBe(false);
-    expect(screen.getByText(/CC0/)).toBeInTheDocument();
+    expect(screen.queryByText(/CC0|CC BY|Wikimedia/)).toBeNull(); // no credits on the site (owner 2026-11-20)
   });
 
   it("explains when the browser blocks notifications but still enables the in-page alert", async () => {

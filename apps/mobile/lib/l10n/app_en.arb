@@ -2132,6 +2132,108 @@
   "@khatmaTitle": {
     "description": "shared key \"khatma.title\""
   },
+  "kidsListen": "Listen",
+  "@kidsListen": {
+    "description": "shared key \"kids.listen\""
+  },
+  "kidsMinutes": "{n} min",
+  "@kidsMinutes": {
+    "description": "shared key \"kids.minutes\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "kidsNote": "For children: stories of the prophets, the teaching Mushaf, meaningful stories and ruqyah for children.",
+  "@kidsNote": {
+    "description": "shared key \"kids.note\""
+  },
+  "kidsOfflineNote": "Watch or listen to any episode, or tap the download icon to use it offline.",
+  "@kidsOfflineNote": {
+    "description": "shared key \"kids.offlineNote\""
+  },
+  "kidsOfflinePlaying": "Playing the copy saved on this device",
+  "@kidsOfflinePlaying": {
+    "description": "shared key \"kids.offlinePlaying\""
+  },
+  "kidsProphets": "Stories of the prophets",
+  "@kidsProphets": {
+    "description": "shared key \"kids.prophets\""
+  },
+  "kidsProphetsSub": "Cartoon episodes: watch or listen, download for offline",
+  "@kidsProphetsSub": {
+    "description": "shared key \"kids.prophetsSub\""
+  },
+  "kidsRamadan": "Short meaningful stories",
+  "@kidsRamadan": {
+    "description": "shared key \"kids.ramadan\""
+  },
+  "kidsRamadanSub": "Short educational comics",
+  "@kidsRamadanSub": {
+    "description": "shared key \"kids.ramadanSub\""
+  },
+  "kidsRasoul": "Stories of the Prophet ﷺ for kids",
+  "@kidsRasoul": {
+    "description": "shared key \"kids.rasoul\""
+  },
+  "kidsRasoulSub": "With Sheikh Mahmoud al-Masri",
+  "@kidsRasoulSub": {
+    "description": "shared key \"kids.rasoulSub\""
+  },
+  "kidsRuqyahSub": "Read and listen",
+  "@kidsRuqyahSub": {
+    "description": "shared key \"kids.ruqyahSub\""
+  },
+  "kidsSize": "{n} MB",
+  "@kidsSize": {
+    "description": "shared key \"kids.size\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "kidsStories": "Religious & educational stories",
+  "@kidsStories": {
+    "description": "shared key \"kids.stories\""
+  },
+  "kidsStoriesSub": "Stories from the Seerah and short meaningful stories",
+  "@kidsStoriesSub": {
+    "description": "shared key \"kids.storiesSub\""
+  },
+  "kidsTeacher": "Teaching Mushaf for kids",
+  "@kidsTeacher": {
+    "description": "shared key \"kids.teacher\""
+  },
+  "kidsTeacherHusary": "Al-Husary (teaching)",
+  "@kidsTeacherHusary": {
+    "description": "shared key \"kids.teacherHusary\""
+  },
+  "kidsTeacherMinshawy": "Al-Minshawy with children",
+  "@kidsTeacherMinshawy": {
+    "description": "shared key \"kids.teacherMinshawy\""
+  },
+  "kidsTeacherNote": "Pick a surah: the sheikh reads each ayah and children repeat it, so your child learns the correct reading.",
+  "@kidsTeacherNote": {
+    "description": "shared key \"kids.teacherNote\""
+  },
+  "kidsTeacherSub": "The sheikh reads, children repeat after him",
+  "@kidsTeacherSub": {
+    "description": "shared key \"kids.teacherSub\""
+  },
+  "kidsTitle": "Kids",
+  "@kidsTitle": {
+    "description": "shared key \"kids.title\""
+  },
+  "kidsVideoError": "Could not play the video. Check the internet connection or download the episode first.",
+  "@kidsVideoError": {
+    "description": "shared key \"kids.videoError\""
+  },
+  "kidsWatch": "Watch",
+  "@kidsWatch": {
+    "description": "shared key \"kids.watch\""
+  },
   "libraryAllRiwayat": "All riwayat",
   "@libraryAllRiwayat": {
     "description": "shared key \"library.allRiwayat\""
@@ -3298,14 +3400,6 @@
   "@readerHelpTitle": {
     "description": "shared key \"reader.helpTitle\""
   },
-  "readerTafsirBeside": "Tafsir beside the page",
-  "@readerTafsirBeside": {
-    "description": "Reader: show the page's tafsir beside the Mushaf page without listening."
-  },
-  "readerTafsirBesideShort": "Tafsir",
-  "@readerTafsirBesideShort": {
-    "description": "Reader full screen: short label of the tafsir-beside-the-page button."
-  },
   "readerHideTafsir": "Hide tafsir",
   "@readerHideTafsir": {
     "description": "shared key \"reader.hideTafsir\""
@@ -3461,6 +3555,14 @@
   "readerTabTafsir": "Tafsir",
   "@readerTabTafsir": {
     "description": "shared key \"reader.tabTafsir\""
+  },
+  "readerTafsirBeside": "Tafsir beside the page",
+  "@readerTafsirBeside": {
+    "description": "shared key \"reader.tafsirBeside\""
+  },
+  "readerTafsirBesideShort": "Tafsir",
+  "@readerTafsirBesideShort": {
+    "description": "shared key \"reader.tafsirBesideShort\""
   },
   "readerZoomReset": "{pct}% · Normal size",
   "@readerZoomReset": {
@@ -3633,6 +3735,83 @@
   "@reelsUndo": {
     "description": "shared key \"reels.undo\""
   },
+  "ruqyahAyah": "{surah}: ayah {n}",
+  "@ruqyahAyah": {
+    "description": "shared key \"ruqyah.ayah\"",
+    "placeholders": {
+      "surah": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "ruqyahDua": "From the Sunnah",
+  "@ruqyahDua": {
+    "description": "shared key \"ruqyah.dua\""
+  },
+  "ruqyahFrom": "{surah}: ayahs {from}–{to}",
+  "@ruqyahFrom": {
+    "description": "shared key \"ruqyah.from\"",
+    "placeholders": {
+      "surah": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "ruqyahFull": "The full ruqyah by Sheikh Mishary Alafasy",
+  "@ruqyahFull": {
+    "description": "shared key \"ruqyah.full\""
+  },
+  "ruqyahFullSub": "{n} min · tap the download icon to listen offline",
+  "@ruqyahFullSub": {
+    "description": "shared key \"ruqyah.fullSub\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "ruqyahHeader": "Ruqyah",
+  "@ruqyahHeader": {
+    "description": "shared key \"ruqyah.header\""
+  },
+  "ruqyahKidsNote": "What the Prophet ﷺ sought protection with for al-Hasan and al-Husayn, then al-Ikhlas, al-Falaq and an-Nas. Read them over your child or listen.",
+  "@ruqyahKidsNote": {
+    "description": "shared key \"ruqyah.kidsNote\""
+  },
+  "ruqyahKidsTitle": "Ruqyah for children",
+  "@ruqyahKidsTitle": {
+    "description": "shared key \"ruqyah.kidsTitle\""
+  },
+  "ruqyahListenQuran": "Listen to the verses",
+  "@ruqyahListenQuran": {
+    "description": "shared key \"ruqyah.listenQuran\""
+  },
+  "ruqyahNote": "The Quran verses and Sunnah duas used for ruqyah, as listed by scholars. Read or listen; tap an ayah for its tafsir.",
+  "@ruqyahNote": {
+    "description": "shared key \"ruqyah.note\""
+  },
+  "ruqyahRepeat": "Said {n} times",
+  "@ruqyahRepeat": {
+    "description": "shared key \"ruqyah.repeat\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "ruqyahTitle": "Ruqyah",
+  "@ruqyahTitle": {
+    "description": "shared key \"ruqyah.title\""
+  },
   "settingsAbout": "About",
   "@settingsAbout": {
     "description": "shared key \"settings.about\""
@@ -3684,6 +3863,42 @@
   "settingsManual": "Manual",
   "@settingsManual": {
     "description": "shared key \"settings.manual\""
+  },
+  "settingsMushafPrinted": "Printed Mushaf look",
+  "@settingsMushafPrinted": {
+    "description": "shared key \"settings.mushafPrinted\""
+  },
+  "settingsMushafPrintedDownload": "Download all page fonts for offline reading",
+  "@settingsMushafPrintedDownload": {
+    "description": "shared key \"settings.mushafPrintedDownload\""
+  },
+  "settingsMushafPrintedFailed": "Download failed, try again",
+  "@settingsMushafPrintedFailed": {
+    "description": "shared key \"settings.mushafPrintedFailed\""
+  },
+  "settingsMushafPrintedHint": "Each page in the King Fahd Complex's own page font, exactly like the printed Mushaf. A page needs the internet the first time only.",
+  "@settingsMushafPrintedHint": {
+    "description": "shared key \"settings.mushafPrintedHint\""
+  },
+  "settingsMushafPrintedProgress": "Downloading: {done} of {total}",
+  "@settingsMushafPrintedProgress": {
+    "description": "shared key \"settings.mushafPrintedProgress\"",
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsMushafPrintedSaved": "All page fonts are saved on this device",
+  "@settingsMushafPrintedSaved": {
+    "description": "shared key \"settings.mushafPrintedSaved\""
+  },
+  "settingsMushafSection": "Mushaf",
+  "@settingsMushafSection": {
+    "description": "shared key \"settings.mushafSection\""
   },
   "settingsOurApps": "Our apps",
   "@settingsOurApps": {

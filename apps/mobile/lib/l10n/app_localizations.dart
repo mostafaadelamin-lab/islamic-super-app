@@ -2636,6 +2636,144 @@ abstract class AppLocalizations {
   /// **'Quran khatma'**
   String get khatmaTitle;
 
+  /// shared key "kids.listen"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen'**
+  String get kidsListen;
+
+  /// shared key "kids.minutes"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min'**
+  String kidsMinutes(String n);
+
+  /// shared key "kids.note"
+  ///
+  /// In en, this message translates to:
+  /// **'For children: stories of the prophets, the teaching Mushaf, meaningful stories and ruqyah for children.'**
+  String get kidsNote;
+
+  /// shared key "kids.offlineNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Watch or listen to any episode, or tap the download icon to use it offline.'**
+  String get kidsOfflineNote;
+
+  /// shared key "kids.offlinePlaying"
+  ///
+  /// In en, this message translates to:
+  /// **'Playing the copy saved on this device'**
+  String get kidsOfflinePlaying;
+
+  /// shared key "kids.prophets"
+  ///
+  /// In en, this message translates to:
+  /// **'Stories of the prophets'**
+  String get kidsProphets;
+
+  /// shared key "kids.prophetsSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Cartoon episodes: watch or listen, download for offline'**
+  String get kidsProphetsSub;
+
+  /// shared key "kids.ramadan"
+  ///
+  /// In en, this message translates to:
+  /// **'Short meaningful stories'**
+  String get kidsRamadan;
+
+  /// shared key "kids.ramadanSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Short educational comics'**
+  String get kidsRamadanSub;
+
+  /// shared key "kids.rasoul"
+  ///
+  /// In en, this message translates to:
+  /// **'Stories of the Prophet ﷺ for kids'**
+  String get kidsRasoul;
+
+  /// shared key "kids.rasoulSub"
+  ///
+  /// In en, this message translates to:
+  /// **'With Sheikh Mahmoud al-Masri'**
+  String get kidsRasoulSub;
+
+  /// shared key "kids.ruqyahSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Read and listen'**
+  String get kidsRuqyahSub;
+
+  /// shared key "kids.size"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} MB'**
+  String kidsSize(String n);
+
+  /// shared key "kids.stories"
+  ///
+  /// In en, this message translates to:
+  /// **'Religious & educational stories'**
+  String get kidsStories;
+
+  /// shared key "kids.storiesSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Stories from the Seerah and short meaningful stories'**
+  String get kidsStoriesSub;
+
+  /// shared key "kids.teacher"
+  ///
+  /// In en, this message translates to:
+  /// **'Teaching Mushaf for kids'**
+  String get kidsTeacher;
+
+  /// shared key "kids.teacherHusary"
+  ///
+  /// In en, this message translates to:
+  /// **'Al-Husary (teaching)'**
+  String get kidsTeacherHusary;
+
+  /// shared key "kids.teacherMinshawy"
+  ///
+  /// In en, this message translates to:
+  /// **'Al-Minshawy with children'**
+  String get kidsTeacherMinshawy;
+
+  /// shared key "kids.teacherNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a surah: the sheikh reads each ayah and children repeat it, so your child learns the correct reading.'**
+  String get kidsTeacherNote;
+
+  /// shared key "kids.teacherSub"
+  ///
+  /// In en, this message translates to:
+  /// **'The sheikh reads, children repeat after him'**
+  String get kidsTeacherSub;
+
+  /// shared key "kids.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Kids'**
+  String get kidsTitle;
+
+  /// shared key "kids.videoError"
+  ///
+  /// In en, this message translates to:
+  /// **'Could not play the video. Check the internet connection or download the episode first.'**
+  String get kidsVideoError;
+
+  /// shared key "kids.watch"
+  ///
+  /// In en, this message translates to:
+  /// **'Watch'**
+  String get kidsWatch;
+
   /// shared key "library.allRiwayat"
   ///
   /// In en, this message translates to:
@@ -4046,18 +4184,6 @@ abstract class AppLocalizations {
   /// **'How to use'**
   String get readerHelpTitle;
 
-  /// Reader: show the page's tafsir beside the Mushaf page without listening.
-  ///
-  /// In en, this message translates to:
-  /// **'Tafsir beside the page'**
-  String get readerTafsirBeside;
-
-  /// Reader full screen: short label of the tafsir-beside-the-page button.
-  ///
-  /// In en, this message translates to:
-  /// **'Tafsir'**
-  String get readerTafsirBesideShort;
-
   /// shared key "reader.hideTafsir"
   ///
   /// In en, this message translates to:
@@ -4249,6 +4375,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tafsir'**
   String get readerTabTafsir;
+
+  /// shared key "reader.tafsirBeside"
+  ///
+  /// In en, this message translates to:
+  /// **'Tafsir beside the page'**
+  String get readerTafsirBeside;
+
+  /// shared key "reader.tafsirBesideShort"
+  ///
+  /// In en, this message translates to:
+  /// **'Tafsir'**
+  String get readerTafsirBesideShort;
 
   /// shared key "reader.zoomReset"
   ///
@@ -4472,6 +4610,78 @@ abstract class AppLocalizations {
   /// **'Undo'**
   String get reelsUndo;
 
+  /// shared key "ruqyah.ayah"
+  ///
+  /// In en, this message translates to:
+  /// **'{surah}: ayah {n}'**
+  String ruqyahAyah(String surah, String n);
+
+  /// shared key "ruqyah.dua"
+  ///
+  /// In en, this message translates to:
+  /// **'From the Sunnah'**
+  String get ruqyahDua;
+
+  /// shared key "ruqyah.from"
+  ///
+  /// In en, this message translates to:
+  /// **'{surah}: ayahs {from}–{to}'**
+  String ruqyahFrom(String surah, String from, String to);
+
+  /// shared key "ruqyah.full"
+  ///
+  /// In en, this message translates to:
+  /// **'The full ruqyah by Sheikh Mishary Alafasy'**
+  String get ruqyahFull;
+
+  /// shared key "ruqyah.fullSub"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min · tap the download icon to listen offline'**
+  String ruqyahFullSub(String n);
+
+  /// shared key "ruqyah.header"
+  ///
+  /// In en, this message translates to:
+  /// **'Ruqyah'**
+  String get ruqyahHeader;
+
+  /// shared key "ruqyah.kidsNote"
+  ///
+  /// In en, this message translates to:
+  /// **'What the Prophet ﷺ sought protection with for al-Hasan and al-Husayn, then al-Ikhlas, al-Falaq and an-Nas. Read them over your child or listen.'**
+  String get ruqyahKidsNote;
+
+  /// shared key "ruqyah.kidsTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Ruqyah for children'**
+  String get ruqyahKidsTitle;
+
+  /// shared key "ruqyah.listenQuran"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to the verses'**
+  String get ruqyahListenQuran;
+
+  /// shared key "ruqyah.note"
+  ///
+  /// In en, this message translates to:
+  /// **'The Quran verses and Sunnah duas used for ruqyah, as listed by scholars. Read or listen; tap an ayah for its tafsir.'**
+  String get ruqyahNote;
+
+  /// shared key "ruqyah.repeat"
+  ///
+  /// In en, this message translates to:
+  /// **'Said {n} times'**
+  String ruqyahRepeat(String n);
+
+  /// shared key "ruqyah.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Ruqyah'**
+  String get ruqyahTitle;
+
   /// shared key "settings.about"
   ///
   /// In en, this message translates to:
@@ -4549,6 +4759,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Manual'**
   String get settingsManual;
+
+  /// shared key "settings.mushafPrinted"
+  ///
+  /// In en, this message translates to:
+  /// **'Printed Mushaf look'**
+  String get settingsMushafPrinted;
+
+  /// shared key "settings.mushafPrintedDownload"
+  ///
+  /// In en, this message translates to:
+  /// **'Download all page fonts for offline reading'**
+  String get settingsMushafPrintedDownload;
+
+  /// shared key "settings.mushafPrintedFailed"
+  ///
+  /// In en, this message translates to:
+  /// **'Download failed, try again'**
+  String get settingsMushafPrintedFailed;
+
+  /// shared key "settings.mushafPrintedHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Each page in the King Fahd Complex\'s own page font, exactly like the printed Mushaf. A page needs the internet the first time only.'**
+  String get settingsMushafPrintedHint;
+
+  /// shared key "settings.mushafPrintedProgress"
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading: {done} of {total}'**
+  String settingsMushafPrintedProgress(String done, String total);
+
+  /// shared key "settings.mushafPrintedSaved"
+  ///
+  /// In en, this message translates to:
+  /// **'All page fonts are saved on this device'**
+  String get settingsMushafPrintedSaved;
+
+  /// shared key "settings.mushafSection"
+  ///
+  /// In en, this message translates to:
+  /// **'Mushaf'**
+  String get settingsMushafSection;
 
   /// shared key "settings.ourApps"
   ///

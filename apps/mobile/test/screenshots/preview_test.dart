@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/domain/adhkar.dart';
-import 'package:rattil/ui/about_screen.dart';
 import 'package:rattil/ui/adhkar_screen.dart';
 import 'package:rattil/ui/dhikr_audio.dart';
 import 'package:rattil/ui/page_reader_screen.dart';
@@ -192,21 +191,5 @@ void main() {
     await tester.tap(find.byKey(const Key('readerFull')));
     await tester.pumpAndSettle();
     await shot(tester, '20_mushaf_landscape_full');
-  });
-
-  testWidgets('preview: about page credits', (tester) async {
-    tester.view.devicePixelRatio = 1;
-    await pumpApp(tester, size: size, prefs: prefs);
-    await pushScreen(tester, const AboutScreen());
-    await tester.scrollUntilVisible(
-      find.byKey(const Key('adhanCredits')),
-      300,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await tester.tap(find.byKey(const Key('adhanCredits')));
-    await tester.pumpAndSettle();
-    await tester.drag(find.byType(Scrollable).first, const Offset(0, -200));
-    await tester.pumpAndSettle();
-    await shot(tester, '21_about_credits');
   });
 }

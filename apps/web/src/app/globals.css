@@ -622,6 +622,11 @@ input[type="radio"] {
   color: var(--color-primary);
   font-variant-numeric: tabular-nums;
   letter-spacing: 1px;
+  white-space: nowrap;
+}
+.home-next-time small {
+  font-size: 0.38em;
+  letter-spacing: 0;
 }
 .home-left {
   font-size: var(--font-size-lg);
@@ -1231,6 +1236,10 @@ input[type="radio"] {
 }
 .mushaf-page.measuring .m-in {
   display: inline-block;
+}
+/* «شكل المصحف المطبوع»: text lines in the page's own King Fahd Complex font (QCF v2). */
+.mushaf-page.printed .m-text {
+  font-family: var(--printed-font), var(--font-quran);
 }
 .mushaf-page.centred .m-line {
   text-align: center;
@@ -4005,7 +4014,7 @@ a.episode {
   }
   .site-footer-inner {
     display: grid;
-    grid-template-columns: 1.6fr repeat(4, 1fr);
+    grid-template-columns: 1.6fr repeat(5, 1fr);
     gap: var(--space-xxl);
     max-width: var(--site-max);
     margin: 0 auto;
@@ -4197,8 +4206,8 @@ a.episode {
     margin: 0;
     padding: 0;
     display: grid;
-    /* Five cards since Hajj & Umrah joined them (owner, 2026-11-15). */
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    /* Six cards since Kids got its own section (owner, 2026-11-20): two rows of three. */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-lg);
   }
   .explore-card {

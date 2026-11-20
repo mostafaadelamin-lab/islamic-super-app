@@ -29,6 +29,7 @@ import {
   type ResolvedPage,
 } from "@/lib/mushaf";
 import { loadMushafData, type MushafData } from "@/lib/mushaf-data";
+import { printedIfReady, usePrintedPage } from "@/lib/mushaf-printed";
 import { FONT_MAX, FONT_MIN, lastReadStore, prefsStore } from "@/lib/settings";
 import { bookmarksStore, isBookmarked, toggleBookmark } from "@/lib/bookmarks";
 import { audioStore, itemPage } from "@/lib/audio";
@@ -160,7 +161,9 @@ function useFitFont(
     // (it scrolls there and follows the recitation), and the tafsir takes the rest of the width.
     const root = frame.closest<HTMLElement>(".mushaf-reader");
     const stage = frame.closest<HTMLElement>(".mushaf-stage");
-    if (layout === "duo-wide" && root && stage) {
+    // "|printed" only marks a change of font (re-measure).
+    const kind = layout.split("|")[0];
+    if (kind === "duo-wide" && root && stage) {
       const frameChrome = frame.offsetHeight - el.offsetHeight;
       const lines = Math.max(1, el.querySelectorAll(".m-line").length || FIT.lines);
       // A big page that scrolls in its column, in full screen too (owner 2026-11-18: the whole page in the
@@ -176,7 +179,7 @@ function useFitFont(
       return;
     }
     root?.style.removeProperty("--duo-w");
-    if ((full && isLandscapePhone()) || layout === "duo") {
+    if ((full && isLandscapePhone()) || kind === "duo") {
       el.style.setProperty(
         "--m-size",
         `${Math.min(byWidth, available / (FIT.lineEms * FIT.capRatio)).toFixed(2)}px`,
@@ -393,7 +396,14 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const sizeStep = useCallback((dir: 1 | -1) => {
     readerPageScaleStore.set((v) => stepPageScale(v, dir));
   }, []);
-  useFitFont(pageEl, page, fullScreen, duo ? `duo${wide ? "-wide" : ""}` : "", pageScale);
+  const printed = usePrintedPage(page, prefs.mushafPrinted);
+  useFitFont(
+    pageEl,
+    page,
+    fullScreen,
+    `${duo ? `duo${wide ? "-wide" : ""}` : ""}${printed ? "|printed" : ""}`,
+    pageScale,
+  );
   // Ctrl + mouse wheel and a laptop touchpad pinch (sent by the browser as Ctrl + wheel) resize the page
   // instead of zooming the whole site.
   useEffect(() => {
@@ -891,7 +901,11 @@ export function PageReader({ locale, initial }: PageReaderProps) {
             } as CSSProperties
           }
         >
-          <MushafPage data={other} markerLabel={markerLabel} />
+          <MushafPage
+            data={other}
+            markerLabel={markerLabel}
+            printed={prefs.mushafPrinted ? printedIfReady(other.page) : null}
+          />
           <div className="mushaf-folio">{localizeDigits(other.page, "ar")}</div>
           {role === "under" && turn ? <div className="mushaf-shade" style={{ opacity: turn.shade }} /> : null}
         </div>
@@ -1104,6 +1118,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
               playingBasmala={playingBasmala}
               markerLabel={markerLabel}
               pageRef={pageEl}
+              printed={printed}
             />
             <div className="mushaf-folio" aria-hidden="true">
               {localizeDigits(page, "ar")}

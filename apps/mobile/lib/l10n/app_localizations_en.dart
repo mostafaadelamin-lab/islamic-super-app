@@ -1450,6 +1450,81 @@ class AppLocalizationsEn extends AppLocalizations {
   String get khatmaTitle => 'Quran khatma';
 
   @override
+  String get kidsListen => 'Listen';
+
+  @override
+  String kidsMinutes(String n) {
+    return '$n min';
+  }
+
+  @override
+  String get kidsNote =>
+      'For children: stories of the prophets, the teaching Mushaf, meaningful stories and ruqyah for children.';
+
+  @override
+  String get kidsOfflineNote => 'Watch or listen to any episode, or tap the download icon to use it offline.';
+
+  @override
+  String get kidsOfflinePlaying => 'Playing the copy saved on this device';
+
+  @override
+  String get kidsProphets => 'Stories of the prophets';
+
+  @override
+  String get kidsProphetsSub => 'Cartoon episodes: watch or listen, download for offline';
+
+  @override
+  String get kidsRamadan => 'Short meaningful stories';
+
+  @override
+  String get kidsRamadanSub => 'Short educational comics';
+
+  @override
+  String get kidsRasoul => 'Stories of the Prophet ﷺ for kids';
+
+  @override
+  String get kidsRasoulSub => 'With Sheikh Mahmoud al-Masri';
+
+  @override
+  String get kidsRuqyahSub => 'Read and listen';
+
+  @override
+  String kidsSize(String n) {
+    return '$n MB';
+  }
+
+  @override
+  String get kidsStories => 'Religious & educational stories';
+
+  @override
+  String get kidsStoriesSub => 'Stories from the Seerah and short meaningful stories';
+
+  @override
+  String get kidsTeacher => 'Teaching Mushaf for kids';
+
+  @override
+  String get kidsTeacherHusary => 'Al-Husary (teaching)';
+
+  @override
+  String get kidsTeacherMinshawy => 'Al-Minshawy with children';
+
+  @override
+  String get kidsTeacherNote =>
+      'Pick a surah: the sheikh reads each ayah and children repeat it, so your child learns the correct reading.';
+
+  @override
+  String get kidsTeacherSub => 'The sheikh reads, children repeat after him';
+
+  @override
+  String get kidsTitle => 'Kids';
+
+  @override
+  String get kidsVideoError => 'Could not play the video. Check the internet connection or download the episode first.';
+
+  @override
+  String get kidsWatch => 'Watch';
+
+  @override
   String get libraryAllRiwayat => 'All riwayat';
 
   @override
@@ -2247,12 +2322,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerHelpTitle => 'How to use';
 
   @override
-  String get readerTafsirBeside => 'Tafsir beside the page';
-
-  @override
-  String get readerTafsirBesideShort => 'Tafsir';
-
-  @override
   String get readerHideTafsir => 'Hide tafsir';
 
   @override
@@ -2357,6 +2426,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readerTabTafsir => 'Tafsir';
+
+  @override
+  String get readerTafsirBeside => 'Tafsir beside the page';
+
+  @override
+  String get readerTafsirBesideShort => 'Tafsir';
 
   @override
   String readerZoomReset(String pct) {
@@ -2479,6 +2554,52 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reelsUndo => 'Undo';
 
   @override
+  String ruqyahAyah(String surah, String n) {
+    return '$surah: ayah $n';
+  }
+
+  @override
+  String get ruqyahDua => 'From the Sunnah';
+
+  @override
+  String ruqyahFrom(String surah, String from, String to) {
+    return '$surah: ayahs $from–$to';
+  }
+
+  @override
+  String get ruqyahFull => 'The full ruqyah by Sheikh Mishary Alafasy';
+
+  @override
+  String ruqyahFullSub(String n) {
+    return '$n min · tap the download icon to listen offline';
+  }
+
+  @override
+  String get ruqyahHeader => 'Ruqyah';
+
+  @override
+  String get ruqyahKidsNote =>
+      'What the Prophet ﷺ sought protection with for al-Hasan and al-Husayn, then al-Ikhlas, al-Falaq and an-Nas. Read them over your child or listen.';
+
+  @override
+  String get ruqyahKidsTitle => 'Ruqyah for children';
+
+  @override
+  String get ruqyahListenQuran => 'Listen to the verses';
+
+  @override
+  String get ruqyahNote =>
+      'The Quran verses and Sunnah duas used for ruqyah, as listed by scholars. Read or listen; tap an ayah for its tafsir.';
+
+  @override
+  String ruqyahRepeat(String n) {
+    return 'Said $n times';
+  }
+
+  @override
+  String get ruqyahTitle => 'Ruqyah';
+
+  @override
   String get settingsAbout => 'About';
 
   @override
@@ -2517,6 +2638,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsManual => 'Manual';
+
+  @override
+  String get settingsMushafPrinted => 'Printed Mushaf look';
+
+  @override
+  String get settingsMushafPrintedDownload => 'Download all page fonts for offline reading';
+
+  @override
+  String get settingsMushafPrintedFailed => 'Download failed, try again';
+
+  @override
+  String get settingsMushafPrintedHint =>
+      'Each page in the King Fahd Complex\'s own page font, exactly like the printed Mushaf. A page needs the internet the first time only.';
+
+  @override
+  String settingsMushafPrintedProgress(String done, String total) {
+    return 'Downloading: $done of $total';
+  }
+
+  @override
+  String get settingsMushafPrintedSaved => 'All page fonts are saved on this device';
+
+  @override
+  String get settingsMushafSection => 'Mushaf';
 
   @override
   String get settingsOurApps => 'Our apps';

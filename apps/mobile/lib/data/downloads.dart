@@ -135,8 +135,11 @@ class RecitationDownloads extends ChangeNotifier {
 
   static String _safe(String s) => s.replaceAll(RegExp(r'[^A-Za-z0-9_.-]'), '_');
 
+  /// Kids videos ("kids-…" series) are kept as .mp4 (the iOS player needs the right extension).
+  static String extFor(String series) => series.startsWith('kids-') ? 'mp4' : 'mp3';
+
   Future<File> _file(String series, String id) async =>
-      File('${(await root()).path}/offline/${_safe(series)}/${_safe(id)}.mp3');
+      File('${(await root()).path}/offline/${_safe(series)}/${_safe(id)}.${extFor(series)}');
 
   /// The saved copy of one audio file, or null when it is not on the phone.
   Future<String?> offlineFile(String series, String id) async {

@@ -157,6 +157,18 @@ export function DisplaySettings({ locale, preview }: { locale: Locale; preview: 
         />
         {t(locale, "settings.translation")}
       </label>
+      <label className="check" data-testid="mushaf-printed">
+        <input
+          type="checkbox"
+          checked={prefs.mushafPrinted}
+          onChange={(e) => prefsStore.set((p) => ({ ...p, mushafPrinted: e.target.checked }))}
+        />
+        <span>
+          {t(locale, "settings.mushafPrinted")}
+          <br />
+          <span className="muted small">{t(locale, "settings.mushafPrintedHint")}</span>
+        </span>
+      </label>
       <div className="field" data-testid="hijri-offset">
         <label htmlFor="hijri-offset">
           {t(locale, "settings.hijriOffset")}:{" "}

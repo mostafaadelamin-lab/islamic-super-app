@@ -3,7 +3,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { resolveLocation } from "@/lib/cities";
 import { prayerStore } from "@/lib/settings";
-import { adhanVoiceSrc, BUNDLED_ADHAN_VOICES } from "@/lib/adhan-voices";
+import { adhanVoiceSrc } from "@/lib/adhan-voices";
 import { MuezzinPicker } from "./MuezzinPicker";
 import {
   adhanFor,
@@ -480,16 +480,7 @@ export function AdhanSettings({ locale }: { locale: Locale }) {
         )}
       </p>
       <p className="muted">{t(locale, "adhan.webNote")}</p>
-      <p className="muted" style={{ fontSize: "0.85em" }}>
-        {t(locale, "adhan.credit")}
-      </p>
-      <ul className="muted" style={{ fontSize: "0.85em" }} data-testid="adhan-credits">
-        {BUNDLED_ADHAN_VOICES.filter((v) => v.credit).map((v) => (
-          <li key={v.id}>
-            {locale === "ar" ? v.nameAr : v.nameEn}: {v.credit}
-          </li>
-        ))}
-      </ul>
+      {/* No sources or credits on the site (owner, 2026-11-20: given on request only; docs/CONTENT_SOURCES.md). */}
     </section>
   );
 }

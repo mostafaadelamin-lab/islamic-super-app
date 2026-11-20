@@ -16,6 +16,7 @@ import 'data/device_setup.dart';
 import 'data/khatma_store.dart';
 import 'data/worship_store.dart';
 import 'data/downloads.dart';
+import 'data/printed_mushaf.dart';
 import 'data/adhan_voice_files.dart';
 import 'data/adhkar_audio_files.dart';
 import 'data/location.dart';
@@ -147,6 +148,7 @@ class AppServices {
       httpClient: httpClient,
       root: storageRoot ?? getApplicationSupportDirectory,
     );
+    PrintedMushaf.instance.configure(client: httpClient, root: storageRoot ?? getApplicationSupportDirectory);
     final recitation = RecitationController(
       content: content,
       settings: settings,

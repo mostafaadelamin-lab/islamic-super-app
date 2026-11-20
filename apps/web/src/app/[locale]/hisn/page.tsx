@@ -21,7 +21,6 @@ export default async function HisnPage({ params }: { params: LocaleParams }) {
         chapters={HISN.map(({ id, title }) => ({ id, title }))}
         sections={HISN_SECTIONS}
       />
-      <p className="muted small">{t(locale, "adhkar.source")}</p>
     </>
   );
 }

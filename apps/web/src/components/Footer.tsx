@@ -22,7 +22,7 @@ export function Footer({ locale }: { locale: Locale }) {
             <a href="/privacy-policy.html">{t(locale, "help.privacy")}</a>
           </p>
         </div>
-        {SITE_GROUPS.slice(0, 4).map((g) => (
+        {SITE_GROUPS.filter((g) => g.path !== "hajj" && g.path !== "about").map((g) => (
           <nav className="site-footer-col" key={g.title} aria-label={t(locale, g.title)}>
             <h2>{t(locale, g.title)}</h2>
             <ul>

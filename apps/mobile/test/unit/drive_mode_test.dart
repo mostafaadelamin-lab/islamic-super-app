@@ -125,14 +125,23 @@ void main() {
         for (final it in plan) {
           expect(it.clip.start, lessThan(it.clip.end));
           expect(it.clip.length, greaterThan(const Duration(milliseconds: 900)), reason: '${it.dhikr.index}');
-          expect(it.clip.length, lessThan(const Duration(seconds: 75)), reason: '${it.dhikr.index}');
+          expect(
+            it.clip.length,
+            lessThan(const Duration(seconds: 80)),
+            reason: '${it.dhikr.index}',
+          ); // Ayat al-Kursi with its last madd is the longest
           expect(it.clip.end, lessThan(const Duration(minutes: 20)));
         }
         // Clips follow the reading order of the recording and never overlap.
-        final sorted = [...plan.where((it) => it.clip.file == null)]..sort((a, b) => a.clip.start.compareTo(b.clip.start));
+        final sorted = [...plan.where((it) => it.clip.file == null)]
+          ..sort((a, b) => a.clip.start.compareTo(b.clip.start));
         for (var i = 1; i < sorted.length; i++) {
           if (sorted[i].clip.start == sorted[i - 1].clip.start) continue; // one reading shared
-          expect(sorted[i].clip.start, greaterThanOrEqualTo(sorted[i - 1].clip.end), reason: '${sorted[i].dhikr.index}');
+          expect(
+            sorted[i].clip.start,
+            greaterThanOrEqualTo(sorted[i - 1].clip.end),
+            reason: '${sorted[i].dhikr.index}',
+          );
         }
       }
     });
@@ -149,7 +158,10 @@ void main() {
 
   test('driveTitle: first words, no diacritics, isti\'adha/basmala skipped, nothing added', () {
     expect(driveTitle('سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.'), 'سبحان الله وبحمده');
-    expect(driveTitle('أَعُوذُ بِاللَّهِ مِنَ الشَّيطَانِ الرَّجِيمِ ﴿اللَّهُ لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ'), 'الله لا إله إلا هو…');
+    expect(
+      driveTitle('أَعُوذُ بِاللَّهِ مِنَ الشَّيطَانِ الرَّجِيمِ ﴿اللَّهُ لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ'),
+      'الله لا إله إلا هو…',
+    );
     expect(driveTitle('بِسْمِ اللهِ الرَّحْمنِ الرَّحِيمِ ﴿قُلْ هُوَ اللَّهُ أَحَدٌ'), 'قل هو الله أحد');
   });
 
@@ -162,19 +174,22 @@ void main() {
     expect(isMilestone(3, 3, 10), isFalse);
   });
 
-  test('plays the whole morning session: each clip its Hisn count, ticks between, done sound at the end of each', () async {
-    await drive.start(AdhkarSession.morning);
-    await pump(4000);
-    final plan = drivePlan(c.adhkar, clips, AdhkarSession.morning);
-    expect(files.fetched, ['adhkar_morning_alafasy']);
-    expect(player.loaded, '/x/adhkar_morning_alafasy.mp3');
-    final total = plan.fold<int>(0, (a, it) => a + it.count);
-    expect(player.played.length, total);
-    expect(cues.log.where((e) => e == 'done').length, plan.length);
-    expect(cues.log.where((e) => e == 'tick').length, total - plan.length);
-    expect(drive.finished, isTrue);
-    expect(drive.isPlaying, isFalse);
-  });
+  test(
+    'plays the whole morning session: each clip its Hisn count, ticks between, done sound at the end of each',
+    () async {
+      await drive.start(AdhkarSession.morning);
+      await pump(4000);
+      final plan = drivePlan(c.adhkar, clips, AdhkarSession.morning);
+      expect(files.fetched, ['adhkar_morning_alafasy']);
+      expect(player.loaded, '/x/adhkar_morning_alafasy.mp3');
+      final total = plan.fold<int>(0, (a, it) => a + it.count);
+      expect(player.played.length, total);
+      expect(cues.log.where((e) => e == 'done').length, plan.length);
+      expect(cues.log.where((e) => e == 'tick').length, total - plan.length);
+      expect(drive.finished, isTrue);
+      expect(drive.isPlaying, isFalse);
+    },
+  );
 
   test('spoken count every 10 instead of the tick; no sounds when turned off', () async {
     await settings.setDriveSayEvery(10);
@@ -186,55 +201,58 @@ void main() {
     expect(cues.log, isNot(contains('say 100')));
   });
 
-  test('car / lock-screen title shows the dhikr and the live count; next, previous and pause keep the count right', () async {
-    player.auto = false;
-    final plan = drivePlan(c.adhkar, clips, AdhkarSession.morning);
-    final hundred = plan.indexWhere((it) => it.count == 100);
-    await drive.start(AdhkarSession.morning);
-    await pump();
-    expect(drive.isPlaying, isTrue);
-    await drive.jumpTo(hundred);
-    await pump();
-    for (var i = 0; i < 36; i++) {
-      await player.end();
-    }
-    expect(drive.done, 36);
-    var now = drive.describe()!;
-    expect(now.title, endsWith('· ٣٧ من ١٠٠'));
-    expect(now.title, startsWith(driveTitle(plan[hundred].dhikr.text).replaceAll('…', '')));
-    expect(now.artist, contains('أذكار الصباح'));
-    expect(now.playing, isTrue);
+  test(
+    'car / lock-screen title shows the dhikr and the live count; next, previous and pause keep the count right',
+    () async {
+      player.auto = false;
+      final plan = drivePlan(c.adhkar, clips, AdhkarSession.morning);
+      final hundred = plan.indexWhere((it) => it.count == 100);
+      await drive.start(AdhkarSession.morning);
+      await pump();
+      expect(drive.isPlaying, isTrue);
+      await drive.jumpTo(hundred);
+      await pump();
+      for (var i = 0; i < 36; i++) {
+        await player.end();
+      }
+      expect(drive.done, 36);
+      var now = drive.describe()!;
+      expect(now.title, endsWith('· ٣٧ من ١٠٠'));
+      expect(now.title, startsWith(driveTitle(plan[hundred].dhikr.text).replaceAll('…', '')));
+      expect(now.artist, contains('أذكار الصباح'));
+      expect(now.playing, isTrue);
 
-    // Pause and resume: same count, the 37th repetition is said again from its start.
-    drive.act('pause');
-    await pump();
-    expect(drive.isPlaying, isFalse);
-    expect(drive.done, 36);
-    final before = player.played.length;
-    drive.act('play');
-    await pump();
-    expect(drive.isPlaying, isTrue);
-    expect(player.played.length, before + 1);
-    expect(drive.describe()!.title, endsWith('٣٧ من ١٠٠'));
+      // Pause and resume: same count, the 37th repetition is said again from its start.
+      drive.act('pause');
+      await pump();
+      expect(drive.isPlaying, isFalse);
+      expect(drive.done, 36);
+      final before = player.played.length;
+      drive.act('play');
+      await pump();
+      expect(drive.isPlaying, isTrue);
+      expect(player.played.length, before + 1);
+      expect(drive.describe()!.title, endsWith('٣٧ من ١٠٠'));
 
-    // Previous: this dhikr from the start.
-    drive.act('previous');
-    await pump();
-    expect(drive.index, hundred);
-    expect(drive.done, 0);
-    // Previous again right away (still on its first repetition): the dhikr before.
-    drive.act('previous');
-    await pump();
-    expect(drive.index, hundred - 1);
+      // Previous: this dhikr from the start.
+      drive.act('previous');
+      await pump();
+      expect(drive.index, hundred);
+      expect(drive.done, 0);
+      // Previous again right away (still on its first repetition): the dhikr before.
+      drive.act('previous');
+      await pump();
+      expect(drive.index, hundred - 1);
 
-    // Next.
-    drive.act('next');
-    await pump();
-    expect(drive.index, hundred);
-    expect(drive.done, 0);
-    now = drive.describe()!;
-    expect(now.title, endsWith('١ من ١٠٠'));
-  });
+      // Next.
+      drive.act('next');
+      await pump();
+      expect(drive.index, hundred);
+      expect(drive.done, 0);
+      now = drive.describe()!;
+      expect(now.title, endsWith('١ من ١٠٠'));
+    },
+  );
 
   test('a dhikr said once shows no count in the title', () async {
     player.auto = false;
@@ -281,49 +299,52 @@ void main() {
     expect(b.children(AudioService.recentRootId).single.id, DriveBrowser.eveningId);
   });
 
-  test('CarPlay: the car gets the morning / evening list, picking one plays it, a failed download shows a message', () async {
-    TestWidgetsFlutterBinding.ensureInitialized();
-    player.auto = false;
-    const channel = MethodChannel(CarPlayBridge.channelName);
-    final messenger = TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
-    final sent = <Map<Object?, Object?>>[];
-    messenger.setMockMethodCallHandler(channel, (call) async {
-      if (call.method == 'items') sent.add(call.arguments as Map<Object?, Object?>);
-      return null;
-    });
-    addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
-    Future<Object?> fromCar(String method, [Object? args]) async {
-      Object? reply;
-      await messenger.handlePlatformMessage(
-        CarPlayBridge.channelName,
-        const StandardMethodCodec().encodeMethodCall(MethodCall(method, args)),
-        (data) => reply = data == null ? null : const StandardMethodCodec().decodeEnvelope(data),
-      );
-      return reply;
-    }
+  test(
+    'CarPlay: the car gets the morning / evening list, picking one plays it, a failed download shows a message',
+    () async {
+      TestWidgetsFlutterBinding.ensureInitialized();
+      player.auto = false;
+      const channel = MethodChannel(CarPlayBridge.channelName);
+      final messenger = TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+      final sent = <Map<Object?, Object?>>[];
+      messenger.setMockMethodCallHandler(channel, (call) async {
+        if (call.method == 'items') sent.add(call.arguments as Map<Object?, Object?>);
+        return null;
+      });
+      addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
+      Future<Object?> fromCar(String method, [Object? args]) async {
+        Object? reply;
+        await messenger.handlePlatformMessage(
+          CarPlayBridge.channelName,
+          const StandardMethodCodec().encodeMethodCall(MethodCall(method, args)),
+          (data) => reply = data == null ? null : const StandardMethodCodec().decodeEnvelope(data),
+        );
+        return reply;
+      }
 
-    final bridge = CarPlayBridge(DriveBrowser(drive, settings), settings);
-    addTearDown(bridge.dispose);
-    await pump();
-    expect(sent, hasLength(1));
-    expect(sent.single['title'], 'وضع القيادة');
-    final items = (sent.single['items']! as List).cast<Map<Object?, Object?>>();
-    expect(items.map((e) => e['id']), [DriveBrowser.morningId, DriveBrowser.eveningId]);
-    expect(items.map((e) => e['title']), ['أذكار الصباح', 'أذكار المساء']);
+      final bridge = CarPlayBridge(DriveBrowser(drive, settings), settings);
+      addTearDown(bridge.dispose);
+      await pump();
+      expect(sent, hasLength(1));
+      expect(sent.single['title'], 'وضع القيادة');
+      final items = (sent.single['items']! as List).cast<Map<Object?, Object?>>();
+      expect(items.map((e) => e['id']), [DriveBrowser.morningId, DriveBrowser.eveningId]);
+      expect(items.map((e) => e['title']), ['أذكار الصباح', 'أذكار المساء']);
 
-    // Language changes: the car list follows.
-    await settings.setLocale('en');
-    await pump();
-    expect(sent.last['title'], 'Driving mode');
-    expect(((sent.last['items']! as List).first as Map)['title'], 'Morning adhkar');
+      // Language changes: the car list follows.
+      await settings.setLocale('en');
+      await pump();
+      expect(sent.last['title'], 'Driving mode');
+      expect(((sent.last['items']! as List).first as Map)['title'], 'Morning adhkar');
 
-    expect(await fromCar('play', DriveBrowser.eveningId), isNull);
-    await pump();
-    expect(drive.session, AdhkarSession.evening);
-    expect(drive.isPlaying, isTrue);
+      expect(await fromCar('play', DriveBrowser.eveningId), isNull);
+      await pump();
+      expect(drive.session, AdhkarSession.evening);
+      expect(drive.isPlaying, isTrue);
 
-    await drive.stop();
-    files.ok = false;
-    expect(await fromCar('play', DriveBrowser.morningId), contains('could not be downloaded'));
-  });
+      await drive.stop();
+      files.ok = false;
+      expect(await fromCar('play', DriveBrowser.morningId), contains('could not be downloaded'));
+    },
+  );
 }

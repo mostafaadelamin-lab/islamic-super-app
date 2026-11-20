@@ -38,7 +38,8 @@ void main() {
     File('${outDir.path}/$name.png').writeAsBytesSync(bytes!);
   }
 
-  Finder list(String k) => find.descendant(of: find.byKey(Key('pilgrimage-$k')), matching: find.byType(Scrollable)).first;
+  Finder list(String k) =>
+      find.descendant(of: find.byKey(Key('pilgrimage-$k')), matching: find.byType(Scrollable)).first;
 
   Future<void> goTo(WidgetTester tester, String kind, String step) async {
     final app = await pumpApp(tester, size: const Size(440, 956), prefs: const {'theme': 'light'});

@@ -1,0 +1,111 @@
+{
+  "_doc": "Kids section + ruqyah. References only: Quran passages by surah/ayah (text comes from content/quran, KFGQPC v18), duas by Hisn al-Muslim item or HadeethEnc id (text copied from those files by tools/kids_build.py, never typed here). Video/audio files are archive.org items (metadata snapshots in raw/). Titles are UI labels. Sources: docs/CONTENT_SOURCES.md (never shown in the app). Build: python3 tools/kids_build.py",
+  "ruqyah": {
+    "source": "Ibn Baz, Majmu' Fatawa wa Maqalat 6/368 (binbaz.org.sa fatwa 1694 «الدواء الشرعي للسحر»; same list in fatwa 2492 «كيفية علاج المسحور»)",
+    "items": [
+      {"quran": [1, 1, 7]},
+      {"quran": [2, 255, 255]},
+      {"quran": [7, 117, 119]},
+      {"quran": [10, 79, 82]},
+      {"quran": [20, 65, 69]},
+      {"quran": [109, 1, 6]},
+      {"quran": [112, 1, 4]},
+      {"quran": [113, 1, 5]},
+      {"quran": [114, 1, 6]},
+      {"hadeethenc": "5542", "repeat": 3},
+      {"hadeethenc": "5650", "repeat": 3}
+    ],
+    "full": {"archive": "RuqyahAs-shariahBySheikhMisharyRashidAl-afasy", "file": "QuranI-podDownloding.mp3", "reciter": "alafasy"}
+  },
+  "ruqyahKids": {
+    "source": "islamqa.info fatwa 104454 «الرقية الشرعية للأطفال» (Bukhari 3371, Bukhari 5748, Tirmidhi 2058); dua text = Hisn al-Muslim chapter «ما يعوذ به الأولاد»",
+    "items": [
+      {"hisn": [49, 0], "src": "رواه البخاري"},
+      {"quran": [112, 1, 4]},
+      {"quran": [113, 1, 5]},
+      {"quran": [114, 1, 6]}
+    ]
+  },
+  "quranReciter": "Alafasy_128kbps",
+  "teacher": {
+    "reciters": ["Minshawy_Teacher_128kbps", "Husary_Muallim_128kbps"],
+    "surahs": [1, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114]
+  },
+  "series": [
+    {
+      "id": "kids-prophets",
+      "group": "prophets",
+      "archive": "5-2_20210816",
+      "episodes": [
+        {"file": "ح 1- سيدنا آدم - ج1.mp4", "prophet": "آدم", "part": 1},
+        {"file": "ح 2- سيدنا آدم - ج2.mp4", "prophet": "آدم", "part": 2},
+        {"file": "ح 3- سيدنا آدم - ج3.mp4", "prophet": "آدم", "part": 3},
+        {"file": "ح 4- سيدنا نوح- ج1.mp4", "prophet": "نوح", "part": 1},
+        {"file": "ح 5- سيدنا نوح- ج2.mp4", "prophet": "نوح", "part": 2},
+        {"file": "ح 6- سيدنا هود- ج1.mp4", "prophet": "هود", "part": 1},
+        {"file": "ح 7- سيدنا هود- ج2.mp4", "prophet": "هود", "part": 2},
+        {"file": "ح 1- سيدنا صالح- ج1.mp4", "prophet": "صالح", "part": 1},
+        {"file": "ح 9- سيدنا صالح- ج2.mp4", "prophet": "صالح", "part": 2},
+        {"file": "ح10 - سيدنا ابراهيم- ج1.mp4", "prophet": "إبراهيم", "part": 1},
+        {"file": "ح11 - سيدنا ابراهيم- ج2.mp4", "prophet": "إبراهيم", "part": 2},
+        {"file": "ح12 - سيدنا ابراهيم- ج3.mp4", "prophet": "إبراهيم", "part": 3},
+        {"file": "ح13 - سيدنا ابراهيم- ج4.mp4", "prophet": "إبراهيم", "part": 4},
+        {"file": "ح14 - سيدنا ابراهيم- ج5.mp4", "prophet": "إبراهيم", "part": 5},
+        {"file": "ح15 - سيدنا ابراهيم- ج6.mp4", "prophet": "إبراهيم", "part": 6},
+        {"file": "ح16 - سيدنا لوط- ج1.mp4", "prophet": "لوط", "part": 1},
+        {"file": "ح17 - سيدنا لوط- ج2.mp4", "prophet": "لوط", "part": 2},
+        {"file": "ح18 - سيدنا يوسف- ج1.mp4", "prophet": "يوسف", "part": 1},
+        {"file": "ح19 - سيدنا يوسف- ج2.mp4", "prophet": "يوسف", "part": 2},
+        {"file": "ح20 - سيدنا يوسف- ج3.mp4", "prophet": "يوسف", "part": 3},
+        {"file": "ح21 - سيدنا ابراهيم- ج4.mp4", "prophet": "يوسف", "part": 4, "_note": "file name says Ibrahim part 4; the episode is Yusuf part 4 (brothers scene, sits between Yusuf 3 and 5)"},
+        {"file": "ح22 - سيدنا يوسف- ج5.mp4", "prophet": "يوسف", "part": 5},
+        {"file": "ح23 - سيدنا يوسف- ج6.mp4", "prophet": "يوسف", "part": 6},
+        {"file": "ح24 - سيدنا شعيب- ج1.mp4", "prophet": "شعيب", "part": 1},
+        {"file": "ح25 - سيدنا شعيب- ج2.mp4", "prophet": "شعيب", "part": 2}
+      ]
+    },
+    {
+      "id": "kids-rasoul",
+      "group": "stories",
+      "episodes": [
+        {"archive": "qsas-elrasoul-ramdan2019-ep1", "file": "1.mp4", "n": 1},
+        {"archive": "qsas-elrasoul-ramdan2019-ep2", "file": "قصص الرسول للأطفال الشيخ محمود المصرى الحلقه الثانيه رمضان 2019.mp4", "n": 2},
+        {"archive": "qsas-elrasoul-ramdan2019-ep3", "file": "قصص الرسول للأطفال الشيخ محمود المصرى الحلقه الثالثه رمضان 2019.mp4", "n": 3},
+        {"archive": "qsas-elrasoul-ramdan2019-ep4", "file": "قصص الرسول للأطفال الشيخ محمود المصرى الحلقه الرابعه رمضان 2019.mp4", "n": 4},
+        {"archive": "qsas-elrasoul-ramdan2019-ep5", "file": "قصص الرسول للأطفال الشيخ محمود المصرى الحلقه الخامسه رمضان 2019.mp4", "n": 5},
+        {"archive": "qsas-elrasoul-ramdan2019-ep6", "file": "قصص الرسول للأطفال الشيخ محمود المصرى الحلقه السادسه رمضان 2019.mp4", "n": 6},
+        {"archive": "qsas-elrasoul-ramdan2019-ep7", "file": "قصص الرسول للأطفال الشيخ محمود المصرى الحلقه السابعه رمضان 2019.mp4", "n": 7},
+        {"archive": "tito_bebse_yahoo_2019", "file": "قصص الرسول للأطفال الشيخ محمود المصرى الحلقه الثامنه رمضان 2019.mp4", "n": 8},
+        {"archive": "qsas-elrasoul-ramdan2019-ep9", "file": "قصص الرسول للأطفال الشيخ محمود المصرى الحلقه التاسعه رمضان 2019.mp4", "n": 9},
+        {"archive": "qsas-elrasoul-ramdan2019-ep10", "file": "برنامج قصص الرسول للأطفال - الشيخ محمود المصري - 10 -  قصة الصحابي الذي يقرأ القران في الجنة.mp4", "n": 10, "title": "قصة الصحابي الذي يقرأ القرآن في الجنة"},
+        {"archive": "qsas-elrasoul-ramdan2019-ep11", "file": "برنامج قصص الرسول للأطفال - الشيخ محمود المصري - 11 -  قصة المرأة التي دخلت الجنة بتمرة.mp4", "n": 11, "title": "قصة المرأة التي دخلت الجنة بتمرة"},
+        {"archive": "qsas-elrasoul-ramdan2019", "file": "برنامج قصص الرسول للأطفال - الشيخ محمود المصري - 12 - قصة غلاميين يدافعان عن النبي.mp4", "n": 12, "title": "قصة غلامين يدافعان عن النبي ﷺ"},
+        {"archive": "qsas-elrasoul-ramdan2019", "file": "برنامج قصص الرسول للأطفال - الشيخ محمود المصري - 13 - قصة رجل من أهل الجنة.mp4", "n": 13, "title": "قصة رجل من أهل الجنة"},
+        {"archive": "qsas-elrasoul-ramdan2019", "file": "برنامج قصص الرسول للأطفال - الشيخ محمود المصري - 14 -  حنين الجذع.mp4", "n": 14, "title": "حنين الجذع"},
+        {"archive": "qsas-elrasoul-ramdan2019", "file": "برنامج قصص الرسول للأطفال - الشيخ محمود المصري - 15 -  قصة الرجل الذي استلف  ألف دينار.mp4", "n": 15, "title": "قصة الرجل الذي استلف ألف دينار"},
+        {"archive": "qsas-elrasoul-ramdan2019", "file": "برنامج قصص الرسول للأطفال - الشيخ محمود المصري - 16 -  قصة اصحاب الغار.mp4", "n": 16, "title": "قصة أصحاب الغار"},
+        {"archive": "qsas-elrasoul-ramdan2019", "file": "برنامج قصص الرسول للأطفال - الشيخ محمود المصري - 17 -  قصة السحابة.mp4", "n": 17, "title": "قصة السحابة"}
+      ]
+    },
+    {
+      "id": "kids-ramadan",
+      "group": "stories",
+      "archive": "ramadan-stories-videos-ar",
+      "episodes": [
+        {"file": "سعيد والسحور- قصص رمضانية.mp4", "title": "سعيد والسحور"},
+        {"file": "شلون حل أنور مشكلة لين؟ صدقة رمضان- كوميكس شهر رمضان.mp4", "title": "صدقة رمضان"},
+        {"file": "عصفور غيور في رمضان.mp4", "title": "عصفور غيور في رمضان"},
+        {"file": "قصص وحكايات- خمس حكايا من مجلة رمضان- كوميكس شهر رمضان.mp4", "title": "خمس حكايات من رمضان"},
+        {"file": "كشفناك يا ألمى! بجوار الثلاجة.mp4", "title": "كشفناك يا ألمى!"},
+        {"file": "كوميكس رمضان للأطفال- سر الراحة في رمضان.mp4", "title": "سر الراحة في رمضان"},
+        {"file": "كوميكس شهر رمضان للأطفال ٣- ما علاقة الهلال برمضان.mp4", "title": "ما علاقة الهلال برمضان؟"},
+        {"file": "لماذا أنتظر؟ لقد أذن المغرب- كوميكس شهر رمضان الهادف للأطفال.mp4", "title": "لماذا أنتظر؟ لقد أذّن المغرب"},
+        {"file": "لوحة أنور الجميلة.mp4", "title": "لوحة أنور الجميلة"},
+        {"file": "معتمر أم حاج؟؟.mp4", "title": "معتمر أم حاج؟"},
+        {"file": "هل العلامات السيئة تفسد الصيام؟؟.mp4", "title": "هل العلامات السيئة تفسد الصيام؟"},
+        {"file": "هل انسحبت؟؟ متسابق غريب! - كوميكس شهر رمضان الهادف للأطفال.mp4", "title": "متسابق غريب!"},
+        {"file": "هل مل الله منك؟- كوميكس شهر رمضان الهادف للأطفال.mp4", "title": "هل ملّ الله منك؟"}
+      ]
+    }
+  ]
+}

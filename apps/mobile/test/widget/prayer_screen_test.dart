@@ -3,6 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/domain/prayer.dart';
 import 'package:rattil/domain/text.dart';
 import 'package:rattil/data/location.dart';
+import 'package:rattil/data/settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rattil/ui/city_picker_screen.dart';
 import 'package:rattil/ui/prayer_calendar_screen.dart';
 
@@ -273,6 +275,14 @@ void main() {
     await tester.tap(find.byKey(const Key('dayPrev')));
     await tester.pumpAndSettle();
     expect(find.text('Wednesday 14 January 2026'), findsOneWidget);
+  });
+
+  test('12-hour clock is the default; 24-hour only when chosen (owner 2026-11-20)', () async {
+    SharedPreferences.setMockInitialValues({});
+    final s = SettingsController(await SharedPreferences.getInstance());
+    expect(s.clock12, isTrue);
+    await s.setClock12(false);
+    expect(s.clock12, isFalse);
   });
 
   testWidgets('12-hour clock shows AM/PM (ص/م in Arabic)', (tester) async {
