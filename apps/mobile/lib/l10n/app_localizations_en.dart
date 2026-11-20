@@ -1853,7 +1853,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get offlineSavedDelete => 'Saved on the phone — tap to delete';
 
   @override
+  String get parentLockAge13plus => '13 or older';
+
+  @override
+  String get parentLockAgeAsk => 'Choose your age group';
+
+  @override
+  String get parentLockAgeTitle => 'Before you open videos';
+
+  @override
+  String get parentLockAgeUnder13 => 'Under 13';
+
+  @override
   String get parentLockAnswer => 'Answer';
+
+  @override
+  String get parentLockBack => 'Back to children\'s videos';
 
   @override
   String parentLockChallenge(String a, String b) {
@@ -1873,8 +1888,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get parentLockForgot => 'Forgot the PIN?';
 
   @override
+  String get parentLockHandOver => 'Please hand the phone to a parent to choose the PIN.';
+
+  @override
   String get parentLockIntro =>
       'Videos and short clips come from YouTube and Instagram, so they are locked for children. A parent opens them with a PIN.';
+
+  @override
+  String get parentLockKidsNote => 'These are the kids section videos. A parent opens the other videos with the PIN.';
+
+  @override
+  String get parentLockKidsTitle => 'Videos for children';
 
   @override
   String get parentLockLockNow => 'Lock videos';
@@ -1884,6 +1908,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get parentLockNext => 'Next';
+
+  @override
+  String get parentLockParentOpen => 'Parent: open all videos';
 
   @override
   String get parentLockPin => 'PIN';

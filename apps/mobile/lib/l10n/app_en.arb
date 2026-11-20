@@ -2703,9 +2703,29 @@
   "@offlineSavedDelete": {
     "description": "shared key \"offline.savedDelete\""
   },
+  "parentLockAge13plus": "13 or older",
+  "@parentLockAge13plus": {
+    "description": "shared key \"parentLock.age13plus\""
+  },
+  "parentLockAgeAsk": "Choose your age group",
+  "@parentLockAgeAsk": {
+    "description": "shared key \"parentLock.ageAsk\""
+  },
+  "parentLockAgeTitle": "Before you open videos",
+  "@parentLockAgeTitle": {
+    "description": "shared key \"parentLock.ageTitle\""
+  },
+  "parentLockAgeUnder13": "Under 13",
+  "@parentLockAgeUnder13": {
+    "description": "shared key \"parentLock.ageUnder13\""
+  },
   "parentLockAnswer": "Answer",
   "@parentLockAnswer": {
     "description": "shared key \"parentLock.answer\""
+  },
+  "parentLockBack": "Back to children's videos",
+  "@parentLockBack": {
+    "description": "shared key \"parentLock.back\""
   },
   "parentLockChallenge": "Question for adults: what is {a} × {b}?",
   "@parentLockChallenge": {
@@ -2735,9 +2755,21 @@
   "@parentLockForgot": {
     "description": "shared key \"parentLock.forgot\""
   },
+  "parentLockHandOver": "Please hand the phone to a parent to choose the PIN.",
+  "@parentLockHandOver": {
+    "description": "shared key \"parentLock.handOver\""
+  },
   "parentLockIntro": "Videos and short clips come from YouTube and Instagram, so they are locked for children. A parent opens them with a PIN.",
   "@parentLockIntro": {
     "description": "shared key \"parentLock.intro\""
+  },
+  "parentLockKidsNote": "These are the kids section videos. A parent opens the other videos with the PIN.",
+  "@parentLockKidsNote": {
+    "description": "shared key \"parentLock.kidsNote\""
+  },
+  "parentLockKidsTitle": "Videos for children",
+  "@parentLockKidsTitle": {
+    "description": "shared key \"parentLock.kidsTitle\""
   },
   "parentLockLockNow": "Lock videos",
   "@parentLockLockNow": {
@@ -2750,6 +2782,10 @@
   "parentLockNext": "Next",
   "@parentLockNext": {
     "description": "shared key \"parentLock.next\""
+  },
+  "parentLockParentOpen": "Parent: open all videos",
+  "@parentLockParentOpen": {
+    "description": "shared key \"parentLock.parentOpen\""
   },
   "parentLockPin": "PIN",
   "@parentLockPin": {

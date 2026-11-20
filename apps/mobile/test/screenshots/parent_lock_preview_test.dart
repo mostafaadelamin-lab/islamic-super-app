@@ -11,6 +11,16 @@ import 'package:rattil/domain/parent_lock.dart';
 
 import '../helpers.dart';
 
+/// The kids list loads from the asset bundle (real I/O): let it finish.
+Future<void> settleKids(WidgetTester tester) async {
+  for (var i = 0; i < 30 && find.byType(CircularProgressIndicator).evaluate().isNotEmpty; i++) {
+    await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 100)));
+    await tester.pump();
+  }
+  await tester.pump(const Duration(milliseconds: 500));
+  await tester.pump(const Duration(milliseconds: 500));
+}
+
 void main() {
   setUpAll(loadContent);
   final outDir = Directory('${Platform.environment['RATTIL_SCREENSHOT_DIR'] ?? 'build/screenshots'}/parent-lock');
@@ -45,25 +55,41 @@ void main() {
     tester.view.devicePixelRatio = 1;
     await pumpApp(tester, size: size, prefs: prefs, videosUnlocked: false);
     await tester.tap(find.text('فيديوهات').last);
-    await tester.pumpAndSettle();
+    await settleKids(tester);
   }
 
-  testWidgets('preview: first time, parent chooses a PIN', (tester) async {
+  testWidgets('preview: first time, neutral age group question', (tester) async {
     await openVideos(tester, {});
-    await shot(tester, '01-set-pin');
+    await shot(tester, '00-age');
+  });
+
+  testWidgets('preview: under 13, kids videos only', (tester) async {
+    await openVideos(tester, {'parentLock.age': 'child'});
+    await shot(tester, '01-kids-videos');
+  });
+
+  testWidgets('preview: under 13, parent chooses a PIN', (tester) async {
+    await openVideos(tester, {'parentLock.age': 'child'});
+    await tester.tap(find.byKey(const Key('parentGate.parent')));
+    await tester.pump(const Duration(milliseconds: 500));
+    await shot(tester, '02-set-pin');
   });
 
   testWidgets('preview: locked, enter the PIN', (tester) async {
-    await openVideos(tester, {'parentLock.pin': hashPin('1234')});
+    await openVideos(tester, {'parentLock.age': 'child', 'parentLock.pin': hashPin('1234')});
+    await tester.tap(find.byKey(const Key('parentGate.parent')));
+    await tester.pump(const Duration(milliseconds: 500));
     await tester.enterText(find.byKey(const Key('parentGate.pin')), '12');
-    await tester.pumpAndSettle();
-    await shot(tester, '02-enter-pin');
+    await tester.pump(const Duration(milliseconds: 500));
+    await shot(tester, '03-enter-pin');
   });
 
   testWidgets('preview: forgot the PIN', (tester) async {
-    await openVideos(tester, {'parentLock.pin': hashPin('1234')});
+    await openVideos(tester, {'parentLock.age': 'child', 'parentLock.pin': hashPin('1234')});
+    await tester.tap(find.byKey(const Key('parentGate.parent')));
+    await tester.pump(const Duration(milliseconds: 500));
     await tester.tap(find.byKey(const Key('parentGate.forgot')));
-    await tester.pumpAndSettle();
-    await shot(tester, '03-forgot');
+    await tester.pump(const Duration(milliseconds: 500));
+    await shot(tester, '04-forgot');
   });
 }

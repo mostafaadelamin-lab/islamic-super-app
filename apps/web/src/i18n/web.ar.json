@@ -1035,5 +1035,14 @@
   "parentLock.answer": "الإجابة",
   "parentLock.challengeWrong": "الإجابة غلط",
   "parentLock.reset": "اختار رقم جديد",
-  "parentLock.lockNow": "اقفل الفيديوهات"
+  "parentLock.lockNow": "اقفل الفيديوهات",
+  "parentLock.ageTitle": "قبل ما تفتح الفيديوهات",
+  "parentLock.ageAsk": "اختر فئتك العمرية",
+  "parentLock.handOver": "ادّي الموبايل لولي الأمر عشان يختار الرقم السري.",
+  "parentLock.kidsTitle": "فيديوهات للأطفال",
+  "parentLock.kidsNote": "دي فيديوهات قسم الأطفال. باقي الفيديوهات بيفتحها ولي الأمر بالرقم السري.",
+  "parentLock.parentOpen": "ولي الأمر: افتح كل الفيديوهات",
+  "parentLock.back": "رجوع لفيديوهات الأطفال",
+  "parentLock.ageUnder13": "أقل من 13",
+  "parentLock.age13plus": "13 أو أكثر"
 }

@@ -3368,11 +3368,41 @@ abstract class AppLocalizations {
   /// **'Saved on the phone — tap to delete'**
   String get offlineSavedDelete;
 
+  /// shared key "parentLock.age13plus"
+  ///
+  /// In en, this message translates to:
+  /// **'13 or older'**
+  String get parentLockAge13plus;
+
+  /// shared key "parentLock.ageAsk"
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your age group'**
+  String get parentLockAgeAsk;
+
+  /// shared key "parentLock.ageTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Before you open videos'**
+  String get parentLockAgeTitle;
+
+  /// shared key "parentLock.ageUnder13"
+  ///
+  /// In en, this message translates to:
+  /// **'Under 13'**
+  String get parentLockAgeUnder13;
+
   /// shared key "parentLock.answer"
   ///
   /// In en, this message translates to:
   /// **'Answer'**
   String get parentLockAnswer;
+
+  /// shared key "parentLock.back"
+  ///
+  /// In en, this message translates to:
+  /// **'Back to children\'s videos'**
+  String get parentLockBack;
 
   /// shared key "parentLock.challenge"
   ///
@@ -3404,11 +3434,29 @@ abstract class AppLocalizations {
   /// **'Forgot the PIN?'**
   String get parentLockForgot;
 
+  /// shared key "parentLock.handOver"
+  ///
+  /// In en, this message translates to:
+  /// **'Please hand the phone to a parent to choose the PIN.'**
+  String get parentLockHandOver;
+
   /// shared key "parentLock.intro"
   ///
   /// In en, this message translates to:
   /// **'Videos and short clips come from YouTube and Instagram, so they are locked for children. A parent opens them with a PIN.'**
   String get parentLockIntro;
+
+  /// shared key "parentLock.kidsNote"
+  ///
+  /// In en, this message translates to:
+  /// **'These are the kids section videos. A parent opens the other videos with the PIN.'**
+  String get parentLockKidsNote;
+
+  /// shared key "parentLock.kidsTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Videos for children'**
+  String get parentLockKidsTitle;
 
   /// shared key "parentLock.lockNow"
   ///
@@ -3427,6 +3475,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Next'**
   String get parentLockNext;
+
+  /// shared key "parentLock.parentOpen"
+  ///
+  /// In en, this message translates to:
+  /// **'Parent: open all videos'**
+  String get parentLockParentOpen;
 
   /// shared key "parentLock.pin"
   ///

@@ -1019,5 +1019,14 @@
   "parentLock.answer": "Answer",
   "parentLock.challengeWrong": "Wrong answer",
   "parentLock.reset": "Choose a new PIN",
-  "parentLock.lockNow": "Lock videos"
+  "parentLock.lockNow": "Lock videos",
+  "parentLock.ageTitle": "Before you open videos",
+  "parentLock.ageAsk": "Choose your age group",
+  "parentLock.handOver": "Please hand the phone to a parent to choose the PIN.",
+  "parentLock.kidsTitle": "Videos for children",
+  "parentLock.kidsNote": "These are the kids section videos. A parent opens the other videos with the PIN.",
+  "parentLock.parentOpen": "Parent: open all videos",
+  "parentLock.back": "Back to children's videos",
+  "parentLock.ageUnder13": "Under 13",
+  "parentLock.age13plus": "13 or older"
 }

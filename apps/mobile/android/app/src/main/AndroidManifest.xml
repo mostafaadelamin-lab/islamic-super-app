@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Recitation audio streaming (everyayah.com, HTTPS) and the optional account sync (API.md). -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- Adhan notifications (flutter_local_notifications): show, keep after reboot, fire on time. -->
@@ -13,6 +14,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <!-- No advertising ID (no ads, kids audience / Google Play Families): drop it even if a library adds it. -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
     <application
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"

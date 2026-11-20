@@ -6,6 +6,7 @@
 import { readStorage, removeStorage, writeStorage } from "./storage";
 
 export const PARENT_PIN_KEY = "rattil.parentLock.pin";
+export const PARENT_AGE_KEY = "rattil.parentLock.age";
 
 export const isValidPin = (pin: string): boolean => /^\d{4}$/.test(pin);
 
@@ -34,3 +35,11 @@ export const isParentLockOpen = (): boolean => open;
 export const setParentLockOpen = (v: boolean): void => {
   open = v;
 };
+
+/** Neutral age-group screen (owner 2026-11-20: «أقل من 13» / «13 أو أكثر»). Stored only in this browser. */
+export type ParentAge = "adult" | "child";
+export const readParentAge = (): ParentAge | null => {
+  const v = readStorage(PARENT_AGE_KEY);
+  return v === "adult" || v === "child" ? v : null;
+};
+export const saveParentAge = (v: ParentAge): boolean => writeStorage(PARENT_AGE_KEY, v);

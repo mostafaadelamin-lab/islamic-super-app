@@ -1844,7 +1844,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get offlineSavedDelete => 'محفوظة على الهاتف — اضغط للحذف';
 
   @override
+  String get parentLockAge13plus => '13 أو أكثر';
+
+  @override
+  String get parentLockAgeAsk => 'اختر فئتك العمرية';
+
+  @override
+  String get parentLockAgeTitle => 'قبل ما تفتح الفيديوهات';
+
+  @override
+  String get parentLockAgeUnder13 => 'أقل من 13';
+
+  @override
   String get parentLockAnswer => 'الإجابة';
+
+  @override
+  String get parentLockBack => 'رجوع لفيديوهات الأطفال';
 
   @override
   String parentLockChallenge(String a, String b) {
@@ -1864,8 +1879,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get parentLockForgot => 'نسيت الرقم؟';
 
   @override
+  String get parentLockHandOver => 'ادّي الموبايل لولي الأمر عشان يختار الرقم السري.';
+
+  @override
   String get parentLockIntro =>
       'الفيديوهات والمقاطع القصيرة جاية من YouTube و Instagram، فهي مقفولة للأطفال ويفتحها ولي الأمر برقم سري.';
+
+  @override
+  String get parentLockKidsNote => 'دي فيديوهات قسم الأطفال. باقي الفيديوهات بيفتحها ولي الأمر بالرقم السري.';
+
+  @override
+  String get parentLockKidsTitle => 'فيديوهات للأطفال';
 
   @override
   String get parentLockLockNow => 'اقفل الفيديوهات';
@@ -1875,6 +1899,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get parentLockNext => 'التالي';
+
+  @override
+  String get parentLockParentOpen => 'ولي الأمر: افتح كل الفيديوهات';
 
   @override
   String get parentLockPin => 'الرقم السري';

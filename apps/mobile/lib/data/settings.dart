@@ -45,6 +45,13 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Neutral age screen before videos: 'adult' (13+, no PIN) or 'child' (parent PIN); null = not asked yet.
+  String? get parentLockAge => _prefs.getString('parentLock.age');
+  Future<void> setParentLockAge(String v) async {
+    await _prefs.setString('parentLock.age', v);
+    notifyListeners();
+  }
+
   /// Reels reviewer mode: also show reels that have not been religiously reviewed yet.
   bool get reelsReviewer => _prefs.getBool('reelsReviewer') ?? false;
   Future<void> setReelsReviewer(bool v) async {
