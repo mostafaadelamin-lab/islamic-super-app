@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -5,6 +6,8 @@ import '../app_services.dart';
 import '../domain/kids.dart';
 import '../domain/quran.dart';
 import '../domain/stories.dart';
+import '../domain/text.dart';
+import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import 'adaptive.dart';
 import 'audio_widgets.dart';
@@ -119,7 +122,7 @@ class _RuqyahList extends StatelessWidget {
                           context.num(range.to),
                         ),
                 ),
-                RuqyahDua() => _Dua(key: Key('ruqyah.item.$i'), dua: item),
+                RuqyahDua() => _Dua(key: Key('ruqyah.item.$i'), dua: item, index: i),
               },
           ],
         );
@@ -167,8 +170,8 @@ class _QuranPassage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg),
                 child: QuranText(q.text(const AyahRef(1, 1)), textAlign: TextAlign.center),
               ),
-            for (var a = range.from; a <= range.to; a++)
-              _Verse(ref: AyahRef(range.surah, a), playing: playingRef == AyahRef(range.surah, a)),
+            // One flowing Mushaf paragraph, ayah after ayah (owner 2026-11-20: not one ayah per row).
+            _FlowingVerses(range: range, playingRef: playingRef),
           ],
         ),
       ),
@@ -176,72 +179,188 @@ class _QuranPassage extends StatelessWidget {
   }
 }
 
-class _Verse extends StatelessWidget {
-  const _Verse({required this.ref, required this.playing});
-  final AyahRef ref;
-  final bool playing;
+/// The ayat of [range] as one justified paragraph; the recited ayah is tinted, a tap opens the ayah sheet.
+class _FlowingVerses extends StatefulWidget {
+  const _FlowingVerses({required this.range, required this.playingRef});
+  final StoryRange range;
+  final AyahRef? playingRef;
+
+  @override
+  State<_FlowingVerses> createState() => _FlowingVersesState();
+}
+
+class _FlowingVersesState extends State<_FlowingVerses> {
+  final _taps = <int, TapGestureRecognizer>{};
+
+  TapGestureRecognizer _tap(AyahRef ref) => _taps.putIfAbsent(
+    ref.ayah,
+    () => TapGestureRecognizer()..onTap = () => showAyahSheet(context, ref, readAsList: false),
+  );
+
+  @override
+  void dispose() {
+    for (final r in _taps.values) {
+      r.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final s = context.services;
     final scheme = Theme.of(context).colorScheme;
-    final tile = InkWell(
-      key: Key('ruqyahVerse-${ref.surah}-${ref.ayah}'),
-      onTap: () => showAyahSheet(context, ref, readAsList: false),
-      child: Container(
-        color: playing ? scheme.secondaryContainer : null,
+    final q = s.content.quran;
+    final r = widget.range;
+    final playing = widget.playingRef;
+    if (playing != null && playing.surah == r.surah && playing.ayah >= r.from && playing.ayah <= r.to) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) Scrollable.ensureVisible(context, alignment: 0.3, duration: const Duration(milliseconds: 300));
+      });
+    }
+    return ListenableBuilder(
+      listenable: s.settings,
+      builder: (context, _) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
-        child: QuranText(context.services.content.quran.text(ref), ayahNumber: ref.ayah),
+        child: Text.rich(
+          key: Key('ruqyahFlow-${r.surah}-${r.from}'),
+          TextSpan(
+            children: [
+              for (var a = r.from; a <= r.to; a++)
+                TextSpan(
+                  text: '${s.content.renderMap.forDisplay(q.text(AyahRef(r.surah, a)))}\u00A0${ayahMarker(a)} ',
+                  recognizer: _tap(AyahRef(r.surah, a)),
+                  style: playing == AyahRef(r.surah, a) ? TextStyle(backgroundColor: scheme.secondaryContainer) : null,
+                ),
+            ],
+          ),
+          textDirection: TextDirection.rtl,
+          textAlign: TextAlign.justify,
+          style: AppTheme.quran(context, s.settings.quranFontSize),
+        ),
       ),
     );
-    if (!playing) return tile;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (context.mounted) {
-        Scrollable.ensureVisible(context, alignment: 0.3, duration: const Duration(milliseconds: 300));
-      }
-    });
-    return Semantics(selected: true, child: tile);
   }
 }
 
-class _Dua extends StatelessWidget {
-  const _Dua({super.key, required this.dua});
+/// A dua of the ruqyah. One said more than once gets the adhkar counter (owner 2026-11-20): tap the card
+/// or the circle for each time; it turns into a tick when done.
+class _Dua extends StatefulWidget {
+  const _Dua({super.key, required this.dua, required this.index});
   final RuqyahDua dua;
+  final int index;
+
+  @override
+  State<_Dua> createState() => _DuaState();
+}
+
+class _DuaState extends State<_Dua> {
+  int _n = 0;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final dua = widget.dua;
     final audio = dua.audio;
+    final counted = dua.repeat > 1;
+    final done = counted && _n >= dua.repeat;
+    void count() {
+      if (!counted || done) return;
+      HapticFeedback.selectionClick();
+      setState(() => _n++);
+    }
+
+    final body = Padding(
+      padding: const EdgeInsets.all(DesignTokens.spaceLg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(l.ruqyahDua, style: theme.textTheme.titleSmall?.copyWith(color: scheme.primary)),
+          const SizedBox(height: DesignTokens.spaceSm),
+          Text(dua.text, textDirection: TextDirection.rtl, style: duaStyle(context, size: 20)),
+          const SizedBox(height: DesignTokens.spaceSm),
+          Wrap(
+            spacing: DesignTokens.spaceMd,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              if (dua.source.isNotEmpty) Text(dua.source, style: theme.textTheme.bodySmall),
+              if (counted)
+                Text(
+                  l.ruqyahRepeat(context.num(dua.repeat)),
+                  style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+                ),
+            ],
+          ),
+          if (audio != null) ...[
+            const SizedBox(height: DesignTokens.spaceSm),
+            DhikrListenButton(url: audio, compact: true),
+          ],
+          if (counted) ...[
+            const SizedBox(height: DesignTokens.spaceMd),
+            Center(
+              child: Container(
+                key: Key('ruqyah.count.${widget.index}'),
+                width: 96,
+                height: 96,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: done ? scheme.primary : scheme.primaryContainer,
+                  border: Border.all(color: scheme.secondary.withValues(alpha: 0.6), width: 4),
+                  boxShadow: [
+                    BoxShadow(
+                      color: scheme.primary.withValues(alpha: 0.18),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: done
+                    ? RIcon(RIcons.check, size: 40, color: scheme.onPrimary)
+                    : Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            context.num('$_n'),
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w700,
+                              color: scheme.onPrimaryContainer,
+                              height: 1.1,
+                            ),
+                          ),
+                          Text(
+                            '/ ${context.num('${dua.repeat}')}',
+                            style: TextStyle(fontSize: 14, color: scheme.onPrimaryContainer),
+                          ),
+                        ],
+                      ),
+              ),
+            ),
+            const SizedBox(height: DesignTokens.spaceXs),
+            Text(
+              done ? l.adhkarDone : l.adhkarRemaining(context.num(dua.repeat - _n)),
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodySmall,
+            ),
+            if (_n > 0)
+              Center(
+                child: TextButton.icon(
+                  icon: const RIcon(RIcons.reset, size: 18),
+                  label: Text(l.adhkarReset),
+                  onPressed: () => setState(() => _n = 0),
+                ),
+              ),
+          ],
+        ],
+      ),
+    );
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
-      child: Padding(
-        padding: const EdgeInsets.all(DesignTokens.spaceLg),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(l.ruqyahDua, style: theme.textTheme.titleSmall?.copyWith(color: theme.colorScheme.primary)),
-            const SizedBox(height: DesignTokens.spaceSm),
-            Text(dua.text, textDirection: TextDirection.rtl, style: duaStyle(context, size: 20)),
-            const SizedBox(height: DesignTokens.spaceSm),
-            Wrap(
-              spacing: DesignTokens.spaceMd,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                if (dua.source.isNotEmpty) Text(dua.source, style: theme.textTheme.bodySmall),
-                if (dua.repeat > 1)
-                  Text(
-                    l.ruqyahRepeat(context.num(dua.repeat)),
-                    style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
-                  ),
-              ],
-            ),
-            if (audio != null) ...[
-              const SizedBox(height: DesignTokens.spaceSm),
-              DhikrListenButton(url: audio, compact: true),
-            ],
-          ],
-        ),
-      ),
+      color: done ? scheme.surfaceContainer : null,
+      clipBehavior: Clip.antiAlias,
+      child: counted ? InkWell(onTap: done ? null : count, child: body) : body,
     );
   }
 }

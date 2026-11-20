@@ -1570,16 +1570,64 @@ class AppLocalizationsAr extends AppLocalizations {
   String get kidsTeacher => 'المصحف المعلّم للأطفال';
 
   @override
+  String kidsTeacherAyah(String n) {
+    return 'الآية $n';
+  }
+
+  @override
+  String get kidsTeacherBigger => 'تكبير الخط';
+
+  @override
+  String get kidsTeacherHint => 'اضغط على أي كلمة لتسمعها، أو على رقم الآية لتسمعها وحدها.';
+
+  @override
   String get kidsTeacherHusary => 'الحصري (المصحف المعلّم)';
 
   @override
   String get kidsTeacherMinshawy => 'المنشاوي مع ترديد الأطفال';
 
   @override
-  String get kidsTeacherNote => 'اختر السورة: الشيخ يقرأ كل آية ثم يرددها الأطفال، ليتعلم طفلك القراءة الصحيحة.';
+  String get kidsTeacherNext => 'الآية التالية';
+
+  @override
+  String get kidsTeacherNote => 'اختر السورة ليفتح المصحف: الشيخ يقرأ والكلمة تضيء، والطفل يردد وراءه.';
+
+  @override
+  String get kidsTeacherOpen => 'افتح المصحف';
+
+  @override
+  String get kidsTeacherPause => 'إيقاف';
+
+  @override
+  String get kidsTeacherPlay => 'اسمع السورة';
+
+  @override
+  String get kidsTeacherPrev => 'الآية السابقة';
+
+  @override
+  String get kidsTeacherRepeat => 'كرّر الآية ٣ مرات';
+
+  @override
+  String get kidsTeacherSmaller => 'تصغير الخط';
+
+  @override
+  String kidsTeacherStars(String n) {
+    return 'نجومك في هذه السورة: $n';
+  }
 
   @override
   String get kidsTeacherSub => 'الشيخ يقرأ الآية والأطفال يرددون وراءه';
+
+  @override
+  String kidsTeacherSurah(String name) {
+    return 'سورة $name';
+  }
+
+  @override
+  String get kidsTeacherWell => 'أحسنت! ختمت السورة وكسبت نجمة';
+
+  @override
+  String get kidsTeacherWord => 'الكلمة';
 
   @override
   String get kidsTitle => 'الأطفال';

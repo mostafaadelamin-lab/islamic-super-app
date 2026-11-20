@@ -1,5 +1,5 @@
 "use client";
-import { useSyncExternalStore } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import { renderQuranText } from "@/lib/quran-render";
@@ -97,7 +97,12 @@ export function RuqyahView({
                   </p>
                 ) : null}
                 {/* One flowing Mushaf paragraph, ayah after ayah (owner 2026-11-20: not one ayah per row). */}
-                <p className="quran ruqyah-flow" lang="ar" dir="rtl" data-testid={`ruqyah-flow-${p.s}-${p.from}`}>
+                <p
+                  className="quran ruqyah-flow"
+                  lang="ar"
+                  dir="rtl"
+                  data-testid={`ruqyah-flow-${p.s}-${p.from}`}
+                >
                   {p.ayahs.map((text, k) => {
                     const a = p.from + k;
                     const key = `${p.s}:${a}`;
@@ -118,22 +123,65 @@ export function RuqyahView({
             </section>
           );
         }
-        return (
-          <section key={i} className="card" data-testid={`ruqyah-item-${i}`}>
-            <h2 className="section-title">{t(locale, "ruqyah.dua")}</h2>
-            <p className="dua-text" lang="ar" dir="rtl" style={{ fontSize: "1.25em", lineHeight: 1.9 }}>
-              {item.text}
-            </p>
-            <p className="muted small">
-              {item.src}
-              {item.repeat > 1 ? (
-                <strong> · {t(locale, "ruqyah.repeat", { n: n(item.repeat) })}</strong>
-              ) : null}
-            </p>
-            {item.audio ? <audio controls preload="none" src={item.audio} /> : null}
-          </section>
-        );
+        return <DuaCard key={i} locale={locale} index={i} item={item} />;
       })}
     </div>
+  );
+}
+
+/** A dua of the ruqyah; one said more than once gets the adhkar counter (owner 2026-11-20). */
+function DuaCard({
+  locale,
+  index,
+  item,
+}: {
+  locale: Locale;
+  index: number;
+  item: Extract<RuqyahItem, { t: "d" }>;
+}) {
+  const [count, setCount] = useState(0);
+  const n = (v: number): string => localizeDigits(v, locale);
+  const counted = item.repeat > 1;
+  const done = counted && count >= item.repeat;
+  return (
+    <section className={done ? "card dhikr done" : "card"} data-testid={`ruqyah-item-${index}`}>
+      <h2 className="section-title">{t(locale, "ruqyah.dua")}</h2>
+      <p className="dua-text" lang="ar" dir="rtl" style={{ fontSize: "1.25em", lineHeight: 1.9 }}>
+        {item.text}
+      </p>
+      <p className="muted small">
+        {item.src}
+        {counted ? <strong> · {t(locale, "ruqyah.repeat", { n: n(item.repeat) })}</strong> : null}
+      </p>
+      {item.audio ? <audio controls preload="none" src={item.audio} /> : null}
+      {counted ? (
+        <div className="dhikr-foot">
+          <button
+            type="button"
+            className="btn btn-sm"
+            disabled={count === 0}
+            data-testid={`ruqyah-reset-${index}`}
+            onClick={() => setCount(0)}
+          >
+            <Icon name="reset" size={16} /> {t(locale, "adhkar.reset")}
+          </button>
+          <button
+            type="button"
+            className={done ? "counter done" : "counter"}
+            data-testid={`ruqyah-count-${index}`}
+            disabled={done}
+            onClick={() => setCount((c) => c + 1)}
+          >
+            {done ? <Icon name="check" size={18} /> : null}
+            <span className="sr-only">
+              {t(locale, "adhkar.countLabel", { i: n(1), n: n(count), total: n(item.repeat) })}
+            </span>
+            <span aria-hidden="true">
+              {n(count)} / {n(item.repeat)}
+            </span>
+          </button>
+        </div>
+      ) : null}
+    </section>
   );
 }

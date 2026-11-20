@@ -235,7 +235,9 @@ export function KidsMushaf({
       <p className="muted small kids-mushaf-hint">{t(locale, "kids.teacherHint")}</p>
 
       <div className="mushaf-frame kids-page" style={{ ["--k-size" as string]: `${SIZES[size]}px` }}>
-        <div className="kids-surah-band">{t(locale, "kids.teacherSurah", { name: surahName(surah, "ar") })}</div>
+        <div className="kids-surah-band">
+          {t(locale, "kids.teacherSurah", { name: surahName(surah, "ar") })}
+        </div>
         {basmala ? (
           <p className="quran kids-basmala" lang="ar" dir="rtl">
             {renderQuranText(basmala)}

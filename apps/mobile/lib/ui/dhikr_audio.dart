@@ -85,6 +85,9 @@ class JustAudioUrl implements UrlAudio {
 @visibleForTesting
 UrlAudio Function()? debugUrlAudioFactory;
 
+/// A fresh URL player (the test double when one is set).
+UrlAudio newUrlAudio() => (debugUrlAudioFactory ?? JustAudioUrl.new)();
+
 /// The dhikr recording now loaded: plays once to the end (never loops), can be
 /// paused, resumed, sought and stopped from [DhikrPlayerBar].
 class DhikrPlayer extends ChangeNotifier {

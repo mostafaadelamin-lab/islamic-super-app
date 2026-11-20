@@ -129,9 +129,7 @@ function Teacher({ locale }: { locale: Locale }) {
               <span className="tile-icon">{n(s)}</span>
               <span className="tile-text">
                 <strong>{surahName(s, locale)}</strong>
-                {stars[String(s)] ? (
-                  <span className="muted small">⭐ {n(stars[String(s)] ?? 0)}</span>
-                ) : null}
+                {stars[String(s)] ? <span className="muted small">⭐ {n(stars[String(s)] ?? 0)}</span> : null}
               </span>
               <Icon name="quran" />
             </Link>
