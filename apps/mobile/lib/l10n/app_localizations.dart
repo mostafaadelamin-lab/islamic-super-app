@@ -3032,6 +3032,264 @@ abstract class AppLocalizations {
   /// **'Plays from YouTube, needs internet'**
   String get kidsYtNote;
 
+  /// shared key "kidsLearn.books"
+  ///
+  /// In en, this message translates to:
+  /// **'Kids\' book shelf'**
+  String get kidsLearnBooks;
+
+  /// shared key "kidsLearn.booksNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a book and read it page by page. Save a book on the device to read it offline.'**
+  String get kidsLearnBooksNote;
+
+  /// shared key "kidsLearn.booksSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Picture books: adhkar, faith, manners and stories, page by page'**
+  String get kidsLearnBooksSub;
+
+  /// shared key "kidsLearn.boys"
+  ///
+  /// In en, this message translates to:
+  /// **'Boys'**
+  String get kidsLearnBoys;
+
+  /// shared key "kidsLearn.cardDone"
+  ///
+  /// In en, this message translates to:
+  /// **'Said it today'**
+  String get kidsLearnCardDone;
+
+  /// shared key "kidsLearn.cardMark"
+  ///
+  /// In en, this message translates to:
+  /// **'I said this dhikr'**
+  String get kidsLearnCardMark;
+
+  /// shared key "kidsLearn.cards"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhkar cards'**
+  String get kidsLearnCards;
+
+  /// shared key "kidsLearn.cardsSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Picture cards for boys and girls, collect a star each day'**
+  String get kidsLearnCardsSub;
+
+  /// shared key "kidsLearn.cardsToday"
+  ///
+  /// In en, this message translates to:
+  /// **'Your stars today: {n}'**
+  String kidsLearnCardsToday(String n);
+
+  /// shared key "kidsLearn.credit"
+  ///
+  /// In en, this message translates to:
+  /// **'Pictures from {name}'**
+  String kidsLearnCredit(String name);
+
+  /// shared key "kidsLearn.delete"
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the saved copy'**
+  String get kidsLearnDelete;
+
+  /// shared key "kidsLearn.girls"
+  ///
+  /// In en, this message translates to:
+  /// **'Girls'**
+  String get kidsLearnGirls;
+
+  /// shared key "kidsLearn.hadith"
+  ///
+  /// In en, this message translates to:
+  /// **'Memorise a hadith'**
+  String get kidsLearnHadith;
+
+  /// shared key "kidsLearn.hadithNo"
+  ///
+  /// In en, this message translates to:
+  /// **'Hadith {n}'**
+  String kidsLearnHadithNo(String n);
+
+  /// shared key "kidsLearn.hadithNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Memorise one hadith a day. Start with level 1, repeat it until you know it, then tap «Memorised».'**
+  String get kidsLearnHadithNote;
+
+  /// shared key "kidsLearn.hadithSub"
+  ///
+  /// In en, this message translates to:
+  /// **'600 hadith to memorise in four levels'**
+  String get kidsLearnHadithSub;
+
+  /// shared key "kidsLearn.level"
+  ///
+  /// In en, this message translates to:
+  /// **'Level {n}'**
+  String kidsLearnLevel(String n);
+
+  /// shared key "kidsLearn.levelSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Hadith {from} to {to}'**
+  String kidsLearnLevelSub(String from, String to);
+
+  /// shared key "kidsLearn.markMemorized"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap when you know it'**
+  String get kidsLearnMarkMemorized;
+
+  /// shared key "kidsLearn.memorized"
+  ///
+  /// In en, this message translates to:
+  /// **'Memorised'**
+  String get kidsLearnMemorized;
+
+  /// shared key "kidsLearn.next"
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get kidsLearnNext;
+
+  /// shared key "kidsLearn.offline"
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this device'**
+  String get kidsLearnOffline;
+
+  /// shared key "kidsLearn.page"
+  ///
+  /// In en, this message translates to:
+  /// **'Page {n} of {total}'**
+  String kidsLearnPage(String n, String total);
+
+  /// shared key "kidsLearn.pages"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} pages'**
+  String kidsLearnPages(String n);
+
+  /// shared key "kidsLearn.prev"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get kidsLearnPrev;
+
+  /// shared key "kidsLearn.progress"
+  ///
+  /// In en, this message translates to:
+  /// **'Memorised {n} of {total}'**
+  String kidsLearnProgress(String n, String total);
+
+  /// shared key "kidsLearn.reads"
+  ///
+  /// In en, this message translates to:
+  /// **'Repeated {n} times'**
+  String kidsLearnReads(String n);
+
+  /// shared key "kidsLearn.salah"
+  ///
+  /// In en, this message translates to:
+  /// **'Learn salah'**
+  String get kidsLearnSalah;
+
+  /// shared key "kidsLearn.salahSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer steps in pictures'**
+  String get kidsLearnSalahSub;
+
+  /// shared key "kidsLearn.save"
+  ///
+  /// In en, this message translates to:
+  /// **'Save the book on this device'**
+  String get kidsLearnSave;
+
+  /// shared key "kidsLearn.saveFailed"
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the book. Check the connection and try again.'**
+  String get kidsLearnSaveFailed;
+
+  /// shared key "kidsLearn.shelfAdhkar"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhkar and duas'**
+  String get kidsLearnShelfAdhkar;
+
+  /// shared key "kidsLearn.shelfAkhlaq"
+  ///
+  /// In en, this message translates to:
+  /// **'Manners'**
+  String get kidsLearnShelfAkhlaq;
+
+  /// shared key "kidsLearn.shelfAqeedah"
+  ///
+  /// In en, this message translates to:
+  /// **'Faith'**
+  String get kidsLearnShelfAqeedah;
+
+  /// shared key "kidsLearn.shelfFiqh"
+  ///
+  /// In en, this message translates to:
+  /// **'Purity and prayer'**
+  String get kidsLearnShelfFiqh;
+
+  /// shared key "kidsLearn.shelfParents"
+  ///
+  /// In en, this message translates to:
+  /// **'For parents'**
+  String get kidsLearnShelfParents;
+
+  /// shared key "kidsLearn.shelfQuran"
+  ///
+  /// In en, this message translates to:
+  /// **'The Quran'**
+  String get kidsLearnShelfQuran;
+
+  /// shared key "kidsLearn.shelfRamadan"
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan'**
+  String get kidsLearnShelfRamadan;
+
+  /// shared key "kidsLearn.shelfStories"
+  ///
+  /// In en, this message translates to:
+  /// **'Prophets and Seerah'**
+  String get kidsLearnShelfStories;
+
+  /// shared key "kidsLearn.step"
+  ///
+  /// In en, this message translates to:
+  /// **'Step {n} of {total}'**
+  String kidsLearnStep(String n, String total);
+
+  /// shared key "kidsLearn.stepsDone"
+  ///
+  /// In en, this message translates to:
+  /// **'Well done! You finished all the steps'**
+  String get kidsLearnStepsDone;
+
+  /// shared key "kidsLearn.wudu"
+  ///
+  /// In en, this message translates to:
+  /// **'Learn wudu'**
+  String get kidsLearnWudu;
+
+  /// shared key "kidsLearn.wuduSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Wudu steps in pictures'**
+  String get kidsLearnWuduSub;
+
   /// shared key "library.allRiwayat"
   ///
   /// In en, this message translates to:

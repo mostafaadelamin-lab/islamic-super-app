@@ -1660,6 +1660,155 @@ class AppLocalizationsAr extends AppLocalizations {
   String get kidsYtNote => 'تُعرض من يوتيوب وتحتاج إنترنت';
 
   @override
+  String get kidsLearnBooks => 'مكتبة كتب الأطفال';
+
+  @override
+  String get kidsLearnBooksNote => 'اختر كتابًا واقرأه صفحة صفحة. احفظ الكتاب على الجهاز ليُقرأ بدون إنترنت.';
+
+  @override
+  String get kidsLearnBooksSub => 'كتب مصورة: أذكار وعقيدة وأخلاق وقصص، تُقرأ صفحة صفحة';
+
+  @override
+  String get kidsLearnBoys => 'بنين';
+
+  @override
+  String get kidsLearnCardDone => 'قلته اليوم';
+
+  @override
+  String get kidsLearnCardMark => 'قلت هذا الذكر';
+
+  @override
+  String get kidsLearnCards => 'بطاقات الأذكار';
+
+  @override
+  String get kidsLearnCardsSub => 'بطاقات مصورة للأولاد والبنات، واجمع نجمة كل يوم';
+
+  @override
+  String kidsLearnCardsToday(String n) {
+    return 'نجومك اليوم: $n';
+  }
+
+  @override
+  String kidsLearnCredit(String name) {
+    return 'الصور من $name';
+  }
+
+  @override
+  String get kidsLearnDelete => 'احذف النسخة المحفوظة';
+
+  @override
+  String get kidsLearnGirls => 'بنات';
+
+  @override
+  String get kidsLearnHadith => 'احفظ حديث';
+
+  @override
+  String kidsLearnHadithNo(String n) {
+    return 'الحديث $n';
+  }
+
+  @override
+  String get kidsLearnHadithNote => 'احفظ حديثًا كل يوم. ابدأ بالمستوى الأول، وكرر الحديث حتى تحفظه ثم اضغط «حفظته».';
+
+  @override
+  String get kidsLearnHadithSub => '٦٠٠ حديث للحفظ في أربعة مستويات';
+
+  @override
+  String kidsLearnLevel(String n) {
+    return 'المستوى $n';
+  }
+
+  @override
+  String kidsLearnLevelSub(String from, String to) {
+    return 'الأحاديث من $from إلى $to';
+  }
+
+  @override
+  String get kidsLearnMarkMemorized => 'اضغط عندما تحفظه';
+
+  @override
+  String get kidsLearnMemorized => 'حفظته';
+
+  @override
+  String get kidsLearnNext => 'التالي';
+
+  @override
+  String get kidsLearnOffline => 'محفوظ على الجهاز';
+
+  @override
+  String kidsLearnPage(String n, String total) {
+    return 'صفحة $n من $total';
+  }
+
+  @override
+  String kidsLearnPages(String n) {
+    return '$n صفحة';
+  }
+
+  @override
+  String get kidsLearnPrev => 'السابق';
+
+  @override
+  String kidsLearnProgress(String n, String total) {
+    return 'حفظت $n من $total';
+  }
+
+  @override
+  String kidsLearnReads(String n) {
+    return 'كررته $n مرة';
+  }
+
+  @override
+  String get kidsLearnSalah => 'تعلّم الصلاة';
+
+  @override
+  String get kidsLearnSalahSub => 'خطوات الصلاة بالصور';
+
+  @override
+  String get kidsLearnSave => 'احفظ الكتاب على الجهاز';
+
+  @override
+  String get kidsLearnSaveFailed => 'تعذّر حفظ الكتاب. تأكد من الاتصال بالإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get kidsLearnShelfAdhkar => 'الأذكار والأدعية';
+
+  @override
+  String get kidsLearnShelfAkhlaq => 'الأخلاق والآداب';
+
+  @override
+  String get kidsLearnShelfAqeedah => 'العقيدة والإيمان';
+
+  @override
+  String get kidsLearnShelfFiqh => 'الطهارة والصلاة';
+
+  @override
+  String get kidsLearnShelfParents => 'للآباء والأمهات';
+
+  @override
+  String get kidsLearnShelfQuran => 'القرآن الكريم';
+
+  @override
+  String get kidsLearnShelfRamadan => 'رمضان';
+
+  @override
+  String get kidsLearnShelfStories => 'قصص الأنبياء والسيرة';
+
+  @override
+  String kidsLearnStep(String n, String total) {
+    return 'الخطوة $n من $total';
+  }
+
+  @override
+  String get kidsLearnStepsDone => 'أحسنت! أتممت كل الخطوات';
+
+  @override
+  String get kidsLearnWudu => 'تعلّم الوضوء';
+
+  @override
+  String get kidsLearnWuduSub => 'خطوات الوضوء بالصور';
+
+  @override
   String get libraryAllRiwayat => 'كل الروايات';
 
   @override

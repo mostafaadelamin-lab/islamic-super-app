@@ -2441,6 +2441,240 @@
   "@kidsYtNote": {
     "description": "shared key \"kids.ytNote\""
   },
+  "kidsLearnBooks": "Kids' book shelf",
+  "@kidsLearnBooks": {
+    "description": "shared key \"kidsLearn.books\""
+  },
+  "kidsLearnBooksNote": "Pick a book and read it page by page. Save a book on the device to read it offline.",
+  "@kidsLearnBooksNote": {
+    "description": "shared key \"kidsLearn.booksNote\""
+  },
+  "kidsLearnBooksSub": "Picture books: adhkar, faith, manners and stories, page by page",
+  "@kidsLearnBooksSub": {
+    "description": "shared key \"kidsLearn.booksSub\""
+  },
+  "kidsLearnBoys": "Boys",
+  "@kidsLearnBoys": {
+    "description": "shared key \"kidsLearn.boys\""
+  },
+  "kidsLearnCardDone": "Said it today",
+  "@kidsLearnCardDone": {
+    "description": "shared key \"kidsLearn.cardDone\""
+  },
+  "kidsLearnCardMark": "I said this dhikr",
+  "@kidsLearnCardMark": {
+    "description": "shared key \"kidsLearn.cardMark\""
+  },
+  "kidsLearnCards": "Adhkar cards",
+  "@kidsLearnCards": {
+    "description": "shared key \"kidsLearn.cards\""
+  },
+  "kidsLearnCardsSub": "Picture cards for boys and girls, collect a star each day",
+  "@kidsLearnCardsSub": {
+    "description": "shared key \"kidsLearn.cardsSub\""
+  },
+  "kidsLearnCardsToday": "Your stars today: {n}",
+  "@kidsLearnCardsToday": {
+    "description": "shared key \"kidsLearn.cardsToday\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "kidsLearnCredit": "Pictures from {name}",
+  "@kidsLearnCredit": {
+    "description": "shared key \"kidsLearn.credit\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "kidsLearnDelete": "Delete the saved copy",
+  "@kidsLearnDelete": {
+    "description": "shared key \"kidsLearn.delete\""
+  },
+  "kidsLearnGirls": "Girls",
+  "@kidsLearnGirls": {
+    "description": "shared key \"kidsLearn.girls\""
+  },
+  "kidsLearnHadith": "Memorise a hadith",
+  "@kidsLearnHadith": {
+    "description": "shared key \"kidsLearn.hadith\""
+  },
+  "kidsLearnHadithNo": "Hadith {n}",
+  "@kidsLearnHadithNo": {
+    "description": "shared key \"kidsLearn.hadithNo\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "kidsLearnHadithNote": "Memorise one hadith a day. Start with level 1, repeat it until you know it, then tap «Memorised».",
+  "@kidsLearnHadithNote": {
+    "description": "shared key \"kidsLearn.hadithNote\""
+  },
+  "kidsLearnHadithSub": "600 hadith to memorise in four levels",
+  "@kidsLearnHadithSub": {
+    "description": "shared key \"kidsLearn.hadithSub\""
+  },
+  "kidsLearnLevel": "Level {n}",
+  "@kidsLearnLevel": {
+    "description": "shared key \"kidsLearn.level\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "kidsLearnLevelSub": "Hadith {from} to {to}",
+  "@kidsLearnLevelSub": {
+    "description": "shared key \"kidsLearn.levelSub\"",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "kidsLearnMarkMemorized": "Tap when you know it",
+  "@kidsLearnMarkMemorized": {
+    "description": "shared key \"kidsLearn.markMemorized\""
+  },
+  "kidsLearnMemorized": "Memorised",
+  "@kidsLearnMemorized": {
+    "description": "shared key \"kidsLearn.memorized\""
+  },
+  "kidsLearnNext": "Next",
+  "@kidsLearnNext": {
+    "description": "shared key \"kidsLearn.next\""
+  },
+  "kidsLearnOffline": "Saved on this device",
+  "@kidsLearnOffline": {
+    "description": "shared key \"kidsLearn.offline\""
+  },
+  "kidsLearnPage": "Page {n} of {total}",
+  "@kidsLearnPage": {
+    "description": "shared key \"kidsLearn.page\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "kidsLearnPages": "{n} pages",
+  "@kidsLearnPages": {
+    "description": "shared key \"kidsLearn.pages\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "kidsLearnPrev": "Previous",
+  "@kidsLearnPrev": {
+    "description": "shared key \"kidsLearn.prev\""
+  },
+  "kidsLearnProgress": "Memorised {n} of {total}",
+  "@kidsLearnProgress": {
+    "description": "shared key \"kidsLearn.progress\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "kidsLearnReads": "Repeated {n} times",
+  "@kidsLearnReads": {
+    "description": "shared key \"kidsLearn.reads\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "kidsLearnSalah": "Learn salah",
+  "@kidsLearnSalah": {
+    "description": "shared key \"kidsLearn.salah\""
+  },
+  "kidsLearnSalahSub": "Prayer steps in pictures",
+  "@kidsLearnSalahSub": {
+    "description": "shared key \"kidsLearn.salahSub\""
+  },
+  "kidsLearnSave": "Save the book on this device",
+  "@kidsLearnSave": {
+    "description": "shared key \"kidsLearn.save\""
+  },
+  "kidsLearnSaveFailed": "Could not save the book. Check the connection and try again.",
+  "@kidsLearnSaveFailed": {
+    "description": "shared key \"kidsLearn.saveFailed\""
+  },
+  "kidsLearnShelfAdhkar": "Adhkar and duas",
+  "@kidsLearnShelfAdhkar": {
+    "description": "shared key \"kidsLearn.shelfAdhkar\""
+  },
+  "kidsLearnShelfAkhlaq": "Manners",
+  "@kidsLearnShelfAkhlaq": {
+    "description": "shared key \"kidsLearn.shelfAkhlaq\""
+  },
+  "kidsLearnShelfAqeedah": "Faith",
+  "@kidsLearnShelfAqeedah": {
+    "description": "shared key \"kidsLearn.shelfAqeedah\""
+  },
+  "kidsLearnShelfFiqh": "Purity and prayer",
+  "@kidsLearnShelfFiqh": {
+    "description": "shared key \"kidsLearn.shelfFiqh\""
+  },
+  "kidsLearnShelfParents": "For parents",
+  "@kidsLearnShelfParents": {
+    "description": "shared key \"kidsLearn.shelfParents\""
+  },
+  "kidsLearnShelfQuran": "The Quran",
+  "@kidsLearnShelfQuran": {
+    "description": "shared key \"kidsLearn.shelfQuran\""
+  },
+  "kidsLearnShelfRamadan": "Ramadan",
+  "@kidsLearnShelfRamadan": {
+    "description": "shared key \"kidsLearn.shelfRamadan\""
+  },
+  "kidsLearnShelfStories": "Prophets and Seerah",
+  "@kidsLearnShelfStories": {
+    "description": "shared key \"kidsLearn.shelfStories\""
+  },
+  "kidsLearnStep": "Step {n} of {total}",
+  "@kidsLearnStep": {
+    "description": "shared key \"kidsLearn.step\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "kidsLearnStepsDone": "Well done! You finished all the steps",
+  "@kidsLearnStepsDone": {
+    "description": "shared key \"kidsLearn.stepsDone\""
+  },
+  "kidsLearnWudu": "Learn wudu",
+  "@kidsLearnWudu": {
+    "description": "shared key \"kidsLearn.wudu\""
+  },
+  "kidsLearnWuduSub": "Wudu steps in pictures",
+  "@kidsLearnWuduSub": {
+    "description": "shared key \"kidsLearn.wuduSub\""
+  },
   "libraryAllRiwayat": "All riwayat",
   "@libraryAllRiwayat": {
     "description": "shared key \"library.allRiwayat\""

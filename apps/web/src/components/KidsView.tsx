@@ -9,6 +9,7 @@ import { KIDS, type KidsEpisode, type KidsSeries } from "@/lib/kids";
 import { readStars } from "@/lib/teacher";
 import { embedVideoUrl } from "@/lib/videos";
 import { Icon, type IconName } from "./Icon";
+import { KidsLearnTiles } from "./KidsLearn";
 import { PlayerClose } from "./PlayerClose";
 
 const SECONDS_PER_MINUTE = 60;
@@ -251,6 +252,7 @@ export function KidsView({ locale }: { locale: Locale }) {
             </button>
           </li>
         ))}
+        <KidsLearnTiles locale={locale} />
         <li>
           <Link className="tile tile-sm" href={href(locale, "kids/ruqyah")} data-testid="kids-tab-ruqyah">
             <span className="tile-icon">

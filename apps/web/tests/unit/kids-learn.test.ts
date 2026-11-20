@@ -1,0 +1,60 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import { LEARN, bookById, onShelf, shelfKey } from "@/lib/kids-learn";
+import {
+  bookPageUrl,
+  levelCount,
+  readCardsToday,
+  readMemorized,
+  todayKey,
+  writeCardsToday,
+  writeMemorized,
+} from "@/lib/kids-learn-store";
+import { t } from "@/lib/i18n";
+
+const PUBLIC = join(__dirname, "../../public");
+
+describe("kids learning corner", () => {
+  it("600 hadith in four contiguous levels, no private-use glyphs", () => {
+    expect(LEARN.hadith).toHaveLength(600);
+    const lv = LEARN.hadithLevels;
+    expect(lv.map((l) => l.level)).toEqual([1, 2, 3, 4]);
+    expect(lv[0]?.from).toBe(1);
+    expect(lv.at(-1)?.to).toBe(600);
+    expect(lv.reduce((a, l) => a + levelCount(l), 0)).toBe(600);
+    for (const h of LEARN.hadith) {
+      expect(h.trim().length).toBeGreaterThan(0);
+      expect(/[-]/.test(h)).toBe(false);
+    }
+  });
+
+  it("every shelf has books with a bundled cover and a translated title", () => {
+    for (const s of LEARN.shelves) {
+      expect(onShelf(s).length).toBeGreaterThan(0);
+      expect(t("ar", shelfKey(s))).not.toBe(shelfKey(s));
+      expect(t("en", shelfKey(s))).not.toBe(shelfKey(s));
+    }
+    for (const b of LEARN.books) {
+      expect(existsSync(join(PUBLIC, "kids/covers", `${b.id}.webp`))).toBe(true);
+      expect(bookPageUrl(LEARN.booksBase, b, 1)).toBe(`https://rattilwasalli.com/kids-books/${b.id}/1.webp`);
+    }
+    expect(bookById(LEARN.books[0]!.id)).toBe(LEARN.books[0]);
+  });
+
+  it("cards and steps pictures are bundled", () => {
+    for (const p of [...LEARN.wudu, ...LEARN.salah]) {
+      expect(existsSync(join(PUBLIC, "kids/wudu", `${p}.webp`))).toBe(true);
+    }
+    for (const p of LEARN.cards) {
+      for (const e of ["b", "g"]) expect(existsSync(join(PUBLIC, "kids/cards", `${e}${p}.webp`))).toBe(true);
+    }
+  });
+
+  it("memorised hadith and today's cards are kept in this browser", () => {
+    writeMemorized(new Set([3, 1]));
+    expect([...readMemorized()]).toEqual([1, 3]);
+    writeCardsToday(new Set([5]));
+    expect([...readCardsToday()]).toEqual([5]);
+    expect(todayKey(new Date(2026, 10, 20))).toBe("2026-11-20");
+  });
+});
