@@ -1495,6 +1495,253 @@ input[type="radio"] {
 .ayah .tafsir {
   margin-top: var(--space-md);
 }
+/* Ayah studies (owner 2026-11-20): tabs (tafsir, gharib, i'rab, sarf, balagha, fawa'id) and the tafsir books */
+.study-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: var(--space-sm);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.study-tab {
+  flex: 1 0 auto;
+  min-height: 36px;
+  padding: 0 var(--space-sm);
+  border: 0;
+  border-radius: calc(var(--radius-md) - 4px);
+  background: transparent;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.study-tab.on {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 600;
+}
+.tafsir-books {
+  display: flex;
+  gap: 6px;
+  margin-bottom: var(--space-sm);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.tafsir-books .chip {
+  flex: none;
+  min-height: 32px;
+  font-size: var(--font-size-sm);
+}
+.tafsir-books .chip.on {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+.tafsir-quote {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.study-range {
+  margin: 0 0 var(--space-xs);
+}
+.tafsir-notes {
+  margin-top: var(--space-sm);
+  font-size: var(--font-size-sm);
+}
+.tafsir-notes summary {
+  cursor: pointer;
+  color: var(--color-muted);
+}
+.tafsir-notes .tafsir-text {
+  font-size: 15px;
+  color: var(--color-muted);
+}
+.study-words {
+  margin: 0;
+  display: grid;
+  gap: var(--space-xs);
+}
+.study-word {
+  display: flex;
+  gap: var(--space-sm);
+  line-height: 1.8;
+  font-size: 17px;
+}
+.study-word dt::after {
+  content: ":";
+}
+.study-word dd {
+  margin: 0;
+}
+/* «التفسير» in the library */
+.tafsir-lib-back {
+  margin-bottom: var(--space-md);
+}
+.tafsir-lib-tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+.tafsir-lib-tool,
+.tafsir-lib-book {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-md);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.tafsir-lib-tool span {
+  display: grid;
+}
+.tafsir-lib-tool small,
+.tafsir-lib-book small {
+  color: var(--color-muted);
+}
+.tafsir-lib-books {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-sm);
+}
+.tafsir-lib-book {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: 2px;
+}
+.tafsir-lib-book b {
+  font-size: var(--font-size-lg);
+  color: var(--color-primary);
+}
+.tafsir-lib-book small {
+  grid-column: 1;
+}
+.tafsir-lib-book .tafsir-lib-tag {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+}
+.tafsir-lib-tag {
+  align-self: center;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-2);
+  color: var(--color-muted);
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+}
+.ayah-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+.ayah-picker label {
+  display: grid;
+  gap: 2px;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+.ayah-picker select {
+  min-height: 40px;
+  min-width: 120px;
+  font: inherit;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-sm);
+}
+.tafsir-compare {
+  display: grid;
+  gap: var(--space-sm);
+}
+.tafsir-compare-card {
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  border-inline-start: 4px solid var(--color-accent);
+}
+.tafsir-compare-card header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+}
+.tafsir-compare-card h3 {
+  margin: 0;
+  font-size: var(--font-size-md, 17px);
+  color: var(--color-primary);
+}
+.tafsir-compare-card .tafsir-text {
+  font-size: 16px;
+}
+.tafsir-compare-actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+.tafsir-search-form {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+.tafsir-search-form input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 var(--space-md);
+  font: inherit;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+}
+.tafsir-search-hits {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-sm);
+}
+.tafsir-search-hit {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: var(--space-md);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  line-height: 1.8;
+}
+.tafsir-search-ref {
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+.tafsir-search-snippet mark {
+  background: color-mix(in srgb, var(--color-accent) 45%, transparent);
+  color: inherit;
+  border-radius: 3px;
+}
 .page-slider {
   flex: 1;
   display: flex;

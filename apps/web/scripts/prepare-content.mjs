@@ -170,6 +170,55 @@ tafsir.surahs.forEach((entries, i) => {
   }
   writeJson(join(pub, "data/tafsir/muyassar", `${s.n}.json`), entries);
 });
+// More tafsir books (owner 2026-11-20): al-Sa'di, Ibn Kathir, al-Tabari, al-Baghawi, al-Qurtubi, built verbatim by
+// tools/tafsir_books.py. One file per surah (/data/tafsir/<book>/<n>.json: [[from, to, text, notes?], ...], each
+// section covering the ayahs the book explains together) plus the whole book gzipped (/data/tafsir/<book>/book.v1.dat)
+// for search and for the app's offline download. Al-Muyassar gets the same whole-book file (one section per ayah).
+{
+  const { gunzipSync, gzipSync } = await import("node:zlib");
+  const books = {};
+  for (const id of ["saadi", "ibn-kathir", "tabari", "baghawi", "qurtubi"]) {
+    const raw = readFileSync(join(repo, "content/tafsir/dist", `${id}.v1.json.gz`));
+    const book = JSON.parse(gunzipSync(raw).toString("utf8"));
+    if (book.schema !== "tafsir-book.v1" || book.id !== id || book.surahs.length !== quran.surahs.length) {
+      throw new Error(`${id}.v1.json.gz: unexpected schema`);
+    }
+    book.surahs.forEach((secs, i) => {
+      const n = quran.surahs[i].ayahs.length;
+      let next = 1;
+      for (const [from, to, text] of secs) {
+        if (from !== next || to < from || typeof text !== "string" || !text) throw new Error(`${id}: surah ${i + 1} sections`);
+        next = to + 1;
+      }
+      if (next !== n + 1) throw new Error(`${id}: surah ${i + 1} does not cover every ayah`);
+      writeJson(join(pub, "data/tafsir", id, `${i + 1}.json`), secs);
+    });
+    writeFileSync(join(pub, "data/tafsir", id, "book.v1.dat"), raw);
+    books[id] = { bytes: raw.length };
+  }
+  const muy = {
+    schema: "tafsir-book.v1",
+    id: "muyassar",
+    nameAr: tafsir.nameAr,
+    surahs: tafsir.surahs.map((entries) => entries.map((text, a) => [a + 1, a + 1, text])),
+  };
+  const muyRaw = gzipSync(Buffer.from(JSON.stringify(muy)), { level: 9 });
+  writeFileSync(join(pub, "data/tafsir/muyassar/book.v1.dat"), muyRaw);
+  books.muyassar = { bytes: muyRaw.length };
+  writeJson(join(gen, "tafsir-books.json"), books);
+  // I'rab, sarf, balagha and fawa'id («الجدول في إعراب القرآن وصرفه وبيانه»), tools/irab_build.py, verbatim:
+  // /data/irab/jadwal/<n>.json = [[from, to, irab, sarf, balagha, fawaid], ...].
+  const irab = JSON.parse(gunzipSync(readFileSync(join(repo, "content/irab/dist/jadwal.v1.json.gz"))).toString("utf8"));
+  if (irab.schema !== "irab.v1" || irab.surahs.length !== quran.surahs.length) throw new Error("jadwal.v1: unexpected schema");
+  irab.surahs.forEach((secs, i) => {
+    const end = secs.reduce((next, s) => {
+      if (s[0] !== next || s[1] < s[0] || s.length !== 6) throw new Error(`jadwal: surah ${i + 1} sections`);
+      return s[1] + 1;
+    }, 1);
+    if (end !== quran.surahs[i].ayahs.length + 1) throw new Error(`jadwal: surah ${i + 1} does not cover every ayah`);
+    writeJson(join(pub, "data/irab/jadwal", `${i + 1}.json`), secs);
+  });
+}
 // Word meanings («السراج في بيان غريب القرآن»), one file per surah: [[word, meaning], ...] per ayah, verbatim.
 const meanings = readJson("content/word-meanings/dist/siraj.v1.json");
 if (
