@@ -273,12 +273,9 @@ class _ParentGateState extends State<ParentGate> with WidgetsBindingObserver {
         width: 260,
         child: OutlinedButton(
           key: Key('parentGate.age.$key'),
-          style: OutlinedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceMd),
-            textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-          ),
+          style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceMd)),
           onPressed: () => pick(adult),
-          child: Text(label),
+          child: Text(label, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
         ),
       ),
     );
