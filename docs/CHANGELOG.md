@@ -11,6 +11,9 @@ Owner 2026-11-20: everything ships together (1.2.14 was never uploaded). Phone a
 - Privacy: location leaves the device rounded to about 100 m (mosques, place name); privacy policy has a full children section; contact form asks under-13s to let a parent write.
 - Tafsir books: Muyassar (default) + Sa'di, Ibn Kathir, Tabari, Baghawi, Qurtubi; gharib, i'rab, sarf, balagha and fawa'id tabs; «التفسير» page (read, compare, search, offline download). The app reads the books from rattilwasalli.com, so the website goes up with or before the app.
 - Mushaf player: 41 reciters (27 new), 4 of them one file per surah with ayah highlighting.
+- Every audio player has a ✕ that stops it and hides it (owner 2026-11-20): website player bar, Mushaf mini player (app + website), adhkar, recitation library, Sha'rawi, nasheeds, stories, kids listening.
+- Kids: two modern prophets' stories series (published videos, no prophet's face shown) above the full series; kids corner with a 43-book shelf, «احفظ حديث», adhkar cards and wudu/salah steps (app + website).
+- Mushaf: «الجزء كاملاً», whole-surah tafsir split, bigger page; kids interactive teaching Mushaf.
 ### Changed
 - The printed Mushaf look (King Fahd Complex page fonts) is the default; the old look is an option in settings.
 - 12-hour clock by default (24 hours in settings).
