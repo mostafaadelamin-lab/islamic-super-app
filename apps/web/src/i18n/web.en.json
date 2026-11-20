@@ -982,5 +982,6 @@
   "dhikrRem.summary": "{count} reminders a day",
   "dhikrRem.notifTitle": "Dhikr",
   "dhikrRem.listen": "Listen",
-  "dhikrRem.dismiss": "Close"
+  "dhikrRem.dismiss": "Close",
+  "dhikrRem.denied": "The browser blocks notifications. The reminder shows inside the page only; allow notifications in the browser settings to get them."
 }

@@ -982,5 +982,6 @@
   "dhikrRem.summary": "{count} تذكير في اليوم",
   "dhikrRem.notifTitle": "ذكر",
   "dhikrRem.listen": "استمع",
-  "dhikrRem.dismiss": "إغلاق"
+  "dhikrRem.dismiss": "إغلاق",
+  "dhikrRem.denied": "المتصفح مانع الإشعارات. التذكير هيظهر داخل الصفحة بس، ولو عايز إشعار اسمح بالإشعارات من إعدادات المتصفح."
 }

@@ -154,7 +154,7 @@ export function DhikrRemindersView({ locale }: { locale: Locale }) {
         <p className="muted small">{t(locale, "dhikrRem.webHint")}</p>
         {denied ? (
           <p className="alert" role="status">
-            {t(locale, "adhan.webDenied")}
+            {t(locale, "dhikrRem.denied")}
           </p>
         ) : null}
         <label className="check">
