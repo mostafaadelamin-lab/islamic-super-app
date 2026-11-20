@@ -7,7 +7,7 @@
  * (opaque) copy is served to the <audio> element by the service worker, which looks in the same cache.
  */
 import { createStore, type Store } from "./store";
-import { audioUrl, BASMALA_REF, needsBasmala } from "./audio";
+import { audioUrl, BASMALA_REF, isTimed, needsBasmala, surahFileUrl } from "./audio";
 import { surahMeta } from "./pages";
 
 export const AUDIO_CACHE = "rattil-audio";
@@ -58,6 +58,7 @@ export const totalBytes = (s: DownloadsState): number => s.saved.reduce((a, d) =
 
 /** Every file a surah needs: its ayahs, plus the basmala (1:1) before every surah except 1 and 9. */
 export function surahFiles(folder: string, surah: number): string[] {
+  if (isTimed(folder)) return [surahFileUrl(folder, surah)];
   const count = surahMeta(surah)?.ayahCount ?? 0;
   const ayahs = Array.from({ length: count }, (_, i) => audioUrl(folder, surah, i + 1));
   return needsBasmala(surah, 1) ? [audioUrl(folder, BASMALA_REF[0], BASMALA_REF[1]), ...ayahs] : ayahs;

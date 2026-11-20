@@ -115,4 +115,64 @@ void main() {
     expect(rec.state, RecitationState.idle);
     expect(audio.calls.last, 'stop');
   });
+
+  group('reciters recorded one file per surah', () {
+    const folder = 'mp3q_ahmad_masarawi';
+    setUp(() async {
+      // 112: an opening of 4 s (the basmala) then 4 ayahs.
+      c.reciters.timings[folder] = AyahTimings([
+        for (var s = 1; s <= 114; s++)
+          if (s == 112)
+            [4000, 6000, 8000, 10000, 12000]
+          else if (s == 113)
+            [800, 3000, 6000, 9000, 12000, 15000]
+          else
+            [0, 1000],
+      ]);
+      await settings.setReciter(folder);
+    });
+
+    test('loads the surah file once and follows the ayahs by position', () async {
+      await rec.playSurah(112);
+      expect(file(audio.loaded.single), '112.mp3');
+      expect(audio.seeks.last, Duration.zero);
+      expect(rec.current!.isBasmala, isTrue);
+      audio.emitPosition(const Duration(milliseconds: 3990));
+      await settle();
+      expect(rec.currentRef, const AyahRef(112, 1));
+      expect(rec.current!.isBasmala, isFalse);
+      audio.emitPosition(const Duration(milliseconds: 6100));
+      await settle();
+      expect(rec.currentRef, const AyahRef(112, 2));
+      expect(audio.loaded, hasLength(1));
+      expect(audio.seeks, hasLength(1));
+      for (final ms in [8000, 10000, 12000]) {
+        audio.emitPosition(Duration(milliseconds: ms));
+        await settle();
+      }
+      expect(rec.currentRef, isNull);
+    });
+
+    test('a recording without a basmala starts at ayah 1', () async {
+      await rec.playSurah(113);
+      expect(rec.currentRef, const AyahRef(113, 1));
+      expect(rec.current!.isBasmala, isFalse);
+      expect(audio.seeks.last, const Duration(milliseconds: 800));
+    });
+
+    test('repeat seeks back; next jumps inside the same file', () async {
+      await settings.setRepeat(2);
+      await rec.playFrom(const AyahRef(112, 2), scope: PlayScope.surah);
+      expect(audio.seeks.last, const Duration(milliseconds: 6000));
+      audio.emitPosition(const Duration(milliseconds: 8000));
+      await settle();
+      expect(rec.currentRef, const AyahRef(112, 2));
+      expect(audio.seeks.last, const Duration(milliseconds: 6000));
+      expect(audio.seeks, hasLength(2));
+      await rec.next();
+      expect(rec.currentRef, const AyahRef(112, 3));
+      expect(audio.seeks.last, const Duration(milliseconds: 8000));
+      expect(audio.loaded, hasLength(1));
+    });
+  });
 }

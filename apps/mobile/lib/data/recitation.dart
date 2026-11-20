@@ -26,6 +26,12 @@ abstract class AudioBackend {
 
   /// Fires each time the loaded file has played to its end.
   Stream<void> get completed;
+
+  /// Jumps inside the loaded file (surah files of timed reciters).
+  Future<void> seek(Duration to);
+
+  /// The play position in the loaded file, a few times a second.
+  Stream<Duration> get position;
   Future<void> dispose();
 }
 
@@ -65,6 +71,15 @@ class JustAudioBackend implements AudioBackend {
   Stream<void> get completed => _completed.stream;
 
   @override
+  Future<void> seek(Duration to) => _player.seek(to);
+
+  @override
+  Stream<Duration> get position => _player.createPositionStream(
+    minPeriod: const Duration(milliseconds: 40),
+    maxPeriod: const Duration(milliseconds: 120),
+  );
+
+  @override
   Future<void> dispose() async {
     await _sub.cancel();
     await _completed.close();
@@ -97,6 +112,15 @@ class RecitationController extends ChangeNotifier {
   final AudioBackend Function() _factory;
   AudioBackend? _backend;
   StreamSubscription<void>? _completedSub;
+  StreamSubscription<Duration>? _positionSub;
+
+  // Timed reciters (one file per surah): the file in the player, where the
+  // current ayah ends in it, and where the previous one ended (to go on
+  // without a seek when the next ayah follows straight on).
+  String? _loadedSrc;
+  int? _segmentEndMs;
+  int? _lastEndMs;
+  bool _seeking = false;
 
   List<QueueItem> _queue = const [];
   int _index = 0;
@@ -141,6 +165,7 @@ class RecitationController extends ChangeNotifier {
     if (b != null) return b;
     final nb = _factory();
     _completedSub = nb.completed.listen((_) => _onCompleted());
+    _positionSub = nb.position.listen(_onPosition);
     return _backend = nb;
   }
 
@@ -194,6 +219,9 @@ class RecitationController extends ChangeNotifier {
     _interrupted = false;
     if (!advancing) AudioFocus.claim(this);
     final item = _queue[_index];
+    if (reciter.isTimed) return _playTimed(gen, item, advancing: advancing);
+    _loadedSrc = null;
+    _segmentEndMs = null;
     _state = RecitationState.loading;
     notifyListeners();
     final b = _ensureBackend();
@@ -214,6 +242,76 @@ class RecitationController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// A reciter recorded per surah: plays the ayah's part of the surah file,
+  /// going straight on (no seek, no gap) when it follows the previous one.
+  Future<void> _playTimed(int gen, QueueItem item, {required bool advancing}) async {
+    final r = reciter;
+    final seg = _content.reciters.timings[r.folder]?.segment(item);
+    if (seg == null) {
+      // No basmala in this recording (or no timings): go on to the next item.
+      if (!item.isBasmala) {
+        _state = RecitationState.error;
+        notifyListeners();
+        return;
+      }
+      if (_index + 1 >= _queue.length) return stop();
+      _index++;
+      return _playCurrent(advancing: advancing);
+    }
+    final b = _ensureBackend();
+    String? local;
+    try {
+      local = await _localFile?.call(r.folder, item);
+    } catch (_) {
+      local = null;
+    }
+    if (gen != _generation) return;
+    final src = local != null ? Uri.file(local).toString() : _content.reciters.surahFileUrl(r, item.ref.surah);
+    final flowsOn = advancing && _state == RecitationState.playing && _loadedSrc == src && _lastEndMs == seg.startMs;
+    _segmentEndMs = seg.endMs;
+    _lastEndMs = seg.endMs;
+    if (flowsOn) {
+      notifyListeners();
+      return;
+    }
+    _state = RecitationState.loading;
+    notifyListeners();
+    try {
+      _seeking = true;
+      if (_loadedSrc != src) {
+        _loadedSrc = null;
+        await b.load(src);
+        if (gen != _generation) return;
+        _loadedSrc = src;
+      } else {
+        await b.pause();
+      }
+      await b.seek(Duration(milliseconds: seg.startMs));
+      _seeking = false;
+      if (gen != _generation) return;
+      await b.setSpeed(_settings.audioSpeed);
+      await b.play();
+      if (gen != _generation) return;
+      _state = RecitationState.playing;
+    } catch (_) {
+      if (gen != _generation) return;
+      _loadedSrc = null;
+      _state = RecitationState.error;
+    } finally {
+      _seeking = false;
+    }
+    notifyListeners();
+  }
+
+  void _onPosition(Duration p) {
+    final end = _segmentEndMs;
+    if (end == null || _seeking || _state != RecitationState.playing || !reciter.isTimed) return;
+    if (p.inMilliseconds >= end - 20) {
+      _segmentEndMs = null;
+      _onCompleted();
+    }
+  }
+
   void _onCompleted() {
     if (_state != RecitationState.playing) return;
     if (_index + 1 >= _queue.length) {
@@ -226,6 +324,8 @@ class RecitationController extends ChangeNotifier {
 
   void _finish() {
     _generation++;
+    _segmentEndMs = null;
+    _lastEndMs = null;
     _state = RecitationState.idle;
     _queue = const [];
     _index = 0;
@@ -307,6 +407,7 @@ class RecitationController extends ChangeNotifier {
   Future<void> stop() async {
     _interrupted = false;
     _finish();
+    _loadedSrc = null;
     await _backend?.stop();
   }
 
@@ -315,6 +416,7 @@ class RecitationController extends ChangeNotifier {
     AudioFocus.unregister(this);
     _generation++;
     unawaited(_completedSub?.cancel());
+    unawaited(_positionSub?.cancel());
     unawaited(_backend?.dispose());
     super.dispose();
   }

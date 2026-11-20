@@ -1,8 +1,8 @@
 {
   "schema": "reciters.v1",
-  "source": "everyayah.com per-ayah MP3 (free; streamed, not bundled)",
+  "source": "everyayah.com per-ayah MP3; reciters with surahUrl: one MP3 per surah from mp3quran.net with ayah timings (ayah-timings.json). Free; streamed, not bundled.",
   "urlTemplate": "https://everyayah.com/data/{folder}/{sss}{aaa}.mp3",
-  "note": "sss and aaa are the 3-digit zero-padded surah and ayah numbers. Ayah 1:1 file is the basmala of al-Fatihah. For other surahs (except 9) clients may play 001001 as the basmala before ayah 1. Folder names checked against https://everyayah.com/recitations_ayat.html on 2026-11-09.",
+  "note": "sss and aaa are the 3-digit zero-padded surah and ayah numbers. Ayah 1:1 file is the basmala of al-Fatihah. For other surahs (except 9) clients may play 001001 as the basmala before ayah 1. Folder names checked against https://everyayah.com/recitations_ayat.html on 2026-11-09. Reciters with \"surahUrl\" are recorded one file per surah ({sss} = surah); where each ayah starts/ends is in ayah-timings.json (same folder).",
   "default": "Alafasy_128kbps",
   "reciters": [
     {
@@ -74,6 +74,145 @@
       "folder": "mahmoud_ali_al_banna_32kbps",
       "ar": "محمود علي البنا",
       "en": "Mahmoud Ali Al-Banna"
+    },
+    {
+      "folder": "Nasser_Alqatami_128kbps",
+      "ar": "ناصر القطامي",
+      "en": "Nasser Al-Qatami"
+    },
+    {
+      "folder": "Khaalid_Abdullaah_al-Qahtaanee_192kbps",
+      "ar": "خالد القحطاني",
+      "en": "Khalid Al-Qahtani"
+    },
+    {
+      "folder": "Saood_ash-Shuraym_128kbps",
+      "ar": "سعود الشريم",
+      "en": "Saud Ash-Shuraim"
+    },
+    {
+      "folder": "Abu_Bakr_Ash-Shaatree_128kbps",
+      "ar": "أبو بكر الشاطري",
+      "en": "Abu Bakr Ash-Shatri"
+    },
+    {
+      "folder": "ahmed_ibn_ali_al_ajamy_128kbps",
+      "ar": "أحمد بن علي العجمي",
+      "en": "Ahmed Al-Ajamy"
+    },
+    {
+      "folder": "Ghamadi_40kbps",
+      "ar": "سعد الغامدي",
+      "en": "Saad Al-Ghamdi"
+    },
+    {
+      "folder": "Hudhaify_128kbps",
+      "ar": "علي الحذيفي",
+      "en": "Ali Al-Hudhaifi"
+    },
+    {
+      "folder": "Abdullah_Basfar_192kbps",
+      "ar": "عبد الله بصفر",
+      "en": "Abdullah Basfar"
+    },
+    {
+      "folder": "Hani_Rifai_192kbps",
+      "ar": "هاني الرفاعي",
+      "en": "Hani Ar-Rifai"
+    },
+    {
+      "folder": "Salah_Al_Budair_128kbps",
+      "ar": "صلاح البدير",
+      "en": "Salah Al-Budair"
+    },
+    {
+      "folder": "Muhammad_Ayyoub_128kbps",
+      "ar": "محمد أيوب",
+      "en": "Muhammad Ayyub"
+    },
+    {
+      "folder": "Muhammad_Jibreel_128kbps",
+      "ar": "محمد جبريل",
+      "en": "Muhammad Jibreel"
+    },
+    {
+      "folder": "Abdullaah_3awwaad_Al-Juhaynee_128kbps",
+      "ar": "عبد الله عوّاد الجهني",
+      "en": "Abdullah Al-Juhani"
+    },
+    {
+      "folder": "Fares_Abbad_64kbps",
+      "ar": "فارس عبّاد",
+      "en": "Fares Abbad"
+    },
+    {
+      "folder": "Ali_Jaber_64kbps",
+      "ar": "علي جابر",
+      "en": "Ali Jaber"
+    },
+    {
+      "folder": "Abdullah_Matroud_128kbps",
+      "ar": "عبد الله المطرود",
+      "en": "Abdullah Al-Matrood"
+    },
+    {
+      "folder": "Muhsin_Al_Qasim_192kbps",
+      "ar": "عبد المحسن القاسم",
+      "en": "Abdulmohsen Al-Qasim"
+    },
+    {
+      "folder": "Salaah_AbdulRahman_Bukhatir_128kbps",
+      "ar": "صلاح بو خاطر",
+      "en": "Salah Bukhatir"
+    },
+    {
+      "folder": "Yaser_Salamah_128kbps",
+      "ar": "ياسر سلامة",
+      "en": "Yaser Salamah"
+    },
+    {
+      "folder": "Akram_AlAlaqimy_128kbps",
+      "ar": "أكرم العلاقمي",
+      "en": "Akram Al-Alaqimy"
+    },
+    {
+      "folder": "Ahmed_Neana_128kbps",
+      "ar": "أحمد نعينع",
+      "en": "Ahmed Neana"
+    },
+    {
+      "folder": "Sahl_Yassin_128kbps",
+      "ar": "سهل ياسين",
+      "en": "Sahl Yassin"
+    },
+    {
+      "folder": "Ali_Hajjaj_AlSuesy_128kbps",
+      "ar": "علي حجاج السويسي",
+      "en": "Ali Hajjaj As-Suesy"
+    },
+    {
+      "folder": "mp3q_idrees_abkar",
+      "ar": "إدريس أبكر",
+      "en": "Idris Abkar",
+      "surahUrl": "https://cdn.mp3quran.net/audio/idrees-abkar/r1/{sss}.mp3"
+    },
+    {
+      "folder": "mp3q_mustafa_ismail_mujawwad",
+      "ar": "مصطفى إسماعيل (مجوّد)",
+      "en": "Mustafa Ismail (Mujawwad)",
+      "surahUrl": "https://cdn.mp3quran.net/audio/mustafa-ismail/r2/{sss}.mp3"
+    },
+    {
+      "folder": "mp3q_mahmoud_banna_mujawwad",
+      "ar": "محمود علي البنا (مجوّد)",
+      "en": "Mahmoud Ali Al-Banna (Mujawwad)",
+      "surahUrl": "https://cdn.mp3quran.net/audio/mahmoud-banna/r2/{sss}.mp3"
+    },
+    {
+      "folder": "mp3q_ahmad_masarawi",
+      "ar": "أحمد عيسى المعصراوي",
+      "en": "Ahmad Eisa Al-Masarawi",
+      "surahUrl": "https://cdn.mp3quran.net/audio/ahmad-masarawi/r1/{sss}.mp3"
     }
   ]
 }

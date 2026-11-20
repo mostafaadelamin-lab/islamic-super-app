@@ -7,9 +7,13 @@ import { downloadsStore, isSaved, savedSource } from "./audio-offline";
 import {
   afterEnded,
   audioStore,
+  ayahSegment,
   RECITERS,
   buildQueue,
+  isTimed,
   itemUrl,
+  loadTimings,
+  resetTimingsForTests,
   stepAyah,
   type Cursor,
   type PlayScope,
@@ -51,6 +55,14 @@ let interrupted = false;
 /** A reciter for this playback only (the kids' teaching Mushaf); the chosen reciter is left as it is. */
 let reciterOverride: string | null = null;
 const activeReciter = (): string => reciterOverride ?? audioStore.get().reciter;
+
+// Reciters recorded one file per surah: where the current ayah ends in the file (ms), where the previous one
+// ended (to flow on without a seek when the next ayah follows straight on), and a timer that watches the
+// position more often than "timeupdate" does.
+let segmentEnd: number | null = null;
+let lastEnd: number | null = null;
+let segmentTimer: ReturnType<typeof setInterval> | null = null;
+let loadSeq = 0;
 
 const ICON_SIZES = ["192", "512"] as const;
 
@@ -149,6 +161,9 @@ export const player = {
   },
   stop(): void {
     interrupted = false;
+    segmentEnd = null;
+    lastEnd = null;
+    stopSegmentTimer();
     if (audio) {
       audio.pause();
       audio.removeAttribute("src");
@@ -180,14 +195,10 @@ function element(): HTMLAudioElement {
     // Advance only at the genuine end of the item being played: never while paused, stopped or failed, and
     // never for a late event of an earlier source, so the cursor cannot skip ayahs.
     if ((state.status !== "playing" && state.status !== "loading") || el.src !== elementSrc) return;
-    const next = afterEnded(state.queue, state.cursor, audioStore.get().repeat);
-    if (!next) {
-      setState(IDLE);
-      return;
-    }
-    setState({ cursor: next });
-    load();
+    segmentEnd = null;
+    advance();
   });
+  el.addEventListener("timeupdate", checkSegment);
   el.addEventListener("error", () => {
     if (!el.getAttribute("src")) return; // stop() clears the source
     fail(typeof navigator !== "undefined" && navigator.onLine === false ? "offline" : "network");
@@ -197,6 +208,37 @@ function element(): HTMLAudioElement {
   unsubscribeSpeed = audioStore.subscribe(() => applySpeed(el));
   bindMediaKeys();
   return el;
+}
+
+/** The current item finished: the next one (or its repeat), or the end of the queue. */
+function advance(): void {
+  const next = afterEnded(state.queue, state.cursor, audioStore.get().repeat);
+  if (!next) {
+    stopSegmentTimer();
+    setState(IDLE);
+    return;
+  }
+  setState({ cursor: next });
+  load(true);
+}
+
+/** Timed reciters: the ayah's part of the surah file has played. */
+function checkSegment(): void {
+  const el = audio;
+  if (!el || segmentEnd === null || el.seeking) return;
+  if (state.status !== "playing") return;
+  if (el.currentTime * 1000 >= segmentEnd - 20) {
+    segmentEnd = null;
+    advance();
+  }
+}
+
+function startSegmentTimer(): void {
+  if (segmentTimer === null) segmentTimer = setInterval(checkSegment, 50);
+}
+function stopSegmentTimer(): void {
+  if (segmentTimer !== null) clearInterval(segmentTimer);
+  segmentTimer = null;
 }
 
 /** Another sound started: pause here and remember the ayah, so reading and listening go on from it. */
@@ -240,18 +282,93 @@ async function resume(): Promise<void> {
   }
 }
 
-function start(el: HTMLAudioElement, from: string): void {
+function start(el: HTMLAudioElement, from: string, atMs = 0): void {
   if (blobUrl && blobUrl !== from) URL.revokeObjectURL(blobUrl);
   blobUrl = from.startsWith("blob:") ? from : null;
   elementSrc = from;
+  if (atMs > 0) {
+    el.addEventListener(
+      "loadedmetadata",
+      () => {
+        if (elementSrc === from) el.currentTime = atMs / 1000;
+      },
+      { once: true },
+    );
+  }
   el.src = from;
   void resume();
 }
 
-function load(): void {
+/** Plays an item of a reciter recorded per surah: its part of the surah file. */
+function loadTimed(advancing: boolean): void {
+  const seq = ++loadSeq;
+  const reciter = activeReciter();
+  void loadTimings()
+    .then((all) => {
+      if (seq !== loadSeq) return;
+      const item = state.queue[state.cursor.index];
+      if (!item) return;
+      const seg = ayahSegment(all[reciter] ?? [], item);
+      if (!seg) {
+        // This recording has no basmala before the surah: go straight on to ayah 1.
+        if (item.kind === "basmala" && state.cursor.index + 1 < state.queue.length) {
+          setState({ cursor: { index: state.cursor.index + 1, plays: 0 } });
+          loadTimed(advancing);
+        } else fail("network");
+        return;
+      }
+      const src = itemUrl(item, reciter);
+      const el = element();
+      const sameFile = state.src === src && !!el.getAttribute("src");
+      const flowsOn = advancing && sameFile && lastEnd === seg.start && !el.paused;
+      segmentEnd = seg.end;
+      lastEnd = seg.end;
+      startSegmentTimer();
+      if (flowsOn) {
+        setState({ error: null });
+        return;
+      }
+      if (sameFile) {
+        el.currentTime = seg.start / 1000;
+        if (el.paused) void resume();
+        return;
+      }
+      const offline = typeof navigator !== "undefined" && navigator.onLine === false;
+      setState({ src, status: "loading", error: null });
+      if (isSaved(downloadsStore.get(), reciter, item.s)) {
+        void savedSource(src)
+          .catch(() => null)
+          .then((local) => {
+            if (seq !== loadSeq) return;
+            if (!local && offline) setState({ status: "error", error: "offline", src: null });
+            else start(el, local ?? src, seg.start);
+          });
+        return;
+      }
+      if (offline) {
+        setState({ status: "error", error: "offline", src: null });
+        return;
+      }
+      start(el, src, seg.start);
+    })
+    .catch(() => {
+      if (seq === loadSeq)
+        fail(typeof navigator !== "undefined" && navigator.onLine === false ? "offline" : "network");
+    });
+}
+
+function load(advancing = false): void {
   const item = state.queue[state.cursor.index];
   if (!item) return;
   const reciter = activeReciter();
+  if (isTimed(reciter)) {
+    loadTimed(advancing);
+    return;
+  }
+  loadSeq++;
+  segmentEnd = null;
+  lastEnd = null;
+  stopSegmentTimer();
   const src = itemUrl(item, reciter);
   const offline = typeof navigator !== "undefined" && navigator.onLine === false;
   if (isSaved(downloadsStore.get(), reciter, item.s)) {
@@ -277,7 +394,11 @@ function load(): void {
 
 /** Test hook: forget the audio element and state. */
 export function resetPlayerForTests(): void {
+  resetTimingsForTests();
   interrupted = false;
+  segmentEnd = null;
+  lastEnd = null;
+  stopSegmentTimer();
   blobUrl = null;
   elementSrc = null;
   unsubscribeSpeed?.();

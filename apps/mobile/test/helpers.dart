@@ -317,8 +317,26 @@ class FakeAudioBackend implements AudioBackend {
   @override
   Stream<void> get completed => _completed.stream;
 
+  final seeks = <Duration>[];
+  final _position = StreamController<Duration>.broadcast();
+
   @override
-  Future<void> dispose() => _completed.close();
+  Future<void> seek(Duration to) async {
+    calls.add('seek');
+    seeks.add(to);
+  }
+
+  /// The player reached [p] in the loaded file.
+  void emitPosition(Duration p) => _position.add(p);
+
+  @override
+  Stream<Duration> get position => _position.stream;
+
+  @override
+  Future<void> dispose() async {
+    await _completed.close();
+    await _position.close();
+  }
 }
 
 /// Narrated-episode engine for tests: records calls; [emit] moves the position,

@@ -118,6 +118,11 @@ copyFileSync(join(repo, "content/quran/dist/mushaf-lines.v1.json"), join(pub, "d
 copyFileSync(join(repo, "content/sharawi/dist/sharawi.v1.json"), join(pub, "data/sharawi.json"));
 // Sheikh Mohamed Ahmed Shabib: track list (audio streamed per track), fetched by the /shabib page.
 copyFileSync(join(repo, "content/shabib/dist/shabib.v1.json"), join(pub, "data/shabib.json"));
+// Ayah timings of the reciters recorded one file per surah, fetched by the player when such a reciter plays.
+copyFileSync(
+  join(repo, "packages/shared-schemas/audio/ayah-timings.json"),
+  join(pub, "data/ayah-timings.json"),
+);
 // Nasheeds (same list as the mobile app, voice-only): munshid list with streamed/saved audio, fetched by /nasheeds.
 copyFileSync(join(repo, "apps/mobile/assets/content/nasheeds.v2.json"), join(pub, "data/nasheeds.json"));
 // Videos function (netlify/functions/videos.mjs): the trusted channels (feed) and the suggested ones (search ranking).

@@ -4,12 +4,48 @@
 import 'quran.dart';
 
 class Reciter {
-  const Reciter({required this.folder, required this.nameAr, required this.nameEn});
+  const Reciter({required this.folder, required this.nameAr, required this.nameEn, this.surahUrl});
   final String folder;
   final String nameAr;
   final String nameEn;
 
+  /// Reciters recorded as one file per surah (with ayah timings) instead of one
+  /// file per ayah: the surah file URL with `{sss}` for the surah number.
+  final String? surahUrl;
+
+  bool get isTimed => surahUrl != null;
+
   String name(bool arabic) => arabic ? nameAr : nameEn;
+}
+
+/// Where each ayah starts and ends inside the surah files of a timed reciter
+/// (packages/shared-schemas/audio/ayah-timings.json): per surah
+/// `[start of ayah 1, end of ayah 1, end of ayah 2, …]` in milliseconds.
+class AyahTimings {
+  const AyahTimings(this._bySurah);
+
+  factory AyahTimings.fromJson(List<dynamic> j) => AyahTimings(
+    List.unmodifiable([
+      for (final s in j) List<int>.unmodifiable([for (final v in s as List<dynamic>) (v as num).toInt()]),
+    ]),
+  );
+
+  final List<List<int>> _bySurah;
+
+  /// Opening before ayah 1 shorter than this holds no basmala (just a breath).
+  static const basmalaMinMs = 2500;
+
+  /// The part of the surah file to play for [item], or null when there is
+  /// nothing to play (a basmala the file does not have, or no timings).
+  ({int startMs, int endMs})? segment(QueueItem item) {
+    final s = item.ref.surah;
+    if (s < 1 || s > _bySurah.length) return null;
+    final t = _bySurah[s - 1];
+    if (item.isBasmala) return t.isNotEmpty && t[0] >= basmalaMinMs ? (startMs: 0, endMs: t[0]) : null;
+    final a = item.ref.ayah;
+    if (a < 1 || a >= t.length) return null;
+    return (startMs: t[a - 1], endMs: t[a]);
+  }
 }
 
 class ReciterCatalog {
@@ -24,9 +60,18 @@ class ReciterCatalog {
           folder: (r as Map<String, dynamic>)['folder'] as String,
           nameAr: r['ar'] as String,
           nameEn: r['en'] as String,
+          surahUrl: r['surahUrl'] as String?,
         ),
     ]),
   );
+
+  /// Ayah timings of the timed reciters, by folder (filled from ayah-timings.json).
+  final Map<String, AyahTimings> timings = {};
+
+  void addTimings(Map<String, dynamic> j) {
+    final by = j['reciters'] as Map<String, dynamic>;
+    by.forEach((k, v) => timings[k] = AyahTimings.fromJson(v as List<dynamic>));
+  }
 
   final String urlTemplate;
   final String defaultFolder;
@@ -41,6 +86,9 @@ class ReciterCatalog {
     }
     return reciters.first;
   }
+
+  /// The surah file of a timed reciter, e.g. …/002.mp3.
+  String surahFileUrl(Reciter r, int surah) => r.surahUrl!.replaceAll('{sss}', surah.toString().padLeft(3, '0'));
 
   /// e.g. https://everyayah.com/data/Alafasy_128kbps/002255.mp3
   String url(String folder, AyahRef r) => urlTemplate

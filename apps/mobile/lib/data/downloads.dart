@@ -34,6 +34,11 @@ class RecitationDownloads extends ChangeNotifier {
   Future<String?> localFile(String reciter, AyahRef ref, {int? forSurah}) async {
     final d = await _dir(reciter);
     if (!File('${d.path}/${_sss(forSurah ?? ref.surah)}.done').existsSync()) return null;
+    if (content.reciters.byFolder(reciter).isTimed) {
+      // One file for the whole surah (the ayahs are parts of it).
+      final whole = File('${d.path}/${_sss(forSurah ?? ref.surah)}.mp3');
+      return whole.existsSync() ? whole.path : null;
+    }
     final f = File('${d.path}/${_sss(ref.surah)}${_sss(ref.ayah)}.mp3');
     return f.existsSync() ? f.path : null;
   }
@@ -52,6 +57,20 @@ class RecitationDownloads extends ChangeNotifier {
     _cancelled.remove(key);
     final d = await _dir(reciter);
     await d.create(recursive: true);
+    final r0 = content.reciters.byFolder(reciter);
+    if (r0.isTimed && r0.folder == reciter) {
+      progress[key] = 0;
+      notifyListeners();
+      try {
+        await _downloadWhole(key, content.reciters.surahFileUrl(r0, surah), File('${d.path}/${_sss(surah)}.mp3'));
+        if (_cancelled.contains(key)) return;
+        await File('${d.path}/${_sss(surah)}.done').writeAsString('ok');
+      } finally {
+        progress.remove(key);
+        notifyListeners();
+      }
+      return;
+    }
     final n = content.quran.surah(surah).ayahCount;
     final refs = [if (surah != 1) const AyahRef(1, 1), for (var a = 1; a <= n; a++) AyahRef(surah, a)];
     progress[key] = 0;
@@ -75,6 +94,39 @@ class RecitationDownloads extends ChangeNotifier {
     } finally {
       progress.remove(key);
       notifyListeners();
+    }
+  }
+
+  /// Streams one surah file of a timed reciter to [f] (via a .part file), with progress.
+  Future<void> _downloadWhole(String key, String url, File f) async {
+    if (f.existsSync() && f.lengthSync() > 0) return;
+    final part = File('${f.path}.part');
+    try {
+      final res = await httpClient.send(http.Request('GET', Uri.parse(url)));
+      if (res.statusCode != 200) throw HttpException('HTTP ${res.statusCode}', uri: Uri.parse(url));
+      final total = res.contentLength ?? 0;
+      final sink = part.openWrite();
+      var got = 0;
+      var shown = 0.0;
+      try {
+        await for (final chunk in res.stream) {
+          if (_cancelled.contains(key)) break;
+          sink.add(chunk);
+          got += chunk.length;
+          if (total > 0 && got / total - shown >= 0.02) {
+            shown = got / total;
+            progress[key] = shown;
+            notifyListeners();
+          }
+        }
+      } finally {
+        await sink.close();
+      }
+      if (_cancelled.contains(key)) return;
+      if (got == 0 || (total > 0 && got < total)) throw HttpException('incomplete file', uri: Uri.parse(url));
+      await part.rename(f.path);
+    } finally {
+      if (part.existsSync()) part.deleteSync();
     }
   }
 

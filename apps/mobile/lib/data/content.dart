@@ -97,6 +97,7 @@ class AppContent {
   static const hajjScenesAsset = 'assets/content/hajj-scenes.v1.json';
   static const sceneRolesAsset = 'assets/content/scene-roles.v1.json';
   static const recitersAsset = 'assets/schemas/reciters.json';
+  static const timingsAsset = 'assets/schemas/ayah-timings.json';
   static const versionsAsset = 'assets/content/VERSIONS.json';
   static const reelsAsset = 'assets/content/reels.v1.json';
   static const reelSourcesAsset = 'assets/content/reel-sources.v1.json';
@@ -177,7 +178,7 @@ class AppContent {
     return AppContent(
       quran: quran,
       mushaf: MushafLayout.fromJson(await j(mushafLinesAsset)),
-      reciters: ReciterCatalog.fromJson(await j(recitersAsset)),
+      reciters: ReciterCatalog.fromJson(await j(recitersAsset))..addTimings(await j(timingsAsset)),
       adhkar: adhkar,
       stepDuas: StepDuas.fromJson(await j(stepDuasAsset), adhkar.hisn),
       hajjGuide: SourcedHajjGuide.fromJson(await j(hajjGuideAsset)),

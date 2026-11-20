@@ -19,6 +19,12 @@ class _SilentAudio implements AudioBackend {
   @override
   Future<void> stop() async {}
   @override
+  Future<void> setSpeed(double speed) async {}
+  @override
+  Future<void> seek(Duration to) async {}
+  @override
+  Stream<Duration> get position => const Stream.empty();
+  @override
   Stream<void> get completed => _done.stream;
   @override
   Future<void> dispose() => _done.close();

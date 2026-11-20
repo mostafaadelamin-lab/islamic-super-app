@@ -10,6 +10,8 @@ export interface Reciter {
   folder: string;
   ar: string;
   en: string;
+  /** Recorded one file per surah (with ayah timings) instead of per ayah: the file URL with {sss}. */
+  surahUrl?: string;
 }
 interface RecitersFile {
   urlTemplate: string;
@@ -34,6 +36,57 @@ const pad3 = (n: number): string => String(n).padStart(PAD, "0");
 
 export function isReciter(folder: unknown): folder is string {
   return typeof folder === "string" && RECITERS.some((r) => r.folder === folder);
+}
+
+export function reciterOf(folder: string): Reciter | undefined {
+  return RECITERS.find((r) => r.folder === folder);
+}
+
+/** True for a reciter recorded one file per surah; the ayahs are parts of it (see ayahSegment). */
+export function isTimed(folder: string): boolean {
+  return reciterOf(folder)?.surahUrl !== undefined;
+}
+
+/** The surah file of a timed reciter. */
+export function surahFileUrl(folder: string, s: number): string {
+  const r = reciterOf(folder);
+  if (!r?.surahUrl || !surahMeta(s)) throw new RangeError(`no surah file ${folder} ${s}`);
+  return r.surahUrl.replace("{sss}", pad3(s));
+}
+
+/** Per surah: [start of ayah 1, end of ayah 1, end of ayah 2, …] in ms (packages/shared-schemas/audio/ayah-timings.json). */
+export type SurahTimings = readonly (readonly number[])[];
+/** An opening before ayah 1 shorter than this holds no basmala. */
+export const BASMALA_MIN_MS = 2500;
+
+/** The part of the surah file to play for an item; null when there is nothing to play (no basmala in the file). */
+export function ayahSegment(t: SurahTimings, item: QueueItem): { start: number; end: number } | null {
+  const row = t[item.s - 1];
+  if (!row || row.length < 2) return null;
+  if (item.kind === "basmala") return row[0]! >= BASMALA_MIN_MS ? { start: 0, end: row[0]! } : null;
+  if (item.a < 1 || item.a >= row.length) return null;
+  return { start: row[item.a - 1]!, end: row[item.a]! };
+}
+
+let timingsLoad: Promise<Record<string, SurahTimings>> | null = null;
+/** Loads the ayah timings of the timed reciters once (fetched only when such a reciter plays). */
+export function loadTimings(): Promise<Record<string, SurahTimings>> {
+  timingsLoad ??= fetch("/data/ayah-timings.json")
+    .then((r) => {
+      if (!r.ok) throw new Error(`timings ${r.status}`);
+      return r.json() as Promise<{ reciters: Record<string, SurahTimings> }>;
+    })
+    .then((j) => j.reciters)
+    .catch((e: unknown) => {
+      timingsLoad = null;
+      throw e;
+    });
+  return timingsLoad;
+}
+
+/** Test hook: forget the loaded timings. */
+export function resetTimingsForTests(): void {
+  timingsLoad = null;
 }
 
 export function audioUrl(folder: string, s: number, a: number, template: string = URL_TEMPLATE): string {
@@ -123,6 +176,7 @@ export function buildQueue(scope: PlayScope): QueueItem[] {
 }
 
 export function itemUrl(item: QueueItem, folder: string): string {
+  if (isTimed(folder)) return surahFileUrl(folder, item.s);
   return item.kind === "basmala"
     ? audioUrl(folder, BASMALA_REF[0], BASMALA_REF[1])
     : audioUrl(folder, item.s, item.a);

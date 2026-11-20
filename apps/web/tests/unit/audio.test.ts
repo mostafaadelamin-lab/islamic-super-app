@@ -1,6 +1,8 @@
 import { readRepoJson } from "../repo";
+import { surahMeta } from "@/lib/pages";
 import {
   afterEnded,
+  ayahSegment,
   audioStore,
   audioUrl,
   buildQueue,
@@ -20,10 +22,39 @@ const reciters = readRepoJson<{ urlTemplate: string; default: string; reciters: 
 );
 const refs = (q: QueueItem[]): string[] => q.map((x) => (x.kind === "basmala" ? `b${x.s}` : `${x.s}:${x.a}`));
 
+describe("reciters recorded one file per surah", () => {
+  const timings = readRepoJson<{ reciters: Record<string, number[][]> }>(
+    "packages/shared-schemas/audio/ayah-timings.json",
+  ).reciters;
+  it("every such reciter has rising timings for every ayah of the 114 surahs", () => {
+    const timed = RECITERS.filter((r) => r.surahUrl);
+    expect(timed.map((r) => r.folder).sort()).toEqual(Object.keys(timings).sort());
+    for (const r of timed) {
+      const rows = timings[r.folder]!;
+      expect(rows).toHaveLength(114);
+      rows.forEach((row, i) => {
+        expect(row).toHaveLength((surahMeta(i + 1)?.ayahCount ?? 0) + 1);
+        expect(row[0]).toBeGreaterThanOrEqual(0);
+        row.slice(1).forEach((v, j) => expect(v).toBeGreaterThan(row[j]!));
+      });
+    }
+  });
+  it("uses the surah file and the ayah's part of it", () => {
+    expect(itemUrl({ kind: "ayah", s: 2, a: 255 }, "mp3q_idrees_abkar")).toBe(
+      "https://cdn.mp3quran.net/audio/idrees-abkar/r1/002.mp3",
+    );
+    const row = timings.mp3q_idrees_abkar![1]!;
+    expect(ayahSegment(timings.mp3q_idrees_abkar!, { kind: "ayah", s: 2, a: 2 })).toEqual({
+      start: row[1],
+      end: row[2],
+    });
+  });
+});
+
 describe("reciters and URLs", () => {
   it("uses the shared reciters list and default", () => {
     expect(RECITERS.map((r) => r.folder)).toEqual(reciters.reciters.map((r) => r.folder));
-    expect(RECITERS).toHaveLength(14);
+    expect(RECITERS).toHaveLength(41);
     expect(DEFAULT_RECITER).toBe("Alafasy_128kbps");
   });
   it("builds everyayah per-ayah URLs with 3-digit padding", () => {

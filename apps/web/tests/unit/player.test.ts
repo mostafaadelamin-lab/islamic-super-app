@@ -6,6 +6,9 @@ class FakeAudio extends EventTarget {
   static last: FakeAudio | null = null;
   static playImpl: () => Promise<void> = () => Promise.resolve();
   preload = "";
+  currentTime = 0;
+  paused = true;
+  seeking = false;
   playbackRate = 1;
   defaultPlaybackRate = 1;
   private attrs = new Map<string, string>();
@@ -27,8 +30,11 @@ class FakeAudio extends EventTarget {
     this.attrs.delete(k);
   }
   load(): void {}
-  pause(): void {}
+  pause(): void {
+    this.paused = true;
+  }
   play(): Promise<void> {
+    this.paused = false;
     this.played.push(this.src);
     return FakeAudio.playImpl();
   }
@@ -227,5 +233,80 @@ describe("one sound at a time (owner 2026-11-14)", () => {
     expect((FakeAudio.last as unknown as { volume: number }).volume).toBe(0.35);
     audioStore.set((p) => ({ ...p, volume: 0.8 }));
     expect((FakeAudio.last as unknown as { volume: number }).volume).toBe(0.8);
+  });
+
+  describe("reciters recorded one file per surah", () => {
+    const FILE = (sss: string): string => `https://cdn.mp3quran.net/audio/ahmad-masarawi/r1/${sss}.mp3`;
+    const stubTimings = (
+      row112: number[],
+      row113: number[] = [500, 3000, 6000, 9000, 12000, 15000],
+    ): void => {
+      const rows = Array.from({ length: 114 }, (_, i) =>
+        i === 111 ? row112 : i === 112 ? row113 : [0, 1000],
+      );
+      vi.stubGlobal(
+        "fetch",
+        vi.fn(() =>
+          Promise.resolve(
+            new Response(JSON.stringify({ reciters: { mp3q_ahmad_masarawi: rows } }), { status: 200 }),
+          ),
+        ),
+      );
+    };
+    const at = async (a: FakeAudio, seconds: number): Promise<void> => {
+      a.currentTime = seconds;
+      a.dispatchEvent(new Event("timeupdate"));
+      await flush();
+    };
+
+    it("plays the surah file once and follows the ayahs by their timings", async () => {
+      stubTimings([4000, 6000, 8000, 10000, 12000]);
+      audioStore.set((p) => ({ ...p, reciter: "mp3q_ahmad_masarawi" }));
+      player.play({ kind: "surah", surah: 112 });
+      await flush();
+      await flush();
+      const a = FakeAudio.last!;
+      expect(player.get().src).toBe(FILE("112"));
+      expect(player.current()).toMatchObject({ kind: "basmala", s: 112 });
+      a.dispatchEvent(new Event("playing"));
+      await at(a, 4.0);
+      expect(player.current()).toMatchObject({ kind: "ayah", s: 112, a: 1 });
+      await at(a, 6.5);
+      expect(player.current()).toMatchObject({ kind: "ayah", s: 112, a: 2 });
+      await at(a, 8.0);
+      await at(a, 10.0);
+      expect(player.current()).toMatchObject({ kind: "ayah", s: 112, a: 4 });
+      expect(a.played).toEqual([FILE("112")]);
+      await at(a, 12.0);
+      expect(player.get().status).toBe("idle");
+    });
+
+    it("skips a basmala the recording does not have and starts at ayah 1's time", async () => {
+      stubTimings([800, 6000, 8000, 10000, 12000]);
+      audioStore.set((p) => ({ ...p, reciter: "mp3q_ahmad_masarawi" }));
+      player.play({ kind: "surah", surah: 112 });
+      await flush();
+      await flush();
+      expect(player.current()).toMatchObject({ kind: "ayah", s: 112, a: 1 });
+      const a = FakeAudio.last!;
+      a.dispatchEvent(new Event("loadedmetadata"));
+      expect(a.currentTime).toBeCloseTo(0.8);
+    });
+
+    it("seeks back to repeat an ayah and jumps with next", async () => {
+      stubTimings([4000, 6000, 8000, 10000, 12000]);
+      audioStore.set((p) => ({ ...p, reciter: "mp3q_ahmad_masarawi", repeat: 2 }));
+      player.play({ kind: "ayah", surah: 112, ayah: 2 });
+      await flush();
+      await flush();
+      const a = FakeAudio.last!;
+      a.dispatchEvent(new Event("loadedmetadata"));
+      expect(a.currentTime).toBeCloseTo(6);
+      a.dispatchEvent(new Event("playing"));
+      await at(a, 8.0);
+      expect(a.currentTime).toBeCloseTo(6); // second time
+      await at(a, 8.0);
+      expect(player.get().status).toBe("idle");
+    });
   });
 });
