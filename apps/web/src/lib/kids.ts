@@ -12,6 +12,8 @@ export interface KidsEpisode {
   id: string;
   title: string;
   url: string;
+  /** A published YouTube video (played in the official embed; no listen/download). */
+  youtube?: string;
   bytes?: number;
   seconds?: number;
 }

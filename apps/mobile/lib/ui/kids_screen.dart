@@ -19,6 +19,7 @@ import 'kids_mushaf_screen.dart';
 import 'ruqyah_screen.dart';
 import 'stories_screen.dart' show NarrationBar;
 import 'widgets.dart';
+import 'youtube_player.dart';
 
 /// "الأطفال" (owner, 2026-11-20): stories of the prophets (video, listen, offline),
 /// the teaching Mushaf, religious and educational stories, and ruqyah for children.
@@ -52,6 +53,8 @@ class KidsScreen extends StatelessWidget {
             final k = snap.data;
             if (k == null) return const Center(child: CircularProgressIndicator());
             final prophets = k.byId('kids-prophets');
+            final prophetsNew = k.byId('kids-prophets-new');
+            final prophets3d = k.byId('kids-prophets-3d');
             final rasoul = k.byId('kids-rasoul');
             final ramadan = k.byId('kids-ramadan');
             return ListView(
@@ -68,7 +71,16 @@ class KidsScreen extends StatelessWidget {
                     RIcons.video,
                     l.kidsProphets,
                     l.kidsProphetsSub,
-                    () => push(KidsSeriesScreen(series: prophets, title: l.kidsProphets)),
+                    () => push(
+                      KidsStoriesScreen(
+                        title: l.kidsProphets,
+                        parts: [
+                          if (prophetsNew != null) (prophetsNew, l.kidsProphetsNew, l.kidsProphetsNewSub),
+                          if (prophets3d != null) (prophets3d, l.kidsProphets3d, l.kidsProphets3dSub),
+                          (prophets, l.kidsProphetsClassic, l.kidsProphetsSub),
+                        ],
+                      ),
+                    ),
                   ),
                 tile(
                   'teacher',
@@ -109,32 +121,33 @@ class KidsScreen extends StatelessWidget {
 
 /// "قصص دينية وتعليمية": one card per series.
 class KidsStoriesScreen extends StatelessWidget {
-  const KidsStoriesScreen({super.key, required this.parts});
+  const KidsStoriesScreen({super.key, required this.parts, this.title});
   final List<(KidsSeries, String, String)> parts;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: Text(l.kidsStories)),
+      appBar: AppBar(title: Text(title ?? l.kidsStories)),
       bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
       body: ReadableWidth(
         child: ListView(
           key: const Key('kidsStories'),
           padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
           children: [
-            for (final (s, title, sub) in parts)
+            for (final (s, name, sub) in parts)
               Card(
                 key: Key('kidsStories.${s.id}'),
                 margin: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
                 child: ListTile(
                   leading: const RIconBadge(RIcons.video),
-                  title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+                  title: Text(name, style: const TextStyle(fontWeight: FontWeight.w600)),
                   subtitle: Text('$sub · ${context.num(s.episodes.length)}'),
                   trailing: const RIcon(RIcons.chevronForward),
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute<void>(
-                      builder: (_) => KidsSeriesScreen(series: s, title: title),
+                      builder: (_) => KidsSeriesScreen(series: s, title: name),
                     ),
                   ),
                 ),
@@ -174,6 +187,7 @@ class KidsSeriesScreen extends StatelessWidget {
         child: ListenableBuilder(
           listenable: s.narration,
           builder: (context, _) {
+            final online = series.episodes.isNotEmpty && series.episodes.first.youtube != null;
             final playlist = [for (final e in series.episodes) kidsEpisode(e)];
             return ListView.builder(
               key: Key('kidsSeries.${series.id}'),
@@ -183,10 +197,31 @@ class KidsSeriesScreen extends StatelessWidget {
                 if (i == 0) {
                   return Padding(
                     padding: const EdgeInsets.all(DesignTokens.spaceLg),
-                    child: Text(l.kidsOfflineNote, style: theme.textTheme.bodyMedium),
+                    child: Text(online ? l.kidsYtNote : l.kidsOfflineNote, style: theme.textTheme.bodyMedium),
                   );
                 }
                 final e = series.episodes[i - 1];
+                final yt = e.youtube;
+                if (yt != null) {
+                  return Card(
+                    key: Key('kidsEpisode.${e.id}'),
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: DesignTokens.spaceLg,
+                      vertical: DesignTokens.spaceXs,
+                    ),
+                    child: ListTile(
+                      leading: CircleAvatar(child: Text(context.num(i))),
+                      title: Text(e.title, style: const TextStyle(fontWeight: FontWeight.w600)),
+                      subtitle: e.minutes == null ? null : Text(l.kidsMinutes(context.num(e.minutes!))),
+                      trailing: FilledButton.tonalIcon(
+                        key: Key('kidsWatch.${e.id}'),
+                        icon: const RIcon(RIcons.play, size: 18),
+                        label: Text(l.kidsWatch),
+                        onPressed: () => showYouTubeSheet(context, videoId: yt, title: e.title, subtitle: title),
+                      ),
+                    ),
+                  );
+                }
                 final ep = playlist[i - 1];
                 final listening = s.narration.episode?.id == ep.id && s.narration.isPlaying;
                 final meta = [

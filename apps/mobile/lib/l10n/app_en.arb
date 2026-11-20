@@ -2269,6 +2269,26 @@
   "@kidsProphets": {
     "description": "shared key \"kids.prophets\""
   },
+  "kidsProphets3d": "Prophets' stories: 3D",
+  "@kidsProphets3d": {
+    "description": "shared key \"kids.prophets3d\""
+  },
+  "kidsProphets3dSub": "Modern 3D in Arabic, the prophet's face never shown",
+  "@kidsProphets3dSub": {
+    "description": "shared key \"kids.prophets3dSub\""
+  },
+  "kidsProphetsClassic": "Prophets' stories: full series",
+  "@kidsProphetsClassic": {
+    "description": "shared key \"kids.prophetsClassic\""
+  },
+  "kidsProphetsNew": "Prophets' stories: modern cartoon",
+  "@kidsProphetsNew": {
+    "description": "shared key \"kids.prophetsNew\""
+  },
+  "kidsProphetsNewSub": "A teacher tells the story; the prophet is shown only as light",
+  "@kidsProphetsNewSub": {
+    "description": "shared key \"kids.prophetsNewSub\""
+  },
   "kidsProphetsSub": "Cartoon episodes: watch or listen, download for offline",
   "@kidsProphetsSub": {
     "description": "shared key \"kids.prophetsSub\""
@@ -2412,6 +2432,10 @@
   "kidsWatch": "Watch",
   "@kidsWatch": {
     "description": "shared key \"kids.watch\""
+  },
+  "kidsYtNote": "Plays from YouTube, needs internet",
+  "@kidsYtNote": {
+    "description": "shared key \"kids.ytNote\""
   },
   "libraryAllRiwayat": "All riwayat",
   "@libraryAllRiwayat": {

@@ -35,6 +35,11 @@ void main() {
     expect(k.ruqyah.full?.url, startsWith('https://'));
     expect(k.ruqyahKids.contains(const AyahRef(112, 1)), isTrue);
     expect(k.byId('kids-prophets')!.episodes.length, greaterThan(20));
+    for (final id in ['kids-prophets-new', 'kids-prophets-3d']) {
+      for (final e in k.byId(id)!.episodes) {
+        expect(e.youtube, matches(RegExp(r'^[\w-]{11}$')));
+      }
+    }
     for (final s in k.series) {
       for (final e in s.episodes) {
         expect(e.url, startsWith('https://'));
@@ -74,7 +79,19 @@ void main() {
     }
     await tester.tap(find.byKey(const Key('kids.prophets')));
     await tester.pumpAndSettle();
+    // owner 2026-11-20: two modern published series (YouTube) above the full series
+    for (final id in ['kids-prophets-new', 'kids-prophets-3d', 'kids-prophets']) {
+      expect(find.byKey(Key('kidsStories.$id')), findsOneWidget);
+    }
+    await tester.tap(find.byKey(const Key('kidsStories.kids-prophets-new')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('kidsWatch.kids-prophets-new-1')), findsOneWidget);
+    expect(find.byKey(const Key('kidsListen.kids-prophets-new-1')), findsNothing);
+    await goBack(tester);
+    await tester.tap(find.byKey(const Key('kidsStories.kids-prophets')));
+    await tester.pumpAndSettle();
     expect(find.byKey(const Key('kidsSeries.kids-prophets')), findsOneWidget);
+    await goBack(tester);
     await goBack(tester);
     await tester.tap(find.byKey(const Key('kids.teacher')));
     await tester.pumpAndSettle();

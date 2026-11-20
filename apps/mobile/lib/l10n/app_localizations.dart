@@ -2804,6 +2804,36 @@ abstract class AppLocalizations {
   /// **'Stories of the prophets'**
   String get kidsProphets;
 
+  /// shared key "kids.prophets3d"
+  ///
+  /// In en, this message translates to:
+  /// **'Prophets\' stories: 3D'**
+  String get kidsProphets3d;
+
+  /// shared key "kids.prophets3dSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Modern 3D in Arabic, the prophet\'s face never shown'**
+  String get kidsProphets3dSub;
+
+  /// shared key "kids.prophetsClassic"
+  ///
+  /// In en, this message translates to:
+  /// **'Prophets\' stories: full series'**
+  String get kidsProphetsClassic;
+
+  /// shared key "kids.prophetsNew"
+  ///
+  /// In en, this message translates to:
+  /// **'Prophets\' stories: modern cartoon'**
+  String get kidsProphetsNew;
+
+  /// shared key "kids.prophetsNewSub"
+  ///
+  /// In en, this message translates to:
+  /// **'A teacher tells the story; the prophet is shown only as light'**
+  String get kidsProphetsNewSub;
+
   /// shared key "kids.prophetsSub"
   ///
   /// In en, this message translates to:
@@ -2989,6 +3019,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Watch'**
   String get kidsWatch;
+
+  /// shared key "kids.ytNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Plays from YouTube, needs internet'**
+  String get kidsYtNote;
 
   /// shared key "library.allRiwayat"
   ///

@@ -150,4 +150,20 @@ void main() {
     await tester.pumpAndSettle();
     await shot(tester, '07-ruqyah-counter');
   });
+
+  testWidgets('preview: prophets stories (modern series)', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(tester, size: size, prefs: prefs, audio: FakeAudioBackend());
+    await pushScreen(tester, KidsScreen(loader: () async => kids));
+    await tester.tap(find.byKey(const Key('kids.prophets')));
+    await tester.pumpAndSettle();
+    await shot(tester, '08-prophets-parts');
+    await tester.tap(find.byKey(const Key('kidsStories.kids-prophets-new')));
+    await tester.pumpAndSettle();
+    await shot(tester, '09-prophets-new');
+    await goBack(tester);
+    await tester.tap(find.byKey(const Key('kidsStories.kids-prophets-3d')));
+    await tester.pumpAndSettle();
+    await shot(tester, '10-prophets-3d');
+  });
 }

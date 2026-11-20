@@ -38,6 +38,15 @@ describe("kids section and ruqyah", () => {
     for (const s of KIDS.series) for (const e of s.episodes) expect(e.url).toMatch(/^https:\/\//);
     expect(KIDS.teacher.reciters).toContain("Minshawy_Teacher_128kbps");
   });
+
+  it("the modern prophets' series are published YouTube videos (checked: no prophet's face)", () => {
+    for (const id of ["kids-prophets-new", "kids-prophets-3d"]) {
+      const s = kidsSeries(id);
+      expect(s?.group).toBe("prophets");
+      expect(s?.episodes.length).toBeGreaterThanOrEqual(5);
+      for (const e of s?.episodes ?? []) expect(e.youtube).toMatch(/^[\w-]{11}$/);
+    }
+  });
 });
 
 describe("printed Mushaf pages", () => {
