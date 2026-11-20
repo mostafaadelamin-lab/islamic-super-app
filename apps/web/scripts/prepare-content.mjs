@@ -50,6 +50,7 @@ const copies = {
   "content/reels/dist/reels.v1.json": "reels.json",
   "content/stories/dist/stories.v1.json": "stories.json",
   "content/kids/dist/kids.v1.json": "kids.json",
+  "content/kids/dist/kids-learn.v1.json": "kids-learn.json",
 };
 for (const [from, to] of Object.entries(copies)) copyFileSync(join(repo, from), join(gen, to));
 

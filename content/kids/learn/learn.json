@@ -1,0 +1,347 @@
+{
+ "_doc": "Kids learning corner (owner 2026-11-20): book shelf, «احفظ حديث» (600 hadith for kids), adhkar cards, wudu & salah steps. Religious text is NEVER typed here: hadith600.json was extracted from the published book's PDF text layer (tools/kids_learn_extract.md); cards/steps/books are the published pages as images. Sources: docs/CONTENT_SOURCES.md (never shown in the app, except the wudu/salah book whose terms ask to name it). Build: python3 tools/kids_learn_build.py",
+ "booksBase": "https://rattilwasalli.com/kids-books/",
+ "shelves": [
+  "adhkar",
+  "aqeedah",
+  "akhlaq",
+  "fiqh",
+  "quran",
+  "stories",
+  "ramadan",
+  "parents"
+ ],
+ "books": [
+  {
+   "id": 17385,
+   "shelf": "adhkar",
+   "title": "الأذكار لأطفالنا الصغار",
+   "author": "أبو حازم الأثري",
+   "pages": 36
+  },
+  {
+   "id": 14439,
+   "shelf": "adhkar",
+   "title": "حصن الطفل المسلم",
+   "author": "روض الذهور الصيفي",
+   "pages": 36
+  },
+  {
+   "id": 15340,
+   "shelf": "adhkar",
+   "title": "العطر الفواح في أذكارالصباح",
+   "author": "طالب علم",
+   "pages": 24
+  },
+  {
+   "id": 19866,
+   "shelf": "adhkar",
+   "title": "الأدعية والأذكار للطفل المسلم سؤال وجواب (حصن طفلك)",
+   "author": "يزن الغانم",
+   "pages": 20
+  },
+  {
+   "id": 16856,
+   "shelf": "adhkar",
+   "title": "حصن الطفل المسلم سؤال وجواب",
+   "author": "يزن الغانم",
+   "pages": 21
+  },
+  {
+   "id": 17307,
+   "shelf": "aqeedah",
+   "title": "عقيدة الطفل المسلم للأطفال من عمر 3-6 سنوات",
+   "author": "أبو حازم الأثري",
+   "pages": 35
+  },
+  {
+   "id": 17346,
+   "shelf": "aqeedah",
+   "title": "عقيدة الطفل المسلم",
+   "author": "خالد بن سعود البليهد",
+   "pages": 41
+  },
+  {
+   "id": 10734,
+   "shelf": "aqeedah",
+   "title": "عقيدة الطفل المسلم",
+   "author": "راجية الرحمن أم عمر",
+   "pages": 72
+  },
+  {
+   "id": 10435,
+   "shelf": "aqeedah",
+   "title": "مختصر العقيدة الإسلامية من الكتاب والسنة",
+   "author": "محمد بن جميل زينو",
+   "pages": 48
+  },
+  {
+   "id": 18054,
+   "shelf": "aqeedah",
+   "title": "تعليم الصغار توحيد الغفار (نظام مختصر في اثنين وثلاثين بيتا)",
+   "author": "محمد بن عبدالسلام بن علي",
+   "pages": 11
+  },
+  {
+   "id": 16849,
+   "shelf": "aqeedah",
+   "title": "ما لا يسع أطفال المسلمين جهله",
+   "author": "يزن الغانم",
+   "pages": 147
+  },
+  {
+   "id": 19779,
+   "shelf": "aqeedah",
+   "title": "تربية أطفال المسلمين بمعاني أسماء الله الحميد",
+   "author": "يزن الغانم",
+   "pages": 48
+  },
+  {
+   "id": 16857,
+   "shelf": "akhlaq",
+   "title": "أخلاق الطفل المسلم سؤال وجواب",
+   "author": "يزن الغانم",
+   "pages": 32
+  },
+  {
+   "id": 4943,
+   "shelf": "akhlaq",
+   "title": "الآداب الإسلامية للناشئة",
+   "author": "محمد خير فاطمة",
+   "pages": 259
+  },
+  {
+   "id": 14822,
+   "shelf": "akhlaq",
+   "title": "علمني رسول الله صلى الله عليه وسلم",
+   "author": "موقع بطاقات",
+   "pages": 52
+  },
+  {
+   "id": 19504,
+   "shelf": "akhlaq",
+   "title": "زاد المسلم الصغير",
+   "author": "عبدالشكور معلم",
+   "pages": 45
+  },
+  {
+   "id": 10436,
+   "shelf": "fiqh",
+   "title": "هيا نتعلم الوضوء والصلاة",
+   "author": "موقع سلسلة العلامتين",
+   "pages": 34
+  },
+  {
+   "id": 13437,
+   "shelf": "fiqh",
+   "title": "مختصر البيان في طهارة وصلاة الفتيان",
+   "author": "محمد رفيق مؤمن الشوبكي",
+   "pages": 24
+  },
+  {
+   "id": 19654,
+   "shelf": "quran",
+   "title": "تفسير سورة القدر للأطفال",
+   "author": "د.فاطمة عمر نصيف",
+   "pages": 23
+  },
+  {
+   "id": 19945,
+   "shelf": "quran",
+   "title": "600 حديث للحفظ للأطفال متدرجة حسب الطول ومقسمة إلى أربعة مستويات بالألوان",
+   "author": "د.هاني الشيخ جمعة سهل",
+   "pages": 110
+  },
+  {
+   "id": 10601,
+   "shelf": "quran",
+   "title": "نور البيان في معلم القراءة بالقرآن (كتاب منهجي لأطفال الحضانة ، ودور نحفيظ القرآن )",
+   "author": "راجي رحمة الغفور",
+   "pages": 58
+  },
+  {
+   "id": 13839,
+   "shelf": "quran",
+   "title": "الطريقة المثالية لتعليم القراءة العربية",
+   "author": "بكر موسى هارون",
+   "pages": 84
+  },
+  {
+   "id": 17821,
+   "shelf": "quran",
+   "title": "الحروف الهجائية المنقطة بالتشكيل المستوى الثاني",
+   "author": "بكار فيصل المنفي",
+   "pages": 29
+  },
+  {
+   "id": 10123,
+   "shelf": "stories",
+   "title": "قصص الصحابة1 : الغلام الذي اختار الجنة",
+   "author": "سلوى العناني",
+   "pages": 15
+  },
+  {
+   "id": 10124,
+   "shelf": "stories",
+   "title": "قصص الصحابة2 : صوت من السماء",
+   "author": "سلوى العناني",
+   "pages": 14
+  },
+  {
+   "id": 12884,
+   "shelf": "stories",
+   "title": "رجال ونساء حول الرسول صلى الله عليه وسلم للأطفال",
+   "author": "سيد مبارك",
+   "pages": 63
+  },
+  {
+   "id": 10986,
+   "shelf": "stories",
+   "title": "سلسلة السيرة النبوية للأطفال",
+   "author": "سيد مبارك",
+   "pages": 83
+  },
+  {
+   "id": 11033,
+   "shelf": "stories",
+   "title": "معجزات الرسول للأطفال",
+   "author": "سيد مبارك",
+   "pages": 15
+  },
+  {
+   "id": 13041,
+   "shelf": "stories",
+   "title": "قصة فتي من قريش (قصص إسلامية للأطفال)",
+   "author": "سيد مبارك",
+   "pages": 31
+  },
+  {
+   "id": 20387,
+   "shelf": "stories",
+   "title": "صور مشرقة من حياة الأطفال",
+   "author": "السيد مراد سلامة",
+   "pages": 180
+  },
+  {
+   "id": 19603,
+   "shelf": "stories",
+   "title": "تربية أطفال المسلمين بسير الأئمة الصالحين المصلحين (رضي الله عنهم أجمعين)",
+   "author": "يزن الغانم",
+   "pages": 95
+  },
+  {
+   "id": 19604,
+   "shelf": "stories",
+   "title": "تربية بنات المسلمين بسير خير نساء العالمين",
+   "author": "يزن الغانم",
+   "pages": 78
+  },
+  {
+   "id": 19605,
+   "shelf": "stories",
+   "title": "تربية أطفال المسلمين بسيرة أصحاب سيد الأنبياء والمرسلين (رضي الله عنهم أجمعين)",
+   "author": "يزن الغانم",
+   "pages": 49
+  },
+  {
+   "id": 19606,
+   "shelf": "stories",
+   "title": "تربية أطفال المسلمين بقصص الأنبياء والمرسلين (عليه السلام)",
+   "author": "يزن الغانم",
+   "pages": 144
+  },
+  {
+   "id": 19607,
+   "shelf": "stories",
+   "title": "تربية أطفال المسلمين بسيرة سيد الأنبياء والمرسلين (صلى الله عليه وسلم)",
+   "author": "يزن الغانم",
+   "pages": 50
+  },
+  {
+   "id": 15108,
+   "shelf": "ramadan",
+   "title": "للأطفال - مفكرتي (شهر رمضان)",
+   "author": "آيات",
+   "pages": 32
+  },
+  {
+   "id": 14700,
+   "shelf": "parents",
+   "title": "رفقا بعقيدتي يا أمي (دليل إرشادي لغرس الإيمان في قلوب الأبناء بدءًا من الحمل إلى البلوغ)",
+   "author": "أم عبد الرحمن سوزان بنت مصطفى بخيت",
+   "pages": 93
+  }
+ ],
+ "hadithLevels": [
+  {
+   "level": 1,
+   "from": 1,
+   "to": 200,
+   "color": "#F2C230"
+  },
+  {
+   "level": 2,
+   "from": 201,
+   "to": 350,
+   "color": "#E0564F"
+  },
+  {
+   "level": 3,
+   "from": 351,
+   "to": 500,
+   "color": "#4FA65B"
+  },
+  {
+   "level": 4,
+   "from": 501,
+   "to": 600,
+   "color": "#3D7DCA"
+  }
+ ],
+ "wudu": {
+  "pages": [
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ]
+ },
+ "salah": {
+  "pages": [
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30,
+   31
+  ]
+ },
+ "stepsCredit": "كتاب «هيا نتعلم الوضوء والصلاة» – سلسلة العلامتين",
+ "cards": {
+  "pages": [
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ]
+ }
+}

@@ -15,6 +15,7 @@ import 'l10n_ext.dart';
 import 'library_screen.dart' show OfflineButton;
 import 'play_origin.dart';
 import 'r_icon.dart';
+import 'kids_learn_screen.dart';
 import 'kids_mushaf_screen.dart';
 import 'ruqyah_screen.dart';
 import 'stories_screen.dart' show NarrationBar;
@@ -102,6 +103,41 @@ class KidsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                ),
+                tile(
+                  'books',
+                  RIcons.openBook,
+                  l.kidsLearnBooks,
+                  l.kidsLearnBooksSub,
+                  () => push(const KidsBooksScreen()),
+                ),
+                tile(
+                  'hadith',
+                  RIcons.star,
+                  l.kidsLearnHadith,
+                  l.kidsLearnHadithSub,
+                  () => push(const KidsHadithScreen()),
+                ),
+                tile(
+                  'cards',
+                  RIcons.adhkar,
+                  l.kidsLearnCards,
+                  l.kidsLearnCardsSub,
+                  () => push(const KidsCardsScreen()),
+                ),
+                tile(
+                  'wudu',
+                  RIcons.prayer,
+                  l.kidsLearnWudu,
+                  l.kidsLearnWuduSub,
+                  () => push(const KidsStepsScreen(salah: false)),
+                ),
+                tile(
+                  'salah',
+                  RIcons.prayer,
+                  l.kidsLearnSalah,
+                  l.kidsLearnSalahSub,
+                  () => push(const KidsStepsScreen(salah: true)),
                 ),
                 tile(
                   'ruqyah',
