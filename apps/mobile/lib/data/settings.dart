@@ -275,8 +275,8 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// "شكل المصحف المطبوع": Mushaf pages in the King Fahd Complex page fonts (owner 2026-11-20, default off).
-  bool get mushafPrinted => _prefs.getBool('mushaf.printed') ?? false;
+  /// "شكل المصحف المطبوع": Mushaf pages in the King Fahd Complex page fonts (owner 2026-11-20: the default; the old look is the option).
+  bool get mushafPrinted => _prefs.getBool('mushaf.printed') ?? true;
   Future<void> setMushafPrinted(bool on) async {
     await _prefs.setBool('mushaf.printed', on);
     notifyListeners();

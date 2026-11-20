@@ -130,6 +130,8 @@ Future<TestApp> pumpApp(
     'reader.guideDone': true,
     // Tests read fixed 24-hour times; the 12-hour default (owner 2026-11-20) is tested in prayer_screen_test.
     'clock': '24',
+    // Tests draw the standard Mushaf font; the printed look (default, owner 2026-11-20) is tested in kids_ruqyah_test.
+    'mushaf.printed': false,
     ...prefs,
   });
   final p = await SharedPreferences.getInstance();

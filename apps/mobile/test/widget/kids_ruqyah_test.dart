@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/data/printed_mushaf.dart';
+import 'package:rattil/data/settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rattil/domain/kids.dart';
 import 'package:rattil/domain/quran.dart';
 import 'package:rattil/ui/kids_screen.dart';
@@ -85,6 +87,14 @@ void main() {
     await tester.pump();
     expect(app.services.recitation.reciterOverride, 'Minshawy_Teacher_128kbps');
     expect(app.services.recitation.currentRef?.surah, 112);
+  });
+
+  test('printed Mushaf look is the default; the old look only when chosen (owner 2026-11-20)', () async {
+    SharedPreferences.setMockInitialValues({});
+    final s = SettingsController(await SharedPreferences.getInstance());
+    expect(s.mushafPrinted, isTrue);
+    await s.setMushafPrinted(false);
+    expect(s.mushafPrinted, isFalse);
   });
 
   testWidgets('printed Mushaf look: the page is drawn line by line from the page-font layout', (tester) async {
