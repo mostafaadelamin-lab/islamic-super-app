@@ -3115,6 +3115,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String get storiesWatchVideo => 'Watch video';
 
   @override
+  String get studyBalagha => 'Rhetoric';
+
+  @override
+  String get studyFawaid => 'Benefits';
+
+  @override
+  String get studyGharib => 'Rare words';
+
+  @override
+  String get studyGharibBook => 'From «al-Siraj fi Bayan Gharib al-Quran»';
+
+  @override
+  String get studyIrab => 'I\'rab';
+
+  @override
+  String get studyIrabBook => 'From «al-Jadwal fi I\'rab al-Quran» by Mahmud Safi';
+
+  @override
+  String get studyNoGharib => 'The book lists no rare words in this ayah.';
+
+  @override
+  String studyNoPart(String part) {
+    return 'The book has no $part section for this ayah.';
+  }
+
+  @override
+  String get studyNotes => 'Editor\'s footnotes';
+
+  @override
+  String studyRange(String from, String to, String surah) {
+    return 'The book explains ayahs $from–$to of $surah together.';
+  }
+
+  @override
+  String get studyRetry => 'Try again';
+
+  @override
+  String get studySarf => 'Morphology';
+
+  @override
+  String get studyTafsir => 'Tafsir';
+
+  @override
   String get surahInfoAbout => 'About the surah';
 
   @override
@@ -3161,6 +3204,92 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tafsirTitle => 'Al-Tafsir al-Muyassar';
+
+  @override
+  String get tafsirLibAyah => 'Ayah';
+
+  @override
+  String get tafsirLibBooks => 'Tafsir books';
+
+  @override
+  String get tafsirLibCompare => 'Compare tafsirs';
+
+  @override
+  String get tafsirLibCompareSub => 'Every tafsir of the same ayah';
+
+  @override
+  String get tafsirLibDownload => 'Download for offline reading';
+
+  @override
+  String tafsirLibDownloading(String done) {
+    return 'Downloading… $done of 114 surahs';
+  }
+
+  @override
+  String get tafsirLibDownloadsNote =>
+      'Each book downloads once and then opens without the internet. Without it, each surah downloads when you open it.';
+
+  @override
+  String get tafsirLibDownloadsTitle => 'Offline reading';
+
+  @override
+  String get tafsirLibFailed => 'The download failed. Try again.';
+
+  @override
+  String get tafsirLibInApp => 'In the app';
+
+  @override
+  String get tafsirLibIrabName => 'الجدول في إعراب القرآن وصرفه وبيانه';
+
+  @override
+  String get tafsirLibIrabSub => 'I\'rab, morphology, rhetoric and benefits of every ayah';
+
+  @override
+  String get tafsirLibLenLong => 'Long';
+
+  @override
+  String get tafsirLibLenMedium => 'Medium';
+
+  @override
+  String get tafsirLibLenShort => 'Short';
+
+  @override
+  String get tafsirLibLess => 'Show less';
+
+  @override
+  String get tafsirLibMore => 'Read all';
+
+  @override
+  String get tafsirLibReadBook => 'Open in the book';
+
+  @override
+  String get tafsirLibRemove => 'Remove from device';
+
+  @override
+  String tafsirLibResults(String n) {
+    return 'Results: $n';
+  }
+
+  @override
+  String get tafsirLibSaved => 'Saved on this device';
+
+  @override
+  String get tafsirLibSearch => 'Search the tafsir';
+
+  @override
+  String get tafsirLibSearchHint => 'Type an Arabic word or phrase';
+
+  @override
+  String get tafsirLibSearchNeedsDownload => 'Searching this book needs it downloaded on your device first.';
+
+  @override
+  String get tafsirLibSearchSub => 'Find a word inside any tafsir book';
+
+  @override
+  String get tafsirLibSurah => 'Surah';
+
+  @override
+  String get tafsirLibTitle => 'Tafsir';
 
   @override
   String get tagline => 'Quran, prayer and remembrance — free, no ads';

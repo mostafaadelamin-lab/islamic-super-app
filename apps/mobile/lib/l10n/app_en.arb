@@ -4557,6 +4557,74 @@
   "@storiesWatchVideo": {
     "description": "shared key \"stories.watchVideo\""
   },
+  "studyBalagha": "Rhetoric",
+  "@studyBalagha": {
+    "description": "shared key \"study.balagha\""
+  },
+  "studyFawaid": "Benefits",
+  "@studyFawaid": {
+    "description": "shared key \"study.fawaid\""
+  },
+  "studyGharib": "Rare words",
+  "@studyGharib": {
+    "description": "shared key \"study.gharib\""
+  },
+  "studyGharibBook": "From «al-Siraj fi Bayan Gharib al-Quran»",
+  "@studyGharibBook": {
+    "description": "shared key \"study.gharibBook\""
+  },
+  "studyIrab": "I'rab",
+  "@studyIrab": {
+    "description": "shared key \"study.irab\""
+  },
+  "studyIrabBook": "From «al-Jadwal fi I'rab al-Quran» by Mahmud Safi",
+  "@studyIrabBook": {
+    "description": "shared key \"study.irabBook\""
+  },
+  "studyNoGharib": "The book lists no rare words in this ayah.",
+  "@studyNoGharib": {
+    "description": "shared key \"study.noGharib\""
+  },
+  "studyNoPart": "The book has no {part} section for this ayah.",
+  "@studyNoPart": {
+    "description": "shared key \"study.noPart\"",
+    "placeholders": {
+      "part": {
+        "type": "String"
+      }
+    }
+  },
+  "studyNotes": "Editor's footnotes",
+  "@studyNotes": {
+    "description": "shared key \"study.notes\""
+  },
+  "studyRange": "The book explains ayahs {from}–{to} of {surah} together.",
+  "@studyRange": {
+    "description": "shared key \"study.range\"",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "surah": {
+        "type": "String"
+      }
+    }
+  },
+  "studyRetry": "Try again",
+  "@studyRetry": {
+    "description": "shared key \"study.retry\""
+  },
+  "studySarf": "Morphology",
+  "@studySarf": {
+    "description": "shared key \"study.sarf\""
+  },
+  "studyTafsir": "Tafsir",
+  "@studyTafsir": {
+    "description": "shared key \"study.tafsir\""
+  },
   "surahInfoAbout": "About the surah",
   "@surahInfoAbout": {
     "description": "shared key \"surahInfo.about\""
@@ -4620,6 +4688,124 @@
   "tafsirTitle": "Al-Tafsir al-Muyassar",
   "@tafsirTitle": {
     "description": "shared key \"tafsir.title\""
+  },
+  "tafsirLibAyah": "Ayah",
+  "@tafsirLibAyah": {
+    "description": "shared key \"tafsirLib.ayah\""
+  },
+  "tafsirLibBooks": "Tafsir books",
+  "@tafsirLibBooks": {
+    "description": "shared key \"tafsirLib.books\""
+  },
+  "tafsirLibCompare": "Compare tafsirs",
+  "@tafsirLibCompare": {
+    "description": "shared key \"tafsirLib.compare\""
+  },
+  "tafsirLibCompareSub": "Every tafsir of the same ayah",
+  "@tafsirLibCompareSub": {
+    "description": "shared key \"tafsirLib.compareSub\""
+  },
+  "tafsirLibDownload": "Download for offline reading",
+  "@tafsirLibDownload": {
+    "description": "shared key \"tafsirLib.download\""
+  },
+  "tafsirLibDownloading": "Downloading… {done} of 114 surahs",
+  "@tafsirLibDownloading": {
+    "description": "shared key \"tafsirLib.downloading\"",
+    "placeholders": {
+      "done": {
+        "type": "String"
+      }
+    }
+  },
+  "tafsirLibDownloadsNote": "Each book downloads once and then opens without the internet. Without it, each surah downloads when you open it.",
+  "@tafsirLibDownloadsNote": {
+    "description": "shared key \"tafsirLib.downloadsNote\""
+  },
+  "tafsirLibDownloadsTitle": "Offline reading",
+  "@tafsirLibDownloadsTitle": {
+    "description": "shared key \"tafsirLib.downloadsTitle\""
+  },
+  "tafsirLibFailed": "The download failed. Try again.",
+  "@tafsirLibFailed": {
+    "description": "shared key \"tafsirLib.failed\""
+  },
+  "tafsirLibInApp": "In the app",
+  "@tafsirLibInApp": {
+    "description": "shared key \"tafsirLib.inApp\""
+  },
+  "tafsirLibIrabName": "الجدول في إعراب القرآن وصرفه وبيانه",
+  "@tafsirLibIrabName": {
+    "description": "shared key \"tafsirLib.irabName\""
+  },
+  "tafsirLibIrabSub": "I'rab, morphology, rhetoric and benefits of every ayah",
+  "@tafsirLibIrabSub": {
+    "description": "shared key \"tafsirLib.irabSub\""
+  },
+  "tafsirLibLenLong": "Long",
+  "@tafsirLibLenLong": {
+    "description": "shared key \"tafsirLib.lenLong\""
+  },
+  "tafsirLibLenMedium": "Medium",
+  "@tafsirLibLenMedium": {
+    "description": "shared key \"tafsirLib.lenMedium\""
+  },
+  "tafsirLibLenShort": "Short",
+  "@tafsirLibLenShort": {
+    "description": "shared key \"tafsirLib.lenShort\""
+  },
+  "tafsirLibLess": "Show less",
+  "@tafsirLibLess": {
+    "description": "shared key \"tafsirLib.less\""
+  },
+  "tafsirLibMore": "Read all",
+  "@tafsirLibMore": {
+    "description": "shared key \"tafsirLib.more\""
+  },
+  "tafsirLibReadBook": "Open in the book",
+  "@tafsirLibReadBook": {
+    "description": "shared key \"tafsirLib.readBook\""
+  },
+  "tafsirLibRemove": "Remove from device",
+  "@tafsirLibRemove": {
+    "description": "shared key \"tafsirLib.remove\""
+  },
+  "tafsirLibResults": "Results: {n}",
+  "@tafsirLibResults": {
+    "description": "shared key \"tafsirLib.results\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "tafsirLibSaved": "Saved on this device",
+  "@tafsirLibSaved": {
+    "description": "shared key \"tafsirLib.saved\""
+  },
+  "tafsirLibSearch": "Search the tafsir",
+  "@tafsirLibSearch": {
+    "description": "shared key \"tafsirLib.search\""
+  },
+  "tafsirLibSearchHint": "Type an Arabic word or phrase",
+  "@tafsirLibSearchHint": {
+    "description": "shared key \"tafsirLib.searchHint\""
+  },
+  "tafsirLibSearchNeedsDownload": "Searching this book needs it downloaded on your device first.",
+  "@tafsirLibSearchNeedsDownload": {
+    "description": "shared key \"tafsirLib.searchNeedsDownload\""
+  },
+  "tafsirLibSearchSub": "Find a word inside any tafsir book",
+  "@tafsirLibSearchSub": {
+    "description": "shared key \"tafsirLib.searchSub\""
+  },
+  "tafsirLibSurah": "Surah",
+  "@tafsirLibSurah": {
+    "description": "shared key \"tafsirLib.surah\""
+  },
+  "tafsirLibTitle": "Tafsir",
+  "@tafsirLibTitle": {
+    "description": "shared key \"tafsirLib.title\""
   },
   "tagline": "Quran, prayer and remembrance — free, no ads",
   "@tagline": {

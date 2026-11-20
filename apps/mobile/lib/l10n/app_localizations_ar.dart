@@ -3096,6 +3096,49 @@ class AppLocalizationsAr extends AppLocalizations {
   String get storiesWatchVideo => 'مشاهدة فيديو';
 
   @override
+  String get studyBalagha => 'البلاغة';
+
+  @override
+  String get studyFawaid => 'الفوائد';
+
+  @override
+  String get studyGharib => 'غريب القرآن';
+
+  @override
+  String get studyGharibBook => 'من كتاب «السراج في بيان غريب القرآن»';
+
+  @override
+  String get studyIrab => 'الإعراب';
+
+  @override
+  String get studyIrabBook => 'من كتاب «الجدول في إعراب القرآن وصرفه وبيانه» لمحمود صافي';
+
+  @override
+  String get studyNoGharib => 'لم يذكر الكتاب كلمات غريبة في هذه الآية.';
+
+  @override
+  String studyNoPart(String part) {
+    return 'لم يذكر الكتاب $part في هذه الآية.';
+  }
+
+  @override
+  String get studyNotes => 'حواشي المحقق';
+
+  @override
+  String studyRange(String from, String to, String surah) {
+    return 'الكتاب يشرح الآيات $from–$to من سورة $surah معًا.';
+  }
+
+  @override
+  String get studyRetry => 'أعد المحاولة';
+
+  @override
+  String get studySarf => 'الصرف';
+
+  @override
+  String get studyTafsir => 'التفسير';
+
+  @override
   String get surahInfoAbout => 'نبذة عن السورة';
 
   @override
@@ -3142,6 +3185,92 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tafsirTitle => 'التفسير الميسر';
+
+  @override
+  String get tafsirLibAyah => 'الآية';
+
+  @override
+  String get tafsirLibBooks => 'كتب التفسير';
+
+  @override
+  String get tafsirLibCompare => 'مقارنة التفاسير';
+
+  @override
+  String get tafsirLibCompareSub => 'كل التفاسير للآية نفسها تحت بعضها';
+
+  @override
+  String get tafsirLibDownload => 'تنزيل للقراءة بدون نت';
+
+  @override
+  String tafsirLibDownloading(String done) {
+    return 'جارٍ التنزيل… $done من ١١٤ سورة';
+  }
+
+  @override
+  String get tafsirLibDownloadsNote =>
+      'كل كتاب يتنزّل مرة واحدة، وبعدها يفتح بدون إنترنت. وبدون تنزيل، تتنزّل كل سورة لما تفتحها.';
+
+  @override
+  String get tafsirLibDownloadsTitle => 'التنزيل للقراءة بدون نت';
+
+  @override
+  String get tafsirLibFailed => 'تعذّر التنزيل، حاول مرة أخرى.';
+
+  @override
+  String get tafsirLibInApp => 'موجود في التطبيق';
+
+  @override
+  String get tafsirLibIrabName => 'الجدول في إعراب القرآن وصرفه وبيانه';
+
+  @override
+  String get tafsirLibIrabSub => 'الإعراب والصرف والبلاغة والفوائد لكل آية';
+
+  @override
+  String get tafsirLibLenLong => 'مطوّل';
+
+  @override
+  String get tafsirLibLenMedium => 'متوسط';
+
+  @override
+  String get tafsirLibLenShort => 'مختصر';
+
+  @override
+  String get tafsirLibLess => 'اختصر';
+
+  @override
+  String get tafsirLibMore => 'اقرأ الكل';
+
+  @override
+  String get tafsirLibReadBook => 'افتح في الكتاب';
+
+  @override
+  String get tafsirLibRemove => 'حذف من الجهاز';
+
+  @override
+  String tafsirLibResults(String n) {
+    return 'عدد النتائج: $n';
+  }
+
+  @override
+  String get tafsirLibSaved => 'منزّل على جهازك';
+
+  @override
+  String get tafsirLibSearch => 'البحث في التفسير';
+
+  @override
+  String get tafsirLibSearchHint => 'اكتب كلمة أو جملة';
+
+  @override
+  String get tafsirLibSearchNeedsDownload => 'البحث في هذا الكتاب يحتاج تنزيله على جهازك أولًا.';
+
+  @override
+  String get tafsirLibSearchSub => 'ابحث عن كلمة داخل أي كتاب تفسير';
+
+  @override
+  String get tafsirLibSurah => 'السورة';
+
+  @override
+  String get tafsirLibTitle => 'التفسير';
 
   @override
   String get tagline => 'القرآن والصلاة والذكر — مجاني بلا إعلانات';

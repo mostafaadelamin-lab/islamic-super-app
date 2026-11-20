@@ -5588,6 +5588,84 @@ abstract class AppLocalizations {
   /// **'Watch video'**
   String get storiesWatchVideo;
 
+  /// shared key "study.balagha"
+  ///
+  /// In en, this message translates to:
+  /// **'Rhetoric'**
+  String get studyBalagha;
+
+  /// shared key "study.fawaid"
+  ///
+  /// In en, this message translates to:
+  /// **'Benefits'**
+  String get studyFawaid;
+
+  /// shared key "study.gharib"
+  ///
+  /// In en, this message translates to:
+  /// **'Rare words'**
+  String get studyGharib;
+
+  /// shared key "study.gharibBook"
+  ///
+  /// In en, this message translates to:
+  /// **'From «al-Siraj fi Bayan Gharib al-Quran»'**
+  String get studyGharibBook;
+
+  /// shared key "study.irab"
+  ///
+  /// In en, this message translates to:
+  /// **'I\'rab'**
+  String get studyIrab;
+
+  /// shared key "study.irabBook"
+  ///
+  /// In en, this message translates to:
+  /// **'From «al-Jadwal fi I\'rab al-Quran» by Mahmud Safi'**
+  String get studyIrabBook;
+
+  /// shared key "study.noGharib"
+  ///
+  /// In en, this message translates to:
+  /// **'The book lists no rare words in this ayah.'**
+  String get studyNoGharib;
+
+  /// shared key "study.noPart"
+  ///
+  /// In en, this message translates to:
+  /// **'The book has no {part} section for this ayah.'**
+  String studyNoPart(String part);
+
+  /// shared key "study.notes"
+  ///
+  /// In en, this message translates to:
+  /// **'Editor\'s footnotes'**
+  String get studyNotes;
+
+  /// shared key "study.range"
+  ///
+  /// In en, this message translates to:
+  /// **'The book explains ayahs {from}–{to} of {surah} together.'**
+  String studyRange(String from, String to, String surah);
+
+  /// shared key "study.retry"
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get studyRetry;
+
+  /// shared key "study.sarf"
+  ///
+  /// In en, this message translates to:
+  /// **'Morphology'**
+  String get studySarf;
+
+  /// shared key "study.tafsir"
+  ///
+  /// In en, this message translates to:
+  /// **'Tafsir'**
+  String get studyTafsir;
+
   /// shared key "surahInfo.about"
   ///
   /// In en, this message translates to:
@@ -5683,6 +5761,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Al-Tafsir al-Muyassar'**
   String get tafsirTitle;
+
+  /// shared key "tafsirLib.ayah"
+  ///
+  /// In en, this message translates to:
+  /// **'Ayah'**
+  String get tafsirLibAyah;
+
+  /// shared key "tafsirLib.books"
+  ///
+  /// In en, this message translates to:
+  /// **'Tafsir books'**
+  String get tafsirLibBooks;
+
+  /// shared key "tafsirLib.compare"
+  ///
+  /// In en, this message translates to:
+  /// **'Compare tafsirs'**
+  String get tafsirLibCompare;
+
+  /// shared key "tafsirLib.compareSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Every tafsir of the same ayah'**
+  String get tafsirLibCompareSub;
+
+  /// shared key "tafsirLib.download"
+  ///
+  /// In en, this message translates to:
+  /// **'Download for offline reading'**
+  String get tafsirLibDownload;
+
+  /// shared key "tafsirLib.downloading"
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading… {done} of 114 surahs'**
+  String tafsirLibDownloading(String done);
+
+  /// shared key "tafsirLib.downloadsNote"
+  ///
+  /// In en, this message translates to:
+  /// **'Each book downloads once and then opens without the internet. Without it, each surah downloads when you open it.'**
+  String get tafsirLibDownloadsNote;
+
+  /// shared key "tafsirLib.downloadsTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Offline reading'**
+  String get tafsirLibDownloadsTitle;
+
+  /// shared key "tafsirLib.failed"
+  ///
+  /// In en, this message translates to:
+  /// **'The download failed. Try again.'**
+  String get tafsirLibFailed;
+
+  /// shared key "tafsirLib.inApp"
+  ///
+  /// In en, this message translates to:
+  /// **'In the app'**
+  String get tafsirLibInApp;
+
+  /// shared key "tafsirLib.irabName"
+  ///
+  /// In en, this message translates to:
+  /// **'الجدول في إعراب القرآن وصرفه وبيانه'**
+  String get tafsirLibIrabName;
+
+  /// shared key "tafsirLib.irabSub"
+  ///
+  /// In en, this message translates to:
+  /// **'I\'rab, morphology, rhetoric and benefits of every ayah'**
+  String get tafsirLibIrabSub;
+
+  /// shared key "tafsirLib.lenLong"
+  ///
+  /// In en, this message translates to:
+  /// **'Long'**
+  String get tafsirLibLenLong;
+
+  /// shared key "tafsirLib.lenMedium"
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get tafsirLibLenMedium;
+
+  /// shared key "tafsirLib.lenShort"
+  ///
+  /// In en, this message translates to:
+  /// **'Short'**
+  String get tafsirLibLenShort;
+
+  /// shared key "tafsirLib.less"
+  ///
+  /// In en, this message translates to:
+  /// **'Show less'**
+  String get tafsirLibLess;
+
+  /// shared key "tafsirLib.more"
+  ///
+  /// In en, this message translates to:
+  /// **'Read all'**
+  String get tafsirLibMore;
+
+  /// shared key "tafsirLib.readBook"
+  ///
+  /// In en, this message translates to:
+  /// **'Open in the book'**
+  String get tafsirLibReadBook;
+
+  /// shared key "tafsirLib.remove"
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from device'**
+  String get tafsirLibRemove;
+
+  /// shared key "tafsirLib.results"
+  ///
+  /// In en, this message translates to:
+  /// **'Results: {n}'**
+  String tafsirLibResults(String n);
+
+  /// shared key "tafsirLib.saved"
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this device'**
+  String get tafsirLibSaved;
+
+  /// shared key "tafsirLib.search"
+  ///
+  /// In en, this message translates to:
+  /// **'Search the tafsir'**
+  String get tafsirLibSearch;
+
+  /// shared key "tafsirLib.searchHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Type an Arabic word or phrase'**
+  String get tafsirLibSearchHint;
+
+  /// shared key "tafsirLib.searchNeedsDownload"
+  ///
+  /// In en, this message translates to:
+  /// **'Searching this book needs it downloaded on your device first.'**
+  String get tafsirLibSearchNeedsDownload;
+
+  /// shared key "tafsirLib.searchSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Find a word inside any tafsir book'**
+  String get tafsirLibSearchSub;
+
+  /// shared key "tafsirLib.surah"
+  ///
+  /// In en, this message translates to:
+  /// **'Surah'**
+  String get tafsirLibSurah;
+
+  /// shared key "tafsirLib.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Tafsir'**
+  String get tafsirLibTitle;
 
   /// shared key "tagline"
   ///

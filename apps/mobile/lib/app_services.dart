@@ -35,6 +35,7 @@ import 'data/sharing.dart';
 import 'data/hadith.dart';
 import 'data/mp3quran.dart';
 import 'data/tafsir.dart';
+import 'data/tafsir_books.dart';
 import 'data/word_meanings.dart';
 import 'domain/prayer_schedule.dart';
 import 'ui/prayer_model.dart' show resolveCity;
@@ -173,6 +174,11 @@ class AppServices {
       root: storageRoot ?? getApplicationSupportDirectory,
     );
     PrintedMushaf.instance.configure(client: httpClient, root: storageRoot ?? getApplicationSupportDirectory);
+    TafsirBooks.instance.configure(
+      client: httpClient,
+      root: storageRoot ?? getApplicationSupportDirectory,
+      ayahCounts: [for (final s in content.quran.surahs) s.ayahCount],
+    );
     final recitation = RecitationController(
       content: content,
       settings: settings,

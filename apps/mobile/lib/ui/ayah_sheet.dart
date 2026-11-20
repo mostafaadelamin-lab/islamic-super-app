@@ -5,13 +5,12 @@ import '../app_services.dart';
 import '../domain/audio_queue.dart';
 import '../domain/bookmark.dart';
 import '../domain/quran.dart';
-import '../domain/tafsir.dart';
 import '../domain/text.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import 'ayah_image_screen.dart';
+import 'ayah_study.dart';
 import 'l10n_ext.dart';
-import 'review_notice.dart';
 import 'widgets.dart';
 import 'word_meanings_sheet.dart';
 import 'r_icon.dart';
@@ -112,7 +111,6 @@ class AyahSheet extends StatefulWidget {
 
 class AyahSheetState extends State<AyahSheet> {
   late AyahRef _ref = widget.initial;
-  Future<TafsirContent>? _tafsir;
 
   /// Simple menu (owner, 2026-11-15): the tafsir stays folded until its button is tapped.
   bool _showTafsir = false;
@@ -193,105 +191,11 @@ class AyahSheetState extends State<AyahSheet> {
                   () => setState(() {
                     _showTafsir = !_showTafsir;
                     // Loaded only when first opened.
-                    _tafsir ??= s.tafsir.load()..ignore(); // the card below shows a failure; nothing else waits on it
                   }),
             ),
-            if (_showTafsir && widget.onTafsir == null)
-              Flexible(
-                child: FutureBuilder<TafsirContent>(
-                  future: _tafsir,
-                  initialData: s.tafsir.loaded,
-                  builder: (context, snap) =>
-                      _TafsirCard(text: snap.data?.text(_ref.surah, _ref.ayah), failed: snap.hasError),
-                ),
-              ),
+            if (_showTafsir && widget.onTafsir == null) Flexible(child: AyahStudyCard(ref: _ref)),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _TafsirCard extends StatelessWidget {
-  const _TafsirCard({required this.text, required this.failed});
-  final String? text;
-  final bool failed;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-    final Widget body;
-    if (text != null) {
-      body = Flexible(
-        child: SingleChildScrollView(
-          key: const Key('tafsirScroll'),
-          child: Text(
-            text!,
-            key: const Key('tafsirText'),
-            textDirection: TextDirection.rtl,
-            textAlign: TextAlign.start,
-            style: duaStyle(context, size: 17),
-          ),
-        ),
-      );
-    } else if (failed) {
-      body = Text(
-        l.tafsirError,
-        key: const Key('tafsirError'),
-        style: TextStyle(color: scheme.error),
-      );
-    } else {
-      body = Row(
-        key: const Key('tafsirLoading'),
-        children: [
-          const SizedBox.square(dimension: 16, child: CircularProgressIndicator(strokeWidth: 2)),
-          const SizedBox(width: DesignTokens.spaceSm),
-          Expanded(child: Text(l.tafsirLoading)),
-        ],
-      );
-    }
-    return Container(
-      key: const Key('tafsirCard'),
-      margin: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
-      padding: const EdgeInsets.all(DesignTokens.spaceMd),
-      decoration: BoxDecoration(
-        color: scheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-        border: Border.all(color: scheme.outlineVariant),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              RIcon(RIcons.quran, size: 20, color: scheme.primary),
-              const SizedBox(width: DesignTokens.spaceSm),
-              Expanded(
-                child: Text(
-                  l.tafsirTitle,
-                  key: const Key('tafsirTitle'),
-                  style: theme.textTheme.titleSmall?.copyWith(color: scheme.primary, fontWeight: FontWeight.w600),
-                ),
-              ),
-            ],
-          ),
-          Text(
-            l.tafsirSource,
-            key: const Key('tafsirSource'),
-            style: theme.textTheme.bodySmall?.copyWith(color: scheme.onSurfaceVariant),
-          ),
-          if (!context.isArabic)
-            Text(
-              l.tafsirArabicOnly,
-              key: const Key('tafsirArabicOnly'),
-              style: theme.textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
-            ),
-          const SizedBox(height: DesignTokens.spaceSm),
-          body,
-        ],
       ),
     );
   }

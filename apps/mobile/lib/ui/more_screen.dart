@@ -17,6 +17,7 @@ import 'library_screen.dart';
 import 'stories_screen.dart';
 import 'settings_screen.dart';
 import 'sharawi_screen.dart';
+import 'tafsir_library_screen.dart';
 import 'widgets.dart';
 import 'zakat_screen.dart';
 import 'adaptive.dart';
@@ -47,6 +48,7 @@ class MoreScreen extends StatelessWidget {
                 tile('kids', RIcons.kids, l.kidsTitle, () => const KidsScreen()),
                 tile('khatma', RIcons.khatma, l.khatmaTitle, () => const KhatmaScreen()),
                 tile('tracker', RIcons.calendarCheck, l.worshipTitle, () => const WorshipScreen()),
+                tile('tafsir', RIcons.quran, l.tafsirLibTitle, () => const TafsirLibraryScreen()),
                 tile('hadith', RIcons.openBook, l.hadithTitle, () => const HadithScreen()),
                 tile('asma', RIcons.star, l.asmaTitle, () => const AsmaScreen()),
                 tile('radio', RIcons.radio, l.radiosTitle, () => const RadioScreen()),

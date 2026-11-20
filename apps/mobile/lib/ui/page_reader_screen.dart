@@ -15,6 +15,7 @@ import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import 'play_origin.dart';
 import 'ayah_sheet.dart';
+import 'ayah_study.dart';
 import 'bookmarks_screen.dart';
 import 'adaptive.dart';
 import 'l10n_ext.dart';
@@ -965,15 +966,23 @@ class PageReaderScreenState extends State<PageReaderScreen> {
           ),
           Divider(height: 1, color: scheme.outlineVariant),
           Expanded(
-            child: PageAyahList(
-              key: ValueKey('duo-$_page'),
-              page: _page,
-              withTafsir: true,
-              selected: _focus ?? _selected,
-              fontSize: math.min(s.settings.quranFontSize, 22),
-              onAyahTap: (r) =>
-                  listening ? unawaited(s.recitation.playFrom(r, scope: PlayScope.surah)) : setState(() => _focus = r),
-            ),
+            // Reading (not listening) with an ayah picked: that ayah's tafsir with the books and the studies
+            // (owner 2026-11-20); otherwise the page's tafsir (al-Muyassar), following the recitation.
+            child: !listening && (_focus ?? _selected) != null
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceXs),
+                    child: AyahStudyCard(key: const Key('duoStudy'), ref: (_focus ?? _selected)!),
+                  )
+                : PageAyahList(
+                    key: ValueKey('duo-$_page'),
+                    page: _page,
+                    withTafsir: true,
+                    selected: _focus ?? _selected,
+                    fontSize: math.min(s.settings.quranFontSize, 22),
+                    onAyahTap: (r) => listening
+                        ? unawaited(s.recitation.playFrom(r, scope: PlayScope.surah))
+                        : setState(() => _focus = r),
+                  ),
           ),
         ],
       ),

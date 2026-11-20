@@ -51,7 +51,14 @@ void main() {
     await tester.tap(find.byKey(const Key('ayahTafsir')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('splitView')), findsOneWidget);
-    expect(find.byKey(const Key('tafsirScroll')), findsNothing, reason: 'no tafsir card in the bottom strip');
+    expect(
+      find.descendant(of: find.byKey(const Key('readerStrip')), matching: find.byKey(const Key('tafsirScroll'))),
+      findsNothing,
+      reason: 'no tafsir card in the bottom strip',
+    );
+    // Owner 2026-11-20: the tapped ayah's tafsir beside the page, with the books and the studies.
+    expect(find.byKey(const Key('duoStudy')), findsOneWidget);
+    expect(find.byKey(const Key('tafsirBook.saadi')), findsOneWidget);
     expect(tester.getSize(find.byKey(const Key('readerStrip'))), strip);
     expect(tester.takeException(), isNull);
   });
