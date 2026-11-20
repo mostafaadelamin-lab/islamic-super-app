@@ -1541,6 +1541,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get kidsProphets => 'قصص الأنبياء';
 
   @override
+  String get kidsProphets3d => 'قصص الأنبياء: ثلاثي الأبعاد';
+
+  @override
+  String get kidsProphets3dSub => 'رسوم حديثة ثلاثية الأبعاد بالفصحى، بلا إظهار وجه النبي';
+
+  @override
+  String get kidsProphetsClassic => 'قصص الأنبياء: الحلقات الكاملة';
+
+  @override
+  String get kidsProphetsNew => 'قصص الأنبياء: رسوم حديثة';
+
+  @override
+  String get kidsProphetsNewSub => 'مُعلّمة تحكي القصة للأطفال، والنبي يظهر نورًا بلا ملامح';
+
+  @override
   String get kidsProphetsSub => 'حلقات كرتون، شاهد أو استمع، وحمّلها لتعمل بدون إنترنت';
 
   @override
@@ -1640,6 +1655,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get kidsWatch => 'شاهد';
+
+  @override
+  String get kidsYtNote => 'تُعرض من يوتيوب وتحتاج إنترنت';
 
   @override
   String get libraryAllRiwayat => 'كل الروايات';

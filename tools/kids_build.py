@@ -62,6 +62,11 @@ series = []
 for s in src['series']:
     eps = []
     for k, e in enumerate(s['episodes']):
+        if 'youtube' in e:
+            # Published YouTube series (owner 2026-11-20), checked frame by frame: no prophet's face shown.
+            eps.append({'id': f'{s["id"]}-{k + 1}', 'title': e['title'], 'youtube': e['youtube'],
+                        'url': 'https://www.youtube.com/watch?v=' + e['youtube'], 'seconds': e['seconds']})
+            continue
         it = e.get('archive', s.get('archive'))
         if s['id'] == 'kids-prophets':
             title = f'قصة سيدنا {e["prophet"]} عليه السلام ({ar(e["part"])})'

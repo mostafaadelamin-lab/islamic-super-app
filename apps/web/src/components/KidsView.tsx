@@ -7,6 +7,7 @@ import { localizeDigits } from "@/lib/digits";
 import { surahName } from "@/lib/pages";
 import { KIDS, type KidsEpisode, type KidsSeries } from "@/lib/kids";
 import { readStars } from "@/lib/teacher";
+import { embedVideoUrl } from "@/lib/videos";
 import { Icon, type IconName } from "./Icon";
 import { PlayerClose } from "./PlayerClose";
 
@@ -35,6 +36,7 @@ function EpisodeRow({
       : null,
     ep.bytes ? t(locale, "kids.size", { n: n(Math.max(1, Math.round(ep.bytes / BYTES_PER_MB))) }) : null,
   ].filter(Boolean);
+  if (ep.youtube) return <YouTubeRow ep={ep} locale={locale} watching={watching} setOpen={setOpen} />;
   return (
     <li className="card kids-episode" data-testid={`kids-ep-${ep.id}`}>
       <div className="row" style={{ flexWrap: "wrap", gap: "0.5rem" }}>
@@ -80,6 +82,54 @@ function EpisodeRow({
           className="btn-sm"
           onClose={() => setOpen(null)}
         />
+      ) : null}
+    </li>
+  );
+}
+
+/** A published YouTube episode: watch in the official embed (no listen or download). */
+function YouTubeRow({
+  ep,
+  locale,
+  watching,
+  setOpen,
+}: {
+  ep: KidsEpisode;
+  locale: Locale;
+  watching: boolean;
+  setOpen: (v: string | null) => void;
+}) {
+  const n = (v: number): string => localizeDigits(v, locale);
+  return (
+    <li className="card kids-episode" data-testid={`kids-ep-${ep.id}`}>
+      <div className="row" style={{ flexWrap: "wrap", gap: "0.5rem" }}>
+        <div style={{ flex: 1, minWidth: "12rem" }}>
+          <strong>{ep.title}</strong>
+          {ep.seconds ? (
+            <div className="muted small">
+              {t(locale, "kids.minutes", { n: n(Math.max(1, Math.round(ep.seconds / SECONDS_PER_MINUTE))) })}
+            </div>
+          ) : null}
+        </div>
+        <button
+          type="button"
+          className={`btn btn-sm${watching ? " btn-primary" : ""}`}
+          aria-pressed={watching}
+          onClick={() => setOpen(watching ? null : `v:${ep.id}`)}
+        >
+          <Icon name="video" /> {t(locale, "kids.watch")}
+        </button>
+      </div>
+      {watching && ep.youtube ? (
+        <div className="kids-yt">
+          <iframe
+            src={embedVideoUrl(ep.youtube)}
+            title={ep.title}
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
+        </div>
       ) : null}
     </li>
   );
@@ -216,11 +266,27 @@ export function KidsView({ locale }: { locale: Locale }) {
       <section className="kids-section">
         {tab === "prophets" ? (
           <>
+            {(
+              [
+                ["new", "New"],
+                ["3d", "3d"],
+              ] as const
+            ).map(([k, K]) => (
+              <SeriesBlock
+                key={k}
+                series={KIDS.series.find((s) => s.id === `kids-prophets-${k}`)}
+                locale={locale}
+                title={t(locale, `kids.prophets${K}`)}
+                sub={`${t(locale, `kids.prophets${K}Sub`)} · ${t(locale, "kids.ytNote")}`}
+                open={open}
+                setOpen={setOpen}
+              />
+            ))}
             <p className="muted small">{t(locale, "kids.offlineNote")}</p>
             <SeriesBlock
               series={KIDS.series.find((s) => s.id === "kids-prophets")}
               locale={locale}
-              title={t(locale, "kids.prophets")}
+              title={t(locale, "kids.prophetsClassic")}
               sub={t(locale, "kids.prophetsSub")}
               open={open}
               setOpen={setOpen}

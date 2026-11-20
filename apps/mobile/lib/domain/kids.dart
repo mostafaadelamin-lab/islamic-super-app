@@ -47,10 +47,13 @@ class Ruqyah {
 
 /// One video (or the full ruqyah recording): streamed, or saved for offline.
 class KidsEpisode {
-  const KidsEpisode({required this.id, required this.title, required this.url, this.bytes, this.seconds});
+  const KidsEpisode({required this.id, required this.title, required this.url, this.bytes, this.seconds, this.youtube});
   final String id;
   final String title;
   final String url;
+
+  /// A published YouTube video (owner 2026-11-20): played in the official embed, no listen or download.
+  final String? youtube;
   final int? bytes;
   final int? seconds;
 
@@ -99,6 +102,7 @@ class KidsContent {
     url: e['url'] as String,
     bytes: e['bytes'] as int?,
     seconds: e['seconds'] as int?,
+    youtube: e['youtube'] as String?,
   );
 
   static Ruqyah _ruqyah(Map<String, dynamic> j, {KidsEpisode? full}) => Ruqyah([

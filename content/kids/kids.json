@@ -32,6 +32,23 @@
     "surahs": [1, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114]
   },
   "series": [
+    {"id": "kids-prophets-new", "group": "prophets", "youtube": true, "episodes": [
+        {"youtube": "l-dq1cOdYH0", "title": "قصة سيدنا آدم عليه السلام", "seconds": 247},
+        {"youtube": "_bIt71LxT-8", "title": "قصة سيدنا إدريس عليه السلام", "seconds": 370},
+        {"youtube": "u6LThvZJzOk", "title": "قصة سيدنا إبراهيم عليه السلام (١)", "seconds": 157},
+        {"youtube": "2y0MIiV7Tls", "title": "قصة سيدنا إبراهيم عليه السلام (٢)", "seconds": 206},
+        {"youtube": "3Rq1ma18BgM", "title": "قصة سيدنا موسى عليه السلام: كليم الله", "seconds": 207},
+        {"youtube": "23Ya0gusUeI", "title": "قصة سيدنا موسى عليه السلام: النجاة من فرعون", "seconds": 270},
+        {"youtube": "c_wdAa411Sc", "title": "قصة سيدنا سليمان عليه السلام", "seconds": 281},
+        {"youtube": "nqM7xkD4lZM", "title": "قصة سيدنا زكريا وسيدنا يحيى عليهما السلام", "seconds": 354}
+      ]},
+    {"id": "kids-prophets-3d", "group": "prophets", "youtube": true, "episodes": [
+        {"youtube": "PBnqOqjmSEU", "title": "قصة سيدنا نوح عليه السلام والسفينة", "seconds": 492},
+        {"youtube": "mBwwSMx7rCE", "title": "قصة ناقة سيدنا صالح عليه السلام", "seconds": 483},
+        {"youtube": "M1veaJ81bo4", "title": "قصة سيدنا يونس عليه السلام", "seconds": 342},
+        {"youtube": "ife8US-687I", "title": "قصة سيدنا سليمان عليه السلام والهدهد", "seconds": 484},
+        {"youtube": "FRgCU5z-HVM", "title": "قصة نملة سيدنا سليمان عليه السلام", "seconds": 247}
+      ]},
     {
       "id": "kids-prophets",
       "group": "prophets",

@@ -1549,6 +1549,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kidsProphets => 'Stories of the prophets';
 
   @override
+  String get kidsProphets3d => 'Prophets\' stories: 3D';
+
+  @override
+  String get kidsProphets3dSub => 'Modern 3D in Arabic, the prophet\'s face never shown';
+
+  @override
+  String get kidsProphetsClassic => 'Prophets\' stories: full series';
+
+  @override
+  String get kidsProphetsNew => 'Prophets\' stories: modern cartoon';
+
+  @override
+  String get kidsProphetsNewSub => 'A teacher tells the story; the prophet is shown only as light';
+
+  @override
   String get kidsProphetsSub => 'Cartoon episodes: watch or listen, download for offline';
 
   @override
@@ -1649,6 +1664,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get kidsWatch => 'Watch';
+
+  @override
+  String get kidsYtNote => 'Plays from YouTube, needs internet';
 
   @override
   String get libraryAllRiwayat => 'All riwayat';
