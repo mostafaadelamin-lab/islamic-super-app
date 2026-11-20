@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Rattil wa Salli</string>
     <string name="prayer_widget_description">Hijri date, time and the next prayer</string>
+    <string name="prayer_widget_medium_description">All prayer times, Hijri and Gregorian date</string>
 </resources>

@@ -114,6 +114,12 @@ void main() {
       final t = [for (final x in p) (x as List<dynamic>)[2] as int];
       expect(t, orderedEquals([...t]..sort()));
       expect(d['h'], matches(RegExp(r'^\d\d .+ \d{4}$')));
+      // the medium widget's sixth time (owner 2026-11-20): sunrise, between Fajr and Dhuhr
+      expect(d['sr'] as int, inExclusiveRange(t[0], t[1]));
     }
+    // the widgets follow the app's clock (12 h by default; the tests run on 24 h)
+    expect(j['c12'], isFalse);
+    await app.services.settings.setClock12(true);
+    expect((jsonDecode(HomeWidgetSync(app.services).build()) as Map<String, dynamic>)['c12'], isTrue);
   });
 }

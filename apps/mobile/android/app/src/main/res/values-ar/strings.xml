@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">رتّل وصلِّ</string>
     <string name="prayer_widget_description">التاريخ الهجري والوقت والصلاة القادمة</string>
+    <string name="prayer_widget_medium_description">مواعيد الصلاة كلها والتاريخ الهجري والميلادي</string>
 </resources>
