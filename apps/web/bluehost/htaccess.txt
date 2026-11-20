@@ -40,6 +40,8 @@ AddType application/json .json
 AddType text/javascript .js .mjs
 AddType font/woff2 .woff2
 AddType audio/mpeg .mp3
+# Whole tafsir books (1.2.15): the app downloads data/tafsir/<book>/book.v1.dat for offline reading.
+AddType application/octet-stream .dat
 
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
