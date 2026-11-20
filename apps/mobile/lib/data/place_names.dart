@@ -112,8 +112,8 @@ class PlaceNames {
 
   Uri _nominatim(double lat, double lng, int zoom, bool arabic) =>
       Uri.https('nominatim.openstreetmap.org', '/reverse', {
-        'lat': lat.toStringAsFixed(5),
-        'lon': lng.toStringAsFixed(5),
+        'lat': lat.toStringAsFixed(3),
+        'lon': lng.toStringAsFixed(3),
         'format': 'jsonv2',
         'zoom': '$zoom',
         'accept-language': arabic ? 'ar' : 'en',
@@ -134,8 +134,8 @@ class PlaceNames {
       final b = parseBigDataCloud(
         await _get2(
           Uri.https('api.bigdatacloud.net', '/data/reverse-geocode-client', {
-            'latitude': lat.toStringAsFixed(5),
-            'longitude': lng.toStringAsFixed(5),
+            'latitude': lat.toStringAsFixed(3),
+            'longitude': lng.toStringAsFixed(3),
             'localityLanguage': arabic ? 'ar' : 'en',
           }),
         ),

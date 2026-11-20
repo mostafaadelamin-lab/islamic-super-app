@@ -16,6 +16,7 @@ import 'home_screen.dart';
 import 'locate.dart';
 import 'l10n_ext.dart';
 import 'more_screen.dart';
+import 'parent_gate.dart';
 import 'prayer_screen.dart';
 import 'reels_screen.dart';
 import 'surah_list_screen.dart';
@@ -90,7 +91,8 @@ class HomeShellState extends State<HomeShell> {
       1 => const SurahListScreen(),
       2 => const PrayerScreen(),
       3 => const AdhkarScreen(),
-      4 => const ReelsScreen(),
+      // Parent lock: children use the app (Google Play Families policy, owner 2026-11-20).
+      4 => const ParentGate(child: ReelsScreen()),
       _ => const MoreScreen(),
     };
     final items = [

@@ -44,7 +44,7 @@ Future<List<Mosque>> googlePlacesMosques(
           'languageCode': arabic ? 'ar' : 'en',
           'locationRestriction': {
             'circle': {
-              'center': {'latitude': lat, 'longitude': lng},
+              'center': {'latitude': coarseCoord(lat), 'longitude': coarseCoord(lng)},
               'radius': radius.toDouble(),
             },
           },

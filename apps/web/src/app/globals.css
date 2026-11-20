@@ -5382,3 +5382,44 @@ a.episode {
     gap: var(--space-xs);
   }
 }
+
+/* Parent lock in front of the videos page (Families policy, 2026-11-20). */
+.parent-gate {
+  max-width: 440px;
+  margin: 24px auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.parent-gate form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+.parent-gate-lock {
+  font-size: 44px;
+  line-height: 1;
+}
+.parent-gate-pin {
+  width: 180px;
+  font-size: 26px;
+  letter-spacing: 10px;
+  text-align: center;
+  padding: 8px 10px;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: var(--color-surface);
+  color: inherit;
+}
+.parent-gate-pin::placeholder {
+  font-size: 15px;
+  letter-spacing: 0;
+}
+.parent-gate-error {
+  color: #b3261e;
+  margin: 0;
+}

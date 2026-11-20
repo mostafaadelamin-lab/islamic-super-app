@@ -34,7 +34,7 @@ export interface Mosque {
 
 /** Muslim places of worship, plus buildings drawn as mosques that nobody tagged as a place of worship. */
 export function overpassQuery(lat: number, lng: number, radius: number): string {
-  const a = `(around:${Math.round(radius)},${lat.toFixed(5)},${lng.toFixed(5)})`;
+  const a = `(around:${Math.round(radius)},${lat.toFixed(3)},${lng.toFixed(3)})`;
   return `[out:json][timeout:20];(nwr["amenity"="place_of_worship"]["religion"="muslim"]${a};nwr["building"="mosque"]${a};);out center tags;`;
 }
 

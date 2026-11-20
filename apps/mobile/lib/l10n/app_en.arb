@@ -943,7 +943,7 @@
   "@contactFailed": {
     "description": "shared key \"contact.failed\""
   },
-  "contactIntro": "Write your request and it will reach the team. Add your phone or WhatsApp number if you want a reply.",
+  "contactIntro": "Write your request and it will reach the team. Add your phone or WhatsApp number if you want a reply. If you are under 13, please ask a parent to send the message.",
   "@contactIntro": {
     "description": "shared key \"contact.intro\""
   },
@@ -2702,6 +2702,82 @@
   "offlineSavedDelete": "Saved on the phone — tap to delete",
   "@offlineSavedDelete": {
     "description": "shared key \"offline.savedDelete\""
+  },
+  "parentLockAnswer": "Answer",
+  "@parentLockAnswer": {
+    "description": "shared key \"parentLock.answer\""
+  },
+  "parentLockChallenge": "Question for adults: what is {a} × {b}?",
+  "@parentLockChallenge": {
+    "description": "shared key \"parentLock.challenge\"",
+    "placeholders": {
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
+    }
+  },
+  "parentLockChallengeWrong": "Wrong answer",
+  "@parentLockChallengeWrong": {
+    "description": "shared key \"parentLock.challengeWrong\""
+  },
+  "parentLockConfirm": "Type the PIN again to confirm",
+  "@parentLockConfirm": {
+    "description": "shared key \"parentLock.confirm\""
+  },
+  "parentLockEnter": "Type the PIN to open videos",
+  "@parentLockEnter": {
+    "description": "shared key \"parentLock.enter\""
+  },
+  "parentLockForgot": "Forgot the PIN?",
+  "@parentLockForgot": {
+    "description": "shared key \"parentLock.forgot\""
+  },
+  "parentLockIntro": "Videos and short clips come from YouTube and Instagram, so they are locked for children. A parent opens them with a PIN.",
+  "@parentLockIntro": {
+    "description": "shared key \"parentLock.intro\""
+  },
+  "parentLockLockNow": "Lock videos",
+  "@parentLockLockNow": {
+    "description": "shared key \"parentLock.lockNow\""
+  },
+  "parentLockMismatch": "The two PINs don't match, start again",
+  "@parentLockMismatch": {
+    "description": "shared key \"parentLock.mismatch\""
+  },
+  "parentLockNext": "Next",
+  "@parentLockNext": {
+    "description": "shared key \"parentLock.next\""
+  },
+  "parentLockPin": "PIN",
+  "@parentLockPin": {
+    "description": "shared key \"parentLock.pin\""
+  },
+  "parentLockReset": "Choose a new PIN",
+  "@parentLockReset": {
+    "description": "shared key \"parentLock.reset\""
+  },
+  "parentLockSave": "Save PIN",
+  "@parentLockSave": {
+    "description": "shared key \"parentLock.save\""
+  },
+  "parentLockSetTitle": "Parent: choose a 4-digit PIN",
+  "@parentLockSetTitle": {
+    "description": "shared key \"parentLock.setTitle\""
+  },
+  "parentLockTitle": "Parent lock",
+  "@parentLockTitle": {
+    "description": "shared key \"parentLock.title\""
+  },
+  "parentLockUnlock": "Open",
+  "@parentLockUnlock": {
+    "description": "shared key \"parentLock.unlock\""
+  },
+  "parentLockWrong": "Wrong PIN, try again",
+  "@parentLockWrong": {
+    "description": "shared key \"parentLock.wrong\""
   },
   "playerOpen": "Back to what is playing",
   "@playerOpen": {

@@ -1235,7 +1235,7 @@ abstract class AppLocalizations {
   /// shared key "contact.intro"
   ///
   /// In en, this message translates to:
-  /// **'Write your request and it will reach the team. Add your phone or WhatsApp number if you want a reply.'**
+  /// **'Write your request and it will reach the team. Add your phone or WhatsApp number if you want a reply. If you are under 13, please ask a parent to send the message.'**
   String get contactIntro;
 
   /// shared key "contact.message"
@@ -3367,6 +3367,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Saved on the phone — tap to delete'**
   String get offlineSavedDelete;
+
+  /// shared key "parentLock.answer"
+  ///
+  /// In en, this message translates to:
+  /// **'Answer'**
+  String get parentLockAnswer;
+
+  /// shared key "parentLock.challenge"
+  ///
+  /// In en, this message translates to:
+  /// **'Question for adults: what is {a} × {b}?'**
+  String parentLockChallenge(String a, String b);
+
+  /// shared key "parentLock.challengeWrong"
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong answer'**
+  String get parentLockChallengeWrong;
+
+  /// shared key "parentLock.confirm"
+  ///
+  /// In en, this message translates to:
+  /// **'Type the PIN again to confirm'**
+  String get parentLockConfirm;
+
+  /// shared key "parentLock.enter"
+  ///
+  /// In en, this message translates to:
+  /// **'Type the PIN to open videos'**
+  String get parentLockEnter;
+
+  /// shared key "parentLock.forgot"
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot the PIN?'**
+  String get parentLockForgot;
+
+  /// shared key "parentLock.intro"
+  ///
+  /// In en, this message translates to:
+  /// **'Videos and short clips come from YouTube and Instagram, so they are locked for children. A parent opens them with a PIN.'**
+  String get parentLockIntro;
+
+  /// shared key "parentLock.lockNow"
+  ///
+  /// In en, this message translates to:
+  /// **'Lock videos'**
+  String get parentLockLockNow;
+
+  /// shared key "parentLock.mismatch"
+  ///
+  /// In en, this message translates to:
+  /// **'The two PINs don\'t match, start again'**
+  String get parentLockMismatch;
+
+  /// shared key "parentLock.next"
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get parentLockNext;
+
+  /// shared key "parentLock.pin"
+  ///
+  /// In en, this message translates to:
+  /// **'PIN'**
+  String get parentLockPin;
+
+  /// shared key "parentLock.reset"
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a new PIN'**
+  String get parentLockReset;
+
+  /// shared key "parentLock.save"
+  ///
+  /// In en, this message translates to:
+  /// **'Save PIN'**
+  String get parentLockSave;
+
+  /// shared key "parentLock.setTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Parent: choose a 4-digit PIN'**
+  String get parentLockSetTitle;
+
+  /// shared key "parentLock.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Parent lock'**
+  String get parentLockTitle;
+
+  /// shared key "parentLock.unlock"
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get parentLockUnlock;
+
+  /// shared key "parentLock.wrong"
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong PIN, try again'**
+  String get parentLockWrong;
 
   /// shared key "player.open"
   ///

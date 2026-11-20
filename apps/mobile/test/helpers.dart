@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rattil/ui/parent_gate.dart';
 import 'package:rattil/ui/bookmarks_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
@@ -121,7 +122,10 @@ Future<TestApp> pumpApp(
   DeviceSetup? deviceSetup,
   DrivePlayer? drivePlayer,
   DriveCues? driveCues,
+  // Most tests open the videos tab directly; parent_gate_test covers the lock.
+  bool videosUnlocked = true,
 }) async {
+  parentLockOpen.value = videosUnlocked;
   final c = content ?? _content!;
   // The first-run tour is tested on its own (onboarding_test.dart); other tests start on the home screen.
   SharedPreferences.setMockInitialValues({

@@ -18,7 +18,7 @@ type Addr = Record<string, unknown>;
 const SAME_PLACE_M = 1000;
 const DISTRICT_ZOOM = 14;
 const STREET_ZOOM = 16;
-const COORD_DIGITS = 5;
+const COORD_DIGITS = 3; // ~100 m: the exact position never leaves the device (kids policy)
 
 const DISTRICT = ["town", "suburb", "quarter", "city_district"];
 const SMALL = ["village", "hamlet", "neighbourhood", "residential"];

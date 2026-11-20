@@ -41,8 +41,8 @@ describe("nearby mosques (OpenStreetMap / Overpass)", () => {
   it("asks for Muslim places of worship around the point", () => {
     const q = overpassQuery(CAIRO.lat, CAIRO.lng, 5000);
     expect(q).toContain('["amenity"="place_of_worship"]["religion"="muslim"]');
-    expect(q).toContain("(around:5000,30.04440,31.23570)");
-    expect(q).toContain('nwr["building"="mosque"](around:5000,30.04440,31.23570)');
+    expect(q).toContain("(around:5000,30.044,31.236)");
+    expect(q).toContain('nwr["building"="mosque"](around:5000,30.044,31.236)');
     expect(q).toContain("out center tags;");
   });
 

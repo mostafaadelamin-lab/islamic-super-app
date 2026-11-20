@@ -656,7 +656,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactFailed => 'تعذّر الإرسال. تأكد من الاتصال بالإنترنت وحاول مرة أخرى.';
 
   @override
-  String get contactIntro => 'اكتب طلبك وهيوصل لفريق العمل. لو عايز نرد عليك، اكتب رقم تليفونك أو الواتساب.';
+  String get contactIntro =>
+      'اكتب طلبك وهيوصل لفريق العمل. لو عايز نرد عليك، اكتب رقم تليفونك أو الواتساب. لو سنك أقل من 13 سنة، خلّي حد من أهلك هو اللي يبعت الرسالة.';
 
   @override
   String get contactMessage => 'المحتوى';
@@ -1841,6 +1842,60 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get offlineSavedDelete => 'محفوظة على الهاتف — اضغط للحذف';
+
+  @override
+  String get parentLockAnswer => 'الإجابة';
+
+  @override
+  String parentLockChallenge(String a, String b) {
+    return 'سؤال للكبار: كام حاصل ضرب $a × $b؟';
+  }
+
+  @override
+  String get parentLockChallengeWrong => 'الإجابة غلط';
+
+  @override
+  String get parentLockConfirm => 'اكتب الرقم مرة تانية للتأكيد';
+
+  @override
+  String get parentLockEnter => 'اكتب الرقم السري لفتح الفيديوهات';
+
+  @override
+  String get parentLockForgot => 'نسيت الرقم؟';
+
+  @override
+  String get parentLockIntro =>
+      'الفيديوهات والمقاطع القصيرة جاية من YouTube و Instagram، فهي مقفولة للأطفال ويفتحها ولي الأمر برقم سري.';
+
+  @override
+  String get parentLockLockNow => 'اقفل الفيديوهات';
+
+  @override
+  String get parentLockMismatch => 'الرقمين مش زي بعض، ابدأ من الأول';
+
+  @override
+  String get parentLockNext => 'التالي';
+
+  @override
+  String get parentLockPin => 'الرقم السري';
+
+  @override
+  String get parentLockReset => 'اختار رقم جديد';
+
+  @override
+  String get parentLockSave => 'حفظ الرقم';
+
+  @override
+  String get parentLockSetTitle => 'ولي الأمر: اختار رقم سري من 4 أرقام';
+
+  @override
+  String get parentLockTitle => 'قفل ولي الأمر';
+
+  @override
+  String get parentLockUnlock => 'فتح';
+
+  @override
+  String get parentLockWrong => 'الرقم غلط، حاول تاني';
 
   @override
   String get playerOpen => 'ارجع لشاشة اللي شغال';

@@ -70,8 +70,8 @@ void main() {
     test('query asks for Muslim places of worship around the point', () {
       final q = overpassQuery(30.0444, 31.2357, 5000);
       expect(q, contains('["amenity"="place_of_worship"]["religion"="muslim"]'));
-      expect(q, contains('nwr["building"="mosque"](around:5000,30.04440,31.23570)'));
-      expect(q, contains('(around:5000,30.04440,31.23570)'));
+      expect(q, contains('nwr["building"="mosque"](around:5000,30.044,31.236)'));
+      expect(q, contains('(around:5000,30.044,31.236)'));
     });
     test('haversine', () {
       expect(distanceM(0, 0, 0, 1), closeTo(111195, 10));
@@ -175,7 +175,7 @@ void main() {
     await tester.pumpAndSettle();
     // The first two servers are asked together; the busy one is ignored.
     expect(urls.take(2), unorderedEquals([contains('overpass-api.de'), contains('private.coffee')]));
-    expect(bodies[1], contains('around:5000,30.04440,31.23570')); // no GPS: Cairo, the default city
+    expect(bodies[1], contains('around:5000,30.044,31.236')); // no GPS: Cairo, the default city
     expect(find.byKey(const Key('mosquesGeoFallback')), findsOneWidget);
     expect(find.byKey(const Key('mosque-node/1')), findsOneWidget);
     expect(find.text('Mosque B'), findsOneWidget);
@@ -217,7 +217,7 @@ void main() {
     await pushScreen(tester, MosquesScreen(client: client));
     await tester.pumpAndSettle();
     expect(bodies, hasLength(2), reason: 'two servers asked together');
-    expect(bodies.first, contains('around:5000,30.04450,31.23570'));
+    expect(bodies.first, contains('around:5000,30.044,31.236'));
     expect(find.text('Mosques around your current location'), findsOneWidget);
     expect(find.byKey(const Key('mosquesGeoFallback')), findsNothing);
     expect(find.text('56 m'), findsOneWidget);

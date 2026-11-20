@@ -14,6 +14,8 @@ const overpassEndpoints = [
 /// Last resort when every Overpass server fails: OpenStreetMap's own search
 /// (Nominatim) for mosques inside a box around the point.
 Uri nominatimMosquesUri(double lat, double lng, int radius, {required bool arabic}) {
+  lat = coarseCoord(lat);
+  lng = coarseCoord(lng);
   final dLat = radius / 111320.0;
   final dLng = radius / (111320.0 * math.cos(lat * math.pi / 180).abs().clamp(0.1, 1.0));
   return Uri.https('nominatim.openstreetmap.org', '/search', {
@@ -87,8 +89,12 @@ class Mosque {
 
 /// Muslim places of worship, plus buildings drawn as mosques that nobody
 /// tagged as a place of worship (common in Egypt and elsewhere).
+/// Coordinates leave the phone rounded to 3 decimals (about 100 m), never the
+/// exact position (Google Play Families policy: the app is used by children).
+double coarseCoord(double v) => double.parse(v.toStringAsFixed(3));
+
 String overpassQuery(double lat, double lng, int radius) {
-  final a = '(around:$radius,${lat.toStringAsFixed(5)},${lng.toStringAsFixed(5)})';
+  final a = '(around:$radius,${lat.toStringAsFixed(3)},${lng.toStringAsFixed(3)})';
   return '[out:json][timeout:20];(nwr["amenity"="place_of_worship"]["religion"="muslim"]$a;'
       'nwr["building"="mosque"]$a;);out center tags;';
 }

@@ -660,7 +660,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contactIntro =>
-      'Write your request and it will reach the team. Add your phone or WhatsApp number if you want a reply.';
+      'Write your request and it will reach the team. Add your phone or WhatsApp number if you want a reply. If you are under 13, please ask a parent to send the message.';
 
   @override
   String get contactMessage => 'Message';
@@ -1851,6 +1851,60 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get offlineSavedDelete => 'Saved on the phone — tap to delete';
+
+  @override
+  String get parentLockAnswer => 'Answer';
+
+  @override
+  String parentLockChallenge(String a, String b) {
+    return 'Question for adults: what is $a × $b?';
+  }
+
+  @override
+  String get parentLockChallengeWrong => 'Wrong answer';
+
+  @override
+  String get parentLockConfirm => 'Type the PIN again to confirm';
+
+  @override
+  String get parentLockEnter => 'Type the PIN to open videos';
+
+  @override
+  String get parentLockForgot => 'Forgot the PIN?';
+
+  @override
+  String get parentLockIntro =>
+      'Videos and short clips come from YouTube and Instagram, so they are locked for children. A parent opens them with a PIN.';
+
+  @override
+  String get parentLockLockNow => 'Lock videos';
+
+  @override
+  String get parentLockMismatch => 'The two PINs don\'t match, start again';
+
+  @override
+  String get parentLockNext => 'Next';
+
+  @override
+  String get parentLockPin => 'PIN';
+
+  @override
+  String get parentLockReset => 'Choose a new PIN';
+
+  @override
+  String get parentLockSave => 'Save PIN';
+
+  @override
+  String get parentLockSetTitle => 'Parent: choose a 4-digit PIN';
+
+  @override
+  String get parentLockTitle => 'Parent lock';
+
+  @override
+  String get parentLockUnlock => 'Open';
+
+  @override
+  String get parentLockWrong => 'Wrong PIN, try again';
 
   @override
   String get playerOpen => 'Back to what is playing';

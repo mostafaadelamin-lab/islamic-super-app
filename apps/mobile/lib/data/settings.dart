@@ -34,6 +34,17 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Parent lock for the videos tab: salted hash of the parent's 4-digit PIN (null = not set yet).
+  String? get parentPinHash => _prefs.getString('parentLock.pin');
+  Future<void> setParentPinHash(String? hash) async {
+    if (hash == null) {
+      await _prefs.remove('parentLock.pin');
+    } else {
+      await _prefs.setString('parentLock.pin', hash);
+    }
+    notifyListeners();
+  }
+
   /// Reels reviewer mode: also show reels that have not been religiously reviewed yet.
   bool get reelsReviewer => _prefs.getBool('reelsReviewer') ?? false;
   Future<void> setReelsReviewer(bool v) async {
