@@ -1345,12 +1345,13 @@ body:has(.rd-full) .player,
     grid-row: 2;
     justify-self: stretch;
     display: grid;
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(5, auto);
   }
   .rd-tab {
     min-width: 0;
     min-height: 36px;
-    padding: 0 6px;
+    padding: 0 4px;
+    font-size: 0.86rem;
   }
   .rd-tools {
     grid-column: 3;
@@ -1659,4 +1660,56 @@ button.mn-ref {
   font-weight: 600;
   color: var(--color-ink);
   font-variant-numeric: tabular-nums;
+}
+
+/* ---- «السورة كاملة» / «الجزء كاملاً» beside the tafsir (owner 2026-11-20) ---- */
+/* The flowing text takes the page's half; the Mushaf page itself is not shown in these tabs. */
+.rd-duo-flow > .mushaf-stage {
+  display: none;
+}
+.rd-duo-flow > .rd-flow-pane {
+  order: 3;
+  height: calc((100dvh - var(--rd-dock-h, 200px) - 120px) * 0.5);
+  min-height: 200px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.rd-duo-flow > .rd-flow-pane .rd-surah-flow {
+  border-width: 2px;
+}
+@media (min-width: 1024px) and (min-height: 560px) and (orientation: landscape) {
+  /* Tafsir and text share the width (the page-fit width of the Mushaf halves does not apply here). */
+  .mushaf-reader.rd.rd-duo.rd-duo-flow {
+    grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
+  }
+  .rd-duo-flow > .rd-flow-pane {
+    grid-column: 2;
+    grid-row: 3;
+    height: calc(100dvh - var(--rd-dock-h, 140px) - var(--rd-chrome-top, 190px));
+    min-height: 320px;
+  }
+}
+/* The juz picker above the whole juz. */
+.rd-juz-head {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-sm);
+}
+.rd-juz-pick select {
+  font: inherit;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-frame);
+  border-radius: var(--radius-pill, 999px);
+  padding: 6px 18px;
+  min-height: 44px;
+  cursor: pointer;
+}
+.rd-juz-from {
+  text-align: center;
+  margin: 0 0 var(--space-xs);
+}
+.rd-flow-run + .rd-flow-run {
+  margin-top: var(--space-sm);
 }

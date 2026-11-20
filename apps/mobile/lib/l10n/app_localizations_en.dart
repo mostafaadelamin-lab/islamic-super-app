@@ -2249,6 +2249,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String quranJuzInMushaf(String juz) {
+    return 'Open $juz on the Mushaf pages';
+  }
+
+  @override
+  String quranJuzLine(String surah, String ayah, String page) {
+    return 'Starts at $surah $ayah · Page $page';
+  }
+
+  @override
   String get quranJuzOrdinals => '1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30';
 
   @override
@@ -2352,6 +2362,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quranSurahs => 'Surahs';
+
+  @override
+  String get quranTabJuz => 'Juz';
 
   @override
   String get quranTabQuarters => 'Quarters';
@@ -2528,6 +2541,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerListenWithTafsir => 'Listen with tafsir';
 
   @override
+  String get readerNextJuz => 'Next juz';
+
+  @override
   String get readerNextPage => 'Next page';
 
   @override
@@ -2535,6 +2551,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readerPickAyah => 'Tap any ayah to show its options here';
+
+  @override
+  String get readerPickJuz => 'Choose the juz';
 
   @override
   String get readerPlayAyah => 'Listen to this ayah';
@@ -2547,6 +2566,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readerPlayerShow => 'Show player';
+
+  @override
+  String get readerPrevJuz => 'Previous juz';
 
   @override
   String get readerPrevPage => 'Previous page';
@@ -2575,6 +2597,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerTabAyat => 'Verses';
 
   @override
+  String get readerTabJuz => 'Whole juz';
+
+  @override
   String get readerTabMushaf => 'Mushaf';
 
   @override
@@ -2587,7 +2612,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerTafsirBeside => 'Tafsir beside the page';
 
   @override
+  String get readerTafsirBesideJuz => 'Tafsir beside the juz';
+
+  @override
   String get readerTafsirBesideShort => 'Tafsir';
+
+  @override
+  String get readerTafsirBesideSurah => 'Tafsir beside the surah';
 
   @override
   String readerZoomReset(String pct) {

@@ -39,8 +39,11 @@ class PageReaderScreen extends StatefulWidget {
   /// tap to shrink was confusing). Tests that start in full screen set this to true.
   static bool startFullScreen = false;
 
-  const PageReaderScreen({super.key, this.initialPage = 1, this.highlight});
+  const PageReaderScreen({super.key, this.initialPage = 1, this.highlight, this.initialTab = ReaderTab.mushaf});
   final int initialPage;
+
+  /// The tab to open on: «الجزء كاملاً» from the index's «الأجزاء» (owner 2026-11-20).
+  final ReaderTab initialTab;
 
   /// Ayah to highlight when the page opens (e.g. from search or a bookmark).
   final AyahRef? highlight;
@@ -97,6 +100,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
     super.initState();
     _page = widget.initialPage.clamp(1, 604);
     _selected = widget.highlight;
+    _tab = widget.initialTab;
     _controller = PageController(initialPage: _page - 1);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
@@ -234,8 +238,20 @@ class PageReaderScreenState extends State<PageReaderScreen> {
       setState(() {
         _tab = t;
         _flowSurah = null;
+        _flowJuz = null;
+        _focus = null;
       });
     }
+  }
+
+  /// «السورة كاملة» or «الجزء كاملاً»: the flowing text, which gets the tafsir halves too (owner 2026-11-20).
+  bool get _flowTab => _tab == ReaderTab.surah || _tab == ReaderTab.juz;
+
+  /// The juz of «الجزء كاملاً»: the one picked in the view, else the selected ayah's, else the page's.
+  int? _flowJuz;
+  int get _juzShown {
+    final q = context.services.content.quran;
+    return _flowJuz ?? (_selected != null ? q.juzOf(_selected!) : q.juzOfPage(_page));
   }
 
   /// The surah of "السورة كاملة": the one picked with its buttons, else the selected ayah's, else the page's first.
@@ -244,6 +260,12 @@ class PageReaderScreenState extends State<PageReaderScreen> {
       _flowSurah ?? _selected?.surah ?? context.services.content.quran.ayahsOnPage(_page).first.surah;
 
   Future<void> _onAyahTap(AyahRef r) async {
+    // The whole surah / juz beside its tafsir: a tap shows that ayah's tafsir in the other half.
+    if (_flowTab && _pageTafsir(context)) {
+      setState(() => _focus = r);
+      unawaited(context.services.settings.setLastRead(r));
+      return;
+    }
     setState(() => _selected = r);
     unawaited(context.services.settings.setLastRead(r));
     // On the Mushaf page the actions open in the bottom strip with the other bars (owner 2026-11-15).
@@ -272,7 +294,8 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   /// The page's tafsir is shown beside the page: «التفسير بجانب الصفحة», or listening with tafsir.
   bool _pageTafsir(BuildContext context) {
     final s = context.services;
-    return _tab == ReaderTab.mushaf && (_tafsirBeside || (s.settings.tafsirWithRecitation && s.recitation.isActive));
+    return (_tab == ReaderTab.mushaf || _flowTab) &&
+        (_tafsirBeside || (s.settings.tafsirWithRecitation && s.recitation.isActive));
   }
 
   /// Tafsir beside the page on / off (off also ends «استماع مع التفسير»).
@@ -347,7 +370,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                 PopupMenuItem(value: 3, child: Text(l.readerHelp)),
               ],
             )
-          else if (_tab == ReaderTab.mushaf) ...[
+          else if (_tab == ReaderTab.mushaf || _flowTab) ...[
             // «التفسير بجانب الصفحة»: the page's tafsir beside the page, without listening.
             IconButton(
               key: const Key('readerTafsirBeside'),
@@ -359,13 +382,14 @@ class PageReaderScreenState extends State<PageReaderScreen> {
               icon: const RIcon(RIcons.openBook),
               onPressed: () => _toggleTafsirBeside(context),
             ),
-            IconButton(
-              key: const Key('readerHelp'),
-              tooltip: l.readerHelp,
-              color: scheme.primary,
-              icon: const RIcon(RIcons.help),
-              onPressed: () => showReaderHelp(context, pageCount: _count, onGo: _jump),
-            ),
+            if (_tab == ReaderTab.mushaf)
+              IconButton(
+                key: const Key('readerHelp'),
+                tooltip: l.readerHelp,
+                color: scheme.primary,
+                icon: const RIcon(RIcons.help),
+                onPressed: () => showReaderHelp(context, pageCount: _count, onGo: _jump),
+              ),
           ] else
             const SizedBox(width: 48),
         ],
@@ -837,6 +861,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
       listenable: Listenable.merge([s.recitation, s.settings]),
       builder: (context, _) {
         // Wide screens keep the halves while an ayah's actions are open (its «تفسير الآية» shows there).
+        if (_flowTab && _pageTafsir(context)) return _flowDuo(context);
         final split = _pageTafsir(context) && (_selected == null || ayahSidePanel(MediaQuery.sizeOf(context)));
         if (split) return _duo(context);
         final controller = _tab == ReaderTab.mushaf ? _pageController() : _controller;
@@ -869,20 +894,8 @@ class PageReaderScreenState extends State<PageReaderScreen> {
               child: mushafPage(i),
             ),
           ),
-          ReaderTab.surah => ReadableWidth(
-            child: SurahFlow(
-              key: ValueKey('surahFlowView-$_surahShown'),
-              surah: _surahShown,
-              page: _page,
-              selected: _selected,
-              playing: s.recitation.currentRef,
-              onAyahTap: _onAyahTap,
-              onSurah: (n) {
-                _setPage(s.content.quran.pageOf(AyahRef(n, 1)));
-                setState(() => _flowSurah = n);
-              },
-            ),
-          ),
+          ReaderTab.surah => ReadableWidth(child: _surahFlow(context)),
+          ReaderTab.juz => ReadableWidth(child: _juzFlow(context)),
           ReaderTab.ayat => ReadableWidth(
             child: PageAyahList(
               key: ValueKey('ayat-$_page'),
@@ -905,6 +918,143 @@ class PageReaderScreenState extends State<PageReaderScreen> {
           ),
         };
       },
+    );
+  }
+
+  Widget _surahFlow(BuildContext context, {AyahRef? selected}) {
+    final s = context.services;
+    return SurahFlow(
+      key: ValueKey('surahFlowView-$_surahShown'),
+      surah: _surahShown,
+      page: _page,
+      selected: selected ?? _selected,
+      playing: s.recitation.currentRef,
+      onAyahTap: _onAyahTap,
+      onSurah: (n) {
+        _setPage(s.content.quran.pageOf(AyahRef(n, 1)));
+        setState(() {
+          _flowSurah = n;
+          _focus = null;
+        });
+      },
+    );
+  }
+
+  Widget _juzFlow(BuildContext context, {AyahRef? selected}) {
+    final s = context.services;
+    final j = _juzShown;
+    return JuzFlow(
+      key: ValueKey('juzFlowView-$j'),
+      juz: j,
+      page: _page,
+      selected: selected ?? _selected,
+      playing: s.recitation.currentRef,
+      onAyahTap: _onAyahTap,
+      onJuz: (n) {
+        _setPage(s.content.quran.juz[n - 1].page);
+        setState(() {
+          _flowJuz = n;
+          _selected = null;
+          _focus = null;
+        });
+      },
+    );
+  }
+
+  /// «السورة كاملة» / «الجزء كاملاً» with the tafsir (owner 2026-11-20: on a laptop the whole surah did not
+  /// split into tafsir + surah like the page does): the flowing text on one half and the tafsir of every ayah
+  /// in it on the other; side by side on wide screens, one above the other on phones. A tap on an ayah brings
+  /// its tafsir into view; while listening both halves follow the recitation.
+  Widget _flowDuo(BuildContext context) {
+    final s = context.services;
+    final l = context.l10n;
+    final q = s.content.quran;
+    final scheme = Theme.of(context).colorScheme;
+    final size = MediaQuery.sizeOf(context);
+    final wide = ayahSidePanel(size) && !isLandscapePhone(size);
+    final juz = _tab == ReaderTab.juz;
+    final listening = s.settings.tafsirWithRecitation && s.recitation.isActive;
+    final focus = _focus ?? _selected;
+    final refs = juz
+        ? q.juzRefs(_juzShown)
+        : [for (var a = 1; a <= q.surah(_surahShown).ayahCount; a++) AyahRef(_surahShown, a)];
+    final flow = juz ? _juzFlow(context, selected: focus) : _surahFlow(context, selected: focus);
+    final tafsir = Container(
+      key: const Key('flowTafsir'),
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+        border: Border.all(color: scheme.outlineVariant),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(DesignTokens.spaceMd, 2, DesignTokens.spaceXs, 2),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    listening
+                        ? l.readerListenWithTafsir
+                        : juz
+                        ? l.readerTafsirBesideJuz
+                        : l.readerTafsirBesideSurah,
+                    key: const Key('duoTitle'),
+                    style: TextStyle(color: scheme.primary, fontWeight: FontWeight.w700),
+                  ),
+                ),
+                TextButton(
+                  key: const Key('duoHideTafsir'),
+                  onPressed: () => _toggleTafsirBeside(context),
+                  child: Text(l.readerHideTafsir),
+                ),
+              ],
+            ),
+          ),
+          Divider(height: 1, color: scheme.outlineVariant),
+          Expanded(
+            child: PageAyahList(
+              key: ValueKey('flowTafsir-${juz ? 'j$_juzShown' : 's$_surahShown'}'),
+              page: _page,
+              refs: refs,
+              initial: s.recitation.currentRef ?? q.ayahsOnPage(_page).where(refs.contains).firstOrNull,
+              withTafsir: true,
+              selected: focus,
+              fontSize: math.min(s.settings.quranFontSize, 22),
+              onAyahTap: (r) =>
+                  listening ? unawaited(s.recitation.playFrom(r, scope: PlayScope.surah)) : setState(() => _focus = r),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (wide) {
+      return Padding(
+        key: const Key('flowSplitView'),
+        padding: const EdgeInsets.all(DesignTokens.spaceSm),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(flex: 45, child: tafsir),
+            const SizedBox(width: DesignTokens.spaceSm),
+            Expanded(flex: 55, child: flow),
+          ],
+        ),
+      );
+    }
+    return Padding(
+      key: const Key('flowSplitView'),
+      padding: const EdgeInsets.fromLTRB(DesignTokens.spaceSm, 0, DesignTokens.spaceSm, DesignTokens.spaceXs),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(child: flow),
+          const SizedBox(height: DesignTokens.spaceXs),
+          Expanded(child: tafsir),
+        ],
+      ),
     );
   }
 

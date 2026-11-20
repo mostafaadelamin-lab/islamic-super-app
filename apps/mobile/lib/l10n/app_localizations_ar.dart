@@ -2239,6 +2239,16 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String quranJuzInMushaf(String juz) {
+    return 'افتح $juz في صفحات المصحف';
+  }
+
+  @override
+  String quranJuzLine(String surah, String ayah, String page) {
+    return 'يبدأ من $surah: $ayah - الصفحة $page';
+  }
+
+  @override
   String get quranJuzOrdinals =>
       'الأول|الثاني|الثالث|الرابع|الخامس|السادس|السابع|الثامن|التاسع|العاشر|الحادي عشر|الثاني عشر|الثالث عشر|الرابع عشر|الخامس عشر|السادس عشر|السابع عشر|الثامن عشر|التاسع عشر|العشرون|الحادي والعشرون|الثاني والعشرون|الثالث والعشرون|الرابع والعشرون|الخامس والعشرون|السادس والعشرون|السابع والعشرون|الثامن والعشرون|التاسع والعشرون|الثلاثون';
 
@@ -2343,6 +2353,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get quranSurahs => 'السور';
+
+  @override
+  String get quranTabJuz => 'الأجزاء';
 
   @override
   String get quranTabQuarters => 'الأرباع';
@@ -2515,6 +2528,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerListenWithTafsir => 'استماع مع التفسير';
 
   @override
+  String get readerNextJuz => 'الجزء التالي';
+
+  @override
   String get readerNextPage => 'الصفحة التالية';
 
   @override
@@ -2522,6 +2538,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get readerPickAyah => 'اضغط على أي آية لتظهر خياراتها هنا';
+
+  @override
+  String get readerPickJuz => 'اختر الجزء';
 
   @override
   String get readerPlayAyah => 'استمع للآية';
@@ -2534,6 +2553,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get readerPlayerShow => 'إظهار المشغّل';
+
+  @override
+  String get readerPrevJuz => 'الجزء السابق';
 
   @override
   String get readerPrevPage => 'الصفحة السابقة';
@@ -2562,6 +2584,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerTabAyat => 'الآيات';
 
   @override
+  String get readerTabJuz => 'الجزء كاملاً';
+
+  @override
   String get readerTabMushaf => 'المصحف';
 
   @override
@@ -2574,7 +2599,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerTafsirBeside => 'التفسير بجانب الصفحة';
 
   @override
+  String get readerTafsirBesideJuz => 'التفسير بجانب الجزء';
+
+  @override
   String get readerTafsirBesideShort => 'التفسير';
+
+  @override
+  String get readerTafsirBesideSurah => 'التفسير بجانب السورة';
 
   @override
   String readerZoomReset(String pct) {

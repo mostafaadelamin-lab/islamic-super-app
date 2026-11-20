@@ -4070,6 +4070,18 @@ abstract class AppLocalizations {
   /// **'Juz {juz}'**
   String quranJuz(String juz);
 
+  /// shared key "quran.juzInMushaf"
+  ///
+  /// In en, this message translates to:
+  /// **'Open {juz} on the Mushaf pages'**
+  String quranJuzInMushaf(String juz);
+
+  /// shared key "quran.juzLine"
+  ///
+  /// In en, this message translates to:
+  /// **'Starts at {surah} {ayah} · Page {page}'**
+  String quranJuzLine(String surah, String ayah, String page);
+
   /// shared key "quran.juzOrdinals"
   ///
   /// In en, this message translates to:
@@ -4243,6 +4255,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Surahs'**
   String get quranSurahs;
+
+  /// shared key "quran.tabJuz"
+  ///
+  /// In en, this message translates to:
+  /// **'Juz'**
+  String get quranTabJuz;
 
   /// shared key "quran.tabQuarters"
   ///
@@ -4556,6 +4574,12 @@ abstract class AppLocalizations {
   /// **'Listen with tafsir'**
   String get readerListenWithTafsir;
 
+  /// shared key "reader.nextJuz"
+  ///
+  /// In en, this message translates to:
+  /// **'Next juz'**
+  String get readerNextJuz;
+
   /// shared key "reader.nextPage"
   ///
   /// In en, this message translates to:
@@ -4573,6 +4597,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap any ayah to show its options here'**
   String get readerPickAyah;
+
+  /// shared key "reader.pickJuz"
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the juz'**
+  String get readerPickJuz;
 
   /// shared key "reader.playAyah"
   ///
@@ -4597,6 +4627,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show player'**
   String get readerPlayerShow;
+
+  /// shared key "reader.prevJuz"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous juz'**
+  String get readerPrevJuz;
 
   /// shared key "reader.prevPage"
   ///
@@ -4646,6 +4682,12 @@ abstract class AppLocalizations {
   /// **'Verses'**
   String get readerTabAyat;
 
+  /// shared key "reader.tabJuz"
+  ///
+  /// In en, this message translates to:
+  /// **'Whole juz'**
+  String get readerTabJuz;
+
   /// shared key "reader.tabMushaf"
   ///
   /// In en, this message translates to:
@@ -4670,11 +4712,23 @@ abstract class AppLocalizations {
   /// **'Tafsir beside the page'**
   String get readerTafsirBeside;
 
+  /// shared key "reader.tafsirBesideJuz"
+  ///
+  /// In en, this message translates to:
+  /// **'Tafsir beside the juz'**
+  String get readerTafsirBesideJuz;
+
   /// shared key "reader.tafsirBesideShort"
   ///
   /// In en, this message translates to:
   /// **'Tafsir'**
   String get readerTafsirBesideShort;
+
+  /// shared key "reader.tafsirBesideSurah"
+  ///
+  /// In en, this message translates to:
+  /// **'Tafsir beside the surah'**
+  String get readerTafsirBesideSurah;
 
   /// shared key "reader.zoomReset"
   ///

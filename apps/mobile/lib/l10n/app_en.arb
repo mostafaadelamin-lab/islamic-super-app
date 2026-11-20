@@ -3274,6 +3274,30 @@
       }
     }
   },
+  "quranJuzInMushaf": "Open {juz} on the Mushaf pages",
+  "@quranJuzInMushaf": {
+    "description": "shared key \"quran.juzInMushaf\"",
+    "placeholders": {
+      "juz": {
+        "type": "String"
+      }
+    }
+  },
+  "quranJuzLine": "Starts at {surah} {ayah} · Page {page}",
+  "@quranJuzLine": {
+    "description": "shared key \"quran.juzLine\"",
+    "placeholders": {
+      "surah": {
+        "type": "String"
+      },
+      "ayah": {
+        "type": "String"
+      },
+      "page": {
+        "type": "String"
+      }
+    }
+  },
   "quranJuzOrdinals": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30",
   "@quranJuzOrdinals": {
     "description": "shared key \"quran.juzOrdinals\""
@@ -3452,6 +3476,10 @@
   "quranSurahs": "Surahs",
   "@quranSurahs": {
     "description": "shared key \"quran.surahs\""
+  },
+  "quranTabJuz": "Juz",
+  "@quranTabJuz": {
+    "description": "shared key \"quran.tabJuz\""
   },
   "quranTabQuarters": "Quarters",
   "@quranTabQuarters": {
@@ -3699,6 +3727,10 @@
   "@readerListenWithTafsir": {
     "description": "shared key \"reader.listenWithTafsir\""
   },
+  "readerNextJuz": "Next juz",
+  "@readerNextJuz": {
+    "description": "shared key \"reader.nextJuz\""
+  },
   "readerNextPage": "Next page",
   "@readerNextPage": {
     "description": "shared key \"reader.nextPage\""
@@ -3710,6 +3742,10 @@
   "readerPickAyah": "Tap any ayah to show its options here",
   "@readerPickAyah": {
     "description": "shared key \"reader.pickAyah\""
+  },
+  "readerPickJuz": "Choose the juz",
+  "@readerPickJuz": {
+    "description": "shared key \"reader.pickJuz\""
   },
   "readerPlayAyah": "Listen to this ayah",
   "@readerPlayAyah": {
@@ -3726,6 +3762,10 @@
   "readerPlayerShow": "Show player",
   "@readerPlayerShow": {
     "description": "shared key \"reader.playerShow\""
+  },
+  "readerPrevJuz": "Previous juz",
+  "@readerPrevJuz": {
+    "description": "shared key \"reader.prevJuz\""
   },
   "readerPrevPage": "Previous page",
   "@readerPrevPage": {
@@ -3764,6 +3804,10 @@
   "@readerTabAyat": {
     "description": "shared key \"reader.tabAyat\""
   },
+  "readerTabJuz": "Whole juz",
+  "@readerTabJuz": {
+    "description": "shared key \"reader.tabJuz\""
+  },
   "readerTabMushaf": "Mushaf",
   "@readerTabMushaf": {
     "description": "shared key \"reader.tabMushaf\""
@@ -3780,9 +3824,17 @@
   "@readerTafsirBeside": {
     "description": "shared key \"reader.tafsirBeside\""
   },
+  "readerTafsirBesideJuz": "Tafsir beside the juz",
+  "@readerTafsirBesideJuz": {
+    "description": "shared key \"reader.tafsirBesideJuz\""
+  },
   "readerTafsirBesideShort": "Tafsir",
   "@readerTafsirBesideShort": {
     "description": "shared key \"reader.tafsirBesideShort\""
+  },
+  "readerTafsirBesideSurah": "Tafsir beside the surah",
+  "@readerTafsirBesideSurah": {
+    "description": "shared key \"reader.tafsirBesideSurah\""
   },
   "readerZoomReset": "{pct}% · Normal size",
   "@readerZoomReset": {

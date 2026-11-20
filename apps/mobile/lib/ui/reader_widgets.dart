@@ -19,7 +19,7 @@ import 'widgets.dart';
 import 'r_icon.dart';
 
 /// المصحف / السورة كاملة / الآيات / التفسير.
-enum ReaderTab { mushaf, surah, ayat, tafsir }
+enum ReaderTab { mushaf, surah, juz, ayat, tafsir }
 
 /// Segmented control at the top of the Mushaf reader.
 class ReaderTabs extends StatelessWidget {
@@ -34,6 +34,7 @@ class ReaderTabs extends StatelessWidget {
     final labels = {
       ReaderTab.mushaf: l.readerTabMushaf,
       ReaderTab.surah: l.readerTabSurah,
+      ReaderTab.juz: l.readerTabJuz,
       ReaderTab.ayat: l.readerTabAyat,
       ReaderTab.tafsir: l.readerTabTafsir,
     };
@@ -49,7 +50,7 @@ class ReaderTabs extends StatelessWidget {
         children: [
           for (final e in labels.entries)
             Expanded(
-              flex: e.key == ReaderTab.surah ? 5 : 4,
+              flex: 1,
               child: Semantics(
                 selected: e.key == tab,
                 button: true,
@@ -407,8 +408,17 @@ class PageAyahList extends StatefulWidget {
     this.selected,
     this.fontSize,
     this.onPage,
+    this.refs,
+    this.initial,
   });
+
+  /// With [refs]: the ayah brought into view when the list opens (the reader's page), not highlighted.
+  final AyahRef? initial;
   final int page;
+
+  /// The ayahs to list instead of [page]'s: the whole surah / juz beside the tafsir (owner 2026-11-20).
+  /// The selected ayah is kept in view too.
+  final List<AyahRef>? refs;
 
   /// Turns to another page from the list itself (buttons at the end, or a swipe), so ayah-by-ayah
   /// reading goes on without going back to the Mushaf (owner, 2026-11-17). Null: no page turning here.
@@ -428,6 +438,7 @@ class _PageAyahListState extends State<PageAyahList> {
   final _keys = <AyahRef, GlobalKey>{};
   Future<TafsirContent>? _tafsir;
   AyahRef? _followed;
+  AyahRef? _followedSelected;
 
   @override
   void didChangeDependencies() {
@@ -438,6 +449,16 @@ class _PageAyahListState extends State<PageAyahList> {
   void _follow(AyahRef? playing) {
     if (playing == null || playing == _followed) return;
     _followed = playing;
+    _scrollTo(playing);
+  }
+
+  void _followSelected(AyahRef? selected) {
+    if (selected == null || selected == _followedSelected) return;
+    _followedSelected = selected;
+    _scrollTo(selected);
+  }
+
+  void _scrollTo(AyahRef playing) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final ctx = _keys[playing]?.currentContext;
       if (ctx != null && ctx.mounted) {
@@ -450,13 +471,14 @@ class _PageAyahListState extends State<PageAyahList> {
   Widget build(BuildContext context) {
     final s = context.services;
     final q = s.content.quran;
-    final refs = q.ayahsOnPage(widget.page);
+    final refs = widget.refs ?? q.ayahsOnPage(widget.page);
     final scheme = Theme.of(context).colorScheme;
     return ListenableBuilder(
       listenable: Listenable.merge([s.recitation, s.settings]),
       builder: (context, _) {
         final playing = s.recitation.currentRef;
         _follow(playing);
+        if (widget.refs != null) _followSelected(widget.selected ?? widget.initial);
         final size = widget.fontSize ?? s.settings.quranFontSize;
         return FutureBuilder<TafsirContent>(
           future: _tafsir,

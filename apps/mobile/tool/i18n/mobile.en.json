@@ -1028,5 +1028,11 @@
   "parentLock.parentOpen": "Parent: open all videos",
   "parentLock.back": "Back to children's videos",
   "parentLock.ageUnder13": "Under 13",
-  "parentLock.age13plus": "13 or older"
+  "parentLock.age13plus": "13 or older",
+  "reader.tabJuz": "Whole juz",
+  "reader.nextJuz": "Next juz",
+  "reader.prevJuz": "Previous juz",
+  "reader.pickJuz": "Choose the juz",
+  "reader.tafsirBesideSurah": "Tafsir beside the surah",
+  "reader.tafsirBesideJuz": "Tafsir beside the juz"
 }

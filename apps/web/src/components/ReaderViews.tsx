@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type RefObject } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
-import { PAGE_COUNT, ayahsOnPage, surahMeta, surahName, type Ref } from "@/lib/pages";
+import { JUZ, PAGE_COUNT, ayahsOnPage, juzRefs, surahMeta, surahName, type Ref } from "@/lib/pages";
 import { NO_BASMALA_BEFORE } from "@/lib/audio";
 import { ayahEndMark, renderQuranText } from "@/lib/quran-render";
 import { loadTafsirSurah } from "@/lib/tafsir";
@@ -218,6 +218,98 @@ export function usePageSwipe(page: number, dir: "rtl" | "ltr", onPage: (p: numbe
   };
 }
 
+/** Scrolls [el] to the top of its own scrolling half (the surah / juz beside the tafsir), else the window. */
+function scrollFlowTo(el: Element): void {
+  const pane = el.closest<HTMLElement>(".rd-flow-pane");
+  if (pane && pane.scrollHeight > pane.clientHeight) {
+    const y = el.getBoundingClientRect().top - pane.getBoundingClientRect().top + pane.scrollTop;
+    pane.scrollTo?.({ top: Math.max(0, y - 40) });
+    return;
+  }
+  window.scrollBy({ top: el.getBoundingClientRect().top - 140 });
+}
+
+/** The ayahs [refs] as one flowing text on the Mushaf paper (a surah band before every ayah 1). */
+function FlowText({
+  refs,
+  data,
+  selected,
+  playing,
+  onSelect,
+  bands,
+}: {
+  refs: readonly Ref[];
+  data: MushafData | null;
+  selected: string | null;
+  playing: string | null;
+  onSelect: (ref: Ref) => void;
+  /** Surah bands inside the text (the juz view); the surah view draws its own band above. */
+  bands: boolean;
+}) {
+  // Split into runs, one per surah, so a surah band can sit between them.
+  const runs: Ref[][] = [];
+  for (const r of refs) {
+    const last = runs[runs.length - 1];
+    if (last && last[0]![0] === r[0]) last.push(r);
+    else runs.push([r]);
+  }
+  return (
+    <>
+      {runs.map((run) => (
+        <div key={key(run[0]!)} className="rd-flow-run">
+          {bands && run[0]![1] === 1 ? <SurahStart s={run[0]![0]} data={data} /> : null}
+          <p className="rd-flow" lang="ar" dir="rtl">
+            {run.map((r) => {
+              const k = key(r);
+              const cls = ["seg", k === selected ? "selected" : "", k === playing ? "playing" : ""]
+                .filter(Boolean)
+                .join(" ");
+              return (
+                <span key={k}>
+                  <span
+                    className={cls}
+                    data-ayah={k}
+                    data-testid="flow-ayah"
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => onSelect(r)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") onSelect(r);
+                    }}
+                  >
+                    {ayahText(data, r) ?? "…"}
+                  </span>{" "}
+                  <span className="rd-num">{ayahEndMark(r[1])}</span>{" "}
+                </span>
+              );
+            })}
+          </p>
+        </div>
+      ))}
+    </>
+  );
+}
+
+/** Opens a flow view at the reader's page (once per surah / juz), so the place being read stays in view. */
+function useOpenAtPage(
+  box: RefObject<HTMLDivElement | null>,
+  id: string,
+  page: number,
+  data: MushafData | null,
+  inView: (r: Ref) => boolean,
+): void {
+  const opened = useRef<string | null>(null);
+  useEffect(() => {
+    if (!data || opened.current === id) return;
+    opened.current = id;
+    const first = ayahsOnPage(page).find(inView);
+    if (!first) return;
+    const el = box.current?.querySelector(`[data-ayah="${key(first)}"]`);
+    if (el && el !== box.current?.querySelector("[data-ayah]")) scrollFlowTo(el);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, id, page]);
+}
+
 interface SurahFlowProps {
   locale: Locale;
   surah: number;
@@ -247,46 +339,19 @@ export function SurahFlow({
   const meta = surahMeta(surah);
   const count = meta?.ayahCount ?? 0;
   const box = useRef<HTMLDivElement>(null);
-  // Open at the reader's page (once per surah), so the place being read stays in view.
-  const opened = useRef<number | null>(null);
-  useEffect(() => {
-    if (!data || opened.current === surah) return;
-    opened.current = surah;
-    const first = ayahsOnPage(page).find(([s]) => s === surah);
-    if (!first || first[1] === 1) return;
-    const el = box.current?.querySelector(`[data-ayah="${surah}:${first[1]}"]`);
-    if (el) window.scrollBy({ top: el.getBoundingClientRect().top - 140 });
-  }, [data, surah, page]);
+  const refs: Ref[] = Array.from({ length: count }, (_, i) => [surah, i + 1]);
+  useOpenAtPage(box, `s${surah}`, page, data, ([s]) => s === surah);
   return (
     <div className="rd-surah-flow" data-testid="surah-flow" data-surah={surah} ref={box}>
       <SurahStart s={surah} data={data} />
-      <p className="rd-flow" lang="ar" dir="rtl">
-        {Array.from({ length: count }, (_, i) => {
-          const r: Ref = [surah, i + 1];
-          const k = key(r);
-          const cls = ["seg", k === selected ? "selected" : "", k === playing ? "playing" : ""]
-            .filter(Boolean)
-            .join(" ");
-          return (
-            <span key={k}>
-              <span
-                className={cls}
-                data-ayah={k}
-                data-testid="flow-ayah"
-                role="button"
-                tabIndex={0}
-                onClick={() => onSelect(r)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") onSelect(r);
-                }}
-              >
-                {ayahText(data, r) ?? "…"}
-              </span>{" "}
-              <span className="rd-num">{ayahEndMark(i + 1)}</span>{" "}
-            </span>
-          );
-        })}
-      </p>
+      <FlowText
+        refs={refs}
+        data={data}
+        selected={selected}
+        playing={playing}
+        onSelect={onSelect}
+        bands={false}
+      />
       <div className="rd-page-btns">
         <button
           type="button"
@@ -305,6 +370,77 @@ export function SurahFlow({
           onClick={() => onSurah(surah + 1)}
         >
           {t(locale, "reader.nextSurah")}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+interface JuzFlowProps {
+  locale: Locale;
+  juz: number;
+  page: number;
+  data: MushafData | null;
+  selected: string | null;
+  playing: string | null;
+  onSelect: (ref: Ref) => void;
+  onJuz: (j: number) => void;
+}
+
+/**
+ * «الجزء كاملاً» (owner 2026-11-20): one juz as one flowing text, surah after surah, read by scrolling, with a
+ * juz picker above and the previous / next juz below. Same canonical text as the whole-surah view.
+ */
+export function JuzFlow({ locale, juz, page, data, selected, playing, onSelect, onJuz }: JuzFlowProps) {
+  const box = useRef<HTMLDivElement>(null);
+  const refs = juzRefs(juz);
+  const inJuz = new Set(refs.map(key));
+  useOpenAtPage(box, `j${juz}`, page, data, (r) => inJuz.has(key(r)));
+  const ordinals = t(locale, "quran.juzOrdinals").split("|");
+  const title = (j: number): string => t(locale, "quran.juzTitle", { ordinal: ordinals[j - 1] ?? String(j) });
+  return (
+    <div className="rd-surah-flow rd-juz-flow" data-testid="juz-flow" data-juz={juz} ref={box}>
+      <div className="rd-juz-head">
+        <label className="rd-juz-pick">
+          <span className="sr-only">{t(locale, "reader.pickJuz")}</span>
+          <select
+            value={juz}
+            data-testid="juz-pick"
+            aria-label={t(locale, "reader.pickJuz")}
+            onChange={(e) => onJuz(Number(e.target.value))}
+          >
+            {JUZ.map((z) => (
+              <option key={z.juz} value={z.juz}>
+                {title(z.juz)}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      {refs[0] && refs[0][1] !== 1 ? (
+        <p className="rd-juz-from muted small" lang={locale === "ar" ? "ar" : undefined}>
+          {t(locale, "quran.surahTitle", { name: surahName(refs[0][0], locale) })}
+        </p>
+      ) : null}
+      <FlowText refs={refs} data={data} selected={selected} playing={playing} onSelect={onSelect} bands />
+      <div className="rd-page-btns">
+        <button
+          type="button"
+          className="btn"
+          data-testid="flow-prev-juz"
+          disabled={juz <= 1}
+          onClick={() => onJuz(juz - 1)}
+        >
+          {t(locale, "reader.prevJuz")}
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary"
+          data-testid="flow-next-juz"
+          disabled={juz >= 30}
+          onClick={() => onJuz(juz + 1)}
+        >
+          {t(locale, "reader.nextJuz")}
         </button>
       </div>
     </div>

@@ -7,7 +7,7 @@ import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
 import { normalizeArabic } from "@/lib/search";
 import { renderQuranText } from "@/lib/quran-render";
-import { JUZ, pageForAyah, SURAHS, type Ref, type SurahMeta } from "@/lib/pages";
+import { JUZ, juzForPage, pageForAyah, SURAHS, type Ref, type SurahMeta } from "@/lib/pages";
 import { lastReadStore } from "@/lib/settings";
 import { useStore } from "@/hooks/useStore";
 import { filterSurahs } from "./SurahIndex";
@@ -89,7 +89,7 @@ function StarBadge({ label, small }: { label: string; small?: boolean }) {
   );
 }
 
-type Tab = "surahs" | "quarters";
+type Tab = "surahs" | "juz" | "quarters";
 
 /**
  * The Quran index ("فهرس السور"): a Surahs / Quarters toggle, a search box and a
@@ -106,7 +106,8 @@ export function QuranIndex({ locale }: { locale: Locale }) {
   useEffect(() => {
     const p = Number(new URLSearchParams(window.location.search).get("page"));
     if (Number.isInteger(p) && p >= 1 && p <= MUSHAF_PAGES) setFromPage(p);
-    if (new URLSearchParams(window.location.search).get("tab") === "quarters") setTab("quarters");
+    const tabParam = new URLSearchParams(window.location.search).get("tab");
+    if (tabParam === "quarters" || tabParam === "juz") setTab(tabParam);
   }, []);
 
   // Coming from the reader (?page=N) wins over the saved last-read ayah.
@@ -132,7 +133,14 @@ export function QuranIndex({ locale }: { locale: Locale }) {
   };
   const currentQuarter = QUARTERS.findLast(reached)?.n ?? null;
 
-  const empty = tab === "surahs" ? surahGroups.length === 0 : quarterGroups.length === 0;
+  const juzRows = useMemo(() => filterJuz(q), [q]);
+  const currentJuz = current ? juzOfAyah(current) : currentPage ? juzForPage(currentPage) : null;
+  const empty =
+    tab === "surahs"
+      ? surahGroups.length === 0
+      : tab === "juz"
+        ? juzRows.length === 0
+        : quarterGroups.length === 0;
 
   return (
     <section className="qidx" aria-labelledby="qidx-title">
@@ -140,7 +148,7 @@ export function QuranIndex({ locale }: { locale: Locale }) {
         {t(locale, "quran.index")}
       </h1>
       <div className="qidx-tabs" role="tablist" aria-label={t(locale, "quran.index")}>
-        {(["surahs", "quarters"] as const).map((k) => (
+        {(["surahs", "juz", "quarters"] as const).map((k) => (
           <button
             key={k}
             type="button"
@@ -152,7 +160,10 @@ export function QuranIndex({ locale }: { locale: Locale }) {
             data-testid={`qidx-tab-${k}`}
             onClick={() => setTab(k)}
           >
-            {t(locale, k === "surahs" ? "quran.tabSurahs" : "quran.tabQuarters")}
+            {t(
+              locale,
+              k === "surahs" ? "quran.tabSurahs" : k === "juz" ? "quran.tabJuz" : "quran.tabQuarters",
+            )}
           </button>
         ))}
       </div>
@@ -203,6 +214,12 @@ export function QuranIndex({ locale }: { locale: Locale }) {
               </section>
             ))}
           </div>
+        ) : tab === "juz" ? (
+          <ul className="qidx-list qidx-juz-list" data-testid="juz-list">
+            {juzRows.map((z) => (
+              <JuzRow key={z.juz} juz={z.juz} locale={locale} current={z.juz === currentJuz} />
+            ))}
+          </ul>
         ) : (
           <div data-testid="quarter-list">
             {quarterGroups.map((g) => (
@@ -255,6 +272,70 @@ function SurahRow({ s, locale, current }: { s: SurahMeta; locale: Locale; curren
         aria-label={t(locale, "quran.listViewOf", { surah: locale === "ar" ? s.nameAr : s.translit })}
         title={t(locale, "quran.listView")}
         data-testid="surah-list-view"
+      >
+        <Icon name="book" />
+      </Link>
+    </li>
+  );
+}
+
+/** «الأجزاء»: the 30 juz; a search by number or by the surah a juz starts in. */
+export function filterJuz(query: string): (typeof JUZ)[number][] {
+  const raw = query.trim();
+  if (!raw) return [...JUZ];
+  const digits = raw.replace(/[٠-٩]/g, (d) => String(d.charCodeAt(0) - ARABIC_ZERO));
+  if (/^\d+$/.test(digits)) return JUZ.filter((z) => z.juz === Number(digits));
+  const surahs = new Set(filterSurahs(raw).map((s) => s.n));
+  return JUZ.filter((z, i) => {
+    const last = (JUZ[i + 1]?.start[0] ?? 115) - 1;
+    for (let n = z.start[0]; n <= Math.max(z.start[0], last); n++) if (surahs.has(n)) return true;
+    return false;
+  });
+}
+
+/**
+ * One juz in «الأجزاء» (owner 2026-11-20: the Mushaf by ajzaa): opens the whole juz as one flowing text
+ * (?view=juz); the book button opens its first Mushaf page instead. The opening words are the first quarter's,
+ * copied from the canonical text at build time.
+ */
+function JuzRow({ juz, locale, current }: { juz: number; locale: Locale; current: boolean }) {
+  const z = JUZ[juz - 1]!;
+  const s = SURAHS[z.start[0] - 1]!;
+  const opening = QUARTERS.find((x) => x.juz === juz && x.quarter === 0);
+  const title = juzTitle(locale, juz);
+  return (
+    <li className={`qidx-item${current ? " current" : ""}`} aria-current={current ? "location" : undefined}>
+      <Link
+        className="qidx-row"
+        href={`${href(locale, `page/${z.page}`)}?view=juz`}
+        prefetch={false}
+        data-testid="juz-open"
+      >
+        <StarBadge label={localizeDigits(juz, locale)} />
+        <span className="qidx-text">
+          <strong className="qidx-name">{title}</strong>
+          {opening ? (
+            <span className="qidx-opening" lang="ar" dir="rtl">
+              {renderQuranText(opening.opening)}
+              {opening.more ? " …" : ""}
+            </span>
+          ) : null}
+          <span className="qidx-sub">
+            {t(locale, "quran.juzLine", {
+              surah: t(locale, "quran.surahTitle", { name: locale === "ar" ? s.nameAr : s.translit }),
+              ayah: localizeDigits(z.start[1], locale),
+              page: localizeDigits(z.page, locale),
+            })}
+          </span>
+        </span>
+      </Link>
+      <Link
+        className="qidx-listview"
+        href={href(locale, `page/${z.page}`)}
+        prefetch={false}
+        aria-label={t(locale, "quran.juzInMushaf", { juz: title })}
+        title={t(locale, "quran.juzInMushaf", { juz: title })}
+        data-testid="juz-mushaf"
       >
         <Icon name="book" />
       </Link>

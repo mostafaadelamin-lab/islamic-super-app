@@ -74,5 +74,8 @@
   "stories.episodeError": "The episode could not be played. Check your internet connection.",
   "stories.reviewedBy": "Reviewed by: {name}",
   "stories.reviewerMode": "Reviewer mode (show unreviewed episodes)",
-  "stories.onlineOnly": "Episodes are streamed over the internet"
+  "stories.onlineOnly": "Episodes are streamed over the internet",
+  "quran.tabJuz": "Juz",
+  "quran.juzLine": "Starts at {surah} {ayah} · Page {page}",
+  "quran.juzInMushaf": "Open {juz} on the Mushaf pages"
 }

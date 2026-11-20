@@ -95,3 +95,28 @@ export function surahName(n: number, locale: string): string {
   if (!m) return String(n);
   return locale === "ar" ? m.nameAr : m.translit;
 }
+
+/** The juz (1..30) in which ayah [r] lies, by the juz start ayahs. */
+export function juzOfRef(r: Ref): number {
+  let j = 1;
+  for (const z of JUZ) if (cmp(z.start, r) <= 0) j = z.juz;
+  return j;
+}
+
+/** «الجزء كاملاً»: every [surah, ayah] of juz [j] (1..30), in order (to the ayah before the next juz). */
+export function juzRefs(j: number): Ref[] {
+  const z = JUZ[j - 1];
+  if (!z) throw new RangeError(`juz ${j} out of range`);
+  const next = JUZ[j];
+  const out: Ref[] = [];
+  let [s, a] = z.start;
+  while (s <= SURAHS.length && (!next || cmp([s, a], next.start) < 0)) {
+    out.push([s, a]);
+    if (a < (SURAHS[s - 1] as SurahMeta).ayahCount) a++;
+    else {
+      s++;
+      a = 1;
+    }
+  }
+  return out;
+}

@@ -225,6 +225,27 @@ class QuranContent {
     return j;
   }
 
+  /// «الجزء كاملاً»: every ayah of juz [j] (1..30) in order, up to the ayah before the next juz.
+  List<AyahRef> juzRefs(int j) {
+    if (j < 1 || j > juz.length) throw RangeError.range(j, 1, juz.length);
+    final end = j < juz.length ? juz[j].start : null;
+    final out = <AyahRef>[];
+    var s = juz[j - 1].start.surah;
+    var a = juz[j - 1].start.ayah;
+    while (s <= surahs.length) {
+      final r = AyahRef(s, a);
+      if (end != null && r.compareTo(end) >= 0) break;
+      out.add(r);
+      if (a < surahs[s - 1].ayahCount) {
+        a++;
+      } else {
+        s++;
+        a = 1;
+      }
+    }
+    return out;
+  }
+
   /// Distinct surahs that appear on page [p].
   List<int> surahsOnPage(int p) => ayahsOnPage(p).map((r) => r.surah).toSet().toList();
 }

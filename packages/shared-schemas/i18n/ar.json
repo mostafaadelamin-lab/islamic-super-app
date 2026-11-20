@@ -74,5 +74,8 @@
   "stories.episodeError": "تعذّر تشغيل الحلقة. تأكد من اتصالك بالإنترنت.",
   "stories.reviewedBy": "راجعها: {name}",
   "stories.reviewerMode": "وضع المراجعة (عرض الحلقات غير المراجَعة)",
-  "stories.onlineOnly": "الحلقات تُسمع عبر الإنترنت"
+  "stories.onlineOnly": "الحلقات تُسمع عبر الإنترنت",
+  "quran.tabJuz": "الأجزاء",
+  "quran.juzLine": "يبدأ من {surah}: {ayah} - الصفحة {page}",
+  "quran.juzInMushaf": "افتح {juz} في صفحات المصحف"
 }

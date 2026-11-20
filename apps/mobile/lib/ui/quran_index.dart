@@ -8,11 +8,12 @@ import '../domain/text.dart';
 import '../theme/app_theme.dart';
 import 'l10n_ext.dart';
 import 'page_reader_screen.dart';
+import 'reader_widgets.dart' show ReaderTab;
 import 'surah_info_sheet.dart';
 import 'widgets.dart';
 import 'r_icon.dart';
 
-enum QuranIndexTab { surahs, quarters }
+enum QuranIndexTab { surahs, juz, quarters }
 
 /// Opens the Quran index ("فهرس السور") as a bottom sheet and returns the Mushaf
 /// page the user picked, or null if the sheet was dismissed. [currentPage] is
@@ -59,6 +60,11 @@ class _JuzRow extends _Row {
 class _SurahRow extends _Row {
   const _SurahRow(this.surah);
   final Surah surah;
+}
+
+class _JuzEntryRow extends _Row {
+  const _JuzEntryRow(this.juz);
+  final JuzStart juz;
 }
 
 class _QuarterRow extends _Row {
@@ -114,6 +120,25 @@ class _QuranIndexViewState extends State<QuranIndexView> {
     ];
   }
 
+  /// «الأجزاء»: the 30 juz; a search by number or by a surah inside the juz.
+  List<JuzStart> _juz(BuildContext context) {
+    final quran = context.services.content.quran;
+    final q = _q.trim();
+    if (q.isEmpty) return quran.juz;
+    final num = int.tryParse(toAsciiDigits(q));
+    if (num != null) {
+      return [
+        for (final z in quran.juz)
+          if (z.juz == num) z,
+      ];
+    }
+    final surahs = {for (final su in _surahs(context)) su.n};
+    return [
+      for (final z in quran.juz)
+        if (quran.juzRefs(z.juz).any((r) => surahs.contains(r.surah))) z,
+    ];
+  }
+
   List<HizbQuarter> _quarters(BuildContext context) {
     final s = context.services;
     final quran = s.content.quran;
@@ -144,6 +169,7 @@ class _QuranIndexViewState extends State<QuranIndexView> {
           final hit = switch (r) {
             _SurahRow(:final surah) => surah.n == surah_,
             _QuarterRow(:final quarter) => quarter.n == quarter_,
+            _JuzEntryRow(:final juz) => juz.juz == _currentJuz,
             _JuzRow() => false,
           };
           if (hit) {
@@ -156,6 +182,21 @@ class _QuranIndexViewState extends State<QuranIndexView> {
       });
 
   static const _headerExtent = 62.0;
+  int? _currentJuz;
+
+  /// A juz row: the whole juz as one flowing text («الجزء كاملاً»). Inside the reader's index sheet the
+  /// reader turns to the juz's first page instead.
+  void _openJuz(BuildContext context, JuzStart z) {
+    if (widget.onOpenPage != null) {
+      widget.onOpenPage!(z.page);
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => PageReaderScreen(initialPage: z.page, initialTab: ReaderTab.juz),
+        ),
+      );
+    }
+  }
 
   void _open(BuildContext context, int page) {
     final cb = widget.onOpenPage;
@@ -193,9 +234,16 @@ class _QuranIndexViewState extends State<QuranIndexView> {
             if (x.page <= page) currentQuarter = x.n;
           }
         }
-        final rows = _tab == QuranIndexTab.surahs
-            ? _grouped<Surah>(_surahs(context), (su) => quran.juzOf(AyahRef(su.n, 1)), _SurahRow.new)
-            : _grouped<HizbQuarter>(_quarters(context), (x) => x.juz, _QuarterRow.new);
+        _currentJuz = at != null ? quran.juzOf(at) : (page != null ? quran.juzOfPage(page) : null);
+        final rows = switch (_tab) {
+          QuranIndexTab.surahs => _grouped<Surah>(
+            _surahs(context),
+            (su) => quran.juzOf(AyahRef(su.n, 1)),
+            _SurahRow.new,
+          ),
+          QuranIndexTab.juz => <_Row>[for (final z in _juz(context)) _JuzEntryRow(z)],
+          QuranIndexTab.quarters => _grouped<HizbQuarter>(_quarters(context), (x) => x.juz, _QuarterRow.new),
+        };
         // Fixed row heights (scaled with the text size) let the list open at the highlighted row.
         final scale = MediaQuery.textScalerOf(context).scale(16) / 16;
         double extent(_Row r) => r is _JuzRow ? _headerExtent * math.max(1, scale) : 84 * math.max(1, scale);
@@ -218,6 +266,10 @@ class _QuranIndexViewState extends State<QuranIndexView> {
                   ButtonSegment(
                     value: QuranIndexTab.surahs,
                     label: Text(l.quranTabSurahs, key: const Key('tabSurahs')),
+                  ),
+                  ButtonSegment(
+                    value: QuranIndexTab.juz,
+                    label: Text(l.quranTabJuz, key: const Key('tabJuz')),
                   ),
                   ButtonSegment(
                     value: QuranIndexTab.quarters,
@@ -273,7 +325,11 @@ class _QuranIndexViewState extends State<QuranIndexView> {
                 child: rows.isEmpty
                     ? Center(child: Text(l.quranNoResults))
                     : ListView.builder(
-                        key: Key(_tab == QuranIndexTab.surahs ? 'surahList' : 'quarterList'),
+                        key: Key(switch (_tab) {
+                          QuranIndexTab.surahs => 'surahList',
+                          QuranIndexTab.juz => 'juzList',
+                          QuranIndexTab.quarters => 'quarterList',
+                        }),
                         controller: _controllerFor(rows, extent, currentSurah, currentQuarter),
                         itemExtentBuilder: (i, _) => i < rows.length ? extent(rows[i]) : null,
                         itemCount: rows.length,
@@ -283,6 +339,12 @@ class _QuranIndexViewState extends State<QuranIndexView> {
                             surah,
                             current: surah.n == currentSurah,
                             onOpen: (p) => _open(context, p),
+                          ),
+                          _JuzEntryRow(:final juz) => _JuzTile(
+                            juz,
+                            current: juz.juz == _currentJuz,
+                            onOpen: () => _openJuz(context, juz),
+                            onMushaf: () => _open(context, juz.page),
                           ),
                           _QuarterRow(:final quarter) => _QuarterTile(
                             quarter,
@@ -339,9 +401,11 @@ class _Entry extends StatelessWidget {
     required this.onTap,
     this.semanticsLabel,
     this.onInfo,
+    this.trailing,
     super.key,
   });
   final VoidCallback? onInfo;
+  final Widget? trailing;
   final Widget badge;
   final Widget title;
   final String subtitle;
@@ -394,6 +458,7 @@ class _Entry extends StatelessWidget {
                     icon: RIcon(RIcons.info, color: theme.colorScheme.primary, size: 22),
                     onPressed: onInfo,
                   ),
+                ?trailing,
               ],
             ),
           ),
@@ -431,6 +496,53 @@ class _SurahTile extends StatelessWidget {
       current: current,
       onTap: () => onOpen(page),
       onInfo: () => showSurahInfo(context, s.n),
+    );
+  }
+}
+
+/// One juz in «الأجزاء» (owner 2026-11-20: the Mushaf by ajzaa): opens the whole juz as one flowing text;
+/// the book button opens its first Mushaf page. The opening words are the canonical text of its first ayah.
+class _JuzTile extends StatelessWidget {
+  const _JuzTile(this.z, {required this.current, required this.onOpen, required this.onMushaf});
+  final JuzStart z;
+  final bool current;
+  final VoidCallback onOpen;
+  final VoidCallback onMushaf;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final quran = context.services.content.quran;
+    final s = quran.surah(z.start.surah);
+    final text = quran.text(z.start).replaceFirst(RegExp('^۞\\s*'), '');
+    final title = juzTitle(context, z.juz);
+    return _Entry(
+      key: Key('juz-${z.juz}'),
+      badge: StarBadge(label: context.num(z.juz)),
+      title: Row(
+        children: [
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.primary),
+          ),
+          const SizedBox(width: 8),
+          Expanded(child: ExcludeSemantics(child: QuranText(text, size: 18, maxLines: 1))),
+        ],
+      ),
+      subtitle: l.quranJuzLine(
+        l.quranSurahTitle(surahName(context, s)),
+        context.num(z.start.ayah),
+        context.num(z.page),
+      ),
+      semanticsLabel: title,
+      current: current,
+      onTap: onOpen,
+      trailing: IconButton(
+        key: Key('juzMushaf-${z.juz}'),
+        tooltip: l.quranJuzInMushaf(title),
+        icon: RIcon(RIcons.openBook, color: Theme.of(context).colorScheme.primary, size: 22),
+        onPressed: onMushaf,
+      ),
     );
   }
 }

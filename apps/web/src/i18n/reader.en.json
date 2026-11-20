@@ -77,5 +77,11 @@
   "surahInfo.short": "About surah",
   "surahInfo.loading": "Loading the surah's information…",
   "surahInfo.error": "Could not load the surah's information. Check your connection and try again.",
-  "surahInfo.offline": "You are offline and this surah's information is not saved on this device yet. It is saved after you open it once."
+  "surahInfo.offline": "You are offline and this surah's information is not saved on this device yet. It is saved after you open it once.",
+  "reader.tabJuz": "Whole juz",
+  "reader.nextJuz": "Next juz",
+  "reader.prevJuz": "Previous juz",
+  "reader.pickJuz": "Choose the juz",
+  "reader.tafsirBesideSurah": "Tafsir beside the surah",
+  "reader.tafsirBesideJuz": "Tafsir beside the juz"
 }

@@ -18,7 +18,16 @@ import { dirOf, t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
 import { withBase } from "@/lib/base-path";
-import { PAGE_COUNT, juzForPage, pageForAyah, surahMeta, type Ref } from "@/lib/pages";
+import {
+  JUZ,
+  PAGE_COUNT,
+  juzForPage,
+  juzOfRef,
+  juzRefs,
+  pageForAyah,
+  surahMeta,
+  type Ref,
+} from "@/lib/pages";
 import {
   clampPage,
   fitFontSize,
@@ -53,7 +62,7 @@ import {
 } from "@/lib/reader-dock";
 import { ReaderIcon } from "./ReaderIcon";
 import { KhatmaSheet } from "./KhatmaSheet";
-import { PageAyahList, PageButtons, PageTafsirList, SurahFlow, usePageSwipe } from "./ReaderViews";
+import { JuzFlow, PageAyahList, PageButtons, PageTafsirList, SurahFlow, usePageSwipe } from "./ReaderViews";
 import "./reader.css";
 
 export interface PageReaderProps {
@@ -288,10 +297,11 @@ export function ayahTextOnPage(p: ResolvedPage, [s, a]: Ref): string | null {
   return parts.length ? parts.map((g) => g.text).join(" ") : null;
 }
 
-export type ReaderTab = "mushaf" | "surah" | "ayat" | "tafsir";
+export type ReaderTab = "mushaf" | "surah" | "juz" | "ayat" | "tafsir";
 const TABS: readonly { id: ReaderTab; key: string }[] = [
   { id: "mushaf", key: "reader.tabMushaf" },
   { id: "surah", key: "reader.tabSurah" },
+  { id: "juz", key: "reader.tabJuz" },
   { id: "ayat", key: "reader.tabAyat" },
   { id: "tafsir", key: "reader.tabTafsir" },
 ];
@@ -323,10 +333,18 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   const [tab, setTabState] = useState<ReaderTab>("mushaf");
   // "السورة كاملة": the surah picked with its buttons; otherwise the selected ayah's, else the page's first.
   const [flowSurah, setFlowSurah] = useState<number | null>(null);
+  // «الجزء كاملاً» (owner 2026-11-20): the juz picked in the view; otherwise the selected ayah's, else the page's.
+  const [flowJuz, setFlowJuz] = useState<number | null>(null);
   const setTab = (next: ReaderTab): void => {
     setTabState(next);
     setFlowSurah(null);
+    setFlowJuz(null);
   };
+  // Opened from the index's «الأجزاء» (?view=juz) or a whole-surah link (?view=surah).
+  useEffect(() => {
+    const v = new URLSearchParams(window.location.search).get("view");
+    if (v === "juz" || v === "surah") setTabState(v);
+  }, []);
   const [sheet, setSheet] = useState<"help" | "khatma" | "meanings" | "surahInfo" | null>(null);
   // «عن السورة وأسباب نزولها» (as in the app): the selected ayah's surah, else the page's first.
   const [infoSurah, setInfoSurah] = useState<number | null>(null);
@@ -369,7 +387,11 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   // «التفسير بجانب الصفحة» (owner 2026-11-18): the same halves while reading, without listening.
   const [sideTafsir, setSideTafsir] = useState(false);
   const listenTafsir = audioPrefs.tafsir && active;
-  const pageTafsir = tab === "mushaf" && (sideTafsir || listenTafsir);
+  // «السورة كاملة» / «الجزء كاملاً» get the same halves (owner 2026-11-20: on the laptop the whole surah
+  // did not split into tafsir + surah): the flowing text on one half, its tafsir on the other.
+  const flowTab = tab === "surah" || tab === "juz";
+  const flowDuo = flowTab && (sideTafsir || listenTafsir);
+  const pageTafsir = (tab === "mushaf" || flowTab) && (sideTafsir || listenTafsir);
   // Wide screens: an ayah's «تفسير الآية» opens beside the page too, so the page keeps its size
   // (owner 2026-11-18: in the bottom strip it left the page very small).
   const ayahSide = wide && tab === "mushaf" && !!selected && showTafsir && !pageTafsir;
@@ -574,20 +596,55 @@ export function PageReader({ locale, initial }: PageReaderProps) {
   }, [selected, tab]);
 
   // Page + tafsir: the chosen ayah (a tap on the page, «تفسير الآية») comes into view in the tafsir half.
-  const shownKey = focusKey ?? (duo ? selected : null);
+  /** The first ayah of the reader's page inside the shown surah / juz (where the flow view opens). */
+  const flowStartKey = (): string | null => {
+    const shown = document.querySelector<HTMLElement>("[data-surah], [data-juz]");
+    const inFlow = (k: string): boolean => !!shown?.querySelector(`[data-ayah="${k}"]`);
+    return (
+      pageAyahRefs(view)
+        .map(([s, a]) => `${s}:${a}`)
+        .find(inFlow) ?? null
+    );
+  };
+  const shownKey = focusKey ?? (duo || flowDuo ? selected : null);
   useEffect(() => {
-    if (!shownKey || !duo) return;
-    const box = document.querySelector<HTMLElement>(".rd-duo-tafsir");
-    const item = box?.querySelector<HTMLElement>(`[data-ayah="${shownKey}"]`);
-    if (!box || !item || box.scrollHeight <= box.clientHeight) return;
-    const y = item.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop;
-    box.scrollTo?.({ top: Math.max(0, y - 56), behavior: "smooth" });
-  }, [shownKey, duo]);
+    if (!shownKey || !(duo || flowDuo)) return;
+    const follow = (boxSel: string, gap: number): void => {
+      const box = document.querySelector<HTMLElement>(boxSel);
+      const item = box?.querySelector<HTMLElement>(`[data-ayah="${shownKey}"]`);
+      if (!box || !item || box.scrollHeight <= box.clientHeight) return;
+      const top = item.getBoundingClientRect().top - box.getBoundingClientRect().top;
+      // Already in view (e.g. the ayah just tapped in this half): leave this half where it is.
+      if (top >= gap && top < box.clientHeight - 60) return;
+      box.scrollTo?.({ top: Math.max(0, top + box.scrollTop - gap), behavior: "smooth" });
+    };
+    follow(".rd-duo-tafsir", 56);
+    if (flowDuo) follow(".rd-flow-pane", 40);
+  }, [shownKey, duo, flowDuo]);
+
+  // The whole surah / juz beside the tafsir: both halves open at the place being read (the page's first ayah).
+  useEffect(() => {
+    if (!flowDuo || !data) return;
+    const id = window.setTimeout(() => {
+      const at = selected ?? playingKey ?? flowStartKey();
+      if (!at) return;
+      for (const boxSel of [".rd-duo-tafsir", ".rd-flow-pane"]) {
+        const box = document.querySelector<HTMLElement>(boxSel);
+        const item = box?.querySelector<HTMLElement>(`[data-ayah="${at}"]`);
+        if (!box || !item || box.scrollHeight <= box.clientHeight) continue;
+        const y = item.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop;
+        box.scrollTo?.({ top: Math.max(0, y - 48) });
+      }
+    }, 60);
+    return () => window.clearTimeout(id);
+    // Only when the halves open or the surah / juz changes; later moves are followed by the effects below.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [flowDuo, data, tab, flowSurah, flowJuz]);
 
   // In the verse and tafsir lists, keep the recited ayah in view.
   useEffect(() => {
     if (!playingKey) return;
-    if (duo) {
+    if (duo || flowDuo) {
       // Scroll only inside each half (the tafsir, and the page on phones), never the whole page.
       const follow = (boxSel: string, gap: number): void => {
         const box = document.querySelector<HTMLElement>(boxSel);
@@ -597,14 +654,14 @@ export function PageReader({ locale, initial }: PageReaderProps) {
         box.scrollTo?.({ top: Math.max(0, y - gap), behavior: "smooth" });
       };
       follow(".rd-duo-tafsir", 56);
-      follow(".rd-duo .mushaf-stage", 40);
+      follow(flowDuo ? ".rd-flow-pane" : ".rd-duo .mushaf-stage", 40);
       return;
     }
     if (tab === "mushaf") return;
     document
       .querySelector<HTMLElement>(`.rd-list [data-ayah="${playingKey}"]`)
       ?.scrollIntoView?.({ block: "nearest", behavior: "smooth" });
-  }, [tab, playingKey, duo]);
+  }, [tab, playingKey, duo, flowDuo]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent): void => {
@@ -920,22 +977,40 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     player.play({ kind: "from", surah: s, ayah: a });
   };
   const flowShown = flowSurah ?? (sel ? sel[0] : (refs[0]?.[0] ?? 1));
+  const juzShown = flowJuz ?? (sel ? juzOfRef(sel) : juzForPage(page));
+  // The ayahs beside which the tafsir half is shown in the whole surah / juz views.
+  const flowRefs: Ref[] = flowTab
+    ? tab === "juz"
+      ? juzRefs(juzShown)
+      : Array.from({ length: surahMeta(flowShown)?.ayahCount ?? 0 }, (_, i): Ref => [flowShown, i + 1])
+    : [];
   /** A list page change starts the new page at its top. */
   const goToTop = (p: number): void => {
     goTo(p);
     window.scrollTo({ top: 0 });
   };
   const listSwipe = usePageSwipe(page, dir, goToTop);
+  /** Another surah / juz in the flow view starts at its top (its own half too, beside the tafsir). */
+  const flowToTop = (): void => {
+    document.querySelector<HTMLElement>(".rd-flow-pane")?.scrollTo?.({ top: 0 });
+    document.querySelector<HTMLElement>(".rd-duo-tafsir")?.scrollTo?.({ top: 0 });
+    window.scrollTo({ top: 0 });
+  };
   const onListSelect = ([s, a]: Ref): void =>
     setSelected((cur) => (cur === `${s}:${a}` ? null : `${s}:${a}`));
 
   return (
     <div
-      className={["mushaf-reader rd", fullScreen ? "rd-full" : "", duo ? "rd-duo" : ""]
+      className={[
+        "mushaf-reader rd",
+        fullScreen ? "rd-full" : "",
+        duo || flowDuo ? "rd-duo" : "",
+        flowDuo ? "rd-duo-flow" : "",
+      ]
         .filter(Boolean)
         .join(" ")}
       data-tab={tab}
-      data-split={duo ? "true" : "false"}
+      data-split={duo || flowDuo ? "true" : "false"}
       style={{ "--rd-fs": `${prefs.fontSize}px` } as CSSProperties}
     >
       <div className="rd-top">
@@ -963,7 +1038,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
           ))}
         </div>
         <div className="rd-tools">
-          {tab === "mushaf" ? (
+          {tab === "mushaf" || flowTab ? (
             <button
               type="button"
               className="rd-icon-btn rd-side-btn"
@@ -1048,14 +1123,29 @@ export function PageReader({ locale, initial }: PageReaderProps) {
         </span>
       </header>
 
-      {duo ? (
+      {duo || flowDuo ? (
         <aside
           className="rd-duo-tafsir"
-          aria-label={t(locale, "reader.tafsirOfPage", { page: localizeDigits(page, locale) })}
-          data-testid="duo-tafsir"
+          aria-label={
+            flowDuo
+              ? t(locale, tab === "juz" ? "reader.tafsirBesideJuz" : "reader.tafsirBesideSurah")
+              : t(locale, "reader.tafsirOfPage", { page: localizeDigits(page, locale) })
+          }
+          data-testid={flowDuo ? "flow-tafsir" : "duo-tafsir"}
         >
           <div className="rd-duo-head">
-            <strong>{t(locale, listenTafsir ? "reader.listenWithTafsir" : "reader.tafsirBeside")}</strong>
+            <strong>
+              {t(
+                locale,
+                listenTafsir
+                  ? "reader.listenWithTafsir"
+                  : flowDuo
+                    ? tab === "juz"
+                      ? "reader.tafsirBesideJuz"
+                      : "reader.tafsirBesideSurah"
+                    : "reader.tafsirBeside",
+              )}
+            </strong>
             <button
               type="button"
               className="btn btn-sm"
@@ -1065,7 +1155,18 @@ export function PageReader({ locale, initial }: PageReaderProps) {
               {t(locale, "reader.hideTafsir")}
             </button>
           </div>
-          {ayahSide && sel ? (
+          {flowDuo ? (
+            <PageTafsirList
+              locale={locale}
+              refs={flowRefs}
+              data={data}
+              selected={selected}
+              playing={playingKey}
+              onSelect={([s, a]) =>
+                listenTafsir ? player.play({ kind: "from", surah: s, ayah: a }) : setSelected(`${s}:${a}`)
+              }
+            />
+          ) : ayahSide && sel ? (
             <TafsirPanel locale={locale} surah={sel[0]} ayah={sel[1]} onStep={selectRef} />
           ) : (
             <PageTafsirList
@@ -1226,7 +1327,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
       ) : null}
 
       {tab === "surah" ? (
-        <section aria-label={t(locale, "reader.tabSurah")}>
+        <section className="rd-flow-pane" aria-label={t(locale, "reader.tabSurah")}>
           <SurahFlow
             key={flowShown}
             locale={locale}
@@ -1239,6 +1340,27 @@ export function PageReader({ locale, initial }: PageReaderProps) {
             onSurah={(n) => {
               goTo(pageForAyah(n, 1));
               setFlowSurah(n);
+              flowToTop();
+            }}
+          />
+        </section>
+      ) : null}
+      {tab === "juz" ? (
+        <section className="rd-flow-pane" aria-label={t(locale, "reader.tabJuz")}>
+          <JuzFlow
+            key={juzShown}
+            locale={locale}
+            juz={juzShown}
+            page={page}
+            data={data}
+            selected={selected}
+            playing={playingKey}
+            onSelect={onListSelect}
+            onJuz={(j) => {
+              const z = JUZ[j - 1];
+              if (z) goTo(z.page);
+              setFlowJuz(j);
+              flowToTop();
             }}
           />
         </section>
@@ -1616,7 +1738,12 @@ function PageSizeControl({
 }): ReactElement {
   const pct = `${localizeDigits(Math.round(scale * 100), locale)}${locale === "ar" ? "٪" : "%"}`;
   return (
-    <span className="rd-size" role="group" aria-label={t(locale, "reader.pageSize")} data-testid="reader-size">
+    <span
+      className="rd-size"
+      role="group"
+      aria-label={t(locale, "reader.pageSize")}
+      data-testid="reader-size"
+    >
       <button
         type="button"
         className="rd-size-btn"
