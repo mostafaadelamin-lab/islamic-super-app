@@ -12,6 +12,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ClientEffects } from "@/components/ClientEffects";
 import { UpdateBanner } from "@/components/UpdateBanner";
 import { AdhanAlerts } from "@/components/AdhanAlerts";
+import { DhikrReminderAlerts } from "@/components/DhikrReminders";
 import { PlayerBar } from "@/components/PlayerBar";
 import { FirstRunTour } from "@/components/FirstRunTour";
 import { withBase } from "@/lib/base-path";
@@ -80,6 +81,7 @@ export default async function LocaleLayout({
         <ClientEffects locale={locale} />
         <UpdateBanner locale={locale} />
         <AdhanAlerts locale={locale} />
+        <DhikrReminderAlerts locale={locale} />
         <FirstRunTour locale={locale} />
       </body>
     </html>

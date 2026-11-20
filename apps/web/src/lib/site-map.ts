@@ -43,7 +43,7 @@ export const SITE_GROUPS: readonly SiteGroup[] = [
     sub: "site.group.adhkarSub",
     icon: "dua",
     path: "adhkar",
-    items: ["adhkar", "hisn", "ruqyah", "tasbih", "asma"],
+    items: ["adhkar", "dhikr-reminders", "hisn", "ruqyah", "tasbih", "asma"],
   },
   {
     title: "site.group.library",
@@ -159,6 +159,14 @@ const EXTRA: Readonly<Record<string, Section & { page: string; hash: string }>> 
     title: "ruqyah.kidsTitle",
     sub: "kids.ruqyahSub",
     icon: "shield",
+  },
+  "dhikr-reminders": {
+    path: "dhikr-reminders",
+    page: "adhkar/reminders",
+    hash: "",
+    title: "dhikrRem.title",
+    sub: "dhikrRem.tileSub",
+    icon: "alarm",
   },
   adhan: {
     path: "adhan",

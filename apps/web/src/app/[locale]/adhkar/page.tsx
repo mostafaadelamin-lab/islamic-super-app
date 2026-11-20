@@ -25,6 +25,13 @@ export default async function AdhkarPage({ params }: { params: LocaleParams }) {
         <Link className="btn btn-sm" href={href(locale, "tasbih")}>
           {t(locale, "tasbih.title")}
         </Link>
+        <Link
+          className="btn btn-sm"
+          href={href(locale, "adhkar/reminders")}
+          data-testid="open-dhikr-reminders"
+        >
+          {t(locale, "dhikrRem.title")}
+        </Link>
       </p>
       <AdhkarHub locale={locale} />
       <h2 id="adhkar-sessions">{t(locale, "adhkar.morningEvening")}</h2>

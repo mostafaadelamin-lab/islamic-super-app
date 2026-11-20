@@ -14,6 +14,7 @@ import { videoHistoryStore } from "@/lib/videos";
 import { nasheedsSavedStore } from "@/lib/nasheeds";
 import { firstRunStore } from "@/lib/first-run";
 import { placeNameStore } from "@/lib/place-names";
+import { dhikrReminderStore } from "@/lib/dhikr-reminders";
 
 export function resetStores(): void {
   localStorage.clear();
@@ -25,6 +26,7 @@ export function resetStores(): void {
     prefsStore,
     accountStore,
     adhanStore,
+    dhikrReminderStore,
     khatmaStore,
     worshipStore,
     reelsPrefsStore,
