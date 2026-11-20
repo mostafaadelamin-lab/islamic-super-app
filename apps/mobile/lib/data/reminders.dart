@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' show Locale;
 import 'package:timezone/timezone.dart' as tz;
 
 import '../l10n/app_localizations.dart';
+import '../domain/dhikr_reminders.dart';
 import 'notifications.dart';
 
 /// Fixed notification ids of the repeating reminders (adhan ids are 9-10 digits).
@@ -11,13 +12,32 @@ abstract final class ReminderIds {
   static const adhkarMorning = 2002;
   static const adhkarEvening = 2003;
   static const friday = 2004;
-  static const all = [khatma, adhkarMorning, adhkarEvening, friday];
+
+  /// The dhikr reminders take dhikrBase .. dhikrBase + dhikrReminderMaxAndroid - 1.
+  static const dhikrBase = 3000;
+  static final all = [
+    khatma,
+    adhkarMorning,
+    adhkarEvening,
+    friday,
+    for (var i = 0; i < dhikrReminderMaxAndroid; i++) dhikrBase + i,
+  ];
 }
 
 /// One repeating reminder: every day at [minutes] after midnight, or weekly on [weekday] (1 = Monday).
 class ReminderSpec {
-  const ReminderSpec({required this.id, required this.title, required this.body, required this.minutes, this.weekday});
+  const ReminderSpec({
+    required this.id,
+    required this.title,
+    required this.body,
+    required this.minutes,
+    this.weekday,
+    this.sound,
+  });
   final int id;
+
+  /// A dhikr clip (res/raw / Runner .caf name) instead of the phone tone.
+  final String? sound;
   final String title;
   final String body;
   final int minutes;
@@ -47,6 +67,10 @@ class ReminderScheduler {
   /// Pending notifications the reminders take (one each: they repeat by themselves).
   int get activeCount => active().length;
 
+  /// The pending notifications the reminders take from the adhan's share: on Android the
+  /// dhikr reminders do not count (no small cap there), on iOS everything counts (64 in all).
+  int pendingFor({required bool ios}) => ios ? activeCount : active().where((r) => r.sound == null).length;
+
   /// Cancels every reminder id, then schedules the active ones.
   Future<void> sync() async {
     try {
@@ -74,6 +98,7 @@ class ReminderScheduler {
           location: loc,
           nowUtc: now,
           weekday: r.weekday,
+          sound: r.sound,
         );
       }
     } catch (e) {

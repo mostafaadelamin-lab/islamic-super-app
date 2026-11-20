@@ -1334,6 +1334,138 @@ abstract class AppLocalizations {
   /// **'Stop'**
   String get dhikrListenStop;
 
+  /// shared key "dhikrRem.cancel"
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get dhikrRemCancel;
+
+  /// shared key "dhikrRem.custom"
+  ///
+  /// In en, this message translates to:
+  /// **'Other…'**
+  String get dhikrRemCustom;
+
+  /// shared key "dhikrRem.customTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Every how many minutes?'**
+  String get dhikrRemCustomTitle;
+
+  /// shared key "dhikrRem.enable"
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me of dhikr through the day'**
+  String get dhikrRemEnable;
+
+  /// shared key "dhikrRem.enableHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Shows on the screen; when the phone is not on silent, Sheikh Mishary Alafasy says it'**
+  String get dhikrRemEnableHint;
+
+  /// shared key "dhikrRem.every"
+  ///
+  /// In en, this message translates to:
+  /// **'How often?'**
+  String get dhikrRemEvery;
+
+  /// shared key "dhikrRem.from"
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get dhikrRemFrom;
+
+  /// shared key "dhikrRem.hour"
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour'**
+  String get dhikrRemHour;
+
+  /// shared key "dhikrRem.hours"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} hours'**
+  String dhikrRemHours(String n);
+
+  /// shared key "dhikrRem.iosCap"
+  ///
+  /// In en, this message translates to:
+  /// **'iPhone allows a limited number of reminders, so they come every {n} minutes in this window'**
+  String dhikrRemIosCap(String n);
+
+  /// shared key "dhikrRem.listen"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen'**
+  String get dhikrRemListen;
+
+  /// shared key "dhikrRem.minutes"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min'**
+  String dhikrRemMinutes(String n);
+
+  /// shared key "dhikrRem.notifTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Dhikr'**
+  String get dhikrRemNotifTitle;
+
+  /// shared key "dhikrRem.ok"
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get dhikrRemOk;
+
+  /// shared key "dhikrRem.pick"
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the adhkar'**
+  String get dhikrRemPick;
+
+  /// shared key "dhikrRem.pickHint"
+  ///
+  /// In en, this message translates to:
+  /// **'(said in turn)'**
+  String get dhikrRemPickHint;
+
+  /// shared key "dhikrRem.pickOne"
+  ///
+  /// In en, this message translates to:
+  /// **'Choose at least one dhikr'**
+  String get dhikrRemPickOne;
+
+  /// shared key "dhikrRem.summary"
+  ///
+  /// In en, this message translates to:
+  /// **'{count} reminders a day'**
+  String dhikrRemSummary(String count);
+
+  /// shared key "dhikrRem.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Dhikr reminders'**
+  String get dhikrRemTitle;
+
+  /// shared key "dhikrRem.to"
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get dhikrRemTo;
+
+  /// shared key "dhikrRem.twoHours"
+  ///
+  /// In en, this message translates to:
+  /// **'2 hours'**
+  String get dhikrRemTwoHours;
+
+  /// shared key "dhikrRem.windowHint"
+  ///
+  /// In en, this message translates to:
+  /// **'No reminders while you sleep'**
+  String get dhikrRemWindowHint;
+
   /// shared key "downloads.cancel"
   ///
   /// In en, this message translates to:

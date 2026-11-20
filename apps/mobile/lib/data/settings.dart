@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/adhan_schedule.dart';
 import '../domain/adhan_voices.dart';
+import '../domain/dhikr_reminders.dart';
 import '../domain/hijri.dart';
 import '../domain/page_khatma.dart';
 import '../domain/prayer_schedule.dart';
@@ -491,6 +492,55 @@ class SettingsController extends ChangeNotifier {
     } else {
       await _prefs.setInt(key, minutes.clamp(0, 24 * 60 - 1));
     }
+    notifyListeners();
+  }
+
+  /// «تنبيهات الأذكار» (owner 2026-11-20): see domain/dhikr_reminders.dart.
+  bool get dhikrRemindersOn => _prefs.getBool('dhikrRem.on') ?? false;
+  Future<void> setDhikrRemindersOn(bool on) async {
+    await _prefs.setBool('dhikrRem.on', on);
+    notifyListeners();
+  }
+
+  /// Minutes between two reminders.
+  int get dhikrRemindersEvery =>
+      (_prefs.getInt('dhikrRem.every') ?? 30).clamp(dhikrReminderMinEvery, dhikrReminderMaxEvery);
+  Future<void> setDhikrRemindersEvery(int minutes) async {
+    await _prefs.setInt('dhikrRem.every', minutes.clamp(dhikrReminderMinEvery, dhikrReminderMaxEvery));
+    notifyListeners();
+  }
+
+  /// The daily window, in minutes after midnight (8:00 AM to 11:00 PM by default).
+  int get dhikrRemindersFrom => _prefs.getInt('dhikrRem.from') ?? 8 * 60;
+  int get dhikrRemindersTo => _prefs.getInt('dhikrRem.to') ?? 23 * 60;
+  Future<void> setDhikrRemindersWindow({int? from, int? to}) async {
+    if (from != null) await _prefs.setInt('dhikrRem.from', from.clamp(0, 24 * 60 - 1));
+    if (to != null) await _prefs.setInt('dhikrRem.to', to.clamp(0, 24 * 60 - 1));
+    notifyListeners();
+  }
+
+  /// The chosen adhkar, in the order they are said.
+  List<String> get dhikrReminderIds {
+    final saved = _prefs.getStringList('dhikrRem.ids');
+    if (saved == null) return defaultDhikrReminderIds;
+    return [
+      for (final id in saved)
+        if (findDhikrReminder(id) != null) id,
+    ];
+  }
+
+  Future<void> toggleDhikrReminder(String id) async {
+    final ids = dhikrReminderIds;
+    final next = ids.contains(id)
+        ? [
+            for (final x in ids)
+              if (x != id) x,
+          ]
+        : [
+            for (final d in dhikrReminderItems)
+              if (ids.contains(d.id) || d.id == id) d.id,
+          ];
+    await _prefs.setStringList('dhikrRem.ids', next);
     notifyListeners();
   }
 

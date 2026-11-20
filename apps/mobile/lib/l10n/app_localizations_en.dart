@@ -711,6 +711,81 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dhikrListenStop => 'Stop';
 
   @override
+  String get dhikrRemCancel => 'Cancel';
+
+  @override
+  String get dhikrRemCustom => 'Other…';
+
+  @override
+  String get dhikrRemCustomTitle => 'Every how many minutes?';
+
+  @override
+  String get dhikrRemEnable => 'Remind me of dhikr through the day';
+
+  @override
+  String get dhikrRemEnableHint =>
+      'Shows on the screen; when the phone is not on silent, Sheikh Mishary Alafasy says it';
+
+  @override
+  String get dhikrRemEvery => 'How often?';
+
+  @override
+  String get dhikrRemFrom => 'From';
+
+  @override
+  String get dhikrRemHour => '1 hour';
+
+  @override
+  String dhikrRemHours(String n) {
+    return '$n hours';
+  }
+
+  @override
+  String dhikrRemIosCap(String n) {
+    return 'iPhone allows a limited number of reminders, so they come every $n minutes in this window';
+  }
+
+  @override
+  String get dhikrRemListen => 'Listen';
+
+  @override
+  String dhikrRemMinutes(String n) {
+    return '$n min';
+  }
+
+  @override
+  String get dhikrRemNotifTitle => 'Dhikr';
+
+  @override
+  String get dhikrRemOk => 'OK';
+
+  @override
+  String get dhikrRemPick => 'Choose the adhkar';
+
+  @override
+  String get dhikrRemPickHint => '(said in turn)';
+
+  @override
+  String get dhikrRemPickOne => 'Choose at least one dhikr';
+
+  @override
+  String dhikrRemSummary(String count) {
+    return '$count reminders a day';
+  }
+
+  @override
+  String get dhikrRemTitle => 'Dhikr reminders';
+
+  @override
+  String get dhikrRemTo => 'To';
+
+  @override
+  String get dhikrRemTwoHours => '2 hours';
+
+  @override
+  String get dhikrRemWindowHint => 'No reminders while you sleep';
+
+  @override
   String get downloadsCancel => 'Stop download';
 
   @override

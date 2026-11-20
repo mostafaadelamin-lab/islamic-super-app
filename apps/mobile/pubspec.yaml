@@ -54,6 +54,7 @@ flutter:
     - assets/content/
     - assets/schemas/
     - assets/audio/
+    - assets/audio/dhikr/
     - assets/hadith/
     - assets/hadith/abudawud/
     - assets/hadith/ahmad/

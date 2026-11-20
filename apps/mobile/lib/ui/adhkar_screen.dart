@@ -8,6 +8,7 @@ import '../domain/adhkar.dart';
 import '../domain/nasheeds.dart';
 import '../theme/design_tokens.dart';
 import 'dhikr_audio.dart';
+import 'dhikr_reminders_screen.dart';
 import 'dhikr_hadith.dart';
 import 'dhikr_tools.dart';
 import 'drive_mode_screen.dart';
@@ -551,6 +552,19 @@ class AdhkarRemindersSheet extends StatelessWidget {
                     );
                   },
                 ),
+              // «تنبيهات الأذكار» (owner 2026-11-20): chosen adhkar every N minutes, said aloud.
+              ListTile(
+                key: const Key('openDhikrReminders'),
+                contentPadding: EdgeInsets.zero,
+                leading: const RIcon(RIcons.alarm),
+                title: Text(l.dhikrRemTitle),
+                subtitle: Text(l.dhikrRemEnable),
+                trailing: const RIcon(RIcons.chevronForward),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const DhikrRemindersScreen()));
+                },
+              ),
             ],
           ),
         ),

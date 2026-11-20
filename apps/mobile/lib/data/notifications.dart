@@ -42,6 +42,7 @@ abstract class NotificationsBackend {
     required tz.Location location,
     required DateTime nowUtc,
     int? weekday,
+    String? sound,
   });
 
   Future<void> cancel(int id);
@@ -230,6 +231,7 @@ class LocalNotificationsBackend implements NotificationsBackend {
     required tz.Location location,
     required DateTime nowUtc,
     int? weekday,
+    String? sound,
   }) async {
     await init();
     await _plugin.zonedSchedule(
@@ -237,10 +239,24 @@ class LocalNotificationsBackend implements NotificationsBackend {
       title: title,
       body: body,
       scheduledDate: nextOccurrence(hour: hour, minute: minute, location: location, nowUtc: nowUtc, weekday: weekday),
-      notificationDetails: const NotificationDetails(
-        android: _reminderAndroid,
-        iOS: DarwinNotificationDetails(presentAlert: true, presentSound: true),
-      ),
+      notificationDetails: sound == null
+          ? const NotificationDetails(
+              android: _reminderAndroid,
+              iOS: DarwinNotificationDetails(presentAlert: true, presentSound: true),
+            )
+          : NotificationDetails(
+              // One channel per dhikr: Android ties the sound to the channel. The system
+              // plays it only when the ringer is on, so a silent phone just shows the dhikr.
+              android: AndroidNotificationDetails(
+                'dhikr_$sound',
+                'تذكير بالذكر · Dhikr reminder',
+                channelDescription: 'The chosen dhikr, said aloud by Sheikh Mishary Alafasy',
+                importance: Importance.high,
+                priority: Priority.high,
+                sound: RawResourceAndroidNotificationSound(sound),
+              ),
+              iOS: DarwinNotificationDetails(presentAlert: true, presentSound: true, sound: '$sound.caf'),
+            ),
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       matchDateTimeComponents: weekday == null ? DateTimeComponents.time : DateTimeComponents.dayOfWeekAndTime,
     );

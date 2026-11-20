@@ -403,7 +403,7 @@ class FakeNotifications implements NotificationsBackend {
     String sound = 'adhan',
   }) async => scheduled.add((id: id, title: title, body: body, at: atUtc, sound: sound));
 
-  final repeating = <int, ({String title, String body, int hour, int minute, int? weekday})>{};
+  final repeating = <int, ({String title, String body, int hour, int minute, int? weekday, String? sound})>{};
 
   @override
   Future<void> scheduleRepeating({
@@ -415,7 +415,8 @@ class FakeNotifications implements NotificationsBackend {
     required tz.Location location,
     required DateTime nowUtc,
     int? weekday,
-  }) async => repeating[id] = (title: title, body: body, hour: hour, minute: minute, weekday: weekday);
+    String? sound,
+  }) async => repeating[id] = (title: title, body: body, hour: hour, minute: minute, weekday: weekday, sound: sound);
 
   @override
   Future<void> cancel(int id) async {

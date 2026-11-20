@@ -27,6 +27,7 @@ import 'data/media_session.dart';
 import 'data/notifications.dart';
 import 'data/recitation.dart';
 import 'data/reminders.dart';
+import 'domain/dhikr_reminders.dart';
 import 'data/reels_feed.dart';
 import 'data/sensors.dart';
 import 'data/settings.dart';
@@ -49,6 +50,7 @@ class AppServices {
     required this.recitation,
     required this.adhan,
     required this.adhanPreview,
+    required this.dhikrPreview,
     required this.adhanVoices,
     required this.adhkarAudio,
     required this.tasbih,
@@ -112,6 +114,28 @@ class AppServices {
       locale: () => settings.locale,
     );
     final khatma = KhatmaController(settings, localToday, onReminderChanged: reminders.sync);
+    reminders.addSource((l) {
+      if (!settings.dhikrRemindersOn) return const [];
+      final items = [for (final id in settings.dhikrReminderIds) ?findDhikrReminder(id)];
+      if (items.isEmpty) return const [];
+      final plan = planDhikrSlots(
+        from: settings.dhikrRemindersFrom,
+        to: settings.dhikrRemindersTo,
+        every: settings.dhikrRemindersEvery,
+        max: defaultTargetPlatform == TargetPlatform.iOS ? dhikrReminderMaxIos : dhikrReminderMaxAndroid,
+      );
+      return [
+        for (var i = 0; i < plan.slots.length; i++)
+          ReminderSpec(
+            id: ReminderIds.dhikrBase + i,
+            title: l.dhikrRemNotifTitle,
+            body: content.adhkar.items[items[i % items.length].index].text,
+            minutes: plan.slots[i],
+            sound: items[i % items.length].sound,
+          ),
+      ];
+    });
+
     reminders.addSource(khatma.reminders);
     reminders.addSource((l) {
       final m = settings.fridayReminder;
@@ -212,7 +236,7 @@ class AppServices {
         content: content,
         settings: settings,
         backend: backend,
-        reserved: () => reminders.activeCount,
+        reserved: () => reminders.pendingFor(ios: defaultTargetPlatform == TargetPlatform.iOS),
         afterReset: reminders.scheduleActive,
         clock: c,
         // Android has no small cap on pending alarms, so a month ahead keeps the
@@ -222,6 +246,10 @@ class AppServices {
         voices: adhanVoices,
       ),
       adhanPreview: AdhanPreview(adhanPlayer ?? JustAudioAdhanPlayer(), source: adhanVoices.playable),
+      dhikrPreview: AdhanPreview(
+        adhanPlayer ?? JustAudioAdhanPlayer(),
+        source: (id) async => findDhikrReminder(id)?.asset,
+      ),
       adhanVoices: adhanVoices,
       adhkarAudio: adhkarAudio,
       tasbih: TasbihController(settings),
@@ -264,6 +292,9 @@ class AppServices {
 
   /// In-app playback of the adhan recording (settings "listen" button).
   final AdhanPreview adhanPreview;
+
+  /// The "listen" buttons of the dhikr reminders screen (ids from domain/dhikr_reminders.dart).
+  final AdhanPreview dhikrPreview;
 
   /// The muezzin collection and the recordings downloaded from it.
   final AdhanVoiceFiles adhanVoices;

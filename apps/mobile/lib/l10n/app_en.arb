@@ -1011,6 +1011,114 @@
   "@dhikrListenStop": {
     "description": "shared key \"dhikr.listenStop\""
   },
+  "dhikrRemCancel": "Cancel",
+  "@dhikrRemCancel": {
+    "description": "shared key \"dhikrRem.cancel\""
+  },
+  "dhikrRemCustom": "Other…",
+  "@dhikrRemCustom": {
+    "description": "shared key \"dhikrRem.custom\""
+  },
+  "dhikrRemCustomTitle": "Every how many minutes?",
+  "@dhikrRemCustomTitle": {
+    "description": "shared key \"dhikrRem.customTitle\""
+  },
+  "dhikrRemEnable": "Remind me of dhikr through the day",
+  "@dhikrRemEnable": {
+    "description": "shared key \"dhikrRem.enable\""
+  },
+  "dhikrRemEnableHint": "Shows on the screen; when the phone is not on silent, Sheikh Mishary Alafasy says it",
+  "@dhikrRemEnableHint": {
+    "description": "shared key \"dhikrRem.enableHint\""
+  },
+  "dhikrRemEvery": "How often?",
+  "@dhikrRemEvery": {
+    "description": "shared key \"dhikrRem.every\""
+  },
+  "dhikrRemFrom": "From",
+  "@dhikrRemFrom": {
+    "description": "shared key \"dhikrRem.from\""
+  },
+  "dhikrRemHour": "1 hour",
+  "@dhikrRemHour": {
+    "description": "shared key \"dhikrRem.hour\""
+  },
+  "dhikrRemHours": "{n} hours",
+  "@dhikrRemHours": {
+    "description": "shared key \"dhikrRem.hours\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "dhikrRemIosCap": "iPhone allows a limited number of reminders, so they come every {n} minutes in this window",
+  "@dhikrRemIosCap": {
+    "description": "shared key \"dhikrRem.iosCap\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "dhikrRemListen": "Listen",
+  "@dhikrRemListen": {
+    "description": "shared key \"dhikrRem.listen\""
+  },
+  "dhikrRemMinutes": "{n} min",
+  "@dhikrRemMinutes": {
+    "description": "shared key \"dhikrRem.minutes\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "dhikrRemNotifTitle": "Dhikr",
+  "@dhikrRemNotifTitle": {
+    "description": "shared key \"dhikrRem.notifTitle\""
+  },
+  "dhikrRemOk": "OK",
+  "@dhikrRemOk": {
+    "description": "shared key \"dhikrRem.ok\""
+  },
+  "dhikrRemPick": "Choose the adhkar",
+  "@dhikrRemPick": {
+    "description": "shared key \"dhikrRem.pick\""
+  },
+  "dhikrRemPickHint": "(said in turn)",
+  "@dhikrRemPickHint": {
+    "description": "shared key \"dhikrRem.pickHint\""
+  },
+  "dhikrRemPickOne": "Choose at least one dhikr",
+  "@dhikrRemPickOne": {
+    "description": "shared key \"dhikrRem.pickOne\""
+  },
+  "dhikrRemSummary": "{count} reminders a day",
+  "@dhikrRemSummary": {
+    "description": "shared key \"dhikrRem.summary\"",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dhikrRemTitle": "Dhikr reminders",
+  "@dhikrRemTitle": {
+    "description": "shared key \"dhikrRem.title\""
+  },
+  "dhikrRemTo": "To",
+  "@dhikrRemTo": {
+    "description": "shared key \"dhikrRem.to\""
+  },
+  "dhikrRemTwoHours": "2 hours",
+  "@dhikrRemTwoHours": {
+    "description": "shared key \"dhikrRem.twoHours\""
+  },
+  "dhikrRemWindowHint": "No reminders while you sleep",
+  "@dhikrRemWindowHint": {
+    "description": "shared key \"dhikrRem.windowHint\""
+  },
   "downloadsCancel": "Stop download",
   "@downloadsCancel": {
     "description": "shared key \"downloads.cancel\""

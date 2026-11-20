@@ -707,6 +707,80 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dhikrListenStop => 'إيقاف الصوت';
 
   @override
+  String get dhikrRemCancel => 'إلغاء';
+
+  @override
+  String get dhikrRemCustom => 'وقت تاني…';
+
+  @override
+  String get dhikrRemCustomTitle => 'كل كام دقيقة؟';
+
+  @override
+  String get dhikrRemEnable => 'تذكير بالذكر طول اليوم';
+
+  @override
+  String get dhikrRemEnableHint => 'يظهر على الشاشة، ولو الموبايل مش صامت يتقال بصوت الشيخ مشاري العفاسي';
+
+  @override
+  String get dhikrRemEvery => 'كل قد إيه؟';
+
+  @override
+  String get dhikrRemFrom => 'من';
+
+  @override
+  String get dhikrRemHour => 'ساعة';
+
+  @override
+  String dhikrRemHours(String n) {
+    return '$n ساعات';
+  }
+
+  @override
+  String dhikrRemIosCap(String n) {
+    return 'آيفون بيسمح بعدد محدود من التنبيهات، فهتيجي كل $n دقيقة في الفترة دي';
+  }
+
+  @override
+  String get dhikrRemListen => 'استمع';
+
+  @override
+  String dhikrRemMinutes(String n) {
+    return '$n دقيقة';
+  }
+
+  @override
+  String get dhikrRemNotifTitle => 'ذكر';
+
+  @override
+  String get dhikrRemOk => 'تم';
+
+  @override
+  String get dhikrRemPick => 'اختار الأذكار';
+
+  @override
+  String get dhikrRemPickHint => '(تتقال بالدور)';
+
+  @override
+  String get dhikrRemPickOne => 'اختار ذكر واحد على الأقل';
+
+  @override
+  String dhikrRemSummary(String count) {
+    return '$count تذكير في اليوم';
+  }
+
+  @override
+  String get dhikrRemTitle => 'تنبيهات الأذكار';
+
+  @override
+  String get dhikrRemTo => 'إلى';
+
+  @override
+  String get dhikrRemTwoHours => 'ساعتين';
+
+  @override
+  String get dhikrRemWindowHint => 'مفيش تنبيهات وقت النوم';
+
+  @override
   String get downloadsCancel => 'إيقاف التحميل';
 
   @override
