@@ -146,6 +146,7 @@
   "audio.play": "تشغيل",
   "audio.pause": "إيقاف مؤقت",
   "audio.stop": "إيقاف",
+  "audio.close": "إغلاق المشغّل",
   "audio.next": "الآية التالية",
   "audio.prev": "الآية السابقة",
   "audio.reciter": "القارئ",

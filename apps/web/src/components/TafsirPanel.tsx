@@ -65,7 +65,14 @@ export function resetTafsirChoiceForTests(): void {
 async function loadBody(tab: StudyTab, book: TafsirBookId, s: number, a: number): Promise<Body> {
   if (tab === "tafsir") {
     const sec = await loadBookSection(book, s, a);
-    return { kind: "text", text: sec.text, notes: sec.notes, from: sec.from, to: sec.to, quotes: book !== "muyassar" };
+    return {
+      kind: "text",
+      text: sec.text,
+      notes: sec.notes,
+      from: sec.from,
+      to: sec.to,
+      quotes: book !== "muyassar",
+    };
   }
   if (tab === "gharib") {
     const words = meaningsEntry(await loadMeaningsSurah(s), s, a);
@@ -110,7 +117,14 @@ export interface TafsirPanelProps {
  * The tafsir of one ayah (al-Muyassar by default, or another book the reader picks) and the ayah's studies
  * (gharib, i'rab, sarf, balagha, fawa'id), each shown verbatim, with previous/next ayah buttons.
  */
-export function TafsirPanel({ locale, surah, ayah, onStep, showNav = true, showChoices = true }: TafsirPanelProps) {
+export function TafsirPanel({
+  locale,
+  surah,
+  ayah,
+  onStep,
+  showNav = true,
+  showChoices = true,
+}: TafsirPanelProps) {
   const [own, setOwn] = useState<Ref>([surah, ayah]);
   const [retry, setRetry] = useState(0);
   const headingId = useId();
@@ -158,7 +172,14 @@ export function TafsirPanel({ locale, surah, ayah, onStep, showNav = true, showC
   const source = sourceByTab[tab] ?? t(locale, "study.irabBook");
 
   return (
-    <section className="tafsir" aria-labelledby={headingId} data-testid="tafsir" data-ayah={`${s}:${a}`} data-book={book} data-tab={tab}>
+    <section
+      className="tafsir"
+      aria-labelledby={headingId}
+      data-testid="tafsir"
+      data-ayah={`${s}:${a}`}
+      data-book={book}
+      data-tab={tab}
+    >
       {showChoices ? (
         <div className="study-tabs" role="tablist" aria-label={t(locale, "study.tabs")}>
           {STUDY_TABS.map((id) => (
@@ -197,7 +218,8 @@ export function TafsirPanel({ locale, surah, ayah, onStep, showNav = true, showC
           {title}
           {locale === "ar" ? null : (
             <span lang="ar" dir="rtl">
-              {" "}({titleAr})
+              {" "}
+              ({titleAr})
             </span>
           )}
         </h2>
@@ -219,22 +241,41 @@ export function TafsirPanel({ locale, surah, ayah, onStep, showNav = true, showC
         {shown.status === "error" ? (
           <div className="alert alert-error" role="alert" data-testid="tafsir-error">
             <p>{t(locale, shown.offline ? "tafsir.offline" : "tafsir.error")}</p>
-            <button type="button" className="btn btn-sm" data-testid="tafsir-retry" onClick={() => setRetry((r) => r + 1)}>
+            <button
+              type="button"
+              className="btn btn-sm"
+              data-testid="tafsir-retry"
+              onClick={() => setRetry((r) => r + 1)}
+            >
               {t(locale, "tafsir.retry")}
             </button>
           </div>
         ) : null}
-        {shown.status === "ready" ? <StudyBody locale={locale} body={shown.body} surah={s} ayah={a} tab={tab} /> : null}
+        {shown.status === "ready" ? (
+          <StudyBody locale={locale} body={shown.body} surah={s} ayah={a} tab={tab} />
+        ) : null}
       </div>
       <p className="tafsir-source muted small" data-testid="tafsir-source">
         {source}
       </p>
       {showNav ? (
         <div className="tafsir-nav">
-          <button type="button" className="btn btn-sm" data-testid="tafsir-prev" disabled={!stepRef(s, a, -1)} onClick={() => move(-1)}>
+          <button
+            type="button"
+            className="btn btn-sm"
+            data-testid="tafsir-prev"
+            disabled={!stepRef(s, a, -1)}
+            onClick={() => move(-1)}
+          >
             <Icon name={locale === "ar" ? "next" : "prev"} size={16} /> {t(locale, "tafsir.prev")}
           </button>
-          <button type="button" className="btn btn-sm" data-testid="tafsir-next" disabled={!stepRef(s, a, 1)} onClick={() => move(1)}>
+          <button
+            type="button"
+            className="btn btn-sm"
+            data-testid="tafsir-next"
+            disabled={!stepRef(s, a, 1)}
+            onClick={() => move(1)}
+          >
             {t(locale, "tafsir.next")} <Icon name={locale === "ar" ? "prev" : "next"} size={16} />
           </button>
         </div>
@@ -243,7 +284,19 @@ export function TafsirPanel({ locale, surah, ayah, onStep, showNav = true, showC
   );
 }
 
-function StudyBody({ locale, body, surah, ayah, tab }: { locale: Locale; body: Body; surah: number; ayah: number; tab: StudyTab }) {
+function StudyBody({
+  locale,
+  body,
+  surah,
+  ayah,
+  tab,
+}: {
+  locale: Locale;
+  body: Body;
+  surah: number;
+  ayah: number;
+  tab: StudyTab;
+}) {
   if (body.kind === "empty") {
     return (
       <p className="muted" data-testid="study-empty">

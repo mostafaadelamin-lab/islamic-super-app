@@ -776,6 +776,10 @@
   "@audioBasmala": {
     "description": "shared key \"audio.basmala\""
   },
+  "audioClose": "Close player",
+  "@audioClose": {
+    "description": "shared key \"audio.close\""
+  },
   "audioLoading": "Loading…",
   "@audioLoading": {
     "description": "shared key \"audio.loading\""

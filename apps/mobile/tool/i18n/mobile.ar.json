@@ -90,6 +90,7 @@
   "audio.repeatN": "{n}×",
   "audio.play": "تشغيل",
   "audio.pause": "إيقاف مؤقت",
+  "audio.close": "إغلاق المشغّل",
   "audio.stop": "إيقاف",
   "audio.next": "الآية التالية",
   "audio.previous": "الآية السابقة",

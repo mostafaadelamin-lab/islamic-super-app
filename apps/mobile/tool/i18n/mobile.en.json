@@ -90,6 +90,7 @@
   "audio.repeatN": "{n}×",
   "audio.play": "Play",
   "audio.pause": "Pause",
+  "audio.close": "Close player",
   "audio.stop": "Stop",
   "audio.next": "Next ayah",
   "audio.previous": "Previous ayah",

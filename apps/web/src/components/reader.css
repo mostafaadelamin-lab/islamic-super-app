@@ -1445,6 +1445,12 @@ body:has(.rd-full) .player,
   color: var(--color-on-primary, #fff);
   cursor: pointer;
 }
+.rdp-mini-x {
+  margin-inline-start: auto;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-line);
+}
 .rdp-mini-now {
   min-width: 0;
   overflow: hidden;

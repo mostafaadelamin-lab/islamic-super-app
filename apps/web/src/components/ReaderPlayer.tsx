@@ -1,5 +1,11 @@
 "use client";
-import { useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type KeyboardEvent as ReactKeyboardEvent,
+} from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import { surahName } from "@/lib/pages";
@@ -158,7 +164,8 @@ export function ReaderPlayer({ locale, page }: { locale: Locale; page: number })
           <button
             type="button"
             className="rdp-btn rdp-stop"
-            aria-label={t(locale, "audio.stop")}
+            aria-label={t(locale, "audio.close")}
+            title={t(locale, "audio.close")}
             data-testid="player-stop"
             onClick={() => player.stop()}
           >
@@ -223,6 +230,18 @@ export function ReaderPlayerMini({ locale, page }: { locale: Locale; page: numbe
       <span className="rdp-mini-now" data-testid="mini-now">
         {now}
       </span>
+      {active ? (
+        <button
+          type="button"
+          className="rdp-mini-play rdp-mini-x"
+          aria-label={t(locale, "audio.close")}
+          title={t(locale, "audio.close")}
+          data-testid="mini-close"
+          onClick={() => player.stop()}
+        >
+          <Icon name="close" size={16} />
+        </button>
+      ) : null}
     </section>
   );
 }

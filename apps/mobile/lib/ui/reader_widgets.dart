@@ -1039,6 +1039,16 @@ class ReaderPlayerMini extends StatelessWidget {
                 style: TextStyle(color: error ? scheme.error : scheme.onSurface),
               ),
             ),
+            // The ✕ (owner 2026-11-20): every player can be closed.
+            if (active)
+              IconButton(
+                key: const Key('miniStripClose'),
+                tooltip: l.audioClose,
+                iconSize: 18,
+                visualDensity: VisualDensity.compact,
+                onPressed: () => unawaited(rec.stop()),
+                icon: const RIcon(RIcons.close, size: 18),
+              ),
           ],
         );
       },

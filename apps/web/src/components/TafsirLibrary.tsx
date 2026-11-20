@@ -64,14 +64,24 @@ export function TafsirLibrary({ locale }: { locale: Locale }) {
   return (
     <div className="tafsir-lib" data-testid="tafsir-lib" data-view={place.view}>
       {place.view === "home" ? null : (
-        <button type="button" className="btn btn-sm tafsir-lib-back" data-testid="tafsir-lib-back" onClick={() => go({ view: "home" })}>
+        <button
+          type="button"
+          className="btn btn-sm tafsir-lib-back"
+          data-testid="tafsir-lib-back"
+          onClick={() => go({ view: "home" })}
+        >
           <Icon name={locale === "ar" ? "next" : "prev"} size={16} /> {t(locale, "tafsirLib.books")}
         </button>
       )}
       {place.view === "home" ? <Home locale={locale} go={go} /> : null}
       {place.view === "read" ? (
         <>
-          <AyahPicker locale={locale} surah={place.surah} ayah={place.ayah} onChange={(surah, ayah) => go({ surah, ayah })} />
+          <AyahPicker
+            locale={locale}
+            surah={place.surah}
+            ayah={place.ayah}
+            onChange={(surah, ayah) => go({ surah, ayah })}
+          />
           <TafsirPanel
             locale={locale}
             surah={place.surah}
@@ -83,12 +93,27 @@ export function TafsirLibrary({ locale }: { locale: Locale }) {
       {place.view === "compare" ? (
         <>
           <h2>{t(locale, "tafsirLib.compare")}</h2>
-          <AyahPicker locale={locale} surah={place.surah} ayah={place.ayah} onChange={(surah, ayah) => go({ surah, ayah })} />
-          <Compare locale={locale} surah={place.surah} ayah={place.ayah} onRead={(book) => go({ view: "read", book })} />
+          <AyahPicker
+            locale={locale}
+            surah={place.surah}
+            ayah={place.ayah}
+            onChange={(surah, ayah) => go({ surah, ayah })}
+          />
+          <Compare
+            locale={locale}
+            surah={place.surah}
+            ayah={place.ayah}
+            onRead={(book) => go({ view: "read", book })}
+          />
         </>
       ) : null}
       {place.view === "search" ? (
-        <Search locale={locale} book={place.book} onBook={(book) => go({ book })} onOpen={(h) => go({ view: "read", surah: h.surah, ayah: h.from })} />
+        <Search
+          locale={locale}
+          book={place.book}
+          onBook={(book) => go({ book })}
+          onOpen={(h) => go({ view: "read", surah: h.surah, ayah: h.from })}
+        />
       ) : null}
     </div>
   );
@@ -98,14 +123,24 @@ function Home({ locale, go }: { locale: Locale; go: (p: Partial<Place>) => void 
   return (
     <>
       <div className="tafsir-lib-tools">
-        <button type="button" className="tafsir-lib-tool" data-testid="tafsir-lib-compare" onClick={() => go({ view: "compare" })}>
+        <button
+          type="button"
+          className="tafsir-lib-tool"
+          data-testid="tafsir-lib-compare"
+          onClick={() => go({ view: "compare" })}
+        >
           <Icon name="book" size={22} />
           <span>
             <b>{t(locale, "tafsirLib.compare")}</b>
             <small>{t(locale, "tafsirLib.compareSub")}</small>
           </span>
         </button>
-        <button type="button" className="tafsir-lib-tool" data-testid="tafsir-lib-search" onClick={() => go({ view: "search" })}>
+        <button
+          type="button"
+          className="tafsir-lib-tool"
+          data-testid="tafsir-lib-search"
+          onClick={() => go({ view: "search" })}
+        >
           <Icon name="search" size={22} />
           <span>
             <b>{t(locale, "tafsirLib.search")}</b>
@@ -117,7 +152,12 @@ function Home({ locale, go }: { locale: Locale; go: (p: Partial<Place>) => void 
       <ul className="tafsir-lib-books">
         {TAFSIR_BOOKS.map((b) => (
           <li key={b.id}>
-            <button type="button" className="tafsir-lib-book" data-testid={`tafsir-lib-book-${b.id}`} onClick={() => go({ view: "read", book: b.id })}>
+            <button
+              type="button"
+              className="tafsir-lib-book"
+              data-testid={`tafsir-lib-book-${b.id}`}
+              onClick={() => go({ view: "read", book: b.id })}
+            >
               <b lang="ar">{b.nameAr}</b>
               <small lang="ar">{b.authorAr}</small>
               <span className="tafsir-lib-tag">{t(locale, `tafsirLib.len.${b.length}`)}</span>
@@ -125,10 +165,15 @@ function Home({ locale, go }: { locale: Locale; go: (p: Partial<Place>) => void 
           </li>
         ))}
         <li>
-          <button type="button" className="tafsir-lib-book" data-testid="tafsir-lib-book-irab" onClick={() => {
+          <button
+            type="button"
+            className="tafsir-lib-book"
+            data-testid="tafsir-lib-book-irab"
+            onClick={() => {
               go({ view: "read" });
               setTafsirChoice({ tab: "irab" });
-            }}>
+            }}
+          >
             <b lang="ar">{t("ar", "tafsirLib.irabName")}</b>
             <small>{t(locale, "tafsirLib.irabSub")}</small>
             <span className="tafsir-lib-tag">{t(locale, "study.irab")}</span>
@@ -165,7 +210,11 @@ export function AyahPicker({
       </label>
       <label>
         <span>{t(locale, "tafsirLib.ayah")}</span>
-        <select data-testid="pick-ayah" value={ayah} onChange={(e) => onChange(surah, Number(e.target.value))}>
+        <select
+          data-testid="pick-ayah"
+          value={ayah}
+          onChange={(e) => onChange(surah, Number(e.target.value))}
+        >
           {Array.from({ length: count }, (_, i) => (
             <option key={i + 1} value={i + 1}>
               {localizeDigits(i + 1, locale)}
@@ -179,17 +228,46 @@ export function AyahPicker({
 
 type Loaded = { status: "loading" } | { status: "ready"; sec: SectionView } | { status: "error" };
 
-function Compare({ locale, surah, ayah, onRead }: { locale: Locale; surah: number; ayah: number; onRead: (b: TafsirBookId) => void }) {
+function Compare({
+  locale,
+  surah,
+  ayah,
+  onRead,
+}: {
+  locale: Locale;
+  surah: number;
+  ayah: number;
+  onRead: (b: TafsirBookId) => void;
+}) {
   return (
     <div className="tafsir-compare" data-testid="tafsir-compare">
       {TAFSIR_BOOKS.map((b) => (
-        <CompareCard key={`${b.id}/${surah}:${ayah}`} locale={locale} book={b.id} surah={surah} ayah={ayah} onRead={() => onRead(b.id)} />
+        <CompareCard
+          key={`${b.id}/${surah}:${ayah}`}
+          locale={locale}
+          book={b.id}
+          surah={surah}
+          ayah={ayah}
+          onRead={() => onRead(b.id)}
+        />
       ))}
     </div>
   );
 }
 
-function CompareCard({ locale, book, surah, ayah, onRead }: { locale: Locale; book: TafsirBookId; surah: number; ayah: number; onRead: () => void }) {
+function CompareCard({
+  locale,
+  book,
+  surah,
+  ayah,
+  onRead,
+}: {
+  locale: Locale;
+  book: TafsirBookId;
+  surah: number;
+  ayah: number;
+  onRead: () => void;
+}) {
   const [state, setState] = useState<Loaded>({ status: "loading" });
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -218,10 +296,18 @@ function CompareCard({ locale, book, surah, ayah, onRead }: { locale: Locale; bo
       {state.status === "error" ? <p className="muted">{t(locale, "tafsir.error")}</p> : null}
       {state.status === "ready" ? (
         <>
-          <BookText text={open || !long ? state.sec.text : `${state.sec.text.slice(0, COMPARE_PREVIEW)} …`} quotes={book !== "muyassar"} />
+          <BookText
+            text={open || !long ? state.sec.text : `${state.sec.text.slice(0, COMPARE_PREVIEW)} …`}
+            quotes={book !== "muyassar"}
+          />
           <div className="tafsir-compare-actions">
             {long ? (
-              <button type="button" className="btn btn-sm" data-testid={`compare-more-${book}`} onClick={() => setOpen((o) => !o)}>
+              <button
+                type="button"
+                className="btn btn-sm"
+                data-testid={`compare-more-${book}`}
+                onClick={() => setOpen((o) => !o)}
+              >
                 {t(locale, open ? "tafsirLib.less" : "tafsirLib.more")}
               </button>
             ) : null}
@@ -320,9 +406,17 @@ function Search({
           <ul className="tafsir-search-hits">
             {state.hits.map((h) => (
               <li key={`${h.surah}:${h.from}`}>
-                <button type="button" className="tafsir-search-hit" data-testid="tafsir-search-hit" onClick={() => onOpen(h)}>
+                <button
+                  type="button"
+                  className="tafsir-search-hit"
+                  data-testid="tafsir-search-hit"
+                  onClick={() => onOpen(h)}
+                >
                   <span className="tafsir-search-ref">
-                    {t(locale, "quran.ayahRef", { surah: surahName(h.surah, locale), ayah: localizeDigits(h.from, locale) })}
+                    {t(locale, "quran.ayahRef", {
+                      surah: surahName(h.surah, locale),
+                      ayah: localizeDigits(h.from, locale),
+                    })}
                   </span>
                   <span className="tafsir-search-snippet" lang="ar" dir="rtl">
                     {h.before}

@@ -1788,6 +1788,29 @@ input[type="radio"] {
   box-shadow: 0 -4px 18px rgb(0 0 0 / 12%);
   padding: var(--space-sm) var(--space-md);
 }
+/* the ✕ that closes the player (owner 2026-11-20), in the top corner */
+.player-corner-x {
+  position: absolute;
+  top: 4px;
+  inset-inline-end: 6px;
+  z-index: 1;
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  min-height: 36px;
+}
+.player:has(.player-corner-x) .player-row:first-of-type {
+  padding-inline-end: 42px;
+}
+.player-x {
+  flex: none;
+}
+.series-now-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
 body:has(.player) {
   --player-h: 120px;
 }

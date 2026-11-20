@@ -55,6 +55,18 @@ void main() {
     expect(rec.isActive, isTrue);
   });
 
+  testWidgets('the slid-down row has a ✕ that closes the player (owner 2026-11-20)', (tester) async {
+    await open(tester, prefs: const {'reader.playerMin': true});
+    final rec = tester.element(find.byType(PageReaderScreen)).services.recitation;
+    expect(find.byKey(const Key('miniStripClose')), findsNothing);
+    await tester.tap(find.byKey(const Key('miniStripPlay')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('miniStripClose')));
+    await tester.pumpAndSettle();
+    expect(rec.isActive, isFalse);
+    expect(find.byKey(const Key('miniStripClose')), findsNothing);
+  });
+
   testWidgets('held sideways: the handle works there too', (tester) async {
     await open(tester, size: const Size(956, 440));
     await tester.tap(find.byKey(const Key('playerHandle')));

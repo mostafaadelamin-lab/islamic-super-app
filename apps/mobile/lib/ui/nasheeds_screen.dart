@@ -123,8 +123,8 @@ class NasheedInlinePlayer extends StatelessWidget {
               const SleepTimerButton(),
               IconButton(
                 key: const Key('nasheedStop'),
-                tooltip: l.storiesStop,
-                icon: const RIcon(RIcons.stop),
+                tooltip: l.audioClose,
+                icon: const RIcon(RIcons.close),
                 onPressed: n.stop,
               ),
             ],

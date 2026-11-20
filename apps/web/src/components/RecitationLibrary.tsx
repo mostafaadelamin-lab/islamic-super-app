@@ -18,6 +18,7 @@ import {
 import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { LIVE_RADIOS, isHls } from "@/lib/live-radios";
 import { Icon } from "./Icon";
+import { PlayerClose } from "./PlayerClose";
 import { ShabibView } from "./ShabibView";
 import { SleepTimer } from "./SleepTimer";
 import { SaveAudioButton } from "./SaveAudioButton";
@@ -59,11 +60,14 @@ export function NowPlaying({
   locale,
   track,
   onTrack,
+  onClose,
   slot = null,
 }: {
   locale: Locale;
   track: Track;
   onTrack: (t: Track) => void;
+  /** The ✕: stops and hides the player. */
+  onClose?: () => void;
   slot?: HTMLElement | null;
 }) {
   const ref = useRef<HTMLAudioElement>(null);
@@ -188,6 +192,17 @@ export function NowPlaying({
           </>
         ) : track.live ? (
           <span className="small muted">{t(locale, "library.live")}</span>
+        ) : null}
+        {onClose ? (
+          <PlayerClose
+            locale={locale}
+            testId="library-close"
+            className="btn-sm"
+            onClose={() => {
+              ref.current?.pause();
+              onClose();
+            }}
+          />
         ) : null}
       </div>
       {error ? (
@@ -416,7 +431,15 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
   );
   return (
     <>
-      {track ? <NowPlaying locale={locale} track={track} onTrack={setTrack} slot={slot} /> : null}
+      {track ? (
+        <NowPlaying
+          locale={locale}
+          track={track}
+          onTrack={setTrack}
+          onClose={() => setTrack(null)}
+          slot={slot}
+        />
+      ) : null}
       {shabibOpen ? (
         <section className="card" data-testid="library-shabib" aria-labelledby="library-shabib-h">
           <p>

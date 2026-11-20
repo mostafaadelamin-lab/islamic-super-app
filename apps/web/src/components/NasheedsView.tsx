@@ -16,6 +16,7 @@ import {
 import { useStore } from "@/hooks/useStore";
 import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { Icon } from "./Icon";
+import { PlayerClose } from "./PlayerClose";
 import { SleepTimer } from "./SleepTimer";
 
 interface Playing {
@@ -41,12 +42,14 @@ function NowPlaying({
   progress,
   onPrev,
   onNext,
+  onClose,
 }: {
   locale: Locale;
   audio: RefObject<HTMLAudioElement | null>;
   progress: Progress;
   onPrev: (() => void) | null;
   onNext: (() => void) | null;
+  onClose: () => void;
 }) {
   const toggle = (): void => {
     const el = audio.current;
@@ -104,6 +107,7 @@ function NowPlaying({
           }}
         />
         <span className="small nasheed-time">{clock(progress.duration, locale)}</span>
+        <PlayerClose locale={locale} testId="nasheeds-close" className="btn-sm" onClose={onClose} />
       </div>
       <SleepTimer locale={locale} />
     </div>
@@ -199,6 +203,10 @@ export function NasheedsView({
       progress={progress}
       onPrev={prev ? () => setCurrent(prev) : null}
       onNext={next ? () => setCurrent(next) : null}
+      onClose={() => {
+        audioRef.current?.pause();
+        setCurrent(null);
+      }}
     />
   ) : null;
 

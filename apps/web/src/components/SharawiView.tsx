@@ -105,7 +105,15 @@ export function SharawiView({
       <p className="muted" data-testid="sharawi-note">
         {t(locale, "sharawi.note", { n: n(total) })}
       </p>
-      {track ? <NowPlaying locale={locale} track={track} onTrack={setTrack} slot={slot} /> : null}
+      {track ? (
+        <NowPlaying
+          locale={locale}
+          track={track}
+          onTrack={setTrack}
+          onClose={() => setTrack(null)}
+          slot={slot}
+        />
+      ) : null}
       <input
         type="search"
         className="input"

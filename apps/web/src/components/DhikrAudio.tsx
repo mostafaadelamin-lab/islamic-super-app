@@ -155,9 +155,10 @@ export function DhikrPlayerBar({ locale }: { locale: Locale }) {
         className="btn btn-sm"
         onClick={() => dhikrPlayer.stop()}
         data-testid="dhikr-player-stop"
-        aria-label={t(locale, "dhikr.stop")}
+        aria-label={t(locale, "audio.close")}
+        title={t(locale, "audio.close")}
       >
-        <Icon name="stop" size={18} />
+        <Icon name="close" size={18} />
       </button>
     </div>
   );

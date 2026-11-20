@@ -25,7 +25,8 @@ export function OfflineStatus({ locale }: { locale: Locale }) {
   let text: string;
   if (!supported || !s.supported) text = t(locale, "settings.offlineUnsupported");
   else if (s.complete) text = t(locale, "settings.offlineComplete");
-  else if (s.total > 0 && !s.saved) text = t(locale, "settings.offlineAsk", { mb: localizeDigits(s.mb, locale) });
+  else if (s.total > 0 && !s.saved)
+    text = t(locale, "settings.offlineAsk", { mb: localizeDigits(s.mb, locale) });
   else if (s.total > 0)
     text = t(locale, "settings.offlineProgress", {
       done: localizeDigits(s.done, locale),

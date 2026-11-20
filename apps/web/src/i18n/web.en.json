@@ -146,6 +146,7 @@
   "audio.play": "Play",
   "audio.pause": "Pause",
   "audio.stop": "Stop",
+  "audio.close": "Close player",
   "audio.next": "Next ayah",
   "audio.prev": "Previous ayah",
   "audio.reciter": "Reciter",

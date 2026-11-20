@@ -539,6 +539,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get audioBasmala => 'Basmala';
 
   @override
+  String get audioClose => 'Close player';
+
+  @override
   String get audioLoading => 'Loading…';
 
   @override

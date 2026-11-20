@@ -10,6 +10,7 @@ import { audioStore, RECITERS, REPEAT_CHOICES, SPEED_CHOICES } from "@/lib/audio
 import { player } from "@/lib/audio-player";
 import { useStore } from "@/hooks/useStore";
 import { Icon } from "./Icon";
+import { PlayerClose } from "./PlayerClose";
 
 const ERROR_KEYS = { offline: "audio.errOffline", network: "audio.errNetwork", blocked: "audio.errBlocked" };
 
@@ -46,6 +47,12 @@ export function PlayerBar({ locale }: { locale: Locale }) {
   const playing = ps.status === "playing" || ps.status === "loading";
   return (
     <section ref={barRef} className="player" aria-label={t(locale, "audio.player")} data-testid="player">
+      <PlayerClose
+        locale={locale}
+        onClose={() => player.stop()}
+        testId="player-stop"
+        className="player-corner-x"
+      />
       <div className="player-row">
         <div className="player-now">
           {item ? (
@@ -94,15 +101,6 @@ export function PlayerBar({ locale }: { locale: Locale }) {
             onClick={() => player.step(1)}
           >
             <Icon name={locale === "ar" ? "prev" : "next"} />
-          </button>
-          <button
-            type="button"
-            className="btn btn-icon"
-            aria-label={t(locale, "audio.stop")}
-            data-testid="player-stop"
-            onClick={() => player.stop()}
-          >
-            <Icon name="stop" />
           </button>
         </div>
       </div>

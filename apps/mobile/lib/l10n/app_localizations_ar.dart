@@ -536,6 +536,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get audioBasmala => 'البسملة';
 
   @override
+  String get audioClose => 'إغلاق المشغّل';
+
+  @override
   String get audioLoading => 'جارٍ التحميل…';
 
   @override

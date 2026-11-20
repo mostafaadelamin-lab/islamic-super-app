@@ -77,7 +77,15 @@ export function HajjServices({ locale, tawafHref }: { locale: Locale; tawafHref:
             );
           })}
         </ul>
-        {track ? <NowPlaying locale={locale} track={track} onTrack={setTrack} slot={slot} /> : null}
+        {track ? (
+          <NowPlaying
+            locale={locale}
+            track={track}
+            onTrack={setTrack}
+            onClose={() => setTrack(null)}
+            slot={slot}
+          />
+        ) : null}
       </section>
       <ul className="tiles" data-testid="hajj-links">
         {(

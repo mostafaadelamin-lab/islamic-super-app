@@ -9,6 +9,7 @@ import { embedVideoUrl } from "@/lib/videos";
 import { pauseOthers } from "@/lib/audio-focus";
 import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { Icon } from "./Icon";
+import { PlayerClose } from "./PlayerClose";
 import { SleepTimer } from "./SleepTimer";
 import { SaveAudioButton } from "./SaveAudioButton";
 import { storySavedStore } from "@/lib/audio-offline";
@@ -80,9 +81,20 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
           </p>
           {current ? (
             <div className="series-now" data-testid="series-now">
-              <strong>
-                {t(locale, "stories.nowPlaying")}: {L(current.title)}
-              </strong>
+              <div className="series-now-head">
+                <strong>
+                  {t(locale, "stories.nowPlaying")}: {L(current.title)}
+                </strong>
+                <PlayerClose
+                  locale={locale}
+                  testId="series-close"
+                  className="btn-sm"
+                  onClose={() => {
+                    audioRef.current?.pause();
+                    setCurrent(null);
+                  }}
+                />
+              </div>
               <audio
                 ref={audioRef}
                 src={current.url}

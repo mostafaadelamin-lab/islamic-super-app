@@ -8,6 +8,7 @@ import { surahName } from "@/lib/pages";
 import { KIDS, type KidsEpisode, type KidsSeries } from "@/lib/kids";
 import { readStars } from "@/lib/teacher";
 import { Icon, type IconName } from "./Icon";
+import { PlayerClose } from "./PlayerClose";
 
 const SECONDS_PER_MINUTE = 60;
 const BYTES_PER_MB = 1e6;
@@ -72,6 +73,14 @@ function EpisodeRow({
         />
       ) : null}
       {listening ? <audio controls autoPlay preload="none" src={ep.url} style={{ width: "100%" }} /> : null}
+      {watching || listening ? (
+        <PlayerClose
+          locale={locale}
+          testId={`kids-close-${ep.id}`}
+          className="btn-sm"
+          onClose={() => setOpen(null)}
+        />
+      ) : null}
     </li>
   );
 }

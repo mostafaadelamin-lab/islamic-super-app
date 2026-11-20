@@ -1004,6 +1004,12 @@ abstract class AppLocalizations {
   /// **'Basmala'**
   String get audioBasmala;
 
+  /// shared key "audio.close"
+  ///
+  /// In en, this message translates to:
+  /// **'Close player'**
+  String get audioClose;
+
   /// shared key "audio.loading"
   ///
   /// In en, this message translates to:
