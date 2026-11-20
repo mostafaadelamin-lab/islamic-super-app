@@ -5444,3 +5444,132 @@ a.episode {
   font-weight: 600;
   margin: 0;
 }
+
+/* Ruqyah (owner 2026-11-20): the verses flow as one Mushaf paragraph, not one ayah per row. */
+.ruqyah-flow {
+  margin: 0;
+  text-align: justify;
+  text-align-last: center;
+  line-height: 2.1;
+}
+.ruqyah-ayah[data-playing="true"] {
+  background: var(--hl-playing);
+  border-radius: var(--radius-sm);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* «المصحف المعلّم» for children (owner 2026-11-20): big Mushaf text, the word being read lights up. */
+.kids-mushaf-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+}
+.kids-round {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+.kids-mushaf-hint {
+  margin: var(--space-xs) 0 var(--space-sm);
+}
+.kids-page {
+  padding: 18px 16px 26px;
+}
+.kids-surah-band {
+  font-family: var(--font-quran);
+  text-align: center;
+  font-size: 1.35rem;
+  color: var(--color-paper-ink);
+  border: 2px solid color-mix(in srgb, var(--color-frame) 70%, transparent);
+  border-radius: 999px;
+  padding: 2px 18px;
+  margin: 0 auto 10px;
+  width: fit-content;
+  background: color-mix(in srgb, var(--color-frame) 14%, var(--color-paper));
+}
+.kids-basmala {
+  text-align: center;
+  font-size: calc(var(--k-size, 34px) * 0.85);
+  color: var(--color-paper-ink);
+  margin: 0 0 6px;
+}
+.kids-text {
+  font-size: var(--k-size, 34px);
+  line-height: 2.15;
+  color: var(--color-paper-ink);
+  text-align: justify;
+  text-align-last: center;
+  margin: 0;
+}
+.k-ayah[data-on="true"] {
+  background: var(--hl-playing);
+  border-radius: 10px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.k-word,
+.k-num {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0 0.04em;
+  margin: 0;
+  cursor: pointer;
+  border-radius: 10px;
+  transition:
+    background-color 0.15s,
+    transform 0.15s;
+}
+.k-word[data-on="true"] {
+  background: var(--hl-selected);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-frame) 55%, transparent);
+  transform: scale(1.08);
+}
+.k-num:hover,
+.k-word:hover {
+  background: color-mix(in srgb, var(--hl-selected) 55%, transparent);
+}
+.kids-cheer {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: var(--space-md) 0 0;
+}
+.kids-stars {
+  text-align: center;
+  margin: var(--space-sm) 0;
+}
+.kids-bar {
+  position: sticky;
+  bottom: calc(var(--space-sm) + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+  align-items: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  padding: 8px 12px;
+  box-shadow: var(--shadow-md);
+  margin-top: var(--space-md);
+  z-index: 5;
+}
+.kids-play {
+  min-height: 48px;
+  border-radius: 999px;
+  padding-inline: 22px;
+  font-size: 1.05rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .k-word[data-on="true"] {
+    transform: none;
+  }
+}

@@ -96,23 +96,24 @@ export function RuqyahView({
                     {renderQuranText(p.basmala)}
                   </p>
                 ) : null}
-                {p.ayahs.map((text, k) => {
-                  const a = p.from + k;
-                  const key = `${p.s}:${a}`;
-                  return (
-                    <article
-                      className="ayah"
-                      key={key}
-                      data-ref={key}
-                      data-playing={key === playingKey ? "true" : undefined}
-                    >
-                      <p className="quran" lang="ar" dir="rtl" style={{ margin: 0 }}>
+                {/* One flowing Mushaf paragraph, ayah after ayah (owner 2026-11-20: not one ayah per row). */}
+                <p className="quran ruqyah-flow" lang="ar" dir="rtl" data-testid={`ruqyah-flow-${p.s}-${p.from}`}>
+                  {p.ayahs.map((text, k) => {
+                    const a = p.from + k;
+                    const key = `${p.s}:${a}`;
+                    return (
+                      <span
+                        className="ruqyah-ayah"
+                        key={key}
+                        data-ref={key}
+                        data-playing={key === playingKey ? "true" : undefined}
+                      >
                         {renderQuranText(text)}
-                        <AyahMarker n={a} locale={locale} />
-                      </p>
-                    </article>
-                  );
-                })}
+                        <AyahMarker n={a} locale={locale} />{" "}
+                      </span>
+                    );
+                  })}
+                </p>
               </div>
             </section>
           );

@@ -1,22 +1,17 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
 import { surahName } from "@/lib/pages";
-import { player } from "@/lib/audio-player";
 import { KIDS, type KidsEpisode, type KidsSeries } from "@/lib/kids";
+import { readStars } from "@/lib/teacher";
 import { Icon, type IconName } from "./Icon";
 
 const SECONDS_PER_MINUTE = 60;
 const BYTES_PER_MB = 1e6;
 const VIDEO_RADIUS_PX = 8;
-
-const TEACHER_LABEL: Record<string, string> = {
-  Minshawy_Teacher_128kbps: "kids.teacherMinshawy",
-  Husary_Muallim_128kbps: "kids.teacherHusary",
-};
 
 /** One episode: watch (video in place), listen (sound only) or save the file. */
 function EpisodeRow({
@@ -114,47 +109,32 @@ function SeriesBlock({
   );
 }
 
-/** «المصحف المعلّم»: the sheikh reads each ayah and the children repeat it (whole surah through the site player). */
+/** «المصحف المعلّم»: each surah opens the interactive kids' Mushaf (owner 2026-11-20), with the stars earned so far. */
 function Teacher({ locale }: { locale: Locale }) {
-  const [reciter, setReciter] = useState(KIDS.teacher.reciters[0]);
-  const ps = useSyncExternalStore(player.subscribe, player.get, player.getServer);
-  const cur = ps.status === "idle" ? null : ps.queue[ps.cursor.index];
-  const playingSurah = cur && cur.kind === "ayah" && player.reciterOverride() === reciter ? cur.s : null;
+  const [stars, setStars] = useState<Record<string, number>>({});
+  useEffect(() => setStars(readStars()), []);
   const n = (v: number): string => localizeDigits(v, locale);
   return (
     <>
       <p className="muted">{t(locale, "kids.teacherNote")}</p>
-      <div className="row" role="group" style={{ flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
-        {KIDS.teacher.reciters.map((r) => (
-          <button
-            key={r}
-            type="button"
-            className={`btn btn-sm${r === reciter ? " btn-primary" : ""}`}
-            aria-pressed={r === reciter}
-            data-testid={`kids-teacher-${r}`}
-            onClick={() => setReciter(r)}
-          >
-            {t(locale, TEACHER_LABEL[r] ?? r)}
-          </button>
-        ))}
-      </div>
       <ul className="tiles tiles-sm" data-testid="kids-teacher-surahs">
         {KIDS.teacher.surahs.map((s) => (
           <li key={s}>
-            <button
-              type="button"
+            <Link
               className="tile tile-sm"
-              aria-pressed={playingSurah === s}
+              href={href(locale, `kids/teacher/${s}`)}
               data-testid={`kids-teacher-surah-${s}`}
-              onClick={() => player.play({ kind: "surah", surah: s }, { reciter })}
               style={{ width: "100%" }}
             >
               <span className="tile-icon">{n(s)}</span>
               <span className="tile-text">
                 <strong>{surahName(s, locale)}</strong>
+                {stars[String(s)] ? (
+                  <span className="muted small">⭐ {n(stars[String(s)] ?? 0)}</span>
+                ) : null}
               </span>
-              <Icon name={playingSurah === s ? "headphones" : "play"} />
-            </button>
+              <Icon name="quran" />
+            </Link>
           </li>
         ))}
       </ul>
