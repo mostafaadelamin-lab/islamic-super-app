@@ -15,6 +15,7 @@ import 'l10n_ext.dart';
 import 'library_screen.dart' show OfflineButton;
 import 'play_origin.dart';
 import 'r_icon.dart';
+import 'kids_mushaf_screen.dart';
 import 'ruqyah_screen.dart';
 import 'stories_screen.dart' show NarrationBar;
 import 'widgets.dart';
@@ -410,8 +411,8 @@ class _VideoControls extends StatelessWidget {
   );
 }
 
-/// "المصحف المعلّم للأطفال": Juz 'Amma and al-Fatiha, read by a teaching reciter (the sheikh
-/// reads each ayah, children repeat), without changing the reciter chosen in the settings.
+/// "المصحف المعلّم للأطفال": Juz 'Amma and al-Fatiha. Each surah opens the interactive kids' Mushaf
+/// ([KidsMushafScreen], owner 2026-11-20), with the stars earned so far.
 class TeacherMushafScreen extends StatefulWidget {
   const TeacherMushafScreen({super.key, required this.content});
   final KidsContent content;
@@ -421,7 +422,18 @@ class TeacherMushafScreen extends StatefulWidget {
 }
 
 class _TeacherMushafScreenState extends State<TeacherMushafScreen> {
-  late String _reciter = widget.content.teacherReciters.first;
+  Map<String, int> _stars = const {};
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited(_load());
+  }
+
+  Future<void> _load() async {
+    final st = await readTeacherStars();
+    if (mounted) setState(() => _stars = st);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -429,79 +441,45 @@ class _TeacherMushafScreenState extends State<TeacherMushafScreen> {
     final l = context.l10n;
     final q = s.content.quran;
     final theme = Theme.of(context);
-    String label(String folder) => folder.startsWith('Minshawy') ? l.kidsTeacherMinshawy : l.kidsTeacherHusary;
     return Scaffold(
       appBar: AppBar(title: Text(l.kidsTeacher)),
-      bottomNavigationBar: const MiniPlayer(),
       body: ReadableWidth(
-        child: ListenableBuilder(
-          listenable: s.recitation,
-          builder: (context, _) {
-            final r = s.recitation;
-            final cur = r.current;
-            return ListView(
-              key: const Key('teacherList'),
-              padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(DesignTokens.spaceLg),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(l.kidsTeacherNote, style: theme.textTheme.bodyMedium),
-                      const SizedBox(height: DesignTokens.spaceMd),
-                      SegmentedButton<String>(
-                        key: const Key('teacherReciter'),
-                        showSelectedIcon: false,
-                        segments: [
-                          for (final f in widget.content.teacherReciters)
-                            ButtonSegment(
-                              value: f,
-                              label: Text(label(f), textAlign: TextAlign.center),
-                            ),
-                        ],
-                        selected: {_reciter},
-                        onSelectionChanged: (v) => setState(() => _reciter = v.single),
+        child: ListView(
+          key: const Key('teacherList'),
+          padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(DesignTokens.spaceLg),
+              child: Text(l.kidsTeacherNote, style: theme.textTheme.bodyMedium),
+            ),
+            for (final n in widget.content.teacherSurahs)
+              Card(
+                key: Key('teacher.$n'),
+                margin: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
+                child: ListTile(
+                  leading: CircleAvatar(child: Text(context.num(n))),
+                  title: Text(
+                    'سورة ${q.surah(n).nameAr}',
+                    style: const TextStyle(fontFamily: DesignTokens.fontQuran, fontSize: 20),
+                  ),
+                  subtitle: Text(
+                    [
+                      l.storiesAyahs(context.num(q.surah(n).ayahCount)),
+                      if ((_stars['$n'] ?? 0) > 0) '⭐ ${context.num(_stars['$n']!)}',
+                    ].join(' · '),
+                  ),
+                  trailing: const RIcon(RIcons.openBook, size: 28),
+                  onTap: () async {
+                    await Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => KidsMushafScreen(surah: n, reciters: widget.content.teacherReciters),
                       ),
-                    ],
-                  ),
+                    );
+                    await _load();
+                  },
                 ),
-                for (final n in widget.content.teacherSurahs)
-                  Builder(
-                    builder: (context) {
-                      final on = cur != null && cur.ref.surah == n && r.reciterOverride == _reciter;
-                      final playing = on && r.isPlaying;
-                      return Card(
-                        key: Key('teacher.$n'),
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: DesignTokens.spaceLg,
-                          vertical: DesignTokens.spaceXs,
-                        ),
-                        child: ListTile(
-                          selected: on,
-                          leading: CircleAvatar(child: Text(context.num(n))),
-                          title: Text(
-                            'سورة ${q.surah(n).nameAr}',
-                            style: const TextStyle(fontFamily: DesignTokens.fontQuran, fontSize: 20),
-                          ),
-                          subtitle: Text(l.storiesAyahs(context.num(q.surah(n).ayahCount))),
-                          trailing: RIcon(playing ? RIcons.pauseCircle : RIcons.playCircle, size: 30),
-                          onTap: () {
-                            if (playing) {
-                              r.pause();
-                            } else if (on) {
-                              r.resume();
-                            } else {
-                              r.playSurah(n, reciter: _reciter);
-                            }
-                          },
-                        ),
-                      );
-                    },
-                  ),
-              ],
-            );
-          },
+              ),
+          ],
         ),
       ),
     );

@@ -121,8 +121,10 @@ None of these source names are shown in the app or on the site (owner's rule). R
 | Kids ruqyah | islamqa.info fatwa 104454 (Bukhari 3371, 5748, Tirmidhi 2058); dua = Hisn al-Muslim «ما يعوذ به الأولاد» (`content/adhkar/hisn.json` 49:0) with its existing recording | then al-Ikhlas, al-Falaq, an-Nas |
 | Prophets' stories (25 cartoon episodes) | archive.org item `5-2_20210816` | ~250 MB each; streamed, listened or downloaded; owner should watch them |
 | Stories of the Prophet ﷺ for kids (Sheikh Mahmoud al-Masri, 17 episodes) | archive.org items `qsas-elrasoul-ramdan2019-ep*` | streamed / downloaded |
+| Episode titles of «قصص الرسول ﷺ للأطفال» (2026-11-20) | 7, 8, 12–17: Al-Rahma TV programme page alrahma.tv/programs/64 (the broadcaster); 10, 11: archive.org item titles; 1–6, 9: the story the sheikh names at the start of each episode | titles only, no text of ours |
 | Short educational comics (13) | archive.org item `ramadan-stories-videos-ar` | hadith content in the comics not checked |
 | Teaching Mushaf | everyayah.com `Minshawy_Teacher_128kbps` (children repeat) and `Husary_Muallim_128kbps` | per-ayah, surahs 1 and 78–114 |
+| Interactive teaching Mushaf (2026-11-20) | Quran.com API `api/qdc/audio/reciters/{12,168}/audio_files?chapter=S&segments=true` (ayah + word timings), surah files on download.quranicaudio.com/qdc (Husary Muallim, Minshawi kids_repeat); tap-a-word audio audio.qurancdn.com/wbw/SSS_AAA_WWW.mp3; built by `tools/kids_teacher_timings.py` into `content/kids/dist/teacher-timings.v1.json` | streamed; word positions match KFGQPC v18 words except the «۞» token (mapped); one missing ayah bound (Minshawi 101:3) filled from its neighbours |
 | Printed Mushaf look | King Fahd Complex QCF v2 page fonts (static.qurancdn.com `fonts/quran/hafs/v2/{ttf,woff2}/p{page}`) with the per-word `code_v2` / `line_number` of api.quran.com v4 (`content/quran/printed/pages.json.gz`); `tools/mushaf_printed_build.py` | fonts downloaded per page on first view (or all at once in settings); every one of the 604 pages starts at the same ayah as the 1441H layout |
 
 ## Tafsir books, i'rab and word meanings (listed here 2026-11-20)

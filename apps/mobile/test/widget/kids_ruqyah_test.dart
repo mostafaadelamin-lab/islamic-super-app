@@ -49,7 +49,7 @@ void main() {
     await pushScreen(tester, RuqyahScreen(loader: () async => data));
     expect(find.byKey(const Key('ruqyah')), findsOneWidget);
     expect(find.byKey(const Key('ruqyah.full')), findsOneWidget);
-    expect(find.byKey(const Key('ruqyahVerse-1-1')), findsOneWidget);
+    expect(find.byKey(const Key('ruqyahFlow-1-1')), findsOneWidget);
     await tester.tap(find.byKey(const Key('ruqyah.play')));
     await tester.pump();
     expect(app.services.recitation.currentRef, const AyahRef(1, 1));
@@ -61,11 +61,11 @@ void main() {
     await pushScreen(tester, RuqyahScreen(kids: true, loader: () async => data));
     expect(find.byKey(const Key('ruqyahKids')), findsOneWidget);
     expect(find.byKey(const Key('ruqyah.item.0')), findsOneWidget);
-    await tester.scrollUntilVisible(find.byKey(const Key('ruqyahVerse-114-6')), 300);
-    expect(find.byKey(const Key('ruqyahVerse-114-6')), findsOneWidget);
+    await tester.scrollUntilVisible(find.byKey(const Key('ruqyahFlow-114-1')), 300);
+    expect(find.byKey(const Key('ruqyahFlow-114-1')), findsOneWidget);
   });
 
-  testWidgets('kids hub: prophets, teaching Mushaf (plays with the teacher reciter), stories, ruqyah', (tester) async {
+  testWidgets('kids hub: prophets, teaching Mushaf (opens the kids Mushaf), stories, ruqyah', (tester) async {
     final app = await pumpApp(tester, size: tallPhone);
     final data = _kids();
     await pushScreen(tester, KidsScreen(loader: () async => data));
@@ -84,9 +84,9 @@ void main() {
       scrollable: find.descendant(of: find.byKey(const Key('teacherList')), matching: find.byType(Scrollable)),
     );
     await tester.tap(find.byKey(const Key('teacher.112')));
-    await tester.pump();
-    expect(app.services.recitation.reciterOverride, 'Minshawy_Teacher_128kbps');
-    expect(app.services.recitation.currentRef?.surah, 112);
+    await tester.pumpAndSettle();
+    // owner 2026-11-20: a surah opens the interactive kids' Mushaf
+    expect(find.byKey(const Key('kidsMushaf.text')), findsOneWidget);
   });
 
   test('printed Mushaf look is the default; the old look only when chosen (owner 2026-11-20)', () async {

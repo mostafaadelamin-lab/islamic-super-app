@@ -1578,17 +1578,65 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kidsTeacher => 'Teaching Mushaf for kids';
 
   @override
+  String kidsTeacherAyah(String n) {
+    return 'Ayah $n';
+  }
+
+  @override
+  String get kidsTeacherBigger => 'Bigger text';
+
+  @override
+  String get kidsTeacherHint => 'Tap any word to hear it, or an ayah number to hear that ayah alone.';
+
+  @override
   String get kidsTeacherHusary => 'Al-Husary (teaching)';
 
   @override
   String get kidsTeacherMinshawy => 'Al-Minshawy with children';
 
   @override
+  String get kidsTeacherNext => 'Next ayah';
+
+  @override
   String get kidsTeacherNote =>
-      'Pick a surah: the sheikh reads each ayah and children repeat it, so your child learns the correct reading.';
+      'Pick a surah to open the Mushaf: the sheikh reads, the word lights up, and your child repeats after him.';
+
+  @override
+  String get kidsTeacherOpen => 'Open the Mushaf';
+
+  @override
+  String get kidsTeacherPause => 'Pause';
+
+  @override
+  String get kidsTeacherPlay => 'Listen to the surah';
+
+  @override
+  String get kidsTeacherPrev => 'Previous ayah';
+
+  @override
+  String get kidsTeacherRepeat => 'Repeat the ayah 3 times';
+
+  @override
+  String get kidsTeacherSmaller => 'Smaller text';
+
+  @override
+  String kidsTeacherStars(String n) {
+    return 'Your stars in this surah: $n';
+  }
 
   @override
   String get kidsTeacherSub => 'The sheikh reads, children repeat after him';
+
+  @override
+  String kidsTeacherSurah(String name) {
+    return 'Surah $name';
+  }
+
+  @override
+  String get kidsTeacherWell => 'Well done! You finished the surah and earned a star';
+
+  @override
+  String get kidsTeacherWord => 'Word';
 
   @override
   String get kidsTitle => 'Kids';

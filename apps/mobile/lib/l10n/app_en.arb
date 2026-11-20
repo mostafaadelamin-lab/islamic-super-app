@@ -2314,6 +2314,23 @@
   "@kidsTeacher": {
     "description": "shared key \"kids.teacher\""
   },
+  "kidsTeacherAyah": "Ayah {n}",
+  "@kidsTeacherAyah": {
+    "description": "shared key \"kids.teacherAyah\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "kidsTeacherBigger": "Bigger text",
+  "@kidsTeacherBigger": {
+    "description": "shared key \"kids.teacherBigger\""
+  },
+  "kidsTeacherHint": "Tap any word to hear it, or an ayah number to hear that ayah alone.",
+  "@kidsTeacherHint": {
+    "description": "shared key \"kids.teacherHint\""
+  },
   "kidsTeacherHusary": "Al-Husary (teaching)",
   "@kidsTeacherHusary": {
     "description": "shared key \"kids.teacherHusary\""
@@ -2322,13 +2339,67 @@
   "@kidsTeacherMinshawy": {
     "description": "shared key \"kids.teacherMinshawy\""
   },
-  "kidsTeacherNote": "Pick a surah: the sheikh reads each ayah and children repeat it, so your child learns the correct reading.",
+  "kidsTeacherNext": "Next ayah",
+  "@kidsTeacherNext": {
+    "description": "shared key \"kids.teacherNext\""
+  },
+  "kidsTeacherNote": "Pick a surah to open the Mushaf: the sheikh reads, the word lights up, and your child repeats after him.",
   "@kidsTeacherNote": {
     "description": "shared key \"kids.teacherNote\""
+  },
+  "kidsTeacherOpen": "Open the Mushaf",
+  "@kidsTeacherOpen": {
+    "description": "shared key \"kids.teacherOpen\""
+  },
+  "kidsTeacherPause": "Pause",
+  "@kidsTeacherPause": {
+    "description": "shared key \"kids.teacherPause\""
+  },
+  "kidsTeacherPlay": "Listen to the surah",
+  "@kidsTeacherPlay": {
+    "description": "shared key \"kids.teacherPlay\""
+  },
+  "kidsTeacherPrev": "Previous ayah",
+  "@kidsTeacherPrev": {
+    "description": "shared key \"kids.teacherPrev\""
+  },
+  "kidsTeacherRepeat": "Repeat the ayah 3 times",
+  "@kidsTeacherRepeat": {
+    "description": "shared key \"kids.teacherRepeat\""
+  },
+  "kidsTeacherSmaller": "Smaller text",
+  "@kidsTeacherSmaller": {
+    "description": "shared key \"kids.teacherSmaller\""
+  },
+  "kidsTeacherStars": "Your stars in this surah: {n}",
+  "@kidsTeacherStars": {
+    "description": "shared key \"kids.teacherStars\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
   },
   "kidsTeacherSub": "The sheikh reads, children repeat after him",
   "@kidsTeacherSub": {
     "description": "shared key \"kids.teacherSub\""
+  },
+  "kidsTeacherSurah": "Surah {name}",
+  "@kidsTeacherSurah": {
+    "description": "shared key \"kids.teacherSurah\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "kidsTeacherWell": "Well done! You finished the surah and earned a star",
+  "@kidsTeacherWell": {
+    "description": "shared key \"kids.teacherWell\""
+  },
+  "kidsTeacherWord": "Word",
+  "@kidsTeacherWord": {
+    "description": "shared key \"kids.teacherWord\""
   },
   "kidsTitle": "Kids",
   "@kidsTitle": {

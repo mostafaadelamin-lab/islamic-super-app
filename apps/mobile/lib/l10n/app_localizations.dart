@@ -2864,6 +2864,24 @@ abstract class AppLocalizations {
   /// **'Teaching Mushaf for kids'**
   String get kidsTeacher;
 
+  /// shared key "kids.teacherAyah"
+  ///
+  /// In en, this message translates to:
+  /// **'Ayah {n}'**
+  String kidsTeacherAyah(String n);
+
+  /// shared key "kids.teacherBigger"
+  ///
+  /// In en, this message translates to:
+  /// **'Bigger text'**
+  String get kidsTeacherBigger;
+
+  /// shared key "kids.teacherHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap any word to hear it, or an ayah number to hear that ayah alone.'**
+  String get kidsTeacherHint;
+
   /// shared key "kids.teacherHusary"
   ///
   /// In en, this message translates to:
@@ -2876,17 +2894,83 @@ abstract class AppLocalizations {
   /// **'Al-Minshawy with children'**
   String get kidsTeacherMinshawy;
 
+  /// shared key "kids.teacherNext"
+  ///
+  /// In en, this message translates to:
+  /// **'Next ayah'**
+  String get kidsTeacherNext;
+
   /// shared key "kids.teacherNote"
   ///
   /// In en, this message translates to:
-  /// **'Pick a surah: the sheikh reads each ayah and children repeat it, so your child learns the correct reading.'**
+  /// **'Pick a surah to open the Mushaf: the sheikh reads, the word lights up, and your child repeats after him.'**
   String get kidsTeacherNote;
+
+  /// shared key "kids.teacherOpen"
+  ///
+  /// In en, this message translates to:
+  /// **'Open the Mushaf'**
+  String get kidsTeacherOpen;
+
+  /// shared key "kids.teacherPause"
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get kidsTeacherPause;
+
+  /// shared key "kids.teacherPlay"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to the surah'**
+  String get kidsTeacherPlay;
+
+  /// shared key "kids.teacherPrev"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous ayah'**
+  String get kidsTeacherPrev;
+
+  /// shared key "kids.teacherRepeat"
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat the ayah 3 times'**
+  String get kidsTeacherRepeat;
+
+  /// shared key "kids.teacherSmaller"
+  ///
+  /// In en, this message translates to:
+  /// **'Smaller text'**
+  String get kidsTeacherSmaller;
+
+  /// shared key "kids.teacherStars"
+  ///
+  /// In en, this message translates to:
+  /// **'Your stars in this surah: {n}'**
+  String kidsTeacherStars(String n);
 
   /// shared key "kids.teacherSub"
   ///
   /// In en, this message translates to:
   /// **'The sheikh reads, children repeat after him'**
   String get kidsTeacherSub;
+
+  /// shared key "kids.teacherSurah"
+  ///
+  /// In en, this message translates to:
+  /// **'Surah {name}'**
+  String kidsTeacherSurah(String name);
+
+  /// shared key "kids.teacherWell"
+  ///
+  /// In en, this message translates to:
+  /// **'Well done! You finished the surah and earned a star'**
+  String get kidsTeacherWell;
+
+  /// shared key "kids.teacherWord"
+  ///
+  /// In en, this message translates to:
+  /// **'Word'**
+  String get kidsTeacherWord;
 
   /// shared key "kids.title"
   ///
