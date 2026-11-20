@@ -44,12 +44,13 @@ void main() {
         }
       }
     }
-    // Nothing else is shipped.
-    expect(Directory('android/app/src/main/res/raw').listSync().map((f) => f.uri.pathSegments.last).toSet(), {
-      'adhan_mulla.ogg',
-      'adhan_daghriri_fajr.ogg',
-      'keep.xml',
-    });
+    // Nothing else is shipped (besides the short dhikr reminder clips, dhikr_*.ogg, owner 2026-11-20).
+    expect(
+      Directory(
+        'android/app/src/main/res/raw',
+      ).listSync().map((f) => f.uri.pathSegments.last).where((n) => !n.startsWith('dhikr_')).toSet(),
+      {'adhan_mulla.ogg', 'adhan_daghriri_fajr.ogg', 'keep.xml'},
+    );
     // Openly licensed recordings carry their credit; the owner's picks never show a source.
     for (final v in allAdhanVoices) {
       final owners = [
