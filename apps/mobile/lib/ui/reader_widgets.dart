@@ -21,6 +21,9 @@ import 'r_icon.dart';
 /// المصحف / السورة كاملة / الآيات / التفسير.
 enum ReaderTab { mushaf, surah, juz, ayat, tafsir }
 
+/// A one-word tab label shrinks a little on a narrow phone instead of breaking inside the word («المصح / ف»).
+Widget _tabLabel(Text text, {required bool oneWord}) => oneWord ? FittedBox(fit: BoxFit.scaleDown, child: text) : text;
+
 /// Segmented control at the top of the Mushaf reader.
 class ReaderTabs extends StatelessWidget {
   const ReaderTabs({super.key, required this.tab, required this.onChanged});
@@ -70,16 +73,19 @@ class ReaderTabs extends StatelessWidget {
                           ? const [BoxShadow(color: Color(0x22000000), blurRadius: 3, offset: Offset(0, 1))]
                           : null,
                     ),
-                    child: Text(
-                      e.value,
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        height: 1.15,
-                        fontWeight: e.key == tab ? FontWeight.w600 : FontWeight.w400,
-                        color: e.key == tab ? scheme.primary : scheme.onSurface,
+                    child: _tabLabel(
+                      Text(
+                        e.value,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          height: 1.15,
+                          fontWeight: e.key == tab ? FontWeight.w600 : FontWeight.w400,
+                          color: e.key == tab ? scheme.primary : scheme.onSurface,
+                        ),
                       ),
+                      oneWord: !e.value.contains(' '),
                     ),
                   ),
                 ),

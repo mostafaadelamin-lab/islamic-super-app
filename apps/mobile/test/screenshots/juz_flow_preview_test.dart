@@ -87,4 +87,21 @@ void main() {
     await pushScreen(tester, const PageReaderScreen(initialPage: 582, initialTab: ReaderTab.juz));
     await shot(tester, 'app-phone-5-juz30');
   });
+
+  for (final (name, size) in [('tablet', const Size(1280, 800)), ('phone', const Size(440, 956))]) {
+    testWidgets('preview: Mushaf page as it opens and full screen, $name', (tester) async {
+      tester.view.devicePixelRatio = 1;
+      await pumpApp(
+        tester,
+        size: size,
+        prefs: const {'theme': 'light', 'reader.hintShown': 9},
+        audio: FakeAudioBackend(),
+      );
+      await pushScreen(tester, const PageReaderScreen(initialPage: 106));
+      await shot(tester, 'app-$name-6-mushaf-open');
+      await tester.tap(find.byKey(const Key('readerFull')));
+      await tester.pumpAndSettle();
+      await shot(tester, 'app-$name-7-mushaf-full');
+    });
+  }
 }

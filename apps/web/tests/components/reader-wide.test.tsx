@@ -57,7 +57,7 @@ describe("Mushaf on a laptop (owner 2026-11-18)", () => {
     expect(readerPageScaleStore.get()).toBe(2);
     act(() => void fireEvent.wheel(window, { deltaY: -100 })); // a plain wheel only scrolls
     expect(readerPageScaleStore.get()).toBe(2);
-    expect(JSON.parse(localStorage.getItem("rattil.reader.pageScale")!)).toBe(2);
+    expect(JSON.parse(localStorage.getItem("rattil.reader.pageScale.v2")!)).toBe(2);
   });
 
   it("not on phones: the page keeps its fitted size there", () => {

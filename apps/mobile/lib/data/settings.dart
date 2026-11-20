@@ -99,6 +99,18 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Size of the Mushaf page on a tablet held sideways, as a multiple of "the whole page in the height"
+  /// (owner 2026-11-20: the page opened small; it starts at 2× and scrolls down, A− / A+ change it, like the
+  /// website's − / +).
+  static const tabletPageScaleMin = 1.0;
+  static const tabletPageScaleMax = 3.0;
+  double get tabletPageScale =>
+      (_prefs.getDouble('reader.tabletPageScale') ?? 2.0).clamp(tabletPageScaleMin, tabletPageScaleMax);
+  Future<void> setTabletPageScale(double v) async {
+    await _prefs.setDouble('reader.tabletPageScale', v.clamp(tabletPageScaleMin, tabletPageScaleMax));
+    notifyListeners();
+  }
+
   /// Mushaf page zoom (1 = fits the screen; owner asked for bigger/smaller Quran text).
   static const mushafZoomMin = 1.0;
   // Up to 3× since pinch zoom came (owner 2026-11-16), same as the website.

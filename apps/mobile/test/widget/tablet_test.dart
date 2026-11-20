@@ -74,9 +74,23 @@ void main() {
   testWidgets('a Mushaf page keeps book proportions on a tablet', (tester) async {
     await pumpApp(tester, size: ipadLarge);
     await pushScreen(tester, const PageReaderScreen(initialPage: 1));
+    // Sideways (owner 2026-11-20): twice the size that fits the height, scrolling down.
     final page = tester.getSize(find.byType(MushafPageView));
-    expect(page.width, lessThan(ipadLarge.width / 2));
+    expect(page.width, greaterThan(ipadLarge.width / 2));
     expect(page.width / page.height, closeTo(Adaptive.mushafAspect, 0.01));
+    expect(find.byKey(const Key('tabletPageScroll')), findsOneWidget);
+    // A− makes it smaller, down to the whole page in the height.
+    for (var i = 0; i < 4; i++) {
+      await tester.tap(find.byKey(const Key('readerFontDown')));
+      await tester.pumpAndSettle();
+    }
+    expect(find.byKey(const Key('tabletPageScroll')), findsNothing);
+    final fitted = tester.getSize(find.byType(MushafPageView));
+    expect(fitted.width, lessThan(ipadLarge.width / 2));
+    expect(fitted.width / fitted.height, closeTo(Adaptive.mushafAspect, 0.01));
+    await tester.tap(find.byKey(const Key('readerFontUp')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('tabletPageScroll')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

@@ -66,7 +66,8 @@ void main() {
     // owner 2026-11-15: the page has the width, everything else is one strip across the bottom
     final strip = tester.getRect(find.byKey(const Key('readerStrip')));
     expect(strip.width, closeTo(size.width, 0.5));
-    final page = tester.getRect(find.byKey(const Key('mushafPage-42')));
+    // The page is large and scrolls down inside the room above the strip (owner 2026-11-20).
+    final page = tester.getRect(find.byKey(const Key('tabletPageScroll')).first);
     expect(page.bottom, lessThanOrEqualTo(strip.top + 0.5));
     final player = tester.getRect(find.byKey(const Key('miniPlayer')));
     final bar = tester.getRect(find.byKey(const Key('mushafControls')));

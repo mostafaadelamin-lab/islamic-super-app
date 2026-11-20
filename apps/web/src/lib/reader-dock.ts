@@ -23,8 +23,10 @@ export function dockSwipe(dy: number, minimized: boolean): boolean | null {
  */
 export const PAGE_SCALES = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 3] as const;
 export const DEFAULT_PAGE_SCALE = 2;
+// Owner 2026-11-20: the page still opened small (a size of 100% kept from before), in full screen too. A new key
+// starts everyone at the big default once; − / + still change it and the new choice is kept.
 export const readerPageScaleStore = createStore<number>(
-  "rattil.reader.pageScale",
+  "rattil.reader.pageScale.v2",
   DEFAULT_PAGE_SCALE,
   (raw) => (typeof raw === "number" && (PAGE_SCALES as readonly number[]).includes(raw) ? raw : DEFAULT_PAGE_SCALE),
 );

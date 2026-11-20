@@ -1328,14 +1328,22 @@ class _ZoomButtons extends StatelessWidget {
     final settings = context.services.settings;
     final scheme = Theme.of(context).colorScheme;
     final l = context.l10n;
-    final canDown = mushaf
+    // A tablet held sideways: A− / A+ size the whole page (it scrolls down), like − / + on the website.
+    final tabletPage = mushaf && Adaptive.tabletSideways(context);
+    final canDown = tabletPage
+        ? settings.tabletPageScale > SettingsController.tabletPageScaleMin
+        : mushaf
         ? settings.mushafZoom > SettingsController.mushafZoomMin
         : settings.quranFontSize > SettingsController.minFontSize;
-    final canUp = mushaf
+    final canUp = tabletPage
+        ? settings.tabletPageScale < SettingsController.tabletPageScaleMax
+        : mushaf
         ? settings.mushafZoom < SettingsController.mushafZoomMax
         : settings.quranFontSize < SettingsController.maxFontSize;
     void change(int dir) {
-      if (mushaf) {
+      if (tabletPage) {
+        unawaited(settings.setTabletPageScale(settings.tabletPageScale + 0.25 * dir));
+      } else if (mushaf) {
         unawaited(settings.setMushafZoom(settings.mushafZoom + 0.25 * dir));
       } else {
         final next = (settings.quranFontSize + 2 * dir).clamp(

@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../app_services.dart';
+
 /// Large-screen layout (iPad, Android tablets, foldables, landscape).
 ///
 /// Width classes follow the Material window-size classes: compact < 600,
@@ -18,6 +20,12 @@ abstract final class Adaptive {
 
   /// Width of a Mushaf page relative to its height (Madina print proportions).
   static const mushafAspect = 0.68;
+
+  /// A tablet held sideways: the Mushaf page there has its own size (A− / A+), see [TabletPage].
+  static bool tabletSideways(BuildContext context) {
+    final s = MediaQuery.sizeOf(context);
+    return s.shortestSide >= medium && s.width > s.height;
+  }
 
   static double width(BuildContext context) => MediaQuery.sizeOf(context).width;
 
@@ -62,7 +70,23 @@ class TabletPage extends StatelessWidget {
     final tablet = MediaQuery.sizeOf(context).shortestSide >= Adaptive.medium;
     return LayoutBuilder(
       builder: (context, c) {
-        final width = tablet ? math.min(c.maxWidth, c.maxHeight * Adaptive.mushafAspect) : c.maxWidth;
+        final fitted = c.maxHeight * Adaptive.mushafAspect;
+        // A tablet held sideways (owner 2026-11-20: the page opened small with wide empty sides): the page is
+        // up to twice as large as the height allows and scrolls down, like the website's 200% size.
+        final scale = context.services.settings.tabletPageScale;
+        if (tablet && scale > 1 && c.maxWidth > fitted * 1.3) {
+          final width = math.min(c.maxWidth - 32, fitted * scale);
+          return ColoredBox(
+            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+            child: SingleChildScrollView(
+              key: const Key('tabletPageScroll'),
+              child: Center(
+                child: SizedBox(width: width, height: width / Adaptive.mushafAspect, child: child),
+              ),
+            ),
+          );
+        }
+        final width = tablet ? math.min(c.maxWidth, fitted) : c.maxWidth;
         return ColoredBox(
           color: Theme.of(context).colorScheme.surfaceContainerHighest,
           child: Center(
