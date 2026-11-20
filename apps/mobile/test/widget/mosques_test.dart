@@ -85,6 +85,73 @@ void main() {
       expect(parseOverpass(_sample, 30.0444, 31.2357, arabic: false)[1].name, 'Mosque B');
       expect(parseOverpass(null, 0, 0, arabic: true), isEmpty);
     });
+    test('roads, squares and districts are never listed as mosques (owner 2026-11-20)', () {
+      expect(isMosqueName('طريق طلعت مصطفى'), isFalse);
+      expect(isMosqueName('شارع التحرير'), isFalse);
+      expect(isMosqueName('Road 90'), isFalse);
+      expect(isMosqueName('مسجد الرحمة'), isTrue);
+      expect(isMosqueName('سعد بن ابي وقاص'), isTrue);
+      expect(isMosqueName(null), isTrue);
+      final json = {
+        'elements': [
+          {
+            'type': 'way',
+            'id': 9,
+            'center': {'lat': 30.05, 'lon': 31.24},
+            'tags': {'amenity': 'place_of_worship', 'religion': 'muslim', 'name': 'طريق طلعت مصطفى'},
+          },
+          {
+            'type': 'node',
+            'id': 8,
+            'lat': 30.05,
+            'lon': 31.25,
+            'tags': {'amenity': 'place_of_worship', 'religion': 'muslim', 'name': 'مسجد الرحمة'},
+          },
+        ],
+      };
+      expect(parseOverpass(json, 30.0444, 31.2357, arabic: true).map((m) => m.name), ['مسجد الرحمة']);
+      final nominatim = [
+        {
+          'osm_type': 'way',
+          'osm_id': 1,
+          'lat': '30.05',
+          'lon': '31.24',
+          'category': 'highway',
+          'type': 'primary',
+          'name': 'طريق طلعت مصطفى',
+          'display_name': 'طريق طلعت مصطفى، القاهرة',
+        },
+        {
+          'osm_type': 'way',
+          'osm_id': 2,
+          'lat': '30.05',
+          'lon': '31.24',
+          'category': 'highway',
+          'type': 'residential',
+          'name': '',
+          'display_name': 'مسجد ما، القاهرة',
+        },
+        {
+          'osm_type': 'node',
+          'osm_id': 3,
+          'lat': '30.05',
+          'lon': '31.25',
+          'category': 'amenity',
+          'type': 'place_of_worship',
+          'name': 'سعد بن ابي وقاص',
+        },
+        {
+          'osm_type': 'node',
+          'osm_id': 4,
+          'lat': '30.05',
+          'lon': '31.25',
+          'category': 'building',
+          'type': 'yes',
+          'name': 'جامع النور',
+        },
+      ];
+      expect(parseNominatim(nominatim, 30.0444, 31.2357).map((m) => m.name), ['سعد بن ابي وقاص', 'جامع النور']);
+    });
     test('directions links', () {
       const m = Mosque(id: 'node/1', name: null, lat: 1, lng: 2, distance: 0);
       expect(directionsUri(m, ios: true).toString(), 'https://maps.apple.com/?daddr=1.000000,2.000000');

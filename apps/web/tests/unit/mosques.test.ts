@@ -3,6 +3,7 @@ import {
   distanceM,
   fetchMosques,
   googleMapsMosque,
+  isMosqueName,
   googleMapsNearby,
   MAX_RESULTS,
   osmLink,
@@ -99,5 +100,31 @@ describe("nearby mosques (OpenStreetMap / Overpass)", () => {
     );
     expect(directionsLink({ lat: 1, lng: 2 }, true)).toBe("https://maps.apple.com/?daddr=1.000000,2.000000");
     expect(directionsLink({ lat: 1, lng: 2 }, false)).toBe("geo:1.000000,2.000000?q=1.000000,2.000000");
+  });
+});
+
+describe("not mosques (owner 2026-11-20)", () => {
+  it("drops roads, squares and districts", () => {
+    expect(isMosqueName("طريق طلعت مصطفى")).toBe(false);
+    expect(isMosqueName("Road 90")).toBe(false);
+    expect(isMosqueName("مسجد الرحمة")).toBe(true);
+    const json = {
+      elements: [
+        {
+          type: "way",
+          id: 9,
+          center: { lat: 30.05, lon: 31.24 },
+          tags: { amenity: "place_of_worship", religion: "muslim", name: "طريق طلعت مصطفى" },
+        },
+        {
+          type: "node",
+          id: 8,
+          lat: 30.05,
+          lon: 31.25,
+          tags: { amenity: "place_of_worship", religion: "muslim", name: "مسجد الرحمة" },
+        },
+      ],
+    };
+    expect(parseOverpass(json, 30.0444, 31.2357, "ar").map((m) => m.name)).toEqual(["مسجد الرحمة"]);
   });
 });

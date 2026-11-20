@@ -1,13 +1,18 @@
 // Preview pictures of the ruqyah, the kids section and the home tile (owner 2026-11-20), iPhone 6.9" size at 2x.
 // Output: $RATTIL_SCREENSHOT_DIR/kids-ruqyah, or build/screenshots/kids-ruqyah.
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
 import 'package:rattil/domain/kids.dart';
+import 'package:rattil/ui/about_screen.dart';
 import 'package:rattil/ui/kids_screen.dart';
+import 'package:rattil/ui/mosques_screen.dart';
 import 'package:rattil/ui/ruqyah_screen.dart';
 
 import '../helpers.dart';
@@ -108,5 +113,30 @@ void main() {
     tester.view.devicePixelRatio = 1;
     await pumpApp(tester, size: size, prefs: const {'theme': 'light', 'clock': '12'}, audio: FakeAudioBackend());
     await shot(tester, '00-home-12h');
+  });
+
+  testWidgets('preview: about', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(tester, size: size, prefs: prefs, audio: FakeAudioBackend());
+    await pushScreen(tester, const AboutScreen());
+    await shot(tester, '12-about');
+  });
+
+  testWidgets('preview: mosques', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(tester, size: size, prefs: prefs, audio: FakeAudioBackend());
+    final client = MockClient(
+      (_) async => http.Response.bytes(
+        utf8.encode(
+          '{"elements":[{"type":"node","id":1,"lat":30.046,"lon":31.236,"tags":{"amenity":"place_of_worship","religion":"muslim","name":"مسجد الرحمة"}},'
+          '{"type":"node","id":2,"lat":30.05,"lon":31.24,"tags":{"amenity":"place_of_worship","religion":"muslim","name":"مسجد سعد بن أبي وقاص"}},'
+          '{"type":"way","id":3,"center":{"lat":30.047,"lon":31.236},"tags":{"amenity":"place_of_worship","religion":"muslim","name":"طريق طلعت مصطفى"}}]}',
+        ),
+        200,
+      ),
+    );
+    await pushScreen(tester, MosquesScreen(client: client));
+    await tester.pump(const Duration(seconds: 2));
+    await shot(tester, '13-mosques');
   });
 }

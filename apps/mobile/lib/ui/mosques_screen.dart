@@ -126,6 +126,19 @@ class _MosquesScreenState extends State<MosquesScreen> {
         child: ListView(
           padding: const EdgeInsets.all(DesignTokens.spaceLg),
           children: [
+            // The fullest list (with photos and ratings) is Google's own: one big button to it, at the top
+            // (owner 2026-11-20; showing Google's results inside the app would need the paid Places API).
+            FilledButton.icon(
+              key: const Key('mosquesGoogleMapsBig'),
+              style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(52)),
+              icon: const RIcon(RIcons.location),
+              label: Text(l.mosquesOnGoogleMaps),
+              onPressed: () => launchUrl(
+                googleMapsNearbyUri(_here?.lat ?? city.lat, _here?.lng ?? city.lng, arabic: context.isArabic),
+                mode: LaunchMode.externalApplication,
+              ),
+            ),
+            const SizedBox(height: DesignTokens.spaceLg),
             Text(
               l.mosquesAround(_here != null ? l.mosquesMyLocation : city.name(context.isArabic)),
               key: const Key('mosquesAround'),

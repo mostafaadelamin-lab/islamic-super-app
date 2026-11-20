@@ -59,6 +59,13 @@ interface OsmElement {
 const num = (v: unknown): number | null => (typeof v === "number" && Number.isFinite(v) ? v : null);
 const str = (v: unknown): string | null => (typeof v === "string" && v.trim() !== "" ? v.trim() : null);
 
+/** Names of roads, squares and districts, never a mosque (owner 2026-11-20: «طريق طلعت مصطفى» was listed). */
+const NOT_MOSQUE =
+  /^(طريق|شارع|ش\.|محور|ميدان|كوبري|كورنيش|حي|منطقة|مدينة|قرية|عزبة|road|street|st\.|avenue|square|highway)(\s|$)/i;
+
+/** False for names of roads, squares, districts and the like. */
+export const isMosqueName = (name: string | null): boolean => name === null || !NOT_MOSQUE.test(name.trim());
+
 /** Name in the user's language when OSM has one, else the local name. */
 function pickName(tags: Record<string, unknown>, locale: "ar" | "en"): string | null {
   return locale === "ar"
@@ -83,9 +90,11 @@ export function parseOverpass(json: unknown, lat: number, lng: number, locale: "
     if (seen.has(key)) continue;
     seen.add(key);
     const tags = raw.tags && typeof raw.tags === "object" ? raw.tags : {};
+    const name = pickName(tags, locale);
+    if (!isMosqueName(name)) continue;
     const m: Mosque = {
       id: key,
-      name: pickName(tags, locale),
+      name,
       lat: mLat,
       lng: mLng,
       distance: distanceM(lat, lng, mLat, mLng),

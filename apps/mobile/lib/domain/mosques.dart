@@ -37,7 +37,10 @@ List<Mosque> parseNominatim(Object? json, double lat, double lng) {
     final mLng = double.tryParse('${raw['lon']}');
     final id = '${raw['osm_type']}/${raw['osm_id']}';
     if (mLat == null || mLng == null || !seen.add(id)) continue;
-    final name = _str(raw['name']) ?? _str('${raw['display_name'] ?? ''}'.split(',').first);
+    final name = _str(raw['name']);
+    final worship = raw['category'] == 'amenity' && raw['type'] == 'place_of_worship';
+    if (!worship && !(name != null && _mosqueWord.hasMatch(name))) continue;
+    if (!isMosqueName(name)) continue;
     out.add(Mosque(id: id, name: name, lat: mLat, lng: mLng, distance: distanceM(lat, lng, mLat, mLng)));
   }
   out.sort((a, b) => a.distance.compareTo(b.distance));
@@ -104,6 +107,19 @@ double distanceM(double lat1, double lng1, double lat2, double lng2) {
 }
 
 String? _str(Object? v) => v is String && v.trim().isNotEmpty ? v.trim() : null;
+
+/// Words that name a road, square or district, never a mosque (owner 2026-11-20: «طريق طلعت مصطفى»
+/// was listed as a mosque).
+final _notMosque = RegExp(
+  r'^(طريق|شارع|ش\.|محور|ميدان|كوبري|كورنيش|حي|منطقة|مدينة|قرية|عزبة|road|street|st\.|avenue|square|highway)(\s|$)',
+  caseSensitive: false,
+);
+
+/// Words that say a place is a mosque.
+final _mosqueWord = RegExp(r'مسجد|جامع|زاوية|مصلى|mosque|masjid|masjed|jami|musalla', caseSensitive: false);
+
+/// False for names of roads, squares, districts and the like.
+bool isMosqueName(String? name) => name == null || !_notMosque.hasMatch(name.trim());
 double? _num(Object? v) => v is num && v.isFinite ? v.toDouble() : null;
 
 /// Parses an Overpass JSON answer; ignores malformed elements. Sorted by
@@ -128,6 +144,7 @@ List<Mosque> parseOverpass(Object? json, double lat, double lng, {required bool 
     final name = arabic
         ? _str(tags['name:ar']) ?? _str(tags['name']) ?? _str(tags['name:en'])
         : _str(tags['name:en']) ?? _str(tags['name']) ?? _str(tags['name:ar']);
+    if (!isMosqueName(name)) continue;
     final m = Mosque(id: key, name: name, lat: mLat, lng: mLng, distance: distanceM(lat, lng, mLat, mLng));
     (tags['amenity'] == 'place_of_worship' ? out : buildingOnly).add(m);
   }

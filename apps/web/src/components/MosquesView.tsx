@@ -111,6 +111,19 @@ export function MosquesView({ locale }: { locale: Locale }) {
 
   return (
     <section className="card" aria-labelledby="mosques-h" data-testid="mosques">
+      {/* The fullest list (photos, ratings) is Google's own: one big button to it, at the top (owner 2026-11-20). */}
+      <p>
+        <a
+          className="btn btn-primary"
+          style={{ width: "100%", justifyContent: "center" }}
+          href={googleMapsNearby(point.lat, point.lng, locale === "ar")}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-testid="mosques-google"
+        >
+          {t(locale, "mosques.onGoogleMaps")}
+        </a>
+      </p>
       <h2 id="mosques-h" className="card-title">
         {t(locale, "mosques.around", { place: placeName })}
       </h2>
@@ -152,17 +165,6 @@ export function MosquesView({ locale }: { locale: Locale }) {
           {t(locale, "mosques.retry")}
         </button>
       ) : null}
-      <p>
-        <a
-          className="btn btn-sm"
-          href={googleMapsNearby(point.lat, point.lng, locale === "ar")}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-testid="mosques-google"
-        >
-          {t(locale, "mosques.onGoogleMaps")}
-        </a>
-      </p>
       <ul className="mosque-list" data-testid="mosque-list">
         {items.map((m) => (
           <li key={m.id} data-testid="mosque">
