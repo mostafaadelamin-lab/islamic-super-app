@@ -7,6 +7,7 @@ import 'quran_index.dart';
 import 'search_screen.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
+import 'shell_back.dart';
 
 class SurahListScreen extends StatefulWidget {
   const SurahListScreen({super.key});
@@ -21,6 +22,7 @@ class _SurahListScreenState extends State<SurahListScreen> {
     final l = context.l10n;
     return Scaffold(
       appBar: AppBar(
+        leading: shellBackButton(context),
         title: Text(l.quranIndex),
         centerTitle: true,
         actions: [

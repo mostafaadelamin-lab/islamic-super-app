@@ -900,7 +900,11 @@ class _StepPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                   child: AspectRatio(
                     aspectRatio: 1,
-                    child: Image.asset('assets/kids/steps/$pic.webp', key: Key('kidsStep.pic.$pic'), fit: BoxFit.cover),
+                    child: Image.asset(
+                      'assets/kids/steps/$pic.webp',
+                      key: Key('kidsStep.pic.${pic.replaceFirst(RegExp(r'-[0-9a-f]{8}$'), '')}'),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),

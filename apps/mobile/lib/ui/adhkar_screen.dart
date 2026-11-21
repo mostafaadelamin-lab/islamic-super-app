@@ -20,6 +20,7 @@ import 'r_icon.dart';
 import 'review_notice.dart' show duaStyle;
 import 'ruqyah_screen.dart';
 import 'adhkar_audio.dart';
+import 'shell_back.dart';
 
 /// The Adhkar tab: a vertical list of the daily adhkar (morning, evening,
 /// sleep, prayer…) and the duas, all from Hisn al-Muslim, then the whole book.
@@ -57,7 +58,7 @@ class AdhkarScreen extends StatelessWidget {
       ),
     );
     return Scaffold(
-      appBar: AppBar(title: Text(l.navAdhkar)),
+      appBar: AppBar(leading: shellBackButton(context), title: Text(l.navAdhkar)),
       body: ReadableWidth(
         child: ListView(
           key: const Key('adhkarHub'),

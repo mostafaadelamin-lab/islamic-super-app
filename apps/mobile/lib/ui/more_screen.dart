@@ -22,6 +22,7 @@ import 'widgets.dart';
 import 'zakat_screen.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
+import 'shell_back.dart';
 
 /// "More" tab: the remaining sections and the settings.
 class MoreScreen extends StatelessWidget {
@@ -38,7 +39,7 @@ class MoreScreen extends StatelessWidget {
       onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => screen())),
     );
     return Scaffold(
-      appBar: AppBar(title: Text(l.moreTitle)),
+      appBar: AppBar(leading: shellBackButton(context), title: Text(l.moreTitle)),
       body: ReadableWidth(
         child: ListView(
           key: const Key('moreList'),

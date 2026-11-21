@@ -250,15 +250,17 @@ function ProphetsPicker({
   );
 }
 
+// Kids order (owner 2026-11-21): teaching Mushaf, prophets (drop-down of the three series), stories,
+// books, hadith, adhkar cards, wudu, salah, ruqyah.
 const SECTIONS: readonly [string, IconName][] = [
-  ["prophets", "book"],
   ["teacher", "quran"],
+  ["prophets", "book"],
   ["stories", "kids"],
 ];
 
 /** «قسم الأطفال» (owner 2026-11-20): prophets' stories, the teaching Mushaf, stories, and the kids' ruqyah. */
 export function KidsView({ locale }: { locale: Locale }) {
-  const [tab, setTab] = useState("prophets");
+  const [tab, setTab] = useState("teacher");
   const [open, setOpen] = useState<string | null>(null);
   const pick = (id: string) => {
     setTab(id);
@@ -282,7 +284,7 @@ export function KidsView({ locale }: { locale: Locale }) {
     <div data-testid="kids">
       <p className="muted">{t(locale, "kids.note")}</p>
       <ul className="tiles tiles-sm">
-        {SECTIONS.filter(([id]) => id !== "stories").map(([id, icon]) => (
+        {SECTIONS.map(([id, icon]) => (
           <li key={id}>
             <button
               type="button"
@@ -302,7 +304,7 @@ export function KidsView({ locale }: { locale: Locale }) {
             </button>
           </li>
         ))}
-        <KidsLearnTiles locale={locale} ids={["cards", "wudu", "salah"]} />
+        <KidsLearnTiles locale={locale} ids={["books", "hadith", "cards", "wudu", "salah"]} />
         <li>
           <Link className="tile tile-sm" href={href(locale, "kids/ruqyah")} data-testid="kids-tab-ruqyah">
             <span className="tile-icon">
@@ -314,27 +316,6 @@ export function KidsView({ locale }: { locale: Locale }) {
             </span>
           </Link>
         </li>
-        {SECTIONS.filter(([id]) => id === "stories").map(([id, icon]) => (
-          <li key={id}>
-            <button
-              type="button"
-              className="tile tile-sm"
-              aria-pressed={tab === id}
-              data-testid={`kids-tab-${id}`}
-              onClick={() => pick(id)}
-              style={{ width: "100%" }}
-            >
-              <span className="tile-icon">
-                <Icon name={icon} />
-              </span>
-              <span className="tile-text">
-                <strong>{t(locale, `kids.${id}`)}</strong>
-                <span className="muted small">{t(locale, `kids.${id}Sub`)}</span>
-              </span>
-            </button>
-          </li>
-        ))}
-        <KidsLearnTiles locale={locale} ids={["books", "hadith"]} />
       </ul>
       <section className="kids-section">
         {tab === "prophets" ? <ProphetsPicker locale={locale} open={open} setOpen={setOpen} /> : null}

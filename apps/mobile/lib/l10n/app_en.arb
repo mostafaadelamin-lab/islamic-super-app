@@ -2293,7 +2293,7 @@
       }
     }
   },
-  "kidsNote": "For children: stories of the prophets, the teaching Mushaf, meaningful stories and ruqyah for children.",
+  "kidsNote": "For children: the teaching Mushaf, stories of the prophets, meaningful stories, books, hadith and adhkar, learning wudu and salah, and ruqyah for children.",
   "@kidsNote": {
     "description": "shared key \"kids.note\""
   },

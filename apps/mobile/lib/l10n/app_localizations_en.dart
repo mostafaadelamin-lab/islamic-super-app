@@ -1566,7 +1566,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get kidsNote =>
-      'For children: stories of the prophets, the teaching Mushaf, meaningful stories and ruqyah for children.';
+      'For children: the teaching Mushaf, stories of the prophets, meaningful stories, books, hadith and adhkar, learning wudu and salah, and ruqyah for children.';
 
   @override
   String get kidsOfflineNote => 'Watch or listen to any episode, or tap the download icon to use it offline.';

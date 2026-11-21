@@ -13,6 +13,7 @@ import 'l10n_ext.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
 import 'video_search_screen.dart';
+import 'shell_back.dart';
 
 typedef ReelPlayerBuilder = Widget Function(BuildContext context, Reel reel);
 
@@ -105,6 +106,7 @@ class _ReelsScreenState extends State<ReelsScreen> {
           backgroundColor: Colors.black,
           extendBodyBehindAppBar: true,
           appBar: AppBar(
+            leading: shellBackButton(context),
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.white,
             title: Text(l.reelsTitle, style: const TextStyle(color: Colors.white)),

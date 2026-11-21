@@ -1558,7 +1558,8 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get kidsNote => 'قسم للأطفال: قصص الأنبياء، والمصحف المعلّم، وقصص هادفة، والرقية الشرعية للأطفال.';
+  String get kidsNote =>
+      'قسم للأطفال: المصحف المعلّم، وقصص الأنبياء، وقصص هادفة، وكتب وأحاديث وأذكار، وتعلّم الوضوء والصلاة، والرقية الشرعية للأطفال.';
 
   @override
   String get kidsOfflineNote => 'شاهد أو استمع لأي حلقة مباشرة، أو اضغط أيقونة التحميل لتعمل بدون إنترنت.';

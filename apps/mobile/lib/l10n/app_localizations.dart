@@ -2843,7 +2843,7 @@ abstract class AppLocalizations {
   /// shared key "kids.note"
   ///
   /// In en, this message translates to:
-  /// **'For children: stories of the prophets, the teaching Mushaf, meaningful stories and ruqyah for children.'**
+  /// **'For children: the teaching Mushaf, stories of the prophets, meaningful stories, books, hadith and adhkar, learning wudu and salah, and ruqyah for children.'**
   String get kidsNote;
 
   /// shared key "kids.offlineNote"

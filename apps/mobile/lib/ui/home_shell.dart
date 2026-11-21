@@ -22,6 +22,7 @@ import 'reels_screen.dart';
 import 'surah_list_screen.dart';
 import 'tasbih_screen.dart';
 import 'r_icon.dart';
+import 'shell_back.dart';
 
 /// Bottom navigation (a side rail on tablets): Home, Quran, Prayer, Adhkar, Videos, More.
 /// The recitation mini player sits above the bar while audio is active.
@@ -95,6 +96,15 @@ class HomeShellState extends State<HomeShell> {
       4 => const ParentGate(child: ReelsScreen()),
       _ => const MoreScreen(),
     };
+    // A back arrow on every tab but Home, and the phone's back button returns to Home first.
+    final tab = ShellBack(goHome: _index == 0 ? null : () => select(0), child: body);
+    final content = PopScope(
+      canPop: _index == 0,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && _index != 0) select(0);
+      },
+      child: tab,
+    );
     final items = [
       (RIcons.home, RIcons.home, l.navHome),
       (RIcons.quran, RIcons.quran, l.navQuran),
@@ -127,7 +137,7 @@ class HomeShellState extends State<HomeShell> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: ReadableWidth(maxWidth: Adaptive.tabWidth, child: body),
+                      child: ReadableWidth(maxWidth: Adaptive.tabWidth, child: content),
                     ),
                     const NarrationBar(),
                     const MiniPlayer(),
@@ -140,7 +150,7 @@ class HomeShellState extends State<HomeShell> {
       );
     }
     return Scaffold(
-      body: body,
+      body: content,
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

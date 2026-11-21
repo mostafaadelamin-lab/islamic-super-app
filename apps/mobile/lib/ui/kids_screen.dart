@@ -66,6 +66,14 @@ class KidsScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(DesignTokens.spaceLg),
                   child: Text(l.kidsNote, style: Theme.of(context).textTheme.bodyMedium),
                 ),
+                // Owner's order (2026-11-21): teaching Mushaf first, ruqyah last.
+                tile(
+                  'teacher',
+                  RIcons.quran,
+                  l.kidsTeacher,
+                  l.kidsTeacherSub,
+                  () => push(TeacherMushafScreen(content: k)),
+                ),
                 if (prophets != null)
                   tile('prophets', RIcons.video, l.kidsProphets, l.kidsProphetsSub, () {
                     final choices = [
@@ -76,11 +84,32 @@ class KidsScreen extends StatelessWidget {
                     push(KidsSeriesScreen(series: choices.first.$1, title: l.kidsProphets, choices: choices));
                   }),
                 tile(
-                  'teacher',
-                  RIcons.quran,
-                  l.kidsTeacher,
-                  l.kidsTeacherSub,
-                  () => push(TeacherMushafScreen(content: k)),
+                  'stories',
+                  RIcons.book,
+                  l.kidsStories,
+                  l.kidsStoriesSub,
+                  () => push(
+                    KidsStoriesScreen(
+                      parts: [
+                        if (rasoul != null) (rasoul, l.kidsRasoul, l.kidsRasoulSub),
+                        if (ramadan != null) (ramadan, l.kidsRamadan, l.kidsRamadanSub),
+                      ],
+                    ),
+                  ),
+                ),
+                tile(
+                  'books',
+                  RIcons.openBook,
+                  l.kidsLearnBooks,
+                  l.kidsLearnBooksSub,
+                  () => push(const KidsBooksScreen()),
+                ),
+                tile(
+                  'hadith',
+                  RIcons.star,
+                  l.kidsLearnHadith,
+                  l.kidsLearnHadithSub,
+                  () => push(const KidsHadithScreen()),
                 ),
                 tile(
                   'cards',
@@ -109,34 +138,6 @@ class KidsScreen extends StatelessWidget {
                   l.ruqyahKidsTitle,
                   l.kidsRuqyahSub,
                   () => push(RuqyahScreen(kids: true, loader: loader)),
-                ),
-                tile(
-                  'stories',
-                  RIcons.book,
-                  l.kidsStories,
-                  l.kidsStoriesSub,
-                  () => push(
-                    KidsStoriesScreen(
-                      parts: [
-                        if (rasoul != null) (rasoul, l.kidsRasoul, l.kidsRasoulSub),
-                        if (ramadan != null) (ramadan, l.kidsRamadan, l.kidsRamadanSub),
-                      ],
-                    ),
-                  ),
-                ),
-                tile(
-                  'books',
-                  RIcons.openBook,
-                  l.kidsLearnBooks,
-                  l.kidsLearnBooksSub,
-                  () => push(const KidsBooksScreen()),
-                ),
-                tile(
-                  'hadith',
-                  RIcons.star,
-                  l.kidsLearnHadith,
-                  l.kidsLearnHadithSub,
-                  () => push(const KidsHadithScreen()),
                 ),
               ],
             );

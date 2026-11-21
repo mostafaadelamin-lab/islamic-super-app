@@ -9,6 +9,7 @@ import { THEME_SCRIPT } from "../theme-script";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { BackButton } from "@/components/BackButton";
 import { ClientEffects } from "@/components/ClientEffects";
 import { UpdateBanner } from "@/components/UpdateBanner";
 import { AdhanAlerts } from "@/components/AdhanAlerts";
@@ -74,6 +75,7 @@ export default async function LocaleLayout({
         <Header locale={locale} />
         <main id="main" tabIndex={-1}>
           <Breadcrumbs locale={locale} />
+          <BackButton locale={locale} />
           {children}
         </main>
         <Footer locale={locale} />

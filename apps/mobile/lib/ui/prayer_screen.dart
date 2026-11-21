@@ -22,6 +22,7 @@ import 'settings_screen.dart' show AdhanSettingsCard, HijriOffsetCard;
 import 'widgets.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
+import 'shell_back.dart';
 
 /// Prayer times. The tab is compact (date, the five times with their alert,
 /// and "edit prayer times"); [settingsMode] is that edit screen: location,
@@ -88,7 +89,10 @@ class _PrayerScreenState extends State<PrayerScreen> {
     final s = context.services;
     final l = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: Text(widget.settingsMode ? l.prayerEditTimes : l.prayerTitle)),
+      appBar: AppBar(
+        leading: shellBackButton(context),
+        title: Text(widget.settingsMode ? l.prayerEditTimes : l.prayerTitle),
+      ),
       body: ReadableWidth(
         child: ListenableBuilder(
           listenable: s.settings,

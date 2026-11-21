@@ -11,6 +11,7 @@ import 'kids_screen.dart';
 import 'l10n_ext.dart';
 import 'r_icon.dart';
 import 'ruqyah_screen.dart' show loadKids;
+import 'shell_back.dart';
 
 /// Videos opened with the parent's PIN stay open until the app goes to the background.
 final parentLockOpen = ValueNotifier<bool>(false);
@@ -166,7 +167,7 @@ class _ParentGateState extends State<ParentGate> with WidgetsBindingObserver {
     };
     return Scaffold(
       key: const Key('parentGate'),
-      appBar: AppBar(title: Text(l.navVideos)),
+      appBar: AppBar(leading: shellBackButton(context), title: Text(l.navVideos)),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -282,7 +283,7 @@ class _ParentGateState extends State<ParentGate> with WidgetsBindingObserver {
 
     return Scaffold(
       key: const Key('parentGate'),
-      appBar: AppBar(title: Text(l.navVideos)),
+      appBar: AppBar(leading: shellBackButton(context), title: Text(l.navVideos)),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -312,7 +313,7 @@ class _ParentGateState extends State<ParentGate> with WidgetsBindingObserver {
     void push(Widget w) => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => w));
     return Scaffold(
       key: const Key('parentGate.kids'),
-      appBar: AppBar(title: Text(l.parentLockKidsTitle)),
+      appBar: AppBar(leading: shellBackButton(context), title: Text(l.parentLockKidsTitle)),
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(DesignTokens.spaceMd),
