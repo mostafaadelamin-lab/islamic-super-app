@@ -51,10 +51,15 @@ describe("kids learning corner", () => {
     expect(LEARN.cardAdhkar[8]).toMatchObject({ m: 0, e: 1 });
   });
 
-  it("steps pictures are bundled", () => {
-    for (const p of [...LEARN.wudu, ...LEARN.salah]) {
-      expect(existsSync(join(PUBLIC, "kids/wudu", `${p}.webp`))).toBe(true);
+  it("steps: the book's text with our own 3D pictures, all bundled", () => {
+    expect(LEARN.wudu.filter((s) => s.pic)).toHaveLength(8);
+    expect(LEARN.salah.filter((s) => s.pic)).toHaveLength(12);
+    for (const s of [...LEARN.wudu, ...LEARN.salah]) {
+      expect(s.title.trim()).not.toBe("");
+      expect(s.text.trim()).not.toBe("");
+      if (s.pic) expect(existsSync(join(PUBLIC, "kids/steps", `${s.pic}.webp`))).toBe(true);
     }
+    expect(LEARN.salah.at(-1)?.ayah).toContain("الْقَيُّومُ");
   });
 
   it("memorised hadith and today's cards are kept in this browser", () => {

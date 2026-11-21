@@ -1700,7 +1700,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String kidsLearnCredit(String name) {
-    return 'Pictures from $name';
+    return 'Text from $name';
   }
 
   @override

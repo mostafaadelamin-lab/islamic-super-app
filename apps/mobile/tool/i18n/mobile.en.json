@@ -995,7 +995,7 @@
   "kidsLearn.salahSub": "Prayer steps in pictures",
   "kidsLearn.step": "Step {n} of {total}",
   "kidsLearn.stepsDone": "Well done! You finished all the steps",
-  "kidsLearn.credit": "Pictures from {name}",
+  "kidsLearn.credit": "Text from {name}",
   "settings.mushafSection": "Mushaf",
   "settings.mushafPrinted": "Printed Mushaf look",
   "settings.mushafPrintedHint": "Each page in the King Fahd Complex's own page font, exactly like the printed Mushaf. A page needs the internet the first time only.",

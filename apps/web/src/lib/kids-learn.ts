@@ -6,7 +6,7 @@
  * each client component only what it shows.
  */
 import learnJson from "@/generated/kids-learn.json";
-import type { CardDhikr, HadithLevel, KidsBook } from "@/lib/kids-learn-store";
+import type { CardDhikr, HadithLevel, KidsBook, KidsStep } from "@/lib/kids-learn-store";
 
 interface LearnFile {
   booksBase: string;
@@ -14,8 +14,8 @@ interface LearnFile {
   books: KidsBook[];
   hadithLevels: HadithLevel[];
   hadith: string[];
-  wudu: number[];
-  salah: number[];
+  wudu: KidsStep[];
+  salah: KidsStep[];
   stepsCredit: string;
   cardAdhkar: CardDhikr[];
 }

@@ -5758,6 +5758,7 @@ a.episode {
   background: var(--color-primary);
   color: var(--color-on-primary);
   cursor: default;
+}
 
 /* Kids: prophets' series picker (owner 2026-11-21). */
 .kids-pick {
@@ -5774,4 +5775,37 @@ a.episode {
   background: var(--surface, #fff);
   color: inherit;
   max-width: 28rem;
+}
+
+/* Kids wudu / salah steps: our 3D picture, then the book's title and text (owner 2026-11-21). */
+.kl-step {
+  display: grid;
+  gap: var(--space-sm);
+  justify-items: center;
+  max-width: 640px;
+  margin: 0 auto var(--space-sm);
+}
+.kl-step-pic {
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1;
+  border-radius: 24px;
+  object-fit: cover;
+}
+.kl-step-title {
+  margin: 0;
+  font-size: 1.45rem;
+  color: var(--color-primary);
+  text-align: center;
+}
+.kl-step-text {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.9;
+  text-align: center;
+  white-space: pre-line;
+}
+.kl-step-long {
+  font-size: 1.05rem;
+  text-align: start;
 }

@@ -117,4 +117,16 @@ void main() {
     await settleImages(tester);
     await shot(tester, '07-wudu');
   });
+
+  testWidgets('preview: salah steps', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(tester, size: size, prefs: prefs);
+    await pushScreen(tester, KidsStepsScreen(salah: true, loader: learnLoader));
+    for (var i = 0; i < 3; i++) {
+      await tester.tap(find.byKey(const Key('pager.next')));
+      await tester.pumpAndSettle();
+    }
+    await settleImages(tester);
+    await shot(tester, '08-salah');
+  });
 }

@@ -3089,7 +3089,7 @@ abstract class AppLocalizations {
   /// shared key "kidsLearn.credit"
   ///
   /// In en, this message translates to:
-  /// **'Pictures from {name}'**
+  /// **'Text from {name}'**
   String kidsLearnCredit(String name);
 
   /// shared key "kidsLearn.delete"

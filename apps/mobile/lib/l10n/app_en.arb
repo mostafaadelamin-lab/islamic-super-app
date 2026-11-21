@@ -2482,7 +2482,7 @@
       }
     }
   },
-  "kidsLearnCredit": "Pictures from {name}",
+  "kidsLearnCredit": "Text from {name}",
   "@kidsLearnCredit": {
     "description": "shared key \"kidsLearn.credit\"",
     "placeholders": {

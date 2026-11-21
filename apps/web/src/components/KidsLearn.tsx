@@ -13,6 +13,7 @@ import {
   writeCardCounts,
   writeMemorized,
   type CardDhikr,
+  type KidsStep,
   type HadithLevel,
   type KidsBook,
 } from "@/lib/kids-learn-store";
@@ -379,24 +380,35 @@ export function KidsCards({ locale, items }: { locale: Locale; items: CardDhikr[
 export function KidsSteps({
   locale,
   salah,
-  pages,
+  steps,
   credit,
 }: {
   locale: Locale;
   salah: boolean;
-  pages: number[];
+  steps: KidsStep[];
   credit: string;
 }) {
   const n = (v: number): string => localizeDigits(v, locale);
   const [i, setI] = useState(0);
-  const last = i === pages.length - 1;
-  const label = t(locale, "kidsLearn.step", { n: n(i + 1), total: n(pages.length) });
+  const last = i === steps.length - 1;
+  const label = t(locale, "kidsLearn.step", { n: n(i + 1), total: n(steps.length) });
+  const step = steps[i];
+  if (!step) return null;
   return (
     <div data-testid={salah ? "kids-salah" : "kids-wudu"}>
-      <div className="kl-frame">
-        {/* eslint-disable-next-line @next/next/no-img-element -- static export: no image optimiser */}
-        <img src={withBase(`/kids/wudu/${pages[i]}.webp`)} alt={label} className="kl-page" />
-      </div>
+      <article className="kl-step" data-testid={`kids-step-${i}`}>
+        {step.pic ? (
+          /* eslint-disable-next-line @next/next/no-img-element -- static export: no image optimiser */
+          <img src={withBase(`/kids/steps/${step.pic}.webp`)} alt={step.title} className="kl-step-pic" />
+        ) : null}
+        <h2 className="kl-step-title">{step.title}</h2>
+        <p className={step.pic ? "kl-step-text" : "kl-step-text kl-step-long"}>{step.text}</p>
+        {step.ayah ? (
+          <p className="kl-dhikr-text" lang="ar">
+            {step.ayah}
+          </p>
+        ) : null}
+      </article>
       <Pager
         locale={locale}
         label={label}

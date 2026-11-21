@@ -62,6 +62,26 @@ class CardDhikr {
   int countFor({required bool evening}) => evening ? this.evening : morning;
 }
 
+/// One wudu / salah step: the book's own title and text, with our own 3D picture (none on text pages).
+class KidsStep {
+  const KidsStep({required this.title, required this.text, this.pic, this.ayah});
+  final String title;
+  final String text;
+
+  /// Picture name in `assets/kids/steps/<pic>.webp`.
+  final String? pic;
+
+  /// Ayat al-Kursi on the "dhikr after salah" page (KFGQPC wording from the app's adhkar).
+  final String? ayah;
+
+  static KidsStep fromJson(Map<String, dynamic> j) => KidsStep(
+    title: j['title'] as String,
+    text: j['text'] as String,
+    pic: j['pic'] as String?,
+    ayah: j['ayah'] as String?,
+  );
+}
+
 class KidsLearnContent {
   const KidsLearnContent({
     required this.booksBase,
@@ -83,9 +103,9 @@ class KidsLearnContent {
   /// Hadith text by number - 1.
   final List<String> hadith;
 
-  /// Page numbers of the wudu / salah book (pictures in assets/kids/wudu/).
-  final List<int> wudu;
-  final List<int> salah;
+  /// Wudu / salah steps in the book's order.
+  final List<KidsStep> wudu;
+  final List<KidsStep> salah;
 
   /// The wudu / salah book asks to be named when shared (its own terms).
   final String stepsCredit;
@@ -108,7 +128,7 @@ class KidsLearnContent {
 
   static KidsLearnContent parse(String raw) {
     final j = jsonDecode(raw) as Map<String, dynamic>;
-    List<int> ints(Object? v) => [for (final x in v! as List) x as int];
+    List<KidsStep> steps(Object? v) => [for (final x in (v! as List).cast<Map<String, dynamic>>()) KidsStep.fromJson(x)];
     return KidsLearnContent(
       booksBase: j['booksBase'] as String,
       shelves: [for (final s in j['shelves'] as List) s as String],
@@ -132,8 +152,8 @@ class KidsLearnContent {
           ),
       ],
       hadith: [for (final h in j['hadith'] as List) h as String],
-      wudu: ints(j['wudu']),
-      salah: ints(j['salah']),
+      wudu: steps(j['wudu']),
+      salah: steps(j['salah']),
       stepsCredit: j['stepsCredit'] as String,
       cardAdhkar: [
         for (final c in (j['cardAdhkar'] as List? ?? const []).cast<Map<String, dynamic>>())

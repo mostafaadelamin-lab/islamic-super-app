@@ -38,9 +38,16 @@ void main() {
     for (final s in k.shelves) {
       expect(k.onShelf(s), isNotEmpty, reason: s);
     }
-    for (final p in [...k.wudu, ...k.salah]) {
-      expect(File('assets/kids/wudu/$p.webp').existsSync(), isTrue);
+    // Wudu / salah: the book's title and text per step, our own 3D picture on each step page.
+    expect(k.wudu.where((s) => s.pic != null), hasLength(8));
+    expect(k.salah.where((s) => s.pic != null), hasLength(12));
+    for (final s in [...k.wudu, ...k.salah]) {
+      expect(s.title.trim(), isNotEmpty);
+      expect(s.text.trim(), isNotEmpty);
+      if (s.pic != null) expect(File('assets/kids/steps/${s.pic}.webp').existsSync(), isTrue, reason: s.pic);
     }
+    expect(k.wudu[1].title, 'النية والتسمية وغسل الكفين');
+    expect(k.salah.last.ayah, contains('الْقَيُّومُ'));
     expect(k.stepsCredit, isNotEmpty);
   });
 
@@ -124,7 +131,12 @@ void main() {
     final k = _learn();
     await pushScreen(tester, KidsStepsScreen(salah: false, loader: () async => k));
     expect(find.byKey(const Key('kidsSteps.done')), findsNothing);
-    for (var i = 1; i < k.wudu.length; i++) {
+    expect(tester.widget<Text>(find.byKey(const Key('kidsStep.text.0'))).data, k.wudu.first.text);
+    await tester.tap(find.byKey(const Key('pager.next')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('kidsStep.pic.w-hands')), findsOneWidget);
+    expect(tester.widget<Text>(find.byKey(const Key('kidsStep.title.1'))).data, k.wudu[1].title);
+    for (var i = 2; i < k.wudu.length; i++) {
       await tester.tap(find.byKey(const Key('pager.next')));
       await tester.pumpAndSettle();
     }

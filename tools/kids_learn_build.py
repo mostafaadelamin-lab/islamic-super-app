@@ -1,7 +1,7 @@
 """Builds the kids learning corner (assets/content/kids-learn.v1.json) from content/kids/learn/.
 Hadith text is COPIED from hadith600.json (extracted unchanged from the published book's PDF text layer
-by tools/kids_hadith600/), never typed here. Pictures (cards, wudu/salah steps, book pages) are the
-published pages themselves. Sources: docs/CONTENT_SOURCES.md."""
+by tools/kids_hadith600/), never typed here. Book pages are the published pages themselves;
+wudu/salah steps are the book's text with our own 3D pictures (tools/kids_steps_3d/). Sources: docs/CONTENT_SOURCES.md."""
 import json, os, re, unicodedata
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 src = json.load(open(f'{ROOT}/content/kids/learn/learn.json', encoding='utf-8'))
@@ -42,6 +42,19 @@ for c in cards_src:
         e['surahs'] = adhkar[3:6]
         assert all(t.startswith('قُلْ') for t in e['surahs'])
     card_adhkar.append(e)
+# Wudu / salah steps (owner 2026-11-21): the book's own title and text per page + our own 3D picture.
+steps = json.load(open(f'{ROOT}/content/kids/learn/steps.json', encoding='utf-8'))
+kursi = re.search(r'﴿[^﴾]+﴾', adhkar[1]).group(0)
+assert 'الْقَيُّومُ' in kursi
+def step(e):
+    assert e['title'] and e['text'] and unicodedata.normalize('NFC', e['text']) == e['text'], e
+    o = {'title': e['title'], 'text': e['text']}
+    if e.get('pic'):
+        assert os.path.exists(f"{ROOT}/apps/mobile/assets/kids/steps/{e['pic']}.webp"), e['pic']
+        o['pic'] = e['pic']
+    if e.get('ayatAlKursi'):
+        o['ayah'] = kursi
+    return o
 out = {
     'schema': 'kids-learn.v1',
     'booksBase': src['booksBase'],
@@ -49,8 +62,8 @@ out = {
     'books': [{k: b[k] for k in ('id', 'shelf', 'title', 'author', 'pages')} for b in src['books']],
     'hadithLevels': levels,
     'hadith': [h['text'] for h in had],
-    'wudu': src['wudu']['pages'],
-    'salah': src['salah']['pages'],
+    'wudu': [step(e) for e in steps['wudu']],
+    'salah': [step(e) for e in steps['salah']],
     'stepsCredit': src['stepsCredit'],
     'cardAdhkar': card_adhkar,
 }

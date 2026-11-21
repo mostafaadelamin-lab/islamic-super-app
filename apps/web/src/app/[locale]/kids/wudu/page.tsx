@@ -19,7 +19,7 @@ export default async function KidsWuduPage({ params }: { params: LocaleParams })
         <Link href={href(locale, "kids")}>{t(locale, "kids.back")}</Link>
       </nav>
       <h1>{t(locale, "kidsLearn.wudu")}</h1>
-      <KidsSteps locale={locale} salah={false} pages={LEARN.wudu} credit={LEARN.stepsCredit} />
+      <KidsSteps locale={locale} salah={false} steps={LEARN.wudu} credit={LEARN.stepsCredit} />
     </>
   );
 }

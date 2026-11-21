@@ -1690,7 +1690,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String kidsLearnCredit(String name) {
-    return 'الصور من $name';
+    return 'النص من $name';
   }
 
   @override

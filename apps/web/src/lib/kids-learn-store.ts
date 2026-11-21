@@ -35,6 +35,14 @@ export function writeMemorized(s: Set<number>): void {
 }
 
 /** One dhikr of the adhkar cards as text: m / e = repeat counts in the morning / evening (0 = not said then). */
+/** One wudu / salah step: the book's own title and text, with our own 3D picture (none on text pages). */
+export interface KidsStep {
+  title: string;
+  text: string;
+  pic?: string;
+  ayah?: string;
+}
+
 export interface CardDhikr {
   n: number;
   card: number;

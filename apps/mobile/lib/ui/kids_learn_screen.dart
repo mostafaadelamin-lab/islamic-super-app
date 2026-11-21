@@ -876,6 +876,59 @@ class _KidsCardsScreenState extends State<KidsCardsScreen> {
 // ───────────────────────────── Wudu / salah steps ─────────────────────────────
 
 /// «أتعلم الوضوء» / «أتعلم الصلاة»: the book's pictured steps, one by one.
+/// One step: our 3D picture (if any), then the book's title and text.
+class _StepPage extends StatelessWidget {
+  const _StepPage({required this.step, required this.index});
+  final KidsStep step;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final pic = step.pic;
+    return SingleChildScrollView(
+      key: Key('kidsStep.$index'),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (pic != null)
+            Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 420),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: Image.asset('assets/kids/steps/$pic.webp', key: Key('kidsStep.pic.$pic'), fit: BoxFit.cover),
+                  ),
+                ),
+              ),
+            ),
+          const SizedBox(height: 14),
+          Text(
+            step.title,
+            key: Key('kidsStep.title.$index'),
+            textAlign: TextAlign.center,
+            style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800, color: theme.colorScheme.primary),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            step.text,
+            key: Key('kidsStep.text.$index'),
+            textAlign: pic != null ? TextAlign.center : TextAlign.start,
+            style: theme.textTheme.titleMedium?.copyWith(height: 1.8, fontSize: pic != null ? 20 : 17),
+          ),
+          if (step.ayah case final ayah?) ...[
+            const SizedBox(height: 12),
+            Text(ayah, textAlign: TextAlign.center, style: duaStyle(context, size: 21)),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
 class KidsStepsScreen extends StatefulWidget {
   const KidsStepsScreen({super.key, required this.salah, this.loader = loadKidsLearn});
   final bool salah;
@@ -912,10 +965,7 @@ class _KidsStepsScreenState extends State<KidsStepsScreen> {
                 controller: _pages,
                 itemCount: pages.length,
                 onPageChanged: (i) => setState(() => _i = i),
-                itemBuilder: (_, i) => InteractiveViewer(
-                  maxScale: 4,
-                  child: Center(child: Image.asset('assets/kids/wudu/${pages[i]}.webp', fit: BoxFit.contain)),
-                ),
+                itemBuilder: (context, i) => _StepPage(step: pages[i], index: i),
               ),
             ),
             _PagerBar(
