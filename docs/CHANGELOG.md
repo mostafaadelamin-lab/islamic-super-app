@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.17] — full adhan on iPhone — 2026-11-21
+Owner 2026-11-21: iPhone adhan alerts played only 30 seconds; the whole adhan must ring on every iPhone. Phone apps only (Android already rings the full adhan; the website plays it in full while a page is open).
+### Added
+- iPhone: the whole adhan rings at prayer time with the chosen muezzin. iOS plays at most 30 s of a notification sound, so the app cuts the recording (on the phone, at the pauses between the phrases) into parts of up to 29 s, and each part rings as its own notification the moment the one before ends. The next 48 hours ring in full; later days ring the first 30 s until the app is opened again (iOS keeps at most 64 pending notifications).
+- iPhone: opening the app from an adhan notification plays the rest of the adhan in the app from where it reached, removes the remaining parts, and shows a «إيقاف الأذان» bar.
+- iPhone with iOS 26 or newer: «الأذان كامل كمنبّه» in the adhan settings (off by default; asks for the alarm permission): the adhan rings as a system alarm (AlarmKit) with the whole recording, even on silent, with «إيقاف» and «أكمل في التطبيق» buttons.
+### Changed
+- Unchanged: Quran text and all other religious content; Android and website behaviour.
+
 ## [1.2.16] — one combined store update + website — 2026-11-21
 Owner 2026-11-21: one release with every change asked for (1.2.14 and 1.2.15 were never uploaded to the stores; 1.2.15 went to the website only).
 Owner 2026-11-20: everything ships together (1.2.14 was never uploaded). Phone apps (Android + iPhone) and website.

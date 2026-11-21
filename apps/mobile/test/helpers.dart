@@ -399,6 +399,7 @@ class FakeNotifications implements NotificationsBackend {
   final scheduled = <({int id, String title, String body, DateTime at, String sound})>[];
   int cancels = 0;
   int permissionRequests = 0;
+  final cancelled = <int>[];
 
   @override
   Future<void> init() async {}
@@ -423,7 +424,14 @@ class FakeNotifications implements NotificationsBackend {
     required String body,
     required DateTime atUtc,
     String sound = 'adhan',
-  }) async => scheduled.add((id: id, title: title, body: body, at: atUtc, sound: sound));
+    AdhanRing? ring,
+  }) async {
+    scheduled.add((id: id, title: title, body: body, at: atUtc, sound: sound));
+    if (ring != null) rings[id] = ring;
+  }
+
+  /// iPhone: how each adhan rings (see AdhanRing), by notification id.
+  final rings = <int, AdhanRing>{};
 
   final repeating = <int, ({String title, String body, int hour, int minute, int? weekday, String? sound})>{};
 
@@ -442,6 +450,7 @@ class FakeNotifications implements NotificationsBackend {
 
   @override
   Future<void> cancel(int id) async {
+    cancelled.add(id);
     repeating.remove(id);
     scheduled.removeWhere((n) => n.id == id);
   }
@@ -451,15 +460,17 @@ class FakeAdhanPlayer implements AdhanPlayer {
   int plays = 0;
   int stops = 0;
   String? lastAsset;
+  Duration lastFrom = Duration.zero;
   final _done = StreamController<void>.broadcast();
 
   /// Simulates the recording reaching its end.
   void finish() => _done.add(null);
 
   @override
-  Future<void> play(String asset) async {
+  Future<void> play(String asset, {Duration from = Duration.zero}) async {
     plays++;
     lastAsset = asset;
+    lastFrom = from;
   }
 
   @override
@@ -467,6 +478,34 @@ class FakeAdhanPlayer implements AdhanPlayer {
 
   @override
   Stream<void> get completed => _done.stream;
+}
+
+/// iPhone recording cutter without the platform: every recording has [parts].
+class FakeAdhanParts implements AdhanSoundParts {
+  FakeAdhanParts({this.parts = const [28, 27, 29, 25, 20], this.alarm = 'unavailable'});
+  List<int> parts;
+  String alarm;
+  final prepared = <String>[];
+  String? tap;
+
+  @override
+  Future<List<int>> prepare(String voice, String source) async {
+    prepared.add('$voice|$source');
+    return parts;
+  }
+
+  @override
+  Future<String> alarmState() async => alarm;
+
+  @override
+  Future<String> requestAlarms() async => alarm = 'authorized';
+
+  @override
+  Future<String?> takeAlarmTap() async {
+    final t = tap;
+    tap = null;
+    return t;
+  }
 }
 
 class FakeSensors implements CompassSensors {

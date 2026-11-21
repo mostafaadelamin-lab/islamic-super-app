@@ -138,6 +138,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get adhanContinued => 'The adhan continues. Tap to hear all of it in the app.';
+
+  @override
   String get adhanCredit => 'Adhan recordings:';
 
   @override
@@ -159,6 +162,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get adhanFajrVoiceNote =>
       'The Fajr adhan says «prayer is better than sleep», so it has its own choice and plays only at Fajr.';
+
+  @override
+  String get adhanIosAlarm => 'Full adhan as an alarm';
+
+  @override
+  String get adhanIosAlarmDenied => 'Allow alarms for Rattil wa Salli in the iPhone Settings, then turn this on again.';
+
+  @override
+  String get adhanIosAlarmHint =>
+      'The whole adhan rings like an alarm clock, even when the iPhone is on silent, with a stop button on the lock screen. iOS 26 or newer.';
+
+  @override
+  String get adhanIosFullHint =>
+      'On iPhone the whole adhan rings in parts, one after another. Open the app every day or two to keep it full; otherwise only the first 30 seconds ring.';
 
   @override
   String get adhanIosNote =>
@@ -195,6 +212,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get adhanNote =>
       'Scheduled ahead on this device and works even when the app is closed; opening the app renews them. If an alert is late, allow \"Alarms & reminders\" and turn off battery optimisation for the app.';
+
+  @override
+  String get adhanNowPlaying => 'Adhan';
+
+  @override
+  String get adhanOpenApp => 'Continue in app';
 
   @override
   String get adhanPlayOnSilent => 'Play the adhan when the phone is silent';

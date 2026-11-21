@@ -30,6 +30,7 @@ class AdhanNotification {
     required this.date,
     this.kind = adhanKind,
     this.minutes = 0,
+    this.parts = 1,
   });
 
   /// Stable id (see [adhanNotificationId]) so re-planning the same day replaces
@@ -49,8 +50,15 @@ class AdhanNotification {
   /// Minutes before ([preAdhanKind]) or after ([iqamaKind]) the adhan.
   final int minutes;
 
+  /// iPhone: notifications this alert takes (the full adhan rings as several, back to back; 0 = it rings
+  /// as a system alarm instead). Always 1 for the other kinds and on Android.
+  final int parts;
+
+  AdhanNotification withParts(int n) =>
+      AdhanNotification(id: id, prayer: prayer, at: at, date: date, kind: kind, minutes: minutes, parts: n);
+
   @override
-  String toString() => 'AdhanNotification($id, $kind, $prayer, $at)';
+  String toString() => 'AdhanNotification($id, $kind, $prayer, $at${parts == 1 ? '' : ', parts $parts'})';
 }
 
 /// Adhan ids keep their original form yyyymmdd * 10 + prayer index (9 digits);
@@ -167,4 +175,59 @@ List<AdhanNotification> planAdhanNotifications({
   }
   out.sort((a, b) => a.at.compareTo(b.at));
   return out.length > max ? out.sublist(0, max) : out;
+}
+
+/// iPhone: the id of part [k] (1-based after the first) of the full adhan whose first notification is
+/// [adhanId]. iOS plays at most 30 s of a notification sound, so the whole adhan rings as notifications
+/// back to back (part 0 keeps the adhan's own id). Ids yyyymmdd * 100 + 40..99 are free (reminders use
+/// 10..31), five prayers x [maxAdhanParts] parts; the "try it now" notification (id 1) uses 120 + k.
+int adhanPartId(int adhanId, int k) {
+  if (k < 1 || k >= maxAdhanParts) throw RangeError.range(k, 1, maxAdhanParts - 1, 'k');
+  if (adhanId < 1000) return 100 + adhanId * 20 + k;
+  final ymd = adhanId ~/ 10;
+  final i = adhanId % 10;
+  return (ymd * 100 + 40 + i * maxAdhanParts + (k - 1)) % 0x7fffffff;
+}
+
+/// Most notifications one full adhan may take on iPhone (12 x up to 29 s = almost 6 minutes).
+const maxAdhanParts = 12;
+
+/// iPhone: fits the full adhans into the [max] pending notifications iOS allows. [all] is the plan for every
+/// day (sorted, not capped); [partsFor] gives how many notifications [prayer]'s adhan takes (1 = the first
+/// 30 s only, 0 = it rings as a system alarm and takes no notification). The adhans of the next [keep] are
+/// upgraded to the full adhan, earliest first, as long as every alert of that window still fits; later days
+/// fill what is left with the first 30 s only (the app renews the plan every time it opens).
+/// Returns the alerts with [AdhanNotification.parts] set.
+List<AdhanNotification> fitFullAdhan(
+  List<AdhanNotification> all, {
+  required int Function(String prayer) partsFor,
+  required DateTime nowUtc,
+  int max = 60,
+  Duration keep = const Duration(hours: 48),
+}) {
+  int full(AdhanNotification n) => n.kind == adhanKind ? partsFor(n.prayer).clamp(0, maxAdhanParts) : 1;
+  int one(AdhanNotification n) => n.kind == adhanKind && full(n) == 0 ? 0 : 1;
+  final until = nowUtc.add(keep);
+  final window = [
+    for (final n in all)
+      if (n.at.isBefore(until)) n,
+  ];
+  var used = window.fold<int>(0, (s, n) => s + one(n));
+  final upgraded = <int>{};
+  for (final n in window) {
+    final extra = full(n) - one(n);
+    if (extra <= 0) continue;
+    if (used + extra > max) break;
+    used += extra;
+    upgraded.add(n.id);
+  }
+  final out = <AdhanNotification>[];
+  var total = 0;
+  for (final n in all) {
+    final want = upgraded.contains(n.id) ? full(n) : one(n);
+    if (total + want > max) break;
+    out.add(n.withParts(want));
+    total += want;
+  }
+  return out;
 }

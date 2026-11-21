@@ -304,6 +304,13 @@ class AdhanSettingsCard extends StatelessWidget {
               value: settings.adhanPlayOnSilent,
               onChanged: settings.setAdhanPlayOnSilent,
             ),
+          // Owner (2026-11-21): the whole adhan on every iPhone. iOS cuts a notification sound at 30 s, so it
+          // rings as parts back to back; iOS 26+ can ring it as an alarm instead (AlarmKit).
+          if (Theme.of(context).platform == TargetPlatform.iOS && settings.adhanSound == 'adhan') ...[
+            const SizedBox(height: DesignTokens.spaceXs),
+            Text(l.adhanIosFullHint, key: const Key('adhanIosFullHint'), style: small),
+            const _IosAlarmSwitch(),
+          ],
           const SizedBox(height: DesignTokens.spaceMd),
           _VoiceRow(fajr: false, id: settings.adhanVoice),
           _VoiceRow(fajr: true, id: settings.adhanFajrVoice),
@@ -542,6 +549,65 @@ class MushafLookCard extends StatelessWidget {
                   ),
         ],
       ),
+    );
+  }
+}
+
+/// iOS 26+: ring the whole adhan as a system alarm (asks for the alarm permission when turned on). Hidden on
+/// older iOS.
+class _IosAlarmSwitch extends StatefulWidget {
+  const _IosAlarmSwitch();
+
+  @override
+  State<_IosAlarmSwitch> createState() => _IosAlarmSwitchState();
+}
+
+class _IosAlarmSwitchState extends State<_IosAlarmSwitch> {
+  String? _state;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_state != null) return;
+    _state = 'loading';
+    final parts = context.services.adhan.parts;
+    if (parts == null) {
+      _state = 'unavailable';
+      return;
+    }
+    parts.alarmState().then((v) {
+      if (mounted) setState(() => _state = v);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_state == null || _state == 'loading' || _state == 'unavailable') return const SizedBox.shrink();
+    final s = context.services;
+    final l = context.l10n;
+    final on = s.settings.adhanIosAlarm && _state == 'authorized';
+    return SwitchListTile(
+      key: const Key('adhanIosAlarm'),
+      contentPadding: EdgeInsets.zero,
+      title: Text(l.adhanIosAlarm),
+      subtitle: Text(l.adhanIosAlarmHint, style: Theme.of(context).textTheme.bodySmall),
+      value: on,
+      onChanged: (v) async {
+        final messenger = ScaffoldMessenger.of(context);
+        if (!v) {
+          await s.settings.setAdhanIosAlarm(false);
+          await s.adhan.sync(force: true);
+          return;
+        }
+        final st = await s.adhan.parts!.requestAlarms();
+        if (mounted) setState(() => _state = st);
+        if (st == 'authorized') {
+          await s.settings.setAdhanIosAlarm(true);
+          await s.adhan.sync(force: true);
+        } else {
+          messenger.showSnackBar(SnackBar(content: Text(l.adhanIosAlarmDenied)));
+        }
+      },
     );
   }
 }

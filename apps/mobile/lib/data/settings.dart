@@ -374,6 +374,14 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// iPhone with iOS 26 or newer: the full adhan rings as a system alarm (AlarmKit), even on silent, instead
+  /// of notifications back to back. Off until the user turns it on (iOS then asks for the alarm permission).
+  bool get adhanIosAlarm => _prefs.getBool('adhan.iosAlarm') ?? false;
+  Future<void> setAdhanIosAlarm(bool v) async {
+    await _prefs.setBool('adhan.iosAlarm', v);
+    notifyListeners();
+  }
+
   bool get adhanEnabled => _prefs.getBool('adhan.enabled') ?? false;
 
   /// False until the user has touched the adhan switch (nothing to cancel then).

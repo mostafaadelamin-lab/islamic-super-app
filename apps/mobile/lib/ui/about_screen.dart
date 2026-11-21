@@ -9,7 +9,7 @@ class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 
   /// The store version; test/unit/app_version_test.dart keeps it equal to pubspec.yaml.
-  static const appVersion = '1.2.16';
+  static const appVersion = '1.2.17';
 
   @override
   Widget build(BuildContext context) {

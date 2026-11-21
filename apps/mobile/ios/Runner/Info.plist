@@ -30,6 +30,8 @@
 	</dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSAlarmKitUsageDescription</key>
+	<string>يرنّ الأذان كاملاً في وقت كل صلاة مثل المنبّه، حتى لو كان الآيفون على الصامت.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>«رتّل وصلِّ» يستخدم موقعك فقط أثناء فتح التطبيق لحساب مواقيت الصلاة واتجاه القبلة والمساجد القريبة، ولا يتتبعك في الخلفية. Rattil wa Salli uses your location only while the app is open, for prayer times, the qibla and nearby mosques; it never tracks you in the background.</string>
 	<key>NSMotionUsageDescription</key>

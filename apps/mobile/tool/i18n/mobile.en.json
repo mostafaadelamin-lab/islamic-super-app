@@ -1099,5 +1099,12 @@
   "reader.prevJuz": "Previous juz",
   "reader.pickJuz": "Choose the juz",
   "reader.tafsirBesideSurah": "Tafsir beside the surah",
-  "reader.tafsirBesideJuz": "Tafsir beside the juz"
+  "reader.tafsirBesideJuz": "Tafsir beside the juz",
+  "adhan.continued": "The adhan continues. Tap to hear all of it in the app.",
+  "adhan.iosAlarm": "Full adhan as an alarm",
+  "adhan.iosAlarmHint": "The whole adhan rings like an alarm clock, even when the iPhone is on silent, with a stop button on the lock screen. iOS 26 or newer.",
+  "adhan.iosAlarmDenied": "Allow alarms for Rattil wa Salli in the iPhone Settings, then turn this on again.",
+  "adhan.iosFullHint": "On iPhone the whole adhan rings in parts, one after another. Open the app every day or two to keep it full; otherwise only the first 30 seconds ring.",
+  "adhan.nowPlaying": "Adhan",
+  "adhan.openApp": "Continue in app"
 }

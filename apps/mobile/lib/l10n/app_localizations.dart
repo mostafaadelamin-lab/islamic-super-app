@@ -308,6 +308,12 @@ abstract class AppLocalizations {
   /// **'{name} prayer time in {city}'**
   String adhanBody(String name, String city);
 
+  /// shared key "adhan.continued"
+  ///
+  /// In en, this message translates to:
+  /// **'The adhan continues. Tap to hear all of it in the app.'**
+  String get adhanContinued;
+
   /// shared key "adhan.credit"
   ///
   /// In en, this message translates to:
@@ -349,6 +355,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The Fajr adhan says «prayer is better than sleep», so it has its own choice and plays only at Fajr.'**
   String get adhanFajrVoiceNote;
+
+  /// shared key "adhan.iosAlarm"
+  ///
+  /// In en, this message translates to:
+  /// **'Full adhan as an alarm'**
+  String get adhanIosAlarm;
+
+  /// shared key "adhan.iosAlarmDenied"
+  ///
+  /// In en, this message translates to:
+  /// **'Allow alarms for Rattil wa Salli in the iPhone Settings, then turn this on again.'**
+  String get adhanIosAlarmDenied;
+
+  /// shared key "adhan.iosAlarmHint"
+  ///
+  /// In en, this message translates to:
+  /// **'The whole adhan rings like an alarm clock, even when the iPhone is on silent, with a stop button on the lock screen. iOS 26 or newer.'**
+  String get adhanIosAlarmHint;
+
+  /// shared key "adhan.iosFullHint"
+  ///
+  /// In en, this message translates to:
+  /// **'On iPhone the whole adhan rings in parts, one after another. Open the app every day or two to keep it full; otherwise only the first 30 seconds ring.'**
+  String get adhanIosFullHint;
 
   /// shared key "adhan.iosNote"
   ///
@@ -397,6 +427,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Scheduled ahead on this device and works even when the app is closed; opening the app renews them. If an alert is late, allow \"Alarms & reminders\" and turn off battery optimisation for the app.'**
   String get adhanNote;
+
+  /// shared key "adhan.nowPlaying"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhan'**
+  String get adhanNowPlaying;
+
+  /// shared key "adhan.openApp"
+  ///
+  /// In en, this message translates to:
+  /// **'Continue in app'**
+  String get adhanOpenApp;
 
   /// shared key "adhan.playOnSilent"
   ///

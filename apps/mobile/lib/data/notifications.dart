@@ -29,6 +29,7 @@ abstract class NotificationsBackend {
     required String body,
     required DateTime atUtc,
     String sound = 'adhan',
+    AdhanRing? ring,
   });
 
   /// A notification repeating every day (or every week on [weekday], 1 = Monday)
@@ -68,11 +69,142 @@ tz.TZDateTime nextOccurrence({
 /// Id of the one-off "try it now" notification (real ids are yyyymmddN).
 const adhanTestNotificationId = 1;
 
+/// iPhone: how one adhan rings. iOS plays at most 30 s of a notification sound, so the recording is cut
+/// (natively, at the pauses between its phrases) into [parts] of at most 29 s, saved as
+/// Library/Sounds/[adhanPartSound], and each part rings as its own notification the moment the one before
+/// ends. With [alarm] (iOS 26+, AlarmKit) the whole recording rings as one system alarm instead.
+class AdhanRing {
+  const AdhanRing({
+    required this.voice,
+    required this.parts,
+    this.alarm = false,
+    this.count,
+    this.moreBody = '',
+    this.openLabel = '',
+  });
+
+  /// The muezzin's id (see adhan_voices.dart) whose recording was cut.
+  final String voice;
+
+  /// Length of each part in whole seconds; empty when the recording could not be cut (then the opening
+  /// takbir, Runner/adhan_short.caf, rings alone).
+  final List<int> parts;
+
+  /// Ring as a system alarm with the whole recording.
+  final bool alarm;
+
+  /// How many of the [parts] ring (fewer when the 64 pending notifications iOS allows run out: the far
+  /// days then ring the first 30 s only); null = all.
+  final int? count;
+
+  AdhanRing take(int n) =>
+      AdhanRing(voice: voice, parts: parts, alarm: alarm, count: n, moreBody: moreBody, openLabel: openLabel);
+
+  /// Text of the notifications after the first one.
+  final String moreBody;
+
+  /// Label of the alarm's button that opens the app to continue the adhan.
+  final String openLabel;
+
+  int get seconds => parts.fold(0, (a, b) => a + b);
+
+  /// What opening the app from this adhan's notification (or alarm) hands to [AdhanScheduler.continueFrom].
+  String payload(int id, DateTime atUtc) => 'adhan|$id|$voice|${atUtc.millisecondsSinceEpoch}|${parts.join(',')}';
+}
+
+/// File name (in Library/Sounds) of part [k] of [voice]'s recording, written by AppDelegate.swift.
+String adhanPartSound(String voice, int k) => 'rattil_adhan_${voice}_$k.caf';
+
+/// File name of [voice]'s whole recording for the iOS alarm.
+String adhanFullSound(String voice) => 'rattil_adhan_${voice}_full.caf';
+
+/// iPhone: cuts a muezzin's recording into notification sounds (native code in AppDelegate.swift).
+abstract class AdhanSoundParts {
+  /// Lengths (seconds) of the parts of [voice]'s recording at [source] (a bundled "assets/..." path or a
+  /// downloaded file); empty when it cannot be done. Cached: the cut happens once per recording.
+  Future<List<int>> prepare(String voice, String source);
+
+  /// iOS 26+ alarms: 'unavailable', 'notDetermined', 'denied' or 'authorized'.
+  Future<String> alarmState();
+
+  /// Asks iOS for the alarm permission; the new state.
+  Future<String> requestAlarms();
+
+  /// The adhan the user opened the app for from an alarm's "continue" button, once (or null).
+  Future<String?> takeAlarmTap();
+}
+
+class NativeAdhanSoundParts implements AdhanSoundParts {
+  static const _channel = MethodChannel('org.rattil.app/adhan');
+  final _cache = <String, List<int>>{};
+
+  @override
+  Future<List<int>> prepare(String voice, String source) async {
+    final key = '$voice|$source';
+    final hit = _cache[key];
+    if (hit != null) return hit;
+    try {
+      final r = await _channel.invokeListMethod<int>('prepareParts', {
+        'voice': voice,
+        if (source.startsWith('assets/')) 'asset': source else 'path': source,
+      });
+      final parts = (r ?? const <int>[]).where((s) => s > 0).toList();
+      if (parts.isNotEmpty) _cache[key] = parts;
+      return parts;
+    } catch (e) {
+      debugPrint('adhan parts for $voice failed: $e');
+      return const [];
+    }
+  }
+
+  @override
+  Future<String> alarmState() async {
+    try {
+      return await _channel.invokeMethod<String>('alarmState') ?? 'unavailable';
+    } catch (_) {
+      return 'unavailable';
+    }
+  }
+
+  @override
+  Future<String> requestAlarms() async {
+    try {
+      return await _channel.invokeMethod<String>('alarmRequest') ?? 'unavailable';
+    } catch (_) {
+      return 'unavailable';
+    }
+  }
+
+  @override
+  Future<String?> takeAlarmTap() async {
+    try {
+      return await _channel.invokeMethod<String>('takeAlarmTap');
+    } catch (_) {
+      return null;
+    }
+  }
+}
+
 class LocalNotificationsBackend implements NotificationsBackend {
   LocalNotificationsBackend({bool? fullAdhanOnAndroid})
     : _fullAdhan = fullAdhanOnAndroid ?? (!kIsWeb && defaultTargetPlatform == TargetPlatform.android);
 
   final _plugin = FlutterLocalNotificationsPlugin();
+
+  static bool get _ios => !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+
+  final _taps = StreamController<String>.broadcast();
+  String? _launchTap;
+
+  /// iPhone: payloads ([AdhanRing.payload]) of the adhan notifications the user opens the app from.
+  Stream<String> get adhanTaps => _taps.stream;
+
+  /// The adhan notification that started the app, once (or null).
+  String? takeLaunchTap() {
+    final p = _launchTap;
+    _launchTap = null;
+    return p;
+  }
 
   /// Android plays the whole adhan through an exact alarm + a media foreground
   /// service (android/.../AdhanAlarms.kt, AdhanService.kt): a notification
@@ -141,7 +273,16 @@ class LocalNotificationsBackend implements NotificationsBackend {
           requestSoundPermission: false,
         ),
       ),
+      onDidReceiveNotificationResponse: (r) {
+        final p = r.payload;
+        if (p != null && p.startsWith('adhan|')) _taps.add(p);
+      },
     );
+    if (_ios) {
+      final launch = await _plugin.getNotificationAppLaunchDetails();
+      final p = launch?.notificationResponse?.payload;
+      if ((launch?.didNotificationLaunchApp ?? false) && p != null && p.startsWith('adhan|')) _launchTap = p;
+    }
     final android = _plugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
     _exact = await android?.canScheduleExactNotifications() ?? false;
     _ready = true;
@@ -169,7 +310,13 @@ class LocalNotificationsBackend implements NotificationsBackend {
   Future<void> cancelAll() async {
     await init();
     await _plugin.cancelAll();
-    if (_fullAdhan) await _adhanChannel.invokeMethod<void>('cancelAll');
+    if (_fullAdhan || _ios) {
+      try {
+        await _adhanChannel.invokeMethod<void>('cancelAll');
+      } catch (e) {
+        debugPrint('adhan cancelAll: $e');
+      }
+    }
   }
 
   /// Label of the Android "stop" action (set by the scheduler from l10n).
@@ -189,8 +336,10 @@ class LocalNotificationsBackend implements NotificationsBackend {
     required String body,
     required DateTime atUtc,
     String sound = 'adhan',
+    AdhanRing? ring,
   }) async {
     await init();
+    if (_ios && ring != null && sound == 'adhan') return _scheduleIos(id, title, body, atUtc, ring);
     if (_fullAdhan && sound == 'adhan') {
       await _adhanChannel.invokeMethod<void>('schedule', {
         'id': id,
@@ -211,6 +360,48 @@ class LocalNotificationsBackend implements NotificationsBackend {
       notificationDetails: NotificationDetails(android: _android(sound, stopLabel, voice), iOS: _darwin(sound)),
       androidScheduleMode: _exact ? AndroidScheduleMode.exactAllowWhileIdle : AndroidScheduleMode.inexactAllowWhileIdle,
     );
+  }
+
+  /// iPhone: the full adhan as parts back to back, or as one system alarm (see [AdhanRing]).
+  Future<void> _scheduleIos(int id, String title, String body, DateTime atUtc, AdhanRing ring) async {
+    final payload = ring.payload(id, atUtc);
+    if (ring.alarm) {
+      await _adhanChannel.invokeMethod<void>('alarmSchedule', {
+        'id': id,
+        'atMillis': atUtc.millisecondsSinceEpoch,
+        'title': title,
+        'sound': adhanFullSound(ring.voice),
+        'stopLabel': stopLabel,
+        'openLabel': ring.openLabel,
+        'payload': payload,
+      });
+      return;
+    }
+    final parts = ring.parts.isEmpty ? const [0] : ring.parts;
+    final count = (ring.count ?? parts.length).clamp(1, parts.length);
+    var offset = 0;
+    for (var k = 0; k < count; k++) {
+      await _plugin.zonedSchedule(
+        id: k == 0 ? id : adhanPartId(id, k),
+        title: title,
+        body: k == 0 ? body : ring.moreBody,
+        scheduledDate: tz.TZDateTime.from(atUtc.add(Duration(seconds: offset)), tz.UTC),
+        notificationDetails: NotificationDetails(
+          iOS: DarwinNotificationDetails(
+            presentAlert: true,
+            // In the app only the first part shows a banner; the rest just sound.
+            presentBanner: k == 0,
+            presentList: k == 0,
+            presentSound: true,
+            sound: ring.parts.isEmpty ? 'adhan_short.caf' : adhanPartSound(ring.voice, k),
+            threadIdentifier: 'adhan_$id',
+          ),
+        ),
+        payload: payload,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      );
+      offset += parts[k];
+    }
   }
 
   static const _reminderAndroid = AndroidNotificationDetails(
@@ -282,7 +473,11 @@ class AdhanScheduler {
     this.reserved,
     this.afterReset,
     this.voices,
+    this.parts,
   });
+
+  /// iPhone: cuts the recordings into notification sounds so the whole adhan rings (null elsewhere).
+  final AdhanSoundParts? parts;
 
   /// Downloaded muezzin recordings (null in tests that do not need them).
   final AdhanVoiceFiles? voices;
@@ -316,6 +511,46 @@ class AdhanScheduler {
   String? _lastSignature;
   List<AdhanNotification> _lastPlan = const [];
 
+  /// iPhone: how each prayer's adhan rings (only prayers with the adhan sound), set by [sync].
+  Map<String, AdhanRing> _rings = const {};
+
+  /// The muezzin that really sounds for [prayer]: the chosen one once it is on the phone, else the default.
+  String voiceFor(String prayer) {
+    final id = settings.adhanVoiceFor(prayer);
+    final fallback = prayer == 'fajr' ? defaultFajrVoice : defaultAdhanVoice;
+    final v = voices;
+    if (v != null) return v.isReady(id) ? id : fallback;
+    return (findAdhanVoice(id)?.bundled ?? false) ? id : fallback;
+  }
+
+  Future<Map<String, AdhanRing>> _iosRings(AdhanSoundParts p) async {
+    final l = lookupAppLocalizations(Locale(settings.locale.languageCode));
+    final alarm = settings.adhanIosAlarm && await p.alarmState() == 'authorized';
+    final out = <String, AdhanRing>{};
+    for (final prayer in obligatoryPrayers) {
+      if (settings.adhanSoundFor(prayer) != 'adhan') continue;
+      final voice = voiceFor(prayer);
+      final source = findAdhanVoice(voice)?.asset ?? voices?.localPath(voice);
+      final durations = source == null ? const <int>[] : await p.prepare(voice, source);
+      out[prayer] = AdhanRing(
+        voice: voice,
+        parts: durations,
+        alarm: alarm && durations.isNotEmpty,
+        moreBody: l.adhanContinued,
+        openLabel: l.adhanOpenApp,
+      );
+    }
+    return out;
+  }
+
+  /// Notifications [prayer]'s adhan takes on iPhone (0 = a system alarm).
+  int _partsFor(String prayer) {
+    final r = _rings[prayer];
+    if (r == null) return 1;
+    if (r.alarm) return 0;
+    return r.parts.isEmpty ? 1 : r.parts.length;
+  }
+
   List<AdhanNotification> get lastPlan => _lastPlan;
 
   String get _signature => [
@@ -335,6 +570,7 @@ class AdhanScheduler {
     settings.adjustments,
     settings.locale.languageCode,
     PrayerSchedule.localDate(tz.UTC, clock().toUtc()),
+    [for (final e in _rings.entries) '${e.key}:${e.value.voice}:${e.value.parts.length}:${e.value.alarm}'],
   ].join('|');
 
   /// Plans with the same inputs as the prayer screen.
@@ -344,23 +580,36 @@ class AdhanScheduler {
     final ctx = PrayerInputs.resolve(content, settings);
     final schedule = PrayerSchedule(content.calculator);
     final now = clock().toUtc();
-    return planAdhanNotifications(
+    final budget = max - (reserved?.call() ?? 0);
+    final all = planAdhanNotifications(
       nowUtc: now,
       today: PrayerSchedule.localDate(ctx.location, now),
       enabled: enabled,
       days: days,
-      max: max - (reserved?.call() ?? 0),
+      // iPhone: every alert first, then [fitFullAdhan] shares the budget with the full adhans.
+      max: parts == null ? budget : 1 << 20,
       preMinutes: settings.adhanPreMinutes,
       iqama: settings.iqamaPlan,
       sunrise: settings.sunriseAlert,
       lastThird: settings.lastThirdAlert,
       dayFor: (d) => ctx.day(schedule, d, settings.adjustments),
     );
+    if (parts == null) return all;
+    return fitFullAdhan(all, partsFor: _partsFor, nowUtc: now, max: budget);
   }
 
   /// Re-plans when anything relevant changed (or when [force]).
   Future<void> sync({bool force = false}) async {
     if (!settings.adhanConfigured) return;
+    final p = parts;
+    if (p != null && settings.adhanEnabled) {
+      try {
+        _rings = await _iosRings(p);
+      } catch (e) {
+        _rings = const {};
+        debugPrint('adhan parts failed: $e');
+      }
+    }
     final sig = _signature;
     if (!force && sig == _lastSignature) return;
     _lastSignature = sig;
@@ -402,6 +651,7 @@ class AdhanScheduler {
           },
           atUtc: n.at,
           sound: n.kind == adhanKind ? settings.adhanSoundFor(n.prayer) : extraSound,
+          ring: n.kind == adhanKind ? _rings[n.prayer]?.take(n.parts) : null,
         );
       }
     } catch (e) {
@@ -427,7 +677,30 @@ class AdhanScheduler {
       body: l.adhanTestBody,
       atUtc: clock().toUtc().add(delay),
       sound: settings.adhanSound,
+      ring: _rings['dhuhr'],
     );
+  }
+
+  /// iPhone: the user opened the app from an adhan notification (or the alarm's "continue" button), so the
+  /// rest of the adhan plays in the app from where the notifications reached, and its remaining
+  /// notifications are removed (which also silences the one sounding now). [payload]: [AdhanRing.payload].
+  Future<void> continueFrom(String payload, AdhanPreview preview) async {
+    final f = payload.split('|');
+    if (f.length < 5 || f[0] != 'adhan') return;
+    final id = int.tryParse(f[1]);
+    final start = int.tryParse(f[3]);
+    final parts = [for (final s in f[4].split(',')) ?int.tryParse(s)];
+    if (id == null || start == null) return;
+    final total = parts.fold<int>(0, (a, b) => a + b);
+    final elapsed = clock().toUtc().millisecondsSinceEpoch - start;
+    // Too early (a stale notification) or the adhan is over: nothing to continue.
+    if (elapsed < -60000 || elapsed > (total - 2) * 1000) return;
+    for (var k = 0; k < parts.length && k < maxAdhanParts; k++) {
+      try {
+        await backend.cancel(k == 0 ? id : adhanPartId(id, k));
+      } catch (_) {}
+    }
+    await preview.continueAdhan(f[2], Duration(milliseconds: elapsed < 0 ? 0 : elapsed));
   }
 
   static String _prayerName(AppLocalizations l, String key) => switch (key) {
@@ -441,8 +714,8 @@ class AdhanScheduler {
 
 /// Plays an adhan recording inside the app (settings "listen" buttons).
 abstract class AdhanPlayer {
-  /// [source]: a bundled asset ("assets/...") or a downloaded file's path.
-  Future<void> play(String source);
+  /// [source]: a bundled asset ("assets/...") or a downloaded file's path; [from]: where to start.
+  Future<void> play(String source, {Duration from = Duration.zero});
   Future<void> stop();
 
   /// Fires when the recording reaches its end.
@@ -464,11 +737,12 @@ class JustAudioAdhanPlayer implements AdhanPlayer {
   }
 
   @override
-  Future<void> play(String source) async {
+  Future<void> play(String source, {Duration from = Duration.zero}) async {
+    final at = from > Duration.zero ? from : null;
     if (source.startsWith('assets/')) {
-      await _p.setAsset(source);
+      await _p.setAsset(source, initialPosition: at);
     } else {
-      await _p.setFilePath(source);
+      await _p.setFilePath(source, initialPosition: at);
     }
     unawaited(_p.play());
   }
@@ -495,10 +769,41 @@ class AdhanPreview extends ChangeNotifier {
   bool get playing => _voice != null;
   String? get voice => _voice;
 
+  /// The adhan playing was continued from a prayer-time alert (the app shows a stop bar for it).
+  bool get fromAlert => _alert && _voice != null;
+  bool _alert = false;
+
   void _set(String? v) {
+    if (v == null) _alert = false;
     if (_voice == v) return;
     _voice = v;
     notifyListeners();
+  }
+
+  /// Plays [voiceId]'s recording from [from] (the rest of an adhan that started as a notification).
+  Future<void> continueAdhan(String voiceId, Duration from) async {
+    if (_voice != null) await _player.stop();
+    _alert = true;
+    _voice = null;
+    _set(voiceId);
+    try {
+      final source = await _source(voiceId);
+      if (source == null || _voice != voiceId) {
+        if (_voice == voiceId) _set(null);
+        return;
+      }
+      await _player.play(source, from: from);
+    } catch (e) {
+      _set(null);
+      debugPrint('adhan continue failed: $e');
+    }
+  }
+
+  /// Stops whatever is playing.
+  Future<void> stop() async {
+    if (_voice == null) return;
+    _set(null);
+    await _player.stop();
   }
 
   /// Plays [voiceId] (downloading it first when needed), or stops it when it is the one playing.

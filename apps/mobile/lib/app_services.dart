@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart' show TargetPlatform, defaultTargetPlatform;
+import 'package:flutter/foundation.dart' show TargetPlatform, defaultTargetPlatform, kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -86,6 +86,7 @@ class AppServices {
     NarrationBackend Function()? narrationBackend,
     NotificationsBackend? notifications,
     AdhanPlayer? adhanPlayer,
+    AdhanSoundParts? adhanParts,
     CompassSensors? sensors,
     TafsirStore? tafsir,
     HadithLibrary? hadith,
@@ -250,6 +251,8 @@ class AppServices {
         days: defaultTargetPlatform == TargetPlatform.android ? 30 : 7,
         max: defaultTargetPlatform == TargetPlatform.android ? 150 : 60,
         voices: adhanVoices,
+        // iPhone: the whole adhan rings as notifications back to back (or as an iOS 26 alarm).
+        parts: adhanParts ?? (!kIsWeb && defaultTargetPlatform == TargetPlatform.iOS ? NativeAdhanSoundParts() : null),
       ),
       adhanPreview: AdhanPreview(adhanPlayer ?? JustAudioAdhanPlayer(), source: adhanVoices.playable),
       dhikrPreview: AdhanPreview(

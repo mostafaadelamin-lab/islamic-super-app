@@ -138,6 +138,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get adhanContinued => 'تكملة الأذان. اضغط لتسمعه كاملاً في التطبيق.';
+
+  @override
   String get adhanCredit => 'تسجيلات الأذان:';
 
   @override
@@ -158,6 +161,20 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get adhanFajrVoiceNote =>
       'أذان الفجر فيه «الصلاة خير من النوم»، لذلك له اختيار مستقل ويعمل وحده في وقت الفجر.';
+
+  @override
+  String get adhanIosAlarm => 'الأذان كامل كمنبّه';
+
+  @override
+  String get adhanIosAlarmDenied => 'اسمح لرتّل وصلِّ بالمنبّهات من إعدادات الآيفون، ثم شغّل الخيار مرة أخرى.';
+
+  @override
+  String get adhanIosAlarmHint =>
+      'يرن الأذان كامل مثل المنبّه حتى لو الآيفون على الصامت، ويظهر على شاشة القفل بزر إيقاف. لآيفون iOS 26 وأحدث.';
+
+  @override
+  String get adhanIosFullHint =>
+      'على الآيفون يرن الأذان كاملاً على أجزاء متتالية. افتح التطبيق مرة كل يوم أو يومين ليبقى الأذان كاملاً، وإلا يرن أول ٣٠ ثانية فقط.';
 
   @override
   String get adhanIosNote =>
@@ -194,6 +211,12 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get adhanNote =>
       'تُجدول على هذا الجهاز مسبقًا وتشتغل حتى لو التطبيق مقفول، ويجدّدها فتح التطبيق. لو التنبيه اتأخر، اسمح للتطبيق بـ«المنبّهات والتذكيرات» وأوقف توفير البطارية له.';
+
+  @override
+  String get adhanNowPlaying => 'الأذان';
+
+  @override
+  String get adhanOpenApp => 'أكمل في التطبيق';
 
   @override
   String get adhanPlayOnSilent => 'تشغيل الأذان والهاتف صامت';
