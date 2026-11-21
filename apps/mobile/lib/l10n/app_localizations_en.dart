@@ -1561,6 +1561,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kidsProphetsNewSub => 'A teacher tells the story; the prophet is shown only as light';
 
   @override
+  String get kidsProphetsPick => 'Choose a series';
+
+  @override
   String get kidsProphetsSub => 'Cartoon episodes: watch or listen, download for offline';
 
   @override

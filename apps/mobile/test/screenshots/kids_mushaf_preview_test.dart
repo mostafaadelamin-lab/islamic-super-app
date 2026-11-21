@@ -51,7 +51,7 @@ void main() {
   setUpAll(loadContent);
   final outDir = Directory('${Platform.environment['RATTIL_SCREENSHOT_DIR'] ?? 'build/screenshots'}/kids-mushaf');
   final kids = KidsContent.parse(File('assets/content/kids.v1.json').readAsStringSync());
-  final timings = TeacherTimings.parse(File('assets/content/teacher-timings.v1.json').readAsStringSync());
+  final timings = TeacherTimings.parse(File('../../content/kids/dist/teacher-timings.v1.json').readAsStringSync());
 
   Future<void> shot(WidgetTester tester, String name) async {
     final view = tester.binding.renderViews.first;
@@ -151,19 +151,29 @@ void main() {
     await shot(tester, '07-ruqyah-counter');
   });
 
-  testWidgets('preview: prophets stories (modern series)', (tester) async {
+  testWidgets('preview: prophets stories (drop-down of three series)', (tester) async {
     tester.view.devicePixelRatio = 1;
     await pumpApp(tester, size: size, prefs: prefs, audio: FakeAudioBackend());
     await pushScreen(tester, KidsScreen(loader: () async => kids));
     await tester.tap(find.byKey(const Key('kids.prophets')));
     await tester.pumpAndSettle();
-    await shot(tester, '08-prophets-parts');
-    await tester.tap(find.byKey(const Key('kidsStories.kids-prophets-new')));
+    await shot(tester, '08-prophets-dropdown');
+    await tester.tap(find.byKey(const Key('kidsSeries.pick')));
     await tester.pumpAndSettle();
-    await shot(tester, '09-prophets-new');
-    await goBack(tester);
-    await tester.tap(find.byKey(const Key('kidsStories.kids-prophets-3d')));
+    await shot(tester, '09-prophets-dropdown-open');
+    await tester.tap(find.text('قصص الأنبياء: ثلاثي الأبعاد').last);
     await tester.pumpAndSettle();
     await shot(tester, '10-prophets-3d');
+  });
+
+  testWidgets('preview: teacher list, whole Quran, and al-Ahzab', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(tester, size: size, prefs: prefs, audio: FakeAudioBackend());
+    await pushScreen(tester, TeacherMushafScreen(content: kids));
+    await tester.pumpAndSettle();
+    await shot(tester, '11-teacher-list-all');
+    await pushScreen(tester, KidsMushafScreen(surah: 2, reciters: kids.teacherReciters, loader: () async => timings));
+    await tester.pumpAndSettle();
+    await shot(tester, '12-mushaf-baqarah');
   });
 }

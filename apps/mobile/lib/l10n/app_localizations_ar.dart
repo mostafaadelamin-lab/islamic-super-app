@@ -1553,6 +1553,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get kidsProphetsNewSub => 'مُعلّمة تحكي القصة للأطفال، والنبي يظهر نورًا بلا ملامح';
 
   @override
+  String get kidsProphetsPick => 'اختر المسلسل';
+
+  @override
   String get kidsProphetsSub => 'حلقات كرتون، شاهد أو استمع، وحمّلها لتعمل بدون إنترنت';
 
   @override

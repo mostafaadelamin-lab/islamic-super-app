@@ -2289,6 +2289,10 @@
   "@kidsProphetsNewSub": {
     "description": "shared key \"kids.prophetsNewSub\""
   },
+  "kidsProphetsPick": "Choose a series",
+  "@kidsProphetsPick": {
+    "description": "shared key \"kids.prophetsPick\""
+  },
   "kidsProphetsSub": "Cartoon episodes: watch or listen, download for offline",
   "@kidsProphetsSub": {
     "description": "shared key \"kids.prophetsSub\""

@@ -190,6 +190,56 @@ function Teacher({ locale }: { locale: Locale }) {
   );
 }
 
+/** The three prophets' series, picked from a drop-down list (owner 2026-11-21); the modern one first. */
+const PROPHET_SERIES: readonly [string, string, boolean][] = [
+  ["kids-prophets-new", "New", true],
+  ["kids-prophets-3d", "3d", true],
+  ["kids-prophets", "Classic", false],
+];
+
+function ProphetsPicker({
+  locale,
+  open,
+  setOpen,
+}: {
+  locale: Locale;
+  open: string | null;
+  setOpen: (v: string | null) => void;
+}) {
+  const [id, setId] = useState(PROPHET_SERIES[0]![0]);
+  const [, key, online] = PROPHET_SERIES.find(([x]) => x === id) ?? PROPHET_SERIES[0]!;
+  const sub = t(locale, key === "Classic" ? "kids.prophetsSub" : `kids.prophets${key}Sub`);
+  return (
+    <>
+      <label className="kids-pick">
+        <span className="muted small">{t(locale, "kids.prophetsPick")}</span>
+        <select
+          value={id}
+          data-testid="kids-prophets-pick"
+          onChange={(e) => {
+            setId(e.target.value);
+            setOpen(null);
+          }}
+        >
+          {PROPHET_SERIES.map(([x, k]) => (
+            <option key={x} value={x}>
+              {t(locale, `kids.prophets${k}`)}
+            </option>
+          ))}
+        </select>
+      </label>
+      <SeriesBlock
+        series={KIDS.series.find((s) => s.id === id)}
+        locale={locale}
+        title={t(locale, `kids.prophets${key}`)}
+        sub={`${sub} · ${t(locale, online ? "kids.ytNote" : "kids.offlineNote")}`}
+        open={open}
+        setOpen={setOpen}
+      />
+    </>
+  );
+}
+
 const SECTIONS: readonly [string, IconName][] = [
   ["prophets", "book"],
   ["teacher", "quran"],
@@ -255,35 +305,7 @@ export function KidsView({ locale }: { locale: Locale }) {
         </li>
       </ul>
       <section className="kids-section">
-        {tab === "prophets" ? (
-          <>
-            {(
-              [
-                ["new", "New"],
-                ["3d", "3d"],
-              ] as const
-            ).map(([k, K]) => (
-              <SeriesBlock
-                key={k}
-                series={KIDS.series.find((s) => s.id === `kids-prophets-${k}`)}
-                locale={locale}
-                title={t(locale, `kids.prophets${K}`)}
-                sub={`${t(locale, `kids.prophets${K}Sub`)} · ${t(locale, "kids.ytNote")}`}
-                open={open}
-                setOpen={setOpen}
-              />
-            ))}
-            <p className="muted small">{t(locale, "kids.offlineNote")}</p>
-            <SeriesBlock
-              series={KIDS.series.find((s) => s.id === "kids-prophets")}
-              locale={locale}
-              title={t(locale, "kids.prophetsClassic")}
-              sub={t(locale, "kids.prophetsSub")}
-              open={open}
-              setOpen={setOpen}
-            />
-          </>
-        ) : null}
+        {tab === "prophets" ? <ProphetsPicker locale={locale} open={open} setOpen={setOpen} /> : null}
         {tab === "teacher" ? (
           <>
             <h3 className="section-title">{t(locale, "kids.teacher")}</h3>

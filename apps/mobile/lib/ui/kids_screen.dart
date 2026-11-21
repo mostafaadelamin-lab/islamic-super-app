@@ -66,22 +66,14 @@ class KidsScreen extends StatelessWidget {
                   child: Text(l.kidsNote, style: Theme.of(context).textTheme.bodyMedium),
                 ),
                 if (prophets != null)
-                  tile(
-                    'prophets',
-                    RIcons.video,
-                    l.kidsProphets,
-                    l.kidsProphetsSub,
-                    () => push(
-                      KidsStoriesScreen(
-                        title: l.kidsProphets,
-                        parts: [
-                          if (prophetsNew != null) (prophetsNew, l.kidsProphetsNew, l.kidsProphetsNewSub),
-                          if (prophets3d != null) (prophets3d, l.kidsProphets3d, l.kidsProphets3dSub),
-                          (prophets, l.kidsProphetsClassic, l.kidsProphetsSub),
-                        ],
-                      ),
-                    ),
-                  ),
+                  tile('prophets', RIcons.video, l.kidsProphets, l.kidsProphetsSub, () {
+                    final choices = [
+                      if (prophetsNew != null) (prophetsNew, l.kidsProphetsNew, l.kidsProphetsNewSub),
+                      if (prophets3d != null) (prophets3d, l.kidsProphets3d, l.kidsProphets3dSub),
+                      (prophets, l.kidsProphetsClassic, l.kidsProphetsSub),
+                    ];
+                    push(KidsSeriesScreen(series: choices.first.$1, title: l.kidsProphets, choices: choices));
+                  }),
                 tile(
                   'teacher',
                   RIcons.quran,
@@ -170,13 +162,25 @@ Episode kidsEpisode(KidsEpisode e) => Episode(
 
 /// The episodes of one video series: watch, listen (the sound only, in the background
 /// player), or download for offline (the saved file serves both).
-class KidsSeriesScreen extends StatelessWidget {
-  const KidsSeriesScreen({super.key, required this.series, required this.title});
+class KidsSeriesScreen extends StatefulWidget {
+  const KidsSeriesScreen({super.key, required this.series, required this.title, this.choices});
   final KidsSeries series;
   final String title;
 
+  /// Several series of one kind (the prophets' stories, owner 2026-11-21): a drop-down list picks one.
+  final List<(KidsSeries, String, String)>? choices;
+
+  @override
+  State<KidsSeriesScreen> createState() => _KidsSeriesScreenState();
+}
+
+class _KidsSeriesScreenState extends State<KidsSeriesScreen> {
+  late KidsSeries series = widget.series;
+
   @override
   Widget build(BuildContext context) {
+    final title = widget.title;
+    final choices = widget.choices;
     final s = context.services;
     final l = context.l10n;
     final theme = Theme.of(context);
@@ -195,9 +199,34 @@ class KidsSeriesScreen extends StatelessWidget {
               itemCount: series.episodes.length + 1,
               itemBuilder: (context, i) {
                 if (i == 0) {
+                  final note = Text(online ? l.kidsYtNote : l.kidsOfflineNote, style: theme.textTheme.bodyMedium);
+                  if (choices == null) return Padding(padding: const EdgeInsets.all(DesignTokens.spaceLg), child: note);
+                  final picked = choices.firstWhere((c) => c.$1.id == series.id);
                   return Padding(
                     padding: const EdgeInsets.all(DesignTokens.spaceLg),
-                    child: Text(online ? l.kidsYtNote : l.kidsOfflineNote, style: theme.textTheme.bodyMedium),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        DropdownButtonFormField<String>(
+                          key: const Key('kidsSeries.pick'),
+                          initialValue: series.id,
+                          isExpanded: true,
+                          decoration: InputDecoration(labelText: l.kidsProphetsPick),
+                          items: [
+                            for (final (c, name, _) in choices)
+                              DropdownMenuItem(
+                                value: c.id,
+                                child: Text(name, overflow: TextOverflow.ellipsis),
+                              ),
+                          ],
+                          onChanged: (id) => setState(() => series = choices.firstWhere((c) => c.$1.id == id).$1),
+                        ),
+                        const SizedBox(height: DesignTokens.spaceSm),
+                        Text(picked.$3, style: theme.textTheme.bodySmall),
+                        const SizedBox(height: DesignTokens.spaceSm),
+                        note,
+                      ],
+                    ),
                   );
                 }
                 final e = series.episodes[i - 1];

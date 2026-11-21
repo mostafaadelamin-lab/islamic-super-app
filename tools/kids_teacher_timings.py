@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Builds content/kids/dist/teacher-timings.v1.json for the interactive «المصحف المعلّم» (owner 2026-11-20):
+"""Builds content/kids/dist/teacher-timings.v1.json (+ one file per surah for the app) for the interactive «المصحف المعلّم» (owner 2026-11-20):
 for the two teaching recitations (al-Husary al-Mu'allim, al-Minshawi with children repeating), where every
 ayah and every word starts and ends inside the one-file-per-surah recording, so the kids' Mushaf can light up
 the word being read and play a single ayah.
@@ -90,14 +90,28 @@ for folder in kids['teacher']['reciters']:
                 problems.append(f'{folder} {s}:{a} no word timings')
             ayahs.append([lo, hi, segs])
         if len(ayahs) != sum(1 for x in quran if x['sora'] == s):
-            sys.exit(f'{folder} {s}: ayah count')
+            # Quran.com has no timings for part of this recording (Minshawi kids_repeat 33 stops at 33:22):
+            # this reciter is not offered for that surah.
+            problems.append(f'{folder} {s}: only {len(ayahs)} ayahs timed, surah left out')
+            continue
         rec['surahs'][str(s)] = ayahs
     out['reciters'][folder] = rec
 
 os.makedirs(f'{ROOT}/content/kids/dist', exist_ok=True)
-for p in (f'{ROOT}/content/kids/dist/teacher-timings.v1.json', f'{ROOT}/apps/mobile/assets/content/teacher-timings.v1.json'):
-    with open(p, 'w', encoding='utf-8') as fh:
-        json.dump(out, fh, ensure_ascii=False, separators=(',', ':'))
+with open(f'{ROOT}/content/kids/dist/teacher-timings.v1.json', 'w', encoding='utf-8') as fh:
+    json.dump(out, fh, ensure_ascii=False, separators=(',', ':'))
+# The app reads one small file per surah (the whole Quran is ~5 MB of timings).
+mdir = f'{ROOT}/apps/mobile/assets/content/teacher-timings'
+os.makedirs(mdir, exist_ok=True)
+for s in kids['teacher']['surahs']:
+    one = {'word': out['word'], 'reciters': {
+        k: {'url': v['url'], 'surahs': {str(s): v['surahs'][str(s)]}}
+        for k, v in out['reciters'].items() if str(s) in v['surahs']}}
+    with open(f'{mdir}/{s}.json', 'w', encoding='utf-8') as fh:
+        json.dump(one, fh, ensure_ascii=False, separators=(',', ':'))
 print('ok', {k: len(v['surahs']) for k, v in out['reciters'].items()}, 'problems', len(problems))
+for p in problems:
+    if 'left out' in p:
+        print(' ', p)
 for p in problems[:30]:
     print(' ', p)

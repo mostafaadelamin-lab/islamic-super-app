@@ -2834,6 +2834,12 @@ abstract class AppLocalizations {
   /// **'A teacher tells the story; the prophet is shown only as light'**
   String get kidsProphetsNewSub;
 
+  /// shared key "kids.prophetsPick"
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a series'**
+  String get kidsProphetsPick;
+
   /// shared key "kids.prophetsSub"
   ///
   /// In en, this message translates to:

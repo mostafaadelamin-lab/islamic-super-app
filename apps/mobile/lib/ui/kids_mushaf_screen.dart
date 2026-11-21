@@ -18,12 +18,10 @@ import 'dhikr_audio.dart';
 import 'l10n_ext.dart';
 import 'r_icon.dart';
 
-TeacherTimings? _timingsCache;
-
-/// Read once; decoded here (not in an isolate) so it also loads in widget tests.
-Future<TeacherTimings> loadTeacherTimings() async {
-  final data = await rootBundle.load(TeacherTimings.asset);
-  return _timingsCache ??= TeacherTimings.parse(utf8.decode(data.buffer.asUint8List()));
+/// The timings of one surah; decoded here (not in an isolate) so it also loads in widget tests.
+Future<TeacherTimings> loadTeacherTimings(int surah) async {
+  final data = await rootBundle.load(TeacherTimings.assetFor(surah));
+  return TeacherTimings.parse(utf8.decode(data.buffer.asUint8List()));
 }
 
 const _starsKey = 'kidsTeacherStars';
@@ -55,17 +53,13 @@ const _repeats = 3;
 /// sheikh is reading lights up, a tapped word is said on its own, a tapped ayah number plays that ayah
 /// (three times with «كرّر»), and a full listen earns a star. Text = KFGQPC v18 exactly.
 class KidsMushafScreen extends StatefulWidget {
-  const KidsMushafScreen({
-    super.key,
-    required this.surah,
-    required this.reciters,
-    this.initialReciter,
-    this.loader = loadTeacherTimings,
-  });
+  const KidsMushafScreen({super.key, required this.surah, required this.reciters, this.initialReciter, this.loader});
   final int surah;
   final List<String> reciters;
   final String? initialReciter;
-  final Future<TeacherTimings> Function() loader;
+
+  /// Defaults to the surah's bundled timings file.
+  final Future<TeacherTimings> Function()? loader;
 
   @override
   State<KidsMushafScreen> createState() => _KidsMushafScreenState();
@@ -96,14 +90,21 @@ class _KidsMushafScreenState extends State<KidsMushafScreen> {
   }
 
   Future<void> _init() async {
-    final t = await widget.loader();
+    final t = await (widget.loader ?? () => loadTeacherTimings(widget.surah))();
     final stars = await readTeacherStars();
     if (!mounted) return;
     setState(() {
       _t = t;
+      if (t.reciters[_reciter]?.surahs[widget.surah] == null) _reciter = _available(t).first;
       _stars = stars['${widget.surah}'] ?? 0;
     });
   }
+
+  /// The reciters with timings for this surah (Minshawi has none for al-Ahzab).
+  List<String> _available(TeacherTimings t) => [
+    for (final f in widget.reciters)
+      if (t.reciters[f]?.surahs[widget.surah] != null) f,
+  ];
 
   TeacherRecording get _recording => _t!.reciters[_reciter]!;
   List<TeacherAyah> get _ayahs => _recording.surahs[widget.surah]!;
@@ -333,7 +334,7 @@ class _KidsMushafScreenState extends State<KidsMushafScreen> {
                     key: const Key('kidsMushaf.reciter'),
                     showSelectedIcon: false,
                     segments: [
-                      for (final f in widget.reciters)
+                      for (final f in _available(_t!))
                         ButtonSegment(
                           value: f,
                           label: Text(label(f), textAlign: TextAlign.center),
@@ -454,7 +455,12 @@ class _KidsMushafScreenState extends State<KidsMushafScreen> {
           ),
         );
         if (k < tk.gaps.length) {
-          out.add(TextSpan(text: tk.gaps[k], style: TextStyle(backgroundColor: bg)));
+          out.add(
+            TextSpan(
+              text: tk.gaps[k],
+              style: TextStyle(backgroundColor: bg),
+            ),
+          );
         }
       }
       out
