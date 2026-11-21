@@ -203,7 +203,10 @@ const headC = neckTop.clone().add(hy.clone().multiplyScalar(LEN.headR * 0.95));
 const HK = LEN.headR / 0.19; // poses were written for a 0.19 head
 const inHead = (o) => headC.clone().add(hx.clone().multiplyScalar(o[0] * HK)).add(hy.clone().multiplyScalar(o[1] * HK)).add(hz.clone().multiplyScalar(o[2] * HK));
 const inTorso = (o) => pelvis.clone().add(sideT.clone().multiplyScalar(o[0])).add(tUp.clone().multiplyScalar(o[1])).add(fwdT.clone().multiplyScalar(o[2]));
-const target = (t) => t.head ? inHead(t.head) : t.torso ? inTorso(t.torso) : L(t);
+const arms = {};
+// {lArm: f, up: u}: a point f of the way from the left elbow to the left wrist, lifted u above it.
+const target = (t) => t.head ? inHead(t.head) : t.torso ? inTorso(t.torso)
+  : t.lArm !== undefined ? arms.l.mid.clone().lerp(arms.l.end, t.lArm).add(new THREE.Vector3(0, t.up ?? 0.05, 0)) : L(t);
 
 // Torso: a soft robe shape from the hips to the shoulders.
 {
@@ -247,10 +250,21 @@ for (const s of [1, -1]) {
   const t = target(P[key + 'Hand']);
   const pole = target(P[key + 'Elbow'] ?? { torso: [s * 0.5, 0.1, -0.3] });
   const { mid, end } = ik(sh, t, LEN.upper, LEN.fore, pole);
-  capsule(sh, mid, 0.055, mat.robe);
-  const cuff = mid.clone().add(end.clone().sub(mid).multiplyScalar(0.55));
-  capsule(mid, cuff, 0.05, mat.robe);
-  capsule(cuff, end, 0.032, mat.skin);
+  arms[key] = { mid, end };
+  if (P[key + 'SleeveUp']) {
+    // Sleeve rolled up above the elbow: the whole forearm and elbow show (washing to the elbows).
+    const roll = sh.clone().add(mid.clone().sub(sh).multiplyScalar(0.6));
+    capsule(sh, roll, 0.055, mat.robe);
+    const fold = add(new THREE.Mesh(new THREE.TorusGeometry(0.05, 0.016, 10, 24), mat.robe));
+    fold.position.copy(roll); fold.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), mid.clone().sub(sh).normalize());
+    capsule(roll, mid, 0.036, mat.skin);
+    capsule(mid, end, 0.032, mat.skin);
+  } else {
+    capsule(sh, mid, 0.055, mat.robe);
+    const cuff = mid.clone().add(end.clone().sub(mid).multiplyScalar(0.55));
+    capsule(mid, cuff, 0.05, mat.robe);
+    capsule(cuff, end, 0.032, mat.skin);
+  }
   const d = end.clone().sub(mid).normalize();
   const inward = side.clone().multiplyScalar(-s);
   let pn = (P[key + 'Palm'] ? (P[key + 'Palm'].torso ? inTorso(P[key + 'Palm'].torso).sub(pelvis) : V(P[key + 'Palm']).applyAxisAngle(UP, yaw)) : inward).normalize();

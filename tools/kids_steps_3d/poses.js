@@ -11,7 +11,7 @@ export const POSES = {
   'w-mouth': W({ lHand: [0.08, 0.42, 0.2], rHand: { head: [-0.03, -0.1, 0.2] }, rElbow: { torso: [-0.4, -0.2, 0.2] } }),
   'w-nose': W({ lHand: [0.08, 0.42, 0.2], rHand: { head: [-0.02, -0.04, 0.22] }, rElbow: { torso: [-0.4, -0.2, 0.2] } }),
   'w-face': W({ lHand: { head: [0.1, -0.03, 0.17] }, rHand: { head: [-0.1, -0.03, 0.17] }, lElbow: { torso: [0.3, -0.3, 0.3] }, rElbow: { torso: [-0.3, -0.3, 0.3] } }),
-  'w-arms': W({ lHand: [0.02, 0.47, 0.48], rHand: [0.05, 0.52, 0.32], rElbow: { torso: [-0.5, 0.1, 0] }, water: [[0, 0.55, 0.53], [0.02, 0.5, 0.45]] }),
+  'w-arms': W({ lSleeveUp: true, rSleeveUp: true, lHand: [-0.02, 0.47, 0.64], lElbow: { torso: [0.7, -0.4, 0.1] }, lPalm: [0, 1, 0], rHand: { lArm: 0.35, up: 0.03 }, rPalm: [0, -1, 0], rElbow: { torso: [-0.4, 0.2, -0.3] }, rCurl: 0.9, water: [[0, 0.55, 0.53], [0.0, 0.49, 0.53]], look: [0, 0.62, 0.3], zoom: 0.7 }),
   'w-head': W({ lHand: { head: [0.07, 0.1, 0.02] }, rHand: { head: [-0.07, 0.1, 0.02] }, lElbow: { torso: [0.5, 0.6, 0.2] }, rElbow: { torso: [-0.5, 0.6, 0.2] } }),
   'w-ears': W({ lHand: { head: [0.2, 0.0, 0.0] }, rHand: { head: [-0.2, 0.0, 0.0] }, lElbow: { torso: [0.6, 0.0, 0.1] }, rElbow: { torso: [-0.6, 0.0, 0.1] } }),
   'w-feet': W({ chest: [0, 0.74, 0.14], rFoot: [-0.04, 0.3, 0.45], rKnee: [-0.3, 1.2, 0.6], rFootDir: [0, 0, 1], lHand: [0.0, 0.36, 0.48], rHand: [-0.09, 0.4, 0.42], water: [[0, 0.55, 0.53], [-0.03, 0.36, 0.5]] }),
