@@ -7,6 +7,10 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { POSES } from './poses.js';
 
 const S = 900;
@@ -15,7 +19,7 @@ const P = POSES[name];
 const V = (a) => new THREE.Vector3(...a);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
-renderer.setPixelRatio(1);
+renderer.setPixelRatio(2);
 renderer.setSize(S, S);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.05;
@@ -37,6 +41,7 @@ function bgTexture(top, bottom) {
 }
 const theme = P.scene === 'salah' ? ['#e9f4f1', '#fbf3e2'] : ['#e3f1f8', '#fbf4e6'];
 scene.background = bgTexture(...theme);
+scene.fog = null;
 
 scene.add(new THREE.HemisphereLight(0xffffff, 0xd9c9b0, 0.9));
 const sun = new THREE.DirectionalLight(0xfff4e0, 2.2);
@@ -48,14 +53,32 @@ sun.shadow.radius = 6; sun.shadow.bias = -0.0005; sun.shadow.normalBias = 0.01;
 scene.add(sun);
 const fill = new THREE.DirectionalLight(0xdfefff, 0.6); fill.position.set(-3, 2, 1); scene.add(fill);
 
+function noiseTex(draw, size = 256, repeat = 6) {
+  const c = document.createElement('canvas'); c.width = c.height = size;
+  draw(c.getContext('2d'), size);
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(repeat, repeat); return t;
+}
+const weave = noiseTex((g, n) => {
+  g.fillStyle = '#808080'; g.fillRect(0, 0, n, n);
+  for (let y = 0; y < n; y += 4) for (let x = 0; x < n; x += 4) {
+    g.fillStyle = `rgb(${110 + Math.random() * 40 | 0},${110 + Math.random() * 40 | 0},${110 + Math.random() * 40 | 0})`;
+    g.fillRect(x, y, ((x + y) / 4) % 2 ? 4 : 2, 4);
+  }
+}, 256, 10);
+const crochet = noiseTex((g, n) => {
+  g.fillStyle = '#d8d8d8'; g.fillRect(0, 0, n, n);
+  for (let y = 0; y < n; y += 16) for (let x = (y / 16) % 2 ? 8 : 0; x < n; x += 16) {
+    g.fillStyle = '#3a3a3a'; g.beginPath(); g.ellipse(x + 4, y + 8, 3.2, 4.2, 0, 0, Math.PI * 2); g.fill();
+  }
+}, 256, 5);
 const M = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.6, metalness: 0, ...o });
 const mat = {
-  robe: M(P.robe ?? 0x9fcbea, { roughness: 0.7, side: THREE.DoubleSide }),
+  robe: M(P.robe ?? 0xf4f2ec, { roughness: 0.85, side: THREE.DoubleSide, bumpMap: weave, bumpScale: 0.6 }),
   robeShade: M(0xe9eef3, { roughness: 0.75 }),
-  skin: M(0xf0c39e, { roughness: 0.55 }),
-  hair: M(0x3a2a20, { roughness: 0.7 }),
-  kufi: M(0xffffff, { roughness: 0.5 }),
-  kufiBand: M(P.kufiColor ?? 0x2f8f83, { roughness: 0.5 }),
+  skin: new THREE.MeshPhysicalMaterial({ color: 0xe8b48f, roughness: 0.5, sheen: 0.4, sheenColor: new THREE.Color(0xffd9c2), sheenRoughness: 0.6, clearcoat: 0.05 }),
+  hair: M(0x2b1d15, { roughness: 0.75 }),
+  kufi: M(0xffffff, { roughness: 0.9, bumpMap: crochet, bumpScale: 1.2, side: THREE.DoubleSide }),
+  kufiBand: M(0xe9e6dc, { roughness: 0.8 }),
   ceramic: M(0xffffff, { roughness: 0.15 }),
   metal: M(0xdfe5ea, { roughness: 0.18, metalness: 1 }),
   water: new THREE.MeshPhysicalMaterial({ color: 0x6cc4ff, roughness: 0.05, transparent: true, opacity: 0.72, emissive: 0x1f6fa8, emissiveIntensity: 0.25 }),
@@ -161,7 +184,7 @@ function rug() {
 // ---------------- Child ----------------
 const yaw = P.yaw ?? 0;
 const L = (v) => V(v).applyAxisAngle(UP, yaw);   // body-local → world (feet origin)
-const LEN = { thigh: 0.33, shin: 0.31, upper: 0.22, fore: 0.21, torso: 0.4, neck: 0.05, headR: 0.19 };
+const LEN = { thigh: 0.33, shin: 0.31, upper: 0.22, fore: 0.21, torso: 0.4, neck: 0.05, headR: 0.165 };
 
 const pelvis = L(P.pelvis);
 const chest = P.chest ? L(P.chest) : pelvis.clone().add(new THREE.Vector3(0, LEN.torso, 0));
@@ -177,9 +200,13 @@ qHead.multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(hPitch, hYaw,
 const hx = new THREE.Vector3(1, 0, 0).applyQuaternion(qHead), hy = new THREE.Vector3(0, 1, 0).applyQuaternion(qHead), hz = new THREE.Vector3(0, 0, 1).applyQuaternion(qHead);
 const neckTop = chest.clone().add(tUp.clone().multiplyScalar(LEN.neck));
 const headC = neckTop.clone().add(hy.clone().multiplyScalar(LEN.headR * 0.95));
-const inHead = (o) => headC.clone().add(hx.clone().multiplyScalar(o[0])).add(hy.clone().multiplyScalar(o[1])).add(hz.clone().multiplyScalar(o[2]));
+const HK = LEN.headR / 0.19; // poses were written for a 0.19 head
+const inHead = (o) => headC.clone().add(hx.clone().multiplyScalar(o[0] * HK)).add(hy.clone().multiplyScalar(o[1] * HK)).add(hz.clone().multiplyScalar(o[2] * HK));
 const inTorso = (o) => pelvis.clone().add(sideT.clone().multiplyScalar(o[0])).add(tUp.clone().multiplyScalar(o[1])).add(fwdT.clone().multiplyScalar(o[2]));
-const target = (t) => t.head ? inHead(t.head) : t.torso ? inTorso(t.torso) : L(t);
+const arms = {};
+// {lArm: f, up: u}: a point f of the way from the left elbow to the left wrist, lifted u above it.
+const target = (t) => t.head ? inHead(t.head) : t.torso ? inTorso(t.torso)
+  : t.lArm !== undefined ? arms.l.mid.clone().lerp(arms.l.end, t.lArm).add(new THREE.Vector3(0, t.up ?? 0.05, 0)) : L(t);
 
 // Torso: a soft robe shape from the hips to the shoulders.
 {
@@ -202,13 +229,15 @@ capsule(chest, neckTop.clone().add(tUp.clone().multiplyScalar(0.03)), 0.045, mat
 // Head, hair, kufi, ears (no face is drawn)
 {
   const h = sphere(headC, LEN.headR, mat.skin, [1, 1.04, 0.98]); h.quaternion.copy(qHead);
-  const hair = add(new THREE.Mesh(new THREE.SphereGeometry(LEN.headR * 1.04, 40, 24, 0, Math.PI * 2, 0, 1.55), mat.hair));
+  const hair = add(new THREE.Mesh(new THREE.SphereGeometry(LEN.headR * 1.02, 40, 24, 0, Math.PI * 2, 0, 1.55), mat.hair));
   hair.position.copy(headC); hair.quaternion.copy(qHead).multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(-1.0, 0, 0)));
-  const kufi = add(new THREE.Mesh(new THREE.SphereGeometry(LEN.headR * 1.06, 40, 20, 0, Math.PI * 2, 0, 0.82), mat.kufi));
-  kufi.position.copy(headC); kufi.scale.set(1, 1.12, 1); kufi.quaternion.copy(qHead).multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.28, 0, 0)));
-  const band = add(new THREE.Mesh(new THREE.TorusGeometry(LEN.headR * 1.06 * Math.sin(0.82), 0.012, 12, 48), mat.kufiBand));
-  band.position.copy(headC.clone().add(new THREE.Vector3(0, LEN.headR * 1.06 * Math.cos(0.82), 0).applyQuaternion(kufi.quaternion)));
-  band.quaternion.copy(kufi.quaternion).multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(Math.PI / 2, 0, 0)));
+  // White crocheted taqiyah: a round cap that covers the crown down to above the ears.
+  const kufi = add(new THREE.Mesh(new THREE.SphereGeometry(LEN.headR * 1.07, 48, 24, 0, Math.PI * 2, 0, 1.2), mat.kufi));
+  kufi.position.copy(headC); kufi.scale.set(1, 1.02, 1.03);
+  kufi.quaternion.copy(qHead).multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.32, 0, 0)));
+  const rim = add(new THREE.Mesh(new THREE.TorusGeometry(LEN.headR * 1.07 * Math.sin(1.2), 0.008, 10, 64), mat.kufi));
+  rim.position.copy(headC.clone().add(new THREE.Vector3(0, LEN.headR * 1.07 * 1.02 * Math.cos(1.2), 0).applyQuaternion(kufi.quaternion)));
+  rim.quaternion.copy(kufi.quaternion).multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(Math.PI / 2, 0, 0)));
   for (const s of [1, -1]) {
     const e = sphere(inHead([s * LEN.headR * 0.97, -0.035, -0.01]), 0.042, mat.skin, [0.55, 1, 0.8]);
     e.quaternion.copy(qHead);
@@ -221,17 +250,42 @@ for (const s of [1, -1]) {
   const t = target(P[key + 'Hand']);
   const pole = target(P[key + 'Elbow'] ?? { torso: [s * 0.5, 0.1, -0.3] });
   const { mid, end } = ik(sh, t, LEN.upper, LEN.fore, pole);
-  capsule(sh, mid, 0.055, mat.robe);
-  const cuff = mid.clone().add(end.clone().sub(mid).multiplyScalar(0.55));
-  capsule(mid, cuff, 0.05, mat.robe);
-  capsule(cuff, end, 0.032, mat.skin);
-  const hand = sphere(end.clone().add(end.clone().sub(mid).normalize().multiplyScalar(0.035)), 0.045, mat.skin, [1, 1.25, 0.65]);
-  hand.quaternion.setFromUnitVectors(UP, end.clone().sub(mid).normalize());
-  if (P[key + 'Point']) {
-    const d = end.clone().sub(mid).normalize();
-    const tip = end.clone().add(d.multiplyScalar(0.12));
-    capsule(end.clone().add(end.clone().sub(mid).normalize().multiplyScalar(0.05)), tip, 0.011, mat.skin);
+  arms[key] = { mid, end };
+  if (P[key + 'SleeveUp']) {
+    // Sleeve rolled up above the elbow: the whole forearm and elbow show (washing to the elbows).
+    const roll = sh.clone().add(mid.clone().sub(sh).multiplyScalar(0.6));
+    capsule(sh, roll, 0.055, mat.robe);
+    const fold = add(new THREE.Mesh(new THREE.TorusGeometry(0.05, 0.016, 10, 24), mat.robe));
+    fold.position.copy(roll); fold.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), mid.clone().sub(sh).normalize());
+    capsule(roll, mid, 0.036, mat.skin);
+    capsule(mid, end, 0.032, mat.skin);
+  } else {
+    capsule(sh, mid, 0.055, mat.robe);
+    const cuff = mid.clone().add(end.clone().sub(mid).multiplyScalar(0.55));
+    capsule(mid, cuff, 0.05, mat.robe);
+    capsule(cuff, end, 0.032, mat.skin);
   }
+  const d = end.clone().sub(mid).normalize();
+  const inward = side.clone().multiplyScalar(-s);
+  let pn = (P[key + 'Palm'] ? (P[key + 'Palm'].torso ? inTorso(P[key + 'Palm'].torso).sub(pelvis) : V(P[key + 'Palm']).applyAxisAngle(UP, yaw)) : inward).normalize();
+  pn.sub(d.clone().multiplyScalar(pn.dot(d))).normalize();
+  const across = new THREE.Vector3().crossVectors(d, pn).normalize();
+  const palmC = end.clone().add(d.clone().multiplyScalar(0.035));
+  const palm = add(new THREE.Mesh(new RoundedBoxGeometry(0.058, 0.062, 0.024, 3, 0.011), mat.skin));
+  palm.position.copy(palmC);
+  palm.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(across, d, pn));
+  const curl = P[key + 'Curl'] ?? 0.15;
+  const point = P[key + 'Point'];
+  for (let f = 0; f < 4; f++) {
+    const off = (f - 1.5) * 0.0145;
+    const base = palmC.clone().add(d.clone().multiplyScalar(0.03)).add(across.clone().multiplyScalar(off * s));
+    const len = [0.036, 0.042, 0.04, 0.032][f] * 1.05;
+    const c = point && f === (s > 0 ? 3 : 0) ? 0 : point ? 1.2 : curl;
+    const dir = d.clone().multiplyScalar(Math.cos(c)).add(pn.clone().multiplyScalar(Math.sin(c))).normalize();
+    capsule(base, base.clone().add(dir.multiplyScalar(len)), 0.0075, mat.skin);
+  }
+  const tb = palmC.clone().add(across.clone().multiplyScalar(-0.028 * s)).add(d.clone().multiplyScalar(-0.012));
+  capsule(tb, tb.clone().add(d.clone().multiplyScalar(0.028)).add(across.clone().multiplyScalar(-0.014 * s)).add(pn.clone().multiplyScalar(0.012)), 0.0085, mat.skin);
 }
 // Legs
 const robeLegs = P.skirt ? mat.robe : mat.robe;
@@ -241,8 +295,10 @@ for (const s of [1, -1]) {
   const ft = target(P[key + 'Foot']);
   const pole = target(P[key + 'Knee'] ?? [s * 0.05, 0.4, 1]);
   const { mid, end } = ik(hip, ft, LEN.thigh, LEN.shin, pole);
-  capsule(hip, mid, 0.075, robeLegs);
-  capsule(mid, end.clone().add(mid.clone().sub(end).normalize().multiplyScalar(0.04)), 0.065, robeLegs);
+  if (!P.skirt) {
+    capsule(hip, mid, 0.075, robeLegs);
+    capsule(mid, end.clone().add(mid.clone().sub(end).normalize().multiplyScalar(0.04)), 0.065, robeLegs);
+  }
   capsule(end.clone().add(mid.clone().sub(end).normalize().multiplyScalar(0.04)), end, 0.04, mat.skin);
   // Foot points along footDir (default: child's forward).
   const fd = (P[key + 'FootDir'] ? V(P[key + 'FootDir']).applyAxisAngle(UP, yaw) : new THREE.Vector3(0, 0, 1).applyAxisAngle(UP, yaw)).normalize();
@@ -258,17 +314,51 @@ if (P.skirt) {
 }
 
 // ---------------- Scene ----------------
+function room() {
+  const salah = P.scene === 'salah';
+  const wallTex = noiseTex((g, n) => {
+    g.fillStyle = salah ? '#efe4cf' : '#f4f1ea'; g.fillRect(0, 0, n, n);
+    for (let i = 0; i < 900; i++) { g.fillStyle = `rgba(120,100,70,${Math.random() * 0.04})`; g.fillRect(Math.random() * n, Math.random() * n, 4, 4); }
+  }, 256, 3);
+  wallTex.colorSpace = THREE.SRGBColorSpace;
+  const dadoTex = noiseTex((g, n) => {
+    g.fillStyle = salah ? '#8a5a3a' : '#cfe9e6'; g.fillRect(0, 0, n, n);
+    if (salah) { for (let x = 0; x < n; x += 32) { g.fillStyle = '#7a4c30'; g.fillRect(x, 0, 3, n); } }
+    else { g.strokeStyle = '#9fcfc8'; g.lineWidth = 3; for (let x = 0; x <= n; x += 64) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, n); g.stroke(); g.beginPath(); g.moveTo(0, x); g.lineTo(n, x); g.stroke(); } }
+  }, 256, 4);
+  dadoTex.colorSpace = THREE.SRGBColorSpace;
+  for (const [x, z, ry] of [[-1.35, 0, Math.PI / 2], [0, -1.35, 0]]) {
+    const w = add(new THREE.Mesh(new THREE.PlaneGeometry(3.4, 3), M(0xffffff, { map: wallTex, roughness: 0.95 })));
+    w.position.set(x, 1.5, z); w.rotation.y = ry;
+    const d = add(new THREE.Mesh(new THREE.PlaneGeometry(3.4, salah ? 0.7 : 1.1), M(0xffffff, { map: dadoTex, roughness: salah ? 0.6 : 0.25 })));
+    d.position.set(x + (x ? 0.005 : 0), salah ? 0.35 : 0.55, z + (z ? 0.005 : 0)); d.rotation.y = ry;
+  }
+}
+room();
 if (P.scene === 'wudu') { wuduStation(); water(P.water?.[0], P.water?.[1]); }
 if (P.scene === 'salah') rug();
 const floor = new THREE.Mesh(new THREE.CircleGeometry(3, 64), new THREE.ShadowMaterial({ opacity: 0.18 }));
 floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
-const ground = new THREE.Mesh(new THREE.CircleGeometry(1.25, 64), M(P.scene === 'salah' ? 0xf2e8d5 : 0xe4eef0, { roughness: 0.9 }));
+const floorTex = noiseTex((g, n) => {
+  g.fillStyle = P.scene === 'salah' ? '#e9dcc4' : '#dfe6e8'; g.fillRect(0, 0, n, n);
+  g.strokeStyle = P.scene === 'salah' ? '#cdbb9b' : '#bfcacd'; g.lineWidth = 3; g.strokeRect(0, 0, n, n);
+  for (let i = 0; i < 400; i++) { g.fillStyle = `rgba(255,255,255,${Math.random() * 0.12})`; g.fillRect(Math.random() * n, Math.random() * n, 3, 3); }
+}, 256, 8);
+floorTex.colorSpace = THREE.SRGBColorSpace;
+const ground = new THREE.Mesh(new THREE.CircleGeometry(2.2, 64), M(0xffffff, { roughness: 0.45, map: floorTex }));
 ground.rotation.x = -Math.PI / 2; ground.position.y = -0.002; ground.receiveShadow = true; scene.add(ground);
 
 const cam = new THREE.PerspectiveCamera(P.fov ?? 28, 1, 0.05, 50);
-cam.position.set(...(P.cam ?? [2.2, 1.4, 2.6]));
-cam.lookAt(...(P.look ?? [0, 0.6, 0.1]));
-renderer.render(scene, cam);
+const look = V(P.look ?? [0, 0.6, 0.1]);
+cam.position.copy(V(P.cam ?? [2.2, 1.4, 2.6]).sub(look).multiplyScalar(P.zoom ?? 1).add(look));
+cam.lookAt(look);
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, cam));
+const ao = new GTAOPass(scene, cam, S, S);
+ao.updateGtaoMaterial({ radius: 0.12, distanceExponent: 1.5, thickness: 1, scale: 1.2 });
+composer.addPass(ao);
+composer.addPass(new OutputPass());
+composer.render();
 window.__done = true;
 </script>
 </body></html>
