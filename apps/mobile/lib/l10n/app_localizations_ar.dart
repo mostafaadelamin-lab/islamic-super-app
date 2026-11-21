@@ -219,6 +219,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhanOpenApp => 'أكمل في التطبيق';
 
   @override
+  String get adhanOpenAppBody => 'افتح التطبيق مرة واحدة فقط، فتتجدد تنبيهات الأذان الكامل لليومين القادمين.';
+
+  @override
+  String get adhanOpenAppTitle => 'افتح رتّل وصلِّ ليستمر الأذان كاملاً';
+
+  @override
   String get adhanPlayOnSilent => 'تشغيل الأذان والهاتف صامت';
 
   @override
@@ -1878,6 +1884,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get libraryTitle => 'مكتبة التلاوات لجميع قراء القرآن الكريم';
 
   @override
+  String get lockNoticeHint => 'إشعار ثابت هادئ فيه الصلاة القادمة ومعادها والوقت الباقي عليها ومواقيت اليوم.';
+
+  @override
+  String get lockNoticeSetting => 'الصلاة القادمة على شاشة القفل';
+
+  @override
+  String lockNoticeTitle(String name, String time) {
+    return 'الصلاة القادمة: $name $time';
+  }
+
+  @override
   String get meaningsError => 'تعذّر تحميل معاني الكلمات.';
 
   @override
@@ -3129,6 +3146,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsTour => 'جولة تعريفية بالتطبيق';
 
   @override
+  String get setupAlarmAction => 'اسمح بالمنبّه';
+
+  @override
+  String get setupAlarmBody => 'على iOS 26 وأحدث يرن الأذان كاملاً مثل المنبّه حتى لو الآيفون على الصامت.';
+
+  @override
+  String get setupAlarmTitle => 'الأذان كامل كمنبّه';
+
+  @override
   String get setupAppPage => 'صفحة التطبيق';
 
   @override
@@ -3177,6 +3203,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get setupLocationUse => 'استخدم موقعي';
 
   @override
+  String get setupLockIos =>
+      'ولشاشة القفل: اضغط مطوّلاً على شاشة القفل ← «تخصيص» ← «شاشة القفل» ← «إضافة أدوات» ← «رتّل وصلِّ»، فتظهر الصلاة القادمة والوقت الباقي.';
+
+  @override
   String get setupNotifAction => 'تفعيل الأذان';
 
   @override
@@ -3203,6 +3233,23 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get setupTitle => 'تجهيز التطبيق';
+
+  @override
+  String get setupWidgetAction => 'أضف الودجيت';
+
+  @override
+  String get setupWidgetAndroidManual =>
+      'لو ما ظهرتش رسالة الإضافة: اضغط مطوّلاً على مكان فاضي في الشاشة الرئيسية ← «الأدوات» أو «Widgets» ← «رتّل وصلِّ».';
+
+  @override
+  String get setupWidgetBody => 'مواعيد الصلاة والصلاة الجاية والتاريخ الهجري على شاشتك من غير ما تفتح التطبيق.';
+
+  @override
+  String get setupWidgetIos =>
+      'أبل لا تسمح للتطبيق بإضافته بنفسه: اضغط مطوّلاً على مكان فاضي في الشاشة الرئيسية ← زر «تعديل» أو «+» ← ابحث عن «رتّل وصلِّ» ← اختر الحجم ← «إضافة الودجيت».';
+
+  @override
+  String get setupWidgetTitle => 'ودجيت الصلاة على الشاشة الرئيسية';
 
   @override
   String shabibFromSurah(String name) {

@@ -220,6 +220,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhanOpenApp => 'Continue in app';
 
   @override
+  String get adhanOpenAppBody => 'Just open the app once to renew the full adhan alerts for the next two days.';
+
+  @override
+  String get adhanOpenAppTitle => 'Open Rattil wa Salli to keep the full adhan';
+
+  @override
   String get adhanPlayOnSilent => 'Play the adhan when the phone is silent';
 
   @override
@@ -1889,6 +1895,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get libraryTitle => 'Recitations library: all Quran reciters';
 
   @override
+  String get lockNoticeHint =>
+      'A quiet, lasting notification with the next prayer, its time, the time left and the day\'s times.';
+
+  @override
+  String get lockNoticeSetting => 'Next prayer on the lock screen';
+
+  @override
+  String lockNoticeTitle(String name, String time) {
+    return 'Next prayer: $name $time';
+  }
+
+  @override
   String get meaningsError => 'Could not load the word meanings.';
 
   @override
@@ -3145,6 +3163,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsTour => 'App tour';
 
   @override
+  String get setupAlarmAction => 'Allow the alarm';
+
+  @override
+  String get setupAlarmBody =>
+      'On iOS 26 or newer the whole adhan rings like an alarm clock, even when the iPhone is on silent.';
+
+  @override
+  String get setupAlarmTitle => 'Full adhan as an alarm';
+
+  @override
   String get setupAppPage => 'App page';
 
   @override
@@ -3195,6 +3223,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupLocationUse => 'Use my location';
 
   @override
+  String get setupLockIos =>
+      'For the lock screen: touch and hold the lock screen → Customize → Lock Screen → Add Widgets → Rattil wa Salli, to see the next prayer and the time left.';
+
+  @override
   String get setupNotifAction => 'Turn on the adhan';
 
   @override
@@ -3221,6 +3253,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupTitle => 'Set up the app';
+
+  @override
+  String get setupWidgetAction => 'Add the widget';
+
+  @override
+  String get setupWidgetAndroidManual =>
+      'If no add message appears: touch and hold an empty spot on the home screen → Widgets → Rattil wa Salli.';
+
+  @override
+  String get setupWidgetBody =>
+      'Prayer times, the next prayer and the Hijri date on your home screen without opening the app.';
+
+  @override
+  String get setupWidgetIos =>
+      'Apple does not let apps add it themselves: touch and hold an empty spot on the home screen → Edit or + → search for Rattil wa Salli → pick a size → Add Widget.';
+
+  @override
+  String get setupWidgetTitle => 'Prayer widget on the home screen';
 
   @override
   String shabibFromSurah(String name) {

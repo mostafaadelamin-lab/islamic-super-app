@@ -10,6 +10,7 @@ import 'adaptive.dart';
 import 'city_picker_screen.dart';
 import 'l10n_ext.dart';
 import 'locate.dart';
+import 'prayer_widget_card.dart';
 import 'r_icon.dart';
 import 'settings_screen.dart' show enableAdhanAlerts;
 import 'widgets.dart';
@@ -292,6 +293,9 @@ class _DeviceSetupPanelState extends State<DeviceSetupPanel> with WidgetsBinding
   bool _battery = true;
   bool _loaded = false;
 
+  /// iOS 26+ alarm permission ('unavailable' elsewhere).
+  String _alarm = 'unavailable';
+
   @override
   void initState() {
     super.initState();
@@ -319,19 +323,36 @@ class _DeviceSetupPanelState extends State<DeviceSetupPanel> with WidgetsBinding
     if (settings.cityNeverChosen || settings.cityId == 'gps') await _useLocation();
     if (!mounted) return;
     if (!settings.adhanEnabled) await _enableAdhan();
+    // iPhone with iOS 26+: the whole adhan as an alarm, even on silent (owner 2026-11-21).
+    if (mounted && _alarm == 'notDetermined' && settings.adhanEnabled) await _allowAlarm();
+  }
+
+  Future<void> _allowAlarm() async {
+    final s = context.services;
+    final p = s.adhan.parts;
+    if (p == null) return;
+    final st = await p.requestAlarms();
+    if (st == 'authorized') {
+      await s.settings.setAdhanIosAlarm(true);
+      await s.adhan.sync(force: true);
+    }
+    if (mounted) setState(() => _alarm = st);
   }
 
   Future<void> _refresh() async {
     if (!mounted) return;
     final d = context.services.deviceSetup;
+    final parts = context.services.adhan.parts;
     final n = await d.notificationsAllowed();
     final e = await d.exactAlarmsAllowed();
     final b = await d.batteryUnrestricted();
+    final alarm = await parts?.alarmState() ?? 'unavailable';
     if (!mounted) return;
     setState(() {
       _notifications = n;
       _exact = e;
       _battery = b;
+      _alarm = alarm;
       _loaded = true;
     });
   }
@@ -433,6 +454,27 @@ class _DeviceSetupPanelState extends State<DeviceSetupPanel> with WidgetsBinding
                   ),
               ],
             ),
+            if (d.isIos && _alarm != 'unavailable' && settings.adhanSound == 'adhan')
+              _Step(
+                key: const Key('setupAlarm'),
+                icon: RIcons.alarm,
+                title: l.setupAlarmTitle,
+                body: l.setupAlarmBody,
+                done: _alarm == 'authorized' && settings.adhanIosAlarm,
+                actions: [
+                  if (_alarm == 'notDetermined' || (_alarm == 'authorized' && !settings.adhanIosAlarm))
+                    FilledButton.tonalIcon(
+                      key: const Key('setupAlarmAction'),
+                      onPressed: _allowAlarm,
+                      icon: const RIcon(RIcons.alarm),
+                      label: Text(l.setupAlarmAction),
+                    ),
+                  if (_alarm == 'denied')
+                    OutlinedButton(onPressed: d.openAppSettings, child: Text(l.setupOpenSettings)),
+                ],
+              ),
+            // Owner 2026-11-21: the prayer widget offered right at the first run (and in the settings).
+            const PrayerWidgetCard(),
             if (d.isAndroid && _loaded && !_exact)
               _Step(
                 key: const Key('setupExact'),

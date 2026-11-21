@@ -24,6 +24,7 @@ import 'data/place_names.dart';
 import 'data/carplay.dart';
 import 'data/drive_mode.dart';
 import 'data/media_session.dart';
+import 'data/next_prayer_notice.dart';
 import 'data/notifications.dart';
 import 'data/recitation.dart';
 import 'data/reminders.dart';
@@ -43,6 +44,7 @@ import 'ui/prayer_model.dart' show resolveCity;
 /// Everything screens need, created once in main() (or in a test).
 class AppServices {
   AppServices({
+    this.nextPrayer,
     required this.content,
     required this.settings,
     required this.bookmarks,
@@ -224,7 +226,13 @@ class AppServices {
       a.browser = browser; // Android Auto
       if (defaultTargetPlatform == TargetPlatform.iOS) CarPlayBridge(browser, settings); // CarPlay
     }
+    // Android: the next prayer on the lock screen, planned again after every adhan re-plan (which cancels
+    // every notification).
+    final nextPrayer = NextPrayerNotice.supported
+        ? NextPrayerNotice(content: content, settings: settings, clock: c)
+        : null;
     return AppServices(
+      nextPrayer: nextPrayer,
       content: content,
       settings: settings,
       bookmarks: bookmarks,
@@ -244,7 +252,10 @@ class AppServices {
         settings: settings,
         backend: backend,
         reserved: () => reminders.pendingFor(ios: defaultTargetPlatform == TargetPlatform.iOS),
-        afterReset: reminders.scheduleActive,
+        afterReset: () async {
+          await reminders.scheduleActive();
+          await nextPrayer?.sync(force: true);
+        },
         clock: c,
         // Android has no small cap on pending alarms, so a month ahead keeps the
         // adhan going even if the app is not opened; iOS keeps at most 64.
@@ -298,6 +309,9 @@ class AppServices {
   final Clock clock;
   final RecitationController recitation;
   final AdhanScheduler adhan;
+
+  /// Android: the next prayer and its countdown on the lock screen (null in tests).
+  final NextPrayerNotice? nextPrayer;
 
   /// In-app playback of the adhan recording (settings "listen" button).
   final AdhanPreview adhanPreview;

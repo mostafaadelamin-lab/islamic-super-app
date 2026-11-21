@@ -82,6 +82,7 @@ class _RattilAppState extends State<RattilApp> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       unawaited(services.adhan.sync());
       unawaited(_widget.sync());
+      unawaited(services.nextPrayer?.sync());
       unawaited(_continueAdhan());
     }
   }
@@ -89,6 +90,7 @@ class _RattilAppState extends State<RattilApp> with WidgetsBindingObserver {
   void _syncAdhan() {
     unawaited(services.adhan.sync());
     unawaited(_widget.sync());
+    unawaited(services.nextPrayer?.sync());
   }
 
   @override

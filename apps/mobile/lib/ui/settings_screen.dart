@@ -18,6 +18,7 @@ import 'prayer_screen.dart';
 import 'l10n_ext.dart';
 import 'muezzin_screen.dart';
 import 'onboarding_screen.dart';
+import 'prayer_widget_card.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
@@ -138,6 +139,8 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                // Owner 2026-11-21: users who had the app before add the prayer widget from here.
+                const PrayerWidgetCard(),
                 SectionCard(
                   children: [
                     ListTile(

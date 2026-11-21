@@ -382,6 +382,14 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Android: the next prayer and a countdown in a quiet notification on the lock screen (on by default,
+  /// owner 2026-11-21: phones have no lock-screen widgets).
+  bool get lockNotice => _prefs.getBool('prayer.lockNotice') ?? true;
+  Future<void> setLockNotice(bool v) async {
+    await _prefs.setBool('prayer.lockNotice', v);
+    notifyListeners();
+  }
+
   bool get adhanEnabled => _prefs.getBool('adhan.enabled') ?? false;
 
   /// False until the user has touched the adhan switch (nothing to cancel then).

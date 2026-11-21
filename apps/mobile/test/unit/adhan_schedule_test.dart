@@ -282,8 +282,13 @@ void main() {
       expect(ring.count, 5);
       expect(ring.alarm, isFalse);
       final slots = sch.lastPlan.fold<int>(0, (s, x) => s + x.parts);
-      expect(slots, lessThanOrEqualTo(60));
+      expect(slots, lessThanOrEqualTo(59));
       expect(sch.lastPlan.last.parts, 1);
+      // Half an hour before the first adhan that rings only 30 s: "open the app".
+      final open = fake.scheduled.singleWhere((n) => n.id == adhanOpenAppNotificationId);
+      final firstShort = sch.lastPlan.firstWhere((n) => n.kind == adhanKind && n.parts == 1);
+      expect(open.at, firstShort.at.subtract(const Duration(minutes: 30)));
+      expect(open.sound, 'tone');
     });
 
     test('with the alarm allowed, every adhan of the week rings as an alarm', () async {
@@ -291,6 +296,7 @@ void main() {
       await sch.sync(force: true);
       expect(sch.lastPlan.length, greaterThanOrEqualTo(34));
       expect(fake.rings.values.every((r) => r.alarm), isTrue);
+      expect(fake.scheduled.where((n) => n.id == adhanOpenAppNotificationId), isEmpty);
     });
 
     test('tone and silent prayers have no parts', () async {

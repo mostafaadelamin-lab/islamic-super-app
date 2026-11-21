@@ -110,6 +110,13 @@ void main() {
     await tapVisible(tester, const Key('setupSilent'));
     expect(app.services.settings.adhanPlayOnSilent, isTrue);
 
+    // The prayer widget and, for the lock screen, the next-prayer notice (on by default).
+    await tester.scrollUntilVisible(find.byKey(const Key('lockNotice')), 200, scrollable: find.byType(Scrollable).last);
+    expect(find.byKey(const Key('prayerWidgetCard')), findsOneWidget);
+    expect(app.services.settings.lockNotice, isTrue);
+    await tapVisible(tester, const Key('lockNotice'));
+    expect(app.services.settings.lockNotice, isFalse);
+
     await tester.tap(find.byKey(const Key('tourStart')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('navBar')), findsOneWidget);
@@ -147,6 +154,14 @@ void main() {
       scrollable: find.byType(Scrollable).last,
     );
     expect(find.textContaining('Apple allows it only for emergency and health apps'), findsOneWidget);
+    // Apple lets no app add a widget: the steps for the home and lock screens instead.
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('setupWidgetIos')),
+      200,
+      scrollable: find.byType(Scrollable).last,
+    );
+    expect(find.textContaining('Lock Screen → Add Widgets'), findsOneWidget);
+    expect(find.byKey(const Key('lockNotice')), findsNothing);
   });
 
   testWidgets('Arabic tour and setup are accessible', (tester) async {

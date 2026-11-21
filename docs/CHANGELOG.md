@@ -1,11 +1,14 @@
 # Changelog
 
 ## [1.2.17] — full adhan on iPhone — 2026-11-21
-Owner 2026-11-21: iPhone adhan alerts played only 30 seconds; the whole adhan must ring on every iPhone. Phone apps only (Android already rings the full adhan; the website plays it in full while a page is open).
+Owner 2026-11-21: iPhone adhan alerts played only 30 seconds; the whole adhan must ring on every iPhone. Phone apps only (Android already rings the full adhan; the website plays it in full while a page is open). Also the first-run setup asks for everything at once and offers the prayer widget, and Android gets the next prayer on the lock screen.
 ### Added
 - iPhone: the whole adhan rings at prayer time with the chosen muezzin. iOS plays at most 30 s of a notification sound, so the app cuts the recording (on the phone, at the pauses between the phrases) into parts of up to 29 s, and each part rings as its own notification the moment the one before ends. The next 48 hours ring in full; later days ring the first 30 s until the app is opened again (iOS keeps at most 64 pending notifications).
 - iPhone: opening the app from an adhan notification plays the rest of the adhan in the app from where it reached, removes the remaining parts, and shows a «إيقاف الأذان» bar.
-- iPhone with iOS 26 or newer: «الأذان كامل كمنبّه» in the adhan settings (off by default; asks for the alarm permission): the adhan rings as a system alarm (AlarmKit) with the whole recording, even on silent, with «إيقاف» and «أكمل في التطبيق» buttons.
+- iPhone with iOS 26 or newer: «الأذان كامل كمنبّه» (asked at the first run right after the adhan notifications, and in the adhan settings): the adhan rings as a system alarm (AlarmKit) with the whole recording, even on silent, with «إيقاف» and «أكمل في التطبيق» buttons.
+- iPhone: if the app is not opened for about two days, a notification half an hour before the first 30-second adhan asks the user to open it once (which plans the full adhan for the next two days again).
+- Prayer widget offered at the first run and in the settings («ودجيت الصلاة على الشاشة الرئيسية», owner 2026-11-21): Android adds it with one system message (most launchers; otherwise the steps); iPhone shows the steps for the home screen and the lock screen (Apple lets no app add a widget itself).
+- Android: «الصلاة القادمة على شاشة القفل» (on by default, switch in the widget card): a quiet lasting notification with the next prayer, its time, a live countdown and the day's five times, updated at every prayer (phones have no lock-screen widgets).
 ### Changed
 - Unchanged: Quran text and all other religious content; Android and website behaviour.
 

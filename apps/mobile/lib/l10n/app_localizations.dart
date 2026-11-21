@@ -440,6 +440,18 @@ abstract class AppLocalizations {
   /// **'Continue in app'**
   String get adhanOpenApp;
 
+  /// shared key "adhan.openAppBody"
+  ///
+  /// In en, this message translates to:
+  /// **'Just open the app once to renew the full adhan alerts for the next two days.'**
+  String get adhanOpenAppBody;
+
+  /// shared key "adhan.openAppTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Open Rattil wa Salli to keep the full adhan'**
+  String get adhanOpenAppTitle;
+
   /// shared key "adhan.playOnSilent"
   ///
   /// In en, this message translates to:
@@ -3416,6 +3428,24 @@ abstract class AppLocalizations {
   /// **'Recitations library: all Quran reciters'**
   String get libraryTitle;
 
+  /// shared key "lockNotice.hint"
+  ///
+  /// In en, this message translates to:
+  /// **'A quiet, lasting notification with the next prayer, its time, the time left and the day\'s times.'**
+  String get lockNoticeHint;
+
+  /// shared key "lockNotice.setting"
+  ///
+  /// In en, this message translates to:
+  /// **'Next prayer on the lock screen'**
+  String get lockNoticeSetting;
+
+  /// shared key "lockNotice.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Next prayer: {name} {time}'**
+  String lockNoticeTitle(String name, String time);
+
   /// shared key "meanings.error"
   ///
   /// In en, this message translates to:
@@ -5672,6 +5702,24 @@ abstract class AppLocalizations {
   /// **'App tour'**
   String get settingsTour;
 
+  /// shared key "setup.alarmAction"
+  ///
+  /// In en, this message translates to:
+  /// **'Allow the alarm'**
+  String get setupAlarmAction;
+
+  /// shared key "setup.alarmBody"
+  ///
+  /// In en, this message translates to:
+  /// **'On iOS 26 or newer the whole adhan rings like an alarm clock, even when the iPhone is on silent.'**
+  String get setupAlarmBody;
+
+  /// shared key "setup.alarmTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Full adhan as an alarm'**
+  String get setupAlarmTitle;
+
   /// shared key "setup.appPage"
   ///
   /// In en, this message translates to:
@@ -5762,6 +5810,12 @@ abstract class AppLocalizations {
   /// **'Use my location'**
   String get setupLocationUse;
 
+  /// shared key "setup.lockIos"
+  ///
+  /// In en, this message translates to:
+  /// **'For the lock screen: touch and hold the lock screen → Customize → Lock Screen → Add Widgets → Rattil wa Salli, to see the next prayer and the time left.'**
+  String get setupLockIos;
+
   /// shared key "setup.notifAction"
   ///
   /// In en, this message translates to:
@@ -5815,6 +5869,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Set up the app'**
   String get setupTitle;
+
+  /// shared key "setup.widgetAction"
+  ///
+  /// In en, this message translates to:
+  /// **'Add the widget'**
+  String get setupWidgetAction;
+
+  /// shared key "setup.widgetAndroidManual"
+  ///
+  /// In en, this message translates to:
+  /// **'If no add message appears: touch and hold an empty spot on the home screen → Widgets → Rattil wa Salli.'**
+  String get setupWidgetAndroidManual;
+
+  /// shared key "setup.widgetBody"
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer times, the next prayer and the Hijri date on your home screen without opening the app.'**
+  String get setupWidgetBody;
+
+  /// shared key "setup.widgetIos"
+  ///
+  /// In en, this message translates to:
+  /// **'Apple does not let apps add it themselves: touch and hold an empty spot on the home screen → Edit or + → search for Rattil wa Salli → pick a size → Add Widget.'**
+  String get setupWidgetIos;
+
+  /// shared key "setup.widgetTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer widget on the home screen'**
+  String get setupWidgetTitle;
 
   /// shared key "shabib.fromSurah"
   ///

@@ -1106,5 +1106,19 @@
   "adhan.iosAlarmDenied": "Allow alarms for Rattil wa Salli in the iPhone Settings, then turn this on again.",
   "adhan.iosFullHint": "On iPhone the whole adhan rings in parts, one after another. Open the app every day or two to keep it full; otherwise only the first 30 seconds ring.",
   "adhan.nowPlaying": "Adhan",
-  "adhan.openApp": "Continue in app"
+  "adhan.openApp": "Continue in app",
+  "setup.widgetTitle": "Prayer widget on the home screen",
+  "setup.widgetBody": "Prayer times, the next prayer and the Hijri date on your home screen without opening the app.",
+  "setup.widgetAction": "Add the widget",
+  "setup.widgetIos": "Apple does not let apps add it themselves: touch and hold an empty spot on the home screen → Edit or + → search for Rattil wa Salli → pick a size → Add Widget.",
+  "setup.widgetAndroidManual": "If no add message appears: touch and hold an empty spot on the home screen → Widgets → Rattil wa Salli.",
+  "setup.alarmTitle": "Full adhan as an alarm",
+  "setup.alarmBody": "On iOS 26 or newer the whole adhan rings like an alarm clock, even when the iPhone is on silent.",
+  "setup.alarmAction": "Allow the alarm",
+  "lockNotice.title": "Next prayer: {name} {time}",
+  "lockNotice.setting": "Next prayer on the lock screen",
+  "lockNotice.hint": "A quiet, lasting notification with the next prayer, its time, the time left and the day's times.",
+  "setup.lockIos": "For the lock screen: touch and hold the lock screen → Customize → Lock Screen → Add Widgets → Rattil wa Salli, to see the next prayer and the time left.",
+  "adhan.openAppTitle": "Open Rattil wa Salli to keep the full adhan",
+  "adhan.openAppBody": "Just open the app once to renew the full adhan alerts for the next two days."
 }

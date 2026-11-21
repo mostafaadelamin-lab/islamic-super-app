@@ -69,6 +69,9 @@ tz.TZDateTime nextOccurrence({
 /// Id of the one-off "try it now" notification (real ids are yyyymmddN).
 const adhanTestNotificationId = 1;
 
+/// iPhone: "open the app to keep the full adhan", shortly before the full adhans planned run out.
+const adhanOpenAppNotificationId = 2;
+
 /// iPhone: how one adhan rings. iOS plays at most 30 s of a notification sound, so the recording is cut
 /// (natively, at the pauses between its phrases) into [parts] of at most 29 s, saved as
 /// Library/Sounds/[adhanPartSound], and each part rings as its own notification the moment the one before
@@ -595,7 +598,8 @@ class AdhanScheduler {
       dayFor: (d) => ctx.day(schedule, d, settings.adjustments),
     );
     if (parts == null) return all;
-    return fitFullAdhan(all, partsFor: _partsFor, nowUtc: now, max: budget);
+    // One slot stays for the "open the app" reminder.
+    return fitFullAdhan(all, partsFor: _partsFor, nowUtc: now, max: budget - 1);
   }
 
   /// Re-plans when anything relevant changed (or when [force]).
@@ -653,6 +657,26 @@ class AdhanScheduler {
           sound: n.kind == adhanKind ? settings.adhanSoundFor(n.prayer) : extraSound,
           ring: n.kind == adhanKind ? _rings[n.prayer]?.take(n.parts) : null,
         );
+      }
+      // iPhone (owner 2026-11-21): when the app is not opened, the full adhans planned run out after about
+      // two days and only the first 30 s ring; a reminder half an hour before the first short one asks the
+      // user to open the app (which plans the next two days again).
+      final short = parts == null
+          ? null
+          : items
+                .where((n) => n.kind == adhanKind && n.parts == 1 && (_rings[n.prayer]?.parts.length ?? 0) > 1)
+                .firstOrNull;
+      if (short != null) {
+        final at = short.at.subtract(const Duration(minutes: 30));
+        if (at.isAfter(clock().toUtc())) {
+          await backend.schedule(
+            id: adhanOpenAppNotificationId,
+            title: l.adhanOpenAppTitle,
+            body: l.adhanOpenAppBody,
+            atUtc: at,
+            sound: 'tone',
+          );
+        }
       }
     } catch (e) {
       // A plugin failure must never break the app; the next sync retries.

@@ -303,6 +303,14 @@
   "@adhanOpenApp": {
     "description": "shared key \"adhan.openApp\""
   },
+  "adhanOpenAppBody": "Just open the app once to renew the full adhan alerts for the next two days.",
+  "@adhanOpenAppBody": {
+    "description": "shared key \"adhan.openAppBody\""
+  },
+  "adhanOpenAppTitle": "Open Rattil wa Salli to keep the full adhan",
+  "@adhanOpenAppTitle": {
+    "description": "shared key \"adhan.openAppTitle\""
+  },
   "adhanPlayOnSilent": "Play the adhan when the phone is silent",
   "@adhanPlayOnSilent": {
     "description": "shared key \"adhan.playOnSilent\""
@@ -2772,6 +2780,26 @@
   "@libraryTitle": {
     "description": "shared key \"library.title\""
   },
+  "lockNoticeHint": "A quiet, lasting notification with the next prayer, its time, the time left and the day's times.",
+  "@lockNoticeHint": {
+    "description": "shared key \"lockNotice.hint\""
+  },
+  "lockNoticeSetting": "Next prayer on the lock screen",
+  "@lockNoticeSetting": {
+    "description": "shared key \"lockNotice.setting\""
+  },
+  "lockNoticeTitle": "Next prayer: {name} {time}",
+  "@lockNoticeTitle": {
+    "description": "shared key \"lockNotice.title\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "meaningsError": "Could not load the word meanings.",
   "@meaningsError": {
     "description": "shared key \"meanings.error\""
@@ -4601,6 +4629,18 @@
   "@settingsTour": {
     "description": "shared key \"settings.tour\""
   },
+  "setupAlarmAction": "Allow the alarm",
+  "@setupAlarmAction": {
+    "description": "shared key \"setup.alarmAction\""
+  },
+  "setupAlarmBody": "On iOS 26 or newer the whole adhan rings like an alarm clock, even when the iPhone is on silent.",
+  "@setupAlarmBody": {
+    "description": "shared key \"setup.alarmBody\""
+  },
+  "setupAlarmTitle": "Full adhan as an alarm",
+  "@setupAlarmTitle": {
+    "description": "shared key \"setup.alarmTitle\""
+  },
   "setupAppPage": "App page",
   "@setupAppPage": {
     "description": "shared key \"setup.appPage\""
@@ -4661,6 +4701,10 @@
   "@setupLocationUse": {
     "description": "shared key \"setup.locationUse\""
   },
+  "setupLockIos": "For the lock screen: touch and hold the lock screen → Customize → Lock Screen → Add Widgets → Rattil wa Salli, to see the next prayer and the time left.",
+  "@setupLockIos": {
+    "description": "shared key \"setup.lockIos\""
+  },
   "setupNotifAction": "Turn on the adhan",
   "@setupNotifAction": {
     "description": "shared key \"setup.notifAction\""
@@ -4696,6 +4740,26 @@
   "setupTitle": "Set up the app",
   "@setupTitle": {
     "description": "shared key \"setup.title\""
+  },
+  "setupWidgetAction": "Add the widget",
+  "@setupWidgetAction": {
+    "description": "shared key \"setup.widgetAction\""
+  },
+  "setupWidgetAndroidManual": "If no add message appears: touch and hold an empty spot on the home screen → Widgets → Rattil wa Salli.",
+  "@setupWidgetAndroidManual": {
+    "description": "shared key \"setup.widgetAndroidManual\""
+  },
+  "setupWidgetBody": "Prayer times, the next prayer and the Hijri date on your home screen without opening the app.",
+  "@setupWidgetBody": {
+    "description": "shared key \"setup.widgetBody\""
+  },
+  "setupWidgetIos": "Apple does not let apps add it themselves: touch and hold an empty spot on the home screen → Edit or + → search for Rattil wa Salli → pick a size → Add Widget.",
+  "@setupWidgetIos": {
+    "description": "shared key \"setup.widgetIos\""
+  },
+  "setupWidgetTitle": "Prayer widget on the home screen",
+  "@setupWidgetTitle": {
+    "description": "shared key \"setup.widgetTitle\""
   },
   "shabibFromSurah": "From Surah {name}",
   "@shabibFromSurah": {
