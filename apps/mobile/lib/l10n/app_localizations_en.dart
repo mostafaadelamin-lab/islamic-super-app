@@ -1564,6 +1564,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kidsProphetsNewSub => 'A teacher tells the story; the prophet is shown only as light';
 
   @override
+  String get kidsProphetsPick => 'Choose a series';
+
+  @override
   String get kidsProphetsSub => 'Cartoon episodes: watch or listen, download for offline';
 
   @override
@@ -2986,7 +2989,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ruqyahKidsNote =>
-      'What the Prophet ﷺ sought protection with for al-Hasan and al-Husayn, then al-Ikhlas, al-Falaq and an-Nas. Read them over your child or listen.';
+      'What the Prophet ﷺ sought protection with for al-Hasan and al-Husayn, then al-Fatiha, Ayat al-Kursi, the end of al-Baqarah, al-Ikhlas, al-Falaq and an-Nas, then the ruqyah Jibril recited over the Prophet ﷺ. Read them over your child or listen.';
 
   @override
   String get ruqyahKidsTitle => 'Ruqyah for children';

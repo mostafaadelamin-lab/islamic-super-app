@@ -52,7 +52,7 @@ export function KidsMushaf({
   word: string;
   audio: Record<string, TeacherAudio>;
 }) {
-  const [reciter, setReciter] = useState(KIDS.teacher.reciters[0] ?? Object.keys(audio)[0]!);
+  const [reciter, setReciter] = useState(KIDS.teacher.reciters.find((r) => r in audio) ?? Object.keys(audio)[0]!);
   const [size, setSize] = useState(1);
   const [playing, setPlaying] = useState(false);
   const [pos, setPos] = useState<{ ayah: number; word: number | null } | null>(null);
@@ -197,7 +197,7 @@ export function KidsMushaf({
     <div className="kids-mushaf" data-testid="kids-mushaf">
       <div className="kids-mushaf-tools">
         <div className="row" role="group" style={{ flexWrap: "wrap", gap: "0.5rem" }}>
-          {KIDS.teacher.reciters.map((r) => (
+          {KIDS.teacher.reciters.filter((r) => r in audio).map((r) => (
             <button
               key={r}
               type="button"

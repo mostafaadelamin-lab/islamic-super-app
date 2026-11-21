@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 /// Where each ayah and word sits inside the one-file-per-surah teaching recordings
-/// (assets/content/teacher-timings.v1.json, built by tools/kids_teacher_timings.py).
+/// (assets/content/teacher-timings/{surah}.json, built by tools/kids_teacher_timings.py).
 /// Owner 2026-11-20: the kids' teaching Mushaf lights up the word being read.
 class TeacherTimings {
   TeacherTimings(this.wordUrl, this.reciters);
@@ -24,7 +24,9 @@ class TeacherTimings {
     return TeacherTimings(j['word'] as String, rec);
   }
 
-  static const asset = 'assets/content/teacher-timings.v1.json';
+  /// One file per surah (built by tools/kids_teacher_timings.py); a reciter is missing where
+  /// Quran.com has no timings for that recording.
+  static String assetFor(int surah) => 'assets/content/teacher-timings/$surah.json';
 
   /// Quran.com word-by-word audio template ({sss}, {aaa}, {www}).
   final String wordUrl;

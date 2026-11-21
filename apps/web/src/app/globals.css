@@ -5733,3 +5733,20 @@ a.episode {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+
+/* Kids: prophets' series picker (owner 2026-11-21). */
+.kids-pick {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0.75rem 0;
+}
+.kids-pick select {
+  font: inherit;
+  padding: 0.6rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border, #d8cbb5);
+  background: var(--surface, #fff);
+  color: inherit;
+  max-width: 28rem;
+}

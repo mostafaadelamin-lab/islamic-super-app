@@ -23,9 +23,10 @@ export function teacherAudio(s: number): { word: string; reciters: Record<string
   const reciters: Record<string, TeacherAudio> = {};
   for (const [folder, r] of Object.entries(t.reciters)) {
     const ayahs = r.surahs[String(s)];
-    if (!ayahs) throw new RangeError(`teacher timings ${folder} ${s}`);
+    if (!ayahs) continue; // no published timings for this recording of the surah
     reciters[folder] = { url: fillUrl(r.url, s), ayahs };
   }
+  if (Object.keys(reciters).length === 0) throw new RangeError(`teacher timings ${s}`);
   return { word: t.word, reciters };
 }
 
