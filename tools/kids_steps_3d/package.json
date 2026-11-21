@@ -1,0 +1,6 @@
+{
+  "name": "kids-steps-3d",
+  "private": true,
+  "description": "Our own 3D pictures for the kids wudu / salah steps (owner 2026-11-21). Run: npm i && node render.js",
+  "dependencies": { "three": "0.180.0" }
+}

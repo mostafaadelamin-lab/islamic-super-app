@@ -135,8 +135,8 @@ All from saaid.org «مكتبة الطفل» (`https://saaid.org/book/list.php?c
 | What | Source | Notes |
 |---|---|---|
 | «احفظ حديث» (600 hadith, 4 levels) | saaid book 19945 «600 حديث للحفظ للأطفال متدرجة حسب الطول ومقسمة إلى أربعة مستويات بالألوان», د. هاني الشيخ جمعة سهل | text taken from the PDF text layer (ToUnicode fixed, visual order fixed, NFC), never typed; levels 1–200 / 201–350 / 351–500 / 501–600 as in the book. The author's introduction asks to be contacted before use in apps: owner told 2026-11-20 |
-| Adhkar cards (boys / girls) | saaid books 19621 and 19622 «بطاقات الأذكار للناشئة (بنين / بنات)», محب الدين علي بن تقي المصري | published card pages 3–10 shown as pictures (no usable text layer) |
-| Wudu and salah steps | saaid book 10436 «هيا نتعلم الوضوء والصلاة», سلسلة العلامتين | pages 6–16 (wudu) and 18–31 (salah) as pictures; the book allows free use when named, so the app/site shows «الصور من كتاب «هيا نتعلم الوضوء والصلاة» – سلسلة العلامتين» |
+| Adhkar cards | saaid book 19621 «بطاقات الأذكار للناشئة (بنين)», محب الدين علي بن تقي المصري (19622 بنات has the same text) | since 2026-11-21 shown as TEXT with a counter: copied from the book's PDF text layer (tools/kids_cards/extract_cards.py); card 14's three surahs come from the app's Hisn al-Muslim adhkar |
+| Wudu and salah steps | saaid book 10436 «هيا نتعلم الوضوء والصلاة», سلسلة العلامتين | since 2026-11-21: each step's title and text copied from book pages 6–16 (wudu) and 18–31 (salah) (content/kids/learn/steps.json), with OUR OWN 3D pictures (tools/kids_steps_3d/, three.js; faceless child) instead of the book's drawings; Ayat al-Kursi on page 31 from the app's adhkar (KFGQPC wording). The book allows free use when named, so the app/site shows «النص من كتاب «هيا نتعلم الوضوء والصلاة» – سلسلة العلامتين» |
 | Book shelf (43 books) | saaid books listed below | each page rendered to webp from the PDF (1000 px), hosted at `rattilwasalli.com/kids-books/<id>/<page>.webp`; covers bundled in the app and site; the app saves a book for offline reading on request |
 
 Shelf books (saaid id, title, author):

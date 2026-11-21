@@ -282,7 +282,7 @@ export function KidsView({ locale }: { locale: Locale }) {
     <div data-testid="kids">
       <p className="muted">{t(locale, "kids.note")}</p>
       <ul className="tiles tiles-sm">
-        {SECTIONS.map(([id, icon]) => (
+        {SECTIONS.filter(([id]) => id !== "stories").map(([id, icon]) => (
           <li key={id}>
             <button
               type="button"
@@ -302,7 +302,7 @@ export function KidsView({ locale }: { locale: Locale }) {
             </button>
           </li>
         ))}
-        <KidsLearnTiles locale={locale} />
+        <KidsLearnTiles locale={locale} ids={["cards", "wudu", "salah"]} />
         <li>
           <Link className="tile tile-sm" href={href(locale, "kids/ruqyah")} data-testid="kids-tab-ruqyah">
             <span className="tile-icon">
@@ -314,6 +314,27 @@ export function KidsView({ locale }: { locale: Locale }) {
             </span>
           </Link>
         </li>
+        {SECTIONS.filter(([id]) => id === "stories").map(([id, icon]) => (
+          <li key={id}>
+            <button
+              type="button"
+              className="tile tile-sm"
+              aria-pressed={tab === id}
+              data-testid={`kids-tab-${id}`}
+              onClick={() => pick(id)}
+              style={{ width: "100%" }}
+            >
+              <span className="tile-icon">
+                <Icon name={icon} />
+              </span>
+              <span className="tile-text">
+                <strong>{t(locale, `kids.${id}`)}</strong>
+                <span className="muted small">{t(locale, `kids.${id}Sub`)}</span>
+              </span>
+            </button>
+          </li>
+        ))}
+        <KidsLearnTiles locale={locale} ids={["books", "hadith"]} />
       </ul>
       <section className="kids-section">
         {tab === "prophets" ? <ProphetsPicker locale={locale} open={open} setOpen={setOpen} /> : null}

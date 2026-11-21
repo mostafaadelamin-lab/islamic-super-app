@@ -1694,7 +1694,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kidsLearnCards => 'Adhkar cards';
 
   @override
-  String get kidsLearnCardsSub => 'Picture cards for boys and girls, collect a star each day';
+  String get kidsLearnCardsSub => 'Morning and evening adhkar in text, with a counter for each';
 
   @override
   String kidsLearnCardsToday(String n) {
@@ -1703,7 +1703,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String kidsLearnCredit(String name) {
-    return 'Pictures from $name';
+    return 'Text from $name';
   }
 
   @override

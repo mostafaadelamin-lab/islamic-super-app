@@ -4,10 +4,10 @@ import { LEARN, bookById, onShelf, shelfKey } from "@/lib/kids-learn";
 import {
   bookPageUrl,
   levelCount,
-  readCardsToday,
+  readCardCounts,
   readMemorized,
   todayKey,
-  writeCardsToday,
+  writeCardCounts,
   writeMemorized,
 } from "@/lib/kids-learn-store";
 import { t } from "@/lib/i18n";
@@ -41,20 +41,32 @@ describe("kids learning corner", () => {
     expect(bookById(LEARN.books[0]!.id)).toBe(LEARN.books[0]);
   });
 
-  it("cards and steps pictures are bundled", () => {
-    for (const p of [...LEARN.wudu, ...LEARN.salah]) {
-      expect(existsSync(join(PUBLIC, "kids/wudu", `${p}.webp`))).toBe(true);
+  it("adhkar cards as text: 19 adhkar with the cards' own counts", () => {
+    expect(LEARN.cardAdhkar.map((c) => c.n)).toEqual(Array.from({ length: 19 }, (_, i) => i + 1));
+    for (const c of LEARN.cardAdhkar) {
+      expect(c.text.length).toBeGreaterThan(5);
+      expect(/[\uE000-\uF8FF]/.test(c.text)).toBe(false);
+      expect(c.m + c.e).toBeGreaterThan(0);
     }
-    for (const p of LEARN.cards) {
-      for (const e of ["b", "g"]) expect(existsSync(join(PUBLIC, "kids/cards", `${e}${p}.webp`))).toBe(true);
+    expect(LEARN.cardAdhkar[8]).toMatchObject({ m: 0, e: 1 });
+  });
+
+  it("steps: the book's text with our own 3D pictures, all bundled", () => {
+    expect(LEARN.wudu.filter((s) => s.pic)).toHaveLength(8);
+    expect(LEARN.salah.filter((s) => s.pic)).toHaveLength(12);
+    for (const s of [...LEARN.wudu, ...LEARN.salah]) {
+      expect(s.title.trim()).not.toBe("");
+      expect(s.text.trim()).not.toBe("");
+      if (s.pic) expect(existsSync(join(PUBLIC, "kids/steps", `${s.pic}.webp`))).toBe(true);
     }
+    expect(LEARN.salah.at(-1)?.ayah).toContain("الْقَيُّومُ");
   });
 
   it("memorised hadith and today's cards are kept in this browser", () => {
     writeMemorized(new Set([3, 1]));
     expect([...readMemorized()]).toEqual([1, 3]);
-    writeCardsToday(new Set([5]));
-    expect([...readCardsToday()]).toEqual([5]);
+    writeCardCounts({ m1: 1 });
+    expect(readCardCounts()).toEqual({ m1: 1 });
     expect(todayKey(new Date(2026, 10, 20))).toBe("2026-11-20");
   });
 });

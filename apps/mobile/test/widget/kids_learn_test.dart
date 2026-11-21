@@ -38,13 +38,16 @@ void main() {
     for (final s in k.shelves) {
       expect(k.onShelf(s), isNotEmpty, reason: s);
     }
-    for (final p in [...k.wudu, ...k.salah]) {
-      expect(File('assets/kids/wudu/$p.webp').existsSync(), isTrue);
+    // Wudu / salah: the book's title and text per step, our own 3D picture on each step page.
+    expect(k.wudu.where((s) => s.pic != null), hasLength(8));
+    expect(k.salah.where((s) => s.pic != null), hasLength(12));
+    for (final s in [...k.wudu, ...k.salah]) {
+      expect(s.title.trim(), isNotEmpty);
+      expect(s.text.trim(), isNotEmpty);
+      if (s.pic != null) expect(File('assets/kids/steps/${s.pic}.webp').existsSync(), isTrue, reason: s.pic);
     }
-    for (final p in k.cards) {
-      expect(File('assets/kids/cards/b$p.webp').existsSync(), isTrue);
-      expect(File('assets/kids/cards/g$p.webp').existsSync(), isTrue);
-    }
+    expect(k.wudu[1].title, 'النية والتسمية وغسل الكفين');
+    expect(k.salah.last.ayah, contains('الْقَيُّومُ'));
     expect(k.stepsCredit, isNotEmpty);
   });
 
@@ -89,18 +92,38 @@ void main() {
     expect(find.textContaining('حفظت ١ من ٢٠٠'), findsOneWidget);
   });
 
-  testWidgets('adhkar cards: boys / girls, a star for a card said today', (tester) async {
+  test('adhkar cards as text: 19 adhkar from the cards book with their morning / evening counts', () {
+    final k = _learn();
+    expect(k.cardAdhkar.map((c) => c.n), List.generate(19, (i) => i + 1));
+    for (final c in k.cardAdhkar) {
+      expect(c.text.trim(), isNotEmpty);
+      expect(c.text.runes.any((r) => r >= 0xE000 && r <= 0xF8FF), isFalse, reason: c.text);
+      expect(c.morning + c.evening, greaterThan(0));
+    }
+    // «أعوذ بكلمات الله التامات» is said in the evening only (the card says so).
+    expect(k.cardAdhkar[8].morning, 0);
+    expect(k.cardAdhkar[8].evening, 1);
+    expect(k.cardAdhkar[16].morning, 100);
+    expect(k.cardAdhkar[13].surahs, hasLength(3));
+    expect(k.cardAdhkarFor(evening: false), hasLength(18));
+    expect(k.cardAdhkarFor(evening: true), hasLength(19));
+  });
+
+  testWidgets('adhkar cards: tap the counter, a finished dhikr moves on to the next', (tester) async {
     await pumpApp(tester, size: tallPhone);
     final k = _learn();
-    await pushScreen(tester, KidsCardsScreen(loader: () async => k));
-    expect(find.byKey(const Key('kidsCards.pages')), findsOneWidget);
-    await tester.tap(find.text('بنات'));
+    await pushScreen(tester, KidsCardsScreen(loader: () async => k, evening: false));
+    expect(find.byKey(const Key('kidsCardText-1')), findsOneWidget);
+    expect(tester.widget<Text>(find.byKey(const Key('kidsCardText-1'))).data, k.cardAdhkar.first.text);
+    await tester.tap(find.byKey(const Key('kidsCardTap-1')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const Key('kidsCards.done')));
-    await tester.pumpAndSettle();
-    expect(find.textContaining('نجومك اليوم'), findsOneWidget);
+    expect(find.byKey(const Key('kidsCardText-2')), findsOneWidget);
+    expect(find.textContaining('أُنجز ١ من ١٨'), findsOneWidget);
     final prefs = await SharedPreferences.getInstance();
-    expect(prefs.getString('kidsCardsDone'), contains('${k.cards.first}'));
+    expect(prefs.getString('kidsCardsCount'), contains('"m1":1'));
+    await tester.tap(find.text('المساء'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('أُنجز ٠ من ١٩'), findsOneWidget);
   });
 
   testWidgets('wudu steps: next to the last step says well done, with the book credit', (tester) async {
@@ -108,7 +131,12 @@ void main() {
     final k = _learn();
     await pushScreen(tester, KidsStepsScreen(salah: false, loader: () async => k));
     expect(find.byKey(const Key('kidsSteps.done')), findsNothing);
-    for (var i = 1; i < k.wudu.length; i++) {
+    expect(tester.widget<Text>(find.byKey(const Key('kidsStep.text.0'))).data, k.wudu.first.text);
+    await tester.tap(find.byKey(const Key('pager.next')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('kidsStep.pic.w-hands')), findsOneWidget);
+    expect(tester.widget<Text>(find.byKey(const Key('kidsStep.title.1'))).data, k.wudu[1].title);
+    for (var i = 2; i < k.wudu.length; i++) {
       await tester.tap(find.byKey(const Key('pager.next')));
       await tester.pumpAndSettle();
     }

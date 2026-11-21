@@ -22,7 +22,6 @@ export const bookPageUrl = (base: string, b: KidsBook, page: number): string => 
 export const levelCount = (l: HadithLevel): number => l.to - l.from + 1;
 
 const MEMORIZED_KEY = "kidsHadithMemorized";
-const CARDS_KEY = "kidsCardsDone";
 
 /** Hadith numbers the child marked «حفظته». */
 export function readMemorized(): Set<number> {
@@ -35,14 +34,34 @@ export function writeMemorized(s: Set<number>): void {
   );
 }
 
-/** Today's key: cards said today are stored per day, so the stars start fresh each morning. */
+/** One dhikr of the adhkar cards as text: m / e = repeat counts in the morning / evening (0 = not said then). */
+/** One wudu / salah step: the book's own title and text, with our own 3D picture (none on text pages). */
+export interface KidsStep {
+  title: string;
+  text: string;
+  pic?: string;
+  ayah?: string;
+}
+
+export interface CardDhikr {
+  n: number;
+  card: number;
+  text: string;
+  note: string;
+  m: number;
+  e: number;
+  surahs?: string[];
+}
+
+/** Today's key: counts are kept per day, so each morning and evening start fresh. */
 export function todayKey(d = new Date()): string {
   return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 }
-export function readCardsToday(): Set<number> {
-  const m = readJson<Record<string, number[]>>(CARDS_KEY, {});
-  return new Set(m[todayKey()] ?? []);
+const CARD_COUNTS_KEY = "kidsCardsCount";
+export function readCardCounts(): Record<string, number> {
+  const m = readJson<Record<string, Record<string, number>>>(CARD_COUNTS_KEY, {});
+  return m[todayKey()] ?? {};
 }
-export function writeCardsToday(s: Set<number>): void {
-  writeJson(CARDS_KEY, { [todayKey()]: [...s] });
+export function writeCardCounts(c: Record<string, number>): void {
+  writeJson(CARD_COUNTS_KEY, { [todayKey()]: c });
 }

@@ -3083,7 +3083,7 @@ abstract class AppLocalizations {
   /// shared key "kidsLearn.cardsSub"
   ///
   /// In en, this message translates to:
-  /// **'Picture cards for boys and girls, collect a star each day'**
+  /// **'Morning and evening adhkar in text, with a counter for each'**
   String get kidsLearnCardsSub;
 
   /// shared key "kidsLearn.cardsToday"
@@ -3095,7 +3095,7 @@ abstract class AppLocalizations {
   /// shared key "kidsLearn.credit"
   ///
   /// In en, this message translates to:
-  /// **'Pictures from {name}'**
+  /// **'Text from {name}'**
   String kidsLearnCredit(String name);
 
   /// shared key "kidsLearn.delete"

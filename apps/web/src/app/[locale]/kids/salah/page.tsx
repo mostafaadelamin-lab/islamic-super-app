@@ -19,7 +19,7 @@ export default async function KidsSalahPage({ params }: { params: LocaleParams }
         <Link href={href(locale, "kids")}>{t(locale, "kids.back")}</Link>
       </nav>
       <h1>{t(locale, "kidsLearn.salah")}</h1>
-      <KidsSteps locale={locale} salah pages={LEARN.salah} credit={LEARN.stepsCredit} />
+      <KidsSteps locale={locale} salah steps={LEARN.salah} credit={LEARN.stepsCredit} />
     </>
   );
 }

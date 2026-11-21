@@ -19,7 +19,7 @@ export default async function KidsCardsPage({ params }: { params: LocaleParams }
         <Link href={href(locale, "kids")}>{t(locale, "kids.back")}</Link>
       </nav>
       <h1>{t(locale, "kidsLearn.cards")}</h1>
-      <KidsCards locale={locale} cards={LEARN.cards} />
+      <KidsCards locale={locale} items={LEARN.cardAdhkar} />
     </>
   );
 }

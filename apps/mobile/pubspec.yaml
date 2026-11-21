@@ -66,8 +66,7 @@ flutter:
     - assets/hadith/muslim/
     - assets/hadith/nasai/
     - assets/hadith/tirmidhi/
-    - assets/kids/wudu/
-    - assets/kids/cards/
+    - assets/kids/steps/
     - assets/kids/covers/
   fonts:
     - family: KFGQPC HAFS Uthmanic Script

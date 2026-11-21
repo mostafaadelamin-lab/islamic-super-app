@@ -1,5 +1,5 @@
 {
- "_doc": "Kids learning corner (owner 2026-11-20): book shelf, «احفظ حديث» (600 hadith for kids), adhkar cards, wudu & salah steps. Religious text is NEVER typed here: hadith600.json was extracted from the published book's PDF text layer (tools/kids_hadith600/); cards/steps/books are the published pages as images. Sources: docs/CONTENT_SOURCES.md (never shown in the app, except the wudu/salah book whose terms ask to name it). Build: python3 tools/kids_learn_build.py",
+ "_doc": "Kids learning corner (owner 2026-11-20): book shelf, «احفظ حديث» (600 hadith for kids), adhkar cards, wudu & salah steps. Religious text is NEVER typed here: hadith600.json was extracted from the published book's PDF text layer (tools/kids_hadith600/); adhkar cards are text from the cards book (tools/kids_cards/); books are the published pages as images; wudu/salah steps are the book's text (steps.json) with our own 3D pictures (tools/kids_steps_3d/). Sources: docs/CONTENT_SOURCES.md (never shown in the app, except the wudu/salah book whose terms ask to name it). Build: python3 tools/kids_learn_build.py",
  "booksBase": "https://rattilwasalli.com/kids-books/",
  "shelves": [
   "adhkar",
@@ -340,50 +340,5 @@
    "color": "#3D7DCA"
   }
  ],
- "wudu": {
-  "pages": [
-   6,
-   7,
-   8,
-   9,
-   10,
-   11,
-   12,
-   13,
-   14,
-   15,
-   16
-  ]
- },
- "salah": {
-  "pages": [
-   18,
-   19,
-   20,
-   21,
-   22,
-   23,
-   24,
-   25,
-   26,
-   27,
-   28,
-   29,
-   30,
-   31
-  ]
- },
- "stepsCredit": "كتاب «هيا نتعلم الوضوء والصلاة» – سلسلة العلامتين",
- "cards": {
-  "pages": [
-   3,
-   4,
-   5,
-   6,
-   7,
-   8,
-   9,
-   10
-  ]
- }
+ "stepsCredit": "كتاب «هيا نتعلم الوضوء والصلاة» – سلسلة العلامتين"
 }

@@ -8,16 +8,21 @@ import { withBase } from "@/lib/base-path";
 import {
   bookPageUrl,
   levelCount,
-  readCardsToday,
+  readCardCounts,
   readMemorized,
-  writeCardsToday,
+  writeCardCounts,
   writeMemorized,
+  type CardDhikr,
+  type KidsStep,
   type HadithLevel,
   type KidsBook,
 } from "@/lib/kids-learn-store";
 import { Icon } from "./Icon";
 
-const MAX_STARS = 8;
+/** The evening session starts in the afternoon (as in the app). */
+const EVENING_FROM_HOUR = 15;
+/** Pause before moving on to the next dhikr. */
+const AUTO_NEXT_MS = 350;
 
 /** Previous / page label / next, with an optional action row under it. */
 function Pager({
@@ -255,69 +260,118 @@ export function KidsHadith({
   );
 }
 
-/** «بطاقات الأذكار»: the published cards (boys' or girls' edition), with a star for each card said today. */
-export function KidsCards({ locale, cards }: { locale: Locale; cards: number[] }) {
+/** «بطاقات الأذكار» as text (owner 2026-11-21): the cards' adhkar one by one with a big counter, like the
+ * morning / evening adhkar; finishing a dhikr moves on to the next. */
+export function KidsCards({ locale, items }: { locale: Locale; items: CardDhikr[] }) {
   const n = (v: number): string => localizeDigits(v, locale);
-  const [girls, setGirls] = useState(false);
+  const [evening, setEvening] = useState(false);
+  const [counts, setCounts] = useState<Record<string, number>>({});
   const [i, setI] = useState(0);
-  const [done, setDone] = useState<Set<number>>(new Set());
-  useEffect(() => setDone(readCardsToday()), []);
-  const page = cards[i] ?? cards[0] ?? 0;
-  const isDone = done.has(page);
-  const stars = cards.filter((c) => done.has(c)).length;
-  const toggle = () => {
-    const s = new Set(done);
-    if (s.has(page)) s.delete(page);
-    else s.add(page);
-    setDone(s);
-    writeCardsToday(s);
+  useEffect(() => {
+    setEvening(new Date().getHours() >= EVENING_FROM_HOUR);
+    setCounts(readCardCounts());
+  }, []);
+  const list = items.filter((c) => (evening ? c.e : c.m) > 0);
+  const key = (c: CardDhikr): string => `${evening ? "e" : "m"}${c.n}`;
+  const need = (c: CardDhikr): number => (evening ? c.e : c.m);
+  const got = (c: CardDhikr): number => counts[key(c)] ?? 0;
+  const isDone = (c: CardDhikr): boolean => got(c) >= need(c);
+  const finished = list.filter(isDone).length;
+  const at = Math.min(i, Math.max(0, list.length - 1));
+  const c = list[at];
+  const pick = (ev: boolean): void => {
+    setEvening(ev);
+    setI(0);
+  };
+  const tap = (): void => {
+    if (!c || isDone(c)) return;
+    const next = { ...counts, [key(c)]: got(c) + 1 };
+    setCounts(next);
+    writeCardCounts(next);
+    if (next[key(c)]! >= need(c) && at < list.length - 1) window.setTimeout(() => setI(at + 1), AUTO_NEXT_MS);
+  };
+  const reset = (): void => {
+    const next = Object.fromEntries(
+      Object.entries(counts).filter(([k]) => !k.startsWith(evening ? "e" : "m")),
+    );
+    setCounts(next);
+    writeCardCounts(next);
+    setI(0);
   };
   return (
     <div data-testid="kids-cards">
-      <div className="row" role="group" style={{ justifyContent: "center", gap: "0.5rem" }}>
-        {[false, true].map((g) => (
+      <div className="row" style={{ gap: "0.5rem", justifyContent: "center" }}>
+        <div className="segmented" role="group" aria-label={t(locale, "adhkar.session")}>
+          {[false, true].map((ev) => (
+            <button
+              key={String(ev)}
+              type="button"
+              aria-pressed={evening === ev}
+              data-testid={`kids-cards-${ev ? "evening" : "morning"}`}
+              onClick={() => pick(ev)}
+            >
+              <Icon name={ev ? "moon" : "sun"} size={18} />{" "}
+              {t(locale, ev ? "adhkar.evening" : "adhkar.morning")}
+            </button>
+          ))}
+        </div>
+        <button type="button" className="btn btn-sm" data-testid="kids-cards-reset" onClick={reset}>
+          <Icon name="reset" /> {t(locale, "adhkar.reset")}
+        </button>
+      </div>
+      <progress
+        className="kl-bar"
+        value={finished}
+        max={Math.max(1, list.length)}
+        data-testid="kids-cards-bar"
+      />
+      <p
+        className="muted small"
+        role="status"
+        data-testid="kids-cards-progress"
+        style={{ textAlign: "center" }}
+      >
+        {t(locale, "adhkar.progress", { done: n(finished), total: n(list.length) })}
+      </p>
+      {c ? (
+        <div className={isDone(c) ? "card kl-dhikr done" : "card kl-dhikr"} data-testid={`kids-card-${c.n}`}>
+          <p className="muted small">{t(locale, "kidsLearn.repeatTimes", { n: n(need(c)) })}</p>
+          <p className="kl-dhikr-text" lang="ar" dir="rtl" data-testid="kids-card-text">
+            {c.text}
+          </p>
+          {(c.surahs ?? []).map((s) => (
+            <p key={s} className="kl-dhikr-text" lang="ar" dir="rtl">
+              {s}
+            </p>
+          ))}
+          <p className="kl-dhikr-note">{c.note}</p>
           <button
-            key={String(g)}
             type="button"
-            className={`btn btn-sm${girls === g ? " btn-primary" : ""}`}
-            aria-pressed={girls === g}
-            data-testid={`kids-cards-${g ? "girls" : "boys"}`}
-            onClick={() => setGirls(g)}
+            className={isDone(c) ? "kl-count done" : "kl-count"}
+            data-testid="kids-card-count"
+            disabled={isDone(c)}
+            onClick={tap}
           >
-            {t(locale, g ? "kidsLearn.girls" : "kidsLearn.boys")}
+            {isDone(c) ? (
+              <Icon name="check" size={56} />
+            ) : (
+              <>
+                <strong>{n(got(c))}</strong>
+                <span>/ {n(need(c))}</span>
+              </>
+            )}
           </button>
-        ))}
-      </div>
-      {stars > 0 ? (
-        <p className="kl-stars" data-testid="kids-cards-stars">
-          {"⭐".repeat(Math.min(stars, MAX_STARS))} {t(locale, "kidsLearn.cardsToday", { n: n(stars) })}
-        </p>
+          <p className="muted small" style={{ textAlign: "center" }}>
+            {t(locale, isDone(c) ? "kidsLearn.cardDoneOne" : "kidsLearn.tapCounter")}
+          </p>
+        </div>
       ) : null}
-      <div className="kl-frame">
-        {/* eslint-disable-next-line @next/next/no-img-element -- static export: no image optimiser */}
-        <img
-          src={withBase(`/kids/cards/${girls ? "g" : "b"}${page}.webp`)}
-          alt={t(locale, "kidsLearn.page", { n: n(i + 1), total: n(cards.length) })}
-          className="kl-page"
-          data-testid="kids-card-img"
-        />
-      </div>
       <Pager
         locale={locale}
-        label={t(locale, "kidsLearn.page", { n: n(i + 1), total: n(cards.length) })}
-        onPrev={i > 0 ? () => setI(i - 1) : null}
-        onNext={i < cards.length - 1 ? () => setI(i + 1) : null}
-      >
-        <button
-          type="button"
-          className="btn btn-primary"
-          aria-pressed={isDone}
-          data-testid="kids-card-done"
-          onClick={toggle}
-        >
-          <Icon name="star" /> {t(locale, isDone ? "kidsLearn.cardDone" : "kidsLearn.cardMark")}
-        </button>
-      </Pager>
+        label={`${n(at + 1)} / ${n(list.length)}`}
+        onPrev={at > 0 ? () => setI(at - 1) : null}
+        onNext={at < list.length - 1 ? () => setI(at + 1) : null}
+      />
     </div>
   );
 }
@@ -326,24 +380,35 @@ export function KidsCards({ locale, cards }: { locale: Locale; cards: number[] }
 export function KidsSteps({
   locale,
   salah,
-  pages,
+  steps,
   credit,
 }: {
   locale: Locale;
   salah: boolean;
-  pages: number[];
+  steps: KidsStep[];
   credit: string;
 }) {
   const n = (v: number): string => localizeDigits(v, locale);
   const [i, setI] = useState(0);
-  const last = i === pages.length - 1;
-  const label = t(locale, "kidsLearn.step", { n: n(i + 1), total: n(pages.length) });
+  const last = i === steps.length - 1;
+  const label = t(locale, "kidsLearn.step", { n: n(i + 1), total: n(steps.length) });
+  const step = steps[i];
+  if (!step) return null;
   return (
     <div data-testid={salah ? "kids-salah" : "kids-wudu"}>
-      <div className="kl-frame">
-        {/* eslint-disable-next-line @next/next/no-img-element -- static export: no image optimiser */}
-        <img src={withBase(`/kids/wudu/${pages[i]}.webp`)} alt={label} className="kl-page" />
-      </div>
+      <article className="kl-step" data-testid={`kids-step-${i}`}>
+        {step.pic ? (
+          /* eslint-disable-next-line @next/next/no-img-element -- static export: no image optimiser */
+          <img src={withBase(`/kids/steps/${step.pic}.webp`)} alt={step.title} className="kl-step-pic" />
+        ) : null}
+        <h2 className="kl-step-title">{step.title}</h2>
+        <p className={step.pic ? "kl-step-text" : "kl-step-text kl-step-long"}>{step.text}</p>
+        {step.ayah ? (
+          <p className="kl-dhikr-text" lang="ar">
+            {step.ayah}
+          </p>
+        ) : null}
+      </article>
       <Pager
         locale={locale}
         label={label}
@@ -360,29 +425,33 @@ export function KidsSteps({
 }
 
 /** The four corners as tiles on the kids page. */
-export function KidsLearnTiles({ locale }: { locale: Locale }) {
-  const items = [
-    ["books", "openBook"],
-    ["hadith", "star"],
-    ["cards", "adhkar"],
-    ["wudu", "prayer"],
-    ["salah", "prayer"],
-  ] as const;
+const LEARN_TILES = {
+  books: "openBook",
+  hadith: "star",
+  cards: "adhkar",
+  wudu: "prayer",
+  salah: "prayer",
+} as const;
+export type LearnTile = keyof typeof LEARN_TILES;
+
+export function KidsLearnTiles({ locale, ids }: { locale: Locale; ids: readonly LearnTile[] }) {
   return (
     <>
-      {items.map(([id, icon]) => (
-        <li key={id}>
-          <Link className="tile tile-sm" href={href(locale, `kids/${id}`)} data-testid={`kids-tab-${id}`}>
-            <span className="tile-icon">
-              <Icon name={icon} />
-            </span>
-            <span className="tile-text">
-              <strong>{t(locale, `kidsLearn.${id}`)}</strong>
-              <span className="muted small">{t(locale, `kidsLearn.${id}Sub`)}</span>
-            </span>
-          </Link>
-        </li>
-      ))}
+      {ids
+        .map((id) => [id, LEARN_TILES[id]] as const)
+        .map(([id, icon]) => (
+          <li key={id}>
+            <Link className="tile tile-sm" href={href(locale, `kids/${id}`)} data-testid={`kids-tab-${id}`}>
+              <span className="tile-icon">
+                <Icon name={icon} />
+              </span>
+              <span className="tile-text">
+                <strong>{t(locale, `kidsLearn.${id}`)}</strong>
+                <span className="muted small">{t(locale, `kidsLearn.${id}Sub`)}</span>
+              </span>
+            </Link>
+          </li>
+        ))}
     </>
   );
 }

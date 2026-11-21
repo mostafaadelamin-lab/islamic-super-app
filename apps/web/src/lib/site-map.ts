@@ -61,13 +61,13 @@ export const SITE_GROUPS: readonly SiteGroup[] = [
     items: [
       "kids-prophets",
       "kids-teacher",
-      "kids-stories",
-      "kids-books",
-      "kids-hadith",
       "kids-cards",
       "kids-wudu",
       "kids-salah",
       "kids-ruqyah",
+      "kids-stories",
+      "kids-books",
+      "kids-hadith",
     ],
   },
   {
