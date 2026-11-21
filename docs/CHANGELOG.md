@@ -1,6 +1,7 @@
 # Changelog
 
-## [1.2.15] — one combined store update + website — 2026-11-20
+## [1.2.16] — one combined store update + website — 2026-11-21
+Owner 2026-11-21: one release with every change asked for (1.2.14 and 1.2.15 were never uploaded to the stores; 1.2.15 went to the website only).
 Owner 2026-11-20: everything ships together (1.2.14 was never uploaded). Phone apps (Android + iPhone) and website.
 ### Added
 - «الرقية الشرعية» and «الرقية الشرعية للأطفال» (read and listen), in adhkar and in the kids section.
@@ -13,6 +14,7 @@ Owner 2026-11-20: everything ships together (1.2.14 was never uploaded). Phone a
 - Mushaf player: 41 reciters (27 new), 4 of them one file per surah with ayah highlighting.
 - Every audio player has a ✕ that stops it and hides it (owner 2026-11-20): website player bar, Mushaf mini player (app + website), adhkar, recitation library, Sha'rawi, nasheeds, stories, kids listening.
 - Kids: two modern prophets' stories series (published videos, no prophet's face shown) above the full series; kids corner with a 43-book shelf, «احفظ حديث», adhkar cards and wudu/salah steps (app + website).
+- Kids: the teaching Mushaf covers the whole Quran; prophets' stories picked from a list; fuller kids ruqyah (from trusted sources).
 - Mushaf: «الجزء كاملاً», whole-surah tafsir split, bigger page; kids interactive teaching Mushaf.
 ### Changed
 - The printed Mushaf look (King Fahd Complex page fonts) is the default; the old look is an option in settings.
