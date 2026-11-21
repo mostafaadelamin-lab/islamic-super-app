@@ -229,7 +229,7 @@ class AppServices {
     // Android: the next prayer on the lock screen, planned again after every adhan re-plan (which cancels
     // every notification).
     final nextPrayer = NextPrayerNotice.supported
-        ? NextPrayerNotice(content: content, settings: settings, clock: c)
+        ? NextPrayerNotice(content: content, settings: settings, clock: c, ready: backend.init)
         : null;
     return AppServices(
       nextPrayer: nextPrayer,

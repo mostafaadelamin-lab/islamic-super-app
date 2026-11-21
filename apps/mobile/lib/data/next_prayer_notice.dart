@@ -31,7 +31,10 @@ class NextPrayerSlot {
 /// itself ([AndroidNotificationDetails.timeoutAfter]) when the next one appears. Ids [firstId]... are
 /// re-planned with the adhan (which cancels every notification first) and whenever the inputs change.
 class NextPrayerNotice {
-  NextPrayerNotice({required this.content, required this.settings, required this.clock, this.days = 7});
+  NextPrayerNotice({required this.content, required this.settings, required this.clock, this.ready, this.days = 7});
+
+  /// Initialises the notifications plugin (the adhan backend's init) before the first notice.
+  final Future<void> Function()? ready;
 
   final AppContent content;
   final SettingsController settings;
@@ -99,6 +102,7 @@ class NextPrayerNotice {
   Future<void> sync({bool force = false}) async {
     if (!supported) return;
     try {
+      await ready?.call();
       final slots = plan();
       final sig = [for (final s in slots) '${s.id}|${s.showAt}|${s.next}|${s.title}|${s.body}'].join('\n');
       if (!force && sig == _last) return;
