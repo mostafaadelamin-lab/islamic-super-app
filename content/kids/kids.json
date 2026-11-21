@@ -18,12 +18,16 @@
     "full": {"archive": "RuqyahAs-shariahBySheikhMisharyRashidAl-afasy", "file": "QuranI-podDownloding.mp3", "reciter": "alafasy"}
   },
   "ruqyahKids": {
-    "source": "islamqa.info fatwa 104454 «الرقية الشرعية للأطفال» (Bukhari 3371, Bukhari 5748, Tirmidhi 2058); dua text = Hisn al-Muslim chapter «ما يعوذ به الأولاد»",
+    "source": "islamqa.info fatwa 104454 «الرقية الشرعية للأطفال» (the Prophet's ﷺ words for al-Hasan and al-Husayn, Bukhari 3371; al-Mu'awwidhat, Tirmidhi 2058, Bukhari 5748) + islamweb.net fatwa 48991 «علاج ورقية المصاب بالعين» (a child: al-Fatiha, Ayat al-Kursi, al-Ikhlas, the last two ayahs of al-Baqarah, al-Mu'awwidhatan) + Jibril's ruqyah of the Prophet ﷺ (Sahih Muslim 2186; text copied from content/hadith/dist/muslim, no. 4056 in its numbering)",
     "items": [
       {"hisn": [49, 0], "src": "رواه البخاري"},
+      {"quran": [1, 1, 7]},
+      {"quran": [2, 255, 255]},
+      {"quran": [2, 285, 286]},
       {"quran": [112, 1, 4]},
       {"quran": [113, 1, 5]},
-      {"quran": [114, 1, 6]}
+      {"quran": [114, 1, 6]},
+      {"book": ["muslim", 4056], "start": "بِاسْمِ", "src": "رواه مسلم"}
     ]
   },
   "quranReciter": "Alafasy_128kbps",

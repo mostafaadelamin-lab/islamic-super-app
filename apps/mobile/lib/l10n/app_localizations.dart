@@ -5063,7 +5063,7 @@ abstract class AppLocalizations {
   /// shared key "ruqyah.kidsNote"
   ///
   /// In en, this message translates to:
-  /// **'What the Prophet ﷺ sought protection with for al-Hasan and al-Husayn, then al-Ikhlas, al-Falaq and an-Nas. Read them over your child or listen.'**
+  /// **'What the Prophet ﷺ sought protection with for al-Hasan and al-Husayn, then al-Fatiha, Ayat al-Kursi, the end of al-Baqarah, al-Ikhlas, al-Falaq and an-Nas, then the ruqyah Jibril recited over the Prophet ﷺ. Read them over your child or listen.'**
   String get ruqyahKidsNote;
 
   /// shared key "ruqyah.kidsTitle"

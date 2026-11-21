@@ -53,6 +53,18 @@ def item(x):
         if a:
             out['audio'] = audio['base'].replace('{id}', str(a))
         return out
+    if 'book' in x:
+        # A dua inside a hadith of the books in the app (Open-Hadith-Data): copied from its start to the end.
+        b, n = x['book']
+        for f in os.listdir(f'{ROOT}/content/hadith/dist/{b}'):
+            d = json.load(open(f'{ROOT}/content/hadith/dist/{b}/{f}', encoding='utf-8'))
+            if d['from'] <= n < d['from'] + len(d['ahadith']):
+                t = re.sub(r'\s+', ' ', d['ahadith'][n - d['from']].replace('\u200f', ' ')).strip()
+                k = t.find(x['start'])
+                if k < 0:
+                    sys.exit(f'{b} {n}: start not found')
+                return {'t': 'd', 'text': t[k:], 'src': x['src'], 'repeat': x.get('repeat', 1)}
+        sys.exit(f'{b} {n}: not found')
     sys.exit(f'bad item {x}')
 
 AR = '٠١٢٣٤٥٦٧٨٩'
