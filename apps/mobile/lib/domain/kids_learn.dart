@@ -38,6 +38,30 @@ class HadithLevel {
   bool contains(int n) => n >= from && n <= to;
 }
 
+/// One dhikr of the kids' adhkar cards, as text (owner 2026-11-21): copied from the cards book's
+/// PDF text layer by tools/kids_cards/extract_cards.py. [morning] / [evening] are the repeat counts
+/// the card gives (0 = not said then); [note] is the card's own wording of them.
+class CardDhikr {
+  const CardDhikr({
+    required this.n,
+    required this.text,
+    required this.note,
+    required this.morning,
+    required this.evening,
+    this.surahs = const [],
+  });
+  final int n;
+  final String text;
+  final String note;
+  final int morning;
+  final int evening;
+
+  /// «قل هو الله أحد والمعوذتين»: the three surahs written out.
+  final List<String> surahs;
+
+  int countFor({required bool evening}) => evening ? this.evening : morning;
+}
+
 class KidsLearnContent {
   const KidsLearnContent({
     required this.booksBase,
@@ -48,7 +72,7 @@ class KidsLearnContent {
     required this.wudu,
     required this.salah,
     required this.stepsCredit,
-    required this.cards,
+    this.cardAdhkar = const [],
   });
 
   final String booksBase;
@@ -66,8 +90,14 @@ class KidsLearnContent {
   /// The wudu / salah book asks to be named when shared (its own terms).
   final String stepsCredit;
 
-  /// Page numbers of the adhkar cards (`assets/kids/cards/b<n>.webp` and `g<n>.webp`).
-  final List<int> cards;
+
+  /// The adhkar cards as text, in the cards' order.
+  final List<CardDhikr> cardAdhkar;
+
+  List<CardDhikr> cardAdhkarFor({required bool evening}) => [
+    for (final c in cardAdhkar)
+      if (c.countFor(evening: evening) > 0) c,
+  ];
 
   List<KidsBook> onShelf(String shelf) => [
     for (final b in books)
@@ -105,7 +135,17 @@ class KidsLearnContent {
       wudu: ints(j['wudu']),
       salah: ints(j['salah']),
       stepsCredit: j['stepsCredit'] as String,
-      cards: ints(j['cards']),
+      cardAdhkar: [
+        for (final c in (j['cardAdhkar'] as List? ?? const []).cast<Map<String, dynamic>>())
+          CardDhikr(
+            n: c['n'] as int,
+            text: c['text'] as String,
+            note: c['note'] as String,
+            morning: c['m'] as int,
+            evening: c['e'] as int,
+            surahs: [for (final t in (c['surahs'] as List? ?? const [])) t as String],
+          ),
+      ],
     );
   }
 }

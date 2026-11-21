@@ -5710,3 +5710,52 @@ a.episode {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+.kl-bar {
+  width: 100%;
+  height: 10px;
+  margin-top: var(--space-sm);
+  accent-color: var(--color-primary);
+}
+.kl-dhikr {
+  display: grid;
+  gap: var(--space-sm);
+  margin: var(--space-sm) 0;
+}
+.kl-dhikr.done {
+  background: var(--color-surface-2);
+}
+.kl-dhikr-text {
+  font-size: 1.5rem;
+  line-height: 2;
+  margin: 0;
+}
+.kl-dhikr-note {
+  color: var(--color-danger, #b3261e);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+.kl-count {
+  justify-self: center;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  border: 4px solid color-mix(in srgb, var(--color-accent, #b8975a) 60%, transparent);
+  background: var(--color-primary-container, #f0e2c8);
+  color: var(--color-on-primary-container, #1d3557);
+  display: grid;
+  place-content: center;
+  font: inherit;
+  cursor: pointer;
+}
+.kl-count strong {
+  font-size: 3.2rem;
+  line-height: 1.1;
+}
+.kl-count span {
+  font-size: 1.1rem;
+}
+.kl-count.done {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  cursor: default;
+}

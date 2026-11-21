@@ -6,7 +6,7 @@
  * each client component only what it shows.
  */
 import learnJson from "@/generated/kids-learn.json";
-import type { HadithLevel, KidsBook } from "@/lib/kids-learn-store";
+import type { CardDhikr, HadithLevel, KidsBook } from "@/lib/kids-learn-store";
 
 interface LearnFile {
   booksBase: string;
@@ -17,7 +17,7 @@ interface LearnFile {
   wudu: number[];
   salah: number[];
   stepsCredit: string;
-  cards: number[];
+  cardAdhkar: CardDhikr[];
 }
 
 export const LEARN = learnJson as unknown as LearnFile;

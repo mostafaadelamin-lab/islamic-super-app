@@ -93,10 +93,18 @@ void main() {
   testWidgets('preview: adhkar cards', (tester) async {
     tester.view.devicePixelRatio = 1;
     await pumpApp(tester, size: size, prefs: prefs);
-    await pushScreen(tester, KidsCardsScreen(loader: learnLoader));
-    await tester.tap(find.byKey(const Key('kidsCards.done')));
-    await settleImages(tester);
+    await pushScreen(tester, KidsCardsScreen(loader: learnLoader, evening: false));
+    await tester.tap(find.byKey(const Key('kidsCardTap-1')));
+    await tester.pumpAndSettle();
     await shot(tester, '06-cards');
+    await tester.tap(find.byKey(const Key('kidsCardTap-2')));
+    await tester.pumpAndSettle();
+    for (final n in [3, 4, 5, 6, 7, 8, 10]) {
+      await tester.tap(find.byKey(Key('kidsCardTap-$n')));
+      await tester.pumpAndSettle();
+    }
+    await tester.pumpAndSettle();
+    await shot(tester, '06b-cards-progress');
   });
 
   testWidgets('preview: wudu steps', (tester) async {

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show HapticFeedback, rootBundle;
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,8 +11,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../domain/kids_learn.dart';
 import '../theme/design_tokens.dart';
 import 'adaptive.dart';
+import 'dhikr_tools.dart' show CardPager;
 import 'l10n_ext.dart';
 import 'r_icon.dart';
+import 'review_notice.dart' show duaStyle;
 
 /// The kids' learning corner (owner, 2026-11-20): book shelf, «احفظ حديث»,
 /// adhkar cards, and wudu / salah steps. Religious text and pictures come
@@ -21,7 +23,7 @@ Future<KidsLearnContent> loadKidsLearn() async =>
     KidsLearnContent.parse(await rootBundle.loadString('assets/content/kids-learn.v1.json'));
 
 const _memorizedKey = 'kidsHadithMemorized';
-const _cardsKey = 'kidsCardsDone';
+const _cardsKey = 'kidsCardsCount';
 
 /// Hadith numbers the child marked «حفظته».
 Future<Set<int>> readMemorized() async {
@@ -648,26 +650,29 @@ class _KidsHadithCardScreenState extends State<KidsHadithCardScreen> {
 
 // ───────────────────────────── Adhkar cards ─────────────────────────────
 
-/// Today's key: cards finished today are stored per day, so the stars start fresh each morning.
+/// Today's key: counts are kept per day, so each morning and evening start fresh.
 String _today() {
   final d = DateTime.now();
   return '${d.year}-${d.month}-${d.day}';
 }
 
-/// «بطاقات الأذكار»: the published cards (boys' or girls' edition), card by card.
+/// «بطاقات الأذكار» as text (owner 2026-11-21): the cards' adhkar one by one, with a big counter like
+/// the morning / evening adhkar; finishing a dhikr moves on to the next.
 class KidsCardsScreen extends StatefulWidget {
-  const KidsCardsScreen({super.key, this.loader = loadKidsLearn});
+  const KidsCardsScreen({super.key, this.loader = loadKidsLearn, this.evening});
   final Future<KidsLearnContent> Function() loader;
+
+  /// Which session to open; by default evening from the afternoon on.
+  final bool? evening;
 
   @override
   State<KidsCardsScreen> createState() => _KidsCardsScreenState();
 }
 
 class _KidsCardsScreenState extends State<KidsCardsScreen> {
-  final _pages = PageController();
-  bool _girls = false;
-  int _i = 0;
-  Set<int> _done = {};
+  late bool _evening = widget.evening ?? DateTime.now().hour >= 15;
+  Map<String, int> _counts = {};
+  String _day = _today();
 
   @override
   void initState() {
@@ -675,81 +680,193 @@ class _KidsCardsScreenState extends State<KidsCardsScreen> {
     unawaited(_load());
   }
 
+  String _key(CardDhikr c) => '${_evening ? 'e' : 'm'}${c.n}';
+
   Future<void> _load() async {
     try {
       final p = await SharedPreferences.getInstance();
       final m = jsonDecode(p.getString(_cardsKey) ?? '{}') as Map<String, dynamic>;
-      final today = m[_today()];
-      if (mounted && today is List) setState(() => _done = {for (final x in today) x as int});
+      final today = m[_day];
+      if (mounted && today is Map) {
+        setState(() => _counts = {for (final e in today.entries) '${e.key}': e.value as int});
+      }
     } catch (_) {}
   }
 
-  Future<void> _toggle(int page) async {
-    final s = {..._done};
-    if (!s.remove(page)) s.add(page);
-    setState(() => _done = s);
+  Future<void> _save() async {
     final p = await SharedPreferences.getInstance();
-    await p.setString(_cardsKey, jsonEncode({_today(): s.toList()}));
+    await p.setString(_cardsKey, jsonEncode({_day: _counts}));
   }
 
-  @override
-  void dispose() {
-    _pages.dispose();
-    super.dispose();
+  int _count(CardDhikr c) => _counts[_key(c)] ?? 0;
+  bool _done(CardDhikr c) => _count(c) >= c.countFor(evening: _evening);
+
+  void _tap(CardDhikr c) {
+    if (_done(c)) return;
+    if (_day != _today()) {
+      _day = _today();
+      _counts = {};
+    }
+    HapticFeedback.selectionClick();
+    setState(() => _counts = {..._counts, _key(c): _count(c) + 1});
+    unawaited(_save());
+  }
+
+  void _reset() {
+    setState(
+      () => _counts = {
+        for (final e in _counts.entries)
+          if (!e.key.startsWith(_evening ? 'e' : 'm')) e.key: e.value,
+      },
+    );
+    unawaited(_save());
   }
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final scheme = Theme.of(context).colorScheme;
     return _Frame(
       title: l.kidsLearnCards,
       loader: widget.loader,
       child: (k) {
-        final cards = k.cards;
-        final page = cards[_i.clamp(0, cards.length - 1)];
-        final done = _done.contains(page);
-        final stars = cards.where(_done.contains).length;
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(DesignTokens.spaceSm),
-              child: SegmentedButton<bool>(
-                key: const Key('kidsCards.edition'),
-                segments: [
-                  ButtonSegment(value: false, label: Text(l.kidsLearnBoys)),
-                  ButtonSegment(value: true, label: Text(l.kidsLearnGirls)),
-                ],
-                selected: {_girls},
-                onSelectionChanged: (s) => setState(() => _girls = s.first),
-              ),
-            ),
-            if (stars > 0) Text('${'⭐' * stars.clamp(0, 8)}  ${l.kidsLearnCardsToday(context.num(stars))}'),
-            Expanded(
-              child: PageView.builder(
-                key: const Key('kidsCards.pages'),
-                controller: _pages,
-                itemCount: cards.length,
-                onPageChanged: (i) => setState(() => _i = i),
-                itemBuilder: (_, i) => InteractiveViewer(
-                  maxScale: 4,
-                  child: Center(
-                    child: Image.asset('assets/kids/cards/${_girls ? 'g' : 'b'}${cards[i]}.webp', fit: BoxFit.contain),
-                  ),
+        final items = k.cardAdhkarFor(evening: _evening);
+        final finished = items.where(_done).length;
+        return ReadableWidth(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceSm, DesignTokens.spaceLg, 0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: SegmentedButton<bool>(
+                        key: const Key('kidsCards.session'),
+                        segments: [
+                          ButtonSegment(value: false, icon: const RIcon(RIcons.sunHigh), label: Text(l.adhkarMorning)),
+                          ButtonSegment(value: true, icon: const RIcon(RIcons.moon), label: Text(l.adhkarEvening)),
+                        ],
+                        selected: {_evening},
+                        onSelectionChanged: (v) => setState(() => _evening = v.single),
+                      ),
+                    ),
+                    IconButton(
+                      key: const Key('kidsCards.reset'),
+                      tooltip: l.adhkarReset,
+                      icon: const RIcon(RIcons.reset),
+                      onPressed: _reset,
+                    ),
+                  ],
                 ),
               ),
-            ),
-            _PagerBar(
-              label: l.kidsLearnPage(context.num(_i + 1), context.num(cards.length)),
-              onPrev: _i > 0 ? () => _pages.previousPage(duration: _turn, curve: Curves.easeOut) : null,
-              onNext: _i < cards.length - 1 ? () => _pages.nextPage(duration: _turn, curve: Curves.easeOut) : null,
-              extra: FilledButton.icon(
-                key: const Key('kidsCards.done'),
-                onPressed: () => _toggle(page),
-                icon: Icon(done ? Icons.star : Icons.star_border),
-                label: Text(done ? l.kidsLearnCardDone : l.kidsLearnCardMark),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
+                      child: LinearProgressIndicator(
+                        key: const Key('kidsCards.bar'),
+                        value: items.isEmpty ? 0 : finished / items.length,
+                        minHeight: 10,
+                      ),
+                    ),
+                    const SizedBox(height: DesignTokens.spaceXs),
+                    Text(
+                      l.adhkarProgress(context.num(finished), context.num(items.length)),
+                      key: const Key('kidsCards.progress'),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              Expanded(
+                child: CardPager(
+                  resetKey: _evening,
+                  count: items.length,
+                  isDone: (i) => _done(items[i]),
+                  builder: (context, i) {
+                    final c = items[i];
+                    final n = c.countFor(evening: _evening);
+                    final done = _done(c);
+                    return Card(
+                      key: Key('kidsCard-${c.n}'),
+                      margin: const EdgeInsets.fromLTRB(
+                        DesignTokens.spaceLg,
+                        DesignTokens.spaceMd,
+                        DesignTokens.spaceLg,
+                        0,
+                      ),
+                      color: done ? scheme.surfaceContainer : null,
+                      child: InkWell(
+                        key: Key('kidsCardTap-${c.n}'),
+                        onTap: done ? null : () => _tap(c),
+                        child: Padding(
+                          padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(
+                                l.adhkarRepeatTimes(context.num(n)),
+                                style: Theme.of(context).textTheme.labelLarge?.copyWith(color: scheme.primary),
+                              ),
+                              const SizedBox(height: DesignTokens.spaceSm),
+                              Text(c.text, key: Key('kidsCardText-${c.n}'), style: duaStyle(context, size: 24)),
+                              for (final t in c.surahs) ...[
+                                const SizedBox(height: DesignTokens.spaceSm),
+                                Text(t, style: duaStyle(context, size: 22)),
+                              ],
+                              const SizedBox(height: DesignTokens.spaceSm),
+                              Text(c.note, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: scheme.error)),
+                              const SizedBox(height: DesignTokens.spaceMd),
+                              Center(
+                                child: Container(
+                                  key: Key('kidsCardCount-${c.n}'),
+                                  width: 170,
+                                  height: 170,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: done ? scheme.primary : scheme.primaryContainer,
+                                    border: Border.all(color: scheme.secondary.withValues(alpha: 0.6), width: 4),
+                                  ),
+                                  child: done
+                                      ? RIcon(RIcons.check, size: 64, color: scheme.onPrimary)
+                                      : Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              context.num(_count(c)),
+                                              style: TextStyle(
+                                                fontSize: 52,
+                                                fontWeight: FontWeight.w700,
+                                                color: scheme.onPrimaryContainer,
+                                                height: 1.1,
+                                              ),
+                                            ),
+                                            Text(
+                                              '/ ${context.num(n)}',
+                                              style: TextStyle(fontSize: 18, color: scheme.onPrimaryContainer),
+                                            ),
+                                          ],
+                                        ),
+                                ),
+                              ),
+                              const SizedBox(height: DesignTokens.spaceXs),
+                              Text(
+                                done ? l.adhkarDone : l.adhkarTapCounter,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
