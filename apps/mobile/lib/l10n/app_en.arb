@@ -2469,7 +2469,7 @@
   "@kidsLearnCards": {
     "description": "shared key \"kidsLearn.cards\""
   },
-  "kidsLearnCardsSub": "Picture cards for boys and girls, collect a star each day",
+  "kidsLearnCardsSub": "Morning and evening adhkar in text, with a counter for each",
   "@kidsLearnCardsSub": {
     "description": "shared key \"kidsLearn.cardsSub\""
   },

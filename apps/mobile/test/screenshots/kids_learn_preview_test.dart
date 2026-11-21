@@ -61,6 +61,7 @@ void main() {
     tester.view.devicePixelRatio = 1;
     await pumpApp(tester, size: size, prefs: prefs);
     await pushScreen(tester, KidsScreen(loader: loader));
+    await shot(tester, '01a-kids-hub-top');
     await tester.drag(find.byKey(const Key('kidsHub')), const Offset(0, -260));
     await tester.pumpAndSettle();
     await shot(tester, '01-kids-hub');

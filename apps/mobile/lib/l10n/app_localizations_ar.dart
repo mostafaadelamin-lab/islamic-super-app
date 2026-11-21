@@ -1681,7 +1681,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get kidsLearnCards => 'بطاقات الأذكار';
 
   @override
-  String get kidsLearnCardsSub => 'بطاقات مصورة للأولاد والبنات، واجمع نجمة كل يوم';
+  String get kidsLearnCardsSub => 'أذكار الصباح والمساء مكتوبة، مع عدّاد لكل ذكر';
 
   @override
   String kidsLearnCardsToday(String n) {
