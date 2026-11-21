@@ -47,7 +47,7 @@ class _Audio implements UrlAudio {
 void main() {
   late AppContent content;
   setUpAll(() async => content = await loadContent());
-  final timings = TeacherTimings.parse(File('assets/content/teacher-timings.v1.json').readAsStringSync());
+  final timings = TeacherTimings.parse(File('../../content/kids/dist/teacher-timings.v1.json').readAsStringSync());
   final kids = KidsContent.parse(File('assets/content/kids.v1.json').readAsStringSync());
 
   test('teacher timings: every teaching surah, every ayah, word tokens inside the KFGQPC text', () {
@@ -55,7 +55,12 @@ void main() {
     for (final r in kids.teacherReciters) {
       final rec = timings.reciters[r]!;
       for (final s in kids.teacherSurahs) {
-        final ay = rec.surahs[s]!;
+        final ay = rec.surahs[s];
+        // Minshawi (kids_repeat) has no Quran.com timings past 33:22, so only al-Husary reads al-Ahzab
+        if (ay == null) {
+          expect('$r $s', 'Minshawy_Teacher_128kbps 33');
+          continue;
+        }
         expect(ay.length, q.surah(s).ayahCount, reason: '$r $s');
         for (var a = 0; a < ay.length; a++) {
           final text = q.text(AyahRef(s, a + 1));
@@ -67,7 +72,8 @@ void main() {
             if (k < tk.gaps.length) joined.write(tk.gaps[k]);
           }
           expect(joined.toString(), text);
-          expect(ay[a].words, isNotEmpty, reason: '$r $s:${a + 1}');
+          // al-Husary: every word timed; Minshawi lacks word timings in a few ayahs of 4 and 12 (ayah still lights up)
+          if (r == 'Husary_Muallim_128kbps') expect(ay[a].words, isNotEmpty, reason: '$r $s:${a + 1}');
           for (final w in ay[a].words) {
             expect(w.token, inInclusiveRange(0, tk.words.length - 1), reason: '$r $s:${a + 1}');
             expect(w.start, greaterThanOrEqualTo(ay[a].start));
@@ -76,6 +82,7 @@ void main() {
         }
       }
     }
+    expect(kids.teacherSurahs, List.generate(114, (i) => i + 1)); // owner 2026-11-21: the whole Quran
     expect(timings.reciters['Husary_Muallim_128kbps']!.at(112, 1000), (ayah: 0, word: 2));
     expect(timings.wordAudio(112, 1, 3), 'https://audio.qurancdn.com/wbw/112_001_003.mp3');
   });
@@ -95,10 +102,7 @@ void main() {
     audios.add(_Audio());
     SharedPreferences.setMockInitialValues({});
     await pumpApp(tester, size: tallPhone);
-    await pushScreen(
-      tester,
-      KidsMushafScreen(surah: 112, reciters: kids.teacherReciters, loader: () async => timings),
-    );
+    await pushScreen(tester, KidsMushafScreen(surah: 112, reciters: kids.teacherReciters, loader: () async => timings));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('kidsMushaf.text')), findsOneWidget);
     final rec = audios.last;

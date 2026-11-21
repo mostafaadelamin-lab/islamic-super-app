@@ -1553,6 +1553,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get kidsProphetsNewSub => 'مُعلّمة تحكي القصة للأطفال، والنبي يظهر نورًا بلا ملامح';
 
   @override
+  String get kidsProphetsPick => 'اختر المسلسل';
+
+  @override
   String get kidsProphetsSub => 'حلقات كرتون، شاهد أو استمع، وحمّلها لتعمل بدون إنترنت';
 
   @override
@@ -2937,7 +2940,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get ruqyahKidsNote =>
-      'ما كان النبي ﷺ يعوّذ به الحسن والحسين، ثم سور الإخلاص والفلق والناس. اقرأها على طفلك أو استمع لها.';
+      'ما كان النبي ﷺ يعوّذ به الحسن والحسين، ثم الفاتحة وآية الكرسي وخواتيم البقرة والإخلاص والمعوذتين، ثم رقية جبريل للنبي ﷺ. اقرأها على طفلك أو استمع لها.';
 
   @override
   String get ruqyahKidsTitle => 'الرقية الشرعية للأطفال';
