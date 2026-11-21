@@ -83,34 +83,6 @@ class KidsScreen extends StatelessWidget {
                   () => push(TeacherMushafScreen(content: k)),
                 ),
                 tile(
-                  'stories',
-                  RIcons.book,
-                  l.kidsStories,
-                  l.kidsStoriesSub,
-                  () => push(
-                    KidsStoriesScreen(
-                      parts: [
-                        if (rasoul != null) (rasoul, l.kidsRasoul, l.kidsRasoulSub),
-                        if (ramadan != null) (ramadan, l.kidsRamadan, l.kidsRamadanSub),
-                      ],
-                    ),
-                  ),
-                ),
-                tile(
-                  'books',
-                  RIcons.openBook,
-                  l.kidsLearnBooks,
-                  l.kidsLearnBooksSub,
-                  () => push(const KidsBooksScreen()),
-                ),
-                tile(
-                  'hadith',
-                  RIcons.star,
-                  l.kidsLearnHadith,
-                  l.kidsLearnHadithSub,
-                  () => push(const KidsHadithScreen()),
-                ),
-                tile(
                   'cards',
                   RIcons.adhkar,
                   l.kidsLearnCards,
@@ -137,6 +109,34 @@ class KidsScreen extends StatelessWidget {
                   l.ruqyahKidsTitle,
                   l.kidsRuqyahSub,
                   () => push(RuqyahScreen(kids: true, loader: loader)),
+                ),
+                tile(
+                  'stories',
+                  RIcons.book,
+                  l.kidsStories,
+                  l.kidsStoriesSub,
+                  () => push(
+                    KidsStoriesScreen(
+                      parts: [
+                        if (rasoul != null) (rasoul, l.kidsRasoul, l.kidsRasoulSub),
+                        if (ramadan != null) (ramadan, l.kidsRamadan, l.kidsRamadanSub),
+                      ],
+                    ),
+                  ),
+                ),
+                tile(
+                  'books',
+                  RIcons.openBook,
+                  l.kidsLearnBooks,
+                  l.kidsLearnBooksSub,
+                  () => push(const KidsBooksScreen()),
+                ),
+                tile(
+                  'hadith',
+                  RIcons.star,
+                  l.kidsLearnHadith,
+                  l.kidsLearnHadithSub,
+                  () => push(const KidsHadithScreen()),
                 ),
               ],
             );

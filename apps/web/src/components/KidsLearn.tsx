@@ -413,29 +413,33 @@ export function KidsSteps({
 }
 
 /** The four corners as tiles on the kids page. */
-export function KidsLearnTiles({ locale }: { locale: Locale }) {
-  const items = [
-    ["books", "openBook"],
-    ["hadith", "star"],
-    ["cards", "adhkar"],
-    ["wudu", "prayer"],
-    ["salah", "prayer"],
-  ] as const;
+const LEARN_TILES = {
+  books: "openBook",
+  hadith: "star",
+  cards: "adhkar",
+  wudu: "prayer",
+  salah: "prayer",
+} as const;
+export type LearnTile = keyof typeof LEARN_TILES;
+
+export function KidsLearnTiles({ locale, ids }: { locale: Locale; ids: readonly LearnTile[] }) {
   return (
     <>
-      {items.map(([id, icon]) => (
-        <li key={id}>
-          <Link className="tile tile-sm" href={href(locale, `kids/${id}`)} data-testid={`kids-tab-${id}`}>
-            <span className="tile-icon">
-              <Icon name={icon} />
-            </span>
-            <span className="tile-text">
-              <strong>{t(locale, `kidsLearn.${id}`)}</strong>
-              <span className="muted small">{t(locale, `kidsLearn.${id}Sub`)}</span>
-            </span>
-          </Link>
-        </li>
-      ))}
+      {ids
+        .map((id) => [id, LEARN_TILES[id]] as const)
+        .map(([id, icon]) => (
+          <li key={id}>
+            <Link className="tile tile-sm" href={href(locale, `kids/${id}`)} data-testid={`kids-tab-${id}`}>
+              <span className="tile-icon">
+                <Icon name={icon} />
+              </span>
+              <span className="tile-text">
+                <strong>{t(locale, `kidsLearn.${id}`)}</strong>
+                <span className="muted small">{t(locale, `kidsLearn.${id}Sub`)}</span>
+              </span>
+            </Link>
+          </li>
+        ))}
     </>
   );
 }
