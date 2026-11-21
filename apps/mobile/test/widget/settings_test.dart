@@ -151,7 +151,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('تطبيق مجاني تم إنشاؤه لوجه الله تعالى، بدون مقابل وبدون إعلانات.'), findsOneWidget);
     expect(find.text('مصادر المحتوى'), findsNothing);
-    expect(find.text('الإصدار ١.٢.١٦'), findsOneWidget);
+    expect(find.text('الإصدار ١.٢.١٧'), findsOneWidget);
   });
 
   testWidgets('Hijri date adjustment: +/- within -2..+2, persisted', (tester) async {
