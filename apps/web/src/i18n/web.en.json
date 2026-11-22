@@ -377,7 +377,7 @@
   "adhan.fridayTitle": "Friday",
   "adhan.fridayBody": "A reminder to read Surat al-Kahf and send many blessings upon the Prophet ﷺ",
   "home.elapsed": "{n} min since the {name} adhan",
-  "iqama.wait": "Time left to the {name} iqama",
+  "iqama.wait": "{name} iqama in",
   "prayer.calendarKind": "Calendar",
   "prayer.kind.gregorian": "Gregorian",
   "prayer.kind.hijri": "Hijri",

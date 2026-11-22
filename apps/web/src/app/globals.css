@@ -651,6 +651,9 @@ input[type="radio"] {
 }
 .home-iqama .countdown {
   font-variant-numeric: tabular-nums;
+  display: inline-block;
+  direction: ltr;
+  unicode-bidi: isolate;
 }
 .home-day {
   padding: var(--space-md);

@@ -316,7 +316,7 @@ describe("NextPrayerCard", () => {
     vi.setSystemTime(new Date(day.times.dhuhr.getTime() + 7 * 60_000));
     render(<NextPrayerCard locale="en" />);
     const wait = await screen.findByTestId("home-iqama");
-    expect(wait).toHaveTextContent("Time left to the Dhuhr iqama");
+    expect(wait).toHaveTextContent("Dhuhr iqama in");
     expect(wait).toHaveTextContent("0:08:00");
     expect(screen.queryByTestId("home-elapsed")).toBeNull();
   });
