@@ -5862,3 +5862,65 @@ a.episode {
     display: none;
   }
 }
+
+/* The phone's wide prayer widget as a home card (owner 2026-11-22): times on one side, day panel on the other. */
+.prayer-widget {
+  display: flex;
+  gap: var(--space-sm);
+  margin-block: var(--space-md);
+  padding: 12px;
+  border-radius: 26px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--brand-hero-top), var(--brand-hero-deep));
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--brand-hero-deep) 22%, transparent);
+}
+.prayer-widget-list {
+  flex: 1.05;
+  list-style: none;
+  margin: 0;
+  padding: 2px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 6px;
+}
+.prayer-widget-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  font-size: 1.05rem;
+}
+.prayer-widget-list li.on {
+  color: var(--brand-gold);
+  font-weight: 700;
+}
+.prayer-widget-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 2px;
+  padding: 10px 6px;
+  border-radius: 18px;
+  background: rgb(255 255 255 / 9%);
+  font-size: 0.92rem;
+}
+.prayer-widget-panel > span {
+  opacity: 0.88;
+}
+.prayer-widget-day {
+  font-size: 1.1rem;
+}
+.prayer-widget-next {
+  margin-top: var(--space-sm);
+  font-size: 1.05rem;
+}
+.prayer-widget-countdown {
+  color: var(--brand-gold);
+  font-weight: 700;
+  font-size: 1.6rem;
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}

@@ -16,7 +16,7 @@ import java.util.Calendar
 import java.util.Locale
 
 /**
- * Medium home-screen widget (owner 2026-11-20): the day name, the Hijri and Gregorian dates, a live
+ * Wide home-screen widget (owner 2026-11-20, new layout 2026-11-22 from the owner's screenshot): the day name, the Hijri and Gregorian dates, a live
  * countdown to the next prayer, and the six times of the day (Fajr, sunrise, Dhuhr, Asr, Maghrib,
  * Isha) with the next prayer highlighted. Same data as [PrayerWidgetProvider]; the app schedules a
  * redraw at every prayer and after midnight.
@@ -30,20 +30,28 @@ class PrayerWidgetMediumProvider : HomeWidgetProvider() {
     ) {
         val now = System.currentTimeMillis()
         val day = MediumDay.from(widgetData.getString("rattil.widget", null), now)
+        val json = widgetData.getString("rattil.widget", null)
+        val pal = WidgetStyle.palette(json)
+        val gold = WidgetStyle.gold(pal)
         for (id in appWidgetIds) {
             val views = RemoteViews(context.packageName, R.layout.prayer_widget_medium)
+            views.setInt(R.id.widget_root, "setBackgroundResource", WidgetStyle.background(pal))
+            views.setTextColor(R.id.widget_left, gold)
             if (day == null) {
                 views.setTextViewText(R.id.widget_day, "رتّل وصلِّ")
                 views.setTextViewText(R.id.widget_hijri, "افتح التطبيق · Open the app")
                 views.setViewVisibility(R.id.widget_left, View.GONE)
+                views.setViewVisibility(R.id.widget_list, View.GONE)
             } else {
                 val ar = day.arabic
+                WidgetStyle.direction(views, R.id.widget_root, ar)
+                views.setViewVisibility(R.id.widget_list, View.VISIBLE)
                 views.setTextViewText(R.id.widget_day, day.dayName)
                 views.setTextViewText(R.id.widget_hijri, digits(day.hijri + if (ar) " هـ" else " AH", ar))
                 views.setTextViewText(R.id.widget_greg, digits(day.gregorian, ar))
                 val next = day.next
                 if (next != null) {
-                    views.setTextViewText(R.id.widget_prayer, if (ar) "${next.second} بعد" else "${next.second} in")
+                    views.setTextViewText(R.id.widget_prayer, next.second)
                     views.setViewVisibility(R.id.widget_left, View.VISIBLE)
                     val base = SystemClock.elapsedRealtime() + (next.third - now)
                     views.setChronometer(R.id.widget_left, base, null, true)
@@ -55,10 +63,8 @@ class PrayerWidgetMediumProvider : HomeWidgetProvider() {
                     val t = day.times.getOrNull(i) ?: continue
                     val on = next != null && t.first == next.first && t.third == next.third
                     views.setTextViewText(NAME_IDS[i], t.second)
-                    views.setTextViewText(TIME_IDS[i], digits(clock(t.third, day.clock12), ar))
-                    views.setInt(CELL_IDS[i], "setBackgroundResource",
-                        if (on) R.drawable.widget_cell_on else R.drawable.widget_cell_bg)
-                    val ink = if (on) Color.parseColor("#1F2330") else Color.WHITE
+                    views.setTextViewText(TIME_IDS[i], WidgetStyle.clock(t.third, day.clock12, ar))
+                    val ink = if (on) gold else Color.WHITE
                     views.setTextColor(NAME_IDS[i], ink)
                     views.setTextColor(TIME_IDS[i], ink)
                 }
@@ -74,25 +80,10 @@ class PrayerWidgetMediumProvider : HomeWidgetProvider() {
     }
 
     companion object {
-        private val CELL_IDS = intArrayOf(R.id.cell_0, R.id.cell_1, R.id.cell_2, R.id.cell_3, R.id.cell_4, R.id.cell_5)
         private val NAME_IDS = intArrayOf(R.id.name_0, R.id.name_1, R.id.name_2, R.id.name_3, R.id.name_4, R.id.name_5)
         private val TIME_IDS = intArrayOf(R.id.time_0, R.id.time_1, R.id.time_2, R.id.time_3, R.id.time_4, R.id.time_5)
 
-        fun digits(s: String, ar: Boolean): String {
-            if (!ar) return s
-            val b = StringBuilder()
-            for (c in s) b.append(if (c in '0'..'9') ('٠' + (c - '0')) else c)
-            return b.toString()
-        }
-
-        /** "4:48" (12 h, no AM/PM: the cell is small) or "04:48" / "16:48" (24 h). */
-        fun clock(ms: Long, h12: Boolean): String {
-            val cal = Calendar.getInstance().apply { timeInMillis = ms }
-            val m = cal.get(Calendar.MINUTE).toString().padStart(2, '0')
-            if (!h12) return "${cal.get(Calendar.HOUR_OF_DAY).toString().padStart(2, '0')}:$m"
-            val h = cal.get(Calendar.HOUR).let { if (it == 0) 12 else it }
-            return "$h:$m"
-        }
+        fun digits(s: String, ar: Boolean): String = WidgetStyle.digits(s, ar)
     }
 }
 

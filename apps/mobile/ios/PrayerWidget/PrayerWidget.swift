@@ -1,9 +1,10 @@
 // Widgets for iOS (WidgetKit):
-// - small (home screen): Hijri date, the time, the next prayer and a ring that fills
-//   from the previous prayer to the next one;
-// - medium (home screen, owner 2026-11-20): day name, Hijri and Gregorian dates, the six
-//   times with the next prayer highlighted, and the countdown;
-// - lock screen (iOS 16+, owner 2026-11-20): the next prayer, its time and the countdown.
+// - small (home screen) and lock screen (owner 2026-11-22, no circle): three lines, the next
+//   prayer, its time and the countdown;
+// - medium (home screen, layout from the owner's screenshot 2026-11-22): the six times with
+//   the next prayer in gold on one side, and a panel with the day name, the Hijri and
+//   Gregorian dates, the next prayer and its countdown on the other.
+// Colours: the user's colour style in the app ("pal": madinah by default, or emerald).
 // Data: "rattil.widget" in the App Group group.org.rattil.app, written by
 // lib/data/home_widget_sync.dart (seven days of prayer times).
 // Setup in Xcode (one time, on a Mac): see README.md in this folder.
@@ -27,6 +28,7 @@ struct PrayerEntry: TimelineEntry {
   /// Today's six times (Fajr, sunrise, Dhuhr, Asr, Maghrib, Isha) for the medium widget.
   var today: [PrayerTime] = []
   var clock12: Bool = true
+  var palette: String = "madinah"
 }
 
 private struct Payload: Decodable {
@@ -45,6 +47,7 @@ private struct Payload: Decodable {
   }
   let lang: String
   let c12: Bool?
+  let pal: String?
   let days: [Day]
 }
 
@@ -99,7 +102,8 @@ struct Provider: TimelineProvider {
     let arabic = p.lang != "en"
     return PrayerEntry(
       date: date, hijri: hijri, name: next?.0 ?? "", next: next?.1, previous: prev, arabic: arabic,
-      nextKey: next?.3 ?? "", today: six(todayDay, arabic: arabic), clock12: p.c12 ?? true)
+      nextKey: next?.3 ?? "", today: six(todayDay, arabic: arabic), clock12: p.c12 ?? true,
+      palette: p.pal ?? "madinah")
   }
 
   func placeholder(in context: Context) -> PrayerEntry { entry(at: Date(), nil) }
@@ -108,11 +112,12 @@ struct Provider: TimelineProvider {
     completion(entry(at: Date(), load()))
   }
 
-  /// One entry every 10 minutes for 6 hours (the ring moves), plus one at each prayer.
+  /// One entry now, one every hour for 6 hours (the date changes at midnight) and one at each
+  /// prayer (the next prayer and the gold highlight move). The countdowns run by themselves.
   func getTimeline(in context: Context, completion: @escaping (Timeline<PrayerEntry>) -> Void) {
     let p = load()
     let now = Date()
-    var dates = (0..<36).map { now.addingTimeInterval(Double($0) * 600) }
+    var dates = (0..<7).map { now.addingTimeInterval(Double($0) * 3600) }
     if let p = p {
       dates += prayers(p).map { $0.1 }.filter { $0 > now && $0 < now.addingTimeInterval(6 * 3600) }
     }
@@ -121,45 +126,57 @@ struct Provider: TimelineProvider {
   }
 }
 
-struct PrayerWidgetView: View {
+/// Small home-screen widget and the lock-screen widgets: the next prayer, its time and the countdown.
+struct PrayerNextView: View {
   let entry: PrayerEntry
-
-  private var fraction: Double {
-    guard let next = entry.next else { return 0 }
-    let start = entry.previous ?? next.addingTimeInterval(-6 * 3600)
-    return min(max(entry.date.timeIntervalSince(start) / next.timeIntervalSince(start), 0), 1)
-  }
+  /// Home screen: our colours; lock screen: the system tints the text, no background.
+  var home: Bool = false
 
   var body: some View {
-    ZStack {
-      Circle().fill(Color(red: 0.12, green: 0.14, blue: 0.19))
-      Circle().stroke(Color.white.opacity(0.2), lineWidth: 6)
-      Circle()
-        .trim(from: 0, to: fraction)
-        .stroke(Color(red: 0.95, green: 0.70, blue: 0.24), style: StrokeStyle(lineWidth: 6, lineCap: .round))
-        .rotationEffect(.degrees(-90))
-      VStack(spacing: 2) {
-        Text(entry.hijri).font(.system(size: 11)).foregroundColor(.white.opacity(0.85)).lineLimit(1)
-        Text(entry.date, style: .time).font(.system(size: 24, weight: .bold)).foregroundColor(.white)
-        Divider().background(Color.white.opacity(0.4)).padding(.horizontal, 8)
-        Text(entry.name).font(.system(size: 11)).foregroundColor(.white.opacity(0.8))
-        if let next = entry.next {
-          Text(next, style: .timer).font(.system(size: 14, weight: .bold)).foregroundColor(.white)
-            .multilineTextAlignment(.center)
-        }
+    let style = Style(entry.palette)
+    VStack(spacing: home ? 2 : 0) {
+      Text(entry.name).font(.system(size: home ? 16 : 13)).lineLimit(1).minimumScaleFactor(0.7)
+        .opacity(home ? 0.9 : 1)
+      if let next = entry.next {
+        Text(clock(next, entry)).font(.system(size: home ? 24 : 16, weight: .bold)).lineLimit(1)
+          .minimumScaleFactor(0.6)
+        Text(next, style: .timer).font(.system(size: home ? 18 : 15)).monospacedDigit()
+          .multilineTextAlignment(.center).lineLimit(1).minimumScaleFactor(0.6)
+          .foregroundColor(home ? style.gold : nil)
+      } else {
+        Text(entry.arabic ? "افتح التطبيق" : "Open the app").font(.system(size: 12))
       }
-      .padding(10)
-      .environment(\.locale, Locale(identifier: entry.arabic ? "ar" : "en"))
     }
-    .padding(4)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .foregroundColor(home ? Color.white : nil)
+    .padding(home ? 8 : 0)
+    .modifier(OldBackground(style: style, on: home))
   }
 }
 
-private let gold = Color(red: 0.95, green: 0.70, blue: 0.24)
-private let ink = Color(red: 0.12, green: 0.14, blue: 0.19)
+/// The colour style's two background colours (heroTop, heroDeep) and its gold, from design_tokens.dart.
+private struct Style {
+  let top: Color
+  let deep: Color
+  let gold: Color
+  init(_ id: String) {
+    if id == "emerald" {
+      top = Color(red: 0x0F / 255, green: 0x6B / 255, blue: 0x50 / 255)
+      deep = Color(red: 0x06 / 255, green: 0x2E / 255, blue: 0x23 / 255)
+      gold = Color(red: 0xD4 / 255, green: 0xAF / 255, blue: 0x5A / 255)
+    } else {
+      top = Color(red: 0x1D / 255, green: 0x3A / 255, blue: 0x64 / 255)
+      deep = Color(red: 0x0A / 255, green: 0x18 / 255, blue: 0x30 / 255)
+      gold = Color(red: 0xD9 / 255, green: 0xB2 / 255, blue: 0x5E / 255)
+    }
+  }
+  var background: LinearGradient {
+    LinearGradient(colors: [top, deep], startPoint: .topLeading, endPoint: .bottomTrailing)
+  }
+}
 
-/// "4:48" (12 h, no AM/PM in the small cells) or "04:48" (24 h), with Arabic digits in Arabic.
-private func clock(_ d: Date, _ e: PrayerEntry, suffix: Bool = false) -> String {
+/// "5:22 ص" / "5:22 AM" (12 h) or "05:22" (24 h), with Arabic digits in Arabic.
+private func clock(_ d: Date, _ e: PrayerEntry, suffix: Bool = true) -> String {
   let f = DateFormatter()
   f.locale = Locale(identifier: e.arabic ? "ar" : "en_US_POSIX")
   f.dateFormat = e.clock12 ? (suffix ? "h:mm a" : "h:mm") : "HH:mm"
@@ -182,87 +199,96 @@ private func arabicDigits(_ s: String, _ arabic: Bool) -> String {
   })
 }
 
-/// Medium home-screen widget: day, dates, countdown, the six times (the next one in gold).
+/// Before iOS 17 the view draws its own background; from iOS 17 the widget's container background
+/// does (see PrayerWidget below), so it fills the whole widget.
+private struct OldBackground: ViewModifier {
+  let style: Style
+  let on: Bool
+  func body(content: Content) -> some View {
+    if #available(iOS 17.0, *) {
+      content
+    } else if on {
+      content.background(style.background)
+    } else {
+      content
+    }
+  }
+}
+
+/// iOS 17+: the colour style on the home screen, nothing on the lock screen.
+struct PrayerContainerBackground: View {
+  @Environment(\.widgetFamily) var family
+  let entry: PrayerEntry
+  var body: some View {
+    switch family {
+    case .systemSmall, .systemMedium:
+      Style(entry.palette).background
+    default:
+      Color.clear
+    }
+  }
+}
+
+/// Wide home-screen widget: the six times (the next one in gold) and the day panel.
 struct PrayerMediumView: View {
   let entry: PrayerEntry
 
   var body: some View {
-    VStack(alignment: .leading, spacing: 10) {
-      HStack(alignment: .top) {
-        VStack(alignment: .leading, spacing: 1) {
-          Text(dateText(entry.date, "EEEE", arabic: entry.arabic)).font(.system(size: 16, weight: .bold))
-          Text(arabicDigits(entry.hijri, entry.arabic) + (entry.arabic ? " هـ" : " AH")).font(.system(size: 12))
-            .foregroundColor(.white.opacity(0.8))
-          Text(dateText(entry.date, "d MMMM yyyy", arabic: entry.arabic)).font(.system(size: 12))
-            .foregroundColor(.white.opacity(0.8))
-        }
-        Spacer()
-        if let next = entry.next {
-          VStack(alignment: .trailing, spacing: 1) {
-            Text(entry.arabic ? "\(entry.name) بعد" : "\(entry.name) in").font(.system(size: 12))
-              .foregroundColor(.white.opacity(0.8))
-            Text(next, style: .timer).font(.system(size: 20, weight: .bold)).foregroundColor(gold)
-              .multilineTextAlignment(.trailing)
-          }
-        }
-      }
-      HStack(spacing: 4) {
+    let style = Style(entry.palette)
+    HStack(spacing: 8) {
+      VStack(spacing: 0) {
         ForEach(Array(entry.today.enumerated()), id: \.offset) { _, t in
           let on = t.key == entry.nextKey && entry.next.map { abs($0.timeIntervalSince(t.at)) < 1 } == true
-          VStack(spacing: 2) {
-            Text(t.name).font(.system(size: 11)).lineLimit(1).minimumScaleFactor(0.7)
-            Text(clock(t.at, entry)).font(.system(size: 13, weight: .bold)).lineLimit(1).minimumScaleFactor(0.7)
+          HStack {
+            Text(t.name).lineLimit(1)
+            Spacer(minLength: 4)
+            Text(clock(t.at, entry)).lineLimit(1)
           }
-          .foregroundColor(on ? ink : .white)
-          .frame(maxWidth: .infinity)
-          .padding(.vertical, 6)
-          .background(RoundedRectangle(cornerRadius: 12).fill(on ? gold : Color.white.opacity(0.07)))
+          .font(.system(size: 14, weight: on ? .bold : .regular))
+          .minimumScaleFactor(0.7)
+          .foregroundColor(on ? style.gold : .white)
+          .frame(maxHeight: .infinity)
         }
       }
+      .padding(.horizontal, 8)
+      .frame(maxWidth: .infinity)
+      VStack(spacing: 2) {
+        Text(dateText(entry.date, "EEEE", arabic: entry.arabic)).font(.system(size: 15, weight: .bold))
+        Text(arabicDigits(entry.hijri, entry.arabic) + (entry.arabic ? " هـ" : " AH")).font(.system(size: 12))
+          .opacity(0.85)
+        Text(dateText(entry.date, "d MMMM yyyy", arabic: entry.arabic)).font(.system(size: 12)).opacity(0.85)
+        if let next = entry.next {
+          Text(entry.name).font(.system(size: 14, weight: .bold)).padding(.top, 8)
+          Text(next, style: .timer).font(.system(size: 20, weight: .bold)).monospacedDigit()
+            .foregroundColor(style.gold).multilineTextAlignment(.center)
+        }
+      }
+      .lineLimit(1)
+      .minimumScaleFactor(0.7)
+      .padding(6)
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+      .background(RoundedRectangle(cornerRadius: 16).fill(Color.white.opacity(0.09)))
     }
     .foregroundColor(.white)
-    .padding(14)
-    .background(ink)
+    .padding(10)
+    .modifier(OldBackground(style: style, on: true))
     .environment(\.layoutDirection, entry.arabic ? .rightToLeft : .leftToRight)
     .environment(\.locale, Locale(identifier: entry.arabic ? "ar" : "en"))
   }
 }
 
-/// Lock-screen widgets (iOS 16+): the next prayer, its time and the countdown.
+/// Lock-screen widgets (iOS 16+), owner 2026-11-22: plain text, no circle.
 @available(iOS 16.0, *)
 struct PrayerLockView: View {
   @Environment(\.widgetFamily) var family
   let entry: PrayerEntry
 
   var body: some View {
-    let time = entry.next.map { clock($0, entry, suffix: true) } ?? ""
     switch family {
     case .accessoryInline:
-      Text("\(entry.name) \(time)")
-    case .accessoryCircular:
-      ZStack {
-        AccessoryWidgetBackground()
-        VStack(spacing: 0) {
-          Text(entry.name).font(.system(size: 11, weight: .semibold)).lineLimit(1).minimumScaleFactor(0.6)
-          if let next = entry.next {
-            Text(next, style: .timer).font(.system(size: 11)).multilineTextAlignment(.center)
-              .lineLimit(1).minimumScaleFactor(0.6)
-          }
-        }
-        .padding(4)
-      }
+      Text("\(entry.name) \(entry.next.map { clock($0, entry) } ?? "")")
     default:
-      VStack(alignment: .leading, spacing: 1) {
-        Text("\(entry.name) \(time)").font(.system(size: 17, weight: .bold)).lineLimit(1)
-          .minimumScaleFactor(0.7)
-        if let next = entry.next {
-          HStack(spacing: 4) {
-            Text(entry.arabic ? "باقي" : "in").font(.system(size: 14))
-            Text(next, style: .timer).font(.system(size: 14, weight: .semibold))
-          }
-        }
-      }
-      .frame(maxWidth: .infinity, alignment: .leading)
+      PrayerNextView(entry: entry)
     }
   }
 }
@@ -277,14 +303,15 @@ struct PrayerWidgetEntryView: View {
     case .systemMedium:
       PrayerMediumView(entry: entry)
     case .systemSmall:
-      PrayerWidgetView(entry: entry)
+      PrayerNextView(entry: entry, home: true)
+        .environment(\.locale, Locale(identifier: entry.arabic ? "ar" : "en"))
     default:
       if #available(iOS 16.0, *) {
         PrayerLockView(entry: entry)
           .environment(\.locale, Locale(identifier: entry.arabic ? "ar" : "en"))
           .environment(\.layoutDirection, entry.arabic ? .rightToLeft : .leftToRight)
       } else {
-        PrayerWidgetView(entry: entry)
+        PrayerNextView(entry: entry, home: true)
       }
     }
   }
@@ -304,7 +331,9 @@ struct PrayerWidget: Widget {
   var body: some WidgetConfiguration {
     StaticConfiguration(kind: kind, provider: Provider()) { entry in
       if #available(iOS 17.0, *) {
-        PrayerWidgetEntryView(entry: entry).containerBackground(.clear, for: .widget)
+        PrayerWidgetEntryView(entry: entry).containerBackground(for: .widget) {
+          PrayerContainerBackground(entry: entry)
+        }
       } else {
         PrayerWidgetEntryView(entry: entry)
       }

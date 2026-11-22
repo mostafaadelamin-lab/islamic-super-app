@@ -121,5 +121,9 @@ void main() {
     expect(j['c12'], isFalse);
     await app.services.settings.setClock12(true);
     expect((jsonDecode(HomeWidgetSync(app.services).build()) as Map<String, dynamic>)['c12'], isTrue);
+    // the widgets use the user's colour style (owner 2026-11-22): Madinah night by default
+    expect(j['pal'], 'madinah');
+    await app.services.settings.setPalette('emerald');
+    expect((jsonDecode(HomeWidgetSync(app.services).build()) as Map<String, dynamic>)['pal'], 'emerald');
   });
 }

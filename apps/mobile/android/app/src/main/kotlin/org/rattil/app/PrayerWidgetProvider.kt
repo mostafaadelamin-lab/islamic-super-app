@@ -5,22 +5,17 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.RectF
 import android.os.SystemClock
+import android.view.View
 import android.widget.RemoteViews
 import es.antonborri.home_widget.HomeWidgetProvider
 import org.json.JSONObject
 import java.util.Calendar
 
 /**
- * Home-screen widget: Hijri date, the current time, the next prayer and the
- * time left to it, inside a ring that fills from the previous prayer to the
- * next one. Data: seven days written by lib/data/home_widget_sync.dart; the app
- * schedules a redraw at every prayer and every 10 minutes.
+ * Small home-screen widget (owner 2026-11-22: no circle, like the iPhone lock-screen widget): the
+ * next prayer's name, its time and a live countdown, on the user's colour style. Data: seven days
+ * written by lib/data/home_widget_sync.dart; the app schedules a redraw at every prayer.
  */
 class PrayerWidgetProvider : HomeWidgetProvider() {
     override fun onUpdate(
@@ -29,19 +24,21 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
         appWidgetIds: IntArray,
         widgetData: SharedPreferences,
     ) {
-        val info = NextPrayer.from(widgetData.getString("rattil.widget", null), System.currentTimeMillis())
+        val json = widgetData.getString("rattil.widget", null)
+        val info = NextPrayer.from(json, System.currentTimeMillis())
+        val pal = WidgetStyle.palette(json)
         for (id in appWidgetIds) {
             val views = RemoteViews(context.packageName, R.layout.prayer_widget)
-            val ar = info?.arabic ?: true
-            views.setImageViewBitmap(R.id.widget_ring, ring(info?.fraction ?: 0f))
+            views.setInt(R.id.widget_root, "setBackgroundResource", WidgetStyle.background(pal))
+            views.setTextColor(R.id.widget_left, WidgetStyle.gold(pal))
             if (info == null) {
-                views.setTextViewText(R.id.widget_hijri, "")
-                views.setTextViewText(R.id.widget_prayer, if (ar) "افتح التطبيق" else "Open the app")
-                views.setViewVisibility(R.id.widget_left, android.view.View.GONE)
+                views.setTextViewText(R.id.widget_prayer, "رتّل وصلِّ")
+                views.setTextViewText(R.id.widget_time, "افتح التطبيق")
+                views.setViewVisibility(R.id.widget_left, View.GONE)
             } else {
-                views.setTextViewText(R.id.widget_hijri, digits(info.hijri, ar))
                 views.setTextViewText(R.id.widget_prayer, info.name)
-                views.setViewVisibility(R.id.widget_left, android.view.View.VISIBLE)
+                views.setTextViewText(R.id.widget_time, WidgetStyle.clock(info.at, info.clock12, info.arabic))
+                views.setViewVisibility(R.id.widget_left, View.VISIBLE)
                 // Counts down live without waking the app.
                 val base = SystemClock.elapsedRealtime() + (info.at - System.currentTimeMillis())
                 views.setChronometer(R.id.widget_left, base, null, true)
@@ -59,37 +56,6 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
             appWidgetManager.updateAppWidget(id, views)
         }
     }
-
-    private fun digits(s: String, ar: Boolean): String {
-        if (!ar) return s
-        val b = StringBuilder()
-        for (c in s) b.append(if (c in '0'..'9') ('٠' + (c - '0')) else c)
-        return b.toString()
-    }
-
-    /** Dark disc, a thin track and the amber arc of the time already passed. */
-    private fun ring(fraction: Float): Bitmap {
-        val size = 360
-        val bmp = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
-        val c = Canvas(bmp)
-        val stroke = 14f
-        val inset = stroke / 2 + 2
-        val oval = RectF(inset, inset, size - inset, size - inset)
-        val disc = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.parseColor("#E61F2430") }
-        c.drawOval(oval, disc)
-        val track = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            style = Paint.Style.STROKE; strokeWidth = stroke; color = Color.parseColor("#33FFFFFF")
-        }
-        c.drawOval(oval, track)
-        val arc = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            style = Paint.Style.STROKE; strokeWidth = stroke; strokeCap = Paint.Cap.ROUND
-            color = Color.parseColor("#F2B33D")
-        }
-        c.drawArc(oval, -90f, 360f * fraction.coerceIn(0f, 1f), false, arc)
-        val line = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.parseColor("#55FFFFFF"); strokeWidth = 2f }
-        c.drawLine(size * 0.12f, size * 0.56f, size * 0.88f, size * 0.56f, line)
-        return bmp
-    }
 }
 
 /** The next prayer from the stored days (previous prayer may be yesterday's Isha). */
@@ -99,6 +65,7 @@ data class NextPrayer(
     val fraction: Float,
     val hijri: String,
     val arabic: Boolean,
+    val clock12: Boolean = true,
 ) {
     companion object {
         fun from(json: String?, now: Long): NextPrayer? {
@@ -106,6 +73,7 @@ data class NextPrayer(
             return try {
                 val root = JSONObject(json)
                 val arabic = root.optString("lang", "ar") != "en"
+                val clock12 = root.optBoolean("c12", true)
                 val days = root.getJSONArray("days")
                 var prev: Long? = null
                 var hijriToday = ""
@@ -126,7 +94,7 @@ data class NextPrayer(
                         if (at > now) {
                             val start = prev ?: (at - 6 * 3600 * 1000L)
                             val frac = ((now - start).toFloat() / (at - start).toFloat())
-                            return NextPrayer(e.getString(1), at, frac, hijriToday.ifEmpty { d.getString("h") }, arabic)
+                            return NextPrayer(e.getString(1), at, frac, hijriToday.ifEmpty { d.getString("h") }, arabic, clock12)
                         }
                         prev = at
                     }

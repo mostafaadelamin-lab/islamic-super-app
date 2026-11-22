@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Widget background for the «madinah» colour style (heroTop to heroDeep in design_tokens.dart). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient android:angle="315" android:startColor="#FF1D3A64" android:endColor="#FF0A1830" />
+    <corners android:radius="22dp" />
+</shape>
