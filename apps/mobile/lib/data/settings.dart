@@ -441,10 +441,10 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Reminder this many minutes before each adhan (0 = off).
+  /// Reminder this many minutes before each adhan (0 = off; 10 by default, owner 2026-11-22).
   int get adhanPreMinutes {
-    final v = _prefs.getInt('adhan.pre') ?? 0;
-    return preAdhanChoices.contains(v) ? v : 0;
+    final v = _prefs.getInt('adhan.pre') ?? defaultPreAdhanMinutes;
+    return preAdhanChoices.contains(v) ? v : defaultPreAdhanMinutes;
   }
 
   Future<void> setAdhanPreMinutes(int v) async {
@@ -453,8 +453,8 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Iqama alert after each enabled adhan.
-  bool get iqamaEnabled => _prefs.getBool('adhan.iqama') ?? false;
+  /// Iqama alert (and the countdown to it) after each enabled adhan; on by default (owner 2026-11-22).
+  bool get iqamaEnabled => _prefs.getBool('adhan.iqama') ?? true;
   Future<void> setIqamaEnabled(bool v) async {
     await _prefs.setBool('adhan.iqama', v);
     notifyListeners();

@@ -562,6 +562,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get asmaTitle => 'أسماء الله الحسنى';
 
   @override
+  String asmaLessonTitle(String name) {
+    return 'شرح اسم «$name»';
+  }
+
+  @override
   String get audioBasmala => 'البسملة';
 
   @override
@@ -772,6 +777,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String dhikrRemIosCap(String n) {
     return 'آيفون بيسمح بعدد محدود من التنبيهات، فهتيجي كل $n دقيقة في الفترة دي';
   }
+
+  @override
+  String get dhikrRemIosFull =>
+      'على الآيفون الأذان وتنبيهاته ليهم الأولوية، ودلوقتي واخدين كل الأماكن المتاحة، فمش هيطلع تنبيه أذكار. قلّل تنبيهات الأذان (زي قبل الأذان) لو عايز الأذكار.';
 
   @override
   String get dhikrRemListen => 'استمع';
@@ -1422,6 +1431,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeWelcome => 'السلام عليكم';
 
   @override
+  String iqamaLeft(String time) {
+    return 'الإقامة بعد $time';
+  }
+
+  @override
+  String iqamaWait(String name, String time) {
+    return 'إقامة صلاة $name بعد $time';
+  }
+
+  @override
   String khatmaAhead(String n) {
     return 'متقدم $n ورد على الخطة، بارك الله فيك.';
   }
@@ -1888,6 +1907,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lockNoticeHint => 'إشعار ثابت هادئ فيه الصلاة القادمة ومعادها والوقت الباقي عليها ومواقيت اليوم.';
 
   @override
+  String lockNoticeIqamaTitle(String name, String time) {
+    return 'إقامة صلاة $name: $time';
+  }
+
+  @override
   String get lockNoticeSetting => 'الصلاة القادمة على شاشة القفل';
 
   @override
@@ -2187,7 +2211,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get parentLockWrong => 'الرقم غلط، حاول تاني';
 
   @override
+  String get playerNext => 'التالي';
+
+  @override
   String get playerOpen => 'ارجع لشاشة اللي شغال';
+
+  @override
+  String get playerPrev => 'السابق';
+
+  @override
+  String get playerTitle => 'مشغّل الصوت';
 
   @override
   String get prayerAdjust => 'تعديل يدوي (بالدقائق)';
@@ -4221,18 +4254,4 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'مرّ عام هجري كامل منذ بلغ مالي النصاب';
-
-  @override
-  String get playerTitle => 'مشغّل الصوت';
-
-  @override
-  String get playerPrev => 'السابق';
-
-  @override
-  String get playerNext => 'التالي';
-
-  @override
-  String asmaLessonTitle(String name) {
-    return 'شرح اسم «$name»';
-  }
 }

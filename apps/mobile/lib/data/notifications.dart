@@ -576,6 +576,40 @@ class AdhanScheduler {
     [for (final e in _rings.entries) '${e.key}:${e.value.voice}:${e.value.parts.length}:${e.value.alarm}'],
   ].join('|');
 
+  /// iPhone: the notifications the adhan and its alerts take in the next 48 hours (each full adhan as
+  /// all its parts) plus the "open the app" reminder; 0 on Android. Owner 2026-11-22: the adhan comes
+  /// first, the dhikr reminders only get what is left of the 64.
+  int get iosNeed {
+    if (parts == null || settings.adhanPrayers.isEmpty) return 0;
+    final now = clock().toUtc();
+    final until = now.add(const Duration(hours: 48));
+    var n = 1;
+    for (final a in _alerts(now, 1 << 20)) {
+      if (!a.at.isBefore(until)) break;
+      n += a.kind == adhanKind ? _partsFor(a.prayer).clamp(0, maxAdhanParts) : 1;
+    }
+    return n;
+  }
+
+  List<AdhanNotification> _alerts(DateTime now, int max) {
+    final enabled = settings.adhanPrayers;
+    if (enabled.isEmpty) return const [];
+    final ctx = PrayerInputs.resolve(content, settings);
+    final schedule = PrayerSchedule(content.calculator);
+    return planAdhanNotifications(
+      nowUtc: now,
+      today: PrayerSchedule.localDate(ctx.location, now),
+      enabled: enabled,
+      days: days,
+      max: max,
+      preMinutes: settings.adhanPreMinutes,
+      iqama: settings.iqamaPlan,
+      sunrise: settings.sunriseAlert,
+      lastThird: settings.lastThirdAlert,
+      dayFor: (d) => ctx.day(schedule, d, settings.adjustments),
+    );
+  }
+
   /// Plans with the same inputs as the prayer screen.
   List<AdhanNotification> plan() {
     final enabled = settings.adhanPrayers;

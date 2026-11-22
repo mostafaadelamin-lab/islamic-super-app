@@ -61,7 +61,7 @@ class PrayerWidgetMediumProvider : HomeWidgetProvider() {
                 }
                 for (i in 0 until 6) {
                     val t = day.times.getOrNull(i) ?: continue
-                    val on = next != null && t.first == next.first && t.third == next.third
+                    val on = next != null && t.first == next.first && (day.iqama || t.third == next.third)
                     views.setTextViewText(NAME_IDS[i], t.second)
                     views.setTextViewText(TIME_IDS[i], WidgetStyle.clock(t.third, day.clock12, ar))
                     val ink = if (on) gold else Color.WHITE
@@ -97,6 +97,8 @@ data class MediumDay(
     val next: Triple<String, String, Long>?,
     val arabic: Boolean,
     val clock12: Boolean,
+    /** [next] is the iqama of that prayer (between its adhan and the iqama). */
+    val iqama: Boolean = false,
 ) {
     companion object {
         fun from(json: String?, now: Long): MediumDay? {
@@ -122,6 +124,15 @@ data class MediumDay(
                         if (next == null && e.getLong(2) > now) next = Triple(e.getString(0), e.getString(1), e.getLong(2))
                     }
                 }
+                val wait = iqamaWait(days, now)
+                if (wait != null) {
+                    var key = ""
+                    for (i in 0 until days.length()) {
+                        val p = days.getJSONObject(i).getJSONArray("p")
+                        for (j in 0 until p.length()) if (p.getJSONArray(j).getLong(2) == wait.second) key = p.getJSONArray(j).getString(0)
+                    }
+                    next = Triple(key, (if (arabic) "إقامة " else "Iqama ") + wait.first, wait.third)
+                }
                 val d = todayJson ?: return null
                 val p = d.getJSONArray("p")
                 val times = mutableListOf<Triple<String, String, Long>>()
@@ -139,6 +150,7 @@ data class MediumDay(
                     next = next,
                     arabic = arabic,
                     clock12 = clock12,
+                    iqama = wait != null,
                 )
             } catch (e: Exception) {
                 null

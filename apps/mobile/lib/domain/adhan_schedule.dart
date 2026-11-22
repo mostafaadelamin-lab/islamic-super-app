@@ -15,6 +15,13 @@ const lastThirdKind = 'lastThird';
 /// Minutes offered for the reminder before the adhan (0 = off).
 const preAdhanChoices = [0, 5, 10, 15, 20, 30];
 
+/// The reminder before the adhan until the user changes it (owner 2026-11-22).
+const defaultPreAdhanMinutes = 10;
+
+/// Around each adhan the app sends none of its other reminders (owner 2026-11-22): from this many
+/// minutes before it until the iqama (or this many minutes after it when the iqama alert is off).
+const adhanQuietMinutes = 10;
+
 /// Minutes allowed between the adhan and the iqama.
 const minIqama = 1;
 const maxIqama = 60;

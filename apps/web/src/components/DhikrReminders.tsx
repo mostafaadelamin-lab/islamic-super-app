@@ -15,6 +15,20 @@ import {
   nextDhikrReminder,
 } from "@/lib/dhikr-reminders";
 import { Icon } from "./Icon";
+import { adhanStore, inQuiet, quietWindows } from "@/lib/adhan-alerts";
+import { prayerStore } from "@/lib/settings";
+import { resolveLocation } from "@/lib/cities";
+
+/** True when `at` falls in the quiet time around an enabled adhan (until its iqama). */
+function inPrayerQuiet(at: Date): boolean {
+  try {
+    const prayer = prayerStore.get();
+    const q = { ...resolveLocation(prayer), asr: prayer.asr, adjustments: prayer.adjustments };
+    return inQuiet(at, quietWindows(at, q, adhanStore.get()));
+  } catch {
+    return false;
+  }
+}
 
 const TEXTS = (adhkar as { items: string[] }).items;
 const textOf = (id: string): string => TEXTS[DHIKR_REMINDER_ITEMS.find((d) => d.id === id)?.index ?? 0] ?? "";
@@ -68,6 +82,7 @@ export function DhikrReminderAlerts({ locale }: { locale: Locale }) {
       const fired = target;
       target = nextDhikrReminder(new Date(now + 1000), prefs);
       if (now - fired.at.getTime() > LATE_MS) return; // missed while the computer slept
+      if (inPrayerQuiet(fired.at)) return; // owner 2026-11-22: nothing else around the adhan
       void notify(t(locale, "dhikrRem.notifTitle"), textOf(fired.id));
       if (prefs.sound) playClip(fired.id);
       setShown(fired.id);

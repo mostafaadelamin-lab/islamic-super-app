@@ -39,7 +39,8 @@ import 'data/tafsir.dart';
 import 'data/tafsir_books.dart';
 import 'data/word_meanings.dart';
 import 'domain/prayer_schedule.dart';
-import 'ui/prayer_model.dart' show resolveCity;
+import 'ui/prayer_model.dart' show PrayerInputs, resolveCity;
+import 'domain/adhan_schedule.dart' show adhanQuietMinutes;
 
 /// Everything screens need, created once in main() (or in a test).
 class AppServices {
@@ -116,8 +117,33 @@ class AppServices {
       location: () => tz.getLocation(resolveCity(content, settings).tz),
       clock: c,
       locale: () => settings.locale,
+      // Owner 2026-11-22: no other reminder from 10 minutes before each adhan until its iqama.
+      quiet: () {
+        final prayers = settings.adhanPrayers;
+        if (prayers.isEmpty) return const [];
+        final inputs = PrayerInputs.resolve(content, settings);
+        final today = inputs.day(PrayerSchedule(content.calculator), localToday(), settings.adjustments);
+        if (today == null) return const [];
+        final iqama = settings.iqamaPlan;
+        // A few minutes more each side: the repeating reminders keep their time for days while the prayer
+        // times move a little every day.
+        const drift = 3;
+        return [
+          for (final p in obligatoryPrayers)
+            if (prayers.contains(p))
+              (
+                from: _minuteOfDay(today.local(p)) - adhanQuietMinutes - drift,
+                to: _minuteOfDay(today.local(p)) + (iqama?[p] ?? adhanQuietMinutes) + drift,
+              ),
+        ];
+      },
     );
     final khatma = KhatmaController(settings, localToday, onReminderChanged: reminders.sync);
+    // iPhone (owner 2026-11-22): the adhan with its alerts takes its share of the 64 first.
+    AdhanScheduler? adhanRef;
+    int dhikrMax() => defaultTargetPlatform == TargetPlatform.iOS
+        ? dhikrReminderMaxFor(iosCap: 60, adhanNeed: adhanRef?.iosNeed ?? 0)
+        : dhikrReminderMaxAndroid;
     reminders.addSource((l) {
       if (!settings.dhikrRemindersOn) return const [];
       final items = [for (final id in settings.dhikrReminderIds) ?findDhikrReminder(id)];
@@ -126,7 +152,7 @@ class AppServices {
         from: settings.dhikrRemindersFrom,
         to: settings.dhikrRemindersTo,
         every: settings.dhikrRemindersEvery,
-        max: defaultTargetPlatform == TargetPlatform.iOS ? dhikrReminderMaxIos : dhikrReminderMaxAndroid,
+        max: dhikrMax(),
       );
       return [
         for (var i = 0; i < plan.slots.length; i++)
@@ -247,7 +273,7 @@ class AppServices {
           await narration.pause();
         },
       ),
-      adhan: AdhanScheduler(
+      adhan: adhanRef = AdhanScheduler(
         content: content,
         settings: settings,
         backend: backend,
@@ -387,3 +413,5 @@ class AppScope extends InheritedWidget {
 extension ServicesX on BuildContext {
   AppServices get services => AppScope.of(this);
 }
+
+int _minuteOfDay(DateTime t) => t.hour * 60 + t.minute;

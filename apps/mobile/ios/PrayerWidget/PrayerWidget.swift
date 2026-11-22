@@ -29,6 +29,8 @@ struct PrayerEntry: TimelineEntry {
   var today: [PrayerTime] = []
   var clock12: Bool = true
   var palette: String = "madinah"
+  /// Between the adhan of [nextKey] and its iqama: [next] is the iqama (owner 2026-11-22).
+  var iqama: Bool = false
 }
 
 private struct Payload: Decodable {
@@ -37,6 +39,8 @@ private struct Payload: Decodable {
     let h: String
     let p: [[Value]]
     let sr: Double?
+    /// Iqama instants (ms), same order as [p]; absent when the iqama alert is off.
+    let iq: [Double]?
   }
   enum Value: Decodable {
     case s(String), n(Double)
@@ -71,6 +75,21 @@ struct Provider: TimelineProvider {
     return out
   }
 
+  /// Between an adhan and its iqama at [date]: (prayer name, iqama time, adhan time, key).
+  private func iqamaWait(_ p: Payload, at date: Date) -> (String, Date, Date, String)? {
+    for d in p.days {
+      guard let iq = d.iq, iq.count == d.p.count else { continue }
+      for (j, e) in d.p.enumerated() where e.count == 3 {
+        if case .s(let key) = e[0], case .s(let name) = e[1], case .n(let ms) = e[2] {
+          let adhan = Date(timeIntervalSince1970: ms / 1000)
+          let at = Date(timeIntervalSince1970: iq[j] / 1000)
+          if adhan <= date && date < at { return (name, at, adhan, key) }
+        }
+      }
+    }
+    return nil
+  }
+
   /// The six times of [day] (sunrise after Fajr).
   private func six(_ day: Payload.Day?, arabic: Bool) -> [PrayerTime] {
     guard let day = day else { return [] }
@@ -100,6 +119,12 @@ struct Provider: TimelineProvider {
     let todayDay = p.days.first { $0.d == today }
     let hijri = todayDay?.h ?? next?.2 ?? ""
     let arabic = p.lang != "en"
+    if let w = iqamaWait(p, at: date) {
+      return PrayerEntry(
+        date: date, hijri: hijri, name: (arabic ? "إقامة " : "Iqama ") + w.0, next: w.1, previous: w.2,
+        arabic: arabic, nextKey: w.3, today: six(todayDay, arabic: arabic), clock12: p.c12 ?? true,
+        palette: p.pal ?? "madinah", iqama: true)
+    }
     return PrayerEntry(
       date: date, hijri: hijri, name: next?.0 ?? "", next: next?.1, previous: prev, arabic: arabic,
       nextKey: next?.3 ?? "", today: six(todayDay, arabic: arabic), clock12: p.c12 ?? true,
@@ -120,6 +145,8 @@ struct Provider: TimelineProvider {
     var dates = (0..<7).map { now.addingTimeInterval(Double($0) * 3600) }
     if let p = p {
       dates += prayers(p).map { $0.1 }.filter { $0 > now && $0 < now.addingTimeInterval(6 * 3600) }
+      let iqamas = p.days.flatMap { $0.iq ?? [] }.map { Date(timeIntervalSince1970: $0 / 1000) }
+      dates += iqamas.filter { $0 > now && $0 < now.addingTimeInterval(6 * 3600) }
     }
     let entries = dates.sorted().map { entry(at: $0, p) }
     completion(Timeline(entries: entries, policy: .atEnd))
@@ -238,7 +265,8 @@ struct PrayerMediumView: View {
     HStack(spacing: 8) {
       VStack(spacing: 0) {
         ForEach(Array(entry.today.enumerated()), id: \.offset) { _, t in
-          let on = t.key == entry.nextKey && entry.next.map { abs($0.timeIntervalSince(t.at)) < 1 } == true
+          let on = t.key == entry.nextKey
+            && (entry.iqama || entry.next.map { abs($0.timeIntervalSince(t.at)) < 1 } == true)
           HStack {
             Text(t.name).lineLimit(1)
             Spacer(minLength: 4)

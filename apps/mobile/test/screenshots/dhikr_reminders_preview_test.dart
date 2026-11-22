@@ -68,4 +68,19 @@ void main() {
     await pushScreen(tester, const AdhkarScreen());
     await shot(tester, '04-adhkar-tab-card');
   });
+
+  // Owner 2026-11-22: between the adhan and the iqama the home and prayer tab count down to the iqama.
+  final dhuhr = DateTime.utc(2026, 1, 15, 10, 5);
+  testWidgets('preview: home iqama countdown', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(tester, size: size, clock: () => dhuhr.add(const Duration(minutes: 6, seconds: 18)));
+    await shot(tester, '05-home-iqama-countdown');
+  });
+
+  testWidgets('preview: prayer tab iqama countdown', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(tester, size: size, clock: () => dhuhr.add(const Duration(minutes: 6, seconds: 18)));
+    await goToTab(tester, 2);
+    await shot(tester, '06-prayer-iqama-countdown');
+  });
 }

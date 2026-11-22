@@ -85,6 +85,11 @@ data class NextPrayer(
                     val d = days.getJSONObject(i)
                     if (d.getString("d") == today) hijriToday = d.getString("h")
                 }
+                // Between an adhan and its iqama (owner 2026-11-22): count down to the iqama.
+                iqamaWait(days, now)?.let { (name, adhan, iq) ->
+                    val frac = ((now - adhan).toFloat() / (iq - adhan).toFloat())
+                    return NextPrayer((if (arabic) "إقامة " else "Iqama ") + name, iq, frac, hijriToday, arabic, clock12)
+                }
                 for (i in 0 until days.length()) {
                     val d = days.getJSONObject(i)
                     val p = d.getJSONArray("p")
@@ -105,4 +110,20 @@ data class NextPrayer(
             }
         }
     }
+}
+
+/** (prayer name, adhan ms, iqama ms) when [now] is between an adhan and its iqama ("iq" of each day). */
+fun iqamaWait(days: org.json.JSONArray, now: Long): Triple<String, Long, Long>? {
+    for (i in 0 until days.length()) {
+        val d = days.getJSONObject(i)
+        val iq = d.optJSONArray("iq") ?: continue
+        val p = d.getJSONArray("p")
+        for (j in 0 until minOf(p.length(), iq.length())) {
+            val e = p.getJSONArray(j)
+            val adhan = e.getLong(2)
+            val at = iq.getLong(j)
+            if (now in adhan until at) return Triple(e.getString(1), adhan, at)
+        }
+    }
+    return null
 }

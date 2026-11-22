@@ -641,6 +641,17 @@ input[type="radio"] {
   color: var(--color-muted);
   margin-top: var(--space-xs) !important;
 }
+/* Between the adhan and the iqama (owner 2026-11-22). */
+.home-iqama {
+  font-weight: 700;
+  margin-top: var(--space-xs) !important;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm, 8px);
+  background: var(--color-primary-soft, rgba(217, 178, 94, 0.18));
+}
+.home-iqama .countdown {
+  font-variant-numeric: tabular-nums;
+}
 .home-day {
   padding: var(--space-md);
 }

@@ -328,7 +328,7 @@ void main() {
   });
 
   testWidgets('reminder before the adhan and iqama minutes per prayer', (tester) async {
-    final app = await open(tester, prefs: {'adhan.enabled': true}, edit: true);
+    final app = await open(tester, prefs: {'adhan.enabled': true, 'adhan.iqama': false}, edit: true);
     await tester.scrollUntilVisible(find.byKey(const Key('adhanExtrasTile')), 200);
     await tester.tap(find.byKey(const Key('adhanExtrasTile')));
     await tester.pumpAndSettle();
@@ -371,9 +371,26 @@ void main() {
   testWidgets('home shows time elapsed for 30 minutes after an adhan', (tester) async {
     // Cairo Dhuhr on 2026-01-15 is about 10:05 UTC; 10 minutes later.
     final dhuhr = DateTime.utc(2026, 1, 15, 10, 5);
-    await pumpApp(tester, locale: 'en', size: tallPhone, clock: () => dhuhr.add(const Duration(minutes: 10)));
+    await pumpApp(
+      tester,
+      locale: 'en',
+      size: tallPhone,
+      prefs: {'adhan.iqama': false},
+      clock: () => dhuhr.add(const Duration(minutes: 10)),
+    );
     expect(find.textContaining(' ago'), findsOneWidget);
     expect(find.text('Dhuhr prayer'), findsOneWidget);
+  });
+
+  testWidgets('between the adhan and the iqama: countdown to the iqama (home + prayer tab)', (tester) async {
+    // Cairo Dhuhr 2026-01-15 ≈ 10:05 UTC, iqama 15 min later; 10 minutes after the adhan.
+    final dhuhr = DateTime.utc(2026, 1, 15, 10, 5);
+    await pumpApp(tester, locale: 'en', size: tallPhone, clock: () => dhuhr.add(const Duration(minutes: 10)));
+    expect(find.text('Dhuhr prayer'), findsOneWidget);
+    expect(find.textContaining('Iqama in'), findsOneWidget);
+    await goToTab(tester, 2);
+    expect(find.byKey(const Key('iqamaCountdown')), findsOneWidget);
+    expect(find.textContaining('Dhuhr iqama in'), findsOneWidget);
   });
 
   testWidgets('sunrise / last third / Friday alerts and a sound per prayer', (tester) async {

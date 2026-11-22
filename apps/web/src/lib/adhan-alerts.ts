@@ -60,14 +60,19 @@ export const DEFAULT_IQAMA: Readonly<Record<string, number>> = {
   isha: 15,
 };
 
+/** Reminder before the adhan and iqama alert are on until the user turns them off (owner 2026-11-22). */
+export const DEFAULT_PRE_MINUTES = 10;
+/** No other reminder from this many minutes before each enabled adhan until its iqama (owner 2026-11-22). */
+export const QUIET_MINUTES = 10;
+
 export const DEFAULT_ADHAN: AdhanPrefs = {
   enabled: false,
   prayers: {},
   sound: true,
   voice: DEFAULT_ADHAN_VOICE,
   fajrVoice: DEFAULT_FAJR_VOICE,
-  preMinutes: 0,
-  iqamaEnabled: false,
+  preMinutes: DEFAULT_PRE_MINUTES,
+  iqamaEnabled: true,
   iqama: { ...DEFAULT_IQAMA },
   soundFor: {},
   sunrise: false,
@@ -94,7 +99,7 @@ export function sanitizeAdhan(raw: unknown): AdhanPrefs {
   const pre =
     typeof r.preMinutes === "number" && (PRE_CHOICES as readonly number[]).includes(r.preMinutes)
       ? r.preMinutes
-      : 0;
+      : DEFAULT_PRE_MINUTES;
   const iq = isObj(r.iqama) ? r.iqama : {};
   const iqama = Object.fromEntries(
     OBLIGATORY.map((k) => [k, iq[k] === undefined ? (DEFAULT_IQAMA[k] ?? 15) : clampIqama(iq[k])]),
@@ -106,7 +111,7 @@ export function sanitizeAdhan(raw: unknown): AdhanPrefs {
     voice: isAdhanVoiceId(r.voice) ? r.voice : DEFAULT_ADHAN_VOICE,
     fajrVoice: isAdhanVoiceId(r.fajrVoice) ? r.fajrVoice : DEFAULT_FAJR_VOICE,
     preMinutes: pre,
-    iqamaEnabled: r.iqamaEnabled === true,
+    iqamaEnabled: r.iqamaEnabled !== false,
     iqama,
     soundFor: Object.fromEntries(
       OBLIGATORY.flatMap((k) => {
@@ -223,7 +228,9 @@ export function nextAlert(now: Date, q: PrayerQuery, prefs: AdhanPrefs): Planned
       }),
     ];
   });
+  const quiet = quietWindows(now, q, prefs);
   const future = all
+    .map((a) => (REMINDER_KINDS.includes(a.kind) ? { ...a, at: afterQuiet(a.at, quiet) } : a))
     .filter((a) => a.at.getTime() > now.getTime())
     .sort((a, b) => a.at.getTime() - b.at.getTime());
   return future[0] ?? null;
@@ -260,4 +267,80 @@ export function nextAdhanAlert(
 /** The muezzin chosen for a prayer: Fajr has its own adhan. */
 export function voiceForPrayer(prefs: AdhanPrefs, key: PrayerKey): string {
   return key === "fajr" ? prefs.fajrVoice : prefs.voice;
+}
+
+/** Reminders the quiet time around the adhan moves to its end (the prayer alerts themselves never move). */
+const REMINDER_KINDS: readonly AlertKind[] = ["friday", "adhkarMorning", "adhkarEvening"];
+
+/** The iqama instant of `k` on the day whose adhan is `prayerAt`, or null when the iqama alert is off. */
+function iqamaAt(prefs: AdhanPrefs, k: PrayerKey, prayerAt: Date): Date | null {
+  if (!prefs.iqamaEnabled) return null;
+  return new Date(prayerAt.getTime() + (prefs.iqama[k] ?? DEFAULT_IQAMA[k] ?? 15) * MINUTE_MS);
+}
+
+/**
+ * Around each enabled adhan (yesterday to two days ahead): from QUIET_MINUTES before it until its iqama
+ * (or QUIET_MINUTES after it when the iqama alert is off). No other reminder rings then (owner 2026-11-22).
+ */
+export function quietWindows(now: Date, q: PrayerQuery, prefs: AdhanPrefs): { from: Date; to: Date }[] {
+  if (!prefs.enabled) return [];
+  const enabled = OBLIGATORY.filter((k) => adhanFor(prefs, k));
+  const today = localDateInTz(now, q.tz);
+  const out: { from: Date; to: Date }[] = [];
+  for (let i = -1; i < LOOKAHEAD_DAYS; i++) {
+    let day: PrayerDay;
+    try {
+      day = prayerTimes(addDays(today, i), q.lat, q.lng, q.method, q.asr, q.adjustments ?? {});
+    } catch {
+      continue;
+    }
+    for (const k of enabled) {
+      const at = day.times[k];
+      out.push({
+        from: new Date(at.getTime() - QUIET_MINUTES * MINUTE_MS),
+        to: iqamaAt(prefs, k, at) ?? new Date(at.getTime() + QUIET_MINUTES * MINUTE_MS),
+      });
+    }
+  }
+  return out;
+}
+
+/** True when `at` falls in one of `quiet`. */
+export function inQuiet(at: Date, quiet: readonly { from: Date; to: Date }[]): boolean {
+  return quiet.some((w) => at.getTime() >= w.from.getTime() && at.getTime() < w.to.getTime());
+}
+
+/** `at`, or the end of the quiet time it falls in (moving on while quiet times touch). */
+export function afterQuiet(at: Date, quiet: readonly { from: Date; to: Date }[]): Date {
+  let t = at;
+  for (let guard = 0; guard < quiet.length; guard++) {
+    const w = quiet.find((x) => t.getTime() >= x.from.getTime() && t.getTime() < x.to.getTime());
+    if (!w) break;
+    t = w.to;
+  }
+  return t;
+}
+
+/**
+ * Between a prayer's adhan and its iqama: that prayer and the iqama instant (owner 2026-11-22:
+ * a countdown to the iqama); null otherwise or when the iqama alert is off.
+ */
+export function iqamaWait(now: Date, q: PrayerQuery, prefs: AdhanPrefs): { key: PrayerKey; at: Date } | null {
+  if (!prefs.iqamaEnabled) return null;
+  const today = localDateInTz(now, q.tz);
+  for (const i of [0, -1]) {
+    let day: PrayerDay;
+    try {
+      day = prayerTimes(addDays(today, i), q.lat, q.lng, q.method, q.asr, q.adjustments ?? {});
+    } catch {
+      continue;
+    }
+    for (const k of [...OBLIGATORY].reverse()) {
+      const adhan = day.times[k];
+      if (adhan.getTime() > now.getTime()) continue;
+      const at = iqamaAt(prefs, k, adhan);
+      if (at && at.getTime() > now.getTime()) return { key: k, at };
+    }
+  }
+  return null;
 }

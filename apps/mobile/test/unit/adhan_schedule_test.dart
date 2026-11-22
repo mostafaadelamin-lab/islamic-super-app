@@ -106,7 +106,12 @@ void main() {
     });
 
     test('enabled: schedules the selected city\'s next 7 days with localised text', () async {
-      final (sch, fake, settings) = await make({'adhan.enabled': true, 'adhan.asr': false});
+      final (sch, fake, settings) = await make({
+        'adhan.enabled': true,
+        'adhan.asr': false,
+        'adhan.pre': 0,
+        'adhan.iqama': false,
+      });
       await sch.sync(force: true);
       expect(fake.cancels, 1);
       expect(fake.scheduled, hasLength(sch.lastPlan.length));

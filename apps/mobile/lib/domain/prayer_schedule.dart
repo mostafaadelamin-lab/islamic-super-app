@@ -107,6 +107,19 @@ class PrayerSchedule {
     return null;
   }
 
+  /// Between an obligatory prayer's adhan and its iqama ([iqama]: minutes per prayer): that prayer,
+  /// the iqama instant and the time left to it; null outside that wait or when [iqama] is null.
+  static NextPrayer? iqamaWait(DateTime nowUtc, LocalPrayerDay today, Map<String, int>? iqama) {
+    if (iqama == null) return null;
+    for (final k in obligatoryPrayers.reversed) {
+      final adhan = today.day.utc[k]!;
+      if (nowUtc.isBefore(adhan)) continue;
+      final at = adhan.add(Duration(minutes: iqama[k] ?? 0));
+      return at.isAfter(nowUtc) ? NextPrayer(k, at, at.difference(nowUtc)) : null;
+    }
+    return null;
+  }
+
   /// "H:MM:SS" for a countdown.
   static String formatCountdown(Duration d) {
     final s = d.inSeconds < 0 ? 0 : d.inSeconds;

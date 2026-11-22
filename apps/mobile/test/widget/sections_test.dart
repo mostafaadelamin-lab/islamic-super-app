@@ -655,7 +655,13 @@ void main() {
 
     testWidgets('adhan: granted → five prayers scheduled; a per-prayer switch removes one', (tester) async {
       final n = FakeNotifications();
-      final app = await pumpApp(tester, size: tallPhone, locale: 'en', notifications: n);
+      final app = await pumpApp(
+        tester,
+        size: tallPhone,
+        locale: 'en',
+        notifications: n,
+        prefs: {'adhan.pre': 0, 'adhan.iqama': false},
+      );
       await goToTab(tester, 2);
       await tester.scrollUntilVisible(
         find.byKey(const Key('adhanSwitch')),

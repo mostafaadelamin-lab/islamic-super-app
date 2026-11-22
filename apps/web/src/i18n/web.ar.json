@@ -377,6 +377,7 @@
   "adhan.fridayTitle": "يوم الجمعة",
   "adhan.fridayBody": "تذكير بقراءة سورة الكهف والإكثار من الصلاة على النبي ﷺ",
   "home.elapsed": "مضى {n} دقيقة على أذان {name}",
+  "iqama.wait": "الوقت المتبقي على إقامة صلاة {name}",
   "prayer.calendarKind": "نوع التقويم",
   "prayer.kind.gregorian": "ميلادي",
   "prayer.kind.hijri": "هجري",

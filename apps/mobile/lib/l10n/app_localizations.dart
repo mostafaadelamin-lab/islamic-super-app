@@ -1052,6 +1052,12 @@ abstract class AppLocalizations {
   /// **'Names of Allah'**
   String get asmaTitle;
 
+  /// shared key "asmaLesson.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Explanation of «{name}»'**
+  String asmaLessonTitle(String name);
+
   /// shared key "audio.basmala"
   ///
   /// In en, this message translates to:
@@ -1453,6 +1459,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'iPhone allows a limited number of reminders, so they come every {n} minutes in this window'**
   String dhikrRemIosCap(String n);
+
+  /// shared key "dhikrRem.iosFull"
+  ///
+  /// In en, this message translates to:
+  /// **'On iPhone the adhan and its alerts come first and now take every free place, so no dhikr reminder will come. Turn off some adhan alerts (like the one before the adhan) to get them.'**
+  String get dhikrRemIosFull;
 
   /// shared key "dhikrRem.listen"
   ///
@@ -2612,6 +2624,18 @@ abstract class AppLocalizations {
   /// **'Peace be upon you'**
   String get homeWelcome;
 
+  /// shared key "iqama.left"
+  ///
+  /// In en, this message translates to:
+  /// **'Iqama in {time}'**
+  String iqamaLeft(String time);
+
+  /// shared key "iqama.wait"
+  ///
+  /// In en, this message translates to:
+  /// **'{name} iqama in {time}'**
+  String iqamaWait(String name, String time);
+
   /// shared key "khatma.ahead"
   ///
   /// In en, this message translates to:
@@ -3434,6 +3458,12 @@ abstract class AppLocalizations {
   /// **'A quiet, lasting notification with the next prayer, its time, the time left and the day\'s times.'**
   String get lockNoticeHint;
 
+  /// shared key "lockNotice.iqamaTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'{name} iqama: {time}'**
+  String lockNoticeIqamaTitle(String name, String time);
+
   /// shared key "lockNotice.setting"
   ///
   /// In en, this message translates to:
@@ -3986,11 +4016,29 @@ abstract class AppLocalizations {
   /// **'Wrong PIN, try again'**
   String get parentLockWrong;
 
+  /// shared key "player.next"
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get playerNext;
+
   /// shared key "player.open"
   ///
   /// In en, this message translates to:
   /// **'Back to what is playing'**
   String get playerOpen;
+
+  /// shared key "player.prev"
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get playerPrev;
+
+  /// shared key "player.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Audio player'**
+  String get playerTitle;
 
   /// shared key "prayer.adjust"
   ///
@@ -7609,30 +7657,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A full Hijri year has passed since my wealth reached the nisab'**
   String get zakatYearPassed;
-
-  /// No description provided for @playerTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Audio player'**
-  String get playerTitle;
-
-  /// No description provided for @playerPrev.
-  ///
-  /// In en, this message translates to:
-  /// **'Previous'**
-  String get playerPrev;
-
-  /// No description provided for @playerNext.
-  ///
-  /// In en, this message translates to:
-  /// **'Next'**
-  String get playerNext;
-
-  /// No description provided for @asmaLessonTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Explanation of «{name}»'**
-  String asmaLessonTitle(String name);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

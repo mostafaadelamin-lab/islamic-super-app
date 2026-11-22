@@ -122,7 +122,7 @@ class _DhikrRemindersScreenState extends State<DhikrRemindersScreen> {
               from: settings.dhikrRemindersFrom,
               to: settings.dhikrRemindersTo,
               every: every,
-              max: ios ? dhikrReminderMaxIos : dhikrReminderMaxAndroid,
+              max: ios ? dhikrReminderMaxFor(iosCap: 60, adhanNeed: s.adhan.iosNeed) : dhikrReminderMaxAndroid,
             );
             String time(int m) => context.num(
               formatClock(DateTime(2000, 1, 1, m ~/ 60, m % 60), h12: settings.clock12, arabic: context.isArabic),
@@ -174,7 +174,16 @@ class _DhikrRemindersScreenState extends State<DhikrRemindersScreen> {
                         ),
                       ],
                     ),
-                    if (plan.every != every)
+                    if (on && plan.slots.isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
+                        child: Text(
+                          l.dhikrRemIosFull,
+                          key: const Key('dhikrRemIosFull'),
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      )
+                    else if (plan.every != every)
                       Padding(
                         padding: const EdgeInsets.only(top: DesignTokens.spaceSm),
                         child: Text(

@@ -7,6 +7,10 @@ import {
   lastThirdStart,
   nextAdhanAlert,
   nextAlert,
+  afterQuiet,
+  inQuiet,
+  iqamaWait,
+  quietWindows,
   sanitizeAdhan,
 } from "@/lib/adhan-alerts";
 import { prayerTimes } from "@/lib/prayer";
@@ -58,8 +62,8 @@ describe("adhan alert planning", () => {
       sound: true,
       voice: "mulla",
       fajrVoice: "daghriri_fajr",
-      preMinutes: 0,
-      iqamaEnabled: false,
+      preMinutes: 10,
+      iqamaEnabled: true,
       iqama: { fajr: 20, dhuhr: 15, asr: 15, maghrib: 10, isha: 15 },
       soundFor: {},
       sunrise: false,
@@ -79,7 +83,11 @@ describe("adhan alert planning", () => {
       fajrVoice: "daghriri_fajr",
     });
     const s = sanitizeAdhan({ preMinutes: 7, iqamaEnabled: true, iqama: { fajr: 500, dhuhr: "x", asr: 0 } });
-    expect(s.preMinutes).toBe(0);
+    expect(s.preMinutes).toBe(10);
+    expect(sanitizeAdhan({ preMinutes: 0, iqamaEnabled: false })).toMatchObject({
+      preMinutes: 0,
+      iqamaEnabled: false,
+    });
     expect(s.iqama).toMatchObject({ fajr: 60, dhuhr: 1, asr: 1, maghrib: 10 });
   });
 
@@ -94,7 +102,9 @@ describe("adhan alert planning", () => {
     expect(iqama).toMatchObject({ kind: "iqama", key: "dhuhr" });
     expect(iqama!.at.getTime()).toBe(today.times.dhuhr.getTime() + 15 * 60_000);
     // Without the extras only adhans are planned (same as before).
-    expect(nextAlert(NOW, MAKKAH, sanitizeAdhan({ enabled: true }))).toMatchObject({
+    expect(
+      nextAlert(NOW, MAKKAH, sanitizeAdhan({ enabled: true, preMinutes: 0, iqamaEnabled: false })),
+    ).toMatchObject({
       kind: "adhan",
       key: "dhuhr",
     });
@@ -160,7 +170,7 @@ describe("extra alerts", () => {
 
 describe("AdhanSettings", () => {
   it("stores the per-prayer sound and the extra alerts", async () => {
-    adhanStore.set({ ...DEFAULT_ADHAN, enabled: true });
+    adhanStore.set({ ...DEFAULT_ADHAN, enabled: true, preMinutes: 0, iqamaEnabled: false });
     const u = user();
     render(<AdhanSettings locale="en" />);
     await u.selectOptions(screen.getByTestId("sound-fajr"), "tone");
@@ -216,7 +226,7 @@ describe("AdhanAlerts", () => {
     vi.stubGlobal("Notification", Object.assign(Notif, { permission: "granted" }));
     const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
     const pause = vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => {});
-    adhanStore.set({ ...DEFAULT_ADHAN, enabled: true });
+    adhanStore.set({ ...DEFAULT_ADHAN, enabled: true, preMinutes: 0, iqamaEnabled: false });
     const u = user();
     render(<AdhanAlerts locale="en" />);
     expect(screen.queryByTestId("adhan-ringing")).toBeNull();
@@ -240,7 +250,7 @@ describe("AdhanAlerts", () => {
   it("stays silent when the prayer was missed while the computer slept, and when disabled", async () => {
     vi.stubGlobal("Notification", Object.assign(vi.fn(), { permission: "granted" }));
     const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
-    adhanStore.set({ ...DEFAULT_ADHAN, enabled: true });
+    adhanStore.set({ ...DEFAULT_ADHAN, enabled: true, preMinutes: 0, iqamaEnabled: false });
     render(<AdhanAlerts locale="en" />);
     await act(async () => {
       vi.setSystemTime(new Date(today.times.dhuhr.getTime() + 20 * 60_000));
@@ -253,7 +263,7 @@ describe("AdhanAlerts", () => {
   it("offers a play button when the browser blocks autoplay", async () => {
     vi.stubGlobal("Notification", Object.assign(vi.fn(), { permission: "granted" }));
     vi.spyOn(HTMLMediaElement.prototype, "play").mockRejectedValue(new Error("NotAllowedError"));
-    adhanStore.set({ ...DEFAULT_ADHAN, enabled: true });
+    adhanStore.set({ ...DEFAULT_ADHAN, enabled: true, preMinutes: 0, iqamaEnabled: false });
     render(<AdhanAlerts locale="ar" />);
     await act(async () => {
       vi.setSystemTime(new Date(today.times.dhuhr.getTime() + 1000));
@@ -265,7 +275,13 @@ describe("AdhanAlerts", () => {
   it("rings a silent prayer without the recording and announces sunrise", async () => {
     vi.stubGlobal("Notification", Object.assign(vi.fn(), { permission: "granted" }));
     const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
-    adhanStore.set({ ...DEFAULT_ADHAN, enabled: true, soundFor: { dhuhr: "silent" } });
+    adhanStore.set({
+      ...DEFAULT_ADHAN,
+      enabled: true,
+      preMinutes: 0,
+      iqamaEnabled: false,
+      soundFor: { dhuhr: "silent" },
+    });
     render(<AdhanAlerts locale="en" />);
     await act(async () => {
       vi.setSystemTime(new Date(today.times.dhuhr.getTime() + 1000));
@@ -273,5 +289,24 @@ describe("AdhanAlerts", () => {
     });
     expect(play).not.toHaveBeenCalled();
     expect(screen.getByTestId("adhan-ringing")).toHaveTextContent("Time for Dhuhr");
+  });
+});
+
+describe("quiet around the adhan (owner 2026-11-22)", () => {
+  it("moves the other reminders to after the iqama and knows the iqama wait", () => {
+    const on = sanitizeAdhan({ enabled: true });
+    const quiet = quietWindows(NOW, MAKKAH, on);
+    const dhuhrIqama = new Date(today.times.dhuhr.getTime() + 15 * 60_000);
+    expect(inQuiet(new Date(today.times.dhuhr.getTime() - 5 * 60_000), quiet)).toBe(true);
+    expect(inQuiet(new Date(today.times.dhuhr.getTime() + 14 * 60_000), quiet)).toBe(true);
+    expect(inQuiet(new Date(today.times.dhuhr.getTime() + 16 * 60_000), quiet)).toBe(false);
+    expect(afterQuiet(today.times.dhuhr, quiet).getTime()).toBe(dhuhrIqama.getTime());
+    const wait = iqamaWait(new Date(today.times.dhuhr.getTime() + 60_000), MAKKAH, on);
+    expect(wait).toMatchObject({ key: "dhuhr" });
+    expect(wait!.at.getTime()).toBe(dhuhrIqama.getTime());
+    expect(iqamaWait(new Date(dhuhrIqama.getTime() + 1000), MAKKAH, on)).toBeNull();
+    expect(
+      iqamaWait(new Date(today.times.dhuhr.getTime() + 60_000), MAKKAH, { ...on, iqamaEnabled: false }),
+    ).toBeNull();
   });
 });

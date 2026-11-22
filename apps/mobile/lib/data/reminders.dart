@@ -47,7 +47,18 @@ class ReminderSpec {
 /// Keeps the repeating reminders (khatma portion, adhkar, Friday) scheduled.
 /// Each feature registers a [source] that returns its active reminders.
 class ReminderScheduler {
-  ReminderScheduler({required this.backend, required this.location, required this.clock, required this.locale});
+  ReminderScheduler({
+    required this.backend,
+    required this.location,
+    required this.clock,
+    required this.locale,
+    this.quiet,
+  });
+
+  /// Times of day (minutes after midnight, `from` to `to`, may cross midnight) when no reminder rings:
+  /// around each adhan until its iqama (owner 2026-11-22). Dhikr reminders there are left out; any other
+  /// reminder moves to the end of the quiet time.
+  final List<({int from, int to})> Function()? quiet;
 
   final NotificationsBackend backend;
 
@@ -61,7 +72,7 @@ class ReminderScheduler {
 
   List<ReminderSpec> active() {
     final l = lookupAppLocalizations(locale());
-    return [for (final s in _sources) ...s(l)];
+    return quietened([for (final s in _sources) ...s(l)], quiet?.call() ?? const []);
   }
 
   /// Pending notifications the reminders take (one each: they repeat by themselves).
@@ -105,4 +116,45 @@ class ReminderScheduler {
       debugPrint('reminder scheduling failed: $e');
     }
   }
+}
+
+/// [specs] kept out of the [quiet] times: a dhikr reminder (id from [ReminderIds.dhikrBase]) inside one is
+/// dropped, any other moves to the minute the quiet time ends.
+List<ReminderSpec> quietened(List<ReminderSpec> specs, List<({int from, int to})> quiet) {
+  if (quiet.isEmpty) return specs;
+  const day = 24 * 60;
+  int? endOf(int m) {
+    for (final q in quiet) {
+      final span = (q.to - q.from) % day;
+      if ((m - q.from) % day <= span) return q.to % day;
+    }
+    return null;
+  }
+
+  final out = <ReminderSpec>[];
+  for (final r in specs) {
+    var end = endOf(r.minutes);
+    if (end == null) {
+      out.add(r);
+      continue;
+    }
+    if (r.id >= ReminderIds.dhikrBase) continue;
+    // Quiet times may touch (Maghrib's iqama close to Isha): move on until outside all of them.
+    for (var i = 0; i < quiet.length; i++) {
+      final next = endOf((end! + 1) % day);
+      if (next == null) break;
+      end = next;
+    }
+    out.add(
+      ReminderSpec(
+        id: r.id,
+        title: r.title,
+        body: r.body,
+        minutes: (end! + 1) % day,
+        weekday: r.weekday,
+        sound: r.sound,
+      ),
+    );
+  }
+  return out;
 }

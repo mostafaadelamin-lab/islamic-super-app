@@ -10,6 +10,7 @@ import type { PrayerDay, PrayerKey } from "@/lib/prayer";
 import { formatClock, formatCountdown } from "@/lib/time";
 import { gregorianDay, hijriDate, weekdayName } from "@/lib/dates";
 import { prayerStore, prefsStore } from "@/lib/settings";
+import { adhanStore, iqamaWait } from "@/lib/adhan-alerts";
 import { useStore } from "@/hooks/useStore";
 import { useNow } from "@/hooks/useNow";
 import { Icon, type IconName } from "./Icon";
@@ -78,6 +79,9 @@ export function NextPrayerCard({ locale }: { locale: Locale }) {
   const hhmm = (d: Date): string => localizeDigits(formatClock(d, loc.tz, display.clock, locale), locale);
   const hijri = now ? hijriDate(now, loc.tz, locale) : null;
   const recent = now && computed ? recentPrayer(now, computed.today) : null;
+  const adhan = useStore(adhanStore);
+  // Between the adhan and the iqama (owner 2026-11-22): a countdown to the iqama.
+  const wait = now && computed ? iqamaWait(now, q, adhan) : null;
 
   return (
     <>
@@ -117,7 +121,15 @@ export function NextPrayerCard({ locale }: { locale: Locale }) {
                     {localizeDigits(formatCountdown(next.at.getTime() - now.getTime()), locale)}
                   </span>
                 </p>
-                {recent ? (
+                {wait ? (
+                  <p className="home-iqama" data-testid="home-iqama">
+                    <span>{t(locale, "iqama.wait", { name: t(locale, `prayer.${wait.key}`) })} </span>
+                    <span className="countdown" aria-live="off">
+                      {localizeDigits(formatCountdown(wait.at.getTime() - now.getTime()), locale)}
+                    </span>
+                  </p>
+                ) : null}
+                {recent && !wait ? (
                   <p className="home-elapsed" data-testid="home-elapsed">
                     {t(locale, "home.elapsed", {
                       name: t(locale, `prayer.${recent.key}`),

@@ -17,7 +17,7 @@ void main() {
   }
 
   test('one notice now, then one at each prayer counting down to the one after it', () async {
-    final n = await make({});
+    final n = await make({'adhan.iqama': false});
     final slots = n.plan();
     expect(slots.first.showAt, isNull);
     expect(slots.first.id, NextPrayerNotice.firstId);
@@ -37,5 +37,14 @@ void main() {
   test('off in the settings: nothing', () async {
     final n = await make({'prayer.lockNotice': false});
     expect(n.plan(), isEmpty);
+  });
+
+  test('with the iqama on (default): at each adhan the countdown runs to its iqama, then to the next prayer', () async {
+    final n = await make({});
+    final slots = n.plan();
+    expect(slots.first.title, contains('الظهر'));
+    expect(slots[1].title, contains('إقامة صلاة الظهر'));
+    expect(slots[1].next.difference(slots[1].showAt!), const Duration(minutes: 15));
+    expect(slots[2].title, contains('العصر'));
   });
 }

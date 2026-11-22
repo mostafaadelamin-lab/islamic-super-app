@@ -44,6 +44,7 @@ class HomeWidgetSync {
     final schedule = PrayerSchedule(s.content.calculator);
     final ar = s.settings.locale.languageCode != 'en';
     final today = PrayerSchedule.localDate(inputs.location, s.clock().toUtc());
+    final iqama = s.settings.iqamaPlan;
     final out = <Map<String, Object?>>[];
     for (var i = -1; i < days; i++) {
       final d = today.add(Duration(days: i));
@@ -59,10 +60,21 @@ class HomeWidgetSync {
         ],
         // Sunrise for the medium widget's six times (it is shown, never counted down to).
         'sr': day.day.utc['sunrise']!.millisecondsSinceEpoch,
+        // Iqama instants in the order of 'p' (owner 2026-11-22: the widgets count down to the iqama after the adhan).
+        if (iqama != null)
+          'iq': [
+            for (final k in _names.keys) day.day.utc[k]!.add(Duration(minutes: iqama[k] ?? 0)).millisecondsSinceEpoch,
+          ],
       });
     }
     // 'pal': the user's colour style, so the widgets use the app's colours (owner 2026-11-22).
-    return jsonEncode({'v': 1, 'lang': ar ? 'ar' : 'en', 'c12': s.settings.clock12, 'pal': s.settings.palette, 'days': out});
+    return jsonEncode({
+      'v': 1,
+      'lang': ar ? 'ar' : 'en',
+      'c12': s.settings.clock12,
+      'pal': s.settings.palette,
+      'days': out,
+    });
   }
 
   /// Writes the data and refreshes the widget when anything changed.
@@ -90,6 +102,9 @@ class HomeWidgetSync {
           for (final d in (jsonDecode(data)['days'] as List))
             for (final p in (d['p'] as List))
               if ((p[2] as int) > now.millisecondsSinceEpoch) DateTime.fromMillisecondsSinceEpoch(p[2] as int),
+          for (final d in (jsonDecode(data)['days'] as List))
+            for (final t in (d['iq'] as List? ?? const []))
+              if ((t as int) > now.millisecondsSinceEpoch) DateTime.fromMillisecondsSinceEpoch(t),
         ];
         final times = <DateTime>{
           ...prayerTimes,

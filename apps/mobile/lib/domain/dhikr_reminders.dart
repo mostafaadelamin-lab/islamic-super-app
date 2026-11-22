@@ -51,6 +51,14 @@ const dhikrReminderMaxEvery = 12 * 60;
 /// so the daily dhikr reminders take at most this many there.
 const dhikrReminderMaxIos = 24;
 
+/// The other repeating reminders (khatma, morning and evening adhkar, Friday) kept out of the dhikr share.
+const otherRemindersMax = 4;
+
+/// iPhone: the dhikr reminders a day may take when the adhan and its alerts need [adhanNeed] of the
+/// [iosCap] pending notifications for the next two days (owner 2026-11-22: the adhan comes first).
+int dhikrReminderMaxFor({required int iosCap, required int adhanNeed}) =>
+    (iosCap - adhanNeed - otherRemindersMax).clamp(0, dhikrReminderMaxIos);
+
 /// Android has no such small cap; this only bounds the ids.
 const dhikrReminderMaxAndroid = 96;
 
@@ -66,6 +74,7 @@ const _day = 24 * 60;
   required int every,
   required int max,
 }) {
+  if (max <= 0) return (slots: const <int>[], every: every);
   var step = every.clamp(dhikrReminderMinEvery, dhikrReminderMaxEvery);
   final allDay = from == to;
   final span = allDay ? _day : (to - from) % _day;

@@ -565,6 +565,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get asmaTitle => 'Names of Allah';
 
   @override
+  String asmaLessonTitle(String name) {
+    return 'Explanation of «$name»';
+  }
+
+  @override
   String get audioBasmala => 'Basmala';
 
   @override
@@ -776,6 +781,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String dhikrRemIosCap(String n) {
     return 'iPhone allows a limited number of reminders, so they come every $n minutes in this window';
   }
+
+  @override
+  String get dhikrRemIosFull =>
+      'On iPhone the adhan and its alerts come first and now take every free place, so no dhikr reminder will come. Turn off some adhan alerts (like the one before the adhan) to get them.';
 
   @override
   String get dhikrRemListen => 'Listen';
@@ -1429,6 +1438,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeWelcome => 'Peace be upon you';
 
   @override
+  String iqamaLeft(String time) {
+    return 'Iqama in $time';
+  }
+
+  @override
+  String iqamaWait(String name, String time) {
+    return '$name iqama in $time';
+  }
+
+  @override
   String khatmaAhead(String n) {
     return '$n portions ahead of the plan, may Allah bless you.';
   }
@@ -1899,6 +1918,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'A quiet, lasting notification with the next prayer, its time, the time left and the day\'s times.';
 
   @override
+  String lockNoticeIqamaTitle(String name, String time) {
+    return '$name iqama: $time';
+  }
+
+  @override
   String get lockNoticeSetting => 'Next prayer on the lock screen';
 
   @override
@@ -2198,7 +2222,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get parentLockWrong => 'Wrong PIN, try again';
 
   @override
+  String get playerNext => 'Next';
+
+  @override
   String get playerOpen => 'Back to what is playing';
+
+  @override
+  String get playerPrev => 'Previous';
+
+  @override
+  String get playerTitle => 'Audio player';
 
   @override
   String get prayerAdjust => 'Manual adjustment (minutes)';
@@ -4245,18 +4278,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'A full Hijri year has passed since my wealth reached the nisab';
-
-  @override
-  String get playerTitle => 'Audio player';
-
-  @override
-  String get playerPrev => 'Previous';
-
-  @override
-  String get playerNext => 'Next';
-
-  @override
-  String asmaLessonTitle(String name) {
-    return 'Explanation of «$name»';
-  }
 }

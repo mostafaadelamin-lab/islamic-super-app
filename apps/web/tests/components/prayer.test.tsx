@@ -4,6 +4,7 @@ import { geoErrorKey, PrayerView } from "@/components/PrayerView";
 import { NextPrayerCard, recentPrayer } from "@/components/NextPrayerCard";
 import { hijriMonthDays, hijriOf } from "@/components/PrayerMonth";
 import { prayerStore, prefsStore } from "@/lib/settings";
+import { adhanStore } from "@/lib/adhan-alerts";
 import { prayerTimes, qiblaBearing } from "@/lib/prayer";
 import { formatHHMM } from "@/lib/time";
 import { resetStores } from "./reset";
@@ -306,8 +307,18 @@ describe("NextPrayerCard", () => {
     });
     expect(recentPrayer(new Date(day.times.asr.getTime() + 31 * 60_000), day)).toBeNull();
     vi.setSystemTime(new Date(day.times.dhuhr.getTime() + 7 * 60_000));
+    act(() => adhanStore.set((a) => ({ ...a, iqamaEnabled: false })));
     render(<NextPrayerCard locale="en" />);
     expect(await screen.findByTestId("home-elapsed")).toHaveTextContent("7 min since the Dhuhr adhan");
+  });
+  it("counts down to the iqama after the adhan (owner 2026-11-22)", async () => {
+    const day = prayerTimes({ year: 2026, month: 3, day: 1 }, 21.3891, 39.8579, "makkah");
+    vi.setSystemTime(new Date(day.times.dhuhr.getTime() + 7 * 60_000));
+    render(<NextPrayerCard locale="en" />);
+    const wait = await screen.findByTestId("home-iqama");
+    expect(wait).toHaveTextContent("Time left to the Dhuhr iqama");
+    expect(wait).toHaveTextContent("0:08:00");
+    expect(screen.queryByTestId("home-elapsed")).toBeNull();
   });
   it("shows an error for impossible locations", async () => {
     vi.setSystemTime(new Date("2026-12-21T10:00:00Z"));

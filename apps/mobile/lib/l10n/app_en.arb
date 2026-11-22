@@ -808,6 +808,15 @@
   "@asmaTitle": {
     "description": "shared key \"asma.title\""
   },
+  "asmaLessonTitle": "Explanation of «{name}»",
+  "@asmaLessonTitle": {
+    "description": "shared key \"asmaLesson.title\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "audioBasmala": "Basmala",
   "@audioBasmala": {
     "description": "shared key \"audio.basmala\""
@@ -1100,6 +1109,10 @@
         "type": "String"
       }
     }
+  },
+  "dhikrRemIosFull": "On iPhone the adhan and its alerts come first and now take every free place, so no dhikr reminder will come. Turn off some adhan alerts (like the one before the adhan) to get them.",
+  "@dhikrRemIosFull": {
+    "description": "shared key \"dhikrRem.iosFull\""
   },
   "dhikrRemListen": "Listen",
   "@dhikrRemListen": {
@@ -2059,6 +2072,27 @@
   "@homeWelcome": {
     "description": "shared key \"home.welcome\""
   },
+  "iqamaLeft": "Iqama in {time}",
+  "@iqamaLeft": {
+    "description": "shared key \"iqama.left\"",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "iqamaWait": "{name} iqama in {time}",
+  "@iqamaWait": {
+    "description": "shared key \"iqama.wait\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "khatmaAhead": "{n} portions ahead of the plan, may Allah bless you.",
   "@khatmaAhead": {
     "description": "shared key \"khatma.ahead\"",
@@ -2784,6 +2818,18 @@
   "@lockNoticeHint": {
     "description": "shared key \"lockNotice.hint\""
   },
+  "lockNoticeIqamaTitle": "{name} iqama: {time}",
+  "@lockNoticeIqamaTitle": {
+    "description": "shared key \"lockNotice.iqamaTitle\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "lockNoticeSetting": "Next prayer on the lock screen",
   "@lockNoticeSetting": {
     "description": "shared key \"lockNotice.setting\""
@@ -3208,9 +3254,21 @@
   "@parentLockWrong": {
     "description": "shared key \"parentLock.wrong\""
   },
+  "playerNext": "Next",
+  "@playerNext": {
+    "description": "shared key \"player.next\""
+  },
   "playerOpen": "Back to what is playing",
   "@playerOpen": {
     "description": "shared key \"player.open\""
+  },
+  "playerPrev": "Previous",
+  "@playerPrev": {
+    "description": "shared key \"player.prev\""
+  },
+  "playerTitle": "Audio player",
+  "@playerTitle": {
+    "description": "shared key \"player.title\""
   },
   "prayerAdjust": "Manual adjustment (minutes)",
   "@prayerAdjust": {
@@ -6205,16 +6263,5 @@
   "zakatYearPassed": "A full Hijri year has passed since my wealth reached the nisab",
   "@zakatYearPassed": {
     "description": "shared key \"zakat.yearPassed\""
-  },
-  "playerTitle": "Audio player",
-  "playerPrev": "Previous",
-  "playerNext": "Next",
-  "asmaLessonTitle": "Explanation of «{name}»",
-  "@asmaLessonTitle": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
   }
 }

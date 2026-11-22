@@ -238,6 +238,25 @@ class _PrayerScreenState extends State<PrayerScreen> {
                   if (today == null)
                     Text(l.prayerNoPrayerToday, key: const Key('polarMessage'))
                   else ...[
+                    if (s.settings.iqamaPlan case final plan? when _dayOffset == 0)
+                      if (PrayerSchedule.iqamaWait(s.clock().toUtc(), today, plan) case final wait?)
+                        Container(
+                          key: const Key('iqamaWait'),
+                          margin: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
+                          padding: const EdgeInsets.all(DesignTokens.spaceMd),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primaryContainer,
+                            borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
+                          ),
+                          child: Text(
+                            l.iqamaWait(
+                              context.prayerName(wait.key),
+                              context.numLtr(PrayerSchedule.formatCountdown(wait.remaining)),
+                            ),
+                            key: const Key('iqamaCountdown'),
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                          ),
+                        ),
                     if (next != null)
                       Container(
                         key: const Key('nextPrayer'),

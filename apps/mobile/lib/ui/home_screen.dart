@@ -228,7 +228,9 @@ class _Hero extends StatelessWidget {
     // Shortly after an adhan the hero shows that prayer with the time elapsed
     // since it; otherwise the next prayer with the time left.
     final recent = pv.today == null ? null : PrayerSchedule.recent(now, pv.today!);
-    final next = recent ?? pv.next;
+    // Between the adhan and the iqama (owner 2026-11-22): that prayer, counting down to its iqama.
+    final wait = pv.today == null ? null : PrayerSchedule.iqamaWait(now, pv.today!, s.settings.iqamaPlan);
+    final next = wait == null ? recent ?? pv.next : NextPrayer(wait.key, pv.today!.day.utc[wait.key]!, Duration.zero);
     final remaining = recent?.remaining ?? next?.at.difference(now);
     final city = placeLabel(s, pv.city, arabic: context.isArabic);
     final nextTime = next == null ? null : PrayerSchedule.localDate(pv.location, next.at.toUtc());
@@ -312,7 +314,9 @@ class _Hero extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        recent != null
+                        wait != null
+                            ? l.iqamaLeft(context.numLtr(PrayerSchedule.formatCountdown(wait.remaining)))
+                            : recent != null
                             ? l.homeElapsed(context.numLtr(PrayerSchedule.formatCountdown(remaining!)))
                             : l.homeLeft(context.numLtr(PrayerSchedule.formatCountdown(remaining!))),
                         key: const Key('home.countdown'),

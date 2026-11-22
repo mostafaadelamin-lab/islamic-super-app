@@ -77,22 +77,30 @@ class NextPrayerNotice {
     };
     String clockOf(DateTime t) =>
         formatClock(tz.TZDateTime.from(t, inputs.location), h12: settings.clock12, arabic: ar);
-    NextPrayerSlot slot(int id, DateTime? at, (String, DateTime, LocalPrayerDay) n) => NextPrayerSlot(
+    // Each target the countdown runs to: every prayer, and (owner 2026-11-22) its iqama when that alert is on.
+    final iqama = settings.iqamaPlan;
+    final targets = <(String, DateTime, LocalPrayerDay, bool)>[
+      for (final t in times) ...[
+        (t.$1, t.$2, t.$3, false),
+        if (iqama != null) (t.$1, t.$2.add(Duration(minutes: iqama[t.$1] ?? 0)), t.$3, true),
+      ],
+    ];
+    NextPrayerSlot slot(int id, DateTime? at, (String, DateTime, LocalPrayerDay, bool) n) => NextPrayerSlot(
       id: id,
       showAt: at,
       next: n.$2,
-      title: l.lockNoticeTitle(name(n.$1), clockOf(n.$2)),
+      title: n.$4 ? l.lockNoticeIqamaTitle(name(n.$1), clockOf(n.$2)) : l.lockNoticeTitle(name(n.$1), clockOf(n.$2)),
       body: [for (final p in _names) '${name(p)} ${n.$3.clock(p, h12: settings.clock12, arabic: ar)}'].join(' · '),
     );
     final out = <NextPrayerSlot>[];
     final upcoming = [
-      for (final t in times)
+      for (final t in targets)
         if (t.$2.isAfter(now)) t,
     ];
     if (upcoming.isEmpty) return out;
     out.add(slot(firstId, null, upcoming.first));
     for (var i = 0; i + 1 < upcoming.length && out.length < maxSlots; i++) {
-      // At each prayer, the countdown moves on to the one after it.
+      // At each prayer the countdown moves on to its iqama, and at the iqama to the next prayer.
       out.add(slot(firstId + 1 + i, upcoming[i].$2, upcoming[i + 1]));
     }
     return out;
