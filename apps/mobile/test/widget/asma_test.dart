@@ -76,6 +76,17 @@ void main() {
     await tester.pumpAndSettle();
     expect(fake.urls, ['https://example.org/b.mp3']);
     expect(find.byKey(const Key('dhikrPlayerBar')), findsOneWidget);
+    // Owner 2026-11-22: the player sits inside this name's card (not a page or a bar of its own),
+    // with the time and a seek bar like the lock screen.
+    expect(
+      find.descendant(of: find.byKey(const Key('asma-0')), matching: find.byKey(const Key('dhikrPlayerBar'))),
+      findsOneWidget,
+    );
+    expect(find.descendant(of: find.byKey(const Key('asma-1')), matching: find.byKey(const Key('dhikrPlayerBar'))), findsNothing);
+    expect(find.byKey(const Key('dhikrPlayerSlider')), findsOneWidget);
+    expect(find.byKey(const Key('dhikrPlayerBack30')), findsOneWidget);
+    expect(find.byKey(const Key('dhikrPlayerFwd30')), findsOneWidget);
+    expect(find.textContaining('الرحمن'), findsWidgets);
     await tester.tap(find.byKey(const Key('dhikrPlayerStop')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('dhikrPlayerBar')), findsNothing);

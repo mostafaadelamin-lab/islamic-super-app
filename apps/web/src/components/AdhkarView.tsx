@@ -19,7 +19,6 @@ import { useAutoExit } from "@/hooks/useAutoExit";
 import { Icon } from "./Icon";
 import { CardDeck, ModeSwitch } from "./CardDeck";
 import { DhikrTools } from "./DhikrTools";
-import { DhikrPlayerBar } from "./DhikrAudio";
 import type { DhikrExtra } from "@/lib/dhikr-extras";
 
 const SESSIONS: readonly Session[] = ["morning", "evening"];
@@ -158,7 +157,6 @@ export function AdhkarView({
           {list.map((_, i) => item(i))}
         </ol>
       )}
-      <DhikrPlayerBar locale={locale} />
     </>
   );
 }

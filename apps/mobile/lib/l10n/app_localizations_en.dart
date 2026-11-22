@@ -4245,4 +4245,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'A full Hijri year has passed since my wealth reached the nisab';
+
+  @override
+  String get playerTitle => 'Audio player';
+
+  @override
+  String get playerPrev => 'Previous';
+
+  @override
+  String get playerNext => 'Next';
+
+  @override
+  String asmaLessonTitle(String name) {
+    return 'Explanation of «$name»';
+  }
 }

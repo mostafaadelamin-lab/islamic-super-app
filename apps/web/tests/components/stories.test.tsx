@@ -107,10 +107,16 @@ describe("Sheikh Nabil al-Awadi's series", () => {
     expect(screen.queryByTestId("series-video")).toBeNull();
     await userEvent.click(screen.getByTestId("episode-yusuf"));
     const audio = screen.getByTestId("series-audio") as HTMLAudioElement;
+    // The player sits under the episode playing, with the time and a seek bar (owner 2026-11-22).
+    expect(screen.getByTestId("series-now").closest("li")?.getAttribute("data-episode")).toBe("yusuf");
+    expect(screen.getByTestId("series-seek")).toBeInTheDocument();
     audio.currentTime = 100;
-    await userEvent.click(screen.getByTestId("series-rewind"));
+    act(() => void audio.dispatchEvent(new Event("timeupdate")));
+    expect(screen.getByTestId("series-elapsed").textContent).toBe("١:٤٠");
+    await userEvent.click(screen.getByTestId("series-back"));
     expect(audio.currentTime).toBe(70);
-    await userEvent.click(screen.getByTestId("series-forward"));
+    act(() => void audio.dispatchEvent(new Event("timeupdate")));
+    await userEvent.click(screen.getByTestId("series-fwd"));
     expect(audio.currentTime).toBe(100);
   });
 

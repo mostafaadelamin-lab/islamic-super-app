@@ -6,6 +6,7 @@ import '../domain/stories.dart';
 import '../theme/design_tokens.dart';
 import 'audio_widgets.dart';
 import 'l10n_ext.dart';
+import 'lock_player.dart';
 import 'library_screen.dart' show OfflineButton;
 import 'widgets.dart';
 import 'youtube_player.dart';
@@ -119,7 +120,7 @@ class _EpisodeTile extends StatelessWidget {
     final playing = on && s.narration.isPlaying;
     final m = episode.minutes;
     final scheme = Theme.of(context).colorScheme;
-    return ListTile(
+    final tile = ListTile(
       key: Key('episode-${episode.id}'),
       contentPadding: EdgeInsets.zero,
       selected: on,
@@ -162,6 +163,13 @@ class _EpisodeTile extends StatelessWidget {
         }
       },
     );
+    // The player sits right under the episode playing (owner 2026-11-22).
+    if (!on || !s.narration.isActive) return tile;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [tile, const InlineNarrationPlayer()],
+    );
   }
 }
 
@@ -182,122 +190,30 @@ class NarrationBar extends StatelessWidget {
         // Its buttons are already under the item playing on this screen.
         if (InlinePlayers.on(ModalRoute.of(context))) return const SizedBox.shrink();
         final l = context.l10n;
-        final theme = Theme.of(context);
-        final scheme = theme.colorScheme;
         final error = n.state == RecitationState.error;
-        final total = n.duration ?? (e.durationSec == null ? null : Duration(seconds: e.durationSec!));
-        String fmt(Duration d) => context.numLtr('${d.inMinutes}:${(d.inSeconds % 60).toString().padLeft(2, '0')}');
-        return Material(
+        final canOpen = PlayOrigin.canReturn(context, n.seriesId);
+        return LockPlayerCard(
           key: const Key('narrationBar'),
-          color: scheme.surfaceContainer,
-          child: SafeArea(
-            top: false,
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border(top: BorderSide(color: scheme.outline)),
-              ),
-              padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, DesignTokens.spaceSm, DesignTokens.spaceMd, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _OpenOrigin(
-                    canOpen: PlayOrigin.canReturn(context, n.seriesId),
-                    child: Text(
-                      error ? l.storiesEpisodeError : '${l.storiesNowPlaying}: ${e.title(context.isArabic)}',
-                      key: const Key('narrationTitle'),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: error ? scheme.error : null,
-                      ),
-                    ),
-                  ),
-                  if (total != null && total.inSeconds > 0)
-                    Row(
-                      children: [
-                        Text(fmt(n.position), style: theme.textTheme.bodySmall),
-                        Expanded(
-                          child: Slider(
-                            key: const Key('narrationSlider'),
-                            value: n.position.inSeconds.clamp(0, total.inSeconds).toDouble(),
-                            max: total.inSeconds.toDouble(),
-                            onChanged: (v) => n.seekBy(Duration(seconds: v.round()) - n.position),
-                          ),
-                        ),
-                        Text(fmt(total), style: theme.textTheme.bodySmall),
-                      ],
-                    ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        tooltip: l.storiesRewind,
-                        icon: const Icon(Icons.replay_30),
-                        onPressed: () => n.seekBy(const Duration(seconds: -30)),
-                      ),
-                      IconButton.filled(
-                        key: const Key('narrationToggle'),
-                        tooltip: n.isPlaying ? l.storiesPause : l.storiesPlay,
-                        icon: RIcon(n.isPlaying ? RIcons.pause : RIcons.play),
-                        onPressed: () => n.isPlaying ? n.pause() : n.resume(),
-                      ),
-                      IconButton(
-                        tooltip: l.storiesForward,
-                        icon: const Icon(Icons.forward_30),
-                        onPressed: () => n.seekBy(const Duration(seconds: 30)),
-                      ),
-                      IconButton(
-                        key: const Key('narrationStop'),
-                        tooltip: l.storiesStop,
-                        icon: const RIcon(RIcons.close),
-                        onPressed: n.stop,
-                      ),
-                      const SleepTimerButton(),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+          id: 'narration',
+          docked: true,
+          titleKey: const Key('narrationTitle'),
+          title: error ? l.storiesEpisodeError : e.title(context.isArabic),
+          subtitle: canOpen ? l.playerOpen : null,
+          onTitleTap: canOpen ? () => PlayOrigin.open(context) : null,
+          position: n.position,
+          total: n.duration ?? (e.durationSec == null ? null : Duration(seconds: e.durationSec!)),
+          playing: n.isPlaying && n.state != RecitationState.loading,
+          loading: n.state == RecitationState.loading,
+          live: n.isLive,
+          showSkip: n.hasNext || n.hasPrevious,
+          onPrevious: n.hasPrevious ? n.previous : null,
+          onNext: n.hasNext ? n.next : null,
+          sleepTimer: true,
+          onToggle: () => n.isPlaying ? n.pause() : n.resume(),
+          onSeek: (d) => n.seekBy(d - n.position),
+          onClose: n.stop,
         );
       },
-    );
-  }
-}
-
-/// The player's title; when the item was started on another screen, tapping it (or the
-/// arrow beside it) goes back to that screen.
-class _OpenOrigin extends StatelessWidget {
-  const _OpenOrigin({required this.canOpen, required this.child});
-  final bool canOpen;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    if (!canOpen) return child;
-    final l = context.l10n;
-    return Semantics(
-      button: true,
-      label: l.playerOpen,
-      child: InkWell(
-        key: const Key('narrationOpen'),
-        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-        onTap: () => PlayOrigin.open(context),
-        child: Row(
-          children: [
-            Expanded(child: child),
-            Tooltip(
-              message: l.playerOpen,
-              child: Padding(
-                padding: const EdgeInsets.all(DesignTokens.spaceXs),
-                child: RIcon(RIcons.chevronForward, color: Theme.of(context).colorScheme.primary),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -402,91 +318,28 @@ class _InlineNarrationPlayerState extends State<InlineNarrationPlayer> {
   Widget build(BuildContext context) {
     final n = context.services.narration;
     final l = context.l10n;
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
     return ListenableBuilder(
       listenable: n,
       builder: (context, _) {
-        final total = n.duration;
-        final error = n.state == RecitationState.error;
+        final e = n.episode;
         final skip = n.hasNext || n.hasPrevious;
-        String fmt(Duration d) => context.numLtr('${d.inMinutes}:${(d.inSeconds % 60).toString().padLeft(2, '0')}');
-        return Container(
+        return LockPlayerCard(
           key: const Key('inlinePlayer'),
-          margin: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceSm),
-          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm, vertical: DesignTokens.spaceXs),
-          decoration: BoxDecoration(
-            color: scheme.primaryContainer.withValues(alpha: 0.45),
-            borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-            border: Border.all(color: scheme.primary.withValues(alpha: 0.35)),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (error)
-                Text(l.storiesEpisodeError, style: TextStyle(color: scheme.error))
-              else if (!n.isLive && total != null && total.inSeconds > 0)
-                Row(
-                  children: [
-                    Text(fmt(n.position), style: theme.textTheme.bodySmall),
-                    Expanded(
-                      child: Slider(
-                        key: const Key('inlineSlider'),
-                        value: n.position.inSeconds.clamp(0, total.inSeconds).toDouble(),
-                        max: total.inSeconds.toDouble(),
-                        onChanged: (v) => n.seekBy(Duration(seconds: v.round()) - n.position),
-                      ),
-                    ),
-                    Text(fmt(total), style: theme.textTheme.bodySmall),
-                  ],
-                ),
-              Wrap(
-                alignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  if (skip)
-                    IconButton(
-                      key: const Key('inlinePrev'),
-                      tooltip: l.nasheedsPrev,
-                      icon: const RIcon(RIcons.prev),
-                      onPressed: n.hasPrevious ? n.previous : null,
-                    ),
-                  if (!n.isLive)
-                    IconButton(
-                      tooltip: l.storiesRewind,
-                      icon: const Icon(Icons.replay_30),
-                      onPressed: () => n.seekBy(const Duration(seconds: -30)),
-                    ),
-                  IconButton.filled(
-                    key: const Key('inlineToggle'),
-                    tooltip: n.isPlaying ? l.storiesPause : l.storiesPlay,
-                    icon: RIcon(n.isPlaying ? RIcons.pause : RIcons.play),
-                    onPressed: () => n.isPlaying ? n.pause() : n.resume(),
-                  ),
-                  if (!n.isLive)
-                    IconButton(
-                      tooltip: l.storiesForward,
-                      icon: const Icon(Icons.forward_30),
-                      onPressed: () => n.seekBy(const Duration(seconds: 30)),
-                    ),
-                  if (skip)
-                    IconButton(
-                      key: const Key('inlineNext'),
-                      tooltip: l.nasheedsNext,
-                      icon: const RIcon(RIcons.next),
-                      onPressed: n.hasNext ? n.next : null,
-                    ),
-                  const SleepTimerButton(),
-                  IconButton(
-                    key: const Key('inlineStop'),
-                    tooltip: l.storiesStop,
-                    icon: const RIcon(RIcons.close),
-                    onPressed: n.stop,
-                  ),
-                ],
-              ),
-            ],
-          ),
+          id: 'inline',
+          title: e?.title(context.isArabic),
+          position: n.position,
+          total: n.duration,
+          playing: n.isPlaying && n.state != RecitationState.loading,
+          loading: n.state == RecitationState.loading,
+          error: n.state == RecitationState.error ? l.storiesEpisodeError : null,
+          live: n.isLive,
+          showSkip: skip,
+          onPrevious: n.hasPrevious ? n.previous : null,
+          onNext: n.hasNext ? n.next : null,
+          sleepTimer: true,
+          onToggle: () => n.isPlaying ? n.pause() : n.resume(),
+          onSeek: (d) => n.seekBy(d - n.position),
+          onClose: n.stop,
         );
       },
     );

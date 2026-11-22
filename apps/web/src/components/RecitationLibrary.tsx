@@ -18,9 +18,8 @@ import {
 import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { LIVE_RADIOS, isHls } from "@/lib/live-radios";
 import { Icon } from "./Icon";
-import { PlayerClose } from "./PlayerClose";
 import { ShabibView } from "./ShabibView";
-import { SleepTimer } from "./SleepTimer";
+import { LockPlayer } from "./LockPlayer";
 import { SaveAudioButton } from "./SaveAudioButton";
 import { librarySavedStore } from "@/lib/audio-offline";
 
@@ -44,11 +43,6 @@ type Tab = "reciters" | "radios";
 
 /** mp3quran riwaya id of Hafs from Asim (murattal). */
 const HAFS_REWAYA = 1;
-
-function clock(sec: number, locale: Locale): string {
-  const v = Math.max(0, Math.floor(Number.isFinite(sec) ? sec : 0));
-  return localizeDigits(`${Math.floor(v / 60)}:${String(v % 60).padStart(2, "0")}`, locale);
-}
 
 /**
  * The player for the chosen surah or radio (one sound at a time). One hidden <audio> element plays (it stays
@@ -127,91 +121,38 @@ export function NowPlaying({
     if (el.paused) void Promise.resolve(el.play()).catch(() => undefined);
     else el.pause();
   };
-  const seekable = !track.live && duration > 0;
   const controls = (
-    <div
-      className="nasheed-now"
-      role="group"
-      aria-label={t(locale, "audio.player")}
-      data-testid="library-now"
-    >
+    <>
       {slot ? (
         <span className="sr-only">
           {t(locale, "library.nowPlaying")}: {track.title}
         </span>
       ) : null}
-      <div className="nasheed-now-row">
-        {track.playlist ? (
-          <button
-            type="button"
-            className="btn btn-sm btn-icon"
-            aria-label={t(locale, "nasheeds.prev")}
-            data-testid="library-prev"
-            disabled={!prev}
-            onClick={() => prev && onTrack(prev)}
-          >
-            <Icon name={locale === "ar" ? "next" : "prev"} size={18} />
-          </button>
-        ) : null}
-        <button
-          type="button"
-          className="btn btn-primary btn-icon nasheed-play"
-          aria-label={playing ? t(locale, "audio.pause") : t(locale, "audio.play")}
-          data-testid="library-toggle"
-          onClick={toggle}
-        >
-          <Icon name={playing ? "pause" : "play"} size={22} />
-        </button>
-        {track.playlist ? (
-          <button
-            type="button"
-            className="btn btn-sm btn-icon"
-            aria-label={t(locale, "nasheeds.next")}
-            data-testid="library-next"
-            disabled={!next}
-            onClick={() => next && onTrack(next)}
-          >
-            <Icon name={locale === "ar" ? "prev" : "next"} size={18} />
-          </button>
-        ) : null}
-        {seekable ? (
-          <>
-            <span className="small nasheed-time">{clock(position, locale)}</span>
-            <input
-              type="range"
-              min={0}
-              max={Math.max(1, Math.round(duration))}
-              value={Math.round(position)}
-              aria-label={t(locale, "dhikr.seek")}
-              data-testid="library-seek"
-              onChange={(e) => {
-                if (ref.current) ref.current.currentTime = Number(e.target.value);
-              }}
-            />
-            <span className="small nasheed-time">{clock(duration, locale)}</span>
-          </>
-        ) : track.live ? (
-          <span className="small muted">{t(locale, "library.live")}</span>
-        ) : null}
-        {onClose ? (
-          <PlayerClose
-            locale={locale}
-            testId="library-close"
-            className="btn-sm"
-            onClose={() => {
-              ref.current?.pause();
-              onClose();
-            }}
-          />
-        ) : null}
-      </div>
-      {error ? (
-        <p className="alert alert-error" role="alert" data-testid="library-play-error">
-          {t(locale, "library.playError")}
-        </p>
-      ) : null}
-      <SleepTimer locale={locale} />
-    </div>
+      <LockPlayer
+        locale={locale}
+        id="library"
+        groupId="library-now"
+        errorId="library-play-error"
+        title={track.title}
+        position={position}
+        duration={duration}
+        playing={playing}
+        error={error ? t(locale, "library.playError") : null}
+        live={track.live}
+        skip={!!track.playlist}
+        onPrev={prev ? () => onTrack(prev) : null}
+        onNext={next ? () => onTrack(next) : null}
+        onToggle={toggle}
+        onSeek={(v) => {
+          if (ref.current) ref.current.currentTime = v;
+        }}
+        onClose={() => {
+          ref.current?.pause();
+          onClose?.();
+        }}
+        sleep
+      />
+    </>
   );
   return (
     <>
@@ -249,11 +190,7 @@ export function NowPlaying({
       {slot ? (
         createPortal(controls, slot)
       ) : (
-        <section className="card series-now nasheed-now-top" data-testid="library-now-top">
-          <strong>
-            {t(locale, "library.nowPlaying")}: {track.title}
-            {track.live ? ` · ${t(locale, "library.live")}` : ""}
-          </strong>
+        <section className="series-now nasheed-now-top" data-testid="library-now-top">
           {controls}
         </section>
       )}

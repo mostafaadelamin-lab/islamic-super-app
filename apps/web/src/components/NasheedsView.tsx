@@ -16,8 +16,7 @@ import {
 import { useStore } from "@/hooks/useStore";
 import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { Icon } from "./Icon";
-import { PlayerClose } from "./PlayerClose";
-import { SleepTimer } from "./SleepTimer";
+import { LockPlayer } from "./LockPlayer";
 
 interface Playing {
   n: Nasheed;
@@ -30,14 +29,10 @@ interface Progress {
   duration: number;
 }
 
-function clock(sec: number, locale: Locale): string {
-  const v = Math.max(0, Math.floor(Number.isFinite(sec) ? sec : 0));
-  return localizeDigits(`${Math.floor(v / 60)}:${String(v % 60).padStart(2, "0")}`, locale);
-}
-
-/** The player's buttons, shown right under the nasheed that is playing (owner 2026-11-14). */
+/** The player, in the lock-screen look of every player, right under the nasheed that is playing. */
 function NowPlaying({
   locale,
+  title,
   audio,
   progress,
   onPrev,
@@ -45,6 +40,7 @@ function NowPlaying({
   onClose,
 }: {
   locale: Locale;
+  title: string;
   audio: RefObject<HTMLAudioElement | null>;
   progress: Progress;
   onPrev: (() => void) | null;
@@ -58,59 +54,24 @@ function NowPlaying({
     else el.pause();
   };
   return (
-    <div
-      className="nasheed-now"
-      role="group"
-      aria-label={t(locale, "audio.player")}
-      data-testid="nasheeds-now"
-    >
-      <div className="nasheed-now-row">
-        <button
-          type="button"
-          className="btn btn-sm btn-icon"
-          aria-label={t(locale, "nasheeds.prev")}
-          data-testid="nasheeds-prev"
-          disabled={!onPrev}
-          onClick={() => onPrev?.()}
-        >
-          <Icon name={locale === "ar" ? "next" : "prev"} size={18} />
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary btn-icon nasheed-play"
-          aria-label={progress.playing ? t(locale, "audio.pause") : t(locale, "audio.play")}
-          data-testid="nasheeds-toggle"
-          onClick={toggle}
-        >
-          <Icon name={progress.playing ? "pause" : "play"} size={22} />
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm btn-icon"
-          aria-label={t(locale, "nasheeds.next")}
-          data-testid="nasheeds-next"
-          disabled={!onNext}
-          onClick={() => onNext?.()}
-        >
-          <Icon name={locale === "ar" ? "prev" : "next"} size={18} />
-        </button>
-        <span className="small nasheed-time">{clock(progress.position, locale)}</span>
-        <input
-          type="range"
-          min={0}
-          max={Math.max(1, Math.round(progress.duration))}
-          value={Math.round(progress.position)}
-          aria-label={t(locale, "dhikr.seek")}
-          data-testid="nasheeds-seek"
-          onChange={(e) => {
-            if (audio.current) audio.current.currentTime = Number(e.target.value);
-          }}
-        />
-        <span className="small nasheed-time">{clock(progress.duration, locale)}</span>
-        <PlayerClose locale={locale} testId="nasheeds-close" className="btn-sm" onClose={onClose} />
-      </div>
-      <SleepTimer locale={locale} />
-    </div>
+    <LockPlayer
+      locale={locale}
+      id="nasheeds"
+      groupId="nasheeds-now"
+      title={title}
+      position={progress.position}
+      duration={progress.duration}
+      playing={progress.playing}
+      skip
+      onPrev={onPrev}
+      onNext={onNext}
+      onToggle={toggle}
+      onSeek={(v) => {
+        if (audio.current) audio.current.currentTime = v;
+      }}
+      onClose={onClose}
+      sleep
+    />
   );
 }
 
@@ -199,6 +160,7 @@ export function NasheedsView({
   const controls = current ? (
     <NowPlaying
       locale={locale}
+      title={`${current.n.title} · ${current.m.name}`}
       audio={audioRef}
       progress={progress}
       onPrev={prev ? () => setCurrent(prev) : null}
@@ -297,14 +259,7 @@ export function NasheedsView({
               if (next) setCurrent(next);
             }}
           />
-          {listed ? null : (
-            <section className="card series-now nasheed-now-top">
-              <strong>
-                {current.n.title} · {current.m.name}
-              </strong>
-              {controls}
-            </section>
-          )}
+          {listed ? null : <section className="series-now nasheed-now-top">{controls}</section>}
         </>
       ) : null}
       <input

@@ -1109,5 +1109,6 @@
   "parentLock.parentOpen": "ولي الأمر: افتح كل الفيديوهات",
   "parentLock.back": "رجوع لفيديوهات الأطفال",
   "parentLock.ageUnder13": "أقل من 13",
-  "parentLock.age13plus": "13 أو أكثر"
+  "parentLock.age13plus": "13 أو أكثر",
+  "asma.lessonTitle": "شرح اسم «{name}»"
 }

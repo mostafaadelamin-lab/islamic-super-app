@@ -4221,4 +4221,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'مرّ عام هجري كامل منذ بلغ مالي النصاب';
+
+  @override
+  String get playerTitle => 'مشغّل الصوت';
+
+  @override
+  String get playerPrev => 'السابق';
+
+  @override
+  String get playerNext => 'التالي';
+
+  @override
+  String asmaLessonTitle(String name) {
+    return 'شرح اسم «$name»';
+  }
 }

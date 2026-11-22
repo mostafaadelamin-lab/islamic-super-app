@@ -67,6 +67,41 @@ void main() {
     await expectAccessible(tester);
   });
 
+  testWidgets('a lesson plays with the lock-screen player under it: time, full length, seek bar, ±30 s', (tester) async {
+    // The stream does not report its length (iOS, archive.org): the lesson's listed length is used.
+    final backend = FakeNarrationBackend(length: null);
+    await pumpApp(tester, size: tallPhone, narration: backend);
+    final data = _read();
+    await pushScreen(tester, SharawiSurahScreen(surah: data.bySurah(1)!));
+    final first = data.bySurah(1)!.lessons.first;
+    await tester.tap(find.byKey(Key('sharawi-${first.id}')));
+    await tester.pumpAndSettle();
+    expect(
+      find.descendant(of: find.byKey(Key('sharawi-${first.id}')), matching: find.byKey(const Key('inlinePlayer'))),
+      findsOneWidget,
+      reason: 'the player is right under the lesson playing',
+    );
+    expect(find.byKey(const Key('narrationBar')), findsNothing, reason: 'no second bar at the bottom');
+    final total = tester.widget<Text>(find.byKey(const Key('inlineTotal'))).data!;
+    expect(total, isNot('--:--'));
+    final slider = tester.widget<Slider>(find.byKey(const Key('inlineSlider')));
+    expect(slider.onChanged, isNotNull, reason: 'the user can move forward and back');
+    expect(slider.max, first.seconds! * 1000);
+    await tester.tap(find.byKey(const Key('inlineFwd30')));
+    await tester.pump();
+    expect(backend.calls.last, 'seek:30');
+    await tester.tap(find.byKey(const Key('inlineBack30')));
+    await tester.pump();
+    expect(backend.calls.last, 'seek:0');
+    // The full length arrives later from the player.
+    backend.durations.add(Duration(seconds: first.seconds! + 7));
+    await tester.pump();
+    expect(tester.widget<Slider>(find.byKey(const Key('inlineSlider'))).max, (first.seconds! + 7) * 1000);
+    await tester.tap(find.byKey(const Key('inlineStop')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('inlinePlayer')), findsNothing);
+  });
+
   testWidgets('Sha\'rawi tafsir is its own entry under More', (tester) async {
     await pumpApp(tester, size: tallPhone);
     await goToTab(tester, 5);

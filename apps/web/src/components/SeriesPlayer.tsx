@@ -9,8 +9,7 @@ import { embedVideoUrl } from "@/lib/videos";
 import { pauseOthers } from "@/lib/audio-focus";
 import { claimMediaSession, mediaSessionState } from "@/lib/element-media-session";
 import { Icon } from "./Icon";
-import { PlayerClose } from "./PlayerClose";
-import { SleepTimer } from "./SleepTimer";
+import { LockPlayer } from "./LockPlayer";
 import { SaveAudioButton } from "./SaveAudioButton";
 import { storySavedStore } from "@/lib/audio-offline";
 
@@ -43,6 +42,9 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
   const [video, setVideo] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const lastSave = useRef(0);
+  const [playing, setPlaying] = useState(false);
+  const [position, setPosition] = useState(0);
+  const [duration, setDuration] = useState(0);
   const L = (x: { ar: string; en: string }): string => (locale === "ar" ? x.ar : x.en);
   const posKey = (e: Episode): string => `${series.id}/${e.id}`;
 
@@ -50,6 +52,8 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
     const el = audioRef.current;
     if (!el || !current) return;
     setError(false);
+    setPosition(0);
+    setDuration(current.durationSec ?? 0);
     const resumeAt = readPositions()[posKey(current)];
     const onMeta = (): void => {
       if (resumeAt && resumeAt < (el.duration || Infinity) - 10) el.currentTime = resumeAt;
@@ -80,84 +84,39 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
             {t(locale, "stories.offlineNote")}
           </p>
           {current ? (
-            <div className="series-now" data-testid="series-now">
-              <div className="series-now-head">
-                <strong>
-                  {t(locale, "stories.nowPlaying")}: {L(current.title)}
-                </strong>
-                <PlayerClose
-                  locale={locale}
-                  testId="series-close"
-                  className="btn-sm"
-                  onClose={() => {
-                    audioRef.current?.pause();
-                    setCurrent(null);
-                  }}
-                />
-              </div>
-              <audio
-                ref={audioRef}
-                src={current.url}
-                controls
-                preload="metadata"
-                data-testid="series-audio"
-                onTimeUpdate={(e) => {
-                  const now = Date.now();
-                  if (now - lastSave.current < 5000) return;
-                  lastSave.current = now;
-                  savePosition(posKey(current), e.currentTarget.currentTime);
-                }}
-                onPause={(e) => {
-                  savePosition(posKey(current), e.currentTarget.currentTime);
-                  mediaSessionState(false);
-                }}
-                onEnded={() => savePosition(posKey(current), 0)}
-                onPlay={(e) => {
-                  setError(false);
-                  pauseOthers(e.currentTarget); // one sound at a time
-                  claimMediaSession(e.currentTarget, { title: L(current.title), artist: L(series.narrator) });
-                  mediaSessionState(true);
-                }}
-                onError={() => setError(true)}
-              />
-              {error ? (
-                <p className="alert alert-error" role="alert" data-testid="series-error">
-                  {t(locale, "stories.episodeError")}
-                </p>
-              ) : null}
-              <div className="row series-seek">
-                <button
-                  type="button"
-                  className="btn btn-sm"
-                  data-testid="series-rewind"
-                  onClick={() => {
-                    const el = audioRef.current;
-                    if (el) el.currentTime = Math.max(0, el.currentTime - 30);
-                  }}
-                >
-                  {t(locale, "stories.rewind")}
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-sm"
-                  data-testid="series-forward"
-                  onClick={() => {
-                    const el = audioRef.current;
-                    if (el) el.currentTime = Math.min(el.duration || Infinity, el.currentTime + 30);
-                  }}
-                >
-                  {t(locale, "stories.forward")}
-                </button>
-              </div>
-              <div className="row">
-                <SleepTimer locale={locale} />
-                {current.story ? (
-                  <Link className="btn btn-sm" href={href(locale, `stories/${current.story}`)}>
-                    {t(locale, "stories.readVerses")}
-                  </Link>
-                ) : null}
-              </div>
-            </div>
+            // One hidden element plays; its player sits under the episode playing (owner 2026-11-22).
+            <audio
+              ref={audioRef}
+              src={current.url}
+              hidden
+              preload="metadata"
+              data-testid="series-audio"
+              onTimeUpdate={(e) => {
+                setPosition(e.currentTarget.currentTime);
+                const now = Date.now();
+                if (now - lastSave.current < 5000) return;
+                lastSave.current = now;
+                savePosition(posKey(current), e.currentTarget.currentTime);
+              }}
+              onDurationChange={(e) => {
+                const d = e.currentTarget.duration;
+                if (Number.isFinite(d) && d > 0) setDuration(d);
+              }}
+              onPause={(e) => {
+                setPlaying(false);
+                savePosition(posKey(current), e.currentTarget.currentTime);
+                mediaSessionState(false);
+              }}
+              onEnded={() => savePosition(posKey(current), 0)}
+              onPlay={(e) => {
+                setError(false);
+                setPlaying(true);
+                pauseOthers(e.currentTarget); // one sound at a time
+                claimMediaSession(e.currentTarget, { title: L(current.title), artist: L(series.narrator) });
+                mediaSessionState(true);
+              }}
+              onError={() => setError(true)}
+            />
           ) : null}
           {video ? (
             <div className="series-video" data-testid="series-video">
@@ -226,6 +185,42 @@ export function SeriesPlayer({ locale, series }: { locale: Locale; series: Serie
                     url={e.url}
                     testId={`episode-save-${e.id}`}
                   />
+                  {on && current ? (
+                    <div className="nasheed-slot" data-testid="series-now">
+                      <LockPlayer
+                        locale={locale}
+                        id="series"
+                        closeId="series-close"
+                        title={L(current.title)}
+                        subtitle={L(series.narrator)}
+                        position={position}
+                        duration={duration}
+                        playing={playing}
+                        error={error ? t(locale, "stories.episodeError") : null}
+                        onToggle={() => {
+                          const el = audioRef.current;
+                          if (!el) return;
+                          if (el.paused) void Promise.resolve(el.play()).catch(() => undefined);
+                          else el.pause();
+                        }}
+                        onSeek={(v) => {
+                          if (audioRef.current) audioRef.current.currentTime = v;
+                        }}
+                        onClose={() => {
+                          audioRef.current?.pause();
+                          setCurrent(null);
+                        }}
+                        sleep
+                        extra={
+                          current.story ? (
+                            <Link className="btn btn-sm" href={href(locale, `stories/${current.story}`)}>
+                              {t(locale, "stories.readVerses")}
+                            </Link>
+                          ) : null
+                        }
+                      />
+                    </div>
+                  ) : null}
                 </li>
               );
             })}
