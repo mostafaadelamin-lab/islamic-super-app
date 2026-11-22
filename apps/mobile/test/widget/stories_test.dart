@@ -93,12 +93,14 @@ void main() {
     expect(app.services.recitation.isPlaying, isFalse, reason: 'one voice at a time');
     expect(app.services.recitation.wasInterrupted, isTrue);
     expect(app.services.recitation.currentRef, const AyahRef(105, 1));
-    expect(find.byKey(const Key('narrationBar')), findsOneWidget);
+    // The player sits right under the episode playing (owner 2026-11-22), no bar at the bottom.
+    expect(find.byKey(const Key('inlinePlayer')), findsOneWidget);
+    expect(find.byKey(const Key('narrationBar')), findsNothing);
     expect(find.byKey(const Key('narrationPending')), findsNothing);
 
     narration.emit(const Duration(minutes: 12));
     await tester.pump();
-    await tester.tap(find.byKey(const Key('narrationToggle')));
+    await tester.tap(find.byKey(const Key('inlineToggle')));
     await tester.pumpAndSettle();
     expect(narration.calls.last, 'pause');
     expect(app.prefs.getInt('storyPos.awadi-prophets/adam'), 720);
@@ -111,7 +113,7 @@ void main() {
     await tester.tap(find.byKey(const Key('episode-adam')));
     await tester.pumpAndSettle();
     expect(find.textContaining('تعذّر تشغيل الحلقة'), findsOneWidget);
-    await tester.tap(find.byKey(const Key('narrationToggle')));
+    await tester.tap(find.byKey(const Key('inlineToggle')));
     await tester.pumpAndSettle();
     expect(narration.loaded, hasLength(1));
   });

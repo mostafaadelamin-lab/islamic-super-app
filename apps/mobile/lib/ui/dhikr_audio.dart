@@ -6,8 +6,8 @@ import 'package:just_audio/just_audio.dart';
 
 import '../app_services.dart';
 import '../data/audio_focus.dart';
-import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
+import 'lock_player.dart';
 import 'r_icon.dart';
 
 /// Per-dhikr recordings of Hisn al-Muslim (owner, 2026-11-11: "listen" plays only the
@@ -101,6 +101,10 @@ class DhikrPlayer extends ChangeNotifier {
 
   UrlAudio? _audio;
   String? url;
+
+  /// What is playing, shown on the player (null: the item is right above it).
+  String? title;
+  String? subtitle;
   bool playing = false;
   bool loading = false;
   bool failed = false;
@@ -133,13 +137,15 @@ class DhikrPlayer extends ChangeNotifier {
     return _audio!;
   }
 
-  Future<void> toggle(String u) async {
+  Future<void> toggle(String u, {String? title, String? subtitle}) async {
     if (url == u && (playing || loading)) {
       await stop();
       return;
     }
     AudioFocus.claim(this); // pauses the recitation, which resumes later from its ayah
     url = u;
+    this.title = title;
+    this.subtitle = subtitle;
     loading = true;
     failed = false;
     position = Duration.zero;
@@ -184,9 +190,10 @@ class DhikrPlayer extends ChangeNotifier {
   }
 }
 
-/// Play/pause, progress and ✕ (stop and close) for the dhikr recording (shown while one is loaded).
-/// [inline]: drawn as a rounded strip right under the dhikr playing (adhkar, Hisn al-Muslim; owner
-/// 2026-11-17) instead of a bar at the bottom of the screen.
+/// The dhikr recording's player, in the same lock-screen look as every player (owner 2026-11-22):
+/// title, seek bar with the time gone / full length, ±30 s, play/pause and ✕.
+/// [inline]: right under the item playing (adhkar, Hisn al-Muslim, the names of Allah);
+/// otherwise a bar at the bottom of the screen.
 class DhikrPlayerBar extends StatelessWidget {
   const DhikrPlayerBar({super.key, this.inline = false});
   final bool inline;
@@ -198,67 +205,19 @@ class DhikrPlayerBar extends StatelessWidget {
       listenable: p,
       builder: (context, _) {
         if (!p.active) return const SizedBox.shrink();
-        final l = context.l10n;
-        final theme = Theme.of(context);
-        final scheme = theme.colorScheme;
-        final total = p.duration;
-        String fmt(Duration d) => context.numLtr('${d.inMinutes}:${(d.inSeconds % 60).toString().padLeft(2, '0')}');
-        final row = Row(
-          children: [
-            IconButton.filled(
-              key: const Key('dhikrPlayerToggle'),
-              tooltip: p.playing ? l.storiesPause : l.storiesPlay,
-              icon: p.loading && !p.playing
-                  ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                  : RIcon(p.playing ? RIcons.pause : RIcons.play),
-              onPressed: () => p.playing ? p.pause() : p.resume(),
-            ),
-            Text(fmt(p.position), style: theme.textTheme.bodySmall),
-            Expanded(
-              child: Slider(
-                key: const Key('dhikrPlayerSlider'),
-                value: total == null || total.inMilliseconds == 0
-                    ? 0
-                    : p.position.inMilliseconds.clamp(0, total.inMilliseconds).toDouble(),
-                max: total == null || total.inMilliseconds == 0 ? 1 : total.inMilliseconds.toDouble(),
-                onChanged: total == null ? null : (v) => p.seek(Duration(milliseconds: v.round())),
-              ),
-            ),
-            if (total != null) Text(fmt(total), style: theme.textTheme.bodySmall),
-            IconButton(
-              key: const Key('dhikrPlayerStop'),
-              tooltip: l.storiesStop,
-              icon: const RIcon(RIcons.close),
-              onPressed: p.stop,
-            ),
-          ],
-        );
-        if (inline) {
-          return Container(
-            key: const Key('dhikrPlayerBar'),
-            margin: const EdgeInsets.only(top: DesignTokens.spaceSm),
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            decoration: BoxDecoration(
-              color: scheme.primaryContainer.withValues(alpha: 0.45),
-              borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-              border: Border.all(color: scheme.primary.withValues(alpha: 0.35)),
-            ),
-            child: row,
-          );
-        }
-        return Material(
+        return LockPlayerCard(
           key: const Key('dhikrPlayerBar'),
-          color: scheme.surfaceContainer,
-          child: SafeArea(
-            top: false,
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border(top: BorderSide(color: scheme.outline)),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: row,
-            ),
-          ),
+          id: 'dhikrPlayer',
+          docked: !inline,
+          title: p.title,
+          subtitle: p.subtitle,
+          position: p.position,
+          total: p.duration,
+          playing: p.playing,
+          loading: p.loading,
+          onToggle: () => p.playing ? p.pause() : p.resume(),
+          onSeek: p.seek,
+          onClose: p.stop,
         );
       },
     );

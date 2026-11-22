@@ -46,6 +46,10 @@ describe("Names of Allah (web)", () => {
     await userEvent.click(screen.getByTestId("asma-listen-0-2"));
     expect(dhikrPlayer.get().url).toBe("https://example.org/b.mp3");
     expect(screen.getByTestId("dhikr-player")).toBeInTheDocument();
+    // Owner 2026-11-22: it plays right here, inside this name's card (no page or bar of its own).
+    expect(screen.getByTestId("asma-0").contains(screen.getByTestId("dhikr-player"))).toBe(true);
+    expect(screen.getByTestId("dhikr-player").textContent).toContain("الرحمن");
+    expect(screen.getByTestId("dhikr-player-seek")).toBeInTheDocument();
     await userEvent.type(screen.getByTestId("asma-search"), "المحيط");
     expect(screen.queryByTestId("asma-0")).toBeNull();
     expect(screen.getByTestId("asma-1")).toBeInTheDocument();

@@ -432,6 +432,9 @@ abstract class NarrationBackend {
   Future<void> stop();
   Stream<Duration> get position;
   Stream<void> get completed;
+
+  /// The length once the player knows it (streams often report it only after loading starts).
+  Stream<Duration?> get durationChanges;
   Future<void> dispose();
 }
 
@@ -468,6 +471,9 @@ class JustAudioNarrationBackend implements NarrationBackend {
   Stream<void> get completed => _completed.stream;
 
   @override
+  Stream<Duration?> get durationChanges => _player.durationStream;
+
+  @override
   Future<void> dispose() async {
     await _sub.cancel();
     await _completed.close();
@@ -499,6 +505,7 @@ class NarrationController extends ChangeNotifier {
   NarrationBackend? _backend;
   StreamSubscription<Duration>? _posSub;
   StreamSubscription<void>? _doneSub;
+  StreamSubscription<Duration?>? _durSub;
 
   String? _seriesId;
   Episode? _episode;
@@ -534,7 +541,14 @@ class NarrationController extends ChangeNotifier {
   bool get isLive => _episode != null && _seriesId == 'radio';
   RecitationState get state => _state;
   Duration get position => _position;
-  Duration? get duration => _duration;
+  /// The full length: from the player, else the length listed for the episode (so the seek bar and
+  /// the time show from the start, owner 2026-11-22).
+  Duration? get duration {
+    if (_duration != null && _duration! > Duration.zero) return _duration;
+    final s = _episode?.durationSec;
+    return s == null || s <= 0 ? null : Duration(seconds: s);
+  }
+
   bool get isActive => _state != RecitationState.idle;
   bool get isPlaying => _state == RecitationState.playing || _state == RecitationState.loading;
 
@@ -546,6 +560,11 @@ class NarrationController extends ChangeNotifier {
     final nb = _factory();
     _posSub = nb.position.listen(_onPosition);
     _doneSub = nb.completed.listen((_) => _onDone());
+    _durSub = nb.durationChanges.listen((d) {
+      if (d == null || d <= Duration.zero || d == _duration || _episode == null) return;
+      _duration = d;
+      notifyListeners();
+    });
     return _backend = nb;
   }
 
@@ -670,7 +689,8 @@ class NarrationController extends ChangeNotifier {
     if (_episode == null || _backend == null) return;
     var to = _position + d;
     if (to < Duration.zero) to = Duration.zero;
-    if (_duration != null && to > _duration!) to = _duration!;
+    final total = duration;
+    if (total != null && to > total) to = total;
     _position = to;
     notifyListeners();
     await _backend!.seek(to);
@@ -693,6 +713,7 @@ class NarrationController extends ChangeNotifier {
     _recitation.removeListener(_onRecitation);
     unawaited(_posSub?.cancel());
     unawaited(_doneSub?.cancel());
+    unawaited(_durSub?.cancel());
     unawaited(_backend?.dispose());
     super.dispose();
   }

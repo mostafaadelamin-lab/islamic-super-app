@@ -1108,5 +1108,6 @@
   "parentLock.parentOpen": "Parent: open all videos",
   "parentLock.back": "Back to children's videos",
   "parentLock.ageUnder13": "Under 13",
-  "parentLock.age13plus": "13 or older"
+  "parentLock.age13plus": "13 or older",
+  "asma.lessonTitle": "Explanation of «{name}»"
 }

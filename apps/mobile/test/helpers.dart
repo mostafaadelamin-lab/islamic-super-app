@@ -347,7 +347,7 @@ class FakeAudioBackend implements AudioBackend {
 /// [finish] ends the file, [failNext] makes the next load fail.
 class FakeNarrationBackend implements NarrationBackend {
   FakeNarrationBackend({this.length = const Duration(minutes: 25)});
-  final Duration length;
+  final Duration? length;
   final loaded = <String>[];
   final calls = <String>[];
   final _pos = StreamController<Duration>.broadcast();
@@ -364,6 +364,11 @@ class FakeNarrationBackend implements NarrationBackend {
     loaded.add(url);
     return length;
   }
+
+  final durations = StreamController<Duration?>.broadcast();
+
+  @override
+  Stream<Duration?> get durationChanges => durations.stream;
 
   @override
   Future<void> play() async => calls.add('play');

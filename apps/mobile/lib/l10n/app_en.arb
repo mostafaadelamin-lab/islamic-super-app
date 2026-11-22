@@ -6205,5 +6205,16 @@
   "zakatYearPassed": "A full Hijri year has passed since my wealth reached the nisab",
   "@zakatYearPassed": {
     "description": "shared key \"zakat.yearPassed\""
+  },
+  "playerTitle": "Audio player",
+  "playerPrev": "Previous",
+  "playerNext": "Next",
+  "asmaLessonTitle": "Explanation of «{name}»",
+  "@asmaLessonTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

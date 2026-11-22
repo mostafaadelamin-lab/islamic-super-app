@@ -83,7 +83,6 @@ class _AsmaScreenState extends State<AsmaScreen> {
     final scheme = Theme.of(context).colorScheme;
     return StopDhikrAudioOnExit(
       child: Scaffold(
-        bottomNavigationBar: const DhikrPlayerBar(),
         appBar: AppBar(title: Text(l.asmaTitle)),
         body: ReadableWidth(
           child: FutureBuilder<List<AsmaEntry>>(
@@ -172,7 +171,11 @@ class _AsmaScreenState extends State<AsmaScreen> {
                               ),
                             ],
                           ),
-                          _Lessons(urls: _byIndex[indexOf[e.name]] ?? const [], keyPrefix: 'asmaListen-${i - 1}'),
+                          _Lessons(
+                            name: e.name,
+                            urls: _byIndex[indexOf[e.name]] ?? const [],
+                            keyPrefix: 'asmaListen-${i - 1}',
+                          ),
                           if (e.group != null && e.group != e.name)
                             Text(
                               e.group!,
@@ -195,8 +198,10 @@ class _AsmaScreenState extends State<AsmaScreen> {
 }
 
 /// "Listen to the explanation" by Sheikh al-Nabulsi: one button per recorded lesson on this name.
+/// The player opens right here, under this name (owner 2026-11-22), not on another page.
 class _Lessons extends StatelessWidget {
-  const _Lessons({required this.urls, required this.keyPrefix});
+  const _Lessons({required this.name, required this.urls, required this.keyPrefix});
+  final String name;
   final List<String> urls;
   final String keyPrefix;
 
@@ -207,7 +212,11 @@ class _Lessons extends StatelessWidget {
     final player = DhikrPlayer.instance;
     return ListenableBuilder(
       listenable: player,
-      builder: (context, _) => Padding(
+      builder: (context, _) => Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
         padding: const EdgeInsets.only(top: DesignTokens.spaceXs),
         child: Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
@@ -221,7 +230,11 @@ class _Lessons extends StatelessWidget {
                   final label = urls.length == 1 ? l.asmaListenLesson : l.asmaPart(context.num('${k + 1}'));
                   return TextButton.icon(
                     key: Key(k == 0 ? keyPrefix : '$keyPrefix-${k + 1}'),
-                    onPressed: () => player.toggle(urls[k]),
+                    onPressed: () => player.toggle(
+                      urls[k],
+                      title: urls.length == 1 ? l.asmaLessonTitle(name) : '${l.asmaLessonTitle(name)} · $label',
+                      subtitle: l.asmaLessonBy,
+                    ),
                     icon: RIcon(on ? RIcons.stop : RIcons.headphones, size: 20),
                     label: Text(on ? l.asmaStop : label),
                   );
@@ -229,6 +242,13 @@ class _Lessons extends StatelessWidget {
               ),
           ],
         ),
+          ),
+          if (player.active && urls.contains(player.url))
+            const Padding(
+              padding: EdgeInsets.only(top: DesignTokens.spaceXs),
+              child: DhikrPlayerBar(inline: true),
+            ),
+        ],
       ),
     );
   }

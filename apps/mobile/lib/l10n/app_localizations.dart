@@ -7609,6 +7609,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A full Hijri year has passed since my wealth reached the nisab'**
   String get zakatYearPassed;
+
+  /// No description provided for @playerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio player'**
+  String get playerTitle;
+
+  /// No description provided for @playerPrev.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get playerPrev;
+
+  /// No description provided for @playerNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get playerNext;
+
+  /// No description provided for @asmaLessonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Explanation of «{name}»'**
+  String asmaLessonTitle(String name);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

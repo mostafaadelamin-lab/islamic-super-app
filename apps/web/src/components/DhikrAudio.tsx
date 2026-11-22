@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { t, type Locale } from "@/lib/i18n";
-import { localizeDigits } from "@/lib/digits";
 import type { DhikrHadith } from "@/lib/dhikr-extras";
 import { registerAudio } from "@/lib/audio-focus";
 import { Icon } from "./Icon";
+import { LockPlayer } from "./LockPlayer";
 
 /** One shared player for dhikr recordings: starting one stops the previous; the end stops (no loop). */
 interface PlayerState {
@@ -13,6 +13,9 @@ interface PlayerState {
   failed: boolean;
   position: number;
   duration: number;
+  /** What is playing, shown on the player (none: the item is right above it). */
+  title?: string;
+  subtitle?: string;
 }
 
 let state: PlayerState = { url: null, playing: false, failed: false, position: 0, duration: 0 };
@@ -49,12 +52,12 @@ export const dhikrPlayer = {
     listeners.add(l);
     return () => listeners.delete(l);
   },
-  toggle(url: string): void {
+  toggle(url: string, meta: { title?: string; subtitle?: string } = {}): void {
     if (state.url === url && state.playing) return dhikrPlayer.stop();
     const a = audio();
     if (state.url !== url) {
       a.src = url;
-      update({ url, position: 0, duration: 0, failed: false });
+      update({ url, position: 0, duration: 0, failed: false, title: meta.title, subtitle: meta.subtitle });
     }
     a.play().catch(() => update({ failed: true, playing: false }));
   },
@@ -73,18 +76,13 @@ export const dhikrPlayer = {
       el.removeAttribute("src");
       el.load();
     }
-    update({ url: null, playing: false, position: 0, duration: 0 });
+    update({ url: null, playing: false, position: 0, duration: 0, title: undefined, subtitle: undefined });
   },
 };
 
 const SERVER: PlayerState = { url: null, playing: false, failed: false, position: 0, duration: 0 };
 function usePlayer(): PlayerState {
   return useSyncExternalStore(dhikrPlayer.subscribe, dhikrPlayer.get, () => SERVER);
-}
-
-function clock(s: number, locale: Locale): string {
-  const n = Math.max(0, Math.floor(s));
-  return localizeDigits(`${Math.floor(n / 60)}:${String(n % 60).padStart(2, "0")}`, locale);
 }
 
 /** "Listen" under a dhikr. Stops its own recording when it leaves the page (another card, another page). */
@@ -114,53 +112,42 @@ export function DhikrListen({ locale, url, testId }: { locale: Locale; url: stri
           {t(locale, "dhikr.listenFailed")}
         </span>
       ) : null}
+      {/* The player sits right under the dhikr being heard (owner 2026-11-22). */}
+      <DhikrPlayerBar locale={locale} urls={[url]} />
     </>
   );
 }
 
-/** Play/pause bar shown at the bottom while a dhikr recording is loaded. */
-export function DhikrPlayerBar({ locale }: { locale: Locale }) {
+/**
+ * The dhikr recording's player, in the lock-screen look of every player (owner 2026-11-22): shown
+ * right under the item playing. [urls]: only for these recordings (the item it sits under).
+ */
+export function DhikrPlayerBar({ locale, urls }: { locale: Locale; urls?: readonly string[] }) {
   const p = usePlayer();
-  useEffect(() => () => dhikrPlayer.stop(), []);
-  if (!p.url || p.failed) return null;
+  const key = urls?.join("|");
+  useEffect(
+    () => () => {
+      const now = dhikrPlayer.get().url;
+      if (now && (!key || key.split("|").includes(now))) dhikrPlayer.stop();
+    },
+    [key],
+  );
+  if (!p.url || p.failed || (urls && !urls.includes(p.url))) return null;
   return (
-    <div
-      className="dhikr-player"
-      role="region"
-      aria-label={t(locale, "dhikr.player")}
-      data-testid="dhikr-player"
-    >
-      <button
-        type="button"
-        className="btn btn-primary btn-sm"
-        onClick={() => (p.playing ? dhikrPlayer.pause() : dhikrPlayer.resume())}
-        data-testid="dhikr-player-toggle"
-        aria-label={p.playing ? t(locale, "dhikr.pause") : t(locale, "dhikr.play")}
-      >
-        <Icon name={p.playing ? "pause" : "play"} size={18} />
-      </button>
-      <span className="small">{clock(p.position, locale)}</span>
-      <input
-        type="range"
-        min={0}
-        max={Math.max(1, Math.round(p.duration))}
-        value={Math.round(p.position)}
-        onChange={(e) => dhikrPlayer.seek(Number(e.target.value))}
-        aria-label={t(locale, "dhikr.seek")}
-        data-testid="dhikr-player-seek"
-      />
-      <span className="small">{clock(p.duration, locale)}</span>
-      <button
-        type="button"
-        className="btn btn-sm"
-        onClick={() => dhikrPlayer.stop()}
-        data-testid="dhikr-player-stop"
-        aria-label={t(locale, "audio.close")}
-        title={t(locale, "audio.close")}
-      >
-        <Icon name="close" size={18} />
-      </button>
-    </div>
+    <LockPlayer
+      locale={locale}
+      id="dhikr-player"
+      closeId="dhikr-player-stop"
+      title={p.title}
+      subtitle={p.subtitle}
+      position={p.position}
+      duration={p.duration}
+      playing={p.playing}
+      loading={!p.playing && p.position === 0 && p.duration === 0}
+      onToggle={() => (p.playing ? dhikrPlayer.pause() : dhikrPlayer.resume())}
+      onSeek={(s) => dhikrPlayer.seek(s)}
+      onClose={() => dhikrPlayer.stop()}
+    />
   );
 }
 

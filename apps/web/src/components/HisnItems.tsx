@@ -11,7 +11,6 @@ import { withBase } from "@/lib/base-path";
 import { Icon } from "./Icon";
 import { CardDeck, ModeSwitch } from "./CardDeck";
 import { DhikrTools } from "./DhikrTools";
-import { DhikrPlayerBar } from "./DhikrAudio";
 import type { DhikrExtra } from "@/lib/dhikr-extras";
 
 /** The items of one Hisn al-Muslim chapter (text unchanged), as a list or one card at a time. */
@@ -113,7 +112,6 @@ export function HisnItems({
           {items.map((_, i) => item(i))}
         </ol>
       )}
-      <DhikrPlayerBar locale={locale} />
     </>
   );
 }

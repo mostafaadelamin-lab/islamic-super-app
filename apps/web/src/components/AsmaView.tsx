@@ -21,7 +21,17 @@ const strip = (s: string): string =>
     .replace(/ى/g, "ي")
     .replace(/ة/g, "ه");
 
-function Lessons({ locale, urls, testId }: { locale: Locale; urls: string[]; testId: string }) {
+function Lessons({
+  locale,
+  name,
+  urls,
+  testId,
+}: {
+  locale: Locale;
+  name: string;
+  urls: string[];
+  testId: string;
+}) {
   const p = useSyncExternalStore(dhikrPlayer.subscribe, dhikrPlayer.get, dhikrPlayer.get);
   if (urls.length === 0) return null;
   return (
@@ -39,13 +49,23 @@ function Lessons({ locale, urls, testId }: { locale: Locale; urls: string[]; tes
             type="button"
             className="btn btn-sm"
             aria-pressed={on}
-            onClick={() => dhikrPlayer.toggle(u)}
+            onClick={() =>
+              dhikrPlayer.toggle(u, {
+                title:
+                  urls.length === 1
+                    ? t(locale, "asma.lessonTitle", { name })
+                    : `${t(locale, "asma.lessonTitle", { name })} · ${label}`,
+                subtitle: t(locale, "asma.lessonBy"),
+              })
+            }
             data-testid={k === 0 ? testId : `${testId}-${k + 1}`}
           >
             <Icon name={on ? "stop" : "headphones"} size={16} /> {on ? t(locale, "asma.stop") : label}
           </button>
         );
       })}
+      {/* The explanation plays right here, under this name (owner 2026-11-22). */}
+      <DhikrPlayerBar locale={locale} urls={urls} />
     </div>
   );
 }
@@ -96,13 +116,12 @@ export function AsmaView({ locale, names }: { locale: Locale; names: readonly As
               </h2>
             </div>
             {n.group ? <p className="muted small">{n.group}</p> : null}
-            <Lessons locale={locale} urls={n.lessons} testId={`asma-listen-${i}`} />
+            <Lessons locale={locale} name={n.name} urls={n.lessons} testId={`asma-listen-${i}`} />
             <Explanation locale={locale} text={n.text} />
           </li>
         ))}
       </ol>
       <p className="muted small">{t(locale, "asma.source")}</p>
-      <DhikrPlayerBar locale={locale} />
     </>
   );
 }
