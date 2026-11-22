@@ -64,6 +64,25 @@ class AdhkarScreen extends StatelessWidget {
           key: const Key('adhkarHub'),
           padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
           children: [
+            // «تنبيهات الأذكار» one tap from the Adhkar tab (owner 2026-11-22: couldn't find it
+            // behind the alarm icon inside the morning/evening screen).
+            Card(
+              key: const Key('adhkarHub.dhikrReminders'),
+              margin: const EdgeInsets.fromLTRB(
+                DesignTokens.spaceLg,
+                DesignTokens.spaceLg,
+                DesignTokens.spaceLg,
+                DesignTokens.spaceXs,
+              ),
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: ListTile(
+                leading: RIcon(RIcons.alarm, color: Theme.of(context).colorScheme.primary, size: 28),
+                title: Text(l.dhikrRemTitle, style: const TextStyle(fontWeight: FontWeight.w700)),
+                subtitle: Text(l.dhikrRemEnable),
+                trailing: const RIcon(RIcons.chevronForward),
+                onTap: () => push(const DhikrRemindersScreen()),
+              ),
+            ),
             header(l.adhkarDaily),
             tile(
               'morning',

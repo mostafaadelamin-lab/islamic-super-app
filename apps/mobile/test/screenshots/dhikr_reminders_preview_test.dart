@@ -61,4 +61,11 @@ void main() {
     await tester.pumpAndSettle();
     await shot(tester, '03-adhkar-reminders-sheet');
   });
+
+  testWidgets('preview: Adhkar tab card', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(tester, size: size);
+    await pushScreen(tester, const AdhkarScreen());
+    await shot(tester, '04-adhkar-tab-card');
+  });
 }

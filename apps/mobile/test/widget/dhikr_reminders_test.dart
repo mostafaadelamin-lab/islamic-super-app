@@ -77,10 +77,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('dhikrRem-istighfar')));
     await tester.pumpAndSettle();
-    expect(
-      notes.repeating.entries.where((e) => e.key >= ReminderIds.dhikrBase).map((e) => e.value.sound).toSet(),
-      {'dhikr_salat'},
-    );
+    expect(notes.repeating.entries.where((e) => e.key >= ReminderIds.dhikrBase).map((e) => e.value.sound).toSet(), {
+      'dhikr_salat',
+    });
     await tester.tap(find.byKey(const Key('dhikrRemEvery-30')));
     await tester.pumpAndSettle();
     expect(notes.repeating.keys.where((k) => k >= ReminderIds.dhikrBase).length, 31);
@@ -110,6 +109,15 @@ void main() {
     await tester.tap(find.byKey(const Key('adhkarReminders')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('openDhikrReminders')));
+    await tester.pumpAndSettle();
+    expect(find.byType(DhikrRemindersScreen), findsOneWidget);
+  });
+
+  testWidgets('the Adhkar tab opens the dhikr reminders screen in one tap', (tester) async {
+    await pumpApp(tester, size: tallPhone);
+    await pushScreen(tester, const AdhkarScreen());
+    expect(find.text('تنبيهات الأذكار'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('adhkarHub.dhikrReminders')));
     await tester.pumpAndSettle();
     expect(find.byType(DhikrRemindersScreen), findsOneWidget);
   });
