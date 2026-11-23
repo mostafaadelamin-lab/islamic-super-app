@@ -126,18 +126,26 @@
       ]
     },
     {
-      "id": "kafy",
-      "ar": "الشيخ عمر عبد الكافي",
-      "en": "Sheikh Omar Abdelkafy",
+      "id": "alaa",
+      "ar": "الشيخ علاء حامد",
+      "en": "Sheikh Alaa Hamed",
+      "groups": [
+        "egypt"
+      ]
+    },
+    {
+      "id": "tayeb",
+      "ar": "الإمام الأكبر أحمد الطيب",
+      "en": "Grand Imam Ahmed Al-Tayeb",
       "groups": [
         "azhar",
         "egypt"
       ]
     },
     {
-      "id": "shaarawi",
-      "ar": "الشيخ محمد متولي الشعراوي",
-      "en": "Sheikh Mohamed Metwally Al-Sha'rawi",
+      "id": "kafy",
+      "ar": "الشيخ عمر عبد الكافي",
+      "en": "Sheikh Omar Abdelkafy",
       "groups": [
         "azhar",
         "egypt"
@@ -237,6 +245,27 @@
   ],
   "series": [
     {
+      "id": "asma-tayeb",
+      "topic": "aqeedah",
+      "sheikh": "tayeb",
+      "ar": "حديث الإمام الطيب: أسماء الله الحسنى",
+      "en": "The Grand Imam's talks: the Names of Allah",
+      "items": [
+        "spreaker:5523185"
+      ],
+      "reverse": true
+    },
+    {
+      "id": "wasatiyya-tayeb",
+      "topic": "aqeedah",
+      "sheikh": "tayeb",
+      "ar": "الإمام الطيب: وسطية الإسلام",
+      "en": "The Grand Imam: Islam, the middle way",
+      "items": [
+        "spreaker:4998819"
+      ]
+    },
+    {
       "id": "tawhid-alsheikh",
       "topic": "aqeedah",
       "sheikh": "alsheikh",
@@ -285,17 +314,6 @@
       "items": [
         "hassantahiri28_gmail_41"
       ]
-    },
-    {
-      "id": "seerah-shaarawi",
-      "topic": "seerah",
-      "sheikh": "shaarawi",
-      "ar": "السيرة النبوية",
-      "en": "The Prophet's biography",
-      "items": [
-        "Prophetic_biography_by_Al_Shaarawy"
-      ],
-      "titles": "name"
     },
     {
       "id": "shamail-gabr",
@@ -500,38 +518,6 @@
       ]
     },
     {
-      "id": "anbiya-shaarawi",
-      "topic": "stories",
-      "sheikh": "shaarawi",
-      "ar": "قصص الأنبياء",
-      "en": "Stories of the prophets",
-      "items": [
-        "Islamic_Tape-250_uP_bY_mUSLEm"
-      ],
-      "titles": "title",
-      "order": [
-        "مقدمة",
-        "ادم",
-        "ادريس",
-        "نوح",
-        "هود",
-        "صالح",
-        "ابراهيم",
-        "لوط",
-        "اسماعيل",
-        "يوسف",
-        "شعيب",
-        "أيوب",
-        "ذو الكفل",
-        "موسى",
-        "داوود",
-        "سليمان",
-        "يونس",
-        "زكريا",
-        "عيسى"
-      ]
-    },
-    {
       "id": "sahaba-masri",
       "topic": "stories",
       "sheikh": "masri",
@@ -614,6 +600,16 @@
       ]
     },
     {
+      "id": "usra-tayeb",
+      "topic": "family",
+      "sheikh": "tayeb",
+      "ar": "حديث شيخ الأزهر: المرأة والأسرة",
+      "en": "The Grand Imam: women & the family",
+      "items": [
+        "spreaker:5055842"
+      ]
+    },
+    {
       "id": "awlad-yaqoub",
       "topic": "family",
       "sheikh": "yaqoub",
@@ -632,6 +628,17 @@
       "items": [
         "al7oqoq_Omar-abdlkafee"
       ]
+    },
+    {
+      "id": "hayat-tayeb",
+      "topic": "akhlaq",
+      "sheikh": "tayeb",
+      "ar": "الإمام الطيب: قضايا من حياتنا",
+      "en": "The Grand Imam: issues from our lives",
+      "items": [
+        "spreaker:5055825"
+      ],
+      "titles": "desc"
     },
     {
       "id": "azmat-akhlaq-hassan",
@@ -693,6 +700,23 @@
         "31.-3-31"
       ],
       "titles": "name"
+    },
+    {
+      "id": "tahara-muyassar-alaa",
+      "topic": "tahara",
+      "sheikh": "alaa",
+      "ar": "الطهارة ببساطة",
+      "en": "Purity made simple",
+      "items": [
+        "feqh-moyasser-alaa-001-001",
+        "feqh-moyasser-alaa-002-002",
+        "feqh-moyasser-alaa-003-03",
+        "feqh-moyasser-alaa-004-004",
+        "feqh-moyasser-alaa-005-005",
+        "feqh-moyasser-alaa-006-006-6",
+        "feqh-moyasser-alaa-007-007"
+      ],
+      "titles": "item"
     },
     {
       "id": "tahara-uthaymeen",

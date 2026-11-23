@@ -18,8 +18,10 @@ const MIN_PER_GROUP = 5;
 const MIN_KAFY = 15;
 const DAR_AKHIRA_LESSONS = 32;
 const HTTP_OK = 200;
-/** An archive.org download link with no raw spaces: matches "https://archive.org/download/x/1.mp3", rejects "http://x/a b.mp3". */
-const ARCHIVE_MP3 = /^https:\/\/archive\.org\/download\/[^ ]+\.mp3$/i;
+/** An https mp3 link from archive.org or the Grand Imam's official podcast, no raw spaces:
+ *  matches "https://archive.org/download/x/1.mp3" and "https://api.spreaker.com/download/episode/1/a.mp3", rejects "http://x/a b.mp3". */
+const AUDIO_MP3 = /^https:\/\/(?:archive\.org|api\.spreaker\.com)\/download\/[^ ]+\.mp3$/i;
+const MIN_TAYEB = 4;
 
 beforeEach(() => {
   window.location.hash = "";
@@ -29,7 +31,7 @@ beforeEach(() => {
 });
 
 describe("lesson series: data", () => {
-  it("has every topic and scholar group, all of Omar Abdelkafy's series, https archive.org audio", () => {
+  it("has every topic and scholar group, all of Omar Abdelkafy's series, https mp3 audio, the Grand Imam's talks and no Sha'rawi series", () => {
     expect(data.series.length).toBeGreaterThanOrEqual(MIN_SERIES);
     expect(data.topics.filter((x) => filterSeries(data, null, x.id).length === 0)).toEqual([]);
     expect(
@@ -37,8 +39,11 @@ describe("lesson series: data", () => {
     ).toEqual([]);
     expect(data.series.filter((s) => s.sheikh.id === "kafy").length).toBeGreaterThanOrEqual(MIN_KAFY);
     expect(data.series.filter((s) => s.episodes.length === 0)).toEqual([]);
-    const bad = data.series.flatMap((s) => s.episodes).filter((e) => !ARCHIVE_MP3.test(e.url));
+    const bad = data.series.flatMap((s) => s.episodes).filter((e) => !AUDIO_MP3.test(e.url));
     expect(bad).toEqual([]);
+    // Owner 2026-11-23: Sha'rawi has his own section; add the Grand Imam Ahmed al-Tayeb.
+    expect(data.series.filter((s) => s.sheikh.id === "shaarawi")).toEqual([]);
+    expect(data.series.filter((s) => s.sheikh.id === "tayeb").length).toBeGreaterThanOrEqual(MIN_TAYEB);
   });
 
   it("is listed under More", () => {
@@ -56,7 +61,7 @@ describe("lesson series: page", () => {
     expect(screen.queryByTestId("lessons-series-seerah-hassan")).toBeNull();
     expect(screen.getByTestId("lessons-series-riyadh-uthaymeen")).toBeInTheDocument();
     await user.click(screen.getByTestId("lessons-group-azhar"));
-    expect(screen.getByTestId("lessons-series-anbiya-shaarawi")).toBeInTheDocument();
+    expect(screen.getByTestId("lessons-series-asma-tayeb")).toBeInTheDocument();
     await user.click(screen.getByTestId("lessons-group-all"));
     await user.click(screen.getByTestId("lessons-topic-akhira"));
     expect(screen.getByTestId("lessons-series-nihaya-hassan")).toBeInTheDocument();

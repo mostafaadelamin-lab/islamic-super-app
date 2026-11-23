@@ -14,10 +14,10 @@ LessonCatalog _read() => LessonCatalog.parse(File('assets/content/lessons.v1.jso
 void main() {
   setUpAll(loadContent);
 
-  test('catalog: every series has a topic, a sheikh, unique ids and https archive.org audio', () {
+  test('catalog: every series has a topic, a sheikh, unique ids and https mp3 audio', () {
     final c = _read();
     expect(c.series.length, greaterThanOrEqualTo(45));
-    expect(c.lessonCount, greaterThan(1900));
+    expect(c.lessonCount, greaterThan(1800));
     expect(c.series.map((s) => s.id).toSet().length, c.series.length);
     for (final topic in [
       'aqeedah', 'seerah', 'fiqh', 'hadith', 'hearts', 'stories', 'quran', //
@@ -35,7 +35,7 @@ void main() {
       final urls = s.episodes.map((e) => e.url).toSet();
       expect(urls.length, s.episodes.length, reason: '${s.id}: no lesson twice');
       for (final e in s.episodes) {
-        expect(e.url, startsWith('https://archive.org/download/'));
+        expect(e.url, anyOf(startsWith('https://archive.org/download/'), startsWith('https://api.spreaker.com/download/')));
         expect(e.url, isNot(contains(' ')));
         expect(e.url.toLowerCase(), endsWith('.mp3'));
         // No source/site names or Latin junk in the titles shown.
@@ -45,9 +45,12 @@ void main() {
     final end = c.byId('nihaya-hassan')!;
     expect(end.episodes.length, 29);
     expect(end.episodes[18].title, 'خروج الدجال');
-    final prophets = c.byId('anbiya-shaarawi')!;
-    expect(prophets.episodes.first.title, contains('مقدمة'));
-    expect(prophets.episodes[1].title, contains('ادم'));
+    // Owner 2026-11-23: Sha'rawi has his own section, so no series here; the Grand Imam's talks; simple purity lessons.
+    expect(c.series.where((s) => s.sheikh.id == 'shaarawi'), isEmpty);
+    expect(c.series.where((s) => s.sheikh.id == 'tayeb').length, greaterThanOrEqualTo(4));
+    final simple = c.byId('tahara-muyassar-alaa')!;
+    expect(simple.episodes[2].title, contains('سنن الفطرة'));
+    expect(c.filter(topic: 'tahara').first.id, 'tahara-muyassar-alaa');
   });
 
   testWidgets('series cards filter by scholars and topic, search finds a sheikh, a card opens its lessons', (
@@ -65,7 +68,7 @@ void main() {
     expect(find.byKey(const Key('lessonsSeries.riyadh-uthaymeen')), findsOneWidget);
     await tester.tap(find.byKey(const Key('lessonsGroup.azhar')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('lessonsSeries.anbiya-shaarawi')), findsOneWidget);
+    expect(find.byKey(const Key('lessonsSeries.asma-tayeb')), findsOneWidget);
     expect(find.byKey(const Key('lessonsSeries.riyadh-uthaymeen')), findsNothing);
     await tester.tap(find.byKey(const Key('lessonsGroup.all')));
     await tester.pumpAndSettle();

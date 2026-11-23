@@ -17,9 +17,31 @@ DST = ROOT / 'content/lessons/dist/lessons.v1.json'
 
 
 def fetch(item):
+    if item.startswith('spreaker:'):
+        return fetch_feed(item)
     d = json.load(urllib.request.urlopen(f'https://archive.org/metadata/{item}', timeout=60))
     keep = ('name', 'source', 'format', 'size', 'length', 'title', 'original')
     files = [{k: f[k] for k in keep if k in f} for f in d.get('files', []) if f['name'].lower().endswith('.mp3')]
+    return {'item': item, 'title': d.get('metadata', {}).get('title'), 'files': files}
+
+
+ITUNES = '{http://www.itunes.com/dtds/podcast-1.0.dtd}'
+
+
+def fetch_feed(item):
+    """An official podcast feed (e.g. the Grand Imam's Ramadan programmes): episodes in feed order."""
+    import xml.etree.ElementTree as ET
+    show = item.split(':', 1)[1]
+    root = ET.fromstring(urllib.request.urlopen(f'https://www.spreaker.com/show/{show}/episodes/feed', timeout=60).read())
+    files = []
+    for it in root.find('channel').findall('item'):
+        enc = it.find('enclosure')
+        if enc is None:
+            continue
+        desc = re.sub(r'<[^>]+>', ' ', it.findtext('description') or '')
+        files.append({'url': enc.get('url'), 'name': it.findtext('title') or '', 'source': 'original',
+                      'size': enc.get('length'), 'length': it.findtext(ITUNES + 'duration'),
+                      'desc': re.sub(r'\s+', ' ', desc).strip()})
     return {'item': item, 'files': files}
 
 
@@ -60,6 +82,8 @@ def norm(s):
     return re.sub('[أإآ]', 'ا', s)
 
 
+MIN_EPISODE_SEC = 120
+MAX_DESC_TITLE = 40
 LATIN = re.compile(r'[A-Za-z][A-Za-z0-9_.\-]*')
 
 
@@ -86,11 +110,17 @@ def build(src, refetch=False):
         assert se['topic'] in topics and se['sheikh'] in sheikhs, se['id']
         eps = []
         for item in se['items']:
-            p = RAW / f'{item}.json'
+            p = RAW / f"{item.replace(':', '-')}.json"
             if refetch or not p.exists():
                 p.write_text(json.dumps(fetch(item), ensure_ascii=False, indent=0))
-            files = pick(json.loads(p.read_text())['files'])
-            if se.get('sort') == 'lex':
+            raw = json.loads(p.read_text())
+            files = pick(raw['files'])
+            # Feeds keep their own order (reversed when newest comes first); trailers are dropped.
+            if item.startswith('spreaker:'):
+                files = [f for f in files if seconds(f.get('length')) >= MIN_EPISODE_SEC]
+                if se.get('reverse'):
+                    files.reverse()
+            elif se.get('sort') == 'lex':
                 # Two runs of numbers ("001a".."014b" = part 1, "01a".."26b" = part 2): plain text order.
                 files.sort(key=lambda f: f['name'])
             else:
@@ -107,13 +137,21 @@ def build(src, refetch=False):
             base = f'https://archive.org/download/{quote(item)}/'
             words = [sheikhs[se['sheikh']]['ar'].replace('الشيخ ', ''), se['ar'], 'برنامج', 'للشيخ', 'مع الشيخ', 'الشيخ', 'سلسلة']
             for f in files:
-                ep = {'u': base + '/'.join(quote(x) for x in f['name'].split('/')), 's': seconds(f.get('length')), 'b': int(f.get('size') or 0)}
+                url = f.get('url') or base + '/'.join(quote(x) for x in f['name'].split('/'))
+                ep = {'u': url, 's': seconds(f.get('length')), 'b': int(f.get('size') or 0)}
                 mode = se.get('titles')
                 t = None
                 if mode == 'name':
                     t = clean(f['name'], words)
                 elif mode == 'title':
                     t = clean(f.get('title') or '', [])
+                elif mode == 'desc':
+                    # Short topic lines only ("الابتلاء"); long summaries are left out.
+                    d = f.get('desc') or ''
+                    t = d if 0 < len(d) <= MAX_DESC_TITLE else None
+                elif mode == 'item':
+                    # "001_ مقدمة وتعريف الطهارة _دورة شرح (...) _ م علاء حامد" -> "مقدمة وتعريف الطهارة"
+                    t = clean(re.split(r'\s_|_\s', re.sub(r'^[\d\s\-_.]+', '', raw.get('title') or ''))[0], words)
                 if t:
                     ep['t'] = t
                 eps.append(ep)

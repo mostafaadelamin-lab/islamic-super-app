@@ -53,6 +53,24 @@ void main() {
     await shot(tester, '01-app-lesson-series');
   });
 
+  testWidgets('app: Al-Azhar scholars (the Grand Imam first), and the simple purity lessons', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(tester, size: const Size(440, 956));
+    final data = read();
+    await pushScreen(tester, LessonsScreen(loader: () async => data));
+    await tester.tap(find.byKey(const Key('lessonsGroup.azhar')));
+    await tester.pumpAndSettle();
+    await shot(tester, '03-app-azhar');
+    await tester.tap(find.byKey(const Key('lessonsGroup.all')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('lessonsTopic.tahara')));
+    await tester.tap(find.byKey(const Key('lessonsTopic.tahara')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('lessonsSeries.tahara-muyassar-alaa')));
+    await tester.pumpAndSettle();
+    await shot(tester, '04-app-tahara-simple');
+  });
+
   testWidgets('app: one series, lessons heard ✓, the player under the lesson playing', (tester) async {
     tester.view.devicePixelRatio = 1;
     final backend = FakeNarrationBackend(length: const Duration(minutes: 57, seconds: 12));

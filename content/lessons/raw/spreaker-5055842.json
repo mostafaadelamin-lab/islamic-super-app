@@ -1,0 +1,237 @@
+{
+"item": "spreaker:5055842",
+"files": [
+{
+"url": "https://api.spreaker.com/download/episode/46140877/eps_1.mp3",
+"name": "الحلقة الاولى",
+"source": "original",
+"size": "31116269",
+"length": "779",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140875/eps_2.mp3",
+"name": "الحلقة الثانية",
+"source": "original",
+"size": "33246029",
+"length": "831",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140868/eps_3.mp3",
+"name": "الحلقة الثالثة",
+"source": "original",
+"size": "32495393",
+"length": "813",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140866/eps_4.mp3",
+"name": "الحلقة الرابعة",
+"source": "original",
+"size": "31407545",
+"length": "785",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140864/eps_5.mp3",
+"name": "الحلقة الخامسة",
+"source": "original",
+"size": "27098957",
+"length": "678",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140860/eps_6.mp3",
+"name": "الحلقة السادسة",
+"source": "original",
+"size": "30809333",
+"length": "771",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140854/eps_7.mp3",
+"name": "الحلقة السابعة",
+"source": "original",
+"size": "29133713",
+"length": "729",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140836/eps_8.mp3",
+"name": "الحلقة الثامنة",
+"source": "original",
+"size": "27126101",
+"length": "678",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140833/eps_9.mp3",
+"name": "الحلقة التاسعة",
+"source": "original",
+"size": "27683597",
+"length": "692",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140827/eps_10.mp3",
+"name": "الحلقة العاشرة",
+"source": "original",
+"size": "31291658",
+"length": "783",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140825/eps_11.mp3",
+"name": "الحلقة الحادية عشر",
+"source": "original",
+"size": "31796971",
+"length": "795",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140818/eps_12.mp3",
+"name": "الحلقة الثانية عشر",
+"source": "original",
+"size": "28979313",
+"length": "725",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140816/eps_13.mp3",
+"name": "الحلقة الثالثة عشر",
+"source": "original",
+"size": "31841961",
+"length": "796",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140809/eps_14.mp3",
+"name": "الحلقة الرابعة عشر",
+"source": "original",
+"size": "40233634",
+"length": "1006",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140800/eps_15.mp3",
+"name": "الحلقة الخامسة عشر",
+"source": "original",
+"size": "33054047",
+"length": "827",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140794/eps_16.mp3",
+"name": "الحلقة السادسة عشر",
+"source": "original",
+"size": "41792326",
+"length": "1045",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140784/eps_17.mp3",
+"name": "الحلقة السابعة عشر",
+"source": "original",
+"size": "28136807",
+"length": "704",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140783/eps_19.mp3",
+"name": "الحلقة التاسعة عشر",
+"source": "original",
+"size": "27856977",
+"length": "697",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140713/eps_20.mp3",
+"name": "الحلقة العشرون",
+"source": "original",
+"size": "34309927",
+"length": "858",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140705/eps_21.mp3",
+"name": "الحلقة الواحدة وعشرون",
+"source": "original",
+"size": "32470433",
+"length": "812",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140701/eps_22.mp3",
+"name": "الحلقة الثانية والعشرون",
+"source": "original",
+"size": "30843887",
+"length": "771",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140698/eps_23.mp3",
+"name": "الحلقة الثالثة والعشرون",
+"source": "original",
+"size": "30361559",
+"length": "759",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140690/eps_24.mp3",
+"name": "الحلقة الرابعة والعشرون",
+"source": "original",
+"size": "28493843",
+"length": "713",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140688/eps_25.mp3",
+"name": "الحلقة الخامسة والعشرون",
+"source": "original",
+"size": "27817271",
+"length": "696",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140682/eps_26.mp3",
+"name": "الحلقة السادسة والعشرون",
+"source": "original",
+"size": "29498171",
+"length": "738",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140670/eps_27.mp3",
+"name": "الحلقة السابعة والعشرون",
+"source": "original",
+"size": "29151503",
+"length": "729",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140662/eps_28.mp3",
+"name": "الحلقة الثامنة والعشرون",
+"source": "original",
+"size": "31756280",
+"length": "794",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140652/eps_29.mp3",
+"name": "الحلقة التاسعة والعشرون",
+"source": "original",
+"size": "31598639",
+"length": "790",
+"desc": ""
+},
+{
+"url": "https://api.spreaker.com/download/episode/46140640/eps_30.mp3",
+"name": "الحلقة الثلاثون",
+"source": "original",
+"size": "39229175",
+"length": "981",
+"desc": ""
+}
+]
+}
