@@ -1,7 +1,7 @@
 /**
  * «سلاسل الدروس»: complete audio lesson series by well-known scholars, grouped by topic and by scholars
  * (Al-Azhar / Egypt / Saudi). List built by tools/lessons_build.py (content/lessons/dist/lessons.v1.json →
- * /data/lessons.json); audio is streamed per lesson, or saved per lesson / whole series for offline listening.
+ * /data/lessons-2.json); audio is streamed per lesson, or saved per lesson / whole series for offline listening.
  * Sources are recorded in docs/CONTENT_SOURCES.md, never shown on the site.
  */
 import { AUDIO_CACHE, offlineSupported } from "./audio-offline";
@@ -24,6 +24,8 @@ export interface LessonEpisode {
   url: string;
   title?: string;
   seconds: number;
+  /** Music stretches the player jumps over, seconds [from, to). */
+  skips: [number, number][];
 }
 export interface LessonSeries {
   id: string;
@@ -48,7 +50,7 @@ type RawSeries = {
   sheikh: string;
   ar: string;
   en: string;
-  episodes: { u: string; t?: string; s?: number }[];
+  episodes: { u: string; t?: string; s?: number; m?: [number, number][] }[];
 };
 
 interface RawFile {
@@ -59,7 +61,8 @@ interface RawFile {
   sharawi?: RawSeries[];
 }
 
-export const LESSONS_URL = (): string => withBase("/data/lessons.json");
+/** Renamed (not overwritten) when the list changes, so no browser or service worker keeps the old one. */
+export const LESSONS_URL = (): string => withBase("/data/lessons-2.json");
 
 export function parseLessons(raw: unknown): LessonCatalog {
   const j = raw as RawFile;
@@ -78,6 +81,7 @@ export function parseLessons(raw: unknown): LessonCatalog {
       url: e.u,
       title: e.t,
       seconds: e.s ?? 0,
+      skips: e.m ?? [],
     })),
   });
   return {

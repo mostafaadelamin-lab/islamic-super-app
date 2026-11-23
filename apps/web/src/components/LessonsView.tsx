@@ -21,6 +21,7 @@ import {
 import { normalizeArabic } from "@/lib/search";
 import { useStore } from "@/hooks/useStore";
 import { Icon } from "./Icon";
+import { PlayerClose } from "./PlayerClose";
 import { NowPlaying, PlayerSlot, type Track } from "./RecitationLibrary";
 
 const norm = (s: string): string => normalizeArabic(s.toLowerCase());
@@ -175,6 +176,9 @@ export function LessonsView({
     );
   }
 
+  // The Sha'rawi section asks for one series: never show the whole catalogue in its place.
+  if (only) return <p className="alert alert-error">{t(locale, "lessons.loadError")}</p>;
+
   const last = progress.series ? data.series.find((s) => s.id === progress.series) : undefined;
   const lastEp = last ? last.episodes.find((e) => e.id === progress.last[last.id]) : undefined;
   const chip = (id: string, label: string, on: boolean, tap: () => void) => (
@@ -220,20 +224,29 @@ export function LessonsView({
         onChange={(e) => setQuery(e.target.value)}
       />
       {last && lastEp ? (
-        <button
-          type="button"
-          className="lessons-continue"
-          data-testid="lessons-continue"
-          onClick={() => go(last.id)}
-        >
-          <Icon name="playCircle" />
-          <span className="tile-text">
-            <strong>
-              {t(locale, "lessons.continue", { series: ar ? last.ar : last.en, n: n(lastEp.index) })}
-            </strong>
-            <span className="muted small">{ar ? last.sheikh.ar : last.sheikh.en}</span>
-          </span>
-        </button>
+        <div className="lessons-continue-row">
+          <button
+            type="button"
+            className="lessons-continue"
+            data-testid="lessons-continue"
+            onClick={() => go(last.id)}
+          >
+            <Icon name="playCircle" />
+            <span className="tile-text">
+              <strong>
+                {t(locale, "lessons.continue", { series: ar ? last.ar : last.en, n: n(lastEp.index) })}
+              </strong>
+              <span className="muted small">{ar ? last.sheikh.ar : last.sheikh.en}</span>
+            </span>
+          </button>
+          {/* A clear ✕ on every playing / continue bar (owner 2026-11-23); the saved places stay. */}
+          <PlayerClose
+            locale={locale}
+            testId="lessons-continue-close"
+            className="btn-sm lessons-continue-close"
+            onClose={() => lessonsProgressStore.set((p) => ({ ...p, series: null }))}
+          />
+        </div>
       ) : null}
       {list.length === 0 ? (
         <p className="muted" data-testid="lessons-empty">
@@ -341,6 +354,7 @@ function SeriesPage({
       url: e.url,
       live: false,
       playlist: tracks,
+      skips: e.skips,
     }),
   );
   const play = (e: LessonEpisode): void => {

@@ -96,4 +96,20 @@ describe("Sha'rawi section: three parts", () => {
     await user.click(screen.getByTestId("sharawi-part-tafsir"));
     expect(await screen.findByTestId("sharawi-note")).toBeInTheDocument();
   });
+
+  it("never shows the whole lesson catalogue in place of a Sha'rawi part (stale list, owner 2026-11-23)", async () => {
+    const lessons = parseLessons(readRepoJson("content/lessons/dist/lessons.v1.json"));
+    const old = { ...lessons, sharawi: [] };
+    const user = userEvent.setup();
+    render(
+      <SharawiSection
+        locale="ar"
+        loader={() => Promise.resolve([])}
+        lessonsLoader={() => Promise.resolve(old)}
+      />,
+    );
+    await user.click(screen.getByTestId("sharawi-part-seerah"));
+    expect(await screen.findByText("تعذّر تحميل قائمة السلاسل.")).toBeInTheDocument();
+    expect(screen.queryByTestId("lessons-note")).toBeNull();
+  });
 });

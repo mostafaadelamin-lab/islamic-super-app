@@ -32,6 +32,14 @@ export interface Track {
   playlist?: Track[];
   /** Seconds to start from (where the listener stopped last time). */
   start?: number;
+  /** Stretches jumped over, seconds [from, to): music before, between and after a lesson (owner 2026-11-23). */
+  skips?: readonly (readonly [number, number])[];
+}
+
+/** Where to jump to when `sec` is inside one of the track's music stretches, or null. */
+export function skipEnd(track: Track, sec: number): number | null {
+  for (const [from, to] of track.skips ?? []) if (sec >= from && sec < to) return to;
+  return null;
 }
 
 /** The track after (or before) `track` in its list. */
@@ -105,8 +113,10 @@ export function NowPlaying({
           h.attachMedia(el);
         } else {
           el.src = track.url;
-          if (track.start && track.start > 0) {
-            const at = track.start;
+          // Music at the very start is not played at all.
+          const from = skipEnd(track, track.start ?? 0) ?? track.start ?? 0;
+          if (from > 0) {
+            const at = from;
             el.addEventListener(
               "loadedmetadata",
               () => {
@@ -198,6 +208,17 @@ export function NowPlaying({
         }}
         onTimeUpdate={(e) => {
           const el = e.currentTarget;
+          // Music between or after the parts of a lesson: jump over it (the end of the file counts as heard).
+          const to = skipEnd(track, el.currentTime);
+          if (to !== null && !el.paused) {
+            if (Number.isFinite(el.duration) && to >= el.duration - 1) {
+              el.pause();
+              setPlaying(false);
+              onEnded?.(track);
+              if (next) onTrack(next);
+            } else el.currentTime = to;
+            return;
+          }
           setPosition(el.currentTime);
           onTime?.(track, el.currentTime, Number.isFinite(el.duration) ? el.duration : 0);
         }}

@@ -511,6 +511,9 @@ class NarrationController extends ChangeNotifier {
   Episode? _episode;
   RecitationState _state = RecitationState.idle;
   Duration _position = Duration.zero;
+
+  /// The end of the music stretch being jumped over (so one stretch is jumped once).
+  int? _skippingTo;
   Duration? _duration;
   int _generation = 0;
   bool _remember = true;
@@ -541,6 +544,7 @@ class NarrationController extends ChangeNotifier {
   bool get isLive => _episode != null && _seriesId == 'radio';
   RecitationState get state => _state;
   Duration get position => _position;
+
   /// The full length: from the player, else the length listed for the episode (so the seek bar and
   /// the time show from the start, owner 2026-11-22).
   Duration? get duration {
@@ -595,6 +599,7 @@ class NarrationController extends ChangeNotifier {
     _state = RecitationState.loading;
     _position = Duration.zero;
     _duration = null;
+    _skippingTo = null;
     notifyListeners();
     final b = _ensure();
     try {
@@ -607,8 +612,11 @@ class NarrationController extends ChangeNotifier {
       }
       _duration = await b.load(local != null ? Uri.file(local).toString() : e.url);
       if (gen != _generation) return;
-      final resume = remember && !fromStart ? _settings.storyPosition(_key(seriesId, e)) : 0;
-      if (resume > 5 && (_duration == null || resume < _duration!.inSeconds - 10)) {
+      var resume = remember && !fromStart ? _settings.storyPosition(_key(seriesId, e)) : 0;
+      if (resume <= 5 || (_duration != null && resume >= _duration!.inSeconds - 10)) resume = 0;
+      // Music at the very start is not played at all.
+      resume = skipEnd(e.skips, resume) ?? resume;
+      if (resume > 0) {
         await b.seek(Duration(seconds: resume));
         _position = Duration(seconds: resume);
       }
@@ -625,6 +633,21 @@ class NarrationController extends ChangeNotifier {
   void _onPosition(Duration p) {
     if (_episode == null) return;
     _position = p;
+    // Music between or after the parts of a lesson: jump over it (the end of the file counts as done).
+    final to = skipEnd(_episode!.skips, p.inSeconds);
+    if (to == null) _skippingTo = null;
+    if (to != null && _state == RecitationState.playing && _skippingTo != to) {
+      _skippingTo = to;
+      final d = _duration;
+      if (d != null && to >= d.inSeconds - 1) {
+        _onDone();
+      } else {
+        _position = Duration(seconds: to);
+        unawaited(_backend?.seek(_position));
+      }
+      notifyListeners();
+      return;
+    }
     final now = DateTime.now();
     if (_remember && now.difference(_lastSave).inSeconds >= 5) {
       _lastSave = now;

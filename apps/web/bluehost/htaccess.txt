@@ -58,7 +58,7 @@ AddType application/octet-stream .dat
     Header set Cache-Control "public, max-age=31536000, immutable"
   </If>
   # Pages, the service worker and the manifest must always be checked again, so updates show at once.
-  <FilesMatch "(\.html|\.txt|sw\.js|\.webmanifest)$">
+  <FilesMatch "(\.html|\.txt|sw\.js|\.webmanifest|^(lessons|sharawi|shabib)[^/]*\.json)$">
     Header set Cache-Control "no-cache, must-revalidate"
     Header unset Expires
   </FilesMatch>

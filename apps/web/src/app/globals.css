@@ -6076,6 +6076,21 @@ a.episode {
   flex: none;
   white-space: nowrap;
 }
+.lessons-continue-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin: var(--space-sm) 0;
+}
+.lessons-continue-row .lessons-continue {
+  flex: 1;
+  margin: 0;
+}
+.lessons-continue-close {
+  flex: none;
+  min-width: 44px;
+  min-height: 44px;
+}
 .lessons-continue {
   display: flex;
   align-items: center;

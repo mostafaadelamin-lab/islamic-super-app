@@ -22,7 +22,14 @@ class LessonSheikh extends LessonLabel {
 }
 
 class LessonEpisode {
-  const LessonEpisode({required this.index, required this.url, this.title, this.seconds = 0, this.bytes = 0});
+  const LessonEpisode({
+    required this.index,
+    required this.url,
+    this.title,
+    this.seconds = 0,
+    this.bytes = 0,
+    this.skips = const [],
+  });
 
   /// 1-based position in the series.
   final int index;
@@ -32,6 +39,9 @@ class LessonEpisode {
   final String? title;
   final int seconds;
   final int bytes;
+
+  /// Music stretches the player jumps over, in seconds [from, to).
+  final List<(int, int)> skips;
 }
 
 class LessonSeries {
@@ -124,6 +134,9 @@ class LessonCatalog {
             title: e['t'] as String?,
             seconds: (e['s'] as num?)?.toInt() ?? 0,
             bytes: (e['b'] as num?)?.toInt() ?? 0,
+            skips: [
+              for (final m in (e['m'] as List?) ?? const []) (((m as List)[0] as num).toInt(), (m[1] as num).toInt()),
+            ],
           ),
       ],
     );

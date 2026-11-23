@@ -103,6 +103,9 @@ def clean(name, words):
 
 
 def build(src, refetch=False):
+    # Music stretches the players jump over (tools/lessons_music.py), by audio URL.
+    music_file = RAW.parent / 'music.json'
+    music = json.loads(music_file.read_text()) if music_file.exists() else {}
     sheikhs = {s['id']: s for s in src['sheikhs']}
     topics = {t['id'] for t in src['topics']}
     def series_list(entries):
@@ -156,6 +159,8 @@ def build(src, refetch=False):
                     t = clean(re.split(r'\s_|_\s', re.sub(r'^[\d\s\-_.]+', '', raw.get('title') or ''))[0], words)
                 if t:
                     ep['t'] = t
+                if url in music:
+                    ep['m'] = music[url]
                 eps.append(ep)
         if not eps:
             raise SystemExit(f'no audio in {se["id"]}')

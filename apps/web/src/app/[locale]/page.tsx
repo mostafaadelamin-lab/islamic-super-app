@@ -3,7 +3,6 @@ import { t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
 import { NextPrayerCard } from "@/components/NextPrayerCard";
-import { PrayerTimesWidget } from "@/components/PrayerTimesWidget";
 import { QuranRadio } from "@/components/QuranRadio";
 import { SharePrompt } from "@/components/ShareApp";
 import { Icon, type IconName } from "@/components/Icon";
@@ -118,8 +117,7 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
       </section>
       <div className="home-col home-prayer">
         <NextPrayerCard locale={locale} />
-        {/* The phone widget's layout as a card (owner 2026-11-22). */}
-        <PrayerTimesWidget locale={locale} />
+        {/* The phone widget's layout card was removed here: it repeated these times (owner 2026-11-23). */}
       </div>
       <div className="home-col mobile-only" data-testid="home-tiles">
         <Tiles locale={locale} list={BIG} kind="big" />

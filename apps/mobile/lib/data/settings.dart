@@ -86,6 +86,12 @@ class SettingsController extends ChangeNotifier {
   /// The last lesson series listened to (any), for the «سلاسل الدروس» continue card.
   String? get lastLessonSeries => _prefs.getString('lastLessonSeries');
 
+  /// Hides the continue card (its ✕, owner 2026-11-23); each series keeps its last lesson and place.
+  Future<void> clearLastLessonSeries() async {
+    await _prefs.remove('lastLessonSeries');
+    notifyListeners();
+  }
+
   Future<void> setLastEpisode(String series, String id) async {
     await _prefs.setString('lastEp.$series', id);
     if (series.startsWith('lessons-')) await _prefs.setString('lastLessonSeries', series.substring(8));

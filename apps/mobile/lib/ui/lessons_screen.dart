@@ -67,6 +67,7 @@ Episode lessonEpisode(BuildContext context, LessonSeries s, LessonEpisode e) {
     url: e.url,
     durationSec: e.seconds > 0 ? e.seconds : null,
     status: ReviewStatus.approved,
+    skips: e.skips,
   );
 }
 
@@ -226,6 +227,12 @@ class _LessonsScreenState extends State<LessonsScreen> {
                             leading: const Icon(Icons.play_circle),
                             title: Text(l.lessonsContinue(last.title(ar), context.num(lastEp.index))),
                             subtitle: Text(last.sheikh.of(ar)),
+                            trailing: IconButton(
+                              key: const Key('lessonsContinueClose'),
+                              tooltip: l.commonClose,
+                              icon: const Icon(Icons.close),
+                              onPressed: context.services.settings.clearLastLessonSeries,
+                            ),
                             onTap: () => _open(last),
                           ),
                         ),

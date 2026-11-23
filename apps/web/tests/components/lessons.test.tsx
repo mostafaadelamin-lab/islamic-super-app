@@ -129,3 +129,20 @@ describe("lesson series: page", () => {
     vi.unstubAllGlobals();
   });
 });
+
+describe("lesson music is jumped over (owner 2026-11-23)", () => {
+  it("skipEnd gives the end of the music stretch the time is in", async () => {
+    const { skipEnd } = await import("@/components/RecitationLibrary");
+    const tr = { key: "k", title: "t", url: "u", live: false, skips: [[0, 45], [380, 397]] as const };
+    expect(skipEnd(tr, 0)).toBe(45);
+    expect(skipEnd(tr, 44.9)).toBe(45);
+    expect(skipEnd(tr, 45)).toBeNull();
+    expect(skipEnd(tr, 390)).toBe(397);
+    expect(skipEnd({ ...tr, skips: undefined }, 10)).toBeNull();
+  });
+  it("the Grand Imam's lessons carry their music stretches", () => {
+    const c = parseLessons(readRepoJson("content/lessons/dist/lessons.v1.json"));
+    const asma = c.series.find((s) => s.id === "asma-tayeb")!;
+    expect(asma.episodes.filter((e) => e.skips.length > 0).length).toBeGreaterThan(asma.episodes.length / 2);
+  });
+});

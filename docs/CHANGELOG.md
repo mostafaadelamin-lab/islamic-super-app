@@ -7,6 +7,12 @@ Owner 2026-11-23: a new section of complete religious lesson series, all audio, 
 - Sha'rawi section now has three parts: Quran tafsir, the Prophet's life (220 lessons) and prophets' stories (44 lessons), with the same download-all / resume / ✓ as the lesson series (owner 2026-11-23); his series are not repeated in «سلاسل الدروس».
 - Owner 2026-11-23 (second round): four series of the Grand Imam Ahmed al-Tayeb's Ramadan talks (Names of Allah, Islam the middle way, issues from our lives, women & the family) from his official podcast; «الطهارة ببساطة», 7 simple purity lessons (incl. hygiene / sunan al-fitra) shown first under purity.
 - Each series: «أكمل الدرس N» (resumes where the listener stopped), «تحميل السلسلة» (whole series for offline listening, with stop), download per lesson, ✓ on every lesson heard to the end (long-press on the app / ✓ button on the website to set or clear it), progress on every card, and a «أكمل» card for the last series. The lock-screen-style player opens right under the lesson playing and goes on to the next lesson.
+### Fixed (owner 2026-11-23, after the first upload)
+- Grand Imam al-Tayeb's lessons: the music at the start, between the parts and at the end of each episode is skipped by the player (app + website). The places were found per episode by a speech / music classifier (tools/lessons_music.py → content/lessons/music.json); the recordings themselves are unchanged.
+- Website: the Sha'rawi section's «السيرة النبوية» / «قصص الأنبياء» showed the whole lesson catalogue (and its cards did nothing) when the browser still had the older lesson list; the list is now /data/lessons-2.json (new name) and is never cached long; a Sha'rawi part never falls back to the catalogue.
+- A ✕ on the «أكمل» card of the lesson series (app + website), like the one on every player.
+- Website home: the dark prayer-times box (the phone widget's look) is removed; it repeated the two prayer cards above it.
+- iPhone build: the prayer widget's countdown used an iOS 15 API in an iOS 14 widget (Codemagic archive failed).
 ### Changed
 - Unchanged: Quran text and all other religious content.
 

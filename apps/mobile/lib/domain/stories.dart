@@ -110,6 +110,7 @@ class Episode {
     this.durationSec,
     this.story,
     this.reviewer,
+    this.skips = const [],
   });
 
   final String id;
@@ -120,6 +121,10 @@ class Episode {
   final String? story;
   final ReviewStatus status;
   final String? reviewer;
+
+  /// Stretches the player jumps over, in seconds [from, to): music before, between and after a lesson
+  /// (owner 2026-11-23: no music in lessons).
+  final List<(int, int)> skips;
 
   String title(bool arabic) => arabic ? titleAr : titleEn;
   bool get isPending => status == ReviewStatus.pending;
@@ -234,4 +239,12 @@ class StoryCatalog {
     for (final s in stories)
       if (s.category == c) s,
   ];
+}
+
+/// Where to jump to when [sec] falls inside one of [skips] ([from, to) seconds), or null.
+int? skipEnd(List<(int, int)> skips, int sec) {
+  for (final (from, to) in skips) {
+    if (sec >= from && sec < to) return to;
+  }
+  return null;
 }
