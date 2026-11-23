@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] — «سلاسل الدروس» audio lesson series — 2026-11-23
+## [1.2.19] — «سلاسل الدروس» audio lesson series — 2026-11-23
 Owner 2026-11-23: a new section of complete religious lesson series, all audio, downloadable, with the player under each lesson; famous Egyptian and Arab sheikhs, all of Sheikh Omar Abdelkafy's series, Saudi sheikhs and Al-Azhar scholars. Phone apps (Android + iPhone) and website.
 ### Added
 - «سلاسل الدروس» (More on the app, Library menu on the website): 50 complete series, about 1850 lessons, in 13 topics (creed, the Prophet's life, fiqh, hadith, purifying the soul, prophets/Companions/stories, with the Quran, raising children and family, good character, manners and daily life, dealings with people, purity and personal hygiene, end times and the hereafter). Filters: Al-Azhar scholars / Egyptian sheikhs / Saudi sheikhs, topic, and search by series or sheikh.
