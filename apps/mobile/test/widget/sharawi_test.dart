@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rattil/domain/lessons.dart';
 import 'package:rattil/domain/sharawi.dart';
 import 'package:rattil/ui/library_screen.dart' show OfflineButton;
 import 'package:rattil/ui/sharawi_screen.dart';
@@ -45,7 +46,7 @@ void main() {
     await pumpApp(tester, size: tallPhone);
     final data = _read();
     await pushScreen(tester, SharawiScreen(loader: () async => data));
-    expect(find.text('تفسير الشعراوي'), findsWidgets);
+    expect(find.text('الشيخ الشعراوي'), findsWidgets);
     expect(find.byKey(const Key('sharawiNote')), findsOneWidget);
     expect(find.byKey(const Key('sharawiSurah.0')), findsOneWidget);
     await tester.enterText(find.byKey(const Key('sharawiSearch')), 'البقره');
@@ -64,6 +65,33 @@ void main() {
     expect(find.text('الدرس ١'), findsOneWidget);
     expect(find.textContaining('الآية ١'), findsWidgets);
     expect(find.byType(OfflineButton), findsWidgets);
+    await expectAccessible(tester);
+  });
+
+  testWidgets('three parts (owner 2026-11-23): tafsir, the Prophet\'s life and prophets\' stories by al-Sha\'rawi', (
+    tester,
+  ) async {
+    await pumpApp(tester, size: tallPhone);
+    final data = _read();
+    final lessons = LessonCatalog.parse(File('assets/content/lessons.v1.json').readAsStringSync());
+    expect(lessons.sharawiById('seerah-shaarawi')!.episodes.length, greaterThan(200));
+    expect(lessons.sharawiById('anbiya-shaarawi')!.episodes.first.title, contains('مقدمة'));
+    expect(lessons.series.where((s) => s.sheikh.id == 'shaarawi'), isEmpty, reason: 'not in the lesson list');
+    await pushScreen(tester, SharawiScreen(loader: () async => data, lessonsLoader: () async => lessons));
+    expect(find.byKey(const Key('sharawiPart.tafsir')), findsOneWidget);
+    expect(find.byKey(const Key('sharawiSurah.0')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('sharawiPart.seerah')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('sharawiSeries.seerah-shaarawi')), findsOneWidget);
+    expect(find.byKey(const Key('lesson-seerah-shaarawi-1')), findsOneWidget);
+    expect(find.byKey(const Key('lessonsDownloadAll')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('sharawiPart.anbiya')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('sharawiSeries.anbiya-shaarawi')), findsOneWidget);
+    expect(find.byKey(const Key('lesson-anbiya-shaarawi-2')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('sharawiPart.tafsir')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('sharawiSurah.0')), findsOneWidget);
     await expectAccessible(tester);
   });
 

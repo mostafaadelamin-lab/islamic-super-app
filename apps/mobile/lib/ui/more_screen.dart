@@ -58,7 +58,7 @@ class MoreScreen extends StatelessWidget {
                 tile('library', RIcons.reciter, l.libraryTitle, () => const LibraryScreen()),
                 tile('lessons', RIcons.headphones, l.lessonsTitle, () => const LessonsScreen()),
                 tile('stories', RIcons.headphones, l.storiesTitle, () => const StoriesScreen()),
-                tile('sharawi', RIcons.book, l.sharawiTitle, () => const SharawiScreen()),
+                tile('sharawi', RIcons.book, l.sharawiSection, () => const SharawiScreen()),
                 tile('qibla', RIcons.compass, l.qiblaTitle, () => const QiblaScreen()),
                 tile('mosques', RIcons.location, l.mosquesTitle, () => const MosquesScreen()),
                 tile('zakat', RIcons.zakat, l.zakatTitle, () => const ZakatScreen()),

@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
 import { isLocale, t } from "@/lib/i18n";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
-import { SharawiView } from "@/components/SharawiView";
+import { SharawiSection } from "@/components/SharawiSection";
 
 export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
   const { locale } = await params;
-  return { title: t(isLocale(locale) ? locale : "ar", "sharawi.title") };
+  return { title: t(isLocale(locale) ? locale : "ar", "sharawi.section") };
 }
 
 export default async function SharawiPage({ params }: { params: LocaleParams }) {
   const locale = await resolveLocale(params);
   return (
     <>
-      <h1>{t(locale, "sharawi.title")}</h1>
-      <SharawiView locale={locale} />
+      <h1>{t(locale, "sharawi.section")}</h1>
+      <SharawiSection locale={locale} />
     </>
   );
 }

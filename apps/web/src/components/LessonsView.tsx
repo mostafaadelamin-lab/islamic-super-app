@@ -63,9 +63,12 @@ const keyOf = (e: LessonEpisode): string => `lessons:${e.id}`;
 export function LessonsView({
   locale,
   loader = loadLessons,
+  only,
 }: {
   locale: Locale;
   loader?: () => Promise<LessonCatalog>;
+  /** One series only (the Sha'rawi section's seerah / prophets' stories): no list, no back button. */
+  only?: string;
 }) {
   const [data, setData] = useState<LessonCatalog | null>(null);
   const [failed, setFailed] = useState(false);
@@ -92,11 +95,12 @@ export function LessonsView({
   }, [loader]);
   // The series page is in the address (#series-id), so the back button and links work.
   useEffect(() => {
+    if (only) return undefined;
     const read = (): void => setOpen(decodeURIComponent(window.location.hash.slice(1)) || null);
     read();
     window.addEventListener("hashchange", read);
     return () => window.removeEventListener("hashchange", read);
-  }, []);
+  }, [only]);
 
   const list = useMemo(() => {
     if (!data) return [];
@@ -114,7 +118,8 @@ export function LessonsView({
     setOpen(id);
     window.scrollTo?.({ top: 0 });
   };
-  const series = open ? data.series.find((s) => s.id === open) : undefined;
+  const wanted = only ?? open;
+  const series = wanted ? [...data.series, ...data.sharawi].find((s) => s.id === wanted) : undefined;
   const heard = (s: LessonSeries): number => s.episodes.filter((e) => done.includes(e.id)).length;
   const duration = (sec: number): string => {
     const m = Math.max(1, Math.round(sec / SEC_PER_MIN));
@@ -161,7 +166,7 @@ export function LessonsView({
         heard={heard(series)}
         duration={duration}
         onSlot={setSlot}
-        onBack={() => go(null)}
+        onBack={only ? undefined : () => go(null)}
         onPlay={(tr) => {
           setTrack(tr);
           rememberPlay(series.id, tr.key.slice("lessons:".length));
@@ -310,7 +315,7 @@ function SeriesPage({
   heard: number;
   duration: (sec: number) => string;
   onSlot: (el: HTMLElement | null) => void;
-  onBack: () => void;
+  onBack?: () => void;
   onPlay: (t: Track) => void;
 }) {
   const ar = locale === "ar";
@@ -413,9 +418,11 @@ function SeriesPage({
 
   return (
     <>
-      <button type="button" className="btn btn-sm" data-testid="lessons-back" onClick={onBack}>
-        <Icon name="back" /> {t(locale, "lessons.title")}
-      </button>
+      {onBack ? (
+        <button type="button" className="btn btn-sm" data-testid="lessons-back" onClick={onBack}>
+          <Icon name="back" /> {t(locale, "lessons.title")}
+        </button>
+      ) : null}
       <section
         className="lessons-hero"
         style={{ background: `linear-gradient(160deg, ${topicColor(s.topic.id)}, #0A1830)` }}

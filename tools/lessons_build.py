@@ -105,8 +105,10 @@ def clean(name, words):
 def build(src, refetch=False):
     sheikhs = {s['id']: s for s in src['sheikhs']}
     topics = {t['id'] for t in src['topics']}
-    out = []
-    for se in src['series']:
+    def series_list(entries):
+        return [one(se) for se in entries]
+
+    def one(se):
         assert se['topic'] in topics and se['sheikh'] in sheikhs, se['id']
         eps = []
         for item in se['items']:
@@ -157,13 +159,17 @@ def build(src, refetch=False):
                 eps.append(ep)
         if not eps:
             raise SystemExit(f'no audio in {se["id"]}')
-        out.append({k: se[k] for k in ('id', 'topic', 'sheikh', 'ar', 'en')} | {'episodes': eps})
+        return {k: se[k] for k in ('id', 'topic', 'sheikh', 'ar', 'en')} | {'episodes': eps}
+
+    out = series_list(src['series'])
     return {
         'version': 1,
         'topics': src['topics'],
         'groups': src['groups'],
         'sheikhs': src['sheikhs'],
         'series': out,
+        # Shown inside the Sha'rawi section (seerah, prophets' stories), not in the lesson list.
+        'sharawi': series_list(src.get('sharawi', [])),
     }
 
 

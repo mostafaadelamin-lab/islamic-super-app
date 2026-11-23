@@ -1,5 +1,5 @@
 {
-  "note": "Lesson series (audio, streamed or downloaded per lesson). Built by tools/lessons_build.py. Sources = archive.org items (docs/CONTENT_SOURCES.md), never shown in the app. Owner approved list 2026-11-23.",
+  "note": "Lesson series (audio, streamed or downloaded per lesson). Built by tools/lessons_build.py. Sources = archive.org items (docs/CONTENT_SOURCES.md), never shown in the app. Owner approved list 2026-11-23. \"sharawi\": series shown in the Sha'rawi section (owner 2026-11-23), not in the lesson list.",
   "topics": [
     {
       "id": "aqeedah",
@@ -146,6 +146,15 @@
       "id": "kafy",
       "ar": "الشيخ عمر عبد الكافي",
       "en": "Sheikh Omar Abdelkafy",
+      "groups": [
+        "azhar",
+        "egypt"
+      ]
+    },
+    {
+      "id": "shaarawi",
+      "ar": "الشيخ محمد متولي الشعراوي",
+      "en": "Sheikh Mohamed Metwally Al-Sha'rawi",
       "groups": [
         "azhar",
         "egypt"
@@ -758,6 +767,51 @@
       "en": "The hereafter",
       "items": [
         "Dr.omar-abdulkafy_Dar_Akhira_uP_bY_mUSLEm"
+      ]
+    }
+  ],
+  "sharawi": [
+    {
+      "id": "seerah-shaarawi",
+      "topic": "seerah",
+      "sheikh": "shaarawi",
+      "ar": "السيرة النبوية",
+      "en": "The Prophet's biography",
+      "items": [
+        "Prophetic_biography_by_Al_Shaarawy"
+      ],
+      "titles": "name"
+    },
+    {
+      "id": "anbiya-shaarawi",
+      "topic": "stories",
+      "sheikh": "shaarawi",
+      "ar": "قصص الأنبياء",
+      "en": "Stories of the prophets",
+      "items": [
+        "Islamic_Tape-250_uP_bY_mUSLEm"
+      ],
+      "titles": "title",
+      "order": [
+        "مقدمة",
+        "ادم",
+        "ادريس",
+        "نوح",
+        "هود",
+        "صالح",
+        "ابراهيم",
+        "لوط",
+        "اسماعيل",
+        "يوسف",
+        "شعيب",
+        "أيوب",
+        "ذو الكفل",
+        "موسى",
+        "داوود",
+        "سليمان",
+        "يونس",
+        "زكريا",
+        "عيسى"
       ]
     }
   ]

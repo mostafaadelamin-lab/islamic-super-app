@@ -3520,7 +3520,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get sharawiPartAnbiya => 'Prophets\' stories';
+
+  @override
+  String get sharawiPartSeerah => 'The Prophet\'s life';
+
+  @override
+  String get sharawiPartTafsir => 'Quran tafsir';
+
+  @override
   String get sharawiSearch => 'Find a surah by name or number';
+
+  @override
+  String get sharawiSection => 'Sheikh al-Sha\'rawi';
 
   @override
   String get sharawiTitle => 'Al-Sha\'rawi tafsir';

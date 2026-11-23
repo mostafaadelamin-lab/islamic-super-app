@@ -5166,9 +5166,25 @@
       }
     }
   },
+  "sharawiPartAnbiya": "Prophets' stories",
+  "@sharawiPartAnbiya": {
+    "description": "shared key \"sharawi.partAnbiya\""
+  },
+  "sharawiPartSeerah": "The Prophet's life",
+  "@sharawiPartSeerah": {
+    "description": "shared key \"sharawi.partSeerah\""
+  },
+  "sharawiPartTafsir": "Quran tafsir",
+  "@sharawiPartTafsir": {
+    "description": "shared key \"sharawi.partTafsir\""
+  },
   "sharawiSearch": "Find a surah by name or number",
   "@sharawiSearch": {
     "description": "shared key \"sharawi.search\""
+  },
+  "sharawiSection": "Sheikh al-Sha'rawi",
+  "@sharawiSection": {
+    "description": "shared key \"sharawi.section\""
   },
   "sharawiTitle": "Al-Sha'rawi tafsir",
   "@sharawiTitle": {

@@ -61,11 +61,27 @@ class LessonSeries {
 }
 
 class LessonCatalog {
-  const LessonCatalog({required this.topics, required this.groups, required this.sheikhs, required this.series});
+  const LessonCatalog({
+    required this.topics,
+    required this.groups,
+    required this.sheikhs,
+    required this.series,
+    this.sharawi = const [],
+  });
   final List<LessonLabel> topics;
   final List<LessonLabel> groups;
   final List<LessonSheikh> sheikhs;
   final List<LessonSeries> series;
+
+  /// Al-Sha'rawi's seerah and prophets' stories: shown in his own section, not in the lesson list.
+  final List<LessonSeries> sharawi;
+
+  LessonSeries? sharawiById(String id) {
+    for (final s in sharawi) {
+      if (s.id == id) return s;
+    }
+    return null;
+  }
 
   int get lessonCount => series.fold(0, (a, s) => a + s.episodes.length);
 
@@ -94,30 +110,29 @@ class LessonCatalog {
     ];
     final topicById = {for (final t in topics) t.id: t};
     final sheikhById = {for (final s in sheikhs) s.id: s};
+    LessonSeries series(dynamic s) => LessonSeries(
+      id: s['id'] as String,
+      topic: topicById[s['topic']]!,
+      sheikh: sheikhById[s['sheikh']]!,
+      ar: s['ar'] as String,
+      en: s['en'] as String,
+      episodes: [
+        for (final (i, e) in (s['episodes'] as List).indexed)
+          LessonEpisode(
+            index: i + 1,
+            url: e['u'] as String,
+            title: e['t'] as String?,
+            seconds: (e['s'] as num?)?.toInt() ?? 0,
+            bytes: (e['b'] as num?)?.toInt() ?? 0,
+          ),
+      ],
+    );
     return LessonCatalog(
       topics: topics,
       groups: [for (final x in j['groups'] as List) label(x)],
       sheikhs: sheikhs,
-      series: [
-        for (final s in j['series'] as List)
-          LessonSeries(
-            id: s['id'] as String,
-            topic: topicById[s['topic']]!,
-            sheikh: sheikhById[s['sheikh']]!,
-            ar: s['ar'] as String,
-            en: s['en'] as String,
-            episodes: [
-              for (final (i, e) in (s['episodes'] as List).indexed)
-                LessonEpisode(
-                  index: i + 1,
-                  url: e['u'] as String,
-                  title: e['t'] as String?,
-                  seconds: (e['s'] as num?)?.toInt() ?? 0,
-                  bytes: (e['b'] as num?)?.toInt() ?? 0,
-                ),
-            ],
-          ),
-      ],
+      series: [for (final s in j['series'] as List) series(s)],
+      sharawi: [for (final s in (j['sharawi'] as List?) ?? const []) series(s)],
     );
   }
 }

@@ -3500,7 +3500,19 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get sharawiPartAnbiya => 'قصص الأنبياء';
+
+  @override
+  String get sharawiPartSeerah => 'السيرة النبوية';
+
+  @override
+  String get sharawiPartTafsir => 'تفسير القرآن';
+
+  @override
   String get sharawiSearch => 'ابحث باسم السورة أو رقمها';
+
+  @override
+  String get sharawiSection => 'الشيخ الشعراوي';
 
   @override
   String get sharawiTitle => 'تفسير الشعراوي';

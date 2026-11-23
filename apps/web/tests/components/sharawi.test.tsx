@@ -1,6 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { SharawiSection } from "@/components/SharawiSection";
 import { SharawiView } from "@/components/SharawiView";
+import { parseLessons } from "@/lib/lessons";
 import { SECTIONS } from "@/components/SectionTiles";
 import { parseSharawi, sharawiSavedStore } from "@/lib/sharawi";
 import { readRepoJson } from "../repo";
@@ -68,5 +70,30 @@ describe("Sha'rawi offline save (website)", () => {
     expect(store.size).toBe(0);
     expect(sharawiSavedStore.get()).not.toContain(5);
     vi.unstubAllGlobals();
+  });
+});
+
+describe("Sha'rawi section: three parts", () => {
+  it("shows tafsir, the Prophet's life and prophets' stories (owner 2026-11-23)", async () => {
+    const lessons = parseLessons(readRepoJson("content/lessons/dist/lessons.v1.json"));
+    const tafsir = parseSharawi(readRepoJson("content/sharawi/dist/sharawi.v1.json"));
+    expect(lessons.series.filter((s) => s.sheikh.id === "shaarawi")).toEqual([]);
+    const user = userEvent.setup();
+    render(
+      <SharawiSection
+        locale="ar"
+        loader={() => Promise.resolve(tafsir)}
+        lessonsLoader={() => Promise.resolve(lessons)}
+      />,
+    );
+    expect(await screen.findByTestId("sharawi-note")).toBeInTheDocument();
+    await user.click(screen.getByTestId("sharawi-part-seerah"));
+    expect(await screen.findByTestId("lessons-hero")).toHaveTextContent("السيرة النبوية");
+    expect(screen.getByTestId("lesson-seerah-shaarawi-1")).toBeInTheDocument();
+    expect(screen.queryByTestId("lessons-back")).toBeNull();
+    await user.click(screen.getByTestId("sharawi-part-anbiya"));
+    expect(await screen.findByTestId("lessons-hero")).toHaveTextContent("قصص الأنبياء");
+    await user.click(screen.getByTestId("sharawi-part-tafsir"));
+    expect(await screen.findByTestId("sharawi-note")).toBeInTheDocument();
   });
 });

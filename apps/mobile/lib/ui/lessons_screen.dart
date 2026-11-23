@@ -368,8 +368,11 @@ class _SeriesCard extends StatelessWidget {
 /// One series: continue / download-all buttons, then every lesson in order with ✓ for those heard.
 /// The player opens right under the lesson that plays (same player as the rest of the app).
 class LessonSeriesScreen extends StatefulWidget {
-  const LessonSeriesScreen({super.key, required this.series});
+  const LessonSeriesScreen({super.key, required this.series, this.embedded = false});
   final LessonSeries series;
+
+  /// Inside another screen (the Sha'rawi section's parts): the lessons only, no app bar of its own.
+  final bool embedded;
 
   @override
   State<LessonSeriesScreen> createState() => _LessonSeriesScreenState();
@@ -457,156 +460,156 @@ class _LessonSeriesScreenState extends State<LessonSeriesScreen> {
     final ar = context.isArabic;
     final theme = Theme.of(context);
     final services = context.services;
+    final body = ReadableWidth(
+      child: ListenableBuilder(
+        listenable: Listenable.merge([services.narration, services.settings]),
+        builder: (context, _) {
+          final episodes = [for (final e in s.episodes) lessonEpisode(context, s, e)];
+          final heard = _heard(context, s);
+          final last = _lastEpisode(context, s);
+          final n = services.narration;
+          final allSaved = _saved.length >= s.episodes.length;
+          return ListView.builder(
+            key: const Key('lessonEpisodes'),
+            padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+            itemCount: s.episodes.length + 1,
+            itemBuilder: (context, i) {
+              if (i == 0) {
+                return Container(
+                  margin: const EdgeInsets.all(DesignTokens.spaceMd),
+                  padding: const EdgeInsets.all(DesignTokens.spaceMd),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [lessonTopicColor(s.topic.id), AppTheme.brand('heroDeep')],
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        s.title(ar),
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          color: const Color(0xFFF3E9D2),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        s.sheikh.of(ar),
+                        style: theme.textTheme.bodyMedium?.copyWith(color: const Color(0xFFCDD8EA)),
+                      ),
+                      const SizedBox(height: DesignTokens.spaceXs),
+                      Text(
+                        [
+                          s.topic.of(ar),
+                          l.lessonsCount(context.num(s.episodes.length)),
+                          if (s.seconds > 0) context.lessonDuration(s.seconds),
+                          if (heard > 0) l.lessonsHeard(context.num(heard)),
+                          if (_saved.isNotEmpty) l.lessonsSaved(context.num(_saved.length)),
+                        ].join(' · '),
+                        key: const Key('lessonsSeriesMeta'),
+                        style: theme.textTheme.bodySmall?.copyWith(color: AppTheme.brand('gold')),
+                      ),
+                      const SizedBox(height: DesignTokens.spaceSm),
+                      Wrap(
+                        spacing: DesignTokens.spaceSm,
+                        runSpacing: DesignTokens.spaceXs,
+                        children: [
+                          FilledButton.icon(
+                            key: const Key('lessonsContinueBtn'),
+                            style: FilledButton.styleFrom(
+                              backgroundColor: AppTheme.brand('gold'),
+                              foregroundColor: const Color(0xFF0A1830),
+                            ),
+                            icon: const Icon(Icons.play_arrow),
+                            label: Text(last == null ? l.lessonsStart : l.lessonsContinueBtn(context.num(last.index))),
+                            onPressed: () => _play(episodes, last == null ? 0 : last.index - 1),
+                          ),
+                          if (_bulk)
+                            OutlinedButton.icon(
+                              key: const Key('lessonsDownloadStop'),
+                              style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
+                              icon: const SizedBox.square(
+                                dimension: 16,
+                                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                              ),
+                              label: Text(
+                                '${l.lessonsDownloading(context.num(_bulkDone), context.num(s.episodes.length))} · ${l.lessonsDownloadStop}',
+                              ),
+                              onPressed: () => setState(() => _stop = true),
+                            )
+                          else
+                            OutlinedButton.icon(
+                              key: const Key('lessonsDownloadAll'),
+                              style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
+                              icon: Icon(allSaved ? Icons.download_done : Icons.download_for_offline_outlined),
+                              label: Text(allSaved ? l.lessonsDownloadedAll : l.lessonsDownloadAll),
+                              onPressed: allSaved ? null : _downloadAll,
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: DesignTokens.spaceXs),
+                      Text(
+                        l.lessonsDoneHint,
+                        style: theme.textTheme.labelSmall?.copyWith(color: const Color(0xFFCDD8EA)),
+                      ),
+                    ],
+                  ),
+                );
+              }
+              final idx = i - 1;
+              final e = s.episodes[idx];
+              final ep = episodes[idx];
+              final key = '${s.playerSeries}/${ep.id}';
+              final done = services.settings.episodeDone(key);
+              final on = n.episode?.id == ep.id && n.episode?.url == ep.url;
+              final playing = on && n.isPlaying;
+              final scheme = theme.colorScheme;
+              final sub = [
+                if (e.title != null) e.title!,
+                if (e.seconds > 0) context.lessonDuration(e.seconds),
+                if (done) l.lessonsDone,
+              ].join(' · ');
+              final tile = ListTile(
+                key: Key('lesson-${ep.id}'),
+                selected: on,
+                leading: playing
+                    ? Icon(Icons.pause_circle, color: scheme.primary, size: 32)
+                    : done
+                    ? Icon(
+                        Icons.check_circle,
+                        key: Key('lessonDone-${ep.id}'),
+                        color: AppTheme.of(context, 'success'),
+                        size: 32,
+                      )
+                    : Icon(Icons.play_circle, color: scheme.primary, size: 32),
+                title: Text(context.lessonEpisodeTitle(e)),
+                subtitle: sub.isEmpty ? null : Text(sub),
+                trailing: OfflineButton(
+                  key: ValueKey('off-${ep.id}-$_savedVersion'),
+                  series: s.playerSeries,
+                  episode: ep,
+                ),
+                onTap: () => _play(episodes, idx),
+                onLongPress: () => services.settings.setEpisodeDone(key, !done),
+              );
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [tile, if (on && n.isActive) const InlineNarrationPlayer(), const Divider(height: 1)],
+              );
+            },
+          );
+        },
+      ),
+    );
+    if (widget.embedded) return body;
     return Scaffold(
       appBar: AppBar(title: Text(s.title(ar))),
       bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
-      body: ReadableWidth(
-        child: ListenableBuilder(
-          listenable: Listenable.merge([services.narration, services.settings]),
-          builder: (context, _) {
-            final episodes = [for (final e in s.episodes) lessonEpisode(context, s, e)];
-            final heard = _heard(context, s);
-            final last = _lastEpisode(context, s);
-            final n = services.narration;
-            final allSaved = _saved.length >= s.episodes.length;
-            return ListView.builder(
-              key: const Key('lessonEpisodes'),
-              padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-              itemCount: s.episodes.length + 1,
-              itemBuilder: (context, i) {
-                if (i == 0) {
-                  return Container(
-                    margin: const EdgeInsets.all(DesignTokens.spaceMd),
-                    padding: const EdgeInsets.all(DesignTokens.spaceMd),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [lessonTopicColor(s.topic.id), AppTheme.brand('heroDeep')],
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          s.title(ar),
-                          style: theme.textTheme.titleLarge?.copyWith(
-                            color: const Color(0xFFF3E9D2),
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          s.sheikh.of(ar),
-                          style: theme.textTheme.bodyMedium?.copyWith(color: const Color(0xFFCDD8EA)),
-                        ),
-                        const SizedBox(height: DesignTokens.spaceXs),
-                        Text(
-                          [
-                            s.topic.of(ar),
-                            l.lessonsCount(context.num(s.episodes.length)),
-                            if (s.seconds > 0) context.lessonDuration(s.seconds),
-                            if (heard > 0) l.lessonsHeard(context.num(heard)),
-                            if (_saved.isNotEmpty) l.lessonsSaved(context.num(_saved.length)),
-                          ].join(' · '),
-                          key: const Key('lessonsSeriesMeta'),
-                          style: theme.textTheme.bodySmall?.copyWith(color: AppTheme.brand('gold')),
-                        ),
-                        const SizedBox(height: DesignTokens.spaceSm),
-                        Wrap(
-                          spacing: DesignTokens.spaceSm,
-                          runSpacing: DesignTokens.spaceXs,
-                          children: [
-                            FilledButton.icon(
-                              key: const Key('lessonsContinueBtn'),
-                              style: FilledButton.styleFrom(
-                                backgroundColor: AppTheme.brand('gold'),
-                                foregroundColor: const Color(0xFF0A1830),
-                              ),
-                              icon: const Icon(Icons.play_arrow),
-                              label: Text(
-                                last == null ? l.lessonsStart : l.lessonsContinueBtn(context.num(last.index)),
-                              ),
-                              onPressed: () => _play(episodes, last == null ? 0 : last.index - 1),
-                            ),
-                            if (_bulk)
-                              OutlinedButton.icon(
-                                key: const Key('lessonsDownloadStop'),
-                                style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
-                                icon: const SizedBox.square(
-                                  dimension: 16,
-                                  child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                                ),
-                                label: Text(
-                                  '${l.lessonsDownloading(context.num(_bulkDone), context.num(s.episodes.length))} · ${l.lessonsDownloadStop}',
-                                ),
-                                onPressed: () => setState(() => _stop = true),
-                              )
-                            else
-                              OutlinedButton.icon(
-                                key: const Key('lessonsDownloadAll'),
-                                style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
-                                icon: Icon(allSaved ? Icons.download_done : Icons.download_for_offline_outlined),
-                                label: Text(allSaved ? l.lessonsDownloadedAll : l.lessonsDownloadAll),
-                                onPressed: allSaved ? null : _downloadAll,
-                              ),
-                          ],
-                        ),
-                        const SizedBox(height: DesignTokens.spaceXs),
-                        Text(
-                          l.lessonsDoneHint,
-                          style: theme.textTheme.labelSmall?.copyWith(color: const Color(0xFFCDD8EA)),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-                final idx = i - 1;
-                final e = s.episodes[idx];
-                final ep = episodes[idx];
-                final key = '${s.playerSeries}/${ep.id}';
-                final done = services.settings.episodeDone(key);
-                final on = n.episode?.id == ep.id && n.episode?.url == ep.url;
-                final playing = on && n.isPlaying;
-                final scheme = theme.colorScheme;
-                final sub = [
-                  if (e.title != null) e.title!,
-                  if (e.seconds > 0) context.lessonDuration(e.seconds),
-                  if (done) l.lessonsDone,
-                ].join(' · ');
-                final tile = ListTile(
-                  key: Key('lesson-${ep.id}'),
-                  selected: on,
-                  leading: playing
-                      ? Icon(Icons.pause_circle, color: scheme.primary, size: 32)
-                      : done
-                      ? Icon(
-                          Icons.check_circle,
-                          key: Key('lessonDone-${ep.id}'),
-                          color: AppTheme.of(context, 'success'),
-                          size: 32,
-                        )
-                      : Icon(Icons.play_circle, color: scheme.primary, size: 32),
-                  title: Text(context.lessonEpisodeTitle(e)),
-                  subtitle: sub.isEmpty ? null : Text(sub),
-                  trailing: OfflineButton(
-                    key: ValueKey('off-${ep.id}-$_savedVersion'),
-                    series: s.playerSeries,
-                    episode: ep,
-                  ),
-                  onTap: () => _play(episodes, idx),
-                  onLongPress: () => services.settings.setEpisodeDone(key, !done),
-                );
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [tile, if (on && n.isActive) const InlineNarrationPlayer(), const Divider(height: 1)],
-                );
-              },
-            );
-          },
-        ),
-      ),
+      body: body,
     );
   }
 }

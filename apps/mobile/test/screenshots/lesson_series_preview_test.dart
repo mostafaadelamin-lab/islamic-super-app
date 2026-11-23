@@ -10,7 +10,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/app_services.dart';
 import 'package:rattil/domain/lessons.dart';
+import 'package:rattil/domain/sharawi.dart';
 import 'package:rattil/ui/lessons_screen.dart';
+import 'package:rattil/ui/sharawi_screen.dart';
 
 import '../helpers.dart';
 
@@ -69,6 +71,19 @@ void main() {
     await tester.tap(find.byKey(const Key('lessonsSeries.tahara-muyassar-alaa')));
     await tester.pumpAndSettle();
     await shot(tester, '04-app-tahara-simple');
+  });
+
+  testWidgets('app: the Sha\'rawi section in three parts', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(tester, size: const Size(440, 956));
+    final lessons = read();
+    final tafsir = SharawiTafsir.parse(File('assets/content/sharawi.v1.json').readAsStringSync());
+    await pushScreen(tester, SharawiScreen(loader: () async => tafsir, lessonsLoader: () async => lessons));
+    await tester.pumpAndSettle();
+    await shot(tester, '05-app-sharawi-tafsir');
+    await tester.tap(find.byKey(const Key('sharawiPart.seerah')));
+    await tester.pumpAndSettle();
+    await shot(tester, '06-app-sharawi-seerah');
   });
 
   testWidgets('app: one series, lessons heard ✓, the player under the lesson playing', (tester) async {

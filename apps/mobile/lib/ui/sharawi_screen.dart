@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../app_services.dart';
+import '../domain/lessons.dart';
 import '../domain/sharawi.dart';
 import '../domain/stories.dart';
 import '../theme/design_tokens.dart';
 import 'adaptive.dart';
 import 'audio_widgets.dart';
 import 'l10n_ext.dart';
+import 'lessons_screen.dart' show LessonSeriesScreen, loadLessons;
 import 'library_screen.dart' show PlayTile;
 import 'r_icon.dart';
 import 'stories_screen.dart' show NarrationBar;
@@ -53,10 +55,16 @@ Episode sharawiEpisode(BuildContext context, SharawiLesson x) {
   );
 }
 
-/// "تفسير الشعراوي": the surahs the sheikh's recorded lessons cover, with search.
+/// The three parts of the Sha'rawi section (owner 2026-11-23): Quran tafsir, the Prophet's life, prophets' stories.
+enum SharawiPart { tafsir, seerah, anbiya }
+
+/// "تفسير الشعراوي": the surahs the sheikh's recorded lessons cover, with search; and his seerah and
+/// prophets' stories series (from the lesson-series list) as the section's other two parts.
 class SharawiScreen extends StatefulWidget {
-  const SharawiScreen({super.key, this.loader = loadSharawi});
+  const SharawiScreen({super.key, this.loader = loadSharawi, this.lessonsLoader = loadLessons, this.part});
   final Future<SharawiTafsir> Function() loader;
+  final Future<LessonCatalog> Function() lessonsLoader;
+  final SharawiPart? part;
 
   @override
   State<SharawiScreen> createState() => _SharawiScreenState();
@@ -64,92 +72,144 @@ class SharawiScreen extends StatefulWidget {
 
 class _SharawiScreenState extends State<SharawiScreen> {
   late final Future<SharawiTafsir> _future = widget.loader();
+  Future<LessonCatalog>? _lessons;
+  late SharawiPart _part = widget.part ?? SharawiPart.tafsir;
   String _query = '';
+
+  static const _seriesOf = {SharawiPart.seerah: 'seerah-shaarawi', SharawiPart.anbiya: 'anbiya-shaarawi'};
+
+  Widget _parts(BuildContext context) {
+    final l = context.l10n;
+    final labels = {
+      SharawiPart.tafsir: l.sharawiPartTafsir,
+      SharawiPart.seerah: l.sharawiPartSeerah,
+      SharawiPart.anbiya: l.sharawiPartAnbiya,
+    };
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceSm, DesignTokens.spaceLg, 0),
+      child: Row(
+        children: [
+          for (final p in SharawiPart.values)
+            Padding(
+              padding: const EdgeInsetsDirectional.only(end: DesignTokens.spaceSm),
+              child: ChoiceChip(
+                key: Key('sharawiPart.${p.name}'),
+                label: Text(labels[p]!),
+                selected: _part == p,
+                onSelected: (_) => setState(() => _part = p),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _series(BuildContext context) {
+    final l = context.l10n;
+    final future = _lessons ??= widget.lessonsLoader();
+    return FutureBuilder<LessonCatalog>(
+      future: future,
+      builder: (context, snap) {
+        if (snap.hasError) return Center(child: Text(l.sharawiLoadError));
+        final c = snap.data;
+        if (c == null) return const Center(child: CircularProgressIndicator());
+        final s = c.sharawiById(_seriesOf[_part]!);
+        if (s == null) return Center(child: Text(l.sharawiLoadError));
+        return LessonSeriesScreen(key: Key('sharawiSeries.${s.id}'), series: s, embedded: true);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(l.sharawiTitle)),
+      appBar: AppBar(title: Text(l.sharawiSection)),
       bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
-      body: ReadableWidth(
-        child: FutureBuilder<SharawiTafsir>(
-          future: _future,
-          builder: (context, snap) {
-            if (snap.hasError) return Center(child: Text(l.sharawiLoadError));
-            final all = snap.data;
-            if (all == null) return const Center(child: CircularProgressIndicator());
-            final q = _norm(_query.trim().toLowerCase());
-            final surahs = [
-              for (final s in all.surahs)
-                if (q.isEmpty ||
-                    _norm(context.sharawiSurahName(s.surah).toLowerCase()).contains(q) ||
-                    '${s.surah}' == q ||
-                    context.num(s.surah) == q)
-                  s,
-            ];
-            return ListView(
-              key: const Key('sharawiList'),
-              padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    DesignTokens.spaceLg,
-                    DesignTokens.spaceMd,
-                    DesignTokens.spaceLg,
-                    DesignTokens.spaceSm,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ReadableWidth(child: _parts(context)),
+          Expanded(child: _part == SharawiPart.tafsir ? _tafsir(context) : _series(context)),
+        ],
+      ),
+    );
+  }
+
+  Widget _tafsir(BuildContext context) {
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    return ReadableWidth(
+      child: FutureBuilder<SharawiTafsir>(
+        future: _future,
+        builder: (context, snap) {
+          if (snap.hasError) return Center(child: Text(l.sharawiLoadError));
+          final all = snap.data;
+          if (all == null) return const Center(child: CircularProgressIndicator());
+          final q = _norm(_query.trim().toLowerCase());
+          final surahs = [
+            for (final s in all.surahs)
+              if (q.isEmpty ||
+                  _norm(context.sharawiSurahName(s.surah).toLowerCase()).contains(q) ||
+                  '${s.surah}' == q ||
+                  context.num(s.surah) == q)
+                s,
+          ];
+          return ListView(
+            key: const Key('sharawiList'),
+            padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  DesignTokens.spaceLg,
+                  DesignTokens.spaceMd,
+                  DesignTokens.spaceLg,
+                  DesignTokens.spaceSm,
+                ),
+                child: Text(
+                  l.sharawiNote(context.num(all.lessonCount)),
+                  key: const Key('sharawiNote'),
+                  style: theme.textTheme.bodyMedium,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg),
+                child: TextField(
+                  key: const Key('sharawiSearch'),
+                  decoration: InputDecoration(
+                    prefixIcon: const RIcon(RIcons.search),
+                    hintText: l.sharawiSearch,
+                    isDense: true,
                   ),
-                  child: Text(
-                    l.sharawiNote(context.num(all.lessonCount)),
-                    key: const Key('sharawiNote'),
-                    style: theme.textTheme.bodyMedium,
+                  onChanged: (v) => setState(() => _query = v),
+                ),
+              ),
+              const SizedBox(height: DesignTokens.spaceSm),
+              for (final s in surahs)
+                Card(
+                  key: Key('sharawiSurah.${s.surah}'),
+                  margin: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceXs),
+                  child: ListTile(
+                    leading: s.surah == 0
+                        ? const RIconBadge(RIcons.headphones)
+                        : CircleAvatar(child: Text(context.num(s.surah))),
+                    title: Text(context.sharawiSurahName(s.surah), style: const TextStyle(fontWeight: FontWeight.w600)),
+                    subtitle: Text(l.sharawiLessons(context.num(s.lessons.length))),
+                    trailing: const RIcon(RIcons.chevronForward),
+                    onTap: () => Navigator.of(
+                      context,
+                    ).push(MaterialPageRoute<void>(builder: (_) => SharawiSurahScreen(surah: s))),
                   ),
                 ),
+              if (surahs.isEmpty)
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg),
-                  child: TextField(
-                    key: const Key('sharawiSearch'),
-                    decoration: InputDecoration(
-                      prefixIcon: const RIcon(RIcons.search),
-                      hintText: l.sharawiSearch,
-                      isDense: true,
-                    ),
-                    onChanged: (v) => setState(() => _query = v),
-                  ),
+                  padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                  child: Text(l.sharawiNoMatch, key: const Key('sharawiEmpty')),
                 ),
-                const SizedBox(height: DesignTokens.spaceSm),
-                for (final s in surahs)
-                  Card(
-                    key: Key('sharawiSurah.${s.surah}'),
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: DesignTokens.spaceLg,
-                      vertical: DesignTokens.spaceXs,
-                    ),
-                    child: ListTile(
-                      leading: s.surah == 0
-                          ? const RIconBadge(RIcons.headphones)
-                          : CircleAvatar(child: Text(context.num(s.surah))),
-                      title: Text(
-                        context.sharawiSurahName(s.surah),
-                        style: const TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      subtitle: Text(l.sharawiLessons(context.num(s.lessons.length))),
-                      trailing: const RIcon(RIcons.chevronForward),
-                      onTap: () => Navigator.of(
-                        context,
-                      ).push(MaterialPageRoute<void>(builder: (_) => SharawiSurahScreen(surah: s))),
-                    ),
-                  ),
-                if (surahs.isEmpty)
-                  Padding(
-                    padding: const EdgeInsets.all(DesignTokens.spaceLg),
-                    child: Text(l.sharawiNoMatch, key: const Key('sharawiEmpty')),
-                  ),
-              ],
-            );
-          },
-        ),
+            ],
+          );
+        },
       ),
     );
   }

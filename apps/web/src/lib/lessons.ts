@@ -38,20 +38,25 @@ export interface LessonCatalog {
   groups: LessonLabel[];
   sheikhs: LessonSheikh[];
   series: LessonSeries[];
+  /** Al-Sha'rawi's seerah and prophets' stories: shown in his own section, not in the lesson list. */
+  sharawi: LessonSeries[];
 }
+
+type RawSeries = {
+  id: string;
+  topic: string;
+  sheikh: string;
+  ar: string;
+  en: string;
+  episodes: { u: string; t?: string; s?: number }[];
+};
 
 interface RawFile {
   topics: LessonLabel[];
   groups: LessonLabel[];
   sheikhs: LessonSheikh[];
-  series: {
-    id: string;
-    topic: string;
-    sheikh: string;
-    ar: string;
-    en: string;
-    episodes: { u: string; t?: string; s?: number }[];
-  }[];
+  series: RawSeries[];
+  sharawi?: RawSeries[];
 }
 
 export const LESSONS_URL = (): string => withBase("/data/lessons.json");
@@ -61,24 +66,26 @@ export function parseLessons(raw: unknown): LessonCatalog {
   if (!j || !Array.isArray(j.series) || !Array.isArray(j.topics)) throw new Error("lessons.json: bad format");
   const topics = new Map(j.topics.map((x) => [x.id, x]));
   const sheikhs = new Map(j.sheikhs.map((x) => [x.id, x]));
+  const one = (s: RawSeries): LessonSeries => ({
+    id: s.id,
+    topic: topics.get(s.topic)!,
+    sheikh: sheikhs.get(s.sheikh)!,
+    ar: s.ar,
+    en: s.en,
+    episodes: s.episodes.map((e, i) => ({
+      id: `${s.id}-${i + 1}`,
+      index: i + 1,
+      url: e.u,
+      title: e.t,
+      seconds: e.s ?? 0,
+    })),
+  });
   return {
     topics: j.topics,
     groups: j.groups,
     sheikhs: j.sheikhs,
-    series: j.series.map((s) => ({
-      id: s.id,
-      topic: topics.get(s.topic)!,
-      sheikh: sheikhs.get(s.sheikh)!,
-      ar: s.ar,
-      en: s.en,
-      episodes: s.episodes.map((e, i) => ({
-        id: `${s.id}-${i + 1}`,
-        index: i + 1,
-        url: e.u,
-        title: e.t,
-        seconds: e.s ?? 0,
-      })),
-    })),
+    series: j.series.map(one),
+    sharawi: (j.sharawi ?? []).map(one),
   };
 }
 
