@@ -167,7 +167,7 @@ struct PrayerNextView: View {
       if let next = entry.next {
         Text(clock(next, entry)).font(.system(size: home ? 24 : 16, weight: .bold)).lineLimit(1)
           .minimumScaleFactor(0.6)
-        Text(next, style: .timer).font(.system(size: home ? 18 : 15)).monospacedDigit()
+        Text(next, style: .timer).font(.system(size: home ? 18 : 15).monospacedDigit())
           .multilineTextAlignment(.center).lineLimit(1).minimumScaleFactor(0.6)
           .foregroundColor(home ? style.gold : nil)
       } else {
@@ -287,7 +287,7 @@ struct PrayerMediumView: View {
         Text(dateText(entry.date, "d MMMM yyyy", arabic: entry.arabic)).font(.system(size: 12)).opacity(0.85)
         if let next = entry.next {
           Text(entry.name).font(.system(size: 14, weight: .bold)).padding(.top, 8)
-          Text(next, style: .timer).font(.system(size: 20, weight: .bold)).monospacedDigit()
+          Text(next, style: .timer).font(.system(size: 20, weight: .bold).monospacedDigit())
             .foregroundColor(style.gold).multilineTextAlignment(.center)
         }
       }
