@@ -117,6 +117,8 @@ copyFileSync(join(repo, "content/quran/dist/mushaf-lines.v1.json"), join(pub, "d
 // Hadith books (Open-Hadith-Data, ODbL): book list in src/generated, text chunks served from /data/hadith/<book>/<k>.json.
 // Al-Sha'rawi audio tafsir: lesson list (audio streamed per lesson), fetched by the /sharawi page.
 copyFileSync(join(repo, "content/sharawi/dist/sharawi.v1.json"), join(pub, "data/sharawi.json"));
+// Lesson series («سلاسل الدروس»): series and lesson list (audio streamed per lesson), fetched by the /lessons page.
+copyFileSync(join(repo, "content/lessons/dist/lessons.v1.json"), join(pub, "data/lessons.json"));
 // Sheikh Mohamed Ahmed Shabib: track list (audio streamed per track), fetched by the /shabib page.
 copyFileSync(join(repo, "content/shabib/dist/shabib.v1.json"), join(pub, "data/shabib.json"));
 // Ayah timings of the reciters recorded one file per surah, fetched by the player when such a reciter plays.

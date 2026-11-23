@@ -3428,6 +3428,144 @@ abstract class AppLocalizations {
   /// **'Wudu steps in pictures'**
   String get kidsLearnWuduSub;
 
+  /// shared key "lessons.all"
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get lessonsAll;
+
+  /// shared key "lessons.allTopics"
+  ///
+  /// In en, this message translates to:
+  /// **'All topics'**
+  String get lessonsAllTopics;
+
+  /// shared key "lessons.continue"
+  ///
+  /// In en, this message translates to:
+  /// **'Continue: {series} · lesson {n}'**
+  String lessonsContinue(String series, String n);
+
+  /// shared key "lessons.continueBtn"
+  ///
+  /// In en, this message translates to:
+  /// **'Continue lesson {n}'**
+  String lessonsContinueBtn(String n);
+
+  /// shared key "lessons.count"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} lessons'**
+  String lessonsCount(String n);
+
+  /// shared key "lessons.done"
+  ///
+  /// In en, this message translates to:
+  /// **'Heard'**
+  String get lessonsDone;
+
+  /// shared key "lessons.doneHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Long-press a lesson to add or remove its ✓.'**
+  String get lessonsDoneHint;
+
+  /// shared key "lessons.downloadAll"
+  ///
+  /// In en, this message translates to:
+  /// **'Download series'**
+  String get lessonsDownloadAll;
+
+  /// shared key "lessons.downloadFailed"
+  ///
+  /// In en, this message translates to:
+  /// **'Download stopped. Check the internet connection and try again.'**
+  String get lessonsDownloadFailed;
+
+  /// shared key "lessons.downloadStop"
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get lessonsDownloadStop;
+
+  /// shared key "lessons.downloadedAll"
+  ///
+  /// In en, this message translates to:
+  /// **'Whole series downloaded'**
+  String get lessonsDownloadedAll;
+
+  /// shared key "lessons.downloading"
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading {done} of {total}'**
+  String lessonsDownloading(String done, String total);
+
+  /// shared key "lessons.heard"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} heard'**
+  String lessonsHeard(String n);
+
+  /// shared key "lessons.hours"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} h'**
+  String lessonsHours(String n);
+
+  /// shared key "lessons.lesson"
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson {n}'**
+  String lessonsLesson(String n);
+
+  /// shared key "lessons.loadError"
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load the list of series.'**
+  String get lessonsLoadError;
+
+  /// shared key "lessons.minutes"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min'**
+  String lessonsMinutes(String n);
+
+  /// shared key "lessons.noMatch"
+  ///
+  /// In en, this message translates to:
+  /// **'No series with that name.'**
+  String get lessonsNoMatch;
+
+  /// shared key "lessons.note"
+  ///
+  /// In en, this message translates to:
+  /// **'Complete audio series by well-known scholars: {series} series, {lessons} lessons. Listen online, or download a lesson or the whole series to listen without internet.'**
+  String lessonsNote(String series, String lessons);
+
+  /// shared key "lessons.saved"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} saved'**
+  String lessonsSaved(String n);
+
+  /// shared key "lessons.search"
+  ///
+  /// In en, this message translates to:
+  /// **'Search by series or sheikh'**
+  String get lessonsSearch;
+
+  /// shared key "lessons.start"
+  ///
+  /// In en, this message translates to:
+  /// **'Start from lesson 1'**
+  String get lessonsStart;
+
+  /// shared key "lessons.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson series'**
+  String get lessonsTitle;
+
   /// shared key "library.allRiwayat"
   ///
   /// In en, this message translates to:

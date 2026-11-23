@@ -50,7 +50,7 @@ export const SITE_GROUPS: readonly SiteGroup[] = [
     sub: "site.group.librarySub",
     icon: "book",
     path: "hadith",
-    items: ["tafsir", "hadith", "sharawi", "stories", "nasheeds", "reels", "zakat"],
+    items: ["tafsir", "hadith", "lessons", "sharawi", "stories", "nasheeds", "reels", "zakat"],
   },
   {
     // Its own section, not under the library (owner, 2026-11-20).

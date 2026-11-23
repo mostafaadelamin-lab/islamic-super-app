@@ -1888,6 +1888,95 @@ class AppLocalizationsAr extends AppLocalizations {
   String get kidsLearnWuduSub => 'خطوات الوضوء بالصور';
 
   @override
+  String get lessonsAll => 'الكل';
+
+  @override
+  String get lessonsAllTopics => 'كل المواضيع';
+
+  @override
+  String lessonsContinue(String series, String n) {
+    return 'أكمل: $series · الدرس $n';
+  }
+
+  @override
+  String lessonsContinueBtn(String n) {
+    return 'أكمل الدرس $n';
+  }
+
+  @override
+  String lessonsCount(String n) {
+    return '$n درس';
+  }
+
+  @override
+  String get lessonsDone => 'استمعت إليه';
+
+  @override
+  String get lessonsDoneHint => 'اضغط مطولًا على الدرس لوضع علامة ✓ أو إزالتها.';
+
+  @override
+  String get lessonsDownloadAll => 'تحميل السلسلة';
+
+  @override
+  String get lessonsDownloadFailed => 'توقف التحميل. تأكد من الاتصال بالإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get lessonsDownloadStop => 'إيقاف';
+
+  @override
+  String get lessonsDownloadedAll => 'السلسلة كلها محمّلة';
+
+  @override
+  String lessonsDownloading(String done, String total) {
+    return 'جارٍ التحميل $done من $total';
+  }
+
+  @override
+  String lessonsHeard(String n) {
+    return 'استمعت إلى $n';
+  }
+
+  @override
+  String lessonsHours(String n) {
+    return '$n ساعة';
+  }
+
+  @override
+  String lessonsLesson(String n) {
+    return 'الدرس $n';
+  }
+
+  @override
+  String get lessonsLoadError => 'تعذّر تحميل قائمة السلاسل.';
+
+  @override
+  String lessonsMinutes(String n) {
+    return '$n دقيقة';
+  }
+
+  @override
+  String get lessonsNoMatch => 'لا توجد سلاسل بهذا الاسم.';
+
+  @override
+  String lessonsNote(String series, String lessons) {
+    return 'سلاسل صوتية كاملة لكبار العلماء والمشايخ: $series سلسلة و$lessons درسًا. استمع مباشرة، أو حمّل الدرس أو السلسلة كلها لتسمعها بدون إنترنت.';
+  }
+
+  @override
+  String lessonsSaved(String n) {
+    return 'محمّل $n';
+  }
+
+  @override
+  String get lessonsSearch => 'ابحث باسم السلسلة أو الشيخ';
+
+  @override
+  String get lessonsStart => 'ابدأ من الدرس الأول';
+
+  @override
+  String get lessonsTitle => 'سلاسل الدروس';
+
+  @override
   String get libraryAllRiwayat => 'كل الروايات';
 
   @override

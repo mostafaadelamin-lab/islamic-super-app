@@ -30,6 +30,8 @@ export interface Track {
   live: boolean;
   /** The reciter's surahs in order: when one ends the next one plays (owner, 2026-11-12). */
   playlist?: Track[];
+  /** Seconds to start from (where the listener stopped last time). */
+  start?: number;
 }
 
 /** The track after (or before) `track` in its list. */
@@ -56,6 +58,8 @@ export function NowPlaying({
   onTrack,
   onClose,
   slot = null,
+  onTime,
+  onEnded,
 }: {
   locale: Locale;
   track: Track;
@@ -63,6 +67,10 @@ export function NowPlaying({
   /** The ✕: stops and hides the player. */
   onClose?: () => void;
   slot?: HTMLElement | null;
+  /** Called as the track plays (seconds, full length): to remember where the listener stopped. */
+  onTime?: (t: Track, sec: number, duration: number) => void;
+  /** The track was heard to its end. */
+  onEnded?: (t: Track) => void;
 }) {
   const ref = useRef<HTMLAudioElement>(null);
   const [error, setError] = useState(false);
@@ -97,6 +105,16 @@ export function NowPlaying({
           h.attachMedia(el);
         } else {
           el.src = track.url;
+          if (track.start && track.start > 0) {
+            const at = track.start;
+            el.addEventListener(
+              "loadedmetadata",
+              () => {
+                if (!Number.isFinite(el.duration) || at < el.duration - 10) el.currentTime = at;
+              },
+              { once: true },
+            );
+          }
         }
         await el.play();
       } catch {
@@ -107,6 +125,8 @@ export function NowPlaying({
       cancelled = true;
       hls?.destroy();
     };
+    // A new start point alone (same track) does not restart it.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [track.key, track.url]);
   // Keep the playing item and its buttons in view.
   useEffect(() => {
@@ -176,13 +196,18 @@ export function NowPlaying({
           setPlaying(false);
           mediaSessionState(false);
         }}
-        onTimeUpdate={(e) => setPosition(e.currentTarget.currentTime)}
+        onTimeUpdate={(e) => {
+          const el = e.currentTarget;
+          setPosition(el.currentTime);
+          onTime?.(track, el.currentTime, Number.isFinite(el.duration) ? el.duration : 0);
+        }}
         onDurationChange={(e) => {
           const d = e.currentTarget.duration;
           setDuration(Number.isFinite(d) ? d : 0);
         }}
         onEnded={() => {
           setPlaying(false);
+          onEnded?.(track);
           if (next) onTrack(next);
         }}
         onError={() => setError(true)}

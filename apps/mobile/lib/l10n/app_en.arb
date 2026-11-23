@@ -2785,6 +2785,157 @@
   "@kidsLearnWuduSub": {
     "description": "shared key \"kidsLearn.wuduSub\""
   },
+  "lessonsAll": "All",
+  "@lessonsAll": {
+    "description": "shared key \"lessons.all\""
+  },
+  "lessonsAllTopics": "All topics",
+  "@lessonsAllTopics": {
+    "description": "shared key \"lessons.allTopics\""
+  },
+  "lessonsContinue": "Continue: {series} · lesson {n}",
+  "@lessonsContinue": {
+    "description": "shared key \"lessons.continue\"",
+    "placeholders": {
+      "series": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonsContinueBtn": "Continue lesson {n}",
+  "@lessonsContinueBtn": {
+    "description": "shared key \"lessons.continueBtn\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonsCount": "{n} lessons",
+  "@lessonsCount": {
+    "description": "shared key \"lessons.count\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonsDone": "Heard",
+  "@lessonsDone": {
+    "description": "shared key \"lessons.done\""
+  },
+  "lessonsDoneHint": "Long-press a lesson to add or remove its ✓.",
+  "@lessonsDoneHint": {
+    "description": "shared key \"lessons.doneHint\""
+  },
+  "lessonsDownloadAll": "Download series",
+  "@lessonsDownloadAll": {
+    "description": "shared key \"lessons.downloadAll\""
+  },
+  "lessonsDownloadFailed": "Download stopped. Check the internet connection and try again.",
+  "@lessonsDownloadFailed": {
+    "description": "shared key \"lessons.downloadFailed\""
+  },
+  "lessonsDownloadStop": "Stop",
+  "@lessonsDownloadStop": {
+    "description": "shared key \"lessons.downloadStop\""
+  },
+  "lessonsDownloadedAll": "Whole series downloaded",
+  "@lessonsDownloadedAll": {
+    "description": "shared key \"lessons.downloadedAll\""
+  },
+  "lessonsDownloading": "Downloading {done} of {total}",
+  "@lessonsDownloading": {
+    "description": "shared key \"lessons.downloading\"",
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonsHeard": "{n} heard",
+  "@lessonsHeard": {
+    "description": "shared key \"lessons.heard\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonsHours": "{n} h",
+  "@lessonsHours": {
+    "description": "shared key \"lessons.hours\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonsLesson": "Lesson {n}",
+  "@lessonsLesson": {
+    "description": "shared key \"lessons.lesson\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonsLoadError": "Could not load the list of series.",
+  "@lessonsLoadError": {
+    "description": "shared key \"lessons.loadError\""
+  },
+  "lessonsMinutes": "{n} min",
+  "@lessonsMinutes": {
+    "description": "shared key \"lessons.minutes\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonsNoMatch": "No series with that name.",
+  "@lessonsNoMatch": {
+    "description": "shared key \"lessons.noMatch\""
+  },
+  "lessonsNote": "Complete audio series by well-known scholars: {series} series, {lessons} lessons. Listen online, or download a lesson or the whole series to listen without internet.",
+  "@lessonsNote": {
+    "description": "shared key \"lessons.note\"",
+    "placeholders": {
+      "series": {
+        "type": "String"
+      },
+      "lessons": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonsSaved": "{n} saved",
+  "@lessonsSaved": {
+    "description": "shared key \"lessons.saved\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonsSearch": "Search by series or sheikh",
+  "@lessonsSearch": {
+    "description": "shared key \"lessons.search\""
+  },
+  "lessonsStart": "Start from lesson 1",
+  "@lessonsStart": {
+    "description": "shared key \"lessons.start\""
+  },
+  "lessonsTitle": "Lesson series",
+  "@lessonsTitle": {
+    "description": "shared key \"lessons.title\""
+  },
   "libraryAllRiwayat": "All riwayat",
   "@libraryAllRiwayat": {
     "description": "shared key \"library.allRiwayat\""

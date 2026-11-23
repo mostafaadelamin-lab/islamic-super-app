@@ -6063,3 +6063,127 @@ a.episode {
 .asma-lessons .lock-player {
   width: 100%;
 }
+
+/* «سلاسل الدروس» (lesson series): filter chips, series cards with a coloured cover, the series hero. */
+.lessons-chips {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: var(--space-xs);
+  padding-bottom: var(--space-xs);
+  scrollbar-width: thin;
+}
+.lessons-chips .btn {
+  flex: none;
+  white-space: nowrap;
+}
+.lessons-continue {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  margin: var(--space-sm) 0;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  background: var(--color-accent-soft);
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.lessons-grid {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-sm) 0 var(--space-lg);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 10.5rem), 1fr));
+  gap: var(--space-sm);
+}
+.lessons-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  color: inherit;
+  text-decoration: none;
+}
+.lessons-card:hover,
+.lessons-card:focus-visible {
+  border-color: var(--color-accent);
+}
+.lessons-cover {
+  display: grid;
+  place-content: center;
+  gap: 2px;
+  min-height: 5.25rem;
+  padding: var(--space-sm);
+  text-align: center;
+  color: #f3e9d2;
+  line-height: 1.35;
+}
+.lessons-cover span {
+  font-size: 0.78rem;
+  color: #d9b25e;
+}
+.lessons-card-body {
+  display: grid;
+  gap: 2px;
+  padding: var(--space-xs) var(--space-sm) var(--space-sm);
+}
+.lessons-bar {
+  display: block;
+  height: 4px;
+  margin-top: var(--space-xs);
+  border-radius: 4px;
+  background: var(--color-line);
+  overflow: hidden;
+}
+.lessons-bar i {
+  display: block;
+  height: 100%;
+}
+.lessons-hero {
+  margin: var(--space-sm) 0 var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  color: #f3e9d2;
+}
+.lessons-hero h2 {
+  margin: 0;
+  color: #f3e9d2;
+}
+.lessons-hero p {
+  margin: 2px 0;
+  color: #cdd8ea;
+}
+.lessons-hero .lessons-meta {
+  color: #d9b25e;
+}
+.lessons-hero .row {
+  margin-top: var(--space-sm);
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+.lessons-gold {
+  background: #d9b25e;
+  color: #0a1830;
+  border-color: #d9b25e;
+  font-weight: 600;
+}
+.lessons-ghost {
+  background: transparent;
+  color: #fff;
+  border-color: #6d85ab;
+}
+.episode.lessons-done .icon {
+  color: var(--color-success, #2f7d55);
+}
+.lessons-mark[aria-pressed="false"] .icon {
+  opacity: 0.35;
+}
+.lessons-mark[aria-pressed="true"] .icon {
+  color: var(--color-success, #2f7d55);
+}

@@ -1,0 +1,103 @@
+{
+"item": "gzaly",
+"files": [
+{
+"name": "1.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "24992425",
+"length": "1562.02"
+},
+{
+"name": "10.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "42408784",
+"length": "2650.54"
+},
+{
+"name": "11.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "58066371",
+"length": "3629.14"
+},
+{
+"name": "12.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "38755821",
+"length": "2422.23"
+},
+{
+"name": "13.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "177283377",
+"length": "11080.2"
+},
+{
+"name": "15.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "26451520",
+"length": "1653.21"
+},
+{
+"name": "16.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5767974",
+"length": "360.49"
+},
+{
+"name": "3.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "66028075",
+"length": "4126.75"
+},
+{
+"name": "4.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18227338",
+"length": "1139.2"
+},
+{
+"name": "5.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14203227",
+"length": "887.69"
+},
+{
+"name": "6.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "31240915",
+"length": "1952.55"
+},
+{
+"name": "7.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "15934413",
+"length": "995.89"
+},
+{
+"name": "8.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12025241",
+"length": "751.57"
+},
+{
+"name": "9.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "19612872",
+"length": "1225.8"
+}
+]
+}

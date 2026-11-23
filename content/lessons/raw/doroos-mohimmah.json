@@ -1,0 +1,53 @@
+{
+"item": "doroos-mohimmah",
+"files": [
+{
+"name": "01.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "41605632",
+"length": "62:50",
+"original": "01.wma"
+},
+{
+"name": "02.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "46492160",
+"length": "67:28",
+"original": "02.wma"
+},
+{
+"name": "03.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "40800768",
+"length": "61:35",
+"original": "03.wma"
+},
+{
+"name": "04.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "41302016",
+"length": "61:52",
+"original": "04.wma"
+},
+{
+"name": "05.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "32791040",
+"length": "52:54",
+"original": "05.wma"
+},
+{
+"name": "06.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "45170688",
+"length": "66:25",
+"original": "06.wma"
+}
+]
+}

@@ -1898,6 +1898,95 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kidsLearnWuduSub => 'Wudu steps in pictures';
 
   @override
+  String get lessonsAll => 'All';
+
+  @override
+  String get lessonsAllTopics => 'All topics';
+
+  @override
+  String lessonsContinue(String series, String n) {
+    return 'Continue: $series · lesson $n';
+  }
+
+  @override
+  String lessonsContinueBtn(String n) {
+    return 'Continue lesson $n';
+  }
+
+  @override
+  String lessonsCount(String n) {
+    return '$n lessons';
+  }
+
+  @override
+  String get lessonsDone => 'Heard';
+
+  @override
+  String get lessonsDoneHint => 'Long-press a lesson to add or remove its ✓.';
+
+  @override
+  String get lessonsDownloadAll => 'Download series';
+
+  @override
+  String get lessonsDownloadFailed => 'Download stopped. Check the internet connection and try again.';
+
+  @override
+  String get lessonsDownloadStop => 'Stop';
+
+  @override
+  String get lessonsDownloadedAll => 'Whole series downloaded';
+
+  @override
+  String lessonsDownloading(String done, String total) {
+    return 'Downloading $done of $total';
+  }
+
+  @override
+  String lessonsHeard(String n) {
+    return '$n heard';
+  }
+
+  @override
+  String lessonsHours(String n) {
+    return '$n h';
+  }
+
+  @override
+  String lessonsLesson(String n) {
+    return 'Lesson $n';
+  }
+
+  @override
+  String get lessonsLoadError => 'Could not load the list of series.';
+
+  @override
+  String lessonsMinutes(String n) {
+    return '$n min';
+  }
+
+  @override
+  String get lessonsNoMatch => 'No series with that name.';
+
+  @override
+  String lessonsNote(String series, String lessons) {
+    return 'Complete audio series by well-known scholars: $series series, $lessons lessons. Listen online, or download a lesson or the whole series to listen without internet.';
+  }
+
+  @override
+  String lessonsSaved(String n) {
+    return '$n saved';
+  }
+
+  @override
+  String get lessonsSearch => 'Search by series or sheikh';
+
+  @override
+  String get lessonsStart => 'Start from lesson 1';
+
+  @override
+  String get lessonsTitle => 'Lesson series';
+
+  @override
   String get libraryAllRiwayat => 'All riwayat';
 
   @override

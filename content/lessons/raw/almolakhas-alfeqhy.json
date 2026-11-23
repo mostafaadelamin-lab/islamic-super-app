@@ -1,0 +1,1461 @@
+{
+"item": "almolakhas-alfeqhy",
+"files": [
+{
+"name": "almolakhas-alfeqhy/001-altahara/001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11370956",
+"length": "2840.43",
+"title": "001- الباب الأول (أحكام الطهارة والمياه)، والباب الثاني (أحكام الآنية وثياب الكفار) (كتاب الطهارة- الملخص الفقهي) الإثنين 16 شوال 1433 - 3-9-2012 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/001-altahara/002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7684751",
+"length": "1918.88",
+"title": "002- باب فيما يحرم على المحدث مزاولته من الأعمال، وباب في آداب قضاء الحاجة (كتاب الطهارة- الملخص الفقهي) الإثنين 23 شوال 1433 - 10-9-2012 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/001-altahara/003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7020799",
+"length": "1752.9",
+"title": "003- من باب في السواك وخصال الفطرة، إلى باب في أحكام الوضوء (كتاب الطهارة- الملخص الفقهي) الإثنين 1 ذو القعدة 1433 - 17-9-2012 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/001-altahara/004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "3755528",
+"length": "936.6",
+"title": "004- باب بيان صفة الوضوء (كتاب الطهارة- الملخص الفقهي) الإثنين 8 ذو القعدة 1433 - 24-9-2012 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/001-altahara/005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6422169",
+"length": "1603.25",
+"title": "005- باب في أحكام المسح على الخفين وغيرهما من الحوائل (كتاب الطهارة- الملخص الفقهي) الإثنين 29 ذو القعدة 1433 - 15-10-2012 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/001-altahara/006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6853035",
+"length": "1710.97",
+"title": "006- باب في بيان نواقض الوضوء (كتاب الطهارة- الملخص الفقهي) الإثنين 13 ذو الحجة 1433 - 29-10-2012 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/001-altahara/007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5653060",
+"length": "1410.98",
+"title": "007- باب في أحكام الغسل (كتاب الطهارة- الملخص الفقهي) الإثنين 20 ذو الحجة 1433 - 5-11-2012 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/001-altahara/008.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7194801",
+"length": "1796.42",
+"title": "008- باب في أحكام التيمم (كتاب الطهارة- الملخص الفقهي) الإثنين 5 محرم 1434 - 19-11-2012 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/001-altahara/009.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5620574",
+"length": "1402.86",
+"title": "009- باب في أحكام إزالة النجاسة (كتاب الطهارة- الملخص الفقهي) الإثنين 12 محرم 1434 - 26-11-2012 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/001-altahara/010.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4412158",
+"length": "1100.75",
+"title": "010- باب في أحكام الحيض والنفاس (1) (كتاب الطهارة- الملخص الفقهي) الإثنين 26 محرم 1434 - 10-12-2012 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/001-altahara/011.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5729979",
+"length": "1430.21",
+"title": "011- باب في أحكام الحيض والنفاس (2) (كتاب الطهارة- الملخص الفقهي) الإثنين 4 صفر 1434 - 17-12-2012 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/012.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6047409",
+"length": "1509.57",
+"title": "012- باب في وجوب الصلوات الخمس (كتاب الصلاة- الملخص الفقهي) الإثنين 11 صفر 1434 - 24-12-2012 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/013.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9643847",
+"length": "2408.68",
+"title": "013- باب في أحكام الآذان والإقامة (كتاب الصلاة- الملخص الفقهي) الإثنين 18 صفر 1434 - 31-12-2012 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/014.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6506212",
+"length": "1624.27",
+"title": "014- باب في شروط الصلاة (1) (كتاب الصلاة- الملخص الفقهي) الإثنين 25 صفر 1434 - 7-1-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/015.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10573073",
+"length": "2640.99",
+"title": "015- باب في شروط الصلاة (2) (كتاب الصلاة- الملخص الفقهي) الإثنين 7 ربيع الأول 1434 - 19-1-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/016.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6538201",
+"length": "1632.27",
+"title": "016- باب في شروط الصلاة (3) (كتاب الصلاة- الملخص الفقهي) الإثنين 14 ربيع الأول 1434 - 26-1-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/017.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4170891",
+"length": "1040.44",
+"title": "017- باب في آداب المشي إلى الصلاة (كتاب الصلاة- الملخص الفقهي) الإثنين 21 ربيع الأول 1434 - 2-2-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/018.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5714542",
+"length": "1426.34",
+"title": "018- باب في أركان الصلاة وواجباتها وسننها (1) (كتاب الصلاة- الملخص الفقهي) الإثنين 28 ربيع الأول 1434 - 9-2-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/019.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6083207",
+"length": "1518.53",
+"title": "018- باب في أركان الصلاة وواجباتها وسننها (2) (كتاب الصلاة- الملخص الفقهي) الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/020.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7722525",
+"length": "1928.37",
+"title": "020- باب في بيان ما يكره في الصلاة (كتاب الصلاة- الملخص الفقهي) الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/021.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6356126",
+"length": "1586.76",
+"title": "021- بيان ما يستحب أو يباح فعله في الصلاة (كتاب الصلاة- الملخص الفقهي) الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/022.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6192332",
+"length": "1545.8",
+"title": "022- باب في السجود للسهو (كتاب الصلاة- الملخص الفقهي) الإثنين 27 ربيع الآخر 1434 - 9-2-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/023.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4318442",
+"length": "1077.32",
+"title": "023- الأبواب من التاسع إلى الحادي عشر (كتاب الصلاة- الملخص الفقهي) الإثنين 11 جمادى الأولى 1434 - 23-3-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/024.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5025519",
+"length": "1254.09",
+"title": "024- باب في صلاة التراويح وأحكامها (كتاب الصلاة- الملخص الفقهي) الإثنين 18 جمادى الأولى 1434 - 30-3-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/025.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5959987",
+"length": "1487.71",
+"title": "025- باب في باب في السنن الراتبة مع الفرائض (كتاب الصلاة- الملخص الفقهي) الإثنين 25 جمادى الأولى 1434 - 6-4-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/026.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6729556",
+"length": "1680.1",
+"title": "026- باب في صلاة الضحى، وباب في سجود التلاوة (كتاب الصلاة- الملخص الفقهي) الإثنين 3 جمادى الآخرة 1434 - 13-4-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/027.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6121599",
+"length": "1528.12",
+"title": "027- باب في التطوع المطلق (كتاب الصلاة- الملخص الفقهي) الإثنين 10 جمادى الآخرة 1434 - 20-4-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/028.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4675805",
+"length": "1166.66",
+"title": "028- باب في الأوقات المنهي عن الصلاة فيها (كتاب الصلاة- الملخص الفقهي) الإثنين 17 جمادى الآخرة 1434 - 27-4-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/029.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5866266",
+"length": "1464.3",
+"title": "029- باب في وجوب صلاة الجماعة وفضلها (كتاب الصلاة- الملخص الفقهي) الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/031.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5705333",
+"length": "1424.05",
+"title": "031- باب في باب في الأحكام التي تتعلق بالمسبوق (كتاب الصلاة- الملخص الفقهي) الإثنين 8 رجب 1434 - 18-5-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/032.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6106460",
+"length": "1524.33",
+"title": "032- باب في حكم حضور النساء إلى المساجد (كتاب الصلاة- الملخص الفقهي) الإثنين 6 شعبان 1434 - 15-6-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/033.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14097988",
+"length": "3522.2",
+"title": "033- باب في أحكام الإمامة، وباب فيمن لا تصح إمامته في الصلاة (كتاب الصلاة- الملخص الفقهي) الإثنين 13 شعبان 1434 - 22-6-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/034.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5625592",
+"length": "1404.11",
+"title": "034- باب فيما يشرع للإمام في الصلاة (كتاب الصلاة- الملخص الفقهي) الإثنين 20 شعبان 1434 - 29-6-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/035.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5968857",
+"length": "1489.93",
+"title": "035- باب في صلاة أهل الأعذار (1) صلاة المريض (كتاب الصلاة- الملخص الفقهي) الإثنين 24 شوال 1434 - 31-8-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/036.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6221651",
+"length": "1553.12",
+"title": "036- باب في صلاة أهل الأعذار (2) صلاة الراكب، وصلاة المسافر (كتاب الصلاة- الملخص الفقهي) الإثنين 1 ذوالقعدة 1434 - 7-9-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/mulakhas-feqhy-037.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8285598",
+"length": "2069.11",
+"title": "037- باب في صلاة أهل الأعذار (3) صلاة الخوف (كتاب الصلاة- الملخص الفقهي) الإثنين 10-11-1434 - 16-9-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/mulakhas-feqhy-038.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6540064",
+"length": "1632.74",
+"title": "038- باب في أحكام صلاة الجمعة (كتاب الصلاة- الملخص الفقهي) السبت 15-11-1434 - 21-9-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/mulakhas-feqhy-039.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "15333933",
+"length": "3831.2",
+"title": "039- باب في أحكام صلاة الجمعة (2) (كتاب الصلاة- الملخص الفقهي) السبت 22-11-1434 - 28-9-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/mulakhas-feqhy-040.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13287599",
+"length": "3319.62",
+"title": "040- باب في أحكام صلاة العيدين (كتاب الصلاة- الملخص الفقهي) السبت 29-11-1434 - 5-10-2013 - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/mulakhas-feqhy-041.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12134367",
+"length": "3031.31",
+"title": "041- أحكام صلاة الكسوف وصلاة الاستسقاء (كتاب الصلاة- الملخص الفقهي) السبت 7-12-1434هـ - 12-10-2013م - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/mulakhas-feqhy-042.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8826234",
+"length": "2204.27",
+"title": "042- أحكام الجنائز (1) أحكام المريض والمحتضر (كتاب الصلاة- الملخص الفقهي) السبت 14-12-1434هـ - 19-10-2013م - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/mulakhas-feqhy-043.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "21526770",
+"length": "5379.4",
+"title": "043- أحكام الجنائز (2) أحكام الوفاة، وتغسيل الميت (كتاب الصلاة- الملخص الفقهي) السبت 21-12-1434هـ - 26-10-2013م - الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/mulakhas-feqhy-044.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7436245",
+"length": "1856.79",
+"title": "044- أحكام الجنائز (3) أحكام التكفين، وأحكام الصلاة على الميت (لملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/mulakhas-feqhy-045.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8744202",
+"length": "2183.79",
+"title": "045- أحكام الجنائز (4) حمل الميت ودفنه (لملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/002-alsala/mulakhas-feqhy-046.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4332563",
+"length": "1080.87",
+"title": "046- أحكام الجنائز (5) أحكام التعزية وزيارة القبور (لملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/003-alzaka/mulakhas-feqhy-047.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7607349",
+"length": "1899.58",
+"title": "047- باب في مشروعية الزكاة ومكانتها (الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/003-alzaka/mulakhas-feqhy-048.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11471268",
+"length": "2865.56",
+"title": "048- باب في زكاة بهيمة الأنعام (الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/003-alzaka/mulakhas-feqhy-049.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7692925",
+"length": "1920.97",
+"title": "049- باب في زكاة بهيمة الأنعام (2) (الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/003-alzaka/mulakhas-feqhy-050.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5661161",
+"length": "1413.02",
+"title": "050- باب في زكاة الحبوب والثمار والعسل والمعدن والركاز (الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/003-alzaka/mulakhas-feqhy-051.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6188320",
+"length": "1544.81",
+"title": "052- باب في زكاة الحبوب والثمار والعسل والمعدن والركاز (3) (الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/003-alzaka/mulakhas-feqhy-052.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9896084",
+"length": "2471.76",
+"title": "053- زكاة النقدين (كتاب الزكاة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/003-alzaka/mulakhas-feqhy-053.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5105864",
+"length": "1274.21",
+"title": "054- زكاة عروض التجارة (كتاب الزكاة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/003-alzaka/mulakhas-feqhy-054.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7543806",
+"length": "1883.7",
+"title": "054- زكاة الفطر (كتاب الزكاة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/003-alzaka/mulakhas-feqhy-055.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "3923343",
+"length": "978.58",
+"title": "055- إخراج الزكاة (كتاب الزكاة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/003-alzaka/mulakhas-feqhy-056.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5029218",
+"length": "1255.03",
+"title": "056- بيان أهل الزكاة ومن لا يجوز دفع الزكاة لهم (كتاب الزكاة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/003-alzaka/mulakhas-feqhy-057.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7473243",
+"length": "1866.04",
+"title": "057- بيان أهل الزكاة ومن لا يجوز دفع الزكاة لهم (2) (كتاب الزكاة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/003-alzaka/mulakhas-feqhy-058.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5658506",
+"length": "1412.37",
+"title": "058- الصدقة المستحبة (كتاب الزكاة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/004-alseyam/mulakhas-feqhy-059.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7482699",
+"length": "1868.41",
+"title": "059- وجوب صوم رمضان ووقته (كتاب الصيام- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/004-alseyam/mulakhas-feqhy-060.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6333420",
+"length": "1581.09",
+"title": "060- بدء صيام اليوم ونهايته (كتاب الصيام- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/004-alseyam/mulakhas-feqhy-061.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10593031",
+"length": "2646",
+"title": "061- مفسدات الصوم (كتاب الصيام- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/004-alseyam/mulakhas-feqhy-062.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4942028",
+"length": "1233.25",
+"title": "062- أحكام القضاء للصيام (كتاب الصيام- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/004-alseyam/mulakhas-feqhy-063.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5672427",
+"length": "1415.84",
+"title": "063- ما يلزم من أفطر لكبر أو مرض (كتاب الصيام- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/005-alhag/mulakhas-feqhy-064.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8846906",
+"length": "2209.47",
+"title": "064- الحج وعلى من يجب (كتاب الحج- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/005-alhag/mulakhas-feqhy-065.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7476779",
+"length": "1866.93",
+"title": "065- شروط وجوب الحج على المرأة واحكام النيابة (كتاب الحج- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/005-alhag/mulakhas-feqhy-066.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9999364",
+"length": "2497.57",
+"title": "066- فضل الحج والاستعداد له، ومواقيت الحج (كتاب الحج- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/005-alhag/mulakhas-feqhy-067.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6962531",
+"length": "1738.38",
+"title": "067- كيفية الإحرام (كتاب الحج- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/005-alhag/mulakhas-feqhy-068.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4781937",
+"length": "1193.23",
+"title": "068- محظورات الإحرام (كتاب الحج- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/005-alhag/mulakhas-feqhy-069.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7868184",
+"length": "1964.78",
+"title": "069- أنواع النسك، ومحظورات الإحرام (2) (كتاب الحج- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/005-alhag/mulakhas-feqhy-070.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6502579",
+"length": "1623.39",
+"title": "070- محظورات الإحرام (3) (كتاب الحج- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/005-alhag/mulakhas-feqhy-071.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9158165",
+"length": "2287.26",
+"title": "071- أعمال يوم التروية ويوم عرفة، والدفع إلى مزدلفة والمبيت فيها (كتاب الحج- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/005-alhag/mulakhas-feqhy-072.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9198837",
+"length": "2297.42",
+"title": "072- أحكام الحج التي تفعل في أيام التشريق وطواف الوداع، وأحكام الهدي والأضحية (كتاب الحج- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/005-alhag/mulakhas-feqhy-073.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6523569",
+"length": "1628.64",
+"title": "073- أحكام العقيقة (كتاب الحج- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/006-algehad/mulakhas-feqhy-074.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5218285",
+"length": "1302.31",
+"title": "074- أحكام الجهاد (كتاب الجهاد- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/006-algehad/mulakhas-feqhy-075.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9350655",
+"length": "2335.41",
+"title": "075- أحكام الجهاد (2) (كتاب الجهاد- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/006-algehad/mulakhas-feqhy-076.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5015792",
+"length": "1251.69",
+"title": "076- أحكام الجهاد (3) (كتاب الجهاد- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/006-algehad/mulakhas-feqhy-077.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7103184",
+"length": "1773.54",
+"title": "077- أحكام الجهاد (4) (كتاب الجهاد- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/006-algehad/mulakhas-feqhy-078.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8676383",
+"length": "2166.84",
+"title": "078- أحكام الجهاد (5) (كتاب الجهاد- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-079.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14803970",
+"length": "3698.74",
+"title": "079- أحكام البيوع (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-080.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6788266",
+"length": "1694.8",
+"title": "080- بيان البيوع المنهي عنها (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-081.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9638012",
+"length": "2407.24",
+"title": "081- أحكام الشروط في البيع (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-082.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13066845",
+"length": "3264.45",
+"title": "082- أحكام الخيار في البيع (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-083.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5732847",
+"length": "1430.94",
+"title": "083- أحكام التصرف في البيع قبل قبضه والإقالة (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-084.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13826902",
+"length": "3454.46",
+"title": "084- بيان الربا وحكمه (1) (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-085.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4998350",
+"length": "1247.33",
+"title": "085- بيان الربا وحكمه (2) (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-086.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "3862538",
+"length": "963.38",
+"title": "086- أحكام بيع الأصول (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-087.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5907403",
+"length": "1474.59",
+"title": "087- أحكام بيع الثمار (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-088.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5271886",
+"length": "1315.72",
+"title": "088- وضع الجوائح (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-090.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6569231",
+"length": "1640.05",
+"title": "090- أحكام القرض (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-091.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4385249",
+"length": "1093.96",
+"title": "091- أحكام الرهن (1) (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-092.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7642405",
+"length": "1908.24",
+"title": "092- أحكام الرهن (2) (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-093.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7071546",
+"length": "1765.6",
+"title": "093- أحكام الضمان (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-094.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "3203754",
+"length": "798.65",
+"title": "094- أحكام الكفالة (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-095.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5924668",
+"length": "1478.88",
+"title": "095- أحكام الحوالة (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-096.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6701725",
+"length": "1673.12",
+"title": "096- أحكام الوكالة (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-097.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14695955",
+"length": "3671.7",
+"title": "097- أحكام الحجر (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-098.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "3729416",
+"length": "930.1",
+"title": "098- أحكام الحجر (2) (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-099.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11922662",
+"length": "2978.41",
+"title": "099- أحكام الصلح (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-100.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8399159",
+"length": "2097.46",
+"title": "100- أحكام الجوار والطرقات (كتاب البيوع - الملخص الفقهي)."
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-101.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8237591",
+"length": "2057.07",
+"title": "101- أحكام الشفعة (كتاب البيوع - الملخص الفقهي)."
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-102.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9437661",
+"length": "2357.06",
+"title": "102- أحكام الشراكة وأنواع الشركات، وأحكام شركة العنان (كتاب الشركات- الملخص الفقهي)."
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-103.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8005490",
+"length": "1999.08",
+"title": "103- أحكام شركة المضاربة (كتاب البيوع- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-104.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7536248",
+"length": "1881.74",
+"title": "104- شركات الوجوه والأبدان والمفاوضة (كتاب الشركات- الملخص الفقهي). الشيخ/ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-105.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12095563",
+"length": "3021.56",
+"title": "105- أحكام الإجارة (كتاب المساقاة والمزارعة والإجارة- الملخص الفقهي). الشيخ/ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-106.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7733735",
+"length": "1931.11",
+"title": "106- أحكام السبق (كتاب المساقاة والمزارعة والإجارة- الملخص الفقهي). الشيخ/ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-107.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9649562",
+"length": "2410.09",
+"title": "107- أحكام العارية (كتاب المساقاة والمزارعة والإجارة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-108.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7245039",
+"length": "1808.96",
+"title": "108- أحكام الغصب (كتاب المساقاة والمزارعة والإجارة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-109.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7162679",
+"length": "1788.4",
+"title": "109- أحكام الإتلافات (كتاب المساقاة والمزارعة والإجارة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-110.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8732351",
+"length": "2180.79",
+"title": "110- أحكام الوديعة (كتاب المساقاة والمزارعة والإجارة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-111.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6197438",
+"length": "1547.06",
+"title": "111- أحكام إحياء الموات (كتاب إحياء الموات وتملك المباحات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-112.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6490418",
+"length": "1620.3",
+"title": "112- أحكام الجعالة (كتاب إحياء الموات وتملك المباحات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-113.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7914403",
+"length": "1976.3",
+"title": "113- أحكام اللقطة (كتاب إحياء الموات وتملك المباحات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-114.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8037074",
+"length": "2006.97",
+"title": "114- أحكام اللقيط (كتاب إحياء الموات وتملك المباحات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-115.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9393349",
+"length": "2346.04",
+"title": "115- أحكام الوقف (كتاب إحياء الموات وتملك المباحات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/007-alboyo3/mulakhas-feqhy-116.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11756924",
+"length": "2936.93",
+"title": "116- أحكام الهبة والعطية (كتاب إحياء الموات وتملك المباحات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/008-alneka7/mulakhas-feqhy-117.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6773959",
+"length": "1691.2",
+"title": "117- أحكام النكاح (كتاب النكاح- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/008-alneka7/mulakhas-feqhy-118.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6473074",
+"length": "1615.97",
+"title": "118- أنواع النكاح من حيث الأحكام الشرعية (كتاب النكاح- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/008-alneka7/mulakhas-feqhy-119.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9881067",
+"length": "2467.98",
+"title": "119- أحكام الخطبة (كتاب النكاح- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/008-alneka7/mulakhas-feqhy-120.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8954060",
+"length": "2236.22",
+"title": "120- عقد النكاح وأركانه وشروطه (كتاب النكاح- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/008-alneka7/mulakhas-feqhy-121.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5366491",
+"length": "1339.33",
+"title": "121- الكفاءة في النكاح (كتاب النكاح- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/008-alneka7/mulakhas-feqhy-122.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9724763",
+"length": "2428.9",
+"title": "122- المحرمات في النكاح (كتاب النكاح- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/008-alneka7/mulakhas-feqhy-123.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10317007",
+"length": "2576.96",
+"title": "123- الشروط في النكاح (كتاب النكاح- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/008-alneka7/mulakhas-feqhy-124.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6166463",
+"length": "1539.32",
+"title": "124- العيوب في النكاح (كتاب النكاح- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/008-alneka7/mulakhas-feqhy-125.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4971301",
+"length": "1240.53",
+"title": "125- أنكحة الكفار (كتاب النكاح- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/008-alneka7/mulakhas-feqhy-126.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9031364",
+"length": "2255.55",
+"title": "126- الصداق في النكاح (كتاب النكاح- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/008-alneka7/mulakhas-feqhy-127.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7367459",
+"length": "1839.57",
+"title": "127- وليمة العرس (كتاب النكاح- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/008-alneka7/mulakhas-feqhy-128.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14812415",
+"length": "3700.8",
+"title": "128- عشرة النساء، وما يسقط نفقة الزوجة وقسمها (كتاب النكاح- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-129.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12906672",
+"length": "3224.38",
+"title": "129- أحكام الخلع (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-130.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13226413",
+"length": "3304.31",
+"title": "130- أحكام الطلاق (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-131.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9958838",
+"length": "2487.41",
+"title": "131- الطلاق السني والطلاق البدعي (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-132.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8133819",
+"length": "2031.16",
+"title": "132- الألفاظ التي يقع بها الطلاق (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-133.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11048433",
+"length": "2759.82",
+"title": "133- عدد مرات الطلاق (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-134.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11646724",
+"length": "2909.39",
+"title": "134- الرجعة (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-135.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8713500",
+"length": "2176.08",
+"title": "135- أحكام الإيلاء (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-136.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11004124",
+"length": "2748.74",
+"title": "136- أحكام الظهار (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-137.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7414272",
+"length": "1851.28",
+"title": "137- أحكام اللعان (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-138.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7164363",
+"length": "1788.79",
+"title": "138- أحكام لحوق النسب وعدم لحوقه (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-139.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8458750",
+"length": "2112.4",
+"title": "139- أحكام العدة (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-140.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10003536",
+"length": "2498.59",
+"title": "140- أحكام العدة (2) (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-141.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6878037",
+"length": "1717.22",
+"title": "141- أحكام العدة (3) (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-142.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11253018",
+"length": "2810.96",
+"title": "142- أحكام الرضاع (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-143.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5927176",
+"length": "1479.5",
+"title": "143- أحكام الحضانة (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-144.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14706617",
+"length": "1837.18",
+"title": "144- موانع الحضانة (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-145.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7525030",
+"length": "1878.97",
+"title": "145- نفقة الزوجة (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/009-al6alaq/mulakhas-feqhy-146.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5603275",
+"length": "1398.52",
+"title": "146- نفقة الأقارب والمماليك (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/010-alqasas/mulakhas-feqhy-147.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7062992",
+"length": "1763.45",
+"title": "147- أحكام القتل وأنواعه (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/010-alqasas/mulakhas-feqhy-148.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7859640",
+"length": "1962.61",
+"title": "148- القتل شبه العمد والقتل الخطأ (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/010-alqasas/mulakhas-feqhy-149.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11531613",
+"length": "2880.55",
+"title": "149- أحكام القصاص (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/010-alqasas/mulakhas-feqhy-150.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5473204",
+"length": "1365.94",
+"title": "150- شروط استيفاء القصاص (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/010-alqasas/mulakhas-feqhy-151.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7434683",
+"length": "1856.31",
+"title": "151- القصاص في الأطراف (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/010-alqasas/mulakhas-feqhy-152.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10601887",
+"length": "2648.11",
+"title": "152- القصاص من الجماعة للواحد (كتاب الطلاق- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/010-alqasas/mulakhas-feqhy-153.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6792917",
+"length": "1695.87",
+"title": "153- أحكام الديات (كتاب القصاص والجنايات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/010-alqasas/mulakhas-feqhy-154.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11644902",
+"length": "2908.87",
+"title": "154- مقادير الديات (كتاب القصاص والجنايات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/010-alqasas/mulakhas-feqhy-155.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4792686",
+"length": "1195.81",
+"title": "155- ديات الأعضاء والمنافع (كتاب القصاص والجنايات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/010-alqasas/mulakhas-feqhy-156.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6768803",
+"length": "1689.84",
+"title": "156- أحكام الشجاج وكسر العظام (كتاب القصاص والجنايات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/010-alqasas/mulakhas-feqhy-157.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6570142",
+"length": "1640.18",
+"title": "157- كفارة القتل (كتاب القصاص والجنايات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/010-alqasas/mulakhas-feqhy-158.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6045921",
+"length": "1509.12",
+"title": "158- أحكام القسامة (كتاب القصاص والجنايات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/011-al7odood/mulakhas-feqhy-159.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5914055",
+"length": "1476.15",
+"title": "159- أحكام الحدود (كتاب الحدود والتعزيرات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-160.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6835436",
+"length": "1706.5",
+"title": "160- حد الزنا (كتاب الحدود والتعزيرات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-161.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7917331",
+"length": "1976.97",
+"title": "161- حد الزنا (2) (كتاب الحدود والتعزيرات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-162.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5422533",
+"length": "1353.27",
+"title": "162- حد الزنا (3) (كتاب الحدود والتعزيرات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-163.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9137274",
+"length": "2281.93",
+"title": "163- حد القذف (كتاب الحدود والتعزيرات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-164.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6886984",
+"length": "1719.35",
+"title": "164- حد المسكر (كتاب الحدود والتعزيرات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-165.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8601356",
+"length": "2147.94",
+"title": "165- أحكام التعزير (كتاب الحدود والتعزيرات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-166.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9206239",
+"length": "2299.17",
+"title": "166- حد السرقة (كتاب الحدود والتعزيرات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-167.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6911027",
+"length": "1725.36",
+"title": "167- حد قطاع الطريق (كتاب الحدود والتعزيرات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-168.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9270511",
+"length": "2315.23",
+"title": "168- قتال أهل البغي (كتاب الحدود والتعزيرات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-169.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8338874",
+"length": "2082.33",
+"title": "169- أحكام الردة (كتاب الحدود والتعزيرات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-170.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9752281",
+"length": "2435.71",
+"title": "170- أحكام الردة (2) (كتاب الحدود والتعزيرات- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-171.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7374905",
+"length": "1841.37",
+"title": "171- أحكام الأطعمة (كتاب الأطعمة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-172.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6249558",
+"length": "1560.03",
+"title": "172- أحكام الأطعمة (2) (كتاب الأطعمة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-173.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7379918",
+"length": "1842.63",
+"title": "173- أحكام الذكاة (كتاب الأطعمة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-174.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6389353",
+"length": "1594.98",
+"title": "174- أحكام الصيد (كتاب الأطعمة- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-175.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6130134",
+"length": "1530.17",
+"title": "175- أحكام الأيمان (كتاب الأيمان والنذور- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-176.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6180600",
+"length": "1542.79",
+"title": "176- كفارة اليمين (كتاب الأيمان والنذور- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-177.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7417551",
+"length": "1852.03",
+"title": "177- أحكام النذر (كتاب الأيمان والنذور- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-178.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6218743",
+"length": "1552.33",
+"title": "178- أحكام القضاء في الإسلام (كتاب القضاء- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-179.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5477677",
+"length": "1367.11",
+"title": "179- آداب القاضي (كتاب القضاء- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-180.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6207549",
+"length": "1549.53",
+"title": "180- طريق الحكم وصفته (كتاب القضاء- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-181.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5312592",
+"length": "1325.79",
+"title": "181- شروط صحة الدعوى (كتاب القضاء- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-182.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4502488",
+"length": "1123.27",
+"title": "182- القسمة بين الشركاء (كتاب القضاء- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-183.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "2978292",
+"length": "742.22",
+"title": "183- الدعاوى والبينات (كتاب القضاء- الملخص الفقهي). الشيخ سعيد محمود"
+},
+{
+"name": "almolakhas-alfeqhy/almolakhas-alfeqhy-184.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9886514",
+"length": "2469.28",
+"title": "184- الشهادات (كتاب القضاء- الملخص الفقهي). الشيخ سعيد محمود"
+}
+]
+}

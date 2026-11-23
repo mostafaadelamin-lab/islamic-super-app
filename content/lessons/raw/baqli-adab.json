@@ -1,0 +1,373 @@
+{
+"item": "baqli-adab",
+"files": [
+{
+"name": "01.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "23944172",
+"length": "54:21",
+"original": "01.rm"
+},
+{
+"name": "02.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "26711528",
+"length": "53:18",
+"original": "02.rm"
+},
+{
+"name": "03.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "26133836",
+"length": "52:35",
+"original": "03.rm"
+},
+{
+"name": "04.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "27231512",
+"length": "54:42",
+"original": "04.rm"
+},
+{
+"name": "05.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "26787956",
+"length": "53:48",
+"original": "05.rm"
+},
+{
+"name": "06.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "23891360",
+"length": "47:24",
+"original": "06.rm"
+},
+{
+"name": "07.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "17655692",
+"length": "36:22",
+"original": "07.rm"
+},
+{
+"name": "08.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "18594392",
+"length": "35:17",
+"original": "08.rm"
+},
+{
+"name": "09.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "15059768",
+"length": "30:51",
+"original": "09.rm"
+},
+{
+"name": "10.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "16515320",
+"length": "33:31",
+"original": "10.rm"
+},
+{
+"name": "11.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "28017572",
+"length": "54:13",
+"original": "11.rm"
+},
+{
+"name": "12.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "30568820",
+"length": "59:05",
+"original": "12.rm"
+},
+{
+"name": "13.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "27270104",
+"length": "51:59",
+"original": "13.rm"
+},
+{
+"name": "14.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "15919736",
+"length": "30:53",
+"original": "14.rm"
+},
+{
+"name": "15.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "14297648",
+"length": "28:11",
+"original": "15.rm"
+},
+{
+"name": "16.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "24151640",
+"length": "46:39",
+"original": "16.rm"
+},
+{
+"name": "17.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "26402684",
+"length": "50:16",
+"original": "17.rm"
+},
+{
+"name": "18.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "26784968",
+"length": "52:39",
+"original": "18.rm"
+},
+{
+"name": "19.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "22849844",
+"length": "47:12",
+"original": "19.rm"
+},
+{
+"name": "20.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "16764044",
+"length": "34:30",
+"original": "20.rm"
+},
+{
+"name": "21.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "26504456",
+"length": "51:24",
+"original": "21.rm"
+},
+{
+"name": "22.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "25354760",
+"length": "51:23",
+"original": "22.rm"
+},
+{
+"name": "23.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "24350864",
+"length": "49:28",
+"original": "23.rm"
+},
+{
+"name": "24.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "24484712",
+"length": "50:38",
+"original": "24.rm"
+},
+{
+"name": "25.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "27191516",
+"length": "57:18",
+"original": "25.rm"
+},
+{
+"name": "26.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "25577852",
+"length": "54:00",
+"original": "26.rm"
+},
+{
+"name": "27.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "26050208",
+"length": "51:08",
+"original": "27.rm"
+},
+{
+"name": "28.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "23189648",
+"length": "46:51",
+"original": "28.rm"
+},
+{
+"name": "29.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "24636092",
+"length": "49:14",
+"original": "29.rm"
+},
+{
+"name": "30.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "30202844",
+"length": "62:20",
+"original": "30.rm"
+},
+{
+"name": "31.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "33387944",
+"length": "70:38",
+"original": "31.rm"
+},
+{
+"name": "32.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "30722252",
+"length": "60:07",
+"original": "32.rm"
+},
+{
+"name": "33.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "30558020",
+"length": "59:21",
+"original": "33.rm"
+},
+{
+"name": "34.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "33145988",
+"length": "67:38",
+"original": "34.rm"
+},
+{
+"name": "35.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "24206144",
+"length": "48:33",
+"original": "35.rm"
+},
+{
+"name": "36.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "29282900",
+"length": "58:31",
+"original": "36.rm"
+},
+{
+"name": "37.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "19074848",
+"length": "39:02",
+"original": "37.rm"
+},
+{
+"name": "38.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "26570768",
+"length": "51:17",
+"original": "38.rm"
+},
+{
+"name": "39.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "24687320",
+"length": "49:39",
+"original": "39.rm"
+},
+{
+"name": "40.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "30870320",
+"length": "59:18",
+"original": "40.rm"
+},
+{
+"name": "41.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "20520140",
+"length": "40:44",
+"original": "41.rm"
+},
+{
+"name": "42.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "20226236",
+"length": "39:02",
+"original": "42.rm"
+},
+{
+"name": "43.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "15643004",
+"length": "36:46",
+"original": "43.rm"
+},
+{
+"name": "44.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "17907404",
+"length": "35:34",
+"original": "44.rm"
+},
+{
+"name": "45.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "25770740",
+"length": "53:31",
+"original": "45.rm"
+},
+{
+"name": "46.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "23932940",
+"length": "50:22",
+"original": "46.rm"
+}
+]
+}

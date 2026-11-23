@@ -13,6 +13,7 @@ import 'help_screen.dart';
 import 'l10n_ext.dart';
 import 'mosques_screen.dart';
 import 'qibla_screen.dart';
+import 'lessons_screen.dart';
 import 'library_screen.dart';
 import 'stories_screen.dart';
 import 'settings_screen.dart';
@@ -55,6 +56,7 @@ class MoreScreen extends StatelessWidget {
                 tile('radio', RIcons.radio, l.radiosTitle, () => const RadioScreen()),
                 tile('nasheeds', RIcons.headphones, l.nasheedsTitle, () => const NasheedsScreen()),
                 tile('library', RIcons.reciter, l.libraryTitle, () => const LibraryScreen()),
+                tile('lessons', RIcons.headphones, l.lessonsTitle, () => const LessonsScreen()),
                 tile('stories', RIcons.headphones, l.storiesTitle, () => const StoriesScreen()),
                 tile('sharawi', RIcons.book, l.sharawiTitle, () => const SharawiScreen()),
                 tile('qibla', RIcons.compass, l.qiblaTitle, () => const QiblaScreen()),

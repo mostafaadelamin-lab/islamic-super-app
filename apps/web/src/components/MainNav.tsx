@@ -24,6 +24,7 @@ export const NAV_ITEMS: readonly { path: string; key: string; icon: IconName; al
       "reels",
       "stories",
       "sharawi",
+      "lessons",
       "tafsir",
       "kids",
       "nasheeds",

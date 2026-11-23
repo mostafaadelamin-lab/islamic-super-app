@@ -1,0 +1,740 @@
+{
+  "note": "Lesson series (audio, streamed or downloaded per lesson). Built by tools/lessons_build.py. Sources = archive.org items (docs/CONTENT_SOURCES.md), never shown in the app. Owner approved list 2026-11-23.",
+  "topics": [
+    {
+      "id": "aqeedah",
+      "ar": "العقيدة",
+      "en": "Creed"
+    },
+    {
+      "id": "seerah",
+      "ar": "السيرة النبوية",
+      "en": "The Prophet's life"
+    },
+    {
+      "id": "fiqh",
+      "ar": "الفقه",
+      "en": "Fiqh"
+    },
+    {
+      "id": "hadith",
+      "ar": "شرح الحديث",
+      "en": "Hadith"
+    },
+    {
+      "id": "hearts",
+      "ar": "تزكية النفس والرقائق",
+      "en": "Purifying the soul"
+    },
+    {
+      "id": "stories",
+      "ar": "الأنبياء والصحابة والقصص",
+      "en": "Prophets, Companions & stories"
+    },
+    {
+      "id": "quran",
+      "ar": "مع القرآن",
+      "en": "With the Quran"
+    },
+    {
+      "id": "family",
+      "ar": "تربية الأبناء والأسرة",
+      "en": "Raising children & family"
+    },
+    {
+      "id": "akhlaq",
+      "ar": "الأخلاق",
+      "en": "Good character"
+    },
+    {
+      "id": "adab",
+      "ar": "الآداب والحياة اليومية",
+      "en": "Manners & daily life"
+    },
+    {
+      "id": "muamalat",
+      "ar": "المعاملات",
+      "en": "Dealings with people"
+    },
+    {
+      "id": "tahara",
+      "ar": "الطهارة والنظافة الشخصية",
+      "en": "Purity & personal hygiene"
+    },
+    {
+      "id": "akhira",
+      "ar": "أحداث النهاية والآخرة",
+      "en": "End times & the hereafter"
+    }
+  ],
+  "groups": [
+    {
+      "id": "azhar",
+      "ar": "علماء الأزهر الشريف",
+      "en": "Al-Azhar scholars"
+    },
+    {
+      "id": "egypt",
+      "ar": "مشايخ مصر",
+      "en": "Egyptian sheikhs"
+    },
+    {
+      "id": "saudi",
+      "ar": "مشايخ السعودية",
+      "en": "Saudi sheikhs"
+    }
+  ],
+  "sheikhs": [
+    {
+      "id": "hassan",
+      "ar": "الشيخ محمد حسان",
+      "en": "Sheikh Mohamed Hassan",
+      "groups": [
+        "egypt"
+      ]
+    },
+    {
+      "id": "yaqoub",
+      "ar": "الشيخ محمد حسين يعقوب",
+      "en": "Sheikh Mohamed Hussein Yacoub",
+      "groups": [
+        "egypt"
+      ]
+    },
+    {
+      "id": "masri",
+      "ar": "الشيخ محمود المصري",
+      "en": "Sheikh Mahmoud Al-Masri",
+      "groups": [
+        "egypt"
+      ]
+    },
+    {
+      "id": "saeed",
+      "ar": "الشيخ سعيد محمود",
+      "en": "Sheikh Saeed Mahmoud",
+      "groups": [
+        "egypt"
+      ]
+    },
+    {
+      "id": "bali",
+      "ar": "الشيخ وحيد عبد السلام بالي",
+      "en": "Sheikh Waheed Bali",
+      "groups": [
+        "egypt"
+      ]
+    },
+    {
+      "id": "kafy",
+      "ar": "الشيخ عمر عبد الكافي",
+      "en": "Sheikh Omar Abdelkafy",
+      "groups": [
+        "azhar",
+        "egypt"
+      ]
+    },
+    {
+      "id": "shaarawi",
+      "ar": "الشيخ محمد متولي الشعراوي",
+      "en": "Sheikh Mohamed Metwally Al-Sha'rawi",
+      "groups": [
+        "azhar",
+        "egypt"
+      ]
+    },
+    {
+      "id": "gabr",
+      "ar": "الشيخ يسري جبر",
+      "en": "Sheikh Yousry Gabr",
+      "groups": [
+        "azhar",
+        "egypt"
+      ]
+    },
+    {
+      "id": "saqr",
+      "ar": "الشيخ عطية صقر",
+      "en": "Sheikh Atiyya Saqr",
+      "groups": [
+        "azhar",
+        "egypt"
+      ]
+    },
+    {
+      "id": "ghazali",
+      "ar": "الشيخ محمد الغزالي",
+      "en": "Sheikh Mohammed Al-Ghazali",
+      "groups": [
+        "azhar",
+        "egypt"
+      ]
+    },
+    {
+      "id": "uthaymeen",
+      "ar": "الشيخ محمد بن صالح العثيمين",
+      "en": "Sheikh Ibn Uthaymeen",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
+      "id": "alsheikh",
+      "ar": "الشيخ صالح آل الشيخ",
+      "en": "Sheikh Saleh Al Al-Sheikh",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
+      "id": "sabt",
+      "ar": "الشيخ خالد السبت",
+      "en": "Sheikh Khalid Al-Sabt",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
+      "id": "khathlan",
+      "ar": "الشيخ سعد الخثلان",
+      "en": "Sheikh Saad Al-Khathlan",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
+      "id": "munajjid",
+      "ar": "الشيخ محمد صالح المنجد",
+      "en": "Sheikh Muhammad Al-Munajjid",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
+      "id": "maghamsi",
+      "ar": "الشيخ صالح المغامسي",
+      "en": "Sheikh Saleh Al-Maghamsi",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
+      "id": "arifi",
+      "ar": "الشيخ محمد العريفي",
+      "en": "Sheikh Muhammad Al-Arifi",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
+      "id": "qarni",
+      "ar": "الشيخ عائض القرني",
+      "en": "Sheikh Aidh Al-Qarni",
+      "groups": [
+        "saudi"
+      ]
+    }
+  ],
+  "series": [
+    {
+      "id": "tawhid-alsheikh",
+      "topic": "aqeedah",
+      "sheikh": "alsheikh",
+      "ar": "شرح كتاب التوحيد",
+      "en": "Explaining Kitab al-Tawhid",
+      "items": [
+        "Kitab_Tawhid_Saleh_Bin_Abdul_Aziz_Al-Cheikh_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "usul-uthaymeen",
+      "topic": "aqeedah",
+      "sheikh": "uthaymeen",
+      "ar": "شرح ثلاثة الأصول",
+      "en": "The Three Fundamentals",
+      "items": [
+        "Last_03_20180520_1547"
+      ]
+    },
+    {
+      "id": "doroos-hassan",
+      "topic": "aqeedah",
+      "sheikh": "hassan",
+      "ar": "شرح الدروس المهمة لعامة الأمة",
+      "en": "Important lessons for every Muslim",
+      "items": [
+        "doroos-mohimmah"
+      ]
+    },
+    {
+      "id": "huwa-allah-maghamsi",
+      "topic": "aqeedah",
+      "sheikh": "maghamsi",
+      "ar": "هو الله",
+      "en": "He is Allah",
+      "items": [
+        "Hoi-ALLAH_Mghamsi-mp3"
+      ]
+    },
+    {
+      "id": "seerah-hassan",
+      "topic": "seerah",
+      "sheikh": "hassan",
+      "ar": "السيرة النبوية",
+      "en": "The Prophet's biography",
+      "items": [
+        "hassantahiri28_gmail_41"
+      ]
+    },
+    {
+      "id": "seerah-shaarawi",
+      "topic": "seerah",
+      "sheikh": "shaarawi",
+      "ar": "السيرة النبوية",
+      "en": "The Prophet's biography",
+      "items": [
+        "Prophetic_biography_by_Al_Shaarawy"
+      ],
+      "titles": "name"
+    },
+    {
+      "id": "shamail-gabr",
+      "topic": "seerah",
+      "sheikh": "gabr",
+      "ar": "شرح الشمائل المحمدية",
+      "en": "The Prophet's description (Shama'il)",
+      "items": [
+        "jnnatalfirdos_gmail_29"
+      ]
+    },
+    {
+      "id": "seerah-qarni",
+      "topic": "seerah",
+      "sheikh": "qarni",
+      "ar": "السيرة المحمدية",
+      "en": "The Muhammadan biography",
+      "items": [
+        "Essirra_Al_Mohamadia"
+      ]
+    },
+    {
+      "id": "molakhas-saeed",
+      "topic": "fiqh",
+      "sheikh": "saeed",
+      "ar": "شرح الملخص الفقهي",
+      "en": "The fiqh summary explained",
+      "items": [
+        "almolakhas-alfeqhy"
+      ]
+    },
+    {
+      "id": "fiqh-saqr",
+      "topic": "fiqh",
+      "sheikh": "saqr",
+      "ar": "الموسوعة الفقهية",
+      "en": "Fiqh encyclopedia",
+      "items": [
+        "ahmed_alkttawy_yahoo_6_201808"
+      ],
+      "titles": "name"
+    },
+    {
+      "id": "nawawi-uthaymeen",
+      "topic": "hadith",
+      "sheikh": "uthaymeen",
+      "ar": "شرح الأربعين النووية",
+      "en": "The Forty Hadith of al-Nawawi",
+      "items": [
+        "002_20210929"
+      ]
+    },
+    {
+      "id": "riyadh-uthaymeen",
+      "topic": "hadith",
+      "sheikh": "uthaymeen",
+      "ar": "شرح رياض الصالحين",
+      "en": "Riyad al-Salihin explained",
+      "items": [
+        "06Shar7KetabReyadhAlSal7een"
+      ]
+    },
+    {
+      "id": "qudsi-kafy",
+      "topic": "hadith",
+      "sheikh": "kafy",
+      "ar": "الأحاديث القدسية",
+      "en": "Sacred hadiths",
+      "items": [
+        "Dr_Omar-Abdulkafy_Ahadith_9odosia_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "konooz-kafy",
+      "topic": "hadith",
+      "sheikh": "kafy",
+      "ar": "كنوز السنة",
+      "en": "Treasures of the Sunnah",
+      "items": [
+        "Islamic_Tape-223_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "qulub-sabt",
+      "topic": "hearts",
+      "sheikh": "sabt",
+      "ar": "أعمال القلوب",
+      "en": "Deeds of the heart",
+      "items": [
+        "Hearts_Deeds_uP_bY_mUSLEm",
+        "Hearts_Deeds-2_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "arbaoon-qalbiya-munajjid",
+      "topic": "hearts",
+      "sheikh": "munajjid",
+      "ar": "الأربعون القلبية",
+      "en": "Forty hadiths of the heart",
+      "items": [
+        "aa_127_201608"
+      ]
+    },
+    {
+      "id": "ajaeb-qulub-kafy",
+      "topic": "hearts",
+      "sheikh": "kafy",
+      "ar": "عجائب القلوب",
+      "en": "Wonders of the heart",
+      "items": [
+        "Dr_Omar-Abdulkafy_Ajeib_Al_Koloub_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "qalb-saleem-kafy",
+      "topic": "hearts",
+      "sheikh": "kafy",
+      "ar": "القلب السليم",
+      "en": "The sound heart",
+      "items": [
+        "Al9alb_Essalim"
+      ]
+    },
+    {
+      "id": "tareeq-noor-kafy",
+      "topic": "hearts",
+      "sheikh": "kafy",
+      "ar": "طريق النور",
+      "en": "The path of light",
+      "items": [
+        "Dr_Omar-Abdulkafy_Tarik_E-nour_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "nafahat-kafy",
+      "topic": "hearts",
+      "sheikh": "kafy",
+      "ar": "نفحات",
+      "en": "Breezes",
+      "items": [
+        "Islamic_Tape-600_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "rabbaniyyin-kafy",
+      "topic": "hearts",
+      "sheikh": "kafy",
+      "ar": "كونوا ربانيين",
+      "en": "Be devoted to your Lord",
+      "items": [
+        "kono-rabbaneen"
+      ]
+    },
+    {
+      "id": "nafs-kafy",
+      "topic": "hearts",
+      "sheikh": "kafy",
+      "ar": "ونفس وما سواها",
+      "en": "By the soul",
+      "items": [
+        "aa_123_20160715"
+      ]
+    },
+    {
+      "id": "deen-qayyim-kafy",
+      "topic": "hearts",
+      "sheikh": "kafy",
+      "ar": "الدين القيم",
+      "en": "The upright religion",
+      "items": [
+        "Deen-qaeem_Omar-abdlkafee"
+      ]
+    },
+    {
+      "id": "fawz-kafy",
+      "topic": "hearts",
+      "sheikh": "kafy",
+      "ar": "الفوز المبين",
+      "en": "The clear triumph",
+      "items": [
+        "Fawz-mobeen_Omar-abdlkafee"
+      ]
+    },
+    {
+      "id": "farah-qarni",
+      "topic": "hearts",
+      "sheikh": "qarni",
+      "ar": "دعوة للفرح",
+      "en": "An invitation to joy",
+      "items": [
+        "Islamic_Tape-222_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "lectures-ghazali",
+      "topic": "hearts",
+      "sheikh": "ghazali",
+      "ar": "محاضرات مختارة",
+      "en": "Selected lectures",
+      "items": [
+        "gzaly"
+      ]
+    },
+    {
+      "id": "anbiya-shaarawi",
+      "topic": "stories",
+      "sheikh": "shaarawi",
+      "ar": "قصص الأنبياء",
+      "en": "Stories of the prophets",
+      "items": [
+        "Islamic_Tape-250_uP_bY_mUSLEm"
+      ],
+      "titles": "title",
+      "order": [
+        "مقدمة",
+        "ادم",
+        "ادريس",
+        "نوح",
+        "هود",
+        "صالح",
+        "ابراهيم",
+        "لوط",
+        "اسماعيل",
+        "يوسف",
+        "شعيب",
+        "أيوب",
+        "ذو الكفل",
+        "موسى",
+        "داوود",
+        "سليمان",
+        "يونس",
+        "زكريا",
+        "عيسى"
+      ]
+    },
+    {
+      "id": "sahaba-masri",
+      "topic": "stories",
+      "sheikh": "masri",
+      "ar": "حياة الصحابة",
+      "en": "Lives of the Companions",
+      "items": [
+        "Sahaba_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "sahaba-munajjid",
+      "topic": "stories",
+      "sheikh": "munajjid",
+      "ar": "قصص الصحابة في عهد النبوة",
+      "en": "Companions' stories",
+      "items": [
+        "qesas-sahaba_munjid"
+      ]
+    },
+    {
+      "id": "safwa-kafy",
+      "topic": "stories",
+      "sheikh": "kafy",
+      "ar": "صفوة الصفوة",
+      "en": "The best of the best",
+      "items": [
+        "Islamic_Tape-682_uP_bY_mUSLEm",
+        "Islamic_Tape-683_uP_bY_mUSLEm",
+        "Islamic_Tape-684_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "qisas-quran-munajjid",
+      "topic": "stories",
+      "sheikh": "munajjid",
+      "ar": "قصص القرآن",
+      "en": "Stories of the Quran",
+      "items": [
+        "qasass-quran_up-by-ayoub-islam"
+      ]
+    },
+    {
+      "id": "qissa-kafy",
+      "topic": "stories",
+      "sheikh": "kafy",
+      "ar": "قصة وعبرة",
+      "en": "A story and a lesson",
+      "items": [
+        "way2sona_20160322_2134"
+      ]
+    },
+    {
+      "id": "maa-quran-maghamsi",
+      "topic": "quran",
+      "sheikh": "maghamsi",
+      "ar": "مع القرآن",
+      "en": "With the Quran",
+      "items": [
+        "Ma3a-quran_Mghamsi-mp3"
+      ]
+    },
+    {
+      "id": "quran-insan-kafy",
+      "topic": "quran",
+      "sheikh": "kafy",
+      "ar": "القرآن والإنسان",
+      "en": "The Quran and man",
+      "items": [
+        "Islamic_Tape-895_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "waad-haq-kafy",
+      "topic": "quran",
+      "sheikh": "kafy",
+      "ar": "الوعد الحق",
+      "en": "The true promise",
+      "items": [
+        "Al_Waad_Al_Haq-Up-By-MusleM"
+      ]
+    },
+    {
+      "id": "awlad-yaqoub",
+      "topic": "family",
+      "sheikh": "yaqoub",
+      "ar": "تربية الأولاد",
+      "en": "Raising children",
+      "items": [
+        "Awled_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "huquq-kafy",
+      "topic": "family",
+      "sheikh": "kafy",
+      "ar": "الحقوق",
+      "en": "Rights",
+      "items": [
+        "al7oqoq_Omar-abdlkafee"
+      ]
+    },
+    {
+      "id": "azmat-akhlaq-hassan",
+      "topic": "akhlaq",
+      "sheikh": "hassan",
+      "ar": "أزمة أخلاق",
+      "en": "A crisis of character",
+      "items": [
+        "Mohammad_Hassen_Azmt_Akhla9_up-by-muslem"
+      ]
+    },
+    {
+      "id": "akhlaquna-kafy",
+      "topic": "akhlaq",
+      "sheikh": "kafy",
+      "ar": "أخلاقنا في الميزان",
+      "en": "Our character in the balance",
+      "items": [
+        "Abdel-Kefi_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "afat-lisan-kafy",
+      "topic": "akhlaq",
+      "sheikh": "kafy",
+      "ar": "آفات اللسان",
+      "en": "Sins of the tongue",
+      "items": [
+        "Afat-lissan_Omar-abdlkafee"
+      ]
+    },
+    {
+      "id": "adab-bali",
+      "topic": "adab",
+      "sheikh": "bali",
+      "ar": "شرح صحيح الآداب الإسلامية",
+      "en": "Islamic manners",
+      "items": [
+        "baqli-adab"
+      ]
+    },
+    {
+      "id": "hayatuna-munajjid",
+      "topic": "adab",
+      "sheikh": "munajjid",
+      "ar": "حياتنا في ضوء الشريعة",
+      "en": "Our life in the light of the Shariah",
+      "items": [
+        "hayatona_munjid"
+      ]
+    },
+    {
+      "id": "muamalat-khathlan",
+      "topic": "muamalat",
+      "sheikh": "khathlan",
+      "ar": "فقه المعاملات",
+      "en": "Fiqh of dealings",
+      "items": [
+        "31.-3-31"
+      ],
+      "titles": "name"
+    },
+    {
+      "id": "tahara-uthaymeen",
+      "topic": "tahara",
+      "sheikh": "uthaymeen",
+      "ar": "كتاب الطهارة",
+      "en": "The book of purity",
+      "items": [
+        "Selselat_ketab_a-ttahara__majmo3at_bologh_al-maram__ibn-othaimeen"
+      ],
+      "sort": "lex"
+    },
+    {
+      "id": "nihaya-hassan",
+      "topic": "akhira",
+      "sheikh": "hassan",
+      "ar": "أحداث النهاية",
+      "en": "Events of the end",
+      "items": [
+        "2929MohamedHassan"
+      ],
+      "titles": "name"
+    },
+    {
+      "id": "nihayat-alam-arifi",
+      "topic": "akhira",
+      "sheikh": "arifi",
+      "ar": "نهاية العالم",
+      "en": "The end of the world",
+      "items": [
+        "Islamic_Tape-758_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "dar-akhira-kafy",
+      "topic": "akhira",
+      "sheikh": "kafy",
+      "ar": "الدار الآخرة",
+      "en": "The hereafter",
+      "items": [
+        "Dr.omar-abdulkafy_Dar_Akhira_uP_bY_mUSLEm"
+      ]
+    }
+  ]
+}

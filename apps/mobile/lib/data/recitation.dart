@@ -591,6 +591,7 @@ class NarrationController extends ChangeNotifier {
     if (playlist == null && _seriesId != seriesId) _playlist = const [];
     _seriesId = seriesId;
     _episode = e;
+    if (remember) unawaited(_settings.setLastEpisode(seriesId, e.id));
     _state = RecitationState.loading;
     _position = Duration.zero;
     _duration = null;
@@ -634,7 +635,10 @@ class NarrationController extends ChangeNotifier {
 
   void _onDone() {
     if (_episode == null || _state != RecitationState.playing) return;
-    if (_remember) unawaited(_settings.setStoryPosition(_key(_seriesId!, _episode!), 0));
+    if (_remember) {
+      unawaited(_settings.setStoryPosition(_key(_seriesId!, _episode!), 0));
+      unawaited(_settings.setEpisodeDone(_key(_seriesId!, _episode!), true));
+    }
     if (hasNext) {
       unawaited(next());
       return;

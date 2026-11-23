@@ -69,6 +69,28 @@ class SettingsController extends ChangeNotifier {
     }
   }
 
+  /// Episodes heard to the end (lesson series ✓), keyed "series/episode".
+  bool episodeDone(String key) => _prefs.getBool('epDone.$key') ?? false;
+  Future<void> setEpisodeDone(String key, bool v) async {
+    if (v) {
+      await _prefs.setBool('epDone.$key', true);
+    } else {
+      await _prefs.remove('epDone.$key');
+    }
+    notifyListeners();
+  }
+
+  /// The last episode played in a series (its id), for "continue".
+  String? lastEpisode(String series) => _prefs.getString('lastEp.$series');
+
+  /// The last lesson series listened to (any), for the «سلاسل الدروس» continue card.
+  String? get lastLessonSeries => _prefs.getString('lastLessonSeries');
+
+  Future<void> setLastEpisode(String series, String id) async {
+    await _prefs.setString('lastEp.$series', id);
+    if (series.startsWith('lessons-')) await _prefs.setString('lastLessonSeries', series.substring(8));
+  }
+
   ThemeMode get themeMode => switch (_prefs.getString('theme')) {
     'light' => ThemeMode.light,
     'dark' => ThemeMode.dark,

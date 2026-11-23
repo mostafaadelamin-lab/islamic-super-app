@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased] — «سلاسل الدروس» audio lesson series — 2026-11-23
+Owner 2026-11-23: a new section of complete religious lesson series, all audio, downloadable, with the player under each lesson; famous Egyptian and Arab sheikhs, all of Sheikh Omar Abdelkafy's series, Saudi sheikhs and Al-Azhar scholars. Phone apps (Android + iPhone) and website.
+### Added
+- «سلاسل الدروس» (More on the app, Library menu on the website): 47 complete series, about 2000 lessons, in 13 topics (creed, the Prophet's life, fiqh, hadith, purifying the soul, prophets/Companions/stories, with the Quran, raising children and family, good character, manners and daily life, dealings with people, purity and personal hygiene, end times and the hereafter). Filters: Al-Azhar scholars / Egyptian sheikhs / Saudi sheikhs, topic, and search by series or sheikh.
+- Each series: «أكمل الدرس N» (resumes where the listener stopped), «تحميل السلسلة» (whole series for offline listening, with stop), download per lesson, ✓ on every lesson heard to the end (long-press on the app / ✓ button on the website to set or clear it), progress on every card, and a «أكمل» card for the last series. The lock-screen-style player opens right under the lesson playing and goes on to the next lesson.
+### Changed
+- Unchanged: Quran text and all other religious content.
+
 ## [1.2.18] — CarPlay sections + adhan first — 2026-11-23
 
 ### Added

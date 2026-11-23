@@ -1,0 +1,645 @@
+{
+"item": "Selselat_ketab_a-ttahara__majmo3at_bologh_al-maram__ibn-othaimeen",
+"files": [
+{
+"name": "001a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11428255",
+"length": "2857.06",
+"title": "001a"
+},
+{
+"name": "001b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11044207",
+"length": "2761.05",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 1b"
+},
+{
+"name": "002a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11305279",
+"length": "2826.31",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 2a"
+},
+{
+"name": "002b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11120959",
+"length": "2780.23",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 2b"
+},
+{
+"name": "003a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11378287",
+"length": "2844.57",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 3a"
+},
+{
+"name": "003b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11163295",
+"length": "2790.82",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 3b"
+},
+{
+"name": "004a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11378287",
+"length": "2844.57",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 4a"
+},
+{
+"name": "004b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11186335",
+"length": "2796.58",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 4b"
+},
+{
+"name": "005a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11017279",
+"length": "2754.31",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 5a"
+},
+{
+"name": "005b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10625599",
+"length": "2656.39",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 5b"
+},
+{
+"name": "006a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11451295",
+"length": "2862.82",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 6a"
+},
+{
+"name": "006b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11178559",
+"length": "2794.63",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 6b"
+},
+{
+"name": "007a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11516527",
+"length": "2879.13",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 7a"
+},
+{
+"name": "007b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11217007",
+"length": "2804.25",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 7b"
+},
+{
+"name": "008a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11481967",
+"length": "2870.49",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 8a"
+},
+{
+"name": "008b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11193967",
+"length": "2798.49",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 8b"
+},
+{
+"name": "009a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11389807",
+"length": "2847.45",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 9a"
+},
+{
+"name": "009b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11278495",
+"length": "2819.62",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 9b"
+},
+{
+"name": "010a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11531935",
+"length": "2882.98",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 10a"
+},
+{
+"name": "010b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11025055",
+"length": "2756.26",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 10b"
+},
+{
+"name": "011a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11389807",
+"length": "2847.45",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 11a"
+},
+{
+"name": "011b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11140255",
+"length": "2785.06",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 11b"
+},
+{
+"name": "012a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11290015",
+"length": "2822.5",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 12a"
+},
+{
+"name": "012b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11201599",
+"length": "2800.39",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 12b"
+},
+{
+"name": "013a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11186335",
+"length": "2796.58",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 13a"
+},
+{
+"name": "013b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11182447",
+"length": "2795.61",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 13b"
+},
+{
+"name": "014a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11405215",
+"length": "2851.3",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 14a"
+},
+{
+"name": "014b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11324575",
+"length": "2831.14",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ1- 14b"
+},
+{
+"name": "01a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10733696",
+"length": "2683.42",
+"title": "A0099-1a"
+},
+{
+"name": "01b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10911872",
+"length": "2727.96",
+"title": "A0099-1b"
+},
+{
+"name": "02a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11044992",
+"length": "2761.24",
+"title": "A0099-2a"
+},
+{
+"name": "02b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10938496",
+"length": "2734.62",
+"title": "A0099-2b"
+},
+{
+"name": "03a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10991744",
+"length": "2747.93",
+"title": "A0099-3a"
+},
+{
+"name": "03b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10819712",
+"length": "2704.92",
+"title": "A0099-3b"
+},
+{
+"name": "04a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11040896",
+"length": "2760.22",
+"title": "A0099-4a"
+},
+{
+"name": "04b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11624576",
+"length": "2906.14",
+"title": "A0099-4b"
+},
+{
+"name": "05a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11028799",
+"length": "2757.19",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 5a"
+},
+{
+"name": "05b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10913599",
+"length": "2728.39",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 5b"
+},
+{
+"name": "06a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11044207",
+"length": "2761.05",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 6a"
+},
+{
+"name": "06b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10955935",
+"length": "2738.98",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 6b"
+},
+{
+"name": "07a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11170927",
+"length": "2792.73",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 7a"
+},
+{
+"name": "07b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10986607",
+"length": "2746.65",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 7b"
+},
+{
+"name": "08a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11074879",
+"length": "2768.71",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 8a"
+},
+{
+"name": "08b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10971199",
+"length": "2742.79",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 8b"
+},
+{
+"name": "09a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11143999",
+"length": "2785.99",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 9a"
+},
+{
+"name": "09b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10932895",
+"length": "2733.22",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 9b"
+},
+{
+"name": "10a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11109439",
+"length": "2777.35",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 10a"
+},
+{
+"name": "10b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10990495",
+"length": "2747.62",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 10b"
+},
+{
+"name": "11a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11190079",
+"length": "2797.51",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 11a"
+},
+{
+"name": "11b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10882927",
+"length": "2720.73",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 11b"
+},
+{
+"name": "12a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11036575",
+"length": "2759.14",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 12a"
+},
+{
+"name": "12b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10990495",
+"length": "2747.62",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 12b"
+},
+{
+"name": "13a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11120959",
+"length": "2780.23",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 13a"
+},
+{
+"name": "13b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10890559",
+"length": "2722.63",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 13b"
+},
+{
+"name": "14a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10998127",
+"length": "2749.53",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 14a"
+},
+{
+"name": "14b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10963567",
+"length": "2740.89",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 14b"
+},
+{
+"name": "15a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11032687",
+"length": "2758.17",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 15a"
+},
+{
+"name": "15b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10886815",
+"length": "2721.7",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 15b"
+},
+{
+"name": "16a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11021167",
+"length": "2755.29",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 16a"
+},
+{
+"name": "16b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10886815",
+"length": "2721.7",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 16b"
+},
+{
+"name": "17a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11017279",
+"length": "2754.31",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 17a"
+},
+{
+"name": "17b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10905967",
+"length": "2726.49",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 17b"
+},
+{
+"name": "18a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11005759",
+"length": "2751.43",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 18a"
+},
+{
+"name": "18b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10836847",
+"length": "2709.21",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 18b"
+},
+{
+"name": "19a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11021167",
+"length": "2755.29",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 19a"
+},
+{
+"name": "19b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10898335",
+"length": "2724.58",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 19b"
+},
+{
+"name": "20a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10982719",
+"length": "2745.67",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 20a"
+},
+{
+"name": "20b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10963567",
+"length": "2740.89",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 20b"
+},
+{
+"name": "21a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11048095",
+"length": "2762.02",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 21a"
+},
+{
+"name": "21b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11090287",
+"length": "2772.57",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 21b"
+},
+{
+"name": "22a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11140255",
+"length": "2785.06",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 22a"
+},
+{
+"name": "22b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11067247",
+"length": "2766.81",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 22b"
+},
+{
+"name": "23a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11097919",
+"length": "2774.47",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 23a"
+},
+{
+"name": "23b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10752319",
+"length": "2688.07",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 23b"
+},
+{
+"name": "24a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11228527",
+"length": "2807.13",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 24a"
+},
+{
+"name": "24b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11124847",
+"length": "2781.21",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 24b"
+},
+{
+"name": "25a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11209375",
+"length": "2802.34",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 25a"
+},
+{
+"name": "25b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11101807",
+"length": "2775.45",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 25b"
+},
+{
+"name": "26a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11170927",
+"length": "2792.73",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 26a"
+},
+{
+"name": "26b.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9746335",
+"length": "2436.58",
+"title": "ÈáæÛ ÇáãÑÇã-ÇáØåÇÑÉÇáÌÒÁ2- 26b"
+}
+]
+}
