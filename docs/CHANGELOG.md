@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.18] — CarPlay sections + adhan first — 2026-11-23
+
+### Added
+- CarPlay / Android Auto: the whole dhikr on the car screen (part by part with the recording) and a «نص الذكر» button; radio, recitation library, al-Sha'rawi, prophets' stories and nasheeds beside the morning / evening adhkar.
+- Reminder 10 minutes before the adhan and the iqama alert on by default; iqama countdown on home, prayer tab, widgets, lock screen and the website; no other app reminders from 10 minutes before the adhan until the iqama.
+- Wide prayer widget in the owner's look; «تنبيهات الأذكار» card on the Adhkar tab; every audio player in the lock-screen look.
+
 ## [1.2.17] — full adhan on iPhone — 2026-11-21
 Owner 2026-11-21: iPhone adhan alerts played only 30 seconds; the whole adhan must ring on every iPhone. Phone apps only (Android already rings the full adhan; the website plays it in full while a page is open). Also the first-run setup asks for everything at once and offers the prayer widget, and Android gets the next prayer on the lock screen.
 ### Added
