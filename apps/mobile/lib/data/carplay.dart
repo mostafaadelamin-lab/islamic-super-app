@@ -1,15 +1,16 @@
-// CarPlay (iPhone): the car screen shows a list «أذكار الصباح / أذكار المساء»; picking one
-// starts driving mode here and the car switches to its Now Playing screen, which shows the
-// live title and count that driving mode already gives the lock screen (audio_service).
+// CarPlay (iPhone): the car screen lists «أذكار الصباح / أذكار المساء» and the listening sections
+// (radio, recitation library, al-Sha'rawi, prophets' stories, nasheeds). Picking an item plays it
+// here and the car switches to its Now Playing screen, which shows the live title the lock screen
+// shows (audio_service). In driving mode its «نص الذكر» button opens the whole dhikr in lines.
 //
-// The list itself is drawn natively (ios/Runner/CarPlaySceneDelegate.swift). This side sends
-// it the items (from DriveBrowser, the same list Android Auto shows) and plays what is picked.
+// The lists are drawn natively (ios/Runner/CarPlaySceneDelegate.swift). This side gives it the
+// items (from CarBrowser, the same lists Android Auto shows) and plays what is picked.
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/services.dart';
 
 import '../l10n/app_localizations.dart';
-import 'drive_mode.dart';
+import 'car_browser.dart';
 import 'settings.dart';
 
 class CarPlayBridge {
@@ -17,37 +18,49 @@ class CarPlayBridge {
     : channel = channel ?? const MethodChannel(channelName) {
     this.channel.setMethodCallHandler(_handle);
     settings.addListener(_onSettings);
+    browser.drive.addListener(_onDrive);
     _lastLocale = settings.locale.languageCode;
+    _textOn = browser.drive.isActive;
     send();
   }
 
   static const channelName = 'org.rattil.app/carplay';
 
-  final DriveBrowser browser;
+  final CarBrowser browser;
   final SettingsController settings;
   final MethodChannel channel;
   late String _lastLocale;
+  late bool _textOn;
 
-  /// What the car's list shows: a title and one row per session.
-  Map<String, Object> describe() {
+  AppLocalizations get _l => lookupAppLocalizations(settings.locale);
+
+  /// One list for the car: its title and rows. A row with 'browsable' opens another list.
+  Future<Map<String, Object>> describe([String parentId = AudioService.browsableRootId]) async {
     return {
-      'title': lookupAppLocalizations(settings.locale).driveTitle,
+      'title': parentId == AudioService.browsableRootId ? _l.driveTitle : '',
       'items': [
-        for (final m in browser.children(AudioService.browsableRootId))
+        for (final m in await browser.children(parentId))
           {
             'id': m.id,
             'title': m.title,
             'detail': m.artist ?? '',
-            'icon': m.id == DriveBrowser.eveningId ? 'moon.stars' : 'sun.max',
+            'icon': (m.extras?['icon'] as String?) ?? 'play.circle',
+            'browsable': m.playable == false,
+            if (m.extras?['section'] case final String s) 'section': s,
           },
       ],
     };
   }
 
-  /// Sends the list to the car side (it keeps it until a car connects).
+  /// What the Now Playing screen's «نص الذكر» button shows: the button title, and whether it is on
+  /// (only in driving mode).
+  Map<String, Object> textButton() => {'title': _l.carText, 'on': browser.drive.isActive};
+
+  /// Sends the root list and the text button to the car side (it keeps them until a car connects).
   Future<void> send() async {
     try {
-      await channel.invokeMethod<void>('items', describe());
+      await channel.invokeMethod<void>('items', await describe());
+      await channel.invokeMethod<void>('textButton', textButton());
     } on MissingPluginException {
       // Not on iPhone, or the native side is not there (tests).
     } on PlatformException {
@@ -61,13 +74,23 @@ class CarPlayBridge {
     send();
   }
 
+  void _onDrive() {
+    if (browser.drive.isActive == _textOn) return;
+    _textOn = browser.drive.isActive;
+    channel.invokeMethod<void>('textButton', textButton()).catchError((_) {});
+  }
+
   Future<Object?> _handle(MethodCall call) async {
     switch (call.method) {
+      case 'children':
+        return describe(call.arguments as String);
       case 'play':
         await browser.play(call.arguments as String);
         // null = playing; otherwise the message the car shows.
-        if (!browser.drive.failed) return null;
-        return lookupAppLocalizations(settings.locale).driveFailed;
+        if (!browser.failed) return null;
+        return _l.driveFailed;
+      case 'text':
+        return {'title': _l.carText, 'lines': browser.drive.textLines()};
       case 'ready':
         await send();
         return null;
@@ -77,6 +100,7 @@ class CarPlayBridge {
 
   void dispose() {
     settings.removeListener(_onSettings);
+    browser.drive.removeListener(_onDrive);
     channel.setMethodCallHandler(null);
   }
 }

@@ -972,6 +972,42 @@
   "@bookmarksEmpty": {
     "description": "shared key \"bookmarks.empty\""
   },
+  "carLibrary": "Recitation library",
+  "@carLibrary": {
+    "description": "shared key \"car.library\""
+  },
+  "carLibrarySub": "Reciters · surah by surah",
+  "@carLibrarySub": {
+    "description": "shared key \"car.librarySub\""
+  },
+  "carNasheeds": "Nasheeds",
+  "@carNasheeds": {
+    "description": "shared key \"car.nasheeds\""
+  },
+  "carNasheedsSub": "Munshids",
+  "@carNasheedsSub": {
+    "description": "shared key \"car.nasheedsSub\""
+  },
+  "carRadio": "Radio",
+  "@carRadio": {
+    "description": "shared key \"car.radio\""
+  },
+  "carSharawiSub": "Audio lessons by surah",
+  "@carSharawiSub": {
+    "description": "shared key \"car.sharawiSub\""
+  },
+  "carStories": "Stories of the Prophets",
+  "@carStories": {
+    "description": "shared key \"car.stories\""
+  },
+  "carStoriesSub": "Sheikh Nabil al-Awadi",
+  "@carStoriesSub": {
+    "description": "shared key \"car.storiesSub\""
+  },
+  "carText": "Dhikr text",
+  "@carText": {
+    "description": "shared key \"car.text\""
+  },
   "commonClose": "Close",
   "@commonClose": {
     "description": "shared key \"common.close\""

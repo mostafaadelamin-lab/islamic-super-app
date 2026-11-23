@@ -98,3 +98,82 @@ String driveTitle(String text, {int words = 5}) {
 /// When to say the count out loud: every [every] repetitions (0 = never), never on the last
 /// one (the end sound says that), and only for adhkar said at least [every] times.
 bool isMilestone(int done, int count, int every) => every > 0 && done < count && done % every == 0;
+
+final _space = RegExp(r'\s+');
+
+int _letters(String s) => s.replaceAll(_marks, '').length;
+
+/// The dhikr's whole text cut into parts of about [maxLetters] letters (diacritics do not
+/// count: they take no room). The car screen shows two lines of the title, so the full dhikr
+/// is shown part after part instead of cut (owner, 2026-11-23). Parts end where the text has a
+/// comma or stop when they can, so a sentence is not broken; a long sentence is cut into
+/// even pieces at spaces. Every word stays exactly as written in Hisn al-Muslim; only line
+/// breaks become spaces.
+List<String> driveParts(String text, {int maxLetters = 40}) {
+  final words = text.trim().split(_space).where((w) => w.isNotEmpty).toList();
+  if (words.isEmpty) return [text.trim()];
+  int len(List<String> ws) => _letters(ws.join(' '));
+  // A sentence a little longer than the limit stays whole (better than a one-word tail).
+  final hard = maxLetters + maxLetters ~/ 6;
+  final phrases = <List<String>>[];
+  var cur = <String>[];
+  for (final w in words) {
+    cur.add(w);
+    if (_stop.hasMatch(w)) {
+      phrases.add(cur);
+      cur = [];
+    }
+  }
+  if (cur.isNotEmpty) phrases.add(cur);
+  // Long sentences cut into even pieces.
+  final chunks = <List<String>>[];
+  for (final ph in phrases) {
+    final total = len(ph);
+    if (total <= hard) {
+      chunks.add(ph);
+      continue;
+    }
+    final target = total / (total / maxLetters).ceil();
+    var c = <String>[];
+    for (final w in ph) {
+      if (c.isNotEmpty && (len(c) >= target || len([...c, w]) > hard)) {
+        chunks.add(c);
+        c = [];
+      }
+      c.add(w);
+    }
+    if (c.isNotEmpty) chunks.add(c);
+  }
+  // Short sentences joined while they fit.
+  final parts = <String>[];
+  var part = <String>[];
+  for (final c in chunks) {
+    if (part.isNotEmpty && len([...part, ...c]) <= maxLetters) {
+      part = [...part, ...c];
+      continue;
+    }
+    if (part.isNotEmpty) parts.add(part.join(' '));
+    part = c;
+  }
+  if (part.isNotEmpty) parts.add(part.join(' '));
+  return parts;
+}
+
+final _stop = RegExp(r'[،,.؛:۔﴾»]$');
+
+/// Which part of [parts] the reader is saying when [fraction] (0..1) of one reading is
+/// done: each part gets a share of the time as long as its letters.
+int drivePartAt(List<String> parts, double fraction) {
+  if (parts.length <= 1 || fraction <= 0) return 0;
+  final sizes = [for (final p in parts) _letters(p) + 1];
+  final total = sizes.fold<int>(0, (a, b) => a + b);
+  var acc = 0;
+  for (var i = 0; i < sizes.length; i++) {
+    acc += sizes[i];
+    if (fraction * total < acc) return i;
+  }
+  return parts.length - 1;
+}
+
+/// [parts] item [i] as the car shows it: "…" marks that the dhikr goes on.
+String drivePartTitle(List<String> parts, int i) => i < parts.length - 1 ? '${parts[i]} …' : parts[i];

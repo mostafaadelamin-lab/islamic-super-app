@@ -1268,6 +1268,60 @@ abstract class AppLocalizations {
   /// **'No bookmarks yet'**
   String get bookmarksEmpty;
 
+  /// shared key "car.library"
+  ///
+  /// In en, this message translates to:
+  /// **'Recitation library'**
+  String get carLibrary;
+
+  /// shared key "car.librarySub"
+  ///
+  /// In en, this message translates to:
+  /// **'Reciters · surah by surah'**
+  String get carLibrarySub;
+
+  /// shared key "car.nasheeds"
+  ///
+  /// In en, this message translates to:
+  /// **'Nasheeds'**
+  String get carNasheeds;
+
+  /// shared key "car.nasheedsSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Munshids'**
+  String get carNasheedsSub;
+
+  /// shared key "car.radio"
+  ///
+  /// In en, this message translates to:
+  /// **'Radio'**
+  String get carRadio;
+
+  /// shared key "car.sharawiSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Audio lessons by surah'**
+  String get carSharawiSub;
+
+  /// shared key "car.stories"
+  ///
+  /// In en, this message translates to:
+  /// **'Stories of the Prophets'**
+  String get carStories;
+
+  /// shared key "car.storiesSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Sheikh Nabil al-Awadi'**
+  String get carStoriesSub;
+
+  /// shared key "car.text"
+  ///
+  /// In en, this message translates to:
+  /// **'Dhikr text'**
+  String get carText;
+
   /// shared key "common.close"
   ///
   /// In en, this message translates to:

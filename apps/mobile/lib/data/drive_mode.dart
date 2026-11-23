@@ -207,6 +207,11 @@ class DriveModeController extends ChangeNotifier implements MediaSource {
   /// Bumped by every jump / pause / stop; a running loop whose number is old stops.
   int _run = 0;
 
+  /// While a long dhikr is said, moves the car title on to the next part of its text.
+  Timer? _ticker;
+  int _shownPart = 0;
+  final _partsCache = <String, List<String>>{};
+
   AdhkarSession? get session => _session;
   List<DriveItem> get items => _items;
   int get index => _index;
@@ -214,6 +219,46 @@ class DriveModeController extends ChangeNotifier implements MediaSource {
 
   /// Repetitions of the current dhikr already said.
   int get done => _done;
+
+  /// The whole text of the current dhikr in parts short enough for the car's title.
+  List<String> get parts {
+    final item = current;
+    if (item == null) return const [];
+    return _partsCache.putIfAbsent(item.dhikr.text, () => driveParts(item.dhikr.text));
+  }
+
+  /// The part of [parts] being said now (follows the recording while it plays).
+  int get part {
+    final item = current;
+    final p = parts;
+    if (item == null || p.length <= 1 || !_playing) return 0;
+    final len = item.clip.length.inMilliseconds;
+    if (len <= 0) return 0;
+    return drivePartAt(p, _sinceRep.elapsedMilliseconds / len);
+  }
+
+  /// The current dhikr's whole text in short lines, for the car's «نص الذكر» screen.
+  List<String> textLines() {
+    final item = current;
+    return item == null ? const [] : driveParts(item.dhikr.text, maxLetters: 30);
+  }
+
+  void _tick() {
+    final now = part;
+    if (now == _shownPart) return;
+    _shownPart = now;
+    notifyListeners();
+  }
+
+  void _startTicker() {
+    _ticker ??= Timer.periodic(const Duration(milliseconds: 300), (_) => _tick());
+  }
+
+  void _stopTicker() {
+    _ticker?.cancel();
+    _ticker = null;
+    _shownPart = 0;
+  }
 
   /// The repetition being said now (1-based), as the car screen shows it.
   int get saying => current == null ? 0 : (_done + (_done < current!.count ? 1 : 0));
@@ -283,6 +328,7 @@ class DriveModeController extends ChangeNotifier implements MediaSource {
     if (_finished) return;
     _playing = true;
     AudioFocus.claim(this);
+    _startTicker();
     notifyListeners();
     // Runs on its own; the caller does not wait for the whole session.
     unawaited(_loop(++_run));
@@ -292,6 +338,8 @@ class DriveModeController extends ChangeNotifier implements MediaSource {
     if (!_playing) return;
     _playing = false;
     _run++;
+    _sinceRep.stop();
+    _stopTicker();
     notifyListeners();
     await _player?.stop();
   }
@@ -337,6 +385,8 @@ class DriveModeController extends ChangeNotifier implements MediaSource {
   Future<void> _halt() async {
     _run++;
     _playing = false;
+    _sinceRep.stop();
+    _stopTicker();
     await _player?.stop();
   }
 
@@ -354,6 +404,7 @@ class DriveModeController extends ChangeNotifier implements MediaSource {
       _sinceRep
         ..reset()
         ..start();
+      _shownPart = 0;
       final f = item.clip.file ?? _main!;
       final player = _player ??= _newPlayer();
       if (_loaded != f) {
@@ -375,6 +426,7 @@ class DriveModeController extends ChangeNotifier implements MediaSource {
     }
     if (run != _run) return;
     _playing = false;
+    _stopTicker();
     _finished = true;
     notifyListeners();
   }
@@ -388,14 +440,19 @@ class DriveModeController extends ChangeNotifier implements MediaSource {
     if (s == null || item == null) return null;
     final ar = _settings.isArabic;
     String n(int x) => ar ? toArabicIndic(x) : '$x';
-    final count = item.count == 1 ? '' : (ar ? ' · ${n(saying)} من ${n(item.count)}' : ' · ${n(saying)} of ${n(item.count)}');
+    final count = item.count == 1
+        ? ''
+        : (ar ? 'المرة ${n(saying)} من ${n(item.count)} · ' : 'Time ${n(saying)} of ${n(item.count)} · ');
     final when = s == AdhkarSession.morning ? (ar ? 'أذكار الصباح' : 'Morning adhkar') : (ar ? 'أذكار المساء' : 'Evening adhkar');
+    // The car shows two lines of the title: the whole dhikr goes by part after part with the
+    // recording (owner 2026-11-23: it was cut after a few words). The count is on the line below.
+    final p = parts;
     return NowPlaying(
       id: 'drive/${s.name}/$_index',
-      title: '${driveTitle(item.dhikr.text)}$count',
+      title: drivePartTitle(p, part.clamp(0, p.length - 1)),
       artist: ar
-          ? '$when · ${n(_index + 1)} من ${n(_items.length)}'
-          : '$when · ${n(_index + 1)} of ${n(_items.length)}',
+          ? '$count$when · ${n(_index + 1)} من ${n(_items.length)}'
+          : '$count$when · ${n(_index + 1)} of ${n(_items.length)}',
       playing: _playing,
     );
   }
@@ -420,6 +477,7 @@ class DriveModeController extends ChangeNotifier implements MediaSource {
   void dispose() {
     AudioFocus.unregister(this);
     _run++;
+    _stopTicker();
     unawaited(_player?.dispose());
     unawaited(_cues?.dispose());
     super.dispose();
@@ -437,7 +495,7 @@ class DriveBrowser implements MediaBrowser {
   static const eveningId = 'drive/evening';
 
   @override
-  List<MediaItem> children(String parentId) {
+  Future<List<MediaItem>> children(String parentId) async {
     if (parentId != AudioService.browsableRootId && parentId != AudioService.recentRootId) return const [];
     final ar = settings.isArabic;
     final items = [

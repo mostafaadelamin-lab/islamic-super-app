@@ -21,6 +21,7 @@ import 'data/adhan_voice_files.dart';
 import 'data/adhkar_audio_files.dart';
 import 'data/location.dart';
 import 'data/place_names.dart';
+import 'data/car_browser.dart';
 import 'data/carplay.dart';
 import 'data/drive_mode.dart';
 import 'data/media_session.dart';
@@ -247,8 +248,16 @@ class AppServices {
       cues: driveCues,
     );
     media.attach(drive);
+    final mp3quran = Mp3QuranClient(httpClient: httpClient, prefs: prefs, clock: c);
     if (mediaSession case final AudioServiceMediaSession a) {
-      final browser = DriveBrowser(drive, settings);
+      // The car screen: driving mode for the adhkar + radio, library, al-Sha'rawi, stories, nasheeds.
+      final browser = CarBrowser(
+        drive: drive,
+        narration: narration,
+        settings: settings,
+        content: content,
+        library: mp3quran,
+      );
       a.browser = browser; // Android Auto
       if (defaultTargetPlatform == TargetPlatform.iOS) CarPlayBridge(browser, settings); // CarPlay
     }
@@ -303,7 +312,7 @@ class AppServices {
       sensors: sensors ?? const DeviceCompassSensors(),
       tafsir: tafsir ?? TafsirStore.asset(rootBundle),
       hadith: hadith ?? HadithLibrary.asset(content.hadith, rootBundle),
-      mp3quran: Mp3QuranClient(httpClient: httpClient, prefs: prefs, clock: c),
+      mp3quran: mp3quran,
       location: location ?? const GeolocatorLocation(),
       placeNames: PlaceNames(httpClient),
       khatma: khatma,

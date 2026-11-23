@@ -678,6 +678,33 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookmarksEmpty => 'لا توجد علامات بعد';
 
   @override
+  String get carLibrary => 'مكتبة التلاوة';
+
+  @override
+  String get carLibrarySub => 'القرّاء · سورة بسورة';
+
+  @override
+  String get carNasheeds => 'الأناشيد';
+
+  @override
+  String get carNasheedsSub => 'المنشدون';
+
+  @override
+  String get carRadio => 'الإذاعة';
+
+  @override
+  String get carSharawiSub => 'دروس مسموعة حسب السورة';
+
+  @override
+  String get carStories => 'قصص الأنبياء';
+
+  @override
+  String get carStoriesSub => 'الشيخ نبيل العوضي';
+
+  @override
+  String get carText => 'نص الذكر';
+
+  @override
   String get commonClose => 'إغلاق';
 
   @override

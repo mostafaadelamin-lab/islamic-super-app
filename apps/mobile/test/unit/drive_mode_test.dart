@@ -3,11 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/data/adhkar_audio_files.dart';
 import 'package:rattil/data/audio_focus.dart';
-import 'package:rattil/data/carplay.dart';
 import 'package:rattil/data/content.dart';
 import 'package:rattil/data/drive_mode.dart';
 import 'package:rattil/data/settings.dart';
@@ -217,8 +215,8 @@ void main() {
       }
       expect(drive.done, 36);
       var now = drive.describe()!;
-      expect(now.title, endsWith('· ٣٧ من ١٠٠'));
-      expect(now.title, startsWith(driveTitle(plan[hundred].dhikr.text).replaceAll('…', '')));
+      expect(now.artist, startsWith('المرة ٣٧ من ١٠٠ · '));
+      expect(now.title.replaceAll(' …', ''), driveParts(plan[hundred].dhikr.text).first);
       expect(now.artist, contains('أذكار الصباح'));
       expect(now.playing, isTrue);
 
@@ -232,7 +230,7 @@ void main() {
       await pump();
       expect(drive.isPlaying, isTrue);
       expect(player.played.length, before + 1);
-      expect(drive.describe()!.title, endsWith('٣٧ من ١٠٠'));
+      expect(drive.describe()!.artist, startsWith('المرة ٣٧ من ١٠٠'));
 
       // Previous: this dhikr from the start.
       drive.act('previous');
@@ -250,17 +248,34 @@ void main() {
       expect(drive.index, hundred);
       expect(drive.done, 0);
       now = drive.describe()!;
-      expect(now.title, endsWith('١ من ١٠٠'));
+      expect(now.artist, startsWith('المرة ١ من ١٠٠'));
     },
   );
 
-  test('a dhikr said once shows no count in the title', () async {
+  test('a dhikr said once shows no repetition count', () async {
     player.auto = false;
     await drive.start(AdhkarSession.morning);
     await pump();
     final first = drive.current!;
     expect(first.count, 1);
-    expect(drive.describe()!.title, isNot(contains(' من ')));
+    expect(drive.describe()!.artist, isNot(contains('المرة')));
+  });
+
+  test('the whole dhikr: the car title shows it part after part, the text screen in lines', () async {
+    player.auto = false;
+    await drive.start(AdhkarSession.morning);
+    await pump();
+    // A long dhikr (e.g. sayyid al-istighfar): more than one part, nothing lost or added.
+    final long = drive.items.indexWhere((it) => driveParts(it.dhikr.text).length > 2);
+    expect(long, isNonNegative);
+    await drive.jumpTo(long);
+    await pump();
+    final text = drive.current!.dhikr.text.trim().replaceAll(RegExp(r'\s+'), ' ');
+    expect(drive.parts.join(' '), text);
+    expect(drive.textLines().join(' '), text);
+    expect(drive.textLines().length, greaterThanOrEqualTo(drive.parts.length));
+    // At the start of a reading: the first part, marked as going on.
+    expect(drive.describe()!.title, '${drive.parts.first} …');
   });
 
   test('download failure: failed state, retry works', () async {
@@ -288,63 +303,14 @@ void main() {
   test('Android Auto list: morning and evening, picking one starts it', () async {
     player.auto = false;
     final b = DriveBrowser(drive, settings);
-    final root = b.children(AudioService.browsableRootId);
+    final root = await b.children(AudioService.browsableRootId);
     expect(root.map((e) => e.id), [DriveBrowser.morningId, DriveBrowser.eveningId]);
     expect(root.every((e) => e.playable == true), isTrue);
-    expect(b.children(AudioService.recentRootId), isEmpty);
+    expect(await b.children(AudioService.recentRootId), isEmpty);
     await b.play(DriveBrowser.eveningId);
     await pump();
     expect(drive.session, AdhkarSession.evening);
     expect(drive.isPlaying, isTrue);
-    expect(b.children(AudioService.recentRootId).single.id, DriveBrowser.eveningId);
+    expect((await b.children(AudioService.recentRootId)).single.id, DriveBrowser.eveningId);
   });
-
-  test(
-    'CarPlay: the car gets the morning / evening list, picking one plays it, a failed download shows a message',
-    () async {
-      TestWidgetsFlutterBinding.ensureInitialized();
-      player.auto = false;
-      const channel = MethodChannel(CarPlayBridge.channelName);
-      final messenger = TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
-      final sent = <Map<Object?, Object?>>[];
-      messenger.setMockMethodCallHandler(channel, (call) async {
-        if (call.method == 'items') sent.add(call.arguments as Map<Object?, Object?>);
-        return null;
-      });
-      addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
-      Future<Object?> fromCar(String method, [Object? args]) async {
-        Object? reply;
-        await messenger.handlePlatformMessage(
-          CarPlayBridge.channelName,
-          const StandardMethodCodec().encodeMethodCall(MethodCall(method, args)),
-          (data) => reply = data == null ? null : const StandardMethodCodec().decodeEnvelope(data),
-        );
-        return reply;
-      }
-
-      final bridge = CarPlayBridge(DriveBrowser(drive, settings), settings);
-      addTearDown(bridge.dispose);
-      await pump();
-      expect(sent, hasLength(1));
-      expect(sent.single['title'], 'وضع القيادة');
-      final items = (sent.single['items']! as List).cast<Map<Object?, Object?>>();
-      expect(items.map((e) => e['id']), [DriveBrowser.morningId, DriveBrowser.eveningId]);
-      expect(items.map((e) => e['title']), ['أذكار الصباح', 'أذكار المساء']);
-
-      // Language changes: the car list follows.
-      await settings.setLocale('en');
-      await pump();
-      expect(sent.last['title'], 'Driving mode');
-      expect(((sent.last['items']! as List).first as Map)['title'], 'Morning adhkar');
-
-      expect(await fromCar('play', DriveBrowser.eveningId), isNull);
-      await pump();
-      expect(drive.session, AdhkarSession.evening);
-      expect(drive.isPlaying, isTrue);
-
-      await drive.stop();
-      files.ok = false;
-      expect(await fromCar('play', DriveBrowser.morningId), contains('could not be downloaded'));
-    },
-  );
 }

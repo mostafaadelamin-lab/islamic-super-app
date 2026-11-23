@@ -681,6 +681,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookmarksEmpty => 'No bookmarks yet';
 
   @override
+  String get carLibrary => 'Recitation library';
+
+  @override
+  String get carLibrarySub => 'Reciters · surah by surah';
+
+  @override
+  String get carNasheeds => 'Nasheeds';
+
+  @override
+  String get carNasheedsSub => 'Munshids';
+
+  @override
+  String get carRadio => 'Radio';
+
+  @override
+  String get carSharawiSub => 'Audio lessons by surah';
+
+  @override
+  String get carStories => 'Stories of the Prophets';
+
+  @override
+  String get carStoriesSub => 'Sheikh Nabil al-Awadi';
+
+  @override
+  String get carText => 'Dhikr text';
+
+  @override
   String get commonClose => 'Close';
 
   @override

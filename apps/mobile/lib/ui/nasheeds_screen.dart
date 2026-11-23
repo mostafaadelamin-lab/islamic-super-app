@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../app_services.dart';
+import '../data/car_browser.dart' show nasheedEpisode;
 import '../data/recitation.dart';
 import '../domain/nasheeds.dart';
 import '../domain/stories.dart';
@@ -14,15 +15,14 @@ import 'library_screen.dart' show PlayTile;
 import 'r_icon.dart';
 import 'stories_screen.dart' show NarrationBar;
 
+export '../data/car_browser.dart' show nasheedEpisode;
+
 Future<List<Munshid>> loadNasheeds() async =>
     Munshid.parse(await rootBundle.loadString('assets/content/nasheeds.v2.json'));
 
 String _norm(String s) =>
     s.replaceAll(RegExp('[ًٌٍَُِّْـ]'), '').replaceAll(RegExp('[أإآ]'), 'ا').replaceAll('ى', 'ي').replaceAll('ة', 'ه');
 
-/// Episode for the shared audio player (streams, or plays the offline copy).
-Episode nasheedEpisode(Nasheed n) =>
-    Episode(id: 'nasheed-${n.id}', titleAr: n.title, titleEn: n.title, url: n.url, status: ReviewStatus.approved);
 
 /// A nasheed in a list: its play tile and, while it is the one playing, the player right under it
 /// (owner 2026-11-14: not in a bar away from the list).

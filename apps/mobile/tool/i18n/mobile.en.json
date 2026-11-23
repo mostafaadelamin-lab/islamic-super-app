@@ -1128,5 +1128,14 @@
   "asmaLesson.title": "Explanation of «{name}»",
   "setup.lockIos": "For the lock screen: touch and hold the lock screen → Customize → Lock Screen → Add Widgets → Rattil wa Salli, to see the next prayer and the time left.",
   "adhan.openAppTitle": "Open Rattil wa Salli to keep the full adhan",
-  "adhan.openAppBody": "Just open the app once to renew the full adhan alerts for the next two days."
+  "adhan.openAppBody": "Just open the app once to renew the full adhan alerts for the next two days.",
+  "car.radio": "Radio",
+  "car.library": "Recitation library",
+  "car.librarySub": "Reciters · surah by surah",
+  "car.sharawiSub": "Audio lessons by surah",
+  "car.stories": "Stories of the Prophets",
+  "car.storiesSub": "Sheikh Nabil al-Awadi",
+  "car.nasheeds": "Nasheeds",
+  "car.nasheedsSub": "Munshids",
+  "car.text": "Dhikr text"
 }

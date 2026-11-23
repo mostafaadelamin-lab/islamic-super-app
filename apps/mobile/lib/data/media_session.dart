@@ -279,10 +279,10 @@ class _NarrationSource extends ChangeNotifier implements MediaSource {
   }
 }
 
-/// What the car screen (Android Auto) lists for the app and what picking an item starts.
+/// What the car screen (Android Auto, CarPlay) lists for the app and what picking an item starts.
 abstract class MediaBrowser {
   /// Items under [parentId] (audio_service's root is [AudioService.browsableRootId]).
-  List<MediaItem> children(String parentId);
+  Future<List<MediaItem>> children(String parentId);
 
   /// Starts the item with [id] picked on the car screen.
   Future<void> play(String id);
@@ -293,7 +293,7 @@ class AudioServiceMediaSession extends BaseAudioHandler implements MediaSession 
   void Function(String action)? _onAction;
   void Function(Duration to)? _onSeek;
 
-  /// The app's own list on the Android Auto screen (driving mode for the adhkar).
+  /// The app's own lists on the Android Auto screen (driving mode and the listening sections).
   MediaBrowser? browser;
 
   /// Starts the Android media service / iOS remote commands. Call once from main().
@@ -349,7 +349,7 @@ class AudioServiceMediaSession extends BaseAudioHandler implements MediaSession 
 
   @override
   Future<List<MediaItem>> getChildren(String parentMediaId, [Map<String, dynamic>? options]) async =>
-      browser?.children(parentMediaId) ?? const [];
+      await browser?.children(parentMediaId) ?? const [];
 
   @override
   Future<void> playFromMediaId(String mediaId, [Map<String, dynamic>? extras]) async => browser?.play(mediaId);
