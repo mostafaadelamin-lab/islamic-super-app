@@ -443,7 +443,9 @@ class DriveModeController extends ChangeNotifier implements MediaSource {
     final count = item.count == 1
         ? ''
         : (ar ? 'المرة ${n(saying)} من ${n(item.count)} · ' : 'Time ${n(saying)} of ${n(item.count)} · ');
-    final when = s == AdhkarSession.morning ? (ar ? 'أذكار الصباح' : 'Morning adhkar') : (ar ? 'أذكار المساء' : 'Evening adhkar');
+    final when = s == AdhkarSession.morning
+        ? (ar ? 'أذكار الصباح' : 'Morning adhkar')
+        : (ar ? 'أذكار المساء' : 'Evening adhkar');
     // The car shows two lines of the title: the whole dhikr goes by part after part with the
     // recording (owner 2026-11-23: it was cut after a few words). The count is on the line below.
     final p = parts;

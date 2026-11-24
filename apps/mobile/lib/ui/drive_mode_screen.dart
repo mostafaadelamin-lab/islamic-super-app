@@ -45,7 +45,8 @@ class DriveModeScreen extends StatelessWidget {
                 key: const Key('driveSettings'),
                 tooltip: l.driveSettings,
                 icon: const RIcon(RIcons.settings),
-                onPressed: () => showModalBottomSheet<void>(context: context, builder: (_) => const DriveSettingsSheet()),
+                onPressed: () =>
+                    showModalBottomSheet<void>(context: context, builder: (_) => const DriveSettingsSheet()),
               ),
             ],
           ),

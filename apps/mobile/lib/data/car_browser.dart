@@ -75,10 +75,7 @@ class CarBrowser implements MediaBrowser {
   String _n(int x) => _ar ? toArabicIndic(x) : '$x';
 
   /// The SF Symbol CarPlay shows beside an item (Android Auto shows none).
-  static Map<String, dynamic> _icon(String name, [String? section]) => {
-    'icon': name,
-    'section': ?section,
-  };
+  static Map<String, dynamic> _icon(String name, [String? section]) => {'icon': name, 'section': ?section};
 
   MediaItem _folder(String id, String title, String detail, String icon, [String? section]) =>
       MediaItem(id: id, title: title, artist: detail, playable: false, extras: _icon(icon, section));
@@ -112,7 +109,8 @@ class CarBrowser implements MediaBrowser {
     }
     if (parentId == radioId) {
       return [
-        for (final r in featuredRadios) _item('$radioId/${r.id}', _ar ? r.nameAr : r.nameEn, l.libraryLive, 'dot.radiowaves.left.and.right'),
+        for (final r in featuredRadios)
+          _item('$radioId/${r.id}', _ar ? r.nameAr : r.nameEn, l.libraryLive, 'dot.radiowaves.left.and.right'),
       ];
     }
     if (parentId == libraryId) {
@@ -134,23 +132,27 @@ class CarBrowser implements MediaBrowser {
       final t = await (_sharawi ??= _loadSharawi());
       return [
         for (final s in t.surahs)
-          _folder('$sharawiId/${s.surah}', _sharawiSurah(s.surah), l.sharawiLessons(_n(s.lessons.length)), 'book.closed'),
+          _folder(
+            '$sharawiId/${s.surah}',
+            _sharawiSurah(s.surah),
+            l.sharawiLessons(_n(s.lessons.length)),
+            'book.closed',
+          ),
       ];
     }
     if (parentId.startsWith('$sharawiId/')) {
       final surah = int.parse(parentId.substring(sharawiId.length + 1));
       final s = (await (_sharawi ??= _loadSharawi())).surahs.where((x) => x.surah == surah).firstOrNull;
       if (s == null) return const [];
-      return [for (final x in s.lessons) _item('$sharawiId/$surah/${x.id}', _lessonTitle(x), _lessonDetail(x), 'play.circle')];
+      return [
+        for (final x in s.lessons) _item('$sharawiId/$surah/${x.id}', _lessonTitle(x), _lessonDetail(x), 'play.circle'),
+      ];
     }
     if (parentId == storiesId) {
       final series = content.stories.series.where((s) => s.episodes.isNotEmpty).toList();
       // One series (Sheikh Nabil al-Awadi's): its episodes straight away, one level less to tap.
       if (series.length == 1) return _episodes(series.single);
-      return [
-        for (final s in series)
-          _folder('$storiesId/${s.id}', s.title(_ar), s.narrator(_ar), 'books.vertical'),
-      ];
+      return [for (final s in series) _folder('$storiesId/${s.id}', s.title(_ar), s.narrator(_ar), 'books.vertical')];
     }
     if (parentId.startsWith('$storiesId/')) {
       final id = parentId.substring(storiesId.length + 1);
@@ -161,7 +163,8 @@ class CarBrowser implements MediaBrowser {
       final all = await (_nasheeds ??= _loadNasheeds());
       return [
         for (final m in all)
-          if (m.items.isNotEmpty) _folder('$nasheedsId/${m.id}', m.name, l.nasheedsCount(_n(m.items.length)), 'music.mic'),
+          if (m.items.isNotEmpty)
+            _folder('$nasheedsId/${m.id}', m.name, l.nasheedsCount(_n(m.items.length)), 'music.mic'),
       ];
     }
     if (parentId.startsWith('$nasheedsId/')) {
@@ -224,13 +227,15 @@ class CarBrowser implements MediaBrowser {
 
   Future<Mp3Library> _library() => library!.load(_ar ? 'ar' : 'eng');
 
-  Future<Mp3Reciter?> _reciter(int id) async =>
-      (await _library()).reciters.where((r) => r.id == id).firstOrNull;
+  Future<Mp3Reciter?> _reciter(int id) async => (await _library()).reciters.where((r) => r.id == id).firstOrNull;
 
   static Mp3Moshaf? _hafsMoshaf(Mp3Reciter r) => r.moshafs.where((m) => m.rewayaId == _hafs).firstOrNull;
 
   static List<Mp3Reciter> _hafsReciters(Mp3Library lib) {
-    final list = [for (final r in lib.reciters) if (_hafsMoshaf(r) != null) r]..sort((a, b) => a.name.compareTo(b.name));
+    final list = [
+      for (final r in lib.reciters)
+        if (_hafsMoshaf(r) != null) r,
+    ]..sort((a, b) => a.name.compareTo(b.name));
     return list;
   }
 

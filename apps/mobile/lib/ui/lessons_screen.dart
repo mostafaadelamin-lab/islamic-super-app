@@ -68,6 +68,8 @@ Episode lessonEpisode(BuildContext context, LessonSeries s, LessonEpisode e) {
     durationSec: e.seconds > 0 ? e.seconds : null,
     status: ReviewStatus.approved,
     skips: e.skips,
+    gainDb: s.gainDb,
+    clarity: s.clarity,
   );
 }
 

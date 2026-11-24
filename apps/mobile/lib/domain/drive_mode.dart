@@ -76,10 +76,7 @@ List<DriveItem> drivePlan(AdhkarContent content, DriveClips clips, AdhkarSession
 }
 
 final _marks = RegExp('[ؐ-ًؚ-ٰٟۖ-ۭـ]');
-final _openers = [
-  RegExp(r'^\s*أعوذ بالله من الشيطان الرجيم\s*'),
-  RegExp(r'^\s*بسم الله الرحمن الرحيم\s*'),
-];
+final _openers = [RegExp(r'^\s*أعوذ بالله من الشيطان الرجيم\s*'), RegExp(r'^\s*بسم الله الرحمن الرحيم\s*')];
 
 /// A short name for the car screen / lock screen: the first words of the dhikr's own
 /// text (the isti'adha / basmala before a Quran passage skipped), without diacritics so it

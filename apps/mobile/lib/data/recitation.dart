@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:just_audio/just_audio.dart';
@@ -435,6 +436,11 @@ abstract class NarrationBackend {
 
   /// The length once the player knows it (streams often report it only after loading starts).
   Stream<Duration?> get durationChanges;
+
+  /// Evens out a quiet or old recording after [load] (lesson series): [gainDb] up or down, [clarity] lifts
+  /// the voice of a muffled tape. Android only (the system's loudness enhancer and equalizer); elsewhere the
+  /// recording plays as published.
+  Future<void> setFx({double gainDb = 0, bool clarity = false});
   Future<void> dispose();
 }
 
@@ -445,9 +451,48 @@ class JustAudioNarrationBackend implements NarrationBackend {
     });
   }
 
-  final _player = AudioPlayer();
+  static final _android = !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
+  final _enhancer = AndroidLoudnessEnhancer();
+  final _eq = AndroidEqualizer();
+  late final _player = _android
+      ? AudioPlayer(audioPipeline: AudioPipeline(androidAudioEffects: [_enhancer, _eq]))
+      : AudioPlayer();
   final _completed = StreamController<void>.broadcast();
   late final StreamSubscription<ProcessingState> _sub;
+
+  /// Equalizer: hum under [_humHz] cut, the voice band [_voiceFromHz]-[_voiceToHz] and the highs lifted (dB).
+  static const _humHz = 200;
+  static const _voiceFromHz = 1200;
+  static const _voiceToHz = 4500;
+  static const _humDb = -4.0;
+  static const _voiceDb = 6.0;
+  static const _airDb = 3.0;
+
+  @override
+  Future<void> setFx({double gainDb = 0, bool clarity = false}) async {
+    if (!_android) return;
+    try {
+      await _player.setVolume(gainDb < 0 ? math.pow(10, gainDb / 20).toDouble() : 1);
+      await _enhancer.setEnabled(gainDb > 0);
+      if (gainDb > 0) await _enhancer.setTargetGain(gainDb);
+      await _eq.setEnabled(clarity);
+      if (!clarity) return;
+      final p = await _eq.parameters.timeout(const Duration(seconds: 3));
+      for (final b in p.bands) {
+        final hz = b.centerFrequency;
+        final db = hz < _humHz
+            ? _humDb
+            : hz < _voiceFromHz
+            ? 0.0
+            : hz <= _voiceToHz
+            ? _voiceDb
+            : _airDb;
+        await b.setGain(db.clamp(p.minDecibels, p.maxDecibels));
+      }
+    } catch (_) {
+      // No effect on this phone: the lesson plays as recorded.
+    }
+  }
 
   @override
   Future<Duration?> load(String url) => _player.setUrl(url).timeout(const Duration(seconds: 30));
@@ -612,6 +657,7 @@ class NarrationController extends ChangeNotifier {
       }
       _duration = await b.load(local != null ? Uri.file(local).toString() : e.url);
       if (gen != _generation) return;
+      await b.setFx(gainDb: e.gainDb, clarity: e.clarity);
       var resume = remember && !fromStart ? _settings.storyPosition(_key(seriesId, e)) : 0;
       if (resume <= 5 || (_duration != null && resume >= _duration!.inSeconds - 10)) resume = 0;
       // Music at the very start is not played at all.

@@ -6,6 +6,7 @@
  */
 import { AUDIO_CACHE, offlineSupported } from "./audio-offline";
 import { withBase } from "./base-path";
+import type { AudioFx } from "./audio-fx";
 import { createStore } from "./store";
 
 export interface LessonLabel {
@@ -34,6 +35,8 @@ export interface LessonSeries {
   ar: string;
   en: string;
   episodes: LessonEpisode[];
+  /** Gain / clarity while playing (quiet or old recordings, tools/lessons_loudness.py). */
+  fx?: AudioFx;
 }
 export interface LessonCatalog {
   topics: LessonLabel[];
@@ -51,6 +54,7 @@ type RawSeries = {
   ar: string;
   en: string;
   episodes: { u: string; t?: string; s?: number; m?: [number, number][] }[];
+  fx?: AudioFx;
 };
 
 interface RawFile {
@@ -75,6 +79,7 @@ export function parseLessons(raw: unknown): LessonCatalog {
     sheikh: sheikhs.get(s.sheikh)!,
     ar: s.ar,
     en: s.en,
+    ...(s.fx ? { fx: s.fx } : {}),
     episodes: s.episodes.map((e, i) => ({
       id: `${s.id}-${i + 1}`,
       index: i + 1,

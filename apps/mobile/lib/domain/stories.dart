@@ -111,6 +111,8 @@ class Episode {
     this.story,
     this.reviewer,
     this.skips = const [],
+    this.gainDb = 0,
+    this.clarity = false,
   });
 
   final String id;
@@ -125,6 +127,10 @@ class Episode {
   /// Stretches the player jumps over, in seconds [from, to): music before, between and after a lesson
   /// (owner 2026-11-23: no music in lessons).
   final List<(int, int)> skips;
+
+  /// Gain (dB) and voice lift for a quiet or old recording (lesson series, owner 2026-11-24).
+  final double gainDb;
+  final bool clarity;
 
   String title(bool arabic) => arabic ? titleAr : titleEn;
   bool get isPending => status == ReviewStatus.pending;

@@ -104,10 +104,7 @@ class _LockPlayerCardState extends State<LockPlayerCard> {
         Container(
           width: 44,
           height: 44,
-          decoration: BoxDecoration(
-            color: scheme.primary,
-            borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-          ),
+          decoration: BoxDecoration(color: scheme.primary, borderRadius: BorderRadius.circular(DesignTokens.radiusMd)),
           alignment: Alignment.center,
           child: RIcon(RIcons.headphones, color: scheme.onPrimary, size: 24),
         ),
@@ -153,7 +150,11 @@ class _LockPlayerCardState extends State<LockPlayerCard> {
     if (w.error != null) {
       progress = Padding(
         padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
-        child: Text(w.error!, style: TextStyle(color: scheme.error), textAlign: TextAlign.center),
+        child: Text(
+          w.error!,
+          style: TextStyle(color: scheme.error),
+          textAlign: TextAlign.center,
+        ),
       );
     } else if (w.live) {
       progress = Padding(
@@ -219,10 +220,7 @@ class _LockPlayerCardState extends State<LockPlayerCard> {
     }
 
     final toggleIcon = w.loading && !w.playing
-        ? SizedBox.square(
-            dimension: 22,
-            child: CircularProgressIndicator(strokeWidth: 2.5, color: scheme.onPrimary),
-          )
+        ? SizedBox.square(dimension: 22, child: CircularProgressIndicator(strokeWidth: 2.5, color: scheme.onPrimary))
         : RIcon(w.playing ? RIcons.pause : RIcons.play, size: 28, color: scheme.onPrimary);
     final controls = Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -284,7 +282,12 @@ class _LockPlayerCardState extends State<LockPlayerCard> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [head, const SizedBox(height: DesignTokens.spaceXs), progress, controls],
+        children: [
+          head,
+          const SizedBox(height: DesignTokens.spaceXs),
+          progress,
+          controls,
+        ],
       ),
     );
 
@@ -294,20 +297,24 @@ class _LockPlayerCardState extends State<LockPlayerCard> {
         elevation: 6,
         child: SafeArea(
           top: false,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 720),
-            child: body,
-          ),
+          child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 720), child: body),
         ),
       );
     }
     return Container(
-      margin: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, DesignTokens.spaceXs, DesignTokens.spaceMd, DesignTokens.spaceSm),
+      margin: const EdgeInsets.fromLTRB(
+        DesignTokens.spaceMd,
+        DesignTokens.spaceXs,
+        DesignTokens.spaceMd,
+        DesignTokens.spaceSm,
+      ),
       decoration: BoxDecoration(
         color: scheme.surfaceContainerHigh,
         borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
         border: Border.all(color: scheme.primary.withValues(alpha: 0.25)),
-        boxShadow: [BoxShadow(color: scheme.shadow.withValues(alpha: 0.10), blurRadius: 12, offset: const Offset(0, 4))],
+        boxShadow: [
+          BoxShadow(color: scheme.shadow.withValues(alpha: 0.10), blurRadius: 12, offset: const Offset(0, 4)),
+        ],
       ),
       child: body,
     );

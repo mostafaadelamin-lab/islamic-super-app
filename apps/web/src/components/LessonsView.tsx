@@ -355,6 +355,7 @@ function SeriesPage({
       live: false,
       playlist: tracks,
       skips: e.skips,
+      fx: s.fx,
     }),
   );
   const play = (e: LessonEpisode): void => {

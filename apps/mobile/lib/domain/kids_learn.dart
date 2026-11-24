@@ -110,7 +110,6 @@ class KidsLearnContent {
   /// The wudu / salah book asks to be named when shared (its own terms).
   final String stepsCredit;
 
-
   /// The adhkar cards as text, in the cards' order.
   final List<CardDhikr> cardAdhkar;
 
@@ -128,7 +127,9 @@ class KidsLearnContent {
 
   static KidsLearnContent parse(String raw) {
     final j = jsonDecode(raw) as Map<String, dynamic>;
-    List<KidsStep> steps(Object? v) => [for (final x in (v! as List).cast<Map<String, dynamic>>()) KidsStep.fromJson(x)];
+    List<KidsStep> steps(Object? v) => [
+      for (final x in (v! as List).cast<Map<String, dynamic>>()) KidsStep.fromJson(x),
+    ];
     return KidsLearnContent(
       booksBase: j['booksBase'] as String,
       shelves: [for (final s in j['shelves'] as List) s as String],

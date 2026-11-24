@@ -23,7 +23,6 @@ Future<List<Munshid>> loadNasheeds() async =>
 String _norm(String s) =>
     s.replaceAll(RegExp('[ًٌٍَُِّْـ]'), '').replaceAll(RegExp('[أإآ]'), 'ا').replaceAll('ى', 'ي').replaceAll('ة', 'ه');
 
-
 /// A nasheed in a list: its play tile and, while it is the one playing, the player right under it
 /// (owner 2026-11-14: not in a bar away from the list).
 class NasheedTile extends StatelessWidget {

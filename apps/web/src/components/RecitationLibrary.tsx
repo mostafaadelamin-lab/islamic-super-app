@@ -22,6 +22,7 @@ import { ShabibView } from "./ShabibView";
 import { LockPlayer } from "./LockPlayer";
 import { SaveAudioButton } from "./SaveAudioButton";
 import { librarySavedStore } from "@/lib/audio-offline";
+import { applyFx, type AudioFx } from "@/lib/audio-fx";
 
 export interface Track {
   key: string;
@@ -34,6 +35,8 @@ export interface Track {
   start?: number;
   /** Stretches jumped over, seconds [from, to): music before, between and after a lesson (owner 2026-11-23). */
   skips?: readonly (readonly [number, number])[];
+  /** Gain / clarity for a quiet or old recording (lesson series). */
+  fx?: AudioFx;
 }
 
 /** Where to jump to when `sec` is inside one of the track's music stretches, or null. */
@@ -112,6 +115,7 @@ export function NowPlaying({
           h.loadSource(track.url);
           h.attachMedia(el);
         } else {
+          applyFx(el, track.fx);
           el.src = track.url;
           // Music at the very start is not played at all.
           const from = skipEnd(track, track.start ?? 0) ?? track.start ?? 0;

@@ -217,31 +217,31 @@ class _Lessons extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-        padding: const EdgeInsets.only(top: DesignTokens.spaceXs),
-        child: Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: DesignTokens.spaceSm,
-          children: [
-            Text(l.asmaLessonBy, style: Theme.of(context).textTheme.labelMedium),
-            for (var k = 0; k < urls.length; k++)
-              Builder(
-                builder: (context) {
-                  final on = player.url == urls[k] && (player.playing || player.loading);
-                  final label = urls.length == 1 ? l.asmaListenLesson : l.asmaPart(context.num('${k + 1}'));
-                  return TextButton.icon(
-                    key: Key(k == 0 ? keyPrefix : '$keyPrefix-${k + 1}'),
-                    onPressed: () => player.toggle(
-                      urls[k],
-                      title: urls.length == 1 ? l.asmaLessonTitle(name) : '${l.asmaLessonTitle(name)} · $label',
-                      subtitle: l.asmaLessonBy,
-                    ),
-                    icon: RIcon(on ? RIcons.stop : RIcons.headphones, size: 20),
-                    label: Text(on ? l.asmaStop : label),
-                  );
-                },
-              ),
-          ],
-        ),
+            padding: const EdgeInsets.only(top: DesignTokens.spaceXs),
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: DesignTokens.spaceSm,
+              children: [
+                Text(l.asmaLessonBy, style: Theme.of(context).textTheme.labelMedium),
+                for (var k = 0; k < urls.length; k++)
+                  Builder(
+                    builder: (context) {
+                      final on = player.url == urls[k] && (player.playing || player.loading);
+                      final label = urls.length == 1 ? l.asmaListenLesson : l.asmaPart(context.num('${k + 1}'));
+                      return TextButton.icon(
+                        key: Key(k == 0 ? keyPrefix : '$keyPrefix-${k + 1}'),
+                        onPressed: () => player.toggle(
+                          urls[k],
+                          title: urls.length == 1 ? l.asmaLessonTitle(name) : '${l.asmaLessonTitle(name)} · $label',
+                          subtitle: l.asmaLessonBy,
+                        ),
+                        icon: RIcon(on ? RIcons.stop : RIcons.headphones, size: 20),
+                        label: Text(on ? l.asmaStop : label),
+                      );
+                    },
+                  ),
+              ],
+            ),
           ),
           if (player.active && urls.contains(player.url))
             const Padding(

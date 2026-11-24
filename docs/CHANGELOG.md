@@ -13,6 +13,7 @@ Owner 2026-11-23: a new section of complete religious lesson series, all audio, 
 - A ✕ on the «أكمل» card of the lesson series (app + website), like the one on every player.
 - Website home: the dark prayer-times box (the phone widget's look) is removed; it repeated the two prayer cards above it.
 - iPhone build: the prayer widget's countdown used an iOS 15 API in an iOS 14 widget (Codemagic archive failed).
+- Owner 2026-11-24 («بعض الدروس صوتها ضعيف جدا وقديم»): every series was measured (loudness and how much of the voice band is left); 34 are evened out while playing: quiet ones raised (up to +12 dB), very loud ones lowered, old muffled tapes get the hum cut and the voice lifted (website through Web Audio, Android through the system loudness enhancer + equalizer; iPhone plays them as recorded, its player has no such effects). Seven clearer series added beside the old / quiet ones: «تيسير الوصول: شرح ثلاثة الأصول» (Sheikh Abdulmohsen al-Qasim), «شرح كتاب التوحيد» (Sheikh Abdulrazzaq al-Badr), «الشمائل النبوية» (Sheikh Abdulkarim al-Khudair), «المعاملات المالية المعاصرة» (Sheikh Yusuf al-Shubaily), «فتاوى الحج والعمرة» (Sheikh Atiyya Saqr), «مع القرآن ٣» and «مع القرآن ٦» (Sheikh Saleh al-Maghamsi). Now 57 series, about 2120 lessons.
 ### Changed
 - Unchanged: Quran text and all other religious content.
 

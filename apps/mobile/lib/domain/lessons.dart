@@ -52,6 +52,8 @@ class LessonSeries {
     required this.ar,
     required this.en,
     required this.episodes,
+    this.gainDb = 0,
+    this.clarity = false,
   });
   final String id;
   final LessonLabel topic;
@@ -59,6 +61,10 @@ class LessonSeries {
   final String ar;
   final String en;
   final List<LessonEpisode> episodes;
+
+  /// Played louder / softer (dB) and with the voice lifted for an old tape (tools/lessons_loudness.py).
+  final double gainDb;
+  final bool clarity;
 
   String title(bool arabic) => arabic ? ar : en;
 
@@ -126,6 +132,8 @@ class LessonCatalog {
       sheikh: sheikhById[s['sheikh']]!,
       ar: s['ar'] as String,
       en: s['en'] as String,
+      gainDb: ((s['fx'] as Map?)?['g'] as num?)?.toDouble() ?? 0,
+      clarity: (s['fx'] as Map?)?['c'] == 1,
       episodes: [
         for (final (i, e) in (s['episodes'] as List).indexed)
           LessonEpisode(

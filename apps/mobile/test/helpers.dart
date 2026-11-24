@@ -382,6 +382,11 @@ class FakeNarrationBackend implements NarrationBackend {
   @override
   Future<void> stop() async => calls.add('stop');
 
+  @override
+  Future<void> setFx({double gainDb = 0, bool clarity = false}) async {
+    if (gainDb != 0 || clarity) calls.add('fx:${gainDb.round()}${clarity ? 'c' : ''}');
+  }
+
   void emit(Duration p) => _pos.add(p);
   void finish() => _done.add(null);
 

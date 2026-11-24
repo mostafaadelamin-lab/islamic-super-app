@@ -250,6 +250,38 @@
       "groups": [
         "saudi"
       ]
+    },
+    {
+      "id": "qasim",
+      "ar": "الشيخ عبد المحسن القاسم",
+      "en": "Sheikh Abdulmohsen Al-Qasim",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
+      "id": "badr",
+      "ar": "الشيخ عبد الرزاق البدر",
+      "en": "Sheikh Abdulrazzaq Al-Badr",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
+      "id": "khudair",
+      "ar": "الشيخ عبد الكريم الخضير",
+      "en": "Sheikh Abdulkarim Al-Khudair",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
+      "id": "shubaily",
+      "ar": "الشيخ يوسف الشبيلي",
+      "en": "Sheikh Yusuf Al-Shubaily",
+      "groups": [
+        "saudi"
+      ]
     }
   ],
   "series": [
@@ -285,6 +317,16 @@
       ]
     },
     {
+      "id": "tawhid-badr",
+      "topic": "aqeedah",
+      "sheikh": "badr",
+      "ar": "شرح كتاب التوحيد",
+      "en": "Explaining Kitab al-Tawhid",
+      "items": [
+        "06_20190906_201909"
+      ]
+    },
+    {
       "id": "usul-uthaymeen",
       "topic": "aqeedah",
       "sheikh": "uthaymeen",
@@ -293,6 +335,17 @@
       "items": [
         "Last_03_20180520_1547"
       ]
+    },
+    {
+      "id": "usul-qasim",
+      "topic": "aqeedah",
+      "sheikh": "qasim",
+      "ar": "تيسير الوصول: شرح ثلاثة الأصول",
+      "en": "Explaining the Three Principles",
+      "items": [
+        "Taysir_Wosool"
+      ],
+      "titles": "title"
     },
     {
       "id": "doroos-hassan",
@@ -335,6 +388,16 @@
       ]
     },
     {
+      "id": "shamail-khudair",
+      "topic": "seerah",
+      "sheikh": "khudair",
+      "ar": "الشمائل النبوية",
+      "en": "The Prophet's qualities (al-Shama'il)",
+      "items": [
+        "Shamael-Khudair"
+      ]
+    },
+    {
       "id": "seerah-qarni",
       "topic": "seerah",
       "sheikh": "qarni",
@@ -364,6 +427,18 @@
         "ahmed_alkttawy_yahoo_6_201808"
       ],
       "titles": "name"
+    },
+    {
+      "id": "hajj-fatawa-saqr",
+      "topic": "fiqh",
+      "sheikh": "saqr",
+      "ar": "فتاوى الحج والعمرة",
+      "en": "Fatwas on Hajj and Umrah",
+      "items": [
+        "01_20210717_20210717_0856"
+      ],
+      "titles": "title",
+      "sort": "lex"
     },
     {
       "id": "nawawi-uthaymeen",
@@ -589,6 +664,26 @@
       ]
     },
     {
+      "id": "maa-quran-3-maghamsi",
+      "topic": "quran",
+      "sheikh": "maghamsi",
+      "ar": "مع القرآن ٣",
+      "en": "With the Quran 3",
+      "items": [
+        "M3a-Quran-3_Saleh-Mghamsi-mp3"
+      ]
+    },
+    {
+      "id": "maa-quran-6-maghamsi",
+      "topic": "quran",
+      "sheikh": "maghamsi",
+      "ar": "مع القرآن ٦",
+      "en": "With the Quran 6",
+      "items": [
+        "Ma3a-Quran-6_Saleh-Mghamsi-mp3"
+      ]
+    },
+    {
       "id": "quran-insan-kafy",
       "topic": "quran",
       "sheikh": "kafy",
@@ -709,6 +804,16 @@
         "31.-3-31"
       ],
       "titles": "name"
+    },
+    {
+      "id": "muamalat-shubaily",
+      "topic": "muamalat",
+      "sheikh": "shubaily",
+      "ar": "المعاملات المالية المعاصرة",
+      "en": "Contemporary financial dealings",
+      "items": [
+        "boyo3_shbaili"
+      ]
     },
     {
       "id": "tahara-muyassar-alaa",

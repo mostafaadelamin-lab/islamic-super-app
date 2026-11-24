@@ -1,0 +1,1241 @@
+[
+{
+"series": "asma-tayeb",
+"ep": 1,
+"lufs": -21.5,
+"hi": -24.6,
+"sr": 44100
+},
+{
+"series": "asma-tayeb",
+"ep": 15,
+"lufs": -27.1,
+"hi": -21.2,
+"sr": 44100
+},
+{
+"series": "asma-tayeb",
+"ep": 29,
+"lufs": -26.7,
+"hi": -22.0,
+"sr": 44100
+},
+{
+"series": "wasatiyya-tayeb",
+"ep": 1,
+"lufs": -20.2,
+"hi": -12.499999999999996,
+"sr": 48000
+},
+{
+"series": "wasatiyya-tayeb",
+"ep": 13,
+"lufs": -20.8,
+"hi": -11.399999999999999,
+"sr": 48000
+},
+{
+"series": "wasatiyya-tayeb",
+"ep": 25,
+"lufs": -21.5,
+"hi": -12.899999999999999,
+"sr": 48000
+},
+{
+"series": "tawhid-alsheikh",
+"ep": 1,
+"lufs": -21.4,
+"hi": -18.900000000000002,
+"sr": 22050
+},
+{
+"series": "tawhid-alsheikh",
+"ep": 9,
+"lufs": -11.8,
+"hi": -35.2,
+"sr": 22050
+},
+{
+"series": "tawhid-alsheikh",
+"ep": 16,
+"lufs": -6.7,
+"hi": -29.799999999999997,
+"sr": 22050
+},
+{
+"series": "tawhid-badr",
+"ep": 1,
+"lufs": -21.8,
+"hi": -17.200000000000003,
+"sr": 44100
+},
+{
+"series": "tawhid-badr",
+"ep": 21,
+"lufs": -15.4,
+"hi": -20.6,
+"sr": 22050
+},
+{
+"series": "tawhid-badr",
+"ep": 40,
+"lufs": -16.4,
+"hi": -15.3,
+"sr": 22050
+},
+{
+"series": "usul-uthaymeen",
+"ep": 1,
+"lufs": -17.7,
+"hi": -34.800000000000004,
+"sr": 22050
+},
+{
+"series": "usul-uthaymeen",
+"ep": 2,
+"lufs": -16.5,
+"hi": -34.2,
+"sr": 22050
+},
+{
+"series": "usul-uthaymeen",
+"ep": 3,
+"lufs": -19.7,
+"hi": -28.300000000000004,
+"sr": 22050
+},
+{
+"series": "usul-qasim",
+"ep": 1,
+"lufs": -18.8,
+"hi": -15.100000000000001,
+"sr": 32000
+},
+{
+"series": "usul-qasim",
+"ep": 16,
+"lufs": -20.4,
+"hi": -15.399999999999999,
+"sr": 32000
+},
+{
+"series": "usul-qasim",
+"ep": 30,
+"lufs": -19.6,
+"hi": -15.3,
+"sr": 32000
+},
+{
+"series": "doroos-hassan",
+"ep": 1,
+"lufs": -14.0,
+"hi": -20.7,
+"sr": 22050
+},
+{
+"series": "doroos-hassan",
+"ep": 4,
+"lufs": -13.8,
+"hi": -17.4,
+"sr": 22050
+},
+{
+"series": "doroos-hassan",
+"ep": 6,
+"lufs": -14.1,
+"hi": -19.9,
+"sr": 22050
+},
+{
+"series": "huwa-allah-maghamsi",
+"ep": 1,
+"lufs": -12.4,
+"hi": -29.099999999999998,
+"sr": 44100
+},
+{
+"series": "huwa-allah-maghamsi",
+"ep": 14,
+"lufs": -18.3,
+"hi": -25.900000000000002,
+"sr": 44100
+},
+{
+"series": "huwa-allah-maghamsi",
+"ep": 26,
+"lufs": -12.1,
+"hi": -25.699999999999996,
+"sr": 44100
+},
+{
+"series": "seerah-hassan",
+"ep": 1,
+"lufs": -19.2,
+"hi": -25.5,
+"sr": 11025
+},
+{
+"series": "seerah-hassan",
+"ep": 59,
+"lufs": -13.8,
+"hi": -26.1,
+"sr": 11025
+},
+{
+"series": "seerah-hassan",
+"ep": 117,
+"lufs": -14.1,
+"hi": -10.5,
+"sr": 11025
+},
+{
+"series": "shamail-gabr",
+"ep": 1,
+"lufs": -20.1,
+"hi": -67.2,
+"sr": 8000
+},
+{
+"series": "shamail-gabr",
+"ep": 40,
+"lufs": -20.7,
+"hi": -66.5,
+"sr": 8000
+},
+{
+"series": "shamail-gabr",
+"ep": 79,
+"lufs": -23.2,
+"hi": -64.5,
+"sr": 8000
+},
+{
+"series": "shamail-khudair",
+"ep": 1,
+"lufs": -20.9,
+"hi": -20.0,
+"sr": 22050
+},
+{
+"series": "shamail-khudair",
+"ep": 16,
+"lufs": -18.2,
+"hi": -20.800000000000004,
+"sr": 22050
+},
+{
+"series": "shamail-khudair",
+"ep": 30,
+"lufs": -18.3,
+"hi": -20.300000000000004,
+"sr": 22050
+},
+{
+"series": "seerah-qarni",
+"ep": 1,
+"lufs": -17.7,
+"hi": -13.999999999999996,
+"sr": 48000
+},
+{
+"series": "seerah-qarni",
+"ep": 14,
+"lufs": -17.5,
+"hi": -18.800000000000004,
+"sr": 48000
+},
+{
+"series": "seerah-qarni",
+"ep": 26,
+"lufs": -17.5,
+"hi": -16.5,
+"sr": 48000
+},
+{
+"series": "molakhas-saeed",
+"ep": 1,
+"lufs": -19.8,
+"hi": -12.699999999999996,
+"sr": 44100
+},
+{
+"series": "molakhas-saeed",
+"ep": 92,
+"lufs": -16.9,
+"hi": -25.0,
+"sr": 11025
+},
+{
+"series": "molakhas-saeed",
+"ep": 182,
+"lufs": -13.6,
+"hi": -19.6,
+"sr": 22050
+},
+{
+"series": "fiqh-saqr",
+"ep": 1,
+"lufs": -8.5,
+"hi": -28.099999999999998,
+"sr": 44100
+},
+{
+"series": "fiqh-saqr",
+"ep": 37,
+"lufs": -11.7,
+"hi": -35.699999999999996,
+"sr": 44100
+},
+{
+"series": "fiqh-saqr",
+"ep": 72,
+"lufs": -16.3,
+"hi": -27.300000000000004,
+"sr": 44100
+},
+{
+"series": "hajj-fatawa-saqr",
+"ep": 1,
+"lufs": -20.9,
+"hi": -16.700000000000003,
+"sr": 44100
+},
+{
+"series": "hajj-fatawa-saqr",
+"ep": 53,
+"lufs": -18.4,
+"hi": -16.3,
+"sr": 44100
+},
+{
+"series": "hajj-fatawa-saqr",
+"ep": 104,
+"lufs": -17.4,
+"hi": -18.400000000000002,
+"sr": 44100
+},
+{
+"series": "nawawi-uthaymeen",
+"ep": 1,
+"lufs": -18.0,
+"hi": -17.7,
+"sr": 22050
+},
+{
+"series": "nawawi-uthaymeen",
+"ep": 22,
+"lufs": -17.0,
+"hi": -20.199999999999996,
+"sr": 22050
+},
+{
+"series": "nawawi-uthaymeen",
+"ep": 42,
+"lufs": -17.1,
+"hi": -19.8,
+"sr": 22050
+},
+{
+"series": "riyadh-uthaymeen",
+"ep": 1,
+"lufs": -17.6,
+"hi": -14.200000000000003,
+"sr": 44100
+},
+{
+"series": "riyadh-uthaymeen",
+"ep": 49,
+"lufs": -11.8,
+"hi": -25.1,
+"sr": 44100
+},
+{
+"series": "riyadh-uthaymeen",
+"ep": 96,
+"lufs": -11.4,
+"hi": -23.299999999999997,
+"sr": 44100
+},
+{
+"series": "qudsi-kafy",
+"ep": 1,
+"lufs": -16.5,
+"hi": -27.6,
+"sr": 44100
+},
+{
+"series": "qudsi-kafy",
+"ep": 4,
+"lufs": -16.2,
+"hi": -25.1,
+"sr": 44100
+},
+{
+"series": "qudsi-kafy",
+"ep": 6,
+"lufs": -13.2,
+"hi": -26.200000000000003,
+"sr": 44100
+},
+{
+"series": "konooz-kafy",
+"ep": 1,
+"lufs": -16.4,
+"hi": -23.800000000000004,
+"sr": 22050
+},
+{
+"series": "konooz-kafy",
+"ep": 16,
+"lufs": -16.1,
+"hi": -24.400000000000002,
+"sr": 22050
+},
+{
+"series": "konooz-kafy",
+"ep": 30,
+"lufs": -16.2,
+"hi": -23.8,
+"sr": 22050
+},
+{
+"series": "qulub-sabt",
+"ep": 1,
+"lufs": -17.0,
+"hi": -11.7,
+"sr": 22050
+},
+{
+"series": "qulub-sabt",
+"ep": 17,
+"lufs": -15.3,
+"hi": -13.400000000000002,
+"sr": 22050
+},
+{
+"series": "qulub-sabt",
+"ep": 32,
+"lufs": -17.3,
+"hi": -11.3,
+"sr": 22050
+},
+{
+"series": "arbaoon-qalbiya-munajjid",
+"ep": 1,
+"lufs": -21.3,
+"hi": -13.600000000000001,
+"sr": 44100
+},
+{
+"series": "arbaoon-qalbiya-munajjid",
+"ep": 16,
+"lufs": -17.5,
+"hi": -20.799999999999997,
+"sr": 44100
+},
+{
+"series": "arbaoon-qalbiya-munajjid",
+"ep": 31,
+"lufs": -20.2,
+"hi": -19.0,
+"sr": 44100
+},
+{
+"series": "ajaeb-qulub-kafy",
+"ep": 1,
+"lufs": -13.5,
+"hi": -23.6,
+"sr": 44100
+},
+{
+"series": "ajaeb-qulub-kafy",
+"ep": 13,
+"lufs": -13.4,
+"hi": -24.599999999999998,
+"sr": 44100
+},
+{
+"series": "ajaeb-qulub-kafy",
+"ep": 25,
+"lufs": -15.0,
+"hi": -24.099999999999998,
+"sr": 44100
+},
+{
+"series": "qalb-saleem-kafy",
+"ep": 1,
+"lufs": -8.0,
+"hi": -25.5,
+"sr": 44100
+},
+{
+"series": "qalb-saleem-kafy",
+"ep": 15,
+"lufs": -7.6,
+"hi": -25.000000000000004,
+"sr": 44100
+},
+{
+"series": "qalb-saleem-kafy",
+"ep": 29,
+"lufs": -7.7,
+"hi": -24.300000000000004,
+"sr": 44100
+},
+{
+"series": "tareeq-noor-kafy",
+"ep": 1,
+"lufs": -18.0,
+"hi": -27.2,
+"sr": 22050
+},
+{
+"series": "tareeq-noor-kafy",
+"ep": 16,
+"lufs": -16.3,
+"hi": -25.8,
+"sr": 22050
+},
+{
+"series": "tareeq-noor-kafy",
+"ep": 30,
+"lufs": -11.8,
+"hi": -25.599999999999998,
+"sr": 22050
+},
+{
+"series": "nafahat-kafy",
+"ep": 1,
+"lufs": -19.5,
+"hi": -25.400000000000002,
+"sr": 22050
+},
+{
+"series": "nafahat-kafy",
+"ep": 15,
+"lufs": -18.9,
+"hi": -22.4,
+"sr": 22050
+},
+{
+"series": "nafahat-kafy",
+"ep": 28,
+"lufs": -22.5,
+"hi": -22.2,
+"sr": 22050
+},
+{
+"series": "rabbaniyyin-kafy",
+"ep": 1,
+"lufs": -14.7,
+"hi": -22.599999999999998,
+"sr": 22050
+},
+{
+"series": "rabbaniyyin-kafy",
+"ep": 8,
+"lufs": -11.6,
+"hi": -20.599999999999998,
+"sr": 22050
+},
+{
+"series": "rabbaniyyin-kafy",
+"ep": 15,
+"lufs": -12.2,
+"hi": -19.0,
+"sr": 22050
+},
+{
+"series": "nafs-kafy",
+"ep": 1,
+"lufs": -17.0,
+"hi": -23.300000000000004,
+"sr": 44100
+},
+{
+"series": "nafs-kafy",
+"ep": 16,
+"lufs": -20.0,
+"hi": -24.199999999999996,
+"sr": 44100
+},
+{
+"series": "nafs-kafy",
+"ep": 30,
+"lufs": -16.4,
+"hi": -15.7,
+"sr": 44100
+},
+{
+"series": "deen-qayyim-kafy",
+"ep": 1,
+"lufs": -25.2,
+"hi": -23.1,
+"sr": 44100
+},
+{
+"series": "deen-qayyim-kafy",
+"ep": 10,
+"lufs": -25.9,
+"hi": -22.099999999999998,
+"sr": 44100
+},
+{
+"series": "deen-qayyim-kafy",
+"ep": 18,
+"lufs": -30.8,
+"hi": -26.700000000000003,
+"sr": 44100
+},
+{
+"series": "fawz-kafy",
+"ep": 1,
+"lufs": -13.7,
+"hi": -20.499999999999996,
+"sr": 44100
+},
+{
+"series": "fawz-kafy",
+"ep": 8,
+"lufs": -14.1,
+"hi": -22.7,
+"sr": 44100
+},
+{
+"series": "fawz-kafy",
+"ep": 14,
+"lufs": -13.4,
+"hi": -17.200000000000003,
+"sr": 44100
+},
+{
+"series": "farah-qarni",
+"ep": 1,
+"lufs": -11.4,
+"hi": -20.9,
+"sr": 22050
+},
+{
+"series": "farah-qarni",
+"ep": 16,
+"lufs": -12.3,
+"hi": -19.9,
+"sr": 22050
+},
+{
+"series": "farah-qarni",
+"ep": 30,
+"lufs": -14.2,
+"hi": -19.4,
+"sr": 22050
+},
+{
+"series": "lectures-ghazali",
+"ep": 1,
+"lufs": -5.3,
+"hi": -26.0,
+"sr": 44100
+},
+{
+"series": "lectures-ghazali",
+"ep": 8,
+"lufs": -31.3,
+"hi": -26.200000000000003,
+"sr": 44100
+},
+{
+"series": "lectures-ghazali",
+"ep": 14,
+"lufs": -22.0,
+"hi": -20.2,
+"sr": 44100
+},
+{
+"series": "sahaba-masri",
+"ep": 1,
+"lufs": -13.6,
+"hi": -15.900000000000002,
+"sr": 44100
+},
+{
+"series": "sahaba-masri",
+"ep": 6,
+"lufs": -18.5,
+"hi": -12.600000000000001,
+"sr": 44100
+},
+{
+"series": "sahaba-masri",
+"ep": 10,
+"lufs": -15.2,
+"hi": -19.1,
+"sr": 44100
+},
+{
+"series": "sahaba-munajjid",
+"ep": 1,
+"lufs": -20.4,
+"hi": -16.799999999999997,
+"sr": 22050
+},
+{
+"series": "sahaba-munajjid",
+"ep": 7,
+"lufs": -15.9,
+"hi": -14.3,
+"sr": 22050
+},
+{
+"series": "sahaba-munajjid",
+"ep": 13,
+"lufs": -23.5,
+"hi": -10.600000000000001,
+"sr": 22050
+},
+{
+"series": "safwa-kafy",
+"ep": 1,
+"lufs": -26.2,
+"hi": -21.599999999999998,
+"sr": 48000
+},
+{
+"series": "safwa-kafy",
+"ep": 33,
+"lufs": -24.3,
+"hi": -21.6,
+"sr": 48000
+},
+{
+"series": "safwa-kafy",
+"ep": 65,
+"lufs": -20.1,
+"hi": -21.900000000000002,
+"sr": 48000
+},
+{
+"series": "qisas-quran-munajjid",
+"ep": 1,
+"lufs": -17.5,
+"hi": -18.700000000000003,
+"sr": 22050
+},
+{
+"series": "qisas-quran-munajjid",
+"ep": 23,
+"lufs": -17.6,
+"hi": -18.300000000000004,
+"sr": 22050
+},
+{
+"series": "qisas-quran-munajjid",
+"ep": 45,
+"lufs": -26.5,
+"hi": -19.300000000000004,
+"sr": 22050
+},
+{
+"series": "qissa-kafy",
+"ep": 1,
+"lufs": -22.4,
+"hi": -22.599999999999998,
+"sr": 22050
+},
+{
+"series": "qissa-kafy",
+"ep": 12,
+"lufs": -18.1,
+"hi": -23.400000000000002,
+"sr": 22050
+},
+{
+"series": "qissa-kafy",
+"ep": 22,
+"lufs": -19.1,
+"hi": -22.5,
+"sr": 22050
+},
+{
+"series": "maa-quran-maghamsi",
+"ep": 1,
+"lufs": -23.8,
+"hi": -24.4,
+"sr": 44100
+},
+{
+"series": "maa-quran-maghamsi",
+"ep": 16,
+"lufs": -25.6,
+"hi": -24.200000000000003,
+"sr": 44100
+},
+{
+"series": "maa-quran-maghamsi",
+"ep": 30,
+"lufs": -27.6,
+"hi": -26.4,
+"sr": 44100
+},
+{
+"series": "maa-quran-3-maghamsi",
+"ep": 1,
+"lufs": -10.1,
+"hi": -25.3,
+"sr": 44100
+},
+{
+"series": "maa-quran-3-maghamsi",
+"ep": 16,
+"lufs": -17.4,
+"hi": -21.299999999999997,
+"sr": 44100
+},
+{
+"series": "maa-quran-3-maghamsi",
+"ep": 30,
+"lufs": -14.3,
+"hi": -20.800000000000004,
+"sr": 44100
+},
+{
+"series": "maa-quran-6-maghamsi",
+"ep": 1,
+"lufs": -22.5,
+"hi": -22.9,
+"sr": 44100
+},
+{
+"series": "maa-quran-6-maghamsi",
+"ep": 16,
+"lufs": -18.7,
+"hi": -23.7,
+"sr": 44100
+},
+{
+"series": "maa-quran-6-maghamsi",
+"ep": 30,
+"lufs": -19.3,
+"hi": -24.199999999999996,
+"sr": 44100
+},
+{
+"series": "quran-insan-kafy",
+"ep": 1,
+"lufs": -24.2,
+"hi": -23.299999999999997,
+"sr": 22050
+},
+{
+"series": "quran-insan-kafy",
+"ep": 26,
+"lufs": -18.0,
+"hi": -22.9,
+"sr": 22050
+},
+{
+"series": "quran-insan-kafy",
+"ep": 50,
+"lufs": -25.5,
+"hi": -21.900000000000002,
+"sr": 22050
+},
+{
+"series": "waad-haq-kafy",
+"ep": 1,
+"lufs": -17.5,
+"hi": -32.099999999999994,
+"sr": 22050
+},
+{
+"series": "waad-haq-kafy",
+"ep": 21,
+"lufs": -11.3,
+"hi": -28.800000000000004,
+"sr": 22050
+},
+{
+"series": "waad-haq-kafy",
+"ep": 40,
+"lufs": -18.4,
+"hi": -23.099999999999998,
+"sr": 22050
+},
+{
+"series": "usra-tayeb",
+"ep": 1,
+"lufs": -27.2,
+"hi": -22.1,
+"sr": 44100
+},
+{
+"series": "usra-tayeb",
+"ep": 15,
+"lufs": -21.7,
+"hi": -21.7,
+"sr": 44100
+},
+{
+"series": "usra-tayeb",
+"ep": 29,
+"lufs": -22.6,
+"hi": -20.000000000000004,
+"sr": 44100
+},
+{
+"series": "awlad-yaqoub",
+"ep": 1,
+"lufs": -17.8,
+"hi": -23.200000000000003,
+"sr": 22050
+},
+{
+"series": "awlad-yaqoub",
+"ep": 7,
+"lufs": -15.3,
+"hi": -16.9,
+"sr": 22050
+},
+{
+"series": "awlad-yaqoub",
+"ep": 12,
+"lufs": -13.0,
+"hi": -22.999999999999996,
+"sr": 22050
+},
+{
+"series": "huquq-kafy",
+"ep": 1,
+"lufs": -15.1,
+"hi": -21.2,
+"sr": 44100
+},
+{
+"series": "huquq-kafy",
+"ep": 3,
+"lufs": -13.5,
+"hi": -28.2,
+"sr": 44100
+},
+{
+"series": "huquq-kafy",
+"ep": 5,
+"lufs": -16.3,
+"hi": -25.799999999999997,
+"sr": 44100
+},
+{
+"series": "hayat-tayeb",
+"ep": 1,
+"lufs": -13.8,
+"hi": -18.7,
+"sr": 44100
+},
+{
+"series": "hayat-tayeb",
+"ep": 15,
+"lufs": -16.8,
+"hi": -17.2,
+"sr": 44100
+},
+{
+"series": "hayat-tayeb",
+"ep": 29,
+"lufs": -14.1,
+"hi": -16.8,
+"sr": 44100
+},
+{
+"series": "azmat-akhlaq-hassan",
+"ep": 1,
+"lufs": -13.7,
+"hi": -19.7,
+"sr": 22050
+},
+{
+"series": "azmat-akhlaq-hassan",
+"ep": 13,
+"lufs": -11.1,
+"hi": -18.9,
+"sr": 22050
+},
+{
+"series": "azmat-akhlaq-hassan",
+"ep": 25,
+"lufs": -16.3,
+"hi": -17.2,
+"sr": 22050
+},
+{
+"series": "akhlaquna-kafy",
+"ep": 1,
+"lufs": -18.4,
+"hi": -20.8,
+"sr": 22050
+},
+{
+"series": "akhlaquna-kafy",
+"ep": 10,
+"lufs": -20.9,
+"hi": -18.400000000000002,
+"sr": 22050
+},
+{
+"series": "akhlaquna-kafy",
+"ep": 18,
+"lufs": -21.9,
+"hi": -21.0,
+"sr": 22050
+},
+{
+"series": "afat-lisan-kafy",
+"ep": 1,
+"lufs": -14.1,
+"hi": -17.799999999999997,
+"sr": 44100
+},
+{
+"series": "afat-lisan-kafy",
+"ep": 14,
+"lufs": -13.1,
+"hi": -13.899999999999999,
+"sr": 44100
+},
+{
+"series": "afat-lisan-kafy",
+"ep": 27,
+"lufs": -16.9,
+"hi": -11.400000000000002,
+"sr": 44100
+},
+{
+"series": "adab-bali",
+"ep": 1,
+"lufs": -26.5,
+"hi": -24.7,
+"sr": 16000
+},
+{
+"series": "adab-bali",
+"ep": 24,
+"lufs": -22.6,
+"hi": -25.199999999999996,
+"sr": 16000
+},
+{
+"series": "adab-bali",
+"ep": 46,
+"lufs": -22.6,
+"hi": -26.400000000000002,
+"sr": 16000
+},
+{
+"series": "hayatuna-munajjid",
+"ep": 1,
+"lufs": -19.6,
+"hi": -13.900000000000002,
+"sr": 22050
+},
+{
+"series": "hayatuna-munajjid",
+"ep": 8,
+"lufs": -13.8,
+"hi": -12.7,
+"sr": 22050
+},
+{
+"series": "hayatuna-munajjid",
+"ep": 14,
+"lufs": -16.6,
+"hi": -17.299999999999997,
+"sr": 22050
+},
+{
+"series": "muamalat-khathlan",
+"ep": 1,
+"lufs": -26.3,
+"hi": -23.4,
+"sr": 44100
+},
+{
+"series": "muamalat-khathlan",
+"ep": 44,
+"lufs": -28.9,
+"hi": -20.0,
+"sr": 44100
+},
+{
+"series": "muamalat-khathlan",
+"ep": 87,
+"lufs": -30.8,
+"hi": -17.6,
+"sr": 44100
+},
+{
+"series": "muamalat-shubaily",
+"ep": 1,
+"lufs": null,
+"hi": null,
+"sr": 0
+},
+{
+"series": "muamalat-shubaily",
+"ep": 4,
+"lufs": null,
+"hi": null,
+"sr": 0
+},
+{
+"series": "muamalat-shubaily",
+"ep": 6,
+"lufs": null,
+"hi": null,
+"sr": 0
+},
+{
+"series": "tahara-muyassar-alaa",
+"ep": 1,
+"lufs": -14.8,
+"hi": -24.9,
+"sr": 22050
+},
+{
+"series": "tahara-muyassar-alaa",
+"ep": 4,
+"lufs": -15.3,
+"hi": -21.999999999999996,
+"sr": 22050
+},
+{
+"series": "tahara-muyassar-alaa",
+"ep": 7,
+"lufs": -13.8,
+"hi": -28.300000000000004,
+"sr": 22050
+},
+{
+"series": "tahara-uthaymeen",
+"ep": 1,
+"lufs": -12.8,
+"hi": -23.599999999999998,
+"sr": 16000
+},
+{
+"series": "tahara-uthaymeen",
+"ep": 41,
+"lufs": -19.4,
+"hi": -25.4,
+"sr": 16000
+},
+{
+"series": "tahara-uthaymeen",
+"ep": 80,
+"lufs": -23.0,
+"hi": -17.700000000000003,
+"sr": 16000
+},
+{
+"series": "nihaya-hassan",
+"ep": 1,
+"lufs": -11.5,
+"hi": -13.4,
+"sr": 44100
+},
+{
+"series": "nihaya-hassan",
+"ep": 15,
+"lufs": -22.0,
+"hi": -18.400000000000002,
+"sr": 44100
+},
+{
+"series": "nihaya-hassan",
+"ep": 29,
+"lufs": -17.7,
+"hi": -22.199999999999996,
+"sr": 44100
+},
+{
+"series": "nihayat-alam-arifi",
+"ep": 1,
+"lufs": -21.4,
+"hi": -19.4,
+"sr": 44100
+},
+{
+"series": "nihayat-alam-arifi",
+"ep": 44,
+"lufs": -22.9,
+"hi": -18.6,
+"sr": 44100
+},
+{
+"series": "nihayat-alam-arifi",
+"ep": 86,
+"lufs": -18.3,
+"hi": -17.6,
+"sr": 44100
+},
+{
+"series": "dar-akhira-kafy",
+"ep": 1,
+"lufs": -10.7,
+"hi": -24.7,
+"sr": 22050
+},
+{
+"series": "dar-akhira-kafy",
+"ep": 17,
+"lufs": -9.1,
+"hi": -21.4,
+"sr": 22050
+},
+{
+"series": "dar-akhira-kafy",
+"ep": 32,
+"lufs": -10.8,
+"hi": -25.7,
+"sr": 22050
+},
+{
+"series": "seerah-shaarawi",
+"ep": 1,
+"lufs": -10.8,
+"hi": -24.799999999999997,
+"sr": 44100
+},
+{
+"series": "seerah-shaarawi",
+"ep": 111,
+"lufs": -17.4,
+"hi": -24.200000000000003,
+"sr": 44100
+},
+{
+"series": "seerah-shaarawi",
+"ep": 220,
+"lufs": -9.3,
+"hi": -19.1,
+"sr": 44100
+},
+{
+"series": "anbiya-shaarawi",
+"ep": 1,
+"lufs": -7.2,
+"hi": -25.9,
+"sr": 32000
+},
+{
+"series": "anbiya-shaarawi",
+"ep": 23,
+"lufs": -16.8,
+"hi": -23.1,
+"sr": 32000
+},
+{
+"series": "anbiya-shaarawi",
+"ep": 44,
+"lufs": -16.1,
+"hi": -20.1,
+"sr": 32000
+}
+]

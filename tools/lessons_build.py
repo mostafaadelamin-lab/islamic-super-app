@@ -106,6 +106,9 @@ def build(src, refetch=False):
     # Music stretches the players jump over (tools/lessons_music.py), by audio URL.
     music_file = RAW.parent / 'music.json'
     music = json.loads(music_file.read_text()) if music_file.exists() else {}
+    # Gain / clarity per series (tools/lessons_loudness.py).
+    fx_file = RAW.parent / 'audio-fx.json'
+    audio_fx = json.loads(fx_file.read_text()) if fx_file.exists() else {}
     sheikhs = {s['id']: s for s in src['sheikhs']}
     topics = {t['id'] for t in src['topics']}
     def series_list(entries):
@@ -164,7 +167,10 @@ def build(src, refetch=False):
                 eps.append(ep)
         if not eps:
             raise SystemExit(f'no audio in {se["id"]}')
-        return {k: se[k] for k in ('id', 'topic', 'sheikh', 'ar', 'en')} | {'episodes': eps}
+        out = {k: se[k] for k in ('id', 'topic', 'sheikh', 'ar', 'en')}
+        if se['id'] in audio_fx:
+            out['fx'] = audio_fx[se['id']]
+        return out | {'episodes': eps}
 
     out = series_list(src['series'])
     return {
