@@ -1,5 +1,8 @@
 # Changelog
 
+## Website: «the site is being updated» bar — 2026-11-24
+Owner 2026-11-24: while the website is being uploaded or changed, every page shows a bar at the top: «جارٍ تحديث الموقع وإضافة خدمات جديدة. لو حصل أي تقطيع، انتظر دقائق وحدّث الصفحة.» (English on /en/). The upload tool (builds/ftp_deploy.py `deploy`) writes /site-status.json {"updating": true} before the first file and {"updating": false} at the end, even after an error. The pages read it with a small inline script (works even when a half-updated page's app code fails), every minute and when the tab comes back; the service worker and .htaccess never cache it. Website only: the phone apps carry their content inside and are not affected by uploads.
+
 ## [1.2.19] — «سلاسل الدروس» audio lesson series — 2026-11-23
 Owner 2026-11-23: a new section of complete religious lesson series, all audio, downloadable, with the player under each lesson; famous Egyptian and Arab sheikhs, all of Sheikh Omar Abdelkafy's series, Saudi sheikhs and Al-Azhar scholars. Phone apps (Android + iPhone) and website.
 ### Added

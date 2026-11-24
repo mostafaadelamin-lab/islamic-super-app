@@ -6,6 +6,7 @@ import "../globals.css";
 import { tokens } from "@/generated/tokens";
 import { dirOf, isLocale, LOCALES, t, type Locale } from "@/lib/i18n";
 import { THEME_SCRIPT } from "../theme-script";
+import { SITE_STATUS_SCRIPT } from "../site-status-script";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -67,8 +68,18 @@ export default async function LocaleLayout({
     <html lang={locale} dir={dirOf(locale)} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: SITE_STATUS_SCRIPT }} />
       </head>
       <body>
+        {/* Filled by SITE_STATUS_SCRIPT while an upload runs; React leaves its content alone. */}
+        <div
+          id="site-status"
+          className="site-status"
+          role="status"
+          hidden
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: "" }}
+        />
         <a className="skip-link" href="#main">
           {t(locale, "nav.skip")}
         </a>

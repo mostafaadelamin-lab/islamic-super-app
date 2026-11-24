@@ -62,6 +62,11 @@ AddType application/octet-stream .dat
     Header set Cache-Control "no-cache, must-revalidate"
     Header unset Expires
   </FilesMatch>
+  # Written by the upload tool while an upload runs: never cached anywhere.
+  <Files "site-status.json">
+    Header set Cache-Control "no-store"
+    Header unset Expires
+  </Files>
   # Page data files differ from the page itself: never mix them up in a cache.
   <FilesMatch "\.txt$">
     Header merge Vary "Accept, RSC, Next-Router-State-Tree, Next-Router-Prefetch"

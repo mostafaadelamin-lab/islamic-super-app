@@ -186,6 +186,8 @@ self.addEventListener("fetch", (event) => {
   }
   // Live data from the site's functions (videos feed and search) always goes to the network.
   if (url.pathname.startsWith("__BASE__/api/")) return;
+  // The "site is being updated" flag must always be the live one.
+  if (url.pathname === "__BASE__/site-status.json") return;
   const isDoc = req.mode === "navigate" || req.destination === "document";
   // Next.js, on a version mismatch, sends the browser to the page's ".../index.txt" data file, which then
   // shows as raw text (owner's iPhone, 2026-11-15). A document request for that file goes to the page.

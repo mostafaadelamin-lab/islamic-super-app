@@ -6212,3 +6212,17 @@ a.episode {
 .lessons-mark[aria-pressed="true"] .icon {
   color: var(--color-success, #2f7d55);
 }
+
+/* Owner 2026-11-24: bar at the top of every page while the website is being updated (site-status-script). */
+.site-status {
+  padding: 10px var(--space-md);
+  background: #d9b25e;
+  color: #1a1406;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: center;
+}
+.site-status[hidden] {
+  display: none;
+}
