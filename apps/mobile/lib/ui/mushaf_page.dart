@@ -156,7 +156,14 @@ class MushafPageView extends StatelessWidget {
   static const highlightAlpha = 0.75;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) =>
+      // The page measures its words itself and picks one font size so every line fits the width.
+      // The phone's own text size (Android font size / iOS Dynamic Type) would make the drawn words
+      // wider than measured and cut the first and last words off (owner, realme C21-Y, 2026-11-24),
+      // so the page ignores it: the whole page is scaled as one picture, the text never changes.
+      MediaQuery.withNoTextScaling(child: Builder(builder: _page));
+
+  Widget _page(BuildContext context) {
     final s = context.services;
     if (!s.settings.mushafPrinted) return _build(context, null);
     final pm = PrintedMushaf.instance;
