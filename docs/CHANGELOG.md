@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.21] — Simple home and sections in the owner's design — 2026-11-24
+Owner 2026-11-24 (own description, then comments on real screenshots). Combined with the 1.2.20 Mushaf fix, «رجوع» = the page before, and nearby mosques from 1 km.
+### Phone apps (Android + iPhone)
+- Home: «الأذان» tile (was «مواقيت الصلاة»); 6 tiles: التسبيح / اتجاه القبلة، علّم طفلك / افهم دينك، مكتبة التلاوات / الأناشيد. Quran radio: the play duration is a button inside the player bar.
+- «الأذان» tab: adhan alerts (all parts) first, then the prayer times.
+- «الأقسام الرئيسية» (was «المزيد»): كتب التفسير بشرح مبسّط، أشهر كتب السنة بشرح مبسّط، مكتبة دروس الشيخ الشعراوي، المساجد القريبة، احسب زكاتك، شرح أسماء الله الحسنى، ختمة القرآن، متابعة العبادات، إذاعات متنوعة، الحج والعمرة، افهم دينك. Home items are not repeated; help and about moved into the settings.
+- «افهم دينك» (was «سلاسل الدروس»): every topic visible, no scholars' groups row, stronger shading on the chosen topic; Sheikh Nabil al-Awadi's «قصص الأنبياء» (19 episodes) is a series under «الأنبياء والصحابة والقصص».
+- Settings: language, appearance, then every permission with its explanation (location, notifications, full adhan, widget, battery, silent), then tour, share, rate, contact, «اطلب تطوير أو اقترح فكرة», FAQ, about (version), privacy policy, our apps.
+- Tour: new «بياناتك ملكك» page after the welcome. «بلّغ عن خطأ» at the end of the tafsir, hadith and lessons pages (opens the contact form).
+### Website (only the owner's website list)
+- Renames: افهم دينك، مكتبة التلاوات، كتب التفسير بشرح مبسّط، أشهر كتب السنة بشرح مبسّط، احسب زكاتك، علّم طفلك.
+- «افهم دينك»: no groups row, topics wrapped, stronger chosen-topic shading, al-Awadi series.
+- Settings like the app: location + notification permissions, then the site links incl. «قيّمه على آب ستور» (App Store link now set).
+
 ## [1.2.20] — Mushaf page fits small phones with a big font size — 2026-11-24
 Owner 2026-11-24 (realme C21-Y, Android 11): the Mushaf page was wider than the screen, the first and last words of every line were cut off.
 ### Fixed
