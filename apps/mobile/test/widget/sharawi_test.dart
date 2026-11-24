@@ -45,8 +45,8 @@ void main() {
   testWidgets('surah list with search, a surah opens its lessons with download buttons', (tester) async {
     await pumpApp(tester, size: tallPhone);
     final data = _read();
-    await pushScreen(tester, SharawiScreen(loader: () async => data));
-    expect(find.text('الشيخ الشعراوي'), findsWidgets);
+    await pushScreen(tester, SharawiScreen(loader: () async => data, part: SharawiPart.tafsir));
+    expect(find.text('تفسير القرآن'), findsWidgets);
     expect(find.byKey(const Key('sharawiNote')), findsOneWidget);
     expect(find.byKey(const Key('sharawiSurah.0')), findsOneWidget);
     await tester.enterText(find.byKey(const Key('sharawiSearch')), 'البقره');
@@ -68,31 +68,52 @@ void main() {
     await expectAccessible(tester);
   });
 
-  testWidgets('three parts (owner 2026-11-23): tafsir, the Prophet\'s life and prophets\' stories by al-Sha\'rawi', (
-    tester,
-  ) async {
+  testWidgets('«دروس الشيخ الشعراوي» (owner 2026-11-24): three series cards; each opens its part', (tester) async {
     await pumpApp(tester, size: tallPhone);
     final data = _read();
     final lessons = LessonCatalog.parse(File('assets/content/lessons.v1.json').readAsStringSync());
     expect(lessons.sharawiById('seerah-shaarawi')!.episodes.length, greaterThan(200));
     expect(lessons.sharawiById('anbiya-shaarawi')!.episodes.first.title, contains('مقدمة'));
-    expect(lessons.series.where((s) => s.sheikh.id == 'shaarawi'), isEmpty, reason: 'not in the lesson list');
+    expect(lessons.sharawiTafsir!.lessonTotal, 1116);
+    expect(lessons.sharawiTafsir!.seconds, greaterThan(600 * 3600));
     await pushScreen(tester, SharawiScreen(loader: () async => data, lessonsLoader: () async => lessons));
-    expect(find.byKey(const Key('sharawiPart.tafsir')), findsOneWidget);
+    expect(find.text('دروس الشيخ الشعراوي'), findsWidgets);
+    for (final p in ['tafsir', 'seerah', 'anbiya']) {
+      expect(find.byKey(Key('sharawiPart.$p')), findsOneWidget);
+    }
+    expect(find.text('اختر السورة'), findsOneWidget);
+    expect(find.textContaining('١١١٦ درس'), findsOneWidget);
+    expect(find.byKey(const Key('lessonsDownloadAll')), findsNWidgets(2), reason: 'seerah and stories, not tafsir');
+    await tester.tap(find.text('اختر السورة'));
+    await tester.pumpAndSettle();
     expect(find.byKey(const Key('sharawiSurah.0')), findsOneWidget);
-    await tester.tap(find.byKey(const Key('sharawiPart.seerah')));
+    await tester.tap(find.byType(BackButton).last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('lessonsHeroOpen.seerah-shaarawi')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('sharawiSeries.seerah-shaarawi')), findsOneWidget);
     expect(find.byKey(const Key('lesson-seerah-shaarawi-1')), findsOneWidget);
-    expect(find.byKey(const Key('lessonsDownloadAll')), findsOneWidget);
-    await tester.tap(find.byKey(const Key('sharawiPart.anbiya')));
+    await tester.tap(find.byType(BackButton).last);
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('sharawiSeries.anbiya-shaarawi')), findsOneWidget);
+    await tester.scrollUntilVisible(find.byKey(const Key('lessonsHero.anbiya-shaarawi')), 200);
+    await tester.tap(find.byKey(const Key('lessonsHero.anbiya-shaarawi')), warnIfMissed: false);
+    await tester.pumpAndSettle();
     expect(find.byKey(const Key('lesson-anbiya-shaarawi-2')), findsOneWidget);
-    await tester.tap(find.byKey(const Key('sharawiPart.tafsir')));
+    await tester.tap(find.byType(BackButton).last);
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('sharawiSurah.0')), findsOneWidget);
     await expectAccessible(tester);
+  });
+
+  test('the lesson list shows his parts under their topics (owner 2026-11-24)', () {
+    final c = LessonCatalog.parse(File('assets/content/lessons.v1.json').readAsStringSync());
+    expect(c.filter(topic: 'seerah').map((s) => s.id), contains('seerah-shaarawi'));
+    expect(c.filter(topic: 'stories').map((s) => s.id), contains('anbiya-shaarawi'));
+    expect(c.filter(topic: 'quran').map((s) => s.id), contains(sharawiTafsirId));
+    expect(c.listed.length, c.series.length + 3);
+    final ids = c.listed.map((s) => s.id).toList();
+    // Each right after the last series of its topic.
+    final at = ids.indexOf('seerah-shaarawi');
+    expect(c.listed[at - 1].topic.id, 'seerah');
   });
 
   testWidgets('a lesson plays with the lock-screen player under it: time, full length, seek bar, ±30 s', (tester) async {

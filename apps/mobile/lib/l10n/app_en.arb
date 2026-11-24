@@ -2789,6 +2789,10 @@
   "@lessonsAll": {
     "description": "shared key \"lessons.all\""
   },
+  "lessonsAllEpisodes": "All lessons",
+  "@lessonsAllEpisodes": {
+    "description": "shared key \"lessons.allEpisodes\""
+  },
   "lessonsAllTopics": "All topics",
   "@lessonsAllTopics": {
     "description": "shared key \"lessons.allTopics\""
@@ -5118,6 +5122,10 @@
       }
     }
   },
+  "sharawiChooseSurah": "Choose a surah",
+  "@sharawiChooseSurah": {
+    "description": "shared key \"sharawi.chooseSurah\""
+  },
   "sharawiIntro": "Introduction",
   "@sharawiIntro": {
     "description": "shared key \"sharawi.intro\""
@@ -5182,7 +5190,7 @@
   "@sharawiSearch": {
     "description": "shared key \"sharawi.search\""
   },
-  "sharawiSection": "Sheikh al-Sha'rawi",
+  "sharawiSection": "Sheikh al-Sha'rawi's lessons",
   "@sharawiSection": {
     "description": "shared key \"sharawi.section\""
   },

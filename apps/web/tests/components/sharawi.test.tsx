@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SharawiSection } from "@/components/SharawiSection";
 import { SharawiView } from "@/components/SharawiView";
-import { parseLessons } from "@/lib/lessons";
+import { filterSeries, listedSeries, parseLessons } from "@/lib/lessons";
 import { SECTIONS } from "@/components/SectionTiles";
 import { parseSharawi, sharawiSavedStore } from "@/lib/sharawi";
 import { readRepoJson } from "../repo";
@@ -73,11 +73,15 @@ describe("Sha'rawi offline save (website)", () => {
   });
 });
 
-describe("Sha'rawi section: three parts", () => {
-  it("shows tafsir, the Prophet's life and prophets' stories (owner 2026-11-23)", async () => {
+describe("دروس الشيخ الشعراوي: three series cards (owner 2026-11-24)", () => {
+  afterEach(() => {
+    window.location.hash = "";
+  });
+
+  it("shows tafsir, the Prophet's life and prophets' stories as cards; each opens its part", async () => {
     const lessons = parseLessons(readRepoJson("content/lessons/dist/lessons.v1.json"));
     const tafsir = parseSharawi(readRepoJson("content/sharawi/dist/sharawi.v1.json"));
-    expect(lessons.series.filter((s) => s.sheikh.id === "shaarawi")).toEqual([]);
+    expect(lessons.sharawiTafsir?.summary?.n).toBe(1116);
     const user = userEvent.setup();
     render(
       <SharawiSection
@@ -86,21 +90,26 @@ describe("Sha'rawi section: three parts", () => {
         lessonsLoader={() => Promise.resolve(lessons)}
       />,
     );
-    expect(await screen.findByTestId("sharawi-note")).toBeInTheDocument();
-    await user.click(screen.getByTestId("sharawi-part-seerah"));
+    expect(await screen.findByTestId("lessons-hero-sharawi-tafsir")).toHaveTextContent("١١١٦ درس");
+    expect(screen.getByTestId("lessons-hero-seerah-shaarawi")).toHaveTextContent("السيرة النبوية");
+    expect(screen.getByTestId("lessons-hero-anbiya-shaarawi")).toHaveTextContent("قصص الأنبياء");
+    await user.click(screen.getByTestId("lessons-hero-open-seerah-shaarawi"));
+    expect(window.location.hash).toBe("#seerah");
     expect(await screen.findByTestId("lessons-hero")).toHaveTextContent("السيرة النبوية");
     expect(screen.getByTestId("lesson-seerah-shaarawi-1")).toBeInTheDocument();
     expect(screen.queryByTestId("lessons-back")).toBeNull();
-    await user.click(screen.getByTestId("sharawi-part-anbiya"));
+    await user.click(screen.getByTestId("sharawi-back"));
+    await user.click(await screen.findByTestId("lessons-hero-anbiya-shaarawi"));
     expect(await screen.findByTestId("lessons-hero")).toHaveTextContent("قصص الأنبياء");
-    await user.click(screen.getByTestId("sharawi-part-tafsir"));
+    await user.click(screen.getByTestId("sharawi-back"));
+    await user.click(await screen.findByTestId("lessons-hero-open-sharawi-tafsir"));
     expect(await screen.findByTestId("sharawi-note")).toBeInTheDocument();
   });
 
   it("never shows the whole lesson catalogue in place of a Sha'rawi part (stale list, owner 2026-11-23)", async () => {
     const lessons = parseLessons(readRepoJson("content/lessons/dist/lessons.v1.json"));
     const old = { ...lessons, sharawi: [] };
-    const user = userEvent.setup();
+    window.location.hash = "#seerah";
     render(
       <SharawiSection
         locale="ar"
@@ -108,8 +117,15 @@ describe("Sha'rawi section: three parts", () => {
         lessonsLoader={() => Promise.resolve(old)}
       />,
     );
-    await user.click(screen.getByTestId("sharawi-part-seerah"));
     expect(await screen.findByText("تعذّر تحميل قائمة السلاسل.")).toBeInTheDocument();
     expect(screen.queryByTestId("lessons-note")).toBeNull();
+  });
+
+  it("lists his parts in «سلاسل الدروس» under their topics", () => {
+    const c = parseLessons(readRepoJson("content/lessons/dist/lessons.v1.json"));
+    expect(filterSeries(c, null, "seerah").map((s) => s.id)).toContain("seerah-shaarawi");
+    expect(filterSeries(c, null, "stories").map((s) => s.id)).toContain("anbiya-shaarawi");
+    expect(filterSeries(c, null, "quran").map((s) => s.id)).toContain("sharawi-tafsir");
+    expect(listedSeries(c)).toHaveLength(c.series.length + 3);
   });
 });

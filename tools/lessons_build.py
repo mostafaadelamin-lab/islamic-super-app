@@ -181,7 +181,16 @@ def build(src, refetch=False):
         'series': out,
         # Shown inside the Sha'rawi section (seerah, prophets' stories), not in the lesson list.
         'sharawi': series_list(src.get('sharawi', [])),
+        # His Quran tafsir (content/sharawi), summed for its card in the lesson list and his section.
+        'sharawiTafsir': tafsir_summary(),
     }
+
+
+def tafsir_summary():
+    d = json.loads((ROOT / 'content/sharawi/dist/sharawi.v1.json').read_text())
+    lessons = [x for s in d['surahs'] for x in s['lessons']]
+    return {'id': 'sharawi-tafsir', 'topic': 'quran', 'sheikh': 'shaarawi', 'ar': 'تفسير القرآن الكريم',
+            'en': 'Quran tafsir', 'n': len(lessons), 's': sum(x.get('s') or 0 for x in lessons)}
 
 
 if __name__ == '__main__':

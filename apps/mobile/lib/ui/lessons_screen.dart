@@ -13,6 +13,7 @@ import 'l10n_ext.dart';
 import 'library_screen.dart' show OfflineButton;
 import 'play_origin.dart';
 import 'r_icon.dart';
+import 'sharawi_screen.dart' show SharawiPart, SharawiScreen;
 import 'stories_screen.dart' show InlineNarrationPlayer, NarrationBar;
 
 Future<LessonCatalog> loadLessons() async =>
@@ -108,8 +109,11 @@ class _LessonsScreenState extends State<LessonsScreen> {
   String? _topic;
   String _query = '';
 
-  void _open(LessonSeries s) =>
-      Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => LessonSeriesScreen(series: s)));
+  void _open(LessonSeries s) => Navigator.of(context).push(
+    MaterialPageRoute<void>(
+      builder: (_) => s.isSharawiTafsir ? const SharawiScreen(part: SharawiPart.tafsir) : LessonSeriesScreen(series: s),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +163,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
                         DesignTokens.spaceSm,
                       ),
                       child: Text(
-                        l.lessonsNote(context.num(all.series.length), context.num(all.lessonCount)),
+                        l.lessonsNote(context.num(all.listed.length), context.num(all.lessonCount)),
                         key: const Key('lessonsNote'),
                         style: theme.textTheme.bodyMedium,
                       ),
@@ -288,7 +292,7 @@ class _SeriesCard extends StatelessWidget {
     final l = context.l10n;
     final ar = context.isArabic;
     final theme = Theme.of(context);
-    final total = series.episodes.length;
+    final total = series.lessonTotal;
     final complete = heard >= total;
     return Card(
       key: Key('lessonsSeries.${series.id}'),
@@ -377,11 +381,27 @@ class _SeriesCard extends StatelessWidget {
 /// One series: continue / download-all buttons, then every lesson in order with ✓ for those heard.
 /// The player opens right under the lesson that plays (same player as the rest of the app).
 class LessonSeriesScreen extends StatefulWidget {
-  const LessonSeriesScreen({super.key, required this.series, this.embedded = false});
+  const LessonSeriesScreen({
+    super.key,
+    required this.series,
+    this.embedded = false,
+    this.heroOnly = false,
+    this.onOpen,
+    this.openLabel,
+  });
   final LessonSeries series;
 
   /// Inside another screen (the Sha'rawi section's parts): the lessons only, no app bar of its own.
   final bool embedded;
+
+  /// Only the series card (title, sheikh, topic · lessons · hours, start / download), as a section of
+  /// «دروس الشيخ الشعراوي» (owner 2026-11-24); tapping it calls [onOpen].
+  final bool heroOnly;
+  final VoidCallback? onOpen;
+
+  /// With [heroOnly]: the main button opens the part ([onOpen]) instead of playing, and there is no
+  /// download button (the Quran tafsir, chosen by surah).
+  final String? openLabel;
 
   @override
   State<LessonSeriesScreen> createState() => _LessonSeriesScreenState();
@@ -463,6 +483,100 @@ class _LessonSeriesScreenState extends State<LessonSeriesScreen> {
     }
   }
 
+  /// The series card: title, sheikh, topic · lessons · hours, start / continue and download.
+  Widget _hero(BuildContext context, List<Episode> episodes, int heard, LessonEpisode? last, bool allSaved) {
+    final l = context.l10n;
+    final ar = context.isArabic;
+    final theme = Theme.of(context);
+    final open = widget.openLabel;
+    return Container(
+      margin: const EdgeInsets.all(DesignTokens.spaceMd),
+      padding: const EdgeInsets.all(DesignTokens.spaceMd),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [lessonTopicColor(s.topic.id), AppTheme.brand('heroDeep')],
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            s.title(ar),
+            style: theme.textTheme.titleLarge?.copyWith(color: const Color(0xFFF3E9D2), fontWeight: FontWeight.w600),
+          ),
+          Text(s.sheikh.of(ar), style: theme.textTheme.bodyMedium?.copyWith(color: const Color(0xFFCDD8EA))),
+          const SizedBox(height: DesignTokens.spaceXs),
+          Text(
+            [
+              s.topic.of(ar),
+              l.lessonsCount(context.num(s.lessonTotal)),
+              if (s.seconds > 0) context.lessonDuration(s.seconds),
+              if (heard > 0) l.lessonsHeard(context.num(heard)),
+              if (_saved.isNotEmpty) l.lessonsSaved(context.num(_saved.length)),
+            ].join(' · '),
+            key: const Key('lessonsSeriesMeta'),
+            style: theme.textTheme.bodySmall?.copyWith(color: AppTheme.brand('gold')),
+          ),
+          const SizedBox(height: DesignTokens.spaceSm),
+          Wrap(
+            spacing: DesignTokens.spaceSm,
+            runSpacing: DesignTokens.spaceXs,
+            children: [
+              FilledButton.icon(
+                key: const Key('lessonsContinueBtn'),
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppTheme.brand('gold'),
+                  foregroundColor: const Color(0xFF0A1830),
+                ),
+                icon: Icon(open != null ? Icons.menu_book : Icons.play_arrow),
+                label: Text(open ?? (last == null ? l.lessonsStart : l.lessonsContinueBtn(context.num(last.index)))),
+                onPressed: open != null ? widget.onOpen : () => _play(episodes, last == null ? 0 : last.index - 1),
+              ),
+              if (open == null && widget.heroOnly && widget.onOpen != null)
+                OutlinedButton.icon(
+                  key: Key('lessonsHeroOpen.${s.id}'),
+                  style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
+                  icon: const Icon(Icons.format_list_bulleted),
+                  label: Text(l.lessonsAllEpisodes),
+                  onPressed: widget.onOpen,
+                ),
+              if (open != null)
+                const SizedBox.shrink()
+              else if (_bulk)
+                OutlinedButton.icon(
+                  key: const Key('lessonsDownloadStop'),
+                  style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
+                  icon: const SizedBox.square(
+                    dimension: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                  ),
+                  label: Text(
+                    '${l.lessonsDownloading(context.num(_bulkDone), context.num(s.episodes.length))} · ${l.lessonsDownloadStop}',
+                  ),
+                  onPressed: () => setState(() => _stop = true),
+                )
+              else
+                OutlinedButton.icon(
+                  key: const Key('lessonsDownloadAll'),
+                  style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
+                  icon: Icon(allSaved ? Icons.download_done : Icons.download_for_offline_outlined),
+                  label: Text(allSaved ? l.lessonsDownloadedAll : l.lessonsDownloadAll),
+                  onPressed: allSaved ? null : _downloadAll,
+                ),
+            ],
+          ),
+          if (open == null && !widget.heroOnly) ...[
+            const SizedBox(height: DesignTokens.spaceXs),
+            Text(l.lessonsDoneHint, style: theme.textTheme.labelSmall?.copyWith(color: const Color(0xFFCDD8EA))),
+          ],
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -478,96 +592,19 @@ class _LessonSeriesScreenState extends State<LessonSeriesScreen> {
           final last = _lastEpisode(context, s);
           final n = services.narration;
           final allSaved = _saved.length >= s.episodes.length;
+          if (widget.heroOnly) {
+            return GestureDetector(
+              key: Key('lessonsHero.${s.id}'),
+              onTap: widget.onOpen,
+              child: _hero(context, episodes, heard, last, allSaved),
+            );
+          }
           return ListView.builder(
             key: const Key('lessonEpisodes'),
             padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
             itemCount: s.episodes.length + 1,
             itemBuilder: (context, i) {
-              if (i == 0) {
-                return Container(
-                  margin: const EdgeInsets.all(DesignTokens.spaceMd),
-                  padding: const EdgeInsets.all(DesignTokens.spaceMd),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [lessonTopicColor(s.topic.id), AppTheme.brand('heroDeep')],
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        s.title(ar),
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          color: const Color(0xFFF3E9D2),
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        s.sheikh.of(ar),
-                        style: theme.textTheme.bodyMedium?.copyWith(color: const Color(0xFFCDD8EA)),
-                      ),
-                      const SizedBox(height: DesignTokens.spaceXs),
-                      Text(
-                        [
-                          s.topic.of(ar),
-                          l.lessonsCount(context.num(s.episodes.length)),
-                          if (s.seconds > 0) context.lessonDuration(s.seconds),
-                          if (heard > 0) l.lessonsHeard(context.num(heard)),
-                          if (_saved.isNotEmpty) l.lessonsSaved(context.num(_saved.length)),
-                        ].join(' · '),
-                        key: const Key('lessonsSeriesMeta'),
-                        style: theme.textTheme.bodySmall?.copyWith(color: AppTheme.brand('gold')),
-                      ),
-                      const SizedBox(height: DesignTokens.spaceSm),
-                      Wrap(
-                        spacing: DesignTokens.spaceSm,
-                        runSpacing: DesignTokens.spaceXs,
-                        children: [
-                          FilledButton.icon(
-                            key: const Key('lessonsContinueBtn'),
-                            style: FilledButton.styleFrom(
-                              backgroundColor: AppTheme.brand('gold'),
-                              foregroundColor: const Color(0xFF0A1830),
-                            ),
-                            icon: const Icon(Icons.play_arrow),
-                            label: Text(last == null ? l.lessonsStart : l.lessonsContinueBtn(context.num(last.index))),
-                            onPressed: () => _play(episodes, last == null ? 0 : last.index - 1),
-                          ),
-                          if (_bulk)
-                            OutlinedButton.icon(
-                              key: const Key('lessonsDownloadStop'),
-                              style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
-                              icon: const SizedBox.square(
-                                dimension: 16,
-                                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                              ),
-                              label: Text(
-                                '${l.lessonsDownloading(context.num(_bulkDone), context.num(s.episodes.length))} · ${l.lessonsDownloadStop}',
-                              ),
-                              onPressed: () => setState(() => _stop = true),
-                            )
-                          else
-                            OutlinedButton.icon(
-                              key: const Key('lessonsDownloadAll'),
-                              style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
-                              icon: Icon(allSaved ? Icons.download_done : Icons.download_for_offline_outlined),
-                              label: Text(allSaved ? l.lessonsDownloadedAll : l.lessonsDownloadAll),
-                              onPressed: allSaved ? null : _downloadAll,
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: DesignTokens.spaceXs),
-                      Text(
-                        l.lessonsDoneHint,
-                        style: theme.textTheme.labelSmall?.copyWith(color: const Color(0xFFCDD8EA)),
-                      ),
-                    ],
-                  ),
-                );
-              }
+              if (i == 0) return _hero(context, episodes, heard, last, allSaved);
               final idx = i - 1;
               final e = s.episodes[idx];
               final ep = episodes[idx];
@@ -614,7 +651,7 @@ class _LessonSeriesScreenState extends State<LessonSeriesScreen> {
         },
       ),
     );
-    if (widget.embedded) return body;
+    if (widget.embedded || widget.heroOnly) return body;
     return Scaffold(
       appBar: AppBar(title: Text(s.title(ar))),
       bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),

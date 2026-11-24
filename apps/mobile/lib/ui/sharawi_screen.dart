@@ -58,8 +58,9 @@ Episode sharawiEpisode(BuildContext context, SharawiLesson x) {
 /// The three parts of the Sha'rawi section (owner 2026-11-23): Quran tafsir, the Prophet's life, prophets' stories.
 enum SharawiPart { tafsir, seerah, anbiya }
 
-/// "تفسير الشعراوي": the surahs the sheikh's recorded lessons cover, with search; and his seerah and
-/// prophets' stories series (from the lesson-series list) as the section's other two parts.
+/// «دروس الشيخ الشعراوي» (owner 2026-11-24): a front page of three series cards (Quran tafsir, seerah,
+/// prophets' stories); [part] tafsir = the surahs his recorded lessons cover, with search.
+/// The seerah and stories series also sit in «سلاسل الدروس» under their topics.
 class SharawiScreen extends StatefulWidget {
   const SharawiScreen({super.key, this.loader = loadSharawi, this.lessonsLoader = loadLessons, this.part});
   final Future<SharawiTafsir> Function() loader;
@@ -73,39 +74,26 @@ class SharawiScreen extends StatefulWidget {
 class _SharawiScreenState extends State<SharawiScreen> {
   late final Future<SharawiTafsir> _future = widget.loader();
   Future<LessonCatalog>? _lessons;
-  late SharawiPart _part = widget.part ?? SharawiPart.tafsir;
   String _query = '';
 
   static const _seriesOf = {SharawiPart.seerah: 'seerah-shaarawi', SharawiPart.anbiya: 'anbiya-shaarawi'};
 
-  Widget _parts(BuildContext context) {
-    final l = context.l10n;
-    final labels = {
-      SharawiPart.tafsir: l.sharawiPartTafsir,
-      SharawiPart.seerah: l.sharawiPartSeerah,
-      SharawiPart.anbiya: l.sharawiPartAnbiya,
-    };
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceSm, DesignTokens.spaceLg, 0),
-      child: Row(
-        children: [
-          for (final p in SharawiPart.values)
-            Padding(
-              padding: const EdgeInsetsDirectional.only(end: DesignTokens.spaceSm),
-              child: ChoiceChip(
-                key: Key('sharawiPart.${p.name}'),
-                label: Text(labels[p]!),
-                selected: _part == p,
-                onSelected: (_) => setState(() => _part = p),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
+  String _partLabel(BuildContext context, SharawiPart p) => switch (p) {
+    SharawiPart.tafsir => context.l10n.sharawiPartTafsir,
+    SharawiPart.seerah => context.l10n.sharawiPartSeerah,
+    SharawiPart.anbiya => context.l10n.sharawiPartAnbiya,
+  };
 
-  Widget _series(BuildContext context) {
+  void _openPart(SharawiPart p) => Navigator.of(context).push(
+    MaterialPageRoute<void>(
+      builder: (_) => p == SharawiPart.tafsir
+          ? SharawiScreen(loader: widget.loader, lessonsLoader: widget.lessonsLoader, part: p)
+          : _SeriesPage(lessonsLoader: widget.lessonsLoader, id: _seriesOf[p]!),
+    ),
+  );
+
+  /// The section's front page (owner 2026-11-24): its three parts as series cards, like «سلاسل الدروس».
+  Widget _landing(BuildContext context) {
     final l = context.l10n;
     final future = _lessons ??= widget.lessonsLoader();
     return FutureBuilder<LessonCatalog>(
@@ -114,9 +102,29 @@ class _SharawiScreenState extends State<SharawiScreen> {
         if (snap.hasError) return Center(child: Text(l.sharawiLoadError));
         final c = snap.data;
         if (c == null) return const Center(child: CircularProgressIndicator());
-        final s = c.sharawiById(_seriesOf[_part]!);
-        if (s == null) return Center(child: Text(l.sharawiLoadError));
-        return LessonSeriesScreen(key: Key('sharawiSeries.${s.id}'), series: s, embedded: true);
+        final tafsir = c.sharawiTafsir;
+        return ListView(
+          key: const Key('sharawiParts'),
+          padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+          children: [
+            if (tafsir != null)
+              LessonSeriesScreen(
+                key: const Key('sharawiPart.tafsir'),
+                series: tafsir,
+                heroOnly: true,
+                openLabel: l.sharawiChooseSurah,
+                onOpen: () => _openPart(SharawiPart.tafsir),
+              ),
+            for (final p in [SharawiPart.seerah, SharawiPart.anbiya])
+              if (c.sharawiById(_seriesOf[p]!) case final s?)
+                LessonSeriesScreen(
+                  key: Key('sharawiPart.${p.name}'),
+                  series: s,
+                  heroOnly: true,
+                  onOpen: () => _openPart(p),
+                ),
+          ],
+        );
       },
     );
   }
@@ -124,16 +132,11 @@ class _SharawiScreenState extends State<SharawiScreen> {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final part = widget.part;
     return Scaffold(
-      appBar: AppBar(title: Text(l.sharawiSection)),
+      appBar: AppBar(title: Text(part == null ? l.sharawiSection : _partLabel(context, part))),
       bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ReadableWidth(child: _parts(context)),
-          Expanded(child: _part == SharawiPart.tafsir ? _tafsir(context) : _series(context)),
-        ],
-      ),
+      body: part == null ? _landing(context) : _tafsir(context),
     );
   }
 
@@ -211,6 +214,32 @@ class _SharawiScreenState extends State<SharawiScreen> {
           );
         },
       ),
+    );
+  }
+}
+
+/// Al-Sha'rawi's seerah or prophets' stories: the full series page, loaded from the lesson list.
+class _SeriesPage extends StatelessWidget {
+  const _SeriesPage({required this.lessonsLoader, required this.id});
+  final Future<LessonCatalog> Function() lessonsLoader;
+  final String id;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<LessonCatalog>(
+      future: lessonsLoader(),
+      builder: (context, snap) {
+        final s = snap.data?.sharawiById(id);
+        if (s != null) return LessonSeriesScreen(key: Key('sharawiSeries.$id'), series: s);
+        return Scaffold(
+          appBar: AppBar(),
+          body: Center(
+            child: snap.hasError || snap.hasData
+                ? Text(context.l10n.sharawiLoadError)
+                : const CircularProgressIndicator(),
+          ),
+        );
+      },
     );
   }
 }

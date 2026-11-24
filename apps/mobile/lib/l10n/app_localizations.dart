@@ -3434,6 +3434,12 @@ abstract class AppLocalizations {
   /// **'All'**
   String get lessonsAll;
 
+  /// shared key "lessons.allEpisodes"
+  ///
+  /// In en, this message translates to:
+  /// **'All lessons'**
+  String get lessonsAllEpisodes;
+
   /// shared key "lessons.allTopics"
   ///
   /// In en, this message translates to:
@@ -6254,6 +6260,12 @@ abstract class AppLocalizations {
   /// **'Ayahs {from}–{to}'**
   String sharawiAyahs(String from, String to);
 
+  /// shared key "sharawi.chooseSurah"
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a surah'**
+  String get sharawiChooseSurah;
+
   /// shared key "sharawi.intro"
   ///
   /// In en, this message translates to:
@@ -6323,7 +6335,7 @@ abstract class AppLocalizations {
   /// shared key "sharawi.section"
   ///
   /// In en, this message translates to:
-  /// **'Sheikh al-Sha\'rawi'**
+  /// **'Sheikh al-Sha\'rawi\'s lessons'**
   String get sharawiSection;
 
   /// shared key "sharawi.title"

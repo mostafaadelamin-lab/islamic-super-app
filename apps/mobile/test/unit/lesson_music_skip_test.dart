@@ -29,7 +29,8 @@ void main() {
   test('quiet and old series carry their gain / clarity from the list (owner 2026-11-24)', () {
     final c = LessonCatalog.parse(File('assets/content/lessons.v1.json').readAsStringSync());
     expect(c.byId('muamalat-khathlan')!.gainDb, greaterThan(6));
-    expect(c.byId('usul-uthaymeen')!.clarity, isTrue);
+    expect(c.byId('tawhid-alsheikh')!.clarity, isTrue);
+    expect(c.byId('usul-uthaymeen'), isNull, reason: 'replaced by al-Qasim (owner 2026-11-24)');
     expect(c.byId('shamail-gabr')!.clarity, isTrue);
     for (final s in c.series) {
       expect(s.gainDb, inInclusiveRange(-10, 12));

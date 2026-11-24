@@ -73,17 +73,30 @@ void main() {
     await shot(tester, '04-app-tahara-simple');
   });
 
-  testWidgets('app: the Sha\'rawi section in three parts', (tester) async {
+  testWidgets('app: «دروس الشيخ الشعراوي» as three series cards', (tester) async {
     tester.view.devicePixelRatio = 1;
     await pumpApp(tester, size: const Size(440, 956));
     final lessons = read();
     final tafsir = SharawiTafsir.parse(File('assets/content/sharawi.v1.json').readAsStringSync());
     await pushScreen(tester, SharawiScreen(loader: () async => tafsir, lessonsLoader: () async => lessons));
     await tester.pumpAndSettle();
-    await shot(tester, '05-app-sharawi-tafsir');
-    await tester.tap(find.byKey(const Key('sharawiPart.seerah')));
+    await shot(tester, '05-app-sharawi-cards');
+    await tester.tap(find.text('اختر السورة'));
     await tester.pumpAndSettle();
-    await shot(tester, '06-app-sharawi-seerah');
+    await shot(tester, '06-app-sharawi-tafsir');
+  });
+
+  testWidgets('app: his parts inside «سلاسل الدروس» by topic', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(tester, size: const Size(440, 956));
+    final data = read();
+    await pushScreen(tester, LessonsScreen(loader: () async => data));
+    await tester.ensureVisible(find.byKey(const Key('lessonsTopic.seerah')));
+    await tester.tap(find.byKey(const Key('lessonsTopic.seerah')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('lessonsSeries.seerah-shaarawi')));
+    await tester.pumpAndSettle();
+    await shot(tester, '07-app-lessons-seerah-sharawi');
   });
 
   testWidgets('app: one series, lessons heard ✓, the player under the lesson playing', (tester) async {

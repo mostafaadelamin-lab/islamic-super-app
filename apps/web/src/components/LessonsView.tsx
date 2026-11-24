@@ -6,6 +6,10 @@ import { offlineSupported } from "@/lib/audio-offline";
 import {
   deleteLessonAudio,
   filterSeries,
+  lessonTotal,
+  listedSeries,
+  seriesSeconds,
+  SHARAWI_TAFSIR_ID,
   lessonsDoneStore,
   lessonsProgressStore,
   lessonsSavedStore,
@@ -19,6 +23,8 @@ import {
   type LessonSeries,
 } from "@/lib/lessons";
 import { normalizeArabic } from "@/lib/search";
+import { withBase } from "@/lib/base-path";
+import { href } from "@/lib/locale-path";
 import { useStore } from "@/hooks/useStore";
 import { Icon } from "./Icon";
 import { PlayerClose } from "./PlayerClose";
@@ -56,6 +62,76 @@ const PERCENT = 100;
 
 const topicColor = (id: string): string => TOPIC_COLORS[id] ?? DEFAULT_COLOR;
 const keyOf = (e: LessonEpisode): string => `lessons:${e.id}`;
+
+/** "40 minutes" / "2.5 hours" / "220 hours". */
+function lessonDuration(locale: Locale, sec: number): string {
+  const n = (v: number): string => localizeDigits(v, locale);
+  const m = Math.max(1, Math.round(sec / SEC_PER_MIN));
+  if (m < HOURS_FROM_MIN) return t(locale, "lessons.minutes", { n: n(m) });
+  const h = sec / SEC_PER_HOUR;
+  return t(locale, "lessons.hours", {
+    n: n(h >= WHOLE_HOURS_FROM ? Math.round(h) : Math.round(h * TENTHS) / TENTHS),
+  });
+}
+
+/** Where al-Sha'rawi's tafsir card leads: his section's surah list. */
+export const sharawiTafsirHref = (locale: Locale): string => `${href(locale, "sharawi")}#tafsir`;
+
+/**
+ * A series as a card in the look of its page's top (title, sheikh, topic · lessons · hours): the parts of
+ * «دروس الشيخ الشعراوي» (owner 2026-11-24). The whole card and its button open the part.
+ */
+export function LessonsHeroCard({
+  locale,
+  series: s,
+  openLabel,
+  onOpen,
+}: {
+  locale: Locale;
+  series: LessonSeries;
+  openLabel: string;
+  onOpen: () => void;
+}) {
+  const ar = locale === "ar";
+  const n = (v: number): string => localizeDigits(v, locale);
+  const done = useStore(lessonsDoneStore);
+  const heard = s.episodes.filter((e) => done.includes(e.id)).length;
+  const total = seriesSeconds(s);
+  return (
+    <section
+      className="lessons-hero lessons-hero-card"
+      style={{ background: `linear-gradient(160deg, ${topicColor(s.topic.id)}, #0A1830)` }}
+      data-testid={`lessons-hero-${s.id}`}
+      onClick={onOpen}
+    >
+      <h2>{ar ? s.ar : s.en}</h2>
+      <p>{ar ? s.sheikh.ar : s.sheikh.en}</p>
+      <p className="lessons-meta small">
+        {[
+          ar ? s.topic.ar : s.topic.en,
+          t(locale, "lessons.count", { n: n(lessonTotal(s)) }),
+          total > 0 ? lessonDuration(locale, total) : "",
+          heard > 0 ? t(locale, "lessons.heard", { n: n(heard) }) : "",
+        ]
+          .filter(Boolean)
+          .join(" · ")}
+      </p>
+      <div className="row">
+        <button
+          type="button"
+          className="btn lessons-gold"
+          data-testid={`lessons-hero-open-${s.id}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            onOpen();
+          }}
+        >
+          <Icon name={s.episodes.length ? "list" : "openBook"} /> {openLabel}
+        </button>
+      </div>
+    </section>
+  );
+}
 
 /**
  * «سلاسل الدروس»: series cards (filter by scholars and topic, search), then a series page with every lesson,
@@ -122,14 +198,7 @@ export function LessonsView({
   const wanted = only ?? open;
   const series = wanted ? [...data.series, ...data.sharawi].find((s) => s.id === wanted) : undefined;
   const heard = (s: LessonSeries): number => s.episodes.filter((e) => done.includes(e.id)).length;
-  const duration = (sec: number): string => {
-    const m = Math.max(1, Math.round(sec / SEC_PER_MIN));
-    if (m < HOURS_FROM_MIN) return t(locale, "lessons.minutes", { n: n(m) });
-    const h = sec / SEC_PER_HOUR;
-    return t(locale, "lessons.hours", {
-      n: n(h >= WHOLE_HOURS_FROM ? Math.round(h) : Math.round(h * TENTHS) / TENTHS),
-    });
-  };
+  const duration = (sec: number): string => lessonDuration(locale, sec);
   const player = track ? (
     <NowPlaying
       locale={locale}
@@ -179,7 +248,10 @@ export function LessonsView({
   // The Sha'rawi section asks for one series: never show the whole catalogue in its place.
   if (only) return <p className="alert alert-error">{t(locale, "lessons.loadError")}</p>;
 
-  const last = progress.series ? data.series.find((s) => s.id === progress.series) : undefined;
+  const last = progress.series
+    ? [...data.series, ...data.sharawi].find((s) => s.id === progress.series)
+    : undefined;
+  const shown = listedSeries(data);
   const lastEp = last ? last.episodes.find((e) => e.id === progress.last[last.id]) : undefined;
   const chip = (id: string, label: string, on: boolean, tap: () => void) => (
     <button
@@ -198,8 +270,8 @@ export function LessonsView({
       {player}
       <p className="muted" data-testid="lessons-note">
         {t(locale, "lessons.note", {
-          series: n(data.series.length),
-          lessons: n(data.series.reduce((a, s) => a + s.episodes.length, 0)),
+          series: n(shown.length),
+          lessons: n(shown.reduce((a, s) => a + lessonTotal(s), 0)),
         })}
       </p>
       <div className="row lessons-chips" role="group">
@@ -256,15 +328,17 @@ export function LessonsView({
       <ul className="lessons-grid" data-testid="lessons-grid">
         {list.map((s) => {
           const h = heard(s);
-          const total = s.episodes.length;
+          const total = lessonTotal(s);
           const complete = h >= total;
+          const tafsir = s.id === SHARAWI_TAFSIR_ID;
           return (
             <li key={s.id}>
               <a
                 className="lessons-card"
-                href={`#${encodeURIComponent(s.id)}`}
+                href={tafsir ? withBase(sharawiTafsirHref(locale)) : `#${encodeURIComponent(s.id)}`}
                 data-testid={`lessons-series-${s.id}`}
                 onClick={(e) => {
+                  if (tafsir) return;
                   e.preventDefault();
                   go(s.id);
                 }}

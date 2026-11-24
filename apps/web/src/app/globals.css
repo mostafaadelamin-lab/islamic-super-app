@@ -6182,6 +6182,16 @@ a.episode {
   gap: var(--space-sm);
   flex-wrap: wrap;
 }
+/* «دروس الشيخ الشعراوي»: its parts as series cards (owner 2026-11-24). */
+.lessons-hero-cards {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+}
+.lessons-hero-card {
+  margin: 0;
+  cursor: pointer;
+}
 .lessons-gold {
   background: #d9b25e;
   color: #0a1830;

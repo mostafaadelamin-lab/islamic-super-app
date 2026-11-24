@@ -1891,6 +1891,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lessonsAll => 'الكل';
 
   @override
+  String get lessonsAllEpisodes => 'كل الدروس';
+
+  @override
   String get lessonsAllTopics => 'كل المواضيع';
 
   @override
@@ -3471,6 +3474,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get sharawiChooseSurah => 'اختر السورة';
+
+  @override
   String get sharawiIntro => 'المقدمة';
 
   @override
@@ -3512,7 +3518,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sharawiSearch => 'ابحث باسم السورة أو رقمها';
 
   @override
-  String get sharawiSection => 'الشيخ الشعراوي';
+  String get sharawiSection => 'دروس الشيخ الشعراوي';
 
   @override
   String get sharawiTitle => 'تفسير الشعراوي';

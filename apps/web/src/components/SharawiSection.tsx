@@ -1,9 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
-import { loadLessons, type LessonCatalog } from "@/lib/lessons";
+import { loadLessons, type LessonCatalog, type LessonSeries } from "@/lib/lessons";
 import { loadSharawi, type SharawiSurah } from "@/lib/sharawi";
-import { LessonsView } from "./LessonsView";
+import { Icon } from "./Icon";
+import { LessonsHeroCard, LessonsView } from "./LessonsView";
 import { SharawiView } from "./SharawiView";
 
 type Part = "tafsir" | "seerah" | "anbiya";
@@ -14,9 +15,13 @@ const PARTS: readonly { id: Part; label: string; series?: string }[] = [
   { id: "anbiya", label: "sharawi.partAnbiya", series: "anbiya-shaarawi" },
 ];
 
+const partOf = (hash: string): Part | null => PARTS.find((p) => `#${p.id}` === hash)?.id ?? null;
+
 /**
- * The Sha'rawi section in three parts (owner 2026-11-23): Quran tafsir, the Prophet's life and prophets'
- * stories. The last two are his lesson series, with the same download / resume / ✓ as «سلاسل الدروس».
+ * «دروس الشيخ الشعراوي» (owner 2026-11-24): a front page of three series cards (Quran tafsir, the Prophet's
+ * life, prophets' stories); each opens its part (#tafsir / #seerah / #anbiya, so the back button works).
+ * The seerah and stories are his lesson series, with the same download / resume / ✓ as «سلاسل الدروس»,
+ * where they are listed under their topics too.
  */
 export function SharawiSection({
   locale,
@@ -27,30 +32,66 @@ export function SharawiSection({
   loader?: () => Promise<SharawiSurah[]>;
   lessonsLoader?: () => Promise<LessonCatalog>;
 }) {
-  const [part, setPart] = useState<Part>("tafsir");
-  const current = PARTS.find((p) => p.id === part);
-  const content = current?.series ? (
-    <LessonsView key={current.series} locale={locale} loader={lessonsLoader} only={current.series} />
-  ) : (
-    <SharawiView locale={locale} loader={loader} />
-  );
+  const [part, setPart] = useState<Part | null>(null);
+  const [data, setData] = useState<LessonCatalog | null>(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    const read = (): void => setPart(partOf(window.location.hash));
+    read();
+    window.addEventListener("hashchange", read);
+    return () => window.removeEventListener("hashchange", read);
+  }, []);
+  useEffect(() => {
+    const load = async (): Promise<void> => {
+      try {
+        setData(await lessonsLoader());
+      } catch {
+        setFailed(true);
+      }
+    };
+    void load();
+  }, [lessonsLoader]);
+
+  const go = (p: Part | null): void => {
+    window.location.hash = p ?? "";
+    setPart(p);
+    window.scrollTo?.({ top: 0 });
+  };
+
+  if (part) {
+    const current = PARTS.find((p) => p.id === part)!;
+    return (
+      <>
+        <button type="button" className="btn btn-sm" data-testid="sharawi-back" onClick={() => go(null)}>
+          <Icon name="back" /> {t(locale, "sharawi.section")}
+        </button>
+        <h2>{t(locale, current.label)}</h2>
+        {current.series ? (
+          <LessonsView key={current.series} locale={locale} loader={lessonsLoader} only={current.series} />
+        ) : (
+          <SharawiView locale={locale} loader={loader} />
+        )}
+      </>
+    );
+  }
+  if (failed) return <p className="alert alert-error">{t(locale, "sharawi.loadError")}</p>;
+  if (!data) return <p className="muted">{t(locale, "common.loading")}</p>;
+  const cards: { part: Part; series: LessonSeries }[] = PARTS.flatMap((p) => {
+    const s = p.series ? data.sharawi.find((x) => x.id === p.series) : data.sharawiTafsir;
+    return s ? [{ part: p.id, series: s }] : [];
+  });
   return (
-    <>
-      <div className="row lessons-chips" role="group" aria-label={t(locale, "sharawi.section")}>
-        {PARTS.map((p) => (
-          <button
-            key={p.id}
-            type="button"
-            className={part === p.id ? "btn btn-sm btn-primary" : "btn btn-sm"}
-            aria-pressed={part === p.id}
-            data-testid={`sharawi-part-${p.id}`}
-            onClick={() => setPart(p.id)}
-          >
-            {t(locale, p.label)}
-          </button>
-        ))}
-      </div>
-      {content}
-    </>
+    <div className="lessons-hero-cards" data-testid="sharawi-parts">
+      {cards.map((c) => (
+        <LessonsHeroCard
+          key={c.part}
+          locale={locale}
+          series={c.series}
+          openLabel={t(locale, c.part === "tafsir" ? "sharawi.chooseSurah" : "lessons.allEpisodes")}
+          onOpen={() => go(c.part)}
+        />
+      ))}
+    </div>
   );
 }

@@ -37,14 +37,20 @@ export interface LessonSeries {
   episodes: LessonEpisode[];
   /** Gain / clarity while playing (quiet or old recordings, tools/lessons_loudness.py). */
   fx?: AudioFx;
+  /** Lessons and seconds of a card whose lessons live elsewhere: al-Sha'rawi's Quran tafsir (by surah). */
+  summary?: { n: number; s: number };
 }
+/** The card of al-Sha'rawi's Quran tafsir in the lesson list and his section. */
+export const SHARAWI_TAFSIR_ID = "sharawi-tafsir";
 export interface LessonCatalog {
   topics: LessonLabel[];
   groups: LessonLabel[];
   sheikhs: LessonSheikh[];
   series: LessonSeries[];
-  /** Al-Sha'rawi's seerah and prophets' stories: shown in his own section, not in the lesson list. */
+  /** Al-Sha'rawi's seerah and prophets' stories: his section's parts, and in the lesson list by topic too. */
   sharawi: LessonSeries[];
+  /** His Quran tafsir as a card (summary, no episodes): opens the surah list. */
+  sharawiTafsir?: LessonSeries;
 }
 
 type RawSeries = {
@@ -63,6 +69,7 @@ interface RawFile {
   sheikhs: LessonSheikh[];
   series: RawSeries[];
   sharawi?: RawSeries[];
+  sharawiTafsir?: { id: string; topic: string; sheikh: string; ar: string; en: string; n: number; s: number };
 }
 
 /** Renamed (not overwritten) when the list changes, so no browser or service worker keeps the old one. */
@@ -95,7 +102,34 @@ export function parseLessons(raw: unknown): LessonCatalog {
     sheikhs: j.sheikhs,
     series: j.series.map(one),
     sharawi: (j.sharawi ?? []).map(one),
+    ...(j.sharawiTafsir
+      ? {
+          sharawiTafsir: {
+            id: j.sharawiTafsir.id,
+            topic: topics.get(j.sharawiTafsir.topic)!,
+            sheikh: sheikhs.get(j.sharawiTafsir.sheikh)!,
+            ar: j.sharawiTafsir.ar,
+            en: j.sharawiTafsir.en,
+            episodes: [],
+            summary: { n: j.sharawiTafsir.n, s: j.sharawiTafsir.s },
+          },
+        }
+      : {}),
   };
+}
+
+export const lessonTotal = (s: LessonSeries): number => s.summary?.n ?? s.episodes.length;
+export const seriesSeconds = (s: LessonSeries): number =>
+  s.summary?.s ?? s.episodes.reduce((a, e) => a + e.seconds, 0);
+
+/** Everything the lesson list shows: each Sha'rawi part right after the last series of its topic (owner 2026-11-24). */
+export function listedSeries(c: LessonCatalog): LessonSeries[] {
+  const out = [...c.series];
+  for (const s of [...(c.sharawiTafsir ? [c.sharawiTafsir] : []), ...c.sharawi]) {
+    const at = out.map((x) => x.topic.id).lastIndexOf(s.topic.id);
+    out.splice(at < 0 ? out.length : at + 1, 0, s);
+  }
+  return out;
 }
 
 export async function loadLessons(fetchImpl: typeof fetch = fetch): Promise<LessonCatalog> {
@@ -106,7 +140,7 @@ export async function loadLessons(fetchImpl: typeof fetch = fetch): Promise<Less
 
 /** [group]/[topic] null = all. */
 export function filterSeries(c: LessonCatalog, group: string | null, topic: string | null): LessonSeries[] {
-  return c.series.filter(
+  return listedSeries(c).filter(
     (s) => (group === null || s.sheikh.groups.includes(group)) && (topic === null || s.topic.id === topic),
   );
 }

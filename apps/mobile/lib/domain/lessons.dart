@@ -54,6 +54,7 @@ class LessonSeries {
     required this.episodes,
     this.gainDb = 0,
     this.clarity = false,
+    this.summary,
   });
   final String id;
   final LessonLabel topic;
@@ -66,6 +67,14 @@ class LessonSeries {
   final double gainDb;
   final bool clarity;
 
+  /// (lessons, seconds) of a card whose lessons live elsewhere: al-Sha'rawi's Quran tafsir, chosen
+  /// by surah in his section ([sharawiTafsirId]).
+  final (int, int)? summary;
+
+  int get lessonTotal => summary?.$1 ?? episodes.length;
+
+  bool get isSharawiTafsir => id == sharawiTafsirId;
+
   String title(bool arabic) => arabic ? ar : en;
 
   /// Audio-player series key (resume position, offline folder, "continue" entry).
@@ -73,8 +82,11 @@ class LessonSeries {
 
   String episodeId(LessonEpisode e) => '$id-${e.index}';
 
-  int get seconds => episodes.fold(0, (a, e) => a + e.seconds);
+  int get seconds => summary?.$2 ?? episodes.fold(0, (a, e) => a + e.seconds);
 }
+
+/// The card of al-Sha'rawi's Quran tafsir in the lesson list and his section.
+const sharawiTafsirId = 'sharawi-tafsir';
 
 class LessonCatalog {
   const LessonCatalog({
@@ -83,14 +95,29 @@ class LessonCatalog {
     required this.sheikhs,
     required this.series,
     this.sharawi = const [],
+    this.sharawiTafsir,
   });
   final List<LessonLabel> topics;
   final List<LessonLabel> groups;
   final List<LessonSheikh> sheikhs;
   final List<LessonSeries> series;
 
-  /// Al-Sha'rawi's seerah and prophets' stories: shown in his own section, not in the lesson list.
+  /// Al-Sha'rawi's seerah and prophets' stories: the parts of his own section, and listed in the lesson
+  /// list under their topics too (owner 2026-11-24).
   final List<LessonSeries> sharawi;
+
+  /// His Quran tafsir as a card ([LessonSeries.summary], no episodes): opens the surah list.
+  final LessonSeries? sharawiTafsir;
+
+  /// Everything the lesson list shows: each Sha'rawi part right after the last series of its topic.
+  List<LessonSeries> get listed {
+    final out = [...series];
+    for (final s in [?sharawiTafsir, ...sharawi]) {
+      final at = out.lastIndexWhere((x) => x.topic.id == s.topic.id);
+      out.insert(at < 0 ? out.length : at + 1, s);
+    }
+    return out;
+  }
 
   LessonSeries? sharawiById(String id) {
     for (final s in sharawi) {
@@ -99,10 +126,10 @@ class LessonCatalog {
     return null;
   }
 
-  int get lessonCount => series.fold(0, (a, s) => a + s.episodes.length);
+  int get lessonCount => listed.fold(0, (a, s) => a + s.lessonTotal);
 
   LessonSeries? byId(String id) {
-    for (final s in series) {
+    for (final s in [...series, ...sharawi]) {
       if (s.id == id) return s;
     }
     return null;
@@ -110,7 +137,7 @@ class LessonCatalog {
 
   /// [group]/[topic] null = all.
   List<LessonSeries> filter({String? group, String? topic}) => [
-    for (final s in series)
+    for (final s in listed)
       if ((group == null || s.sheikh.groups.contains(group)) && (topic == null || s.topic.id == topic)) s,
   ];
 
@@ -154,6 +181,18 @@ class LessonCatalog {
       sheikhs: sheikhs,
       series: [for (final s in j['series'] as List) series(s)],
       sharawi: [for (final s in (j['sharawi'] as List?) ?? const []) series(s)],
+      sharawiTafsir: switch (j['sharawiTafsir']) {
+        final Map<String, dynamic> t => LessonSeries(
+          id: t['id'] as String,
+          topic: topicById[t['topic']]!,
+          sheikh: sheikhById[t['sheikh']]!,
+          ar: t['ar'] as String,
+          en: t['en'] as String,
+          episodes: const [],
+          summary: ((t['n'] as num).toInt(), (t['s'] as num).toInt()),
+        ),
+        _ => null,
+      },
     );
   }
 }
