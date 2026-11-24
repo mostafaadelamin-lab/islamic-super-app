@@ -5076,6 +5076,42 @@ a.episode {
   }
 }
 
+/* Upload-in-progress bar (owner 2026-11-24): top of every page while /site-status.json says updating. */
+.maintenance-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-md);
+  background: #b45309;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.maintenance-banner__icon {
+  font-size: 1.1rem;
+}
+.maintenance-banner__text {
+  flex: 1;
+  text-align: center;
+}
+.maintenance-banner__close {
+  flex: none;
+  min-width: 32px;
+  min-height: 32px;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.18);
+  color: inherit;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.maintenance-banner__close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
 /* Sourced Hajj & Umrah guide (owner 2026-11-16): 3D pictures, every text in full with its reference. */
 .hajj-scene {
   margin: var(--space-md) 0;
@@ -6213,16 +6249,3 @@ a.episode {
   color: var(--color-success, #2f7d55);
 }
 
-/* Owner 2026-11-24: bar at the top of every page while the website is being updated (site-status-script). */
-.site-status {
-  padding: 10px var(--space-md);
-  background: #d9b25e;
-  color: #1a1406;
-  font-weight: 700;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  text-align: center;
-}
-.site-status[hidden] {
-  display: none;
-}

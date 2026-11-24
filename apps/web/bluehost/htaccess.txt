@@ -62,7 +62,7 @@ AddType application/octet-stream .dat
     Header set Cache-Control "no-cache, must-revalidate"
     Header unset Expires
   </FilesMatch>
-  # Written by the upload tool while an upload runs: never cached anywhere.
+  # The upload-in-progress flag is rewritten during every upload: never cache it anywhere.
   <Files "site-status.json">
     Header set Cache-Control "no-store"
     Header unset Expires
