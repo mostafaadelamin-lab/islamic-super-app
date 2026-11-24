@@ -29,6 +29,7 @@ import { useStore } from "@/hooks/useStore";
 import { Icon } from "./Icon";
 import { PlayerClose } from "./PlayerClose";
 import { NowPlaying, PlayerSlot, type Track } from "./RecitationLibrary";
+import { closeHashLayer, pushLayer, setRootBack } from "@/lib/back-nav";
 
 const norm = (s: string): string => normalizeArabic(s.toLowerCase());
 
@@ -177,7 +178,14 @@ export function LessonsView({
     const read = (): void => setOpen(decodeURIComponent(window.location.hash.slice(1)) || null);
     read();
     window.addEventListener("hashchange", read);
-    return () => window.removeEventListener("hashchange", read);
+    window.addEventListener("popstate", read);
+    // A series opened from a link: «رجوع» shows the list first.
+    setRootBack(() => closeHashLayer("lessons"));
+    return () => {
+      window.removeEventListener("hashchange", read);
+      window.removeEventListener("popstate", read);
+      setRootBack(null);
+    };
   }, [only]);
 
   const list = useMemo(() => {
@@ -191,8 +199,11 @@ export function LessonsView({
   if (failed) return <p className="alert alert-error">{t(locale, "lessons.loadError")}</p>;
   if (!data) return <p className="muted">{t(locale, "common.loading")}</p>;
 
+  // A series adds a history entry (#id), so «رجوع», this page's back button and the phone's back all
+  // return to the list (owner 2026-11-24).
   const go = (id: string | null): void => {
-    window.location.hash = id ? encodeURIComponent(id) : "";
+    if (id) pushLayer("lessons", `#${encodeURIComponent(id)}`);
+    else closeHashLayer("lessons");
     setOpen(id);
     window.scrollTo?.({ top: 0 });
   };

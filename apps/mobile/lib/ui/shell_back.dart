@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 /// The main tabs (Quran, Prayer, Adhkar, Videos, More) open from the home page's tiles without a
 /// new page, so they had no way back (owner 2026-11-21: «زرار الرجوع» on every page). [HomeShell]
-/// puts this above the open tab; the tab's app bar shows a back arrow that returns to Home.
+/// puts this above the open tab; the tab's app bar shows a back arrow that returns to the tab opened
+/// before it (Home when there is none; owner 2026-11-24: back goes to the page before).
 class ShellBack extends InheritedWidget {
   const ShellBack({super.key, required this.goHome, required super.child});
 
-  /// Returns to the Home tab; null on the Home tab itself.
+  /// Returns to the tab opened before (or Home); null on the Home tab itself.
   final VoidCallback? goHome;
 
   static VoidCallback? of(BuildContext context) => context.dependOnInheritedWidgetOfExactType<ShellBack>()?.goHome;

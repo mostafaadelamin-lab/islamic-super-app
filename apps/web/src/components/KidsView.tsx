@@ -11,6 +11,7 @@ import { embedVideoUrl } from "@/lib/videos";
 import { Icon, type IconName } from "./Icon";
 import { KidsLearnTiles } from "./KidsLearn";
 import { PlayerClose } from "./PlayerClose";
+import { keptState } from "@/lib/back-nav";
 
 const SECONDS_PER_MINUTE = 60;
 const BYTES_PER_MB = 1e6;
@@ -265,7 +266,7 @@ export function KidsView({ locale }: { locale: Locale }) {
   const pick = (id: string) => {
     setTab(id);
     setOpen(null);
-    if (window.location.hash !== `#${id}`) window.history.replaceState(null, "", `#${id}`);
+    if (window.location.hash !== `#${id}`) window.history.replaceState(keptState(), "", `#${id}`);
   };
   // The site menu links to kids#prophets / #teacher / #stories (owner 2026-11-20: Kids is its own section).
   useEffect(() => {

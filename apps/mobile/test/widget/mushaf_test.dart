@@ -108,6 +108,28 @@ void main() {
     });
   }
 
+  // Owner 2026-11-24 (realme C21-Y): with a bigger phone font size the first and last words of every line
+  // were cut off. The page now ignores the phone's text size and fits itself.
+  for (final scale in [1.15, 1.3]) {
+    testWidgets('a bigger phone font size ($scale) never pushes the words out of the page at 360x800', (tester) async {
+      await pumpApp(tester, size: const Size(360, 800), textScale: scale);
+      await pushScreen(tester, const PageReaderScreen(initialPage: 1));
+      for (var p = 1; p <= 604; p++) {
+        reader(tester).jumpTo(p);
+        await tester.pump();
+        expect(tester.takeException(), isNull, reason: 'page $p');
+        if (p % 50 != 2 && p != 562) continue;
+        final pageFinder = find.byKey(Key('mushafPage-$p'));
+        final box = tester.getRect(pageFinder);
+        final texts = find.descendant(of: pageFinder, matching: find.byType(Text));
+        for (final e in texts.evaluate()) {
+          final r = tester.getRect(find.byWidget(e.widget).first);
+          expect(r.left >= box.left - 0.5 && r.right <= box.right + 0.5, isTrue, reason: 'page $p: $r inside $box');
+        }
+      }
+    });
+  }
+
   testWidgets('pages 1 and 2 are centred 8-line pages with a surah band', (tester) async {
     await open(tester, 2);
     expect(find.byKey(const Key('surahBanner-2')), findsOneWidget);

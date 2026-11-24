@@ -18,6 +18,7 @@ import { dirOf, t, type Locale } from "@/lib/i18n";
 import { href } from "@/lib/locale-path";
 import { localizeDigits } from "@/lib/digits";
 import { withBase } from "@/lib/base-path";
+import { goBack } from "@/lib/back-nav";
 import {
   JUZ,
   PAGE_COUNT,
@@ -1014,14 +1015,16 @@ export function PageReader({ locale, initial }: PageReaderProps) {
       style={{ "--rd-fs": `${prefs.fontSize}px` } as CSSProperties}
     >
       <div className="rd-top">
-        <Link
+        {/* Back to the page before (owner 2026-11-24); the Quran index when the Mushaf was opened from outside. */}
+        <button
+          type="button"
           className="rd-icon-btn rd-back"
-          href={`${href(locale, "quran")}?page=${page}`}
-          aria-label={t(locale, "reader.back")}
+          onClick={() => goBack(() => router.push(`${href(locale, "quran")}?page=${page}`))}
+          aria-label={t(locale, "nav.back")}
           data-testid="reader-back"
         >
           <ReaderIcon name="back" />
-        </Link>
+        </button>
         <div className="rd-tabs" role="tablist" aria-label={t(locale, "reader.tabs")}>
           {TABS.map((x) => (
             <button

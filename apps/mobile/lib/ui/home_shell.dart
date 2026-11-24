@@ -37,7 +37,29 @@ class HomeShellState extends State<HomeShell> {
   int _index = 0;
   int get index => _index;
 
-  void select(int i) => setState(() => _index = i);
+  /// The tabs opened before this one, newest last (owner 2026-11-24: back goes to the page before, not
+  /// always Home). Home clears it, so back from Home leaves the app as before.
+  final List<int> _history = [];
+
+  void select(int i) {
+    if (i == _index) return;
+    setState(() {
+      if (i == 0) {
+        _history.clear();
+      } else {
+        _history
+          ..remove(i)
+          ..add(_index);
+      }
+      _index = i;
+    });
+  }
+
+  /// Back to the tab opened before this one (Home when there is none).
+  void back() {
+    if (_index == 0) return;
+    setState(() => _index = _history.isEmpty ? 0 : _history.removeLast());
+  }
 
   @override
   void initState() {
@@ -96,12 +118,13 @@ class HomeShellState extends State<HomeShell> {
       4 => const ParentGate(child: ReelsScreen()),
       _ => const MoreScreen(),
     };
-    // A back arrow on every tab but Home, and the phone's back button returns to Home first.
-    final tab = ShellBack(goHome: _index == 0 ? null : () => select(0), child: body);
+    // A back arrow on every tab but Home; it and the phone's back button return to the tab opened
+    // before (Home when there is none), and only Home leaves the app.
+    final tab = ShellBack(goHome: _index == 0 ? null : back, child: body);
     final content = PopScope(
       canPop: _index == 0,
       onPopInvokedWithResult: (didPop, _) {
-        if (!didPop && _index != 0) select(0);
+        if (!didPop) back();
       },
       child: tab,
     );

@@ -6,6 +6,7 @@ import { loadSharawi, type SharawiSurah } from "@/lib/sharawi";
 import { Icon } from "./Icon";
 import { LessonsHeroCard, LessonsView } from "./LessonsView";
 import { SharawiView } from "./SharawiView";
+import { closeHashLayer, pushLayer, setRootBack } from "@/lib/back-nav";
 
 type Part = "tafsir" | "seerah" | "anbiya";
 
@@ -40,7 +41,14 @@ export function SharawiSection({
     const read = (): void => setPart(partOf(window.location.hash));
     read();
     window.addEventListener("hashchange", read);
-    return () => window.removeEventListener("hashchange", read);
+    window.addEventListener("popstate", read);
+    // A part opened from a link: «رجوع» shows the three cards first (owner 2026-11-24).
+    setRootBack(() => closeHashLayer("sharawi"));
+    return () => {
+      window.removeEventListener("hashchange", read);
+      window.removeEventListener("popstate", read);
+      setRootBack(null);
+    };
   }, []);
   useEffect(() => {
     const load = async (): Promise<void> => {
@@ -54,7 +62,8 @@ export function SharawiSection({
   }, [lessonsLoader]);
 
   const go = (p: Part | null): void => {
-    window.location.hash = p ?? "";
+    if (p) pushLayer("sharawi", `#${p}`);
+    else closeHashLayer("sharawi");
     setPart(p);
     window.scrollTo?.({ top: 0 });
   };

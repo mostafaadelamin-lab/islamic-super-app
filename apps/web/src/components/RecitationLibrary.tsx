@@ -23,6 +23,7 @@ import { LockPlayer } from "./LockPlayer";
 import { SaveAudioButton } from "./SaveAudioButton";
 import { librarySavedStore } from "@/lib/audio-offline";
 import { applyFx, type AudioFx } from "@/lib/audio-fx";
+import { useBackLayer } from "@/lib/back-nav";
 
 export interface Track {
   key: string;
@@ -357,6 +358,9 @@ export function RecitationLibrary({ locale }: { locale: Locale }) {
   const [rewaya, setRewaya] = useState<number | null>(null);
   const [reciter, setReciter] = useState<Reciter | null>(null);
   const [shabibOpen, setShabibOpen] = useState(false);
+  // A reciter's page closes with «رجوع» and the phone's back before leaving the library (owner 2026-11-24).
+  useBackLayer(reciter !== null, () => setReciter(null));
+  useBackLayer(shabibOpen, () => setShabibOpen(false));
   const [track, setTrack] = useState<Track | null>(null);
   const [slot, setSlot] = useState<HTMLElement | null>(null);
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.20] — Mushaf page fits small phones with a big font size — 2026-11-24
+Owner 2026-11-24 (realme C21-Y, Android 11): the Mushaf page was wider than the screen, the first and last words of every line were cut off.
+### Fixed
+- Phone apps (Android + iPhone): the Mushaf page followed the phone's own font size (Settings › font size / iOS Dynamic Type), so its words came out wider than the page had measured. The page now keeps its own size and fits the screen width; the Quran text and its lines are unchanged. Website checked at 360 px wide: it already fitted (no change).
+- Same as 1.2.19 otherwise.
+
 ## Lessons: Eng. Ayman Abdelrahim's series — 2026-11-24
 Owner 2026-11-24 (sent his YouTube playlist «تأسيس وعي المسلم المعاصر», asked for all his audio series under the fitting topics): 7 series, 46 lectures (~85 h), app and website. Two new topics: «الفكر والوعي الإسلامي» (تأسيس وعي المسلم المعاصر) and «التاريخ الإسلامي» (مدخل لدراسة التاريخ الإسلامي، تاريخ الدولة الأموية والعباسية); the others under the Prophet's life (العهد المكي), prophets & Companions (الخلفاء الراشدون), with the Quran (الثلاثون جذرًا) and family (البيت المسلم). Owner: religious lessons only, so his general courses (psychology, humanities, linguistics, «التأسيس المعرفي», «من هنا نبدأ», a TV programme, «ما بعد السلفية») were left out. lessons_build: per-series hand-written "names" for lesson titles. Now 71 series, ~3100 lessons.
 

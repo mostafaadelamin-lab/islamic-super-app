@@ -22,6 +22,7 @@ import {
 import { useStore } from "@/hooks/useStore";
 import { DhikrTools } from "./DhikrTools";
 import { HadithExplain } from "./HadithExplain";
+import { keptState, useBackLayer } from "@/lib/back-nav";
 
 /** Hadiths shown per screen. */
 export const PAGE_SIZE = 20;
@@ -80,6 +81,9 @@ export function HadithReader({ locale, bookId }: { locale: Locale; bookId: strin
   /** Page of the "explained hadiths" list being shown, or null for the book. */
   const [exPage, setExPage] = useState<number | null>(null);
   const [exItems, setExItems] = useState<HadithItem[] | null>(null);
+  // Search results and the explained-only list close with «رجوع» and the phone's back (owner 2026-11-24).
+  useBackLayer(results !== null, () => setResults(null));
+  useBackLayer(exPage !== null, () => setExPage(null));
   const n = (v: number): string => localizeDigits(v, locale);
 
   const open = useCallback(
@@ -88,7 +92,7 @@ export function HadithReader({ locale, bookId }: { locale: Locale; bookId: strin
       setFrom(firstOfPage(s));
       setResults(null);
       setExPage(null);
-      if (typeof window !== "undefined") history.replaceState(null, "", `#${s}`);
+      if (typeof window !== "undefined") history.replaceState(keptState(), "", `#${s}`);
     },
     [book.count],
   );
