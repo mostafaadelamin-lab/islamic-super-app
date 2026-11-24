@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -151,6 +152,12 @@ void main() {
         },
       ];
       expect(parseNominatim(nominatim, 30.0444, 31.2357).map((m) => m.name), ['سعد بن ابي وقاص', 'جامع النور']);
+      // The search box is a square: corners further than the distance are dropped.
+      expect(parseNominatim(nominatim, 30.0444, 31.2357, maxDistance: 900), isEmpty);
+      expect(isOtherFaithName('كنيسة مار جرجس'), isTrue);
+      expect(isOtherFaithName('St Mark Church'), isTrue);
+      expect(isOtherFaithName('مسجد الدير '), isFalse);
+      expect(isOtherFaithName('مسجد الرحمة'), isFalse);
     });
     test('directions links', () {
       const m = Mosque(id: 'node/1', name: null, lat: 1, lng: 2, distance: 0);
@@ -159,12 +166,11 @@ void main() {
     });
   });
 
-  testWidgets('lists mosques around the prayer city, falls back to the second server, radius re-queries', (
-    tester,
-  ) async {
+  testWidgets('lists mosques around the prayer city from 1 km, busy server ignored, radius re-queries', (tester) async {
     final urls = <String>[];
     final bodies = <String>[];
     final client = MockClient((req) async {
+      if (req.url.host == 'nominatim.openstreetmap.org') return http.Response('[]', 200);
       urls.add(req.url.toString());
       bodies.add(Uri.decodeQueryComponent(req.body));
       if (urls.length == 1) return http.Response('busy', 429);
@@ -173,24 +179,111 @@ void main() {
     await pumpApp(tester, size: tallPhone, locale: 'en');
     await pushScreen(tester, MosquesScreen(client: client));
     await tester.pumpAndSettle();
-    // The first two servers are asked together; the busy one is ignored.
-    expect(urls.take(2), unorderedEquals([contains('overpass-api.de'), contains('private.coffee')]));
-    expect(bodies[1], contains('around:5000,30.044,31.236')); // no GPS: Cairo, the default city
+    // The first three servers are asked together; the busy one is ignored.
+    expect(
+      urls.take(3),
+      unorderedEquals([contains('overpass-api.de'), contains('mail.ru'), contains('private.coffee')]),
+    );
+    expect(bodies[1], contains('around:1000,30.044,31.236')); // no GPS: Cairo, the default city
     expect(find.byKey(const Key('mosquesGeoFallback')), findsOneWidget);
     expect(find.byKey(const Key('mosque-node/1')), findsOneWidget);
     expect(find.text('Mosque B'), findsOneWidget);
     expect(find.text('Mosque (no name on the map)'), findsOneWidget);
     expect(find.text('67 m'), findsOneWidget);
     expect(find.textContaining('© OpenStreetMap contributors'), findsOneWidget);
-    await tester.tap(find.byKey(const Key('mosquesRadius-10000')));
+    // Closest distances first, whole numbers: 500 m, 1 km (chosen), 2 km, 5 km.
+    for (final t in ['500 m', '1 km', '2 km', '5 km']) {
+      expect(find.widgetWithText(ChoiceChip, t), findsOneWidget);
+    }
+    expect(tester.widget<ChoiceChip>(find.byKey(const Key('mosquesRadius-1000'))).selected, isTrue);
+    // The corner button says what it does.
+    expect(
+      find.descendant(of: find.byKey(const Key('mosquesGoogleMaps')), matching: find.text('Google Maps')),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const Key('mosquesRadius-500')));
     await tester.pumpAndSettle();
-    expect(bodies.last, contains('around:10000,'));
+    expect(bodies.last, contains('around:500,'));
+  });
+
+  testWidgets('nothing within 1 km: widens to 2 km by itself and says so', (tester) async {
+    final bodies = <String>[];
+    final client = MockClient((req) async {
+      if (req.url.host == 'nominatim.openstreetmap.org') return http.Response('[]', 200);
+      final body = Uri.decodeQueryComponent(req.body);
+      bodies.add(body);
+      final empty = body.contains('around:1000,');
+      return http.Response.bytes(utf8.encode(jsonEncode(empty ? {'elements': []} : _sample)), 200);
+    });
+    await pumpApp(tester, size: tallPhone, locale: 'en');
+    await pushScreen(tester, MosquesScreen(client: client));
+    await tester.pumpAndSettle();
+    expect(bodies.any((b) => b.contains('around:2000,')), isTrue);
+    expect(tester.widget<ChoiceChip>(find.byKey(const Key('mosquesRadius-2000'))).selected, isTrue);
+    expect(find.text('No mosque is mapped within 1 km, so these are the nearest within 2 km.'), findsOneWidget);
+    expect(find.byKey(const Key('mosque-node/1')), findsOneWidget);
+    // Chosen by hand: no widening.
+    await tester.tap(find.byKey(const Key('mosquesRadius-1000')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('mosquesWidened')), findsNothing);
+    expect(find.text('No mosques are mapped within this distance. Try a larger one.'), findsOneWidget);
+  });
+
+  testWidgets('slow map servers: the quick list shows within a second, then the full one', (tester) async {
+    final nominatim = [
+      {
+        'osm_type': 'node',
+        'osm_id': 1,
+        'lat': '30.045',
+        'lon': '31.2357',
+        'category': 'amenity',
+        'type': 'place_of_worship',
+        'name': 'مسجد أ',
+      },
+      {
+        'osm_type': 'node',
+        'osm_id': 77,
+        'lat': '30.046',
+        'lon': '31.2357',
+        'category': 'amenity',
+        'type': 'place_of_worship',
+        'name': 'كنيسة العذراء',
+      },
+    ];
+    final client = MockClient((req) async {
+      if (req.url.host == 'nominatim.openstreetmap.org') {
+        return http.Response.bytes(utf8.encode(jsonEncode(nominatim)), 200);
+      }
+      await Future<void>.delayed(const Duration(seconds: 15));
+      return http.Response.bytes(utf8.encode(jsonEncode(_sample)), 200);
+    });
+    await pumpApp(tester, size: tallPhone, locale: 'ar');
+    // Not pushScreen: its pumpAndSettle would wait for the slow servers.
+    unawaited(
+      tester
+          .state<NavigatorState>(find.byType(Navigator).first)
+          .push(MaterialPageRoute<void>(builder: (_) => MosquesScreen(client: client))),
+    );
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pump();
+    expect(find.byKey(const Key('mosque-node/1')), findsOneWidget);
+    expect(find.text('كنيسة العذراء'), findsNothing, reason: 'churches are not mosques');
+    expect(find.byKey(const Key('mosquesCompleting')), findsOneWidget);
+    expect(find.byKey(const Key('mosquesLoading')), findsNothing);
+    await tester.pump(const Duration(seconds: 16));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('mosquesCompleting')), findsNothing);
+    expect(find.byKey(const Key('mosque-way/2')), findsOneWidget);
+    expect(find.byKey(const Key('mosque-node/1')), findsOneWidget);
+    await tester.pump(const Duration(seconds: 30)); // the spare servers' answers, now ignored
   });
 
   testWidgets('offline: last saved list, else an error with retry', (tester) async {
     var online = true;
     final client = MockClient((req) async {
       if (!online) throw http.ClientException('offline');
+      if (req.url.host == 'nominatim.openstreetmap.org') return http.Response('[]', 200);
       return http.Response.bytes(utf8.encode(jsonEncode(_sample)), 200);
     });
     await pumpApp(tester, size: tallPhone, locale: 'en');
@@ -201,7 +294,7 @@ void main() {
     await tester.tap(find.byKey(const Key('mosquesRadius-2000')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('mosquesError')), findsOneWidget);
-    await tester.tap(find.byKey(const Key('mosquesRadius-5000')));
+    await tester.tap(find.byKey(const Key('mosquesRadius-1000')));
     await tester.pumpAndSettle();
     expect(find.textContaining('last saved result'), findsOneWidget);
     expect(find.byKey(const Key('mosque-node/1')), findsOneWidget);
@@ -210,20 +303,21 @@ void main() {
   testWidgets('searches around the GPS position, and again on "update my location"', (tester) async {
     final bodies = <String>[];
     final client = MockClient((req) async {
+      if (req.url.host == 'nominatim.openstreetmap.org') return http.Response('[]', 200);
       bodies.add(Uri.decodeQueryComponent(req.body));
       return http.Response.bytes(utf8.encode(jsonEncode(_sample)), 200);
     });
     await pumpApp(tester, size: tallPhone, locale: 'en', location: const FakeLocation(LocationFound(30.0445, 31.2357)));
     await pushScreen(tester, MosquesScreen(client: client));
     await tester.pumpAndSettle();
-    expect(bodies, hasLength(2), reason: 'two servers asked together');
-    expect(bodies.first, contains('around:5000,30.044,31.236'));
+    expect(bodies, hasLength(3), reason: 'three servers asked together');
+    expect(bodies.first, contains('around:1000,30.044,31.236'));
     expect(find.text('Mosques around your current location'), findsOneWidget);
     expect(find.byKey(const Key('mosquesGeoFallback')), findsNothing);
     expect(find.text('56 m'), findsOneWidget);
     await tester.tap(find.byKey(const Key('mosquesLocate')));
     await tester.pumpAndSettle();
-    expect(bodies, hasLength(4));
+    expect(bodies, hasLength(6));
   });
 
   test('Google Places: parsed nearest first; the finder uses it when a key is set, else OpenStreetMap', () async {

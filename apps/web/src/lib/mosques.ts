@@ -7,18 +7,23 @@
  * The mobile port (apps/mobile/lib/domain/mosques.dart) builds the same query and parses the same JSON.
  */
 
-/** Public Overpass servers, tried in order (both free and keyless). */
+/** Public Overpass servers (free and keyless); the first FIRST_WAVE are asked together, the rest when they are slow. */
 export const OVERPASS_ENDPOINTS = [
   "https://overpass-api.de/api/interpreter",
-  "https://overpass.kumi.systems/api/interpreter",
+  "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
   "https://overpass.private.coffee/api/interpreter",
+  "https://overpass.kumi.systems/api/interpreter",
 ] as const;
-/** A server that has not answered by then is skipped for the next one. */
-export const SERVER_TIMEOUT_MS = 15_000;
+export const FIRST_WAVE = 3;
+/** Busy Overpass servers answer a 2 km search in about 18 s (2026-11-24). */
+export const SERVER_TIMEOUT_MS = 20_000;
+export const SPARE_SERVERS_AFTER_MS = 4_000;
+const NOMINATIM_TIMEOUT_MS = 10_000;
 /** A building-only element this close to a tagged mosque is the same mosque drawn twice. */
 const SAME_MOSQUE_M = 60;
-export const RADII_M = [2000, 5000, 10000] as const;
-export const DEFAULT_RADIUS_M = 5000;
+/** Closest first (owner 2026-11-24: under 1 km). With nothing that close the page widens by itself. */
+export const RADII_M = [500, 1000, 2000, 5000] as const;
+export const DEFAULT_RADIUS_M = 1000;
 export const MAX_RESULTS = 60;
 const EARTH_RADIUS_M = 6_371_000;
 
@@ -62,6 +67,15 @@ const str = (v: unknown): string | null => (typeof v === "string" && v.trim() !=
 /** Names of roads, squares and districts, never a mosque (owner 2026-11-20: «طريق طلعت مصطفى» was listed). */
 const NOT_MOSQUE =
   /^(طريق|شارع|ش\.|محور|ميدان|كوبري|كورنيش|حي|منطقة|مدينة|قرية|عزبة|road|street|st\.|avenue|square|highway)(\s|$)/i;
+
+/** Words that say a place is a mosque. */
+const MOSQUE_WORD = /مسجد|جامع|زاوية|مصلى|mosque|masjid|masjed|jami|musalla/i;
+/** Churches and other places of worship (Nominatim's «مسجد» search returns every place of worship). */
+const OTHER_FAITH = /كنيسة|كاتدرائية|كنيس|دير\s|معبد|church|cathedral|chapel|monastery|synagogue|temple/i;
+
+/** True for a church, monastery …; a name with a mosque word in it («مسجد الدير») stays. */
+export const isOtherFaithName = (name: string | null): boolean =>
+  name !== null && OTHER_FAITH.test(name) && !MOSQUE_WORD.test(name);
 
 /** False for names of roads, squares, districts and the like. */
 export const isMosqueName = (name: string | null): boolean => name === null || !NOT_MOSQUE.test(name.trim());
@@ -109,31 +123,138 @@ export function parseOverpass(json: unknown, lat: number, lng: number, locale: "
   return out.slice(0, MAX_RESULTS);
 }
 
-/** Fetches mosques around a point, trying each Overpass server in turn. Throws when all fail. */
-export async function fetchMosques(
+/** OpenStreetMap's quick search (Nominatim) for mosques in a box around the point (same as the app). */
+export function nominatimUrl(lat: number, lng: number, radius: number, locale: "ar" | "en"): string {
+  const la = Number(lat.toFixed(3));
+  const ln = Number(lng.toFixed(3));
+  const dLat = radius / 111_320;
+  const dLng = radius / (111_320 * Math.min(1, Math.max(0.1, Math.abs(Math.cos((la * Math.PI) / 180)))));
+  const q = new URLSearchParams({
+    q: locale === "ar" ? "مسجد" : "mosque",
+    format: "jsonv2",
+    limit: "50",
+    bounded: "1",
+    viewbox: `${ln - dLng},${la + dLat},${ln + dLng},${la - dLat}`,
+    "accept-language": locale,
+  });
+  return `https://nominatim.openstreetmap.org/search?${q.toString()}`;
+}
+
+/** Parses a Nominatim answer: places of worship (not churches) and names with a mosque word, within maxDistance. */
+export function parseNominatim(json: unknown, lat: number, lng: number, maxDistance?: number): Mosque[] {
+  if (!Array.isArray(json)) return [];
+  const out: Mosque[] = [];
+  const seen = new Set<string>();
+  for (const raw of json as Record<string, unknown>[]) {
+    const mLat = Number(raw?.lat);
+    const mLng = Number(raw?.lon);
+    const id = `${String(raw?.osm_type)}/${String(raw?.osm_id)}`;
+    if (!Number.isFinite(mLat) || !Number.isFinite(mLng) || seen.has(id)) continue;
+    seen.add(id);
+    const name = str(raw.name);
+    const worship = raw.category === "amenity" && raw.type === "place_of_worship";
+    if (!worship && !(name !== null && MOSQUE_WORD.test(name))) continue;
+    if (!isMosqueName(name) || isOtherFaithName(name)) continue;
+    const d = distanceM(lat, lng, mLat, mLng);
+    if (maxDistance !== undefined && d > maxDistance) continue;
+    out.push({ id, name, lat: mLat, lng: mLng, distance: d });
+  }
+  out.sort((a, b) => a.distance - b.distance);
+  return out.slice(0, MAX_RESULTS);
+}
+
+/** Adds the extra mosques not already in base (same id or within 60 m), nearest first. */
+export function mergeMosques(base: Mosque[], extra: Mosque[]): Mosque[] {
+  const out = [...base];
+  for (const e of extra) {
+    if (!base.some((m) => m.id === e.id || distanceM(m.lat, m.lng, e.lat, e.lng) < SAME_MOSQUE_M))
+      out.push(e);
+  }
+  out.sort((a, b) => a.distance - b.distance);
+  return out.slice(0, MAX_RESULTS);
+}
+
+/**
+ * Fetches mosques around a point. The quick search (Nominatim, about 1 s) and the Overpass servers (complete but
+ * often busy) are asked together; the quick list goes to onEarly at once, the result is the first Overpass answer
+ * with mosques merged with it. Throws when every server fails.
+ */
+export function fetchMosques(
   lat: number,
   lng: number,
   radius: number,
   locale: "ar" | "en",
   fetchFn: typeof fetch = fetch,
+  onEarly?: (list: Mosque[]) => void,
 ): Promise<Mosque[]> {
   const body = `data=${encodeURIComponent(overpassQuery(lat, lng, radius))}`;
-  let last: unknown = null;
-  for (const url of OVERPASS_ENDPOINTS) {
-    try {
-      const res = await fetchFn(url, {
+  return new Promise<Mosque[]>((resolve, reject) => {
+    let settled = false;
+    let quick: Mosque[] | null = null;
+    let quickDone = false;
+    let left: number = OVERPASS_ENDPOINTS.length;
+    let firstLeft: number = FIRST_WAVE;
+    let answered = false;
+    let spares = false;
+    let last: unknown = null;
+    const finish = (list: Mosque[] | null): void => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(spareTimer);
+      clearTimeout(deadline);
+      if (list) resolve(list);
+      else reject(last instanceof Error ? last : new Error("Overpass unavailable"));
+    };
+    const settle = (): void => {
+      if (left === 0 && quickDone) finish(quick ?? (answered ? [] : null));
+    };
+    const ask = (url: string, first: boolean): void => {
+      fetchFn(url, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body,
         signal: AbortSignal.timeout(SERVER_TIMEOUT_MS),
+      })
+        .then(async (res) => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const list = parseOverpass(await res.json(), lat, lng, locale);
+          answered = true;
+          if (list.length > 0) finish(mergeMosques(list, quick ?? []));
+        })
+        .catch((e: unknown) => {
+          last = e;
+        })
+        .finally(() => {
+          left -= 1;
+          if (first && --firstLeft === 0 && !settled) askSpares();
+          settle();
+        });
+    };
+    const askSpares = (): void => {
+      if (spares) return;
+      spares = true;
+      for (const u of OVERPASS_ENDPOINTS.slice(FIRST_WAVE)) ask(u, false);
+    };
+    fetchFn(nominatimUrl(lat, lng, radius, locale), { signal: AbortSignal.timeout(NOMINATIM_TIMEOUT_MS) })
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const list = parseNominatim(await res.json(), lat, lng, radius);
+        if (list.length > 0) {
+          quick = list;
+          if (!settled) onEarly?.(list);
+        }
+      })
+      .catch((e: unknown) => {
+        last ??= e;
+      })
+      .finally(() => {
+        quickDone = true;
+        settle();
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return parseOverpass(await res.json(), lat, lng, locale);
-    } catch (e) {
-      last = e;
-    }
-  }
-  throw last instanceof Error ? last : new Error("Overpass unavailable");
+    for (const u of OVERPASS_ENDPOINTS.slice(0, FIRST_WAVE)) ask(u, true);
+    const spareTimer = setTimeout(askSpares, SPARE_SERVERS_AFTER_MS);
+    const deadline = setTimeout(() => finish(quick), SERVER_TIMEOUT_MS + SPARE_SERVERS_AFTER_MS);
+  });
 }
 
 /** Link that opens the mosque on openstreetmap.org (from there the user can ask for directions). */

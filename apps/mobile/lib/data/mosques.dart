@@ -84,11 +84,27 @@ class MosqueFinder {
   static const _cacheKey = 'mosques.cache';
   static const _ua = 'Rattil-Quran-app/1.0 (nearby mosques)';
 
+  /// Busy Overpass servers answer a 2 km search in about 18 s.
+  static const overpassTimeout = Duration(seconds: 20);
+  static const firstOverpassWave = 3;
+  static const spareServersAfter = Duration(seconds: 4);
+
   static String _key(double lat, double lng, int radius, bool arabic) =>
       '${lat.toStringAsFixed(3)},${lng.toStringAsFixed(3)},$radius,${arabic ? 'ar' : 'en'}';
 
   /// Throws when no server answers and nothing is saved for this place.
-  Future<MosqueResult> find(double lat, double lng, int radius, {required bool arabic}) async {
+  ///
+  /// OpenStreetMap's quick search (Nominatim, about 1 s) and the Overpass
+  /// servers (complete, but often busy: 15–20 s) are asked at the same time.
+  /// The quick list goes to [onEarly] at once so the screen never just spins;
+  /// the result is the first Overpass answer merged with it.
+  Future<MosqueResult> find(
+    double lat,
+    double lng,
+    int radius, {
+    required bool arabic,
+    void Function(MosqueResult early)? onEarly,
+  }) async {
     final key = _key(lat, lng, radius, arabic);
     Object? last;
     if (placesKey.isNotEmpty) {
@@ -100,8 +116,6 @@ class MosqueFinder {
         last = e; // fall back to OpenStreetMap
       }
     }
-    // Two waves of servers asked at the same time, so a slow server does not
-    // keep the user waiting: the first non-empty answer wins.
     Future<List<Mosque>> overpass(String url) async {
       final res = await _http
           .post(
@@ -113,7 +127,7 @@ class MosqueFinder {
             },
             body: 'data=${Uri.encodeQueryComponent(overpassQuery(lat, lng, radius))}',
           )
-          .timeout(const Duration(seconds: 12));
+          .timeout(overpassTimeout);
       if (res.statusCode != 200) throw http.ClientException('HTTP ${res.statusCode}');
       return parseOverpass(jsonDecode(utf8.decode(res.bodyBytes)), lat, lng, arabic: arabic);
     }
@@ -121,22 +135,73 @@ class MosqueFinder {
     Future<List<Mosque>> nominatim() async {
       final res = await _http
           .get(nominatimMosquesUri(lat, lng, radius, arabic: arabic), headers: const {'User-Agent': _ua})
-          .timeout(const Duration(seconds: 12));
+          .timeout(const Duration(seconds: 10));
       if (res.statusCode != 200) throw http.ClientException('HTTP ${res.statusCode}');
-      return parseNominatim(jsonDecode(utf8.decode(res.bodyBytes)), lat, lng);
+      return parseNominatim(jsonDecode(utf8.decode(res.bodyBytes)), lat, lng, maxDistance: radius.toDouble());
     }
 
-    final waves = <List<Future<List<Mosque>> Function()>>[
-      [for (final u in overpassEndpoints.take(2)) () => overpass(u)],
-      [for (final u in overpassEndpoints.skip(2)) () => overpass(u), nominatim],
-    ];
-    for (final wave in waves) {
-      final r = await _firstNonEmpty(wave);
-      if (r.list != null) {
-        await _save(key, r.list!);
-        return MosqueResult(r.list!);
+    final done = Completer<List<Mosque>?>();
+    List<Mosque>? quick;
+    var quickDone = false;
+    var overpassLeft = overpassEndpoints.length;
+    var gotOverpass = false; // a server answered (maybe with no mosques)
+    var later = false; // the spare servers were started
+
+    void settle() {
+      if (done.isCompleted || overpassLeft > 0 || !quickDone) return;
+      // Every server finished without a list of mosques.
+      done.complete(quick ?? (gotOverpass ? const <Mosque>[] : null));
+    }
+
+    var firstLeft = firstOverpassWave;
+    late void Function() askSpares;
+    void ask(String url, {bool first = false}) => unawaited(() async {
+      try {
+        final list = await overpass(url);
+        gotOverpass = true;
+        if (list.isNotEmpty && !done.isCompleted) done.complete(mergeMosques(list, quick ?? const []));
+      } catch (e) {
+        last = e;
+      } finally {
+        overpassLeft--;
+        // All of the first servers failed or found nothing: ask the spares now.
+        if (first && --firstLeft == 0 && !done.isCompleted) askSpares();
+        settle();
       }
-      last = r.error ?? last;
+    }());
+
+    askSpares = () {
+      if (later) return;
+      later = true;
+      for (final u in overpassEndpoints.skip(firstOverpassWave)) {
+        ask(u);
+      }
+    };
+
+    unawaited(() async {
+      try {
+        final list = await nominatim();
+        if (list.isNotEmpty) {
+          quick = list;
+          if (!done.isCompleted) onEarly?.call(MosqueResult(list));
+        }
+      } catch (e) {
+        last ??= e;
+      } finally {
+        quickDone = true;
+        settle();
+      }
+    }());
+    for (final u in overpassEndpoints.take(firstOverpassWave)) {
+      ask(u, first: true);
+    }
+    // The spare servers only when the first ones are slow.
+    final spareTimer = Timer(spareServersAfter, askSpares);
+    final list = await done.future.timeout(overpassTimeout + spareServersAfter, onTimeout: () => quick);
+    spareTimer.cancel();
+    if (list != null) {
+      await _save(key, list);
+      return MosqueResult(list);
     }
     final raw = _prefs.getString(_cacheKey);
     if (raw != null) {
@@ -150,30 +215,6 @@ class MosqueFinder {
       }
     }
     throw last ?? Exception('Overpass unavailable');
-  }
-
-  /// Runs [jobs] together; completes with the first non-empty list, or with
-  /// no list (and the last error) once every job has finished.
-  static Future<({List<Mosque>? list, Object? error})> _firstNonEmpty(List<Future<List<Mosque>> Function()> jobs) {
-    final done = Completer<({List<Mosque>? list, Object? error})>();
-    var left = jobs.length;
-    Object? error;
-    for (final job in jobs) {
-      Future<void> run() async {
-        try {
-          final list = await job();
-          if (list.isNotEmpty && !done.isCompleted) done.complete((list: list, error: null));
-        } catch (e) {
-          error = e;
-        } finally {
-          left--;
-          if (left == 0 && !done.isCompleted) done.complete((list: null, error: error));
-        }
-      }
-
-      unawaited(run());
-    }
-    return done.future;
   }
 
   Future<void> _save(String key, List<Mosque> list, {bool google = false}) => _prefs.setString(

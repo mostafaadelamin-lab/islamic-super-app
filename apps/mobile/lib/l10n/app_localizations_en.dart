@@ -2107,6 +2107,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get mosquesCompleting => 'Completing the list from the rest of the map…';
+
+  @override
   String mosquesCount(String n) {
     return '$n mosques, nearest first. Tap one for directions.';
   }
@@ -2117,6 +2120,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mosquesGeoFallback =>
       'Your location is not available (turn on GPS and allow location). Showing mosques around your prayer-times city.';
+
+  @override
+  String get mosquesGoogleMapsShort => 'Google Maps';
 
   @override
   String mosquesKm(String n) {
@@ -2173,6 +2179,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mosquesUnnamed => 'Mosque (no name on the map)';
+
+  @override
+  String mosquesWidened(String from, String to) {
+    return 'No mosque is mapped within $from, so these are the nearest within $to.';
+  }
 
   @override
   String get mushafCopied => 'Ayah copied';

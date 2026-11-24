@@ -5,8 +5,8 @@ import 'dart:math' as math;
 
 const overpassEndpoints = [
   'https://overpass-api.de/api/interpreter',
-  'https://overpass.private.coffee/api/interpreter',
   'https://maps.mail.ru/osm/tools/overpass/api/interpreter',
+  'https://overpass.private.coffee/api/interpreter',
   'https://overpass.osm.jp/api/interpreter',
   'https://overpass.kumi.systems/api/interpreter',
 ];
@@ -28,8 +28,9 @@ Uri nominatimMosquesUri(double lat, double lng, int radius, {required bool arabi
   });
 }
 
-/// Parses a Nominatim search answer into mosques sorted by distance.
-List<Mosque> parseNominatim(Object? json, double lat, double lng) {
+/// Parses a Nominatim search answer into mosques sorted by distance, only those
+/// within [maxDistance] metres when given (the search box is a square).
+List<Mosque> parseNominatim(Object? json, double lat, double lng, {double? maxDistance}) {
   if (json is! List) return const [];
   final out = <Mosque>[];
   final seen = <String>{};
@@ -42,8 +43,10 @@ List<Mosque> parseNominatim(Object? json, double lat, double lng) {
     final name = _str(raw['name']);
     final worship = raw['category'] == 'amenity' && raw['type'] == 'place_of_worship';
     if (!worship && !(name != null && _mosqueWord.hasMatch(name))) continue;
-    if (!isMosqueName(name)) continue;
-    out.add(Mosque(id: id, name: name, lat: mLat, lng: mLng, distance: distanceM(lat, lng, mLat, mLng)));
+    if (!isMosqueName(name) || isOtherFaithName(name)) continue;
+    final d = distanceM(lat, lng, mLat, mLng);
+    if (maxDistance != null && d > maxDistance) continue;
+    out.add(Mosque(id: id, name: name, lat: mLat, lng: mLng, distance: d));
   }
   out.sort((a, b) => a.distance.compareTo(b.distance));
   return out.take(maxMosques).toList();
@@ -61,8 +64,10 @@ Uri googleMapsMosqueUri(Mosque m) {
   return Uri.https('www.google.com', '/maps/search/', {'api': '1', 'query': m.name == null ? p : '${m.name} $p'});
 }
 
-const mosqueRadii = [2000, 5000, 10000];
-const defaultMosqueRadius = 5000;
+/// Search distances, nearest first (owner 2026-11-24: start from the closest,
+/// under 1 km). With nothing that close, the screen widens by itself.
+const mosqueRadii = [500, 1000, 2000, 5000];
+const defaultMosqueRadius = 1000;
 const maxMosques = 60;
 
 class Mosque {
@@ -123,6 +128,27 @@ final _notMosque = RegExp(
 
 /// Words that say a place is a mosque.
 final _mosqueWord = RegExp(r'مسجد|جامع|زاوية|مصلى|mosque|masjid|masjed|jami|musalla', caseSensitive: false);
+
+/// Churches, monasteries and other places of worship that are not mosques
+/// (Nominatim's «مسجد» search returns every place of worship).
+final _otherFaith = RegExp(
+  r'كنيسة|كاتدرائية|كنيس|دير\s|معبد|church|cathedral|chapel|monastery|synagogue|temple',
+  caseSensitive: false,
+);
+
+/// A name with a mosque word in it («مسجد الدير») stays.
+bool isOtherFaithName(String? name) => name != null && _otherFaith.hasMatch(name) && !_mosqueWord.hasMatch(name);
+
+/// Adds the [extra] mosques that are not already in [base] (same place within
+/// 60 m), nearest first.
+List<Mosque> mergeMosques(List<Mosque> base, List<Mosque> extra) {
+  final out = List.of(base);
+  for (final e in extra) {
+    if (!base.any((m) => m.id == e.id || distanceM(m.lat, m.lng, e.lat, e.lng) < _sameMosqueM)) out.add(e);
+  }
+  out.sort((a, b) => a.distance.compareTo(b.distance));
+  return out.length > maxMosques ? out.sublist(0, maxMosques) : out;
+}
 
 /// False for names of roads, squares, districts and the like.
 bool isMosqueName(String? name) => name == null || !_notMosque.hasMatch(name.trim());

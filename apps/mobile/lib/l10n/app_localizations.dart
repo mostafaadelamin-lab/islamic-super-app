@@ -3776,6 +3776,12 @@ abstract class AppLocalizations {
   /// **'Mosques around {place}'**
   String mosquesAround(String place);
 
+  /// shared key "mosques.completing"
+  ///
+  /// In en, this message translates to:
+  /// **'Completing the list from the rest of the map…'**
+  String get mosquesCompleting;
+
   /// shared key "mosques.count"
   ///
   /// In en, this message translates to:
@@ -3793,6 +3799,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your location is not available (turn on GPS and allow location). Showing mosques around your prayer-times city.'**
   String get mosquesGeoFallback;
+
+  /// shared key "mosques.googleMapsShort"
+  ///
+  /// In en, this message translates to:
+  /// **'Google Maps'**
+  String get mosquesGoogleMapsShort;
 
   /// shared key "mosques.km"
   ///
@@ -3895,6 +3907,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mosque (no name on the map)'**
   String get mosquesUnnamed;
+
+  /// shared key "mosques.widened"
+  ///
+  /// In en, this message translates to:
+  /// **'No mosque is mapped within {from}, so these are the nearest within {to}.'**
+  String mosquesWidened(String from, String to);
 
   /// shared key "mushaf.copied"
   ///
