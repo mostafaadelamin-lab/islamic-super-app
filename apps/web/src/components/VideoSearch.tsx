@@ -12,6 +12,7 @@ import {
 } from "@/lib/videos";
 import { useStore } from "@/hooks/useStore";
 import { Icon } from "./Icon";
+import { useBackLayer } from "@/lib/back-nav";
 
 /**
  * Search box over the videos page: Islamic videos only (trusted channels first; see netlify/lib/videos-core.mjs).
@@ -59,6 +60,8 @@ export function VideoSearch({
     setPlaying(null);
     setState("idle");
   };
+  // The results close with «رجوع» and the phone's back, back to the videos (owner 2026-11-24).
+  useBackLayer(query !== null, close);
 
   const showHistory = history.length > 0 && (query === null || focused) && state !== "loading";
   return (

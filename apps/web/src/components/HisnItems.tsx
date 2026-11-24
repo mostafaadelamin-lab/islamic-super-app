@@ -8,6 +8,7 @@ import { useAutoExit } from "@/hooks/useAutoExit";
 import { countStatedIn } from "@/lib/hisn-count";
 import { href } from "@/lib/locale-path";
 import { withBase } from "@/lib/base-path";
+import { goBack } from "@/lib/back-nav";
 import { Icon } from "./Icon";
 import { CardDeck, ModeSwitch } from "./CardDeck";
 import { DhikrTools } from "./DhikrTools";
@@ -38,21 +39,8 @@ export function HisnItems({
   useAutoExit(
     mode === "cards" && items.length > 0 && items.every((_, i) => isDone(i)),
     String(chapterId),
-    () => {
-      const index = withBase(href(locale, "hisn"));
-      let fromIndex = false;
-      try {
-        const ref = new URL(document.referrer);
-        fromIndex =
-          ref.origin === window.location.origin &&
-          ref.pathname.replace(/\/$/, "") === index.replace(/\/$/, "");
-      } catch {
-        fromIndex = false;
-      }
-      // Back keeps the section the reader had picked; otherwise open the chapter list.
-      if (fromIndex && window.history.length > 1) window.history.back();
-      else window.location.assign(index);
-    },
+    // Back to the page before (it keeps the section the reader had picked); else the chapter list.
+    () => goBack(() => window.location.assign(withBase(href(locale, "hisn")))),
   );
   const counter = (i: number): React.JSX.Element => {
     const n = taps[i] ?? 0;

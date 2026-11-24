@@ -18,6 +18,7 @@ import {
   type KidsBook,
 } from "@/lib/kids-learn-store";
 import { Icon } from "./Icon";
+import { useBackLayer } from "@/lib/back-nav";
 
 /** The evening session starts in the afternoon (as in the app). */
 const EVENING_FROM_HOUR = 15;
@@ -118,6 +119,12 @@ export function KidsHadith({
   const [level, setLevel] = useState<HadithLevel | null>(null);
   const [open, setOpen] = useState<number | null>(null);
   const [reads, setReads] = useState(0);
+  // A level and a hadith card close with «رجوع» and the phone's back, one step at a time (owner 2026-11-24).
+  useBackLayer(level !== null, () => {
+    setLevel(null);
+    setOpen(null);
+  });
+  useBackLayer(open !== null, () => setOpen(null));
   useEffect(() => setDone(readMemorized()), []);
   const toggle = (h: number) => {
     const s = new Set(done);
