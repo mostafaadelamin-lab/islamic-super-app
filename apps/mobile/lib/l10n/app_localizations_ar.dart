@@ -2078,6 +2078,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get mosquesCompleting => 'جارٍ إكمال القائمة من باقي الخريطة…';
+
+  @override
   String mosquesCount(String n) {
     return '$n مسجد، الأقرب أولًا. اضغط على المسجد لفتح الاتجاهات.';
   }
@@ -2088,6 +2091,9 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get mosquesGeoFallback =>
       'تعذّر معرفة موقعك (افتح الـ GPS واسمح للتطبيق بالموقع). نعرض المساجد حول مدينة المواقيت.';
+
+  @override
+  String get mosquesGoogleMapsShort => 'خرائط جوجل';
 
   @override
   String mosquesKm(String n) {
@@ -2144,6 +2150,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get mosquesUnnamed => 'مسجد (بدون اسم على الخريطة)';
+
+  @override
+  String mosquesWidened(String from, String to) {
+    return 'لا يوجد مسجد على الخريطة في حدود $from، فهذه أقرب المساجد في حدود $to.';
+  }
 
   @override
   String get mushafCopied => 'نُسخت الآية';

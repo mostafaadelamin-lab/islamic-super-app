@@ -3096,6 +3096,10 @@
       }
     }
   },
+  "mosquesCompleting": "Completing the list from the rest of the map…",
+  "@mosquesCompleting": {
+    "description": "shared key \"mosques.completing\""
+  },
   "mosquesCount": "{n} mosques, nearest first. Tap one for directions.",
   "@mosquesCount": {
     "description": "shared key \"mosques.count\"",
@@ -3112,6 +3116,10 @@
   "mosquesGeoFallback": "Your location is not available (turn on GPS and allow location). Showing mosques around your prayer-times city.",
   "@mosquesGeoFallback": {
     "description": "shared key \"mosques.geoFallback\""
+  },
+  "mosquesGoogleMapsShort": "Google Maps",
+  "@mosquesGoogleMapsShort": {
+    "description": "shared key \"mosques.googleMapsShort\""
   },
   "mosquesKm": "{n} km",
   "@mosquesKm": {
@@ -3190,6 +3198,18 @@
   "mosquesUnnamed": "Mosque (no name on the map)",
   "@mosquesUnnamed": {
     "description": "shared key \"mosques.unnamed\""
+  },
+  "mosquesWidened": "No mosque is mapped within {from}, so these are the nearest within {to}.",
+  "@mosquesWidened": {
+    "description": "shared key \"mosques.widened\"",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
   },
   "mushafCopied": "Ayah copied",
   "@mushafCopied": {

@@ -9,6 +9,10 @@ import {
   osmLink,
   overpassQuery,
   parseOverpass,
+  parseNominatim,
+  isOtherFaithName,
+  RADII_M,
+  DEFAULT_RADIUS_M,
 } from "@/lib/mosques";
 
 const CAIRO = { lat: 30.0444, lng: 31.2357 };
@@ -71,21 +75,108 @@ describe("nearby mosques (OpenStreetMap / Overpass)", () => {
     expect(parseOverpass(many, 30, 31, "ar")).toHaveLength(MAX_RESULTS);
   });
 
-  it("falls back to the second Overpass server, then throws when both fail", async () => {
+  it("asks the quick search and three Overpass servers together; a busy one is ignored; throws when all fail", async () => {
     const calls: string[] = [];
     const ok = vi.fn(async (url: string) => {
       calls.push(url);
-      if (calls.length === 1) return new Response("busy", { status: 429 });
+      if (url.includes("nominatim")) return new Response("[]", { status: 200 });
+      if (url.includes("overpass-api.de")) return new Response("busy", { status: 429 });
       return new Response(JSON.stringify(SAMPLE), { status: 200 });
     });
     const list = await fetchMosques(CAIRO.lat, CAIRO.lng, 2000, "ar", ok as unknown as typeof fetch);
     expect(list).toHaveLength(4);
-    expect(calls[0]).toContain("overpass-api.de");
-    expect(calls[1]).toContain("kumi.systems");
+    expect(calls[0]).toContain("nominatim.openstreetmap.org");
+    expect(calls.slice(1, 4)).toEqual([
+      expect.stringContaining("overpass-api.de"),
+      expect.stringContaining("mail.ru"),
+      expect.stringContaining("private.coffee"),
+    ]);
     const bad = vi.fn(async () => {
       throw new TypeError("offline");
     });
     await expect(fetchMosques(0, 0, 2000, "ar", bad as unknown as typeof fetch)).rejects.toThrow("offline");
+  });
+
+  it("slow Overpass: the quick list arrives first, then both are merged; churches are left out", async () => {
+    const nominatim = [
+      {
+        osm_type: "node",
+        osm_id: 1,
+        lat: "30.045",
+        lon: "31.2357",
+        category: "amenity",
+        type: "place_of_worship",
+        name: "مسجد أ",
+      },
+      {
+        osm_type: "node",
+        osm_id: 99,
+        lat: "30.044",
+        lon: "31.234",
+        category: "amenity",
+        type: "place_of_worship",
+        name: "مسجد قريب",
+      },
+      {
+        osm_type: "node",
+        osm_id: 77,
+        lat: "30.046",
+        lon: "31.2357",
+        category: "amenity",
+        type: "place_of_worship",
+        name: "كنيسة العذراء",
+      },
+    ];
+    const slow = vi.fn(async (url: string) => {
+      if (url.includes("nominatim")) return new Response(JSON.stringify(nominatim), { status: 200 });
+      await new Promise((r) => setTimeout(r, 50));
+      return new Response(JSON.stringify(SAMPLE), { status: 200 });
+    });
+    const early: string[][] = [];
+    const list = await fetchMosques(CAIRO.lat, CAIRO.lng, 1000, "ar", slow as unknown as typeof fetch, (l) =>
+      early.push(l.map((m) => m.name ?? "")),
+    );
+    expect(early).toEqual([["مسجد أ", "مسجد قريب"]]);
+    expect(list.map((m) => m.id)).toContain("node/99");
+    expect(list.some((m) => m.name === "كنيسة العذراء")).toBe(false);
+    expect(list.map((m) => m.distance)).toEqual([...list.map((m) => m.distance)].sort((a, b) => a - b));
+  });
+
+  it("quick search: distance limit, churches and mosque words", () => {
+    expect(isOtherFaithName("كنيسة مار جرجس")).toBe(true);
+    expect(isOtherFaithName("مسجد الدير ")).toBe(false);
+    const json = [
+      {
+        osm_type: "node",
+        osm_id: 1,
+        lat: "30.06",
+        lon: "31.2357",
+        category: "amenity",
+        type: "place_of_worship",
+        name: "مسجد بعيد",
+      },
+      {
+        osm_type: "way",
+        osm_id: 2,
+        lat: "30.045",
+        lon: "31.2357",
+        category: "building",
+        type: "yes",
+        name: "جامع النور",
+      },
+      {
+        osm_type: "way",
+        osm_id: 3,
+        lat: "30.045",
+        lon: "31.2357",
+        category: "highway",
+        type: "primary",
+        name: "شارع الجامع",
+      },
+    ];
+    expect(parseNominatim(json, CAIRO.lat, CAIRO.lng, 1000).map((m) => m.name)).toEqual(["جامع النور"]);
+    expect(RADII_M[0]).toBe(500);
+    expect(DEFAULT_RADIUS_M).toBe(1000);
   });
 
   it("links", () => {

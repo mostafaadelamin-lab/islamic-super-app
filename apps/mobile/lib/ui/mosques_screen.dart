@@ -39,6 +39,16 @@ class _MosquesScreenState extends State<MosquesScreen> {
   bool _error = false;
   bool _started = false;
 
+  /// Quick list shown while the fuller search is still running.
+  MosqueResult? _early;
+
+  /// Nothing within the chosen distance on the first search: the screen moved
+  /// to the next one by itself; this is the distance it started from.
+  int? _widenedFrom;
+
+  /// Each search has a number, so an older, slower answer never replaces a newer one.
+  int _searchId = 0;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -63,7 +73,7 @@ class _MosquesScreenState extends State<MosquesScreen> {
         _geoFailed = _here == null;
       }
     });
-    await _search();
+    await _search(widen: true);
   }
 
   @override
@@ -72,28 +82,54 @@ class _MosquesScreenState extends State<MosquesScreen> {
     super.dispose();
   }
 
-  Future<void> _search() async {
+  /// With [widen], an empty answer moves on to the next distance by itself,
+  /// so the nearest mosques always show (owner 2026-11-24).
+  Future<void> _search({bool widen = false, int? from}) async {
     final city = PrayerView.compute(context.services).city;
     final lat = _here?.lat ?? city.lat;
     final lng = _here?.lng ?? city.lng;
     final arabic = context.isArabic;
+    final id = ++_searchId;
     setState(() {
       _loading = true;
       _error = false;
+      _early = null;
+      _widenedFrom = from;
     });
     try {
       final finder = MosqueFinder(_client, await SharedPreferences.getInstance());
-      final r = await finder.find(lat, lng, _radius, arabic: arabic);
-      if (mounted) setState(() => _result = r);
+      final r = await finder.find(
+        lat,
+        lng,
+        _radius,
+        arabic: arabic,
+        onEarly: (e) {
+          if (mounted && id == _searchId) setState(() => _early = e);
+        },
+      );
+      if (!mounted || id != _searchId) return;
+      final next = mosqueRadii.where((x) => x > _radius).firstOrNull;
+      if (widen && r.mosques.isEmpty && !r.offline && next != null) {
+        final start = from ?? _radius;
+        setState(() => _radius = next);
+        await _search(widen: true, from: start);
+        return;
+      }
+      setState(() => _result = r);
     } catch (_) {
-      if (mounted) {
+      if (mounted && id == _searchId) {
         setState(() {
           _result = null;
           _error = true;
         });
       }
     } finally {
-      if (mounted) setState(() => _loading = false);
+      if (mounted && id == _searchId) {
+        setState(() {
+          _loading = false;
+          _early = null;
+        });
+      }
     }
   }
 
@@ -101,23 +137,37 @@ class _MosquesScreenState extends State<MosquesScreen> {
       ? context.l10n.mosquesMeters(context.num(m.round()))
       : context.l10n.mosquesKm(context.num((m / 1000).toStringAsFixed(1)));
 
+  /// «٥٠٠ م»، «١ كم»، «٢ كم» (no «٢٫٠»).
+  String _radiusLabel(BuildContext context, int m) =>
+      m < 1000 ? context.l10n.mosquesMeters(context.num(m)) : context.l10n.mosquesKm(context.num(m ~/ 1000));
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final theme = Theme.of(context);
     final city = PrayerView.compute(context.services).city;
-    final r = _result;
+    // While searching, the quick list (if any) is shown instead of a bare spinner.
+    final r = _loading ? _early : _result;
     return Scaffold(
       appBar: AppBar(
         title: Text(l.mosquesTitle),
         actions: [
-          IconButton(
-            key: const Key('mosquesGoogleMaps'),
-            tooltip: l.mosquesOnGoogleMaps,
-            icon: const RIcon(RIcons.external),
-            onPressed: () => launchUrl(
-              googleMapsNearbyUri(_here?.lat ?? city.lat, _here?.lng ?? city.lng, arabic: context.isArabic),
-              mode: LaunchMode.externalApplication,
+          // Labelled, not a bare arrow (owner 2026-11-24: the corner icon was not clear).
+          Padding(
+            padding: const EdgeInsetsDirectional.only(end: DesignTokens.spaceSm),
+            child: OutlinedButton.icon(
+              key: const Key('mosquesGoogleMaps'),
+              style: OutlinedButton.styleFrom(
+                visualDensity: VisualDensity.compact,
+                side: BorderSide(color: theme.colorScheme.primary),
+                padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm),
+              ),
+              icon: const RIcon(RIcons.location, size: 18),
+              label: Text(l.mosquesGoogleMapsShort, style: const TextStyle(fontWeight: FontWeight.w600)),
+              onPressed: () => launchUrl(
+                googleMapsNearbyUri(_here?.lat ?? city.lat, _here?.lng ?? city.lng, arabic: context.isArabic),
+                mode: LaunchMode.externalApplication,
+              ),
             ),
           ),
         ],
@@ -163,7 +213,7 @@ class _MosquesScreenState extends State<MosquesScreen> {
                 for (final rad in mosqueRadii)
                   ChoiceChip(
                     key: Key('mosquesRadius-$rad'),
-                    label: Text(_distance(context, rad.toDouble())),
+                    label: Text(_radiusLabel(context, rad)),
                     selected: _radius == rad,
                     onSelected: (_) {
                       if (_radius == rad || _locating) return;
@@ -174,7 +224,7 @@ class _MosquesScreenState extends State<MosquesScreen> {
               ],
             ),
             const SizedBox(height: DesignTokens.spaceMd),
-            if (_locating || _loading)
+            if (_locating || (_loading && r == null))
               Row(
                 key: const Key('mosquesLoading'),
                 children: [
@@ -191,13 +241,34 @@ class _MosquesScreenState extends State<MosquesScreen> {
                 child: OutlinedButton(key: const Key('mosquesRetry'), onPressed: _search, child: Text(l.mosquesRetry)),
               ),
             ] else if (r != null) ...[
-              Text(
-                r.mosques.isEmpty
-                    ? l.mosquesNone
-                    : '${l.mosquesCount(context.num(r.mosques.length))}${r.offline ? ' ${l.mosquesOffline}' : ''}',
-                key: const Key('mosquesStatus'),
-                style: theme.textTheme.bodySmall,
-              ),
+              if (_loading)
+                // The quick list is already here; the fuller one is still coming.
+                Row(
+                  key: const Key('mosquesCompleting'),
+                  children: [
+                    const SizedBox.square(dimension: 14, child: CircularProgressIndicator(strokeWidth: 2)),
+                    const SizedBox(width: DesignTokens.spaceSm),
+                    Expanded(child: Text(l.mosquesCompleting, style: theme.textTheme.bodySmall)),
+                  ],
+                )
+              else ...[
+                if (_widenedFrom != null && r.mosques.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: DesignTokens.spaceXs),
+                    child: Text(
+                      l.mosquesWidened(_radiusLabel(context, _widenedFrom!), _radiusLabel(context, _radius)),
+                      key: const Key('mosquesWidened'),
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ),
+                Text(
+                  r.mosques.isEmpty
+                      ? l.mosquesNone
+                      : '${l.mosquesCount(context.num(r.mosques.length))}${r.offline ? ' ${l.mosquesOffline}' : ''}',
+                  key: const Key('mosquesStatus'),
+                  style: theme.textTheme.bodySmall,
+                ),
+              ],
               for (final m in r.mosques)
                 Card(
                   key: Key('mosque-${m.id}'),
