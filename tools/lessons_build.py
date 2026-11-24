@@ -82,7 +82,9 @@ def norm(s):
     return re.sub('[أإآ]', 'ا', s)
 
 
+SURAHS = [s['nameAr'] for s in json.loads((ROOT / 'content/quran/dist/quran.v1.json').read_text())['surahs']]
 MIN_EPISODE_SEC = 120
+MIN_EPISODE_BYTES = 20000
 MAX_DESC_TITLE = 40
 LATIN = re.compile(r'[A-Za-z][A-Za-z0-9_.\-]*')
 
@@ -133,6 +135,11 @@ def build(src, refetch=False):
                 files.sort(key=lambda f: f['name'])
             else:
                 files.sort(key=lambda f: natkey(f['name']))
+            # Broken uploads (a few KB, no audio) are left out.
+            files = [f for f in files if not f.get('size') or int(f['size']) >= MIN_EPISODE_BYTES]
+            if 'keep' in se:
+                # Items with duplicates, cut-off copies or another speaker's file: only these names.
+                files = [f for f in files if re.search(se['keep'], f['name'])]
             if 'order' in se:
                 # Listed order (e.g. prophets in their historical order); file order within each entry.
                 def rank(f):
@@ -157,9 +164,18 @@ def build(src, refetch=False):
                     # Short topic lines only ("الابتلاء"); long summaries are left out.
                     d = f.get('desc') or ''
                     t = d if 0 < len(d) <= MAX_DESC_TITLE else None
+                elif mode == 'surah':
+                    # "001_AlFateha_002.mp3" -> "سورة الفاتحة" (the surah the lesson explains).
+                    m = re.match(r'(\d{3})', f['name'].rsplit('/', 1)[-1])
+                    t = f'سورة {SURAHS[int(m.group(1)) - 1]}' if m else None
                 elif mode == 'item':
                     # "001_ مقدمة وتعريف الطهارة _دورة شرح (...) _ م علاء حامد" -> "مقدمة وتعريف الطهارة"
                     t = clean(re.split(r'\s_|_\s', re.sub(r'^[\d\s\-_.]+', '', raw.get('title') or ''))[0], words)
+                for pat in se.get('strip', []):
+                    # Per-series leftovers in the recording titles (the sheikh's name, dates, the series name).
+                    t = re.sub(pat, ' ', t) if t else t
+                if t:
+                    t = re.sub(r'\s+', ' ', t).strip(' -_."():')
                 if t:
                     ep['t'] = t
                 if url in music:

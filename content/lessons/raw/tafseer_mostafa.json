@@ -1,0 +1,4031 @@
+{
+"item": "tafseer_mostafa",
+"title": "تفسير الشيخ مصطفى بن العدوي (صوتي كامل )",
+"files": [
+{
+"name": "001_AlFateha_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8750263",
+"length": "2138"
+},
+{
+"name": "001_AlFateha_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14381427",
+"length": "3545.79"
+},
+{
+"name": "001_AlFateha_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12833411",
+"length": "3158.78"
+},
+{
+"name": "002_AlBaqara_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11195638",
+"length": "2749.34"
+},
+{
+"name": "002_AlBaqara_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7493146",
+"length": "1823.72"
+},
+{
+"name": "002_AlBaqara_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6369045",
+"length": "1542.69"
+},
+{
+"name": "002_AlBaqara_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6295066",
+"length": "1524.2"
+},
+{
+"name": "002_AlBaqara_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10560758",
+"length": "2590.62"
+},
+{
+"name": "002_AlBaqara_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7999608",
+"length": "1950.33"
+},
+{
+"name": "002_AlBaqara_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13232248",
+"length": "3258.49"
+},
+{
+"name": "002_AlBaqara_008.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10803905",
+"length": "2651.41"
+},
+{
+"name": "002_AlBaqara_009.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10276441",
+"length": "2519.54"
+},
+{
+"name": "002_AlBaqara_010.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9240007",
+"length": "2260.43"
+},
+{
+"name": "002_AlBaqara_011.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13520953",
+"length": "3330.67"
+},
+{
+"name": "002_AlBaqara_012.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13622413",
+"length": "3356.04"
+},
+{
+"name": "002_AlBaqara_013.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11038067",
+"length": "2709.95"
+},
+{
+"name": "002_AlBaqara_014.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9658070",
+"length": "2364.95"
+},
+{
+"name": "002_AlBaqara_015.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11368359",
+"length": "2792.52"
+},
+{
+"name": "002_AlBaqara_016.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7247700",
+"length": "1762.36"
+},
+{
+"name": "002_AlBaqara_017.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6472281",
+"length": "1568.5"
+},
+{
+"name": "002_AlBaqara_018.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7252402",
+"length": "1763.53"
+},
+{
+"name": "002_AlBaqara_019.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8453930",
+"length": "2063.91"
+},
+{
+"name": "002_AlBaqara_020.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10060878",
+"length": "2465.65"
+},
+{
+"name": "002_AlBaqara_021.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8257176",
+"length": "2014.73"
+},
+{
+"name": "002_AlBaqara_022.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9895680",
+"length": "2424.35"
+},
+{
+"name": "002_AlBaqara_023.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10412591",
+"length": "2553.58"
+},
+{
+"name": "002_AlBaqara_024.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9150459",
+"length": "2238.05"
+},
+{
+"name": "002_AlBaqara_025.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10603598",
+"length": "2601.33"
+},
+{
+"name": "002_AlBaqara_026.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17133375",
+"length": "4233.78"
+},
+{
+"name": "002_AlBaqara_027.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11181949",
+"length": "2745.92"
+},
+{
+"name": "002_AlBaqara_028.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10273724",
+"length": "2518.86"
+},
+{
+"name": "002_AlBaqara_029.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7470263",
+"length": "1818"
+},
+{
+"name": "002_AlBaqara_030.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10720940",
+"length": "2630.67"
+},
+{
+"name": "002_AlBaqara_031.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9586286",
+"length": "2347"
+},
+{
+"name": "002_AlBaqara_032.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8438988",
+"length": "2060.18"
+},
+{
+"name": "002_AlBaqara_033.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7046452",
+"length": "1712.05"
+},
+{
+"name": "002_AlBaqara_034.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5155291",
+"length": "1239.25"
+},
+{
+"name": "002_AlBaqara_035.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5348075",
+"length": "1287.45"
+},
+{
+"name": "002_AlBaqara_036.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5788918",
+"length": "1397.66"
+},
+{
+"name": "002_AlBaqara_037.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6670602",
+"length": "1618.08"
+},
+{
+"name": "002_AlBaqara_038.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7422929",
+"length": "1806.16"
+},
+{
+"name": "002_AlBaqara_039.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7403703",
+"length": "1801.36"
+},
+{
+"name": "002_AlBaqara_040.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7356369",
+"length": "1789.52"
+},
+{
+"name": "002_AlBaqara_041.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7587187",
+"length": "1847.23"
+},
+{
+"name": "002_AlBaqara_042.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10578521",
+"length": "2595.06"
+},
+{
+"name": "002_AlBaqara_043.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6504777",
+"length": "1576.63"
+},
+{
+"name": "002_AlBaqara_044.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7378521",
+"length": "1795.06"
+},
+{
+"name": "002_AlBaqara_045.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7259402",
+"length": "1765.28"
+},
+{
+"name": "002_AlBaqara_046.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4954567",
+"length": "1189.07"
+},
+{
+"name": "002_AlBaqara_047.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8530416",
+"length": "2083.04"
+},
+{
+"name": "002_AlBaqara_048.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5248810",
+"length": "1262.63"
+},
+{
+"name": "002_AlBaqara_049.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9612513",
+"length": "2353.56"
+},
+{
+"name": "002_AlBaqara_050.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7172362",
+"length": "1743.52"
+},
+{
+"name": "003_001_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12043468",
+"length": "2961.3"
+},
+{
+"name": "003_002_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12554005",
+"length": "3088.93"
+},
+{
+"name": "003_003_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12283167",
+"length": "3021.22"
+},
+{
+"name": "003_004_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9472183",
+"length": "2318.48"
+},
+{
+"name": "003_005_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8749113",
+"length": "2137.71"
+},
+{
+"name": "003_006_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9560268",
+"length": "2340.5"
+},
+{
+"name": "003_007_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8704601",
+"length": "2126.58"
+},
+{
+"name": "003_008_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9646994",
+"length": "2362.18"
+},
+{
+"name": "003_009_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8821316",
+"length": "2155.76"
+},
+{
+"name": "003_010_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4668891",
+"length": "1117.65"
+},
+{
+"name": "003_011_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8740545",
+"length": "2135.57"
+},
+{
+"name": "003_012_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7324500",
+"length": "1781.56"
+},
+{
+"name": "003_013_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "3887621",
+"length": "922.34"
+},
+{
+"name": "003_014_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7180304",
+"length": "1745.51"
+},
+{
+"name": "003_015_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "2631549",
+"length": "608.32"
+},
+{
+"name": "003_016_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7175706",
+"length": "1744.36"
+},
+{
+"name": "003_017_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8074423",
+"length": "1969.04"
+},
+{
+"name": "003_018_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8837721",
+"length": "2159.86"
+},
+{
+"name": "003_019_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10589910",
+"length": "2597.91"
+},
+{
+"name": "003_020_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8736052",
+"length": "2134.45"
+},
+{
+"name": "003_021_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4912144",
+"length": "1178.47"
+},
+{
+"name": "003_022_Aal_Emran.MP3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7215308",
+"length": "1754.26"
+},
+{
+"name": "003_023_Aal_Emran.MP3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12280869",
+"length": "3020.65"
+},
+{
+"name": "003_024_Aal_Emran.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11068682",
+"length": "2717.6"
+},
+{
+"name": "004_001_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4592614",
+"length": "1098.59"
+},
+{
+"name": "004_002_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9236558",
+"length": "2259.57"
+},
+{
+"name": "004_003_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9940611",
+"length": "2435.58"
+},
+{
+"name": "004_004_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7687811",
+"length": "1872.38"
+},
+{
+"name": "004_005_Al_Nesaa.MP3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12723278",
+"length": "3131.25"
+},
+{
+"name": "004_006_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12832993",
+"length": "3158.68"
+},
+{
+"name": "004_007_Al_Nesaa.MP3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12221414",
+"length": "3005.79"
+},
+{
+"name": "004_008_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13519073",
+"length": "3330.2"
+},
+{
+"name": "004_009_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12096653",
+"length": "2974.6"
+},
+{
+"name": "004_010_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12183693",
+"length": "2996.36"
+},
+{
+"name": "004_011_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14214139",
+"length": "3503.97"
+},
+{
+"name": "004_012_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9370305",
+"length": "2293.01"
+},
+{
+"name": "004_013_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9013055",
+"length": "2203.7"
+},
+{
+"name": "004_014_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8780774",
+"length": "2145.63"
+},
+{
+"name": "004_015_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8578064",
+"length": "2094.95"
+},
+{
+"name": "004_016_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9581479",
+"length": "2345.8"
+},
+{
+"name": "004_017_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10320536",
+"length": "2530.57"
+},
+{
+"name": "004_018_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11159693",
+"length": "2740.36"
+},
+{
+"name": "004_019_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11942113",
+"length": "2935.96"
+},
+{
+"name": "004_020_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12853473",
+"length": "3163.8"
+},
+{
+"name": "004_021_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10347807",
+"length": "2537.38"
+},
+{
+"name": "004_022_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11987252",
+"length": "2947.25"
+},
+{
+"name": "004_023_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10666919",
+"length": "2617.16"
+},
+{
+"name": "004_024_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9836748",
+"length": "2409.62"
+},
+{
+"name": "004_025_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10565460",
+"length": "2591.8"
+},
+{
+"name": "004_026_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11636793",
+"length": "2859.63"
+},
+{
+"name": "004_027_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10644454",
+"length": "2611.55"
+},
+{
+"name": "004_028_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5790589",
+"length": "1398.08"
+},
+{
+"name": "004_029_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10183445",
+"length": "2496.29"
+},
+{
+"name": "004_030_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6932036",
+"length": "1683.44"
+},
+{
+"name": "004_031_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10723239",
+"length": "2631.24"
+},
+{
+"name": "004_032_Al_Nesaa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "2894237",
+"length": "673.99"
+},
+{
+"name": "005_001_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11922991",
+"length": "2931.18"
+},
+{
+"name": "005_002_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11196578",
+"length": "2749.58"
+},
+{
+"name": "005_003_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9042312",
+"length": "2211.01"
+},
+{
+"name": "005_004_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10005185",
+"length": "2451.73"
+},
+{
+"name": "005_005_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4327210",
+"length": "1032.23"
+},
+{
+"name": "005_006_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10263693",
+"length": "2516.36"
+},
+{
+"name": "005_007_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10345091",
+"length": "2536.7"
+},
+{
+"name": "005_008_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5898214",
+"length": "1424.99"
+},
+{
+"name": "005_009_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10649783",
+"length": "2612.88"
+},
+{
+"name": "005_010_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8863216",
+"length": "2166.24"
+},
+{
+"name": "005_011_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7912359",
+"length": "1928.52"
+},
+{
+"name": "005_012_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10861061",
+"length": "2665.7"
+},
+{
+"name": "005_013_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11363448",
+"length": "2791.29"
+},
+{
+"name": "005_014_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12119954",
+"length": "2980.42"
+},
+{
+"name": "005_015_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10077492",
+"length": "2469.81"
+},
+{
+"name": "005_016_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7228056",
+"length": "1757.45"
+},
+{
+"name": "005_017_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7707246",
+"length": "1877.24"
+},
+{
+"name": "005_018_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9398518",
+"length": "2300.06"
+},
+{
+"name": "005_019_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7672973",
+"length": "1868.68"
+},
+{
+"name": "005_020_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7914553",
+"length": "1929.07"
+},
+{
+"name": "005_021_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11665215",
+"length": "2866.74"
+},
+{
+"name": "005_022_Al_Ma2eda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "2746906",
+"length": "637.16"
+},
+{
+"name": "006_Al_An3aam_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8779624",
+"length": "2145.34"
+},
+{
+"name": "006_Al_An3aam_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10784888",
+"length": "2646.65"
+},
+{
+"name": "006_Al_An3aam_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11521019",
+"length": "2830.69"
+},
+{
+"name": "006_Al_An3aam_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11198563",
+"length": "2750.07"
+},
+{
+"name": "006_Al_An3aam_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12423393",
+"length": "3056.28"
+},
+{
+"name": "006_Al_An3aam_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8957675",
+"length": "2189.85"
+},
+{
+"name": "006_Al_An3aam_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12864235",
+"length": "3166.49"
+},
+{
+"name": "006_Al_An3aam_008.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9326838",
+"length": "2282.14"
+},
+{
+"name": "006_Al_An3aam_009.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12883357",
+"length": "3171.27"
+},
+{
+"name": "006_Al_An3aam_010.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11172754",
+"length": "2743.62"
+},
+{
+"name": "006_Al_An3aam_011.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11395631",
+"length": "2799.34"
+},
+{
+"name": "006_Al_An3aam_012.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11401169",
+"length": "2800.72"
+},
+{
+"name": "006_Al_An3aam_013.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12528196",
+"length": "3082.48"
+},
+{
+"name": "006_Al_An3aam_014.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13933584",
+"length": "3433.83"
+},
+{
+"name": "007_Al_A3raf_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4898769",
+"length": "1175.12"
+},
+{
+"name": "007_Al_A3raf_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10494720",
+"length": "2574.11"
+},
+{
+"name": "007_Al_A3raf_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9796833",
+"length": "2399.64"
+},
+{
+"name": "007_Al_A3raf_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6127256",
+"length": "1482.25"
+},
+{
+"name": "007_Al_A3raf_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7795122",
+"length": "1899.21"
+},
+{
+"name": "007_Al_A3raf_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7339024",
+"length": "1785.19"
+},
+{
+"name": "007_Al_A3raf_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8694465",
+"length": "2124.05"
+},
+{
+"name": "007_Al_A3raf_008.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10341433",
+"length": "2535.79"
+},
+{
+"name": "007_Al_A3raf_009.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8202736",
+"length": "2001.12"
+},
+{
+"name": "007_Al_A3raf_010.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8301584",
+"length": "2025.83"
+},
+{
+"name": "007_Al_A3raf_011.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7564304",
+"length": "1841.51"
+},
+{
+"name": "007_Al_A3raf_012.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7535778",
+"length": "1834.38"
+},
+{
+"name": "007_Al_A3raf_013.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9456300",
+"length": "2314.51"
+},
+{
+"name": "007_Al_A3raf_014.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11104627",
+"length": "2726.59"
+},
+{
+"name": "007_Al_A3raf_015.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9862766",
+"length": "2416.12"
+},
+{
+"name": "007_Al_A3raf_016.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "2961946",
+"length": "690.92"
+},
+{
+"name": "007_Al_A3raf_017.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6935380",
+"length": "1684.28"
+},
+{
+"name": "007_Al_A3raf_018.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8388624",
+"length": "2047.59"
+},
+{
+"name": "007_Al_A3raf_019.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6839458",
+"length": "1660.3"
+},
+{
+"name": "007_Al_A3raf_020.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10292741",
+"length": "2523.62"
+},
+{
+"name": "007_Al_A3raf_021.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6912914",
+"length": "1678.66"
+},
+{
+"name": "007_Al_A3raf_022.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13358158",
+"length": "3289.97"
+},
+{
+"name": "007_Al_A3raf_023.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10266932",
+"length": "2517.17"
+},
+{
+"name": "007_Al_A3raf_024.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6370299",
+"length": "1543.01"
+},
+{
+"name": "008_Al_Anfal_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "1329711",
+"length": "282.86"
+},
+{
+"name": "008_Al_Anfal_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8940434",
+"length": "2185.54"
+},
+{
+"name": "008_Al_Anfal_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9698194",
+"length": "2374.98"
+},
+{
+"name": "008_Al_Anfal_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11485806",
+"length": "2821.88"
+},
+{
+"name": "008_Al_Anfal_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11550589",
+"length": "2838.08"
+},
+{
+"name": "008_Al_Anfal_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9889515",
+"length": "2422.81"
+},
+{
+"name": "008_Al_Anfal_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11717564",
+"length": "2879.82"
+},
+{
+"name": "008_Al_Anfal_008.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9483990",
+"length": "2321.43"
+},
+{
+"name": "008_Al_Anfal_009.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9729019",
+"length": "2382.69"
+},
+{
+"name": "008_Al_Anfal_010.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10898364",
+"length": "2675.02"
+},
+{
+"name": "008_Al_Anfal_011.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6767256",
+"length": "1642.25"
+},
+{
+"name": "009_Al_Tawba_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11463340",
+"length": "2816.27"
+},
+{
+"name": "009_Al_Tawba_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12613878",
+"length": "3103.9"
+},
+{
+"name": "009_Al_Tawba_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9595063",
+"length": "2349.2"
+},
+{
+"name": "009_Al_Tawba_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12382328",
+"length": "3046.01"
+},
+{
+"name": "009_Al_Tawba_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12607817",
+"length": "3102.39"
+},
+{
+"name": "009_Al_Tawba_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12753371",
+"length": "3138.77"
+},
+{
+"name": "009_Al_Tawba_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12298527",
+"length": "3025.06"
+},
+{
+"name": "009_Al_Tawba_008.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12158929",
+"length": "2990.16"
+},
+{
+"name": "009_Al_Tawba_009.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14488633",
+"length": "3572.59"
+},
+{
+"name": "009_Al_Tawba_010.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12722547",
+"length": "3131.07"
+},
+{
+"name": "009_Al_Tawba_011.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11579638",
+"length": "2845.34"
+},
+{
+"name": "009_Al_Tawba_012.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12304065",
+"length": "3026.45"
+},
+{
+"name": "009_Al_Tawba_013.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12981055",
+"length": "3195.7"
+},
+{
+"name": "009_Al_Tawba_014.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12723069",
+"length": "3131.2"
+},
+{
+"name": "009_Al_Tawba_015.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12946469",
+"length": "3187.05"
+},
+{
+"name": "009_Al_Tawba_016.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10477479",
+"length": "2569.8"
+},
+{
+"name": "010_Yonos_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13589290",
+"length": "3347.75"
+},
+{
+"name": "010_Yonos_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11323011",
+"length": "2781.18"
+},
+{
+"name": "010_Yonos_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11843161",
+"length": "2911.22"
+},
+{
+"name": "010_Yonos_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11420918",
+"length": "2805.66"
+},
+{
+"name": "010_Yonos_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11723416",
+"length": "2881.29"
+},
+{
+"name": "010_Yonos_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10830341",
+"length": "2658.02"
+},
+{
+"name": "010_Yonos_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10891990",
+"length": "2673.43"
+},
+{
+"name": "010_Yonos_008.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10969417",
+"length": "2692.79"
+},
+{
+"name": "010_Yonos_009.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10777574",
+"length": "2644.83"
+},
+{
+"name": "011_Hood_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12557774",
+"length": "3089.66"
+},
+{
+"name": "011_Hood_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12935151",
+"length": "3184.18"
+},
+{
+"name": "011_Hood_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12538194",
+"length": "3084.94"
+},
+{
+"name": "011_Hood_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13091258",
+"length": "3223.2"
+},
+{
+"name": "011_Hood_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10150184",
+"length": "2487.93"
+},
+{
+"name": "011_Hood_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12655641",
+"length": "3114.3"
+},
+{
+"name": "011_Hood_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11201769",
+"length": "2750.83"
+},
+{
+"name": "011_Hood_008.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11147825",
+"length": "2737.34"
+},
+{
+"name": "011_Hood_009.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11127809",
+"length": "2732.34"
+},
+{
+"name": "012_Yosof_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27201267",
+"length": "3375.24"
+},
+{
+"name": "012_Yosof_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "24590662",
+"length": "3048.91"
+},
+{
+"name": "012_Yosof_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18925891",
+"length": "2340.82"
+},
+{
+"name": "012_Yosof_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "26781012",
+"length": "3322.7"
+},
+{
+"name": "012_Yosof_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25678930",
+"length": "3184.94"
+},
+{
+"name": "012_Yosof_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17304861",
+"length": "2138.21"
+},
+{
+"name": "012_Yosof_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "20425414",
+"length": "2528.26"
+},
+{
+"name": "012_Yosof_008.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "20632175",
+"length": "2554.1"
+},
+{
+"name": "013_Al_Ra3d_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "23697679",
+"length": "2937.34"
+},
+{
+"name": "013_Al_Ra3d_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "30618127",
+"length": "3802.39"
+},
+{
+"name": "013_Al_Ra3d_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "23036047",
+"length": "2854.63"
+},
+{
+"name": "013_Al_Ra3d_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "24491215",
+"length": "3036.53"
+},
+{
+"name": "013_Al_Ra3d_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "23995855",
+"length": "2974.61"
+},
+{
+"name": "013_Al_Ra3d_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "21905743",
+"length": "2713.34"
+},
+{
+"name": "013_Al_Ra3d_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "22024975",
+"length": "2728.25"
+},
+{
+"name": "014_Ibrajim_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12836077",
+"length": "3159.41"
+},
+{
+"name": "014_Ibrajim_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11491294",
+"length": "2823.22"
+},
+{
+"name": "014_Ibrajim_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11866412",
+"length": "2917"
+},
+{
+"name": "014_Ibrajim_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12936492",
+"length": "3184.52"
+},
+{
+"name": "014_Ibrajim_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10451202",
+"length": "2563.19"
+},
+{
+"name": "015_Al_Hejr_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7855925",
+"length": "1914.25"
+},
+{
+"name": "015_Al_Hejr_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12801218",
+"length": "3150.58"
+},
+{
+"name": "015_Al_Hejr_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11375875",
+"length": "2794.24"
+},
+{
+"name": "015_Al_Hejr_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12983240",
+"length": "3196.08"
+},
+{
+"name": "015_Al_Hejr_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11158534",
+"length": "2739.91"
+},
+{
+"name": "016_Al_Nahl_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11280224",
+"length": "2770.45"
+},
+{
+"name": "016_Al_Nahl_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10364476",
+"length": "2541.51"
+},
+{
+"name": "016_Al_Nahl_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14846879",
+"length": "3662.11"
+},
+{
+"name": "016_Al_Nahl_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13123999",
+"length": "3231.39"
+},
+{
+"name": "016_Al_Nahl_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "16100623",
+"length": "3975.55"
+},
+{
+"name": "016_Al_Nahl_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8929279",
+"length": "2182.71"
+},
+{
+"name": "016_Al_Nahl_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "26673095",
+"length": "2647.47"
+},
+{
+"name": "016_Al_Nahl_008.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28430091",
+"length": "2823.17"
+},
+{
+"name": "016_Al_Nahl_009.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "26467250",
+"length": "2626.89"
+},
+{
+"name": "016_Al_Nahl_010.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "24800755",
+"length": "2460.19"
+},
+{
+"name": "017_01_Al_Esraa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10946307",
+"length": "2686.88"
+},
+{
+"name": "017_02_Al_Esraa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12175629",
+"length": "2994.21"
+},
+{
+"name": "017_03_Al_Esraa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12652103",
+"length": "3113.33"
+},
+{
+"name": "017_04_Al_Esraa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10158245",
+"length": "2489.86"
+},
+{
+"name": "017_05_Al_Esraa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10032648",
+"length": "2458.46"
+},
+{
+"name": "017_06_Al_Esraa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10734820",
+"length": "2634"
+},
+{
+"name": "017_07_Al_Esraa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10285931",
+"length": "2521.78"
+},
+{
+"name": "017_08_Al_Esraa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11180782",
+"length": "2745.5"
+},
+{
+"name": "017_09_Al_Esraa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12532462",
+"length": "3083.42"
+},
+{
+"name": "017_10_Al_Esraa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10122405",
+"length": "2480.9"
+},
+{
+"name": "017_11_Al_Esraa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12466633",
+"length": "3066.96"
+},
+{
+"name": "018_Al_Kahf_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7531903",
+"length": "1833.37"
+},
+{
+"name": "018_Al_Kahf_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9784863",
+"length": "2396.48"
+},
+{
+"name": "018_Al_Kahf_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11116717",
+"length": "2729.45"
+},
+{
+"name": "018_Al_Kahf_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8418459",
+"length": "2054.88"
+},
+{
+"name": "018_Al_Kahf_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10985965",
+"length": "2696.76"
+},
+{
+"name": "018_Al_Kahf_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9573995",
+"length": "2343.76"
+},
+{
+"name": "018_Al_Kahf_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11365369",
+"length": "2791.6"
+},
+{
+"name": "018_Al_Kahf_008.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10517956",
+"length": "2579.75"
+},
+{
+"name": "018_Al_Kahf_009.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10996731",
+"length": "2699.44"
+},
+{
+"name": "018_Al_Kahf_010.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11674556",
+"length": "2868.9"
+},
+{
+"name": "018_Al_Kahf_011.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10878239",
+"length": "2669.82"
+},
+{
+"name": "018_Al_Kahf_012.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12765741",
+"length": "3141.69"
+},
+{
+"name": "019_Mariam_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7656117",
+"length": "1864.3"
+},
+{
+"name": "019_Mariam_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10892229",
+"length": "2673.32"
+},
+{
+"name": "019_Mariam_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17023463",
+"length": "4206.13"
+},
+{
+"name": "019_Mariam_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11154741",
+"length": "2738.95"
+},
+{
+"name": "019_Mariam_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11355331",
+"length": "2789.1"
+},
+{
+"name": "019_Mariam_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14264864",
+"length": "3516.47"
+},
+{
+"name": "019_Mariam_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6380588",
+"length": "1545.4"
+},
+{
+"name": "020_Taha_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5061618",
+"length": "1215.66"
+},
+{
+"name": "020_Taha_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6085618",
+"length": "1471.66"
+},
+{
+"name": "020_Taha_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7669265",
+"length": "1867.57"
+},
+{
+"name": "020_Taha_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10094682",
+"length": "2473.93"
+},
+{
+"name": "020_Taha_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9970235",
+"length": "2442.81"
+},
+{
+"name": "020_Taha_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9959263",
+"length": "2440.07"
+},
+{
+"name": "020_Taha_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5938392",
+"length": "1434.85"
+},
+{
+"name": "021_Al_Anbiaa_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11315696",
+"length": "2779.36"
+},
+{
+"name": "021_Al_Anbiaa_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10433593",
+"length": "2558.83"
+},
+{
+"name": "021_Al_Anbiaa_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7907683",
+"length": "1976.92"
+},
+{
+"name": "021_Al_Anbiaa_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12446720",
+"length": "3111.68"
+},
+{
+"name": "021_Al_Anbiaa_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13176790",
+"length": "3294.2"
+},
+{
+"name": "021_Al_Anbiaa_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11503282",
+"length": "2875.82"
+},
+{
+"name": "021_Al_Anbiaa_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11085113",
+"length": "2771.28"
+},
+{
+"name": "022_Al_Haj_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10557231",
+"length": "2639.31"
+},
+{
+"name": "022_Al_Haj_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9593313",
+"length": "2398.33"
+},
+{
+"name": "022_Al_Haj_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10166230",
+"length": "2541.56"
+},
+{
+"name": "022_Al_Haj_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10785123",
+"length": "2696.28"
+},
+{
+"name": "022_Al_Haj_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14307579",
+"length": "3576.89"
+},
+{
+"name": "022_Al_Haj_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5917048",
+"length": "1479.26"
+},
+{
+"name": "022_Al_Haj_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12337215",
+"length": "3084.3"
+},
+{
+"name": "023_Al_Mo2menoon_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11336411",
+"length": "2834.1"
+},
+{
+"name": "023_Al_Mo2menoon_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5601698",
+"length": "1400.42"
+},
+{
+"name": "023_Al_Mo2menoon_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9834893",
+"length": "2458.72"
+},
+{
+"name": "023_Al_Mo2menoon_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9491331",
+"length": "2372.83"
+},
+{
+"name": "023_Al_Mo2menoon_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9300219",
+"length": "2325.05"
+},
+{
+"name": "023_Al_Mo2menoon_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9947847",
+"length": "2486.96"
+},
+{
+"name": "023_Al_Mo2menoon_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6560078",
+"length": "1640.02"
+},
+{
+"name": "024_Al_Noor_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10157140",
+"length": "2539.29"
+},
+{
+"name": "024_Al_Noor_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10171455",
+"length": "2542.86"
+},
+{
+"name": "024_Al_Noor_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14876526",
+"length": "3719.13"
+},
+{
+"name": "024_Al_Noor_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11921345",
+"length": "2980.34"
+},
+{
+"name": "024_Al_Noor_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "15544947",
+"length": "3886.24"
+},
+{
+"name": "024_Al_Noor_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "15411200",
+"length": "3852.8"
+},
+{
+"name": "024_Al_Noor_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8803788",
+"length": "2200.95"
+},
+{
+"name": "024_Al_Noor_008.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "16340323",
+"length": "4085.08"
+},
+{
+"name": "024_Al_Noor_009.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "16030824",
+"length": "4007.71"
+},
+{
+"name": "025_Al_Forqan_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10963801",
+"length": "2740.95"
+},
+{
+"name": "025_Al_Forqan_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8409234",
+"length": "2102.31"
+},
+{
+"name": "025_Al_Forqan_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8918204",
+"length": "2229.55"
+},
+{
+"name": "025_Al_Forqan_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9415471",
+"length": "2353.87"
+},
+{
+"name": "025_Al_Forqan_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8747154",
+"length": "2186.79"
+},
+{
+"name": "025_Al_Forqan_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7785430",
+"length": "1946.36"
+},
+{
+"name": "026_Al_Sho3araa_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11403912",
+"length": "2850.98"
+},
+{
+"name": "026_Al_Sho3araa_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10236761",
+"length": "2559.19"
+},
+{
+"name": "026_Al_Sho3araa_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9857985",
+"length": "2464.5"
+},
+{
+"name": "026_Al_Sho3araa_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9640124",
+"length": "2410.03"
+},
+{
+"name": "026_Al_Sho3araa_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9366465",
+"length": "2341.62"
+},
+{
+"name": "026_Al_Sho3araa_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14993032",
+"length": "3748.26"
+},
+{
+"name": "027_Al_Naml_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9845551",
+"length": "2461.39"
+},
+{
+"name": "027_Al_Naml_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9729776",
+"length": "2432.44"
+},
+{
+"name": "027_Al_Naml_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8197851",
+"length": "2049.46"
+},
+{
+"name": "027_Al_Naml_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8044042",
+"length": "2011.01"
+},
+{
+"name": "027_Al_Naml_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7743425",
+"length": "1935.86"
+},
+{
+"name": "027_Al_Naml_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9289038",
+"length": "2322.26"
+},
+{
+"name": "027_Al_Naml_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8379141",
+"length": "2094.79"
+},
+{
+"name": "028_Al_Qasas_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10880731",
+"length": "2720.18"
+},
+{
+"name": "028_Al_Qasas_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11409136",
+"length": "2852.28"
+},
+{
+"name": "028_Al_Qasas_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10651899",
+"length": "2662.97"
+},
+{
+"name": "028_Al_Qasas_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11040810",
+"length": "2760.2"
+},
+{
+"name": "028_Al_Qasas_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10561829",
+"length": "2640.46"
+},
+{
+"name": "028_Al_Qasas_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10282841",
+"length": "2570.71"
+},
+{
+"name": "028_Al_Qasas_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10162364",
+"length": "2540.59"
+},
+{
+"name": "028_Al_Qasas_008.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9125407",
+"length": "2281.35"
+},
+{
+"name": "028_Al_Qasas_009.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9064176",
+"length": "2266.04"
+},
+{
+"name": "028_Al_Qasas_010.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10964010",
+"length": "2741"
+},
+{
+"name": "029_Al_3anaboot_001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9631033",
+"length": "2407.76"
+},
+{
+"name": "029_Al_3anaboot_002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9647334",
+"length": "2411.83"
+},
+{
+"name": "029_Al_3anaboot_003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12988291",
+"length": "3247.07"
+},
+{
+"name": "029_Al_3anaboot_004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8045610",
+"length": "2011.4"
+},
+{
+"name": "029_Al_3anaboot_005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9531350",
+"length": "2382.84"
+},
+{
+"name": "029_Al_3anaboot_006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10904033",
+"length": "2726.01"
+},
+{
+"name": "029_Al_3anaboot_007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8991242",
+"length": "2247.81"
+},
+{
+"name": "031_01_Luqman.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "16325799",
+"length": "4081.45"
+},
+{
+"name": "031_02_Luqman.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13500604",
+"length": "3375.15"
+},
+{
+"name": "031_03_Luqman.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13426103",
+"length": "3356.53"
+},
+{
+"name": "031_04_Luqman.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9611494",
+"length": "2402.87"
+},
+{
+"name": "032_01_AL_Sagda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11258984",
+"length": "2814.75"
+},
+{
+"name": "032_02_AL_Sagda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13215765",
+"length": "3303.94"
+},
+{
+"name": "032_03_AL_Sagda.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10912705",
+"length": "2728.18"
+},
+{
+"name": "033_01_Al_Ahzab.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11490429",
+"length": "2872.61"
+},
+{
+"name": "033_02_Al_Ahzab.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9676173",
+"length": "2419.04"
+},
+{
+"name": "033_03_Al_Ahzab.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8790727",
+"length": "2197.68"
+},
+{
+"name": "033_04_Al_Ahzab.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10567993",
+"length": "2642"
+},
+{
+"name": "033_05_Al_Ahzab.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12294792",
+"length": "3073.7"
+},
+{
+"name": "033_06_Al_Ahzab.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11984248",
+"length": "2996.06"
+},
+{
+"name": "033_07_Al_Ahzab.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10459847",
+"length": "2614.96"
+},
+{
+"name": "033_08_Al_Ahzab.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13070002",
+"length": "3267.5"
+},
+{
+"name": "033_09_Al_Ahzab.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11339964",
+"length": "2834.99"
+},
+{
+"name": "033_10_Al_Ahzab.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11660225",
+"length": "2915.06"
+},
+{
+"name": "034_01_Saba.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11435990",
+"length": "2859"
+},
+{
+"name": "034_02_Saba.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9377959",
+"length": "2344.49"
+},
+{
+"name": "034_03_Saba.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10318472",
+"length": "2579.62"
+},
+{
+"name": "034_04_Saba.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8672444",
+"length": "2168.11"
+},
+{
+"name": "035_01_Fater.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11751027",
+"length": "2937.76"
+},
+{
+"name": "035_02_Fater.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11256163",
+"length": "2814.04"
+},
+{
+"name": "035_03_Fater.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10984281",
+"length": "2746.07"
+},
+{
+"name": "035_04_Fater.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9855373",
+"length": "2463.84"
+},
+{
+"name": "035_05_Fater.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11122416",
+"length": "2780.6"
+},
+{
+"name": "036_001_Ya_Seen.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11789479",
+"length": "2947.37"
+},
+{
+"name": "036_002_Ya_Seen.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7643011",
+"length": "1910.75"
+},
+{
+"name": "036_003_Ya_Seen.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9560921",
+"length": "2390.23"
+},
+{
+"name": "036_004_Ya_Seen.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10379807",
+"length": "2594.95"
+},
+{
+"name": "036_005_Ya_Seen.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10890658",
+"length": "2722.66"
+},
+{
+"name": "037_01_Al_Safat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9373153",
+"length": "2343.29"
+},
+{
+"name": "037_02_Al_Safat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10342504",
+"length": "2585.63"
+},
+{
+"name": "037_03_Al_Safat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11006015",
+"length": "2751.5"
+},
+{
+"name": "037_04_Al_Safat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9611912",
+"length": "2402.98"
+},
+{
+"name": "037_05_Al_Safat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7741127",
+"length": "1935.28"
+},
+{
+"name": "038_01_Saad.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11820304",
+"length": "2955.08"
+},
+{
+"name": "038_02_Saad.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10104163",
+"length": "2526.04"
+},
+{
+"name": "038_03_Saad.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12964885",
+"length": "3241.22"
+},
+{
+"name": "038_04_Saad.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11175288",
+"length": "2793.82"
+},
+{
+"name": "038_05_Saad.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7842273",
+"length": "1960.57"
+},
+{
+"name": "038_06_Saad.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9814309",
+"length": "2453.58"
+},
+{
+"name": "039_01_Al_Zomar.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13592346",
+"length": "3398.09"
+},
+{
+"name": "039_02_Al_Zomar.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11886237",
+"length": "2971.56"
+},
+{
+"name": "039_03_Al_Zomar.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "16265300",
+"length": "4066.33"
+},
+{
+"name": "039_04_Al_Zomar.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12083513",
+"length": "3020.88"
+},
+{
+"name": "039_05_Al_Zomar.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7955540",
+"length": "1988.89"
+},
+{
+"name": "039_06_Al_Zomar.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13331435",
+"length": "3332.86"
+},
+{
+"name": "039_07_Al_Zomar.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10998909",
+"length": "2749.73"
+},
+{
+"name": "039_08_Al_Zomar.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8671817",
+"length": "2167.95"
+},
+{
+"name": "040_01_Gafer.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11629296",
+"length": "2907.32"
+},
+{
+"name": "040_02_Gafer.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11241953",
+"length": "2810.49"
+},
+{
+"name": "040_03_Gafer.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12594991",
+"length": "3148.75"
+},
+{
+"name": "040_04_Gafer.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11070067",
+"length": "2767.52"
+},
+{
+"name": "040_05_Gafer.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11908284",
+"length": "2977.07"
+},
+{
+"name": "040_06_Gafer.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12427285",
+"length": "3106.82"
+},
+{
+"name": "040_07_Gafer.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12984320",
+"length": "3246.08"
+},
+{
+"name": "041_01_Fosselat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "1038",
+"length": "0.26"
+},
+{
+"name": "041_01_Fosselat_0.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "1038",
+"length": "0.26"
+},
+{
+"name": "041_01_Fosselat_0_0.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "1038",
+"length": "0.26"
+},
+{
+"name": "041_01_Fosselat_0_0_0.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "1038",
+"length": "0.26"
+},
+{
+"name": "042_01_Al_Shora.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "16473256",
+"length": "2034.31"
+},
+{
+"name": "042_02_Al_Shora.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18227752",
+"length": "2253.62"
+},
+{
+"name": "042_03_Al_Shora.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "16173352",
+"length": "1996.82"
+},
+{
+"name": "042_04_Al_Shora.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14591656",
+"length": "1799.11"
+},
+{
+"name": "042_05_Al_Shora.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "198350",
+"length": "0"
+},
+{
+"name": "042_06_Al_Shora.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12350248",
+"length": "1518.94"
+},
+{
+"name": "042_07_Al_Shora.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9847912",
+"length": "1206.14"
+},
+{
+"name": "043_01_Al_Zokhrof.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "19316553",
+"length": "2389.7"
+},
+{
+"name": "043_02_Al_Zokhrof.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18703305",
+"length": "2313.05"
+},
+{
+"name": "043_03_Al_Zokhrof.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9565833",
+"length": "1170.86"
+},
+{
+"name": "043_04_Al_Zokhrof.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18588489",
+"length": "2298.7"
+},
+{
+"name": "043_05_Al_Zokhrof.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14007753",
+"length": "1726.1"
+},
+{
+"name": "043_06_Al_Zokhrof.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11118729",
+"length": "1364.98"
+},
+{
+"name": "043_07_Al_Zokhrof.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11348169",
+"length": "1393.66"
+},
+{
+"name": "043_08_Al_Zokhrof.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12943305",
+"length": "1593.05"
+},
+{
+"name": "044_01_Al_Dokhan.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "19031848",
+"length": "2354.14"
+},
+{
+"name": "044_02_Al_Dokhan.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14878120",
+"length": "1834.92"
+},
+{
+"name": "044_03_Al_Dokhan.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12582760",
+"length": "1548"
+},
+{
+"name": "045_01_Al_Jathea.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13759036",
+"length": "1695.02"
+},
+{
+"name": "045_02_Al_Jathea.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17797096",
+"length": "2199.79"
+},
+{
+"name": "045_03_Al_Jathea.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "15315196",
+"length": "1889.54"
+},
+{
+"name": "045_04_Al_Jathea.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10634728",
+"length": "1304.5"
+},
+{
+"name": "046_1_Al_Ahqaf.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "32223868",
+"length": "4003.13"
+},
+{
+"name": "046_2_Al_Ahqaf.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8723752",
+"length": "1065.62"
+},
+{
+"name": "046_3_Al_Ahqaf.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "19144636",
+"length": "2368.22"
+},
+{
+"name": "046_4_Al_Ahqaf.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "16299196",
+"length": "2012.54"
+},
+{
+"name": "046_5_Al_Ahqaf.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14143996",
+"length": "1743.14"
+},
+{
+"name": "047_1_mohammed.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11728137",
+"length": "1441.15"
+},
+{
+"name": "047_2_mohammed.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25046217",
+"length": "3105.91"
+},
+{
+"name": "047_3_mohammed.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17197259",
+"length": "2124.79"
+},
+{
+"name": "047_4_mohammed.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "15594251",
+"length": "1924.42"
+},
+{
+"name": "047_5_mohammed.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11051913",
+"length": "1356.62"
+},
+{
+"name": "048_1_Al_Fath.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "19041256",
+"length": "2355.31"
+},
+{
+"name": "048_2_Al_Fath.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "15822376",
+"length": "1952.95"
+},
+{
+"name": "048_3_Al_Fath.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25655080",
+"length": "3182.04"
+},
+{
+"name": "048_4_Al_Fath.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "19610536",
+"length": "2426.47"
+},
+{
+"name": "048_5_Al_Fath.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "16045096",
+"length": "1980.79"
+},
+{
+"name": "049_1_Al_Hojorat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17454537",
+"length": "2156.95"
+},
+{
+"name": "049_2_Al_Hojorat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "20047497",
+"length": "2481.07"
+},
+{
+"name": "049_3_Al_Hojorat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10202891",
+"length": "1250.5"
+},
+{
+"name": "049_4_Al_Hojorat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "21552587",
+"length": "2669.21"
+},
+{
+"name": "049_5_Al_Hojorat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18883977",
+"length": "2335.63"
+},
+{
+"name": "050_1_Qaaf.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "16537384",
+"length": "2042.33"
+},
+{
+"name": "050_2_Qaaf.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13588456",
+"length": "1673.71"
+},
+{
+"name": "050_3_Qaaf.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "16006312",
+"length": "1975.94"
+},
+{
+"name": "050_4_Qaaf.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13034536",
+"length": "1604.47"
+},
+{
+"name": "051_1_Al_Thareat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18941224",
+"length": "2342.81"
+},
+{
+"name": "051_2_Al_Thareat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "14427304",
+"length": "1778.57"
+},
+{
+"name": "051_3_Al_Thareat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "23346856",
+"length": "2893.51"
+},
+{
+"name": "051_4_Al_Thareat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "16737256",
+"length": "2067.31"
+},
+{
+"name": "052_1_Al_Toor.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12742780",
+"length": "1567.99"
+},
+{
+"name": "052_2_Al_Toor.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11046460",
+"length": "1355.95"
+},
+{
+"name": "052_3_Al_Toor.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "19135036",
+"length": "2367.02"
+},
+{
+"name": "053_1_Al_Najm.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18664168",
+"length": "2308.18"
+},
+{
+"name": "053_2_Al_Najm.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "22562920",
+"length": "2795.52"
+},
+{
+"name": "053_3_Al_Najm.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17957416",
+"length": "2219.83"
+},
+{
+"name": "054_1_Al_Qamar.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13984552",
+"length": "1723.22"
+},
+{
+"name": "054_2_Al_Qamar.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "15289960",
+"length": "1886.4"
+},
+{
+"name": "054_3_Al_Qamar.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5561512",
+"length": "670.34"
+},
+{
+"name": "055_1_Al_Rahmaan.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8167996",
+"length": "996.14"
+},
+{
+"name": "055_2_Al_Rahmaan.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11239612",
+"length": "1380.1"
+},
+{
+"name": "055_3_Al_Rahmaan.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17065468",
+"length": "2108.33"
+},
+{
+"name": "056_1_Al_Waqi3a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17680060",
+"length": "2185.15"
+},
+{
+"name": "056_2_Al_Waqi3a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17691196",
+"length": "2186.54"
+},
+{
+"name": "056_3_Al_Waqi3a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "20898556",
+"length": "2587.46"
+},
+{
+"name": "057_1_Al_Hadeed.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "19916860",
+"length": "2464.75"
+},
+{
+"name": "057_2_Al_Hadeed.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13126972",
+"length": "1616.02"
+},
+{
+"name": "057_3_Al_Hadeed.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25582588",
+"length": "3172.97"
+},
+{
+"name": "057_4_Al_Hadeed.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "20085244",
+"length": "2485.8"
+},
+{
+"name": "058_1_Al_Mojadela.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "19410364",
+"length": "2401.44"
+},
+{
+"name": "058_2_Al_Mojadela.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11931580",
+"length": "1466.59"
+},
+{
+"name": "058_3_Al_Mojadela.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17418556",
+"length": "2152.46"
+},
+{
+"name": "058_4_Al_Mojadela.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "15718972",
+"length": "1940.02"
+},
+{
+"name": "059_1_Al_Hashr.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18782824",
+"length": "2323.01"
+},
+{
+"name": "059_2_Al_Hashr.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "19475752",
+"length": "2409.62"
+},
+{
+"name": "059_3_Al_Hashr.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17958076",
+"length": "2219.9"
+},
+{
+"name": "060_1_Al_Momta7ana.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "30966076",
+"length": "3845.9"
+},
+{
+"name": "060_2_Al_Momta7ana.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27797308",
+"length": "3449.81"
+},
+{
+"name": "062_1_Al_Jomo3a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "21943996",
+"length": "2718.14"
+},
+{
+"name": "062_2_Al_Jomo3a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9300604",
+"length": "1137.72"
+},
+{
+"name": "063_Al_Monafeqoon.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25130728",
+"length": "3116.5"
+},
+{
+"name": "064_1_Al_Tagabon.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "19062460",
+"length": "2357.95"
+},
+{
+"name": "064_2_Al_Tagabon.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28600148",
+"length": "3550.18"
+},
+{
+"name": "065_1_Al_Talaq.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25641340",
+"length": "3180.31"
+},
+{
+"name": "065_2_Al_Talaq.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12549628",
+"length": "1543.85"
+},
+{
+"name": "066_Al_Tahreem.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "33235900",
+"length": "4129.63"
+},
+{
+"name": "067_1_Al_Molk.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "19551868",
+"length": "2419.13"
+},
+{
+"name": "067_2_Al_Molk.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "20980072",
+"length": "2597.66"
+},
+{
+"name": "068_1_Al_Qalam.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25661032",
+"length": "3182.78"
+},
+{
+"name": "068_2_Al_Qalam.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "21104296",
+"length": "2613.19"
+},
+{
+"name": "069_1_Al_Haqqa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "22837096",
+"length": "2829.79"
+},
+{
+"name": "069_2_Al_Haqqa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18750376",
+"length": "2318.95"
+},
+{
+"name": "070_1_Al_Ma3arej.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18529960",
+"length": "2291.4"
+},
+{
+"name": "070_2_Al_Ma3arej.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "15101608",
+"length": "1862.86"
+},
+{
+"name": "071_Nooh.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "21787048",
+"length": "2698.54"
+},
+{
+"name": "072_1_Al_Jenn.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "16875688",
+"length": "2084.62"
+},
+{
+"name": "072_2_Al_Jenn.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18536380",
+"length": "2292.19"
+},
+{
+"name": "073_1_Al_Mozzamel.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17723944",
+"length": "2190.65"
+},
+{
+"name": "073_2_Al_Mozzamel.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "41291368",
+"length": "5136.58"
+},
+{
+"name": "074_1_Al_Moddather.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11988136",
+"length": "1473.67"
+},
+{
+"name": "074_2_Al_Moddather.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12658984",
+"length": "1557.53"
+},
+{
+"name": "074_3_Al_Moddather.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10552744",
+"length": "1294.25"
+},
+{
+"name": "074_4_Al_Moddather.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11826088",
+"length": "1453.42"
+},
+{
+"name": "075_1_Al_Qiama.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18785128",
+"length": "2323.3"
+},
+{
+"name": "075_2_Al_Qiama.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "9987688",
+"length": "1223.62"
+},
+{
+"name": "076_1_Al_Ensaan.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8892136",
+"length": "1086.67"
+},
+{
+"name": "076_2_Al_Ensaan.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17723752",
+"length": "2190.62"
+},
+{
+"name": "076_3_Al_Ensaan.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "19494376",
+"length": "2411.95"
+},
+{
+"name": "077_Al_Morsalat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "30278332",
+"length": "3759.94"
+},
+{
+"name": "078_1_Al_Morsalat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "21337585",
+"length": "2642.41"
+},
+{
+"name": "078_2_Al_Morsalat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "11705507",
+"length": "1438.4"
+},
+{
+"name": "079_1_Al_Naze3at.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18791796",
+"length": "2324.18"
+},
+{
+"name": "079_2_Al_Naze3at.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "21144697",
+"length": "2618.3"
+},
+{
+"name": "080_Abasa.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "24332263",
+"length": "3016.74"
+},
+{
+"name": "081_Al_Takweer.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "30398940",
+"length": "3775.08"
+},
+{
+"name": "082_Al_Enfetaar.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13038797",
+"length": "1605.06"
+},
+{
+"name": "083_1_Al_Motaffifeen.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "17686294",
+"length": "2185.99"
+},
+{
+"name": "083_2_Al_Motaffifeen.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25408299",
+"length": "3151.25"
+},
+{
+"name": "083_3_Al_Motaffifeen.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27792338",
+"length": "3449.25"
+},
+{
+"name": "084_Al_Enshiqaq.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "16998124",
+"length": "2099.97"
+},
+{
+"name": "085_1_Al_Borooj.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25831064",
+"length": "3204.09"
+},
+{
+"name": "085_2_Al_Borooj.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "12979028",
+"length": "1597.59"
+},
+{
+"name": "086_Al_Tareq.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8768299",
+"length": "1071.25"
+},
+{
+"name": "087_Al_A3la.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "23577010",
+"length": "2922.33"
+},
+{
+"name": "088_Al_Gashia.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18222326",
+"length": "2253"
+},
+{
+"name": "089_Al_Fager.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27361004",
+"length": "3395.33"
+},
+{
+"name": "090_Al_Balad.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "35327724",
+"length": "4391.17"
+},
+{
+"name": "091_Al_Shams.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25363995",
+"length": "3145.71"
+},
+{
+"name": "092_Al_Lail.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "30739159",
+"length": "3817.6"
+},
+{
+"name": "093_Al_Duha.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28489703",
+"length": "3536.42"
+},
+{
+"name": "094_Al_Sharh.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "15104978",
+"length": "1863.33"
+},
+{
+"name": "095_Al_Tin.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "6795531",
+"length": "824.65"
+},
+{
+"name": "096_Al_3alaq.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "20217037",
+"length": "2502.34"
+},
+{
+"name": "097_Al_Qadr.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10599378",
+"length": "1300.13"
+},
+{
+"name": "098_Al_Baiena.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8482008",
+"length": "1035.41"
+},
+{
+"name": "099_Al_Zalzala.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "21057624",
+"length": "2607.36"
+},
+{
+"name": "100_Al_3adeat.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "8906016",
+"length": "1088.46"
+},
+{
+"name": "101_Al_Qare3a.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4734366",
+"length": "567"
+},
+{
+"name": "102_Al_Takathor.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "5838360",
+"length": "704.95"
+},
+{
+"name": "103_Al_3asr.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "32757693",
+"length": "4069.92"
+},
+{
+"name": "104_Al_Homaza.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28703698",
+"length": "3563.17"
+},
+{
+"name": "105_Al_Feel.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "23671051",
+"length": "2934.09"
+},
+{
+"name": "106_Quraish.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28293053",
+"length": "3511.84"
+},
+{
+"name": "107_Al_Ma3oon.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "26142444",
+"length": "3243.01"
+},
+{
+"name": "108_Al_KAuthar.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27416384",
+"length": "3402.26"
+},
+{
+"name": "109_Al_Kaferoon.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27370199",
+"length": "3396.48"
+},
+{
+"name": "110_Al_Naser.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "31830241",
+"length": "3953.99"
+},
+{
+"name": "111_Al_Masad.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25842140",
+"length": "3205.48"
+},
+{
+"name": "112_Al_Ekhlas.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "21458166",
+"length": "2657.48"
+},
+{
+"name": "113_1_Al_Falaq.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28028276",
+"length": "3478.74"
+},
+{
+"name": "113_2_Al_Falaq.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "40675721",
+"length": "5059.67"
+},
+{
+"name": "114_1_Al_Nas.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "29868968",
+"length": "3708.83"
+},
+{
+"name": "114_2_Al_Nas.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "34257121",
+"length": "4257.35"
+},
+{
+"name": "114_3_Al_Nas.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "31124726",
+"length": "3865.8"
+},
+{
+"name": "114_4_Al_Nas.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "18834846",
+"length": "2329.56"
+},
+{
+"name": "30_01_Al_Room.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "13424744",
+"length": "3356.19"
+},
+{
+"name": "30_02_Al_Room.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7691494",
+"length": "1922.87"
+},
+{
+"name": "30_03_Al_Room.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "7608633",
+"length": "1902.16"
+},
+{
+"name": "30_04_Al_Room.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10934335",
+"length": "2733.58"
+},
+{
+"name": "30_05_Al_Room.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "4759301",
+"length": "1189.83"
+},
+{
+"name": "61_1_Al_Saf.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27571624",
+"length": "3421.61"
+},
+{
+"name": "61_2_Al_Saf.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "10243132",
+"length": "1255.54"
+}
+]
+}

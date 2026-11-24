@@ -9,6 +9,7 @@ tools/lessons_build.py copies it into each series as "fx"; the website (Web Audi
 (LoudnessEnhancer + Equalizer) apply it while playing.
 
 Usage: python3 tools/lessons_loudness.py            (measures 3 episodes per series with ffmpeg; ~5 min)
+       python3 tools/lessons_loudness.py --new      (measures only series not measured yet, keeps the rest)
        python3 tools/lessons_loudness.py --rules    (re-applies the rules to content/lessons/raw/loudness-raw.json)
 """
 import json
@@ -83,12 +84,19 @@ if __name__ == '__main__':
         rules(json.loads(RAW.read_text()))
         sys.exit()
     cat = json.loads(DIST.read_text())
+    listed = cat['series'] + cat.get('sharawi', [])
+    ids = {s['id'] for s in listed}
+    # Series no longer in the list are dropped from the measurements.
+    old = [x for x in json.loads(RAW.read_text()) if x['series'] in ids] if '--new' in sys.argv else []
+    done = {x['series'] for x in old}
     jobs = []
-    for s in cat['series'] + cat.get('sharawi', []):
+    for s in listed:
+        if s['id'] in done:
+            continue
         eps = s['episodes']
         for i in sorted({0, len(eps) // 2, len(eps) - 1}):
             jobs.append((s['id'], i + 1, eps[i]['u']))
     with ThreadPoolExecutor(6) as ex:
-        res = list(ex.map(measure, jobs))
+        res = old + list(ex.map(measure, jobs))
     RAW.write_text(json.dumps(res, indent=0))
     rules(res)

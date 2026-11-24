@@ -282,6 +282,14 @@
       "groups": [
         "saudi"
       ]
+    },
+    {
+      "id": "adawi",
+      "ar": "الشيخ مصطفى العدوي",
+      "en": "Sheikh Mustafa al-Adawi",
+      "groups": [
+        "egypt"
+      ]
     }
   ],
   "series": [
@@ -358,6 +366,31 @@
       ]
     },
     {
+      "id": "aqeedah-adawi",
+      "topic": "aqeedah",
+      "sheikh": "adawi",
+      "ar": "سلسلة العقيدة",
+      "en": "Creed series",
+      "items": [
+        "alaqida_mustafa_aladawy"
+      ]
+    },
+    {
+      "id": "tawhid-khuzaymah-adawi",
+      "topic": "aqeedah",
+      "sheikh": "adawi",
+      "ar": "شرح كتاب التوحيد لابن خزيمة",
+      "en": "Ibn Khuzaymah's Book of Tawhid",
+      "items": [
+        "ibn-khozaima_taweed"
+      ],
+      "titles": "title",
+      "strip": [
+        "\\s*-\\s*\\d{3}$",
+        "^\\d{3}\\s*-\\s*"
+      ]
+    },
+    {
       "id": "seerah-hassan",
       "topic": "seerah",
       "sheikh": "hassan",
@@ -398,6 +431,20 @@
       ]
     },
     {
+      "id": "seerah-adawi",
+      "topic": "seerah",
+      "sheikh": "adawi",
+      "ar": "السيرة النبوية",
+      "en": "The Prophet's life",
+      "items": [
+        "zizovolex_yahoo_007_201611"
+      ],
+      "titles": "title",
+      "strip": [
+        "صل[يى]+ الله عليه وسلم"
+      ]
+    },
+    {
       "id": "molakhas-saeed",
       "topic": "fiqh",
       "sheikh": "saeed",
@@ -429,6 +476,52 @@
       ],
       "titles": "title",
       "sort": "lex"
+    },
+    {
+      "id": "abushuja-adawi",
+      "topic": "fiqh",
+      "sheikh": "adawi",
+      "ar": "شرح متن أبي شجاع",
+      "en": "Explaining Matn Abi Shuja'",
+      "items": [
+        "mtn-abe-shojaa"
+      ],
+      "titles": "title",
+      "strip": [
+        "(لفضيلة\\s*)?(لل?شيخ|الشيخ)?\\s*مصط[فغ]ى\\s*(بن\\s*)?العدو[يى]?",
+        "تاريخ",
+        "\\d{1,2} \\d{1,2} \\d{4}",
+        "أبو شجاع \\(\\d+\\)",
+        "شرح متن ابي شجاع",
+        "\""
+      ]
+    },
+    {
+      "id": "bahth-fiqhi-adawi",
+      "topic": "fiqh",
+      "sheikh": "adawi",
+      "ar": "البحث الفقهي",
+      "en": "Fiqh studies",
+      "items": [
+        "islami-1474"
+      ],
+      "titles": "name",
+      "strip": [
+        "(لفضيلة\\s*)?(لل?شيخ|الشيخ)?\\s*مصطف[يى]\\s*(بن\\s*)?ال(عدو[يى]|عد|)(?=\\s|$)",
+        "^\\d+\\.",
+        "منوعات\\s*\\(?\\d+\\)?",
+        "سلسلة",
+        "قناة الحافظ",
+        "\\(?الحافظ\\)?( د\\d+)?",
+        "البحث الفقه[يى]\\s*\\(?\\d*\\)?",
+        "\\(\\d{6,8}\\)?",
+        "\\d{1,2}\\s*[-= ]\\s*\\d{1,2}\\s*[-= ]\\s*\\d{4}",
+        "^\\s*\\d+\\s",
+        "\\(\\d+\\)",
+        "\\d{0,2}\\s*=\\s*\\d{1,2}\\s*=\\s*\\d{4}",
+        "^\\s*\\d{4}\\s*$"
+      ],
+      "keep": "^(?!42\\.|66\\.)(0[1-9]|[1-5][0-9]|6[0-7])\\. "
     },
     {
       "id": "nawawi-uthaymeen",
@@ -592,6 +685,20 @@
       ]
     },
     {
+      "id": "rasail-adawi",
+      "topic": "hearts",
+      "sheikh": "adawi",
+      "ar": "رسائل إيمانية",
+      "en": "Messages of faith",
+      "items": [
+        "aa_211_20160824"
+      ],
+      "titles": "title",
+      "strip": [
+        "(لفضيلة\\s*)?(لل?شيخ|الشيخ)?\\s*مصط[فغ]ى\\s*(بن\\s*)?العدو[يى]?"
+      ]
+    },
+    {
       "id": "sahaba-masri",
       "topic": "stories",
       "sheikh": "masri",
@@ -692,6 +799,33 @@
       "items": [
         "Al_Waad_Al_Haq-Up-By-MusleM"
       ]
+    },
+    {
+      "id": "quran-sunna-adawi",
+      "topic": "quran",
+      "sheikh": "adawi",
+      "ar": "قرآن تفسره السنة",
+      "en": "The Quran explained by the Sunnah",
+      "items": [
+        "Quran-tafssiroh-sunna_Mustafa-Adawi-mp3"
+      ],
+      "titles": "name",
+      "strip": [
+        "(لفضيلة\\s*)?(لل?شيخ|الشيخ)?\\s*مصط[فغ]ى\\s*(بن\\s*)?العدو[يى]?",
+        "قرآن تفسره السن[هة]",
+        "الحلقة رقم \\(\\d+\\)"
+      ]
+    },
+    {
+      "id": "tafsir-adawi",
+      "topic": "quran",
+      "sheikh": "adawi",
+      "ar": "تفسير القرآن العظيم",
+      "en": "Tafsir of the Quran",
+      "items": [
+        "tafseer_mostafa"
+      ],
+      "titles": "surah"
     },
     {
       "id": "usra-tayeb",

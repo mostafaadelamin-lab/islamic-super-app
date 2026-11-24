@@ -99,6 +99,21 @@ void main() {
     await shot(tester, '07-app-lessons-seerah-sharawi');
   });
 
+  testWidgets('app: Sheikh Mustafa al-Adawi\'s series in «سلاسل الدروس»', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    await pumpApp(tester, size: const Size(440, 1500));
+    final data = read();
+    await pushScreen(tester, LessonsScreen(loader: () async => data));
+    await tester.enterText(find.byKey(const Key('lessonsSearch')), 'العدوي');
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('lessonsSeries.rasail-adawi')));
+    await tester.pumpAndSettle();
+    await shot(tester, '08-app-adawi');
+    await tester.tap(find.byKey(const Key('lessonsSeries.tafsir-adawi')));
+    await tester.pumpAndSettle();
+    await shot(tester, '09-app-adawi-tafsir');
+  });
+
   testWidgets('app: one series, lessons heard ✓, the player under the lesson playing', (tester) async {
     tester.view.devicePixelRatio = 1;
     final backend = FakeNarrationBackend(length: const Duration(minutes: 57, seconds: 12));

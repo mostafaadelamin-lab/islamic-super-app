@@ -84,27 +84,6 @@
 "sr": 22050
 },
 {
-"series": "usul-uthaymeen",
-"ep": 1,
-"lufs": -17.7,
-"hi": -34.800000000000004,
-"sr": 22050
-},
-{
-"series": "usul-uthaymeen",
-"ep": 2,
-"lufs": -16.5,
-"hi": -34.2,
-"sr": 22050
-},
-{
-"series": "usul-uthaymeen",
-"ep": 3,
-"lufs": -19.7,
-"hi": -28.300000000000004,
-"sr": 22050
-},
-{
 "series": "usul-qasim",
 "ep": 1,
 "lufs": -18.8,
@@ -1237,5 +1216,173 @@
 "lufs": -16.1,
 "hi": -20.1,
 "sr": 32000
+},
+{
+"series": "aqeedah-adawi",
+"ep": 1,
+"lufs": -20.3,
+"hi": -21.5,
+"sr": 44100
+},
+{
+"series": "aqeedah-adawi",
+"ep": 16,
+"lufs": -15.5,
+"hi": -20.1,
+"sr": 44100
+},
+{
+"series": "aqeedah-adawi",
+"ep": 30,
+"lufs": -15.2,
+"hi": -18.8,
+"sr": 44100
+},
+{
+"series": "tawhid-khuzaymah-adawi",
+"ep": 1,
+"lufs": -14.7,
+"hi": -25.1,
+"sr": 22050
+},
+{
+"series": "tawhid-khuzaymah-adawi",
+"ep": 19,
+"lufs": -12.8,
+"hi": -22.099999999999998,
+"sr": 22050
+},
+{
+"series": "tawhid-khuzaymah-adawi",
+"ep": 37,
+"lufs": -16.3,
+"hi": -19.6,
+"sr": 22050
+},
+{
+"series": "seerah-adawi",
+"ep": 1,
+"lufs": -15.9,
+"hi": -21.900000000000002,
+"sr": 48000
+},
+{
+"series": "seerah-adawi",
+"ep": 14,
+"lufs": -16.8,
+"hi": -21.9,
+"sr": 48000
+},
+{
+"series": "seerah-adawi",
+"ep": 26,
+"lufs": -16.5,
+"hi": -19.3,
+"sr": 48000
+},
+{
+"series": "abushuja-adawi",
+"ep": 1,
+"lufs": -16.9,
+"hi": -18.799999999999997,
+"sr": 22050
+},
+{
+"series": "abushuja-adawi",
+"ep": 83,
+"lufs": -6.6,
+"hi": -20.6,
+"sr": 22050
+},
+{
+"series": "abushuja-adawi",
+"ep": 165,
+"lufs": -17.5,
+"hi": -24.5,
+"sr": 22050
+},
+{
+"series": "bahth-fiqhi-adawi",
+"ep": 1,
+"lufs": -20.5,
+"hi": -26.800000000000004,
+"sr": 44100
+},
+{
+"series": "bahth-fiqhi-adawi",
+"ep": 33,
+"lufs": -14.5,
+"hi": -25.1,
+"sr": 44100
+},
+{
+"series": "bahth-fiqhi-adawi",
+"ep": 65,
+"lufs": -15.5,
+"hi": -21.5,
+"sr": 44100
+},
+{
+"series": "rasail-adawi",
+"ep": 1,
+"lufs": -15.7,
+"hi": -27.1,
+"sr": 44100
+},
+{
+"series": "rasail-adawi",
+"ep": 8,
+"lufs": -16.1,
+"hi": -22.7,
+"sr": 44100
+},
+{
+"series": "rasail-adawi",
+"ep": 15,
+"lufs": -24.1,
+"hi": -19.900000000000002,
+"sr": 44100
+},
+{
+"series": "quran-sunna-adawi",
+"ep": 1,
+"lufs": -21.7,
+"hi": -26.999999999999996,
+"sr": 48000
+},
+{
+"series": "quran-sunna-adawi",
+"ep": 15,
+"lufs": -22.0,
+"hi": -24.599999999999998,
+"sr": 48000
+},
+{
+"series": "quran-sunna-adawi",
+"ep": 29,
+"lufs": -20.9,
+"hi": -27.400000000000002,
+"sr": 48000
+},
+{
+"series": "tafsir-adawi",
+"ep": 1,
+"lufs": -8.5,
+"hi": -18.700000000000003,
+"sr": 22050
+},
+{
+"series": "tafsir-adawi",
+"ep": 286,
+"lufs": -12.1,
+"hi": -22.999999999999996,
+"sr": 44100
+},
+{
+"series": "tafsir-adawi",
+"ep": 571,
+"lufs": -23.9,
+"hi": -21.9,
+"sr": 22050
 }
 ]
