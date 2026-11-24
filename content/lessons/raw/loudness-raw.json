@@ -1384,5 +1384,194 @@
 "lufs": -23.9,
 "hi": -21.9,
 "sr": 22050
+},
+{
+"series": "seerah-makki-ayman",
+"ep": 1,
+"lufs": -14.3,
+"hi": -11.600000000000001,
+"sr": 22050
+},
+{
+"series": "seerah-makki-ayman",
+"ep": 4,
+"lufs": -17.2,
+"hi": -9.8,
+"sr": 22050
+},
+{
+"series": "seerah-makki-ayman",
+"ep": 6,
+"lufs": -16.8,
+"hi": -13.800000000000004,
+"sr": 22050
+},
+{
+"series": "khulafa-ayman",
+"ep": 1,
+"lufs": -15.7,
+"hi": -23.9,
+"sr": 22050
+},
+{
+"series": "khulafa-ayman",
+"ep": 3,
+"lufs": -11.9,
+"hi": -21.799999999999997,
+"sr": 22050
+},
+{
+"series": "khulafa-ayman",
+"ep": 5,
+"lufs": -16.7,
+"hi": -20.9,
+"sr": 22050
+},
+{
+"series": "judhur-ayman",
+"ep": 1,
+"lufs": -7.9,
+"hi": -20.4,
+"sr": 22050
+},
+{
+"series": "judhur-ayman",
+"ep": 3,
+"lufs": -9.8,
+"hi": -16.1,
+"sr": 22050
+},
+{
+"series": "judhur-ayman",
+"ep": 4,
+"lufs": -8.1,
+"hi": -22.0,
+"sr": 22050
+},
+{
+"series": "bayt-ayman",
+"ep": 1,
+"lufs": -18.3,
+"hi": -15.700000000000003,
+"sr": 22050
+},
+{
+"series": "bayt-ayman",
+"ep": 5,
+"lufs": -13.8,
+"hi": -20.299999999999997,
+"sr": 22050
+},
+{
+"series": "bayt-ayman",
+"ep": 8,
+"lufs": -9.5,
+"hi": -18.5,
+"sr": 22050
+},
+{
+"series": "waai-ayman",
+"ep": 1,
+"lufs": -9.2,
+"hi": -21.099999999999998,
+"sr": 22050
+},
+{
+"series": "waai-ayman",
+"ep": 5,
+"lufs": -14.2,
+"hi": -19.5,
+"sr": 22050
+},
+{
+"series": "waai-ayman",
+"ep": 9,
+"lufs": -17.9,
+"hi": -14.500000000000004,
+"sr": 22050
+},
+{
+"series": "taasis-ayman",
+"ep": 1,
+"lufs": -16.7,
+"hi": -11.399999999999999,
+"sr": 22050
+},
+{
+"series": "taasis-ayman",
+"ep": 8,
+"lufs": -24.1,
+"hi": -12.699999999999996,
+"sr": 22050
+},
+{
+"series": "taasis-ayman",
+"ep": 15,
+"lufs": -24.2,
+"hi": -18.799999999999997,
+"sr": 22050
+},
+{
+"series": "min-huna-ayman",
+"ep": 1,
+"lufs": -19.2,
+"hi": -16.500000000000004,
+"sr": 22050
+},
+{
+"series": "min-huna-ayman",
+"ep": 2,
+"lufs": -18.2,
+"hi": -20.499999999999996,
+"sr": 22050
+},
+{
+"series": "min-huna-ayman",
+"ep": 3,
+"lufs": -17.6,
+"hi": -15.8,
+"sr": 22050
+},
+{
+"series": "tarikh-ayman",
+"ep": 1,
+"lufs": -9.5,
+"hi": -78.2,
+"sr": 8000
+},
+{
+"series": "tarikh-ayman",
+"ep": 5,
+"lufs": -12.4,
+"hi": -74.7,
+"sr": 8000
+},
+{
+"series": "tarikh-ayman",
+"ep": 9,
+"lufs": -16.0,
+"hi": -71.9,
+"sr": 8000
+},
+{
+"series": "umawi-abbasi-ayman",
+"ep": 1,
+"lufs": -11.1,
+"hi": -21.4,
+"sr": 22050
+},
+{
+"series": "umawi-abbasi-ayman",
+"ep": 3,
+"lufs": -12.2,
+"hi": -18.800000000000004,
+"sr": 22050
+},
+{
+"series": "umawi-abbasi-ayman",
+"ep": 5,
+"lufs": -10.7,
+"hi": -23.599999999999998,
+"sr": 22050
 }
 ]

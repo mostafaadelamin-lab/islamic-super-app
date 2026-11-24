@@ -47,6 +47,8 @@ const TOPIC_COLORS: Record<string, string> = {
   muamalat: "#3A3A1A",
   tahara: "#14465A",
   akhira: "#2A1E36",
+  history: "#3D2F1C",
+  fikr: "#233F4F",
 };
 const DEFAULT_COLOR = "#1D3A64";
 const SEC_PER_MIN = 60;

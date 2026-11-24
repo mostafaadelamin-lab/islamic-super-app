@@ -28,6 +28,9 @@
  "huwa-allah-maghamsi": {
   "c": 1
  },
+ "judhur-ayman": {
+  "g": -7
+ },
  "lectures-ghazali": {
   "g": 4
  },
@@ -86,11 +89,21 @@
  "shamail-khudair": {
   "g": 3
  },
+ "taasis-ayman": {
+  "g": 6
+ },
  "tahara-uthaymeen": {
+  "c": 1
+ },
+ "tarikh-ayman": {
+  "g": -3,
   "c": 1
  },
  "tawhid-alsheikh": {
   "c": 1
+ },
+ "umawi-abbasi-ayman": {
+  "g": -5
  },
  "usra-tayeb": {
   "g": 8

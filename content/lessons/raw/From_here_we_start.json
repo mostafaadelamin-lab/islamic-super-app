@@ -1,0 +1,33 @@
+{
+"item": "From_here_we_start",
+"title": "دورة مِن هنا نبدأ - ماذا أتعلم؟ وكيف أتعلم؟",
+"files": [
+{
+"name": "01.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "114920751",
+"length": "02:05:21",
+"title": "دورة مِن هنا نبدأ - ماذا أتعلم؟ وكيف أتعلم؟ - الجزء الأول",
+"original": "01.wma"
+},
+{
+"name": "02.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "50189453",
+"length": "02:05:21",
+"title": "دورة مِن هنا نبدأ - ماذا أتعلم؟ وكيف أتعلم؟ - الجزء الثاني",
+"original": "02.wma"
+},
+{
+"name": "03.mp3",
+"source": "derivative",
+"format": "VBR MP3",
+"size": "67422295",
+"length": "02:05:21",
+"title": "دورة مِن هنا نبدأ - ماذا أتعلم؟ وكيف أتعلم؟ - الجزء الثالث",
+"original": "03.wma"
+}
+]
+}

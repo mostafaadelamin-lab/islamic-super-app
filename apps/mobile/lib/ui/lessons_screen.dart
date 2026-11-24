@@ -41,6 +41,8 @@ const _topicColors = <String, Color>{
   'muamalat': Color(0xFF3A3A1A),
   'tahara': Color(0xFF14465A),
   'akhira': Color(0xFF2A1E36),
+  'history': Color(0xFF3D2F1C),
+  'fikr': Color(0xFF233F4F),
 };
 
 Color lessonTopicColor(String topic) => _topicColors[topic] ?? AppTheme.brand('heroTop');

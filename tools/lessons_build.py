@@ -181,6 +181,12 @@ def build(src, refetch=False):
                 if url in music:
                     ep['m'] = music[url]
                 eps.append(ep)
+        if 'names' in se:
+            # Hand-written titles, one per lesson in order (file names too garbled to clean, e.g. "ألهقولكون").
+            if len(se['names']) != len(eps):
+                raise SystemExit(f'{se["id"]}: {len(se["names"])} names for {len(eps)} lessons')
+            for ep, name in zip(eps, se['names']):
+                ep['t'] = name
         if not eps:
             raise SystemExit(f'no audio in {se["id"]}')
         out = {k: se[k] for k in ('id', 'topic', 'sheikh', 'ar', 'en')}

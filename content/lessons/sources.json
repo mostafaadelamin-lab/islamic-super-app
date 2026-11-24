@@ -32,6 +32,11 @@
       "en": "Prophets, Companions & stories"
     },
     {
+      "id": "history",
+      "ar": "التاريخ الإسلامي",
+      "en": "Islamic history"
+    },
+    {
       "id": "quran",
       "ar": "مع القرآن",
       "en": "With the Quran"
@@ -50,6 +55,11 @@
       "id": "adab",
       "ar": "الآداب والحياة اليومية",
       "en": "Manners & daily life"
+    },
+    {
+      "id": "fikr",
+      "ar": "الفكر والوعي الإسلامي",
+      "en": "Islamic thought and awareness"
     },
     {
       "id": "muamalat",
@@ -290,6 +300,14 @@
       "groups": [
         "egypt"
       ]
+    },
+    {
+      "id": "ayman",
+      "ar": "م. أيمن عبد الرحيم",
+      "en": "Eng. Ayman Abdelrahim",
+      "groups": [
+        "egypt"
+      ]
     }
   ],
   "series": [
@@ -442,6 +460,16 @@
       "titles": "title",
       "strip": [
         "صل[يى]+ الله عليه وسلم"
+      ]
+    },
+    {
+      "id": "seerah-makki-ayman",
+      "topic": "seerah",
+      "sheikh": "ayman",
+      "ar": "السيرة النبوية: العهد المكي",
+      "en": "The Prophet's life: the Meccan period",
+      "items": [
+        "islami-2425"
       ]
     },
     {
@@ -751,6 +779,16 @@
       ]
     },
     {
+      "id": "khulafa-ayman",
+      "topic": "stories",
+      "sheikh": "ayman",
+      "ar": "سيرة الخلفاء الراشدين",
+      "en": "The Rightly Guided Caliphs",
+      "items": [
+        "islami-2431"
+      ]
+    },
+    {
       "id": "maa-quran-maghamsi",
       "topic": "quran",
       "sheikh": "maghamsi",
@@ -828,6 +866,22 @@
       "titles": "surah"
     },
     {
+      "id": "judhur-ayman",
+      "topic": "quran",
+      "sheikh": "ayman",
+      "ar": "الثلاثون جذرًا الأكثر شيوعًا في القرآن",
+      "en": "The 30 most common roots in the Quran",
+      "items": [
+        "islami-2422"
+      ],
+      "names": [
+        "مقدمة الدورة والمصادر المستعملة فيها",
+        "الجذور: أله، قول، كون",
+        "الجذور: ربب، أمن، علم",
+        "الجذور: أتى، قوم، كفر، بين"
+      ]
+    },
+    {
       "id": "usra-tayeb",
       "topic": "family",
       "sheikh": "tayeb",
@@ -855,6 +909,16 @@
       "en": "Rights",
       "items": [
         "al7oqoq_Omar-abdlkafee"
+      ]
+    },
+    {
+      "id": "bayt-ayman",
+      "topic": "family",
+      "sheikh": "ayman",
+      "ar": "البيت المسلم",
+      "en": "The Muslim home",
+      "items": [
+        "islami-2421"
       ]
     },
     {
@@ -996,6 +1060,67 @@
       "en": "The hereafter",
       "items": [
         "Dr.omar-abdulkafy_Dar_Akhira_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "waai-ayman",
+      "topic": "fikr",
+      "sheikh": "ayman",
+      "ar": "تأسيس وعي المسلم المعاصر",
+      "en": "Building the modern Muslim's awareness",
+      "items": [
+        "islami-2429"
+      ]
+    },
+    {
+      "id": "taasis-ayman",
+      "topic": "fikr",
+      "sheikh": "ayman",
+      "ar": "دورة التأسيس المعرفي",
+      "en": "Foundations of knowledge",
+      "items": [
+        "islami-2430"
+      ]
+    },
+    {
+      "id": "min-huna-ayman",
+      "topic": "fikr",
+      "sheikh": "ayman",
+      "ar": "من هنا نبدأ: ماذا أتعلم وكيف أتعلم؟",
+      "en": "Where to start: what and how to learn",
+      "items": [
+        "From_here_we_start"
+      ]
+    },
+    {
+      "id": "tarikh-ayman",
+      "topic": "history",
+      "sheikh": "ayman",
+      "ar": "مدخل لدراسة التاريخ الإسلامي",
+      "en": "Introduction to Islamic history",
+      "items": [
+        "1_20220208_20220208_1628"
+      ],
+      "order": [
+        "المحاضرة_الأولى",
+        "المحاضرة_الثانية",
+        "المحاضرة_الثالثة",
+        "المحاضرة_الرابعة",
+        "المحاضرة_الخامسة",
+        "المحاضرة_السادسة",
+        "المحاضرة_السابعة",
+        "المحاضرة_الثامنة",
+        "المحاضرة_التاسعة"
+      ]
+    },
+    {
+      "id": "umawi-abbasi-ayman",
+      "topic": "history",
+      "sheikh": "ayman",
+      "ar": "تاريخ الدولة الأموية والعباسية",
+      "en": "The Umayyad and Abbasid states",
+      "items": [
+        "Dawlatain_Ayman"
       ]
     }
   ],

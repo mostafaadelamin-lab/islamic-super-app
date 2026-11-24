@@ -1,5 +1,8 @@
 # Changelog
 
+## Lessons: Eng. Ayman Abdelrahim's series — 2026-11-24
+Owner 2026-11-24 (sent his YouTube playlist «تأسيس وعي المسلم المعاصر», asked for all his audio series under the fitting topics): 9 series, 64 lectures (~116 h), app and website. Two new topics: «الفكر والوعي الإسلامي» (تأسيس وعي المسلم المعاصر، دورة التأسيس المعرفي، من هنا نبدأ) and «التاريخ الإسلامي» (مدخل لدراسة التاريخ الإسلامي، تاريخ الدولة الأموية والعباسية); the others under the Prophet's life (العهد المكي), prophets & Companions (الخلفاء الراشدون), with the Quran (الثلاثون جذرًا) and family (البيت المسلم). His general-knowledge courses (psychology, humanities, linguistics, a TV programme, «ما بعد السلفية») were left out. lessons_build: per-series hand-written "names" for lesson titles. Now 73 series, ~3120 lessons.
+
 ## Website: «the site is being updated» bar — 2026-11-24
 Owner 2026-11-24: while the website is being uploaded or changed, every page shows an orange bar at the top (owner picked this look with a × to hide it): «نحدّث الموقع الآن ونضيف خدمات جديدة. إن تقطّعت خدمة أو توقفت فستعود للعمل خلال دقائق.» (English on /en/). The upload tool (builds/ftp_deploy.py `deploy`, plus `notice on|off` for hand changes) writes /site-status.json {"updating": true} before the first file and false when it ends without errors; optional message_ar / message_en replace the text. MaintenanceBanner reads it on load, every minute and when the tab comes back; the service worker and .htaccess never cache it, and the file is not part of the build. Website only: the phone apps carry their content inside and are not affected by uploads.
 
