@@ -120,7 +120,7 @@ copyFileSync(join(repo, "content/sharawi/dist/sharawi.v1.json"), join(pub, "data
 // Lesson series («سلاسل الدروس»): series and lesson list (audio streamed per lesson), fetched by the /lessons page
 // and the Sha'rawi section. The name carries a number (see LESSONS_URL): browsers and older service workers keep
 // a file by its name, so a new list under the old name was not seen (owner 2026-11-23). Raise both together.
-copyFileSync(join(repo, "content/lessons/dist/lessons.v1.json"), join(pub, "data/lessons-2.json"));
+copyFileSync(join(repo, "content/lessons/dist/lessons.v1.json"), join(pub, "data/lessons-3.json"));
 // Sheikh Mohamed Ahmed Shabib: track list (audio streamed per track), fetched by the /shabib page.
 copyFileSync(join(repo, "content/shabib/dist/shabib.v1.json"), join(pub, "data/shabib.json"));
 // Ayah timings of the reciters recorded one file per surah, fetched by the player when such a reciter plays.

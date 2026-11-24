@@ -1,15 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="5" failures="0" errors="0" time="0.005185687">
-    <testsuite name="tests/unit/static-pages-back.test.ts" timestamp="2026-11-20T22:29:57.572Z" hostname="vm" tests="5" failures="0" errors="0" skipped="0" time="0.005185687">
-        <testcase classname="tests/unit/static-pages-back.test.ts" name="privacy-policy.html &gt; has a sticky back bar that opens the app home" time="0.001456795">
+<testsuites name="vitest tests" tests="16" failures="0" errors="0" time="4.35463547">
+    <testsuite name="tests/components/lessons.test.tsx" timestamp="2026-11-24T10:55:05.514Z" hostname="vm" tests="7" failures="0" errors="0" skipped="0" time="1.909789497">
+        <testcase classname="tests/components/lessons.test.tsx" name="lesson series: data &gt; has every topic and scholar group, all of Omar Abdelkafy&apos;s series, https mp3 audio, the Grand Imam&apos;s talks and no Sha&apos;rawi series" time="0.012517948">
         </testcase>
-        <testcase classname="tests/unit/static-pages-back.test.ts" name="privacy-policy.html &gt; goes back in history only when the visitor came from this site" time="0.000422853">
+        <testcase classname="tests/components/lessons.test.tsx" name="lesson series: data &gt; is listed under More" time="0.000808813">
         </testcase>
-        <testcase classname="tests/unit/static-pages-back.test.ts" name="sources.html &gt; has a sticky back bar that opens the app home" time="0.000367636">
+        <testcase classname="tests/components/lessons.test.tsx" name="lesson series: page &gt; filters by scholars and topic, searches, and opens a series" time="1.501137967">
         </testcase>
-        <testcase classname="tests/unit/static-pages-back.test.ts" name="sources.html &gt; goes back in history only when the visitor came from this site" time="0.000271866">
+        <testcase classname="tests/components/lessons.test.tsx" name="lesson series: page &gt; plays a lesson with the player under it, ✓ at its end, then continue from the series list" time="0.321278082">
         </testcase>
-        <testcase classname="tests/unit/static-pages-back.test.ts" name="store copy of the privacy policy matches the website one" time="0.000462727">
+        <testcase classname="tests/components/lessons.test.tsx" name="lesson series: page &gt; downloads the whole series for offline listening" time="0.056145251">
+        </testcase>
+        <testcase classname="tests/components/lessons.test.tsx" name="lesson music is jumped over (owner 2026-11-23) &gt; skipEnd gives the end of the music stretch the time is in" time="0.001418134">
+        </testcase>
+        <testcase classname="tests/components/lessons.test.tsx" name="lesson music is jumped over (owner 2026-11-23) &gt; the Grand Imam&apos;s lessons carry their music stretches" time="0.009288691">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/components/sharawi.test.tsx" timestamp="2026-11-24T10:55:05.517Z" hostname="vm" tests="7" failures="0" errors="0" skipped="0" time="2.420589956">
+        <testcase classname="tests/components/sharawi.test.tsx" name="Sha&apos;rawi audio tafsir &gt; parses every lesson with an encoded https archive.org url and valid ranges" time="0.029210704">
+        </testcase>
+        <testcase classname="tests/components/sharawi.test.tsx" name="Sha&apos;rawi audio tafsir &gt; is listed under More" time="0.000595552">
+        </testcase>
+        <testcase classname="tests/components/sharawi.test.tsx" name="Sha&apos;rawi audio tafsir &gt; filters surahs, opens a surah and plays a lesson with the player under it" time="0.798203215">
+        </testcase>
+        <testcase classname="tests/components/sharawi.test.tsx" name="Sha&apos;rawi offline save (website) &gt; saves a lesson into the audio cache and deletes it again" time="0.835669721">
+        </testcase>
+        <testcase classname="tests/components/sharawi.test.tsx" name="دروس الشيخ الشعراوي: three series cards (owner 2026-11-24) &gt; shows tafsir, the Prophet&apos;s life and prophets&apos; stories as cards; each opens its part" time="0.690169832">
+        </testcase>
+        <testcase classname="tests/components/sharawi.test.tsx" name="دروس الشيخ الشعراوي: three series cards (owner 2026-11-24) &gt; never shows the whole lesson catalogue in place of a Sha&apos;rawi part (stale list, owner 2026-11-23)" time="0.058978038">
+        </testcase>
+        <testcase classname="tests/components/sharawi.test.tsx" name="دروس الشيخ الشعراوي: three series cards (owner 2026-11-24) &gt; lists his parts in «سلاسل الدروس» under their topics" time="0.004342819">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/audio-fx.test.ts" timestamp="2026-11-24T10:55:05.518Z" hostname="vm" tests="2" failures="0" errors="0" skipped="0" time="0.024256017">
+        <testcase classname="tests/unit/audio-fx.test.ts" name="lesson sound evened out while playing (owner 2026-11-24) &gt; leaves other audio alone, and routes a quiet / old lesson through gain + voice lift with CORS" time="0.011536418">
+        </testcase>
+        <testcase classname="tests/unit/audio-fx.test.ts" name="lesson sound evened out while playing (owner 2026-11-24) &gt; plays as published on iPhone (Web Audio stops on the lock screen there)" time="0.007924293">
         </testcase>
     </testsuite>
 </testsuites>
