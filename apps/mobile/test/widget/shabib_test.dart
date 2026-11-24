@@ -78,7 +78,7 @@ void main() {
   ) async {
     await pumpApp(tester, size: tallPhone);
     await goToTab(tester, 5);
-    await tester.scrollUntilVisible(find.byKey(const Key('more.library')), 200);
+    expect(find.byKey(const Key('more.lessons')), findsOneWidget);
     expect(find.byKey(const Key('more.shabib')), findsNothing);
   });
 }

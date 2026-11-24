@@ -117,6 +117,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountSyncNow => 'Sync now';
 
   @override
+  String get adhanAlertsHeader => 'Adhan alerts';
+
+  @override
   String get adhanBanner => 'Adhan alerts are off. Turn them on to hear the adhan at every prayer time.';
 
   @override
@@ -282,6 +285,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhanStop => 'Stop adhan';
+
+  @override
+  String get adhanTabTitle => 'Adhan';
 
   @override
   String get adhanTest => 'Test the alert (in 10 seconds)';
@@ -1070,7 +1076,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get hadithTitle => 'Hadith books';
+  String get hadithTitle => 'Main hadith books, simply explained';
 
   @override
   String get hadithUnsave => 'Remove from saved';
@@ -1386,7 +1392,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeBigNasheeds => 'Nasheeds';
 
   @override
-  String get homeBigPrayer => 'Prayer times';
+  String get homeBigPrayer => 'Adhan';
 
   @override
   String get homeBigQibla => 'Qibla direction';
@@ -1735,7 +1741,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kidsTeacherWord => 'Word';
 
   @override
-  String get kidsTitle => 'Kids';
+  String get kidsTitle => 'Teach your child';
 
   @override
   String get kidsVideoError => 'Could not play the video. Check the internet connection or download the episode first.';
@@ -1972,7 +1978,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String lessonsNote(String series, String lessons) {
-    return 'Complete audio series by well-known scholars: $series series, $lessons lessons. Listen online, or download a lesson or the whole series to listen without internet.';
+    return 'Complete audio series by major scholars, arranged by topic: $series series, $lessons lessons. Pick a topic, then listen online or download a lesson or the whole series to listen without internet.';
   }
 
   @override
@@ -1987,7 +1993,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lessonsStart => 'Start from lesson 1';
 
   @override
-  String get lessonsTitle => 'Lesson series';
+  String get lessonsTitle => 'Understand your religion';
 
   @override
   String get libraryAllRiwayat => 'All riwayat';
@@ -2030,7 +2036,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get libraryTitle => 'Recitations library: all Quran reciters';
+  String get libraryTitle => 'Recitations library';
 
   @override
   String get lockNoticeHint =>
@@ -2081,7 +2087,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meaningsTitle => 'Word meanings';
 
   @override
-  String get moreTitle => 'More';
+  String get moreAsma => 'The Names of Allah explained';
+
+  @override
+  String get moreHajjSub => 'Umrah and the three kinds of Hajj';
+
+  @override
+  String get moreLessonsSub => 'Complete audio series by major scholars';
+
+  @override
+  String get moreSharawiSub => 'Quran tafsir, the Prophet\'s biography, prophets\' stories';
+
+  @override
+  String get moreTitle => 'Main sections';
 
   @override
   String mosquesAround(String place) {
@@ -2838,7 +2856,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get radiosMore => 'More radios';
 
   @override
-  String get radiosTitle => 'Quran radios';
+  String get radiosTitle => 'Various radios';
 
   @override
   String get readerBack => 'Back to the index';
@@ -3157,6 +3175,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reelsUndo => 'Undo';
 
   @override
+  String get reportAction => 'Report a mistake';
+
+  @override
+  String get reportPrompt => 'Spotted a mistake on this page?';
+
+  @override
+  String reportTitle(String page) {
+    return 'Mistake in: $page';
+  }
+
+  @override
   String ruqyahAyah(String surah, String n) {
     return '$surah: ayah $n';
   }
@@ -3210,6 +3239,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsAccountHint => 'Optional — sync bookmarks between devices';
+
+  @override
+  String get settingsAppSection => 'The app';
 
   @override
   String get settingsAuto => 'Automatic';
@@ -3285,6 +3317,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsPermissions => 'Permissions and background';
 
   @override
+  String get settingsPermissionsHeader => 'Permissions the app needs';
+
+  @override
   String get settingsPermissionsHint => 'Location, notifications, battery and adhan on silent';
 
   @override
@@ -3297,7 +3332,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsPrayerTimes => 'Prayer times';
 
   @override
+  String get settingsPrivacy => 'Privacy policy';
+
+  @override
   String get settingsSources => 'Content sources';
+
+  @override
+  String get settingsSuggest => 'Request a feature or suggest an idea';
+
+  @override
+  String get settingsSuggestTitle => 'Idea suggestion';
 
   @override
   String get settingsTheme => 'Theme';
@@ -3538,7 +3582,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sharawiSearch => 'Find a surah by name or number';
 
   @override
-  String get sharawiSection => 'Sheikh al-Sha\'rawi\'s lessons';
+  String get sharawiSection => 'Sheikh al-Sha\'rawi\'s lessons library';
 
   @override
   String get sharawiTitle => 'Al-Sha\'rawi tafsir';
@@ -3864,7 +3908,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tafsirLibSurah => 'Surah';
 
   @override
-  String get tafsirLibTitle => 'Tafsir';
+  String get tafsirLibTitle => 'Tafsir books, simply explained';
 
   @override
   String get tagline => 'Quran, prayer and remembrance — free, no ads';
@@ -4034,6 +4078,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tourPrayerTitle => 'Prayer times and adhan';
+
+  @override
+  String get tourPrivacyBody =>
+      'We don\'t collect or keep any of your personal data, and the app needs no sign-in. We ask for your location only so the adhan comes at the right time and the qibla direction is accurate; this is worked out on your phone and we don\'t keep your location.';
+
+  @override
+  String get tourPrivacyTitle => 'Your data stays yours';
 
   @override
   String get tourQuranBody =>
@@ -4361,7 +4412,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get zakatTileSub => 'Zakat on money, after Egypt\'s Dar al-Ifta';
 
   @override
-  String get zakatTitle => 'Zakat calculator';
+  String get zakatTitle => 'Calculate your zakat';
 
   @override
   String zakatTotalAlso(String v) {

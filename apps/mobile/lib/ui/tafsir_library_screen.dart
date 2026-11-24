@@ -7,6 +7,7 @@ import '../domain/tafsir_books.dart';
 import '../theme/design_tokens.dart';
 import 'ayah_study.dart';
 import 'l10n_ext.dart';
+import 'report_error_link.dart';
 import 'r_icon.dart';
 import 'adaptive.dart';
 import 'ayah_sheet.dart' show stepAyah;
@@ -75,6 +76,7 @@ class TafsirLibraryScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(DesignTokens.spaceLg),
                 child: Text(l.tafsirLibDownloadsNote, style: Theme.of(context).textTheme.bodySmall),
               ),
+              ReportErrorLink(page: l.tafsirLibTitle),
             ],
           ),
         ),

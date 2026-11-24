@@ -6,7 +6,7 @@ import 'package:rattil/ui/more_screen.dart';
 import 'package:rattil/ui/prayer_screen.dart';
 import 'package:rattil/ui/qibla_screen.dart';
 import 'package:rattil/ui/kids_screen.dart';
-import 'package:rattil/ui/stories_screen.dart';
+import 'package:rattil/ui/lessons_screen.dart';
 import 'package:rattil/ui/surah_list_screen.dart';
 import 'package:rattil/ui/tasbih_screen.dart';
 
@@ -58,7 +58,9 @@ void main() {
     expect(find.byType(MoreScreen), findsOneWidget);
   });
 
-  testWidgets('tiles: Quran, adhkar, prayer tabs; tasbih, qibla, kids, stories screens', (tester) async {
+  testWidgets('tiles: Quran, adhkar, prayer tabs; tasbih, qibla, kids, lessons screens (owner 2026-11-24)', (
+    tester,
+  ) async {
     await pumpApp(tester, size: tallPhone);
     Future<void> tile(String id) async {
       await tester.ensureVisible(find.byKey(Key('home.tile-$id')));
@@ -72,16 +74,17 @@ void main() {
       if (id == 'quran') expect(find.byType(SurahListScreen), findsOneWidget);
       await goToTab(tester, 0);
     }
-    for (final (id, type) in [
-      ('tasbih', TasbihScreen),
-      ('qibla', QiblaScreen),
-      ('kids', KidsScreen),
-      ('stories', StoriesScreen),
-    ]) {
+    for (final (id, type) in [('tasbih', TasbihScreen), ('qibla', QiblaScreen), ('kids', KidsScreen)]) {
       await tile(id);
       expect(find.byType(type), findsOneWidget, reason: id);
       await goBack(tester);
     }
+    // «افهم دينك» loads its catalogue from the assets: only check that it opens.
+    await tester.ensureVisible(find.byKey(const Key('home.tile-lessons')));
+    await tester.tap(find.byKey(const Key('home.tile-lessons')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byType(LessonsScreen), findsOneWidget);
   });
 
   testWidgets('Quran radio: chosen reciter, whole Mushaf, duration stops it, pause/resume', (tester) async {
@@ -89,10 +92,13 @@ void main() {
     final app = await pumpApp(tester, size: tallPhone, audio: audio);
     final s = app.services;
     await tester.ensureVisible(find.byKey(const Key('radio.play')));
-    expect(find.text('غير محدود'), findsOneWidget);
-    await tester.tap(find.byKey(const Key('radio.longer')));
-    await tester.pump();
-    expect(find.text('١٥ دقيقة'), findsOneWidget);
+    // The play duration sits inside the player bar (owner 2026-11-24): ∞ until a time is chosen.
+    expect(find.text('∞'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('radio.duration')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('radio.duration-15')).last);
+    await tester.pumpAndSettle();
+    expect(find.text('١٥'), findsOneWidget);
     await s.settings.setReciter('Yasser_Ad-Dussary_128kbps');
     await s.settings.setRadioStation('mushaf');
     await tester.pump();

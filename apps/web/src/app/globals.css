@@ -6100,10 +6100,9 @@ a.episode {
   width: 100%;
 }
 
-/* «سلاسل الدروس» (lesson series): filter chips, series cards with a coloured cover, the series hero. */
+/* «افهم دينك» (lesson series): topic chips (all shown, wrapped), series cards with a coloured cover, the series hero. */
 .lessons-chips {
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  flex-wrap: wrap;
   gap: var(--space-xs);
   padding-bottom: var(--space-xs);
   scrollbar-width: thin;
@@ -6249,3 +6248,24 @@ a.episode {
   color: var(--color-success, #2f7d55);
 }
 
+
+/* Settings → «الموقع»: the site's links in one list, as in the app (owner 2026-11-24). */
+.settings-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.settings-links li {
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-line);
+}
+.settings-links li:last-child {
+  border-bottom: 0;
+}
+/* The chosen topic in «افهم دينك» shaded more strongly (owner 2026-11-24). */
+.lessons-chips .btn-primary {
+  background: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  border: 2px solid var(--color-accent);
+  color: var(--color-ink);
+  font-weight: 700;
+}

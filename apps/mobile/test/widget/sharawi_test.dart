@@ -77,7 +77,7 @@ void main() {
     expect(lessons.sharawiTafsir!.lessonTotal, 1116);
     expect(lessons.sharawiTafsir!.seconds, greaterThan(600 * 3600));
     await pushScreen(tester, SharawiScreen(loader: () async => data, lessonsLoader: () async => lessons));
-    expect(find.text('دروس الشيخ الشعراوي'), findsWidgets);
+    expect(find.text('مكتبة دروس الشيخ الشعراوي'), findsWidgets);
     for (final p in ['tafsir', 'seerah', 'anbiya']) {
       expect(find.byKey(Key('sharawiPart.$p')), findsOneWidget);
     }
@@ -116,7 +116,9 @@ void main() {
     expect(c.listed[at - 1].topic.id, 'seerah');
   });
 
-  testWidgets('a lesson plays with the lock-screen player under it: time, full length, seek bar, ±30 s', (tester) async {
+  testWidgets('a lesson plays with the lock-screen player under it: time, full length, seek bar, ±30 s', (
+    tester,
+  ) async {
     // The stream does not report its length (iOS, archive.org): the lesson's listed length is used.
     final backend = FakeNarrationBackend(length: null);
     await pumpApp(tester, size: tallPhone, narration: backend);

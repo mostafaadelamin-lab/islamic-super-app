@@ -48,6 +48,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final l = context.l10n;
     return [
       TourSlide(RIcons.star, l.tourWelcomeTitle, l.tourWelcomeBody),
+      TourSlide(RIcons.shield, l.tourPrivacyTitle, l.tourPrivacyBody),
       TourSlide(RIcons.quran, l.tourQuranTitle, l.tourQuranBody),
       TourSlide(RIcons.prayer, l.tourPrayerTitle, l.tourPrayerBody),
       TourSlide(RIcons.dua, l.tourAdhkarTitle, l.tourAdhkarBody),

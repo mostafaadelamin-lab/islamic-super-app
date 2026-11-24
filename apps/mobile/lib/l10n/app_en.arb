@@ -149,6 +149,10 @@
   "@accountSyncNow": {
     "description": "shared key \"account.syncNow\""
   },
+  "adhanAlertsHeader": "Adhan alerts",
+  "@adhanAlertsHeader": {
+    "description": "shared key \"adhan.alertsHeader\""
+  },
   "adhanBanner": "Adhan alerts are off. Turn them on to hear the adhan at every prayer time.",
   "@adhanBanner": {
     "description": "shared key \"adhan.banner\""
@@ -396,6 +400,10 @@
   "adhanStop": "Stop adhan",
   "@adhanStop": {
     "description": "shared key \"adhan.stop\""
+  },
+  "adhanTabTitle": "Adhan",
+  "@adhanTabTitle": {
+    "description": "shared key \"adhan.tabTitle\""
   },
   "adhanTest": "Test the alert (in 10 seconds)",
   "@adhanTest": {
@@ -1559,7 +1567,7 @@
       }
     }
   },
-  "hadithTitle": "Hadith books",
+  "hadithTitle": "Main hadith books, simply explained",
   "@hadithTitle": {
     "description": "shared key \"hadith.title\""
   },
@@ -1985,7 +1993,7 @@
   "@homeBigNasheeds": {
     "description": "shared key \"home.big.nasheeds\""
   },
-  "homeBigPrayer": "Prayer times",
+  "homeBigPrayer": "Adhan",
   "@homeBigPrayer": {
     "description": "shared key \"home.big.prayer\""
   },
@@ -2535,7 +2543,7 @@
   "@kidsTeacherWord": {
     "description": "shared key \"kids.teacherWord\""
   },
-  "kidsTitle": "Kids",
+  "kidsTitle": "Teach your child",
   "@kidsTitle": {
     "description": "shared key \"kids.title\""
   },
@@ -2907,7 +2915,7 @@
   "@lessonsNoMatch": {
     "description": "shared key \"lessons.noMatch\""
   },
-  "lessonsNote": "Complete audio series by well-known scholars: {series} series, {lessons} lessons. Listen online, or download a lesson or the whole series to listen without internet.",
+  "lessonsNote": "Complete audio series by major scholars, arranged by topic: {series} series, {lessons} lessons. Pick a topic, then listen online or download a lesson or the whole series to listen without internet.",
   "@lessonsNote": {
     "description": "shared key \"lessons.note\"",
     "placeholders": {
@@ -2936,7 +2944,7 @@
   "@lessonsStart": {
     "description": "shared key \"lessons.start\""
   },
-  "lessonsTitle": "Lesson series",
+  "lessonsTitle": "Understand your religion",
   "@lessonsTitle": {
     "description": "shared key \"lessons.title\""
   },
@@ -3001,7 +3009,7 @@
       }
     }
   },
-  "libraryTitle": "Recitations library: all Quran reciters",
+  "libraryTitle": "Recitations library",
   "@libraryTitle": {
     "description": "shared key \"library.title\""
   },
@@ -3083,7 +3091,23 @@
   "@meaningsTitle": {
     "description": "shared key \"meanings.title\""
   },
-  "moreTitle": "More",
+  "moreAsma": "The Names of Allah explained",
+  "@moreAsma": {
+    "description": "shared key \"more.asma\""
+  },
+  "moreHajjSub": "Umrah and the three kinds of Hajj",
+  "@moreHajjSub": {
+    "description": "shared key \"more.hajjSub\""
+  },
+  "moreLessonsSub": "Complete audio series by major scholars",
+  "@moreLessonsSub": {
+    "description": "shared key \"more.lessonsSub\""
+  },
+  "moreSharawiSub": "Quran tafsir, the Prophet's biography, prophets' stories",
+  "@moreSharawiSub": {
+    "description": "shared key \"more.sharawiSub\""
+  },
+  "moreTitle": "Main sections",
   "@moreTitle": {
     "description": "shared key \"more.title\""
   },
@@ -4201,7 +4225,7 @@
   "@radiosMore": {
     "description": "shared key \"radios.more\""
   },
-  "radiosTitle": "Quran radios",
+  "radiosTitle": "Various radios",
   "@radiosTitle": {
     "description": "shared key \"radios.title\""
   },
@@ -4649,6 +4673,23 @@
   "@reelsUndo": {
     "description": "shared key \"reels.undo\""
   },
+  "reportAction": "Report a mistake",
+  "@reportAction": {
+    "description": "shared key \"report.action\""
+  },
+  "reportPrompt": "Spotted a mistake on this page?",
+  "@reportPrompt": {
+    "description": "shared key \"report.prompt\""
+  },
+  "reportTitle": "Mistake in: {page}",
+  "@reportTitle": {
+    "description": "shared key \"report.title\"",
+    "placeholders": {
+      "page": {
+        "type": "String"
+      }
+    }
+  },
   "ruqyahAyah": "{surah}: ayah {n}",
   "@ruqyahAyah": {
     "description": "shared key \"ruqyah.ayah\"",
@@ -4737,6 +4778,10 @@
   "settingsAccountHint": "Optional — sync bookmarks between devices",
   "@settingsAccountHint": {
     "description": "shared key \"settings.accountHint\""
+  },
+  "settingsAppSection": "The app",
+  "@settingsAppSection": {
+    "description": "shared key \"settings.appSection\""
   },
   "settingsAuto": "Automatic",
   "@settingsAuto": {
@@ -4838,6 +4883,10 @@
   "@settingsPermissions": {
     "description": "shared key \"settings.permissions\""
   },
+  "settingsPermissionsHeader": "Permissions the app needs",
+  "@settingsPermissionsHeader": {
+    "description": "shared key \"settings.permissionsHeader\""
+  },
   "settingsPermissionsHint": "Location, notifications, battery and adhan on silent",
   "@settingsPermissionsHint": {
     "description": "shared key \"settings.permissionsHint\""
@@ -4854,9 +4903,21 @@
   "@settingsPrayerTimes": {
     "description": "shared key \"settings.prayerTimes\""
   },
+  "settingsPrivacy": "Privacy policy",
+  "@settingsPrivacy": {
+    "description": "shared key \"settings.privacy\""
+  },
   "settingsSources": "Content sources",
   "@settingsSources": {
     "description": "shared key \"settings.sources\""
+  },
+  "settingsSuggest": "Request a feature or suggest an idea",
+  "@settingsSuggest": {
+    "description": "shared key \"settings.suggest\""
+  },
+  "settingsSuggestTitle": "Idea suggestion",
+  "@settingsSuggestTitle": {
+    "description": "shared key \"settings.suggestTitle\""
   },
   "settingsTheme": "Theme",
   "@settingsTheme": {
@@ -5190,7 +5251,7 @@
   "@sharawiSearch": {
     "description": "shared key \"sharawi.search\""
   },
-  "sharawiSection": "Sheikh al-Sha'rawi's lessons",
+  "sharawiSection": "Sheikh al-Sha'rawi's lessons library",
   "@sharawiSection": {
     "description": "shared key \"sharawi.section\""
   },
@@ -5665,7 +5726,7 @@
   "@tafsirLibSurah": {
     "description": "shared key \"tafsirLib.surah\""
   },
-  "tafsirLibTitle": "Tafsir",
+  "tafsirLibTitle": "Tafsir books, simply explained",
   "@tafsirLibTitle": {
     "description": "shared key \"tafsirLib.title\""
   },
@@ -5914,6 +5975,14 @@
   "tourPrayerTitle": "Prayer times and adhan",
   "@tourPrayerTitle": {
     "description": "shared key \"tour.prayerTitle\""
+  },
+  "tourPrivacyBody": "We don't collect or keep any of your personal data, and the app needs no sign-in. We ask for your location only so the adhan comes at the right time and the qibla direction is accurate; this is worked out on your phone and we don't keep your location.",
+  "@tourPrivacyBody": {
+    "description": "shared key \"tour.privacyBody\""
+  },
+  "tourPrivacyTitle": "Your data stays yours",
+  "@tourPrivacyTitle": {
+    "description": "shared key \"tour.privacyTitle\""
   },
   "tourQuranBody": "The King Fahd Complex Mushaf, page by page, recitations by many reciters, Tafsir al-Muyassar and a khatma planner.",
   "@tourQuranBody": {
@@ -6398,7 +6467,7 @@
   "@zakatTileSub": {
     "description": "shared key \"zakat.tileSub\""
   },
-  "zakatTitle": "Zakat calculator",
+  "zakatTitle": "Calculate your zakat",
   "@zakatTitle": {
     "description": "shared key \"zakat.title\""
   },

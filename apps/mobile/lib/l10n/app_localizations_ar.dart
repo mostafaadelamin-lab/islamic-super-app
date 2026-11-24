@@ -117,6 +117,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accountSyncNow => 'زامن الآن';
 
   @override
+  String get adhanAlertsHeader => 'تنبيهات الأذان';
+
+  @override
   String get adhanBanner => 'تنبيه الأذان مقفول. فعّله عشان يوصلك تنبيه بصوت الأذان في كل صلاة.';
 
   @override
@@ -281,6 +284,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adhanStop => 'إيقاف الأذان';
+
+  @override
+  String get adhanTabTitle => 'الأذان';
 
   @override
   String get adhanTest => 'جرّب التنبيه (بعد ١٠ ثوانٍ)';
@@ -1064,7 +1070,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get hadithTitle => 'كتب السنة';
+  String get hadithTitle => 'أشهر كتب السنة بشرح مبسّط';
 
   @override
   String get hadithUnsave => 'إلغاء الحفظ';
@@ -1379,7 +1385,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeBigNasheeds => 'الأناشيد';
 
   @override
-  String get homeBigPrayer => 'مواقيت الصلاة';
+  String get homeBigPrayer => 'الأذان';
 
   @override
   String get homeBigQibla => 'اتجاه القبلة';
@@ -1727,7 +1733,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get kidsTeacherWord => 'الكلمة';
 
   @override
-  String get kidsTitle => 'الأطفال';
+  String get kidsTitle => 'علّم طفلك';
 
   @override
   String get kidsVideoError => 'تعذّر تشغيل الفيديو. تأكد من الاتصال بالإنترنت أو حمّل الحلقة أولًا.';
@@ -1962,7 +1968,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String lessonsNote(String series, String lessons) {
-    return 'سلاسل صوتية كاملة لكبار العلماء والمشايخ: $series سلسلة و$lessons درسًا. استمع مباشرة، أو حمّل الدرس أو السلسلة كلها لتسمعها بدون إنترنت.';
+    return 'سلاسل صوتية كاملة لكبار العلماء والمشايخ، مرتّبة بالمواضيع: $series سلسلة و$lessons درسًا. اختر الموضوع الذي يهمّك، واستمع مباشرة أو حمّل الدرس أو السلسلة كلها لتسمعها بدون إنترنت.';
   }
 
   @override
@@ -1977,7 +1983,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lessonsStart => 'ابدأ من الدرس الأول';
 
   @override
-  String get lessonsTitle => 'سلاسل الدروس';
+  String get lessonsTitle => 'افهم دينك';
 
   @override
   String get libraryAllRiwayat => 'كل الروايات';
@@ -2020,7 +2026,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get libraryTitle => 'مكتبة التلاوات لجميع قراء القرآن الكريم';
+  String get libraryTitle => 'مكتبة التلاوات';
 
   @override
   String get lockNoticeHint => 'إشعار ثابت هادئ فيه الصلاة القادمة ومعادها والوقت الباقي عليها ومواقيت اليوم.';
@@ -2070,7 +2076,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get meaningsTitle => 'معاني الكلمات';
 
   @override
-  String get moreTitle => 'المزيد';
+  String get moreAsma => 'شرح أسماء الله الحسنى';
+
+  @override
+  String get moreHajjSub => 'العمرة وأنواع الحج الثلاثة';
+
+  @override
+  String get moreLessonsSub => 'سلاسل صوتية كاملة لكبار العلماء والمشايخ';
+
+  @override
+  String get moreSharawiSub => 'تفسير القرآن، السيرة النبوية، قصص الأنبياء';
+
+  @override
+  String get moreTitle => 'الأقسام الرئيسية';
 
   @override
   String mosquesAround(String place) {
@@ -2827,7 +2845,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get radiosMore => 'إذاعات أخرى';
 
   @override
-  String get radiosTitle => 'إذاعات القرآن الكريم';
+  String get radiosTitle => 'إذاعات متنوعة';
 
   @override
   String get readerBack => 'رجوع إلى الفهرس';
@@ -3142,6 +3160,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reelsUndo => 'تراجع';
 
   @override
+  String get reportAction => 'بلّغ عن خطأ';
+
+  @override
+  String get reportPrompt => 'لاحظت خطأ في هذه الصفحة؟';
+
+  @override
+  String reportTitle(String page) {
+    return 'خطأ في: $page';
+  }
+
+  @override
   String ruqyahAyah(String surah, String n) {
     return '$surah: الآية $n';
   }
@@ -3195,6 +3224,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsAccountHint => 'اختياري — مزامنة العلامات بين الأجهزة';
+
+  @override
+  String get settingsAppSection => 'التطبيق';
 
   @override
   String get settingsAuto => 'تلقائي';
@@ -3269,6 +3301,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsPermissions => 'الصلاحيات والعمل في الخلفية';
 
   @override
+  String get settingsPermissionsHeader => 'الصلاحيات التي يحتاجها التطبيق';
+
+  @override
   String get settingsPermissionsHint => 'الموقع، الإشعارات، البطارية، والأذان والهاتف صامت';
 
   @override
@@ -3281,7 +3316,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsPrayerTimes => 'أوقات الصلاة';
 
   @override
+  String get settingsPrivacy => 'سياسة الخصوصية';
+
+  @override
   String get settingsSources => 'مصادر المحتوى';
+
+  @override
+  String get settingsSuggest => 'اطلب تطوير أو اقترح فكرة';
+
+  @override
+  String get settingsSuggestTitle => 'اقتراح فكرة';
 
   @override
   String get settingsTheme => 'المظهر';
@@ -3518,7 +3562,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sharawiSearch => 'ابحث باسم السورة أو رقمها';
 
   @override
-  String get sharawiSection => 'دروس الشيخ الشعراوي';
+  String get sharawiSection => 'مكتبة دروس الشيخ الشعراوي';
 
   @override
   String get sharawiTitle => 'تفسير الشعراوي';
@@ -3842,7 +3886,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tafsirLibSurah => 'السورة';
 
   @override
-  String get tafsirLibTitle => 'التفسير';
+  String get tafsirLibTitle => 'كتب التفسير بشرح مبسّط';
 
   @override
   String get tagline => 'القرآن والصلاة والذكر — مجاني بلا إعلانات';
@@ -4011,6 +4055,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tourPrayerTitle => 'مواقيت الصلاة والأذان';
+
+  @override
+  String get tourPrivacyBody =>
+      'لا نجمع ولا نحتفظ بأي بيانات خاصة بك، ولا يحتاج التطبيق إلى تسجيل دخول. نطلب الموقع فقط ليأتي الأذان في وقته الصحيح وليكون اتجاه القبلة دقيقًا، ويُحسب ذلك على هاتفك ولا نحتفظ بموقعك عندنا.';
+
+  @override
+  String get tourPrivacyTitle => 'بياناتك ملكك';
 
   @override
   String get tourQuranBody =>
@@ -4338,7 +4389,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get zakatTileSub => 'زكاة المال على فتاوى دار الإفتاء المصرية';
 
   @override
-  String get zakatTitle => 'حاسبة الزكاة';
+  String get zakatTitle => 'احسب زكاتك';
 
   @override
   String zakatTotalAlso(String v) {

@@ -17,45 +17,36 @@ const GEO_MAX_AGE_MS = 600_000;
 type GeoState = { kind: "idle" } | { kind: "locating" } | { kind: "error"; key: string };
 
 /**
- * First visit (owner 2026-11-14, same as the apps): a short tour of the main features, then the
- * setup of what the site can ask for: location (prayer times) and notifications (adhan alerts).
- * Browsers cannot ring with every page closed or override the phone's silent mode, so the last
- * step says so honestly and points to the phone app. Shown once; Settings can show it again.
+ * Turns the adhan alerts on, asking the browser for notifications first. Must run from the visitor's own
+ * click (Safari and Firefox require that). Resolves true when the visitor refused notifications.
  */
-export function FirstRunTour({ locale }: { locale: Locale }) {
-  const state = useStore(firstRunStore);
+async function enableAdhanAlerts(): Promise<boolean> {
+  let denied = false;
+  if (typeof Notification !== "undefined") {
+    let perm = Notification.permission;
+    if (perm === "default") {
+      try {
+        perm = await Notification.requestPermission();
+      } catch {
+        // older Safari: the in-page alert still works
+      }
+    }
+    denied = perm === "denied";
+  }
+  adhanStore.set((p) => ({ ...p, enabled: true }));
+  return denied;
+}
+
+/**
+ * What the site can ask for, each with why: location (prayer times and qibla) and notifications (adhan
+ * alerts). Shown at the end of the first-visit tour and in the settings (owner 2026-11-24), so a visitor
+ * who skipped it can allow them later. [autoAsk] starts both requests once, from the visitor's own click.
+ */
+export function SetupSteps({ locale, autoAsk = 0 }: { locale: Locale; autoAsk?: number }) {
   const prayer = useStore(prayerStore);
   const adhan = useStore(adhanStore);
-  // Rendered only after hydration: the server does not know whether this visitor has seen it.
-  const [mounted, setMounted] = useState(false);
-  const [index, setIndex] = useState(0);
   const [geo, setGeo] = useState<GeoState>({ kind: "idle" });
   const [notifDenied, setNotifDenied] = useState(false);
-  const dialog = useRef<HTMLDivElement>(null);
-
-  useEffect(() => setMounted(true), []);
-  const open = mounted && !state.done;
-
-  useEffect(() => {
-    if (!open) return;
-    setIndex(0);
-    const onKey = (e: KeyboardEvent): void => {
-      if (e.key === "Escape") firstRunStore.set({ done: true });
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
-
-  useEffect(() => {
-    if (open) dialog.current?.querySelector<HTMLElement>("[data-autofocus]")?.focus();
-  }, [open, index]);
-
-  if (!open) return null;
-
-  const count = TOUR_SLIDES.length + 1;
-  const last = index === count - 1;
-  const finish = (): void => firstRunStore.set({ done: true });
-  const n = (v: number): string => localizeDigits(String(v), locale);
 
   const locate = (): void => {
     if (typeof navigator === "undefined" || !navigator.geolocation) {
@@ -83,29 +74,115 @@ export function FirstRunTour({ locale }: { locale: Locale }) {
 
   const enableAdhan = async (): Promise<void> => {
     setNotifDenied(false);
-    if (typeof Notification !== "undefined") {
-      let perm = Notification.permission;
-      if (perm === "default") {
-        try {
-          perm = await Notification.requestPermission();
-        } catch {
-          // older Safari: the in-page alert still works
-        }
-      }
-      if (perm === "denied") setNotifDenied(true);
-    }
-    adhanStore.set((p) => ({ ...p, enabled: true }));
+    setNotifDenied(await enableAdhanAlerts());
   };
+
+  // The location needs no click of its own: asked as soon as the tour reaches this step.
+  useEffect(() => {
+    if (autoAsk && !prayerStore.get().custom) locate();
+  }, [autoAsk]);
+
+  return (
+    <>
+      <div className="tour-step">
+        <h3>
+          <Icon name="location" /> {t(locale, "setup.locationTitle")}
+          {prayer.custom && (
+            <span className="tour-done" data-testid="tour-location-done">
+              <Icon name="checkCircle" /> {t(locale, "setup.done")}
+            </span>
+          )}
+        </h3>
+        <p>{t(locale, "setup.webLocationBody")}</p>
+        <button
+          type="button"
+          className="btn"
+          data-testid="tour-locate"
+          disabled={geo.kind === "locating"}
+          onClick={locate}
+        >
+          <Icon name="myLocation" /> {t(locale, "setup.locationUse")}
+        </button>
+        {geo.kind === "error" && (
+          <p className="muted" role="status">
+            {t(locale, geo.key)} {t(locale, "setup.webLocationCity")}
+          </p>
+        )}
+      </div>
+      <div className="tour-step">
+        <h3>
+          <Icon name="bell" /> {t(locale, "setup.notifTitle")}
+          {adhan.enabled && !notifDenied && (
+            <span className="tour-done" data-testid="tour-adhan-done">
+              <Icon name="checkCircle" /> {t(locale, "setup.done")}
+            </span>
+          )}
+        </h3>
+        <p>{t(locale, "setup.webNotifBody")}</p>
+        {!adhan.enabled && (
+          <button type="button" className="btn" data-testid="tour-adhan" onClick={() => void enableAdhan()}>
+            <Icon name="bell" /> {t(locale, "setup.notifAction")}
+          </button>
+        )}
+        {notifDenied && (
+          <p className="muted" role="status">
+            {t(locale, "adhan.webDenied")}
+          </p>
+        )}
+        <p className="muted">{t(locale, "setup.webSilent")}</p>
+      </div>
+    </>
+  );
+}
+
+/**
+ * First visit (owner 2026-11-14, same as the apps): a short tour of the main features, then the
+ * setup of what the site can ask for: location (prayer times) and notifications (adhan alerts).
+ * Browsers cannot ring with every page closed or override the phone's silent mode, so the last
+ * step says so honestly and points to the phone app. Shown once; Settings can show it again.
+ */
+export function FirstRunTour({ locale }: { locale: Locale }) {
+  const state = useStore(firstRunStore);
+  // Rendered only after hydration: the server does not know whether this visitor has seen it.
+  const [mounted, setMounted] = useState(false);
+  const [index, setIndex] = useState(0);
+  // Bumped by Next / Skip into the setup step: SetupSteps then asks for both permissions (see goToSetup).
+  const [ask, setAsk] = useState(0);
+  const dialog = useRef<HTMLDivElement>(null);
+
+  useEffect(() => setMounted(true), []);
+  const open = mounted && !state.done;
+
+  useEffect(() => {
+    if (!open) return;
+    setIndex(0);
+    const onKey = (e: KeyboardEvent): void => {
+      if (e.key === "Escape") firstRunStore.set({ done: true });
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  useEffect(() => {
+    if (open) dialog.current?.querySelector<HTMLElement>("[data-autofocus]")?.focus();
+  }, [open, index]);
+
+  if (!open) return null;
+
+  const count = TOUR_SLIDES.length + 1;
+  const last = index === count - 1;
+  const finish = (): void => firstRunStore.set({ done: true });
+  const n = (v: number): string => localizeDigits(String(v), locale);
 
   /**
    * Owner (2026-11-14): on first open the site asks for the location and to turn on the adhan alerts
    * right away. Called from the Next / Skip click, so the browser sees the notification request as
-   * the visitor's own action (Safari and Firefox require that).
+   * the visitor's own action (Safari and Firefox require that); the location is asked by SetupSteps.
    */
   const goToSetup = (): void => {
     setIndex(count - 1);
-    if (!adhanStore.get().enabled) void enableAdhan();
-    if (!prayerStore.get().custom) locate();
+    setAsk((a) => a + 1);
+    if (!adhanStore.get().enabled) void enableAdhanAlerts();
   };
 
   const slide = TOUR_SLIDES[index];
@@ -141,58 +218,7 @@ export function FirstRunTour({ locale }: { locale: Locale }) {
           <div className="tour-setup" data-testid="tour-setup">
             <h2 id="tour-h">{t(locale, "setup.title")}</h2>
             <p className="muted">{t(locale, "setup.webIntro")}</p>
-            <div className="tour-step">
-              <h3>
-                <Icon name="location" /> {t(locale, "setup.locationTitle")}
-                {prayer.custom && (
-                  <span className="tour-done" data-testid="tour-location-done">
-                    <Icon name="checkCircle" /> {t(locale, "setup.done")}
-                  </span>
-                )}
-              </h3>
-              <p>{t(locale, "setup.webLocationBody")}</p>
-              <button
-                type="button"
-                className="btn"
-                data-testid="tour-locate"
-                disabled={geo.kind === "locating"}
-                onClick={locate}
-              >
-                <Icon name="myLocation" /> {t(locale, "setup.locationUse")}
-              </button>
-              {geo.kind === "error" && (
-                <p className="muted" role="status">
-                  {t(locale, geo.key)} {t(locale, "setup.webLocationCity")}
-                </p>
-              )}
-            </div>
-            <div className="tour-step">
-              <h3>
-                <Icon name="bell" /> {t(locale, "setup.notifTitle")}
-                {adhan.enabled && !notifDenied && (
-                  <span className="tour-done" data-testid="tour-adhan-done">
-                    <Icon name="checkCircle" /> {t(locale, "setup.done")}
-                  </span>
-                )}
-              </h3>
-              <p>{t(locale, "setup.webNotifBody")}</p>
-              {!adhan.enabled && (
-                <button
-                  type="button"
-                  className="btn"
-                  data-testid="tour-adhan"
-                  onClick={() => void enableAdhan()}
-                >
-                  <Icon name="bell" /> {t(locale, "setup.notifAction")}
-                </button>
-              )}
-              {notifDenied && (
-                <p className="muted" role="status">
-                  {t(locale, "adhan.webDenied")}
-                </p>
-              )}
-              <p className="muted">{t(locale, "setup.webSilent")}</p>
-            </div>
+            <SetupSteps locale={locale} autoAsk={ask} />
           </div>
         )}
         <div className="tour-nav">

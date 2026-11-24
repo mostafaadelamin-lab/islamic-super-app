@@ -151,7 +151,6 @@ export function LessonsView({
 }) {
   const [data, setData] = useState<LessonCatalog | null>(null);
   const [failed, setFailed] = useState(false);
-  const [group, setGroup] = useState<string | null>(null);
   const [topic, setTopic] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState<string | null>(null);
@@ -184,10 +183,10 @@ export function LessonsView({
   const list = useMemo(() => {
     if (!data) return [];
     const q = norm(query.trim());
-    return filterSeries(data, group, topic).filter(
+    return filterSeries(data, null, topic).filter(
       (s) => !q || [s.ar, s.en, s.sheikh.ar, s.sheikh.en, s.topic.ar].some((x) => norm(x).includes(q)),
     );
-  }, [data, group, topic, query]);
+  }, [data, topic, query]);
 
   if (failed) return <p className="alert alert-error">{t(locale, "lessons.loadError")}</p>;
   if (!data) return <p className="muted">{t(locale, "common.loading")}</p>;
@@ -276,16 +275,11 @@ export function LessonsView({
           lessons: n(shown.reduce((a, s) => a + lessonTotal(s), 0)),
         })}
       </p>
-      <div className="row lessons-chips" role="group">
-        {chip("lessons-group-all", t(locale, "lessons.all"), group === null, () => setGroup(null))}
-        {data.groups.map((g) =>
-          chip(`lessons-group-${g.id}`, ar ? g.ar : g.en, group === g.id, () => setGroup(g.id)),
-        )}
-      </div>
+      {/* Owner (2026-11-24): every topic visible at once, no scholars' groups row. */}
       <div className="row lessons-chips" role="group">
         {chip("lessons-topic-all", t(locale, "lessons.allTopics"), topic === null, () => setTopic(null))}
         {data.topics
-          .filter((x) => filterSeries(data, group, x.id).length > 0)
+          .filter((x) => filterSeries(data, null, x.id).length > 0)
           .map((x) => chip(`lessons-topic-${x.id}`, ar ? x.ar : x.en, topic === x.id, () => setTopic(x.id)))}
       </div>
       <input

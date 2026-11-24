@@ -278,6 +278,12 @@ abstract class AppLocalizations {
   /// **'Sync now'**
   String get accountSyncNow;
 
+  /// shared key "adhan.alertsHeader"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhan alerts'**
+  String get adhanAlertsHeader;
+
   /// shared key "adhan.banner"
   ///
   /// In en, this message translates to:
@@ -553,6 +559,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stop adhan'**
   String get adhanStop;
+
+  /// shared key "adhan.tabTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhan'**
+  String get adhanTabTitle;
 
   /// shared key "adhan.test"
   ///
@@ -1943,7 +1955,7 @@ abstract class AppLocalizations {
   /// shared key "hadith.title"
   ///
   /// In en, this message translates to:
-  /// **'Hadith books'**
+  /// **'Main hadith books, simply explained'**
   String get hadithTitle;
 
   /// shared key "hadith.unsave"
@@ -2543,7 +2555,7 @@ abstract class AppLocalizations {
   /// shared key "home.big.prayer"
   ///
   /// In en, this message translates to:
-  /// **'Prayer times'**
+  /// **'Adhan'**
   String get homeBigPrayer;
 
   /// shared key "home.big.qibla"
@@ -3149,7 +3161,7 @@ abstract class AppLocalizations {
   /// shared key "kids.title"
   ///
   /// In en, this message translates to:
-  /// **'Kids'**
+  /// **'Teach your child'**
   String get kidsTitle;
 
   /// shared key "kids.videoError"
@@ -3545,7 +3557,7 @@ abstract class AppLocalizations {
   /// shared key "lessons.note"
   ///
   /// In en, this message translates to:
-  /// **'Complete audio series by well-known scholars: {series} series, {lessons} lessons. Listen online, or download a lesson or the whole series to listen without internet.'**
+  /// **'Complete audio series by major scholars, arranged by topic: {series} series, {lessons} lessons. Pick a topic, then listen online or download a lesson or the whole series to listen without internet.'**
   String lessonsNote(String series, String lessons);
 
   /// shared key "lessons.saved"
@@ -3569,7 +3581,7 @@ abstract class AppLocalizations {
   /// shared key "lessons.title"
   ///
   /// In en, this message translates to:
-  /// **'Lesson series'**
+  /// **'Understand your religion'**
   String get lessonsTitle;
 
   /// shared key "library.allRiwayat"
@@ -3647,7 +3659,7 @@ abstract class AppLocalizations {
   /// shared key "library.title"
   ///
   /// In en, this message translates to:
-  /// **'Recitations library: all Quran reciters'**
+  /// **'Recitations library'**
   String get libraryTitle;
 
   /// shared key "lockNotice.hint"
@@ -3728,10 +3740,34 @@ abstract class AppLocalizations {
   /// **'Word meanings'**
   String get meaningsTitle;
 
+  /// shared key "more.asma"
+  ///
+  /// In en, this message translates to:
+  /// **'The Names of Allah explained'**
+  String get moreAsma;
+
+  /// shared key "more.hajjSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Umrah and the three kinds of Hajj'**
+  String get moreHajjSub;
+
+  /// shared key "more.lessonsSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Complete audio series by major scholars'**
+  String get moreLessonsSub;
+
+  /// shared key "more.sharawiSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Quran tafsir, the Prophet\'s biography, prophets\' stories'**
+  String get moreSharawiSub;
+
   /// shared key "more.title"
   ///
   /// In en, this message translates to:
-  /// **'More'**
+  /// **'Main sections'**
   String get moreTitle;
 
   /// shared key "mosques.around"
@@ -5075,7 +5111,7 @@ abstract class AppLocalizations {
   /// shared key "radios.title"
   ///
   /// In en, this message translates to:
-  /// **'Quran radios'**
+  /// **'Various radios'**
   String get radiosTitle;
 
   /// shared key "reader.back"
@@ -5660,6 +5696,24 @@ abstract class AppLocalizations {
   /// **'Undo'**
   String get reelsUndo;
 
+  /// shared key "report.action"
+  ///
+  /// In en, this message translates to:
+  /// **'Report a mistake'**
+  String get reportAction;
+
+  /// shared key "report.prompt"
+  ///
+  /// In en, this message translates to:
+  /// **'Spotted a mistake on this page?'**
+  String get reportPrompt;
+
+  /// shared key "report.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Mistake in: {page}'**
+  String reportTitle(String page);
+
   /// shared key "ruqyah.ayah"
   ///
   /// In en, this message translates to:
@@ -5749,6 +5803,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Optional — sync bookmarks between devices'**
   String get settingsAccountHint;
+
+  /// shared key "settings.appSection"
+  ///
+  /// In en, this message translates to:
+  /// **'The app'**
+  String get settingsAppSection;
 
   /// shared key "settings.auto"
   ///
@@ -5888,6 +5948,12 @@ abstract class AppLocalizations {
   /// **'Permissions and background'**
   String get settingsPermissions;
 
+  /// shared key "settings.permissionsHeader"
+  ///
+  /// In en, this message translates to:
+  /// **'Permissions the app needs'**
+  String get settingsPermissionsHeader;
+
   /// shared key "settings.permissionsHint"
   ///
   /// In en, this message translates to:
@@ -5912,11 +5978,29 @@ abstract class AppLocalizations {
   /// **'Prayer times'**
   String get settingsPrayerTimes;
 
+  /// shared key "settings.privacy"
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get settingsPrivacy;
+
   /// shared key "settings.sources"
   ///
   /// In en, this message translates to:
   /// **'Content sources'**
   String get settingsSources;
+
+  /// shared key "settings.suggest"
+  ///
+  /// In en, this message translates to:
+  /// **'Request a feature or suggest an idea'**
+  String get settingsSuggest;
+
+  /// shared key "settings.suggestTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Idea suggestion'**
+  String get settingsSuggestTitle;
 
   /// shared key "settings.theme"
   ///
@@ -6335,7 +6419,7 @@ abstract class AppLocalizations {
   /// shared key "sharawi.section"
   ///
   /// In en, this message translates to:
-  /// **'Sheikh al-Sha\'rawi\'s lessons'**
+  /// **'Sheikh al-Sha\'rawi\'s lessons library'**
   String get sharawiSection;
 
   /// shared key "sharawi.title"
@@ -6923,7 +7007,7 @@ abstract class AppLocalizations {
   /// shared key "tafsirLib.title"
   ///
   /// In en, this message translates to:
-  /// **'Tafsir'**
+  /// **'Tafsir books, simply explained'**
   String get tafsirLibTitle;
 
   /// shared key "tagline"
@@ -7225,6 +7309,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Prayer times and adhan'**
   String get tourPrayerTitle;
+
+  /// shared key "tour.privacyBody"
+  ///
+  /// In en, this message translates to:
+  /// **'We don\'t collect or keep any of your personal data, and the app needs no sign-in. We ask for your location only so the adhan comes at the right time and the qibla direction is accurate; this is worked out on your phone and we don\'t keep your location.'**
+  String get tourPrivacyBody;
+
+  /// shared key "tour.privacyTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Your data stays yours'**
+  String get tourPrivacyTitle;
 
   /// shared key "tour.quranBody"
   ///
@@ -7793,7 +7889,7 @@ abstract class AppLocalizations {
   /// shared key "zakat.title"
   ///
   /// In en, this message translates to:
-  /// **'Zakat calculator'**
+  /// **'Calculate your zakat'**
   String get zakatTitle;
 
   /// shared key "zakat.totalAlso"

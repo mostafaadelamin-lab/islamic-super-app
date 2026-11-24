@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/data/location.dart';
-import 'package:rattil/ui/onboarding_screen.dart';
 
 import '../helpers.dart';
 
@@ -13,7 +12,7 @@ void main() {
   const firstRun = <String, Object>{'onboarding.done': false};
 
   Future<void> toSetup(WidgetTester tester) async {
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 6; i++) {
       await tester.tap(find.byKey(const Key('tourNext')));
       await tester.pumpAndSettle();
     }
@@ -70,7 +69,12 @@ void main() {
       location: const FakeLocation(LocationFound(30.0445, 31.2357)),
     );
     // The tour's slides, in order.
-    for (final title in ['Welcome to Rattil wa Salli', 'The Holy Quran', 'Prayer times and adhan']) {
+    for (final title in [
+      'Welcome to Rattil wa Salli',
+      'Your data stays yours',
+      'The Holy Quran',
+      'Prayer times and adhan',
+    ]) {
       expect(find.text(title), findsOneWidget);
       await tester.tap(find.byKey(const Key('tourNext')));
       await tester.pumpAndSettle();
@@ -171,25 +175,20 @@ void main() {
     await expectAccessible(tester);
   });
 
-  testWidgets('Settings: permissions screen and the tour again', (tester) async {
+  testWidgets('Settings: every permission inside the settings, and the tour again', (tester) async {
     final device = FakeDeviceSetup();
-    await pumpApp(tester, size: tallPhone, locale: 'en', deviceSetup: device);
+    await pumpApp(tester, size: const Size(440, 4000), locale: 'en', deviceSetup: device);
     await openSettings(tester);
-    await tester.scrollUntilVisible(
-      find.byKey(const Key('permissionsTile')),
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await tester.tap(find.byKey(const Key('permissionsTile')));
-    await tester.pumpAndSettle();
-    expect(find.byType(PermissionsScreen), findsOneWidget);
+    // Owner (2026-11-24): all permissions together in the settings, each with its explanation.
+    expect(find.byKey(const Key('settingsPermissions')), findsOneWidget);
     expect(find.byKey(const Key('setupBattery')), findsOneWidget);
-    await goBack(tester);
+    await tester.ensureVisible(find.byKey(const Key('tourTile')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('tourTile')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('onboarding')), findsOneWidget);
     // Replay: the tour only, no setup page; Done closes it.
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 5; i++) {
       await tester.tap(find.byKey(const Key('tourNext')));
       await tester.pumpAndSettle();
     }
@@ -197,6 +196,6 @@ void main() {
     await tester.tap(find.byKey(const Key('tourStart')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('onboarding')), findsNothing);
-    expect(find.byKey(const Key('permissionsTile')), findsOneWidget);
+    expect(find.byKey(const Key('settingsPermissions')), findsOneWidget);
   });
 }

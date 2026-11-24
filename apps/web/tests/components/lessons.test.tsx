@@ -52,17 +52,16 @@ describe("lesson series: data", () => {
 });
 
 describe("lesson series: page", () => {
-  it("filters by scholars and topic, searches, and opens a series", async () => {
+  it("shows every topic (no scholars' groups), filters, searches, and opens a series", async () => {
     const user = userEvent.setup();
     render(<LessonsView locale="ar" loader={load} />);
     expect(await screen.findByTestId("lessons-note")).toBeInTheDocument();
     expect(screen.getByTestId("lessons-series-seerah-hassan")).toBeInTheDocument();
-    await user.click(screen.getByTestId("lessons-group-saudi"));
-    expect(screen.queryByTestId("lessons-series-seerah-hassan")).toBeNull();
-    expect(screen.getByTestId("lessons-series-riyadh-uthaymeen")).toBeInTheDocument();
-    await user.click(screen.getByTestId("lessons-group-azhar"));
-    expect(screen.getByTestId("lessons-series-asma-tayeb")).toBeInTheDocument();
-    await user.click(screen.getByTestId("lessons-group-all"));
+    // Owner (2026-11-24): no groups row (no nationality or institution shown), every topic at once.
+    expect(screen.queryByTestId("lessons-group-saudi")).toBeNull();
+    expect(screen.getByTestId("lessons-topic-stories")).toBeInTheDocument();
+    await user.click(screen.getByTestId("lessons-topic-stories"));
+    expect(screen.getByTestId("lessons-series-anbiya-awadi")).toBeInTheDocument();
     await user.click(screen.getByTestId("lessons-topic-akhira"));
     expect(screen.getByTestId("lessons-series-nihaya-hassan")).toBeInTheDocument();
     expect(screen.queryByTestId("lessons-series-seerah-hassan")).toBeNull();

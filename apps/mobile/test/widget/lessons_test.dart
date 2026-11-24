@@ -35,7 +35,10 @@ void main() {
       final urls = s.episodes.map((e) => e.url).toSet();
       expect(urls.length, s.episodes.length, reason: '${s.id}: no lesson twice');
       for (final e in s.episodes) {
-        expect(e.url, anyOf(startsWith('https://archive.org/download/'), startsWith('https://api.spreaker.com/download/')));
+        expect(
+          e.url,
+          anyOf(startsWith('https://archive.org/download/'), startsWith('https://api.spreaker.com/download/')),
+        );
         expect(e.url, isNot(contains(' ')));
         expect(e.url.toLowerCase(), endsWith('.mp3'));
         // No source/site names or Latin junk in the titles shown.
@@ -53,54 +56,52 @@ void main() {
     expect(c.filter(topic: 'tahara').first.id, 'tahara-muyassar-alaa');
   });
 
-  testWidgets('series cards filter by scholars and topic, search finds a sheikh, a card opens its lessons', (
-    tester,
-  ) async {
-    await pumpApp(tester, size: tallPhone);
-    final data = _read();
-    await pushScreen(tester, LessonsScreen(loader: () async => data));
-    expect(find.text('سلاسل الدروس'), findsWidgets);
-    expect(find.byKey(const Key('lessonsNote')), findsOneWidget);
-    expect(find.byKey(const Key('lessonsSeries.seerah-hassan')), findsOneWidget);
-    await tester.tap(find.byKey(const Key('lessonsGroup.saudi')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('lessonsSeries.seerah-hassan')), findsNothing);
-    expect(find.byKey(const Key('lessonsSeries.riyadh-uthaymeen')), findsOneWidget);
-    await tester.tap(find.byKey(const Key('lessonsGroup.azhar')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('lessonsSeries.asma-tayeb')), findsOneWidget);
-    expect(find.byKey(const Key('lessonsSeries.riyadh-uthaymeen')), findsNothing);
-    await tester.tap(find.byKey(const Key('lessonsGroup.all')));
-    await tester.pumpAndSettle();
-    await tester.ensureVisible(find.byKey(const Key('lessonsTopic.akhira')));
-    await tester.tap(find.byKey(const Key('lessonsTopic.akhira')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('lessonsSeries.nihaya-hassan')), findsOneWidget);
-    expect(find.byKey(const Key('lessonsSeries.dar-akhira-kafy')), findsOneWidget);
-    expect(find.byKey(const Key('lessonsSeries.seerah-hassan')), findsNothing);
-    await tester.ensureVisible(find.byKey(const Key('lessonsTopic.all')));
-    await tester.tap(find.byKey(const Key('lessonsTopic.all')));
-    await tester.pumpAndSettle();
-    await tester.enterText(find.byKey(const Key('lessonsSearch')), 'عبد الكافي');
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('lessonsSeries.dar-akhira-kafy')), findsOneWidget);
-    expect(find.byKey(const Key('lessonsSeries.safwa-kafy')), findsOneWidget, reason: 'all topics again');
-    expect(find.byKey(const Key('lessonsSeries.seerah-hassan')), findsNothing);
-    await tester.enterText(find.byKey(const Key('lessonsSearch')), 'لا يوجد شيء كهذا');
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('lessonsEmpty')), findsOneWidget);
-    await tester.enterText(find.byKey(const Key('lessonsSearch')), 'أحداث النهاية');
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const Key('lessonsSeries.nihaya-hassan')));
-    await tester.pumpAndSettle();
-    expect(find.byType(LessonSeriesScreen), findsOneWidget);
-    expect(find.text('الدرس ١'), findsOneWidget);
-    expect(find.textContaining('الموت'), findsWidgets);
-    expect(find.byType(OfflineButton), findsWidgets);
-    expect(find.byKey(const Key('lessonsDownloadAll')), findsOneWidget);
-    expect(find.byKey(const Key('lessonsContinueBtn')), findsOneWidget);
-    await expectAccessible(tester);
-  });
+  testWidgets(
+    '«افهم دينك»: every topic shown, no scholars\' groups, filter by topic, search finds a sheikh, a card opens its lessons',
+    (tester) async {
+      await pumpApp(tester, size: tallPhone);
+      final data = _read();
+      await pushScreen(tester, LessonsScreen(loader: () async => data));
+      expect(find.text('افهم دينك'), findsWidgets);
+      expect(find.byKey(const Key('lessonsNote')), findsOneWidget);
+      expect(find.byKey(const Key('lessonsSeries.seerah-hassan')), findsOneWidget);
+      // Owner (2026-11-24): no groups row (no nationality or institution), all topics at once.
+      expect(find.byKey(const Key('lessonsGroup.saudi')), findsNothing);
+      await tester.ensureVisible(find.byKey(const Key('lessonsTopic.stories')));
+      await tester.tap(find.byKey(const Key('lessonsTopic.stories')));
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.byKey(const Key('lessonsSeries.anbiya-awadi')));
+      expect(find.byKey(const Key('lessonsSeries.anbiya-awadi')), findsOneWidget);
+      await tester.ensureVisible(find.byKey(const Key('lessonsTopic.akhira')));
+      await tester.tap(find.byKey(const Key('lessonsTopic.akhira')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('lessonsSeries.nihaya-hassan')), findsOneWidget);
+      expect(find.byKey(const Key('lessonsSeries.dar-akhira-kafy')), findsOneWidget);
+      expect(find.byKey(const Key('lessonsSeries.seerah-hassan')), findsNothing);
+      await tester.ensureVisible(find.byKey(const Key('lessonsTopic.all')));
+      await tester.tap(find.byKey(const Key('lessonsTopic.all')));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byKey(const Key('lessonsSearch')), 'عبد الكافي');
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('lessonsSeries.dar-akhira-kafy')), findsOneWidget);
+      expect(find.byKey(const Key('lessonsSeries.safwa-kafy')), findsOneWidget, reason: 'all topics again');
+      expect(find.byKey(const Key('lessonsSeries.seerah-hassan')), findsNothing);
+      await tester.enterText(find.byKey(const Key('lessonsSearch')), 'لا يوجد شيء كهذا');
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('lessonsEmpty')), findsOneWidget);
+      await tester.enterText(find.byKey(const Key('lessonsSearch')), 'أحداث النهاية');
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('lessonsSeries.nihaya-hassan')));
+      await tester.pumpAndSettle();
+      expect(find.byType(LessonSeriesScreen), findsOneWidget);
+      expect(find.text('الدرس ١'), findsOneWidget);
+      expect(find.textContaining('الموت'), findsWidgets);
+      expect(find.byType(OfflineButton), findsWidgets);
+      expect(find.byKey(const Key('lessonsDownloadAll')), findsOneWidget);
+      expect(find.byKey(const Key('lessonsContinueBtn')), findsOneWidget);
+      await expectAccessible(tester);
+    },
+  );
 
   testWidgets('a lesson plays with the player under it, gets ✓ at its end, and "continue" goes back to it', (
     tester,

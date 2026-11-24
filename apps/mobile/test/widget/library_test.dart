@@ -214,15 +214,10 @@ void main() {
     expect(find.byKey(const Key('libraryRetry')), findsOneWidget);
   });
 
-  testWidgets('More opens the library', (tester) async {
+  testWidgets('the home tile opens the library (owner 2026-11-24: not repeated in the sections)', (tester) async {
     await pumpApp(tester, httpClient: _api(), size: tallPhone);
-    await goToTab(tester, 5);
-    await tester.scrollUntilVisible(
-      find.byKey(const Key('more.library')),
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await tester.tap(find.byKey(const Key('more.library')));
+    await tester.ensureVisible(find.byKey(const Key('home.tile-library')));
+    await tester.tap(find.byKey(const Key('home.tile-library')));
     await tester.pumpAndSettle();
     expect(find.byType(LibraryScreen), findsOneWidget);
   });

@@ -134,7 +134,9 @@ void main() {
 
   testWidgets('about: free-forever statement, no content sources (owner 2026-11-15)', (tester) async {
     await open(tester, locale: 'en');
-    await tester.scrollUntilVisible(find.byKey(const Key('aboutTile')), 200, scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(find.byKey(const Key('aboutTile')), 200, scrollable: settingsScroll);
+    await tester.ensureVisible(find.byKey(const Key('aboutTile')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('aboutTile')));
     await tester.pumpAndSettle();
     expect(find.text('A free app made for the sake of Allah: no charge and no ads.'), findsOneWidget);
@@ -146,7 +148,9 @@ void main() {
 
   testWidgets('about in Arabic', (tester) async {
     await open(tester);
-    await tester.scrollUntilVisible(find.byKey(const Key('aboutTile')), 200, scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(find.byKey(const Key('aboutTile')), 200, scrollable: settingsScroll);
+    await tester.ensureVisible(find.byKey(const Key('aboutTile')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('aboutTile')));
     await tester.pumpAndSettle();
     expect(find.text('تطبيق مجاني تم إنشاؤه لوجه الله تعالى، بدون مقابل وبدون إعلانات.'), findsOneWidget);

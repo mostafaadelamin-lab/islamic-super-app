@@ -162,12 +162,12 @@ void main() {
     expect(audio.loaded.last, endsWith('/038041.mp3'));
   });
 
-  testWidgets('stories are reachable from More', (tester) async {
+  testWidgets('the sections list no longer has the audio stories (owner 2026-11-24: a series in «افهم دينك»)', (
+    tester,
+  ) async {
     await pumpApp(tester, size: tallPhone);
     await goToTab(tester, 5);
-    await tester.tap(find.byKey(const Key('more.stories')));
-    await tester.pumpAndSettle();
-    expect(find.byType(StoriesScreen), findsOneWidget);
-    expect(find.byKey(const Key('episode-adam')), findsOneWidget);
+    expect(find.byKey(const Key('more.stories')), findsNothing);
+    expect(find.byKey(const Key('more.lessons')), findsOneWidget);
   });
 }

@@ -12,6 +12,7 @@ import 'audio_widgets.dart';
 import 'l10n_ext.dart';
 import 'library_screen.dart' show OfflineButton;
 import 'play_origin.dart';
+import 'report_error_link.dart';
 import 'r_icon.dart';
 import 'sharawi_screen.dart' show SharawiPart, SharawiScreen;
 import 'stories_screen.dart' show InlineNarrationPlayer, NarrationBar;
@@ -95,7 +96,7 @@ LessonEpisode? _lastEpisode(BuildContext context, LessonSeries s) {
   return null;
 }
 
-/// «سلاسل الدروس»: all series as cards, filtered by scholars' group (Al-Azhar / Egypt / Saudi)
+/// «افهم دينك» (lesson series): all series as cards, filtered by topic, with a search box.
 /// and topic, with search and a "continue" card for the last series listened to.
 class LessonsScreen extends StatefulWidget {
   const LessonsScreen({super.key, this.loader = loadLessons});
@@ -107,7 +108,6 @@ class LessonsScreen extends StatefulWidget {
 
 class _LessonsScreenState extends State<LessonsScreen> {
   late final Future<LessonCatalog> _future = widget.loader();
-  String? _group;
   String? _topic;
   String _query = '';
 
@@ -134,7 +134,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
             if (all == null) return const Center(child: CircularProgressIndicator());
             final q = _norm(_query.trim());
             final list = [
-              for (final s in all.filter(group: _group, topic: _topic))
+              for (final s in all.filter(topic: _topic))
                 if (q.isEmpty ||
                     _norm(s.ar).contains(q) ||
                     _norm(s.en).contains(q) ||
@@ -145,7 +145,15 @@ class _LessonsScreenState extends State<LessonsScreen> {
             ];
             Widget chip(String key, String label, bool on, VoidCallback tap) => Padding(
               padding: const EdgeInsetsDirectional.only(end: DesignTokens.spaceXs),
-              child: ChoiceChip(key: Key(key), label: Text(label), selected: on, onSelected: (_) => tap()),
+              // Owner (2026-11-24): the chosen topic is shaded more strongly.
+              child: ChoiceChip(
+                key: Key(key),
+                label: Text(label, style: on ? const TextStyle(fontWeight: FontWeight.w700) : null),
+                selected: on,
+                selectedColor: theme.colorScheme.secondary.withValues(alpha: 0.5),
+                side: on ? BorderSide(color: theme.colorScheme.secondary, width: 1.5) : null,
+                onSelected: (_) => tap(),
+              ),
             );
             return ListenableBuilder(
               listenable: context.services.settings,
@@ -170,22 +178,11 @@ class _LessonsScreenState extends State<LessonsScreen> {
                         style: theme.textTheme.bodyMedium,
                       ),
                     ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
+                    // Owner (2026-11-24): every topic visible at once, no groups row.
+                    Padding(
                       padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg),
-                      child: Row(
-                        children: [
-                          chip('lessonsGroup.all', l.lessonsAll, _group == null, () => setState(() => _group = null)),
-                          for (final g in all.groups)
-                            chip('lessonsGroup.${g.id}', g.of(ar), _group == g.id, () => setState(() => _group = g.id)),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: DesignTokens.spaceXs),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg),
-                      child: Row(
+                      child: Wrap(
+                        runSpacing: DesignTokens.spaceXs,
                         children: [
                           chip(
                             'lessonsTopic.all',
@@ -194,7 +191,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
                             () => setState(() => _topic = null),
                           ),
                           for (final t in all.topics)
-                            if (all.filter(group: _group, topic: t.id).isNotEmpty)
+                            if (all.filter(topic: t.id).isNotEmpty)
                               chip(
                                 'lessonsTopic.${t.id}',
                                 t.of(ar),
@@ -272,6 +269,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
                         padding: const EdgeInsets.all(DesignTokens.spaceLg),
                         child: Text(l.lessonsNoMatch, key: const Key('lessonsEmpty')),
                       ),
+                    ReportErrorLink(page: l.lessonsTitle),
                   ],
                 );
               },

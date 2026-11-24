@@ -597,26 +597,31 @@ void main() {
   });
 
   group('More and settings', () {
-    testWidgets('More lists the sections and settings', (tester) async {
+    testWidgets('More lists the sections in the owner\'s order and the settings', (tester) async {
       await pumpApp(tester, size: tallPhone);
       await goToTab(tester, 5);
-      for (final id in [
-        'khatma',
-        'tracker',
-        'nasheeds',
+      // Owner (2026-11-24): this order; home items (tasbih, qibla, kids, library, nasheeds) not repeated;
+      // help and about live inside the settings.
+      const order = [
+        'tafsir',
         'hadith',
-        'asma',
-        'radio',
-        'library',
-        'stories',
-        'qibla',
+        'sharawi',
         'mosques',
         'zakat',
+        'asma',
+        'khatma',
+        'tracker',
+        'radio',
         'hajj',
+        'lessons',
         'settings',
-        'about',
-      ]) {
-        expect(find.byKey(Key('more.$id')), findsOneWidget);
+      ];
+      final ys = [for (final id in order) tester.getTopLeft(find.byKey(Key('more.$id'))).dy];
+      for (var i = 1; i < ys.length; i++) {
+        expect(ys[i], greaterThan(ys[i - 1]), reason: order[i]);
+      }
+      for (final id in ['qibla', 'kids', 'library', 'nasheeds', 'stories', 'about', 'help']) {
+        expect(find.byKey(Key('more.$id')), findsNothing, reason: id);
       }
       await tester.tap(find.byKey(const Key('more.settings')));
       await tester.pumpAndSettle();

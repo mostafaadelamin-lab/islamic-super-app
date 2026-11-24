@@ -21,6 +21,7 @@ import 'prayer_calendar_screen.dart';
 import 'prayer_model.dart';
 import 'qibla_screen.dart';
 import 'radio_screen.dart';
+import 'lessons_screen.dart';
 import 'stories_screen.dart';
 import 'locate.dart';
 import 'tasbih_screen.dart';
@@ -130,7 +131,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(width: DesignTokens.spaceSm),
                       Expanded(child: _BigTile('adhkar', RIcons.dua, l.homeBigAdhkar, () => widget.onSelectTab(3))),
                       const SizedBox(width: DesignTokens.spaceSm),
-                      Expanded(child: _BigTile('prayer', RIcons.clock, l.homeBigPrayer, () => widget.onSelectTab(2))),
+                      // «الأذان» (was «مواقيت الصلاة»): the tab opens on the adhan alerts, then the times (owner 2026-11-24).
+                      Expanded(child: _BigTile('prayer', RIcons.bell, l.homeBigPrayer, () => widget.onSelectTab(2))),
                       const SizedBox(width: DesignTokens.spaceSm),
                       // Hajj & Umrah next to the prayer times (owner, 2026-11-17).
                       Expanded(
@@ -145,13 +147,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   b: _WideTile('qibla', RIcons.compass, l.homeBigQibla, () => _push(const QiblaScreen())),
                 ),
                 const SizedBox(height: DesignTokens.spaceSm),
-                // Kids section in place of the short videos, which the Videos tab already opens (owner, 2026-11-20).
+                // Owner 2026-11-24: «علّم طفلك» under the tasbih, «افهم دينك» (the lesson series, which now
+                // hold the prophets' stories too) in place of the stories; the recitations library under the
+                // kids, the nasheeds beside it.
                 _WideRow(
                   a: _WideTile('kids', RIcons.kids, l.kidsTitle, () => _push(const KidsScreen())),
-                  b: _WideTile('stories', RIcons.headphones, l.homeBigStories, () => _push(const StoriesScreen())),
+                  b: _WideTile('lessons', RIcons.headphones, l.lessonsTitle, () => _push(const LessonsScreen())),
                 ),
                 const SizedBox(height: DesignTokens.spaceSm),
-                // Recitations library under the videos, nasheeds under the stories (owner, 2026-11-17).
                 _WideRow(
                   a: _WideTile('library', RIcons.reciter, l.homeBigLibrary, () => _push(const LibraryScreen())),
                   b: _WideTile('nasheeds', RIcons.playlist, l.homeBigNasheeds, () => _push(const NasheedsScreen())),
@@ -641,7 +644,6 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
         final isRadio = rec.isActive && rec.scope == PlayScope.radio;
         final playing = isRadio && rec.isPlaying;
         final minutes = _chosen;
-        final step = QuranRadioCard.durations.indexOf(minutes);
         final cur = isRadio ? rec.current : null;
         // Live station chosen for the card (Cairo Quran radio unless the user picked another).
         final station = s.settings.radioStation;
@@ -649,13 +651,6 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
         final n = s.narration;
         final liveOn = live != null && n.episode?.id == live.id;
         final livePlaying = liveOn && n.isPlaying;
-
-        void setDuration(int delta) {
-          final i = ((step < 0 ? 0 : step) + delta).clamp(0, QuranRadioCard.durations.length - 1);
-          final m = QuranRadioCard.durations[i];
-          setState(() => _chosen = m);
-          if (isRadio || livePlaying) s.sleepTimer.set(m == 0 ? null : m);
-        }
 
         Future<void> onPlay() async {
           if (live != null) {
@@ -748,16 +743,52 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
                               ),
                             ),
                             const SizedBox(width: DesignTokens.spaceXs),
-                            if (liveOn && n.isActive) ...[
-                              const InlinePlayerMarker(),
+                            if ((liveOn && n.isActive) || isRadio) ...[
+                              if (liveOn) const InlinePlayerMarker(),
                               IconButton(
                                 key: const Key('inlineStop'),
                                 tooltip: l.storiesStop,
                                 icon: const RIcon(RIcons.close),
-                                onPressed: n.stop,
+                                onPressed: liveOn ? n.stop : rec.stop,
                               ),
-                              const SleepTimerButton(),
                             ],
+                            // Play duration lives inside the player bar (owner, 2026-11-24).
+                            PopupMenuButton<int>(
+                              key: const Key('radio.duration'),
+                              tooltip: l.radioDuration,
+                              initialValue: minutes,
+                              onSelected: (m) {
+                                setState(() => _chosen = m);
+                                if (isRadio || livePlaying) s.sleepTimer.set(m == 0 ? null : m);
+                              },
+                              itemBuilder: (context) => [
+                                for (final m in QuranRadioCard.durations)
+                                  PopupMenuItem(
+                                    key: Key('radio.duration-$m'),
+                                    value: m,
+                                    child: Text(m == 0 ? l.radioUnlimited : l.radioMin(context.num(m))),
+                                  ),
+                              ],
+                              child: Container(
+                                constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+                                alignment: Alignment.center,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    RIcon(RIcons.moon, color: scheme.primary),
+                                    Text(
+                                      (isRadio || livePlaying) && s.sleepTimer.minutesLeft != null
+                                          ? context.num(s.sleepTimer.minutesLeft!)
+                                          : minutes == 0
+                                          ? '∞'
+                                          : context.num(minutes),
+                                      key: const Key('radio.durationLabel'),
+                                      style: theme.labelSmall?.copyWith(fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                             IconButton.filled(
                               key: const Key('radio.play'),
                               tooltip: (playing || livePlaying) ? l.radioPause : l.radioListen,
@@ -805,43 +836,6 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: DesignTokens.spaceSm),
-              Row(
-                children: [
-                  Text(l.radioDuration, style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
-                  const SizedBox(width: DesignTokens.spaceSm),
-                  Expanded(
-                    child: _Box(
-                      child: Row(
-                        children: [
-                          IconButton(
-                            key: const Key('radio.longer'),
-                            tooltip: l.radioLonger,
-                            color: scheme.primary,
-                            onPressed: step == QuranRadioCard.durations.length - 1 ? null : () => setDuration(1),
-                            icon: const RIcon(RIcons.plus),
-                          ),
-                          Expanded(
-                            child: Text(
-                              minutes == 0 ? l.radioUnlimited : l.radioMin(context.num(minutes)),
-                              key: const Key('radio.duration'),
-                              textAlign: TextAlign.center,
-                              style: theme.labelMedium?.copyWith(fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          IconButton(
-                            key: const Key('radio.shorter'),
-                            tooltip: l.radioShorter,
-                            color: scheme.primary,
-                            onPressed: step <= 0 ? null : () => setDuration(-1),
-                            icon: const RIcon(RIcons.minus),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                 ],

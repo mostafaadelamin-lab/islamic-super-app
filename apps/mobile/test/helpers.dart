@@ -609,3 +609,7 @@ class TestDriveCues implements DriveCues {
   @override
   Future<void> dispose() async {}
 }
+
+/// The settings page's own list (its cards hold other scrollables, e.g. the permission steps).
+Finder get settingsScroll =>
+    find.descendant(of: find.byKey(const Key('settingsList')), matching: find.byType(Scrollable)).first;

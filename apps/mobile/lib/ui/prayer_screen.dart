@@ -91,7 +91,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: shellBackButton(context),
-        title: Text(widget.settingsMode ? l.prayerEditTimes : l.prayerTitle),
+        title: Text(widget.settingsMode ? l.prayerEditTimes : l.adhanTabTitle),
       ),
       body: ReadableWidth(
         child: ListenableBuilder(
@@ -400,9 +400,11 @@ class _PrayerScreenState extends State<PrayerScreen> {
               key: const Key('prayerList'),
               padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
               children: [
-                ...timesCard,
-                // Owner (2026-11-11): adhan alerts and the muezzin choice live on the prayer page itself.
+                // Owner (2026-11-24): this tab is «الأذان» — the adhan alerts with all their parts come
+                // first, then the prayer times.
                 const AdhanSettingsCard(),
+                if (s.settings.adhanEnabled) _AdhanExtrasCard(settings: s.settings),
+                ...timesCard,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceXl, vertical: DesignTokens.spaceSm),
                   child: Text(

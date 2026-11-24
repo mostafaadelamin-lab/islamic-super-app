@@ -18,7 +18,6 @@ import 'prayer_screen.dart';
 import 'l10n_ext.dart';
 import 'muezzin_screen.dart';
 import 'onboarding_screen.dart';
-import 'prayer_widget_card.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
@@ -95,7 +94,12 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const MushafLookCard(),
+                // Owner (2026-11-24): every permission together, each with its explanation.
+                SectionCard(
+                  key: const Key('settingsPermissions'),
+                  title: l.settingsPermissionsHeader,
+                  children: const [DeviceSetupPanel()],
+                ),
                 SectionCard(
                   title: l.settingsPrayerTimes,
                   children: [
@@ -139,19 +143,11 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                // Owner 2026-11-21: users who had the app before add the prayer widget from here.
-                const PrayerWidgetCard(),
+                const HijriOffsetCard(),
+                const MushafLookCard(),
                 SectionCard(
+                  title: l.settingsAppSection,
                   children: [
-                    ListTile(
-                      key: const Key('permissionsTile'),
-                      contentPadding: EdgeInsets.zero,
-                      leading: const RIcon(RIcons.bell),
-                      title: Text(l.settingsPermissions),
-                      subtitle: Text(l.settingsPermissionsHint),
-                      trailing: const RIcon(RIcons.chevronForward),
-                      onTap: () => _push(context, const PermissionsScreen()),
-                    ),
                     ListTile(
                       key: const Key('tourTile'),
                       contentPadding: EdgeInsets.zero,
@@ -164,10 +160,13 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ],
-                ),
-                SectionCard(
-                  children: [
+                    ListTile(
+                      key: const Key('shareTile'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const RIcon(RIcons.share),
+                      title: Text(l.helpShareApp),
+                      onTap: () => s.sharer.shareText(shareAppText(l, links)),
+                    ),
                     if (store != null)
                       ListTile(
                         key: const Key('rateTile'),
@@ -178,11 +177,20 @@ class SettingsScreen extends StatelessWidget {
                         onTap: () => launchUrl(Uri.parse(store), mode: LaunchMode.externalApplication),
                       ),
                     ListTile(
-                      key: const Key('shareTile'),
+                      key: const Key('contactTile'),
                       contentPadding: EdgeInsets.zero,
-                      leading: const RIcon(RIcons.share),
-                      title: Text(l.helpShareApp),
-                      onTap: () => s.sharer.shareText(shareAppText(l, links)),
+                      leading: const RIcon(RIcons.mail),
+                      title: Text(l.helpContact),
+                      trailing: const RIcon(RIcons.chevronForward),
+                      onTap: () => _push(context, const ContactScreen()),
+                    ),
+                    ListTile(
+                      key: const Key('suggestTile'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const RIcon(RIcons.bulb),
+                      title: Text(l.settingsSuggest),
+                      trailing: const RIcon(RIcons.chevronForward),
+                      onTap: () => _push(context, ContactScreen(initialTitle: l.settingsSuggestTitle)),
                     ),
                     ListTile(
                       key: const Key('faqTile'),
@@ -193,12 +201,24 @@ class SettingsScreen extends StatelessWidget {
                       onTap: () => _push(context, const HelpScreen()),
                     ),
                     ListTile(
-                      key: const Key('contactTile'),
+                      key: const Key('aboutTile'),
                       contentPadding: EdgeInsets.zero,
-                      leading: const RIcon(RIcons.mail),
-                      title: Text(l.helpContact),
+                      leading: const RIcon(RIcons.info),
+                      title: Text(l.settingsAbout),
+                      subtitle: Text(l.aboutVersion(context.num(AboutScreen.appVersion))),
                       trailing: const RIcon(RIcons.chevronForward),
-                      onTap: () => _push(context, const ContactScreen()),
+                      onTap: () => _push(context, const AboutScreen()),
+                    ),
+                    ListTile(
+                      key: const Key('privacyTile'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const RIcon(RIcons.shield),
+                      title: Text(l.settingsPrivacy),
+                      trailing: const RIcon(RIcons.chevronForward),
+                      onTap: () => launchUrl(
+                        Uri.parse('https://rattilwasalli.com/privacy-policy.html'),
+                        mode: LaunchMode.externalApplication,
+                      ),
                     ),
                     ListTile(
                       key: const Key('ourAppsTile'),
@@ -206,14 +226,6 @@ class SettingsScreen extends StatelessWidget {
                       leading: const RIcon(RIcons.list),
                       title: Text(l.settingsOurApps),
                       subtitle: Text(l.settingsOurAppsSoon),
-                    ),
-                    ListTile(
-                      key: const Key('aboutTile'),
-                      contentPadding: EdgeInsets.zero,
-                      leading: const RIcon(RIcons.info),
-                      title: Text(l.settingsAbout),
-                      trailing: const RIcon(RIcons.chevronForward),
-                      onTap: () => _push(context, const AboutScreen()),
                     ),
                   ],
                 ),

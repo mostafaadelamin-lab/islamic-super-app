@@ -1,7 +1,6 @@
 // Preview pictures of «سلاسل الدروس» (owner 2026-11-23): the series cards and one series with a lesson playing.
 // Output: $RATTIL_SCREENSHOT_DIR/lesson-series, or build/screenshots/lesson-series.
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -55,19 +54,15 @@ void main() {
     await shot(tester, '01-app-lesson-series');
   });
 
-  testWidgets('app: Al-Azhar scholars (the Grand Imam first), and the simple purity lessons', (tester) async {
+  testWidgets('app: the simple purity lessons', (tester) async {
     tester.view.devicePixelRatio = 1;
     await pumpApp(tester, size: const Size(440, 956));
     final data = read();
     await pushScreen(tester, LessonsScreen(loader: () async => data));
-    await tester.tap(find.byKey(const Key('lessonsGroup.azhar')));
-    await tester.pumpAndSettle();
-    await shot(tester, '03-app-azhar');
-    await tester.tap(find.byKey(const Key('lessonsGroup.all')));
-    await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const Key('lessonsTopic.tahara')));
     await tester.tap(find.byKey(const Key('lessonsTopic.tahara')));
     await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('lessonsSeries.tahara-muyassar-alaa')));
     await tester.tap(find.byKey(const Key('lessonsSeries.tahara-muyassar-alaa')));
     await tester.pumpAndSettle();
     await shot(tester, '04-app-tahara-simple');

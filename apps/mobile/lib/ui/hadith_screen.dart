@@ -9,6 +9,7 @@ import 'adhkar_screen.dart';
 import 'dhikr_tools.dart';
 import 'hadith_explain.dart';
 import 'l10n_ext.dart';
+import 'report_error_link.dart';
 import 'r_icon.dart';
 import 'review_notice.dart';
 
@@ -58,6 +59,7 @@ class HadithScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ),
+            ReportErrorLink(page: l.hadithTitle),
           ],
         ),
       ),
