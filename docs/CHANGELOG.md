@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.2.22] — Car screen: al-Sha'rawi's library, «افهم دينك», «علّم طفلك» — 2026-11-25
+- CarPlay / Android Auto: al-Sha'rawi's whole library (seerah, prophets' stories, then the tafsir by surah); «افهم دينك» with every topic, series and lesson (Awadi's prophets' stories inside it); «علّم طفلك» (teaching Mushaf, the audio kids' stories, the children's ruqyah verses). Adhkar, radio, recitation library and nasheeds unchanged.
+
 ## [1.2.21] — Simple home and sections in the owner's design — 2026-11-24
 Owner 2026-11-24 (own description, then comments on real screenshots). Combined with the 1.2.20 Mushaf fix, «رجوع» = the page before, and nearby mosques from 1 km.
 ### Phone apps (Android + iPhone)
