@@ -1141,7 +1141,7 @@
   "car.radio": "Radio",
   "car.library": "Recitation library",
   "car.librarySub": "Reciters · surah by surah",
-  "car.sharawiSub": "Audio lessons by surah",
+  "car.sharawiSub": "Quran tafsir · Seerah · Prophets' stories",
   "car.stories": "Stories of the Prophets",
   "car.storiesSub": "Sheikh Nabil al-Awadi",
   "car.nasheeds": "Nasheeds",
@@ -1185,5 +1185,10 @@
   "report.title": "Mistake in: {page}",
   "tour.privacyTitle": "Your data stays yours",
   "tour.privacyBody": "We don't collect or keep any of your personal data, and the app needs no sign-in. We ask for your location only so the adhan comes at the right time and the qibla direction is accurate; this is worked out on your phone and we don't keep your location.",
-  "settings.privacy": "Privacy policy"
+  "settings.privacy": "Privacy policy",
+  "car.afhamSub": "Every topic and lesson series",
+  "car.kidsSub": "Teaching Mushaf · stories · ruqyah",
+  "car.seriesCount": "{n} series",
+  "car.episodes": "{n} episodes",
+  "car.kidsRuqyahSub": "The ruqyah verses, recited"
 }

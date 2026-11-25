@@ -257,6 +257,7 @@ class AppServices {
         settings: settings,
         content: content,
         library: mp3quran,
+        recitation: recitation,
       );
       a.browser = browser; // Android Auto
       if (defaultTargetPlatform == TargetPlatform.iOS) CarPlayBridge(browser, settings); // CarPlay

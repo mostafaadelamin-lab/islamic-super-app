@@ -687,6 +687,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookmarksEmpty => 'No bookmarks yet';
 
   @override
+  String get carAfhamSub => 'Every topic and lesson series';
+
+  @override
+  String carEpisodes(String n) {
+    return '$n episodes';
+  }
+
+  @override
+  String get carKidsRuqyahSub => 'The ruqyah verses, recited';
+
+  @override
+  String get carKidsSub => 'Teaching Mushaf · stories · ruqyah';
+
+  @override
   String get carLibrary => 'Recitation library';
 
   @override
@@ -702,7 +716,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get carRadio => 'Radio';
 
   @override
-  String get carSharawiSub => 'Audio lessons by surah';
+  String carSeriesCount(String n) {
+    return '$n series';
+  }
+
+  @override
+  String get carSharawiSub => 'Quran tafsir · Seerah · Prophets\' stories';
 
   @override
   String get carStories => 'Stories of the Prophets';

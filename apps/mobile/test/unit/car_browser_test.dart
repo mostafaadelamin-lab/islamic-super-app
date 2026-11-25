@@ -16,6 +16,9 @@ import 'package:rattil/data/recitation.dart';
 import 'package:rattil/data/settings.dart';
 import 'package:rattil/domain/adhkar.dart';
 import 'package:rattil/domain/drive_mode.dart';
+import 'package:rattil/domain/kids.dart';
+import 'package:rattil/domain/lessons.dart';
+import 'package:rattil/domain/teacher_timings.dart';
 import 'package:rattil/domain/nasheeds.dart' show Munshid;
 import 'package:rattil/domain/radios.dart';
 import 'package:rattil/domain/sharawi.dart';
@@ -56,7 +59,13 @@ const _reciters = {
       'id': 8,
       'name': 'ورش فقط',
       'moshaf': [
-        {'id': 80, 'name': 'ورش عن نافع', 'rewaya_id': 2, 'server': 'https://cdn.mp3quran.net/warsh/', 'surah_list': '1'},
+        {
+          'id': 80,
+          'name': 'ورش عن نافع',
+          'rewaya_id': 2,
+          'server': 'https://cdn.mp3quran.net/warsh/',
+          'surah_list': '1',
+        },
       ],
     },
   ],
@@ -88,6 +97,7 @@ void main() {
   late FakeNarrationBackend voice;
   late NarrationController narration;
   late CarBrowser car;
+  late RecitationController rec;
 
   setUp(() async {
     AudioFocus.reset();
@@ -105,7 +115,7 @@ void main() {
       cues: FakeCues.new,
     );
     voice = FakeNarrationBackend();
-    final rec = RecitationController(content: c, settings: settings, backendFactory: FakeAudioBackend.new);
+    rec = RecitationController(content: c, settings: settings, backendFactory: FakeAudioBackend.new);
     narration = NarrationController(settings: settings, recitation: rec, backendFactory: () => voice);
     car = CarBrowser(
       drive: drive,
@@ -115,11 +125,15 @@ void main() {
       library: Mp3QuranClient(httpClient: _api(), prefs: prefs),
       nasheeds: () async => Munshid.parse(File('assets/content/nasheeds.v2.json').readAsStringSync()),
       sharawi: () async => SharawiTafsir.parse(File('assets/content/sharawi.v1.json').readAsStringSync()),
+      lessons: () async => LessonCatalog.parse(File('assets/content/lessons.v1.json').readAsStringSync()),
+      kids: () async => KidsContent.parse(File('assets/content/kids.v1.json').readAsStringSync()),
+      teacher: (n) async => TeacherTimings.parse(File(TeacherTimings.assetFor(n)).readAsStringSync()),
+      recitation: rec,
     );
   });
   tearDown(() => drive.dispose());
 
-  test('first list: morning and evening adhkar, then radio, library, Sha\'rawi, stories, nasheeds', () async {
+  test('first list: adhkar, radio, library, Sha\'rawi, «افهم دينك», «علّم طفلك», nasheeds', () async {
     final root = await car.children(AudioService.browsableRootId);
     expect(root.map((e) => e.id), [
       DriveBrowser.morningId,
@@ -127,16 +141,18 @@ void main() {
       CarBrowser.radioId,
       CarBrowser.libraryId,
       CarBrowser.sharawiId,
-      CarBrowser.storiesId,
+      CarBrowser.afhamId,
+      CarBrowser.kidsId,
       CarBrowser.nasheedsId,
     ]);
     expect(root.map((e) => e.title), [
       'أذكار الصباح',
       'أذكار المساء',
-      'الإذاعة',
-      'مكتبة التلاوة',
-      'تفسير الشعراوي',
-      'قصص الأنبياء',
+      'إذاعات متنوعة',
+      'مكتبة التلاوات',
+      'مكتبة دروس الشيخ الشعراوي',
+      'افهم دينك',
+      'علّم طفلك',
       'الأناشيد',
     ]);
     expect(root.take(2).every((e) => e.playable == true), isTrue);
@@ -168,29 +184,71 @@ void main() {
     expect(voice.loaded.single, 'https://server6.mp3quran.net/akdr/002.mp3');
   });
 
-  test('al-Sha\'rawi: surahs, then lessons; a lesson plays with the same id as on the phone', () async {
-    final surahs = await car.children(CarBrowser.sharawiId);
-    expect(surahs.length, greaterThan(50));
-    final fatiha = surahs.firstWhere((e) => e.id == '${CarBrowser.sharawiId}/1');
+  test('al-Sha\'rawi: his seerah and prophets\' stories first, then the tafsir surah by surah', () async {
+    final list = await car.children(CarBrowser.sharawiId);
+    expect(list.take(2).map((e) => e.title), ['السيرة النبوية', 'قصص الأنبياء']);
+    expect(list.take(2).every((e) => e.playable == false), isTrue);
+    final fatiha = list.firstWhere((e) => e.id == '${CarBrowser.sharawiId}/1');
     expect(fatiha.title, 'الفاتحة');
+    expect(fatiha.extras!['section'], 'تفسير القرآن');
     final lessons = await car.children(fatiha.id);
-    expect(lessons, isNotEmpty);
     expect(lessons.first.title, 'الدرس ١');
     await car.play(lessons.first.id);
     expect(narration.seriesId, 'sharawi');
     expect(narration.episode!.id, 'sharawi-${lessons.first.id.split('/').last}');
     expect(narration.playlist, hasLength(lessons.length));
+
+    // The seerah: its lessons, played with the lessons screen's ids.
+    final seerah = await car.children(list.first.id);
+    expect(seerah.length, greaterThan(100));
+    await car.play(seerah[1].id);
+    expect(narration.seriesId, 'lessons-seerah-shaarawi');
+    expect(narration.episode!.id, 'seerah-shaarawi-2');
+    expect(narration.playlist, hasLength(seerah.length));
   });
 
-  test('prophets\' stories: the episodes, playing goes on to the next one', () async {
-    final eps = await car.children(CarBrowser.storiesId);
-    expect(eps, isNotEmpty);
-    final series = c.stories.series.firstWhere((s) => s.episodes.isNotEmpty);
-    expect(eps.first.title, series.episodes.first.titleAr);
+  test('«افهم دينك»: every topic, its series, their lessons; Awadi\'s prophets\' stories are in it', () async {
+    final catalog = LessonCatalog.parse(File('assets/content/lessons.v1.json').readAsStringSync());
+    final topics = await car.children(CarBrowser.afhamId);
+    expect(topics, hasLength(catalog.topics.length));
+    final stories = topics.firstWhere((e) => e.title == 'الأنبياء والصحابة والقصص');
+    final series = await car.children(stories.id);
+    final awadi = series.firstWhere((e) => e.artist!.contains('العوضي'));
+    final eps = await car.children(awadi.id);
+    expect(eps, hasLength(19));
     await car.play(eps.first.id);
-    expect(narration.seriesId, series.id);
-    expect(narration.episode!.id, series.episodes.first.id);
-    expect(narration.hasNext, series.episodes.length > 1);
+    expect(narration.seriesId, startsWith('lessons-'));
+    expect(narration.hasNext, isTrue);
+    // Every series of the lessons list is reachable (al-Sha'rawi's tafsir is in his own section).
+    var count = 0;
+    for (final t in topics) {
+      count += (await car.children(t.id)).length;
+    }
+    expect(count, catalog.listed.where((s) => !s.isSharawiTafsir).length);
+  });
+
+  test('«علّم طفلك»: teaching Mushaf, the audio stories and the ruqyah', () async {
+    final list = await car.children(CarBrowser.kidsId);
+    expect(list.map((e) => e.title), [
+      'المصحف المعلّم للأطفال',
+      'قصص الأنبياء: الحلقات الكاملة',
+      'قصص الرسول ﷺ للأطفال',
+      'قصص قصيرة هادفة',
+      'الرقية الشرعية للأطفال',
+    ]);
+    final surahs = await car.children(CarBrowser.teacherId);
+    expect(surahs.first.title, '١. الفاتحة');
+    await car.play(surahs.first.id);
+    expect(narration.seriesId, 'kids-teacher');
+    expect(narration.playlist, hasLength(surahs.length));
+
+    final rasoul = await car.children(list[2].id);
+    expect(rasoul, hasLength(17));
+    await car.play(rasoul.first.id);
+    expect(narration.seriesId, 'kids-rasoul');
+
+    await car.play(list.last.id);
+    expect(rec.current, isNotNull);
   });
 
   test('nasheeds: munshids, then their nasheeds', () async {
@@ -210,57 +268,55 @@ void main() {
     expect(car.failed, isTrue);
   });
 
-  test(
-    'CarPlay: first list with sections, opening a section, the dhikr text button only in driving mode',
-    () async {
-      const channel = MethodChannel(CarPlayBridge.channelName);
-      final messenger = TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
-      final sent = <String, List<Map<Object?, Object?>>>{};
-      messenger.setMockMethodCallHandler(channel, (call) async {
-        sent.putIfAbsent(call.method, () => []).add(call.arguments as Map<Object?, Object?>);
-        return null;
-      });
-      addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
-      Future<Object?> fromCar(String method, [Object? args]) async {
-        Object? reply;
-        await messenger.handlePlatformMessage(
-          CarPlayBridge.channelName,
-          const StandardMethodCodec().encodeMethodCall(MethodCall(method, args)),
-          (data) => reply = data == null ? null : const StandardMethodCodec().decodeEnvelope(data),
-        );
-        return reply;
-      }
+  test('CarPlay: first list with sections, opening a section, the dhikr text button only in driving mode', () async {
+    const channel = MethodChannel(CarPlayBridge.channelName);
+    final messenger = TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+    final sent = <String, List<Map<Object?, Object?>>>{};
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      sent.putIfAbsent(call.method, () => []).add(call.arguments as Map<Object?, Object?>);
+      return null;
+    });
+    addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
+    Future<Object?> fromCar(String method, [Object? args]) async {
+      Object? reply;
+      await messenger.handlePlatformMessage(
+        CarPlayBridge.channelName,
+        const StandardMethodCodec().encodeMethodCall(MethodCall(method, args)),
+        (data) => reply = data == null ? null : const StandardMethodCodec().decodeEnvelope(data),
+      );
+      return reply;
+    }
 
-      final bridge = CarPlayBridge(car, settings);
-      addTearDown(bridge.dispose);
-      await pump();
-      final root = (sent['items']!.single['items']! as List).cast<Map<Object?, Object?>>();
-      expect(root, hasLength(7));
-      expect(root.map((e) => e['browsable']), [false, false, true, true, true, true, true]);
-      expect(sent['textButton']!.last, {'title': 'نص الذكر', 'on': false});
+    final bridge = CarPlayBridge(car, settings);
+    addTearDown(bridge.dispose);
+    await pump();
+    final root = (sent['items']!.single['items']! as List).cast<Map<Object?, Object?>>();
+    expect(root, hasLength(8));
+    expect(root.map((e) => e['browsable']), [false, false, true, true, true, true, true, true]);
+    expect(sent['textButton']!.last, {'title': 'نص الذكر', 'on': false});
 
-      final radio = (await fromCar('children', CarBrowser.radioId))! as Map;
-      expect((radio['items']! as List), hasLength(featuredRadios.length));
+    final radio = (await fromCar('children', CarBrowser.radioId))! as Map;
+    expect((radio['items']! as List), hasLength(featuredRadios.length));
 
-      // Driving mode on: the button turns on and gives the whole dhikr in lines.
-      expect(await fromCar('play', DriveBrowser.morningId), isNull);
-      await pump();
-      expect(drive.isPlaying, isTrue);
-      expect(sent['textButton']!.last['on'], isTrue);
-      final text = (await fromCar('text'))! as Map;
-      final lines = (text['lines']! as List).cast<String>();
-      expect(lines.join(' '), drive.current!.dhikr.text.trim().replaceAll(RegExp(r'\s+'), ' '));
-      await drive.stop();
-      expect(sent['textButton']!.last['on'], isFalse);
+    // Driving mode on: the button turns on and gives the whole dhikr in lines.
+    expect(await fromCar('play', DriveBrowser.morningId), isNull);
+    await pump();
+    expect(drive.isPlaying, isTrue);
+    expect(sent['textButton']!.last['on'], isTrue);
+    final text = (await fromCar('text'))! as Map;
+    final lines = (text['lines']! as List).cast<String>();
+    expect(lines.join(' '), drive.current!.dhikr.text.trim().replaceAll(RegExp(r'\s+'), ' '));
+    await drive.stop();
+    expect(sent['textButton']!.last['on'], isFalse);
 
-      // A failed download: the car shows the message.
-      files.ok = false;
-      expect(await fromCar('play', DriveBrowser.eveningId), contains('تعذّر'));
-    },
-  );
+    // A failed download: the car shows the message.
+    files.ok = false;
+    expect(await fromCar('play', DriveBrowser.eveningId), contains('تعذّر'));
+  });
 
   test('the text parts keep every word and fit the car title', () {
-    const t = 'اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ';
+    const t =
+        'اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ';
     final parts = driveParts(t);
     expect(parts.join(' '), t);
     expect(parts.length, greaterThan(1));

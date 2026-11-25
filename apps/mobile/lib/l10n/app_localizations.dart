@@ -1280,6 +1280,30 @@ abstract class AppLocalizations {
   /// **'No bookmarks yet'**
   String get bookmarksEmpty;
 
+  /// shared key "car.afhamSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Every topic and lesson series'**
+  String get carAfhamSub;
+
+  /// shared key "car.episodes"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} episodes'**
+  String carEpisodes(String n);
+
+  /// shared key "car.kidsRuqyahSub"
+  ///
+  /// In en, this message translates to:
+  /// **'The ruqyah verses, recited'**
+  String get carKidsRuqyahSub;
+
+  /// shared key "car.kidsSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Teaching Mushaf · stories · ruqyah'**
+  String get carKidsSub;
+
   /// shared key "car.library"
   ///
   /// In en, this message translates to:
@@ -1310,10 +1334,16 @@ abstract class AppLocalizations {
   /// **'Radio'**
   String get carRadio;
 
+  /// shared key "car.seriesCount"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} series'**
+  String carSeriesCount(String n);
+
   /// shared key "car.sharawiSub"
   ///
   /// In en, this message translates to:
-  /// **'Audio lessons by surah'**
+  /// **'Quran tafsir · Seerah · Prophets\' stories'**
   String get carSharawiSub;
 
   /// shared key "car.stories"

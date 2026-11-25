@@ -980,6 +980,27 @@
   "@bookmarksEmpty": {
     "description": "shared key \"bookmarks.empty\""
   },
+  "carAfhamSub": "Every topic and lesson series",
+  "@carAfhamSub": {
+    "description": "shared key \"car.afhamSub\""
+  },
+  "carEpisodes": "{n} episodes",
+  "@carEpisodes": {
+    "description": "shared key \"car.episodes\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "carKidsRuqyahSub": "The ruqyah verses, recited",
+  "@carKidsRuqyahSub": {
+    "description": "shared key \"car.kidsRuqyahSub\""
+  },
+  "carKidsSub": "Teaching Mushaf · stories · ruqyah",
+  "@carKidsSub": {
+    "description": "shared key \"car.kidsSub\""
+  },
   "carLibrary": "Recitation library",
   "@carLibrary": {
     "description": "shared key \"car.library\""
@@ -1000,7 +1021,16 @@
   "@carRadio": {
     "description": "shared key \"car.radio\""
   },
-  "carSharawiSub": "Audio lessons by surah",
+  "carSeriesCount": "{n} series",
+  "@carSeriesCount": {
+    "description": "shared key \"car.seriesCount\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "carSharawiSub": "Quran tafsir · Seerah · Prophets' stories",
   "@carSharawiSub": {
     "description": "shared key \"car.sharawiSub\""
   },

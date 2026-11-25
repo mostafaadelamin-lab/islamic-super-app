@@ -1,6 +1,7 @@
 // The app's lists on the car screen (Android Auto and CarPlay): the morning / evening adhkar
-// in driving mode first, then the listening sections the owner asked for on 2026-11-23:
-// radio, the recitation library, al-Sha'rawi's tafsir, the prophets' stories and nasheeds.
+// in driving mode first, then the listening sections the owner asked for (2026-11-23, 2026-11-25):
+// radio, the recitation library, al-Sha'rawi's whole library, «افهم دينك» (every lesson series),
+// «علّم طفلك» (what children can listen to) and nasheeds.
 //
 // Picking an item plays it through the same players as the phone screens (driving mode, or the
 // narration player with the same series and episode ids, so saved copies and the place where the
@@ -11,11 +12,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart' show Locale;
 
+import '../domain/kids.dart';
+import '../domain/lessons.dart';
 import '../domain/mp3quran.dart';
 import '../domain/nasheeds.dart' show Munshid, Nasheed;
 import '../domain/radios.dart';
 import '../domain/sharawi.dart';
 import '../domain/stories.dart';
+import '../domain/teacher_timings.dart';
 import '../domain/text.dart';
 import '../l10n/app_localizations.dart';
 import 'content.dart';
@@ -35,14 +39,24 @@ class CarBrowser implements MediaBrowser {
     required this.settings,
     required this.content,
     required this.library,
+    this.recitation,
     Future<List<Munshid>> Function()? nasheeds,
     Future<SharawiTafsir> Function()? sharawi,
+    Future<LessonCatalog> Function()? lessons,
+    Future<KidsContent> Function()? kids,
+    Future<TeacherTimings> Function(int surah)? teacher,
   }) : _drive = DriveBrowser(drive, settings),
        _loadNasheeds = nasheeds ?? _assetNasheeds,
-       _loadSharawi = sharawi ?? _assetSharawi;
+       _loadSharawi = sharawi ?? _assetSharawi,
+       _loadLessons = lessons ?? _assetLessons,
+       _loadKids = kids ?? _assetKids,
+       _loadTeacher = teacher ?? _assetTeacher;
 
   final DriveModeController drive;
   final NarrationController narration;
+
+  /// Plays the Quran passages of the children's ruqyah. Null: that row is left out.
+  final RecitationController? recitation;
   final SettingsController settings;
   final AppContent content;
 
@@ -51,18 +65,38 @@ class CarBrowser implements MediaBrowser {
   final DriveBrowser _drive;
   final Future<List<Munshid>> Function() _loadNasheeds;
   final Future<SharawiTafsir> Function() _loadSharawi;
+  final Future<LessonCatalog> Function() _loadLessons;
+  final Future<KidsContent> Function() _loadKids;
+  final Future<TeacherTimings> Function(int surah) _loadTeacher;
   Future<List<Munshid>>? _nasheeds;
   Future<SharawiTafsir>? _sharawi;
+  Future<LessonCatalog>? _lessons;
+  Future<KidsContent>? _kids;
 
   static Future<List<Munshid>> _assetNasheeds() async =>
       Munshid.parse(await rootBundle.loadString('assets/content/nasheeds.v2.json'));
   static Future<SharawiTafsir> _assetSharawi() async =>
       SharawiTafsir.parse(await rootBundle.loadString('assets/content/sharawi.v1.json'));
 
+  static Future<LessonCatalog> _assetLessons() async =>
+      LessonCatalog.parse(await rootBundle.loadString('assets/content/lessons.v1.json'));
+  static Future<KidsContent> _assetKids() async =>
+      KidsContent.parse(await rootBundle.loadString('assets/content/kids.v1.json'));
+  static Future<TeacherTimings> _assetTeacher(int surah) async =>
+      TeacherTimings.parse(await rootBundle.loadString(TeacherTimings.assetFor(surah)));
+
   static const radioId = 'car/radio';
   static const libraryId = 'car/lib';
   static const sharawiId = 'car/sharawi';
-  static const storiesId = 'car/stories';
+  static const afhamId = 'car/afham';
+  static const lessonsId = 'car/ls';
+  static const kidsId = 'car/kids';
+  static const teacherId = 'car/kids/teacher';
+  static const kidsSeriesId = 'car/kids/s';
+  static const kidsRuqyahId = 'car/kids/ruqyah';
+
+  /// The kids' series the car lists (audio; the YouTube-only series are left out), in the app's order.
+  static const kidsSeries = ['kids-prophets', 'kids-rasoul', 'kids-ramadan'];
   static const nasheedsId = 'car/nasheeds';
 
   /// Series ids the phone screens use (offline copies and saved places are kept per series).
@@ -100,10 +134,11 @@ class CarBrowser implements MediaBrowser {
       return [
         for (final m in await _drive.children(parentId))
           m.copyWith(extras: _icon(m.id == DriveBrowser.eveningId ? 'moon.stars' : 'sun.max')),
-        _folder(radioId, l.carRadio, l.libraryLive, 'antenna.radiowaves.left.and.right'),
-        if (library != null) _folder(libraryId, l.carLibrary, l.carLibrarySub, 'person.wave.2'),
-        _folder(sharawiId, l.sharawiTitle, l.carSharawiSub, 'book.closed'),
-        _folder(storiesId, l.carStories, l.carStoriesSub, 'books.vertical'),
+        _folder(radioId, l.radiosTitle, l.libraryLive, 'antenna.radiowaves.left.and.right'),
+        if (library != null) _folder(libraryId, l.libraryTitle, l.carLibrarySub, 'person.wave.2'),
+        _folder(sharawiId, l.sharawiSection, l.carSharawiSub, 'book.closed'),
+        _folder(afhamId, l.lessonsTitle, l.carAfhamSub, 'building.columns'),
+        _folder(kidsId, l.kidsTitle, l.carKidsSub, 'figure.and.child.holdinghands'),
         _folder(nasheedsId, l.carNasheeds, l.carNasheedsSub, 'music.note'),
       ];
     }
@@ -129,14 +164,21 @@ class CarBrowser implements MediaBrowser {
       ];
     }
     if (parentId == sharawiId) {
+      // His whole library (owner 2026-11-25): the seerah and the prophets' stories, then the Quran tafsir
+      // surah by surah in the same list (CarPlay allows only a few lists one inside another).
+      final c = await (_lessons ??= _loadLessons());
       final t = await (_sharawi ??= _loadSharawi());
       return [
+        for (final s in c.sharawi)
+          if (s.episodes.isNotEmpty)
+            _folder('$lessonsId/${s.id}', _ar ? s.ar : s.en, l.sharawiLessons(_n(s.episodes.length)), 'book.closed'),
         for (final s in t.surahs)
           _folder(
             '$sharawiId/${s.surah}',
             _sharawiSurah(s.surah),
             l.sharawiLessons(_n(s.lessons.length)),
             'book.closed',
+            l.sharawiPartTafsir,
           ),
       ];
     }
@@ -148,16 +190,75 @@ class CarBrowser implements MediaBrowser {
         for (final x in s.lessons) _item('$sharawiId/$surah/${x.id}', _lessonTitle(x), _lessonDetail(x), 'play.circle'),
       ];
     }
-    if (parentId == storiesId) {
-      final series = content.stories.series.where((s) => s.episodes.isNotEmpty).toList();
-      // One series (Sheikh Nabil al-Awadi's): its episodes straight away, one level less to tap.
-      if (series.length == 1) return _episodes(series.single);
-      return [for (final s in series) _folder('$storiesId/${s.id}', s.title(_ar), s.narrator(_ar), 'books.vertical')];
+    if (parentId == afhamId) {
+      final c = await (_lessons ??= _loadLessons());
+      return [
+        for (final t in c.topics)
+          if (_topicSeries(c, t.id).isNotEmpty)
+            _folder(
+              '$afhamId/${t.id}',
+              _ar ? t.ar : t.en,
+              l.carSeriesCount(_n(_topicSeries(c, t.id).length)),
+              'building.columns',
+            ),
+      ];
     }
-    if (parentId.startsWith('$storiesId/')) {
-      final id = parentId.substring(storiesId.length + 1);
-      final s = content.stories.series.where((x) => x.id == id).firstOrNull;
-      return s == null ? const [] : _episodes(s);
+    if (parentId.startsWith('$afhamId/')) {
+      final c = await (_lessons ??= _loadLessons());
+      return [
+        for (final s in _topicSeries(c, parentId.substring(afhamId.length + 1)))
+          _folder(
+            '$lessonsId/${s.id}',
+            _ar ? s.ar : s.en,
+            '${_ar ? s.sheikh.ar : s.sheikh.en} · ${l.sharawiLessons(_n(s.episodes.length))}',
+            'headphones',
+          ),
+      ];
+    }
+    if (parentId.startsWith('$lessonsId/')) {
+      final s = await _series(parentId.substring(lessonsId.length + 1));
+      if (s == null) return const [];
+      return [
+        for (final e in s.episodes)
+          _item(
+            '$lessonsId/${s.id}/${e.index}',
+            e.title ?? l.lessonsLesson(_n(e.index)),
+            [
+              if (e.title != null) l.lessonsLesson(_n(e.index)),
+              if (e.seconds > 0) l.sharawiMinutes(_n((e.seconds / 60).round())),
+            ].join(' · '),
+            'play.circle',
+          ),
+      ];
+    }
+    if (parentId == kidsId) {
+      final k = await (_kids ??= _loadKids());
+      return [
+        if (k.teacherSurahs.isNotEmpty) _folder(teacherId, l.kidsTeacher, l.kidsTeacherSub, 'book'),
+        for (final id in kidsSeries)
+          if (_kidsAudio(k, id) case final eps when eps.isNotEmpty)
+            _folder('$kidsSeriesId/$id', _kidsTitle(id), l.carEpisodes(_n(eps.length)), 'headphones'),
+        if (recitation != null && k.ruqyahKids.quranRanges.isNotEmpty)
+          _item(kidsRuqyahId, l.ruqyahKidsTitle, l.carKidsRuqyahSub, 'shield'),
+      ];
+    }
+    if (parentId == teacherId) {
+      final k = await (_kids ??= _loadKids());
+      return [
+        for (final n in k.teacherSurahs) _item('$teacherId/$n', '${_n(n)}. ${_surahName(n)}', l.kidsTeacher, 'book'),
+      ];
+    }
+    if (parentId.startsWith('$kidsSeriesId/')) {
+      final k = await (_kids ??= _loadKids());
+      return [
+        for (final e in _kidsAudio(k, parentId.substring(kidsSeriesId.length + 1)))
+          _item(
+            '$parentId/${e.id}',
+            e.title,
+            e.seconds == null ? '' : l.sharawiMinutes(_n((e.seconds! / 60).round())),
+            'play.circle',
+          ),
+      ];
     }
     if (parentId == nasheedsId) {
       final all = await (_nasheeds ??= _loadNasheeds());
@@ -176,9 +277,60 @@ class CarBrowser implements MediaBrowser {
     return const [];
   }
 
-  List<MediaItem> _episodes(StorySeries s) => [
-    for (final e in s.episodes) _item('$storiesId/${s.id}/${e.id}', e.title(_ar), s.narrator(_ar), 'play.circle'),
+  // ---- «افهم دينك» (lesson series) ----
+
+  /// The series of [topic] the car can play: every lesson series, al-Sha'rawi's seerah / stories too
+  /// (his Quran tafsir card is left out: it is in his section, chosen by surah).
+  List<LessonSeries> _topicSeries(LessonCatalog c, String topic) => [
+    for (final s in c.filter(topic: topic))
+      if (!s.isSharawiTafsir && s.episodes.isNotEmpty) s,
   ];
+
+  Future<LessonSeries?> _series(String id) async {
+    final c = await (_lessons ??= _loadLessons());
+    return [...c.series, ...c.sharawi].where((s) => s.id == id).firstOrNull;
+  }
+
+  /// The same episode as the lessons screen's (same id and player series: places and saved copies shared).
+  Episode _lessonEpisode(LessonSeries s, LessonEpisode e) {
+    final ar = '${s.ar} · ${s.sheikh.ar.replaceFirst('الشيخ ', '')} · الدرس ${_n(e.index)}';
+    final en = '${s.en} · ${s.sheikh.en.replaceFirst('Sheikh ', '')} · lesson ${e.index}';
+    return Episode(
+      id: s.episodeId(e),
+      titleAr: e.title == null ? ar : '$ar · ${e.title}',
+      titleEn: en,
+      url: e.url,
+      durationSec: e.seconds > 0 ? e.seconds : null,
+      status: ReviewStatus.approved,
+      skips: e.skips,
+      gainDb: s.gainDb,
+      clarity: s.clarity,
+    );
+  }
+
+  // ---- «علّم طفلك» ----
+
+  /// The episodes of a kids' series that can be heard (not the YouTube-only ones).
+  static List<KidsEpisode> _kidsAudio(KidsContent k, String id) => [
+    for (final e in k.byId(id)?.episodes ?? const <KidsEpisode>[])
+      if (e.youtube == null) e,
+  ];
+
+  String _kidsTitle(String id) => switch (id) {
+    'kids-prophets' => _l.kidsProphetsClassic,
+    'kids-rasoul' => _l.kidsRasoul,
+    'kids-ramadan' => _l.kidsRamadan,
+    _ => id,
+  };
+
+  static Episode _kidsEpisode(KidsEpisode e) => Episode(
+    id: e.id,
+    titleAr: e.title,
+    titleEn: e.title,
+    url: e.url,
+    durationSec: e.seconds,
+    status: ReviewStatus.approved,
+  );
 
   @override
   Future<void> play(String id) async {
@@ -207,10 +359,23 @@ class CarBrowser implements MediaBrowser {
         final list = [for (final x in s.lessons) _sharawiEpisode(x)];
         final e = list.where((x) => x.id == 'sharawi-${parts[3]}').firstOrNull;
         if (e != null) await narration.playEpisode(sharawiSeries, e, playlist: list);
-      case 'stories' when parts.length == 4:
-        final s = content.stories.series.where((x) => x.id == parts[2]).firstOrNull;
-        final e = s?.episodes.where((x) => x.id == parts[3]).firstOrNull;
-        if (e != null) await narration.playEpisode(s!.id, e, playlist: s.episodes);
+      case 'ls' when parts.length == 4:
+        final s = await _series(parts[2]);
+        if (s == null) return;
+        final list = [for (final e in s.episodes) _lessonEpisode(s, e)];
+        final i = s.episodes.indexWhere((e) => '${e.index}' == parts[3]);
+        if (i >= 0) await narration.playEpisode(s.playerSeries, list[i], playlist: list);
+      case 'kids' when parts.length == 3 && parts[2] == 'ruqyah':
+        // The Quran passages of the children's ruqyah, as its «listen» button on the phone.
+        final k = await (_kids ??= _loadKids());
+        await recitation?.playRanges(k.ruqyahKids.quranRanges);
+      case 'kids' when parts.length == 4 && parts[2] == 'teacher':
+        await _playTeacher(int.parse(parts[3]));
+      case 'kids' when parts.length == 5 && parts[2] == 's':
+        final k = await (_kids ??= _loadKids());
+        final list = [for (final e in _kidsAudio(k, parts[3])) _kidsEpisode(e)];
+        final e = list.where((x) => x.id == parts[4]).firstOrNull;
+        if (e != null) await narration.playEpisode(parts[3], e, playlist: list);
       case 'nasheeds' when parts.length == 4:
         final m = (await (_nasheeds ??= _loadNasheeds())).where((x) => x.id == int.parse(parts[2])).firstOrNull;
         if (m == null) return;
@@ -218,6 +383,29 @@ class CarBrowser implements MediaBrowser {
         final e = list.where((x) => x.id == 'nasheed-${parts[3]}').firstOrNull;
         if (e != null) await narration.playEpisode(nasheedsSeries, e, remember: false, playlist: list);
     }
+  }
+
+  /// The teaching Mushaf: the whole surah as the teacher reads it (the first teacher, as on the phone),
+  /// going on to the next surah.
+  Future<void> _playTeacher(int surah) async {
+    final k = await (_kids ??= _loadKids());
+    final t = await _loadTeacher(surah);
+    final rec =
+        (k.teacherReciters.isEmpty ? null : t.reciters[k.teacherReciters.first]) ?? t.reciters.values.firstOrNull;
+    if (rec == null) return;
+    final name = k.teacherReciters.isEmpty ? 'teacher' : k.teacherReciters.first;
+    final list = [
+      for (final n in k.teacherSurahs)
+        Episode(
+          id: 'teacher-$name-$n',
+          titleAr: '${_l.kidsTeacher} · ${content.quran.surah(n).nameAr}',
+          titleEn: '${_l.kidsTeacher} · ${content.quran.surah(n).translit}',
+          url: rec.url(n),
+          status: ReviewStatus.approved,
+        ),
+    ];
+    final e = list.where((x) => x.id == 'teacher-$name-$surah').firstOrNull;
+    if (e != null) await narration.playEpisode('kids-teacher', e, playlist: list);
   }
 
   /// True when the last pick could not start (no internet for the recording or the stream).

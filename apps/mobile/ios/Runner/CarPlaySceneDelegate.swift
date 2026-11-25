@@ -4,7 +4,7 @@ import UIKit
 
 /// CarPlay (entitlement com.apple.developer.carplay-audio): the app's lists on the car screen.
 /// The first list has «أذكار الصباح / أذكار المساء» (driving mode) and the listening sections
-/// (radio, recitation library, al-Sha'rawi, prophets' stories, nasheeds; owner 2026-11-23).
+/// (radio, recitation library, al-Sha'rawi, «افهم دينك», «علّم طفلك», nasheeds; owner 2026-11-23/25).
 /// A section opens its own list (asked from Dart: lib/data/carplay.dart); picking an item plays
 /// it in Dart and opens the car's Now Playing screen, which shows the title / artist the lock
 /// screen shows (audio_service's MPNowPlayingInfoCenter) with play / pause / next / previous.
@@ -76,8 +76,9 @@ class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegate, CPN
       }
     }
     let sections = groups.prefix(Int(CPListTemplate.maximumSectionCount)).map { group -> CPListSection in
-      if let letter = group.0 {
-        return CPListSection(items: group.1, header: letter, sectionIndexTitle: letter)
+      if let title = group.0 {
+        // A letter (the reciters) also goes in the index on the side; a longer title is only a header.
+        return CPListSection(items: group.1, header: title, sectionIndexTitle: title.count <= 2 ? title : nil)
       }
       return CPListSection(items: group.1)
     }
