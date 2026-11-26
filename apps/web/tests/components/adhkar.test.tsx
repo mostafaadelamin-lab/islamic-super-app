@@ -8,6 +8,7 @@ import { HISN, HISN_SECTIONS } from "@/lib/hisn";
 import { resetStores } from "./reset";
 import { ADHKAR_AUTO_EXIT_MS } from "@/hooks/useAutoExit";
 import { adhkarStore, countOne, sessionItems } from "@/lib/adhkar";
+import { adhkarViewStore } from "@/lib/dhikr-share";
 import { isoDate } from "@/lib/time";
 import { countStatedIn } from "@/lib/hisn-count";
 
@@ -55,7 +56,9 @@ describe("cards, share and report", () => {
     expect(writeText).toHaveBeenCalledWith(expect.stringContaining(HISN[1]!.items[1]!));
     expect(screen.getByText("Copied — paste it where you like.")).toBeInTheDocument();
     const report = screen.getByTestId("hisn-2-report");
-    expect(report.getAttribute("href")).toMatch(/\/en\/help\/?\?title=Mistake%20in%20a%20dhikr&message=.*#contact$/);
+    expect(report.getAttribute("href")).toMatch(
+      /\/en\/help\/?\?title=Mistake%20in%20a%20dhikr&message=.*#contact$/,
+    );
     expect(decodeURIComponent(report.getAttribute("href")!)).toContain("(chapter 2) · 2");
   });
 
@@ -89,8 +92,8 @@ describe("finishing a list goes back by itself", () => {
       }
       return cur;
     });
+    adhkarViewStore.set(() => ({ mode: "list" }));
     render(<AdhkarView locale="en" items={ITEMS} />);
-    await userEvent.click(screen.getByTestId("view-list"));
     vi.useFakeTimers();
     try {
       const counters = screen.getAllByTestId("dhikr-count");

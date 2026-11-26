@@ -1170,5 +1170,9 @@
   "adhkar.mineDeleteAsk": "حذف هذا الذكر من أذكارك؟",
   "adhkar.mineCancel": "إلغاء",
   "adhkar.mineLess": "أقل",
-  "adhkar.mineMore": "أكثر"
+  "adhkar.mineMore": "أكثر",
+  "adhkar.barAdd": "إضافة",
+  "adhkar.barView": "العرض",
+  "adhkar.barAlarm": "التنبيه",
+  "adhkar.barReset": "من جديد"
 }

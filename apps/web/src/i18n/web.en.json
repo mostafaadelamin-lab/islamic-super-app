@@ -1170,5 +1170,9 @@
   "adhkar.mineDeleteAsk": "Delete this dhikr from your adhkar?",
   "adhkar.mineCancel": "Cancel",
   "adhkar.mineLess": "Fewer",
-  "adhkar.mineMore": "More"
+  "adhkar.mineMore": "More",
+  "adhkar.barAdd": "Add",
+  "adhkar.barView": "View",
+  "adhkar.barAlarm": "Alarm",
+  "adhkar.barReset": "Restart"
 }

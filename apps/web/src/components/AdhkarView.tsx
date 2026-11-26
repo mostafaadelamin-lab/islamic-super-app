@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { href } from "@/lib/locale-path";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import {
@@ -17,7 +19,7 @@ import { adhkarViewStore } from "@/lib/dhikr-share";
 import { useStore } from "@/hooks/useStore";
 import { useAutoExit } from "@/hooks/useAutoExit";
 import { Icon } from "./Icon";
-import { CardDeck, ModeSwitch } from "./CardDeck";
+import { CardDeck } from "./CardDeck";
 import { DhikrTools } from "./DhikrTools";
 import type { DhikrExtra } from "@/lib/dhikr-extras";
 import { userAdhkarStore, userItems, type UserDhikr } from "@/lib/custom-adhkar";
@@ -157,27 +159,48 @@ export function AdhkarView({
           </button>
         ))}
       </div>
-      <div className="adhkar-summary row">
-        <p className="muted" data-testid="adhkar-progress" role="status">
-          {t(locale, "adhkar.progress", {
-            done: localizeDigits(summary.completed, locale),
-            total: localizeDigits(summary.total, locale),
-          })}
-        </p>
+      <p className="muted" data-testid="adhkar-progress" role="status">
+        {t(locale, "adhkar.progress", {
+          done: localizeDigits(summary.completed, locale),
+          total: localizeDigits(summary.total, locale),
+        })}
+      </p>
+      {/* Owner 2026-11-26 (option 2): the tools as coloured squares with their names. */}
+      <div className="adhkar-tools">
+        <button type="button" className="tool-tile gold" data-testid="user-dhikr-add" onClick={goToForm}>
+          <Icon name="plus" size={22} />
+          <span>{t(locale, "adhkar.barAdd")}</span>
+        </button>
         <button
           type="button"
-          className="btn btn-sm"
+          className="tool-tile plain"
+          data-testid={mode === "cards" ? "view-list" : "view-cards"}
+          title={t(locale, mode === "cards" ? "dhikr.view.list" : "dhikr.view.cards")}
+          onClick={() => adhkarViewStore.set(() => ({ mode: mode === "cards" ? "list" : "cards" }))}
+        >
+          <Icon name={mode === "cards" ? "pages" : "palette"} size={22} />
+          <span>{t(locale, "adhkar.barView")}</span>
+        </button>
+        <Link
+          className="tool-tile soft"
+          href={href(locale, "adhkar/reminders")}
+          data-testid="adhkar-tool-reminders"
+        >
+          <Icon name="alarm" size={22} />
+          <span>{t(locale, "adhkar.barAlarm")}</span>
+        </Link>
+        <button
+          type="button"
+          className="tool-tile plain"
           data-testid="adhkar-reset"
+          title={t(locale, "adhkar.reset")}
           onClick={() => adhkarStore.set((p) => resetSession(p, localToday(), session))}
         >
-          <Icon name="reset" size={16} /> {t(locale, "adhkar.reset")}
-        </button>
-        <button type="button" className="btn btn-sm" data-testid="user-dhikr-add" onClick={goToForm}>
-          <Icon name="plus" size={16} /> {t(locale, "adhkar.mineAdd")}
+          <Icon name="reset" size={22} />
+          <span>{t(locale, "adhkar.barReset")}</span>
         </button>
       </div>
       {locale !== "ar" ? <p className="alert">{t(locale, "common.arabicOnly")}</p> : null}
-      <ModeSwitch locale={locale} />
       {mode === "cards" ? (
         <CardDeck
           locale={locale}

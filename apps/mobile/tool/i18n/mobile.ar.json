@@ -1210,5 +1210,10 @@
   "adhkar.mineLess": "أقل",
   "adhkar.mineMore": "أكثر",
   "drive.barOpen": "افتح وضع القيادة",
-  "drive.barRep": "المرة {n} من {count}"
+  "drive.barRep": "المرة {n} من {count}",
+  "adhkar.barAdd": "إضافة",
+  "adhkar.barDrive": "القيادة",
+  "adhkar.barView": "العرض",
+  "adhkar.barAlarm": "التنبيه",
+  "adhkar.barReset": "من جديد"
 }

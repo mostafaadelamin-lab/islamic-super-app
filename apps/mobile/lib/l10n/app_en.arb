@@ -491,6 +491,26 @@
   "@adhkarAudioWatchOnline": {
     "description": "shared key \"adhkar.audioWatchOnline\""
   },
+  "adhkarBarAdd": "Add",
+  "@adhkarBarAdd": {
+    "description": "shared key \"adhkar.barAdd\""
+  },
+  "adhkarBarAlarm": "Alarm",
+  "@adhkarBarAlarm": {
+    "description": "shared key \"adhkar.barAlarm\""
+  },
+  "adhkarBarDrive": "Drive",
+  "@adhkarBarDrive": {
+    "description": "shared key \"adhkar.barDrive\""
+  },
+  "adhkarBarReset": "Restart",
+  "@adhkarBarReset": {
+    "description": "shared key \"adhkar.barReset\""
+  },
+  "adhkarBarView": "View",
+  "@adhkarBarView": {
+    "description": "shared key \"adhkar.barView\""
+  },
   "adhkarCards": "One card at a time",
   "@adhkarCards": {
     "description": "shared key \"adhkar.cards\""

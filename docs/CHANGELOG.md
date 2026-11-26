@@ -4,9 +4,10 @@
 Owner 2026-11-26 (screenshot of another app's «أضف ذكر» dialog as layout reference only; own design).
 ### Phone apps (Android + iPhone)
 - Morning / evening adhkar: «＋» in the top bar and «أضف ذكرًا من عندك» at the end of the list open «أضف ذكرًا»: the text, the number of times (− / ＋ and 1, 3, 7, 10, 33, 100) and where it shows (الصباح / المساء / الاثنين). Added adhkar sit at the end under «أذكاري · أضفتها أنت», with a counter like the others, edit and delete. Kept on the phone only; not in driving mode (no recording); sharing names «أذكاري» as the source, not Hisn al-Muslim.
+- Morning / evening adhkar top bar (owner's pick, option 2): the tools are coloured squares with their names in a row under the title: إضافة (gold), القيادة (navy), العرض, التنبيه (cream), من جديد.
 - Driving mode: after leaving its screen while it plays, a bar stays at the bottom of every screen (like the stories bar): «وضع القيادة · أذكار الصباح», which dhikr and repetition, previous / pause / next, tap the title to go back to the driving screen, ✕ stops driving mode.
 ### Website
-- Adhkar page: the same «أذكاري» (add form at the end of the list, «＋ أضف ذكرًا» next to «البدء من جديد», edit / delete, counter). Kept in the browser only. (No driving mode on the website.)
+- Adhkar page: the same «أذكاري» (add form at the end of the list, edit / delete, counter), and the tools as the same coloured squares: إضافة، العرض، التنبيه، من جديد. Kept in the browser only. (No driving mode on the website.)
 
 ## [1.2.22] — Car screen: al-Sha'rawi's library, «افهم دينك», «علّم طفلك» — 2026-11-25
 - CarPlay / Android Auto: al-Sha'rawi's whole library (seerah, prophets' stories, then the tafsir by surah); «افهم دينك» with every topic, series and lesson (Awadi's prophets' stories inside it); «علّم طفلك» (teaching Mushaf, the audio kids' stories, the children's ruqyah verses). Adhkar, radio, recitation library and nasheeds unchanged.

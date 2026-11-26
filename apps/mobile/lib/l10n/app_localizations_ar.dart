@@ -351,6 +351,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhkarAudioWatchOnline => 'استمع عبر الإنترنت';
 
   @override
+  String get adhkarBarAdd => 'إضافة';
+
+  @override
+  String get adhkarBarAlarm => 'التنبيه';
+
+  @override
+  String get adhkarBarDrive => 'القيادة';
+
+  @override
+  String get adhkarBarReset => 'من جديد';
+
+  @override
+  String get adhkarBarView => 'العرض';
+
+  @override
   String get adhkarCards => 'بطاقة بطاقة';
 
   @override

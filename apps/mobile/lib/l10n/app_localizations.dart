@@ -680,6 +680,36 @@ abstract class AppLocalizations {
   /// **'Listen online'**
   String get adhkarAudioWatchOnline;
 
+  /// shared key "adhkar.barAdd"
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get adhkarBarAdd;
+
+  /// shared key "adhkar.barAlarm"
+  ///
+  /// In en, this message translates to:
+  /// **'Alarm'**
+  String get adhkarBarAlarm;
+
+  /// shared key "adhkar.barDrive"
+  ///
+  /// In en, this message translates to:
+  /// **'Drive'**
+  String get adhkarBarDrive;
+
+  /// shared key "adhkar.barReset"
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get adhkarBarReset;
+
+  /// shared key "adhkar.barView"
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get adhkarBarView;
+
   /// shared key "adhkar.cards"
   ///
   /// In en, this message translates to:

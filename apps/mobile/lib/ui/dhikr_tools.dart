@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../app_services.dart';
+import '../theme/design_tokens.dart';
 import 'contact_screen.dart';
 import 'l10n_ext.dart';
 import 'r_icon.dart';
@@ -63,9 +64,73 @@ class DhikrActions extends StatelessWidget {
   }
 }
 
+/// Which colour a [TintedAction] uses.
+enum ActionTint { gold, navy, soft, plain }
+
+/// Our icon inside a coloured rounded square with its name under it (owner 2026-11-26, option 2:
+/// the morning / evening adhkar top bar, modern look).
+class TintedAction extends StatelessWidget {
+  const TintedAction({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.tooltip,
+    required this.onPressed,
+    this.tint = ActionTint.plain,
+  });
+  final RIconData icon;
+  final String label;
+  final String tooltip;
+  final VoidCallback? onPressed;
+  final ActionTint tint;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final (bg, fg) = switch (tint) {
+      ActionTint.gold => (scheme.secondary, scheme.onPrimary),
+      ActionTint.navy => (scheme.primary, scheme.onPrimary),
+      ActionTint.soft => (scheme.secondaryContainer, scheme.secondary),
+      ActionTint.plain => (scheme.surfaceContainerHigh, scheme.primary),
+    };
+    return Tooltip(
+      message: tooltip,
+      child: Material(
+        color: bg,
+        elevation: 2,
+        shadowColor: scheme.primary.withValues(alpha: 0.35),
+        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+          child: SizedBox(
+            height: 58,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RIcon(icon, size: 22, color: fg),
+                const SizedBox(height: 2),
+                Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(color: fg, fontWeight: FontWeight.w700),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// App-bar button switching between a list and one card at a time (kept in settings).
 class AdhkarViewToggle extends StatelessWidget {
-  const AdhkarViewToggle({super.key});
+  const AdhkarViewToggle({super.key, this.tinted = false});
+
+  /// Drawn as a [TintedAction] (morning / evening adhkar).
+  final bool tinted;
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +140,15 @@ class AdhkarViewToggle extends StatelessWidget {
       listenable: settings,
       builder: (context, _) {
         final cards = settings.adhkarCards;
+        if (tinted) {
+          return TintedAction(
+            key: const Key('adhkarViewMode'),
+            label: l.adhkarBarView,
+            tooltip: cards ? l.adhkarList : l.adhkarCards,
+            icon: cards ? RIcons.pages : RIcons.palette,
+            onPressed: () => settings.setAdhkarCards(!cards),
+          );
+        }
         return IconButton(
           key: const Key('adhkarViewMode'),
           tooltip: cards ? l.adhkarList : l.adhkarCards,

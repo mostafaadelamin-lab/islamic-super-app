@@ -1210,5 +1210,10 @@
   "adhkar.mineLess": "Fewer",
   "adhkar.mineMore": "More",
   "drive.barOpen": "Open driving mode",
-  "drive.barRep": "Time {n} of {count}"
+  "drive.barRep": "Time {n} of {count}",
+  "adhkar.barAdd": "Add",
+  "adhkar.barDrive": "Drive",
+  "adhkar.barView": "View",
+  "adhkar.barAlarm": "Alarm",
+  "adhkar.barReset": "Restart"
 }

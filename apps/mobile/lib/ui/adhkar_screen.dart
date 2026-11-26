@@ -203,34 +203,53 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle),
-          actions: [
-            IconButton(
-              key: const Key('customDhikrAdd'),
-              tooltip: l.adhkarMineAdd,
-              icon: const RIcon(RIcons.plus),
-              onPressed: () => showCustomDhikrSheet(context, session),
+          // Owner 2026-11-26 (option 2): the tools as coloured squares with their names, in a row
+          // under the title.
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(74),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceSm),
+              child: Row(
+                children: [
+                  for (final (i, w) in <Widget>[
+                    TintedAction(
+                      key: const Key('customDhikrAdd'),
+                      tint: ActionTint.gold,
+                      label: l.adhkarBarAdd,
+                      tooltip: l.adhkarMineAdd,
+                      icon: RIcons.plus,
+                      onPressed: () => showCustomDhikrSheet(context, session),
+                    ),
+                    TintedAction(
+                      key: const Key('adhkarDriveMode'),
+                      tint: ActionTint.navy,
+                      label: l.adhkarBarDrive,
+                      tooltip: l.driveOpen,
+                      icon: RIcons.car,
+                      onPressed: () => openDriveMode(context, session),
+                    ),
+                    const AdhkarViewToggle(tinted: true),
+                    TintedAction(
+                      key: const Key('adhkarReminders'),
+                      tint: ActionTint.soft,
+                      label: l.adhkarBarAlarm,
+                      tooltip: l.adhkarReminders,
+                      icon: RIcons.alarm,
+                      onPressed: () =>
+                          showModalBottomSheet<void>(context: context, builder: (_) => const AdhkarRemindersSheet()),
+                    ),
+                    TintedAction(
+                      key: const Key('adhkarReset'),
+                      label: l.adhkarBarReset,
+                      tooltip: l.adhkarReset,
+                      icon: RIcons.reset,
+                      onPressed: () => s.adhkar.reset(session),
+                    ),
+                  ].indexed) ...[if (i > 0) const SizedBox(width: DesignTokens.spaceSm), Expanded(child: w)],
+                ],
+              ),
             ),
-            IconButton(
-              key: const Key('adhkarDriveMode'),
-              tooltip: l.driveOpen,
-              icon: const RIcon(RIcons.car),
-              onPressed: () => openDriveMode(context, session),
-            ),
-            const AdhkarViewToggle(),
-            IconButton(
-              key: const Key('adhkarReminders'),
-              tooltip: l.adhkarReminders,
-              icon: const RIcon(RIcons.alarm),
-              onPressed: () =>
-                  showModalBottomSheet<void>(context: context, builder: (_) => const AdhkarRemindersSheet()),
-            ),
-            IconButton(
-              key: const Key('adhkarReset'),
-              tooltip: l.adhkarReset,
-              icon: const RIcon(RIcons.reset),
-              onPressed: () => s.adhkar.reset(session),
-            ),
-          ],
+          ),
         ),
         bottomNavigationBar: const DriveBar(),
         body: ReadableWidth(

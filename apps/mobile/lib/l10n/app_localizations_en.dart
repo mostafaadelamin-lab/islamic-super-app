@@ -353,6 +353,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhkarAudioWatchOnline => 'Listen online';
 
   @override
+  String get adhkarBarAdd => 'Add';
+
+  @override
+  String get adhkarBarAlarm => 'Alarm';
+
+  @override
+  String get adhkarBarDrive => 'Drive';
+
+  @override
+  String get adhkarBarReset => 'Restart';
+
+  @override
+  String get adhkarBarView => 'View';
+
+  @override
   String get adhkarCards => 'One card at a time';
 
   @override
