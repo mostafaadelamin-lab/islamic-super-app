@@ -62,7 +62,7 @@ void main() {
           tester,
           size: const Size(360, 800),
           textScale: scale,
-          prefs: {'theme': 'light', 'reader.hintShown': 9, 'mushaf.printed': printed},
+          prefs: {'theme': 'light', 'reader.hintShown': 9, 'mushaf.printed.v2': printed},
           audio: FakeAudioBackend(),
         );
         await pushScreen(tester, const PageReaderScreen(initialPage: 562));

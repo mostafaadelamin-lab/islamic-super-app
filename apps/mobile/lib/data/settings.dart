@@ -334,10 +334,12 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// "شكل المصحف المطبوع": Mushaf pages in the King Fahd Complex page fonts (owner 2026-11-20: the default; the old look is the option).
-  bool get mushafPrinted => _prefs.getBool('mushaf.printed') ?? true;
+  /// "شكل المصحف المطبوع": Mushaf pages in the QCF page fonts, downloaded on request. Owner 2026-11-26: the
+  /// normal look (the Complex's v2.2 text and font, proven by fingerprint) is the default again and the printed
+  /// look is an optional download; a new key so the old default (true) is not carried over.
+  bool get mushafPrinted => _prefs.getBool('mushaf.printed.v2') ?? false;
   Future<void> setMushafPrinted(bool on) async {
-    await _prefs.setBool('mushaf.printed', on);
+    await _prefs.setBool('mushaf.printed.v2', on);
     notifyListeners();
   }
 

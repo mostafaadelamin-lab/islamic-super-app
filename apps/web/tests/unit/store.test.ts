@@ -95,16 +95,19 @@ describe("settings sanitisers", () => {
       clockV: 2,
       hijriOffset: 0,
       paletteV: 2,
-      mushafPrinted: true,
+      mushafPrinted: false,
+      mushafPrintedV: 2,
     });
     // 12 h is the default since 2026-11-20 (owner); a "24" saved before that was the old default and is dropped.
     expect(sanitizePrefs({ clock: "24" }).clock).toBe("12");
     expect(sanitizePrefs({ clock: "24", clockV: 2 }).clock).toBe("24");
-    expect(sanitizePrefs({ mushafPrinted: true }).mushafPrinted).toBe(true);
-    expect(sanitizePrefs({ mushafPrinted: "yes" }).mushafPrinted).toBe(true);
-    // the printed look is the default since owner 2026-11-20; the old look stays a choice
-    expect(sanitizePrefs({}).mushafPrinted).toBe(true);
-    expect(sanitizePrefs({ mushafPrinted: false }).mushafPrinted).toBe(false);
+    // owner 2026-11-26: the normal look (Complex v2.2) is the default; the printed look is an optional download.
+    // A "true" saved under the old default (no mushafPrintedV) is dropped once; a choice made after that is kept.
+    expect(sanitizePrefs({}).mushafPrinted).toBe(false);
+    expect(sanitizePrefs({ mushafPrinted: true }).mushafPrinted).toBe(false);
+    expect(sanitizePrefs({ mushafPrinted: true, mushafPrintedV: 2 }).mushafPrinted).toBe(true);
+    expect(sanitizePrefs({ mushafPrinted: "yes", mushafPrintedV: 2 }).mushafPrinted).toBe(false);
+    expect(sanitizePrefs({ mushafPrinted: false, mushafPrintedV: 2 }).mushafPrinted).toBe(false);
     expect(sanitizePrefs({ clock: "13" }).clock).toBe("12");
     // colour styles: «ليل المدينة» is the default since 1.2.8 (owner 2026-11-17); a style saved before 1.2.8
     // (no paletteV) is dropped once, a style picked after that is kept

@@ -1037,7 +1037,7 @@
   "kidsLearn.openBook": "افتح الكتاب",
   "kidsLearn.levelsBack": "المستويات",
   "settings.mushafPrinted": "شكل المصحف المطبوع",
-  "settings.mushafPrintedHint": "كل صفحة بخط مجمع الملك فهد الخاص بها، مثل المصحف الورقي تمامًا.",
+  "settings.mushafPrintedHint": "اختياري، يتحمّل من الإنترنت: صفحات بشكل المصحف الورقي (خطوط صفحات المجمع عن طريق quran.com). الشكل العادي هو نص مجمع الملك فهد وخطه (الإصدار 2.2) المثبت بالبصمة.",
   "dhikrRem.title": "تنبيهات الأذكار",
   "dhikrRem.tileSub": "ذكر تختاره كل وقت تحدده",
   "dhikrRem.enable": "تذكير بالذكر طول اليوم",

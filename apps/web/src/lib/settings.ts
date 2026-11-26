@@ -33,8 +33,10 @@ export interface Preferences {
   hijriOffset: number;
   /** 2 = the palette was saved under the 1.2.8 default (see PalettePref). */
   paletteV: 2;
-  /** «شكل المصحف المطبوع»: Mushaf pages in the King Fahd Complex page fonts; the default since owner 2026-11-20, the old look is the option. */
+  /** «شكل المصحف المطبوع»: Mushaf pages in the QCF page fonts, downloaded on request. Owner 2026-11-26: off by default (the
+   * normal look = the Complex's v2.2 text and font, proven by fingerprint); only a choice made after that (mushafPrintedV 2) counts. */
   mushafPrinted: boolean;
+  mushafPrintedV: 2;
 }
 export const DEFAULT_PREFS: Preferences = {
   locale: null,
@@ -46,7 +48,8 @@ export const DEFAULT_PREFS: Preferences = {
   clockV: 2,
   hijriOffset: 0,
   paletteV: 2,
-  mushafPrinted: true,
+  mushafPrinted: false,
+  mushafPrintedV: 2,
 };
 
 export const HIJRI_OFFSET_MAX = 2;
@@ -76,7 +79,8 @@ export function sanitizePrefs(raw: unknown): Preferences {
     clockV: 2,
     hijriOffset: clampHijriOffset(r.hijriOffset ?? 0),
     paletteV: 2,
-    mushafPrinted: typeof r.mushafPrinted === "boolean" ? r.mushafPrinted : true,
+    mushafPrinted: r.mushafPrintedV === 2 && r.mushafPrinted === true,
+    mushafPrintedV: 2,
   };
 }
 

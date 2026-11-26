@@ -1008,7 +1008,7 @@
   "kidsLearn.credit": "النص من {name}",
   "settings.mushafSection": "المصحف",
   "settings.mushafPrinted": "شكل المصحف المطبوع",
-  "settings.mushafPrintedHint": "كل صفحة بخط مجمع الملك فهد الخاص بها، مثل المصحف الورقي تمامًا. تحتاج الصفحة إلى الإنترنت أول مرة فقط.",
+  "settings.mushafPrintedHint": "اختياري، يتحمّل من الإنترنت: صفحات بشكل المصحف الورقي (خطوط صفحات المجمع عن طريق quran.com). الشكل العادي هو نص مجمع الملك فهد وخطه (الإصدار 2.2) المثبت بالبصمة.",
   "settings.mushafPrintedDownload": "حمّل خطوط كل الصفحات للقراءة بدون إنترنت",
   "settings.mushafPrintedProgress": "جارٍ التحميل: {done} من {total}",
   "settings.mushafPrintedSaved": "خطوط كل الصفحات محفوظة على الجهاز",

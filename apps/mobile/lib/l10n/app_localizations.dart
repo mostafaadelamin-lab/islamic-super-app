@@ -6089,7 +6089,7 @@ abstract class AppLocalizations {
   /// shared key "settings.mushafPrintedHint"
   ///
   /// In en, this message translates to:
-  /// **'Each page in the King Fahd Complex\'s own page font, exactly like the printed Mushaf. A page needs the internet the first time only.'**
+  /// **'Optional, downloaded from the internet: pages that look like the printed Mushaf (the Complex\'s page fonts via quran.com). The normal look is the King Fahd Complex\'s own text and font (v2.2), proven by fingerprint.'**
   String get settingsMushafPrintedHint;
 
   /// shared key "settings.mushafPrintedProgress"

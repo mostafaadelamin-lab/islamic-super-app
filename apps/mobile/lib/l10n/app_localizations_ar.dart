@@ -3378,7 +3378,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsMushafPrintedHint =>
-      'كل صفحة بخط مجمع الملك فهد الخاص بها، مثل المصحف الورقي تمامًا. تحتاج الصفحة إلى الإنترنت أول مرة فقط.';
+      'اختياري، يتحمّل من الإنترنت: صفحات بشكل المصحف الورقي (خطوط صفحات المجمع عن طريق quran.com). الشكل العادي هو نص مجمع الملك فهد وخطه (الإصدار 2.2) المثبت بالبصمة.';
 
   @override
   String settingsMushafPrintedProgress(String done, String total) {
