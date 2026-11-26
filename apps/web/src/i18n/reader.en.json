@@ -44,6 +44,8 @@
   "reader.tafsirBeside": "Tafsir beside the page",
   "reader.printedLook": "Switch between the Uthmani font and the Madina font (the Madina font is optional and downloaded from the internet)",
   "reader.printedLookShort": "Madina font",
+  "reader.fontSwitchShort": "Font",
+  "reader.fullScreenShort": "Full screen",
   "reader.fontUthmani": "Uthmani font",
   "reader.fontMadina": "Madina font",
   "reader.tafsirBesideShort": "Tafsir",

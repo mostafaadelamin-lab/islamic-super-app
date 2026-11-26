@@ -4614,4 +4614,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'A full Hijri year has passed since my wealth reached the nisab';
+
+  @override
+  String get readerFontSmallerShort => 'Smaller';
+
+  @override
+  String get readerFontBiggerShort => 'Bigger';
+
+  @override
+  String get readerFontSwitchShort => 'Font';
+
+  @override
+  String get surahInfoShort => 'Surah info';
 }

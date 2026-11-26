@@ -6767,5 +6767,9 @@
   "zakatYearPassed": "A full Hijri year has passed since my wealth reached the nisab",
   "@zakatYearPassed": {
     "description": "shared key \"zakat.yearPassed\""
-  }
+  },
+  "readerFontSmallerShort": "Smaller",
+  "readerFontBiggerShort": "Bigger",
+  "readerFontSwitchShort": "Font",
+  "surahInfoShort": "Surah info"
 }

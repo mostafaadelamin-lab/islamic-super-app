@@ -8251,6 +8251,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A full Hijri year has passed since my wealth reached the nisab'**
   String get zakatYearPassed;
+
+  /// No description provided for @readerFontSmallerShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Smaller'**
+  String get readerFontSmallerShort;
+
+  /// No description provided for @readerFontBiggerShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Bigger'**
+  String get readerFontBiggerShort;
+
+  /// No description provided for @readerFontSwitchShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Font'**
+  String get readerFontSwitchShort;
+
+  /// No description provided for @surahInfoShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Surah info'**
+  String get surahInfoShort;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

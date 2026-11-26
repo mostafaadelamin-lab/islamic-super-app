@@ -416,31 +416,24 @@ class PageReaderScreenState extends State<PageReaderScreen> {
               listenable: s.settings,
               builder: (context, _) {
                 final on = s.settings.mushafPrinted;
-                return SizedBox(
-                  width: 92,
-                  child: TintedAction(
-                    key: const Key('readerPrinted'),
-                    icon: RIcons.pages,
-                    label: on ? l.readerFontMadina : l.readerFontUthmani,
-                    tooltip: l.readerPrintedLook,
-                    tint: on ? ActionTint.gold : ActionTint.plain,
-                    onPressed: () => unawaited(s.settings.setMushafPrinted(!on)),
-                  ),
+                return ReaderMiniTool(
+                  key: const Key('readerPrinted'),
+                  lead: const RIcon(RIcons.pages, size: 18),
+                  label: l.readerFontSwitchShort,
+                  tooltip: '${l.readerPrintedLook} (${on ? l.readerFontMadina : l.readerFontUthmani})',
+                  selected: on,
+                  onPressed: () => unawaited(s.settings.setMushafPrinted(!on)),
                 );
               },
             ),
           ],
-          const SizedBox(width: DesignTokens.spaceSm),
-          Expanded(
-            child: Align(
-              alignment: AlignmentDirectional.centerEnd,
-              child: TextButton.icon(
-                key: const Key('readerSurahInfo'),
-                icon: const RIcon(RIcons.info, size: 20),
-                label: Text(l.surahInfoTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
-                onPressed: () => showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah),
-              ),
-            ),
+          const SizedBox(width: 4),
+          ReaderMiniTool(
+            key: const Key('readerSurahInfo'),
+            lead: const RIcon(RIcons.info, size: 18),
+            label: l.surahInfoShort,
+            tooltip: l.surahInfoTitle,
+            onPressed: () => showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah),
           ),
         ],
       ),
@@ -1384,37 +1377,20 @@ class _ZoomButtons extends StatelessWidget {
       }
     }
 
-    Widget btn(String key, String label, bool enabled, int dir, String tip) => Tooltip(
-      message: tip,
-      child: InkWell(
-        key: Key(key),
-        borderRadius: BorderRadius.circular(10),
-        onTap: enabled ? () => change(dir) : null,
-        child: Container(
-          width: 48,
-          height: 48,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: enabled ? scheme.primary : scheme.surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Text(
-            label,
-            style: TextStyle(
-              color: enabled ? scheme.onPrimary : scheme.onSurfaceVariant,
-              fontWeight: FontWeight.w700,
-              fontSize: dir > 0 ? 18 : 14,
-            ),
-          ),
-        ),
-      ),
+    // Owner 2026-11-27: small buttons, each with a one- or two-word name under it.
+    Widget btn(String key, String glyph, bool enabled, int dir, String tip, String name) => ReaderMiniTool(
+      key: Key(key),
+      tooltip: tip,
+      label: name,
+      lead: Text(glyph, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15, height: 1)),
+      onPressed: enabled ? () => change(dir) : null,
     );
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        btn('readerFontDown', 'A−', canDown, -1, l.readerFontSmaller),
+        btn('readerFontDown', 'A−', canDown, -1, l.readerFontSmaller, l.readerFontSmallerShort),
         const SizedBox(width: 4),
-        btn('readerFontUp', 'A+', canUp, 1, l.readerFontBigger),
+        btn('readerFontUp', 'A+', canUp, 1, l.readerFontBigger, l.readerFontBiggerShort),
         const SizedBox(width: 4),
       ],
     );
@@ -1535,4 +1511,72 @@ class _DuoPageState extends State<_DuoPage> {
       child: SizedBox(height: _height(c), child: widget.child),
     ),
   );
+}
+
+/// A small reader tool: an icon (or A−/A+) with a one- or two-word name under it (owner 2026-11-27).
+class ReaderMiniTool extends StatelessWidget {
+  const ReaderMiniTool({
+    super.key,
+    required this.lead,
+    required this.label,
+    required this.tooltip,
+    required this.onPressed,
+    this.selected = false,
+  });
+  final Widget lead;
+  final String label;
+  final String tooltip;
+  final VoidCallback? onPressed;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final enabled = onPressed != null;
+    final bg = selected ? scheme.primary : scheme.surfaceContainerHigh;
+    final fg = selected ? scheme.onPrimary : (enabled ? scheme.primary : scheme.onSurfaceVariant.withValues(alpha: 0.5));
+    return Tooltip(
+      message: tooltip,
+      child: Semantics(
+        button: true,
+        label: tooltip,
+        selected: selected,
+        child: Material(
+          color: bg,
+          borderRadius: BorderRadius.circular(10),
+          child: InkWell(
+            onTap: onPressed,
+            borderRadius: BorderRadius.circular(10),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minWidth: 50, minHeight: 44),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                child: IconTheme.merge(
+                  data: IconThemeData(color: fg),
+                  child: DefaultTextStyle.merge(
+                    style: TextStyle(color: fg),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        lead,
+                        const SizedBox(height: 2),
+                        ExcludeSemantics(
+                          child: Text(
+                            label,
+                            maxLines: 1,
+                            style: const TextStyle(fontSize: 10.5, fontWeight: FontWeight.w700, height: 1.1),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

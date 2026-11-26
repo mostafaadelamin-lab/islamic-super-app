@@ -1562,9 +1562,6 @@ button.mn-ref {
   .rd-side-label {
     display: none;
   }
-  .rd-side-btn {
-    padding: 0;
-  }
 }
 .rd-full-tools {
   position: fixed;
@@ -1721,11 +1718,24 @@ button.mn-ref {
   margin-top: var(--space-sm);
 }
 
-/* Uthmani / Madina font switch as a coloured square with its name (owner 2026-11-26, like the adhkar tools) */
-.rd-font-tile {
-  min-height: 48px;
-  min-width: 72px;
-  padding: 4px 8px;
-  font-size: 12px;
+/* Reader top tools (owner 2026-11-27): small buttons, each with a one- or two-word name under its icon. */
+.rd-icon-btn.rd-mini {
+  flex-direction: column;
+  gap: 1px;
+  width: auto;
+  min-width: 46px;
+  height: 46px;
+  padding: 2px 4px;
+  border-radius: var(--radius-md);
+}
+.rd-mini-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.1;
   white-space: nowrap;
+}
+.rd-icon-btn.rd-mini.on,
+.rd-icon-btn.rd-mini[aria-pressed="true"] {
+  background: var(--color-primary);
+  color: var(--color-on-primary, #fff);
 }

@@ -44,6 +44,8 @@
   "reader.tafsirBeside": "التفسير بجانب الصفحة",
   "reader.printedLook": "تبديل بين الخط العثماني وخط المدينة (خط المدينة اختياري ويتحمّل من الإنترنت)",
   "reader.printedLookShort": "خط المدينة",
+  "reader.fontSwitchShort": "تغيير الخط",
+  "reader.fullScreenShort": "الشاشة كاملة",
   "reader.fontUthmani": "الخط العثماني",
   "reader.fontMadina": "خط المدينة",
   "reader.tafsirBesideShort": "التفسير",

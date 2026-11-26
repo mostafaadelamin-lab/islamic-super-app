@@ -1044,54 +1044,56 @@ export function PageReader({ locale, initial }: PageReaderProps) {
           {tab === "mushaf" || flowTab ? (
             <button
               type="button"
-              className="rd-icon-btn rd-side-btn"
+              className="rd-icon-btn rd-side-btn rd-mini"
               aria-label={t(locale, "reader.tafsirBeside")}
               title={t(locale, "reader.tafsirBeside")}
               aria-pressed={pageTafsir}
               data-testid="reader-side-tafsir"
               onClick={() => toggleSideTafsir()}
             >
-              <ReaderIcon name="openBook" />
-              <span className="rd-side-label">{t(locale, "reader.tafsirBesideShort")}</span>
+              <ReaderIcon name="openBook" size={20} />
+              <span className="rd-mini-label">{t(locale, "reader.tafsirBesideShort")}</span>
             </button>
           ) : null}
           {tab === "mushaf" ? (
             // Owner 2026-11-26: switch to the printed look (optional, downloaded) and back while reading.
             <button
               type="button"
-              className={`tool-tile rd-font-tile ${prefs.mushafPrinted ? "gold" : "plain"}`}
+              className={`rd-icon-btn rd-mini rd-font-tile ${prefs.mushafPrinted ? "on" : ""}`}
               aria-label={t(locale, "reader.printedLook")}
               title={t(locale, "reader.printedLook")}
               aria-pressed={prefs.mushafPrinted}
               data-testid="reader-printed"
               onClick={() => prefsStore.set((p) => ({ ...p, mushafPrinted: !p.mushafPrinted, mushafPrintedV: 2 }))}
             >
-              <ReaderIcon name="pages" />
-              <span>{t(locale, prefs.mushafPrinted ? "reader.fontMadina" : "reader.fontUthmani")}</span>
+              <ReaderIcon name="pages" size={20} />
+              <span className="rd-mini-label">{t(locale, "reader.fontSwitchShort")}</span>
             </button>
           ) : null}
           {tab === "mushaf" ? (
             <button
               type="button"
-              className="rd-icon-btn"
+              className="rd-icon-btn rd-mini"
               aria-label={t(locale, "reader.help")}
               aria-expanded={sheet === "help"}
               data-testid="reader-help"
               onClick={() => setSheet((v) => (v === "help" ? null : "help"))}
             >
-              <ReaderIcon name="help" />
+              <ReaderIcon name="help" size={20} />
+              <span className="rd-mini-label">{t(locale, "reader.help")}</span>
             </button>
           ) : null}
           {tab === "mushaf" ? (
             <button
               type="button"
-              className="rd-icon-btn rd-full-btn"
+              className="rd-icon-btn rd-full-btn rd-mini"
               aria-label={t(locale, "reader.fullScreen")}
               title={t(locale, "reader.fullScreen")}
               data-testid="reader-full"
               onClick={enterFull}
             >
-              <ReaderIcon name="expand" />
+              <ReaderIcon name="expand" size={20} />
+              <span className="rd-mini-label">{t(locale, "reader.fullScreenShort")}</span>
             </button>
           ) : (
             // A− / A+ (owner 2026-11-17): the text size of the whole-surah view and the lists.
