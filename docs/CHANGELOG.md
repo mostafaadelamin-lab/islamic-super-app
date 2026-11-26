@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.25] — Quran text from the King Fahd Complex package v2.2 (2024); proof of sources on the sources page — 2026-11-26
+Owner 2026-11-26: use the Complex's current release (v22) without changing anything, keep a copy of the Complex's page and files, and show transparent proof of every religious source.
+### Phone apps (Android + iPhone) and website
+- Quran text read straight from the Word file inside the Complex's `hafs-2.2.zip` (SHA-256 B5CF0666…1B23, the value printed on qurancomplex.gov.sa/fonts/hafs); Mushaf font = the Complex's v2.2 font from the same package. Only difference from v18: the kashida after kaf in «كلا» (33 ayahs). Pages/lines unchanged (hafsData_v18). Quran content 3.0.0.
+- Website sources page: new «الإثبات» section (100% match cards with fingerprints for the Mushaf, tafsir books, i'rab, word meanings and the nine hadith books, verify-yourself steps, honesty notes) and the hadith cross-check with sunnah.com (no hadith text changed).
+- Archive of the Complex's page, screenshots and zips: project files _sync/mushaf-proof/kfgqpc-archive-2026-11-26 (+ البصمات-SHA256.txt).
+
 ## [1.2.24] — «افهم دينك» without sheikhs with legal problems; Al-Azhar and Saudi scholars; stories narrated by al-Sha'rawi — 2026-11-26
 Owner 2026-11-26 after a per-sheikh review (arrest, prison, ban, case), report in project files reports/مراجعة-شيوخ-افهم-دينك-مفصلة-2026-11-26.md.
 ### Phone apps (Android + iPhone + car screen) and website
