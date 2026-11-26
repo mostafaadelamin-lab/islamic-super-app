@@ -3560,6 +3560,30 @@ abstract class AppLocalizations {
   /// **'Prayer steps in pictures'**
   String get kidsLearnSalahSub;
 
+  /// shared key "kidsLearn.islam"
+  ///
+  /// In en, this message translates to:
+  /// **'Pillars of Islam'**
+  String get kidsLearnIslam;
+
+  /// shared key "kidsLearn.islamSub"
+  ///
+  /// In en, this message translates to:
+  /// **'The five pillars in pictures'**
+  String get kidsLearnIslamSub;
+
+  /// shared key "kidsLearn.iman"
+  ///
+  /// In en, this message translates to:
+  /// **'Pillars of faith'**
+  String get kidsLearnIman;
+
+  /// shared key "kidsLearn.imanSub"
+  ///
+  /// In en, this message translates to:
+  /// **'The six pillars in pictures'**
+  String get kidsLearnImanSub;
+
   /// shared key "kidsLearn.save"
   ///
   /// In en, this message translates to:

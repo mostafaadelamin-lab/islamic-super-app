@@ -387,11 +387,14 @@ export function KidsCards({ locale, items }: { locale: Locale; items: CardDhikr[
 export function KidsSteps({
   locale,
   salah,
+  section,
   steps,
   credit,
 }: {
   locale: Locale;
   salah: boolean;
+  /** «أركان الإسلام» / «أركان الإيمان»: hadith + its published explanation, so the generic source line is shown. */
+  section?: "islam" | "iman";
   steps: KidsStep[];
   credit: string;
 }) {
@@ -402,7 +405,7 @@ export function KidsSteps({
   const step = steps[i];
   if (!step) return null;
   return (
-    <div data-testid={salah ? "kids-salah" : "kids-wudu"}>
+    <div data-testid={section ? `kids-${section}` : salah ? "kids-salah" : "kids-wudu"}>
       <article className="kl-step" data-testid={`kids-step-${i}`}>
         {step.pic ? (
           /* eslint-disable-next-line @next/next/no-img-element -- static export: no image optimiser */
@@ -425,7 +428,7 @@ export function KidsSteps({
         {last ? <strong data-testid="kids-steps-done">{t(locale, "kidsLearn.stepsDone")}</strong> : null}
       </Pager>
       <p className="muted small" style={{ textAlign: "center" }}>
-        {t(locale, "kidsLearn.credit", { name: credit })}
+        {section ? t(locale, "hadith.explainSource") : t(locale, "kidsLearn.credit", { name: credit })}
       </p>
     </div>
   );
@@ -438,6 +441,8 @@ const LEARN_TILES = {
   cards: "adhkar",
   wudu: "prayer",
   salah: "prayer",
+  islam: "kaaba",
+  iman: "star",
 } as const;
 export type LearnTile = keyof typeof LEARN_TILES;
 

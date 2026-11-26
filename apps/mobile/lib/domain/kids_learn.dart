@@ -92,6 +92,8 @@ class KidsLearnContent {
     required this.wudu,
     required this.salah,
     required this.stepsCredit,
+    this.islam = const [],
+    this.iman = const [],
     this.cardAdhkar = const [],
   });
 
@@ -106,6 +108,10 @@ class KidsLearnContent {
   /// Wudu / salah steps in the book's order.
   final List<KidsStep> wudu;
   final List<KidsStep> salah;
+
+  /// «أركان الإسلام» / «أركان الإيمان»: hadith + its published explanation, quoted word for word.
+  final List<KidsStep> islam;
+  final List<KidsStep> iman;
 
   /// The wudu / salah book asks to be named when shared (its own terms).
   final String stepsCredit;
@@ -155,6 +161,8 @@ class KidsLearnContent {
       hadith: [for (final h in j['hadith'] as List) h as String],
       wudu: steps(j['wudu']),
       salah: steps(j['salah']),
+      islam: j['islam'] == null ? const [] : steps(j['islam']),
+      iman: j['iman'] == null ? const [] : steps(j['iman']),
       stepsCredit: j['stepsCredit'] as String,
       cardAdhkar: [
         for (final c in (j['cardAdhkar'] as List? ?? const []).cast<Map<String, dynamic>>())

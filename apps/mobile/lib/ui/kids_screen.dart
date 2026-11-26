@@ -133,6 +133,20 @@ class KidsScreen extends StatelessWidget {
                   () => push(const KidsStepsScreen(salah: true)),
                 ),
                 tile(
+                  'islam',
+                  RIcons.kaaba,
+                  l.kidsLearnIslam,
+                  l.kidsLearnIslamSub,
+                  () => push(const KidsStepsScreen(salah: false, section: 'islam')),
+                ),
+                tile(
+                  'iman',
+                  RIcons.star,
+                  l.kidsLearnIman,
+                  l.kidsLearnImanSub,
+                  () => push(const KidsStepsScreen(salah: false, section: 'iman')),
+                ),
+                tile(
                   'ruqyah',
                   RIcons.shield,
                   l.ruqyahKidsTitle,

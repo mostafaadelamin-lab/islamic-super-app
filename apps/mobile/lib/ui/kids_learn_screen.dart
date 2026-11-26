@@ -934,8 +934,11 @@ class _StepPage extends StatelessWidget {
 }
 
 class KidsStepsScreen extends StatefulWidget {
-  const KidsStepsScreen({super.key, required this.salah, this.loader = loadKidsLearn});
+  const KidsStepsScreen({super.key, required this.salah, this.section, this.loader = loadKidsLearn});
   final bool salah;
+
+  /// 'islam' / 'iman': the pillars sections (hadith text, so the generic source line replaces the book credit).
+  final String? section;
   final Future<KidsLearnContent> Function() loader;
 
   @override
@@ -956,16 +959,28 @@ class _KidsStepsScreenState extends State<KidsStepsScreen> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     return _Frame(
-      title: widget.salah ? l.kidsLearnSalah : l.kidsLearnWudu,
+      title: switch (widget.section) {
+        'islam' => l.kidsLearnIslam,
+        'iman' => l.kidsLearnIman,
+        _ => widget.salah ? l.kidsLearnSalah : l.kidsLearnWudu,
+      },
       loader: widget.loader,
       child: (k) {
-        final pages = widget.salah ? k.salah : k.wudu;
+        final pages = switch (widget.section) {
+          'islam' => k.islam,
+          'iman' => k.iman,
+          _ => widget.salah ? k.salah : k.wudu,
+        };
         final last = _i == pages.length - 1;
         return Column(
           children: [
             Expanded(
               child: PageView.builder(
-                key: Key(widget.salah ? 'kidsSalah.pages' : 'kidsWudu.pages'),
+                key: Key(switch (widget.section) {
+                  'islam' => 'kidsIslam.pages',
+                  'iman' => 'kidsIman.pages',
+                  _ => widget.salah ? 'kidsSalah.pages' : 'kidsWudu.pages',
+                }),
                 controller: _pages,
                 itemCount: pages.length,
                 onPageChanged: (i) => setState(() => _i = i),
@@ -988,7 +1003,11 @@ class _KidsStepsScreenState extends State<KidsStepsScreen> {
                         style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                       ),
                     ),
-                  Text(l.kidsLearnCredit(k.stepsCredit), style: Theme.of(context).textTheme.bodySmall),
+                  Text(
+                    widget.section != null ? l.hadithExplainSource : l.kidsLearnCredit(k.stepsCredit),
+                    style: Theme.of(context).textTheme.bodySmall,
+                    textAlign: TextAlign.center,
+                  ),
                 ],
               ),
             ),

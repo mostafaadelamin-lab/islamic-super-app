@@ -16,6 +16,8 @@ interface LearnFile {
   hadith: string[];
   wudu: KidsStep[];
   salah: KidsStep[];
+  islam: KidsStep[];
+  iman: KidsStep[];
   stepsCredit: string;
   cardAdhkar: CardDhikr[];
 }

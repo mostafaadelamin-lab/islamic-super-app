@@ -21,6 +21,8 @@ const HAS_PAGE: ReadonlySet<string> = new Set([
   "kids/books",
   "kids/cards",
   "kids/hadith",
+  "kids/iman",
+  "kids/islam",
   "kids/ruqyah",
   "kids/salah",
   "kids/wudu",
