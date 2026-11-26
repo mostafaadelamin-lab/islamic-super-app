@@ -82,7 +82,10 @@ void main() {
       find.descendant(of: find.byKey(const Key('asma-0')), matching: find.byKey(const Key('dhikrPlayerBar'))),
       findsOneWidget,
     );
-    expect(find.descendant(of: find.byKey(const Key('asma-1')), matching: find.byKey(const Key('dhikrPlayerBar'))), findsNothing);
+    expect(
+      find.descendant(of: find.byKey(const Key('asma-1')), matching: find.byKey(const Key('dhikrPlayerBar'))),
+      findsNothing,
+    );
     expect(find.byKey(const Key('dhikrPlayerSlider')), findsOneWidget);
     expect(find.byKey(const Key('dhikrPlayerBack30')), findsOneWidget);
     expect(find.byKey(const Key('dhikrPlayerFwd30')), findsOneWidget);

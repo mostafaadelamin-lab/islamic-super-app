@@ -15,7 +15,9 @@ import '../helpers.dart';
 
 void main() {
   setUpAll(loadContent);
-  final outDir = Directory('${Platform.environment['RATTIL_SCREENSHOT_DIR'] ?? 'build/screenshots'}/small-phone-mushaf');
+  final outDir = Directory(
+    '${Platform.environment['RATTIL_SCREENSHOT_DIR'] ?? 'build/screenshots'}/small-phone-mushaf',
+  );
   final fontDir = Platform.environment['RATTIL_PAGE_FONT_DIR'];
 
   Future<void> shot(WidgetTester tester, String name) async {

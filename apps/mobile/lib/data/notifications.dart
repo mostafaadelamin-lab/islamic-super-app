@@ -74,10 +74,10 @@ const adhanOpenAppNotificationId = 2;
 
 /// iPhone: how one adhan rings. iOS plays at most 30 s of a notification sound, so the recording is cut
 /// (natively, at the pauses between its phrases) into [parts] of at most 29 s, saved as
-/// Library/Sounds/[adhanPartSound]. Owner 2026-11-26: only the first part rings, as ONE notification
-/// (each further part used to show as its own «تكملة الأذان» notification on the lock screen, five or six
-/// per prayer); tapping it plays the rest in the app. With [alarm] (iOS 26+, AlarmKit) the whole recording
-/// rings as one system alarm instead.
+/// Library/Sounds/[adhanPartSound], and each part rings as its own notification the moment the one before
+/// ends (iOS shows each on the lock screen). With [alarm] (iOS 26+, AlarmKit) the whole recording rings as
+/// ONE system alarm instead; owner 2026-11-26/27: the app offers it right after install and once after
+/// the update (see maybeOfferAdhanAlarm).
 class AdhanRing {
   const AdhanRing({
     required this.voice,
@@ -85,6 +85,7 @@ class AdhanRing {
     this.alarm = false,
     this.count,
     this.moreBody = '',
+    this.tapHint = '',
     this.openLabel = '',
   });
 
@@ -102,12 +103,22 @@ class AdhanRing {
   /// days then ring the first 30 s only); null = all.
   final int? count;
 
-  AdhanRing take(int n) =>
-      AdhanRing(voice: voice, parts: parts, alarm: alarm, count: n, moreBody: moreBody, openLabel: openLabel);
+  AdhanRing take(int n) => AdhanRing(
+    voice: voice,
+    parts: parts,
+    alarm: alarm,
+    count: n,
+    moreBody: moreBody,
+    tapHint: tapHint,
+    openLabel: openLabel,
+  );
 
-  /// Line added under the notification's text when the adhan is longer than what rings ("tap to hear
-  /// the whole adhan in the app").
+  /// Text of the notifications after the first one ("the adhan continues").
   final String moreBody;
+
+  /// Line added under the first notification's text when only its start rings (days beyond what the 64
+  /// pending notifications hold): "tap to hear the whole adhan in the app".
+  final String tapHint;
 
   /// Label of the alarm's button that opens the app to continue the adhan.
   final String openLabel;
@@ -393,7 +404,7 @@ class LocalNotificationsBackend implements NotificationsBackend {
         id: k == 0 ? id : adhanPartId(id, k),
         title: title,
         body: k == 0
-            ? (count < parts.length && ring.moreBody.isNotEmpty ? '$body\n${ring.moreBody}' : body)
+            ? (count < parts.length && ring.tapHint.isNotEmpty ? '$body\n${ring.tapHint}' : body)
             : ring.moreBody,
         scheduledDate: tz.TZDateTime.from(atUtc.add(Duration(seconds: offset)), tz.UTC),
         notificationDetails: NotificationDetails(
@@ -546,16 +557,22 @@ class AdhanScheduler {
         voice: voice,
         parts: durations,
         alarm: alarm && durations.isNotEmpty,
-        moreBody: l.adhanTapForFull,
+        moreBody: l.adhanContinued,
+        tapHint: l.adhanTapForFull,
         openLabel: l.adhanOpenApp,
       );
     }
     return out;
   }
 
-  /// Notifications [prayer]'s adhan takes on iPhone: 0 = a system alarm, else 1 (owner 2026-11-26: one
-  /// notification per adhan, never the parts one after another).
-  int _partsFor(String prayer) => (_rings[prayer]?.alarm ?? false) ? 0 : 1;
+  /// Notifications [prayer]'s adhan takes on iPhone (0 = a system alarm). Owner 2026-11-27: without the
+  /// alarm (older iOS, or not allowed) the parts still ring one after another so the whole adhan sounds.
+  int _partsFor(String prayer) {
+    final r = _rings[prayer];
+    if (r == null) return 1;
+    if (r.alarm) return 0;
+    return r.parts.isEmpty ? 1 : r.parts.length;
+  }
 
   List<AdhanNotification> get lastPlan => _lastPlan;
 
@@ -694,6 +711,26 @@ class AdhanScheduler {
           sound: n.kind == adhanKind ? settings.adhanSoundFor(n.prayer) : extraSound,
           ring: n.kind == adhanKind ? _rings[n.prayer]?.take(n.parts) : null,
         );
+      }
+      // iPhone (owner 2026-11-21): when the app is not opened, the full adhans planned run out after about
+      // two days and only the first 30 s ring; a reminder half an hour before the first short one asks the
+      // user to open the app (which plans the next two days again).
+      final short = parts == null
+          ? null
+          : items
+                .where((n) => n.kind == adhanKind && n.parts == 1 && (_rings[n.prayer]?.parts.length ?? 0) > 1)
+                .firstOrNull;
+      if (short != null) {
+        final at = short.at.subtract(const Duration(minutes: 30));
+        if (at.isAfter(clock().toUtc())) {
+          await backend.schedule(
+            id: adhanOpenAppNotificationId,
+            title: l.adhanOpenAppTitle,
+            body: l.adhanOpenAppBody,
+            atUtc: at,
+            sound: 'tone',
+          );
+        }
       }
     } catch (e) {
       // A plugin failure must never break the app; the next sync retries.

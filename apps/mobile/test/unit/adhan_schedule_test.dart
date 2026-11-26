@@ -129,11 +129,12 @@ void main() {
       expect(fake.scheduled.every((e) => e.sound == 'tone'), isTrue);
       expect(() => settings.setAdhanSound('loud'), throwsArgumentError);
       // "Adhan when the phone is silent" (Android) re-plans so the alarms carry it.
-      expect(settings.adhanPlayOnSilent, isFalse);
-      await settings.setAdhanPlayOnSilent(true);
+      // On by default (owner 2026-11-27).
+      expect(settings.adhanPlayOnSilent, isTrue);
+      await settings.setAdhanPlayOnSilent(false);
       await sch.sync();
       expect(fake.cancels, 3);
-      expect(settings.adhanPlayOnSilent, isTrue);
+      expect(settings.adhanPlayOnSilent, isFalse);
       // Turning it off cancels everything.
       await settings.setAdhanEnabled(false);
       await sch.sync();
@@ -276,7 +277,7 @@ void main() {
       );
     }
 
-    test('each adhan rings as ONE notification (its first part), never the parts one after another', () async {
+    test('each adhan carries its parts; the plan stays within the iOS budget', () async {
       final (sch, fake, parts) = await make({'adhan.enabled': true});
       await sch.sync(force: true);
       expect(parts.prepared, contains('mulla|assets/audio/adhan_mulla.m4a'));
@@ -284,13 +285,16 @@ void main() {
       final first = fake.scheduled.first;
       final ring = fake.rings[first.id]!;
       expect(ring.voice, 'mulla');
-      expect(ring.count, 1);
+      expect(ring.count, 5);
       expect(ring.alarm, isFalse);
-      expect(ring.moreBody, isNotEmpty);
-      expect(sch.lastPlan.every((x) => x.parts == 1), isTrue);
-      // With one notification per adhan the whole week fits (no "open the app" reminder needed).
-      expect(sch.lastPlan.length, greaterThanOrEqualTo(34));
-      expect(fake.scheduled.where((n) => n.id == adhanOpenAppNotificationId), isEmpty);
+      final slots = sch.lastPlan.fold<int>(0, (s, x) => s + x.parts);
+      expect(slots, lessThanOrEqualTo(59));
+      expect(sch.lastPlan.last.parts, 1);
+      // Half an hour before the first adhan that rings only 30 s: "open the app".
+      final open = fake.scheduled.singleWhere((n) => n.id == adhanOpenAppNotificationId);
+      final firstShort = sch.lastPlan.firstWhere((n) => n.kind == adhanKind && n.parts == 1);
+      expect(open.at, firstShort.at.subtract(const Duration(minutes: 30)));
+      expect(open.sound, 'tone');
     });
 
     test('with the alarm allowed, every adhan of the week rings as an alarm', () async {

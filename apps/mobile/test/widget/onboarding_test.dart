@@ -109,10 +109,10 @@ void main() {
     await tapVisible(tester, const Key('setupAppPage'));
     expect(device.opened, ['exact', 'battery', 'app']);
 
-    // Adhan when the phone is silent.
-    expect(app.services.settings.adhanPlayOnSilent, isFalse);
-    await tapVisible(tester, const Key('setupSilent'));
+    // Adhan when the phone is silent: on by default (owner 2026-11-27), the switch turns it off.
     expect(app.services.settings.adhanPlayOnSilent, isTrue);
+    await tapVisible(tester, const Key('setupSilent'));
+    expect(app.services.settings.adhanPlayOnSilent, isFalse);
 
     // The prayer widget and, for the lock screen, the next-prayer notice (on by default).
     await tester.scrollUntilVisible(find.byKey(const Key('lockNotice')), 200, scrollable: find.byType(Scrollable).last);

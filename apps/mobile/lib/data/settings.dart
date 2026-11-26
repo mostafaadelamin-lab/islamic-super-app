@@ -396,7 +396,8 @@ class SettingsController extends ChangeNotifier {
   // --- Adhan notifications --------------------------------------------------------
   /// Android: play the full adhan even when the phone is on silent / vibrate (on the
   /// alarm volume, like an alarm clock). Off by default. iOS does not allow it.
-  bool get adhanPlayOnSilent => _prefs.getBool('adhan.playOnSilent') ?? false;
+  // Owner 2026-11-27: on by default (the full adhan sounds even on silent, like an alarm clock).
+  bool get adhanPlayOnSilent => _prefs.getBool('adhan.playOnSilent') ?? true;
   Future<void> setAdhanPlayOnSilent(bool v) async {
     await _prefs.setBool('adhan.playOnSilent', v);
     notifyListeners();

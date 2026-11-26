@@ -281,7 +281,7 @@ abstract class AppLocalizations {
   /// shared key "adhan.alarmOfferBody"
   ///
   /// In en, this message translates to:
-  /// **'From now on the adhan shows one notification with its first 30 seconds; tap it to hear the whole adhan in the app.\n\nTo have the whole adhan ring without opening the app, even on silent, turn it on as an alarm.'**
+  /// **'Allow it once and the whole adhan rings as one alarm, even when the iPhone is on silent, instead of several notifications one after another on the lock screen.'**
   String get adhanAlarmOfferBody;
 
   /// shared key "adhan.alarmOfferTitle"
@@ -395,7 +395,7 @@ abstract class AppLocalizations {
   /// shared key "adhan.iosFullHint"
   ///
   /// In en, this message translates to:
-  /// **'On iPhone the first 30 seconds of the adhan ring in one notification; tap it to hear the whole adhan in the app. To hear it all without opening the app, turn on \"Full adhan as an alarm\" (iOS 26 or newer).'**
+  /// **'On iPhone the whole adhan rings in parts, one after another. Open the app every day or two to keep it full; otherwise only the first 30 seconds ring.'**
   String get adhanIosFullHint;
 
   /// shared key "adhan.iosNote"
