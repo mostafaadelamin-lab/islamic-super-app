@@ -410,6 +410,10 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// iPhone: the one-time offer of [adhanIosAlarm] after the update to one notification per adhan was shown.
+  bool get adhanAlarmOffered => _prefs.getBool('adhan.alarmOffered') ?? false;
+  Future<void> setAdhanAlarmOffered() => _prefs.setBool('adhan.alarmOffered', true);
+
   /// Android: the next prayer and a countdown in a quiet notification on the lock screen (on by default,
   /// owner 2026-11-21: phones have no lock-screen widgets).
   bool get lockNotice => _prefs.getBool('prayer.lockNotice') ?? true;

@@ -117,6 +117,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accountSyncNow => 'زامن الآن';
 
   @override
+  String get adhanAlarmOfferBody =>
+      'من الآن يظهر للأذان إشعار واحد فقط بأول ٣٠ ثانية، واضغط عليه لتسمعه كاملاً في التطبيق.\n\nولو تحب يرن الأذان كاملاً بدون فتح التطبيق، حتى لو الآيفون على الصامت، شغّله كمنبّه.';
+
+  @override
+  String get adhanAlarmOfferTitle => 'الأذان كامل على الآيفون';
+
+  @override
   String get adhanAlertsHeader => 'تنبيهات الأذان';
 
   @override
@@ -177,7 +184,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adhanIosFullHint =>
-      'على الآيفون يرن الأذان كاملاً على أجزاء متتالية. افتح التطبيق مرة كل يوم أو يومين ليبقى الأذان كاملاً، وإلا يرن أول ٣٠ ثانية فقط.';
+      'على الآيفون يرن أول ٣٠ ثانية من الأذان في إشعار واحد، واضغط عليه لتسمعه كاملاً في التطبيق. ليرن كاملاً بدون فتح التطبيق شغّل «الأذان كامل كمنبّه» (iOS 26 وأحدث).';
 
   @override
   String get adhanIosNote =>
@@ -287,6 +294,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adhanTabTitle => 'الأذان';
+
+  @override
+  String get adhanTapForFull => 'اضغط لتسمع الأذان كاملاً في التطبيق.';
 
   @override
   String get adhanTest => 'جرّب التنبيه (بعد ١٠ ثوانٍ)';

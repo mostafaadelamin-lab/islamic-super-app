@@ -149,6 +149,14 @@
   "@accountSyncNow": {
     "description": "shared key \"account.syncNow\""
   },
+  "adhanAlarmOfferBody": "From now on the adhan shows one notification with its first 30 seconds; tap it to hear the whole adhan in the app.\n\nTo have the whole adhan ring without opening the app, even on silent, turn it on as an alarm.",
+  "@adhanAlarmOfferBody": {
+    "description": "shared key \"adhan.alarmOfferBody\""
+  },
+  "adhanAlarmOfferTitle": "The whole adhan on iPhone",
+  "@adhanAlarmOfferTitle": {
+    "description": "shared key \"adhan.alarmOfferTitle\""
+  },
   "adhanAlertsHeader": "Adhan alerts",
   "@adhanAlertsHeader": {
     "description": "shared key \"adhan.alertsHeader\""
@@ -235,7 +243,7 @@
   "@adhanIosAlarmHint": {
     "description": "shared key \"adhan.iosAlarmHint\""
   },
-  "adhanIosFullHint": "On iPhone the whole adhan rings in parts, one after another. Open the app every day or two to keep it full; otherwise only the first 30 seconds ring.",
+  "adhanIosFullHint": "On iPhone the first 30 seconds of the adhan ring in one notification; tap it to hear the whole adhan in the app. To hear it all without opening the app, turn on \"Full adhan as an alarm\" (iOS 26 or newer).",
   "@adhanIosFullHint": {
     "description": "shared key \"adhan.iosFullHint\""
   },
@@ -404,6 +412,10 @@
   "adhanTabTitle": "Adhan",
   "@adhanTabTitle": {
     "description": "shared key \"adhan.tabTitle\""
+  },
+  "adhanTapForFull": "Tap to hear the whole adhan in the app.",
+  "@adhanTapForFull": {
+    "description": "shared key \"adhan.tapForFull\""
   },
   "adhanTest": "Test the alert (in 10 seconds)",
   "@adhanTest": {

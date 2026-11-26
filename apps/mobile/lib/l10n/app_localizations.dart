@@ -278,6 +278,18 @@ abstract class AppLocalizations {
   /// **'Sync now'**
   String get accountSyncNow;
 
+  /// shared key "adhan.alarmOfferBody"
+  ///
+  /// In en, this message translates to:
+  /// **'From now on the adhan shows one notification with its first 30 seconds; tap it to hear the whole adhan in the app.\n\nTo have the whole adhan ring without opening the app, even on silent, turn it on as an alarm.'**
+  String get adhanAlarmOfferBody;
+
+  /// shared key "adhan.alarmOfferTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'The whole adhan on iPhone'**
+  String get adhanAlarmOfferTitle;
+
   /// shared key "adhan.alertsHeader"
   ///
   /// In en, this message translates to:
@@ -383,7 +395,7 @@ abstract class AppLocalizations {
   /// shared key "adhan.iosFullHint"
   ///
   /// In en, this message translates to:
-  /// **'On iPhone the whole adhan rings in parts, one after another. Open the app every day or two to keep it full; otherwise only the first 30 seconds ring.'**
+  /// **'On iPhone the first 30 seconds of the adhan ring in one notification; tap it to hear the whole adhan in the app. To hear it all without opening the app, turn on \"Full adhan as an alarm\" (iOS 26 or newer).'**
   String get adhanIosFullHint;
 
   /// shared key "adhan.iosNote"
@@ -565,6 +577,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Adhan'**
   String get adhanTabTitle;
+
+  /// shared key "adhan.tapForFull"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to hear the whole adhan in the app.'**
+  String get adhanTapForFull;
 
   /// shared key "adhan.test"
   ///

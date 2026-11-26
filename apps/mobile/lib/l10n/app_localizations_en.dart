@@ -117,6 +117,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountSyncNow => 'Sync now';
 
   @override
+  String get adhanAlarmOfferBody =>
+      'From now on the adhan shows one notification with its first 30 seconds; tap it to hear the whole adhan in the app.\n\nTo have the whole adhan ring without opening the app, even on silent, turn it on as an alarm.';
+
+  @override
+  String get adhanAlarmOfferTitle => 'The whole adhan on iPhone';
+
+  @override
   String get adhanAlertsHeader => 'Adhan alerts';
 
   @override
@@ -178,7 +185,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhanIosFullHint =>
-      'On iPhone the whole adhan rings in parts, one after another. Open the app every day or two to keep it full; otherwise only the first 30 seconds ring.';
+      'On iPhone the first 30 seconds of the adhan ring in one notification; tap it to hear the whole adhan in the app. To hear it all without opening the app, turn on \"Full adhan as an alarm\" (iOS 26 or newer).';
 
   @override
   String get adhanIosNote =>
@@ -288,6 +295,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhanTabTitle => 'Adhan';
+
+  @override
+  String get adhanTapForFull => 'Tap to hear the whole adhan in the app.';
 
   @override
   String get adhanTest => 'Test the alert (in 10 seconds)';

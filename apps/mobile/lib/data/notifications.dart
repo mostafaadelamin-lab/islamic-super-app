@@ -74,8 +74,10 @@ const adhanOpenAppNotificationId = 2;
 
 /// iPhone: how one adhan rings. iOS plays at most 30 s of a notification sound, so the recording is cut
 /// (natively, at the pauses between its phrases) into [parts] of at most 29 s, saved as
-/// Library/Sounds/[adhanPartSound], and each part rings as its own notification the moment the one before
-/// ends. With [alarm] (iOS 26+, AlarmKit) the whole recording rings as one system alarm instead.
+/// Library/Sounds/[adhanPartSound]. Owner 2026-11-26: only the first part rings, as ONE notification
+/// (each further part used to show as its own «تكملة الأذان» notification on the lock screen, five or six
+/// per prayer); tapping it plays the rest in the app. With [alarm] (iOS 26+, AlarmKit) the whole recording
+/// rings as one system alarm instead.
 class AdhanRing {
   const AdhanRing({
     required this.voice,
@@ -103,7 +105,8 @@ class AdhanRing {
   AdhanRing take(int n) =>
       AdhanRing(voice: voice, parts: parts, alarm: alarm, count: n, moreBody: moreBody, openLabel: openLabel);
 
-  /// Text of the notifications after the first one.
+  /// Line added under the notification's text when the adhan is longer than what rings ("tap to hear
+  /// the whole adhan in the app").
   final String moreBody;
 
   /// Label of the alarm's button that opens the app to continue the adhan.
@@ -112,7 +115,9 @@ class AdhanRing {
   int get seconds => parts.fold(0, (a, b) => a + b);
 
   /// What opening the app from this adhan's notification (or alarm) hands to [AdhanScheduler.continueFrom].
-  String payload(int id, DateTime atUtc) => 'adhan|$id|$voice|${atUtc.millisecondsSinceEpoch}|${parts.join(',')}';
+  /// The last field is how many parts ring as notifications (the rest plays in the app).
+  String payload(int id, DateTime atUtc) =>
+      'adhan|$id|$voice|${atUtc.millisecondsSinceEpoch}|${parts.join(',')}|${count ?? parts.length}';
 }
 
 /// File name (in Library/Sounds) of part [k] of [voice]'s recording, written by AppDelegate.swift.
@@ -387,7 +392,9 @@ class LocalNotificationsBackend implements NotificationsBackend {
       await _plugin.zonedSchedule(
         id: k == 0 ? id : adhanPartId(id, k),
         title: title,
-        body: k == 0 ? body : ring.moreBody,
+        body: k == 0
+            ? (count < parts.length && ring.moreBody.isNotEmpty ? '$body\n${ring.moreBody}' : body)
+            : ring.moreBody,
         scheduledDate: tz.TZDateTime.from(atUtc.add(Duration(seconds: offset)), tz.UTC),
         notificationDetails: NotificationDetails(
           iOS: DarwinNotificationDetails(
@@ -539,20 +546,16 @@ class AdhanScheduler {
         voice: voice,
         parts: durations,
         alarm: alarm && durations.isNotEmpty,
-        moreBody: l.adhanContinued,
+        moreBody: l.adhanTapForFull,
         openLabel: l.adhanOpenApp,
       );
     }
     return out;
   }
 
-  /// Notifications [prayer]'s adhan takes on iPhone (0 = a system alarm).
-  int _partsFor(String prayer) {
-    final r = _rings[prayer];
-    if (r == null) return 1;
-    if (r.alarm) return 0;
-    return r.parts.isEmpty ? 1 : r.parts.length;
-  }
+  /// Notifications [prayer]'s adhan takes on iPhone: 0 = a system alarm, else 1 (owner 2026-11-26: one
+  /// notification per adhan, never the parts one after another).
+  int _partsFor(String prayer) => (_rings[prayer]?.alarm ?? false) ? 0 : 1;
 
   List<AdhanNotification> get lastPlan => _lastPlan;
 
@@ -692,26 +695,6 @@ class AdhanScheduler {
           ring: n.kind == adhanKind ? _rings[n.prayer]?.take(n.parts) : null,
         );
       }
-      // iPhone (owner 2026-11-21): when the app is not opened, the full adhans planned run out after about
-      // two days and only the first 30 s ring; a reminder half an hour before the first short one asks the
-      // user to open the app (which plans the next two days again).
-      final short = parts == null
-          ? null
-          : items
-                .where((n) => n.kind == adhanKind && n.parts == 1 && (_rings[n.prayer]?.parts.length ?? 0) > 1)
-                .firstOrNull;
-      if (short != null) {
-        final at = short.at.subtract(const Duration(minutes: 30));
-        if (at.isAfter(clock().toUtc())) {
-          await backend.schedule(
-            id: adhanOpenAppNotificationId,
-            title: l.adhanOpenAppTitle,
-            body: l.adhanOpenAppBody,
-            atUtc: at,
-            sound: 'tone',
-          );
-        }
-      }
     } catch (e) {
       // A plugin failure must never break the app; the next sync retries.
       _lastSignature = null;
@@ -750,9 +733,19 @@ class AdhanScheduler {
     final parts = [for (final s in f[4].split(',')) ?int.tryParse(s)];
     if (id == null || start == null) return;
     final total = parts.fold<int>(0, (a, b) => a + b);
-    final elapsed = clock().toUtc().millisecondsSinceEpoch - start;
-    // Too early (a stale notification) or the adhan is over: nothing to continue.
-    if (elapsed < -60000 || elapsed > (total - 2) * 1000) return;
+    var elapsed = clock().toUtc().millisecondsSinceEpoch - start;
+    // How many parts rang as notifications (0 or missing = all of them, or the alarm with the whole adhan).
+    final rang = f.length > 5 ? (int.tryParse(f[5]) ?? 0) : 0;
+    if (rang > 0 && rang < parts.length) {
+      // Only the start rang (owner 2026-11-26: one notification per adhan): the rest plays from where that
+      // stopped, also when the user taps the notification a while later (up to half an hour).
+      final heard = parts.take(rang).fold<int>(0, (a, b) => a + b) * 1000;
+      if (elapsed < -60000 || elapsed > 30 * 60000) return;
+      if (elapsed > heard) elapsed = heard;
+    } else if (elapsed < -60000 || elapsed > (total - 2) * 1000) {
+      // Too early (a stale notification) or the adhan is over: nothing to continue.
+      return;
+    }
     for (var k = 0; k < parts.length && k < maxAdhanParts; k++) {
       try {
         await backend.cancel(k == 0 ? id : adhanPartId(id, k));

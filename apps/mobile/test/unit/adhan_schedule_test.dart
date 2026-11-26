@@ -276,7 +276,7 @@ void main() {
       );
     }
 
-    test('each adhan carries its parts; the plan stays within the iOS budget', () async {
+    test('each adhan rings as ONE notification (its first part), never the parts one after another', () async {
       final (sch, fake, parts) = await make({'adhan.enabled': true});
       await sch.sync(force: true);
       expect(parts.prepared, contains('mulla|assets/audio/adhan_mulla.m4a'));
@@ -284,16 +284,13 @@ void main() {
       final first = fake.scheduled.first;
       final ring = fake.rings[first.id]!;
       expect(ring.voice, 'mulla');
-      expect(ring.count, 5);
+      expect(ring.count, 1);
       expect(ring.alarm, isFalse);
-      final slots = sch.lastPlan.fold<int>(0, (s, x) => s + x.parts);
-      expect(slots, lessThanOrEqualTo(59));
-      expect(sch.lastPlan.last.parts, 1);
-      // Half an hour before the first adhan that rings only 30 s: "open the app".
-      final open = fake.scheduled.singleWhere((n) => n.id == adhanOpenAppNotificationId);
-      final firstShort = sch.lastPlan.firstWhere((n) => n.kind == adhanKind && n.parts == 1);
-      expect(open.at, firstShort.at.subtract(const Duration(minutes: 30)));
-      expect(open.sound, 'tone');
+      expect(ring.moreBody, isNotEmpty);
+      expect(sch.lastPlan.every((x) => x.parts == 1), isTrue);
+      // With one notification per adhan the whole week fits (no "open the app" reminder needed).
+      expect(sch.lastPlan.length, greaterThanOrEqualTo(34));
+      expect(fake.scheduled.where((n) => n.id == adhanOpenAppNotificationId), isEmpty);
     });
 
     test('with the alarm allowed, every adhan of the week rings as an alarm', () async {
@@ -327,6 +324,24 @@ void main() {
       // An adhan that is over does not start again.
       await sch.continueFrom(ring.payload(202601151, fixedNow.subtract(const Duration(minutes: 5))), preview);
       expect(player.plays, 1);
+    });
+
+    test('tapping the one notification plays the rest from where its first part stopped', () async {
+      final (sch, fake, _) = await make({'adhan.enabled': true});
+      final player = FakeAdhanPlayer();
+      final preview = AdhanPreview(player, source: (id) async => 'assets/$id.m4a');
+      const ring = AdhanRing(voice: 'mulla', parts: [28, 27, 29], count: 1);
+      // Tapped two minutes later: the adhan goes on from the end of the first part, not from minute two.
+      await sch.continueFrom(ring.payload(202601151, fixedNow.subtract(const Duration(minutes: 2))), preview);
+      expect(player.lastFrom, const Duration(seconds: 28));
+      await preview.stop();
+      // Tapped while the first part still sounds: from that moment.
+      await sch.continueFrom(ring.payload(202601151, fixedNow.subtract(const Duration(seconds: 10))), preview);
+      expect(player.lastFrom, const Duration(seconds: 10));
+      await preview.stop();
+      // Much later than half an hour: nothing.
+      await sch.continueFrom(ring.payload(202601151, fixedNow.subtract(const Duration(minutes: 40))), preview);
+      expect(player.plays, 2);
     });
   });
 }
