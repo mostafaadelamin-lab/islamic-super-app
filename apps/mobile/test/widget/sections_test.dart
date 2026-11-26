@@ -532,7 +532,11 @@ void main() {
       final arafah = flow.indexWhere((s) => s.step == 'arafah');
       final next = find.byKey(const Key('stepNext-tamattu'));
       for (var n = 0; n < arafah; n++) {
-        await tester.scrollUntilVisible(next, 600, scrollable: find.byType(Scrollable).last);
+        // the step's own list (steps quote sunnah.com's longer wording since 1.2.25)
+        final list = find.descendant(of: find.byKey(const Key('pilgrimage-tamattu')), matching: find.byType(Scrollable));
+        await tester.scrollUntilVisible(next, 600, scrollable: list.first);
+        await tester.ensureVisible(next);
+        await tester.pumpAndSettle();
         await tester.tap(next);
         await tester.pumpAndSettle();
       }
