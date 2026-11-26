@@ -1059,7 +1059,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
             // Owner 2026-11-26: switch to the printed look (optional, downloaded) and back while reading.
             <button
               type="button"
-              className="rd-icon-btn rd-side-btn"
+              className={`tool-tile rd-font-tile ${prefs.mushafPrinted ? "gold" : "plain"}`}
               aria-label={t(locale, "reader.printedLook")}
               title={t(locale, "reader.printedLook")}
               aria-pressed={prefs.mushafPrinted}
@@ -1067,7 +1067,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
               onClick={() => prefsStore.set((p) => ({ ...p, mushafPrinted: !p.mushafPrinted, mushafPrintedV: 2 }))}
             >
               <ReaderIcon name="pages" />
-              <span className="rd-side-label">{t(locale, "reader.printedLookShort")}</span>
+              <span>{t(locale, prefs.mushafPrinted ? "reader.fontMadina" : "reader.fontUthmani")}</span>
             </button>
           ) : null}
           {tab === "mushaf" ? (

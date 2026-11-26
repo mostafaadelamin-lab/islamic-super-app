@@ -2987,12 +2987,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerFontBigger => 'Bigger text';
 
   @override
+  String get readerFontMadina => 'Madina font';
+
+  @override
   String readerFontSize(String size) {
     return 'Text size: $size — press to enlarge';
   }
 
   @override
   String get readerFontSmaller => 'Smaller text';
+
+  @override
+  String get readerFontUthmani => 'Uthmani font';
 
   @override
   String get readerFullHint =>
@@ -3121,10 +3127,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerPrevSurah => 'Previous surah';
 
   @override
-  String get readerPrintedLook => 'Printed Mushaf look (optional, downloaded from the internet)';
+  String get readerPrintedLook =>
+      'Switch between the Uthmani font and the Madina font (the Madina font is optional and downloaded from the internet)';
 
   @override
-  String get readerPrintedLookShort => 'Printed';
+  String get readerPrintedLookShort => 'Madina font';
 
   @override
   String readerRepeatN(String n) {

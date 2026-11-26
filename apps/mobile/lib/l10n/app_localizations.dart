@@ -5348,6 +5348,12 @@ abstract class AppLocalizations {
   /// **'Bigger text'**
   String get readerFontBigger;
 
+  /// shared key "reader.fontMadina"
+  ///
+  /// In en, this message translates to:
+  /// **'Madina font'**
+  String get readerFontMadina;
+
   /// shared key "reader.fontSize"
   ///
   /// In en, this message translates to:
@@ -5359,6 +5365,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Smaller text'**
   String get readerFontSmaller;
+
+  /// shared key "reader.fontUthmani"
+  ///
+  /// In en, this message translates to:
+  /// **'Uthmani font'**
+  String get readerFontUthmani;
 
   /// shared key "reader.fullHint"
   ///
@@ -5591,13 +5603,13 @@ abstract class AppLocalizations {
   /// shared key "reader.printedLook"
   ///
   /// In en, this message translates to:
-  /// **'Printed Mushaf look (optional, downloaded from the internet)'**
+  /// **'Switch between the Uthmani font and the Madina font (the Madina font is optional and downloaded from the internet)'**
   String get readerPrintedLook;
 
   /// shared key "reader.printedLookShort"
   ///
   /// In en, this message translates to:
-  /// **'Printed'**
+  /// **'Madina font'**
   String get readerPrintedLookShort;
 
   /// shared key "reader.repeatN"

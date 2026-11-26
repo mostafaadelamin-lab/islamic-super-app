@@ -13,6 +13,7 @@ import '../domain/quran.dart';
 import '../domain/text.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
+import 'dhikr_tools.dart';
 import 'play_origin.dart';
 import 'ayah_sheet.dart';
 import 'ayah_study.dart';
@@ -390,24 +391,6 @@ class PageReaderScreenState extends State<PageReaderScreen> {
               onPressed: () => _toggleTafsirBeside(context),
             ),
             if (_tab == ReaderTab.mushaf)
-              // Owner 2026-11-26: switch to the printed look (optional, downloaded) and back while reading.
-              ListenableBuilder(
-                listenable: s.settings,
-                builder: (context, _) {
-                  final on = s.settings.mushafPrinted;
-                  return IconButton(
-                    key: const Key('readerPrinted'),
-                    tooltip: l.readerPrintedLook,
-                    isSelected: on,
-                    color: scheme.primary,
-                    selectedIcon: RIcon(RIcons.pages, color: scheme.onPrimary),
-                    style: on ? IconButton.styleFrom(backgroundColor: scheme.primary) : null,
-                    icon: const RIcon(RIcons.pages),
-                    onPressed: () => unawaited(s.settings.setMushafPrinted(!on)),
-                  );
-                },
-              ),
-            if (_tab == ReaderTab.mushaf)
               IconButton(
                 key: const Key('readerHelp'),
                 tooltip: l.readerHelp,
@@ -425,6 +408,28 @@ class PageReaderScreenState extends State<PageReaderScreen> {
       child: Row(
         children: [
           _ZoomButtons(mushaf: _tab == ReaderTab.mushaf),
+          if (_tab == ReaderTab.mushaf) ...[
+            const SizedBox(width: DesignTokens.spaceSm),
+            // Owner 2026-11-26: switch between the Uthmani font (the Complex's v2.2, default) and the Madina font
+            // (the printed look, optional download) while reading: a coloured square with its name, like the adhkar tools.
+            ListenableBuilder(
+              listenable: s.settings,
+              builder: (context, _) {
+                final on = s.settings.mushafPrinted;
+                return SizedBox(
+                  width: 92,
+                  child: TintedAction(
+                    key: const Key('readerPrinted'),
+                    icon: RIcons.pages,
+                    label: on ? l.readerFontMadina : l.readerFontUthmani,
+                    tooltip: l.readerPrintedLook,
+                    tint: on ? ActionTint.gold : ActionTint.plain,
+                    onPressed: () => unawaited(s.settings.setMushafPrinted(!on)),
+                  ),
+                );
+              },
+            ),
+          ],
           const SizedBox(width: DesignTokens.spaceSm),
           Expanded(
             child: Align(

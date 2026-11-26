@@ -4416,6 +4416,10 @@
   "@readerFontBigger": {
     "description": "shared key \"reader.fontBigger\""
   },
+  "readerFontMadina": "Madina font",
+  "@readerFontMadina": {
+    "description": "shared key \"reader.fontMadina\""
+  },
   "readerFontSize": "Text size: {size} — press to enlarge",
   "@readerFontSize": {
     "description": "shared key \"reader.fontSize\"",
@@ -4428,6 +4432,10 @@
   "readerFontSmaller": "Smaller text",
   "@readerFontSmaller": {
     "description": "shared key \"reader.fontSmaller\""
+  },
+  "readerFontUthmani": "Uthmani font",
+  "@readerFontUthmani": {
+    "description": "shared key \"reader.fontUthmani\""
   },
   "readerFullHint": "To turn pages, swipe the page or press the arrows. To show the tools, press “Show tools”.",
   "@readerFullHint": {
@@ -4604,11 +4612,11 @@
   "@readerPrevSurah": {
     "description": "shared key \"reader.prevSurah\""
   },
-  "readerPrintedLook": "Printed Mushaf look (optional, downloaded from the internet)",
+  "readerPrintedLook": "Switch between the Uthmani font and the Madina font (the Madina font is optional and downloaded from the internet)",
   "@readerPrintedLook": {
     "description": "shared key \"reader.printedLook\""
   },
-  "readerPrintedLookShort": "Printed",
+  "readerPrintedLookShort": "Madina font",
   "@readerPrintedLookShort": {
     "description": "shared key \"reader.printedLookShort\""
   },

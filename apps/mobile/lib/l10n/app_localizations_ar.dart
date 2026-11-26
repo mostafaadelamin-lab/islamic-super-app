@@ -2975,12 +2975,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerFontBigger => 'تكبير الخط';
 
   @override
+  String get readerFontMadina => 'خط المدينة';
+
+  @override
   String readerFontSize(String size) {
     return 'حجم الخط: $size — اضغط للتكبير';
   }
 
   @override
   String get readerFontSmaller => 'تصغير الخط';
+
+  @override
+  String get readerFontUthmani => 'الخط العثماني';
 
   @override
   String get readerFullHint => 'للتقليب: اسحب الصفحة أو اضغط السهمين. لإظهار الأدوات اضغط «إظهار الأدوات».';
@@ -3105,10 +3111,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerPrevSurah => 'السورة السابقة';
 
   @override
-  String get readerPrintedLook => 'شكل المصحف المطبوع (اختياري، يتحمّل من الإنترنت)';
+  String get readerPrintedLook => 'تبديل بين الخط العثماني وخط المدينة (خط المدينة اختياري ويتحمّل من الإنترنت)';
 
   @override
-  String get readerPrintedLookShort => 'المطبوع';
+  String get readerPrintedLookShort => 'خط المدينة';
 
   @override
   String readerRepeatN(String n) {

@@ -1720,3 +1720,12 @@ button.mn-ref {
 .rd-flow-run + .rd-flow-run {
   margin-top: var(--space-sm);
 }
+
+/* Uthmani / Madina font switch as a coloured square with its name (owner 2026-11-26, like the adhkar tools) */
+.rd-font-tile {
+  min-height: 48px;
+  min-width: 72px;
+  padding: 4px 8px;
+  font-size: 12px;
+  white-space: nowrap;
+}
