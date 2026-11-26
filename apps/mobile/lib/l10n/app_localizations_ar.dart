@@ -117,6 +117,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accountSyncNow => 'زامن الآن';
 
   @override
+  String get adhanAlarmOfferBody =>
+      'بعد إذنك مرة واحدة، يرن الأذان كاملاً في منبّه واحد حتى لو الآيفون على الصامت، بدل عدة إشعارات متتالية على شاشة القفل.';
+
+  @override
+  String get adhanAlarmOfferTitle => 'الأذان كامل على الآيفون';
+
+  @override
   String get adhanAlertsHeader => 'تنبيهات الأذان';
 
   @override
@@ -142,6 +149,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adhanContinued => 'تكملة الأذان. اضغط لتسمعه كاملاً في التطبيق.';
+
+  @override
+  String adhanContinuedTitle(String name, String k, String n) {
+    return 'تكملة أذان $name ($k من $n)';
+  }
 
   @override
   String get adhanCredit => 'تسجيلات الأذان:';
@@ -287,6 +299,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adhanTabTitle => 'الأذان';
+
+  @override
+  String get adhanTapForFull => 'اضغط لتسمع الأذان كاملاً في التطبيق.';
 
   @override
   String get adhanTest => 'جرّب التنبيه (بعد ١٠ ثوانٍ)';

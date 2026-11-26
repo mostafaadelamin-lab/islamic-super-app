@@ -398,7 +398,8 @@ class SettingsController extends ChangeNotifier {
   // --- Adhan notifications --------------------------------------------------------
   /// Android: play the full adhan even when the phone is on silent / vibrate (on the
   /// alarm volume, like an alarm clock). Off by default. iOS does not allow it.
-  bool get adhanPlayOnSilent => _prefs.getBool('adhan.playOnSilent') ?? false;
+  // Owner 2026-11-27: on by default (the full adhan sounds even on silent, like an alarm clock).
+  bool get adhanPlayOnSilent => _prefs.getBool('adhan.playOnSilent') ?? true;
   Future<void> setAdhanPlayOnSilent(bool v) async {
     await _prefs.setBool('adhan.playOnSilent', v);
     notifyListeners();
@@ -411,6 +412,10 @@ class SettingsController extends ChangeNotifier {
     await _prefs.setBool('adhan.iosAlarm', v);
     notifyListeners();
   }
+
+  /// iPhone: the one-time offer of [adhanIosAlarm] after the update to one notification per adhan was shown.
+  bool get adhanAlarmOffered => _prefs.getBool('adhan.alarmOffered') ?? false;
+  Future<void> setAdhanAlarmOffered() => _prefs.setBool('adhan.alarmOffered', true);
 
   /// Android: the next prayer and a countdown in a quiet notification on the lock screen (on by default,
   /// owner 2026-11-21: phones have no lock-screen widgets).

@@ -129,11 +129,12 @@ void main() {
       expect(fake.scheduled.every((e) => e.sound == 'tone'), isTrue);
       expect(() => settings.setAdhanSound('loud'), throwsArgumentError);
       // "Adhan when the phone is silent" (Android) re-plans so the alarms carry it.
-      expect(settings.adhanPlayOnSilent, isFalse);
-      await settings.setAdhanPlayOnSilent(true);
+      // On by default (owner 2026-11-27).
+      expect(settings.adhanPlayOnSilent, isTrue);
+      await settings.setAdhanPlayOnSilent(false);
       await sch.sync();
       expect(fake.cancels, 3);
-      expect(settings.adhanPlayOnSilent, isTrue);
+      expect(settings.adhanPlayOnSilent, isFalse);
       // Turning it off cancels everything.
       await settings.setAdhanEnabled(false);
       await sch.sync();
@@ -327,6 +328,30 @@ void main() {
       // An adhan that is over does not start again.
       await sch.continueFrom(ring.payload(202601151, fixedNow.subtract(const Duration(minutes: 5))), preview);
       expect(player.plays, 1);
+    });
+
+    test('the parts after the first are titled «تكملة أذان …» with their number', () {
+      const ring = AdhanRing(voice: 'mulla', parts: [28, 27, 29], moreTitle: 'تكملة أذان المغرب ({k} من {n})');
+      expect(ring.titleOfPart(1, 3), 'تكملة أذان المغرب (2 من 3)');
+      expect(ring.titleOfPart(2, 3), 'تكملة أذان المغرب (3 من 3)');
+    });
+
+    test('tapping the one notification plays the rest from where its first part stopped', () async {
+      final (sch, fake, _) = await make({'adhan.enabled': true});
+      final player = FakeAdhanPlayer();
+      final preview = AdhanPreview(player, source: (id) async => 'assets/$id.m4a');
+      const ring = AdhanRing(voice: 'mulla', parts: [28, 27, 29], count: 1);
+      // Tapped two minutes later: the adhan goes on from the end of the first part, not from minute two.
+      await sch.continueFrom(ring.payload(202601151, fixedNow.subtract(const Duration(minutes: 2))), preview);
+      expect(player.lastFrom, const Duration(seconds: 28));
+      await preview.stop();
+      // Tapped while the first part still sounds: from that moment.
+      await sch.continueFrom(ring.payload(202601151, fixedNow.subtract(const Duration(seconds: 10))), preview);
+      expect(player.lastFrom, const Duration(seconds: 10));
+      await preview.stop();
+      // Much later than half an hour: nothing.
+      await sch.continueFrom(ring.payload(202601151, fixedNow.subtract(const Duration(minutes: 40))), preview);
+      expect(player.plays, 2);
     });
   });
 }
