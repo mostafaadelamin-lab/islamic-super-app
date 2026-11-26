@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.24] — «افهم دينك» without sheikhs with legal problems; Al-Azhar and Saudi scholars; stories narrated by al-Sha'rawi — 2026-11-26
+Owner 2026-11-26 after a per-sheikh review (arrest, prison, ban, case), report in project files reports/مراجعة-شيوخ-افهم-دينك-مفصلة-2026-11-26.md.
+### Phone apps (Android + iPhone + car screen) and website
+- «افهم دينك»: every series of Sheikhs Muhammad al-Munajjid, Muhammad al-Arifi, Mohamed Hussein Yacoub, Nabil al-Awadi and Eng. Ayman Abdelrahim removed (with the topics «الفكر والوعي الإسلامي» and «التاريخ الإسلامي», which only had his series). The owner kept Sheikhs al-Adawi, Hassan, al-Qarni, al-Ghazali, Abdelkafy and al-Maghamsi.
+- 11 Al-Azhar series added: Dr. Yousry Gabr (عقيدة العوام، نور اليقين، فتح القريب المجيب، منازل السائرين، التبيان), Sheikh Muhammad al-Rawi, Dr. Abdullah Shehata, Dr. Ahmed Omar Hashem, Grand Imam Muhammad Sayyid Tantawi, Al-Azhar's «من هدي الرسول ﷺ», Sheikh Omar Abdelkafy's «أحسن القصص».
+- 9 Saudi series added: Sheikh Saleh al-Fawzan (الملخص الفقهي، دروس من رمضان), Sheikh Ibn Baz (الوابل الصيب، الاستقامة), Sheikh Saleh ibn Humaid (منهاج القاصدين، الأربعين النووية), Sheikh Abdullah al-Mutlaq (الفقه الميسر), Sheikh Sulaiman al-Ruhaily (فقه الحج، فقه الأسرة). Now 78 series, 3975 lessons.
+- «قصص قرآنية مسموعة»: the prophets' stories are now Sheikh al-Sha'rawi's (44 episodes) instead of Sheikh Nabil al-Awadi's; his videos removed.
+- Website lesson list file renamed lessons-5.json (no stale cached copy).
+
 ## [1.2.23] — «أذكاري» (your own adhkar) and the driving-mode bar — 2026-11-26
 Owner 2026-11-26 (screenshot of another app's «أضف ذكر» dialog as layout reference only; own design).
 ### Phone apps (Android + iPhone)
