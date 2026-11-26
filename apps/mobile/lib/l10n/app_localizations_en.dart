@@ -151,6 +151,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhanContinued => 'The adhan continues. Tap to hear all of it in the app.';
 
   @override
+  String adhanContinuedTitle(String name, String k, String n) {
+    return '$name adhan continues ($k of $n)';
+  }
+
+  @override
   String get adhanCredit => 'Adhan recordings:';
 
   @override

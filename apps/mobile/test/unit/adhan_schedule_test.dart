@@ -330,6 +330,12 @@ void main() {
       expect(player.plays, 1);
     });
 
+    test('the parts after the first are titled «تكملة أذان …» with their number', () {
+      const ring = AdhanRing(voice: 'mulla', parts: [28, 27, 29], moreTitle: 'تكملة أذان المغرب ({k} من {n})');
+      expect(ring.titleOfPart(1, 3), 'تكملة أذان المغرب (2 من 3)');
+      expect(ring.titleOfPart(2, 3), 'تكملة أذان المغرب (3 من 3)');
+    });
+
     test('tapping the one notification plays the rest from where its first part stopped', () async {
       final (sch, fake, _) = await make({'adhan.enabled': true});
       final player = FakeAdhanPlayer();

@@ -151,6 +151,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhanContinued => 'تكملة الأذان. اضغط لتسمعه كاملاً في التطبيق.';
 
   @override
+  String adhanContinuedTitle(String name, String k, String n) {
+    return 'تكملة أذان $name ($k من $n)';
+  }
+
+  @override
   String get adhanCredit => 'تسجيلات الأذان:';
 
   @override

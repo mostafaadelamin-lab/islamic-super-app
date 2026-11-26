@@ -85,6 +85,7 @@ class AdhanRing {
     this.alarm = false,
     this.count,
     this.moreBody = '',
+    this.moreTitle = '',
     this.tapHint = '',
     this.openLabel = '',
   });
@@ -109,12 +110,21 @@ class AdhanRing {
     alarm: alarm,
     count: n,
     moreBody: moreBody,
+    moreTitle: moreTitle,
     tapHint: tapHint,
     openLabel: openLabel,
   );
 
-  /// Text of the notifications after the first one ("the adhan continues").
+  /// Text of the notifications after the first one ("tap to hear the whole adhan in the app").
   final String moreBody;
+
+  /// Owner 2026-11-27: title of the notifications after the first one, so the lock screen does not show
+  /// the same «حان وقت صلاة …» again and again: "تكملة أذان المغرب ({k} من {n})"; {k} and {n} are filled
+  /// in per part. Empty = the first notification's title.
+  final String moreTitle;
+
+  /// [moreTitle] for part [k] (0-based) of [n].
+  String titleOfPart(int k, int n) => moreTitle.replaceAll('{k}', '${k + 1}').replaceAll('{n}', '$n');
 
   /// Line added under the first notification's text when only its start rings (days beyond what the 64
   /// pending notifications hold): "tap to hear the whole adhan in the app".
@@ -402,7 +412,7 @@ class LocalNotificationsBackend implements NotificationsBackend {
     for (var k = 0; k < count; k++) {
       await _plugin.zonedSchedule(
         id: k == 0 ? id : adhanPartId(id, k),
-        title: title,
+        title: k == 0 || ring.moreTitle.isEmpty ? title : ring.titleOfPart(k, count),
         body: k == 0
             ? (count < parts.length && ring.tapHint.isNotEmpty ? '$body\n${ring.tapHint}' : body)
             : ring.moreBody,
@@ -557,7 +567,8 @@ class AdhanScheduler {
         voice: voice,
         parts: durations,
         alarm: alarm && durations.isNotEmpty,
-        moreBody: l.adhanContinued,
+        moreBody: l.adhanTapForFull,
+        moreTitle: l.adhanContinuedTitle(_prayerName(l, prayer), '{k}', '{n}'),
         tapHint: l.adhanTapForFull,
         openLabel: l.adhanOpenApp,
       );

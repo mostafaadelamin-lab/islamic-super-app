@@ -203,6 +203,21 @@
   "@adhanContinued": {
     "description": "shared key \"adhan.continued\""
   },
+  "adhanContinuedTitle": "{name} adhan continues ({k} of {n})",
+  "@adhanContinuedTitle": {
+    "description": "shared key \"adhan.continuedTitle\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "k": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
   "adhanCredit": "Adhan recordings:",
   "@adhanCredit": {
     "description": "shared key \"adhan.credit\""

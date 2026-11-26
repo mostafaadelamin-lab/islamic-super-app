@@ -332,6 +332,12 @@ abstract class AppLocalizations {
   /// **'The adhan continues. Tap to hear all of it in the app.'**
   String get adhanContinued;
 
+  /// shared key "adhan.continuedTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'{name} adhan continues ({k} of {n})'**
+  String adhanContinuedTitle(String name, String k, String n);
+
   /// shared key "adhan.credit"
   ///
   /// In en, this message translates to:

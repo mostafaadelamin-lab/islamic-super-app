@@ -1111,6 +1111,7 @@
   "reader.tafsirBesideJuz": "Tafsir beside the juz",
   "adhan.continued": "The adhan continues. Tap to hear all of it in the app.",
   "adhan.tapForFull": "Tap to hear the whole adhan in the app.",
+  "adhan.continuedTitle": "{name} adhan continues ({k} of {n})",
   "adhan.alarmOfferTitle": "The whole adhan on iPhone",
   "adhan.alarmOfferBody": "Allow it once and the whole adhan rings as one alarm, even when the iPhone is on silent, instead of several notifications one after another on the lock screen.",
   "adhan.iosAlarm": "Full adhan as an alarm",
