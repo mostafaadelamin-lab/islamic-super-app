@@ -2,10 +2,14 @@
 """Build versioned, platform-neutral content bundles from pinned upstream sources.
 
 The Quran text is the King Fahd Glorious Quran Printing Complex's own digital
-text, "KFGQPC Hafs Uthmanic Data" version 18 (hafsData_v18.json), copied
-byte-for-byte. The only thing removed is the ayah number that the Complex
-appends to each aya_text after a no-break space (the apps draw that number
-themselves, in the Complex's font). Nothing in this script edits, normalises or
+text, version 2.2 (v22, 2024): the Word document inside the official package
+hafs-2.2.zip from qurancomplex.gov.sa/fonts/hafs, whose SHA-256 the Complex
+prints on that page (read by tools/kfgqpc_docx.py). Every ayah is copied
+byte-for-byte; only the ayah number after the no-break space is split off (the
+apps draw that number themselves, in the Complex's font). The page, line and
+juz columns still come from the Complex's hafsData_v18.json (same 1441H
+edition); the build checks that the v22 text equals the v18 text except the
+33 places where v22 dropped the kashida in «كَلَّا» (owner's choice 2026-11-26). Nothing in this script edits, normalises or
 re-encodes ayah text. Any glyph substitution needed
 for a particular font happens at render time in the client, never in content.
 
@@ -29,13 +33,18 @@ import re
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import kfgqpc_docx  # noqa: E402
 import mushaf_lines  # noqa: E402
 import reels  # noqa: E402
 import stories  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 C = ROOT / "content"
-QURAN_SRC = C / "quran/upstream/kfgqpc-hafs-v18.json"
+QURAN_SRC = C / "quran/upstream/kfgqpc-hafs-v18.json"  # page/line/juz columns (and the v18 text the v22 text is checked against)
+QURAN_PKG = C / "quran/upstream/kfgqpc-hafs-2.2.zip"  # official package, SHA-256 as printed on qurancomplex.gov.sa/fonts/hafs
+QURAN_PKG_DOCX = "UthmanicHafs v22.docx"
+QURAN_PKG_SHA256 = "B5CF0666441AABD5FF2BE4993934E6F2A57D00B6B89AFCDF708CD70288671B23"
+KALLA_KASHIDA = "\u0643\u0640"  # «كـ»: v18 wrote كَلَّا with a kashida after the kaf; v22 does not (33 places)
 META_SRC = C / "quran/upstream/quran-json-3.1.2.quran.json"  # surah names/transliteration only, never ayah text
 EN_SRC = C / "translations/upstream/quran-json-3.1.2.quran_en.json"
 MADINA = C / "quran/madina-1441h-manifest.json"
@@ -44,7 +53,7 @@ REF = ROOT / "tests/vectors/quran-reference.json"
 QUARTERS_SRC = C / "quran/upstream/quran-meta-7.0.0-hizb-quarters.json"
 RUB_SIGN = "\u06de"  # ۞ printed in the Mushaf at the start of each hizb quarter
 
-QURAN_VERSION = "2.0.0"  # 2.0.0: text = KFGQPC Hafs v18, pages = new edition (1441H)
+QURAN_VERSION = "3.0.0"  # 3.0.0: text = KFGQPC Hafs v22 (2.2); 2.0.0: v18, pages = new edition (1441H)
 
 
 def sha(s: str) -> str:
@@ -127,6 +136,8 @@ def main() -> int:
     by_surah: dict[int, list[dict]] = {}
     for r in kf:
         by_surah.setdefault(r["sora"], []).append(r)
+    v22 = kfgqpc_docx.read_package(QURAN_PKG, QURAN_PKG_DOCX, QURAN_PKG_SHA256)
+    kalla_changes = 0
     surahs = []
     for s, e in zip(meta, en, strict=True):
         assert s["id"] == e["id"]
@@ -136,7 +147,13 @@ def main() -> int:
         for r in rows:
             m = AYAH_NUMBER_SUFFIX.search(r["aya_text"])
             assert m and int(m.group(0)[1:].translate(str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789"))) == r["aya_no"], (s["id"], r["aya_no"])
-            ayahs.append(r["aya_text"][: m.start()])
+            v18_text = r["aya_text"][: m.start()]
+            text = v22[s["id"] - 1][r["aya_no"] - 1]
+            if text != v18_text:
+                # the only allowed difference: one kashida dropped from «كـَلَّا»
+                assert v18_text.count(KALLA_KASHIDA) == 1 and v18_text.replace(KALLA_KASHIDA, "\u0643") == text, (s["id"], r["aya_no"])
+                kalla_changes += 1
+            ayahs.append(text)
         surahs.append({
             "n": s["id"],
             "nameAr": s["name"],
@@ -148,6 +165,8 @@ def main() -> int:
             "en": [v["translation"] for v in e["verses"]],
         })
         assert len(e["verses"]) == len(rows)
+    assert [len(a) for a in v22] == [s["ayahCount"] for s in surahs]
+    assert kalla_changes == 33, kalla_changes
 
     # --- Madinah Mushaf (KFGQPC new edition, 1441H) page boundaries ----------
     # Manifest rows are [surahIdx0, lineIdx, surahIdx0, lineIdx] where lineIdx 0/1
@@ -182,10 +201,12 @@ def main() -> int:
         "riwayah": "Hafs an Asim",
         "numbering": "Kufi (6236)",
         "source": {
-            "text": "King Fahd Glorious Quran Printing Complex, KFGQPC Hafs Uthmanic Data v18 (hafsData_v18.json, 2021-10-25), byte-for-byte; ayah-number suffix removed",
-            "font": "KFGQPC HAFS Uthmanic Script v0.18 (the Complex's font for this text, distributed unmodified)",
+            "text": "King Fahd Glorious Quran Printing Complex, Hafs text version 2.2 (v22), \"UthmanicHafs v22.docx\" in the official package hafs-2.2.zip (qurancomplex.gov.sa/fonts/hafs), byte-for-byte; ayah-number suffix removed",
+            "font": "KFGQPC HAFS Uthmanic Script version 2.2 (the Complex's font for this text, distributed unmodified)",
+            "pages": "hafsData_v18.json page/line_start/line_end/jozz (KFGQPC new edition 1441H)",
             "translationEn": "Saheeh International via quran-json@3.1.2 (licence review pending, see docs/CONTENT_SOURCES.md)",
-            "upstreamSha256": hashlib.sha256(QURAN_SRC.read_bytes()).hexdigest(),
+            "upstreamSha256": hashlib.sha256(QURAN_PKG.read_bytes()).hexdigest(),
+            "pagesSha256": hashlib.sha256(QURAN_SRC.read_bytes()).hexdigest(),
         },
         "surahs": surahs,
     }

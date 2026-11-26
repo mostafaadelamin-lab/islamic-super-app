@@ -159,6 +159,23 @@
         margin-top: 40px;
         text-align: center;
       }
+      @media (max-width: 600px) {
+        table.cards thead { display: none; }
+        table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: auto; }
+        table.cards tr { border-bottom: 2px solid var(--line, #ccd); padding: 8px 0; }
+        table.cards td { border: 0; padding: 4px 8px; }
+        table.cards td[data-label]::before { content: attr(data-label) ": "; font-weight: 700; }
+      }
+      .proof .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0}
+      .proof .card h3{margin:0 0 6px;font-size:1.1rem;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+      .proof h3.sub{color:var(--accent);margin:22px 0 6px}
+      .ok{background:#e4f2ea;color:#2f7d55;border-radius:999px;padding:2px 12px;font-size:.9rem;font-weight:600;white-space:nowrap;display:inline-block}
+      .proof dl{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:4px 14px}
+      .proof dt{color:var(--muted)} .proof dd{margin:0}
+      .proof code{direction:ltr;unicode-bidi:embed;font-size:12px;word-break:break-all}
+      .proof .note{background:var(--card);border-inline-start:4px solid var(--accent);padding:10px 14px;border-radius:8px}
+      @media (prefers-color-scheme: dark){.ok{background:#17301f;color:#6cc596}}
+      @media (max-width:560px){.proof dl{grid-template-columns:1fr}.proof dt{margin-top:6px}}
     </style>
   </head>
   <body>
@@ -169,15 +186,42 @@
     <main>
       <h1>مصادر المحتوى في «رتّل وصلِّ»</h1>
       <p class="muted">
-        آخر تحديث: 20 نوفمبر 2026 · تطبيق «رتّل وصلِّ» (Android و iPhone) وموقع rattilwasalli.com
+        آخر تحديث: 26 نوفمبر 2026 · تطبيق «رتّل وصلِّ» (Android و iPhone) وموقع rattilwasalli.com
       </p>
       <p>
         هذه الصفحة تجمع مصادر كل المحتوى المعروض في التطبيق والموقع وتراخيصها. النصوص الدينية تُنقل كما نُشرت
         في مصادرها دون إضافة أو تغيير.
       </p>
 
+
+      <section id="proof" class="proof">
+      <h2>الإثبات: كل المحتوى الديني مطابق لمصدره</h2>
+      <p>للإثبات، حمّلنا كل مصدر من جديد من مكانه الأصلي، وقارنّاه بالملف اللي في التطبيق حرفًا بحرف، وسجّلنا <b>البصمة الرقمية (SHA-256)</b> لملف المصدر. البصمة زي بصمة الإصبع: لو اتغير حرف واحد أو حركة واحدة في الملف، البصمة كلها بتتغير. تاريخ الفحص: 26 نوفمبر 2026م.</p>
+      <h3 class="sub">القرآن الكريم والتفسير ومعاني الكلمات</h3>
+      <div class="card"><h3>المصحف الشريف <span class="ok">✓ مطابق 100٪ — صفر اختلاف</span></h3><dl><dt>المصدر</dt><dd>مجمع الملك فهد لطباعة المصحف الشريف، نص حفص العثماني <b>الإصدار 2.2</b> (2024م)، ملف الوورد داخل حزمة <code>hafs-2.2.zip</code> المنشورة على <a href="https://qurancomplex.gov.sa/fonts/hafs">صفحة خط حفص في موقع المجمع</a>، وبخط المجمع من نفس الحزمة</dd><dt>اللي اتقارن</dt><dd>كل حرف وكل حركة في 6236 آية و114 سورة، وترتيب السور والآيات وأرقامها. صفحات طبعة 1441هـ (604 صفحة) وأول وآخر سطر لكل آية من ملف بيانات المجمع hafsData_v18.json</dd><dt>بصمة حزمة المجمع</dt><dd><code>B5CF0666441AABD5FF2BE4993934E6F2A57D00B6B89AFCDF708CD70288671B23</code><br>نفس البصمة المكتوبة على صفحة المجمع ✓</dd><dt>بصمة خط المصحف</dt><dd><code>aa68bffce289b4c0ebac68e90502eb69e42356abcd1603cb2b8e99c2c723f145</code><br>الخط اللي في التطبيق والموقع هو خط المجمع نفسه بايت بايت ✓</dd><dt>بصمة ملف الصفحات</dt><dd><code>5d8bb91726e482839d0057633cb1973031e4d706fa9604eea5e08892f20ba140</code></dd></dl></div><div class="card"><h3>التفسير الميسر <span class="ok">✓ مطابق 100٪ — صفر اختلاف</span></h3><dl><dt>المصدر</dt><dd>مجمع الملك فهد لطباعة المصحف الشريف (نسخة Tanzil / alquran.cloud، حزمة ar.muyassar 1.0.0)</dd><dt>اللي اتقارن</dt><dd>تفسير كل آية من الـ 6236 آية</dd><dt>بصمة ملف المصدر</dt><dd><code>0d0441ae058d5d36cd450d8e9f768a2c5f918e30048316553bc873fb75770da3</code></dd></dl></div><div class="card"><h3>تفسير السعدي <span class="ok">✓ مطابق 100٪</span></h3><dl><dt>المصدر</dt><dd>«تيسير الكريم الرحمن»، مؤسسة الرسالة، الطبعة الأولى 1420هـ، من بيانات Quranpedia المفتوحة (كتاب 3)</dd><dt>اللي اتقارن</dt><dd>النص كله حرفًا بحرف (3,297,155 حرف) والحواشي</dd><dt>بصمة ملف المصدر</dt><dd><code>2d76f729e3b0671aa9c11c25fb3880942941c4af70ab331dac16766591428c34</code></dd></dl></div><div class="card"><h3>تفسير ابن كثير <span class="ok">✓ مطابق 100٪</span></h3><dl><dt>المصدر</dt><dd>«تفسير القرآن العظيم»، دار طيبة، الطبعة الثانية، من بيانات Quranpedia (كتاب 136)</dd><dt>اللي اتقارن</dt><dd>النص كله حرفًا بحرف (16,126,873 حرف) والحواشي</dd><dt>بصمة ملف المصدر</dt><dd><code>26749df050617a92fb12e871395dcf1228a475e008d29035d71e61f75ed4f230</code></dd></dl></div><div class="card"><h3>تفسير الطبري <span class="ok">✓ مطابق 100٪</span></h3><dl><dt>المصدر</dt><dd>«جامع البيان في تأويل آي القرآن»، مؤسسة الرسالة، الطبعة الأولى 1420هـ، من بيانات Quranpedia (كتاب 4)</dd><dt>اللي اتقارن</dt><dd>النص كله حرفًا بحرف (13,865,069 حرف) والحواشي</dd><dt>بصمة ملف المصدر</dt><dd><code>ea7132febfe16c40247388ca37716aee05e1d320f6c470f70f784c2f2051b966</code></dd></dl></div><div class="card"><h3>تفسير البغوي <span class="ok">✓ مطابق 100٪</span></h3><dl><dt>المصدر</dt><dd>«معالم التنزيل»، دار طيبة، الطبعة الرابعة، من بيانات Quranpedia (كتاب 2)</dd><dt>اللي اتقارن</dt><dd>النص كله حرفًا بحرف (6,785,721 حرف) والحواشي</dd><dt>بصمة ملف المصدر</dt><dd><code>cdf2680094d6f11a80388e6b5bd44053644c2c95f3e739662e1ddda6dc0a511c</code></dd></dl></div><div class="card"><h3>تفسير القرطبي <span class="ok">✓ مطابق 100٪</span></h3><dl><dt>المصدر</dt><dd>«الجامع لأحكام القرآن»، من مستودع tafsir_api المفتوح (أصله من مكتبة QUL)</dd><dt>اللي اتقارن</dt><dd>النص كله حرفًا بحرف (15,233,681 حرف)</dd><dt>بصمة ملف المصدر</dt><dd><code>d669a4ecd1b0cdac890f205948f61f663c1bf29e60563d7bea962df671c2d4fc</code></dd></dl></div><div class="card"><h3>الإعراب والصرف والبلاغة <span class="ok">✓ مطابق 100٪</span></h3><dl><dt>المصدر</dt><dd>«الجدول في إعراب القرآن وصرفه وبيانه» لمحمود صافي، من مستودع tafsir_api المفتوح</dd><dt>اللي اتقارن</dt><dd>الملف كله</dd><dt>بصمة ملف المصدر</dt><dd><code>eb6fecb7d03f2f91f4da698e21fce46e263aeb0910f7448ca2b4e3aa2538cd7b</code></dd></dl></div><div class="card"><h3>معاني الكلمات <span class="ok">✓ مطابق 100٪</span></h3><dl><dt>المصدر</dt><dd>«السراج في بيان غريب القرآن» لمحمد بن عبد العزيز الخضيري، الطبعة الأولى 1429هـ، من بيانات Quranpedia (كتاب 491)</dd><dt>اللي اتقارن</dt><dd>6104 كلمة ومعناها</dd><dt>بصمة ملف المصدر</dt><dd><code>b46ca5ae7baa5287dc08816d5c6037e8ad9282e49cf870357e6bb6184b8d0699</code></dd></dl></div>
+      <h3 class="sub">كتب الحديث التسعة (62,169 حديث)</h3>
+      <p>المصدر: مجموعة Open-Hadith-Data المفتوحة (النص بالتشكيل، ترقيم العالمية)، النسخة <code>1515f6c</code>. كل حديث اتقارن بالملف الأصلي (<b>مطابق 100٪ في الكتب التسعة</b>)، وكمان اتراجع مع مصدر تاني هو موقع sunnah.com (الحروف بس، لأن التشكيل بيختلف من طبعة لطبعة؛ <a href="#hadith-check">التفاصيل</a>). ماتغيّرش أي نص.</p>
+      <div class="table-wrap"><table class="cards"><thead><tr><th>الكتاب</th><th>عدد الأحاديث</th><th>مع ملف المصدر</th><th>مع sunnah.com</th><th>بصمة ملف المصدر</th></tr></thead><tbody>
+      <tr><td><b>صحيح البخاري</b></td><td data-label="عدد الأحاديث">7,008</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">94.5٪ مطابق أو شبه مطابق (95٪ فأكثر)</td><td data-label="بصمة ملف المصدر"><code>b03f661876fc4089520800b9231b57a1564baff734344ea8914494b86e2eb708</code></td></tr><tr><td><b>صحيح مسلم</b></td><td data-label="عدد الأحاديث">5,362</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">97.3٪ مطابق أو شبه مطابق (95٪ فأكثر)</td><td data-label="بصمة ملف المصدر"><code>79232c8d7c27fef161d8f33ca169f9754741cfe14957dde2ac76893374998943</code></td></tr><tr><td><b>سنن أبي داود</b></td><td data-label="عدد الأحاديث">4,590</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">98.0٪ مطابق أو شبه مطابق (95٪ فأكثر)</td><td data-label="بصمة ملف المصدر"><code>68918ef593d5154d38c1d00bad3ae8237510cb35eeb3ebf22b4a1f9fa3b2799f</code></td></tr><tr><td><b>جامع الترمذي</b></td><td data-label="عدد الأحاديث">3,891</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">94.6٪ مطابق أو شبه مطابق (95٪ فأكثر)</td><td data-label="بصمة ملف المصدر"><code>136b4467116a59dd81b9633306960898d6f8fd34c3a3aa3579d2d0ba130b3ce9</code></td></tr><tr><td><b>سنن النسائي</b></td><td data-label="عدد الأحاديث">5,662</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">98.8٪ مطابق أو شبه مطابق (95٪ فأكثر)</td><td data-label="بصمة ملف المصدر"><code>21d677b02a39722f039f9a79f06706e71a0a09a18cc1aa71df6f90d994bf11c2</code></td></tr><tr><td><b>سنن ابن ماجه</b></td><td data-label="عدد الأحاديث">4,332</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">97.6٪ مطابق أو شبه مطابق (95٪ فأكثر)</td><td data-label="بصمة ملف المصدر"><code>88b2fec03dbaff0b6d8e36d9b4b3989d1526a0aa8f81a8cdd56e1de95a7d5f68</code></td></tr><tr><td><b>موطأ مالك</b></td><td data-label="عدد الأحاديث">1,594</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">96.2٪ مطابق أو شبه مطابق (95٪ فأكثر)</td><td data-label="بصمة ملف المصدر"><code>d306930f056bb0a74745a4453fbef04cc80765213554b052a29427e24702ece0</code></td></tr><tr><td><b>مسند أحمد</b></td><td data-label="عدد الأحاديث">26,363</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">1,358 من 1,446 حديث موجودين هناك مطابقين حرفيًا؛ الباقي مالوش نسخة تانية متاحة</td><td data-label="بصمة ملف المصدر"><code>41553fee47fe582a8d0b60fbea1f71b867df44d40adac94dcfe742571a8bce24</code></td></tr><tr><td><b>سنن الدارمي</b></td><td data-label="عدد الأحاديث">3,367</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">91.2٪ مطابق أو شبه مطابق (95٪ فأكثر)</td><td data-label="بصمة ملف المصدر"><code>bb995abb07a513cf76743e9580787e80c7ce5bd08dd6108c13e01d936a048327</code></td></tr>
+      </tbody></table></div>
+      <h3 class="sub">إزاي تتحقق بنفسك من المصحف</h3>
+      <ol>
+        <li>ادخل <a href="https://qurancomplex.gov.sa/fonts/hafs">صفحة خط حفص على موقع مجمع الملك فهد</a> ونزّل «الإصدار 2.2» (ملف <code>hafs-2.2.zip</code>).</li>
+        <li>احسب بصمته (على ويندوز: <code>certutil -hashfile hafs-2.2.zip SHA256</code>). هتطلع <code>B5CF0666441AABD5FF2BE4993934E6F2A57D00B6B89AFCDF708CD70288671B23</code>، وهي نفس البصمة المكتوبة على صفحة المجمع ونفس اللي فوق.</li>
+        <li>نص كل آية في التطبيق هو نص ملف الوورد اللي جوه الحزمة دي بالظبط. رقم الآية متخزّن في خانة لوحده، وبيترسم على الشاشة جوه علامة نهاية الآية بخط المجمع.</li>
+      </ol>
+      <h3 class="sub">ملاحظات للأمانة</h3>
+      <div class="note"><ul>
+        <li>المجمع بيقول إن ملف الوورد «مصادق عليه رقميًا»، لكن الملف نفسه مافيهوش توقيع رقمي جواه؛ الإثبات هو بصمة الحزمة المنشورة على موقع المجمع. احتفظنا بنسخة من صفحة المجمع وملفاته بتاريخ 26 نوفمبر 2026م.</li>
+        <li>الإصدار 2.2 نفس حروف وتشكيل الإصدار 18 اللي كان قبله، والفرق الوحيد مدّة صغيرة «ـ» بعد الكاف في «كَلَّا» في 33 موضع، وده تعديل المجمع نفسه.</li>
+        <li>كتب الحديث والتفاسير مطابقة لملفات مصادرها الرقمية المذكورة فوق، لكن لسه ماتراجعتش على نسخة ورقية مطبوعة.</li>
+        <li>الشرح المبسّط للأحاديث منقول من موسوعة الأحاديث النبوية (HadeethEnc). موقعهم ماكانش متاح وقت الفحص، فماتقارنش المرة دي.</li>
+      </ul></div>
+      </section>
+
       <nav class="toc" aria-label="المحتويات">
         <ol>
+          <li><a href="#proof">الإثبات: مطابق لمصدره</a></li>
           <li><a href="#quran">القرآن الكريم ونص المصحف</a></li>
           <li><a href="#mushaf-lines">ترتيب أسطر المصحف (Waqf GPL)</a></li>
           <li><a href="#tafsir">التفسير ومعلومات السور</a></li>
@@ -207,15 +251,17 @@
             <tr>
               <td>نص القرآن الكريم (الرسم العثماني، رواية حفص عن عاصم، 6236 آية)</td>
               <td>
-                مجمع الملك فهد لطباعة المصحف الشريف، ملف «Hafs Uthmanic Data» الإصدار 18 (<span lang="en"
-                  >hafsData_v18.json</span
-                >). يُستخدم كما هو، ويُتحقق آليًا من مطابقة كل آية لملف المجمع حرفًا بحرف.
+                مجمع الملك فهد لطباعة المصحف الشريف، نص حفص العثماني الإصدار 2.2 (ملف الوورد داخل حزمة <span lang="en"
+                  >hafs-2.2.zip</span
+                > من <a href="https://qurancomplex.gov.sa/fonts/hafs">صفحة خط حفص على موقع المجمع</a>، وبصمتها SHA-256
+                <span lang="en">B5CF0666…1B23</span> كما ينشرها المجمع). يُستخدم كما هو، ويُتحقق آليًا من مطابقة كل آية
+                لملف المجمع حرفًا بحرف.
               </td>
               <td>منشور من المجمع للاستخدام المجاني، ويُوزّع دون تعديل</td>
             </tr>
             <tr>
               <td>صفحات مصحف المدينة (طبعة 1441هـ، 604 صفحات)</td>
-              <td>عمود الصفحة في ملف المجمع نفسه (الإصدار 18)</td>
+              <td>أعمدة الصفحة والسطر والجزء في ملف بيانات المجمع «hafsData_v18.json» (نفس طبعة 1441هـ ونفس الكلمات)</td>
               <td>كما سبق</td>
             </tr>
             <tr>
@@ -374,6 +420,82 @@
               <td>شرح الأحاديث المختصر (العنوان، الشرح، الفوائد، الدرجة)</td>
               <td>موسوعة الأحاديث النبوية <span lang="en">HadeethEnc.com</span>، منقول بنصه</td>
               <td>بحسب شروط الموسوعة</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="hadith-check">مراجعة الأحاديث مع مصدر ثانٍ (26 نوفمبر 2026)</h3>
+      <p>
+        قورن نص كل حديث في التطبيق بالحديث نفسه في موقع <span lang="en">sunnah.com</span>. التشكيل يختلف من طبعة إلى
+        أخرى، فقورنت الحروف فقط. «نفس الكلمات بتقسيم مختلف» يعني أن الكلمات واحدة لكن المصدرين قسّما الحديث أو
+        وصلا الكلمات بشكل مختلف. لم يُغيَّر أي نص بناءً على هذه المقارنة. البصمة (SHA-256) لنصوص كل كتاب كما في
+        التطبيق، ليتأكد أي أحد أنها لم تتغير.
+      </p>
+      <div class="table-wrap">
+        <table class="cards">
+          <thead>
+            <tr>
+              <th>الكتاب</th>
+              <th>عدد الأحاديث</th>
+              <th>نتيجة المقارنة مع sunnah.com</th>
+              <th>بصمة النصوص (SHA-256)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>صحيح البخاري</strong></td>
+              <td data-label="عدد الأحاديث">7,008</td>
+              <td data-label="المقارنة مع sunnah.com">4,675 مطابق حرفيًا · 234 نفس الكلمات بتقسيم مختلف · 1,713 مطابق 95% فأكثر · 371 مطابق 80–95% · 15 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">28fc7bb4ab19e1f943a1f84af74e802eee8df888cb10bf4eccf8b98056224701</code></td>
+            </tr>
+            <tr>
+              <td><strong>صحيح مسلم</strong></td>
+              <td data-label="عدد الأحاديث">5,362</td>
+              <td data-label="المقارنة مع sunnah.com">2,580 مطابق حرفيًا · 806 نفس الكلمات بتقسيم مختلف · 1,832 مطابق 95% فأكثر · 100 مطابق 80–95% · 44 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">bd028449f44d9351af2c13a0b752e28d2b30ea9b853b648f1814408c698232c1</code></td>
+            </tr>
+            <tr>
+              <td><strong>سنن أبي داود</strong></td>
+              <td data-label="عدد الأحاديث">4,590</td>
+              <td data-label="المقارنة مع sunnah.com">2,611 مطابق حرفيًا · 347 نفس الكلمات بتقسيم مختلف · 1,538 مطابق 95% فأكثر · 80 مطابق 80–95% · 14 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">8cfb84883a34abeec2c0a88c575d0813643dbb32f5fc53a4f6a717981223bc5d</code></td>
+            </tr>
+            <tr>
+              <td><strong>جامع الترمذي</strong></td>
+              <td data-label="عدد الأحاديث">3,891</td>
+              <td data-label="المقارنة مع sunnah.com">1,332 مطابق حرفيًا · 467 نفس الكلمات بتقسيم مختلف · 1,880 مطابق 95% فأكثر · 197 مطابق 80–95% · 15 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">d4d243ef57e64b28e22cdd5f89858fb453e6398aac7cd9aa3c8d8fd0c5037066</code></td>
+            </tr>
+            <tr>
+              <td><strong>سنن النسائي</strong></td>
+              <td data-label="عدد الأحاديث">5,662</td>
+              <td data-label="المقارنة مع sunnah.com">4,047 مطابق حرفيًا · 130 نفس الكلمات بتقسيم مختلف · 1,419 مطابق 95% فأكثر · 64 مطابق 80–95% · 2 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">395e003ac2bc705b638f9540f19c2b771ed49eed4d90189ac572102f93d507a1</code></td>
+            </tr>
+            <tr>
+              <td><strong>سنن ابن ماجه</strong></td>
+              <td data-label="عدد الأحاديث">4,332</td>
+              <td data-label="المقارنة مع sunnah.com">2,888 مطابق حرفيًا · 106 نفس الكلمات بتقسيم مختلف · 1,234 مطابق 95% فأكثر · 101 مطابق 80–95% · 3 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">6cb1548810f1a576476ba9c0d228da548007c8c9cc45ff865a802105fb8bfa13</code></td>
+            </tr>
+            <tr>
+              <td><strong>موطأ مالك</strong></td>
+              <td data-label="عدد الأحاديث">1,594</td>
+              <td data-label="المقارنة مع sunnah.com">1,198 مطابق حرفيًا · 197 نفس الكلمات بتقسيم مختلف · 138 مطابق 95% فأكثر · 43 مطابق 80–95% · 18 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">e2c67df04c83b3f79feccb632d67b236fd090582750cbabb2f1a4f199a79781d</code></td>
+            </tr>
+            <tr>
+              <td><strong>مسند أحمد</strong></td>
+              <td data-label="عدد الأحاديث">26,363</td>
+              <td data-label="المقارنة مع sunnah.com">يوجد في sunnah.com جزء صغير منه فقط: قورن 1,446 حديثًا، منها 1,358 مطابق حرفيًا. باقي الأحاديث (24,917) لا يوجد لها مصدر إلكتروني ثانٍ متاح للمقارنة</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">00f22c2d26faaa9cd88f329a712dfb36a56debdc7e40dbc9c8a3e29d21d96337</code></td>
+            </tr>
+            <tr>
+              <td><strong>سنن الدارمي</strong></td>
+              <td data-label="عدد الأحاديث">3,367</td>
+              <td data-label="المقارنة مع sunnah.com">1,636 مطابق حرفيًا · 514 نفس الكلمات بتقسيم مختلف · 922 مطابق 95% فأكثر · 292 مطابق 80–95% · 3 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">e0123485bd1db1ea5935d1a3d3e648b230aed53ea4313c50441ad04bb484aa9e</code></td>
             </tr>
           </tbody>
         </table>
@@ -756,7 +878,7 @@
             <tr>
               <td>خط المصحف</td>
               <td>
-                <span lang="en">KFGQPC HAFS Uthmanic Script v18</span>، خط مجمع الملك فهد الخاص بهذا النص
+                <span lang="en">KFGQPC HAFS Uthmanic Script</span> الإصدار 2.2، خط مجمع الملك فهد الخاص بهذا النص
                 (يُستخدم دون تعديل)
               </td>
               <td>

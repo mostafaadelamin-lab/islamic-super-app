@@ -10,7 +10,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutFonts =>
-      'Fonts: Quran — KFGQPC HAFS Uthmanic Script v18 (King Fahd Complex, unmodified, under its licence); interface — IBM Plex Sans Arabic, SIL Open Font License 1.1.';
+      'Fonts: Quran — KFGQPC HAFS Uthmanic Script version 2.2 (King Fahd Complex, unmodified, under its licence); interface — IBM Plex Sans Arabic, SIL Open Font License 1.1.';
 
   @override
   String get aboutOpenSource => 'Open source and free forever. No tracking, no ads, no in-app purchases.';
@@ -25,7 +25,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutQuranText =>
-      'Quran text: King Fahd Glorious Quran Printing Complex, Hafs Uthmanic Data v18 (hafsData_v18.json), Hafs an Asim. Bundled exactly as published (only the trailing ayah number is removed); verified by SHA-256.';
+      'Quran text: King Fahd Glorious Quran Printing Complex, Hafs Uthmanic text version 2.2 (package hafs-2.2.zip from the Complex\'s website), Hafs an Asim. Bundled exactly as published (only the ayah number is split off); verified by the SHA-256 the Complex publishes.';
 
   @override
   String get aboutTranslation =>

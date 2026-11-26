@@ -1,8 +1,8 @@
 /* Rattil web — colour styles from the design tokens (owner 2026-11-15: style 1 emerald & gold, style 2 Madinah night; Mushaf pages keep cream & brown). Every colour, size and radius comes from tokens.css. */
 @font-face {
-  /* King Fahd Complex font for its Hafs v18 text; distributed unmodified (content/fonts/KFGQPC-HAFS-LICENSE.txt) */
+  /* King Fahd Complex font (version 2.2) for its Hafs v22 text; distributed unmodified (content/fonts/KFGQPC-HAFS-LICENSE.txt) */
   font-family: "KFGQPC HAFS Uthmanic Script";
-  src: url("/fonts/KFGQPC-HAFS-Uthmanic-v18.ttf") format("truetype");
+  src: url("/fonts/KFGQPC-HAFS-Uthmanic-v22.ttf") format("truetype");
   /* preloaded on reader routes; blocking avoids re-flowing Quran text (layout shift) */
   font-display: block;
 }

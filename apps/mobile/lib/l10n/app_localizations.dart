@@ -95,7 +95,7 @@ abstract class AppLocalizations {
   /// shared key "about.fonts"
   ///
   /// In en, this message translates to:
-  /// **'Fonts: Quran — KFGQPC HAFS Uthmanic Script v18 (King Fahd Complex, unmodified, under its licence); interface — IBM Plex Sans Arabic, SIL Open Font License 1.1.'**
+  /// **'Fonts: Quran — KFGQPC HAFS Uthmanic Script version 2.2 (King Fahd Complex, unmodified, under its licence); interface — IBM Plex Sans Arabic, SIL Open Font License 1.1.'**
   String get aboutFonts;
 
   /// shared key "about.openSource"
@@ -119,7 +119,7 @@ abstract class AppLocalizations {
   /// shared key "about.quranText"
   ///
   /// In en, this message translates to:
-  /// **'Quran text: King Fahd Glorious Quran Printing Complex, Hafs Uthmanic Data v18 (hafsData_v18.json), Hafs an Asim. Bundled exactly as published (only the trailing ayah number is removed); verified by SHA-256.'**
+  /// **'Quran text: King Fahd Glorious Quran Printing Complex, Hafs Uthmanic text version 2.2 (package hafs-2.2.zip from the Complex\'s website), Hafs an Asim. Bundled exactly as published (only the ayah number is split off); verified by the SHA-256 the Complex publishes.'**
   String get aboutQuranText;
 
   /// shared key "about.translation"
