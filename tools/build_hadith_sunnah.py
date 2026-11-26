@@ -4,7 +4,13 @@
 Owner's decision (2026-11-26): the texts of these two books come from sunnah.com only.
 
 Usage:
-  python3 tools/build_hadith_sunnah.py <hadith-json dir> <hadith-api dir>
+  python3 tools/build_hadith_sunnah.py --site <dir>      (2026-11-27: text and numbers from sunnah.com itself)
+  python3 tools/build_hadith_sunnah.py <hadith-json dir> <hadith-api dir>      (first build, from two copies)
+
+  --site <dir>: bukhari.site.json and muslim.site.json = every book page of sunnah.com/<book>, read in a
+      browser (the Arabic box of each hadith, its "Reference" number, chapter titles). The text shipped is the
+      site's text with outer spaces trimmed. Also moves old bookmarks (from-alamiyya.json) to the new entries
+      and writes <dir>/moves.json (previous entry -> new entry) for the Hajj guide and kids ruqyah references.
 
   <hadith-json dir>: bukhari.json and muslim.json of github.com/AhmedBaset/hadith-json v1.2.0
       (db/by_book/the_9_books), a copy of sunnah.com. The TEXT shipped is its "arabic" field, byte for byte.
@@ -224,7 +230,139 @@ def migrate(old, hj):
     return res, guess
 
 
+SITE_SHA = {  # pages of sunnah.com itself, read on 2026-11-26/27 in a browser (owner approved, 2026-11-27)
+    "bukhari.site.json": "1c6ff13e17612eea22ed2477b43de4f5170f4f10bb8b225cebc5c5eae0c2985a",
+    "muslim.site.json": "01214c6064fbcb1da6c0842bfffb4f7b34d66266e8e6035f9c83be05794a8ecb",
+}
+
+
+def site_label(refs):
+    """'Reference : Sahih Muslim 4 a' -> '4a'; '... Introduction 8' -> 'intro8'; '2314, 2315' -> '2314,2315'."""
+    r = next((x for x in refs if x.startswith("Reference :")), "")
+    m = re.match(r"Reference : Sahih (?:al-Bukhari|Muslim) (.+)$", r)
+    if not m:
+        return None
+    v = m.group(1).strip()
+    if v.startswith("Introduction"):
+        return "intro" + v.split()[-1]
+    return ",".join(re.sub(r"\s+", "", x) for x in v.split(","))
+
+
+def clean(t):
+    """The site's text as shown: outer spaces trimmed, runs of spaces made one, line breaks kept."""
+    t = t.strip().replace("\r", "")
+    t = re.sub(r"[ \t]+", " ", t)
+    return re.sub(r" ?\n[ \n]*", "\n", t)
+
+
+def main_site(sitedir):
+    repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    dist = os.path.join(repo, "content", "hadith", "dist")
+    meta_path = os.path.join(dist, "books.v1.json")
+    meta = json.load(open(meta_path, encoding="utf-8"))
+    report = {}
+    for bid, ar, en in BOOKS:
+        path = os.path.join(sitedir, f"{bid}.site.json")
+        want = SITE_SHA.get(f"{bid}.site.json")
+        if want and sha256(path) != want:
+            sys.exit(f"{path}: SHA-256 changed; review the new pages, then update SITE_SHA")
+        site = json.load(open(path, encoding="utf-8"))
+        texts, labels, chapters = [], [], []
+        for page in site["pages"]:
+            if page.get("error"):
+                sys.exit(f"{bid}: page {page['p']} was not read")
+            for it in page["items"]:
+                t = clean(it["ar"])
+                if not t:
+                    continue  # one empty box on the site (Bukhari book 62)
+                lab = site_label(it["refs"])
+                if lab is None:
+                    sys.exit(f"{bid}: no sunnah.com number on {page['p']}")
+                texts.append(t)
+                labels.append(lab)
+        if len(set(labels)) != len(labels):
+            dup = [l for l in set(labels) if labels.count(l) > 1]
+            sys.exit(f"{bid}: numbers used twice: {dup[:10]}")
+        # the app's previous build of this book (sunnah.com copy): old entry -> new entry, by number, else by text
+        old_refs = json.load(open(os.path.join(dist, bid, "refs.json"), encoding="utf-8"))["refs"]
+        old = old_texts(dist, bid)
+        by_label = {}
+        for k, l in enumerate(labels):
+            for part in l.split(","):
+                by_label.setdefault(part, k)
+        by_text = {}
+        for k, t in enumerate(texts):
+            by_text.setdefault(squash(t), k)
+        move, by_num, by_txt, near = [], 0, 0, 0
+        for i, (r, t) in enumerate(zip(old_refs, old)):
+            k = by_text.get(squash(t))
+            if k is not None:
+                by_txt += 1
+            else:
+                parts = [x for x in r.split(",") if x and not x.startswith("~")]
+                k = next((by_label[x] for x in parts if x in by_label), None)
+                if k is not None:
+                    by_num += 1
+                else:
+                    k = move[-1] if move else 0
+                    near += 1
+            move.append(k)
+        mig_path = os.path.join(dist, bid, "from-alamiyya.json")
+        if os.path.exists(mig_path):
+            mig = json.load(open(mig_path, encoding="utf-8"))
+            mig["to"] = [move[n - 1] + 1 if n else 0 for n in mig["to"]]
+            with open(mig_path, "w", encoding="utf-8") as f:
+                json.dump(mig, f, separators=(",", ":"))
+        report[bid] = {"old_to_new": [k + 1 for k in move], "by_label": by_label}
+        for f in glob.glob(os.path.join(dist, bid, "[0-9]*.json")):
+            os.remove(f)
+        chunks = (len(texts) + CHUNK - 1) // CHUNK
+        for k in range(chunks):
+            part = {"book": bid, "from": k * CHUNK + 1, "ahadith": texts[k * CHUNK:(k + 1) * CHUNK]}
+            with open(os.path.join(dist, bid, f"{k}.json"), "w", encoding="utf-8") as f:
+                json.dump(part, f, ensure_ascii=False, separators=(",", ":"))
+        with open(os.path.join(dist, bid, "refs.json"), "w", encoding="utf-8") as f:
+            json.dump({"book": bid, "refs": labels}, f, ensure_ascii=False, separators=(",", ":"))
+        books = {}
+        for page in site["pages"]:
+            n = sum(1 for it in page["items"] if clean(it["ar"]))
+            if n:
+                books[page["p"].rsplit("/", 1)[-1]] = sha256_text("\n".join(
+                    bare(clean(it["ar"])) for it in page["items"] if clean(it["ar"])))
+        entry = {
+            "id": bid, "nameAr": ar, "nameEn": en, "count": len(texts), "chunks": chunks,
+            "numbering": "sunnah.com", "refs": True,
+            "source": {"name": "sunnah.com", "url": "https://sunnah.com/" + bid, "read": site["fetched"]},
+            "sourceFile": f"sunnah.com/{bid}.site.json", "sha256": sha256(path),
+            "textSha256": sha256_text("\n".join(texts)),
+            "fingerprint": {
+                "how": "SHA-256 of each hadith's letters and marks with spaces and direction marks removed, one per line",
+                "all": sha256_text("\n".join(bare(t) for t in texts)),
+                "books": books,
+            },
+        }
+        meta["books"] = [entry if b["id"] == bid else b for b in meta["books"]]
+        print(bid, len(texts), "entries from sunnah.com,", chunks, "parts; old entries moved by text", by_txt,
+              "by number", by_num, "nearest", near, "; fingerprint", entry["fingerprint"]["all"])
+    with open(meta_path, "w", encoding="utf-8") as f:
+        json.dump(meta, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+    with open(os.path.join(sitedir, "moves.json"), "w", encoding="utf-8") as f:
+        json.dump(report, f, ensure_ascii=False)
+
+
+def bare(s):
+    """For the fingerprint: the text without spaces and invisible direction marks (letters, marks, braces kept)."""
+    return re.sub(r"[\s\u200b-\u200f\u202a-\u202e\u2066-\u2069\ufeff]+", "", s)
+
+
+def sha256_text(s):
+    return hashlib.sha256(s.encode("utf-8")).hexdigest()
+
+
 def main():
+    if sys.argv[1] == "--site":
+        return main_site(sys.argv[2])
     hjdir, fzdir = sys.argv[1:3]
     for rel, want in EXPECTED_SHA.items():
         d, name = rel.split("/")

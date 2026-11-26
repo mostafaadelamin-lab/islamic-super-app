@@ -106,8 +106,8 @@ void main() {
       expect(mr, hasLength(7459));
       expect(await library.refs(catalog.book('malik')!), isEmpty);
       expect(findHadithRef(br, '١٥٤٩'), 1495);
-      expect(findHadithRef(mr, '2186'), 5553);
-      expect(findHadithRef(mr, '1218a'), 2833);
+      expect(findHadithRef(mr, '2186'), 5644);
+      expect(findHadithRef(mr, '1218a'), 2924);
       expect(findHadithRef(mr, '999999'), isNull);
       String ar(Object v) => '$v'.replaceAllMapped(RegExp(r'\d'), (m) => '٠١٢٣٤٥٦٧٨٩'[int.parse(m[0]!)]);
       expect(hadithRefLabel('1218a', true, ar), '١٢١٨ أ');
@@ -115,7 +115,7 @@ void main() {
       expect(hadithRefLabel('intro3', true, ar), 'المقدمة ٣');
       expect(hadithRefLabel('~597b', true, ar), 'بعد ٥٩٧ ب');
       expect(hadithRefLabel('1218a', false, (v) => '$v'), '1218a');
-      expect((await library.range(catalog.book('muslim')!, 2833, 2833)).single.ref, '1218a');
+      expect((await library.range(catalog.book('muslim')!, 2924, 2924)).single.ref, '1218a');
       final guide = jsonEncode(readRepoJson('content/pilgrimage/guide.v2.src.json'));
       final cites = RegExp(r'"h":"(bukhari|muslim):(\d+)","std":(\d+)').allMatches(guide).toList();
       expect(cites.length, greaterThan(10));
@@ -136,10 +136,10 @@ void main() {
       expect(app.services.settings.hadithFavouritesMoved, isFalse);
       await pushScreen(tester, const HadithScreen());
       await tester.pumpAndSettle();
-      expect(app.services.settings.hadithFavourites, ['bukhari:1495', 'abudawud:3', 'muslim:5553']);
+      expect(app.services.settings.hadithFavourites, ['bukhari:1495', 'abudawud:3', 'muslim:5644']);
       expect(app.services.settings.hadithFavouritesMoved, isTrue);
       await app.services.settings.migrateHadithFavourites((_) async => throw StateError('not again'));
-      expect(app.services.settings.hadithFavourites, ['bukhari:1495', 'abudawud:3', 'muslim:5553']);
+      expect(app.services.settings.hadithFavourites, ['bukhari:1495', 'abudawud:3', 'muslim:5644']);
     });
 
     testWidgets('Muslim: go to sunnah.com number 1218 shows «حديث ١٢١٨ أ»', (tester) async {
@@ -151,7 +151,7 @@ void main() {
       await tester.enterText(find.byKey(const Key('hadithGo')), '١٢١٨');
       await tester.testTextInput.receiveAction(TextInputAction.go);
       await tester.pumpAndSettle();
-      expect(find.byKey(const Key('hadith-2833')), findsOneWidget);
+      expect(find.byKey(const Key('hadith-2924')), findsOneWidget);
       expect(find.text('حديث ١٢١٨ أ'), findsOneWidget);
       expect(find.text('حديث ١٢١٨ أ (ترقيم sunnah.com)'), findsOneWidget);
       await tester.enterText(find.byKey(const Key('hadithGo')), '99999');

@@ -141,8 +141,8 @@ describe("hadith books (Open-Hadith-Data)", () => {
     expect(br[0]).toBe("1");
     expect(findRef(br, "1")).toBe(1);
     expect(findRef(br, "١٥٤٩")).toBe(1495); // Bukhari 1549 (talbiyah), cited by the Hajj guide
-    expect(findRef(mr, "2186")).toBe(5553); // Jibril's ruqyah, kids ruqyah
-    expect(findRef(mr, "1218a")).toBe(2833); // Jabir's long hadith on the Prophet's Hajj
+    expect(findRef(mr, "2186")).toBe(5644); // Jibril's ruqyah, kids ruqyah
+    expect(findRef(mr, "1218a")).toBe(2924); // Jabir's long hadith on the Prophet's Hajj
     expect(findRef(mr, "999999")).toBeNull();
     expect(findRef(mr, "abc")).toBeNull();
     const ar = (v: string): string => v.replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[Number(d)]!);
@@ -151,7 +151,7 @@ describe("hadith books (Open-Hadith-Data)", () => {
     expect(refLabel("intro3", "ar", ar)).toBe("المقدمة ٣");
     expect(refLabel("~597b", "ar", ar)).toBe("بعد ٥٩٧ ب");
     expect(refLabel("1218a", "en")).toBe("1218a");
-    const r = await loadRange(muslim, 2833, 2833);
+    const r = await loadRange(muslim, 2924, 2924);
     expect(r[0]!.ref).toBe("1218a");
     // every Bukhari/Muslim hadith of the Hajj guide: its "std" number is the sunnah.com number of the entry
     const src = readRepoJson<{ steps: unknown[] }>("content/pilgrimage/guide.v2.src.json");
@@ -174,8 +174,8 @@ describe("hadith books (Open-Hadith-Data)", () => {
     hadithFavStore.reload();
     expect(hadithFavStore.get().v).toBeUndefined();
     await migrateHadithFavourites();
-    expect(hadithFavStore.get()).toEqual({ keys: ["bukhari:1495", "abudawud:3", "muslim:5553"], v: 2 });
+    expect(hadithFavStore.get()).toEqual({ keys: ["bukhari:1495", "abudawud:3", "muslim:5644"], v: 2 });
     await migrateHadithFavourites(); // second call changes nothing
-    expect(hadithFavStore.get().keys).toEqual(["bukhari:1495", "abudawud:3", "muslim:5553"]);
+    expect(hadithFavStore.get().keys).toEqual(["bukhari:1495", "abudawud:3", "muslim:5644"]);
   });
 });
