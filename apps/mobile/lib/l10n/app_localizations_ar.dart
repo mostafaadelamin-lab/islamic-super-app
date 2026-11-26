@@ -400,6 +400,62 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhkarListenHeader => 'استمع إلى الأذكار';
 
   @override
+  String get adhkarMine => 'أذكاري';
+
+  @override
+  String get adhkarMineAdd => 'أضف ذكرًا';
+
+  @override
+  String get adhkarMineAddLong => 'أضف ذكرًا من عندك';
+
+  @override
+  String get adhkarMineBoth => 'الاثنين';
+
+  @override
+  String get adhkarMineCancel => 'إلغاء';
+
+  @override
+  String get adhkarMineCount => 'عدد المرات';
+
+  @override
+  String get adhkarMineDelete => 'حذف';
+
+  @override
+  String get adhkarMineDeleteAsk => 'حذف هذا الذكر من أذكارك؟';
+
+  @override
+  String get adhkarMineEdit => 'تعديل';
+
+  @override
+  String get adhkarMineEditTitle => 'تعديل الذكر';
+
+  @override
+  String get adhkarMineHint => 'اكتب الذكر الذي تحتاجه، ويُضاف إلى آخر القائمة بعدّاد مثل باقي الأذكار.';
+
+  @override
+  String get adhkarMineLess => 'أقل';
+
+  @override
+  String get adhkarMineMore => 'أكثر';
+
+  @override
+  String get adhkarMineSave => 'حفظ';
+
+  @override
+  String get adhkarMineShowIn => 'يظهر في';
+
+  @override
+  String get adhkarMineTag => 'أضفتها أنت';
+
+  @override
+  String get adhkarMineTextHint => 'اكتب الذكر هنا';
+
+  @override
+  String adhkarMineTimes(String n) {
+    return '$n مرة';
+  }
+
+  @override
   String get adhkarMorning => 'الصباح';
 
   @override
@@ -907,6 +963,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get driveAgain => 'ابدأ من الأول';
+
+  @override
+  String get driveBarOpen => 'افتح وضع القيادة';
+
+  @override
+  String driveBarRep(String n, String count) {
+    return 'المرة $n من $count';
+  }
 
   @override
   String get driveCarHint =>

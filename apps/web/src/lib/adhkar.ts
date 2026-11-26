@@ -27,6 +27,8 @@ export interface Dhikr {
   id: number;
   text: string;
   count: number;
+  /** Added by the visitor («أذكاري», lib/custom-adhkar.ts). */
+  custom?: boolean;
 }
 
 export function sessionItems(items: readonly string[], session: Session): Dhikr[] {

@@ -20,6 +20,8 @@ import { Icon } from "./Icon";
 import { CardDeck, ModeSwitch } from "./CardDeck";
 import { DhikrTools } from "./DhikrTools";
 import type { DhikrExtra } from "@/lib/dhikr-extras";
+import { userAdhkarStore, userItems, type UserDhikr } from "@/lib/custom-adhkar";
+import { UserDhikrForm, UserDhikrTools } from "./UserAdhkar";
 
 const SESSIONS: readonly Session[] = ["morning", "evening"];
 
@@ -42,12 +44,14 @@ export function AdhkarView({
   const [today, setToday] = useState("");
   const stored = useStore(adhkarStore);
   const { mode } = useStore(adhkarViewStore);
+  const mine = useStore(userAdhkarStore);
+  const [editing, setEditing] = useState<UserDhikr | null>(null);
   useEffect(() => {
     const hash = window.location.hash.slice(1);
     setSession(hash === "morning" || hash === "evening" ? hash : defaultSession(new Date().getHours()));
     setToday(localToday());
   }, []);
-  const list = sessionItems(items, session);
+  const list = [...sessionItems(items, session), ...userItems(mine, session)];
   const progress = progressFor(stored, today);
   const summary = sessionSummary(stored, today, session, list);
   // Finishing the last dhikr goes back up to the adhkar list at the top of the page (the app closes
@@ -65,13 +69,30 @@ export function AdhkarView({
     window.history.replaceState(window.history.state, "", `#${s}`);
   };
 
-  const source = t(locale, "adhkar.shareSource", { session: t(locale, `adhkar.${session}`) });
+  const bookSource = t(locale, "adhkar.shareSource", { session: t(locale, `adhkar.${session}`) });
+  const goToForm = (): void => {
+    document.getElementById("user-dhikr-form")?.scrollIntoView?.({ block: "center" });
+    document.getElementById("user-dhikr-text")?.focus({ preventScroll: true });
+  };
   const item = (i: number): React.JSX.Element => {
     const d = list[i]!;
     const n = progress.done[`${session}:${d.id}`] ?? 0;
     const done = n >= d.count;
+    // A dhikr the visitor wrote is not from Hisn al-Muslim.
+    const source = d.custom ? t(locale, "adhkar.mine") : bookSource;
+    const first = d.custom && (i === 0 || !list[i - 1]!.custom);
     return (
-      <li key={`${session}-${d.id}`} className={done ? "dhikr done" : "dhikr"} data-testid="dhikr">
+      <li
+        key={`${session}-${d.id}`}
+        className={`dhikr${done ? " done" : ""}${d.custom ? " mine" : ""}`}
+        data-testid={d.custom ? "dhikr-mine" : "dhikr"}
+      >
+        {first || (d.custom && mode === "cards") ? (
+          <p className="mine-head" data-testid={first ? "mine-head" : undefined}>
+            <strong>{t(locale, "adhkar.mine")}</strong>{" "}
+            <span className="tag">{t(locale, "adhkar.mineTag")}</span>
+          </p>
+        ) : null}
         <p className="dhikr-text" lang="ar" dir="rtl">
           {d.text}
         </p>
@@ -105,8 +126,18 @@ export function AdhkarView({
           source={source}
           where={`${source} · ${localizeDigits(i + 1, locale)}`}
           testId={`dhikr-${i + 1}`}
-          extra={extras[d.id]}
+          extra={d.custom ? undefined : extras[d.id]}
         />
+        {d.custom ? (
+          <UserDhikrTools
+            locale={locale}
+            id={d.id}
+            onEdit={(x) => {
+              setEditing(x);
+              requestAnimationFrame(goToForm);
+            }}
+          />
+        ) : null}
       </li>
     );
   };
@@ -141,6 +172,9 @@ export function AdhkarView({
         >
           <Icon name="reset" size={16} /> {t(locale, "adhkar.reset")}
         </button>
+        <button type="button" className="btn btn-sm" data-testid="user-dhikr-add" onClick={goToForm}>
+          <Icon name="plus" size={16} /> {t(locale, "adhkar.mineAdd")}
+        </button>
       </div>
       {locale !== "ar" ? <p className="alert">{t(locale, "common.arabicOnly")}</p> : null}
       <ModeSwitch locale={locale} />
@@ -157,6 +191,7 @@ export function AdhkarView({
           {list.map((_, i) => item(i))}
         </ol>
       )}
+      <UserDhikrForm locale={locale} session={session} editing={editing} onDone={() => setEditing(null)} />
     </>
   );
 }

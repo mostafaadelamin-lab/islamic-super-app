@@ -7,6 +7,7 @@ import '../app_services.dart';
 import '../domain/adhkar.dart';
 import '../domain/nasheeds.dart';
 import '../theme/design_tokens.dart';
+import 'custom_adhkar.dart';
 import 'dhikr_audio.dart';
 import 'dhikr_reminders_screen.dart';
 import 'dhikr_hadith.dart';
@@ -204,6 +205,12 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
           title: Text(session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle),
           actions: [
             IconButton(
+              key: const Key('customDhikrAdd'),
+              tooltip: l.adhkarMineAdd,
+              icon: const RIcon(RIcons.plus),
+              onPressed: () => showCustomDhikrSheet(context, session),
+            ),
+            IconButton(
               key: const Key('adhkarDriveMode'),
               tooltip: l.driveOpen,
               icon: const RIcon(RIcons.car),
@@ -225,6 +232,7 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
             ),
           ],
         ),
+        bottomNavigationBar: const DriveBar(),
         body: ReadableWidth(
           child: ListenableBuilder(
             listenable: Listenable.merge([s.adhkar, s.settings]),
@@ -352,7 +360,11 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
                 padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
                 children: [
                   ...header,
-                  for (final d in p.items) _DhikrCard(dhikr: d, session: session, progress: p),
+                  for (final (i, d) in p.items.indexed) ...[
+                    if (d.custom && (i == 0 || !p.items[i - 1].custom)) const CustomAdhkarHeader(),
+                    _DhikrCard(dhikr: d, session: session, progress: p),
+                  ],
+                  AddCustomDhikrButton(session: session),
                 ],
               );
             },
@@ -381,6 +393,12 @@ class _DhikrCard extends StatelessWidget {
       key: Key('dhikr-${dhikr.index}'),
       margin: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
       color: done ? scheme.surfaceContainer : null,
+      shape: dhikr.custom
+          ? RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
+              side: BorderSide(color: scheme.secondary, width: 2),
+            )
+          : null,
       clipBehavior: Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -399,6 +417,8 @@ class _DhikrCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    if (big && dhikr.custom)
+                      const Align(alignment: AlignmentDirectional.centerStart, child: CustomAdhkarTag()),
                     if (big)
                       Padding(
                         padding: const EdgeInsets.only(bottom: DesignTokens.spaceSm),
@@ -413,12 +433,13 @@ class _DhikrCard extends StatelessWidget {
                       style: duaStyle(context, size: big ? 24 : 18),
                     ),
                     const SizedBox(height: DesignTokens.spaceSm),
-                    DhikrAudioUrl(
-                      pick: (m) => m.forDhikr(dhikr.index),
-                      builder: (context, url) => Center(
-                        child: DhikrListenButton(url: url, compact: !big),
+                    if (!dhikr.custom)
+                      DhikrAudioUrl(
+                        pick: (m) => m.forDhikr(dhikr.index),
+                        builder: (context, url) => Center(
+                          child: DhikrListenButton(url: url, compact: !big),
+                        ),
                       ),
-                    ),
                     const SizedBox(height: DesignTokens.spaceMd),
                     Center(
                       child: Container(
@@ -473,13 +494,17 @@ class _DhikrCard extends StatelessWidget {
           ),
           Builder(
             builder: (context) {
-              final source = l.adhkarShareSourceSession(
-                session == AdhkarSession.morning ? l.adhkarMorning : l.adhkarEvening,
-              );
+              // A dhikr the user wrote is not from Hisn al-Muslim.
+              final source = dhikr.custom
+                  ? l.adhkarMine
+                  : l.adhkarShareSourceSession(session == AdhkarSession.morning ? l.adhkarMorning : l.adhkarEvening);
               return Wrap(
                 alignment: WrapAlignment.end,
                 children: [
-                  DhikrHadithButton(key: Key('dhikrHadith-${dhikr.index}'), pick: (m) => m.forDhikr(dhikr.index)),
+                  if (dhikr.custom)
+                    CustomDhikrTools(dhikr: dhikr, session: session)
+                  else
+                    DhikrHadithButton(key: Key('dhikrHadith-${dhikr.index}'), pick: (m) => m.forDhikr(dhikr.index)),
                   CopyButton(text: dhikr.text, buttonKey: Key('dhikrCopy-${dhikr.index}')),
                   DhikrActions(
                     text: dhikr.text,

@@ -9,6 +9,7 @@ import '../theme/design_tokens.dart';
 import '../l10n/app_localizations.dart';
 import 'review_notice.dart' show duaStyle;
 import 'l10n_ext.dart';
+import 'lock_player.dart';
 import 'r_icon.dart';
 
 /// Opens driving mode for [session] and starts it.
@@ -316,6 +317,77 @@ class DriveSettingsSheet extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Driving mode keeps playing after its screen is closed (owner 2026-11-26): this bar stays at the
+/// bottom of the other screens while it is on, like the stories / recitation bar, with
+/// previous / pause / next, a tap on the title to go back to the driving screen, and ✕ to stop it.
+class DriveBar extends StatelessWidget {
+  const DriveBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final drive = context.services.drive;
+    if (drive == null) return const SizedBox.shrink();
+    return ListenableBuilder(
+      listenable: drive,
+      builder: (context, _) {
+        // Only on the screen in front (screens left underneath keep theirs hidden).
+        if (!drive.isActive || ModalRoute.of(context)?.isCurrent == false) return const SizedBox.shrink();
+        final l = context.l10n;
+        final session = drive.session;
+        final title = session == AdhkarSession.evening ? l.adhkarEveningTitle : l.adhkarMorningTitle;
+        final item = drive.current;
+        final String info;
+        if (drive.failed) {
+          info = l.driveFailed;
+        } else if (drive.finished) {
+          info = l.driveFinished;
+        } else if (item == null) {
+          info = l.drivePreparing;
+        } else {
+          info =
+              '${l.driveDhikrOf(context.num(drive.index + 1), context.num(drive.items.length))}'
+              ' · ${l.driveBarRep(context.num(drive.saying), context.num(item.count))}';
+        }
+        final theme = Theme.of(context);
+        return LockPlayerCard(
+          key: const Key('driveBar'),
+          id: 'driveBar',
+          docked: true,
+          icon: RIcons.car,
+          titleKey: const Key('driveBarTitle'),
+          title: '${l.driveTitle} · $title',
+          subtitle: l.driveBarOpen,
+          onTitleTap: () =>
+              Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => DriveModeScreen(drive: drive))),
+          info: Text(
+            info,
+            key: const Key('driveBarInfo'),
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.primary),
+          ),
+          position: Duration.zero,
+          total: null,
+          playing: drive.isPlaying,
+          loading: drive.isPreparing,
+          showSkip: item != null,
+          onPrevious: item == null ? null : drive.previous,
+          onNext: item == null || drive.index >= drive.items.length - 1 ? null : drive.next,
+          onToggle: () {
+            if (drive.finished) {
+              unawaited(drive.start(session ?? AdhkarSession.morning));
+            } else {
+              unawaited(drive.toggle());
+            }
+          },
+          onClose: () => unawaited(drive.stop()),
+        );
+      },
     );
   }
 }

@@ -8,6 +8,7 @@ import { reelsFeedStore, reelsPrefsStore } from "@/lib/reels";
 import { audioStore } from "@/lib/audio";
 import { downloadsStore } from "@/lib/audio-offline";
 import { adhkarStore } from "@/lib/adhkar";
+import { userAdhkarStore } from "@/lib/custom-adhkar";
 import { adhkarViewStore } from "@/lib/dhikr-share";
 import { sharePromptStore } from "@/lib/app-links";
 import { videoHistoryStore } from "@/lib/videos";
@@ -36,6 +37,7 @@ export function resetStores(): void {
     audioStore,
     downloadsStore,
     adhkarStore,
+    userAdhkarStore,
     adhkarViewStore,
     sharePromptStore,
     firstRunStore,

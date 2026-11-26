@@ -402,6 +402,63 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhkarListenHeader => 'Listen to the adhkar';
 
   @override
+  String get adhkarMine => 'My adhkar';
+
+  @override
+  String get adhkarMineAdd => 'Add a dhikr';
+
+  @override
+  String get adhkarMineAddLong => 'Add your own dhikr';
+
+  @override
+  String get adhkarMineBoth => 'Both';
+
+  @override
+  String get adhkarMineCancel => 'Cancel';
+
+  @override
+  String get adhkarMineCount => 'Number of times';
+
+  @override
+  String get adhkarMineDelete => 'Delete';
+
+  @override
+  String get adhkarMineDeleteAsk => 'Delete this dhikr from your adhkar?';
+
+  @override
+  String get adhkarMineEdit => 'Edit';
+
+  @override
+  String get adhkarMineEditTitle => 'Edit dhikr';
+
+  @override
+  String get adhkarMineHint =>
+      'Write the dhikr you need; it is added to the end of the list with a counter like the others.';
+
+  @override
+  String get adhkarMineLess => 'Fewer';
+
+  @override
+  String get adhkarMineMore => 'More';
+
+  @override
+  String get adhkarMineSave => 'Save';
+
+  @override
+  String get adhkarMineShowIn => 'Show in';
+
+  @override
+  String get adhkarMineTag => 'Added by you';
+
+  @override
+  String get adhkarMineTextHint => 'Write the dhikr here';
+
+  @override
+  String adhkarMineTimes(String n) {
+    return '$n times';
+  }
+
+  @override
   String get adhkarMorning => 'Morning';
 
   @override
@@ -912,6 +969,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get driveAgain => 'Start again';
+
+  @override
+  String get driveBarOpen => 'Open driving mode';
+
+  @override
+  String driveBarRep(String n, String count) {
+    return 'Time $n of $count';
+  }
 
   @override
   String get driveCarHint =>

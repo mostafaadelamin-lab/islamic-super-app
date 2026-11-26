@@ -67,10 +67,54 @@ const adhkarMeta = <AdhkarMeta>[
 ];
 
 class Dhikr {
-  const Dhikr({required this.index, required this.text, required this.meta});
+  const Dhikr({required this.index, required this.text, required this.meta, this.custom = false});
   final int index;
   final String text;
   final AdhkarMeta meta;
+
+  /// Added by the user («أذكاري»): their own text and count, kept on the device only.
+  final bool custom;
+}
+
+/// Indexes of user-added adhkar start here so their counters never share a key with
+/// adhkar.v1.json items.
+const userDhikrBase = 100000;
+
+/// A dhikr the user added to morning/evening adhkar (owner 2026-11-26): their own text,
+/// how many times, and in which session(s). Never sent anywhere.
+class UserDhikr {
+  const UserDhikr({required this.id, required this.text, required this.count, required this.sessions});
+
+  factory UserDhikr.fromJson(Map<String, dynamic> j) => UserDhikr(
+    id: (j['id'] as num).toInt(),
+    text: j['text'] as String,
+    count: ((j['count'] as num).toInt()).clamp(1, maxCount),
+    sessions: {
+      for (final n in (j['sessions'] as List<dynamic>).cast<String>())
+        for (final s in AdhkarSession.values)
+          if (s.name == n) s,
+    },
+  );
+
+  static const maxCount = 1000;
+
+  final int id;
+  final String text;
+  final int count;
+  final Set<AdhkarSession> sessions;
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'text': text,
+    'count': count,
+    'sessions': [
+      for (final s in AdhkarSession.values)
+        if (sessions.contains(s)) s.name,
+    ],
+  };
+
+  Dhikr toDhikr() =>
+      Dhikr(index: userDhikrBase + id, text: text, meta: AdhkarMeta(sessions, count, null), custom: true);
 }
 
 class HisnChapter {

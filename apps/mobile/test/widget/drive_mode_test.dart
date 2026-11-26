@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/domain/adhkar.dart';
+import 'package:rattil/domain/drive_mode.dart';
 import 'package:rattil/ui/adhkar_screen.dart';
 
 import '../helpers.dart';
@@ -18,6 +20,11 @@ Directory driveStorage() {
   return d;
 }
 
+Future<void> back(WidgetTester tester) async {
+  await tester.state<NavigatorState>(find.byType(Navigator).first).maybePop();
+  await settle(tester);
+}
+
 Future<void> settle(WidgetTester tester) async {
   for (var i = 0; i < 10; i++) {
     await tester.pump(const Duration(milliseconds: 50));
@@ -26,6 +33,8 @@ Future<void> settle(WidgetTester tester) async {
 
 void main() {
   setUpAll(() => loadContent(realFonts: false));
+  // A cached asset load from an earlier test never finishes in this test's fake clock.
+  setUp(() => rootBundle.evict(DriveClips.asset));
 
   testWidgets('Adhkar tab → listen while driving: big counter, next / previous / pause, count goes up by itself', (
     tester,
@@ -95,5 +104,62 @@ void main() {
     expect(app.services.drive!.session, AdhkarSession.evening);
     expect(find.text('وضع القيادة · أذكار المساء'), findsOneWidget);
     await app.services.drive!.stop();
+  });
+
+  testWidgets('leaving the driving screen: the bar stays on the adhkar screen and the home screen, ✕ stops it', (
+    tester,
+  ) async {
+    final player = TestDrivePlayer();
+    final app = await pumpApp(tester, storage: driveStorage(), drivePlayer: player, driveCues: TestDriveCues());
+    await pushScreen(tester, const AdhkarSessionScreen(initial: AdhkarSession.morning));
+    expect(find.byKey(const Key('driveBar')), findsNothing);
+    await tester.tap(find.byKey(const Key('adhkarDriveMode')));
+    await settle(tester);
+    final drive = app.services.drive!;
+    for (var i = 0; i < 60 && !drive.isPlaying; i++) {
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 100)));
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+    expect(drive.isPlaying, isTrue);
+
+    // Back to the adhkar screen: still playing, and the bar is there.
+    await back(tester);
+    await settle(tester);
+    expect(drive.isPlaying, isTrue);
+    expect(find.byKey(const Key('driveBar')), findsOneWidget);
+    expect(find.text('وضع القيادة · أذكار الصباح'), findsOneWidget);
+    expect(tester.widget<Text>(find.byKey(const Key('driveBarInfo'))).data, contains('الذكر ١ من'));
+
+    // Pause / play from the bar.
+    await tester.tap(find.byKey(const Key('driveBarToggle')));
+    await settle(tester);
+    expect(drive.isPlaying, isFalse);
+    await tester.tap(find.byKey(const Key('driveBarToggle')));
+    await settle(tester);
+    expect(drive.isPlaying, isTrue);
+
+    // Next dhikr from the bar.
+    await tester.tap(find.byKey(const Key('driveBarNext')));
+    await settle(tester);
+    expect(drive.index, 1);
+
+    // Back to the home screen: the bar is there too.
+    await back(tester);
+    await settle(tester);
+    expect(find.byKey(const Key('driveBar')), findsOneWidget);
+
+    // Tapping its title opens the driving screen again.
+    await tester.tap(find.byKey(const Key('driveBarOpen')));
+    await settle(tester);
+    expect(find.byKey(const Key('driveText')), findsOneWidget);
+    await back(tester);
+    await settle(tester);
+
+    // ✕ stops driving mode and the bar goes away.
+    await tester.tap(find.byKey(const Key('driveBarStop')));
+    await settle(tester);
+    expect(drive.isActive, isFalse);
+    expect(drive.isPlaying, isFalse);
+    expect(find.byKey(const Key('driveBar')), findsNothing);
   });
 }

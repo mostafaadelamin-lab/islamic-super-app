@@ -5,6 +5,7 @@ import '../data/recitation.dart';
 import '../domain/stories.dart';
 import '../theme/design_tokens.dart';
 import 'audio_widgets.dart';
+import 'drive_mode_screen.dart' show DriveBar;
 import 'l10n_ext.dart';
 import 'lock_player.dart';
 import 'library_screen.dart' show OfflineButton;
@@ -180,6 +181,11 @@ class NarrationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Driving mode's bar sits with it, so it shows on every screen that has the bottom players.
+    return Column(mainAxisSize: MainAxisSize.min, children: [const DriveBar(), _narration(context)]);
+  }
+
+  Widget _narration(BuildContext context) {
     final s = context.services;
     final n = s.narration;
     return ListenableBuilder(

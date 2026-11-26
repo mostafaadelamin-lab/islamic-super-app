@@ -770,6 +770,114 @@ abstract class AppLocalizations {
   /// **'Listen to the adhkar'**
   String get adhkarListenHeader;
 
+  /// shared key "adhkar.mine"
+  ///
+  /// In en, this message translates to:
+  /// **'My adhkar'**
+  String get adhkarMine;
+
+  /// shared key "adhkar.mineAdd"
+  ///
+  /// In en, this message translates to:
+  /// **'Add a dhikr'**
+  String get adhkarMineAdd;
+
+  /// shared key "adhkar.mineAddLong"
+  ///
+  /// In en, this message translates to:
+  /// **'Add your own dhikr'**
+  String get adhkarMineAddLong;
+
+  /// shared key "adhkar.mineBoth"
+  ///
+  /// In en, this message translates to:
+  /// **'Both'**
+  String get adhkarMineBoth;
+
+  /// shared key "adhkar.mineCancel"
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get adhkarMineCancel;
+
+  /// shared key "adhkar.mineCount"
+  ///
+  /// In en, this message translates to:
+  /// **'Number of times'**
+  String get adhkarMineCount;
+
+  /// shared key "adhkar.mineDelete"
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get adhkarMineDelete;
+
+  /// shared key "adhkar.mineDeleteAsk"
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this dhikr from your adhkar?'**
+  String get adhkarMineDeleteAsk;
+
+  /// shared key "adhkar.mineEdit"
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get adhkarMineEdit;
+
+  /// shared key "adhkar.mineEditTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Edit dhikr'**
+  String get adhkarMineEditTitle;
+
+  /// shared key "adhkar.mineHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Write the dhikr you need; it is added to the end of the list with a counter like the others.'**
+  String get adhkarMineHint;
+
+  /// shared key "adhkar.mineLess"
+  ///
+  /// In en, this message translates to:
+  /// **'Fewer'**
+  String get adhkarMineLess;
+
+  /// shared key "adhkar.mineMore"
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get adhkarMineMore;
+
+  /// shared key "adhkar.mineSave"
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get adhkarMineSave;
+
+  /// shared key "adhkar.mineShowIn"
+  ///
+  /// In en, this message translates to:
+  /// **'Show in'**
+  String get adhkarMineShowIn;
+
+  /// shared key "adhkar.mineTag"
+  ///
+  /// In en, this message translates to:
+  /// **'Added by you'**
+  String get adhkarMineTag;
+
+  /// shared key "adhkar.mineTextHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Write the dhikr here'**
+  String get adhkarMineTextHint;
+
+  /// shared key "adhkar.mineTimes"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} times'**
+  String adhkarMineTimes(String n);
+
   /// shared key "adhkar.morning"
   ///
   /// In en, this message translates to:
@@ -1693,6 +1801,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Start again'**
   String get driveAgain;
+
+  /// shared key "drive.barOpen"
+  ///
+  /// In en, this message translates to:
+  /// **'Open driving mode'**
+  String get driveBarOpen;
+
+  /// shared key "drive.barRep"
+  ///
+  /// In en, this message translates to:
+  /// **'Time {n} of {count}'**
+  String driveBarRep(String n, String count);
 
   /// shared key "drive.carHint"
   ///

@@ -1153,5 +1153,22 @@
   "about.siteSection": "The site",
   "about.privacyLink": "Privacy policy",
   "about.ourApps": "Our apps",
-  "about.ourAppsSoon": "More apps coming soon, God willing"
+  "about.ourAppsSoon": "More apps coming soon, God willing",
+  "adhkar.mine": "My adhkar",
+  "adhkar.mineTag": "Added by you · saved on this device",
+  "adhkar.mineAdd": "Add a dhikr",
+  "adhkar.mineEditTitle": "Edit dhikr",
+  "adhkar.mineHint": "Write the dhikr you need; it is added to the end of the list with a counter like the others.",
+  "adhkar.mineTextHint": "Write the dhikr here",
+  "adhkar.mineCount": "Number of times",
+  "adhkar.mineTimes": "{n} times",
+  "adhkar.mineShowIn": "Show in",
+  "adhkar.mineBoth": "Both",
+  "adhkar.mineSave": "Save",
+  "adhkar.mineEdit": "Edit",
+  "adhkar.mineDelete": "Delete",
+  "adhkar.mineDeleteAsk": "Delete this dhikr from your adhkar?",
+  "adhkar.mineCancel": "Cancel",
+  "adhkar.mineLess": "Fewer",
+  "adhkar.mineMore": "More"
 }

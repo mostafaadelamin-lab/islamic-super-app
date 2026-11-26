@@ -89,7 +89,7 @@ class AdhkarController extends ChangeNotifier {
     final stamp = _todayStamp;
     final existing = _progress[s];
     if (existing != null && _loadedOn[s] == stamp) return existing;
-    final items = _content.adhkar.forSession(s);
+    final items = _itemsFor(s);
     Map<int, int>? done;
     final raw = _settings.rawJson(_key(s));
     if (raw != null) {
@@ -111,6 +111,77 @@ class AdhkarController extends ChangeNotifier {
   }
 
   final Map<AdhkarSession, String> _loadedOn = {};
+
+  static const _customKey = 'adhkar.custom';
+  List<UserDhikr>? _custom;
+
+  /// The user's own adhkar («أذكاري»), oldest first.
+  List<UserDhikr> get custom {
+    if (_custom != null) return _custom!;
+    var list = <UserDhikr>[];
+    final raw = _settings.rawJson(_customKey);
+    if (raw != null) {
+      try {
+        list = [
+          for (final x in jsonDecode(raw) as List<dynamic>) UserDhikr.fromJson(x as Map<String, dynamic>),
+        ].where((d) => d.text.trim().isNotEmpty && d.sessions.isNotEmpty).toList();
+      } on FormatException {
+        list = [];
+      } on TypeError {
+        list = [];
+      }
+    }
+    return _custom = List.unmodifiable(list);
+  }
+
+  List<Dhikr> _itemsFor(AdhkarSession s) => [
+    ..._content.adhkar.forSession(s),
+    for (final c in custom)
+      if (c.sessions.contains(s)) c.toDhikr(),
+  ];
+
+  /// Adds a new dhikr (when [id] is null) or replaces the one with [id].
+  Future<void> saveCustom({
+    int? id,
+    required String text,
+    required int count,
+    required Set<AdhkarSession> sessions,
+  }) async {
+    final t = text.trim();
+    if (t.isEmpty || sessions.isEmpty) return;
+    final list = [...custom];
+    final nextId = list.isEmpty ? 1 : list.map((d) => d.id).reduce((a, b) => a > b ? a : b) + 1;
+    final d = UserDhikr(id: id ?? nextId, text: t, count: count.clamp(1, UserDhikr.maxCount), sessions: sessions);
+    final at = list.indexWhere((x) => x.id == d.id);
+    if (at < 0) {
+      list.add(d);
+    } else {
+      list[at] = d;
+    }
+    await _setCustom(list);
+  }
+
+  Future<void> deleteCustom(int id) async {
+    await _setCustom([...custom.where((d) => d.id != id)]);
+    for (final s in AdhkarSession.values) {
+      final p = _progress[s];
+      if (p != null && _loadedOn[s] == _todayStamp) {
+        p.reset(UserDhikr(id: id, text: '', count: 1, sessions: const {}).toDhikr());
+        await _save(s);
+      }
+    }
+  }
+
+  Future<void> _setCustom(List<UserDhikr> list) async {
+    _custom = List.unmodifiable(list);
+    // Rebuild today's lists, keeping the counts already made.
+    for (final s in AdhkarSession.values) {
+      final p = _progress[s];
+      if (p != null && _loadedOn[s] == _todayStamp) _progress[s] = AdhkarProgress(_itemsFor(s), p.done);
+    }
+    notifyListeners();
+    await _settings.setRawJson(_customKey, jsonEncode([for (final d in list) d.toJson()]));
+  }
 
   Future<void> tap(AdhkarSession s, Dhikr d) async {
     if (progress(s).tap(d)) {

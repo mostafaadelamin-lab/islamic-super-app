@@ -564,6 +564,83 @@
   "@adhkarListenHeader": {
     "description": "shared key \"adhkar.listenHeader\""
   },
+  "adhkarMine": "My adhkar",
+  "@adhkarMine": {
+    "description": "shared key \"adhkar.mine\""
+  },
+  "adhkarMineAdd": "Add a dhikr",
+  "@adhkarMineAdd": {
+    "description": "shared key \"adhkar.mineAdd\""
+  },
+  "adhkarMineAddLong": "Add your own dhikr",
+  "@adhkarMineAddLong": {
+    "description": "shared key \"adhkar.mineAddLong\""
+  },
+  "adhkarMineBoth": "Both",
+  "@adhkarMineBoth": {
+    "description": "shared key \"adhkar.mineBoth\""
+  },
+  "adhkarMineCancel": "Cancel",
+  "@adhkarMineCancel": {
+    "description": "shared key \"adhkar.mineCancel\""
+  },
+  "adhkarMineCount": "Number of times",
+  "@adhkarMineCount": {
+    "description": "shared key \"adhkar.mineCount\""
+  },
+  "adhkarMineDelete": "Delete",
+  "@adhkarMineDelete": {
+    "description": "shared key \"adhkar.mineDelete\""
+  },
+  "adhkarMineDeleteAsk": "Delete this dhikr from your adhkar?",
+  "@adhkarMineDeleteAsk": {
+    "description": "shared key \"adhkar.mineDeleteAsk\""
+  },
+  "adhkarMineEdit": "Edit",
+  "@adhkarMineEdit": {
+    "description": "shared key \"adhkar.mineEdit\""
+  },
+  "adhkarMineEditTitle": "Edit dhikr",
+  "@adhkarMineEditTitle": {
+    "description": "shared key \"adhkar.mineEditTitle\""
+  },
+  "adhkarMineHint": "Write the dhikr you need; it is added to the end of the list with a counter like the others.",
+  "@adhkarMineHint": {
+    "description": "shared key \"adhkar.mineHint\""
+  },
+  "adhkarMineLess": "Fewer",
+  "@adhkarMineLess": {
+    "description": "shared key \"adhkar.mineLess\""
+  },
+  "adhkarMineMore": "More",
+  "@adhkarMineMore": {
+    "description": "shared key \"adhkar.mineMore\""
+  },
+  "adhkarMineSave": "Save",
+  "@adhkarMineSave": {
+    "description": "shared key \"adhkar.mineSave\""
+  },
+  "adhkarMineShowIn": "Show in",
+  "@adhkarMineShowIn": {
+    "description": "shared key \"adhkar.mineShowIn\""
+  },
+  "adhkarMineTag": "Added by you",
+  "@adhkarMineTag": {
+    "description": "shared key \"adhkar.mineTag\""
+  },
+  "adhkarMineTextHint": "Write the dhikr here",
+  "@adhkarMineTextHint": {
+    "description": "shared key \"adhkar.mineTextHint\""
+  },
+  "adhkarMineTimes": "{n} times",
+  "@adhkarMineTimes": {
+    "description": "shared key \"adhkar.mineTimes\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
   "adhkarMorning": "Morning",
   "@adhkarMorning": {
     "description": "shared key \"adhkar.morning\""
@@ -1295,6 +1372,22 @@
   "driveAgain": "Start again",
   "@driveAgain": {
     "description": "shared key \"drive.again\""
+  },
+  "driveBarOpen": "Open driving mode",
+  "@driveBarOpen": {
+    "description": "shared key \"drive.barOpen\""
+  },
+  "driveBarRep": "Time {n} of {count}",
+  "@driveBarRep": {
+    "description": "shared key \"drive.barRep\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
   },
   "driveCarHint": "Control it from the car screen, the steering-wheel buttons or the lock screen: next = next dhikr, previous = this dhikr again, pause resumes at the same count.",
   "@driveCarHint": {

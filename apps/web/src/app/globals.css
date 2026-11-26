@@ -6248,7 +6248,6 @@ a.episode {
   color: var(--color-success, #2f7d55);
 }
 
-
 /* Settings → «الموقع»: the site's links in one list, as in the app (owner 2026-11-24). */
 .settings-links {
   list-style: none;
@@ -6268,4 +6267,97 @@ a.episode {
   border: 2px solid var(--color-accent);
   color: var(--color-ink);
   font-weight: 700;
+}
+
+/* «أذكاري»: adhkar the visitor adds (2026-11-26) */
+.dhikr.mine {
+  border: 2px solid var(--color-accent);
+}
+.mine-head {
+  margin: 0 0 var(--space-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+.mine-head .tag {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  border-radius: var(--radius-pill);
+  padding: 2px var(--space-sm);
+  font-size: 12px;
+  font-weight: 600;
+}
+.user-dhikr-tools {
+  justify-content: flex-end;
+}
+.user-dhikr-form {
+  margin-top: var(--space-lg);
+  background: var(--color-surface);
+  border: 2px dashed var(--color-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.user-dhikr-form h3 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-accent);
+}
+.user-dhikr-form p {
+  margin: 0;
+}
+.user-dhikr-form textarea {
+  font: inherit;
+  font-size: 18px;
+  line-height: 1.8;
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-line);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  resize: vertical;
+  width: 100%;
+}
+.user-dhikr-label {
+  font-weight: 600;
+}
+.user-dhikr-stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.user-dhikr-stepper output {
+  flex: 1;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+}
+.user-dhikr-quick {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+.user-dhikr-quick button {
+  flex: 1;
+  min-width: 44px;
+  min-height: 40px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  cursor: pointer;
+}
+.user-dhikr-quick button[aria-pressed="true"] {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+.user-dhikr-actions {
+  gap: var(--space-sm);
 }

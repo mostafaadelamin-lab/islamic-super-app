@@ -42,6 +42,8 @@ class LockPlayerCard extends StatefulWidget {
     this.docked = false,
     this.onTitleTap,
     this.titleKey,
+    this.icon,
+    this.info,
   });
 
   final String id;
@@ -76,6 +78,12 @@ class LockPlayerCard extends StatefulWidget {
   final VoidCallback? onTitleTap;
   final Key? titleKey;
 
+  /// The square picture on the start side (headphones when null).
+  final RIconData? icon;
+
+  /// Shown instead of the seek bar (e.g. driving mode: which dhikr and repetition).
+  final Widget? info;
+
   @override
   State<LockPlayerCard> createState() => _LockPlayerCardState();
 }
@@ -106,7 +114,7 @@ class _LockPlayerCardState extends State<LockPlayerCard> {
           height: 44,
           decoration: BoxDecoration(color: scheme.primary, borderRadius: BorderRadius.circular(DesignTokens.radiusMd)),
           alignment: Alignment.center,
-          child: RIcon(RIcons.headphones, color: scheme.onPrimary, size: 24),
+          child: RIcon(w.icon ?? RIcons.headphones, color: scheme.onPrimary, size: 24),
         ),
         const SizedBox(width: DesignTokens.spaceMd),
         Expanded(
@@ -147,7 +155,12 @@ class _LockPlayerCardState extends State<LockPlayerCard> {
     );
 
     Widget progress;
-    if (w.error != null) {
+    if (w.info != null && w.error == null) {
+      progress = Padding(
+        padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceXs),
+        child: w.info,
+      );
+    } else if (w.error != null) {
       progress = Padding(
         padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceSm),
         child: Text(
