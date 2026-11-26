@@ -260,6 +260,46 @@
       ]
     },
     {
+      "id": "fawzan",
+      "ar": "الشيخ صالح الفوزان",
+      "en": "Sheikh Saleh al-Fawzan",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
+      "id": "ibnbaz",
+      "ar": "الشيخ عبد العزيز بن باز",
+      "en": "Sheikh Abdulaziz ibn Baz",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
+      "id": "humaid",
+      "ar": "الشيخ صالح بن حميد",
+      "en": "Sheikh Saleh ibn Humaid",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
+      "id": "mutlaq",
+      "ar": "الشيخ عبد الله المطلق",
+      "en": "Sheikh Abdullah al-Mutlaq",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
+      "id": "ruhaily",
+      "ar": "الشيخ سليمان الرحيلي",
+      "en": "Sheikh Sulaiman al-Ruhaily",
+      "groups": [
+        "saudi"
+      ]
+    },
+    {
       "id": "tantawi",
       "ar": "الإمام الأكبر محمد سيد طنطاوي",
       "en": "Grand Imam Muhammad Sayyid Tantawi",
@@ -1142,6 +1182,106 @@
       "en": "The hereafter",
       "items": [
         "Dr.omar-abdulkafy_Dar_Akhira_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "molakhas-fawzan",
+      "topic": "fiqh",
+      "sheikh": "fawzan",
+      "ar": "الملخص الفقهي",
+      "en": "The fiqh summary",
+      "items": [
+        "01_20210327_202103"
+      ],
+      "titles": "name"
+    },
+    {
+      "id": "ramadan-fawzan",
+      "topic": "hearts",
+      "sheikh": "fawzan",
+      "ar": "دروس من رمضان",
+      "en": "Lessons from Ramadan",
+      "items": [
+        "doros_201905"
+      ],
+      "titles": "name"
+    },
+    {
+      "id": "wabel-ibnbaz",
+      "topic": "hearts",
+      "sheikh": "ibnbaz",
+      "ar": "شرح الوابل الصيب من الكلم الطيب",
+      "en": "Explaining al-Wabil al-Sayyib",
+      "items": [
+        "wabel_saib.ibnbaz"
+      ]
+    },
+    {
+      "id": "istiqama-ibnbaz",
+      "topic": "aqeedah",
+      "sheikh": "ibnbaz",
+      "ar": "شرح كتاب الاستقامة لابن تيمية",
+      "en": "Explaining Ibn Taymiyya's al-Istiqama",
+      "items": [
+        "IbnBaz-Aleskamah1-19"
+      ]
+    },
+    {
+      "id": "minhaj-humaid",
+      "topic": "hearts",
+      "sheikh": "humaid",
+      "ar": "شرح مختصر منهاج القاصدين",
+      "en": "Explaining Minhaj al-Qasidin",
+      "items": [
+        "06-6_20200505"
+      ],
+      "titles": "name",
+      "strip": [
+        "\\s*\\(\\d+\\)?\\s*$"
+      ]
+    },
+    {
+      "id": "nawawi-humaid",
+      "topic": "hadith",
+      "sheikh": "humaid",
+      "ar": "شرح الأربعين النووية",
+      "en": "Explaining the Forty Hadith",
+      "items": [
+        "048_20200505"
+      ]
+    },
+    {
+      "id": "muyassar-mutlaq",
+      "topic": "fiqh",
+      "sheikh": "mutlaq",
+      "ar": "الفقه الميسر",
+      "en": "Fiqh made easy",
+      "items": [
+        "043.-43"
+      ],
+      "titles": "name",
+      "strip": [
+        "^.*?حلقة\\s*\\d+\\s*"
+      ]
+    },
+    {
+      "id": "hajj-ruhaily",
+      "topic": "fiqh",
+      "sheikh": "ruhaily",
+      "ar": "فقه الحج",
+      "en": "The fiqh of Hajj",
+      "items": [
+        "Fi9h_Al-Hajj_Solaimen-Rhili_uP_bY_mUSLEm"
+      ]
+    },
+    {
+      "id": "usra-ruhaily",
+      "topic": "family",
+      "sheikh": "ruhaily",
+      "ar": "فقه الأسرة",
+      "en": "The fiqh of family life",
+      "items": [
+        "007_20211025"
       ]
     }
   ],

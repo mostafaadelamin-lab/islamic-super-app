@@ -53,6 +53,11 @@ void main() {
     for (final gone in ['munajjid', 'arifi', 'yaqoub', 'awadi']) {
       expect(c.series.where((s) => s.sheikh.id == gone), isEmpty, reason: gone);
     }
+    // Owner 2026-11-26: Saudi scholars with no arrest or ban record.
+    for (final sh in ['fawzan', 'ibnbaz', 'humaid', 'mutlaq', 'ruhaily']) {
+      expect(c.series.where((s) => s.sheikh.id == sh), isNotEmpty, reason: sh);
+    }
+    expect(c.series.where((s) => s.sheikh.id == 'ayman'), isEmpty);
     final awam = c.byId('awam-gabr')!;
     expect(awam.episodes.length, 7);
     expect(awam.episodes[4].title, 'المجلس الخامس');

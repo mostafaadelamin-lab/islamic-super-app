@@ -1,0 +1,646 @@
+{
+"item": "048_20200505",
+"title": "شرح الأربعين النووية وزيادات ابن رجب عليها للشيخ صالح بن عبدالله بن حميد",
+"files": [
+{
+"name": "001.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "22497371",
+"length": "2807.89",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 001 - ÇáÍ"
+},
+{
+"name": "002.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "23907775",
+"length": "2984.19",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 002 - ÇáÍ"
+},
+{
+"name": "003.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "23716767",
+"length": "2960.32",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 003 - ÇáÍ"
+},
+{
+"name": "004.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "22057936",
+"length": "2752.98",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 004 - ÇáÍ"
+},
+{
+"name": "005.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "23873084",
+"length": "2979.86",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 005 - ÇáÍ"
+},
+{
+"name": "006.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "19041685",
+"length": "2375.93",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 006 - ÇáÍ"
+},
+{
+"name": "007.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "23871203",
+"length": "2979.62",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 007 - ÇáÍ"
+},
+{
+"name": "008.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "23829456",
+"length": "2974.42",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 008 - ÇáÍ"
+},
+{
+"name": "009.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28764718",
+"length": "3591.33",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 009 - ÇáÍ"
+},
+{
+"name": "010.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "26311089",
+"length": "3284.63",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 010 - ÇáÍ"
+},
+{
+"name": "011.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25698312",
+"length": "3208.01",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 011 - ÇáÍ"
+},
+{
+"name": "012.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27869192",
+"length": "3479.37",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 012 - ÇáÍ"
+},
+{
+"name": "013.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "26013244",
+"length": "3247.38",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 013 - ÇáÍ"
+},
+{
+"name": "014.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "24212885",
+"length": "3022.33",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 014 - ÇáÍ"
+},
+{
+"name": "015.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "26879255",
+"length": "3355.63",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 015 - ÇáÍ"
+},
+{
+"name": "016.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "24954344",
+"length": "3115.01",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 016 - ÇáÍ"
+},
+{
+"name": "017.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "23289613",
+"length": "2906.92",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 017 - ÇáÍ"
+},
+{
+"name": "018.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27058978",
+"length": "3378.09",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 018 - ÇáÍ"
+},
+{
+"name": "019.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27006315",
+"length": "3371.51",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 019 - ÇáÍ"
+},
+{
+"name": "020.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27427827",
+"length": "3424.2",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 020 - ÇáÍ"
+},
+{
+"name": "021.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27512464",
+"length": "3434.78",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 021 - ÇáÍ"
+},
+{
+"name": "022.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28223412",
+"length": "3523.65",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 022 - ÇáÍ"
+},
+{
+"name": "023.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "26415530",
+"length": "3297.66",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 023 - ÇáÍ"
+},
+{
+"name": "024.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28162181",
+"length": "3515.99",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 024 - ÇáÍ"
+},
+{
+"name": "025.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "26023902",
+"length": "3248.71",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 025 - ÇáÍ"
+},
+{
+"name": "026.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27712039",
+"length": "3459.73",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 026 - ÇáÍ"
+},
+{
+"name": "027.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "26913737",
+"length": "3359.94",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 027 - ÇáÍ"
+},
+{
+"name": "028.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "24958524",
+"length": "3115.54",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 028 - ÇáÍ"
+},
+{
+"name": "029.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "22163053",
+"length": "2766.12",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 029 - ÇáÍ"
+},
+{
+"name": "030.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "20514991",
+"length": "2560.09",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 030 - ÇáÍ"
+},
+{
+"name": "031.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "20555324",
+"length": "2565.14",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 031 - ÇáÍ"
+},
+{
+"name": "032.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "24867200",
+"length": "3104.12",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 032 - ÇáÍ"
+},
+{
+"name": "033.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "26182100",
+"length": "3268.48",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 033 - ÇáÍ"
+},
+{
+"name": "034.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25371468",
+"length": "3167.15",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 034 - ÇáÍ"
+},
+{
+"name": "035.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "26430994",
+"length": "3299.59",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 035 - ÇáÍ"
+},
+{
+"name": "036.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "24598870",
+"length": "3070.58",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 036 - ÇáÍ"
+},
+{
+"name": "037.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28339605",
+"length": "3538.17",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 037 - ÇáÍ"
+},
+{
+"name": "038.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25241482",
+"length": "3150.91",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 038 - ÇáÍ"
+},
+{
+"name": "039.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27936692",
+"length": "3487.81",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 039 - ÇáÍ"
+},
+{
+"name": "040.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28326648",
+"length": "3536.55",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 040 - ÇáÍ"
+},
+{
+"name": "041.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27441828",
+"length": "3425.95",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 041 - ÇáÍ"
+},
+{
+"name": "042.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27290945",
+"length": "3407.09",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 042 - ÇáÍ"
+},
+{
+"name": "043.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28365309",
+"length": "3541.38",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 043 - ÇáÍ"
+},
+{
+"name": "044.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25566028",
+"length": "3191.47",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 044 - ÇáÍ"
+},
+{
+"name": "045.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28345247",
+"length": "3538.88",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 045 - ÇáÍ"
+},
+{
+"name": "046.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "22221309",
+"length": "2773.38",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 046 - ÇáÍ"
+},
+{
+"name": "047.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "25766021",
+"length": "3216.47",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 047 - ÇáÍ"
+},
+{
+"name": "048.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "29415223",
+"length": "3672.62",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 048 - ÇáÍ"
+},
+{
+"name": "049.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27352594",
+"length": "3414.79",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 049 - ÇáÍ"
+},
+{
+"name": "050.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28870204",
+"length": "3604.5",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 050 - ÇáÍ"
+},
+{
+"name": "051.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28975321",
+"length": "3617.64",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 051 - ÇáÍ"
+},
+{
+"name": "052.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27608803",
+"length": "3446.82",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 052 - ÇáÍ"
+},
+{
+"name": "053.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28279419",
+"length": "3530.65",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 053 - ÇáÍ"
+},
+{
+"name": "054.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28229682",
+"length": "3524.43",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 054 - ÇáÍ"
+},
+{
+"name": "055.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28291331",
+"length": "3532.14",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 055 - ÇáÍ"
+},
+{
+"name": "056.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "22293407",
+"length": "2782.4",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 056 - ÇáÍ"
+},
+{
+"name": "057.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28014015",
+"length": "3497.47",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 057 - ÇáÍ"
+},
+{
+"name": "058.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27646002",
+"length": "3451.47",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 058 - ÇáÍ"
+},
+{
+"name": "059.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28168660",
+"length": "3516.8",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 059 - ÇáÍ"
+},
+{
+"name": "060.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "24151236",
+"length": "3014.63",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 060 - ÇáÍ"
+},
+{
+"name": "061.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "24681417",
+"length": "3080.9",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 061 - ÇáÍ"
+},
+{
+"name": "062.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "24054060",
+"length": "3002.48",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 062 - ÇáÍ"
+},
+{
+"name": "063.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28085277",
+"length": "3506.38",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 063 - ÇáÍ"
+},
+{
+"name": "064.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28731024",
+"length": "3587.1",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 064 - ÇáÍ"
+},
+{
+"name": "065.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28392526",
+"length": "3544.81",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 065 - ÇáÍ"
+},
+{
+"name": "066.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27351807",
+"length": "3414.72",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 066 - ÇáÍ"
+},
+{
+"name": "067.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27807543",
+"length": "3471.66",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 067 - ÇáÍ"
+},
+{
+"name": "068.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "29230694",
+"length": "3649.56",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 068 - ÇáÍ"
+},
+{
+"name": "069.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27878178",
+"length": "3480.49",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 069 - ÇáÍ"
+},
+{
+"name": "070.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27529600",
+"length": "3436.92",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 070 - ÇáÍ"
+},
+{
+"name": "071.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "27306410",
+"length": "3409.02",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 071 - ÇáÍ"
+},
+{
+"name": "072.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "29313659",
+"length": "3659.93",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 072 - ÇáÍ"
+},
+{
+"name": "073.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28275030",
+"length": "3530.1",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 073 - ÇáÍ"
+},
+{
+"name": "074.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28773864",
+"length": "3592.45",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 074 - ÇáÍ"
+},
+{
+"name": "075.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28330619",
+"length": "3537.05",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 075 - ÇáÍ"
+},
+{
+"name": "076.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "23758981",
+"length": "2965.59",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 076 - ÇáÍ"
+},
+{
+"name": "077.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "22709904",
+"length": "2834.46",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 077 - ÇáÍ"
+},
+{
+"name": "078.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "21904914",
+"length": "2733.83",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 078 - ÇáÍ"
+},
+{
+"name": "079.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "28555481",
+"length": "3565.16",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 079 - ÇáÍ"
+},
+{
+"name": "080.mp3",
+"source": "original",
+"format": "VBR MP3",
+"size": "26669440",
+"length": "3329.4",
+"title": "ÔÑÍ ÇáÃÑÈÚíä ÇáäææíÉ 080 - ÇáÍ"
+}
+]
+}

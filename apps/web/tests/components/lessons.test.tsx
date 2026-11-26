@@ -49,6 +49,10 @@ describe("lesson series: data", () => {
     const gone = ["munajjid", "arifi", "yaqoub", "awadi"];
     expect(data.series.filter((s) => gone.includes(s.sheikh.id))).toEqual([]);
     expect(data.series.some((s) => s.id === "nur-yaqin-gabr")).toBe(true);
+    // Owner 2026-11-26: Eng. Ayman Abdelrahim removed; Saudi scholars with no arrest or ban record added.
+    expect(data.series.filter((s) => s.sheikh.id === "ayman")).toEqual([]);
+    for (const sh of ["fawzan", "ibnbaz", "humaid", "mutlaq", "ruhaily"])
+      expect(data.series.some((s) => s.sheikh.id === sh)).toBe(true);
   });
 
   it("is listed under More", () => {
