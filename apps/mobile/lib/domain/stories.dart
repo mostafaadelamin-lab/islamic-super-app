@@ -3,8 +3,8 @@
 ///  * verse stories: each story is its Quranic verse ranges, shown as the
 ///    Mushaf text, recited with the app's reciters and explained with Tafsir
 ///    al-Muyassar;
-///  * narrated series: audio-only episodes by a named narrator (Sheikh Nabil
-///    al-Awadi's "Stories of the Prophets"), streamed from their source. Users
+///  * narrated series: audio-only episodes by a named narrator (Sheikh
+///    al-Sha'rawi's "Stories of the Prophets"), streamed from their source. Users
 ///    hear only episodes a named reviewer approved; reviewer mode also lists
 ///    pending ones, with a banner.
 library;

@@ -6,9 +6,6 @@
  "akhlaquna-kafy": {
   "g": 4
  },
- "arbaoon-qalbiya-munajjid": {
-  "g": 4
- },
  "asma-tayeb": {
   "g": 9
  },
@@ -28,9 +25,6 @@
  "huwa-allah-maghamsi": {
   "c": 1
  },
- "judhur-ayman": {
-  "g": -7
- },
  "lectures-ghazali": {
   "g": 4
  },
@@ -49,14 +43,8 @@
  "nafahat-kafy": {
   "g": 4
  },
- "nihayat-alam-arifi": {
-  "g": 5
- },
  "qalb-saleem-kafy": {
   "g": -8
- },
- "qisas-quran-munajjid": {
-  "g": 5
  },
  "qissa-kafy": {
   "g": 4
@@ -72,9 +60,6 @@
  },
  "safwa-kafy": {
   "g": 8
- },
- "sahaba-munajjid": {
-  "g": 4
  },
  "seerah-hassan": {
   "c": 1
@@ -92,15 +77,8 @@
  "tahara-uthaymeen": {
   "c": 1
  },
- "tarikh-ayman": {
-  "g": -3,
-  "c": 1
- },
  "tawhid-alsheikh": {
   "c": 1
- },
- "umawi-abbasi-ayman": {
-  "g": -5
  },
  "usra-tayeb": {
   "g": 8

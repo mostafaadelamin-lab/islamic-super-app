@@ -16,8 +16,17 @@ RAW = ROOT / 'content/lessons/raw'
 DST = ROOT / 'content/lessons/dist/lessons.v1.json'
 
 
+def is_feed(item):
+    return item.startswith(('spreaker:', 'feed:'))
+
+
+def raw_name(item):
+    # "spreaker:123" -> "spreaker-123"; "feed:https://host/x" -> "feed-host-x"
+    return re.sub(r'[^A-Za-z0-9_.-]+', '-', item.replace('://', '-')).strip('-')
+
+
 def fetch(item):
-    if item.startswith('spreaker:'):
+    if is_feed(item):
         return fetch_feed(item)
     d = json.load(urllib.request.urlopen(f'https://archive.org/metadata/{item}', timeout=60))
     keep = ('name', 'source', 'format', 'size', 'length', 'title', 'original')
@@ -28,18 +37,28 @@ def fetch(item):
 ITUNES = '{http://www.itunes.com/dtds/podcast-1.0.dtd}'
 
 
+def feed_url(u):
+    # The host's own file, without listen-counting redirects (dts.podtrac.com/redirect.mp3/<host>/...)
+    # or feed-tracking query strings.
+    u = re.sub(r'^https?://dts\.podtrac\.com/redirect\.mp3/', 'https://', u)
+    return u.split('?', 1)[0]
+
+
 def fetch_feed(item):
     """An official podcast feed (e.g. the Grand Imam's Ramadan programmes): episodes in feed order."""
     import xml.etree.ElementTree as ET
-    show = item.split(':', 1)[1]
-    root = ET.fromstring(urllib.request.urlopen(f'https://www.spreaker.com/show/{show}/episodes/feed', timeout=60).read())
+    kind, rest = item.split(':', 1)
+    # spreaker:<showId> or feed:<RSS url> (an official podcast feed, e.g. a scholar's own channel).
+    url = f'https://www.spreaker.com/show/{rest}/episodes/feed' if kind == 'spreaker' else rest
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+    root = ET.fromstring(urllib.request.urlopen(req, timeout=60).read())
     files = []
     for it in root.find('channel').findall('item'):
         enc = it.find('enclosure')
         if enc is None:
             continue
         desc = re.sub(r'<[^>]+>', ' ', it.findtext('description') or '')
-        files.append({'url': enc.get('url'), 'name': it.findtext('title') or '', 'source': 'original',
+        files.append({'url': feed_url(enc.get('url')), 'name': it.findtext('title') or '', 'source': 'original',
                       'size': enc.get('length'), 'length': it.findtext(ITUNES + 'duration'),
                       'desc': re.sub(r'\s+', ' ', desc).strip()})
     return {'item': item, 'files': files}
@@ -120,13 +139,13 @@ def build(src, refetch=False):
         assert se['topic'] in topics and se['sheikh'] in sheikhs, se['id']
         eps = []
         for item in se['items']:
-            p = RAW / f"{item.replace(':', '-')}.json"
+            p = RAW / f"{raw_name(item)}.json"
             if refetch or not p.exists():
                 p.write_text(json.dumps(fetch(item), ensure_ascii=False, indent=0))
             raw = json.loads(p.read_text())
             files = pick(raw['files'])
             # Feeds keep their own order (reversed when newest comes first); trailers are dropped.
-            if item.startswith('spreaker:'):
+            if is_feed(item):
                 files = [f for f in files if seconds(f.get('length')) >= MIN_EPISODE_SEC]
                 if se.get('reverse'):
                     files.reverse()

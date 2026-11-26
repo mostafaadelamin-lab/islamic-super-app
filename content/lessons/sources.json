@@ -32,11 +32,6 @@
       "en": "Prophets, Companions & stories"
     },
     {
-      "id": "history",
-      "ar": "التاريخ الإسلامي",
-      "en": "Islamic history"
-    },
-    {
       "id": "quran",
       "ar": "مع القرآن",
       "en": "With the Quran"
@@ -55,11 +50,6 @@
       "id": "adab",
       "ar": "الآداب والحياة اليومية",
       "en": "Manners & daily life"
-    },
-    {
-      "id": "fikr",
-      "ar": "الفكر والوعي الإسلامي",
-      "en": "Islamic thought and awareness"
     },
     {
       "id": "muamalat",
@@ -99,14 +89,6 @@
       "id": "hassan",
       "ar": "الشيخ محمد حسان",
       "en": "Sheikh Mohamed Hassan",
-      "groups": [
-        "egypt"
-      ]
-    },
-    {
-      "id": "yaqoub",
-      "ar": "الشيخ محمد حسين يعقوب",
-      "en": "Sheikh Mohamed Hussein Yacoub",
       "groups": [
         "egypt"
       ]
@@ -230,25 +212,9 @@
       ]
     },
     {
-      "id": "munajjid",
-      "ar": "الشيخ محمد صالح المنجد",
-      "en": "Sheikh Muhammad Al-Munajjid",
-      "groups": [
-        "saudi"
-      ]
-    },
-    {
       "id": "maghamsi",
       "ar": "الشيخ صالح المغامسي",
       "en": "Sheikh Saleh Al-Maghamsi",
-      "groups": [
-        "saudi"
-      ]
-    },
-    {
-      "id": "arifi",
-      "ar": "الشيخ محمد العريفي",
-      "en": "Sheikh Muhammad Al-Arifi",
       "groups": [
         "saudi"
       ]
@@ -294,6 +260,24 @@
       ]
     },
     {
+      "id": "tantawi",
+      "ar": "الإمام الأكبر محمد سيد طنطاوي",
+      "en": "Grand Imam Muhammad Sayyid Tantawi",
+      "groups": [
+        "azhar",
+        "egypt"
+      ]
+    },
+    {
+      "id": "hashem",
+      "ar": "الدكتور أحمد عمر هاشم",
+      "en": "Dr. Ahmed Omar Hashem",
+      "groups": [
+        "azhar",
+        "egypt"
+      ]
+    },
+    {
       "id": "adawi",
       "ar": "الشيخ مصطفى العدوي",
       "en": "Sheikh Mustafa al-Adawi",
@@ -302,18 +286,31 @@
       ]
     },
     {
-      "id": "ayman",
-      "ar": "م. أيمن عبد الرحيم",
-      "en": "Eng. Ayman Abdelrahim",
+      "id": "rawi",
+      "ar": "الشيخ محمد الراوي",
+      "en": "Sheikh Muhammad Al-Rawi",
       "groups": [
+        "azhar",
         "egypt"
       ]
     },
     {
-      "id": "awadi",
-      "ar": "الشيخ نبيل العوضي",
-      "en": "Sheikh Nabil Al-Awadi",
-      "groups": []
+      "id": "shehata",
+      "ar": "الدكتور عبد الله شحاتة",
+      "en": "Dr. Abdullah Shehata",
+      "groups": [
+        "azhar",
+        "egypt"
+      ]
+    },
+    {
+      "id": "azhar",
+      "ar": "الأزهر الشريف",
+      "en": "Al-Azhar Al-Sharif",
+      "groups": [
+        "azhar",
+        "egypt"
+      ]
     }
   ],
   "series": [
@@ -425,6 +422,27 @@
       ]
     },
     {
+      "id": "awam-gabr",
+      "topic": "aqeedah",
+      "sheikh": "gabr",
+      "ar": "شرح عقيدة العوام",
+      "en": "Explaining 'Aqidat al-'Awam",
+      "items": [
+        "feed:https://feeds.simplecast.com/L_pjpQBh"
+      ],
+      "keep": "عقيدة العوام|عَقِيدَةِ العَوَام",
+      "reverse": true,
+      "titles": "name",
+      "strip": [
+        "شرح منظومة",
+        "عَقِيدَةِ العَوَام",
+        "عقيدة العوام",
+        "[أا]ٔ?\\.\\s*د\\.?",
+        "(^|\\s)د(\\s|$)",
+        "^\\s*-\\s*"
+      ]
+    },
+    {
       "id": "shamail-gabr",
       "topic": "seerah",
       "sheikh": "gabr",
@@ -469,13 +487,27 @@
       ]
     },
     {
-      "id": "seerah-makki-ayman",
+      "id": "nur-yaqin-gabr",
       "topic": "seerah",
-      "sheikh": "ayman",
-      "ar": "السيرة النبوية: العهد المكي",
-      "en": "The Prophet's life: the Meccan period",
+      "sheikh": "gabr",
+      "ar": "نور اليقين في سيرة سيد المرسلين",
+      "en": "Nur al-Yaqin: the Prophet's life",
       "items": [
-        "islami-2425"
+        "feed:https://feeds.simplecast.com/L_pjpQBh"
+      ],
+      "keep": "نور ?اليقين",
+      "reverse": true,
+      "titles": "name",
+      "strip": [
+        "^\\d+",
+        "شرح\\s*كتاب\\s*",
+        "^\\s*كتاب\\s*",
+        "نور ?اليقين في سيرة سيد المرسلين",
+        "الخضري رحمه الله",
+        "^\\s*-\\s*",
+        "\\(\\s*\\)",
+        "^\\(",
+        "\\((?=المجلس)"
       ]
     },
     {
@@ -558,6 +590,25 @@
       "keep": "^(?!42\\.|66\\.)(0[1-9]|[1-5][0-9]|6[0-7])\\. "
     },
     {
+      "id": "fath-qarib-gabr",
+      "topic": "fiqh",
+      "sheikh": "gabr",
+      "ar": "فتح القريب المجيب (الفقه الشافعي)",
+      "en": "Fath al-Qarib (Shafi'i fiqh)",
+      "items": [
+        "feed:https://feeds.simplecast.com/L_pjpQBh"
+      ],
+      "keep": "فتح القريب|حَجْرُ السَّفِيهِ|أحكامُ الرَّهْن|صلاةُ الكسوف",
+      "reverse": true,
+      "titles": "name",
+      "strip": [
+        "^\\d+-\\s*",
+        "-?\\s*شرح (كتاب )?فتح القريب المجيب( في شرح ألفاظ التقريب)?\\.?",
+        "«|»",
+        "\\(\\s*فقه شافعيّ\\)\\s*-?"
+      ]
+    },
+    {
       "id": "nawawi-uthaymeen",
       "topic": "hadith",
       "sheikh": "uthaymeen",
@@ -606,16 +657,6 @@
       "items": [
         "Hearts_Deeds_uP_bY_mUSLEm",
         "Hearts_Deeds-2_uP_bY_mUSLEm"
-      ]
-    },
-    {
-      "id": "arbaoon-qalbiya-munajjid",
-      "topic": "hearts",
-      "sheikh": "munajjid",
-      "ar": "الأربعون القلبية",
-      "en": "Forty hadiths of the heart",
-      "items": [
-        "aa_127_201608"
       ]
     },
     {
@@ -733,6 +774,25 @@
       ]
     },
     {
+      "id": "manazil-gabr",
+      "topic": "hearts",
+      "sheikh": "gabr",
+      "ar": "شرح منازل السائرين",
+      "en": "Stations of the wayfarers",
+      "items": [
+        "feed:https://feeds.simplecast.com/L_pjpQBh"
+      ],
+      "keep": "منازل السائرين",
+      "reverse": true,
+      "titles": "name",
+      "strip": [
+        "^\\d+-\\s*",
+        "(شرح\\s*)?منازل السائرين\\s*-?",
+        "[أا]ٔ?\\.\\s*د\\.?",
+        "(^|\\s)د(\\s|$)"
+      ]
+    },
+    {
       "id": "sahaba-masri",
       "topic": "stories",
       "sheikh": "masri",
@@ -740,16 +800,6 @@
       "en": "Lives of the Companions",
       "items": [
         "Sahaba_uP_bY_mUSLEm"
-      ]
-    },
-    {
-      "id": "sahaba-munajjid",
-      "topic": "stories",
-      "sheikh": "munajjid",
-      "ar": "قصص الصحابة في عهد النبوة",
-      "en": "Companions' stories",
-      "items": [
-        "qesas-sahaba_munjid"
       ]
     },
     {
@@ -765,16 +815,6 @@
       ]
     },
     {
-      "id": "qisas-quran-munajjid",
-      "topic": "stories",
-      "sheikh": "munajjid",
-      "ar": "قصص القرآن",
-      "en": "Stories of the Quran",
-      "items": [
-        "qasass-quran_up-by-ayoub-islam"
-      ]
-    },
-    {
       "id": "qissa-kafy",
       "topic": "stories",
       "sheikh": "kafy",
@@ -785,14 +825,15 @@
       ]
     },
     {
-      "id": "khulafa-ayman",
+      "id": "ahsan-qasas-kafy",
       "topic": "stories",
-      "sheikh": "ayman",
-      "ar": "سيرة الخلفاء الراشدين",
-      "en": "The Rightly Guided Caliphs",
+      "sheikh": "kafy",
+      "ar": "أحسن القصص",
+      "en": "The best of stories",
       "items": [
-        "islami-2431"
-      ]
+        "A7ssan-qasas_Omar-abdlkafi-mp3"
+      ],
+      "titles": "title"
     },
     {
       "id": "maa-quran-maghamsi",
@@ -872,19 +913,52 @@
       "titles": "surah"
     },
     {
-      "id": "judhur-ayman",
+      "id": "tibyan-gabr",
       "topic": "quran",
-      "sheikh": "ayman",
-      "ar": "الثلاثون جذرًا الأكثر شيوعًا في القرآن",
-      "en": "The 30 most common roots in the Quran",
+      "sheikh": "gabr",
+      "ar": "التبيان في آداب حملة القرآن",
+      "en": "Manners of the people of the Quran",
       "items": [
-        "islami-2422"
+        "feed:https://feeds.simplecast.com/L_pjpQBh"
       ],
-      "names": [
-        "مقدمة الدورة والمصادر المستعملة فيها",
-        "الجذور: أله، قول، كون",
-        "الجذور: ربب، أمن، علم",
-        "الجذور: أتى، قوم، كفر، بين"
+      "keep": "التبيان",
+      "reverse": true,
+      "titles": "name",
+      "strip": [
+        "^\\d+-\\s*",
+        "التبيان في آداب حملة القرآن",
+        "[أا]ٔ?\\.\\s*د\\.?",
+        "(^|\\s)د(\\s|$)"
+      ]
+    },
+    {
+      "id": "waqafat-rawi",
+      "topic": "quran",
+      "sheikh": "rawi",
+      "ar": "وقفات مع آيات",
+      "en": "Pauses with verses",
+      "items": [
+        "spreaker:5847619"
+      ],
+      "keep": "الراوي",
+      "titles": "name",
+      "strip": [
+        "^.*׀\\s*"
+      ]
+    },
+    {
+      "id": "tafsir-shehata",
+      "topic": "quran",
+      "sheikh": "shehata",
+      "ar": "تفسير وتأملات",
+      "en": "Tafsir and reflections",
+      "items": [
+        "spreaker:5847619"
+      ],
+      "keep": "عبد الله شحاتة",
+      "titles": "name",
+      "strip": [
+        "^.*׀\\s*"
       ]
     },
     {
@@ -898,16 +972,6 @@
       ]
     },
     {
-      "id": "awlad-yaqoub",
-      "topic": "family",
-      "sheikh": "yaqoub",
-      "ar": "تربية الأولاد",
-      "en": "Raising children",
-      "items": [
-        "Awled_uP_bY_mUSLEm"
-      ]
-    },
-    {
       "id": "huquq-kafy",
       "topic": "family",
       "sheikh": "kafy",
@@ -915,16 +979,6 @@
       "en": "Rights",
       "items": [
         "al7oqoq_Omar-abdlkafee"
-      ]
-    },
-    {
-      "id": "bayt-ayman",
-      "topic": "family",
-      "sheikh": "ayman",
-      "ar": "البيت المسلم",
-      "en": "The Muslim home",
-      "items": [
-        "islami-2421"
       ]
     },
     {
@@ -969,6 +1023,36 @@
       ]
     },
     {
+      "id": "hadith-hashem",
+      "topic": "akhlaq",
+      "sheikh": "hashem",
+      "ar": "أحاديث في الأخلاق والدعوة",
+      "en": "Talks on character",
+      "items": [
+        "spreaker:5847619"
+      ],
+      "keep": "أحمد عمر هاشم",
+      "titles": "name",
+      "strip": [
+        "^.*׀\\s*"
+      ]
+    },
+    {
+      "id": "hadith-tantawi",
+      "topic": "akhlaq",
+      "sheikh": "tantawi",
+      "ar": "أحاديث الإمام الأكبر",
+      "en": "Talks of the Grand Imam",
+      "items": [
+        "spreaker:5847619"
+      ],
+      "keep": "طنطاوي",
+      "titles": "name",
+      "strip": [
+        "^.*׀\\s*"
+      ]
+    },
+    {
       "id": "adab-bali",
       "topic": "adab",
       "sheikh": "bali",
@@ -979,14 +1063,16 @@
       ]
     },
     {
-      "id": "hayatuna-munajjid",
+      "id": "hady-rasul-azhar",
       "topic": "adab",
-      "sheikh": "munajjid",
-      "ar": "حياتنا في ضوء الشريعة",
-      "en": "Our life in the light of the Shariah",
+      "sheikh": "azhar",
+      "ar": "من هدي الرسول ﷺ",
+      "en": "From the Prophet's guidance",
       "items": [
-        "hayatona_munjid"
-      ]
+        "spreaker:6114261"
+      ],
+      "reverse": true,
+      "titles": "name"
     },
     {
       "id": "muamalat-khathlan",
@@ -1049,16 +1135,6 @@
       "titles": "name"
     },
     {
-      "id": "nihayat-alam-arifi",
-      "topic": "akhira",
-      "sheikh": "arifi",
-      "ar": "نهاية العالم",
-      "en": "The end of the world",
-      "items": [
-        "Islamic_Tape-758_uP_bY_mUSLEm"
-      ]
-    },
-    {
       "id": "dar-akhira-kafy",
       "topic": "akhira",
       "sheikh": "kafy",
@@ -1066,99 +1142,6 @@
       "en": "The hereafter",
       "items": [
         "Dr.omar-abdulkafy_Dar_Akhira_uP_bY_mUSLEm"
-      ]
-    },
-    {
-      "id": "waai-ayman",
-      "topic": "fikr",
-      "sheikh": "ayman",
-      "ar": "تأسيس وعي المسلم المعاصر",
-      "en": "Building the modern Muslim's awareness",
-      "items": [
-        "islami-2429"
-      ]
-    },
-    {
-      "id": "tarikh-ayman",
-      "topic": "history",
-      "sheikh": "ayman",
-      "ar": "مدخل لدراسة التاريخ الإسلامي",
-      "en": "Introduction to Islamic history",
-      "items": [
-        "1_20220208_20220208_1628"
-      ],
-      "order": [
-        "المحاضرة_الأولى",
-        "المحاضرة_الثانية",
-        "المحاضرة_الثالثة",
-        "المحاضرة_الرابعة",
-        "المحاضرة_الخامسة",
-        "المحاضرة_السادسة",
-        "المحاضرة_السابعة",
-        "المحاضرة_الثامنة",
-        "المحاضرة_التاسعة"
-      ]
-    },
-    {
-      "id": "umawi-abbasi-ayman",
-      "topic": "history",
-      "sheikh": "ayman",
-      "ar": "تاريخ الدولة الأموية والعباسية",
-      "en": "The Umayyad and Abbasid states",
-      "items": [
-        "Dawlatain_Ayman"
-      ]
-    },
-    {
-      "id": "anbiya-awadi",
-      "topic": "stories",
-      "sheikh": "awadi",
-      "ar": "قصص الأنبياء",
-      "en": "Stories of the Prophets",
-      "items": [
-        "prophets_stories_Nabel-ElAwadde"
-      ],
-      "order": [
-        "قصة آدم عليه السلام",
-        "قصة ادريس ونوح عليهما السلام",
-        "قصة هود عليه السلام",
-        "قصة صالح عليه السلام",
-        "قصة إبراهيم عليه السلام",
-        "قصة لوط عليه السلام",
-        "قصة شعيب عليه السلام",
-        "قصة يوسف عليه السلام",
-        "قصة أيوب عليه السلام",
-        "قصة يونس عليه السلام",
-        "قصة موسى عليه السلام",
-        "قصة الخضر عليه السلام",
-        "قصة يوشع بن نون عليه السلام",
-        "قصة داوود عليه السلام",
-        "قصة سليمان و العزير عليهما السلام",
-        "قصة زكريا و يحي عليهما السلام",
-        "قصة مريم بنت عمران عليها السلام",
-        "قصة عيسى عليه السلام",
-        "قصة محمد صلّ الله عليه و سلم"
-      ],
-      "names": [
-        "قصة آدم عليه السلام",
-        "قصة إدريس ونوح عليهما السلام",
-        "قصة هود عليه السلام",
-        "قصة صالح عليه السلام",
-        "قصة إبراهيم عليه السلام",
-        "قصة لوط عليه السلام",
-        "قصة شعيب عليه السلام",
-        "قصة يوسف عليه السلام",
-        "قصة أيوب عليه السلام",
-        "قصة يونس عليه السلام",
-        "قصة موسى عليه السلام",
-        "قصة الخضر عليه السلام",
-        "قصة يوشع بن نون عليه السلام",
-        "قصة داوود عليه السلام",
-        "قصة سليمان و العزير عليهما السلام",
-        "قصة زكريا ويحيى عليهما السلام",
-        "قصة مريم بنت عمران عليها السلام",
-        "قصة عيسى عليه السلام",
-        "قصة محمد ﷺ"
       ]
     }
   ],

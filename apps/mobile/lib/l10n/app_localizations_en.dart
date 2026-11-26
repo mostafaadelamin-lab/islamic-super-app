@@ -799,7 +799,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get carStories => 'Stories of the Prophets';
 
   @override
-  String get carStoriesSub => 'Sheikh Nabil al-Awadi';
+  String get carStoriesSub => 'Sheikh Mohamed Metwally Al-Sha\'rawi';
 
   @override
   String get carText => 'Dhikr text';
@@ -3744,8 +3744,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get storiesHowTo =>
-      'Each episode: tap to listen, the video icon to watch, or the download icon to listen offline.';
+  String get storiesHowTo => 'Each episode: tap to listen, or the download icon to listen offline.';
 
   @override
   String get storiesIntro =>
@@ -3838,7 +3837,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get storiesVersesTitle => 'The stories\' verses from the Mushaf';
 
   @override
-  String get storiesVideoBy => 'Sheikh Nabil Al-Awadi';
+  String get storiesVideoBy => 'Sheikh Mohamed Metwally Al-Sha\'rawi';
 
   @override
   String get storiesWatchVideo => 'Watch video';

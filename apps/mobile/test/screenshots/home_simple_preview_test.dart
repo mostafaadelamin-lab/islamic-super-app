@@ -77,7 +77,7 @@ void main() {
     await shot(tester, 'A4-afham');
     await tester.tap(find.byKey(const Key('lessonsTopic.stories')));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.byKey(const Key('lessonsSeries.anbiya-awadi')));
+    await tester.ensureVisible(find.byKey(const Key('lessonsSeries.ahsan-qasas-kafy')));
     await tester.pumpAndSettle();
     await shot(tester, 'A5-afham-stories');
   });

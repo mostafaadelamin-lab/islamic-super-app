@@ -795,7 +795,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get carStories => 'قصص الأنبياء';
 
   @override
-  String get carStoriesSub => 'الشيخ نبيل العوضي';
+  String get carStoriesSub => 'الشيخ محمد متولي الشعراوي';
 
   @override
   String get carText => 'نص الذكر';
@@ -3722,8 +3722,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get storiesHowTo =>
-      'لكل حلقة: اضغط للاستماع، أو أيقونة الفيديو للمشاهدة، أو أيقونة التحميل للسماع بدون إنترنت.';
+  String get storiesHowTo => 'لكل حلقة: اضغط للاستماع، أو أيقونة التحميل للسماع بدون إنترنت.';
 
   @override
   String get storiesIntro =>
@@ -3815,7 +3814,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get storiesVersesTitle => 'آيات القصص من المصحف';
 
   @override
-  String get storiesVideoBy => 'الشيخ نبيل العوضي';
+  String get storiesVideoBy => 'الشيخ محمد متولي الشعراوي';
 
   @override
   String get storiesWatchVideo => 'مشاهدة فيديو';

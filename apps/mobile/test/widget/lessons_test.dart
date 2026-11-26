@@ -37,7 +37,11 @@ void main() {
       for (final e in s.episodes) {
         expect(
           e.url,
-          anyOf(startsWith('https://archive.org/download/'), startsWith('https://api.spreaker.com/download/')),
+          anyOf(
+            startsWith('https://archive.org/download/'),
+            startsWith('https://api.spreaker.com/download/'),
+            startsWith('https://cdn.simplecast.com/audio/'),
+          ),
         );
         expect(e.url, isNot(contains(' ')));
         expect(e.url.toLowerCase(), endsWith('.mp3'));
@@ -45,9 +49,13 @@ void main() {
         if (e.title != null) expect(RegExp('[A-Za-z]').hasMatch(e.title!), isFalse, reason: e.title);
       }
     }
-    final end = c.byId('nihaya-hassan')!;
-    expect(end.episodes.length, 29);
-    expect(end.episodes[18].title, 'خروج الدجال');
+    // Owner 2026-11-26: sheikhs with legal/security problems in Egypt or Saudi Arabia removed, Al-Azhar scholars instead.
+    for (final gone in ['munajjid', 'arifi', 'yaqoub', 'awadi']) {
+      expect(c.series.where((s) => s.sheikh.id == gone), isEmpty, reason: gone);
+    }
+    final awam = c.byId('awam-gabr')!;
+    expect(awam.episodes.length, 7);
+    expect(awam.episodes[4].title, 'المجلس الخامس');
     // Owner 2026-11-23: Sha'rawi has his own section, so no series here; the Grand Imam's talks; simple purity lessons.
     expect(c.series.where((s) => s.sheikh.id == 'shaarawi'), isEmpty);
     expect(c.series.where((s) => s.sheikh.id == 'tayeb').length, greaterThanOrEqualTo(4));
@@ -64,20 +72,19 @@ void main() {
       await pushScreen(tester, LessonsScreen(loader: () async => data));
       expect(find.text('افهم دينك'), findsWidgets);
       expect(find.byKey(const Key('lessonsNote')), findsOneWidget);
-      expect(find.byKey(const Key('lessonsSeries.seerah-hassan')), findsOneWidget);
+      expect(find.byKey(const Key('lessonsSeries.nur-yaqin-gabr')), findsOneWidget);
       // Owner (2026-11-24): no groups row (no nationality or institution), all topics at once.
       expect(find.byKey(const Key('lessonsGroup.saudi')), findsNothing);
       await tester.ensureVisible(find.byKey(const Key('lessonsTopic.stories')));
       await tester.tap(find.byKey(const Key('lessonsTopic.stories')));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.byKey(const Key('lessonsSeries.anbiya-awadi')));
-      expect(find.byKey(const Key('lessonsSeries.anbiya-awadi')), findsOneWidget);
+      await tester.ensureVisible(find.byKey(const Key('lessonsSeries.ahsan-qasas-kafy')));
+      expect(find.byKey(const Key('lessonsSeries.ahsan-qasas-kafy')), findsOneWidget);
       await tester.ensureVisible(find.byKey(const Key('lessonsTopic.akhira')));
       await tester.tap(find.byKey(const Key('lessonsTopic.akhira')));
       await tester.pumpAndSettle();
-      expect(find.byKey(const Key('lessonsSeries.nihaya-hassan')), findsOneWidget);
       expect(find.byKey(const Key('lessonsSeries.dar-akhira-kafy')), findsOneWidget);
-      expect(find.byKey(const Key('lessonsSeries.seerah-hassan')), findsNothing);
+      expect(find.byKey(const Key('lessonsSeries.nur-yaqin-gabr')), findsNothing);
       await tester.ensureVisible(find.byKey(const Key('lessonsTopic.all')));
       await tester.tap(find.byKey(const Key('lessonsTopic.all')));
       await tester.pumpAndSettle();
@@ -85,17 +92,17 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byKey(const Key('lessonsSeries.dar-akhira-kafy')), findsOneWidget);
       expect(find.byKey(const Key('lessonsSeries.safwa-kafy')), findsOneWidget, reason: 'all topics again');
-      expect(find.byKey(const Key('lessonsSeries.seerah-hassan')), findsNothing);
+      expect(find.byKey(const Key('lessonsSeries.nur-yaqin-gabr')), findsNothing);
       await tester.enterText(find.byKey(const Key('lessonsSearch')), 'لا يوجد شيء كهذا');
       await tester.pumpAndSettle();
       expect(find.byKey(const Key('lessonsEmpty')), findsOneWidget);
-      await tester.enterText(find.byKey(const Key('lessonsSearch')), 'أحداث النهاية');
+      await tester.enterText(find.byKey(const Key('lessonsSearch')), 'منازل السائرين');
       await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const Key('lessonsSeries.nihaya-hassan')));
+      await tester.tap(find.byKey(const Key('lessonsSeries.manazil-gabr')));
       await tester.pumpAndSettle();
       expect(find.byType(LessonSeriesScreen), findsOneWidget);
       expect(find.text('الدرس ١'), findsOneWidget);
-      expect(find.textContaining('الموت'), findsWidgets);
+      expect(find.textContaining('اليقظة'), findsWidgets);
       expect(find.byType(OfflineButton), findsWidgets);
       expect(find.byKey(const Key('lessonsDownloadAll')), findsOneWidget);
       expect(find.byKey(const Key('lessonsContinueBtn')), findsOneWidget);
@@ -109,7 +116,7 @@ void main() {
     final backend = FakeNarrationBackend();
     await pumpApp(tester, size: tallPhone, narration: backend);
     final data = _read();
-    final s = data.byId('awlad-yaqoub')!;
+    final s = data.byId('huquq-kafy')!;
     await pushScreen(tester, LessonSeriesScreen(series: s));
     final second = s.episodeId(s.episodes[1]);
     await tester.tap(find.byKey(Key('lesson-$second')));

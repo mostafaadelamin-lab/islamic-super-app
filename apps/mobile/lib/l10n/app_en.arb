@@ -1135,7 +1135,7 @@
   "@carStories": {
     "description": "shared key \"car.stories\""
   },
-  "carStoriesSub": "Sheikh Nabil al-Awadi",
+  "carStoriesSub": "Sheikh Mohamed Metwally Al-Sha'rawi",
   "@carStoriesSub": {
     "description": "shared key \"car.storiesSub\""
   },
@@ -5495,7 +5495,7 @@
       }
     }
   },
-  "storiesHowTo": "Each episode: tap to listen, the video icon to watch, or the download icon to listen offline.",
+  "storiesHowTo": "Each episode: tap to listen, or the download icon to listen offline.",
   "@storiesHowTo": {
     "description": "shared key \"stories.howTo\""
   },
@@ -5635,7 +5635,7 @@
   "@storiesVersesTitle": {
     "description": "shared key \"stories.versesTitle\""
   },
-  "storiesVideoBy": "Sheikh Nabil Al-Awadi",
+  "storiesVideoBy": "Sheikh Mohamed Metwally Al-Sha'rawi",
   "@storiesVideoBy": {
     "description": "shared key \"stories.videoBy\""
   },

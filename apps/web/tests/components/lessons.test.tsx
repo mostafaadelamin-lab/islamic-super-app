@@ -18,9 +18,10 @@ const MIN_PER_GROUP = 5;
 const MIN_KAFY = 15;
 const DAR_AKHIRA_LESSONS = 32;
 const HTTP_OK = 200;
-/** An https mp3 link from archive.org or the Grand Imam's official podcast, no raw spaces:
- *  matches "https://archive.org/download/x/1.mp3" and "https://api.spreaker.com/download/episode/1/a.mp3", rejects "http://x/a b.mp3". */
-const AUDIO_MP3 = /^https:\/\/(?:archive\.org|api\.spreaker\.com)\/download\/[^ ]+\.mp3$/i;
+/** An https mp3 link from archive.org or an official podcast (Spreaker, Simplecast), no raw spaces:
+ *  matches "https://archive.org/download/x/1.mp3", "https://api.spreaker.com/download/episode/1/a.mp3" and
+ *  "https://cdn.simplecast.com/audio/x/default_tc.mp3", rejects "http://x/a b.mp3". */
+const AUDIO_MP3 = /^https:\/\/(?:(?:archive\.org|api\.spreaker\.com)\/download|cdn\.simplecast\.com\/audio)\/[^ ]+\.mp3$/i;
 const MIN_TAYEB = 4;
 
 beforeEach(() => {
@@ -44,6 +45,10 @@ describe("lesson series: data", () => {
     // Owner 2026-11-23: Sha'rawi has his own section; add the Grand Imam Ahmed al-Tayeb.
     expect(data.series.filter((s) => s.sheikh.id === "shaarawi")).toEqual([]);
     expect(data.series.filter((s) => s.sheikh.id === "tayeb").length).toBeGreaterThanOrEqual(MIN_TAYEB);
+    // Owner 2026-11-26: sheikhs with legal/security problems in Egypt or Saudi Arabia removed, Al-Azhar scholars instead.
+    const gone = ["munajjid", "arifi", "yaqoub", "awadi"];
+    expect(data.series.filter((s) => gone.includes(s.sheikh.id))).toEqual([]);
+    expect(data.series.some((s) => s.id === "nur-yaqin-gabr")).toBe(true);
   });
 
   it("is listed under More", () => {
@@ -56,19 +61,19 @@ describe("lesson series: page", () => {
     const user = userEvent.setup();
     render(<LessonsView locale="ar" loader={load} />);
     expect(await screen.findByTestId("lessons-note")).toBeInTheDocument();
-    expect(screen.getByTestId("lessons-series-seerah-hassan")).toBeInTheDocument();
+    expect(screen.getByTestId("lessons-series-nur-yaqin-gabr")).toBeInTheDocument();
     // Owner (2026-11-24): no groups row (no nationality or institution shown), every topic at once.
     expect(screen.queryByTestId("lessons-group-saudi")).toBeNull();
     expect(screen.getByTestId("lessons-topic-stories")).toBeInTheDocument();
     await user.click(screen.getByTestId("lessons-topic-stories"));
-    expect(screen.getByTestId("lessons-series-anbiya-awadi")).toBeInTheDocument();
+    expect(screen.getByTestId("lessons-series-ahsan-qasas-kafy")).toBeInTheDocument();
     await user.click(screen.getByTestId("lessons-topic-akhira"));
-    expect(screen.getByTestId("lessons-series-nihaya-hassan")).toBeInTheDocument();
-    expect(screen.queryByTestId("lessons-series-seerah-hassan")).toBeNull();
+    expect(screen.getByTestId("lessons-series-dar-akhira-kafy")).toBeInTheDocument();
+    expect(screen.queryByTestId("lessons-series-nur-yaqin-gabr")).toBeNull();
     await user.click(screen.getByTestId("lessons-topic-all"));
     await user.type(screen.getByTestId("lessons-search"), "عبد الكافي");
     expect(screen.getByTestId("lessons-series-safwa-kafy")).toBeInTheDocument();
-    expect(screen.queryByTestId("lessons-series-seerah-hassan")).toBeNull();
+    expect(screen.queryByTestId("lessons-series-nur-yaqin-gabr")).toBeNull();
     await user.click(screen.getByTestId("lessons-series-dar-akhira-kafy"));
     expect(await screen.findByTestId("lessons-hero")).toHaveTextContent("الدار الآخرة");
     expect(screen.getByTestId("lessons-episodes").querySelectorAll("li")).toHaveLength(DAR_AKHIRA_LESSONS);
@@ -79,29 +84,29 @@ describe("lesson series: page", () => {
   it("plays a lesson with the player under it, ✓ at its end, then continue from the series list", async () => {
     vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
     const user = userEvent.setup();
-    window.location.hash = "nihaya-hassan";
+    window.location.hash = "manazil-gabr";
     render(<LessonsView locale="ar" loader={load} />);
-    const s = data.series.find((x) => x.id === "nihaya-hassan")!;
-    await user.click(await screen.findByTestId("lesson-nihaya-hassan-3"));
+    const s = data.series.find((x) => x.id === "manazil-gabr")!;
+    await user.click(await screen.findByTestId("lesson-manazil-gabr-3"));
     const audio = screen.getByTestId("library-audio") as HTMLAudioElement;
     expect(audio.getAttribute("src")).toBe(s.episodes[2]!.url);
-    const row = screen.getByTestId("lesson-nihaya-hassan-3").closest("li")!;
+    const row = screen.getByTestId("lesson-manazil-gabr-3").closest("li")!;
     expect(row.contains(screen.getByTestId("library-now"))).toBe(true);
-    expect(row.textContent).toContain("الموت");
+    expect(row.textContent).toContain("اليقظة");
     act(() => {
       audio.dispatchEvent(new Event("ended"));
     });
-    expect(lessonsDoneStore.get()).toContain("nihaya-hassan-3");
+    expect(lessonsDoneStore.get()).toContain("manazil-gabr-3");
     expect(audio.getAttribute("src")).toBe(s.episodes[3]!.url);
-    expect(lessonsProgressStore.get().series).toBe("nihaya-hassan");
+    expect(lessonsProgressStore.get().series).toBe("manazil-gabr");
     expect(screen.getByTestId("lessons-continue-btn")).toHaveTextContent("٤");
     // ✓ by hand, and off again.
-    await user.click(screen.getByTestId("lesson-done-nihaya-hassan-1"));
-    expect(lessonsDoneStore.get()).toContain("nihaya-hassan-1");
-    await user.click(screen.getByTestId("lesson-done-nihaya-hassan-1"));
-    expect(lessonsDoneStore.get()).not.toContain("nihaya-hassan-1");
+    await user.click(screen.getByTestId("lesson-done-manazil-gabr-1"));
+    expect(lessonsDoneStore.get()).toContain("manazil-gabr-1");
+    await user.click(screen.getByTestId("lesson-done-manazil-gabr-1"));
+    expect(lessonsDoneStore.get()).not.toContain("manazil-gabr-1");
     await user.click(screen.getByTestId("lessons-back"));
-    expect(await screen.findByTestId("lessons-continue")).toHaveTextContent("أحداث النهاية");
+    expect(await screen.findByTestId("lessons-continue")).toHaveTextContent("منازل السائرين");
     vi.restoreAllMocks();
   });
 

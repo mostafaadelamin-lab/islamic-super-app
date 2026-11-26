@@ -64,7 +64,7 @@ describe("StoriesIndex", () => {
   });
 });
 
-describe("Sheikh Nabil al-Awadi's series", () => {
+describe("Sheikh al-Sha'rawi's prophets' stories (replaced Sheikh Nabil al-Awadi's series, owner 2026-11-26)", () => {
   const approved: Series = {
     ...SERIES[0]!,
     episodes: SERIES[0]!.episodes.map((e, i) =>
@@ -76,12 +76,12 @@ describe("Sheikh Nabil al-Awadi's series", () => {
     render(<StoriesIndex locale="ar" />);
     expect(screen.queryByTestId("stories-reviewer")).toBeNull();
     expect(screen.queryByTestId("series-hidden")).toBeNull();
-    expect(document.querySelectorAll("[data-episode]")).toHaveLength(19);
+    expect(document.querySelectorAll("[data-episode]")).toHaveLength(44);
     vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
-    await userEvent.click(screen.getByTestId("episode-yusuf"));
+    await userEvent.click(screen.getByTestId("episode-yusuf-1"));
     const audio = screen.getByTestId("series-audio") as HTMLAudioElement;
     expect(audio.getAttribute("src")).toMatch(
-      /^https:\/\/archive\.org\/download\/prophets_stories_Nabel-ElAwadde\/.+\.mp3$/,
+      /^https:\/\/archive\.org\/download\/Islamic_Tape-250_uP_bY_mUSLEm\/.+\.mp3$/,
     );
     expect(screen.queryByRole("note")).toBeNull();
     expect(screen.getByText("اقرأ آيات القصة").closest("a")?.getAttribute("href")).toBe("/ar/stories/yusuf/");
@@ -95,20 +95,15 @@ describe("Sheikh Nabil al-Awadi's series", () => {
     unregister();
   });
 
-  it("has the app's episode videos and 30-second rewind/forward", async () => {
+  it("has no episode videos (Awadi's were removed) and 30-second rewind/forward", async () => {
     vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
     vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => undefined);
     render(<StoriesIndex locale="ar" />);
-    await userEvent.click(screen.getByTestId("episode-video-yusuf"));
-    expect(screen.getByTestId("series-video").querySelector("iframe")?.getAttribute("src")).toContain(
-      "youtube-nocookie.com/embed/eLC6K7YyIIU",
-    );
-    await userEvent.click(screen.getByTestId("series-video-close"));
-    expect(screen.queryByTestId("series-video")).toBeNull();
-    await userEvent.click(screen.getByTestId("episode-yusuf"));
+    expect(screen.queryByTestId("episode-video-yusuf-1")).toBeNull();
+    await userEvent.click(screen.getByTestId("episode-yusuf-1"));
     const audio = screen.getByTestId("series-audio") as HTMLAudioElement;
     // The player sits under the episode playing, with the time and a seek bar (owner 2026-11-22).
-    expect(screen.getByTestId("series-now").closest("li")?.getAttribute("data-episode")).toBe("yusuf");
+    expect(screen.getByTestId("series-now").closest("li")?.getAttribute("data-episode")).toBe("yusuf-1");
     expect(screen.getByTestId("series-seek")).toBeInTheDocument();
     audio.currentTime = 100;
     act(() => void audio.dispatchEvent(new Event("timeupdate")));
@@ -122,13 +117,13 @@ describe("Sheikh Nabil al-Awadi's series", () => {
 
   it("does not show a reviewer's name on episodes", () => {
     render(<StoriesIndex locale="ar" series={[approved]} />);
-    expect(screen.getByTestId("episode-adam").textContent).not.toContain("الشيخ س");
+    expect(screen.getByTestId("episode-intro").textContent).not.toContain("الشيخ س");
   });
 
   it("shows an error when the episode cannot load", async () => {
     vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
     render(<StoriesIndex locale="en" series={[approved]} />);
-    await userEvent.click(screen.getByTestId("episode-adam"));
+    await userEvent.click(screen.getByTestId("episode-adam-1"));
     act(() => void screen.getByTestId("series-audio").dispatchEvent(new Event("error")));
     expect(screen.getByTestId("series-error")).toBeInTheDocument();
   });

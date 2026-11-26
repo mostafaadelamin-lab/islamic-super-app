@@ -85,10 +85,11 @@ const series: Series = {
 };
 
 describe("narrated series", () => {
-  it("ships the owner's series: Sheikh Nabil al-Awadi, 19 episodes, none approved yet", () => {
+  it("ships the owner's series: Sheikh al-Sha'rawi (replaced al-Awadi, 2026-11-26), 44 episodes, none approved yet", () => {
     expect(SERIES).toHaveLength(bundle.series.length);
-    expect(SERIES[0]!.narrator.ar).toContain("نبيل العوضي");
-    expect(SERIES[0]!.episodes).toHaveLength(19);
+    expect(SERIES[0]!.narrator.ar).toContain("الشعراوي");
+    expect(JSON.stringify(bundle)).not.toContain("العوضي");
+    expect(SERIES[0]!.episodes).toHaveLength(44);
     expect(SERIES[0]!.episodes.every((e) => e.status === "pending")).toBe(true);
     for (const e of SERIES[0]!.episodes) if (e.story) expect(storyById(e.story)).toBeDefined();
   });

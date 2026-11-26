@@ -207,15 +207,16 @@ void main() {
     expect(narration.playlist, hasLength(seerah.length));
   });
 
-  test('«افهم دينك»: every topic, its series, their lessons; Awadi\'s prophets\' stories are in it', () async {
+  test('«افهم دينك»: every topic, its series, their lessons; Abdelkafy\'s «أحسن القصص» is in it', () async {
     final catalog = LessonCatalog.parse(File('assets/content/lessons.v1.json').readAsStringSync());
     final topics = await car.children(CarBrowser.afhamId);
     expect(topics, hasLength(catalog.topics.length));
     final stories = topics.firstWhere((e) => e.title == 'الأنبياء والصحابة والقصص');
     final series = await car.children(stories.id);
-    final awadi = series.firstWhere((e) => e.artist!.contains('العوضي'));
-    final eps = await car.children(awadi.id);
-    expect(eps, hasLength(19));
+    final qasas = series.firstWhere((e) => e.title == 'أحسن القصص');
+    expect(qasas.artist, contains('عبد الكافي'));
+    final eps = await car.children(qasas.id);
+    expect(eps, hasLength(14));
     await car.play(eps.first.id);
     expect(narration.seriesId, startsWith('lessons-'));
     expect(narration.hasNext, isTrue);

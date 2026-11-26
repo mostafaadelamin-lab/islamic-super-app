@@ -64,8 +64,9 @@ void main() {
   testWidgets('every episode is listed, with an offline button (no review step)', (tester) async {
     await pumpApp(tester, size: tallPhone);
     await pushScreen(tester, const StoriesScreen());
-    expect(find.textContaining('نبيل العوضي'), findsWidgets);
-    expect(find.byKey(const Key('episode-adam')), findsOneWidget);
+    expect(find.textContaining('الشعراوي'), findsWidgets);
+    expect(find.textContaining('العوضي'), findsNothing);
+    expect(find.byKey(const Key('episode-adam-1')), findsOneWidget);
     expect(find.byKey(const Key('stories.reviewer')), findsNothing);
     expect(find.byKey(const Key('story-yusuf')), findsNothing, reason: 'verse stories removed');
   });
@@ -79,15 +80,15 @@ void main() {
       content: withApproved(base, 2),
       narration: narration,
       audio: audio,
-      prefs: {'storyPos.awadi-prophets/adam': 600},
+      prefs: {'storyPos.shaarawi-prophets/adam-1': 600},
     );
     await app.services.recitation.playSurah(105);
     await pushScreen(tester, const StoriesScreen());
-    expect(find.byKey(const Key('episode-idris-nuh')), findsOneWidget);
+    expect(find.byKey(const Key('episode-idris')), findsOneWidget);
     expect(find.text('راجعها: الشيخ س'), findsNothing); // shown inside the subtitle line
-    await tester.tap(find.byKey(const Key('episode-adam')));
+    await tester.tap(find.byKey(const Key('episode-adam-1')));
     await tester.pumpAndSettle();
-    expect(narration.loaded.single, contains('archive.org/download/prophets_stories_Nabel-ElAwadde/'));
+    expect(narration.loaded.single, contains('archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/'));
     expect(narration.calls, containsAllInOrder(['load', 'seek:600', 'play']));
     // One sound at a time: the recitation pauses and keeps its ayah (owner 2026-11-14).
     expect(app.services.recitation.isPlaying, isFalse, reason: 'one voice at a time');
@@ -103,14 +104,14 @@ void main() {
     await tester.tap(find.byKey(const Key('inlineToggle')));
     await tester.pumpAndSettle();
     expect(narration.calls.last, 'pause');
-    expect(app.prefs.getInt('storyPos.awadi-prophets/adam'), 720);
+    expect(app.prefs.getInt('storyPos.shaarawi-prophets/adam-1'), 720);
   });
 
   testWidgets('a failed episode shows an error and can be retried', (tester) async {
     final narration = FakeNarrationBackend()..failNext = true;
     await pumpApp(tester, size: tallPhone, content: withApproved(base, 1), narration: narration);
     await pushScreen(tester, const StoriesScreen());
-    await tester.tap(find.byKey(const Key('episode-adam')));
+    await tester.tap(find.byKey(const Key('episode-adam-1')));
     await tester.pumpAndSettle();
     expect(find.textContaining('تعذّر تشغيل الحلقة'), findsOneWidget);
     await tester.tap(find.byKey(const Key('inlineToggle')));
@@ -122,7 +123,7 @@ void main() {
     final narration = FakeNarrationBackend();
     final app = await pumpApp(tester, size: tallPhone, content: withApproved(base, 1), narration: narration);
     await pushScreen(tester, const StoriesScreen());
-    await tester.tap(find.byKey(const Key('episode-adam')));
+    await tester.tap(find.byKey(const Key('episode-adam-1')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('sleepTimer')));
     await tester.pumpAndSettle();

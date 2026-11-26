@@ -1,7 +1,7 @@
 {
   "schema": "stories-catalogue.v1",
   "version": 1,
-  "note": "Edit with tools/stories.py. A story is only its Quranic verses (Madinah Mushaf text, recited by the app's reciters from everyayah.com) with Tafsir al-Muyassar per ayah: no text written by us. 'series' holds audio-only narrated series (e.g. Sheikh Nabil al-Awadi's Stories of the Prophets), streamed from their source with the stated licence; an episode is heard by users only after a named reviewer approves it (pending ones in reviewer mode only). review on a story records the check of its verse ranges.",
+  "note": "Edit with tools/stories.py. A story is only its Quranic verses (Madinah Mushaf text, recited by the app's reciters from everyayah.com) with Tafsir al-Muyassar per ayah: no text written by us. 'series' holds audio-only narrated series (e.g. Sheikh al-Sha'rawi's Stories of the Prophets, which replaced Sheikh Nabil al-Awadi's series on 2026-11-26), streamed from their source with the stated licence; an episode is heard by users only after a named reviewer approves it (pending ones in reviewer mode only). review on a story records the check of its verse ranges.",
   "items": [
     {
       "id": "adam",
@@ -571,68 +571,170 @@
   ],
   "series": [
     {
-      "id": "awadi-prophets",
+      "id": "shaarawi-prophets",
       "title": {
         "ar": "قصص الأنبياء",
         "en": "Stories of the Prophets"
       },
       "narrator": {
-        "ar": "الشيخ نبيل العوضي",
-        "en": "Sheikh Nabil Al-Awadi"
+        "ar": "الشيخ محمد متولي الشعراوي",
+        "en": "Sheikh Mohamed Metwally Al-Sha'rawi"
       },
-      "source": "Internet Archive: prophets_stories_Nabel-ElAwadde (uploaded from koonoz.blogspot.com)",
-      "sourceUrl": "https://archive.org/details/prophets_stories_Nabel-ElAwadde",
-      "licence": "Upload notice: الحقوق متاحة لكل مسلم بشرط عدم الإستخدام تجاريا (free for every Muslim, non-commercial use only). The app is free with no ads. Written confirmation from the sheikh's office is advised before a store release.",
+      "source": "Internet Archive: Islamic_Tape-250_uP_bY_mUSLEm (the same recordings as the prophets part of his own section)",
+      "sourceUrl": "https://archive.org/details/Islamic_Tape-250_uP_bY_mUSLEm",
+      "licence": "Freely downloadable recordings (owner rule 2026-11-12: free religious audio is usable); the app is free with no ads.",
       "episodes": [
         {
-          "id": "adam",
+          "id": "intro",
           "title": {
-            "ar": "قصة آدم عليه السلام",
-            "en": "The story of Adam"
+            "ar": "مقدمة في قصص الأنبياء",
+            "en": "Introduction"
           },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%A2%D8%AF%D9%85%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 3082,
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/intro.mp3",
+          "durationSec": 1998,
+          "story": null,
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "adam-1",
+          "title": {
+            "ar": "قصة آدم عليه السلام — الجزء الأول",
+            "en": "The story of Adam (part 1)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/adam_1.mp3",
+          "durationSec": 3907,
           "story": "adam",
-          "addedAt": "2026-11-08",
+          "addedAt": "2026-11-26",
           "review": {
             "status": "pending",
             "reviewer": null,
             "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
           }
         },
         {
-          "id": "idris-nuh",
+          "id": "adam-2",
           "title": {
-            "ar": "قصة إدريس ونوح عليهما السلام",
-            "en": "The story of Idris and Noah"
+            "ar": "قصة آدم عليه السلام — الجزء الثاني",
+            "en": "The story of Adam (part 2)"
           },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%A7%D8%AF%D8%B1%D9%8A%D8%B3%20%D9%88%D9%86%D9%88%D8%AD%20%D8%B9%D9%84%D9%8A%D9%87%D9%85%D8%A7%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 3136,
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/adam_2.mp3",
+          "durationSec": 3740,
+          "story": "adam",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "idris",
+          "title": {
+            "ar": "قصة إدريس عليه السلام",
+            "en": "The story of Idris"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/edress.mp3",
+          "durationSec": 185,
+          "story": null,
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "nuh-1",
+          "title": {
+            "ar": "قصة نوح عليه السلام — الجزء الأول",
+            "en": "The story of Noah (part 1)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/noha_1.mp3",
+          "durationSec": 4837,
           "story": "nuh",
-          "addedAt": "2026-11-08",
+          "addedAt": "2026-11-26",
           "review": {
             "status": "pending",
             "reviewer": null,
             "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
           }
         },
         {
-          "id": "hud",
+          "id": "nuh-2",
           "title": {
-            "ar": "قصة هود عليه السلام",
-            "en": "The story of Hud"
+            "ar": "قصة نوح عليه السلام — الجزء الثاني",
+            "en": "The story of Noah (part 2)"
           },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%87%D9%88%D8%AF%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 1518,
-          "story": "hud",
-          "addedAt": "2026-11-08",
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/noha_2.mp3",
+          "durationSec": 3081,
+          "story": "nuh",
+          "addedAt": "2026-11-26",
           "review": {
             "status": "pending",
             "reviewer": null,
             "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "nuh-3",
+          "title": {
+            "ar": "قصة نوح عليه السلام — الجزء الثالث",
+            "en": "The story of Noah (part 3)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/noha_3.mp3",
+          "durationSec": 5322,
+          "story": "nuh",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "hud-1",
+          "title": {
+            "ar": "قصة هود عليه السلام — الجزء الأول",
+            "en": "The story of Hud (part 1)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/hud_1.mp3",
+          "durationSec": 2682,
+          "story": "hud",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "hud-2",
+          "title": {
+            "ar": "قصة هود عليه السلام — الجزء الثاني",
+            "en": "The story of Hud (part 2)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/hud_2.mp3",
+          "durationSec": 2640,
+          "story": "hud",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
           }
         },
         {
@@ -641,32 +743,117 @@
             "ar": "قصة صالح عليه السلام",
             "en": "The story of Salih"
           },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%B5%D8%A7%D9%84%D8%AD%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 1463,
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/salah.mp3",
+          "durationSec": 3491,
           "story": "salih",
-          "addedAt": "2026-11-08",
+          "addedAt": "2026-11-26",
           "review": {
             "status": "pending",
             "reviewer": null,
             "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
           }
         },
         {
-          "id": "ibrahim",
+          "id": "ibrahim-1",
           "title": {
-            "ar": "قصة إبراهيم عليه السلام",
-            "en": "The story of Abraham"
+            "ar": "قصة إبراهيم عليه السلام — الجزء الأول",
+            "en": "The story of Abraham (part 1)"
           },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%A5%D8%A8%D8%B1%D8%A7%D9%87%D9%8A%D9%85%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 4566,
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/ebraheem_1.mp3",
+          "durationSec": 3612,
           "story": "ibrahim",
-          "addedAt": "2026-11-08",
+          "addedAt": "2026-11-26",
           "review": {
             "status": "pending",
             "reviewer": null,
             "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "ibrahim-2",
+          "title": {
+            "ar": "قصة إبراهيم عليه السلام — الجزء الثاني",
+            "en": "The story of Abraham (part 2)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/ebraheem_2.mp3",
+          "durationSec": 4147,
+          "story": "ibrahim",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "ibrahim-3",
+          "title": {
+            "ar": "قصة إبراهيم عليه السلام — الجزء الثالث",
+            "en": "The story of Abraham (part 3)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/ebraheem_3.mp3",
+          "durationSec": 4309,
+          "story": "ibrahim",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "ibrahim-4",
+          "title": {
+            "ar": "قصة إبراهيم عليه السلام — الجزء الرابع",
+            "en": "The story of Abraham (part 4)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/ebraheem_4.mp3",
+          "durationSec": 4222,
+          "story": "ibrahim",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "ibrahim-5",
+          "title": {
+            "ar": "قصة إبراهيم عليه السلام — الجزء الخامس",
+            "en": "The story of Abraham (part 5)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/ebraheem_5.mp3",
+          "durationSec": 3403,
+          "story": "ibrahim",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "ibrahim-6",
+          "title": {
+            "ar": "قصة إبراهيم عليه السلام — الجزء السادس",
+            "en": "The story of Abraham (part 6)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/ebraheem_6.mp3",
+          "durationSec": 3602,
+          "story": "ibrahim",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
           }
         },
         {
@@ -675,15 +862,117 @@
             "ar": "قصة لوط عليه السلام",
             "en": "The story of Lot"
           },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%84%D9%88%D8%B7%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 1533,
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/lout.mp3",
+          "durationSec": 4427,
           "story": "lut",
-          "addedAt": "2026-11-08",
+          "addedAt": "2026-11-26",
           "review": {
             "status": "pending",
             "reviewer": null,
             "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "ismail",
+          "title": {
+            "ar": "قصة إسماعيل عليه السلام",
+            "en": "The story of Ishmael"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/ismaeel.mp3",
+          "durationSec": 2631,
+          "story": null,
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "yusuf-1",
+          "title": {
+            "ar": "قصة يوسف عليه السلام — الجزء الأول",
+            "en": "The story of Joseph (part 1)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/yusf_1.mp3",
+          "durationSec": 4090,
+          "story": "yusuf",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "yusuf-2",
+          "title": {
+            "ar": "قصة يوسف عليه السلام — الجزء الثاني",
+            "en": "The story of Joseph (part 2)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/yusf_2.mp3",
+          "durationSec": 4301,
+          "story": "yusuf",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "yusuf-3",
+          "title": {
+            "ar": "قصة يوسف عليه السلام — الجزء الثالث",
+            "en": "The story of Joseph (part 3)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/yusf_3.mp3",
+          "durationSec": 3663,
+          "story": "yusuf",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "yusuf-4",
+          "title": {
+            "ar": "قصة يوسف عليه السلام — الجزء الرابع",
+            "en": "The story of Joseph (part 4)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/yusf_4.mp3",
+          "durationSec": 4554,
+          "story": "yusuf",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "yusuf-5",
+          "title": {
+            "ar": "قصة يوسف عليه السلام — الجزء الخامس",
+            "en": "The story of Joseph (part 5)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/yusf_5.mp3",
+          "durationSec": 5015,
+          "story": "yusuf",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
           }
         },
         {
@@ -692,32 +981,15 @@
             "ar": "قصة شعيب عليه السلام",
             "en": "The story of Shu'ayb"
           },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%B4%D8%B9%D9%8A%D8%A8%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 1415,
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/shooeib.mp3",
+          "durationSec": 3261,
           "story": "shuayb",
-          "addedAt": "2026-11-08",
+          "addedAt": "2026-11-26",
           "review": {
             "status": "pending",
             "reviewer": null,
             "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
-          }
-        },
-        {
-          "id": "yusuf",
-          "title": {
-            "ar": "قصة يوسف عليه السلام",
-            "en": "The story of Joseph"
-          },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%8A%D9%88%D8%B3%D9%81%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 4459,
-          "story": "yusuf",
-          "addedAt": "2026-11-08",
-          "review": {
-            "status": "pending",
-            "reviewer": null,
-            "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
           }
         },
         {
@@ -726,15 +998,202 @@
             "ar": "قصة أيوب عليه السلام",
             "en": "The story of Job"
           },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%A3%D9%8A%D9%88%D8%A8%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 1504,
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/ayuob.mp3",
+          "durationSec": 911,
           "story": "ayyub",
-          "addedAt": "2026-11-08",
+          "addedAt": "2026-11-26",
           "review": {
             "status": "pending",
             "reviewer": null,
             "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "dhulkifl",
+          "title": {
+            "ar": "قصة ذو الكفل عليه السلام",
+            "en": "The story of Dhul-Kifl"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/zoelkfl.mp3",
+          "durationSec": 379,
+          "story": null,
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "musa-1",
+          "title": {
+            "ar": "قصة موسى وهارون عليهما السلام — الجزء الأول",
+            "en": "The story of Moses and Aaron (part 1)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/mosaa_haroon_1.mp3",
+          "durationSec": 3596,
+          "story": "musa",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "musa-2",
+          "title": {
+            "ar": "قصة موسى وهارون عليهما السلام — الجزء الثاني",
+            "en": "The story of Moses and Aaron (part 2)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/mosaa_haroon_2.mp3",
+          "durationSec": 3804,
+          "story": "musa",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "musa-3",
+          "title": {
+            "ar": "قصة موسى وهارون عليهما السلام — الجزء الثالث",
+            "en": "The story of Moses and Aaron (part 3)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/mosaa_haroon_3.mp3",
+          "durationSec": 3423,
+          "story": "musa",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "musa-4",
+          "title": {
+            "ar": "قصة موسى وهارون عليهما السلام — الجزء الرابع",
+            "en": "The story of Moses and Aaron (part 4)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/mosaa_haroon_4.mp3",
+          "durationSec": 4340,
+          "story": "musa",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "musa-5",
+          "title": {
+            "ar": "قصة موسى وهارون عليهما السلام — الجزء الخامس",
+            "en": "The story of Moses and Aaron (part 5)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/mosaa_haroon_5.mp3",
+          "durationSec": 2987,
+          "story": "musa",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "musa-6",
+          "title": {
+            "ar": "قصة موسى وهارون عليهما السلام — الجزء السادس",
+            "en": "The story of Moses and Aaron (part 6)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/mosaa_haroon_6.mp3",
+          "durationSec": 3491,
+          "story": "musa",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "musa-7",
+          "title": {
+            "ar": "قصة موسى وهارون عليهما السلام — الجزء السابع",
+            "en": "The story of Moses and Aaron (part 7)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/mosaa_haroon_7.mp3",
+          "durationSec": 2920,
+          "story": "musa",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "dawud",
+          "title": {
+            "ar": "قصة داود عليه السلام",
+            "en": "The story of David"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/dawood.mp3",
+          "durationSec": 3207,
+          "story": "talut",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "sulayman-1",
+          "title": {
+            "ar": "قصة سليمان عليه السلام — الجزء الأول",
+            "en": "The story of Solomon (part 1)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/soliman_1.mp3",
+          "durationSec": 3223,
+          "story": "dawud-sulayman",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "sulayman-2",
+          "title": {
+            "ar": "قصة سليمان عليه السلام — الجزء الثاني",
+            "en": "The story of Solomon (part 2)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/soliman_2.mp3",
+          "durationSec": 3944,
+          "story": "dawud-sulayman",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
           }
         },
         {
@@ -743,100 +1202,15 @@
             "ar": "قصة يونس عليه السلام",
             "en": "The story of Jonah"
           },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%8A%D9%88%D9%86%D8%B3%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": null,
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/yuns.mp3",
+          "durationSec": 3865,
           "story": "yunus",
-          "addedAt": "2026-11-08",
+          "addedAt": "2026-11-26",
           "review": {
             "status": "pending",
             "reviewer": null,
             "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
-          }
-        },
-        {
-          "id": "musa",
-          "title": {
-            "ar": "قصة موسى عليه السلام",
-            "en": "The story of Moses"
-          },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%85%D9%88%D8%B3%D9%89%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 5941,
-          "story": "musa",
-          "addedAt": "2026-11-08",
-          "review": {
-            "status": "pending",
-            "reviewer": null,
-            "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
-          }
-        },
-        {
-          "id": "khidr",
-          "title": {
-            "ar": "قصة الخضر عليه السلام",
-            "en": "The story of Al-Khidr"
-          },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%A7%D9%84%D8%AE%D8%B6%D8%B1%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 1498,
-          "story": "musa-khidr",
-          "addedAt": "2026-11-08",
-          "review": {
-            "status": "pending",
-            "reviewer": null,
-            "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
-          }
-        },
-        {
-          "id": "yusha",
-          "title": {
-            "ar": "قصة يوشع بن نون عليه السلام",
-            "en": "The story of Joshua son of Nun"
-          },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%8A%D9%88%D8%B4%D8%B9%20%D8%A8%D9%86%20%D9%86%D9%88%D9%86%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": null,
-          "story": null,
-          "addedAt": "2026-11-08",
-          "review": {
-            "status": "pending",
-            "reviewer": null,
-            "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
-          }
-        },
-        {
-          "id": "dawud",
-          "title": {
-            "ar": "قصة داوود عليه السلام",
-            "en": "The story of David"
-          },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%AF%D8%A7%D9%88%D9%88%D8%AF%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 1519,
-          "story": "talut",
-          "addedAt": "2026-11-08",
-          "review": {
-            "status": "pending",
-            "reviewer": null,
-            "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
-          }
-        },
-        {
-          "id": "sulayman-uzair",
-          "title": {
-            "ar": "قصة سليمان و العزير عليهما السلام",
-            "en": "The story of Solomon and Uzair"
-          },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%B3%D9%84%D9%8A%D9%85%D8%A7%D9%86%20%D9%88%20%D8%A7%D9%84%D8%B9%D8%B2%D9%8A%D8%B1%20%D8%B9%D9%84%D9%8A%D9%87%D9%85%D8%A7%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 3017,
-          "story": "dawud-sulayman",
-          "addedAt": "2026-11-08",
-          "review": {
-            "status": "pending",
-            "reviewer": null,
-            "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
           }
         },
         {
@@ -845,66 +1219,117 @@
             "ar": "قصة زكريا ويحيى عليهما السلام",
             "en": "The story of Zechariah and John"
           },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%B2%D9%83%D8%B1%D9%8A%D8%A7%20%D9%88%20%D9%8A%D8%AD%D9%8A%20%D8%B9%D9%84%D9%8A%D9%87%D9%85%D8%A7%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 1513,
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/zak_yahea.mp3",
+          "durationSec": 3576,
           "story": "zakariya-yahya",
-          "addedAt": "2026-11-08",
+          "addedAt": "2026-11-26",
           "review": {
             "status": "pending",
             "reviewer": null,
             "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
           }
         },
         {
-          "id": "maryam",
+          "id": "isa-1",
           "title": {
-            "ar": "قصة مريم بنت عمران عليها السلام",
-            "en": "The story of Mary daughter of Imran"
+            "ar": "قصة عيسى عليه السلام — الجزء الأول",
+            "en": "The story of Jesus (part 1)"
           },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%85%D8%B1%D9%8A%D9%85%20%D8%A8%D9%86%D8%AA%20%D8%B9%D9%85%D8%B1%D8%A7%D9%86%20%D8%B9%D9%84%D9%8A%D9%87%D8%A7%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 1356,
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/isaa_1.mp3",
+          "durationSec": 4011,
           "story": "maryam-isa",
-          "addedAt": "2026-11-08",
+          "addedAt": "2026-11-26",
           "review": {
             "status": "pending",
             "reviewer": null,
             "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
           }
         },
         {
-          "id": "isa",
+          "id": "isa-2",
           "title": {
-            "ar": "قصة عيسى عليه السلام",
-            "en": "The story of Jesus"
+            "ar": "قصة عيسى عليه السلام — الجزء الثاني",
+            "en": "The story of Jesus (part 2)"
           },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D8%B9%D9%8A%D8%B3%D9%89%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85.mp3",
-          "durationSec": 1480,
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/isaa_2.mp3",
+          "durationSec": 3919,
           "story": "maryam-isa",
-          "addedAt": "2026-11-08",
+          "addedAt": "2026-11-26",
           "review": {
             "status": "pending",
             "reviewer": null,
             "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
           }
         },
         {
-          "id": "muhammad",
+          "id": "isa-3",
           "title": {
-            "ar": "قصة محمد ﷺ",
-            "en": "The story of Muhammad ﷺ"
+            "ar": "قصة عيسى عليه السلام — الجزء الثالث",
+            "en": "The story of Jesus (part 3)"
           },
-          "url": "https://archive.org/download/prophets_stories_Nabel-ElAwadde/%D9%82%D8%B5%D8%A9%20%D9%85%D8%AD%D9%85%D8%AF%20%D8%B5%D9%84%D9%91%20%D8%A7%D9%84%D9%84%D9%87%20%D8%B9%D9%84%D9%8A%D9%87%20%D9%88%20%D8%B3%D9%84%D9%85.mp3",
-          "durationSec": 1579,
-          "story": null,
-          "addedAt": "2026-11-08",
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/isaa_3.mp3",
+          "durationSec": 3658,
+          "story": "maryam-isa",
+          "addedAt": "2026-11-26",
           "review": {
             "status": "pending",
             "reviewer": null,
             "reviewedAt": null,
-            "notes": "Added at the owner's request; not yet listened to by a religious reviewer."
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "isa-4",
+          "title": {
+            "ar": "قصة عيسى عليه السلام — الجزء الرابع",
+            "en": "The story of Jesus (part 4)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/isaa_4.mp3",
+          "durationSec": 3219,
+          "story": "maryam-isa",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "isa-5",
+          "title": {
+            "ar": "قصة عيسى عليه السلام — الجزء الخامس",
+            "en": "The story of Jesus (part 5)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/isaa_5.mp3",
+          "durationSec": 3191,
+          "story": "maryam-isa",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
+          }
+        },
+        {
+          "id": "isa-6",
+          "title": {
+            "ar": "قصة عيسى عليه السلام — الجزء السادس",
+            "en": "The story of Jesus (part 6)"
+          },
+          "url": "https://archive.org/download/Islamic_Tape-250_uP_bY_mUSLEm/isaa_6.mp3",
+          "durationSec": 2788,
+          "story": "maryam-isa",
+          "addedAt": "2026-11-26",
+          "review": {
+            "status": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Owner 2026-11-26: Sheikh al-Sha'rawi's prophets' stories replace Sheikh Nabil al-Awadi's series."
           }
         }
       ]

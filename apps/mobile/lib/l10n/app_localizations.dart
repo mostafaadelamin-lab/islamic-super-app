@@ -1493,7 +1493,7 @@ abstract class AppLocalizations {
   /// shared key "car.storiesSub"
   ///
   /// In en, this message translates to:
-  /// **'Sheikh Nabil al-Awadi'**
+  /// **'Sheikh Mohamed Metwally Al-Sha\'rawi'**
   String get carStoriesSub;
 
   /// shared key "car.text"
@@ -6707,7 +6707,7 @@ abstract class AppLocalizations {
   /// shared key "stories.howTo"
   ///
   /// In en, this message translates to:
-  /// **'Each episode: tap to listen, the video icon to watch, or the download icon to listen offline.'**
+  /// **'Each episode: tap to listen, or the download icon to listen offline.'**
   String get storiesHowTo;
 
   /// shared key "stories.intro"
@@ -6863,7 +6863,7 @@ abstract class AppLocalizations {
   /// shared key "stories.videoBy"
   ///
   /// In en, this message translates to:
-  /// **'Sheikh Nabil Al-Awadi'**
+  /// **'Sheikh Mohamed Metwally Al-Sha\'rawi'**
   String get storiesVideoBy;
 
   /// shared key "stories.watchVideo"

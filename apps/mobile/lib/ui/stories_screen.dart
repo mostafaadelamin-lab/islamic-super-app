@@ -15,7 +15,7 @@ import 'adaptive.dart';
 import 'r_icon.dart';
 import 'play_origin.dart';
 
-/// Prophets' stories: the narrated series (audio only, Sheikh Nabil al-Awadi's
+/// Prophets' stories: the narrated series (audio only, Sheikh Nabil al-Sha'rawi's
 /// "Stories of the Prophets"), every episode shown (owner: no review step).
 class StoriesScreen extends StatelessWidget {
   const StoriesScreen({super.key});
@@ -84,29 +84,9 @@ class SeriesCard extends StatelessWidget {
   }
 }
 
-/// The same series on video (Sheikh Nabil Al-Awadi's lessons channel, playlist
-/// PLx0cDxpWtpY_65w9G0_SEA5TF3jhq_QaF; some videos cover two or more prophets).
-const storyVideos = <String, String>{
-  'adam': 'VQtyczrmgDU',
-  'idris-nuh': 'U1b6uIe9LmM',
-  'hud': 'ck6vaENGENg',
-  'salih': 'ck6vaENGENg',
-  'ibrahim': 'G5sO3nBi-gM',
-  'lut': 'xKc6_kZYq9I',
-  'shuayb': 'xKc6_kZYq9I',
-  'yusuf': 'eLC6K7YyIIU',
-  'ayyub': 'S-hwVKViokc',
-  'yunus': 'S-hwVKViokc',
-  'musa': 'wvtWBHguRh0',
-  'khidr': 'lqzbfy26gC4',
-  'yusha': '2lyl2XOMhqs',
-  'dawud': '2lyl2XOMhqs',
-  'sulayman-uzair': '2lyl2XOMhqs',
-  'zakariya-yahya': '2lyl2XOMhqs',
-  'maryam': '4cxCcYlJXbY',
-  'isa': '4cxCcYlJXbY',
-  'muhammad': 'd5vq2Ly9LBw',
-};
+/// Videos of the series' episodes (YouTube ids by episode id). Empty since 2026-11-26: Sheikh Nabil
+/// al-Sha'rawi's series and videos were removed (owner); al-Sha'rawi's audio replaced them, with no videos.
+const storyVideos = <String, String>{};
 
 class _EpisodeTile extends StatelessWidget {
   const _EpisodeTile({required this.seriesId, required this.episode});

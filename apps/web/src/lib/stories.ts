@@ -2,7 +2,7 @@
  * Quranic stories, from trusted sources only (owner rule: no story text written by us):
  *  - Verse stories: each story is its Quranic verse ranges, shown as the Mushaf text, recited with the app's
  *    reciters (everyayah.com) and explained with Tafsir al-Muyassar.
- *  - Narrated series: audio-only episodes by a named narrator (Sheikh Nabil al-Awadi's "Stories of the
+ *  - Narrated series: audio-only episodes by a named narrator (Sheikh al-Sha'rawi's "Stories of the
  *    Prophets"), streamed from their source. Users hear only episodes a named reviewer approved; reviewer
  *    mode also lists pending ones, with a banner.
  */
@@ -128,25 +128,6 @@ export function storiesByCategory(
 export const minutes = (sec: number | null): number | null =>
   sec ? Math.max(1, Math.round(sec / 60)) : null;
 
-/** Sheikh Nabil al-Awadi's episode videos on YouTube (same ids as the app's stories_screen.dart storyVideos). */
-export const STORY_VIDEOS: Readonly<Record<string, string>> = {
-  adam: "VQtyczrmgDU",
-  "idris-nuh": "U1b6uIe9LmM",
-  hud: "ck6vaENGENg",
-  salih: "ck6vaENGENg",
-  ibrahim: "G5sO3nBi-gM",
-  lut: "xKc6_kZYq9I",
-  shuayb: "xKc6_kZYq9I",
-  yusuf: "eLC6K7YyIIU",
-  ayyub: "S-hwVKViokc",
-  yunus: "S-hwVKViokc",
-  musa: "wvtWBHguRh0",
-  khidr: "lqzbfy26gC4",
-  yusha: "2lyl2XOMhqs",
-  dawud: "2lyl2XOMhqs",
-  "sulayman-uzair": "2lyl2XOMhqs",
-  "zakariya-yahya": "2lyl2XOMhqs",
-  maryam: "4cxCcYlJXbY",
-  isa: "4cxCcYlJXbY",
-  muhammad: "d5vq2Ly9LBw",
-};
+/** Episode videos on YouTube by episode id (same as the app's stories_screen.dart storyVideos). Empty since
+ *  2026-11-26: Sheikh Nabil al-Awadi's series and videos were removed (owner); al-Sha'rawi's audio replaced them. */
+export const STORY_VIDEOS: Readonly<Record<string, string>> = {};

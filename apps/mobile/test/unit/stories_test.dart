@@ -25,7 +25,7 @@ void main() {
     counts = [for (final s in c.quran.surahs) s.ayahCount];
   });
 
-  test('the shipped bundle: verse stories and Sheikh Nabil al-Awadi\'s 19 episodes, all pending', () async {
+  test('the shipped bundle: verse stories and Sheikh al-Sha\'rawi\'s 44 episodes (replaced al-Awadi, owner 2026-11-26), all pending', () async {
     final c = await loadContent();
     final cat = c.stories;
     final raw = jsonDecode(File('assets/content/stories.v1.json').readAsStringSync()) as Map<String, dynamic>;
@@ -33,11 +33,11 @@ void main() {
     expect(cat.stories.length, greaterThanOrEqualTo(20));
     expect(cat.series, hasLength(1));
     final se = cat.series.single;
-    expect(se.narratorAr, contains('نبيل العوضي'));
-    expect(se.episodes, hasLength(19));
+    expect(se.narratorAr, contains('الشعراوي'));
+    expect(se.episodes, hasLength(44));
     expect(se.episodes.every((e) => e.isPending), isTrue);
     expect(se.visible(reviewer: false), isEmpty);
-    expect(se.visible(reviewer: true), hasLength(19));
+    expect(se.visible(reviewer: true), hasLength(44));
     for (final e in se.episodes) {
       if (e.story != null) expect(cat.byId(e.story), isNotNull, reason: e.id);
     }
