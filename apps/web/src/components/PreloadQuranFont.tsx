@@ -3,7 +3,7 @@ import { withBase } from "@/lib/base-path";
 
 /** Emits <link rel="preload"> for the self-hosted Quran font on routes that render Quran text. */
 export function PreloadQuranFont() {
-  preload(withBase("/fonts/KFGQPC-HAFS-Uthmanic-v18.ttf"), {
+  preload(withBase("/fonts/KFGQPC-HAFS-Uthmanic-v22.ttf"), {
     as: "font",
     type: "font/ttf",
     crossOrigin: "anonymous",

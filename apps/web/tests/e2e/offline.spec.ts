@@ -63,7 +63,7 @@ test("service worker precaches the app; it works offline after first load", asyn
       has: [
         "/ar/surah/36/",
         "/ar/page/604/",
-        "/fonts/KFGQPC-HAFS-Uthmanic-v18.ttf",
+        "/fonts/KFGQPC-HAFS-Uthmanic-v22.ttf",
         "/data/quran-text.json",
         "/data/mushaf-lines.json",
         "/ar/adhkar/",

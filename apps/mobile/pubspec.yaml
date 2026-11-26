@@ -71,7 +71,7 @@ flutter:
   fonts:
     - family: KFGQPC HAFS Uthmanic Script
       fonts:
-        - asset: assets/fonts/KFGQPC-HAFS-Uthmanic-v18.ttf
+        - asset: assets/fonts/KFGQPC-HAFS-Uthmanic-v22.ttf
     - family: IBM Plex Sans Arabic
       fonts:
         - asset: assets/fonts/IBMPlexSansArabic-Regular.ttf

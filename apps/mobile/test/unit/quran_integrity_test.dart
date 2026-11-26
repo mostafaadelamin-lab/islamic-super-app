@@ -145,21 +145,34 @@ void main() {
     expect(() => q.surah(115), throwsRangeError);
   });
 
-  test('every bundled ayah equals the pinned KFGQPC hafsData_v18 text (minus its ayah-number suffix)', () {
+  test('the text is the King Fahd Complex v22 package; pages come from hafsData_v18', () {
+    // services/api/tests/test_quran_integrity.py also compares every ayah with the Word document
+    // inside the package; here the package hash is pinned and every ayah is checked against v18,
+    // which differs from v22 only by the kashida of «كـَلَّا» (33 places).
+    final package = File('$repoRoot/content/quran/upstream/kfgqpc-hafs-2.2.zip');
+    expect(sha256.convert(package.readAsBytesSync()).toString(), reference['upstreamFileSha256']);
+    expect(reference['upstreamFileSha256'], 'b5cf0666441aabd5ff2be4993934e6f2a57d00b6b89afcdf708cd70288671b23');
     final upstreamFile = File('$repoRoot/content/quran/upstream/kfgqpc-hafs-v18.json');
-    expect(sha256.convert(upstreamFile.readAsBytesSync()).toString(), reference['upstreamFileSha256']);
+    expect(sha256.convert(upstreamFile.readAsBytesSync()).toString(), reference['pagesFileSha256']);
     final rows = jsonDecode(upstreamFile.readAsStringSync()) as List<dynamic>;
     expect(rows, hasLength(6236));
-    final suffix = RegExp(' [٠-٩]+\$');
+    final suffix = RegExp('\u00a0[٠-٩]+\$');
+    var kalla = 0;
     for (final raw in rows) {
       final r = raw as Map<String, dynamic>;
       final ref = AyahRef(r['sora'] as int, r['aya_no'] as int);
       final text = r['aya_text'] as String;
       final m = suffix.firstMatch(text)!;
       expect(toAsciiDigits(m.group(0)!.substring(1)), '${ref.ayah}');
-      expect(q.text(ref), text.substring(0, m.start), reason: '$ref');
+      final v18 = text.substring(0, m.start);
+      if (q.text(ref) != v18) {
+        kalla++;
+        expect('\u0643\u0640'.allMatches(v18), hasLength(1), reason: '$ref');
+        expect(q.text(ref), v18.replaceFirst('\u0643\u0640', '\u0643'), reason: '$ref');
+      }
       expect(q.pageOf(ref), r['page'], reason: 'page of $ref');
     }
+    expect(kalla, 33);
   });
 
   test('integrity.v1.json is the copy bundled with the app', () async {

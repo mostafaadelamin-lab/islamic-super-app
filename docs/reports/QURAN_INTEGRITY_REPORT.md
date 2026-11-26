@@ -1,5 +1,11 @@
 # Quran integrity report
 
+## Update 2026-11-26 — Quran content 3.0.0: King Fahd Complex text version 2.2 (owner's choice)
+- **Source now:** the Word document `UthmanicHafs v22.docx` in the Complex's official package `hafs-2.2.zip` (qurancomplex.gov.sa/fonts/hafs), package SHA-256 `b5cf0666441aabd5ff2be4993934e6f2a57d00b6b89afcdf708cd70288671b23`, the same value the Complex prints on that page.
+- **Difference from v18:** only the kashida (U+0640) the Complex had placed after the kaf of «كَلَّا» in 33 ayahs; every other byte of all 6236 ayahs is identical (checked by the build and by the API and Flutter tests). Word count per ayah unchanged, so `mushaf-lines.v1.json`, pages, juz and quarters are byte-identical.
+- **Font:** KFGQPC HAFS Uthmanic Script version 2.2 (`UthmanicHafs_V22.ttf`), unmodified. Median line width is the same as v18 (16.0 em); v22 no longer draws the «۞» + no-break space twice as wide.
+- **Pages and lines:** still from `hafsData_v18.json` (1441H edition).
+
 ## Update 2026-11-10 — Quran content 2.0.0: King Fahd Complex text v18 (owner's request)
 - **Source now:** KFGQPC "Hafs Uthmanic Data" v18, `hafsData_v18.json` (2021-10-25, the Complex's latest published release), file SHA-256 `5d8bb91726e482839d0057633cb1973031e4d706fa9604eea5e08892f20ba140`.
 - **Text:** every one of the 6236 ayahs is the Complex's `aya_text` byte-for-byte; only the trailing no-break space + ayah number that the file appends is removed (the build and tests check that number equals the ayah). Overall SHA-256 of the bundled ayahs: `debc5c29cc6116809f4778dbbcb7abbe01e8f845fb924081d8b67d97b757b48b`.

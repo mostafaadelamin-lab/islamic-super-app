@@ -55,7 +55,7 @@ const copies = {
 for (const [from, to] of Object.entries(copies)) copyFileSync(join(repo, from), join(gen, to));
 
 for (const f of [
-  "KFGQPC-HAFS-Uthmanic-v18.ttf",
+  "KFGQPC-HAFS-Uthmanic-v22.ttf",
   "KFGQPC-HAFS-LICENSE.txt",
   "IBMPlexSansArabic-Regular.ttf",
   "IBMPlexSansArabic-SemiBold.ttf",

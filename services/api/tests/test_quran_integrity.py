@@ -3,6 +3,7 @@
 import hashlib
 import json
 import re
+import sys
 
 from .conftest import REPO
 
@@ -11,12 +12,25 @@ BUNDLE = json.loads((DIST / "quran.v1.json").read_text(encoding="utf-8"))
 INTEG = json.loads((DIST / "integrity.v1.json").read_text(encoding="utf-8"))
 PAGES = json.loads((DIST / "pages.v1.json").read_text(encoding="utf-8"))["pages"]
 REF = json.loads((REPO / "tests/vectors/quran-reference.json").read_text(encoding="utf-8"))
-UPSTREAM = REPO / "content/quran/upstream/kfgqpc-hafs-v18.json"  # KFGQPC hafsData_v18.json
+UPSTREAM = REPO / "content/quran/upstream/kfgqpc-hafs-v18.json"  # KFGQPC hafsData_v18.json: page/line/juz columns
+PACKAGE = REPO / "content/quran/upstream/kfgqpc-hafs-2.2.zip"  # KFGQPC official package v2.2: the text
 AYAH_NUMBER_SUFFIX = re.compile("\u00a0[\u0660-\u0669]+$")
+# SHA-256 of hafs-2.2.zip exactly as printed by the Complex on qurancomplex.gov.sa/fonts/hafs
+PUBLISHED_PACKAGE_SHA256 = "B5CF0666441AABD5FF2BE4993934E6F2A57D00B6B89AFCDF708CD70288671B23"
 
 
 def test_upstream_file_hash_is_pinned():
-    assert hashlib.sha256(UPSTREAM.read_bytes()).hexdigest() == REF["upstreamFileSha256"]
+    assert hashlib.sha256(PACKAGE.read_bytes()).hexdigest() == REF["upstreamFileSha256"] == PUBLISHED_PACKAGE_SHA256.lower()
+    assert hashlib.sha256(UPSTREAM.read_bytes()).hexdigest() == REF["pagesFileSha256"]
+    assert INTEG["upstreamFileSha256"] == REF["upstreamFileSha256"]
+
+
+def test_text_identical_to_the_complex_v22_document_every_ayah():
+    sys.path.insert(0, str(REPO / "tools"))
+    import kfgqpc_docx
+
+    v22 = kfgqpc_docx.read_package(PACKAGE, "UthmanicHafs v22.docx", PUBLISHED_PACKAGE_SHA256)
+    assert [s["ayahs"] for s in BUNDLE["surahs"]] == v22
 
 
 def test_114_surahs_and_6236_ayahs():
@@ -33,16 +47,22 @@ def test_surah_order():
     assert [s["n"] for s in BUNDLE["surahs"]] == list(range(1, 115))
 
 
-def test_text_identical_to_upstream_every_ayah():
-    # every ayah is the KFGQPC v18 aya_text byte-for-byte, minus only its trailing NBSP + ayah number
+def test_text_equals_v18_except_the_kashida_of_kalla():
+    # v22 = v18 aya_text byte-for-byte (minus its trailing NBSP + ayah number), except that v22 dropped
+    # the kashida the Complex had put in «كـَلَّا» (33 places)
     rows = json.loads(UPSTREAM.read_text(encoding="utf-8"))
     assert [r["id"] for r in rows] == list(range(1, 6237))
     bundled = [(s["n"], i + 1, t) for s in BUNDLE["surahs"] for i, t in enumerate(s["ayahs"])]
+    changed = 0
     for (n, a, text), r in zip(bundled, rows, strict=True):
         assert (n, a) == (r["sora"], r["aya_no"])
         suffix = AYAH_NUMBER_SUFFIX.search(r["aya_text"])
         assert suffix and int(suffix.group()[1:].translate(str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789"))) == a
-        assert text == r["aya_text"][: suffix.start()], (n, a)
+        v18 = r["aya_text"][: suffix.start()]
+        if text != v18:
+            changed += 1
+            assert v18.count("\u0643\u0640") == 1 and v18.replace("\u0643\u0640", "\u0643") == text, (n, a)
+    assert changed == 33
 
 
 def test_pages_match_kfgqpc_v18_every_ayah():

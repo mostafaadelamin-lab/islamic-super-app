@@ -48,7 +48,7 @@ PAIRS=(
   "packages/shared-schemas/search-normalization.json:assets/schemas/search-normalization.json"
   "packages/shared-schemas/audio/reciters.json:assets/schemas/reciters.json"
   "packages/shared-schemas/audio/ayah-timings.json:assets/schemas/ayah-timings.json"
-  "content/fonts/KFGQPC-HAFS-Uthmanic-v18.ttf:assets/fonts/KFGQPC-HAFS-Uthmanic-v18.ttf"
+  "content/fonts/KFGQPC-HAFS-Uthmanic-v22.ttf:assets/fonts/KFGQPC-HAFS-Uthmanic-v22.ttf"
   "content/fonts/IBMPlexSansArabic-Regular.ttf:assets/fonts/IBMPlexSansArabic-Regular.ttf"
   "content/fonts/IBMPlexSansArabic-SemiBold.ttf:assets/fonts/IBMPlexSansArabic-SemiBold.ttf"
   "content/fonts/KFGQPC-HAFS-LICENSE.txt:assets/fonts/KFGQPC-HAFS-LICENSE.txt"
