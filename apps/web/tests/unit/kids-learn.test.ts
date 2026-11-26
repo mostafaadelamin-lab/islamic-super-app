@@ -52,7 +52,7 @@ describe("kids learning corner", () => {
   });
 
   it("steps: the book's text with our own 3D pictures, all bundled", () => {
-    expect(LEARN.wudu.filter((s) => s.pic)).toHaveLength(8);
+    expect(LEARN.wudu.filter((s) => s.pic)).toHaveLength(9);
     expect(LEARN.salah.filter((s) => s.pic)).toHaveLength(12);
     for (const s of [...LEARN.wudu, ...LEARN.salah]) {
       expect(s.title.trim()).not.toBe("");

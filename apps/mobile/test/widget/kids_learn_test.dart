@@ -39,7 +39,7 @@ void main() {
       expect(k.onShelf(s), isNotEmpty, reason: s);
     }
     // Wudu / salah: the book's title and text per step, our own 3D picture on each step page.
-    expect(k.wudu.where((s) => s.pic != null), hasLength(8));
+    expect(k.wudu.where((s) => s.pic != null), hasLength(9));
     expect(k.salah.where((s) => s.pic != null), hasLength(12));
     for (final s in [...k.wudu, ...k.salah]) {
       expect(s.title.trim(), isNotEmpty);
