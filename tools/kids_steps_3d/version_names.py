@@ -8,7 +8,7 @@ import hashlib, json, pathlib, re
 repo = pathlib.Path(__file__).resolve().parents[2]
 outs = [repo / 'apps/mobile/assets/kids/steps', repo / 'apps/web/public/kids/steps']
 steps_file = repo / 'content/kids/learn/steps.json'
-NAME = re.compile(r'^([ws]-[a-z0-9]+?)(?:-[0-9a-f]{8})?\.webp$')
+NAME = re.compile(r'^([a-z]-[a-z0-9]+?)(?:-[0-9a-f]{8})?\.webp$')
 
 def newest(folder, pose):
     files = [f for f in folder.glob(f'{pose}*.webp') if (m := NAME.match(f.name)) and m.group(1) == pose]
@@ -33,7 +33,7 @@ text = steps_file.read_text(encoding='utf-8')
 def swap(m):
     base = NAME.match(m.group(1) + '.webp').group(1)
     return f'"pic": "{names[base]}"'
-text = re.sub(r'"pic": "([ws]-[a-z0-9-]+)"', swap, text)
+text = re.sub(r'"pic": "([a-z]-[a-z0-9-]+)"', swap, text)
 json.loads(text)
 steps_file.write_text(text, encoding='utf-8')
 print('\n'.join(f'{k} -> {v}.webp' for k, v in names.items()))

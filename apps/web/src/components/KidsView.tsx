@@ -305,7 +305,7 @@ export function KidsView({ locale }: { locale: Locale }) {
             </button>
           </li>
         ))}
-        <KidsLearnTiles locale={locale} ids={["books", "hadith", "cards", "wudu", "salah"]} />
+        <KidsLearnTiles locale={locale} ids={["books", "hadith", "cards", "wudu", "salah", "islam", "iman"]} />
         <li>
           <Link className="tile tile-sm" href={href(locale, "kids/ruqyah")} data-testid="kids-tab-ruqyah">
             <span className="tile-icon">

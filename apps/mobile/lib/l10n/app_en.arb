@@ -2872,6 +2872,22 @@
   "@kidsLearnSalahSub": {
     "description": "shared key \"kidsLearn.salahSub\""
   },
+  "kidsLearnIslam": "Pillars of Islam",
+  "@kidsLearnIslam": {
+    "description": "shared key \"kidsLearn.islam\""
+  },
+  "kidsLearnIslamSub": "The five pillars in pictures",
+  "@kidsLearnIslamSub": {
+    "description": "shared key \"kidsLearn.islamSub\""
+  },
+  "kidsLearnIman": "Pillars of faith",
+  "@kidsLearnIman": {
+    "description": "shared key \"kidsLearn.iman\""
+  },
+  "kidsLearnImanSub": "The six pillars in pictures",
+  "@kidsLearnImanSub": {
+    "description": "shared key \"kidsLearn.imanSub\""
+  },
   "kidsLearnSave": "Save the book on this device",
   "@kidsLearnSave": {
     "description": "shared key \"kidsLearn.save\""

@@ -55,6 +55,43 @@ def step(e):
     if e.get('ayatAlKursi'):
         o['ayah'] = kursi
     return o
+# Pillars of Islam / Iman (owner 2026-11-26): every text comes from HadeethEnc (the hadith and verbatim pieces of
+# its published explanation), cut here by the `part` rule of each entry; nothing is typed. Titles are short labels.
+HE = {h['id']: h for h in json.load(open(f'{ROOT}/content/hadith/hadeethenc-ar.json', encoding='utf-8'))}
+def lead_waw(s):
+    return s[1:] if s.startswith('و') else s
+def pillar_text(e):
+    h = HE[e['he']]
+    part = e['part']
+    lines = [x.strip() for x in h['explanation'].split('\n') if x.strip()]
+    if part.startswith('hadith'):
+        txt = f"{h['hadeeth']} ({h['attribution']})"
+        if '+line:' in part:
+            extra = lines[int(part.split('+line:')[1])].rstrip('،').strip() + '.'
+            txt += '\n\n' + extra
+        return txt
+    if part.startswith('line:'):
+        return lead_waw(lines[int(part[5:])])
+    if part == 'iman-hadith':
+        had = h['hadeeth']
+        a = had.index('فَأَخْبِرْنِي عَنِ الْإِيمَانِ')
+        b = had.index('»', a) + 1
+        head = had[:had.index(':') + 1]
+        assert head == 'عن عمر بن الخطاب رضي الله عنه قال:', head
+        return f"{head} … {had[a:b]} ({h['attribution']})"
+    if part.startswith('span:'):
+        start, end = part[5:].split('|')
+        ex = h['explanation']
+        a = ex.index(start)
+        b = ex.index(end, a + len(start))
+        return ex[a:b].strip().rstrip('،.') + '.'
+    raise AssertionError(part)
+def pillar(e):
+    o = {'title': e['title'], 'text': pillar_text(e)}
+    if e.get('pic'):
+        assert os.path.exists(f"{ROOT}/apps/mobile/assets/kids/steps/{e['pic']}.webp"), e['pic']
+        o['pic'] = e['pic']
+    return o
 out = {
     'schema': 'kids-learn.v1',
     'booksBase': src['booksBase'],
@@ -64,6 +101,8 @@ out = {
     'hadith': [h['text'] for h in had],
     'wudu': [step(e) for e in steps['wudu']],
     'salah': [step(e) for e in steps['salah']],
+    'islam': [pillar(e) for e in steps['islam']],
+    'iman': [pillar(e) for e in steps['iman']],
     'stepsCredit': src['stepsCredit'],
     'cardAdhkar': card_adhkar,
 }

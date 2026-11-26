@@ -62,6 +62,20 @@ describe("kids learning corner", () => {
     expect(LEARN.salah.at(-1)?.ayah).toContain("الْقَيُّومُ");
   });
 
+  it("pillars of Islam (5) and faith (6): hadith-sourced text, every picture bundled", () => {
+    expect(LEARN.islam).toHaveLength(6);
+    expect(LEARN.iman).toHaveLength(7);
+    expect(LEARN.islam.filter((s) => s.pic)).toHaveLength(5);
+    expect(LEARN.iman.filter((s) => s.pic)).toHaveLength(6);
+    expect(LEARN.islam[0]?.text).toContain("بُنِيَ الْإِسْلَامُ عَلَى خَمْسٍ");
+    for (const s of [...LEARN.islam, ...LEARN.iman]) {
+      expect(s.text.length).toBeGreaterThan(10);
+      if (s.pic) expect(existsSync(join(PUBLIC, "kids/steps", `${s.pic}.webp`))).toBe(true);
+    }
+    expect(t("ar", "kidsLearn.islam")).toBe("أركان الإسلام");
+    expect(t("ar", "kidsLearn.iman")).toBe("أركان الإيمان");
+  });
+
   it("memorised hadith and today's cards are kept in this browser", () => {
     writeMemorized(new Set([3, 1]));
     expect([...readMemorized()]).toEqual([1, 3]);

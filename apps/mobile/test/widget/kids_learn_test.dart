@@ -49,6 +49,16 @@ void main() {
     expect(k.wudu[1].title, 'النية والتسمية وغسل الكفين');
     expect(k.salah.last.ayah, contains('الْقَيُّومُ'));
     expect(k.stepsCredit, isNotEmpty);
+    // Pillars of Islam (5) / faith (6): intro page + one pictured page per pillar, hadith text.
+    expect(k.islam, hasLength(6));
+    expect(k.iman, hasLength(7));
+    expect(k.islam.where((s) => s.pic != null), hasLength(5));
+    expect(k.iman.where((s) => s.pic != null), hasLength(6));
+    expect(k.islam.first.text, contains('بُنِيَ الْإِسْلَامُ عَلَى خَمْسٍ'));
+    for (final s in [...k.islam, ...k.iman]) {
+      expect(s.text.trim(), isNotEmpty);
+      if (s.pic != null) expect(File('assets/kids/steps/${s.pic}.webp').existsSync(), isTrue, reason: s.pic);
+    }
   });
 
   testWidgets('kids hub shows the four learning corners', (tester) async {
@@ -142,5 +152,15 @@ void main() {
     }
     expect(find.byKey(const Key('kidsSteps.done')), findsOneWidget);
     expect(find.textContaining(k.stepsCredit), findsOneWidget);
+  });
+
+  testWidgets('pillars of faith: hadith pages with the generic source line, not the book credit', (tester) async {
+    await pumpApp(tester, size: tallPhone);
+    final k = _learn();
+    await pushScreen(tester, KidsStepsScreen(salah: false, section: 'iman', loader: () async => k));
+    expect(find.byKey(const Key('kidsIman.pages')), findsOneWidget);
+    expect(tester.widget<Text>(find.byKey(const Key('kidsStep.text.0'))).data, k.iman.first.text);
+    expect(find.textContaining('موسوعة حديثية'), findsOneWidget);
+    expect(find.textContaining(k.stepsCredit), findsNothing);
   });
 }

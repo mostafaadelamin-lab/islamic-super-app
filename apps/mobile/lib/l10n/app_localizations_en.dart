@@ -1959,6 +1959,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kidsLearnSalahSub => 'Prayer steps in pictures';
 
   @override
+  String get kidsLearnIslam => 'Pillars of Islam';
+
+  @override
+  String get kidsLearnIslamSub => 'The five pillars in pictures';
+
+  @override
+  String get kidsLearnIman => 'Pillars of faith';
+
+  @override
+  String get kidsLearnImanSub => 'The six pillars in pictures';
+
+  @override
   String get kidsLearnSave => 'Save the book on this device';
 
   @override

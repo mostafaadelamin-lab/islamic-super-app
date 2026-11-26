@@ -1948,6 +1948,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get kidsLearnSalahSub => 'خطوات الصلاة بالصور';
 
   @override
+  String get kidsLearnIslam => 'أركان الإسلام';
+
+  @override
+  String get kidsLearnIslamSub => 'الأركان الخمسة بالصور';
+
+  @override
+  String get kidsLearnIman => 'أركان الإيمان';
+
+  @override
+  String get kidsLearnImanSub => 'الأركان الستة بالصور';
+
+  @override
   String get kidsLearnSave => 'احفظ الكتاب على الجهاز';
 
   @override
