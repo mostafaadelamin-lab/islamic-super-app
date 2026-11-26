@@ -19,9 +19,10 @@ CHUNK = 500
 EXPECTED_COMMIT = "1515f6cba21efed20d8916bf55acef1dffa0d2d5"
 
 # id, upstream folder, Arabic name, English name, expected count (al-Alamiyya numbering).
+# Sahih al-Bukhari and Sahih Muslim come from sunnah.com since 1.2.25 (tools/build_hadith_sunnah.py, owner
+# 2026-11-26): their entries in books.v1.json are kept as they are and stay first.
+SUNNAH_BOOKS = ("bukhari", "muslim")
 BOOKS = [
-    ("bukhari", "Sahih_Al-Bukhari", "صحيح البخاري", "Sahih al-Bukhari", 7008),
-    ("muslim", "Sahih_Muslim", "صحيح مسلم", "Sahih Muslim", 5362),
     ("abudawud", "Sunan_Abu-Dawud", "سنن أبي داود", "Sunan Abi Dawud", 4590),
     ("tirmidhi", "Sunan_Al-Tirmidhi", "جامع الترمذي", "Jami' at-Tirmidhi", 3891),
     ("nasai", "Sunan_Al-Nasai", "سنن النسائي", "Sunan an-Nasa'i", 5662),
@@ -77,6 +78,10 @@ def main():
             "textSha256": hashlib.sha256("\n".join(texts).encode("utf-8")).hexdigest(),
         })
         print(bid, len(texts), chunks)
+    meta_path = os.path.join(out, "books.v1.json")
+    if os.path.exists(meta_path):
+        kept = [b for b in json.load(open(meta_path, encoding="utf-8"))["books"] if b["id"] in SUNNAH_BOOKS]
+        books = kept + books
     meta = {
         "version": 1,
         "reviewStatus": "pending",

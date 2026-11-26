@@ -23,6 +23,7 @@ class HadithLibrary {
   final Future<String> Function(String key) _read;
   final bool isolate;
   final _parts = <String, Future<List<String>>>{};
+  final _refs = <String, Future<List<String>>>{};
 
   static List<String> _decode(String raw) => [
     for (final t in (jsonDecode(raw) as Map<String, dynamic>)['ahadith'] as List<dynamic>) t as String,
@@ -40,6 +41,30 @@ class HadithLibrary {
     );
   }
 
+  /// sunnah.com numbers of every entry of [book] (empty for books without them).
+  Future<List<String>> refs(HadithBook book) {
+    if (!book.refs) return Future.value(const []);
+    return _refs[book.id] ??= _read('assets/hadith/${book.id}/refs.json.gz').then(
+      (raw) => [for (final r in (jsonDecode(raw) as Map<String, dynamic>)['refs'] as List<dynamic>) r as String],
+      onError: (Object e, StackTrace st) {
+        _refs.remove(book.id);
+        return Future<List<String>>.error(e, st);
+      },
+    );
+  }
+
+  /// Old al-Alamiyya number -> entry of the sunnah.com copy (0 = none), for bookmarks saved before 1.2.25.
+  Future<List<int>> fromAlamiyya(String book) async {
+    final raw = await _read('assets/hadith/$book/from-alamiyya.json.gz');
+    return [for (final n in (jsonDecode(raw) as Map<String, dynamic>)['to'] as List<dynamic>) n as int];
+  }
+
+  Future<List<HadithItem>> _withRefs(HadithBook book, List<HadithItem> items) async {
+    if (!book.refs || items.isEmpty) return items;
+    final r = await refs(book);
+    return [for (final h in items) HadithItem(h.n, h.text, h.n <= r.length ? r[h.n - 1] : '')];
+  }
+
   /// Hadiths [from]..[to] (inclusive, clamped to the book).
   Future<List<HadithItem>> range(HadithBook book, int from, int to) async {
     final a = from < 1 ? 1 : from;
@@ -49,10 +74,10 @@ class HadithLibrary {
     final parts = await Future.wait([for (var k = first; k <= catalog.chunkOf(b); k++) part(book.id, k)]);
     final start = first * catalog.chunkSize + 1;
     final all = parts.expand((p) => p).toList();
-    return [
+    return _withRefs(book, [
       for (var i = 0; i < all.length; i++)
         if (start + i >= a && start + i <= b) HadithItem(start + i, all[i]),
-    ];
+    ]);
   }
 
   /// Hadiths of [book] containing every word of [query], ignoring diacritics; at most [hadithSearchLimit].
@@ -73,7 +98,7 @@ class HadithLibrary {
       }
       onProgress?.call(k + 1, book.chunks);
     }
-    return hits;
+    return _withRefs(book, hits);
   }
 }
 

@@ -1519,7 +1519,7 @@
   "@driveTitle": {
     "description": "shared key \"drive.title\""
   },
-  "hadithAttribution": "Hadiths numbered as in al-Alamiyya, from the {name} project ({licence}).",
+  "hadithAttribution": "Sahih al-Bukhari and Sahih Muslim are copied from sunnah.com with its numbers. The other books are numbered after al-Alamiyya, from {name} ({licence}).",
   "@hadithAttribution": {
     "description": "shared key \"hadith.attribution\"",
     "placeholders": {
@@ -1581,6 +1581,10 @@
   "@hadithFavourites": {
     "description": "shared key \"hadith.favourites\""
   },
+  "hadithGoMissing": "There is no hadith with this number in this book.",
+  "@hadithGoMissing": {
+    "description": "shared key \"hadith.goMissing\""
+  },
   "hadithGoTo": "Go to hadith number (1–{max})",
   "@hadithGoTo": {
     "description": "shared key \"hadith.goTo\"",
@@ -1589,6 +1593,10 @@
         "type": "String"
       }
     }
+  },
+  "hadithGoToSunnah": "Go to hadith number (sunnah.com numbering, e.g. 1218)",
+  "@hadithGoToSunnah": {
+    "description": "shared key \"hadith.goToSunnah\""
   },
   "hadithGrade": "Grade: {grade}",
   "@hadithGrade": {
@@ -1628,6 +1636,15 @@
         "type": "String"
       },
       "total": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithPageSunnah": "Hadith {n} (sunnah.com numbering)",
+  "@hadithPageSunnah": {
+    "description": "shared key \"hadith.pageSunnah\"",
+    "placeholders": {
+      "n": {
         "type": "String"
       }
     }
@@ -1701,6 +1718,18 @@
   "hadithSource": "{book}, hadith {n} (al-Alamiyya numbering)",
   "@hadithSource": {
     "description": "shared key \"hadith.source\"",
+    "placeholders": {
+      "book": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithSourceSunnah": "{book}, hadith {n} (sunnah.com numbering)",
+  "@hadithSourceSunnah": {
+    "description": "shared key \"hadith.sourceSunnah\"",
     "placeholders": {
       "book": {
         "type": "String"

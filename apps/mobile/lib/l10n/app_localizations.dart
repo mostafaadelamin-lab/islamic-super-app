@@ -1973,7 +1973,7 @@ abstract class AppLocalizations {
   /// shared key "hadith.attribution"
   ///
   /// In en, this message translates to:
-  /// **'Hadiths numbered as in al-Alamiyya, from the {name} project ({licence}).'**
+  /// **'Sahih al-Bukhari and Sahih Muslim are copied from sunnah.com with its numbers. The other books are numbered after al-Alamiyya, from {name} ({licence}).'**
   String hadithAttribution(String name, String licence);
 
   /// shared key "hadith.backToBook"
@@ -2036,11 +2036,23 @@ abstract class AppLocalizations {
   /// **'Saved hadiths'**
   String get hadithFavourites;
 
+  /// shared key "hadith.goMissing"
+  ///
+  /// In en, this message translates to:
+  /// **'There is no hadith with this number in this book.'**
+  String get hadithGoMissing;
+
   /// shared key "hadith.goTo"
   ///
   /// In en, this message translates to:
   /// **'Go to hadith number (1–{max})'**
   String hadithGoTo(String max);
+
+  /// shared key "hadith.goToSunnah"
+  ///
+  /// In en, this message translates to:
+  /// **'Go to hadith number (sunnah.com numbering, e.g. 1218)'**
+  String get hadithGoToSunnah;
 
   /// shared key "hadith.grade"
   ///
@@ -2077,6 +2089,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hadith {n} of {total}'**
   String hadithPageOf(String n, String total);
+
+  /// shared key "hadith.pageSunnah"
+  ///
+  /// In en, this message translates to:
+  /// **'Hadith {n} (sunnah.com numbering)'**
+  String hadithPageSunnah(String n);
 
   /// shared key "hadith.prev"
   ///
@@ -2131,6 +2149,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{book}, hadith {n} (al-Alamiyya numbering)'**
   String hadithSource(String book, String n);
+
+  /// shared key "hadith.sourceSunnah"
+  ///
+  /// In en, this message translates to:
+  /// **'{book}, hadith {n} (sunnah.com numbering)'**
+  String hadithSourceSunnah(String book, String n);
 
   /// shared key "hadith.title"
   ///

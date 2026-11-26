@@ -15,21 +15,51 @@
       "id": "bukhari",
       "nameAr": "صحيح البخاري",
       "nameEn": "Sahih al-Bukhari",
-      "count": 7008,
+      "count": 7277,
       "chunks": 15,
-      "sourceFile": "Sahih_Al-Bukhari/sahih_al-bukhari_ahadith_mushakkala_mufassala.utf8.csv",
-      "sha256": "b03f661876fc4089520800b9231b57a1564baff734344ea8914494b86e2eb708",
-      "textSha256": "28fc7bb4ab19e1f943a1f84af74e802eee8df888cb10bf4eccf8b98056224701"
+      "numbering": "sunnah.com",
+      "refs": true,
+      "source": {
+        "name": "sunnah.com (copy: AhmedBaset/hadith-json v1.2.0)",
+        "url": "https://sunnah.com/bukhari",
+        "copy": "https://github.com/AhmedBaset/hadith-json",
+        "numbersFrom": "https://github.com/fawazahmed0/hadith-api"
+      },
+      "sourceFile": "hadith-json/bukhari.json",
+      "sha256": "8b0038db684b9a37efe2f047627c8076496b2a6d05bff576272de17b6da699f7",
+      "numbersSha256": "e34a3402889ca378871da3c5984b7875c680920e93f1c8738ac7afe502179562",
+      "textSha256": "5efca35ddcf123a7aa59868c5af8ada79ac912aa5be58fe0797070842ed1020e",
+      "crossCheck": {
+        "sameInBoth": 7231,
+        "joinedInSunnah": 0,
+        "entries": 7277,
+        "approxNumbers": 0
+      }
     },
     {
       "id": "muslim",
       "nameAr": "صحيح مسلم",
       "nameEn": "Sahih Muslim",
-      "count": 5362,
-      "chunks": 11,
-      "sourceFile": "Sahih_Muslim/sahih_muslim_ahadith_mushakkala_mufassala.utf8.csv",
-      "sha256": "79232c8d7c27fef161d8f33ca169f9754741cfe14957dde2ac76893374998943",
-      "textSha256": "bd028449f44d9351af2c13a0b752e28d2b30ea9b853b648f1814408c698232c1"
+      "count": 7459,
+      "chunks": 15,
+      "numbering": "sunnah.com",
+      "refs": true,
+      "source": {
+        "name": "sunnah.com (copy: AhmedBaset/hadith-json v1.2.0)",
+        "url": "https://sunnah.com/muslim",
+        "copy": "https://github.com/AhmedBaset/hadith-json",
+        "numbersFrom": "https://github.com/fawazahmed0/hadith-api"
+      },
+      "sourceFile": "hadith-json/muslim.json",
+      "sha256": "530ed720dea65c7eb4d6ebfef86e9be22ed284f3cb2d33e33d1d66c8318fd24f",
+      "numbersSha256": "194073b24090c5368e4d14a3f55c9e0ef144c7437bd7e5aa83aa4d2bc54a8ea0",
+      "textSha256": "432a068740cf70b80b7e94905684f65cd2b2cedf5f5955899f8c4127514a2e6d",
+      "crossCheck": {
+        "sameInBoth": 7119,
+        "joinedInSunnah": 0,
+        "entries": 7459,
+        "approxNumbers": 214
+      }
     },
     {
       "id": "abudawud",

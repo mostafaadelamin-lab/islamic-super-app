@@ -1067,7 +1067,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String hadithAttribution(String name, String licence) {
-    return 'Hadiths numbered as in al-Alamiyya, from the $name project ($licence).';
+    return 'Sahih al-Bukhari and Sahih Muslim are copied from sunnah.com with its numbers. The other books are numbered after al-Alamiyya, from $name ($licence).';
   }
 
   @override
@@ -1106,9 +1106,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hadithFavourites => 'Saved hadiths';
 
   @override
+  String get hadithGoMissing => 'There is no hadith with this number in this book.';
+
+  @override
   String hadithGoTo(String max) {
     return 'Go to hadith number (1–$max)';
   }
+
+  @override
+  String get hadithGoToSunnah => 'Go to hadith number (sunnah.com numbering, e.g. 1218)';
 
   @override
   String hadithGrade(String grade) {
@@ -1132,6 +1138,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String hadithPageOf(String n, String total) {
     return 'Hadith $n of $total';
+  }
+
+  @override
+  String hadithPageSunnah(String n) {
+    return 'Hadith $n (sunnah.com numbering)';
   }
 
   @override
@@ -1172,6 +1183,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String hadithSource(String book, String n) {
     return '$book, hadith $n (al-Alamiyya numbering)';
+  }
+
+  @override
+  String hadithSourceSunnah(String book, String n) {
+    return '$book, hadith $n (sunnah.com numbering)';
   }
 
   @override

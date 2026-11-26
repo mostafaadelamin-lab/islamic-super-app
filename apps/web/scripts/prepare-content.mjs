@@ -147,6 +147,12 @@ for (const b of hadith.books) {
     mkdirSync(dirname(dest), { recursive: true });
     copyFileSync(join(repo, "content/hadith/dist", b.id, `${k}.json`), dest);
   }
+  // Bukhari/Muslim (sunnah.com copy): sunnah.com numbers per entry + old al-Alamiyya number -> entry (bookmarks).
+  if (b.refs) {
+    for (const f of ["refs.json", "from-alamiyya.json"]) {
+      copyFileSync(join(repo, "content/hadith/dist", b.id, f), join(pub, "data/hadith", b.id, f));
+    }
+  }
 }
 // Simplified explanations (quoted from a published hadith encyclopedia, same file as the app's
 // assets/hadith/explained.v1.json), split per book: /data/hadith/explained/<book>.json = { map: {n: id}, entries }.

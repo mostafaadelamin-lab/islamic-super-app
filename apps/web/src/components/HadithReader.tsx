@@ -8,11 +8,15 @@ import {
   bookName,
   displayText,
   explainedNumbers,
+  findRef,
   hadithBook,
   hadithFavStore,
   loadExplained,
   loadItems,
   loadRange,
+  loadRefs,
+  migrateHadithFavourites,
+  refLabel,
   searchBook,
   SEARCH_LIMIT,
   toggleFavourite,
@@ -35,12 +39,18 @@ const firstOfPage = (n: number): number => Math.floor((n - 1) / PAGE_SIZE) * PAG
 export function HadithCard({ locale, book, item }: { locale: Locale; book: HadithBook; item: HadithItem }) {
   const fav = useStore(hadithFavStore);
   const saved = fav.keys.includes(`${book.id}:${item.n}`);
-  const num = localizeDigits(item.n, locale);
-  const source = t(locale, "hadith.source", { book: bookName(book, locale), n: num });
+  const digits = (v: string | number): string => localizeDigits(v, locale);
+  const num = item.ref !== undefined ? refLabel(item.ref, locale, digits) : digits(item.n);
+  const source = t(locale, book.refs ? "hadith.sourceSunnah" : "hadith.source", {
+    book: bookName(book, locale),
+    n: num,
+  });
   return (
     <article className="card hadith" id={`h${item.n}`} data-testid="hadith" data-n={item.n}>
       <header className="hadith-head">
-        <span className="badge">{t(locale, "hadith.number", { n: num })}</span>
+        <span className="badge" data-testid="hadith-num">
+          {num ? t(locale, "hadith.number", { n: num }) : bookName(book, locale)}
+        </span>
         <button
           type="button"
           className="btn btn-sm"
@@ -85,6 +95,19 @@ export function HadithReader({ locale, bookId }: { locale: Locale; bookId: strin
   useBackLayer(results !== null, () => setResults(null));
   useBackLayer(exPage !== null, () => setExPage(null));
   const n = (v: number): string => localizeDigits(v, locale);
+  /** sunnah.com numbers of the entries (Bukhari/Muslim), for «اذهب إلى» and the range line. */
+  const [refs, setRefs] = useState<string[]>([]);
+  const [notFound, setNotFound] = useState(false);
+  useEffect(() => {
+    let live = true;
+    void migrateHadithFavourites();
+    loadRefs(book)
+      .then((r) => live && setRefs(r))
+      .catch(() => undefined);
+    return () => {
+      live = false;
+    };
+  }, [book]);
 
   const open = useCallback(
     (start: number) => {
@@ -164,17 +187,26 @@ export function HadithReader({ locale, bookId }: { locale: Locale; bookId: strin
           className="row"
           onSubmit={(e) => {
             e.preventDefault();
+            if (book.refs) {
+              const at = findRef(refs, go);
+              setNotFound(at === null);
+              if (at !== null) open(at);
+              return;
+            }
             const v = Number(go);
             if (Number.isInteger(v) && v >= 1) open(v);
           }}
         >
           <label className="field">
-            <span>{t(locale, "hadith.goTo", { max: n(book.count) })}</span>
+            <span>
+              {book.refs ? t(locale, "hadith.goToSunnah") : t(locale, "hadith.goTo", { max: n(book.count) })}
+            </span>
             <input
-              type="number"
-              min={1}
-              max={book.count}
-              inputMode="numeric"
+              type={book.refs ? "text" : "number"}
+              min={book.refs ? undefined : 1}
+              max={book.refs ? undefined : book.count}
+              inputMode={book.refs ? "text" : "numeric"}
+              dir="ltr"
               value={go}
               onChange={(e) => setGo(e.target.value)}
               data-testid="hadith-go"
@@ -183,6 +215,11 @@ export function HadithReader({ locale, bookId }: { locale: Locale; bookId: strin
           <button type="submit" className="btn" data-testid="hadith-go-btn">
             {t(locale, "hadith.go")}
           </button>
+          {notFound ? (
+            <p className="muted small" role="status" data-testid="hadith-go-missing">
+              {t(locale, "hadith.goMissing")}
+            </p>
+          ) : null}
         </form>
         <form
           className="row"
@@ -294,7 +331,12 @@ export function HadithReader({ locale, bookId }: { locale: Locale; bookId: strin
       ) : (
         <section aria-live="polite">
           <p className="muted" data-testid="hadith-range">
-            {t(locale, "hadith.range", { from: n(from), to: n(last), count: n(book.count) })}
+            {book.refs && items && items.length > 0
+              ? t(locale, "hadith.rangeSunnah", {
+                  from: refLabel(items[0]!.ref ?? "", locale, (v) => localizeDigits(v, locale)),
+                  to: refLabel(items[items.length - 1]!.ref ?? "", locale, (v) => localizeDigits(v, locale)),
+                })
+              : t(locale, "hadith.range", { from: n(from), to: n(last), count: n(book.count) })}
           </p>
           {items === null && !error ? <p className="muted">{t(locale, "common.loading")}</p> : null}
           {items?.map((h) => (
@@ -333,6 +375,9 @@ export function HadithReader({ locale, bookId }: { locale: Locale; bookId: strin
 export function HadithFavourites({ locale }: { locale: Locale }) {
   const fav = useStore(hadithFavStore);
   const [items, setItems] = useState<{ book: HadithBook; item: HadithItem }[] | null>(null);
+  useEffect(() => {
+    void migrateHadithFavourites();
+  }, []);
   useEffect(() => {
     let live = true;
     Promise.all(

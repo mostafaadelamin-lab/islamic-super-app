@@ -676,8 +676,43 @@ class SettingsController extends ChangeNotifier {
   /// Saved hadiths as "book:n" keys, newest first.
   List<String> get hadithFavourites => _prefs.getStringList('hadith.favourites') ?? const [];
 
+  /// Saved Bukhari/Muslim keys are positions in the sunnah.com copy (true for lists started on 1.2.25+).
+  bool get hadithFavouritesMoved => _prefs.getBool('hadith.favourites.v2') ?? hadithFavourites.isEmpty;
+
+  /// Moves saved Bukhari/Muslim hadiths from their old al-Alamiyya numbers to the same hadith in the
+  /// sunnah.com copy, once. [table] gives, for a book, the new entry of each old number (0 = none).
+  Future<void> migrateHadithFavourites(Future<List<int>> Function(String book) table) async {
+    if (hadithFavouritesMoved) {
+      if (_prefs.getBool('hadith.favourites.v2') == null) await _prefs.setBool('hadith.favourites.v2', true);
+      return;
+    }
+    final tables = <String, List<int>>{};
+    for (final b in const ['bukhari', 'muslim']) {
+      if (hadithFavourites.any((k) => k.startsWith('$b:'))) tables[b] = await table(b);
+    }
+    final moved = <String>[];
+    for (final k in hadithFavourites) {
+      final i = k.indexOf(':');
+      final t = i > 0 ? tables[k.substring(0, i)] : null;
+      if (t == null) {
+        moved.add(k);
+        continue;
+      }
+      final n = int.tryParse(k.substring(i + 1)) ?? 0;
+      final to = n >= 1 && n <= t.length ? t[n - 1] : 0;
+      if (to > 0 && !moved.contains('${k.substring(0, i)}:$to')) moved.add('${k.substring(0, i)}:$to');
+    }
+    await _prefs.setStringList('hadith.favourites', moved);
+    await _prefs.setBool('hadith.favourites.v2', true);
+    notifyListeners();
+  }
+
   Future<void> toggleHadithFavourite(String book, int n) async {
     final key = '$book:$n';
+    // An empty list starts in the new numbering (old lists are moved when a hadith screen opens).
+    if (_prefs.getBool('hadith.favourites.v2') == null && hadithFavouritesMoved) {
+      await _prefs.setBool('hadith.favourites.v2', true);
+    }
     final list = hadithFavourites;
     await _prefs.setStringList(
       'hadith.favourites',

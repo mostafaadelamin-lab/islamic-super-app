@@ -17,9 +17,39 @@ import 'review_notice.dart';
 String _westernDigits(String s) =>
     String.fromCharCodes(s.runes.map((r) => r >= 0x0660 && r <= 0x0669 ? r - 0x0660 + 0x30 : r));
 
+/// The number shown for a hadith: its sunnah.com number (Bukhari, Muslim) or its number in the book.
+String hadithNumLabel(BuildContext context, HadithItem item) =>
+    item.ref != null ? hadithRefLabel(item.ref!, context.isArabic, context.num) : context.num(item.n);
+
+/// «البخاري، حديث رقم …» for copy/share: says which numbering the number follows.
+String hadithSourceLine(BuildContext context, HadithBook book, HadithItem item) {
+  final l = context.l10n;
+  final name = book.name(context.isArabic);
+  return book.refs ? l.hadithSourceSunnah(name, hadithNumLabel(context, item)) : l.hadithSource(name, context.num(item.n));
+}
+
+/// Moves bookmarks saved before 1.2.25 to the sunnah.com copy (once; quietly retried if it fails).
+void migrateHadithFavourites(BuildContext context) {
+  final s = context.services;
+  s.settings.migrateHadithFavourites(s.hadith.fromAlamiyya).catchError((Object _) {});
+}
+
 /// The nine hadith books, the saved hadiths and the source.
-class HadithScreen extends StatelessWidget {
+class HadithScreen extends StatefulWidget {
   const HadithScreen({super.key});
+
+  @override
+  State<HadithScreen> createState() => _HadithScreenState();
+}
+
+class _HadithScreenState extends State<HadithScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) migrateHadithFavourites(context);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +107,9 @@ class HadithCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final settings = context.services.settings;
-    final text = item.text.trim();
-    final source = l.hadithSource(book.name(context.isArabic), context.num(item.n));
+    final text = hadithDisplayText(item.text);
+    final source = hadithSourceLine(context, book, item);
+    final num = hadithNumLabel(context, item);
     return Card(
       key: Key('hadith-${item.n}'),
       margin: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceLg, 0),
@@ -89,7 +120,7 @@ class HadithCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Chip(label: Text(l.hadithNumber(context.num(item.n)))),
+                Chip(label: Text(num.isEmpty ? book.name(context.isArabic) : l.hadithNumber(num))),
                 const Spacer(),
                 ListenableBuilder(
                   listenable: settings,
@@ -152,9 +183,20 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
   bool _explainedOnly = false;
   List<int>? _explained;
 
+  /// sunnah.com numbers of the entries (Bukhari, Muslim; empty for the other books).
+  List<String> _refs = const [];
+  bool _goMissing = false;
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      migrateHadithFavourites(context);
+      context.services.hadith.refs(widget.book).then((r) {
+        if (mounted) setState(() => _refs = r);
+      }, onError: (_) {});
+    });
     HadithExplanations.load().then((e) {
       if (mounted) setState(() => _explained = e.numbers(widget.book.id));
     }, onError: (_) {});
@@ -227,14 +269,21 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
           TextField(
             key: const Key('hadithGo'),
             controller: _go,
-            keyboardType: TextInputType.number,
+            keyboardType: book.refs ? TextInputType.text : TextInputType.number,
             textInputAction: TextInputAction.go,
             decoration: InputDecoration(
-              labelText: l.hadithGoTo(context.num(book.count)),
+              labelText: book.refs ? l.hadithGoToSunnah : l.hadithGoTo(context.num(book.count)),
               prefixIcon: const Icon(Icons.tag),
               isDense: true,
+              errorText: _goMissing ? l.hadithGoMissing : null,
             ),
             onSubmitted: (v) {
+              if (book.refs) {
+                final at = findHadithRef(_refs, v);
+                setState(() => _goMissing = at == null);
+                if (at != null) _open(at);
+                return;
+              }
               final n = int.tryParse(_westernDigits(v.trim()));
               if (n != null && n >= 1) _open(n);
             },
@@ -424,7 +473,9 @@ class _HadithBookScreenState extends State<HadithBookScreen> {
                     ),
                     Expanded(
                       child: Text(
-                        l.hadithPageOf(context.num(_n), context.num(book.count)),
+                        book.refs && _n <= _refs.length && _refs[_n - 1].isNotEmpty
+                            ? l.hadithPageSunnah(hadithRefLabel(_refs[_n - 1], ar, context.num))
+                            : l.hadithPageOf(context.num(_n), context.num(book.count)),
                         key: const Key('hadithRange'),
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.labelLarge,
@@ -524,8 +575,9 @@ class _BookPage extends StatelessWidget {
               if (list == null) return const Center(child: CircularProgressIndicator());
               final item = list.where((h) => h.n == n).firstOrNull;
               if (item == null) return const SizedBox.shrink();
-              final text = item.text.trim();
-              final source = l.hadithSource(book.name(context.isArabic), context.num(item.n));
+              final text = hadithDisplayText(item.text);
+              final source = hadithSourceLine(context, book, item);
+              final num = hadithNumLabel(context, item);
               final settings = context.services.settings;
               return Column(
                 key: Key('hadith-${item.n}'),
@@ -569,7 +621,11 @@ class _BookPage extends StatelessWidget {
                         color: scheme.secondary.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Text(l.hadithNumber(context.num(item.n)), style: Theme.of(context).textTheme.labelLarge),
+                      child: Text(
+                        num.isEmpty ? book.name(context.isArabic) : l.hadithNumber(num),
+                        key: Key('hadithNum-${item.n}'),
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
                     ),
                   ),
                   Expanded(
@@ -612,6 +668,11 @@ class HadithFavouritesScreen extends StatelessWidget {
   const HadithFavouritesScreen({super.key});
 
   Future<List<(HadithBook, HadithItem)>> _load(AppServices s, List<String> keys) async {
+    if (!s.settings.hadithFavouritesMoved) {
+      // bookmarks from before 1.2.25: moved first; the list then rebuilds with the new keys
+      await s.settings.migrateHadithFavourites(s.hadith.fromAlamiyya);
+      return const [];
+    }
     final out = <(HadithBook, HadithItem)>[];
     for (final key in keys) {
       if (s.content.hadith.parseKey(key) case (final book, final n)) {

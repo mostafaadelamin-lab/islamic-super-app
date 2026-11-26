@@ -19,7 +19,7 @@ def grams(words):
     return {' '.join(words[i:i + N]) for i in range(len(words) - N + 1)}
 
 index, texts = {}, {}
-for f in glob.glob(os.path.join(root, '*', '*.json')):
+for f in glob.glob(os.path.join(root, '*', '[0-9]*.json')):
     j = json.load(open(f))
     for k, t in enumerate(j['ahadith']):
         key = f"{j['book']}:{j['from'] + k}"

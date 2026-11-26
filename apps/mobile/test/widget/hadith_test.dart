@@ -43,7 +43,11 @@ void main() {
         'ahmad',
         'darimi',
       ]);
-      expect(catalog.book('bukhari')!.count, 7008);
+      // Bukhari and Muslim: the sunnah.com copy (owner 2026-11-26).
+      expect(catalog.book('bukhari')!.count, 7277);
+      expect(catalog.book('muslim')!.count, 7459);
+      expect(catalog.book('bukhari')!.refs, isTrue);
+      expect(catalog.book('abudawud')!.refs, isFalse);
       expect(catalog.reviewStatus, 'pending');
       expect(catalog.licence, contains('ODbL'));
       expect(readAppJson('assets/hadith/books.v1.json'), readRepoJson('content/hadith/dist/books.v1.json'));
@@ -79,17 +83,81 @@ void main() {
         onProgress: (d, _) => done.add(d),
       );
       expect(hits.first.n, 1);
+      expect(hits.first.ref, '1');
       expect(done.last, bukhari.chunks);
       expect(await library.search(bukhari, '  ', content.normalizer), isEmpty);
       expect(await library.search(catalog.book('malik')!, 'الله', content.normalizer), hasLength(hadithSearchLimit));
     });
 
     test('saved keys must name a book and a number inside it', () {
-      expect(catalog.parseKey('bukhari:7008')?.$2, 7008);
-      expect(catalog.parseKey('bukhari:7009'), isNull);
+      expect(catalog.parseKey('bukhari:7277')?.$2, 7277);
+      expect(catalog.parseKey('bukhari:7278'), isNull);
       expect(catalog.parseKey('bukhari:0'), isNull);
       expect(catalog.parseKey('nope:1'), isNull);
       expect(catalog.parseKey('bukhari'), isNull);
+    });
+  });
+
+  group('sunnah.com numbers (Bukhari, Muslim)', () {
+    test('labels, «اذهب إلى» and the numbers the Hajj guide cites', () async {
+      final br = await library.refs(catalog.book('bukhari')!);
+      final mr = await library.refs(catalog.book('muslim')!);
+      expect(br, hasLength(7277));
+      expect(mr, hasLength(7459));
+      expect(await library.refs(catalog.book('malik')!), isEmpty);
+      expect(findHadithRef(br, '١٥٤٩'), 1495);
+      expect(findHadithRef(mr, '2186'), 5553);
+      expect(findHadithRef(mr, '1218a'), 2833);
+      expect(findHadithRef(mr, '999999'), isNull);
+      String ar(Object v) => '$v'.replaceAllMapped(RegExp(r'\d'), (m) => '٠١٢٣٤٥٦٧٨٩'[int.parse(m[0]!)]);
+      expect(hadithRefLabel('1218a', true, ar), '١٢١٨ أ');
+      expect(hadithRefLabel('5709,5710', true, ar), '٥٧٠٩، ٥٧١٠');
+      expect(hadithRefLabel('intro3', true, ar), 'المقدمة ٣');
+      expect(hadithRefLabel('~597b', true, ar), 'بعد ٥٩٧ ب');
+      expect(hadithRefLabel('1218a', false, (v) => '$v'), '1218a');
+      expect((await library.range(catalog.book('muslim')!, 2833, 2833)).single.ref, '1218a');
+      final guide = jsonEncode(readRepoJson('content/pilgrimage/guide.v2.src.json'));
+      final cites = RegExp(r'"h":"(bukhari|muslim):(\d+)","std":(\d+)').allMatches(guide).toList();
+      expect(cites.length, greaterThan(10));
+      for (final c in cites) {
+        final refs = c[1] == 'bukhari' ? br : mr;
+        expect(refs[int.parse(c[2]!) - 1].replaceAll(RegExp(r'[a-z]$'), ''), c[3], reason: c[0]);
+      }
+    });
+
+    testWidgets('bookmarks saved before 1.2.25 move to the sunnah.com copy, once', (tester) async {
+      final app = await pumpApp(
+        tester,
+        size: tallPhone,
+        prefs: {
+          'hadith.favourites': ['bukhari:1448', 'abudawud:3', 'muslim:4056'],
+        },
+      );
+      expect(app.services.settings.hadithFavouritesMoved, isFalse);
+      await pushScreen(tester, const HadithScreen());
+      await tester.pumpAndSettle();
+      expect(app.services.settings.hadithFavourites, ['bukhari:1495', 'abudawud:3', 'muslim:5553']);
+      expect(app.services.settings.hadithFavouritesMoved, isTrue);
+      await app.services.settings.migrateHadithFavourites((_) async => throw StateError('not again'));
+      expect(app.services.settings.hadithFavourites, ['bukhari:1495', 'abudawud:3', 'muslim:5553']);
+    });
+
+    testWidgets('Muslim: go to sunnah.com number 1218 shows «حديث ١٢١٨ أ»', (tester) async {
+      await pumpApp(tester, size: tallPhone);
+      await pushScreen(tester, HadithBookScreen(book: catalog.book('muslim')!));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('hadithTools')));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byKey(const Key('hadithGo')), '١٢١٨');
+      await tester.testTextInput.receiveAction(TextInputAction.go);
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('hadith-2833')), findsOneWidget);
+      expect(find.text('حديث ١٢١٨ أ'), findsOneWidget);
+      expect(find.text('حديث ١٢١٨ أ (ترقيم sunnah.com)'), findsOneWidget);
+      await tester.enterText(find.byKey(const Key('hadithGo')), '99999');
+      await tester.testTextInput.receiveAction(TextInputAction.go);
+      await tester.pumpAndSettle();
+      expect(find.text('لا يوجد حديث بهذا الرقم في هذا الكتاب.'), findsOneWidget);
     });
   });
 

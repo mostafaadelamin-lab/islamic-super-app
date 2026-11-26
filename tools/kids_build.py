@@ -54,9 +54,11 @@ def item(x):
             out['audio'] = audio['base'].replace('{id}', str(a))
         return out
     if 'book' in x:
-        # A dua inside a hadith of the books in the app (Open-Hadith-Data): copied from its start to the end.
+        # A dua inside a hadith of the books in the app (Bukhari/Muslim: the sunnah.com copy): copied from its start to the end.
         b, n = x['book']
         for f in os.listdir(f'{ROOT}/content/hadith/dist/{b}'):
+            if not f.split('.')[0].isdigit():
+                continue
             d = json.load(open(f'{ROOT}/content/hadith/dist/{b}/{f}', encoding='utf-8'))
             if d['from'] <= n < d['from'] + len(d['ahadith']):
                 t = re.sub(r'\s+', ' ', d['ahadith'][n - d['from']].replace('\u200f', ' ')).strip()

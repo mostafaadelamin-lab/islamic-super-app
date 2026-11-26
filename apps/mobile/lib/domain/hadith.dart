@@ -1,5 +1,6 @@
-/// The nine hadith books from Open-Hadith-Data (ODbL 1.0), bundled in assets/hadith
-/// (copied from content/hadith/dist, built by tools/build_hadith.py). The texts are shown
+/// The nine hadith books, bundled in assets/hadith (copied from content/hadith/dist). Sahih al-Bukhari and
+/// Sahih Muslim are the sunnah.com copy with sunnah.com numbers (tools/build_hadith_sunnah.py, owner
+/// 2026-11-26); the other seven are Open-Hadith-Data (ODbL 1.0, tools/build_hadith.py). The texts are shown
 /// exactly as in the source; this file only describes the books and the saved list.
 library;
 
@@ -11,6 +12,7 @@ class HadithBook {
     required this.count,
     required this.chunks,
     required this.textSha256,
+    this.refs = false,
   });
 
   factory HadithBook.fromJson(Map<String, dynamic> j) => HadithBook(
@@ -20,6 +22,7 @@ class HadithBook {
     count: j['count'] as int,
     chunks: j['chunks'] as int,
     textSha256: j['textSha256'] as String,
+    refs: j['refs'] == true,
   );
 
   final String id;
@@ -30,6 +33,10 @@ class HadithBook {
 
   /// SHA-256 of all the texts joined with "\n" (checked by the tests).
   final String textSha256;
+
+  /// true: every entry has its sunnah.com number in BOOK/refs.json; the entry index n is only the
+  /// app's own position (links, bookmarks).
+  final bool refs;
 
   String name(bool arabic) => arabic ? nameAr : nameEn;
 }
@@ -91,10 +98,69 @@ class HadithCatalog {
 }
 
 class HadithItem {
-  const HadithItem(this.n, this.text);
+  const HadithItem(this.n, this.text, [this.ref]);
+
+  /// Position of the entry in the book (1-based).
   final int n;
   final String text;
+
+  /// sunnah.com number(s), raw: "2186", "1218a", "5709,5710", "intro3", "~597b" (null for other books).
+  final String? ref;
 }
+
+/// sunnah.com letters after a number (a, b, c…) as Arabic abjad letters.
+const _abjad = 'أبجدهوزحطيكلمنسعفصقرشتثخذضظغ';
+final _refRe = RegExp(r'^(\d+)([a-z]?)$');
+
+String _oneRef(String r, bool arabic, String Function(Object) digits) {
+  final intro = RegExp(r'^intro(\d+)$').firstMatch(r);
+  if (intro != null) return arabic ? 'المقدمة ${digits(intro.group(1)!)}' : 'Introduction ${intro.group(1)}';
+  final m = _refRe.firstMatch(r);
+  if (m == null) return r;
+  final l = m.group(2)!;
+  final letter = l.isEmpty
+      ? ''
+      : arabic
+      ? ' ${_abjad[l.codeUnitAt(0) - 97]}'
+      : l;
+  return '${digits(m.group(1)!)}$letter';
+}
+
+/// A raw sunnah.com number for display: "1218a" → "١٢١٨ أ", "5709,5710" → "٥٧٠٩، ٥٧١٠", "~597b" → "بعد ٥٩٧ ب".
+String hadithRefLabel(String raw, bool arabic, String Function(Object) digits) {
+  if (raw.isEmpty) return '';
+  if (raw.startsWith('~')) {
+    final inner = _oneRef(raw.substring(1), arabic, digits);
+    return arabic ? 'بعد $inner' : 'after $inner';
+  }
+  return raw.split(',').map((r) => _oneRef(r, arabic, digits)).join(arabic ? '، ' : ', ');
+}
+
+/// The entry (1-based) holding sunnah.com number [query] ("2186", "2186a", "١٢١٨"); null when none.
+/// A number without a letter opens its first part.
+int? findHadithRef(List<String> refs, String query) {
+  final q = String.fromCharCodes(
+    query.trim().toLowerCase().replaceAll(RegExp(r'\s+'), '').runes.map(
+      (r) => r >= 0x0660 && r <= 0x0669 ? r - 0x0660 + 0x30 : r,
+    ),
+  );
+  final m = _refRe.firstMatch(q);
+  if (m == null) return null;
+  final base = int.parse(m.group(1)!).toString();
+  final letter = m.group(2)!;
+  for (var i = 0; i < refs.length; i++) {
+    if (refs[i].startsWith('~')) continue;
+    for (final r in refs[i].split(',')) {
+      final x = _refRe.firstMatch(r);
+      if (x != null && x.group(1) == base && (letter.isEmpty || x.group(2) == letter)) return i + 1;
+    }
+  }
+  return null;
+}
+
+/// Text for display: the source's own words without the spaces around them. The sunnah.com copy keeps the
+/// line breaks of the site's page source, which the site itself shows as spaces: shown the same way here.
+String hadithDisplayText(String text) => text.replaceAll(RegExp(r'[ \t]*\n\s*'), ' ').trim();
 
 /// Hadiths shown per screen.
 const hadithPageSize = 20;

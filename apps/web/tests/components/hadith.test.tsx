@@ -23,6 +23,11 @@ beforeEach(() => {
       return Promise.resolve(
         new Response(readFileSync(`public/data/hadith/explained/${ex[1]}.json`, "utf8")),
       );
+    const f = /\/data\/hadith\/([a-z]+)\/(refs|from-alamiyya)\.json$/.exec(url);
+    if (f)
+      return Promise.resolve(
+        new Response(JSON.stringify(readRepoJson(`content/hadith/dist/${f[1]}/${f[2]}.json`))),
+      );
     const m = /\/data\/hadith\/([a-z]+)\/(\d+)\.json$/.exec(url)!;
     if (m[1] === "darimi") return Promise.resolve(new Response("", { status: 404 }));
     return Promise.resolve(

@@ -1,6 +1,7 @@
 /**
- * The nine hadith books from Open-Hadith-Data (ODbL 1.0; content/hadith/dist, built by
- * tools/build_hadith.py). Text is shown exactly as in the source; parts of each book are fetched on demand
+ * The nine hadith books (content/hadith/dist): Sahih al-Bukhari and Sahih Muslim are the sunnah.com copy
+ * (tools/build_hadith_sunnah.py, owner 2026-11-26) with sunnah.com's numbers in <book>/refs.json; the
+ * other seven are Open-Hadith-Data (ODbL 1.0; tools/build_hadith.py). Text is shown exactly as in the source; parts of each book are fetched on demand
  * from /data/hadith/<book>/<k>.json and kept by the service worker once read.
  */
 import booksJson from "@/generated/hadith-books.json";
@@ -15,6 +16,9 @@ export interface HadithBook {
   count: number;
   chunks: number;
   textSha256: string;
+  /** true: entries carry sunnah.com numbers (refs.json); the entry index n is only the app's own position. */
+  refs?: boolean;
+  numbering?: string;
 }
 interface HadithMeta {
   reviewStatus: string;
@@ -57,8 +61,81 @@ export function loadChunk(book: string, k: number): Promise<string[]> {
 }
 
 export interface HadithItem {
+  /** Position of the entry in the book (1-based): the app's key for links, bookmarks and "#n". */
   n: number;
   text: string;
+  /** sunnah.com number(s) of the entry, raw (e.g. "2186", "1218a", "5709,5710", "intro3", "~597b"). */
+  ref?: string;
+}
+
+const refsCache = new Map<string, Promise<string[]>>();
+export const refsUrl = (book: string): string => withBase(`/data/hadith/${book}/refs.json`);
+
+/** sunnah.com numbers of every entry of a book with `refs` (empty list for the other books). */
+export function loadRefs(book: HadithBook): Promise<string[]> {
+  if (!book.refs) return Promise.resolve([]);
+  let p = refsCache.get(book.id);
+  if (!p) {
+    p = fetch(refsUrl(book.id))
+      .then((r) => {
+        if (!r.ok) throw new Error(`${book.id} refs: ${r.status}`);
+        return r.json() as Promise<{ refs: string[] }>;
+      })
+      .then((j) => j.refs);
+    refsCache.set(book.id, p);
+    p.catch(() => refsCache.delete(book.id));
+  }
+  return p;
+}
+
+async function withRefs(book: HadithBook, items: HadithItem[]): Promise<HadithItem[]> {
+  if (!book.refs) return items;
+  const refs = await loadRefs(book);
+  return items.map((h) => ({ ...h, ref: refs[h.n - 1] ?? "" }));
+}
+
+/** sunnah.com letters after a number (a, b, c…) shown as Arabic abjad letters in Arabic. */
+const ABJAD = "أبجدهوزحطيكلمنسعفصقرشتثخذضظغ";
+function oneRef(r: string, locale: string, digits: (v: string) => string): string {
+  const intro = /^intro(\d+)$/.exec(r);
+  if (intro) return locale === "ar" ? `المقدمة ${digits(intro[1]!)}` : `Introduction ${intro[1]}`;
+  const m = /^(\d+)([a-z]?)$/.exec(r);
+  if (!m) return r;
+  const letter = m[2] ? (locale === "ar" ? ` ${ABJAD[m[2].charCodeAt(0) - 97] ?? m[2]}` : m[2]) : "";
+  return `${digits(m[1]!)}${letter}`;
+}
+
+/** A raw sunnah.com number for display: "1218a" → "١٢١٨ أ", "5709,5710" → "٥٧٠٩، ٥٧١٠", "~597b" → "بعد ٥٩٧ ب". */
+export function refLabel(raw: string, locale: string, digits: (v: string) => string = (v) => v): string {
+  if (!raw) return "";
+  if (raw.startsWith("~")) {
+    const inner = oneRef(raw.slice(1), locale, digits);
+    return locale === "ar" ? `بعد ${inner}` : `after ${inner}`;
+  }
+  return raw
+    .split(",")
+    .map((r) => oneRef(r, locale, digits))
+    .join(locale === "ar" ? "، " : ", ");
+}
+
+/**
+ * The entry (1-based) that holds sunnah.com number `query` ("2186", "2186a", "١٢١٨"); null when none.
+ * A number without a letter opens its first part (a).
+ */
+export function findRef(refs: readonly string[], query: string): number | null {
+  const q = query
+    .trim()
+    .replace(/[٠-٩]/g, (d) => String(d.charCodeAt(0) - 0x660))
+    .toLowerCase()
+    .replace(/\s+/g, "");
+  const m = /^(\d+)([a-z]?)$/.exec(q);
+  if (!m) return null;
+  const wanted = (r: string): boolean => {
+    const x = /^(\d+)([a-z]?)$/.exec(r);
+    return !!x && x[1] === String(Number(m[1])) && (m[2] === "" || x[2] === m[2]);
+  };
+  const i = refs.findIndex((all) => !all.startsWith("~") && all.split(",").some(wanted));
+  return i < 0 ? null : i + 1;
 }
 
 /** Hadiths `from`..`to` (inclusive, clamped to the book). */
@@ -69,21 +146,30 @@ export async function loadRange(book: HadithBook, from: number, to: number): Pro
   const parts = Array.from({ length: chunkOf(b) - chunkOf(a) + 1 }, (_, i) => chunkOf(a) + i);
   const texts = await Promise.all(parts.map((k) => loadChunk(book.id, k)));
   const firstN = parts[0]! * HADITH.chunkSize + 1;
-  return texts
-    .flat()
-    .map((text, i) => ({ n: firstN + i, text }))
-    .filter((h) => h.n >= a && h.n <= b);
+  return withRefs(
+    book,
+    texts
+      .flat()
+      .map((text, i) => ({ n: firstN + i, text }))
+      .filter((h) => h.n >= a && h.n <= b),
+  );
 }
 
 /** The hadiths numbered `ns` (any order; read from their parts). */
 export async function loadItems(book: HadithBook, ns: readonly number[]): Promise<HadithItem[]> {
   const ok = ns.filter((n) => n >= 1 && n <= book.count);
   const texts = await Promise.all(ok.map((n) => loadChunk(book.id, chunkOf(n))));
-  return ok.map((n, i) => ({ n, text: texts[i]![(n - 1) % HADITH.chunkSize] ?? "" }));
+  return withRefs(
+    book,
+    ok.map((n, i) => ({ n, text: texts[i]![(n - 1) % HADITH.chunkSize] ?? "" })),
+  );
 }
 
-/** Text for display: the source's own words, without the spaces around them. */
-export const displayText = (text: string): string => text.trim();
+/**
+ * Text for display: the source's own words, without the spaces around them. The sunnah.com copy keeps the
+ * line breaks of the site's page source, which the site itself shows as spaces: shown the same way here.
+ */
+export const displayText = (text: string): string => text.replace(/[ \t]*\n\s*/g, " ").trim();
 
 export const SEARCH_LIMIT = 200;
 
@@ -109,12 +195,17 @@ export async function searchBook(
     });
     onProgress?.(k + 1, book.chunks);
   }
-  return hits;
+  return withRefs(book, hits);
 }
 
 export interface HadithFavourites {
   /** "book:n" keys, newest first. */
   keys: string[];
+  /**
+   * 2 = Bukhari/Muslim keys are positions in the sunnah.com copy (since 1.2.25). Older lists hold
+   * al-Alamiyya numbers for those two books and are moved once by migrateHadithFavourites().
+   */
+  v?: 2;
 }
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null;
 /** "bukhari:1" → a known book and a number inside it. https://regex101.com/?regex=%5E(%5Ba-z%5D%2B)%3A(%5Cd%2B)%24&testString=bukhari%3A1 */
@@ -131,18 +222,49 @@ export function parseKey(key: string): { book: HadithBook; n: number } | null {
 export function sanitizeFavourites(raw: unknown): HadithFavourites {
   const list = isObj(raw) && Array.isArray(raw.keys) ? raw.keys : [];
   const keys = [...new Set(list.filter((k): k is string => typeof k === "string" && parseKey(k) !== null))];
-  return { keys };
+  // An empty list has nothing to move: mark it as new so later keys are never moved by mistake.
+  return isObj(raw) && raw.v === 2 ? { keys, v: 2 } : keys.length === 0 ? { keys, v: 2 } : { keys };
 }
 
 export const hadithFavStore = createStore<HadithFavourites>(
   "rattil.hadithFavourites",
-  { keys: [] },
+  { keys: [], v: 2 },
   sanitizeFavourites,
 );
+
+/** Books whose numbers changed in 1.2.25 (al-Alamiyya → sunnah.com copy). */
+const MOVED_BOOKS = ["bukhari", "muslim"] as const;
+
+/**
+ * Moves saved Bukhari/Muslim hadiths from their old al-Alamiyya numbers to the same hadith in the
+ * sunnah.com copy (table built by tools/build_hadith_sunnah.py). Runs once; safe to call again.
+ */
+export async function migrateHadithFavourites(): Promise<void> {
+  const cur = hadithFavStore.get();
+  if (cur.v === 2) return;
+  const tables: Record<string, number[]> = {};
+  for (const b of MOVED_BOOKS) {
+    if (!cur.keys.some((k) => k.startsWith(`${b}:`))) continue;
+    const r = await fetch(withBase(`/data/hadith/${b}/from-alamiyya.json`));
+    if (!r.ok) return; // try again next time
+    tables[b] = ((await r.json()) as { to: number[] }).to;
+  }
+  hadithFavStore.set((s) => ({
+    v: 2,
+    keys: s.keys.flatMap((k) => {
+      const [b, n] = k.split(":");
+      const table = tables[b!];
+      if (!table) return [k];
+      const to = table[Number(n) - 1];
+      return to ? [`${b}:${to}`] : [];
+    }),
+  }));
+}
 
 export function toggleFavourite(book: string, n: number): void {
   const key = `${book}:${n}`;
   hadithFavStore.set((s) => ({
+    ...s,
     keys: s.keys.includes(key) ? s.keys.filter((k) => k !== key) : [key, ...s.keys],
   }));
 }

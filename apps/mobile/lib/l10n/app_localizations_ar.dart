@@ -1061,7 +1061,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String hadithAttribution(String name, String licence) {
-    return 'الأحاديث بترقيم العالمية، من مشروع $name ($licence).';
+    return 'صحيح البخاري وصحيح مسلم منقولان من sunnah.com بترقيمه. باقي الكتب بترقيم العالمية، من مشروع $name ($licence).';
   }
 
   @override
@@ -1099,9 +1099,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hadithFavourites => 'الأحاديث المحفوظة';
 
   @override
+  String get hadithGoMissing => 'لا يوجد حديث بهذا الرقم في هذا الكتاب.';
+
+  @override
   String hadithGoTo(String max) {
     return 'اذهب إلى حديث رقم (١–$max)';
   }
+
+  @override
+  String get hadithGoToSunnah => 'اذهب إلى حديث رقم (بترقيم sunnah.com، مثل ١٢١٨)';
 
   @override
   String hadithGrade(String grade) {
@@ -1125,6 +1131,11 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String hadithPageOf(String n, String total) {
     return 'الحديث $n من $total';
+  }
+
+  @override
+  String hadithPageSunnah(String n) {
+    return 'حديث $n (ترقيم sunnah.com)';
   }
 
   @override
@@ -1165,6 +1176,11 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String hadithSource(String book, String n) {
     return '$book، حديث رقم $n (ترقيم العالمية)';
+  }
+
+  @override
+  String hadithSourceSunnah(String book, String n) {
+    return '$book، حديث رقم $n (ترقيم sunnah.com)';
   }
 
   @override
