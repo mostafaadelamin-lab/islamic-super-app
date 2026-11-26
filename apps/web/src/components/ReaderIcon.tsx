@@ -17,6 +17,7 @@ export type ReaderIconName = Extract<
   | "reciter"
   | "expand"
   | "shrink"
+  | "pages"
 >;
 
 export function ReaderIcon({ name, size }: { name: ReaderIconName; size?: number }) {

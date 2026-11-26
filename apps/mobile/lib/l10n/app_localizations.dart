@@ -95,7 +95,7 @@ abstract class AppLocalizations {
   /// shared key "about.fonts"
   ///
   /// In en, this message translates to:
-  /// **'Fonts: Quran — KFGQPC HAFS Uthmanic Script version 2.2 (King Fahd Complex, unmodified, under its licence); interface — IBM Plex Sans Arabic, SIL Open Font License 1.1.'**
+  /// **'Fonts: Quran — KFGQPC HAFS Uthmanic Script v18 (King Fahd Complex, unmodified, under its licence); interface — IBM Plex Sans Arabic, SIL Open Font License 1.1.'**
   String get aboutFonts;
 
   /// shared key "about.openSource"
@@ -119,7 +119,7 @@ abstract class AppLocalizations {
   /// shared key "about.quranText"
   ///
   /// In en, this message translates to:
-  /// **'Quran text: King Fahd Glorious Quran Printing Complex, Hafs Uthmanic text version 2.2 (package hafs-2.2.zip from the Complex\'s website), Hafs an Asim. Bundled exactly as published (only the ayah number is split off); verified by the SHA-256 the Complex publishes.'**
+  /// **'Quran text: King Fahd Glorious Quran Printing Complex, Hafs Uthmanic Data v18 (hafsData_v18.json), Hafs an Asim. Bundled exactly as published (only the trailing ayah number is removed); verified by SHA-256.'**
   String get aboutQuranText;
 
   /// shared key "about.translation"
@@ -1493,7 +1493,7 @@ abstract class AppLocalizations {
   /// shared key "car.storiesSub"
   ///
   /// In en, this message translates to:
-  /// **'Sheikh Mohamed Metwally Al-Sha\'rawi'**
+  /// **'Sheikh Nabil al-Awadi'**
   String get carStoriesSub;
 
   /// shared key "car.text"
@@ -5588,6 +5588,18 @@ abstract class AppLocalizations {
   /// **'Previous surah'**
   String get readerPrevSurah;
 
+  /// shared key "reader.printedLook"
+  ///
+  /// In en, this message translates to:
+  /// **'Printed Mushaf look (optional, downloaded from the internet)'**
+  String get readerPrintedLook;
+
+  /// shared key "reader.printedLookShort"
+  ///
+  /// In en, this message translates to:
+  /// **'Printed'**
+  String get readerPrintedLookShort;
+
   /// shared key "reader.repeatN"
   ///
   /// In en, this message translates to:
@@ -6707,7 +6719,7 @@ abstract class AppLocalizations {
   /// shared key "stories.howTo"
   ///
   /// In en, this message translates to:
-  /// **'Each episode: tap to listen, or the download icon to listen offline.'**
+  /// **'Each episode: tap to listen, the video icon to watch, or the download icon to listen offline.'**
   String get storiesHowTo;
 
   /// shared key "stories.intro"
@@ -6863,7 +6875,7 @@ abstract class AppLocalizations {
   /// shared key "stories.videoBy"
   ///
   /// In en, this message translates to:
-  /// **'Sheikh Mohamed Metwally Al-Sha\'rawi'**
+  /// **'Sheikh Nabil Al-Awadi'**
   String get storiesVideoBy;
 
   /// shared key "stories.watchVideo"

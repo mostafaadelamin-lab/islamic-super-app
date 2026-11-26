@@ -1014,6 +1014,8 @@
   "settings.mushafPrintedSaved": "All page fonts are saved on this device",
   "settings.mushafPrintedFailed": "Download failed, try again",
   "reader.tafsirBeside": "Tafsir beside the page",
+  "reader.printedLook": "Printed Mushaf look (optional, downloaded from the internet)",
+  "reader.printedLookShort": "Printed",
   "reader.tafsirBesideShort": "Tafsir",
   "dhikrRem.title": "Dhikr reminders",
   "dhikrRem.enable": "Remind me of dhikr through the day",

@@ -10,7 +10,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutFonts =>
-      'Fonts: Quran — KFGQPC HAFS Uthmanic Script version 2.2 (King Fahd Complex, unmodified, under its licence); interface — IBM Plex Sans Arabic, SIL Open Font License 1.1.';
+      'Fonts: Quran — KFGQPC HAFS Uthmanic Script v18 (King Fahd Complex, unmodified, under its licence); interface — IBM Plex Sans Arabic, SIL Open Font License 1.1.';
 
   @override
   String get aboutOpenSource => 'Open source and free forever. No tracking, no ads, no in-app purchases.';
@@ -25,7 +25,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutQuranText =>
-      'Quran text: King Fahd Glorious Quran Printing Complex, Hafs Uthmanic text version 2.2 (package hafs-2.2.zip from the Complex\'s website), Hafs an Asim. Bundled exactly as published (only the ayah number is split off); verified by the SHA-256 the Complex publishes.';
+      'Quran text: King Fahd Glorious Quran Printing Complex, Hafs Uthmanic Data v18 (hafsData_v18.json), Hafs an Asim. Bundled exactly as published (only the trailing ayah number is removed); verified by SHA-256.';
 
   @override
   String get aboutTranslation =>
@@ -799,7 +799,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get carStories => 'Stories of the Prophets';
 
   @override
-  String get carStoriesSub => 'Sheikh Mohamed Metwally Al-Sha\'rawi';
+  String get carStoriesSub => 'Sheikh Nabil al-Awadi';
 
   @override
   String get carText => 'Dhikr text';
@@ -3121,6 +3121,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerPrevSurah => 'Previous surah';
 
   @override
+  String get readerPrintedLook => 'Printed Mushaf look (optional, downloaded from the internet)';
+
+  @override
+  String get readerPrintedLookShort => 'Printed';
+
+  @override
   String readerRepeatN(String n) {
     return 'Repeat: $n';
   }
@@ -3744,7 +3750,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get storiesHowTo => 'Each episode: tap to listen, or the download icon to listen offline.';
+  String get storiesHowTo =>
+      'Each episode: tap to listen, the video icon to watch, or the download icon to listen offline.';
 
   @override
   String get storiesIntro =>
@@ -3837,7 +3844,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get storiesVersesTitle => 'The stories\' verses from the Mushaf';
 
   @override
-  String get storiesVideoBy => 'Sheikh Mohamed Metwally Al-Sha\'rawi';
+  String get storiesVideoBy => 'Sheikh Nabil Al-Awadi';
 
   @override
   String get storiesWatchVideo => 'Watch video';

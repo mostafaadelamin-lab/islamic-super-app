@@ -358,6 +358,8 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                     showSurahInfo(context, (_selected ?? s.content.quran.ayahsOnPage(_page).first).surah);
                   case 4:
                     _toggleTafsirBeside(context);
+                  case 5:
+                    unawaited(st.setMushafPrinted(!st.mushafPrinted));
                   default:
                     showReaderHelp(context, pageCount: _count, onGo: _jump);
                 }
@@ -367,6 +369,11 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                 PopupMenuItem(value: 1, child: Text('A−  ${l.readerFontSmaller}')),
                 PopupMenuItem(value: 2, child: Text(l.surahInfoTitle)),
                 PopupMenuItem(value: 4, key: const Key('menuTafsirBeside'), child: Text(l.readerTafsirBeside)),
+                PopupMenuItem(
+                  value: 5,
+                  key: const Key('menuPrinted'),
+                  child: Text('${s.settings.mushafPrinted ? '✓ ' : ''}${l.readerPrintedLook}'),
+                ),
                 PopupMenuItem(value: 3, child: Text(l.readerHelp)),
               ],
             )
@@ -382,6 +389,24 @@ class PageReaderScreenState extends State<PageReaderScreen> {
               icon: const RIcon(RIcons.openBook),
               onPressed: () => _toggleTafsirBeside(context),
             ),
+            if (_tab == ReaderTab.mushaf)
+              // Owner 2026-11-26: switch to the printed look (optional, downloaded) and back while reading.
+              ListenableBuilder(
+                listenable: s.settings,
+                builder: (context, _) {
+                  final on = s.settings.mushafPrinted;
+                  return IconButton(
+                    key: const Key('readerPrinted'),
+                    tooltip: l.readerPrintedLook,
+                    isSelected: on,
+                    color: scheme.primary,
+                    selectedIcon: RIcon(RIcons.pages, color: scheme.onPrimary),
+                    style: on ? IconButton.styleFrom(backgroundColor: scheme.primary) : null,
+                    icon: const RIcon(RIcons.pages),
+                    onPressed: () => unawaited(s.settings.setMushafPrinted(!on)),
+                  );
+                },
+              ),
             if (_tab == ReaderTab.mushaf)
               IconButton(
                 key: const Key('readerHelp'),

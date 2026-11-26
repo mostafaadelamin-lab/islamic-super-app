@@ -42,6 +42,8 @@
   "reader.volume": "Volume",
   "reader.hintClose": "Got it",
   "reader.tafsirBeside": "Tafsir beside the page",
+  "reader.printedLook": "Printed Mushaf look (optional, downloaded from the internet)",
+  "reader.printedLookShort": "Printed",
   "reader.tafsirBesideShort": "Tafsir",
   "reader.pageSize": "Page size",
   "reader.pageSmaller": "Smaller page",

@@ -1014,6 +1014,8 @@
   "settings.mushafPrintedSaved": "خطوط كل الصفحات محفوظة على الجهاز",
   "settings.mushafPrintedFailed": "تعذّر التحميل، حاول مرة أخرى",
   "reader.tafsirBeside": "التفسير بجانب الصفحة",
+  "reader.printedLook": "شكل المصحف المطبوع (اختياري، يتحمّل من الإنترنت)",
+  "reader.printedLookShort": "المطبوع",
   "reader.tafsirBesideShort": "التفسير",
   "dhikrRem.title": "تنبيهات الأذكار",
   "dhikrRem.enable": "تذكير بالذكر طول اليوم",

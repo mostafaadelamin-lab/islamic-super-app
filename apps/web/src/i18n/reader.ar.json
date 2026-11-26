@@ -42,6 +42,8 @@
   "reader.volume": "مستوى الصوت",
   "reader.hintClose": "فهمت",
   "reader.tafsirBeside": "التفسير بجانب الصفحة",
+  "reader.printedLook": "شكل المصحف المطبوع (اختياري، يتحمّل من الإنترنت)",
+  "reader.printedLookShort": "المطبوع",
   "reader.tafsirBesideShort": "التفسير",
   "reader.pageSize": "حجم الصفحة",
   "reader.pageSmaller": "تصغير الصفحة",
