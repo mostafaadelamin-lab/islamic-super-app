@@ -159,6 +159,13 @@
         margin-top: 40px;
         text-align: center;
       }
+      @media (max-width: 600px) {
+        table.cards thead { display: none; }
+        table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: auto; }
+        table.cards tr { border-bottom: 2px solid var(--line, #ccd); padding: 8px 0; }
+        table.cards td { border: 0; padding: 4px 8px; }
+        table.cards td[data-label]::before { content: attr(data-label) ": "; font-weight: 700; }
+      }
     </style>
   </head>
   <body>
@@ -389,7 +396,7 @@
         التطبيق، ليتأكد أي أحد أنها لم تتغير.
       </p>
       <div class="table-wrap">
-        <table>
+        <table class="cards">
           <thead>
             <tr>
               <th>الكتاب</th>
@@ -400,58 +407,58 @@
           </thead>
           <tbody>
             <tr>
-              <td>صحيح البخاري</td>
-              <td>7,008</td>
-              <td>4,675 مطابق حرفيًا · 234 نفس الكلمات بتقسيم مختلف · 1,713 مطابق 95% فأكثر · 371 مطابق 80–95% · 15 أقل من 80% (قيد المراجعة اليدوية)</td>
-              <td><code style="font-size:.75em;word-break:break-all">28fc7bb4ab19e1f943a1f84af74e802eee8df888cb10bf4eccf8b98056224701</code></td>
+              <td><strong>صحيح البخاري</strong></td>
+              <td data-label="عدد الأحاديث">7,008</td>
+              <td data-label="المقارنة مع sunnah.com">4,675 مطابق حرفيًا · 234 نفس الكلمات بتقسيم مختلف · 1,713 مطابق 95% فأكثر · 371 مطابق 80–95% · 15 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">28fc7bb4ab19e1f943a1f84af74e802eee8df888cb10bf4eccf8b98056224701</code></td>
             </tr>
             <tr>
-              <td>صحيح مسلم</td>
-              <td>5,362</td>
-              <td>2,580 مطابق حرفيًا · 806 نفس الكلمات بتقسيم مختلف · 1,832 مطابق 95% فأكثر · 100 مطابق 80–95% · 44 أقل من 80% (قيد المراجعة اليدوية)</td>
-              <td><code style="font-size:.75em;word-break:break-all">bd028449f44d9351af2c13a0b752e28d2b30ea9b853b648f1814408c698232c1</code></td>
+              <td><strong>صحيح مسلم</strong></td>
+              <td data-label="عدد الأحاديث">5,362</td>
+              <td data-label="المقارنة مع sunnah.com">2,580 مطابق حرفيًا · 806 نفس الكلمات بتقسيم مختلف · 1,832 مطابق 95% فأكثر · 100 مطابق 80–95% · 44 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">bd028449f44d9351af2c13a0b752e28d2b30ea9b853b648f1814408c698232c1</code></td>
             </tr>
             <tr>
-              <td>سنن أبي داود</td>
-              <td>4,590</td>
-              <td>2,611 مطابق حرفيًا · 347 نفس الكلمات بتقسيم مختلف · 1,538 مطابق 95% فأكثر · 80 مطابق 80–95% · 14 أقل من 80% (قيد المراجعة اليدوية)</td>
-              <td><code style="font-size:.75em;word-break:break-all">8cfb84883a34abeec2c0a88c575d0813643dbb32f5fc53a4f6a717981223bc5d</code></td>
+              <td><strong>سنن أبي داود</strong></td>
+              <td data-label="عدد الأحاديث">4,590</td>
+              <td data-label="المقارنة مع sunnah.com">2,611 مطابق حرفيًا · 347 نفس الكلمات بتقسيم مختلف · 1,538 مطابق 95% فأكثر · 80 مطابق 80–95% · 14 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">8cfb84883a34abeec2c0a88c575d0813643dbb32f5fc53a4f6a717981223bc5d</code></td>
             </tr>
             <tr>
-              <td>جامع الترمذي</td>
-              <td>3,891</td>
-              <td>1,332 مطابق حرفيًا · 467 نفس الكلمات بتقسيم مختلف · 1,880 مطابق 95% فأكثر · 197 مطابق 80–95% · 15 أقل من 80% (قيد المراجعة اليدوية)</td>
-              <td><code style="font-size:.75em;word-break:break-all">d4d243ef57e64b28e22cdd5f89858fb453e6398aac7cd9aa3c8d8fd0c5037066</code></td>
+              <td><strong>جامع الترمذي</strong></td>
+              <td data-label="عدد الأحاديث">3,891</td>
+              <td data-label="المقارنة مع sunnah.com">1,332 مطابق حرفيًا · 467 نفس الكلمات بتقسيم مختلف · 1,880 مطابق 95% فأكثر · 197 مطابق 80–95% · 15 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">d4d243ef57e64b28e22cdd5f89858fb453e6398aac7cd9aa3c8d8fd0c5037066</code></td>
             </tr>
             <tr>
-              <td>سنن النسائي</td>
-              <td>5,662</td>
-              <td>4,047 مطابق حرفيًا · 130 نفس الكلمات بتقسيم مختلف · 1,419 مطابق 95% فأكثر · 64 مطابق 80–95% · 2 أقل من 80% (قيد المراجعة اليدوية)</td>
-              <td><code style="font-size:.75em;word-break:break-all">395e003ac2bc705b638f9540f19c2b771ed49eed4d90189ac572102f93d507a1</code></td>
+              <td><strong>سنن النسائي</strong></td>
+              <td data-label="عدد الأحاديث">5,662</td>
+              <td data-label="المقارنة مع sunnah.com">4,047 مطابق حرفيًا · 130 نفس الكلمات بتقسيم مختلف · 1,419 مطابق 95% فأكثر · 64 مطابق 80–95% · 2 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">395e003ac2bc705b638f9540f19c2b771ed49eed4d90189ac572102f93d507a1</code></td>
             </tr>
             <tr>
-              <td>سنن ابن ماجه</td>
-              <td>4,332</td>
-              <td>2,888 مطابق حرفيًا · 106 نفس الكلمات بتقسيم مختلف · 1,234 مطابق 95% فأكثر · 101 مطابق 80–95% · 3 أقل من 80% (قيد المراجعة اليدوية)</td>
-              <td><code style="font-size:.75em;word-break:break-all">6cb1548810f1a576476ba9c0d228da548007c8c9cc45ff865a802105fb8bfa13</code></td>
+              <td><strong>سنن ابن ماجه</strong></td>
+              <td data-label="عدد الأحاديث">4,332</td>
+              <td data-label="المقارنة مع sunnah.com">2,888 مطابق حرفيًا · 106 نفس الكلمات بتقسيم مختلف · 1,234 مطابق 95% فأكثر · 101 مطابق 80–95% · 3 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">6cb1548810f1a576476ba9c0d228da548007c8c9cc45ff865a802105fb8bfa13</code></td>
             </tr>
             <tr>
-              <td>موطأ مالك</td>
-              <td>1,594</td>
-              <td>1,198 مطابق حرفيًا · 197 نفس الكلمات بتقسيم مختلف · 138 مطابق 95% فأكثر · 43 مطابق 80–95% · 18 أقل من 80% (قيد المراجعة اليدوية)</td>
-              <td><code style="font-size:.75em;word-break:break-all">e2c67df04c83b3f79feccb632d67b236fd090582750cbabb2f1a4f199a79781d</code></td>
+              <td><strong>موطأ مالك</strong></td>
+              <td data-label="عدد الأحاديث">1,594</td>
+              <td data-label="المقارنة مع sunnah.com">1,198 مطابق حرفيًا · 197 نفس الكلمات بتقسيم مختلف · 138 مطابق 95% فأكثر · 43 مطابق 80–95% · 18 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">e2c67df04c83b3f79feccb632d67b236fd090582750cbabb2f1a4f199a79781d</code></td>
             </tr>
             <tr>
-              <td>مسند أحمد</td>
-              <td>26,363</td>
-              <td>يوجد في sunnah.com جزء صغير منه فقط: قورن 1,446 حديثًا، منها 1,358 مطابق حرفيًا. باقي الأحاديث (24,917) لا يوجد لها مصدر إلكتروني ثانٍ متاح للمقارنة</td>
-              <td><code style="font-size:.75em;word-break:break-all">00f22c2d26faaa9cd88f329a712dfb36a56debdc7e40dbc9c8a3e29d21d96337</code></td>
+              <td><strong>مسند أحمد</strong></td>
+              <td data-label="عدد الأحاديث">26,363</td>
+              <td data-label="المقارنة مع sunnah.com">يوجد في sunnah.com جزء صغير منه فقط: قورن 1,446 حديثًا، منها 1,358 مطابق حرفيًا. باقي الأحاديث (24,917) لا يوجد لها مصدر إلكتروني ثانٍ متاح للمقارنة</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">00f22c2d26faaa9cd88f329a712dfb36a56debdc7e40dbc9c8a3e29d21d96337</code></td>
             </tr>
             <tr>
-              <td>سنن الدارمي</td>
-              <td>3,367</td>
-              <td>1,636 مطابق حرفيًا · 514 نفس الكلمات بتقسيم مختلف · 922 مطابق 95% فأكثر · 292 مطابق 80–95% · 3 أقل من 80% (قيد المراجعة اليدوية)</td>
-              <td><code style="font-size:.75em;word-break:break-all">e0123485bd1db1ea5935d1a3d3e648b230aed53ea4313c50441ad04bb484aa9e</code></td>
+              <td><strong>سنن الدارمي</strong></td>
+              <td data-label="عدد الأحاديث">3,367</td>
+              <td data-label="المقارنة مع sunnah.com">1,636 مطابق حرفيًا · 514 نفس الكلمات بتقسيم مختلف · 922 مطابق 95% فأكثر · 292 مطابق 80–95% · 3 أقل من 80% (قيد المراجعة اليدوية)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">e0123485bd1db1ea5935d1a3d3e648b230aed53ea4313c50441ad04bb484aa9e</code></td>
             </tr>
           </tbody>
         </table>
