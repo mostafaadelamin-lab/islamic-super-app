@@ -320,7 +320,7 @@ class ReelsFeedController extends ChangeNotifier {
       final at = DateTime.parse(j['at'] as String);
       final list = [
         for (final r in j['items'] as List<dynamic>) ?s.fromCache(r),
-      ].where((r) => allowedFeedTitle(r.titleAr)).toList();
+      ].where((r) => allowedFeedTitle(r.titleAr, s.group)).toList();
       return (at, list);
     } on Object {
       return null;
@@ -363,7 +363,7 @@ class ReelsFeedController extends ChangeNotifier {
             jsonEncode({
               'at': now.toUtc().toIso8601String(),
               'items': [
-                for (final r in list.where((r) => allowedFeedTitle(r.titleAr)).take(perSource))
+                for (final r in list.where((r) => allowedFeedTitle(r.titleAr, s.group)).take(perSource))
                   {'ref': r.ref, 'title': r.titleAr, 'published': r.published?.toUtc().toIso8601String()},
               ],
             }),

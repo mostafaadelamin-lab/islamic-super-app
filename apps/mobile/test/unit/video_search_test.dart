@@ -59,6 +59,22 @@ void main() {
       expect(allowedFeedTitle('خطبة الجمعة من المسجد النبوي'), isFalse);
       expect(allowedFeedTitle('نشيد جميل'), isFalse);
       expect(allowedFeedTitle('لقاء مع القارئ'), isFalse);
+      expect(
+        allowedFeedTitle('( وَقَالُوا حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ )'),
+        isTrue,
+        reason: 'a verse in brackets',
+      );
+      expect(
+        allowedFeedTitle('وَٱذۡكُرۡ فِي ٱلۡكِتَٰبِ مَرۡيَمَ | محمد رفعت'),
+        isTrue,
+        reason: 'Quran text with tashkeel',
+      );
+      expect(allowedFeedTitle('الشيخ أبو العينين شعيشع'), isFalse);
+      expect(allowedFeedTitle('الشيخ أبو العينين شعيشع', 'golden'), isTrue, reason: 'golden generation channels');
+      expect(allowedFeedTitle('لقاء مع الشيخ', 'golden'), isFalse);
+      expect(allowedFeedTitle('معلقة عنترة بن شداد'), isFalse);
+      expect(allowedFeedTitle('فَضْلُ يَوِمِ عَاشُورَاءَ لفضيلة الشيخ'), isFalse);
+      expect(allowedFeedTitle('اذكار الصباح بصوت الشيخ'), isFalse);
       expect(allowedChannel('تلاوات خاشعة'), isTrue);
       expect(allowedChannel('دروس ومواعظ'), isFalse);
     });

@@ -64,7 +64,23 @@ bool looksIslamic(String text) => _hasWord(text, islamicWords);
 const recitationWords = [
   'قران', 'سوره', 'سور', 'تلاوه', 'تلاوات', 'ترتيل', 'تجويد', 'مصحف', 'ايات', 'قارئ', 'القارئ', 'مقرئ', //
   'تراويح', 'تهجد', 'قيام الليل', 'فجريه', 'عشائيه', 'عشائيات', 'صلاه الفجر', 'صلاه العشاء', 'صلاه المغرب',
-  'صلاه الظهر', 'صلاه العصر', 'ختمه', 'رقيه', 'quran', 'koran', 'recitation', 'surah', 'surat', 'sura', 'tilawat',
+  'صلاه الظهر',
+  'صلاه العصر',
+  'ختمه',
+  'رقيه',
+  'سورتي',
+  'سورتين',
+  'سورتا',
+  'صلاه الجمعه',
+  'صلاه التراويح',
+  'tahajjud',
+  'quran',
+  'koran',
+  'recitation',
+  'surah',
+  'surat',
+  'sura',
+  'tilawat',
   'tilawah', 'tajweed', 'taraweeh', 'tarawih', 'qiyam', 'fajr', 'isha', 'maghrib',
 ];
 
@@ -72,7 +88,28 @@ const recitationWords = [
 const nonRecitationWords = [
   'خطبه', 'خطبتي', 'خطبتا', 'درس', 'دروس', 'محاضره', 'محاضرات', 'موعظه', 'مواعظ', 'نصيحه', 'نصائح', 'فتوي', //
   'فتاوي', 'لقاء', 'حوار', 'برنامج', 'بودكاست', 'نشيد', 'انشوده', 'اناشيد', 'قصيده', 'دعاء', 'ادعيه', 'تكبيرات',
-  'اذان', 'تفسير', 'سؤال', 'اسئله', 'مقابله',
+  'اذان',
+  'تفسير',
+  'سؤال',
+  'اسئله',
+  'مقابله',
+  'معلقه',
+  'معلقات',
+  'شعر',
+  'كورس',
+  'لهجه',
+  'عيديه',
+  'استقبال',
+  'اذكار',
+  'رضي الله عنه',
+  'رضي الله عنها',
+  'فوائد',
+  'سلسله',
+  'فضل يوم',
+  'فضل صيام',
+  'فضل شهر',
+  'لا اله الا الله وحده',
+  'ادع الله',
   'lecture', 'lesson', 'khutbah', 'khutba', 'sermon', 'nasheed', 'anasheed', 'dua', 'podcast', 'interview',
 ];
 
@@ -83,7 +120,13 @@ const excludedPeople = [
   'راتب النابلسي', 'حازم شومان', 'طارق السويدان', 'احمد عبد المنعم', 'ياسر الحزيمي',
 ];
 
-bool looksRecitation(String text) => _hasWord(text, recitationWords) || text.contains('﴿');
+final _tashkeelMark = RegExp('[\u064B-\u0652\u0670]');
+final _quotedArabic = RegExp(r'[(«"“{﴿][^)»"”}﴾]*\p{Script=Arabic}[^)»"”}﴾]*[)»"”}﴾]', unicode: true);
+
+/// Quran text in a title: 4+ tashkeel marks, or Arabic between brackets/quotes (same as videos-core.mjs).
+bool looksLikeVerse(String text) => _tashkeelMark.allMatches(text).length >= 4 || _quotedArabic.hasMatch(text);
+
+bool looksRecitation(String text) => _hasWord(text, recitationWords) || text.contains('﴿') || looksLikeVerse(text);
 bool namesExcluded(String text) => _hasWord(text, excludedPeople);
 
 /// Blocked, not recitation, or naming an excluded sheikh.
@@ -91,7 +134,9 @@ bool notRecitation(String text) =>
     isBlockedVideoText(text) || _hasWord(text, nonRecitationWords) || namesExcluded(text);
 
 /// A video from a reciter's channel may join the feed.
-bool allowedFeedTitle(String title) => !notRecitation(title) && looksRecitation(title);
+/// The golden generation's channels hold only their recitations (often titled with the name alone): blocklist only.
+bool allowedFeedTitle(String title, [String? group]) =>
+    !notRecitation(title) && (group == 'golden' || looksRecitation(title));
 
 /// A channel from the channel search may be added: its name must say recitation/Quran.
 bool allowedChannel(String title) => !notRecitation(title) && looksRecitation(title);

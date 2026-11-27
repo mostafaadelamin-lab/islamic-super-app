@@ -159,26 +159,135 @@ export const BLOCKED_WORDS = [
 /** Words that show a title is Quran recitation (normalized forms). Prayer names: the Haramain channels title
  *  their uploads "صلاة العشاء من المسجد الحرام – تلاوة …". */
 export const RECITATION_WORDS = [
-  "قران", "سوره", "سور", "تلاوه", "تلاوات", "ترتيل", "تجويد", "مصحف", "ايات", "قارئ", "القارئ", "مقرئ",
-  "تراويح", "تهجد", "قيام الليل", "فجريه", "عشائيه", "عشائيات", "صلاه الفجر", "صلاه العشاء", "صلاه المغرب",
-  "صلاه الظهر", "صلاه العصر", "ختمه", "رقيه", "quran", "koran", "recitation", "surah", "surat", "sura", "tilawat", "tilawah", "tajweed", "taraweeh",
-  "tarawih", "qiyam", "fajr", "isha", "maghrib",
+  "قران",
+  "سوره",
+  "سور",
+  "تلاوه",
+  "تلاوات",
+  "ترتيل",
+  "تجويد",
+  "مصحف",
+  "ايات",
+  "قارئ",
+  "القارئ",
+  "مقرئ",
+  "تراويح",
+  "تهجد",
+  "قيام الليل",
+  "فجريه",
+  "عشائيه",
+  "عشائيات",
+  "صلاه الفجر",
+  "صلاه العشاء",
+  "صلاه المغرب",
+  "صلاه الظهر",
+  "صلاه العصر",
+  "ختمه",
+  "رقيه",
+  "سورتي",
+  "سورتين",
+  "سورتا",
+  "صلاه الجمعه",
+  "صلاه التراويح",
+  "tahajjud",
+  "quran",
+  "koran",
+  "recitation",
+  "surah",
+  "surat",
+  "sura",
+  "tilawat",
+  "tilawah",
+  "tajweed",
+  "taraweeh",
+  "tarawih",
+  "qiyam",
+  "fajr",
+  "isha",
+  "maghrib",
 ];
 
 /** Not recitation even on a reciter's channel (owner 2026-11-27: videos = recitation only). No surah names here:
  *  "القصص" or "الشرح" must still pass, so قصص/شرح are not listed. */
 export const NON_RECITATION_WORDS = [
-  "خطبه", "خطبتي", "خطبتا", "درس", "دروس", "محاضره", "محاضرات", "موعظه", "مواعظ", "نصيحه", "نصائح", "فتوي",
-  "فتاوي", "لقاء", "حوار", "برنامج", "بودكاست", "نشيد", "انشوده", "اناشيد", "قصيده", "دعاء", "ادعيه", "تكبيرات",
-  "اذان", "تفسير", "سؤال", "اسئله", "مقابله",
-  "lecture", "lesson", "khutbah", "khutba", "sermon", "nasheed", "anasheed", "dua", "podcast", "interview",
+  "خطبه",
+  "خطبتي",
+  "خطبتا",
+  "درس",
+  "دروس",
+  "محاضره",
+  "محاضرات",
+  "موعظه",
+  "مواعظ",
+  "نصيحه",
+  "نصائح",
+  "فتوي",
+  "فتاوي",
+  "لقاء",
+  "حوار",
+  "برنامج",
+  "بودكاست",
+  "نشيد",
+  "انشوده",
+  "اناشيد",
+  "قصيده",
+  "دعاء",
+  "ادعيه",
+  "تكبيرات",
+  "اذان",
+  "تفسير",
+  "سؤال",
+  "اسئله",
+  "مقابله",
+  "معلقه",
+  "معلقات",
+  "شعر",
+  "كورس",
+  "لهجه",
+  "عيديه",
+  "استقبال",
+  "اذكار",
+  "رضي الله عنه",
+  "رضي الله عنها",
+  "فوائد",
+  "سلسله",
+  "فضل يوم",
+  "فضل صيام",
+  "فضل شهر",
+  "لا اله الا الله وحده",
+  "ادع الله",
+  "lecture",
+  "lesson",
+  "khutbah",
+  "khutba",
+  "sermon",
+  "nasheed",
+  "anasheed",
+  "dua",
+  "podcast",
+  "interview",
 ];
 
 /** Never shown (owner 2026-11-26/27: jailed, or ever in a political current). Matched as whole phrases. */
 export const EXCLUDED_PEOPLE = [
-  "نبيل العوضي", "محمد العريفي", "صالح المنجد", "محمد حسين يعقوب", "ايمن عبد الرحيم", "بدر المشاري",
-  "عبدالله بصفر", "عبد الله بصفر", "صالح ال طالب", "بندر بليله", "عمرو خالد", "محمد حسان", "عائض القرني",
-  "راتب النابلسي", "حازم شومان", "طارق السويدان", "احمد عبد المنعم", "ياسر الحزيمي",
+  "نبيل العوضي",
+  "محمد العريفي",
+  "صالح المنجد",
+  "محمد حسين يعقوب",
+  "ايمن عبد الرحيم",
+  "بدر المشاري",
+  "عبدالله بصفر",
+  "عبد الله بصفر",
+  "صالح ال طالب",
+  "بندر بليله",
+  "عمرو خالد",
+  "محمد حسان",
+  "عائض القرني",
+  "راتب النابلسي",
+  "حازم شومان",
+  "طارق السويدان",
+  "احمد عبد المنعم",
+  "ياسر الحزيمي",
 ];
 
 /** Arabic words may carry a joined prefix (و، ف، ب، ل، ال، وال، بال، فال، لل). */
@@ -200,14 +309,23 @@ const hasWord = (text, words) => {
 
 export const isBlocked = (text) => hasWord(text, BLOCKED_WORDS);
 export const looksIslamic = (text) => hasWord(text, ISLAMIC_WORDS);
-export const looksRecitation = (text) => hasWord(text, RECITATION_WORDS) || String(text).includes("﴿");
+/** Quran text in a title: 4+ tashkeel marks, or Arabic between brackets/quotes, e.g. "( وَاصْبِرْ )" or «يريد الله»;
+ *  "الشيخ أبو العينين شعيشع" has neither. */
+const TASHKEEL = /[\u064B-\u0652\u0670]/gu;
+const QUOTED_ARABIC = /[(«"“{﴿][^)»"”}﴾]*\p{Script=Arabic}[^)»"”}﴾]*[)»"”}﴾]/u;
+export const looksLikeVerse = (text) =>
+  (String(text).match(TASHKEEL)?.length ?? 0) >= 4 || QUOTED_ARABIC.test(String(text));
+export const looksRecitation = (text) =>
+  hasWord(text, RECITATION_WORDS) || String(text).includes("﴿") || looksLikeVerse(text);
 export const namesExcluded = (text) => hasWord(text, EXCLUDED_PEOPLE);
 /** Blocked, not recitation, or naming an excluded sheikh. */
 export const notRecitation = (text) =>
   isBlocked(text) || hasWord(text, NON_RECITATION_WORDS) || namesExcluded(text);
 
-/** A video from a reciter's channel may join the feed: it must look like recitation. */
-export const allowedFeedTitle = (title) => !notRecitation(title) && looksRecitation(title);
+/** A video from a reciter's channel may join the feed: it must look like recitation. The golden generation's
+ *  channels hold only their recitations, often titled with the reciter's name alone, so only the blocklist applies there. */
+export const allowedFeedTitle = (title, group = null) =>
+  !notRecitation(title) && (group === "golden" || looksRecitation(title));
 
 /** A search result may be shown: recitation only; trusted reciters' channels first. */
 export function allowedVideo(hit, trustedChannelIds) {
@@ -389,7 +507,7 @@ export async function buildFeed(sources, get) {
       if (!cid || !CHANNEL_ID.test(cid)) return [];
       const items = (await fetchSource(cid, get)) ?? [];
       return items
-        .filter((r) => allowedFeedTitle(r.title))
+        .filter((r) => allowedFeedTitle(r.title, s.group ?? null))
         .slice(0, PER_SOURCE)
         .map((r) => toReel(s, r));
     }),

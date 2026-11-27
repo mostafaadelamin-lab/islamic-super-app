@@ -61,6 +61,14 @@ describe("videos engine (website function)", () => {
     expect(allowedFeedTitle("صلاة العشاء من المسجد الحرام")).toBe(true);
     expect(allowedFeedTitle("خطبة الجمعة من المسجد النبوي")).toBe(false);
     expect(allowedFeedTitle("نشيد جميل")).toBe(false);
+    expect(allowedFeedTitle("( وَقَالُوا حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ )")).toBe(true);
+    expect(allowedFeedTitle("وَٱذۡكُرۡ فِي ٱلۡكِتَٰبِ مَرۡيَمَ | محمد رفعت")).toBe(true);
+    expect(allowedFeedTitle("الشيخ أبو العينين شعيشع")).toBe(false);
+    expect(allowedFeedTitle("الشيخ أبو العينين شعيشع", "golden")).toBe(true);
+    expect(allowedFeedTitle("لقاء مع الشيخ", "golden")).toBe(false);
+    expect(allowedFeedTitle("معلقة عنترة بن شداد")).toBe(false);
+    expect(allowedFeedTitle("فَضْلُ يَوِمِ عَاشُورَاءَ لفضيلة الشيخ")).toBe(false);
+    expect(allowedFeedTitle("اذكار الصباح بصوت الشيخ")).toBe(false);
     expect(allowedChannel("تلاوات خاشعة")).toBe(true);
     expect(allowedChannel("دروس ومواعظ")).toBe(false);
   });

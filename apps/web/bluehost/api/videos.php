@@ -51,14 +51,14 @@ const BLOCKED_WORDS = [
 const RECITATION_WORDS = [
     'قران', 'سوره', 'سور', 'تلاوه', 'تلاوات', 'ترتيل', 'تجويد', 'مصحف', 'ايات', 'قارئ', 'القارئ', 'مقرئ',
     'تراويح', 'تهجد', 'قيام الليل', 'فجريه', 'عشائيه', 'عشائيات', 'صلاه الفجر', 'صلاه العشاء', 'صلاه المغرب',
-    'صلاه الظهر', 'صلاه العصر', 'ختمه', 'رقيه', 'quran', 'koran', 'recitation', 'surah', 'surat', 'sura', 'tilawat',
+    'صلاه الظهر', 'صلاه العصر', 'ختمه', 'رقيه', 'سورتي', 'سورتين', 'سورتا', 'صلاه الجمعه', 'صلاه التراويح', 'tahajjud',  'quran', 'koran', 'recitation', 'surah', 'surat', 'sura', 'tilawat',
     'tilawah', 'tajweed', 'taraweeh', 'tarawih', 'qiyam', 'fajr', 'isha', 'maghrib',
 ];
 
 const NON_RECITATION_WORDS = [
     'خطبه', 'خطبتي', 'خطبتا', 'درس', 'دروس', 'محاضره', 'محاضرات', 'موعظه', 'مواعظ', 'نصيحه', 'نصائح', 'فتوي',
     'فتاوي', 'لقاء', 'حوار', 'برنامج', 'بودكاست', 'نشيد', 'انشوده', 'اناشيد', 'قصيده', 'دعاء', 'ادعيه', 'تكبيرات',
-    'اذان', 'تفسير', 'سؤال', 'اسئله', 'مقابله',
+    'اذان', 'تفسير', 'سؤال', 'اسئله', 'مقابله', 'معلقه', 'معلقات', 'شعر', 'كورس', 'لهجه', 'عيديه', 'استقبال', 'اذكار', 'رضي الله عنه', 'رضي الله عنها', 'فوائد', 'سلسله', 'فضل يوم', 'فضل صيام', 'فضل شهر', 'لا اله الا الله وحده', 'ادع الله',
     'lecture', 'lesson', 'khutbah', 'khutba', 'sermon', 'nasheed', 'anasheed', 'dua', 'podcast', 'interview',
 ];
 
@@ -95,14 +95,23 @@ function hasWord(string $text, array $words): bool
 
 function isBlocked(string $text): bool { return hasWord($text, BLOCKED_WORDS); }
 function looksIslamic(string $text): bool { return hasWord($text, ISLAMIC_WORDS); }
-function looksRecitation(string $text): bool { return hasWord($text, RECITATION_WORDS) || str_contains($text, '﴿'); }
+/** Quran text in a title: 4+ tashkeel marks, or Arabic between brackets/quotes (same as videos-core.mjs). */
+function looksLikeVerse(string $text): bool
+{
+    return preg_match_all('/[\x{064B}-\x{0652}\x{0670}]/u', $text) >= 4
+        || preg_match('/[(«"“{﴿][^)»"”}﴾]*\p{Arabic}[^)»"”}﴾]*[)»"”}﴾]/u', $text) === 1;
+}
+function looksRecitation(string $text): bool
+{
+    return hasWord($text, RECITATION_WORDS) || str_contains($text, '﴿') || looksLikeVerse($text);
+}
 function namesExcluded(string $text): bool { return hasWord($text, EXCLUDED_PEOPLE); }
 function notRecitation(string $text): bool
 {
     return isBlocked($text) || hasWord($text, NON_RECITATION_WORDS) || namesExcluded($text);
 }
 /** A video from a reciter's channel may join the feed: it must look like recitation. */
-function allowedFeedTitle(string $title): bool { return !notRecitation($title) && looksRecitation($title); }
+function allowedFeedTitle(string $title, ?string $group = null): bool { return !notRecitation($title) && ($group === 'golden' || looksRecitation($title)); }
 /** A channel from the channel search may be added: its name must say recitation/Quran. */
 function allowedChannel(string $title): bool { return !notRecitation($title) && looksRecitation($title); }
 
@@ -338,7 +347,7 @@ function buildFeed(array $sources, callable $get): array
 
     $lists = [];
     foreach ($sources as $k => $s) {
-        $ok = array_values(array_filter($items[$k] ?? [], fn($r) => allowedFeedTitle($r['title'])));
+        $ok = array_values(array_filter($items[$k] ?? [], fn($r) => allowedFeedTitle($r['title'], $s['group'] ?? null)));
         $lists[] = array_map(fn($r) => toReel($s, $r), array_slice($ok, 0, PER_SOURCE));
     }
     return [
