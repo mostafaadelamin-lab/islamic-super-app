@@ -511,6 +511,38 @@
   "@adhkarBarView": {
     "description": "shared key \"adhkar.barView\""
   },
+  "adhkarBgApp": "Normal",
+  "@adhkarBgApp": {
+    "description": "shared key \"adhkar.bgApp\""
+  },
+  "adhkarBgAzure": "Azure",
+  "@adhkarBgAzure": {
+    "description": "shared key \"adhkar.bgAzure\""
+  },
+  "adhkarBgEmerald": "Emerald",
+  "@adhkarBgEmerald": {
+    "description": "shared key \"adhkar.bgEmerald\""
+  },
+  "adhkarBgLavender": "Lavender",
+  "@adhkarBgLavender": {
+    "description": "shared key \"adhkar.bgLavender\""
+  },
+  "adhkarBgNight": "Night",
+  "@adhkarBgNight": {
+    "description": "shared key \"adhkar.bgNight\""
+  },
+  "adhkarBgSand": "Sand",
+  "@adhkarBgSand": {
+    "description": "shared key \"adhkar.bgSand\""
+  },
+  "adhkarBgSky": "Sky",
+  "@adhkarBgSky": {
+    "description": "shared key \"adhkar.bgSky\""
+  },
+  "adhkarBgSunset": "Sunset",
+  "@adhkarBgSunset": {
+    "description": "shared key \"adhkar.bgSunset\""
+  },
   "adhkarCards": "One card at a time",
   "@adhkarCards": {
     "description": "shared key \"adhkar.cards\""
@@ -530,6 +562,30 @@
   "adhkarDone": "Done",
   "@adhkarDone": {
     "description": "shared key \"adhkar.done\""
+  },
+  "adhkarDoneAgain": "Start again",
+  "@adhkarDoneAgain": {
+    "description": "shared key \"adhkar.doneAgain\""
+  },
+  "adhkarDoneAll": "You finished all the adhkar",
+  "@adhkarDoneAll": {
+    "description": "shared key \"adhkar.doneAll\""
+  },
+  "adhkarDoneBack": "Back",
+  "@adhkarDoneBack": {
+    "description": "shared key \"adhkar.doneBack\""
+  },
+  "adhkarDoneEvening": "You finished all the evening adhkar",
+  "@adhkarDoneEvening": {
+    "description": "shared key \"adhkar.doneEvening\""
+  },
+  "adhkarDoneMorning": "You finished all the morning adhkar",
+  "@adhkarDoneMorning": {
+    "description": "shared key \"adhkar.doneMorning\""
+  },
+  "adhkarDoneTitle": "May Allah accept it from you",
+  "@adhkarDoneTitle": {
+    "description": "shared key \"adhkar.doneTitle\""
   },
   "adhkarDuas": "Duas",
   "@adhkarDuas": {
@@ -580,9 +636,25 @@
   "@adhkarListen": {
     "description": "shared key \"adhkar.listen\""
   },
+  "adhkarListenAll": "Listen to all the adhkar",
+  "@adhkarListenAll": {
+    "description": "shared key \"adhkar.listenAll\""
+  },
+  "adhkarListenAllSub": "Sheikh Mishary Alafasy",
+  "@adhkarListenAllSub": {
+    "description": "shared key \"adhkar.listenAllSub\""
+  },
+  "adhkarListenClose": "Close the player",
+  "@adhkarListenClose": {
+    "description": "shared key \"adhkar.listenClose\""
+  },
   "adhkarListenHeader": "Listen to the adhkar",
   "@adhkarListenHeader": {
     "description": "shared key \"adhkar.listenHeader\""
+  },
+  "adhkarListenSaved": "Saved",
+  "@adhkarListenSaved": {
+    "description": "shared key \"adhkar.listenSaved\""
   },
   "adhkarMine": "My adhkar",
   "@adhkarMine": {
@@ -760,6 +832,30 @@
   "adhkarReviewNotice": "Pending religious review. Texts: Kazi Shariar adhkar dataset (CC BY 4.0) and Hisn al-Muslim; repetition counts follow Hisn al-Muslim.",
   "@adhkarReviewNotice": {
     "description": "shared key \"adhkar.reviewNotice\""
+  },
+  "adhkarSettingsBg": "Background",
+  "@adhkarSettingsBg": {
+    "description": "shared key \"adhkar.settingsBg\""
+  },
+  "adhkarSettingsSize": "Text size",
+  "@adhkarSettingsSize": {
+    "description": "shared key \"adhkar.settingsSize\""
+  },
+  "adhkarSettingsTashkeel": "Diacritics",
+  "@adhkarSettingsTashkeel": {
+    "description": "shared key \"adhkar.settingsTashkeel\""
+  },
+  "adhkarSettingsTashkeelHint": "Hiding them is for display only; Quran verses keep theirs.",
+  "@adhkarSettingsTashkeelHint": {
+    "description": "shared key \"adhkar.settingsTashkeelHint\""
+  },
+  "adhkarSettingsTitle": "Adhkar settings",
+  "@adhkarSettingsTitle": {
+    "description": "shared key \"adhkar.settingsTitle\""
+  },
+  "adhkarSettingsView": "View",
+  "@adhkarSettingsView": {
+    "description": "shared key \"adhkar.settingsView\""
   },
   "adhkarShare": "Share",
   "@adhkarShare": {
@@ -1203,6 +1299,18 @@
   "@contactWhatsapp": {
     "description": "shared key \"contact.whatsapp\""
   },
+  "dhikrDeleteSaved": "Delete the saved copy",
+  "@dhikrDeleteSaved": {
+    "description": "shared key \"dhikr.deleteSaved\""
+  },
+  "dhikrDownload": "Download this dhikr for listening offline",
+  "@dhikrDownload": {
+    "description": "shared key \"dhikr.download\""
+  },
+  "dhikrDownloadFailed": "Could not download; check the internet",
+  "@dhikrDownloadFailed": {
+    "description": "shared key \"dhikr.downloadFailed\""
+  },
   "dhikrHadith": "The hadith",
   "@dhikrHadith": {
     "description": "shared key \"dhikr.hadith\""
@@ -1230,6 +1338,84 @@
   "dhikrListenStop": "Stop",
   "@dhikrListenStop": {
     "description": "shared key \"dhikr.listenStop\""
+  },
+  "dhikrOfflineAll": "Download all",
+  "@dhikrOfflineAll": {
+    "description": "shared key \"dhikr.offlineAll\""
+  },
+  "dhikrOfflineAllHisn": "Download every dhikr recording ({n} clips, about 120 MB)",
+  "@dhikrOfflineAllHisn": {
+    "description": "shared key \"dhikr.offlineAllHisn\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "dhikrOfflineCancel": "Cancel",
+  "@dhikrOfflineCancel": {
+    "description": "shared key \"dhikr.offlineCancel\""
+  },
+  "dhikrOfflineCount": "Each dhikr's own recording: {n} clips",
+  "@dhikrOfflineCount": {
+    "description": "shared key \"dhikr.offlineCount\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "dhikrOfflineDelete": "Delete",
+  "@dhikrOfflineDelete": {
+    "description": "shared key \"dhikr.offlineDelete\""
+  },
+  "dhikrOfflineDeleteAll": "Delete all saved",
+  "@dhikrOfflineDeleteAll": {
+    "description": "shared key \"dhikr.offlineDeleteAll\""
+  },
+  "dhikrOfflineDone": "All saved for listening offline",
+  "@dhikrOfflineDone": {
+    "description": "shared key \"dhikr.offlineDone\""
+  },
+  "dhikrOfflineProgress": "Downloading: {done} of {total}",
+  "@dhikrOfflineProgress": {
+    "description": "shared key \"dhikr.offlineProgress\"",
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "dhikrOfflineRetry": "The download stopped; try again",
+  "@dhikrOfflineRetry": {
+    "description": "shared key \"dhikr.offlineRetry\""
+  },
+  "dhikrOfflineSaved": "{n} clips saved · {size} MB",
+  "@dhikrOfflineSaved": {
+    "description": "shared key \"dhikr.offlineSaved\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "dhikrOfflineSettings": "Adhkar recordings offline",
+  "@dhikrOfflineSettings": {
+    "description": "shared key \"dhikr.offlineSettings\""
+  },
+  "dhikrOfflineTitle": "Listen without internet",
+  "@dhikrOfflineTitle": {
+    "description": "shared key \"dhikr.offlineTitle\""
+  },
+  "dhikrSaved": "Saved",
+  "@dhikrSaved": {
+    "description": "shared key \"dhikr.saved\""
   },
   "dhikrRemCancel": "Cancel",
   "@dhikrRemCancel": {
@@ -2810,6 +2996,22 @@
   "@kidsLearnHadithSub": {
     "description": "shared key \"kidsLearn.hadithSub\""
   },
+  "kidsLearnIman": "Pillars of faith",
+  "@kidsLearnIman": {
+    "description": "shared key \"kidsLearn.iman\""
+  },
+  "kidsLearnImanSub": "The six pillars in pictures",
+  "@kidsLearnImanSub": {
+    "description": "shared key \"kidsLearn.imanSub\""
+  },
+  "kidsLearnIslam": "Pillars of Islam",
+  "@kidsLearnIslam": {
+    "description": "shared key \"kidsLearn.islam\""
+  },
+  "kidsLearnIslamSub": "The five pillars in pictures",
+  "@kidsLearnIslamSub": {
+    "description": "shared key \"kidsLearn.islamSub\""
+  },
   "kidsLearnLevel": "Level {n}",
   "@kidsLearnLevel": {
     "description": "shared key \"kidsLearn.level\"",
@@ -2900,22 +3102,6 @@
   "kidsLearnSalahSub": "Prayer steps in pictures",
   "@kidsLearnSalahSub": {
     "description": "shared key \"kidsLearn.salahSub\""
-  },
-  "kidsLearnIslam": "Pillars of Islam",
-  "@kidsLearnIslam": {
-    "description": "shared key \"kidsLearn.islam\""
-  },
-  "kidsLearnIslamSub": "The five pillars in pictures",
-  "@kidsLearnIslamSub": {
-    "description": "shared key \"kidsLearn.islamSub\""
-  },
-  "kidsLearnIman": "Pillars of faith",
-  "@kidsLearnIman": {
-    "description": "shared key \"kidsLearn.iman\""
-  },
-  "kidsLearnImanSub": "The six pillars in pictures",
-  "@kidsLearnImanSub": {
-    "description": "shared key \"kidsLearn.imanSub\""
   },
   "kidsLearnSave": "Save the book on this device",
   "@kidsLearnSave": {

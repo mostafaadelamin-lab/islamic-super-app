@@ -1,5 +1,14 @@
 # Changelog
 
+## Adhkar: listening in the page, offline recordings, «إعدادات الأذكار», celebration — 2026-11-27
+Owner 2026-11-27 (approved mockups in project files _sync/adhkar-listen-offline; their screenshot of another app's settings was a layout reference only).
+### Phone apps (Android + iPhone) and website
+- Sheikh Mishary Alafasy's whole morning / evening recording now plays inside the adhkar page itself («استمع للأذكار كاملة» card at the top, with ✕), not in a separate sheet. The Adhkar tab's listen cards open the page with it playing.
+- Every dhikr that can be heard has «⬇» beside «استمع»: saves its recording for listening without internet («✓ محفوظ», tap again to delete). Saved recordings play from the phone.
+- «استماع بدون إنترنت · حمّل الكل» at the top of morning/evening, every Hisn al-Muslim chapter and the ruqyah: downloads all of the page's recordings with progress and cancel, then «حذف». App settings: «الأذكار المسموعة بدون إنترنت» (what is saved, its size, download all 253, delete all).
+- ⚙ «إعدادات الأذكار» (adhkar, Hisn al-Muslim, ruqyah): view (one per page / list), 8 backgrounds of our own (عادي، ليلي، لازوردي، زمردي، رملي، سماوي، لافندر، غروب), tashkeel on/off (display only; Quran verses between ﴿ ﴾ always keep theirs; the text is never changed), text size slider (80–180%). Website: «الإعدادات» square in the adhkar tools.
+- After the last dhikr (morning, evening, a Hisn chapter): a full screen with a crescent and falling gold stars, «تقبّل الله منك», a strong vibration and no sound; «رجوع» goes back, «من جديد» starts again (owner's pick, option 1).
+
 ## [1.2.25] — Quran text from the King Fahd Complex package v2.2 (2024); proof of sources on the sources page — 2026-11-26
 Owner 2026-11-26: use the Complex's current release (v22) without changing anything, keep a copy of the Complex's page and files, and show transparent proof of every religious source.
 ### Phone apps (Android + iPhone) and website

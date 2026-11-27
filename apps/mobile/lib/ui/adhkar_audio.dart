@@ -11,6 +11,7 @@ import '../l10n/app_localizations.dart';
 import '../domain/nasheeds.dart';
 import '../theme/design_tokens.dart';
 import 'background_audio.dart';
+import 'dhikr_audio.dart';
 import 'l10n_ext.dart';
 import 'r_icon.dart';
 import 'youtube_player.dart';
@@ -71,7 +72,7 @@ Future<void> openAdhkarAudio(BuildContext context, AdhkarAudio a, String title) 
     context: context,
     showDragHandle: true,
     builder: (_) => SafeArea(
-      child: _AssetPlayer(
+      child: AdhkarAudioPlayer(
         files: s.adhkarAudio,
         file: file,
         videoId: adhkarAudioVideo[a],
@@ -82,14 +83,21 @@ Future<void> openAdhkarAudio(BuildContext context, AdhkarAudio a, String title) 
   );
 }
 
-class _AssetPlayer extends StatefulWidget {
-  const _AssetPlayer({
+/// The player of one whole Alafasy recording: downloads it the first time, then plays from the phone.
+/// Shown inside the adhkar page itself (owner 2026-11-27), with ✕ ([onClose]).
+class AdhkarAudioPlayer extends StatefulWidget {
+  const AdhkarAudioPlayer({
+    super.key,
     required this.files,
     required this.file,
     this.videoId,
     required this.title,
     required this.subtitle,
+    this.onClose,
   });
+
+  /// ✕: stops and hides the player (inside a page). Null in a bottom sheet.
+  final VoidCallback? onClose;
 
   final AdhkarAudioFiles files;
 
@@ -102,10 +110,10 @@ class _AssetPlayer extends StatefulWidget {
   final String subtitle;
 
   @override
-  State<_AssetPlayer> createState() => _AssetPlayerState();
+  State<AdhkarAudioPlayer> createState() => _AssetPlayerState();
 }
 
-class _AssetPlayerState extends State<_AssetPlayer> {
+class _AssetPlayerState extends State<AdhkarAudioPlayer> {
   late final AssetAudio _a = (debugAssetAudioFactory ?? JustAudioAsset.new)();
   Duration _total = Duration.zero;
   Duration _pos = Duration.zero;
@@ -222,8 +230,29 @@ class _AssetPlayerState extends State<_AssetPlayer> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(widget.title, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
-          Text(widget.subtitle, style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(widget.title, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
+                    Text(
+                      widget.subtitle,
+                      style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                    ),
+                  ],
+                ),
+              ),
+              if (widget.onClose case final close?)
+                IconButton(
+                  key: const Key('adhkarAudioClose'),
+                  tooltip: l.adhkarListenClose,
+                  icon: const RIcon(RIcons.close),
+                  onPressed: close,
+                ),
+            ],
+          ),
           if (_downloading ?? true) ...[
             const SizedBox(height: DesignTokens.spaceLg),
             const Center(child: CircularProgressIndicator(key: Key('adhkarAudioLoading'))),
@@ -239,7 +268,11 @@ class _AssetPlayerState extends State<_AssetPlayer> {
                 key: const Key('adhkarAudioYouTube'),
                 onPressed: () {
                   final nav = Navigator.of(context);
-                  nav.pop();
+                  if (widget.onClose case final close?) {
+                    close();
+                  } else {
+                    nav.pop();
+                  }
                   showYouTubeSheet(nav.context, videoId: id, title: widget.title, subtitle: widget.subtitle);
                 },
                 child: Text(l.adhkarAudioWatchOnline),
@@ -273,5 +306,74 @@ class _AssetPlayerState extends State<_AssetPlayer> {
       const SizedBox(height: DesignTokens.spaceXs),
       Text(l.adhkarOfflineNote, textAlign: TextAlign.center, style: theme.textTheme.bodySmall),
     ];
+  }
+}
+
+/// «استمع للأذكار كاملة» at the top of the morning / evening adhkar page: the whole Alafasy recording plays
+/// right here, in the page (owner 2026-11-27), not in a separate sheet.
+class AlafasyListenCard extends StatefulWidget {
+  const AlafasyListenCard({super.key, required this.audio, required this.title, this.autoStart = false});
+  final AdhkarAudio audio;
+  final String title;
+  final bool autoStart;
+
+  @override
+  State<AlafasyListenCard> createState() => _AlafasyListenCardState();
+}
+
+class _AlafasyListenCardState extends State<AlafasyListenCard> with AutomaticKeepAliveClientMixin {
+  late bool _open = widget.autoStart;
+
+  // The recording goes on while the reader scrolls the list away from it.
+  @override
+  bool get wantKeepAlive => _open;
+
+  void _set(bool v) {
+    setState(() => _open = v);
+    updateKeepAlive();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    final file = offlineAdhkarAudio[widget.audio];
+    if (file == null) return const SizedBox.shrink();
+    final l = context.l10n;
+    final s = context.services;
+    final scheme = Theme.of(context).colorScheme;
+    return Card(
+      key: Key('alafasyCard-${widget.audio.name}'),
+      margin: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceSm, DesignTokens.spaceLg, 0),
+      child: _open
+          ? Padding(
+              padding: const EdgeInsets.only(top: DesignTokens.spaceMd),
+              child: AdhkarAudioPlayer(
+                files: s.adhkarAudio,
+                file: file,
+                videoId: adhkarAudioVideo[widget.audio],
+                title: widget.title,
+                subtitle: l.adhkarListenAllSub,
+                onClose: () => _set(false),
+              ),
+            )
+          : ListTile(
+              key: const Key('alafasyListen'),
+              leading: RIcon(RIcons.headphones, color: scheme.primary, size: 28),
+              title: Text(l.adhkarListenAll, style: const TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: FutureBuilder<String?>(
+                future: s.adhkarAudio.local(file),
+                builder: (context, snap) => Text(
+                  snap.data == null ? l.adhkarListenAllSub : '${l.adhkarListenAllSub} · ✓ ${l.adhkarListenSaved}',
+                ),
+              ),
+              trailing: RIcon(RIcons.playCircle, color: scheme.primary),
+              onTap: () {
+                if (s.recitation.isPlaying) s.recitation.pause();
+                if (s.narration.isPlaying) s.narration.pause();
+                unawaited(DhikrPlayer.instance.stop());
+                _set(true);
+              },
+            ),
+    );
   }
 }

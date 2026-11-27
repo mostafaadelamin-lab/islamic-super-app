@@ -10,10 +10,9 @@ describe("AdhkarHub (the app's adhkar page)", () => {
     expect(screen.getByText("الأدعية")).toBeInTheDocument();
     expect(screen.getByTestId("adhkar-hub-sleep").getAttribute("href")).toBe("/ar/hisn/#sleep");
     expect(screen.getByTestId("adhkar-hub-travel").getAttribute("href")).toBe("/ar/hisn/#travel");
+    // Owner 2026-11-27: the recording plays inside the morning / evening adhkar below.
     for (const s of ["morning", "evening"]) {
-      const audio = screen.getByTestId(`adhkar-audio-${s}`).querySelector("audio");
-      expect(audio?.getAttribute("src")).toBe(`/audio/adhkar_${s}_alafasy.mp3`);
-      expect(audio?.getAttribute("preload")).toBe("none");
+      expect(screen.getByTestId(`adhkar-audio-${s}`).getAttribute("href")).toBe(`#${s}-listen`);
     }
     expect(screen.getAllByText(/مشاري راشد العفاسي/)).toHaveLength(2);
   });

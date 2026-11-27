@@ -13,6 +13,8 @@ import { Icon } from "./Icon";
 import { CardDeck, ModeSwitch } from "./CardDeck";
 import { DhikrTools } from "./DhikrTools";
 import type { DhikrExtra } from "@/lib/dhikr-extras";
+import { AdhkarLookFrame, AdhkarSettingsButton, Celebration, DhikrText } from "./AdhkarLook";
+import { DhikrOfflineCard } from "./DhikrOffline";
 
 /** The items of one Hisn al-Muslim chapter (text unchanged), as a list or one card at a time. */
 export function HisnItems({
@@ -35,13 +37,18 @@ export function HisnItems({
   const isDone = (i: number): boolean => (taps[i] ?? 0) >= target(i);
   const tap = (i: number): void =>
     setTaps((cur) => cur.map((n, k) => (k === i ? (n >= target(i) ? 0 : n + 1) : n)));
-  // Finishing the last counter goes back to the chapter list it came from.
+  // Finishing the last counter: the celebration (owner 2026-11-27), then back to the chapter list.
+  const [celebrate, setCelebrate] = useState(false);
   useAutoExit(
     mode === "cards" && items.length > 0 && items.every((_, i) => isDone(i)),
     String(chapterId),
-    // Back to the page before (it keeps the section the reader had picked); else the chapter list.
-    () => goBack(() => window.location.assign(withBase(href(locale, "hisn")))),
+    () => setCelebrate(true),
   );
+  // Back to the page before (it keeps the section the reader had picked); else the chapter list.
+  const leave = (): void => {
+    setCelebrate(false);
+    goBack(() => window.location.assign(withBase(href(locale, "hisn"))));
+  };
   const counter = (i: number): React.JSX.Element => {
     const n = taps[i] ?? 0;
     const done = isDone(i);
@@ -71,9 +78,7 @@ export function HisnItems({
   const source = t(locale, "hisn.shareSource", { title, n: localizeDigits(chapterId, locale) });
   const item = (i: number): React.JSX.Element => (
     <li key={i} className="dhikr">
-      <p className="dhikr-text" lang="ar" dir="rtl">
-        {items[i]}
-      </p>
+      <DhikrText text={items[i]!} />
       {mode === "cards" ? counter(i) : null}
       <DhikrTools
         locale={locale}
@@ -85,9 +90,14 @@ export function HisnItems({
       />
     </li>
   );
+  const clipUrls = extras.flatMap((x) => (x?.audio ? [x.audio] : []));
   return (
-    <>
-      <ModeSwitch locale={locale} />
+    <AdhkarLookFrame>
+      <div className="row">
+        <ModeSwitch locale={locale} />
+        <AdhkarSettingsButton locale={locale} view={false} />
+      </div>
+      <DhikrOfflineCard locale={locale} group={`hisn-${chapterId}`} urls={clipUrls} />
       {mode === "cards" ? (
         <CardDeck
           locale={locale}
@@ -100,6 +110,17 @@ export function HisnItems({
           {items.map((_, i) => item(i))}
         </ol>
       )}
-    </>
+      {celebrate ? (
+        <Celebration
+          locale={locale}
+          subtitle={t(locale, "adhkar.doneAll")}
+          onBack={leave}
+          onAgain={() => {
+            setTaps(items.map(() => 0));
+            setCelebrate(false);
+          }}
+        />
+      ) : null}
+    </AdhkarLookFrame>
   );
 }

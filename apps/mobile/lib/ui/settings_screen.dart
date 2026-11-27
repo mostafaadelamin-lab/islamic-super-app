@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -15,6 +17,7 @@ import 'help_screen.dart';
 import 'locate.dart';
 import 'prayer_model.dart';
 import 'prayer_screen.dart';
+import 'dhikr_audio.dart';
 import 'l10n_ext.dart';
 import 'muezzin_screen.dart';
 import 'onboarding_screen.dart';
@@ -145,6 +148,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 const HijriOffsetCard(),
                 const MushafLookCard(),
+                const AdhkarOfflineCard(),
                 SectionCard(
                   title: l.settingsAppSection,
                   children: [
@@ -623,6 +627,86 @@ class _IosAlarmSwitchState extends State<_IosAlarmSwitch> {
           messenger.showSnackBar(SnackBar(content: Text(l.adhanIosAlarmDenied)));
         }
       },
+    );
+  }
+}
+
+/// «الأذكار المسموعة بدون إنترنت» (owner 2026-11-27): what is saved, «حمّل كل الأذكار المسموعة» and delete all.
+class AdhkarOfflineCard extends StatefulWidget {
+  const AdhkarOfflineCard({super.key});
+
+  @override
+  State<AdhkarOfflineCard> createState() => _AdhkarOfflineCardState();
+}
+
+class _AdhkarOfflineCardState extends State<AdhkarOfflineCard> {
+  late final Future<DhikrAudioMap?> _map = DhikrAudioMap.load(DefaultAssetBundle.of(context));
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    unawaited(context.services.dhikrClips.ready());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final clips = context.services.dhikrClips;
+    return ListenableBuilder(
+      listenable: clips,
+      builder: (context, _) => FutureBuilder<DhikrAudioMap?>(
+        future: _map,
+        builder: (context, snap) {
+          final m = snap.data;
+          final urls = m == null
+              ? const <String>[]
+              : {
+                  for (final id in {...m.adhkar.values, ...m.hisn.values}) m.base.replaceAll('{id}', '$id'),
+                }.toList();
+          final mb = clips.bytes / (1024 * 1024);
+          return SectionCard(
+            key: const Key('adhkarOfflineSettings'),
+            title: l.dhikrOfflineSettings,
+            children: [
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const RIcon(RIcons.headphones),
+                title: Text(
+                  l.dhikrOfflineSaved(
+                    context.num('${clips.savedCount()}'),
+                    context.num(mb < 10 ? mb.toStringAsFixed(1) : '${mb.round()}'),
+                  ),
+                  key: const Key('adhkarOfflineSaved'),
+                ),
+                trailing: clips.savedCount() > 0
+                    ? TextButton(
+                        key: const Key('adhkarOfflineDeleteAll'),
+                        onPressed: () => clips.deleteAll(),
+                        child: Text(l.dhikrOfflineDeleteAll),
+                      )
+                    : null,
+              ),
+              if (clips.batch == 'all') ...[
+                Text(l.dhikrOfflineProgress(context.num('${clips.batchDone}'), context.num('${clips.batchTotal}'))),
+                const SizedBox(height: DesignTokens.spaceXs),
+                LinearProgressIndicator(value: clips.batchTotal == 0 ? null : clips.batchDone / clips.batchTotal),
+                Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: TextButton(onPressed: clips.cancel, child: Text(l.dhikrOfflineCancel)),
+                ),
+              ] else if (urls.isNotEmpty && clips.savedCount(urls) < urls.length)
+                ListTile(
+                  key: const Key('adhkarOfflineAll'),
+                  contentPadding: EdgeInsets.zero,
+                  leading: const RIcon(RIcons.download),
+                  title: Text(l.dhikrOfflineAllHisn(context.num('${urls.length}'))),
+                  subtitle: clips.batchFailed == 'all' ? Text(l.dhikrOfflineRetry) : null,
+                  onTap: clips.batch != null ? null : () => clips.downloadAll('all', urls),
+                ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

@@ -6365,7 +6365,7 @@ a.episode {
 /* Adhkar tools as coloured squares with their names (owner 2026-11-26, option 2) */
 .adhkar-tools {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--space-sm);
   margin: var(--space-sm) 0 var(--space-md);
   max-width: 520px;
@@ -6400,4 +6400,230 @@ a.episode {
 }
 .tool-tile:hover {
   filter: brightness(1.05);
+}
+
+/* «إعدادات الأذكار» (owner 2026-11-27): our own backgrounds, text size, settings sheet, celebration. */
+.adhkar-look .dhikr-text,
+.adhkar-look .dua-text {
+  font-size: calc(19px * var(--dhikr-scale, 1));
+}
+.adhkar-look[class*="bg-"] {
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-inline: calc(var(--space-md) * -1);
+  background: var(--look-bg);
+  color: var(--color-ink);
+}
+.adhkar-look.bg-night {
+  --look-bg: linear-gradient(180deg, #181c22, #0b0d10);
+}
+.adhkar-look.bg-azure {
+  --look-bg: linear-gradient(180deg, #1e4a7c, #0e2747);
+}
+.adhkar-look.bg-emerald {
+  --look-bg: linear-gradient(180deg, #21735a, #0f3d30);
+}
+.adhkar-look.bg-sand {
+  --look-bg: linear-gradient(180deg, #fff7e6, #f1ddb4);
+}
+.adhkar-look.bg-sky {
+  --look-bg: linear-gradient(180deg, #e6f4fa, #bfe2f0);
+}
+.adhkar-look.bg-lavender {
+  --look-bg: linear-gradient(180deg, #f1ecfa, #d9cdef);
+}
+.adhkar-look.bg-sunset {
+  --look-bg: linear-gradient(180deg, #fbe3cf, #e8b9a8);
+}
+.adhkar-look.bg-night,
+.adhkar-look.bg-azure,
+.adhkar-look.bg-emerald {
+  --color-ink: #f4f1e8;
+  --color-muted: #c9d2de;
+  --color-surface: rgb(255 255 255 / 9%);
+  --color-surface-2: rgb(255 255 255 / 14%);
+  --color-line: rgb(255 255 255 / 22%);
+  --color-primary: #e8c77a;
+  --color-on-primary: #1b1300;
+}
+.adhkar-look.bg-sand,
+.adhkar-look.bg-sky,
+.adhkar-look.bg-lavender,
+.adhkar-look.bg-sunset {
+  --color-ink: #1b2433;
+  --color-muted: #4b5668;
+  --color-surface: rgb(255 255 255 / 62%);
+  --color-surface-2: rgb(255 255 255 / 80%);
+  --color-line: rgb(0 0 0 / 12%);
+}
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgb(0 0 0 / 30%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.sheet {
+  width: min(560px, 100%);
+  max-height: 88vh;
+  overflow: auto;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border-radius: 22px 22px 0 0;
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
+  box-shadow: var(--shadow-md);
+}
+.sheet h2 {
+  margin: 0;
+}
+.sheet h3 {
+  font-size: 15px;
+  margin: var(--space-md) 0 var(--space-xs);
+}
+.bg-picks {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+.bg-pick {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.bg-pick .swatch {
+  width: 100%;
+  height: 54px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-line);
+}
+.bg-pick.on .swatch {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.swatch.bg-app {
+  background: var(--color-bg, #f3f5f9);
+}
+.swatch.bg-night {
+  background: linear-gradient(180deg, #181c22, #0b0d10);
+}
+.swatch.bg-azure {
+  background: linear-gradient(180deg, #1e4a7c, #0e2747);
+}
+.swatch.bg-emerald {
+  background: linear-gradient(180deg, #21735a, #0f3d30);
+}
+.swatch.bg-sand {
+  background: linear-gradient(180deg, #fff7e6, #f1ddb4);
+}
+.swatch.bg-sky {
+  background: linear-gradient(180deg, #e6f4fa, #bfe2f0);
+}
+.swatch.bg-lavender {
+  background: linear-gradient(180deg, #f1ecfa, #d9cdef);
+}
+.swatch.bg-sunset {
+  background: linear-gradient(180deg, #fbe3cf, #e8b9a8);
+}
+.size-row {
+  align-items: center;
+  gap: var(--space-sm);
+}
+.size-row input[type="range"] {
+  flex: 1;
+  accent-color: var(--color-accent);
+}
+.tool-tile.navy {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+.dhikr-offline {
+  border: 1.5px solid var(--color-accent);
+  margin: var(--space-sm) 0;
+}
+.dhikr-offline progress {
+  width: 100%;
+  accent-color: var(--color-accent);
+}
+.alafasy-card audio {
+  width: 100%;
+  margin-top: var(--space-sm);
+}
+.celebration {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: #fff;
+  background: radial-gradient(circle at 50% 38%, #2b5590 0%, #1d3a64 55%, #0f2140 100%);
+  animation: celebrate-in 0.35s ease-out both;
+}
+.celebration-star {
+  position: absolute;
+  top: -40px;
+  color: #e8c77a;
+  animation: celebrate-fall linear infinite;
+  pointer-events: none;
+}
+.celebration-body {
+  position: relative;
+  padding: var(--space-lg);
+}
+.celebration-body h2 {
+  font-size: 30px;
+  margin: var(--space-lg) 0 var(--space-xs);
+}
+.celebration-moon {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  box-shadow: 34px 10px 0 0 #e8c77a;
+  transform: translateX(-17px);
+  filter: drop-shadow(0 0 24px rgb(232 199 122 / 55%));
+  animation: celebrate-pop 0.8s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+.celebration-back {
+  background: #e8c77a;
+  color: #1b1300;
+  border-color: #e8c77a;
+}
+.celebration-again {
+  background: transparent;
+  color: #fff;
+  border-color: rgb(255 255 255 / 70%);
+}
+@keyframes celebrate-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes celebrate-pop {
+  from {
+    transform: translateX(-17px) scale(0);
+  }
+}
+@keyframes celebrate-fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .celebration-star {
+    animation: none;
+    display: none;
+  }
+  .celebration-moon {
+    animation: none;
+  }
 }

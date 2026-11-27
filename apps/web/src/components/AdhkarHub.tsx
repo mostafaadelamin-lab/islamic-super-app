@@ -78,15 +78,16 @@ export function AdhkarHub({ locale }: { locale: Locale }) {
       <h2>{t(locale, "adhkar.listenHeader")}</h2>
       <div className="grid adhkar-listen">
         {(["morning", "evening"] as const).map((s) => (
-          <figure className="card" key={s} data-testid={`adhkar-audio-${s}`}>
-            <figcaption>
-              <strong>
-                <Icon name={s === "morning" ? "sun" : "moon"} /> {t(locale, `adhkar.${s}Title`)}
-              </strong>
-              <span className="muted small"> · {t(locale, "adhkar.alafasy")}</span>
-            </figcaption>
-            <audio controls preload="none" src={withBase(ADHKAR_AUDIO[s])} />
-          </figure>
+          // Owner 2026-11-27: the recording plays inside the morning / evening adhkar themselves.
+          <a className="card tile" key={s} href={`#${s}-listen`} data-testid={`adhkar-audio-${s}`}>
+            <span className="tile-icon">
+              <Icon name="headphones" />
+            </span>
+            <span className="tile-text">
+              <strong>{t(locale, `adhkar.${s}Title`)}</strong>
+              <span className="muted small">{t(locale, "adhkar.alafasy")}</span>
+            </span>
+          </a>
         ))}
       </div>
     </section>

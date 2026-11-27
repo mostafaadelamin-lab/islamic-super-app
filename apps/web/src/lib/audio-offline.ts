@@ -161,6 +161,8 @@ export const createSavedUrls = (key: string): Store<string[]> =>
 export const storySavedStore = createSavedUrls("rattil.storySaved");
 /** Surahs of any reciter in the recitation library (the app saves them too). */
 export const librarySavedStore = createSavedUrls("rattil.librarySaved");
+/** Each dhikr's own recording (owner 2026-11-27: every dhikr that can be heard can be saved; the app too). */
+export const dhikrSavedStore = createSavedUrls("rattil.dhikrSaved");
 
 export async function saveAudioFile(store: Store<string[]>, url: string): Promise<void> {
   const cache = await caches.open(AUDIO_CACHE);

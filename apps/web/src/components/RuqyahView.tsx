@@ -8,6 +8,9 @@ import { player } from "@/lib/audio-player";
 import type { RuqyahItem } from "@/lib/kids";
 import { AyahMarker } from "./AyahMarker";
 import { Icon } from "./Icon";
+import { AdhkarLookFrame, AdhkarSettingsButton, DhikrText } from "./AdhkarLook";
+import { DhikrListen } from "./DhikrAudio";
+import { DhikrOfflineCard } from "./DhikrOffline";
 
 /** A Quran passage of the ruqyah with its canonical ayah texts (and the basmala before a whole surah). */
 export interface RuqyahPassage {
@@ -39,93 +42,103 @@ export function RuqyahView({
   const ranges = passages.map((p) => [p.s, p.from, p.to] as const);
   let q = 0;
   return (
-    <div data-testid={kids ? "ruqyah-kids" : "ruqyah"}>
-      <p className="muted">{t(locale, kids ? "ruqyah.kidsNote" : "ruqyah.note")}</p>
-      <p>
-        <button
-          type="button"
-          className="btn btn-primary"
-          data-testid="ruqyah-play"
-          onClick={() => player.play({ kind: "ranges", ranges })}
-        >
-          <Icon name="play" /> {t(locale, "ruqyah.listenQuran")}
-        </button>
-      </p>
-      {full ? (
-        <figure className="card" data-testid="ruqyah-full">
-          <figcaption>
-            <strong>
-              <Icon name="headphones" /> {t(locale, "ruqyah.full")}
-            </strong>
-            {full.seconds ? (
-              <span className="muted small">
-                {" "}
-                · {t(locale, "ruqyah.fullSub", { n: n(Math.round(full.seconds / 60)) })}
-              </span>
-            ) : null}
-          </figcaption>
-          <audio controls preload="none" src={full.url} />
-        </figure>
-      ) : null}
-      {items.map((item, i) => {
-        if (item.t === "q") {
-          const p = passages[q++];
-          if (!p) return null;
-          const title =
-            p.from === p.to
-              ? t(locale, "ruqyah.ayah", { surah: surahName(p.s, locale), n: n(p.from) })
-              : t(locale, "ruqyah.from", { surah: surahName(p.s, locale), from: n(p.from), to: n(p.to) });
-          return (
-            <section key={i} className="card story-segment" data-testid={`ruqyah-item-${i}`}>
-              <div className="row">
-                <h2 className="section-title" style={{ flex: 1 }}>
-                  {title}
-                </h2>
-                <button
-                  type="button"
-                  className="btn btn-sm"
-                  data-testid={`ruqyah-listen-${p.s}-${p.from}`}
-                  onClick={() => player.play({ kind: "ranges", ranges: [[p.s, p.from, p.to]] })}
-                >
-                  <Icon name="headphones" /> {t(locale, "ruqyah.listen")}
-                </button>
-              </div>
-              <div className="reader">
-                {p.basmala ? (
-                  <p className="quran" lang="ar" dir="rtl" style={{ textAlign: "center", margin: 0 }}>
-                    {renderQuranText(p.basmala)}
+    <AdhkarLookFrame>
+      <div data-testid={kids ? "ruqyah-kids" : "ruqyah"}>
+        <p className="muted">{t(locale, kids ? "ruqyah.kidsNote" : "ruqyah.note")}</p>
+        <p>
+          <AdhkarSettingsButton locale={locale} view={false} />
+        </p>
+        <DhikrOfflineCard
+          locale={locale}
+          group={kids ? "ruqyah-kids" : "ruqyah"}
+          urls={items.flatMap((it) => (it.t === "d" && it.audio ? [it.audio] : []))}
+        />
+        <p>
+          <button
+            type="button"
+            className="btn btn-primary"
+            data-testid="ruqyah-play"
+            onClick={() => player.play({ kind: "ranges", ranges })}
+          >
+            <Icon name="play" /> {t(locale, "ruqyah.listenQuran")}
+          </button>
+        </p>
+        {full ? (
+          <figure className="card" data-testid="ruqyah-full">
+            <figcaption>
+              <strong>
+                <Icon name="headphones" /> {t(locale, "ruqyah.full")}
+              </strong>
+              {full.seconds ? (
+                <span className="muted small">
+                  {" "}
+                  · {t(locale, "ruqyah.fullSub", { n: n(Math.round(full.seconds / 60)) })}
+                </span>
+              ) : null}
+            </figcaption>
+            <audio controls preload="none" src={full.url} />
+          </figure>
+        ) : null}
+        {items.map((item, i) => {
+          if (item.t === "q") {
+            const p = passages[q++];
+            if (!p) return null;
+            const title =
+              p.from === p.to
+                ? t(locale, "ruqyah.ayah", { surah: surahName(p.s, locale), n: n(p.from) })
+                : t(locale, "ruqyah.from", { surah: surahName(p.s, locale), from: n(p.from), to: n(p.to) });
+            return (
+              <section key={i} className="card story-segment" data-testid={`ruqyah-item-${i}`}>
+                <div className="row">
+                  <h2 className="section-title" style={{ flex: 1 }}>
+                    {title}
+                  </h2>
+                  <button
+                    type="button"
+                    className="btn btn-sm"
+                    data-testid={`ruqyah-listen-${p.s}-${p.from}`}
+                    onClick={() => player.play({ kind: "ranges", ranges: [[p.s, p.from, p.to]] })}
+                  >
+                    <Icon name="headphones" /> {t(locale, "ruqyah.listen")}
+                  </button>
+                </div>
+                <div className="reader">
+                  {p.basmala ? (
+                    <p className="quran" lang="ar" dir="rtl" style={{ textAlign: "center", margin: 0 }}>
+                      {renderQuranText(p.basmala)}
+                    </p>
+                  ) : null}
+                  {/* One flowing Mushaf paragraph, ayah after ayah (owner 2026-11-20: not one ayah per row). */}
+                  <p
+                    className="quran ruqyah-flow"
+                    lang="ar"
+                    dir="rtl"
+                    data-testid={`ruqyah-flow-${p.s}-${p.from}`}
+                  >
+                    {p.ayahs.map((text, k) => {
+                      const a = p.from + k;
+                      const key = `${p.s}:${a}`;
+                      return (
+                        <span
+                          className="ruqyah-ayah"
+                          key={key}
+                          data-ref={key}
+                          data-playing={key === playingKey ? "true" : undefined}
+                        >
+                          {renderQuranText(text)}
+                          <AyahMarker n={a} locale={locale} />{" "}
+                        </span>
+                      );
+                    })}
                   </p>
-                ) : null}
-                {/* One flowing Mushaf paragraph, ayah after ayah (owner 2026-11-20: not one ayah per row). */}
-                <p
-                  className="quran ruqyah-flow"
-                  lang="ar"
-                  dir="rtl"
-                  data-testid={`ruqyah-flow-${p.s}-${p.from}`}
-                >
-                  {p.ayahs.map((text, k) => {
-                    const a = p.from + k;
-                    const key = `${p.s}:${a}`;
-                    return (
-                      <span
-                        className="ruqyah-ayah"
-                        key={key}
-                        data-ref={key}
-                        data-playing={key === playingKey ? "true" : undefined}
-                      >
-                        {renderQuranText(text)}
-                        <AyahMarker n={a} locale={locale} />{" "}
-                      </span>
-                    );
-                  })}
-                </p>
-              </div>
-            </section>
-          );
-        }
-        return <DuaCard key={i} locale={locale} index={i} item={item} />;
-      })}
-    </div>
+                </div>
+              </section>
+            );
+          }
+          return <DuaCard key={i} locale={locale} index={i} item={item} />;
+        })}
+      </div>
+    </AdhkarLookFrame>
   );
 }
 
@@ -146,14 +159,16 @@ function DuaCard({
   return (
     <section className={done ? "card dhikr done" : "card"} data-testid={`ruqyah-item-${index}`}>
       <h2 className="section-title">{t(locale, "ruqyah.dua")}</h2>
-      <p className="dua-text" lang="ar" dir="rtl" style={{ fontSize: "1.25em", lineHeight: 1.9 }}>
-        {item.text}
-      </p>
+      <DhikrText text={item.text} className="dua-text" />
       <p className="muted small">
         {item.src}
         {counted ? <strong> · {t(locale, "ruqyah.repeat", { n: n(item.repeat) })}</strong> : null}
       </p>
-      {item.audio ? <audio controls preload="none" src={item.audio} /> : null}
+      {item.audio ? (
+        <div className="dhikr-tools">
+          <DhikrListen locale={locale} url={item.audio} testId={`ruqyah-${index}`} />
+        </div>
+      ) : null}
       {counted ? (
         <div className="dhikr-foot">
           <button

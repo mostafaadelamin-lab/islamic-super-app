@@ -24,6 +24,10 @@ import { DhikrTools } from "./DhikrTools";
 import type { DhikrExtra } from "@/lib/dhikr-extras";
 import { userAdhkarStore, userItems, type UserDhikr } from "@/lib/custom-adhkar";
 import { UserDhikrForm, UserDhikrTools } from "./UserAdhkar";
+import { AdhkarLookFrame, AdhkarSettingsButton, Celebration, DhikrText } from "./AdhkarLook";
+import { DhikrOfflineCard } from "./DhikrOffline";
+import { withBase } from "@/lib/base-path";
+import { ADHKAR_AUDIO } from "./AdhkarHub";
 
 const SESSIONS: readonly Session[] = ["morning", "evening"];
 
@@ -48,10 +52,23 @@ export function AdhkarView({
   const { mode } = useStore(adhkarViewStore);
   const mine = useStore(userAdhkarStore);
   const [editing, setEditing] = useState<UserDhikr | null>(null);
+  const [celebrate, setCelebrate] = useState(false);
+  // Alafasy's whole recording, played right here in the page (owner 2026-11-27); «#morning-listen» starts it.
+  const [listen, setListen] = useState(false);
   useEffect(() => {
-    const hash = window.location.hash.slice(1);
-    setSession(hash === "morning" || hash === "evening" ? hash : defaultSession(new Date().getHours()));
+    const read = (): void => {
+      const hash = window.location.hash.slice(1);
+      const [s, how] = hash.split("-");
+      setSession(s === "morning" || s === "evening" ? s : defaultSession(new Date().getHours()));
+      if (how === "listen") {
+        setListen(true);
+        document.getElementById("adhkar-sessions")?.scrollIntoView?.({ block: "start" });
+      }
+    };
+    read();
     setToday(localToday());
+    window.addEventListener("hashchange", read);
+    return () => window.removeEventListener("hashchange", read);
   }, []);
   const list = [...sessionItems(items, session), ...userItems(mine, session)];
   const progress = progressFor(stored, today);
@@ -61,11 +78,14 @@ export function AdhkarView({
   useAutoExit(
     today !== "" && summary.total > 0 && summary.completed === summary.total,
     `${session}:${today}`,
-    () => {
-      const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-      window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
-    },
+    // Owner 2026-11-27: first a celebration (stars, strong vibration, no sound).
+    () => setCelebrate(true),
   );
+  const leave = (): void => {
+    setCelebrate(false);
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+  };
   const choose = (s: Session): void => {
     setSession(s);
     window.history.replaceState(window.history.state, "", `#${s}`);
@@ -95,9 +115,7 @@ export function AdhkarView({
             <span className="tag">{t(locale, "adhkar.mineTag")}</span>
           </p>
         ) : null}
-        <p className="dhikr-text" lang="ar" dir="rtl">
-          {d.text}
-        </p>
+        <DhikrText text={d.text} />
         <div className="dhikr-foot">
           <span className="muted small">
             {t(locale, "adhkar.repeat", { n: localizeDigits(d.count, locale) })}
@@ -144,8 +162,9 @@ export function AdhkarView({
     );
   };
 
+  const clipUrls = list.flatMap((d) => (d.custom ? [] : extras[d.id]?.audio ? [extras[d.id]!.audio!] : []));
   return (
-    <>
+    <AdhkarLookFrame>
       <div className="segmented" role="group" aria-label={t(locale, "adhkar.session")}>
         {SESSIONS.map((s) => (
           <button
@@ -199,7 +218,40 @@ export function AdhkarView({
           <Icon name="reset" size={22} />
           <span>{t(locale, "adhkar.barReset")}</span>
         </button>
+        <AdhkarSettingsButton locale={locale} tile />
       </div>
+      <section className="card alafasy-card" data-testid={`alafasy-${session}`}>
+        <p className="row" style={{ justifyContent: "space-between" }}>
+          <span>
+            <strong>
+              <Icon name="headphones" size={18} /> {t(locale, "adhkar.listenAll")}
+            </strong>
+            <br />
+            <span className="muted small">{t(locale, "adhkar.alafasy")}</span>
+          </span>
+          {listen ? null : (
+            <button
+              type="button"
+              className="btn btn-sm"
+              data-testid="alafasy-listen"
+              onClick={() => setListen(true)}
+            >
+              <Icon name="play" size={16} /> {t(locale, "dhikr.listenShort")}
+            </button>
+          )}
+        </p>
+        {listen ? (
+          <audio
+            key={session}
+            controls
+            autoPlay
+            preload="none"
+            data-testid="alafasy-audio"
+            src={withBase(ADHKAR_AUDIO[session])}
+          />
+        ) : null}
+      </section>
+      <DhikrOfflineCard locale={locale} group={`adhkar-${session}`} urls={clipUrls} />
       {locale !== "ar" ? <p className="alert">{t(locale, "common.arabicOnly")}</p> : null}
       {mode === "cards" ? (
         <CardDeck
@@ -215,6 +267,17 @@ export function AdhkarView({
         </ol>
       )}
       <UserDhikrForm locale={locale} session={session} editing={editing} onDone={() => setEditing(null)} />
-    </>
+      {celebrate ? (
+        <Celebration
+          locale={locale}
+          subtitle={t(locale, session === "morning" ? "adhkar.doneMorning" : "adhkar.doneEvening")}
+          onBack={leave}
+          onAgain={() => {
+            adhkarStore.set((p) => resetSession(p, localToday(), session));
+            setCelebrate(false);
+          }}
+        />
+      ) : null}
+    </AdhkarLookFrame>
   );
 }

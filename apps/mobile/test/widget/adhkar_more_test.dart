@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/data/reminders.dart';
 import 'package:rattil/domain/adhkar.dart';
+import 'package:rattil/ui/adhkar_celebration.dart';
 import 'package:rattil/ui/adhkar_screen.dart';
 import 'package:rattil/ui/dhikr_tools.dart';
 import 'package:rattil/ui/hisn_screen.dart';
@@ -76,7 +77,9 @@ void main() {
     expect(find.textContaining('٢ /'), findsOneWidget);
   });
 
-  testWidgets('finishing the last morning dhikr shows the tick, then goes back to the adhkar list', (tester) async {
+  testWidgets('finishing the last morning dhikr: celebration (vibration, no sound), «رجوع» goes back', (tester) async {
+    var buzzed = 0;
+    celebrationVibrate = () async => buzzed++;
     final app = await pumpApp(tester, size: tallPhone);
     await pushScreen(tester, const AdhkarSessionScreen(initial: AdhkarSession.morning));
     final items = app.services.adhkar.progress(AdhkarSession.morning).items;
@@ -94,8 +97,40 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
     expect(find.byType(AdhkarSessionScreen), findsOneWidget, reason: 'the done tick shows for a moment');
     await tester.pump(adhkarAutoExitDelay);
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byKey(const Key('adhkarCelebration')), findsOneWidget);
+    expect(find.text('تقبّل الله منك'), findsOneWidget);
+    expect(buzzed, 1);
+    await tester.tap(find.byKey(const Key('celebrationBack')));
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    expect(find.byKey(const Key('adhkarCelebration')), findsNothing);
     expect(find.byType(AdhkarSessionScreen), findsNothing, reason: 'back to the list it came from');
+  });
+
+  testWidgets('celebration «من جديد» starts the list again and stays on it', (tester) async {
+    celebrationVibrate = () async {};
+    final app = await pumpApp(tester, size: tallPhone);
+    await pushScreen(tester, const AdhkarSessionScreen(initial: AdhkarSession.evening));
+    final items = app.services.adhkar.progress(AdhkarSession.evening).items;
+    for (final d in items) {
+      final n = d == items.last ? d.meta.count - 1 : d.meta.count;
+      for (var k = 0; k < n; k++) {
+        await app.services.adhkar.tap(AdhkarSession.evening, d);
+      }
+    }
+    await tester.pumpAndSettle();
+    await app.services.adhkar.tap(AdhkarSession.evening, items.last);
+    await tester.pump();
+    await tester.pump(adhkarAutoExitDelay);
+    await tester.pump(const Duration(seconds: 1));
+    await tester.tap(find.byKey(const Key('celebrationAgain')));
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    expect(find.byType(AdhkarSessionScreen), findsOneWidget);
+    expect(app.services.adhkar.progress(AdhkarSession.evening).completedItems, 0);
   });
 
   testWidgets('a list already finished today opens normally and does not close by itself', (tester) async {
@@ -111,7 +146,8 @@ void main() {
     expect(find.byType(AdhkarSessionScreen), findsOneWidget);
   });
 
-  testWidgets('a Hisn chapter closes by itself after its last counter is done', (tester) async {
+  testWidgets('a Hisn chapter celebrates after its last counter is done, then goes back', (tester) async {
+    celebrationVibrate = () async {};
     final app = await pumpApp(tester, size: tallPhone);
     await app.services.settings.setAdhkarCards(true);
     final chapter = app.services.content.adhkar.hisn[97];
@@ -124,7 +160,11 @@ void main() {
     }
     expect(find.byType(HisnChapterScreen), findsOneWidget);
     await tester.pump(adhkarAutoExitDelay);
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 1));
+    await tester.tap(find.byKey(const Key('celebrationBack')));
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
     expect(find.byType(HisnChapterScreen), findsNothing);
   });
 
