@@ -41,8 +41,7 @@ void main() {
 
   Future<void> openPlaying(WidgetTester tester, {required bool min}) async {
     tester.view.devicePixelRatio = 1;
-    await pumpApp(tester,
-        size: const Size(440, 956), prefs: {'reader.playerMin': min}, audio: FakeAudioBackend());
+    await pumpApp(tester, size: const Size(440, 956), prefs: {'reader.playerMin': min}, audio: FakeAudioBackend());
     await pushScreen(tester, const PageReaderScreen(initialPage: 440));
     final rec = tester.element(find.byType(PageReaderScreen)).services.recitation;
     await rec.playOnFrom(440);

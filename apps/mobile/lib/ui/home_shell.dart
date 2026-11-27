@@ -68,7 +68,7 @@ class HomeShellState extends State<HomeShell> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _onShortcut();
       if (!mounted) return;
-      maybeShowSharePrompt(context, isoDay(context.services.clock()));
+      unawaited(_promptsAtStart());
       // Prayer times and the place name follow the phone's position (the
       // "automatic location" setting, on by default) unless a city was picked.
       final s = context.services;
@@ -79,6 +79,12 @@ class HomeShellState extends State<HomeShell> {
         unawaited(refreshPlaceName(s).catchError((Object _) {}));
       }
     });
+  }
+
+  /// One dialog at most per start: the iPhone alarm offer first, else the share suggestion.
+  Future<void> _promptsAtStart() async {
+    if (await maybeOfferAdhanAlarm(context)) return;
+    if (mounted) await maybeShowSharePrompt(context, isoDay(context.services.clock()));
   }
 
   @override
@@ -195,4 +201,47 @@ class HomeShellState extends State<HomeShell> {
       ),
     );
   }
+}
+
+/// iPhone with iOS 26+, once (owner 2026-11-26): the adhan now rings as ONE notification with its first
+/// 30 s, so offer the system alarm that rings the whole adhan (also one notification, even on silent).
+/// Returns whether the dialog was shown.
+Future<bool> maybeOfferAdhanAlarm(BuildContext context) async {
+  final s = context.services;
+  final p = s.adhan.parts;
+  final st = s.settings;
+  if (p == null || st.adhanAlarmOffered || st.adhanIosAlarm || !st.adhanEnabled || st.adhanSound != 'adhan') {
+    return false;
+  }
+  final state = await p.alarmState();
+  if (state != 'notDetermined' || !context.mounted) return false;
+  await st.setAdhanAlarmOffered();
+  if (!context.mounted) return false;
+  final l = context.l10n;
+  final yes = await showDialog<bool>(
+    context: context,
+    builder: (context) => AlertDialog(
+      key: const Key('adhanAlarmOffer'),
+      icon: const RIcon(RIcons.alarm),
+      title: Text(l.adhanAlarmOfferTitle),
+      content: Text(l.adhanAlarmOfferBody),
+      actions: [
+        TextButton(
+          key: const Key('adhanAlarmOfferLater'),
+          onPressed: () => Navigator.of(context).pop(false),
+          child: Text(l.helpNotNow),
+        ),
+        FilledButton(
+          key: const Key('adhanAlarmOfferYes'),
+          onPressed: () => Navigator.of(context).pop(true),
+          child: Text(l.setupAlarmAction),
+        ),
+      ],
+    ),
+  );
+  if (yes == true && await p.requestAlarms() == 'authorized') {
+    await st.setAdhanIosAlarm(true);
+    await s.adhan.sync(force: true);
+  }
+  return true;
 }

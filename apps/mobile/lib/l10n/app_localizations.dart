@@ -278,6 +278,18 @@ abstract class AppLocalizations {
   /// **'Sync now'**
   String get accountSyncNow;
 
+  /// shared key "adhan.alarmOfferBody"
+  ///
+  /// In en, this message translates to:
+  /// **'Allow it once and the whole adhan rings as one alarm, even when the iPhone is on silent, instead of several notifications one after another on the lock screen.'**
+  String get adhanAlarmOfferBody;
+
+  /// shared key "adhan.alarmOfferTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'The whole adhan on iPhone'**
+  String get adhanAlarmOfferTitle;
+
   /// shared key "adhan.alertsHeader"
   ///
   /// In en, this message translates to:
@@ -319,6 +331,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The adhan continues. Tap to hear all of it in the app.'**
   String get adhanContinued;
+
+  /// shared key "adhan.continuedTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'{name} adhan continues ({k} of {n})'**
+  String adhanContinuedTitle(String name, String k, String n);
 
   /// shared key "adhan.credit"
   ///
@@ -565,6 +583,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Adhan'**
   String get adhanTabTitle;
+
+  /// shared key "adhan.tapForFull"
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to hear the whole adhan in the app.'**
+  String get adhanTapForFull;
 
   /// shared key "adhan.test"
   ///

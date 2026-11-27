@@ -77,7 +77,14 @@ void main() {
 
   testWidgets('preview: hadith levels and card', (tester) async {
     tester.view.devicePixelRatio = 1;
-    await pumpApp(tester, size: size, prefs: {...prefs, 'kidsHadithMemorized': ['1', '2', '3']});
+    await pumpApp(
+      tester,
+      size: size,
+      prefs: {
+        ...prefs,
+        'kidsHadithMemorized': ['1', '2', '3'],
+      },
+    );
     await pushScreen(tester, KidsHadithScreen(loader: learnLoader));
     await shot(tester, '03-hadith-levels');
     await tester.tap(find.byKey(const Key('kidsHadith.level1')));

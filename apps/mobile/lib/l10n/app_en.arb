@@ -149,6 +149,14 @@
   "@accountSyncNow": {
     "description": "shared key \"account.syncNow\""
   },
+  "adhanAlarmOfferBody": "Allow it once and the whole adhan rings as one alarm, even when the iPhone is on silent, instead of several notifications one after another on the lock screen.",
+  "@adhanAlarmOfferBody": {
+    "description": "shared key \"adhan.alarmOfferBody\""
+  },
+  "adhanAlarmOfferTitle": "The whole adhan on iPhone",
+  "@adhanAlarmOfferTitle": {
+    "description": "shared key \"adhan.alarmOfferTitle\""
+  },
   "adhanAlertsHeader": "Adhan alerts",
   "@adhanAlertsHeader": {
     "description": "shared key \"adhan.alertsHeader\""
@@ -194,6 +202,21 @@
   "adhanContinued": "The adhan continues. Tap to hear all of it in the app.",
   "@adhanContinued": {
     "description": "shared key \"adhan.continued\""
+  },
+  "adhanContinuedTitle": "{name} adhan continues ({k} of {n})",
+  "@adhanContinuedTitle": {
+    "description": "shared key \"adhan.continuedTitle\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "k": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
   },
   "adhanCredit": "Adhan recordings:",
   "@adhanCredit": {
@@ -404,6 +427,10 @@
   "adhanTabTitle": "Adhan",
   "@adhanTabTitle": {
     "description": "shared key \"adhan.tabTitle\""
+  },
+  "adhanTapForFull": "Tap to hear the whole adhan in the app.",
+  "@adhanTapForFull": {
+    "description": "shared key \"adhan.tapForFull\""
   },
   "adhanTest": "Test the alert (in 10 seconds)",
   "@adhanTest": {

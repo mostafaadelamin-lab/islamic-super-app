@@ -117,6 +117,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountSyncNow => 'Sync now';
 
   @override
+  String get adhanAlarmOfferBody =>
+      'Allow it once and the whole adhan rings as one alarm, even when the iPhone is on silent, instead of several notifications one after another on the lock screen.';
+
+  @override
+  String get adhanAlarmOfferTitle => 'The whole adhan on iPhone';
+
+  @override
   String get adhanAlertsHeader => 'Adhan alerts';
 
   @override
@@ -142,6 +149,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhanContinued => 'The adhan continues. Tap to hear all of it in the app.';
+
+  @override
+  String adhanContinuedTitle(String name, String k, String n) {
+    return '$name adhan continues ($k of $n)';
+  }
 
   @override
   String get adhanCredit => 'Adhan recordings:';
@@ -288,6 +300,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhanTabTitle => 'Adhan';
+
+  @override
+  String get adhanTapForFull => 'Tap to hear the whole adhan in the app.';
 
   @override
   String get adhanTest => 'Test the alert (in 10 seconds)';
