@@ -20,7 +20,8 @@ Owner 2026-11-26: use the Complex's current release (v22) without changing anyth
 - Saved Bukhari/Muslim hadiths move by themselves to the same hadith in the new copy; the Hajj guide, the children's ruqyah (Muslim 2186) and the simplified explanations point to the new numbers (Hajj-guide quotes now in sunnah.com's wording).
 - الآيفون: كل مقطع بعد أول إشعار للأذان عنوانه «تكملة أذان … (٢ من ٨)»، رسالة مرة واحدة لتشغيل الأذان كامل كمنبّه على iOS 26، وتشغيل الأذان والهاتف صامت مفعّل افتراضياً على أندرويد.
 - Mushaf font (owner 2026-11-27): «خط المدينة» (the printed page, QCF page fonts) is the default again for everyone; «تغيير الخط» opens three choices: switch to the Uthmani font (bundled) or back, download this surah's Madina font, or download the whole Mushaf once. Pages already saved are never downloaded again (app: kept on the phone, gzipped; website: kept in the browser); a cut download carries on where it stopped; progress shows at the top of the reader. Without the font (no internet), a page shows in the Uthmani font.
-- «عن التطبيق» (app) and «حول التطبيق» (website): new «المصادر والإثبات» card that opens rattilwasalli.com/sources.html#proof (owner 2026-11-26).
+- «عن التطبيق» (app) and «حول التطبيق» (website): new «المصادر والإثبات» card (owner 2026-11-26). In the app it opens inside the app, offline (the website's own page, bundled), and so does «سياسة الخصوصية» (owner 2026-11-27).
+- Privacy policy (27 Nov 2026): the Madina font download from quran.com listed among outside services, and a new «مصادر المحتوى» section (King Fahd Complex, quran.com, sunnah.com, Open-Hadith-Data); updated with every new source.
 - Sources page: Bukhari/Muslim rows say «منقول من sunnah.com» with the second-copy check; their 59 rows left the low-match list (now 55 hadiths from the other books).
 
 ## [1.2.24] — «افهم دينك» without sheikhs with legal problems; Al-Azhar and Saudi scholars; stories narrated by al-Sha'rawi — 2026-11-26

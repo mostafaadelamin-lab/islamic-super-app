@@ -16,6 +16,8 @@ MODE="${1:-copy}"
 # source (relative to repo root) -> destination (relative to apps/mobile)
 PAIRS=(
   "content/quran/dist/quran.v1.json:assets/content/quran.v1.json"
+  "apps/web/public/sources.html:assets/content/sources.html"
+  "apps/web/public/privacy-policy.html:assets/content/privacy-policy.html"
   "content/quran/dist/pages.v1.json:assets/content/pages.v1.json"
   "content/quran/dist/integrity.v1.json:assets/content/integrity.v1.json"
   "content/quran/dist/mushaf-lines.v1.json:assets/content/mushaf-lines.v1.json"

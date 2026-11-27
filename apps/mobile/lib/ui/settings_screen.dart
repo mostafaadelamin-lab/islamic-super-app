@@ -23,6 +23,7 @@ import 'muezzin_screen.dart';
 import 'onboarding_screen.dart';
 import 'widgets.dart';
 import 'adaptive.dart';
+import 'in_app_doc_screen.dart';
 import 'r_icon.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -219,9 +220,10 @@ class SettingsScreen extends StatelessWidget {
                       leading: const RIcon(RIcons.shield),
                       title: Text(l.settingsPrivacy),
                       trailing: const RIcon(RIcons.chevronForward),
-                      onTap: () => launchUrl(
-                        Uri.parse('https://rattilwasalli.com/privacy-policy.html'),
-                        mode: LaunchMode.externalApplication,
+                      // Owner 2026-11-27: opens inside the app (the website's own page, bundled).
+                      onTap: () => _push(
+                        context,
+                        InAppDocScreen(title: l.settingsPrivacy, asset: InAppDocScreen.privacyAsset),
                       ),
                     ),
                     ListTile(

@@ -1,0 +1,1015 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>مصادر المحتوى — رتّل وصلِّ | Content sources</title>
+    <!-- Not linked from any menu, footer or sitemap (owner, 2026-11-15): shown only on request.
+         Kept in step with docs/CONTENT_SOURCES.md. -->
+    <style>
+      :root {
+        --bg: #f3f5f9;
+        --fg: #121c2c;
+        --muted: #55657c;
+        --accent: #1d3a64;
+        --line: #d8e0ec;
+        --card: #ffffff;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0a111e;
+          --fg: #e7edf7;
+          --muted: #9aa7bd;
+          --accent: #e3b65c;
+          --line: #243350;
+          --card: #121c2e;
+        }
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font:
+          16px/1.75 "IBM Plex Sans Arabic",
+          system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 32px 16px 64px;
+      }
+      h1 {
+        color: var(--accent);
+        font-size: 1.7rem;
+        margin: 0 0 4px;
+      }
+      h2 {
+        color: var(--accent);
+        font-size: 1.2rem;
+        margin: 36px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--line);
+      }
+      p,
+      li {
+        margin: 6px 0;
+      }
+      a {
+        color: var(--accent);
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      nav.toc ol {
+        columns: 2;
+        padding-inline-start: 20px;
+      }
+      .table-wrap {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--card);
+        font-size: 0.95rem;
+      }
+      th,
+      td {
+        border: 1px solid var(--line);
+        padding: 8px 10px;
+        text-align: start;
+        vertical-align: top;
+      }
+      th {
+        color: var(--accent);
+        font-weight: 600;
+      }
+      td:first-child {
+        font-weight: 600;
+        width: 26%;
+      }
+      td:last-child {
+        width: 24%;
+      }
+      .notice {
+        border: 1px solid var(--accent);
+        border-radius: 10px;
+        padding: 12px 16px;
+        margin: 14px 0;
+        background: var(--card);
+      }
+      .notice[lang="en"] {
+        direction: ltr;
+        text-align: left;
+      }
+      [lang="en"] {
+        unicode-bidi: isolate;
+      }
+      @media (max-width: 600px) {
+        nav.toc ol {
+          columns: 1;
+        }
+        td:first-child,
+        td:last-child {
+          width: auto;
+        }
+      }
+    
+      /* Madinah-night colours (site default) + a way back to the app (owner 2026-11-19:
+         the installed Windows app had no back button on this page). */
+      .back-bar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 16px;
+        background: #1d3a64;
+        color: #f3e9d2;
+        box-shadow: 0 2px 10px rgb(10 24 48 / 0.25);
+      }
+      .back-bar .brand {
+        font-weight: 700;
+        color: #d9b25e;
+      }
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 0 18px;
+        border-radius: 999px;
+        background: #d9b25e;
+        color: #0a1830;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .back-btn:hover,
+      .back-btn:focus-visible {
+        background: #f1dfae;
+        outline: 2px solid #f3e9d2;
+        outline-offset: 2px;
+      }
+      .back-end {
+        margin-top: 40px;
+        text-align: center;
+      }
+      @media (max-width: 600px) {
+        table.cards thead { display: none; }
+        table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: auto; }
+        table.cards tr { border-bottom: 2px solid var(--line, #ccd); padding: 8px 0; }
+        table.cards td { border: 0; padding: 4px 8px; }
+        table.cards td[data-label]::before { content: attr(data-label) ": "; font-weight: 700; }
+      }
+      .proof .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0}
+      .proof .card h3{margin:0 0 6px;font-size:1.1rem;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+      .proof h3.sub{color:var(--accent);margin:22px 0 6px}
+      .ok{background:#e4f2ea;color:#2f7d55;border-radius:999px;padding:2px 12px;font-size:.9rem;font-weight:600;white-space:nowrap;display:inline-block}
+      .proof dl{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:4px 14px}
+      .proof dt{color:var(--muted)} .proof dd{margin:0}
+      .proof code{direction:ltr;unicode-bidi:embed;font-size:12px;word-break:break-all}
+      .proof .note{background:var(--card);border-inline-start:4px solid var(--accent);padding:10px 14px;border-radius:8px}
+      @media (prefers-color-scheme: dark){.ok{background:#17301f;color:#6cc596}}
+      @media (max-width:560px){.proof dl{grid-template-columns:1fr}.proof dt{margin-top:6px}}
+    </style>
+  </head>
+  <body>
+    <header class="back-bar">
+      <a class="back-btn" href="/ar/" data-back>→ رجوع للتطبيق</a>
+      <span class="brand">رتّل وصلِّ</span>
+    </header>
+    <main>
+      <h1>مصادر المحتوى في «رتّل وصلِّ»</h1>
+      <p class="muted">
+        آخر تحديث: 26 نوفمبر 2026 · تطبيق «رتّل وصلِّ» (Android و iPhone) وموقع rattilwasalli.com
+      </p>
+      <p>
+        هذه الصفحة تجمع مصادر كل المحتوى المعروض في التطبيق والموقع وتراخيصها. النصوص الدينية تُنقل كما نُشرت
+        في مصادرها دون إضافة أو تغيير.
+      </p>
+
+
+      <section id="proof" class="proof">
+      <h2>الإثبات: كل المحتوى الديني مطابق لمصدره</h2>
+      <p>للإثبات، حمّلنا كل مصدر من جديد من مكانه الأصلي، وقارنّاه بالملف اللي في التطبيق حرفًا بحرف، وسجّلنا <b>البصمة الرقمية (SHA-256)</b> لملف المصدر. البصمة زي بصمة الإصبع: لو اتغير حرف واحد أو حركة واحدة في الملف، البصمة كلها بتتغير. تاريخ الفحص: 26 نوفمبر 2026م.</p>
+      <h3 class="sub">القرآن الكريم والتفسير ومعاني الكلمات</h3>
+      <div class="card"><h3>المصحف الشريف <span class="ok">✓ مطابق 100٪ — صفر اختلاف</span></h3><dl><dt>المصدر</dt><dd>مجمع الملك فهد لطباعة المصحف الشريف، نص حفص العثماني <b>الإصدار 2.2</b> (2024م)، ملف الوورد داخل حزمة <code>hafs-2.2.zip</code> المنشورة على <a href="https://qurancomplex.gov.sa/fonts/hafs">صفحة خط حفص في موقع المجمع</a>، وبخط المجمع من نفس الحزمة</dd><dt>اللي اتقارن</dt><dd>كل حرف وكل حركة في 6236 آية و114 سورة، وترتيب السور والآيات وأرقامها. صفحات طبعة 1441هـ (604 صفحة) وأول وآخر سطر لكل آية من ملف بيانات المجمع hafsData_v18.json</dd><dt>بصمة حزمة المجمع</dt><dd><code>B5CF0666441AABD5FF2BE4993934E6F2A57D00B6B89AFCDF708CD70288671B23</code><br>نفس البصمة المكتوبة على صفحة المجمع ✓</dd><dt>بصمة خط المصحف</dt><dd><code>aa68bffce289b4c0ebac68e90502eb69e42356abcd1603cb2b8e99c2c723f145</code><br>الخط اللي في التطبيق والموقع هو خط المجمع نفسه بايت بايت ✓</dd><dt>بصمة ملف الصفحات</dt><dd><code>5d8bb91726e482839d0057633cb1973031e4d706fa9604eea5e08892f20ba140</code></dd></dl></div><div class="card"><h3>التفسير الميسر <span class="ok">✓ مطابق 100٪ — صفر اختلاف</span></h3><dl><dt>المصدر</dt><dd>مجمع الملك فهد لطباعة المصحف الشريف (نسخة Tanzil / alquran.cloud، حزمة ar.muyassar 1.0.0)</dd><dt>اللي اتقارن</dt><dd>تفسير كل آية من الـ 6236 آية</dd><dt>بصمة ملف المصدر</dt><dd><code>0d0441ae058d5d36cd450d8e9f768a2c5f918e30048316553bc873fb75770da3</code></dd></dl></div><div class="card"><h3>تفسير السعدي <span class="ok">✓ مطابق 100٪</span></h3><dl><dt>المصدر</dt><dd>«تيسير الكريم الرحمن»، مؤسسة الرسالة، الطبعة الأولى 1420هـ، من بيانات Quranpedia المفتوحة (كتاب 3)</dd><dt>اللي اتقارن</dt><dd>النص كله حرفًا بحرف (3,297,155 حرف) والحواشي</dd><dt>بصمة ملف المصدر</dt><dd><code>2d76f729e3b0671aa9c11c25fb3880942941c4af70ab331dac16766591428c34</code></dd></dl></div><div class="card"><h3>تفسير ابن كثير <span class="ok">✓ مطابق 100٪</span></h3><dl><dt>المصدر</dt><dd>«تفسير القرآن العظيم»، دار طيبة، الطبعة الثانية، من بيانات Quranpedia (كتاب 136)</dd><dt>اللي اتقارن</dt><dd>النص كله حرفًا بحرف (16,126,873 حرف) والحواشي</dd><dt>بصمة ملف المصدر</dt><dd><code>26749df050617a92fb12e871395dcf1228a475e008d29035d71e61f75ed4f230</code></dd></dl></div><div class="card"><h3>تفسير الطبري <span class="ok">✓ مطابق 100٪</span></h3><dl><dt>المصدر</dt><dd>«جامع البيان في تأويل آي القرآن»، مؤسسة الرسالة، الطبعة الأولى 1420هـ، من بيانات Quranpedia (كتاب 4)</dd><dt>اللي اتقارن</dt><dd>النص كله حرفًا بحرف (13,865,069 حرف) والحواشي</dd><dt>بصمة ملف المصدر</dt><dd><code>ea7132febfe16c40247388ca37716aee05e1d320f6c470f70f784c2f2051b966</code></dd></dl></div><div class="card"><h3>تفسير البغوي <span class="ok">✓ مطابق 100٪</span></h3><dl><dt>المصدر</dt><dd>«معالم التنزيل»، دار طيبة، الطبعة الرابعة، من بيانات Quranpedia (كتاب 2)</dd><dt>اللي اتقارن</dt><dd>النص كله حرفًا بحرف (6,785,721 حرف) والحواشي</dd><dt>بصمة ملف المصدر</dt><dd><code>cdf2680094d6f11a80388e6b5bd44053644c2c95f3e739662e1ddda6dc0a511c</code></dd></dl></div><div class="card"><h3>تفسير القرطبي <span class="ok">✓ مطابق 100٪</span></h3><dl><dt>المصدر</dt><dd>«الجامع لأحكام القرآن»، من مستودع tafsir_api المفتوح (أصله من مكتبة QUL)</dd><dt>اللي اتقارن</dt><dd>النص كله حرفًا بحرف (15,233,681 حرف)</dd><dt>بصمة ملف المصدر</dt><dd><code>d669a4ecd1b0cdac890f205948f61f663c1bf29e60563d7bea962df671c2d4fc</code></dd></dl></div><div class="card"><h3>الإعراب والصرف والبلاغة <span class="ok">✓ مطابق 100٪</span></h3><dl><dt>المصدر</dt><dd>«الجدول في إعراب القرآن وصرفه وبيانه» لمحمود صافي، من مستودع tafsir_api المفتوح</dd><dt>اللي اتقارن</dt><dd>الملف كله</dd><dt>بصمة ملف المصدر</dt><dd><code>eb6fecb7d03f2f91f4da698e21fce46e263aeb0910f7448ca2b4e3aa2538cd7b</code></dd></dl></div><div class="card"><h3>معاني الكلمات <span class="ok">✓ مطابق 100٪</span></h3><dl><dt>المصدر</dt><dd>«السراج في بيان غريب القرآن» لمحمد بن عبد العزيز الخضيري، الطبعة الأولى 1429هـ، من بيانات Quranpedia (كتاب 491)</dd><dt>اللي اتقارن</dt><dd>6104 كلمة ومعناها</dd><dt>بصمة ملف المصدر</dt><dd><code>b46ca5ae7baa5287dc08816d5c6037e8ad9282e49cf870357e6bb6184b8d0699</code></dd></dl></div>
+      <h3 class="sub">كتب الحديث التسعة (64,535 حديث)</h3>
+      <p><b>صحيح البخاري وصحيح مسلم: من موقع sunnah.com فقط</b> (بترقيم الموقع)، منقولين من صفحات الموقع نفسه حديث حديث يوم 26 نوفمبر 2026، وليهم بصمة بتطابق الموقع (البخاري <code>8b1625a8…4e0b</code>، مسلم <code>8a388da0…192c</code>؛ <a href="#hadith-check">إزاي تتأكد بنفسك</a>). باقي الكتب السبعة: مجموعة Open-Hadith-Data المفتوحة (النص بالتشكيل، ترقيم العالمية)، النسخة <code>1515f6c</code>. كل حديث اتقارن بالملف الأصلي (<b>مطابق 100٪ في الكتب التسعة</b>)، والكتب السبعة اتراجعت كمان مع موقع sunnah.com (الحروف بس، لأن التشكيل بيختلف من طبعة لطبعة؛ <a href="#hadith-check">التفاصيل</a>، و<a href="#hadith-114">قائمة الأحاديث الأقل تطابقًا</a>). ماتغيّرش أي نص.</p>
+      <div class="table-wrap"><table class="cards"><thead><tr><th>الكتاب</th><th>عدد الأحاديث</th><th>مع ملف المصدر</th><th>مع sunnah.com</th><th>بصمة ملف المصدر</th></tr></thead><tbody>
+      <tr><td><b>صحيح البخاري</b></td><td data-label="عدد الأحاديث">7,277</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com"><span class="ok">✓ منقول من صفحات sunnah.com نفسها — مطابق 100٪</span></td><td data-label="بصمة ملف المصدر"><code>8b1625a83df9a17896490e474e521efaa0e9e1560de73a5044e4b2db38c84e0b</code></td></tr><tr><td><b>صحيح مسلم</b></td><td data-label="عدد الأحاديث">7,459</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com"><span class="ok">✓ منقول من صفحات sunnah.com نفسها — مطابق 100٪</span></td><td data-label="بصمة ملف المصدر"><code>8a388da06140b79220f2c1b67f561be1f0fc561010a17d56bdf161c3ce60192c</code></td></tr><tr><td><b>سنن أبي داود</b></td><td data-label="عدد الأحاديث">4,590</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">98.0٪ مطابق أو شبه مطابق (95٪ فأكثر)</td><td data-label="بصمة ملف المصدر"><code>68918ef593d5154d38c1d00bad3ae8237510cb35eeb3ebf22b4a1f9fa3b2799f</code></td></tr><tr><td><b>جامع الترمذي</b></td><td data-label="عدد الأحاديث">3,891</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">94.6٪ مطابق أو شبه مطابق (95٪ فأكثر)</td><td data-label="بصمة ملف المصدر"><code>136b4467116a59dd81b9633306960898d6f8fd34c3a3aa3579d2d0ba130b3ce9</code></td></tr><tr><td><b>سنن النسائي</b></td><td data-label="عدد الأحاديث">5,662</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">98.8٪ مطابق أو شبه مطابق (95٪ فأكثر)</td><td data-label="بصمة ملف المصدر"><code>21d677b02a39722f039f9a79f06706e71a0a09a18cc1aa71df6f90d994bf11c2</code></td></tr><tr><td><b>سنن ابن ماجه</b></td><td data-label="عدد الأحاديث">4,332</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">97.6٪ مطابق أو شبه مطابق (95٪ فأكثر)</td><td data-label="بصمة ملف المصدر"><code>88b2fec03dbaff0b6d8e36d9b4b3989d1526a0aa8f81a8cdd56e1de95a7d5f68</code></td></tr><tr><td><b>موطأ مالك</b></td><td data-label="عدد الأحاديث">1,594</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">96.2٪ مطابق أو شبه مطابق (95٪ فأكثر)</td><td data-label="بصمة ملف المصدر"><code>d306930f056bb0a74745a4453fbef04cc80765213554b052a29427e24702ece0</code></td></tr><tr><td><b>مسند أحمد</b></td><td data-label="عدد الأحاديث">26,363</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">1,358 من 1,446 حديث موجودين هناك مطابقين حرفيًا؛ الباقي مالوش نسخة تانية متاحة</td><td data-label="بصمة ملف المصدر"><code>41553fee47fe582a8d0b60fbea1f71b867df44d40adac94dcfe742571a8bce24</code></td></tr><tr><td><b>سنن الدارمي</b></td><td data-label="عدد الأحاديث">3,367</td><td data-label="مع ملف المصدر"><span class="ok">✓ مطابق 100٪</span></td><td data-label="مع sunnah.com">91.2٪ مطابق أو شبه مطابق (95٪ فأكثر)</td><td data-label="بصمة ملف المصدر"><code>bb995abb07a513cf76743e9580787e80c7ce5bd08dd6108c13e01d936a048327</code></td></tr>
+      </tbody></table></div>
+      <h3 class="sub">إزاي تتحقق بنفسك من المصحف</h3>
+      <ol>
+        <li>ادخل <a href="https://qurancomplex.gov.sa/fonts/hafs">صفحة خط حفص على موقع مجمع الملك فهد</a> ونزّل «الإصدار 2.2» (ملف <code>hafs-2.2.zip</code>).</li>
+        <li>احسب بصمته (على ويندوز: <code>certutil -hashfile hafs-2.2.zip SHA256</code>). هتطلع <code>B5CF0666441AABD5FF2BE4993934E6F2A57D00B6B89AFCDF708CD70288671B23</code>، وهي نفس البصمة المكتوبة على صفحة المجمع ونفس اللي فوق.</li>
+        <li>نص كل آية في التطبيق هو نص ملف الوورد اللي جوه الحزمة دي بالظبط. رقم الآية متخزّن في خانة لوحده، وبيترسم على الشاشة جوه علامة نهاية الآية بخط المجمع.</li>
+      </ol>
+      <h3 class="sub">ملاحظات للأمانة</h3>
+      <div class="note"><ul>
+        <li>المجمع بيقول إن ملف الوورد «مصادق عليه رقميًا»، لكن الملف نفسه مافيهوش توقيع رقمي جواه؛ الإثبات هو بصمة الحزمة المنشورة على موقع المجمع. احتفظنا بنسخة من صفحة المجمع وملفاته بتاريخ 26 نوفمبر 2026م.</li>
+        <li>الإصدار 2.2 نفس حروف وتشكيل الإصدار 18 اللي كان قبله، والفرق الوحيد مدّة صغيرة «ـ» بعد الكاف في «كَلَّا» في 33 موضع، وده تعديل المجمع نفسه.</li>
+        <li>كتب الحديث والتفاسير مطابقة لملفات مصادرها الرقمية المذكورة فوق، لكن لسه ماتراجعتش على نسخة ورقية مطبوعة.</li>
+        <li>الشرح المبسّط للأحاديث منقول من موسوعة الأحاديث النبوية (HadeethEnc). موقعهم ماكانش متاح وقت الفحص، فماتقارنش المرة دي.</li>
+      </ul></div>
+      </section>
+
+      <nav class="toc" aria-label="المحتويات">
+        <ol>
+          <li><a href="#proof">الإثبات: مطابق لمصدره</a></li>
+          <li><a href="#quran">القرآن الكريم ونص المصحف</a></li>
+          <li><a href="#mushaf-lines">ترتيب أسطر المصحف (Waqf GPL)</a></li>
+          <li><a href="#tafsir">التفسير ومعلومات السور</a></li>
+          <li><a href="#hadith">الحديث الشريف</a></li>
+          <li><a href="#adhkar">الأذكار وأسماء الله الحسنى</a></li>
+          <li><a href="#audio">التلاوات والإذاعات والدروس الصوتية</a></li>
+          <li><a href="#adhan">أصوات الأذان</a></li>
+          <li><a href="#video">الفيديوهات والأناشيد</a></li>
+          <li><a href="#hajj">الحج والعمرة</a></li>
+          <li><a href="#tools">المواقيت والقبلة والمساجد والزكاة</a></li>
+          <li><a href="#fonts">الخطوط والتصميم</a></li>
+          <li><a href="#licences">ملفات التراخيص</a></li>
+        </ol>
+      </nav>
+
+      <h2 id="quran">القرآن الكريم ونص المصحف</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>نص القرآن الكريم (الرسم العثماني، رواية حفص عن عاصم، 6236 آية)</td>
+              <td>
+                مجمع الملك فهد لطباعة المصحف الشريف، نص حفص العثماني الإصدار 2.2 (ملف الوورد داخل حزمة <span lang="en"
+                  >hafs-2.2.zip</span
+                > من <a href="https://qurancomplex.gov.sa/fonts/hafs">صفحة خط حفص على موقع المجمع</a>، وبصمتها SHA-256
+                <span lang="en">B5CF0666…1B23</span> كما ينشرها المجمع). يُستخدم كما هو، ويُتحقق آليًا من مطابقة كل آية
+                لملف المجمع حرفًا بحرف.
+              </td>
+              <td>منشور من المجمع للاستخدام المجاني، ويُوزّع دون تعديل</td>
+            </tr>
+            <tr>
+              <td>صفحات مصحف المدينة (طبعة 1441هـ، 604 صفحات)</td>
+              <td>أعمدة الصفحة والسطر والجزء في ملف بيانات المجمع «hafsData_v18.json» (نفس طبعة 1441هـ ونفس الكلمات)</td>
+              <td>كما سبق</td>
+            </tr>
+            <tr>
+              <td>أرباع الأحزاب (240 ربعًا)</td>
+              <td>
+                بيانات Tanzil عبر حزمة <span lang="en">quran-meta@7.0.0</span>، مع مطابقتها لعلامات ۞ في نص
+                المجمع
+              </td>
+              <td><span lang="en">MIT</span> — <a href="/licenses/quran-meta-LICENSE.txt">نص الترخيص</a></td>
+            </tr>
+            <tr>
+              <td>أسماء السور</td>
+              <td><span lang="en">quran-json@3.1.2</span> (الأسماء فقط، وليس نص القرآن)</td>
+              <td>
+                <span lang="en">CC BY-SA 4.0</span> —
+                <a href="/licenses/quran-json-LICENSE.txt">نص الترخيص</a>
+              </td>
+            </tr>
+            <tr>
+              <td>ترجمة معاني القرآن إلى الإنجليزية (اختيارية)</td>
+              <td>
+                ترجمة <span lang="en">Saheeh International</span> عبر حزمة
+                <span lang="en">quran-json@3.1.2</span>. تُعرض مساعدةً على الفهم فقط ولا تحل محل النص العربي.
+              </td>
+              <td>حقوق الترجمة لناشرها</td>
+            </tr>
+            <tr>
+              <td>شكل المصحف المطبوع (604 صفحات) — اختياري من الإعدادات، والشكل الافتراضي هو نص المجمع وخطه الإصدار 2.2 المثبت بالبصمة</td>
+              <td>خطوط صفحات مصحف المدينة من مجمع الملك فهد (<span lang="en">QCF v2</span>) عبر <span lang="en">static.qurancdn.com</span>، مع موضع كل كلمة وسطرها من واجهة <span lang="en">api.quran.com</span> (الإصدار 4). كل صفحة تبدأ بالآية نفسها في طبعة 1441هـ</td>
+              <td>تُنزَّل الخطوط عند فتح الصفحة أول مرة</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="mushaf-lines">ترتيب أسطر مصحف المدينة (15 سطرًا)</h2>
+      <p>
+        تُستخدم بيانات أسطر مصحف المدينة (Madina-1441H) من مشروع
+        <span lang="en">quran-madina-html</span> للمهندس طارق الديب (الإصدار 2.2.2) لتحديد مواضع نهاية كل سطر
+        فقط. النص المعروض هو نص المجمع نفسه، ويتحقق البناء من أن كل كلمة تظهر مرة واحدة وبالترتيب، وأن صفحة كل
+        آية وأول سطر وآخر سطر فيها تطابق ملف المجمع.
+      </p>
+      <div class="notice" lang="en" dir="ltr">
+        <strong>Licence notice.</strong> Mushaf line-layout data from <em>quran-madina-html</em> 2.2.2 by
+        Tarek Eldeeb (database Madina-1441H). "Code and assets are licensed under the
+        <a href="https://github.com/ojuba-org/waqf/tree/master/2.0">“Waqf” General Public License 2.0</a>, 3
+        Muharram 1435." Original notice:
+        <a href="/licenses/quran-madina-html-LICENSE.txt">quran-madina-html-LICENSE.txt</a>. Source of the
+        data: npm package <a href="https://www.npmjs.com/package/quran-madina-html">quran-madina-html</a> and
+        <a href="https://github.com/tarekeldeeb/quran-madina-html">github.com/tarekeldeeb/quran-madina-html</a
+        >. Our derived file (<code>/data/mushaf-lines.json</code>, word ranges per line) is shared under the
+        same licence.
+      </div>
+      <div class="notice">
+        <strong>إشعار الترخيص:</strong> بيانات ترتيب الأسطر مأخوذة من مشروع
+        <span lang="en">quran-madina-html</span> وهي مرخّصة برخصة «وقف» العامة الإصدار 2.0 (<span lang="en"
+          >Waqf GPL 2.0</span
+        >)، والملف المشتق منها في الموقع (<span lang="en">/data/mushaf-lines.json</span>) متاح بالرخصة نفسها.
+      </div>
+
+      <h2 id="tafsir">التفسير ومعلومات السور</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>التفسير الميسر</td>
+              <td>
+                مجمع الملك فهد لطباعة المصحف الشريف، نسخة Tanzil (<span lang="en">ar.muyassar</span>) عبر حزمة
+                <span lang="en">@muslimjs/ar.muyassar@1.0.0</span>، دون تعديل
+              </td>
+              <td>استخدام مجاني غير تجاري مع نسبة المصدر ودون تعديل (شروط Tanzil)</td>
+            </tr>
+            <tr>
+              <td>تعريف السور وأسباب النزول (الواحدي)</td>
+              <td>موسوعة Quranpedia</td>
+              <td>يسمح ترخيصها بالاستخدام داخل التطبيق</td>
+            </tr>
+            <tr>
+              <td>تفسير الشيخ محمد متولي الشعراوي (صوتي، 1116 درسًا)</td>
+              <td>
+                أرشيف الإنترنت <span lang="en">archive.org</span>، مجموعة «خواطر الشيخ محمد متولي الشعراوي
+                للقرآن الكريم» (<span lang="en">20240104_20240104_0645</span>)، تُشغّل من الأرشيف مباشرة
+              </td>
+              <td>علامة الملكية العامة (<span lang="en">Public Domain Mark</span>)</td>
+            </tr>
+            <tr>
+              <td>سلاسل الدروس الصوتية «افهم دينك» (78 سلسلة، نحو 4000 درس، لعلماء الأزهر الشريف ومشايخ مصر والسعودية؛ منها برامج فضيلة الإمام الأكبر أحمد الطيب من البودكاست الرسمي لفضيلته؛ والسيرة النبوية وقصص الأنبياء للشيخ الشعراوي داخل قسمه؛ وأُضيفت في 24 نوفمبر 2026 تسجيلات أوضح بجانب القديمة: شرح ثلاثة الأصول للشيخ عبد المحسن القاسم، وشرح كتاب التوحيد للشيخ عبد الرزاق البدر، والشمائل النبوية للشيخ عبد الكريم الخضير، والمعاملات المالية المعاصرة للشيخ يوسف الشبيلي، وفتاوى الحج والعمرة للشيخ عطية صقر، ومع القرآن ٣ و٦ للشيخ صالح المغامسي؛ وثماني سلاسل للشيخ مصطفى العدوي: رسائل إيمانية، وقرآن تفسره السنة، وتفسير القرآن العظيم، وسلسلة العقيدة، وشرح كتاب التوحيد لابن خزيمة، والسيرة النبوية، وشرح متن أبي شجاع، والبحث الفقهي؛ وأُضيفت في 26 نوفمبر 2026 سلاسل لعلماء الأزهر الشريف: شرح عقيدة العوام، ونور اليقين في سيرة سيد المرسلين، وفتح القريب المجيب، وشرح منازل السائرين، والتبيان في آداب حملة القرآن للدكتور يسري جبر من البودكاست الخاص به، ووقفات مع آيات للشيخ محمد الراوي، وتفسير وتأملات للدكتور عبد الله شحاتة، وأحاديث الدكتور أحمد عمر هاشم، وأحاديث الإمام الأكبر محمد سيد طنطاوي من برنامج «حديث الروح» بالإذاعة المصرية، و«من هدي الرسول ﷺ» من بودكاست الأزهر الشريف الرسمي، وأحسن القصص للشيخ عمر عبد الكافي؛ وأُضيفت في 26 نوفمبر 2026 سلاسل لعلماء السعودية: الملخص الفقهي ودروس من رمضان للشيخ صالح الفوزان، وشرح الوابل الصيب وشرح كتاب الاستقامة للشيخ عبد العزيز بن باز، وشرح مختصر منهاج القاصدين وشرح الأربعين النووية للشيخ صالح بن حميد، والفقه الميسر للشيخ عبد الله المطلق، وفقه الحج وفقه الأسرة للشيخ سليمان الرحيلي؛ وحُذف تسجيل شرح ثلاثة الأصول القديم للشيخ ابن عثيمين)</td>
+              <td>
+                أرشيف الإنترنت <span lang="en">archive.org</span> والبودكاست الرسمي للمشايخ والأزهر الشريف: تسجيلات منشورة للدروس كما ألقاها المشايخ، تُشغّل من
+                مصدرها مباشرة أو تُحمَّل للاستماع بدون إنترنت (القائمة الكاملة في <span lang="en">content/lessons/sources.json</span>)
+              </td>
+              <td>تسجيلات متاحة للتحميل مجانًا، والتطبيق مجاني بلا إعلانات</td>
+            </tr>
+            <tr>
+              <td>القصص القرآني (25 قصة)</td>
+              <td>نطاقات آيات من نص المجمع، مع التلاوة والتفسير الميسر المذكورين هنا</td>
+              <td>كما في مصادرها</td>
+            </tr>
+            <tr>
+              <td>كتب التفسير: تفسير السعدي، تفسير ابن كثير، تفسير الطبري، تفسير البغوي</td>
+              <td>البيانات المفتوحة لموسوعة <span lang="en">Quranpedia</span> (<span lang="en">quranpedia.net/dumps</span>)، بنصها دون إضافة أو اختصار</td>
+              <td>يسمح ترخيصها بالاستخدام داخل التطبيقات والمواقع</td>
+            </tr>
+            <tr>
+              <td>تفسير القرطبي</td>
+              <td>مستودع <span lang="en">spa5k/tafsir_api</span> العام على GitHub، بنصه</td>
+              <td>MIT</td>
+            </tr>
+            <tr>
+              <td>الإعراب والصرف والبلاغة والفوائد لكل آية</td>
+              <td>«الجدول في إعراب القرآن وصرفه وبيانه» لمحمود صافي، من مستودع <span lang="en">spa5k/tafsir_api</span>، بنصه</td>
+              <td>MIT</td>
+            </tr>
+            <tr>
+              <td>معاني الكلمات (غريب القرآن، 6104 كلمات)</td>
+              <td>«السراج في بيان غريب القرآن» للدكتور محمد بن عبد العزيز الخضيري (الطبعة الأولى 1429هـ)، من البيانات المفتوحة لموسوعة <span lang="en">Quranpedia</span></td>
+              <td>يسمح ترخيصها بالاستخدام داخل التطبيقات؛ الكتاب ملك لمؤلفه</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="hadith">الحديث الشريف</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                سنن أبي داود، جامع الترمذي، سنن النسائي، سنن ابن ماجه، موطأ مالك، مسند أحمد، سنن الدارمي
+                (بالتشكيل وترقيم العالمية)
+              </td>
+              <td>
+                <a href="https://github.com/mhashim6/Open-Hadith-Data" lang="en">Open-Hadith-Data</a> (عمود
+                النص فقط، دون تعديل). أصل النصوص: مشروع <span lang="en">hadith-islamware</span> (© Islam Ware
+                2006-2014)
+              </td>
+              <td>
+                <span lang="en">ODbL 1.0</span> لقاعدة البيانات و<span lang="en">DbCL 1.0</span> للمحتوى
+              </td>
+            </tr>
+            <tr>
+              <td>صحيح البخاري وصحيح مسلم (بالتشكيل وترقيم <span lang="en">sunnah.com</span>، منذ الإصدار 1.2.25)</td>
+              <td>
+                موقع <a href="https://sunnah.com" lang="en">sunnah.com</a> نفسه: نص كل حديث ورقمه منقولان من صفحات الموقع
+                (<a href="https://sunnah.com/bukhari" lang="en">sunnah.com/bukhari</a>،
+                <a href="https://sunnah.com/muslim" lang="en">sunnah.com/muslim</a>) يوم 26 نوفمبر 2026 دون تعديل
+              </td>
+              <td>تحميل مجاني بدون رسوم</td>
+            </tr>
+            <tr>
+              <td>شرح الأحاديث المختصر (العنوان، الشرح، الفوائد، الدرجة)</td>
+              <td>موسوعة الأحاديث النبوية <span lang="en">HadeethEnc.com</span>، منقول بنصه</td>
+              <td>بحسب شروط الموسوعة</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="hadith-check">مراجعة الأحاديث مع مصدر ثانٍ (26 نوفمبر 2026)</h3>
+      <p>
+        صحيح البخاري وصحيح مسلم منقولان من صفحات <span lang="en">sunnah.com</span> نفسها (منذ الإصدار 1.2.25). <b>تأكد بنفسك:</b> افتح كل كتاب في الموقع، وخذ نص كل حديث بعد حذف المسافات وعلامات الاتجاه (U+200B–200F، U+202A–202E، U+2066–2069، U+FEFF)، حديث في كل سطر بترتيب الموقع، ثم احسب SHA-256: البخاري 7,277 حديث = <code style="word-break:break-all">8b1625a83df9a17896490e474e521efaa0e9e1560de73a5044e4b2db38c84e0b</code>، مسلم 7,459 حديث = <code style="word-break:break-all">8a388da06140b79220f2c1b67f561be1f0fc561010a17d56bdf161c3ce60192c</code>. نفس الحساب على نصوص التطبيق يعطي نفس البصمة. أما الكتب السبعة الأخرى فقورن نص كل حديث فيها بالحديث نفسه في موقع <span lang="en">sunnah.com</span>. التشكيل يختلف من طبعة إلى
+        أخرى، فقورنت الحروف فقط. «نفس الكلمات بتقسيم مختلف» يعني أن الكلمات واحدة لكن المصدرين قسّما الحديث أو
+        وصلا الكلمات بشكل مختلف. لم يُغيَّر أي نص بناءً على هذه المقارنة. البصمة (SHA-256) لنصوص كل كتاب كما في
+        التطبيق، ليتأكد أي أحد أنها لم تتغير.
+      </p>
+      <div class="table-wrap">
+        <table class="cards">
+          <thead>
+            <tr>
+              <th>الكتاب</th>
+              <th>عدد الأحاديث</th>
+              <th>نتيجة المقارنة مع sunnah.com</th>
+              <th>بصمة النصوص (SHA-256)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>صحيح البخاري</strong></td>
+              <td data-label="عدد الأحاديث">7,277</td>
+              <td data-label="المقارنة مع sunnah.com">منقول من صفحات sunnah.com نفسها: 7,277 من 7,277 مطابق (بصمة الموقع <code style="font-size:.75em;word-break:break-all">8b1625a8…4e0b</code>)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">c741ddd38086d05d8e9b33cb1663675adc02b675c58fb95a8fd4f45a88241fd8</code></td>
+            </tr>
+            <tr>
+              <td><strong>صحيح مسلم</strong></td>
+              <td data-label="عدد الأحاديث">7,459</td>
+              <td data-label="المقارنة مع sunnah.com">منقول من صفحات sunnah.com نفسها: 7,459 من 7,459 مطابق (بصمة الموقع <code style="font-size:.75em;word-break:break-all">8a388da0…192c</code>)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">fa57229d2351f06ce9e925b51107fb1d1b586e1fdbbadb5979a963c630aec342</code></td>
+            </tr>
+            <tr>
+              <td><strong>سنن أبي داود</strong></td>
+              <td data-label="عدد الأحاديث">4,590</td>
+              <td data-label="المقارنة مع sunnah.com">2,611 مطابق حرفيًا · 347 نفس الكلمات بتقسيم مختلف · 1,538 مطابق 95% فأكثر · 80 مطابق 80–95% · 14 أقل من 80% (<a href="#hadith-114">في القائمة تحت</a>)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">8cfb84883a34abeec2c0a88c575d0813643dbb32f5fc53a4f6a717981223bc5d</code></td>
+            </tr>
+            <tr>
+              <td><strong>جامع الترمذي</strong></td>
+              <td data-label="عدد الأحاديث">3,891</td>
+              <td data-label="المقارنة مع sunnah.com">1,332 مطابق حرفيًا · 467 نفس الكلمات بتقسيم مختلف · 1,880 مطابق 95% فأكثر · 197 مطابق 80–95% · 15 أقل من 80% (<a href="#hadith-114">في القائمة تحت</a>)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">d4d243ef57e64b28e22cdd5f89858fb453e6398aac7cd9aa3c8d8fd0c5037066</code></td>
+            </tr>
+            <tr>
+              <td><strong>سنن النسائي</strong></td>
+              <td data-label="عدد الأحاديث">5,662</td>
+              <td data-label="المقارنة مع sunnah.com">4,047 مطابق حرفيًا · 130 نفس الكلمات بتقسيم مختلف · 1,419 مطابق 95% فأكثر · 64 مطابق 80–95% · 2 أقل من 80% (<a href="#hadith-114">في القائمة تحت</a>)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">395e003ac2bc705b638f9540f19c2b771ed49eed4d90189ac572102f93d507a1</code></td>
+            </tr>
+            <tr>
+              <td><strong>سنن ابن ماجه</strong></td>
+              <td data-label="عدد الأحاديث">4,332</td>
+              <td data-label="المقارنة مع sunnah.com">2,888 مطابق حرفيًا · 106 نفس الكلمات بتقسيم مختلف · 1,234 مطابق 95% فأكثر · 101 مطابق 80–95% · 3 أقل من 80% (<a href="#hadith-114">في القائمة تحت</a>)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">6cb1548810f1a576476ba9c0d228da548007c8c9cc45ff865a802105fb8bfa13</code></td>
+            </tr>
+            <tr>
+              <td><strong>موطأ مالك</strong></td>
+              <td data-label="عدد الأحاديث">1,594</td>
+              <td data-label="المقارنة مع sunnah.com">1,198 مطابق حرفيًا · 197 نفس الكلمات بتقسيم مختلف · 138 مطابق 95% فأكثر · 43 مطابق 80–95% · 18 أقل من 80% (<a href="#hadith-114">في القائمة تحت</a>)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">e2c67df04c83b3f79feccb632d67b236fd090582750cbabb2f1a4f199a79781d</code></td>
+            </tr>
+            <tr>
+              <td><strong>مسند أحمد</strong></td>
+              <td data-label="عدد الأحاديث">26,363</td>
+              <td data-label="المقارنة مع sunnah.com">يوجد في sunnah.com جزء صغير منه فقط: قورن 1,446 حديثًا، منها 1,358 مطابق حرفيًا. باقي الأحاديث (24,917) لا يوجد لها مصدر إلكتروني ثانٍ متاح للمقارنة</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">00f22c2d26faaa9cd88f329a712dfb36a56debdc7e40dbc9c8a3e29d21d96337</code></td>
+            </tr>
+            <tr>
+              <td><strong>سنن الدارمي</strong></td>
+              <td data-label="عدد الأحاديث">3,367</td>
+              <td data-label="المقارنة مع sunnah.com">1,636 مطابق حرفيًا · 514 نفس الكلمات بتقسيم مختلف · 922 مطابق 95% فأكثر · 292 مطابق 80–95% · 3 أقل من 80% (<a href="#hadith-114">في القائمة تحت</a>)</td>
+              <td data-label="بصمة النصوص"><code style="font-size:.75em;word-break:break-all">e0123485bd1db1ea5935d1a3d3e648b230aed53ea4313c50441ad04bb484aa9e</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="hadith-114">الأحاديث الأقل تطابقًا مع sunnah.com (55 حديث)</h3>
+      <p>
+        كانت القائمة 114 حديثًا، منها 59 من البخاري ومسلم خرجت منها لأن الكتابين صارا من <span lang="en">sunnah.com</span> نفسه.
+        الباقي <b>موجود في التطبيق كما هو</b> بنصه من مصدره (Open-Hadith-Data) دون أي تغيير أو حذف. عند مقارنتها
+        بموقع <span lang="en">sunnah.com</span> كانت نسبة الكلمات المتطابقة أقل من 80٪. السبب في الغالب أن النسختين
+        قسّمتا الحديث بشكل مختلف (حديث مقسوم على رقمين في نسخة ورقم واحد في الأخرى)، أو أن الطبعتين اختلفتا في الرواية أو
+        الإسناد. الرقم الثاني هو ترتيب أقرب حديث له في النسخة المنزّلة من <span lang="en">sunnah.com</span> (ترتيبه في الكتاب، وليس بالضرورة الرقم المكتوب على الموقع).
+      </p>
+      <details>
+        <summary>عرض القائمة (55 حديث)</summary>
+        <div class="table-wrap">
+          <table class="cards">
+            <thead><tr><th>الكتاب</th><th>رقمه عندنا</th><th>أقرب حديث في sunnah.com</th><th>نسبة الكلمات المتطابقة</th></tr></thead>
+            <tbody>
+              <tr><td>سنن أبي داود</td><td data-label="رقمه عندنا">99</td><td data-label="أقرب حديث في sunnah.com">111</td><td data-label="نسبة الكلمات المتطابقة">78٪</td></tr>
+              <tr><td>سنن أبي داود</td><td data-label="رقمه عندنا">240</td><td data-label="أقرب حديث في sunnah.com">274</td><td data-label="نسبة الكلمات المتطابقة">66٪</td></tr>
+              <tr><td>سنن أبي داود</td><td data-label="رقمه عندنا">275</td><td data-label="أقرب حديث في sunnah.com">322</td><td data-label="نسبة الكلمات المتطابقة">66٪</td></tr>
+              <tr><td>سنن أبي داود</td><td data-label="رقمه عندنا">627</td><td data-label="أقرب حديث في sunnah.com">730</td><td data-label="نسبة الكلمات المتطابقة">45٪</td></tr>
+              <tr><td>سنن أبي داود</td><td data-label="رقمه عندنا">730</td><td data-label="أقرب حديث في sunnah.com">856</td><td data-label="نسبة الكلمات المتطابقة">67٪</td></tr>
+              <tr><td>سنن أبي داود</td><td data-label="رقمه عندنا">824</td><td data-label="أقرب حديث في sunnah.com">964</td><td data-label="نسبة الكلمات المتطابقة">62٪</td></tr>
+              <tr><td>سنن أبي داود</td><td data-label="رقمه عندنا">856</td><td data-label="أقرب حديث في sunnah.com">1009</td><td data-label="نسبة الكلمات المتطابقة">52٪</td></tr>
+              <tr><td>سنن أبي داود</td><td data-label="رقمه عندنا">919</td><td data-label="أقرب حديث في sunnah.com">1088</td><td data-label="نسبة الكلمات المتطابقة">74٪</td></tr>
+              <tr><td>سنن أبي داود</td><td data-label="رقمه عندنا">1198</td><td data-label="أقرب حديث في sunnah.com">1408</td><td data-label="نسبة الكلمات المتطابقة">77٪</td></tr>
+              <tr><td>سنن أبي داود</td><td data-label="رقمه عندنا">1553</td><td data-label="أقرب حديث في sunnah.com">1820</td><td data-label="نسبة الكلمات المتطابقة">78٪</td></tr>
+              <tr><td>سنن أبي داود</td><td data-label="رقمه عندنا">1675</td><td data-label="أقرب حديث في sunnah.com">1961</td><td data-label="نسبة الكلمات المتطابقة">70٪</td></tr>
+              <tr><td>سنن أبي داود</td><td data-label="رقمه عندنا">1898</td><td data-label="أقرب حديث في sunnah.com">2226</td><td data-label="نسبة الكلمات المتطابقة">73٪</td></tr>
+              <tr><td>سنن أبي داود</td><td data-label="رقمه عندنا">3583</td><td data-label="أقرب حديث في sunnah.com">4108</td><td data-label="نسبة الكلمات المتطابقة">79٪</td></tr>
+              <tr><td>سنن أبي داود</td><td data-label="رقمه عندنا">3798</td><td data-label="أقرب حديث في sunnah.com">4366</td><td data-label="نسبة الكلمات المتطابقة">68٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">17</td><td data-label="أقرب حديث في sunnah.com">17</td><td data-label="نسبة الكلمات المتطابقة">45٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">75</td><td data-label="أقرب حديث في sunnah.com">80</td><td data-label="نسبة الكلمات المتطابقة">78٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">76</td><td data-label="أقرب حديث في sunnah.com">81</td><td data-label="نسبة الكلمات المتطابقة">58٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">187</td><td data-label="أقرب حديث في sunnah.com">203</td><td data-label="نسبة الكلمات المتطابقة">51٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">191</td><td data-label="أقرب حديث في sunnah.com">207</td><td data-label="نسبة الكلمات المتطابقة">66٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">1073</td><td data-label="أقرب حديث في sunnah.com">1156</td><td data-label="نسبة الكلمات المتطابقة">74٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">1155</td><td data-label="أقرب حديث في sunnah.com">1241</td><td data-label="نسبة الكلمات المتطابقة">52٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">1650</td><td data-label="أقرب حديث في sunnah.com">1780</td><td data-label="نسبة الكلمات المتطابقة">55٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">1693</td><td data-label="أقرب حديث في sunnah.com">1827</td><td data-label="نسبة الكلمات المتطابقة">77٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">1745</td><td data-label="أقرب حديث في sunnah.com">1884</td><td data-label="نسبة الكلمات المتطابقة">79٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">1975</td><td data-label="أقرب حديث في sunnah.com">275</td><td data-label="نسبة الكلمات المتطابقة">51٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">3090</td><td data-label="أقرب حديث في sunnah.com">3250</td><td data-label="نسبة الكلمات المتطابقة">72٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">3595</td><td data-label="أقرب حديث في sunnah.com">3755</td><td data-label="نسبة الكلمات المتطابقة">75٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">3729</td><td data-label="أقرب حديث في sunnah.com">3892</td><td data-label="نسبة الكلمات المتطابقة">73٪</td></tr>
+              <tr><td>جامع الترمذي</td><td data-label="رقمه عندنا">3884</td><td data-label="أقرب حديث في sunnah.com">4038</td><td data-label="نسبة الكلمات المتطابقة">76٪</td></tr>
+              <tr><td>سنن النسائي</td><td data-label="رقمه عندنا">548</td><td data-label="أقرب حديث في sunnah.com">553</td><td data-label="نسبة الكلمات المتطابقة">75٪</td></tr>
+              <tr><td>سنن النسائي</td><td data-label="رقمه عندنا">1620</td><td data-label="أقرب حديث في sunnah.com">1643</td><td data-label="نسبة الكلمات المتطابقة">38٪</td></tr>
+              <tr><td>سنن ابن ماجه</td><td data-label="رقمه عندنا">1642</td><td data-label="أقرب حديث في sunnah.com">1386</td><td data-label="نسبة الكلمات المتطابقة">76٪</td></tr>
+              <tr><td>سنن ابن ماجه</td><td data-label="رقمه عندنا">1726</td><td data-label="أقرب حديث في sunnah.com">1470</td><td data-label="نسبة الكلمات المتطابقة">78٪</td></tr>
+              <tr><td>سنن ابن ماجه</td><td data-label="رقمه عندنا">2184</td><td data-label="أقرب حديث في sunnah.com">1927</td><td data-label="نسبة الكلمات المتطابقة">72٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">72</td><td data-label="أقرب حديث في sunnah.com">81</td><td data-label="نسبة الكلمات المتطابقة">69٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">266</td><td data-label="أقرب حديث في sunnah.com">291</td><td data-label="نسبة الكلمات المتطابقة">76٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">410</td><td data-label="أقرب حديث في sunnah.com">258</td><td data-label="نسبة الكلمات المتطابقة">73٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">647</td><td data-label="أقرب حديث في sunnah.com">767</td><td data-label="نسبة الكلمات المتطابقة">79٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">681</td><td data-label="أقرب حديث في sunnah.com">808</td><td data-label="نسبة الكلمات المتطابقة">77٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">713</td><td data-label="أقرب حديث في sunnah.com">845</td><td data-label="نسبة الكلمات المتطابقة">77٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">882</td><td data-label="أقرب حديث في sunnah.com">1042</td><td data-label="نسبة الكلمات المتطابقة">42٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">902</td><td data-label="أقرب حديث في sunnah.com">1064</td><td data-label="نسبة الكلمات المتطابقة">38٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">1059</td><td data-label="أقرب حديث في sunnah.com">1276</td><td data-label="نسبة الكلمات المتطابقة">76٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">1099</td><td data-label="أقرب حديث في sunnah.com">1323</td><td data-label="نسبة الكلمات المتطابقة">77٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">1176</td><td data-label="أقرب حديث في sunnah.com">1424</td><td data-label="نسبة الكلمات المتطابقة">37٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">1177</td><td data-label="أقرب حديث في sunnah.com">1427</td><td data-label="نسبة الكلمات المتطابقة">79٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">1190</td><td data-label="أقرب حديث في sunnah.com">1445</td><td data-label="نسبة الكلمات المتطابقة">60٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">1217</td><td data-label="أقرب حديث في sunnah.com">1495</td><td data-label="نسبة الكلمات المتطابقة">26٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">1229</td><td data-label="أقرب حديث في sunnah.com">1515</td><td data-label="نسبة الكلمات المتطابقة">73٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">1501</td><td data-label="أقرب حديث في sunnah.com">1870</td><td data-label="نسبة الكلمات المتطابقة">56٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">1514</td><td data-label="أقرب حديث في sunnah.com">1884</td><td data-label="نسبة الكلمات المتطابقة">75٪</td></tr>
+              <tr><td>موطأ مالك</td><td data-label="رقمه عندنا">1576</td><td data-label="أقرب حديث في sunnah.com">1963</td><td data-label="نسبة الكلمات المتطابقة">54٪</td></tr>
+              <tr><td>سنن الدارمي</td><td data-label="رقمه عندنا">452</td><td data-label="أقرب حديث في sunnah.com">3210</td><td data-label="نسبة الكلمات المتطابقة">76٪</td></tr>
+              <tr><td>سنن الدارمي</td><td data-label="رقمه عندنا">1555</td><td data-label="أقرب حديث في sunnah.com">922</td><td data-label="نسبة الكلمات المتطابقة">77٪</td></tr>
+              <tr><td>سنن الدارمي</td><td data-label="رقمه عندنا">3031</td><td data-label="أقرب حديث في sunnah.com">2421</td><td data-label="نسبة الكلمات المتطابقة">76٪</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+
+      <h2 id="adhkar">الأذكار وأسماء الله الحسنى</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>أذكار الصباح والمساء، حصن المسلم، الأربعون النووية</td>
+              <td>
+                النسخة الرقمية من بيانات <span lang="en">Kazi Shariar</span>. «حصن المسلم» للشيخ سعيد بن علي
+                بن وهف القحطاني، و«الأربعون النووية» للإمام النووي. ضُبط التشكيل على النص المشكول لحصن المسلم
+                (تغيير الحركات فقط دون الحروف)
+              </td>
+              <td><span lang="en">CC BY 4.0</span> (للنسخة الرقمية)</td>
+            </tr>
+            <tr>
+              <td>تخريج كل ذكر وفضله ومرجعه</td>
+              <td>
+                قاعدة <span lang="en">Morning-And-Evening-Adhkar-DB</span> (<span lang="en">Seen-Arabic</span
+                >)، وأحاديث من موسوعة <span lang="en">HadeethEnc</span>، منقولة بنصها
+              </td>
+              <td><span lang="en">MIT</span> / شروط الموسوعة</td>
+            </tr>
+            <tr>
+              <td>صوت كل ذكر من حصن المسلم</td>
+              <td>موقع حصن المسلم <span lang="en">hisnmuslim.com</span>، تشغيل مباشر</td>
+              <td>متاح مجانًا من الموقع</td>
+            </tr>
+            <tr>
+              <td>أذكار الصباح والمساء بصوت الشيخ مشاري العفاسي (دون إنترنت)</td>
+              <td>الصوتيات الإسلامية بموقع إسلام ويب <span lang="en">audio.islamweb.net</span></td>
+              <td>متاح للتنزيل المجاني من الموقع</td>
+            </tr>
+            <tr>
+              <td>أسماء الله الحسنى وشرحها المبسط</td>
+              <td>موقع <span lang="en">surahquran.com</span>، صفحة أسماء الله الحسنى ومعانيها</td>
+              <td>متاح مجانًا من الموقع</td>
+            </tr>
+            <tr>
+              <td>دروس أسماء الله الحسنى (صوتي)</td>
+              <td>
+                موقع الدكتور محمد راتب النابلسي <span lang="en">nabulsi.com</span>، سلسلتا «أسماء الله الحسنى»
+                2008 و1996، تشغيل مباشر من الموقع
+              </td>
+              <td>متاح مجانًا من الموقع</td>
+            </tr>
+            <tr>
+              <td>الرقية الشرعية: الآيات المقروءة</td>
+              <td>الشيخ عبد العزيز بن باز، مجموع فتاوى ومقالات متنوعة 6/368 (فتوى «الدواء الشرعي للسحر» رقم 1694، والقائمة نفسها في الفتوى 2492 على binbaz.org.sa). نص الآيات من مصحف المجمع</td>
+              <td>فتاوى منشورة</td>
+            </tr>
+            <tr>
+              <td>الرقية الشرعية: أدعية السنة</td>
+              <td>موسوعة <span lang="en">HadeethEnc</span> (الحديثان 5542 و5650)، منقولة بنصها</td>
+              <td>بحسب شروط الموسوعة</td>
+            </tr>
+            <tr>
+              <td>الرقية الشرعية كاملة بصوت الشيخ مشاري العفاسي</td>
+              <td>أرشيف الإنترنت (<span lang="en">RuqyahAs-shariahBySheikhMisharyRashidAl-afasy</span>)</td>
+              <td>تشغيل مباشر أو حفظ للاستماع دون إنترنت</td>
+            </tr>
+            <tr>
+              <td>رقية الأطفال</td>
+              <td>فتوى موقع الإسلام سؤال وجواب رقم 104454 (البخاري 3371 و5748، الترمذي 2058)، والدعاء من «حصن المسلم» باب «ما يعوذ به الأولاد»، ثم الإخلاص والمعوذتان</td>
+              <td>فتاوى منشورة</td>
+            </tr>
+            <tr>
+              <td>التذكير بالأذكار (صوت الذكر في التنبيه)</td>
+              <td>مقاطع من تسجيل أذكار الصباح بصوت الشيخ مشاري العفاسي المذكور أعلاه، دون تغيير</td>
+              <td>كما في مصدرها</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="audio">التلاوات والإذاعات والدروس الصوتية</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>تلاوة آية بآية في المصحف (41 قارئًا، منهم المصحف المعلّم للحصري والمنشاوي مع ترديد الأطفال)</td>
+              <td><span lang="en">EveryAyah.com</span>، تشغيل مباشر</td>
+              <td>متاح للاستماع مجانًا؛ حقوق التسجيلات لناشريها</td>
+            </tr>
+            <tr>
+              <td>مكتبة التلاوات (السور كاملة بكل الروايات) وإذاعات القرآن</td>
+              <td>واجهة <span lang="en">mp3quran.net</span> العامة (الإصدار 3)، تشغيل مباشر</td>
+              <td>يسمح الموقع بنسخ المواد واستخدام الروابط</td>
+            </tr>
+            <tr>
+              <td>إذاعة القرآن الكريم من القاهرة وإذاعة القرآن الكريم السعودية</td>
+              <td>البث المباشر للإذاعتين (<span lang="en">radiojar.com</span>)</td>
+              <td>بث عام</td>
+            </tr>
+            <tr>
+              <td>بث مباشر من الحرمين (صوت)</td>
+              <td>البث الرسمي لقناتي القرآن الكريم والسنة النبوية (<span lang="en">holol.com</span>)</td>
+              <td>بث عام</td>
+            </tr>
+            <tr>
+              <td>قصص الأنبياء (صوتي) — الشيخ محمد متولي الشعراوي (بدل الشيخ نبيل العوضي منذ 26 نوفمبر 2026)</td>
+              <td>أرشيف الإنترنت (<span lang="en">Islamic_Tape-250_uP_bY_mUSLEm</span>)، تشغيل مباشر</td>
+              <td>تسجيلات متاحة للتحميل مجانًا، والتطبيق مجاني بلا إعلانات</td>
+            </tr>
+            <tr>
+              <td>القرّاء المسجّلون بالسورة كاملة في مشغل المصحف (إدريس أبكر، مصطفى إسماعيل مجوّد، محمود علي البنا مجوّد، أحمد عيسى المعصراوي)</td>
+              <td>ملفات السور من <span lang="en">mp3quran.net</span> مع توقيت الآيات من واجهتها المجانية (<span lang="en">ayat_timing</span>)، بعد مراجعته مع التسجيل</td>
+              <td>يسمح الموقع بنسخ المواد واستخدام الروابط</td>
+            </tr>
+            <tr>
+              <td>قصص الأنبياء للأطفال برسوم حديثة (مسلسلان منشوران)</td>
+              <td>قناتا <span lang="en">Broccole</span> (بروكلي) و<span lang="en">Kids Zone</span> على يوتيوب، تشغيل من مشغّل يوتيوب الرسمي داخل التطبيق والموقع</td>
+              <td>منشورة للعامة على يوتيوب؛ حقوقها لناشريها. اخترنا فقط الحلقات التي لا يظهر فيها وجه نبي</td>
+            </tr>
+            <tr>
+              <td>المصحف المعلّم التفاعلي للأطفال: تسجيل السورة كاملة للحصري (المصحف المعلّم) والمنشاوي مع ترديد الأطفال، مع موضع كل آية وكل كلمة فيه، وصوت الكلمة الواحدة عند الضغط عليها</td>
+              <td>واجهة <span lang="en">api.quran.com</span> (توقيت الكلمات)، والتسجيلات من <span lang="en">download.quranicaudio.com</span>، وصوت الكلمة من <span lang="en">audio.qurancdn.com</span>، تشغيل مباشر</td>
+              <td>متاح للاستماع مجانًا؛ حقوق التسجيلات لناشريها</td>
+            </tr>
+            <tr>
+              <td>تلاوات الشيخ محمد أحمد شبيب (16 مرتّلة و70 مجوّدة)</td>
+              <td>المرتّل من <span lang="en">zekr.online</span>، والمجوّد من أرشيف الإنترنت (<span lang="en">20240303</span>). لا يوجد تسجيل كامل للقرآن بصوته في أي مصدر</td>
+              <td>تشغيل مباشر؛ المجوّد بعلامة الملكية العامة</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="adhan">أصوات الأذان</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>التسجيل</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>أذان المسجد الحرام (2013)</td>
+              <td><span lang="en">Wikimedia Commons</span> — <span lang="en">Seyfula Islam</span></td>
+              <td><span lang="en">CC BY 3.0</span></td>
+            </tr>
+            <tr>
+              <td>أذان الفجر (مسجد مالمو 2012)</td>
+              <td><span lang="en">Wikimedia Commons</span> — <span lang="en">Islamic Center Malmö</span></td>
+              <td><span lang="en">CC BY 3.0</span></td>
+            </tr>
+            <tr>
+              <td>أذان المسجد النبوي</td>
+              <td><span lang="en">Wikimedia Commons</span> — <span lang="en">ejaz215</span></td>
+              <td><span lang="en">CC BY 3.0</span></td>
+            </tr>
+            <tr>
+              <td>أذان صباح فخري</td>
+              <td><span lang="en">Wikimedia Commons</span></td>
+              <td>ملكية عامة</td>
+            </tr>
+            <tr>
+              <td>أذان «Beautiful adhan»</td>
+              <td><span lang="en">Wikimedia Commons</span> — <span lang="en">Adam-synagda</span></td>
+              <td><span lang="en">CC0 1.0</span></td>
+            </tr>
+            <tr>
+              <td>أذان عاقب عزيز</td>
+              <td><span lang="en">Wikimedia Commons</span> — <span lang="en">Atcovi</span></td>
+              <td><span lang="en">CC BY-SA 4.0</span></td>
+            </tr>
+            <tr>
+              <td>
+                أصوات المؤذنين: علي ملا، أذان مكة المكرمة، عصام بخاري، مصطفى إسماعيل، محمود علي البنا، محمد
+                رفعت، عبد الباسط عبد الصمد، وأذان الفجر لحمد الدغريري ومشاري العفاسي
+              </td>
+              <td>الصوتيات الإسلامية بموقع إسلام ويب <span lang="en">audio.islamweb.net</span></td>
+              <td>متاح للتنزيل المجاني من الموقع</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="video">الفيديوهات والأناشيد</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>الفيديوهات القصيرة (تلاوات، دروس، مواعظ)</td>
+              <td>
+                قنوات موثوقة على <span lang="en">YouTube</span> و<span lang="en">Instagram</span>، تُعرض
+                بالمشغل الرسمي لكل منصة دون تنزيل أو إعادة رفع
+              </td>
+              <td>الحقوق لأصحاب القنوات؛ العرض بحسب شروط كل منصة</td>
+            </tr>
+            <tr>
+              <td>الأناشيد (القنوات الرسمية للمنشدين)</td>
+              <td>
+                القنوات الرسمية على <span lang="en">YouTube</span>: محمد طارق، محمد يوسف، نصر الدين طوبار، سيد
+                النقشبندي، مشاري العفاسي، أحمد بوخاطر، أبو علي، محمد المقيط (نسخ صوتية بدون موسيقى)
+              </td>
+              <td>المشغل الرسمي لـ YouTube</td>
+            </tr>
+            <tr>
+              <td>مكتبة الأناشيد (516 نشيدًا لـ 34 منشدًا)</td>
+              <td>موقع <span lang="en">anasheed.info</span>، والملفات مستضافة على أرشيف الإنترنت</td>
+              <td>متاح مجانًا من الموقع</td>
+            </tr>
+            <tr>
+              <td>قسم الأطفال: قصص الأنبياء (25 حلقة كرتون)</td>
+              <td>أرشيف الإنترنت (<span lang="en">5-2_20210816</span>)</td>
+              <td>تشغيل مباشر أو تنزيل</td>
+            </tr>
+            <tr>
+              <td>قسم الأطفال: قصص الرسول ﷺ للأطفال (الشيخ محمود المصري، 17 حلقة)</td>
+              <td>أرشيف الإنترنت (<span lang="en">qsas-elrasoul-ramdan2019</span>)</td>
+              <td>تشغيل مباشر أو تنزيل</td>
+            </tr>
+            <tr>
+              <td>قسم الأطفال: قصص مصوّرة قصيرة (13)</td>
+              <td>أرشيف الإنترنت (<span lang="en">ramadan-stories-videos-ar</span>)</td>
+              <td>تشغيل مباشر</td>
+            </tr>
+            <tr>
+              <td>قسم الأطفال: «احفظ حديث» (600 حديث في أربعة مستويات)</td>
+              <td>كتاب «600 حديث للحفظ للأطفال» للدكتور هاني الشيخ جمعة سهل، من مكتبة الطفل في شبكة صيد الفوائد</td>
+              <td>النص كما في الكتاب المنشور</td>
+            </tr>
+            <tr>
+              <td>قسم الأطفال: بطاقات الأذكار (بنين وبنات)</td>
+              <td>كتابا «بطاقات الأذكار للناشئة» لمحب الدين علي بن تقي المصري، من مكتبة الطفل في شبكة صيد الفوائد</td>
+              <td>صفحات الكتاب كما نُشرت</td>
+            </tr>
+            <tr>
+              <td>قسم الأطفال: تعلّم الوضوء والصلاة</td>
+              <td>نص الخطوات من كتاب «هيا نتعلم الوضوء والصلاة»، سلسلة العلامتين، من مكتبة الطفل في شبكة صيد الفوائد؛ والرسوم الثلاثية الأبعاد من عمل التطبيق</td>
+              <td>مجاني مع ذكر المصدر</td>
+            </tr>
+            <tr>
+              <td>قسم الأطفال: مكتبة كتب الأطفال (43 كتابًا)</td>
+              <td>مكتبة الطفل في شبكة صيد الفوائد: «الأذكار لأطفالنا الصغار» (أبو حازم الأثري)، «حصن الطفل المسلم» (روض الذهور الصيفي)، «العطر الفواح في أذكارالصباح» (طالب علم)، «الأدعية والأذكار للطفل المسلم سؤال وجواب (حصن طفلك)» (يزن الغانم)، «حصن الطفل المسلم سؤال وجواب» (يزن الغانم)، «عقيدة الطفل المسلم للأطفال من عمر 3-6 سنوات» (أبو حازم الأثري)، «عقيدة الطفل المسلم» (خالد بن سعود البليهد)، «عقيدة الطفل المسلم» (راجية الرحمن أم عمر)، «مختصر العقيدة الإسلامية من الكتاب والسنة» (محمد بن جميل زينو)، «تعليم الصغار توحيد الغفار (نظام مختصر في اثنين وثلاثين بيتا)» (محمد بن عبدالسلام بن علي)، «ما لا يسع أطفال المسلمين جهله» (يزن الغانم)، «تربية أطفال المسلمين بمعاني أسماء الله الحميد» (يزن الغانم)، «أخلاق الطفل المسلم سؤال وجواب» (يزن الغانم)، «الآداب الإسلامية للناشئة» (محمد خير فاطمة)، «علمني رسول الله صلى الله عليه وسلم» (موقع بطاقات)، «زاد المسلم الصغير» (عبدالشكور معلم)، «هيا نتعلم الوضوء والصلاة» (موقع سلسلة العلامتين)، «مختصر البيان في طهارة وصلاة الفتيان» (محمد رفيق مؤمن الشوبكي)، «تفسير سورة القدر للأطفال» (د.فاطمة عمر نصيف)، «600 حديث للحفظ للأطفال متدرجة حسب الطول ومقسمة إلى أربعة مستويات بالألوان» (د.هاني الشيخ جمعة سهل)، «نور البيان في معلم القراءة بالقرآن (كتاب منهجي لأطفال الحضانة ، ودور نحفيظ القرآن )» (راجي رحمة الغفور)، «الطريقة المثالية لتعليم القراءة العربية» (بكر موسى هارون)، «الحروف الهجائية المنقطة بالتشكيل المستوى الثاني» (بكار فيصل المنفي)، «قصص الصحابة1 : الغلام الذي اختار الجنة» (سلوى العناني)، «قصص الصحابة2 : صوت من السماء» (سلوى العناني)، «رجال ونساء حول الرسول صلى الله عليه وسلم للأطفال» (سيد مبارك)، «سلسلة السيرة النبوية للأطفال» (سيد مبارك)، «معجزات الرسول للأطفال» (سيد مبارك)، «قصة فتي من قريش (قصص إسلامية للأطفال)» (سيد مبارك)، «صور مشرقة من حياة الأطفال» (السيد مراد سلامة)، «تربية أطفال المسلمين بسير الأئمة الصالحين المصلحين (رضي الله عنهم أجمعين)» (يزن الغانم)، «تربية بنات المسلمين بسير خير نساء العالمين» (يزن الغانم)، «تربية أطفال المسلمين بسيرة أصحاب سيد الأنبياء والمرسلين (رضي الله عنهم أجمعين)» (يزن الغانم)، «تربية أطفال المسلمين بقصص الأنبياء والمرسلين (عليه السلام)» (يزن الغانم)، «تربية أطفال المسلمين بسيرة سيد الأنبياء والمرسلين (صلى الله عليه وسلم)» (يزن الغانم)، «للأطفال - مفكرتي (شهر رمضان)» (آيات)، «رفقا بعقيدتي يا أمي (دليل إرشادي لغرس الإيمان في قلوب الأبناء بدءًا من الحمل إلى البلوغ)» (أم عبد الرحمن سوزان بنت مصطفى بخيت)، «من قصص القرآن للأطفال» (سيد مبارك)، «سلسلة قصص الأنبياء للفتيان والفتيات» (سيد مبارك)، «سلسلة العشرة المبشرون بالجنة للفتيان والفتيات» (سيد مبارك)، «سلسلة زوجات الرسول صلى الله عليه وسلم» (سيد مبارك)، «منهاج الطفل المسلم في المسجد والمدرسة والبيت» (د. إبراهيم عبدالرحمن العاني)، «حصن المسلم للأطفال» (بدر الفيلكاوي)</td>
+              <td>صفحات الكتب كما نُشرت</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="hajj">الحج والعمرة</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>خطوات العمرة وأنواع الحج (الإفراد، القِران، التمتع) والمواقيت وزيارة المدينة</td>
+              <td>
+                كتاب «التحقيق والإيضاح لكثير من مسائل الحج والعمرة والزيارة» للشيخ عبد العزيز بن باز (المكتبة
+                الشاملة، كتاب 31235)، مع رقم الصفحة تحت كل نقطة. أركان الحج وواجباته: فتوى الشيخ ابن باز (فتاوى نور على
+                الدرب، binbaz.org.sa، رقم 14833). مواضع من «دليل الحاج والمعتمر وزائر مسجد الرسول ﷺ» (وزارة الشؤون
+                الإسلامية والدعوة والإرشاد بالمملكة العربية السعودية). الأحاديث من الكتب المذكورة أعلاه، والأدعية من «حصن
+                المسلم»، والآيات من مصحف المجمع
+              </td>
+              <td>منقول بنصه مع ذكر المرجع تحت كل نقطة</td>
+            </tr>
+            <tr>
+              <td>مستوى الزحام في الحرمين</td>
+              <td>
+                رابط إلى المصدر الرسمي: الهيئة العامة للعناية بشؤون المسجد الحرام والمسجد النبوي (<a
+                  href="https://alharamain.gov.sa/public/"
+                  lang="en"
+                  >alharamain.gov.sa</a
+                >) ومنصة
+                <a href="https://www.nusuk.sa/" lang="en">نسك</a>
+              </td>
+              <td>روابط فقط، دون نسخ بيانات</td>
+            </tr>
+            <tr>
+              <td>رسومات خطوات الحج والعمرة</td>
+              <td>مرسومة بالكود داخل التطبيق</td>
+              <td>من عملنا</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="tools">المواقيت والقبلة والمساجد والزكاة</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>طرق حساب مواقيت الصلاة</td>
+              <td>
+                المعاملات المنشورة لكل جهة (رابطة العالم الإسلامي، الهيئة المصرية العامة للمساحة، أم القرى،
+                كراتشي، ISNA، دبي، الكويت، قطر، UOIF)، ومراجعتها مع مكتبة <span lang="en">adhan-js</span>
+              </td>
+              <td>حقائق منشورة / <span lang="en">adhan-js</span>: <span lang="en">MIT</span></td>
+            </tr>
+            <tr>
+              <td>التقويم الهجري وتواريخ رمضان</td>
+              <td>تقويم أم القرى الرسمي (<span lang="en">ICU islamic-umalqura</span>)</td>
+              <td>حقائق منشورة</td>
+            </tr>
+            <tr>
+              <td>الانحراف المغناطيسي لبوصلة القبلة</td>
+              <td>
+                النموذج المغناطيسي العالمي <span lang="en">WMM 2025</span> (NOAA NCEI وهيئة المساحة الجيولوجية
+                البريطانية)
+              </td>
+              <td>ملكية عامة (عمل حكومي أمريكي)</td>
+            </tr>
+            <tr>
+              <td>المساجد القريبة وأسماء الأماكن</td>
+              <td>
+                <span lang="en">OpenStreetMap</span> عبر <span lang="en">Overpass API</span> و<span lang="en"
+                  >Nominatim</span
+                >، استعلام مباشر وقت الطلب
+              </td>
+              <td><span lang="en">ODbL 1.0</span> — © OpenStreetMap contributors</td>
+            </tr>
+            <tr>
+              <td>
+                حاسبة الزكاة (النصاب 85 جرامًا من ذهب عيار 21، 2.5%، الحول القمري، ذهب الزينة، عروض التجارة،
+                الشهادات، الأسهم، الديون)
+              </td>
+              <td>
+                فتاوى دار الإفتاء المصرية المنشورة، أرقام 7506 و8426 و6231 و6203 و8848 و8115 و8087 و6423 و3133
+                و6318 (<a href="https://www.dar-alifta.org/" lang="en">dar-alifta.org</a>)
+              </td>
+              <td>اقتباسات قصيرة بنصها مع رابط كل فتوى</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="fonts">الخطوط والتصميم</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>المحتوى</th>
+              <th>المصدر</th>
+              <th>الترخيص</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>خط المصحف</td>
+              <td>
+                <span lang="en">KFGQPC HAFS Uthmanic Script</span> الإصدار 2.2، خط مجمع الملك فهد الخاص بهذا النص
+                (يُستخدم دون تعديل)
+              </td>
+              <td>
+                رخصة المجمع: استخدام ونسخ وتوزيع مجاني، دون تعديل أو بيع —
+                <a href="/fonts/KFGQPC-HAFS-LICENSE.txt">نص الرخصة</a>
+              </td>
+            </tr>
+            <tr>
+              <td>خط الواجهة</td>
+              <td><span lang="en">IBM Plex Sans Arabic</span></td>
+              <td>
+                <span lang="en">SIL Open Font License 1.1</span> —
+                <a href="/fonts/OFL-IBMPlexSansArabic.txt">نص الرخصة</a>
+              </td>
+            </tr>
+            <tr>
+              <td>شعار التطبيق والأيقونات والألوان</td>
+              <td>من تصميمنا</td>
+              <td>من عملنا</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="licences">ملفات التراخيص</h2>
+      <ul>
+        <li><a href="/licenses/quran-madina-html-LICENSE.txt">quran-madina-html — Waqf GPL 2.0</a></li>
+        <li><a href="/licenses/quran-meta-LICENSE.txt">quran-meta — MIT</a></li>
+        <li><a href="/licenses/quran-json-LICENSE.txt">quran-json — CC BY-SA 4.0</a></li>
+        <li><a href="/fonts/KFGQPC-HAFS-LICENSE.txt">KFGQPC HAFS Uthmanic Script — رخصة المجمع</a></li>
+        <li><a href="/fonts/OFL-IBMPlexSansArabic.txt">IBM Plex Sans Arabic — SIL OFL 1.1</a></li>
+      </ul>
+      <p class="muted">«رتّل وصلِّ» تطبيق مجاني لوجه الله، بدون إعلانات ولا اشتراكات.</p>
+      <p class="back-end"><a class="back-btn" href="/ar/" data-back>→ رجوع للتطبيق · Back to the app</a></p>
+    </main>
+    <script>
+      // Go back to the page the visitor came from on this site; otherwise open the app home.
+      document.querySelectorAll("[data-back]").forEach(function (a) {
+        a.addEventListener("click", function (e) {
+          try {
+            if (history.length > 1 && document.referrer && new URL(document.referrer).origin === location.origin) {
+              e.preventDefault();
+              history.back();
+            }
+          } catch (_) {}
+        });
+      });
+    </script>
+  </body>
+</html>
