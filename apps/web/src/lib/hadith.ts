@@ -1,7 +1,7 @@
 /**
- * The nine hadith books (content/hadith/dist): Sahih al-Bukhari and Sahih Muslim are the sunnah.com copy
- * (tools/build_hadith_sunnah.py, owner 2026-11-26) with sunnah.com's numbers in <book>/refs.json; the
- * other seven are Open-Hadith-Data (ODbL 1.0; tools/build_hadith.py). Text is shown exactly as in the source; parts of each book are fetched on demand
+ * The nine hadith books (content/hadith/dist): eight are the sunnah.com copy (tools/build_hadith_sunnah.py;
+ * Bukhari/Muslim owner 2026-11-26, the six Sunan/Muwatta/Darimi books 2026-11-27) with sunnah.com's numbers
+ * in <book>/refs.json; Musnad Ahmad is Open-Hadith-Data (ODbL 1.0; tools/build_hadith.py). Text is shown exactly as in the source; parts of each book are fetched on demand
  * from /data/hadith/<book>/<k>.json and kept by the service worker once read.
  */
 import booksJson from "@/generated/hadith-books.json";
@@ -233,10 +233,10 @@ export const hadithFavStore = createStore<HadithFavourites>(
 );
 
 /** Books whose numbers changed in 1.2.25 (al-Alamiyya → sunnah.com copy). */
-const MOVED_BOOKS = ["bukhari", "muslim"] as const;
+const MOVED_BOOKS = ["bukhari", "muslim", "abudawud", "tirmidhi", "nasai", "ibnmajah", "malik", "darimi"] as const;
 
 /**
- * Moves saved Bukhari/Muslim hadiths from their old al-Alamiyya numbers to the same hadith in the
+ * Moves saved hadiths of the eight sunnah.com books from their old al-Alamiyya numbers to the same hadith in the
  * sunnah.com copy (table built by tools/build_hadith_sunnah.py). Runs once; safe to call again.
  */
 export async function migrateHadithFavourites(): Promise<void> {

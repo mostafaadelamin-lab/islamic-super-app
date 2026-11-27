@@ -47,7 +47,12 @@ void main() {
       expect(catalog.book('bukhari')!.count, 7277);
       expect(catalog.book('muslim')!.count, 7459);
       expect(catalog.book('bukhari')!.refs, isTrue);
-      expect(catalog.book('abudawud')!.refs, isFalse);
+      // The six Sunan/Muwatta/Darimi books too (owner 2026-11-27); only Musnad Ahmad stays Open-Hadith-Data.
+      for (final id in ['abudawud', 'tirmidhi', 'nasai', 'ibnmajah', 'malik', 'darimi']) {
+        expect(catalog.book(id)!.refs, isTrue, reason: id);
+      }
+      expect(catalog.book('abudawud')!.count, 5276);
+      expect(catalog.book('ahmad')!.refs, isFalse);
       expect(catalog.reviewStatus, 'pending');
       expect(catalog.licence, contains('ODbL'));
       expect(readAppJson('assets/hadith/books.v1.json'), readRepoJson('content/hadith/dist/books.v1.json'));
@@ -104,7 +109,8 @@ void main() {
       final mr = await library.refs(catalog.book('muslim')!);
       expect(br, hasLength(7277));
       expect(mr, hasLength(7459));
-      expect(await library.refs(catalog.book('malik')!), isEmpty);
+      expect(await library.refs(catalog.book('ahmad')!), isEmpty);
+      expect(await library.refs(catalog.book('malik')!), hasLength(1860));
       expect(findHadithRef(br, '١٥٤٩'), 1495);
       expect(findHadithRef(mr, '2186'), 5644);
       expect(findHadithRef(mr, '1218a'), 2924);
@@ -117,10 +123,10 @@ void main() {
       expect(hadithRefLabel('1218a', false, (v) => '$v'), '1218a');
       expect((await library.range(catalog.book('muslim')!, 2924, 2924)).single.ref, '1218a');
       final guide = jsonEncode(readRepoJson('content/pilgrimage/guide.v2.src.json'));
-      final cites = RegExp(r'"h":"(bukhari|muslim):(\d+)","std":(\d+)').allMatches(guide).toList();
-      expect(cites.length, greaterThan(10));
+      final cites = RegExp(r'"h":"([a-z]+):(\d+)","std":(\d+)').allMatches(guide).toList();
+      expect(cites.length, greaterThan(13));
       for (final c in cites) {
-        final refs = c[1] == 'bukhari' ? br : mr;
+        final refs = await library.refs(catalog.book(c[1]!)!);
         expect(refs[int.parse(c[2]!) - 1].replaceAll(RegExp(r'[a-z]$'), ''), c[3], reason: c[0]);
       }
     });
@@ -166,10 +172,12 @@ void main() {
       final app = await pumpApp(tester, locale: locale, size: tallPhone);
       await pushScreen(tester, const HadithScreen());
       expect(find.byKey(const Key('hadithAttribution')), findsOneWidget);
-      await tester.tap(find.byKey(const Key('hadithBook-malik')));
+      // Musnad Ahmad: the one book still numbered 1..n (al-Alamiyya)
+      await tester.scrollUntilVisible(find.byKey(const Key('hadithBook-ahmad')), 200);
+      await tester.tap(find.byKey(const Key('hadithBook-ahmad')));
       await tester.pumpAndSettle();
       expect(find.byKey(const Key('hadith-1')), findsOneWidget);
-      final first = _part('malik', 0).first.trim();
+      final first = _part('ahmad', 0).first.trim();
       expect(find.text(first), findsOneWidget);
 
       await tester.tap(find.byKey(const Key('hadithNext')));
@@ -185,7 +193,7 @@ void main() {
 
       await tester.tap(find.byKey(const Key('hadithFav-1594')));
       await tester.pumpAndSettle();
-      expect(app.services.settings.hadithFavourites, ['malik:1594']);
+      expect(app.services.settings.hadithFavourites, ['ahmad:1594']);
 
       await goBack(tester);
       await tester.tap(find.byKey(const Key('hadithFavourites')));
@@ -218,14 +226,14 @@ void main() {
     final ex = HadithExplanations.parse(gunzipText(File(HadithExplanations.asset).readAsBytesSync()));
     HadithExplanations.debugUse(ex);
     final nums = ex.numbers('malik');
-    expect(nums, contains(4));
+    expect(nums, contains(5));
     expect(nums, isNot(contains(1)));
     await pumpApp(tester, size: tallPhone);
-    await pushScreen(tester, HadithBookScreen(book: catalog.book('malik')!, start: 4));
+    await pushScreen(tester, HadithBookScreen(book: catalog.book('malik')!, start: 5));
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('hadithExplain-4')), findsOneWidget);
+    expect(find.byKey(const Key('hadithExplain-5')), findsOneWidget);
     expect(find.text('الشرح المبسّط'), findsOneWidget);
-    await tester.tap(find.byKey(const Key('hadithExplainMore-4')));
+    await tester.tap(find.byKey(const Key('hadithExplainMore-5')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('hadithExplainSheet')), findsOneWidget);
     expect(find.text('من فوائد الحديث'), findsOneWidget);

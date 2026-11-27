@@ -20,8 +20,9 @@ EXPECTED_COMMIT = "1515f6cba21efed20d8916bf55acef1dffa0d2d5"
 
 # id, upstream folder, Arabic name, English name, expected count (al-Alamiyya numbering).
 # Sahih al-Bukhari and Sahih Muslim come from sunnah.com since 1.2.25 (tools/build_hadith_sunnah.py, owner
-# 2026-11-26): their entries in books.v1.json are kept as they are and stay first.
-SUNNAH_BOOKS = ("bukhari", "muslim")
+# 2026-11-26), and so do the six Sunan/Muwatta/Darimi books (owner 2026-11-27): their entries in
+# books.v1.json are kept as they are. Only Musnad Ahmad is still built here.
+SUNNAH_BOOKS = ("bukhari", "muslim", "abudawud", "tirmidhi", "nasai", "ibnmajah", "malik", "darimi")
 BOOKS = [
     ("abudawud", "Sunan_Abu-Dawud", "سنن أبي داود", "Sunan Abi Dawud", 4590),
     ("tirmidhi", "Sunan_Al-Tirmidhi", "جامع الترمذي", "Jami' at-Tirmidhi", 3891),
@@ -52,6 +53,8 @@ def main():
     csv.field_size_limit(1 << 30)
     books = []
     for bid, folder, ar, en, expected in BOOKS:
+        if bid in SUNNAH_BOOKS:
+            continue  # built from sunnah.com pages by tools/build_hadith_sunnah.py
         files = [f for f in os.listdir(os.path.join(src, folder)) if "mushakkala" in f]
         if len(files) != 1:
             sys.exit(f"{folder}: expected one *mushakkala* file, got {files}")
@@ -81,7 +84,8 @@ def main():
     meta_path = os.path.join(out, "books.v1.json")
     if os.path.exists(meta_path):
         kept = [b for b in json.load(open(meta_path, encoding="utf-8"))["books"] if b["id"] in SUNNAH_BOOKS]
-        books = kept + books
+        order = list(SUNNAH_BOOKS[:2]) + [b[0] for b in BOOKS]
+        books = sorted(kept + books, key=lambda b: order.index(b["id"]))
     meta = {
         "version": 1,
         "reviewStatus": "pending",

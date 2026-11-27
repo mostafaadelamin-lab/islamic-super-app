@@ -42,6 +42,16 @@ EXPECTED_SHA = {  # inputs as reviewed on 2026-11-26
     "fz/ara-muslim.json": "194073b24090c5368e4d14a3f55c9e0ef144c7437bd7e5aa83aa4d2bc54a8ea0",
 }
 BOOKS = [("bukhari", "صحيح البخاري", "Sahih al-Bukhari"), ("muslim", "صحيح مسلم", "Sahih Muslim")]
+# Owner 2026-11-27: six more books from sunnah.com itself (--site only). Musnad Ahmad stays on Open-Hadith-Data
+# (sunnah.com has only a small part of it).
+SITE_BOOKS = BOOKS + [
+    ("abudawud", "سنن أبي داود", "Sunan Abi Dawud"),
+    ("tirmidhi", "جامع الترمذي", "Jami` at-Tirmidhi"),
+    ("nasai", "سنن النسائي", "Sunan an-Nasa'i"),
+    ("ibnmajah", "سنن ابن ماجه", "Sunan Ibn Majah"),
+    ("malik", "موطأ مالك", "Muwatta Malik"),
+    ("darimi", "سنن الدارمي", "Sunan ad-Darimi"),
+]
 LETTERS = "abcdefghijklmnopqrstuvwxyz"
 
 
@@ -233,15 +243,28 @@ def migrate(old, hj):
 SITE_SHA = {  # pages of sunnah.com itself, read on 2026-11-26/27 in a browser (owner approved, 2026-11-27)
     "bukhari.site.json": "1c6ff13e17612eea22ed2477b43de4f5170f4f10bb8b225cebc5c5eae0c2985a",
     "muslim.site.json": "01214c6064fbcb1da6c0842bfffb4f7b34d66266e8e6035f9c83be05794a8ecb",
+    "abudawud.site.json": "30e8e24c6ff09d70f7366e3a96a883bda6b65c82a8dd1c866f7b41819e897c1c",
+    "tirmidhi.site.json": "02a7762767797261e84f99924b0bb8752d74f34028112e947eb64cf0fbf487b6",
+    "nasai.site.json": "50c234168fb87d5d1e0685a1a25c816677b117daf6886e06d147411f62dd4d81",
+    "ibnmajah.site.json": "5be002fb128196bdd49a36604a2bd8819b3a88d6bb457134e0013c387420b57a",
+    "malik.site.json": "21cf12d3e368cd46da402c3af40813ab6e2d790129f417404cb7385c2c527a8a",
+    "darimi.site.json": "297e7664be482943a882ac152963f86c21c35045857da24d3d4fcbeb78fa6e6a",
 }
 
 
 def site_label(refs):
-    """'Reference : Sahih Muslim 4 a' -> '4a'; '... Introduction 8' -> 'intro8'; '2314, 2315' -> '2314,2315'."""
+    """'Reference : Sahih Muslim 4 a' -> '4a'; '... Introduction 8' -> 'intro8'; '2314, 2315' -> '2314,2315'.
+
+    Any collection: the number is what follows the book's English name on the «Reference :» line.
+    """
     r = next((x for x in refs if x.startswith("Reference :")), "")
-    m = re.match(r"Reference : Sahih (?:al-Bukhari|Muslim) (.+)$", r)
+    m = re.match(r"Reference : .+? ((?:Introduction )?\d.*)$", r)
     if not m:
-        return None
+        # Muwatta Malik has no «Reference :» line: its running number is the one on the
+        # «Arabic reference : Book 2, Hadith 33» line (the first book says «Arabic/English book reference»).
+        a = next((x for x in refs if re.match(r"Arabic(/English book)? reference : ", x)), "")
+        m = re.search(r", Hadith (\d+ ?[a-z]?)$", a)
+        return re.sub(r"\s+", "", m.group(1)) if m else None
     v = m.group(1).strip()
     if v.startswith("Introduction"):
         return "intro" + v.split()[-1]
@@ -261,8 +284,13 @@ def main_site(sitedir):
     meta_path = os.path.join(dist, "books.v1.json")
     meta = json.load(open(meta_path, encoding="utf-8"))
     report = {}
-    for bid, ar, en in BOOKS:
+    only = os.environ.get("BOOKS")
+    for bid, ar, en in SITE_BOOKS:
+        if only and bid not in only.split(","):
+            continue
         path = os.path.join(sitedir, f"{bid}.site.json")
+        if not os.path.exists(path):
+            sys.exit(f"{path}: missing")
         want = SITE_SHA.get(f"{bid}.site.json")
         if want and sha256(path) != want:
             sys.exit(f"{path}: SHA-256 changed; review the new pages, then update SITE_SHA")
@@ -280,12 +308,23 @@ def main_site(sitedir):
                     sys.exit(f"{bid}: no sunnah.com number on {page['p']}")
                 texts.append(t)
                 labels.append(lab)
-        if len(set(labels)) != len(labels):
-            dup = [l for l in set(labels) if labels.count(l) > 1]
+        # sunnah.com itself gives the same number to two different hadiths in a few places
+        # (Tirmidhi); keep both as the site shows them, and list them in the report.
+        dup = sorted({l for l in labels if labels.count(l) > 1}, key=lambda x: (len(x), x))
+        if bid in ("bukhari", "muslim") and dup:
             sys.exit(f"{bid}: numbers used twice: {dup[:10]}")
         # the app's previous build of this book (sunnah.com copy): old entry -> new entry, by number, else by text
-        old_refs = json.load(open(os.path.join(dist, bid, "refs.json"), encoding="utf-8"))["refs"]
         old = old_texts(dist, bid)
+        refs_path = os.path.join(dist, bid, "refs.json")
+        first_move = not os.path.exists(refs_path)  # still the al-Alamiyya numbering (Open-Hadith-Data)
+        if first_move:
+            # old al-Alamiyya entry -> nearest new entry by shared 5-word runs (also the bookmark table)
+            to, guess = migrate(old, [{"arabic": t} for t in texts])
+            move = [max(0, k - 1) for k in to]
+            with open(os.path.join(dist, bid, "from-alamiyya.json"), "w", encoding="utf-8") as f:
+                json.dump({"book": bid, "to": to}, f, separators=(",", ":"))
+            by_txt, by_num, near = len(to) - guess - to.count(0), 0, guess
+        old_refs = [] if first_move else json.load(open(refs_path, encoding="utf-8"))["refs"]
         by_label = {}
         for k, l in enumerate(labels):
             for part in l.split(","):
@@ -293,7 +332,8 @@ def main_site(sitedir):
         by_text = {}
         for k, t in enumerate(texts):
             by_text.setdefault(squash(t), k)
-        move, by_num, by_txt, near = [], 0, 0, 0
+        if not first_move:
+            move, by_num, by_txt, near = [], 0, 0, 0
         for i, (r, t) in enumerate(zip(old_refs, old)):
             k = by_text.get(squash(t))
             if k is not None:
@@ -308,12 +348,12 @@ def main_site(sitedir):
                     near += 1
             move.append(k)
         mig_path = os.path.join(dist, bid, "from-alamiyya.json")
-        if os.path.exists(mig_path):
+        if os.path.exists(mig_path) and not first_move:
             mig = json.load(open(mig_path, encoding="utf-8"))
             mig["to"] = [move[n - 1] + 1 if n else 0 for n in mig["to"]]
             with open(mig_path, "w", encoding="utf-8") as f:
                 json.dump(mig, f, separators=(",", ":"))
-        report[bid] = {"old_to_new": [k + 1 for k in move], "by_label": by_label}
+        report[bid] = {"old_to_new": [k + 1 for k in move], "by_label": by_label, "same_number_twice": dup}
         for f in glob.glob(os.path.join(dist, bid, "[0-9]*.json")):
             os.remove(f)
         chunks = (len(texts) + CHUNK - 1) // CHUNK
@@ -342,6 +382,7 @@ def main_site(sitedir):
             },
         }
         meta["books"] = [entry if b["id"] == bid else b for b in meta["books"]]
+        report.setdefault("_order", []).append(bid)
         print(bid, len(texts), "entries from sunnah.com,", chunks, "parts; old entries moved by text", by_txt,
               "by number", by_num, "nearest", near, "; fingerprint", entry["fingerprint"]["all"])
     with open(meta_path, "w", encoding="utf-8") as f:

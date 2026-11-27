@@ -568,7 +568,7 @@
   "hadith.count": "{count} حديثًا",
   "hadith.favourites": "الأحاديث المحفوظة",
   "hadith.noFavourites": "لم تحفظ أحاديث بعد. اضغط «احفظ» تحت أي حديث.",
-  "hadith.attribution": "صحيح البخاري وصحيح مسلم منقولان من sunnah.com بترقيمه. باقي الكتب بترقيم {numbering}، من مشروع",
+  "hadith.attribution": "ثمانية كتب منقولة من sunnah.com بترقيمه. مسند أحمد بترقيم {numbering}، من مشروع",
   "hadith.numbering": "العالمية",
   "hadith.source": "{book}، حديث رقم {n} (ترقيم العالمية)",
   "hadith.number": "حديث {n}",

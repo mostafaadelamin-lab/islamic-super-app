@@ -173,8 +173,11 @@ const HADITH_BOOK = {
   abudawud: "سنن أبي داود",
   tirmidhi: "سنن الترمذي",
   nasai: "سنن النسائي",
+  ibnmajah: "سنن ابن ماجه",
+  malik: "موطأ مالك",
+  darimi: "سنن الدارمي",
 };
-const SUNNAH_BOOKS = new Set(["bukhari", "muslim"]);
+const SUNNAH_BOOKS = new Set(["bukhari", "muslim", "abudawud", "tirmidhi", "nasai", "ibnmajah", "malik", "darimi"]);
 const hadithCache = new Map();
 function hadith(bookId, n) {
   const key = `${bookId}:${n}`;
@@ -206,7 +209,7 @@ function hadithQuote(it) {
   const also = it.also ? `، و${it.also.replace(/\d+/g, (d) => ar(d))}` : "";
   return {
     text: t.slice(i, j + it.to.length),
-    // Bukhari and Muslim are the sunnah.com copy: std is already the number a reader finds there.
+    // The eight sunnah.com books: std is already the number a reader finds there.
     src: SUNNAH_BOOKS.has(b)
       ? `${std}${also}${it.narrator ? ` (${it.narrator})` : ""}`
       : `${std}${also} (رقمه في نسخة التطبيق ${ar(n)}${it.narrator ? `، ${it.narrator}` : ""})`,

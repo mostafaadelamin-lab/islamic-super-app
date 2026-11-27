@@ -2,15 +2,18 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { readRepoJson } from "../repo";
 import { HadithFavourites, HadithReader, PAGE_SIZE } from "@/components/HadithReader";
 import { readFileSync } from "node:fs";
-import { hadithFavStore, resetExplainedCache } from "@/lib/hadith";
+import { displayText, hadithFavStore, resetExplainedCache } from "@/lib/hadith";
 
 interface Chunk {
   ahadith: string[];
 }
+// as shown: the sunnah.com books join the source's line breaks with spaces
 const text = (book: string, n: number): string =>
-  readRepoJson<Chunk>(`content/hadith/dist/${book}/${Math.floor((n - 1) / 500)}.json`).ahadith[
-    (n - 1) % 500
-  ]!;
+  displayText(
+    readRepoJson<Chunk>(`content/hadith/dist/${book}/${Math.floor((n - 1) / 500)}.json`).ahadith[
+      (n - 1) % 500
+    ]!,
+  );
 
 beforeEach(() => {
   localStorage.clear();
@@ -42,11 +45,11 @@ const shown = (): number[] => screen.getAllByTestId("hadith").map((e) => Number(
 describe("HadithReader", () => {
   it("shows the app's simplified explanation, grade and benefits where there is one", async () => {
     render(<HadithReader locale="ar" bookId="malik" />);
-    const ex = await screen.findByTestId("hadith-explain-4");
+    const ex = await screen.findByTestId("hadith-explain-5");
     expect(ex.textContent).toContain("الشرح المبسّط");
     expect(ex.querySelector(".hadith-explain-text")!.textContent!.length).toBeGreaterThan(20);
     expect(ex.textContent).not.toContain("من فوائد الحديث");
-    fireEvent.click(screen.getByTestId("hadith-explain-more-4"));
+    fireEvent.click(screen.getByTestId("hadith-explain-more-5"));
     expect(ex.textContent).toContain("الدرجة: صحيح");
     expect(ex.textContent).toContain("من فوائد الحديث");
     expect(screen.queryByTestId("hadith-explain-1")).toBeNull();
@@ -85,12 +88,13 @@ describe("HadithReader", () => {
     expect((screen.getByTestId("hadith-prev") as HTMLButtonElement).disabled).toBe(true);
     fireEvent.click(screen.getByTestId("hadith-next"));
     await waitFor(() => expect(shown()[0]).toBe(21));
-    fireEvent.change(screen.getByTestId("hadith-go"), { target: { value: "1594" } });
+    // Muwatta Malik has sunnah.com's running numbers since 1.2.25: «1861» is its last entry (1,860)
+    fireEvent.change(screen.getByTestId("hadith-go"), { target: { value: "1861" } });
     fireEvent.click(screen.getByTestId("hadith-go-btn"));
-    await waitFor(() => expect(shown().at(-1)).toBe(1594));
-    expect(shown()[0]).toBe(1581);
+    await waitFor(() => expect(shown().at(-1)).toBe(1860));
+    expect(shown()[0]).toBe(1841);
     expect((screen.getByTestId("hadith-next") as HTMLButtonElement).disabled).toBe(true);
-    expect(window.location.hash).toBe("#1594");
+    expect(window.location.hash).toBe("#1860");
   });
 
   it("searches the book and goes back", async () => {

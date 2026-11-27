@@ -60,7 +60,14 @@ describe("hadith books (Open-Hadith-Data)", () => {
     expect(hadithBook("muslim")!.count).toBe(7459);
     expect(hadithBook("bukhari")!.refs).toBe(true);
     expect(hadithBook("muslim")!.numbering).toBe("sunnah.com");
-    expect(hadithBook("abudawud")!.refs).toBeUndefined();
+    // The six Sunan/Muwatta/Darimi books too (owner 2026-11-27); only Musnad Ahmad stays Open-Hadith-Data.
+    for (const id of ["abudawud", "tirmidhi", "nasai", "ibnmajah", "malik", "darimi"]) {
+      expect(hadithBook(id)!.refs).toBe(true);
+      expect(hadithBook(id)!.numbering).toBe("sunnah.com");
+    }
+    expect(hadithBook("abudawud")!.count).toBe(5276);
+    expect(hadithBook("malik")!.count).toBe(1860);
+    expect(hadithBook("ahmad")!.refs).toBeUndefined();
     expect(hadithBook("ahmad")!.count).toBe(26363);
     expect(HADITH.source.commit).toBe("1515f6cba21efed20d8916bf55acef1dffa0d2d5");
     expect(HADITH.source.licence).toContain("ODbL");
@@ -153,13 +160,13 @@ describe("hadith books (Open-Hadith-Data)", () => {
     expect(refLabel("1218a", "en")).toBe("1218a");
     const r = await loadRange(muslim, 2924, 2924);
     expect(r[0]!.ref).toBe("1218a");
-    // every Bukhari/Muslim hadith of the Hajj guide: its "std" number is the sunnah.com number of the entry
+    // every hadith of the Hajj guide: its "std" number is the sunnah.com number of the entry
     const src = readRepoJson<{ steps: unknown[] }>("content/pilgrimage/guide.v2.src.json");
-    const cites = JSON.stringify(src).match(/"h":"(bukhari|muslim):\d+","std":\d+/g) ?? [];
-    expect(cites.length).toBeGreaterThan(10);
+    const cites = JSON.stringify(src).match(/"h":"[a-z]+:\d+","std":\d+/g) ?? [];
+    expect(cites.length).toBeGreaterThan(13);
     for (const c of cites) {
       const [, b, n, std] = /"h":"(\w+):(\d+)","std":(\d+)/.exec(c)!;
-      const refs = b === "bukhari" ? br : mr;
+      const refs = await loadRefs(hadithBook(b!)!);
       expect(refs[Number(n) - 1]!.replace(/[a-z]$/, "")).toBe(std);
     }
   });

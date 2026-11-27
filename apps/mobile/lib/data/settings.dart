@@ -714,7 +714,7 @@ class SettingsController extends ChangeNotifier {
       return;
     }
     final tables = <String, List<int>>{};
-    for (final b in const ['bukhari', 'muslim']) {
+    for (final b in const ['bukhari', 'muslim', 'abudawud', 'tirmidhi', 'nasai', 'ibnmajah', 'malik', 'darimi']) {
       if (hadithFavourites.any((k) => k.startsWith('$b:'))) tables[b] = await table(b);
     }
     final moved = <String>[];

@@ -1732,7 +1732,7 @@
   "@driveTitle": {
     "description": "shared key \"drive.title\""
   },
-  "hadithAttribution": "Sahih al-Bukhari and Sahih Muslim are copied from sunnah.com with its numbers. The other books are numbered after al-Alamiyya, from {name} ({licence}).",
+  "hadithAttribution": "Eight books are copied from sunnah.com with its numbers. Musnad Ahmad is numbered after al-Alamiyya, from {name} ({licence}).",
   "@hadithAttribution": {
     "description": "shared key \"hadith.attribution\"",
     "placeholders": {

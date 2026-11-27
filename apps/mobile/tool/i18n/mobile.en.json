@@ -500,7 +500,7 @@
   "hadith.count": "{n} hadiths",
   "hadith.favourites": "Saved hadiths",
   "hadith.noFavourites": "No saved hadiths yet. Tap the star next to any hadith.",
-  "hadith.attribution": "Sahih al-Bukhari and Sahih Muslim are copied from sunnah.com with its numbers. The other books are numbered after al-Alamiyya, from {name} ({licence}).",
+  "hadith.attribution": "Eight books are copied from sunnah.com with its numbers. Musnad Ahmad is numbered after al-Alamiyya, from {name} ({licence}).",
   "hadith.source": "{book}, hadith {n} (al-Alamiyya numbering)",
   "hadith.number": "Hadith {n}",
   "hadith.save": "Save hadith",

@@ -357,7 +357,7 @@
   "driveSayOff": "لا",
   "driveSettings": "إعدادات وضع القيادة",
   "driveTitle": "وضع القيادة",
-  "hadithAttribution": "صحيح البخاري وصحيح مسلم منقولان من sunnah.com بترقيمه. باقي الكتب بترقيم العالمية، من مشروع {name} ({licence}).",
+  "hadithAttribution": "ثمانية كتب منقولة من sunnah.com بترقيمه. مسند أحمد بترقيم العالمية، من مشروع {name} ({licence}).",
   "hadithBackToBook": "العودة إلى الكتاب",
   "hadithBenefits": "من فوائد الحديث",
   "hadithCount": "{n} حديثًا",
