@@ -2237,7 +2237,7 @@ abstract class AppLocalizations {
   /// shared key "hadith.attribution"
   ///
   /// In en, this message translates to:
-  /// **'Sahih al-Bukhari and Sahih Muslim are copied from sunnah.com with its numbers. The other books are numbered after al-Alamiyya, from {name} ({licence}).'**
+  /// **'Eight books are copied from sunnah.com with its numbers. Musnad Ahmad is numbered after al-Alamiyya, from {name} ({licence}).'**
   String hadithAttribution(String name, String licence);
 
   /// shared key "hadith.backToBook"

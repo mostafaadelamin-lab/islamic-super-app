@@ -1210,7 +1210,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String hadithAttribution(String name, String licence) {
-    return 'Sahih al-Bukhari and Sahih Muslim are copied from sunnah.com with its numbers. The other books are numbered after al-Alamiyya, from $name ($licence).';
+    return 'Eight books are copied from sunnah.com with its numbers. Musnad Ahmad is numbered after al-Alamiyya, from $name ($licence).';
   }
 
   @override

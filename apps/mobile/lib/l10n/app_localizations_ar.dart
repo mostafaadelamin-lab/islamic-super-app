@@ -1204,7 +1204,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String hadithAttribution(String name, String licence) {
-    return 'صحيح البخاري وصحيح مسلم منقولان من sunnah.com بترقيمه. باقي الكتب بترقيم العالمية، من مشروع $name ($licence).';
+    return 'ثمانية كتب منقولة من sunnah.com بترقيمه. مسند أحمد بترقيم العالمية، من مشروع $name ($licence).';
   }
 
   @override
