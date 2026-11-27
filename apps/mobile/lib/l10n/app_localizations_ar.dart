@@ -381,6 +381,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhkarBarView => 'العرض';
 
   @override
+  String get adhkarBgApp => 'عادي';
+
+  @override
+  String get adhkarBgAzure => 'لازوردي';
+
+  @override
+  String get adhkarBgEmerald => 'زمردي';
+
+  @override
+  String get adhkarBgLavender => 'لافندر';
+
+  @override
+  String get adhkarBgNight => 'ليلي';
+
+  @override
+  String get adhkarBgSand => 'رملي';
+
+  @override
+  String get adhkarBgSky => 'سماوي';
+
+  @override
+  String get adhkarBgSunset => 'غروب';
+
+  @override
   String get adhkarCards => 'بطاقة بطاقة';
 
   @override
@@ -394,6 +418,24 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adhkarDone => 'تمّ';
+
+  @override
+  String get adhkarDoneAgain => 'من جديد';
+
+  @override
+  String get adhkarDoneAll => 'أتممت الأذكار كلها';
+
+  @override
+  String get adhkarDoneBack => 'رجوع';
+
+  @override
+  String get adhkarDoneEvening => 'أتممت أذكار المساء كلها';
+
+  @override
+  String get adhkarDoneMorning => 'أتممت أذكار الصباح كلها';
+
+  @override
+  String get adhkarDoneTitle => 'تقبّل الله منك';
 
   @override
   String get adhkarDuas => 'الأدعية';
@@ -427,7 +469,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adhkarListen => 'استمع بصوت الشيخ مشاري العفاسي';
 
   @override
+  String get adhkarListenAll => 'استمع للأذكار كاملة';
+
+  @override
+  String get adhkarListenAllSub => 'الشيخ مشاري العفاسي';
+
+  @override
+  String get adhkarListenClose => 'إغلاق المشغّل';
+
+  @override
   String get adhkarListenHeader => 'استمع إلى الأذكار';
+
+  @override
+  String get adhkarListenSaved => 'محفوظ';
 
   @override
   String get adhkarMine => 'أذكاري';
@@ -549,6 +603,24 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get adhkarReviewNotice =>
       'بانتظار المراجعة الشرعية. النصوص من مجموعة أذكار Kazi Shariar (CC BY 4.0) ومن حصن المسلم، وأعداد التكرار وفق حصن المسلم.';
+
+  @override
+  String get adhkarSettingsBg => 'الخلفية';
+
+  @override
+  String get adhkarSettingsSize => 'حجم الخط';
+
+  @override
+  String get adhkarSettingsTashkeel => 'التشكيل';
+
+  @override
+  String get adhkarSettingsTashkeelHint => 'إخفاء التشكيل للعرض فقط، وآيات القرآن تبقى بتشكيلها.';
+
+  @override
+  String get adhkarSettingsTitle => 'إعدادات الأذكار';
+
+  @override
+  String get adhkarSettingsView => 'العرض';
 
   @override
   String get adhkarShare => 'مشاركة';
@@ -862,6 +934,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactWhatsapp => 'رقم الواتساب (اختياري)';
 
   @override
+  String get dhikrDeleteSaved => 'احذف المحفوظ';
+
+  @override
+  String get dhikrDownload => 'حمّل هذا الذكر للاستماع بدون إنترنت';
+
+  @override
+  String get dhikrDownloadFailed => 'تعذّر التحميل، تأكد من الإنترنت';
+
+  @override
   String get dhikrHadith => 'الحديث';
 
   @override
@@ -881,6 +962,53 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get dhikrListenStop => 'إيقاف الصوت';
+
+  @override
+  String get dhikrOfflineAll => 'حمّل الكل';
+
+  @override
+  String dhikrOfflineAllHisn(String n) {
+    return 'حمّل كل الأذكار المسموعة ($n مقطع، حوالي ١٢٠ ميجا)';
+  }
+
+  @override
+  String get dhikrOfflineCancel => 'إلغاء';
+
+  @override
+  String dhikrOfflineCount(String n) {
+    return 'كل ذكر بصوته: $n مقطع';
+  }
+
+  @override
+  String get dhikrOfflineDelete => 'حذف';
+
+  @override
+  String get dhikrOfflineDeleteAll => 'حذف كل المحفوظ';
+
+  @override
+  String get dhikrOfflineDone => 'محفوظة كلها للاستماع بدون إنترنت';
+
+  @override
+  String dhikrOfflineProgress(String done, String total) {
+    return 'جارٍ التحميل: $done من $total';
+  }
+
+  @override
+  String get dhikrOfflineRetry => 'توقف التحميل، حاول مرة أخرى';
+
+  @override
+  String dhikrOfflineSaved(String n, String size) {
+    return 'محفوظ $n مقطع · $size ميجا';
+  }
+
+  @override
+  String get dhikrOfflineSettings => 'الأذكار المسموعة بدون إنترنت';
+
+  @override
+  String get dhikrOfflineTitle => 'استماع بدون إنترنت';
+
+  @override
+  String get dhikrSaved => 'محفوظ';
 
   @override
   String get dhikrRemCancel => 'إلغاء';
@@ -1928,6 +2056,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get kidsLearnHadithSub => '٦٠٠ حديث للحفظ في أربعة مستويات';
 
   @override
+  String get kidsLearnIman => 'أركان الإيمان';
+
+  @override
+  String get kidsLearnImanSub => 'الأركان الستة بالصور';
+
+  @override
+  String get kidsLearnIslam => 'أركان الإسلام';
+
+  @override
+  String get kidsLearnIslamSub => 'الأركان الخمسة بالصور';
+
+  @override
   String kidsLearnLevel(String n) {
     return 'المستوى $n';
   }
@@ -1977,18 +2117,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get kidsLearnSalahSub => 'خطوات الصلاة بالصور';
-
-  @override
-  String get kidsLearnIslam => 'أركان الإسلام';
-
-  @override
-  String get kidsLearnIslamSub => 'الأركان الخمسة بالصور';
-
-  @override
-  String get kidsLearnIman => 'أركان الإيمان';
-
-  @override
-  String get kidsLearnImanSub => 'الأركان الستة بالصور';
 
   @override
   String get kidsLearnSave => 'احفظ الكتاب على الجهاز';

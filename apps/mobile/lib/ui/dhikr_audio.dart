@@ -6,6 +6,8 @@ import 'package:just_audio/just_audio.dart';
 
 import '../app_services.dart';
 import '../data/audio_focus.dart';
+import '../data/dhikr_clips.dart';
+import '../theme/design_tokens.dart';
 import 'l10n_ext.dart';
 import 'lock_player.dart';
 import 'r_icon.dart';
@@ -59,7 +61,8 @@ class JustAudioUrl implements UrlAudio {
   final _p = AudioPlayer();
   @override
   Future<void> play(String url) async {
-    await _p.setUrl(url);
+    // A recording saved on the phone plays from its file, without internet.
+    url.startsWith('/') ? await _p.setFilePath(url) : await _p.setUrl(url);
     unawaited(_p.play());
   }
 
@@ -137,7 +140,8 @@ class DhikrPlayer extends ChangeNotifier {
     return _audio!;
   }
 
-  Future<void> toggle(String u, {String? title, String? subtitle}) async {
+  /// [source]: the saved file of [u] when it is on the phone (played instead of streaming).
+  Future<void> toggle(String u, {String? title, String? subtitle, String? source}) async {
     if (url == u && (playing || loading)) {
       await stop();
       return;
@@ -152,7 +156,7 @@ class DhikrPlayer extends ChangeNotifier {
     duration = null;
     notifyListeners();
     try {
-      await _a.play(u);
+      await _a.play(source ?? u);
     } catch (e) {
       debugPrint('dhikr audio failed: $e');
       loading = false;
@@ -250,12 +254,21 @@ class DhikrListenButton extends StatelessWidget {
           final s = context.services;
           if (s.recitation.isPlaying) s.recitation.pause();
           if (s.narration.isPlaying) s.narration.pause();
-          p.toggle(url);
+          p.toggle(url, source: s.dhikrClips.localPath(url));
         }
 
-        final button = compact
+        final listen = compact
             ? TextButton.icon(key: const Key('dhikrListen'), onPressed: onTap, icon: icon, label: Text(label))
             : FilledButton.tonalIcon(key: const Key('dhikrListen'), onPressed: onTap, icon: icon, label: Text(label));
+        // «⬇» beside it keeps this recording for listening without internet (owner 2026-11-27).
+        final button = Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            listen,
+            const SizedBox(width: 4),
+            DhikrSaveButton(url: url),
+          ],
+        );
         // The player shows right here, under the dhikr being heard; the page stays as it is.
         if (!inlinePlayer || !mine || !p.active) return button;
         return Column(
@@ -306,4 +319,196 @@ class _StopDhikrAudioOnExitState extends State<StopDhikrAudioOnExit> {
 
   @override
   Widget build(BuildContext context) => widget.child;
+}
+
+/// «⬇» / «✓ محفوظ» for one dhikr recording: saves it for listening without internet, or deletes the copy.
+class DhikrSaveButton extends StatefulWidget {
+  const DhikrSaveButton({super.key, required this.url});
+  final String url;
+
+  @override
+  State<DhikrSaveButton> createState() => _DhikrSaveButtonState();
+}
+
+class _DhikrSaveButtonState extends State<DhikrSaveButton> {
+  bool _failed = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    unawaited(context.services.dhikrClips.ready());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final clips = context.services.dhikrClips;
+    final l = context.l10n;
+    final scheme = Theme.of(context).colorScheme;
+    return ListenableBuilder(
+      listenable: clips,
+      builder: (context, _) {
+        final id = DhikrClips.idOf(widget.url) ?? '';
+        if (clips.busy.contains(widget.url)) {
+          return const Padding(
+            padding: EdgeInsets.all(12),
+            child: SizedBox.square(dimension: 20, child: CircularProgressIndicator(strokeWidth: 2)),
+          );
+        }
+        if (clips.isSaved(widget.url)) {
+          return TextButton.icon(
+            key: Key('dhikrSaved-$id'),
+            style: TextButton.styleFrom(foregroundColor: scheme.tertiary),
+            onPressed: () => clips.delete(widget.url),
+            icon: const RIcon(RIcons.checkCircle, size: 18),
+            label: Text(l.dhikrSaved),
+          );
+        }
+        return IconButton.outlined(
+          key: Key('dhikrSave-$id'),
+          tooltip: _failed ? l.dhikrDownloadFailed : l.dhikrDownload,
+          icon: RIcon(_failed ? RIcons.refresh : RIcons.download, size: 20),
+          onPressed: () async {
+            final ok = await clips.download(widget.url);
+            if (mounted) setState(() => _failed = !ok);
+          },
+        );
+      },
+    );
+  }
+}
+
+/// «استماع بدون إنترنت · حمّل الكل» at the top of a page of adhkar that can be heard: downloads every
+/// recording of the page at once, with the progress, cancel, and delete once all are saved.
+class DhikrOfflineCard extends StatefulWidget {
+  const DhikrOfflineCard({super.key, required this.group, required this.urls});
+
+  /// Which page (one "download all" runs at a time; its progress shows on its own page).
+  final String group;
+  final List<String> urls;
+
+  @override
+  State<DhikrOfflineCard> createState() => _DhikrOfflineCardState();
+}
+
+class _DhikrOfflineCardState extends State<DhikrOfflineCard> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    unawaited(context.services.dhikrClips.ready());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final clips = context.services.dhikrClips;
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final urls = widget.urls.toSet().toList();
+    if (urls.isEmpty) return const SizedBox.shrink();
+    return ListenableBuilder(
+      listenable: clips,
+      builder: (context, _) {
+        final saved = clips.savedCount(urls);
+        final all = saved == urls.length;
+        final running = clips.batch == widget.group;
+        final Widget body;
+        if (running) {
+          final total = clips.batchTotal == 0 ? 1 : clips.batchTotal;
+          body = Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      l.dhikrOfflineProgress(context.num('${clips.batchDone}'), context.num('${clips.batchTotal}')),
+                      key: const Key('dhikrOfflineProgress'),
+                      style: theme.textTheme.titleSmall,
+                    ),
+                  ),
+                  TextButton(
+                    key: const Key('dhikrOfflineCancel'),
+                    onPressed: clips.cancel,
+                    child: Text(l.dhikrOfflineCancel),
+                  ),
+                ],
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
+                child: LinearProgressIndicator(value: clips.batchDone / total, minHeight: 8),
+              ),
+            ],
+          );
+        } else if (all) {
+          body = Row(
+            children: [
+              RIcon(RIcons.checkCircle, color: scheme.tertiary),
+              const SizedBox(width: DesignTokens.spaceSm),
+              Expanded(
+                child: Text(l.dhikrOfflineDone, key: const Key('dhikrOfflineDone'), style: theme.textTheme.titleSmall),
+              ),
+              TextButton(
+                key: const Key('dhikrOfflineDelete'),
+                onPressed: () => clips.deleteAll(urls),
+                child: Text(l.dhikrOfflineDelete),
+              ),
+            ],
+          );
+        } else {
+          body = Row(
+            children: [
+              const RIcon(RIcons.headphones),
+              const SizedBox(width: DesignTokens.spaceSm),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(l.dhikrOfflineTitle, style: theme.textTheme.titleSmall),
+                    Text(
+                      clips.batchFailed == widget.group
+                          ? l.dhikrOfflineRetry
+                          : l.dhikrOfflineCount(context.num('${urls.length}')),
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+              OutlinedButton.icon(
+                key: const Key('dhikrOfflineAll'),
+                onPressed: clips.batch != null ? null : () => clips.downloadAll(widget.group, urls),
+                icon: const RIcon(RIcons.download, size: 18),
+                label: Text(l.dhikrOfflineAll),
+              ),
+            ],
+          );
+        }
+        return Card(
+          key: Key('dhikrOffline-${widget.group}'),
+          margin: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceSm, DesignTokens.spaceLg, 0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
+            side: BorderSide(color: scheme.secondary, width: 1.5),
+          ),
+          child: Padding(padding: const EdgeInsets.all(DesignTokens.spaceMd), child: body),
+        );
+      },
+    );
+  }
+}
+
+/// [DhikrOfflineCard] for the recordings [pick] finds in the audio map (nothing when there are none).
+class DhikrOfflineFor extends StatelessWidget {
+  const DhikrOfflineFor({super.key, required this.group, required this.pick});
+  final String group;
+  final Iterable<String?> Function(DhikrAudioMap m) pick;
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<DhikrAudioMap?>(
+    future: DhikrAudioMap.load(DefaultAssetBundle.of(context)),
+    builder: (context, snap) {
+      final m = snap.data;
+      final urls = m == null ? const <String>[] : pick(m).whereType<String>().toList();
+      return urls.isEmpty ? const SizedBox.shrink() : DhikrOfflineCard(group: group, urls: urls);
+    },
+  );
 }

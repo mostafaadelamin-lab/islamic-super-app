@@ -12,11 +12,11 @@ import '../theme/design_tokens.dart';
 import 'adaptive.dart';
 import 'audio_widgets.dart';
 import 'ayah_sheet.dart';
+import 'adhkar_look.dart';
 import 'dhikr_audio.dart';
 import 'l10n_ext.dart';
 import 'library_screen.dart' show PlayTile;
 import 'r_icon.dart';
-import 'review_notice.dart' show duaStyle;
 import 'stories_screen.dart' show NarrationBar;
 import 'widgets.dart';
 
@@ -34,17 +34,22 @@ class RuqyahScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     return StopDhikrAudioOnExit(
-      child: Scaffold(
-        appBar: AppBar(title: Text(kids ? l.ruqyahKidsTitle : l.ruqyahTitle)),
-        bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
-        body: ReadableWidth(
-          child: FutureBuilder<KidsContent>(
-            future: loader(),
-            builder: (context, snap) {
-              final k = snap.data;
-              if (k == null) return const Center(child: CircularProgressIndicator());
-              return _RuqyahList(ruqyah: kids ? k.ruqyahKids : k.ruqyah, kids: kids);
-            },
+      child: AdhkarLook(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(kids ? l.ruqyahKidsTitle : l.ruqyahTitle),
+            actions: const [AdhkarSettingsButton(view: false)],
+          ),
+          bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
+          body: ReadableWidth(
+            child: FutureBuilder<KidsContent>(
+              future: loader(),
+              builder: (context, snap) {
+                final k = snap.data;
+                if (k == null) return const Center(child: CircularProgressIndicator());
+                return _RuqyahList(ruqyah: kids ? k.ruqyahKids : k.ruqyah, kids: kids);
+              },
+            ),
           ),
         ),
       ),
@@ -108,6 +113,12 @@ class _RuqyahList extends StatelessWidget {
                   ),
                 ),
               ),
+            if ([
+                  for (final it in ruqyah.items)
+                    if (it is RuqyahDua && it.audio != null) it.audio!,
+                ]
+                case final urls when urls.isNotEmpty)
+              DhikrOfflineCard(group: kids ? 'ruqyah-kids' : 'ruqyah', urls: urls),
             for (final (i, item) in ruqyah.items.indexed)
               switch (item) {
                 RuqyahQuran(:final range) => _QuranPassage(
@@ -278,7 +289,11 @@ class _DuaState extends State<_Dua> {
         children: [
           Text(l.ruqyahDua, style: theme.textTheme.titleSmall?.copyWith(color: scheme.primary)),
           const SizedBox(height: DesignTokens.spaceSm),
-          Text(dua.text, textDirection: TextDirection.rtl, style: duaStyle(context, size: 20)),
+          Text(
+            dhikrShown(dua.text, tashkeel: context.services.settings.adhkarTashkeel),
+            textDirection: TextDirection.rtl,
+            style: dhikrStyle(context, size: 20),
+          ),
           const SizedBox(height: DesignTokens.spaceSm),
           Wrap(
             spacing: DesignTokens.spaceMd,

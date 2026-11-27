@@ -734,6 +734,54 @@ abstract class AppLocalizations {
   /// **'View'**
   String get adhkarBarView;
 
+  /// shared key "adhkar.bgApp"
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get adhkarBgApp;
+
+  /// shared key "adhkar.bgAzure"
+  ///
+  /// In en, this message translates to:
+  /// **'Azure'**
+  String get adhkarBgAzure;
+
+  /// shared key "adhkar.bgEmerald"
+  ///
+  /// In en, this message translates to:
+  /// **'Emerald'**
+  String get adhkarBgEmerald;
+
+  /// shared key "adhkar.bgLavender"
+  ///
+  /// In en, this message translates to:
+  /// **'Lavender'**
+  String get adhkarBgLavender;
+
+  /// shared key "adhkar.bgNight"
+  ///
+  /// In en, this message translates to:
+  /// **'Night'**
+  String get adhkarBgNight;
+
+  /// shared key "adhkar.bgSand"
+  ///
+  /// In en, this message translates to:
+  /// **'Sand'**
+  String get adhkarBgSand;
+
+  /// shared key "adhkar.bgSky"
+  ///
+  /// In en, this message translates to:
+  /// **'Sky'**
+  String get adhkarBgSky;
+
+  /// shared key "adhkar.bgSunset"
+  ///
+  /// In en, this message translates to:
+  /// **'Sunset'**
+  String get adhkarBgSunset;
+
   /// shared key "adhkar.cards"
   ///
   /// In en, this message translates to:
@@ -763,6 +811,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done'**
   String get adhkarDone;
+
+  /// shared key "adhkar.doneAgain"
+  ///
+  /// In en, this message translates to:
+  /// **'Start again'**
+  String get adhkarDoneAgain;
+
+  /// shared key "adhkar.doneAll"
+  ///
+  /// In en, this message translates to:
+  /// **'You finished all the adhkar'**
+  String get adhkarDoneAll;
+
+  /// shared key "adhkar.doneBack"
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get adhkarDoneBack;
+
+  /// shared key "adhkar.doneEvening"
+  ///
+  /// In en, this message translates to:
+  /// **'You finished all the evening adhkar'**
+  String get adhkarDoneEvening;
+
+  /// shared key "adhkar.doneMorning"
+  ///
+  /// In en, this message translates to:
+  /// **'You finished all the morning adhkar'**
+  String get adhkarDoneMorning;
+
+  /// shared key "adhkar.doneTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'May Allah accept it from you'**
+  String get adhkarDoneTitle;
 
   /// shared key "adhkar.duas"
   ///
@@ -818,11 +902,35 @@ abstract class AppLocalizations {
   /// **'Listen (Mishary Alafasy)'**
   String get adhkarListen;
 
+  /// shared key "adhkar.listenAll"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to all the adhkar'**
+  String get adhkarListenAll;
+
+  /// shared key "adhkar.listenAllSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Sheikh Mishary Alafasy'**
+  String get adhkarListenAllSub;
+
+  /// shared key "adhkar.listenClose"
+  ///
+  /// In en, this message translates to:
+  /// **'Close the player'**
+  String get adhkarListenClose;
+
   /// shared key "adhkar.listenHeader"
   ///
   /// In en, this message translates to:
   /// **'Listen to the adhkar'**
   String get adhkarListenHeader;
+
+  /// shared key "adhkar.listenSaved"
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get adhkarListenSaved;
 
   /// shared key "adhkar.mine"
   ///
@@ -1039,6 +1147,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pending religious review. Texts: Kazi Shariar adhkar dataset (CC BY 4.0) and Hisn al-Muslim; repetition counts follow Hisn al-Muslim.'**
   String get adhkarReviewNotice;
+
+  /// shared key "adhkar.settingsBg"
+  ///
+  /// In en, this message translates to:
+  /// **'Background'**
+  String get adhkarSettingsBg;
+
+  /// shared key "adhkar.settingsSize"
+  ///
+  /// In en, this message translates to:
+  /// **'Text size'**
+  String get adhkarSettingsSize;
+
+  /// shared key "adhkar.settingsTashkeel"
+  ///
+  /// In en, this message translates to:
+  /// **'Diacritics'**
+  String get adhkarSettingsTashkeel;
+
+  /// shared key "adhkar.settingsTashkeelHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Hiding them is for display only; Quran verses keep theirs.'**
+  String get adhkarSettingsTashkeelHint;
+
+  /// shared key "adhkar.settingsTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhkar settings'**
+  String get adhkarSettingsTitle;
+
+  /// shared key "adhkar.settingsView"
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get adhkarSettingsView;
 
   /// shared key "adhkar.share"
   ///
@@ -1616,6 +1760,24 @@ abstract class AppLocalizations {
   /// **'WhatsApp number (optional)'**
   String get contactWhatsapp;
 
+  /// shared key "dhikr.deleteSaved"
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the saved copy'**
+  String get dhikrDeleteSaved;
+
+  /// shared key "dhikr.download"
+  ///
+  /// In en, this message translates to:
+  /// **'Download this dhikr for listening offline'**
+  String get dhikrDownload;
+
+  /// shared key "dhikr.downloadFailed"
+  ///
+  /// In en, this message translates to:
+  /// **'Could not download; check the internet'**
+  String get dhikrDownloadFailed;
+
   /// shared key "dhikr.hadith"
   ///
   /// In en, this message translates to:
@@ -1657,6 +1819,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stop'**
   String get dhikrListenStop;
+
+  /// shared key "dhikr.offlineAll"
+  ///
+  /// In en, this message translates to:
+  /// **'Download all'**
+  String get dhikrOfflineAll;
+
+  /// shared key "dhikr.offlineAllHisn"
+  ///
+  /// In en, this message translates to:
+  /// **'Download every dhikr recording ({n} clips, about 120 MB)'**
+  String dhikrOfflineAllHisn(String n);
+
+  /// shared key "dhikr.offlineCancel"
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get dhikrOfflineCancel;
+
+  /// shared key "dhikr.offlineCount"
+  ///
+  /// In en, this message translates to:
+  /// **'Each dhikr\'s own recording: {n} clips'**
+  String dhikrOfflineCount(String n);
+
+  /// shared key "dhikr.offlineDelete"
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get dhikrOfflineDelete;
+
+  /// shared key "dhikr.offlineDeleteAll"
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all saved'**
+  String get dhikrOfflineDeleteAll;
+
+  /// shared key "dhikr.offlineDone"
+  ///
+  /// In en, this message translates to:
+  /// **'All saved for listening offline'**
+  String get dhikrOfflineDone;
+
+  /// shared key "dhikr.offlineProgress"
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading: {done} of {total}'**
+  String dhikrOfflineProgress(String done, String total);
+
+  /// shared key "dhikr.offlineRetry"
+  ///
+  /// In en, this message translates to:
+  /// **'The download stopped; try again'**
+  String get dhikrOfflineRetry;
+
+  /// shared key "dhikr.offlineSaved"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} clips saved · {size} MB'**
+  String dhikrOfflineSaved(String n, String size);
+
+  /// shared key "dhikr.offlineSettings"
+  ///
+  /// In en, this message translates to:
+  /// **'Adhkar recordings offline'**
+  String get dhikrOfflineSettings;
+
+  /// shared key "dhikr.offlineTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Listen without internet'**
+  String get dhikrOfflineTitle;
+
+  /// shared key "dhikr.saved"
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get dhikrSaved;
 
   /// shared key "dhikrRem.cancel"
   ///
@@ -3506,6 +3746,30 @@ abstract class AppLocalizations {
   /// **'600 hadith to memorise in four levels'**
   String get kidsLearnHadithSub;
 
+  /// shared key "kidsLearn.iman"
+  ///
+  /// In en, this message translates to:
+  /// **'Pillars of faith'**
+  String get kidsLearnIman;
+
+  /// shared key "kidsLearn.imanSub"
+  ///
+  /// In en, this message translates to:
+  /// **'The six pillars in pictures'**
+  String get kidsLearnImanSub;
+
+  /// shared key "kidsLearn.islam"
+  ///
+  /// In en, this message translates to:
+  /// **'Pillars of Islam'**
+  String get kidsLearnIslam;
+
+  /// shared key "kidsLearn.islamSub"
+  ///
+  /// In en, this message translates to:
+  /// **'The five pillars in pictures'**
+  String get kidsLearnIslamSub;
+
   /// shared key "kidsLearn.level"
   ///
   /// In en, this message translates to:
@@ -3583,30 +3847,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Prayer steps in pictures'**
   String get kidsLearnSalahSub;
-
-  /// shared key "kidsLearn.islam"
-  ///
-  /// In en, this message translates to:
-  /// **'Pillars of Islam'**
-  String get kidsLearnIslam;
-
-  /// shared key "kidsLearn.islamSub"
-  ///
-  /// In en, this message translates to:
-  /// **'The five pillars in pictures'**
-  String get kidsLearnIslamSub;
-
-  /// shared key "kidsLearn.iman"
-  ///
-  /// In en, this message translates to:
-  /// **'Pillars of faith'**
-  String get kidsLearnIman;
-
-  /// shared key "kidsLearn.imanSub"
-  ///
-  /// In en, this message translates to:
-  /// **'The six pillars in pictures'**
-  String get kidsLearnImanSub;
 
   /// shared key "kidsLearn.save"
   ///

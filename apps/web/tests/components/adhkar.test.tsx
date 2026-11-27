@@ -100,6 +100,11 @@ describe("finishing a list goes back by itself", () => {
       act(() => counters[counters.length - 1]!.click());
       expect(scrollTo).not.toHaveBeenCalled();
       act(() => vi.advanceTimersByTime(ADHKAR_AUTO_EXIT_MS));
+      // Owner 2026-11-27: first the celebration (vibration, no sound), then «رجوع» goes back up.
+      expect(screen.getByTestId("adhkar-celebration")).toBeInTheDocument();
+      expect(scrollTo).not.toHaveBeenCalled();
+      act(() => screen.getByTestId("celebration-back").click());
+      expect(screen.queryByTestId("adhkar-celebration")).toBeNull();
       expect(scrollTo).toHaveBeenCalledWith(expect.objectContaining({ top: 0 }));
     } finally {
       vi.useRealTimers();
@@ -139,6 +144,8 @@ describe("finishing a list goes back by itself", () => {
       }
       expect(assign).not.toHaveBeenCalled();
       act(() => vi.advanceTimersByTime(ADHKAR_AUTO_EXIT_MS));
+      expect(screen.getByTestId("adhkar-celebration")).toBeInTheDocument();
+      act(() => screen.getByTestId("celebration-back").click());
       expect(assign).toHaveBeenCalledWith(expect.stringMatching(/hisn\/?$/));
     } finally {
       vi.useRealTimers();

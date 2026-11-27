@@ -15,6 +15,7 @@ import 'data/devotions.dart';
 import 'data/device_setup.dart';
 import 'data/khatma_store.dart';
 import 'data/worship_store.dart';
+import 'data/dhikr_clips.dart';
 import 'data/downloads.dart';
 import 'data/printed_mushaf.dart';
 import 'data/adhan_voice_files.dart';
@@ -58,6 +59,7 @@ class AppServices {
     required this.dhikrPreview,
     required this.adhanVoices,
     required this.adhkarAudio,
+    required this.dhikrClips,
     required this.tasbih,
     required this.adhkar,
     required this.sensors,
@@ -232,6 +234,7 @@ class AppServices {
       root: storageRoot ?? getApplicationSupportDirectory,
       retryDelay: adhanRetryDelay,
     );
+    final dhikrClips = DhikrClips(httpClient: httpClient, root: storageRoot ?? getApplicationSupportDirectory);
     final media = RecitationMediaBridge(
       recitation: recitation,
       content: content,
@@ -308,6 +311,7 @@ class AppServices {
       ),
       adhanVoices: adhanVoices,
       adhkarAudio: adhkarAudio,
+      dhikrClips: dhikrClips,
       tasbih: TasbihController(settings),
       adhkar: AdhkarController(content, settings, localToday),
       sensors: sensors ?? const DeviceCompassSensors(),
@@ -360,6 +364,9 @@ class AppServices {
 
   /// Alafasy's morning / evening adhkar recordings, downloaded on first play.
   final AdhkarAudioFiles adhkarAudio;
+
+  /// Per-dhikr recordings saved for listening without internet.
+  final DhikrClips dhikrClips;
   final TasbihController tasbih;
   final AdhkarController adhkar;
   final CompassSensors sensors;

@@ -18,9 +18,9 @@ import 'l10n_ext.dart';
 import 'prayer_model.dart';
 import 'adaptive.dart';
 import 'r_icon.dart';
-import 'review_notice.dart' show duaStyle;
 import 'ruqyah_screen.dart';
 import 'adhkar_audio.dart';
+import 'adhkar_look.dart';
 import 'shell_back.dart';
 
 /// The Adhkar tab: a vertical list of the daily adhkar (morning, evening,
@@ -127,7 +127,13 @@ class AdhkarScreen extends StatelessWidget {
                   title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
                   subtitle: Text(l.adhkarAlafasy),
                   trailing: const RIcon(RIcons.playCircle),
-                  onTap: () => openAdhkarAudio(context, a, title),
+                  // Owner 2026-11-27: the recording plays inside the adhkar page itself.
+                  onTap: () => push(
+                    AdhkarSessionScreen(
+                      initial: a == AdhkarAudio.morning ? AdhkarSession.morning : AdhkarSession.evening,
+                      listen: true,
+                    ),
+                  ),
                 ),
               ),
             header(l.driveTitle),
@@ -156,8 +162,11 @@ class AdhkarScreen extends StatelessWidget {
 /// Morning or evening adhkar, one under the other, with a counter under every
 /// item (persisted for the day).
 class AdhkarSessionScreen extends StatefulWidget {
-  const AdhkarSessionScreen({super.key, this.initial});
+  const AdhkarSessionScreen({super.key, this.initial, this.listen = false});
   final AdhkarSession? initial;
+
+  /// Start Alafasy's whole recording at once, in the page (from «استمع للأذكار» on the Adhkar tab).
+  final bool listen;
 
   @override
   State<AdhkarSessionScreen> createState() => AdhkarScreenState();
@@ -200,193 +209,225 @@ class AdhkarScreenState extends State<AdhkarSessionScreen> {
     final l = context.l10n;
     final s = context.services;
     return StopDhikrAudioOnExit(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle),
-          // Owner 2026-11-26 (option 2): the tools as coloured squares with their names, in a row
-          // under the title.
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(74),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceSm),
-              child: Row(
-                children: [
-                  for (final (i, w) in <Widget>[
-                    TintedAction(
-                      key: const Key('customDhikrAdd'),
-                      tint: ActionTint.gold,
-                      label: l.adhkarBarAdd,
-                      tooltip: l.adhkarMineAdd,
-                      icon: RIcons.plus,
-                      onPressed: () => showCustomDhikrSheet(context, session),
-                    ),
-                    TintedAction(
-                      key: const Key('adhkarDriveMode'),
-                      tint: ActionTint.navy,
-                      label: l.adhkarBarDrive,
-                      tooltip: l.driveOpen,
-                      icon: RIcons.car,
-                      onPressed: () => openDriveMode(context, session),
-                    ),
-                    const AdhkarViewToggle(tinted: true),
-                    TintedAction(
-                      key: const Key('adhkarReminders'),
-                      tint: ActionTint.soft,
-                      label: l.adhkarBarAlarm,
-                      tooltip: l.adhkarReminders,
-                      icon: RIcons.alarm,
-                      onPressed: () =>
-                          showModalBottomSheet<void>(context: context, builder: (_) => const AdhkarRemindersSheet()),
-                    ),
-                    TintedAction(
-                      key: const Key('adhkarReset'),
-                      label: l.adhkarBarReset,
-                      tooltip: l.adhkarReset,
-                      icon: RIcons.reset,
-                      onPressed: () => s.adhkar.reset(session),
-                    ),
-                  ].indexed) ...[if (i > 0) const SizedBox(width: DesignTokens.spaceSm), Expanded(child: w)],
-                ],
+      child: AdhkarLook(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle),
+            actions: const [AdhkarSettingsButton()],
+            // Owner 2026-11-26 (option 2): the tools as coloured squares with their names, in a row
+            // under the title.
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(74),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceSm),
+                child: Row(
+                  children: [
+                    for (final (i, w) in <Widget>[
+                      TintedAction(
+                        key: const Key('customDhikrAdd'),
+                        tint: ActionTint.gold,
+                        label: l.adhkarBarAdd,
+                        tooltip: l.adhkarMineAdd,
+                        icon: RIcons.plus,
+                        onPressed: () => showCustomDhikrSheet(context, session),
+                      ),
+                      TintedAction(
+                        key: const Key('adhkarDriveMode'),
+                        tint: ActionTint.navy,
+                        label: l.adhkarBarDrive,
+                        tooltip: l.driveOpen,
+                        icon: RIcons.car,
+                        onPressed: () => openDriveMode(context, session),
+                      ),
+                      const AdhkarViewToggle(tinted: true),
+                      TintedAction(
+                        key: const Key('adhkarReminders'),
+                        tint: ActionTint.soft,
+                        label: l.adhkarBarAlarm,
+                        tooltip: l.adhkarReminders,
+                        icon: RIcons.alarm,
+                        onPressed: () =>
+                            showModalBottomSheet<void>(context: context, builder: (_) => const AdhkarRemindersSheet()),
+                      ),
+                      TintedAction(
+                        key: const Key('adhkarReset'),
+                        label: l.adhkarBarReset,
+                        tooltip: l.adhkarReset,
+                        icon: RIcons.reset,
+                        onPressed: () => s.adhkar.reset(session),
+                      ),
+                    ].indexed) ...[if (i > 0) const SizedBox(width: DesignTokens.spaceSm), Expanded(child: w)],
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        bottomNavigationBar: const DriveBar(),
-        body: ReadableWidth(
-          child: ListenableBuilder(
-            listenable: Listenable.merge([s.adhkar, s.settings]),
-            builder: (context, _) {
-              final p = s.adhkar.progress(session);
-              _autoExit.update(this.context, complete: p.items.isNotEmpty && p.completedItems == p.items.length);
-              final header = <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    DesignTokens.spaceLg,
-                    DesignTokens.spaceSm,
-                    DesignTokens.spaceLg,
-                    0,
+          bottomNavigationBar: const DriveBar(),
+          body: ReadableWidth(
+            child: ListenableBuilder(
+              listenable: Listenable.merge([s.adhkar, s.settings]),
+              builder: (context, _) {
+                final p = s.adhkar.progress(session);
+                _autoExit.update(
+                  this.context,
+                  complete: p.items.isNotEmpty && p.completedItems == p.items.length,
+                  celebrate: session == AdhkarSession.morning ? l.adhkarDoneMorning : l.adhkarDoneEvening,
+                  onAgain: () => s.adhkar.reset(session),
+                );
+                // Owner 2026-11-27: the whole recording plays here, and every dhikr's own recording can be
+                // saved for listening without internet.
+                final audioCards = <Widget>[
+                  AlafasyListenCard(
+                    key: ValueKey('alafasy-${session.name}'),
+                    audio: session == AdhkarSession.morning ? AdhkarAudio.morning : AdhkarAudio.evening,
+                    title: session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle,
+                    autoStart: widget.listen && session == widget.initial,
                   ),
-                  child: SegmentedButton<AdhkarSession>(
-                    key: const Key('adhkarSession'),
-                    segments: [
-                      ButtonSegment(
-                        value: AdhkarSession.morning,
-                        icon: const RIcon(RIcons.sunHigh),
-                        label: Text(l.adhkarMorning),
-                      ),
-                      ButtonSegment(
-                        value: AdhkarSession.evening,
-                        icon: const RIcon(RIcons.moon),
-                        label: Text(l.adhkarEvening),
-                      ),
-                    ],
-                    selected: {session},
-                    onSelectionChanged: (v) => setState(() {
-                      _session = v.single;
-                      _at = 0;
-                      _autoExit.restart();
-                    }),
+                  DhikrOfflineFor(
+                    key: ValueKey('offline-${session.name}'),
+                    group: 'adhkar-${session.name}',
+                    pick: (m) => [for (final d in p.items) d.custom ? null : m.forDhikr(d.index)],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    DesignTokens.spaceLg,
-                    DesignTokens.spaceMd,
-                    DesignTokens.spaceLg,
-                    0,
+                ];
+                final header = <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      DesignTokens.spaceLg,
+                      DesignTokens.spaceSm,
+                      DesignTokens.spaceLg,
+                      0,
+                    ),
+                    child: SegmentedButton<AdhkarSession>(
+                      key: const Key('adhkarSession'),
+                      segments: [
+                        ButtonSegment(
+                          value: AdhkarSession.morning,
+                          icon: const RIcon(RIcons.sunHigh),
+                          label: Text(l.adhkarMorning),
+                        ),
+                        ButtonSegment(
+                          value: AdhkarSession.evening,
+                          icon: const RIcon(RIcons.moon),
+                          label: Text(l.adhkarEvening),
+                        ),
+                      ],
+                      selected: {session},
+                      onSelectionChanged: (v) => setState(() {
+                        _session = v.single;
+                        _at = 0;
+                        _autoExit.restart();
+                      }),
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: DesignTokens.spaceXs),
-                      Text(
-                        l.adhkarProgress(context.num(p.completedItems), context.num(p.items.length)),
-                        key: const Key('adhkarProgress'),
-                      ),
-                      const SizedBox(height: DesignTokens.spaceXs),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
-                        child: LinearProgressIndicator(value: p.fraction, minHeight: 6),
-                      ),
-                      const SizedBox(height: DesignTokens.spaceXs),
-                      Text(l.adhkarTapToCount, style: Theme.of(context).textTheme.bodySmall),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      DesignTokens.spaceLg,
+                      DesignTokens.spaceMd,
+                      DesignTokens.spaceLg,
+                      0,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          session == AdhkarSession.morning ? l.adhkarMorningTitle : l.adhkarEveningTitle,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        const SizedBox(height: DesignTokens.spaceXs),
+                        Text(
+                          l.adhkarProgress(context.num(p.completedItems), context.num(p.items.length)),
+                          key: const Key('adhkarProgress'),
+                        ),
+                        const SizedBox(height: DesignTokens.spaceXs),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
+                          child: LinearProgressIndicator(value: p.fraction, minHeight: 6),
+                        ),
+                        const SizedBox(height: DesignTokens.spaceXs),
+                        Text(l.adhkarTapToCount, style: Theme.of(context).textTheme.bodySmall),
+                      ],
+                    ),
                   ),
-                ),
-              ];
-              if (s.settings.adhkarCards) {
-                // One dhikr per page (owner's choice, 2026-11-11): a bar with the overall progress on
-                // top, the dhikr, "listen to this dhikr", and a big counter that moves on when complete.
-                final n = p.items.length;
-                final pct = (p.fraction * 100).round();
-                return Column(
-                  children: [
-                    header.first,
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        DesignTokens.spaceLg,
-                        DesignTokens.spaceMd,
-                        DesignTokens.spaceLg,
-                        0,
-                      ),
-                      child: Column(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
-                            child: LinearProgressIndicator(
-                              key: const Key('adhkarTopBar'),
-                              value: p.fraction,
-                              minHeight: 10,
-                            ),
+                ];
+                if (s.settings.adhkarCards) {
+                  // One dhikr per page (owner's choice, 2026-11-11): a bar with the overall progress on
+                  // top, the dhikr, "listen to this dhikr", and a big counter that moves on when complete.
+                  final n = p.items.length;
+                  final pct = (p.fraction * 100).round();
+                  // The listen and download cards scroll in the top part (at most 40% of the page), so the
+                  // dhikr card keeps its room on small phones.
+                  return LayoutBuilder(
+                    builder: (context, box) => Column(
+                      children: [
+                        ConstrainedBox(
+                          constraints: BoxConstraints(maxHeight: box.maxHeight * 0.4),
+                          child: SingleChildScrollView(child: Column(children: [header.first, ...audioCards])),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(
+                            DesignTokens.spaceLg,
+                            DesignTokens.spaceMd,
+                            DesignTokens.spaceLg,
+                            0,
                           ),
-                          const SizedBox(height: DesignTokens.spaceXs),
-                          Row(
+                          child: Column(
                             children: [
-                              Expanded(
-                                child: Text(
-                                  l.adhkarItemOf(context.num(_at.clamp(0, n - 1) + 1), context.num(n)),
-                                  key: const Key('adhkarItemOf'),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(DesignTokens.radiusPill),
+                                child: LinearProgressIndicator(
+                                  key: const Key('adhkarTopBar'),
+                                  value: p.fraction,
+                                  minHeight: 10,
                                 ),
                               ),
-                              Text(l.adhkarPercentDone(context.num(pct)), key: const Key('adhkarProgress')),
+                              const SizedBox(height: DesignTokens.spaceXs),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      l.adhkarItemOf(context.num(_at.clamp(0, n - 1) + 1), context.num(n)),
+                                      key: const Key('adhkarItemOf'),
+                                    ),
+                                  ),
+                                  Text(l.adhkarPercentDone(context.num(pct)), key: const Key('adhkarProgress')),
+                                ],
+                              ),
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                        Expanded(
+                          child: CardPager(
+                            resetKey: session,
+                            count: n,
+                            isDone: (i) => p.isDone(p.items[i]),
+                            onIndex: (i) {
+                              unawaited(DhikrPlayer.instance.stop());
+                              setState(() => _at = i);
+                            },
+                            builder: (context, i) =>
+                                _DhikrCard(dhikr: p.items[i], session: session, progress: p, big: true),
+                          ),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: CardPager(
-                        resetKey: session,
-                        count: n,
-                        isDone: (i) => p.isDone(p.items[i]),
-                        onIndex: (i) {
-                          unawaited(DhikrPlayer.instance.stop());
-                          setState(() => _at = i);
-                        },
-                        builder: (context, i) =>
-                            _DhikrCard(dhikr: p.items[i], session: session, progress: p, big: true),
-                      ),
-                    ),
+                  );
+                }
+                return ListView(
+                  key: const Key('adhkarList'),
+                  padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+                  children: [
+                    header.first,
+                    ...audioCards,
+                    ...header.skip(1),
+                    for (final (i, d) in p.items.indexed) ...[
+                      if (d.custom && (i == 0 || !p.items[i - 1].custom)) const CustomAdhkarHeader(),
+                      _DhikrCard(dhikr: d, session: session, progress: p),
+                    ],
+                    AddCustomDhikrButton(session: session),
                   ],
                 );
-              }
-              return ListView(
-                key: const Key('adhkarList'),
-                padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-                children: [
-                  ...header,
-                  for (final (i, d) in p.items.indexed) ...[
-                    if (d.custom && (i == 0 || !p.items[i - 1].custom)) const CustomAdhkarHeader(),
-                    _DhikrCard(dhikr: d, session: session, progress: p),
-                  ],
-                  AddCustomDhikrButton(session: session),
-                ],
-              );
-            },
+              },
+            ),
           ),
         ),
       ),
@@ -447,9 +488,9 @@ class _DhikrCard extends StatelessWidget {
                         ),
                       ),
                     Text(
-                      dhikr.text,
+                      dhikrShown(dhikr.text, tashkeel: s.settings.adhkarTashkeel),
                       textDirection: TextDirection.rtl,
-                      style: duaStyle(context, size: big ? 24 : 18),
+                      style: dhikrStyle(context, size: big ? 24 : 18),
                     ),
                     const SizedBox(height: DesignTokens.spaceSm),
                     if (!dhikr.custom)

@@ -5,6 +5,8 @@ import type { DhikrHadith } from "@/lib/dhikr-extras";
 import { registerAudio } from "@/lib/audio-focus";
 import { Icon } from "./Icon";
 import { LockPlayer } from "./LockPlayer";
+import { SaveAudioButton } from "./SaveAudioButton";
+import { dhikrSavedStore } from "@/lib/audio-offline";
 
 /** One shared player for dhikr recordings: starting one stops the previous; the end stops (no loop). */
 interface PlayerState {
@@ -107,6 +109,8 @@ export function DhikrListen({ locale, url, testId }: { locale: Locale; url: stri
         <Icon name={mine && p.playing ? "stop" : "play"} size={16} />{" "}
         {mine && p.playing ? t(locale, "dhikr.stop") : t(locale, "dhikr.listen")}
       </button>
+      {/* «⬇» keeps this recording for listening without internet (owner 2026-11-27). */}
+      <SaveAudioButton locale={locale} store={dhikrSavedStore} url={url} testId={`${testId}-save`} />
       {mine && p.failed ? (
         <span className="muted small" role="status">
           {t(locale, "dhikr.listenFailed")}

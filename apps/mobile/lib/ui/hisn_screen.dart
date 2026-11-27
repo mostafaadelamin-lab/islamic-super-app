@@ -8,6 +8,7 @@ import '../domain/adhkar.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/design_tokens.dart';
 import 'adhkar_screen.dart';
+import 'adhkar_look.dart';
 import 'dhikr_audio.dart';
 import 'dhikr_hadith.dart';
 import 'dhikr_tools.dart';
@@ -152,7 +153,11 @@ class _HisnChapterScreenState extends State<HisnChapterScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(chapter.items[i], textDirection: TextDirection.rtl, style: duaStyle(context)),
+            Text(
+              dhikrShown(chapter.items[i], tashkeel: context.services.settings.adhkarTashkeel),
+              textDirection: TextDirection.rtl,
+              style: dhikrStyle(context),
+            ),
             const SizedBox(height: DesignTokens.spaceSm),
             DhikrAudioUrl(
               pick: (m) => m.forHisn(chapter.index, i),
@@ -182,40 +187,50 @@ class _HisnChapterScreenState extends State<HisnChapterScreen> {
   @override
   Widget build(BuildContext context) {
     final settings = context.services.settings;
+    final l = context.l10n;
     return StopDhikrAudioOnExit(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(chapter.title, textDirection: TextDirection.rtl),
-          actions: const [AdhkarViewToggle()],
-        ),
-        body: ReadableWidth(
-          child: ListenableBuilder(
-            listenable: settings,
-            builder: (context, _) {
-              // Counters exist only in the one-per-page view; there, finishing the last one goes back.
-              _autoExit.update(
-                this.context,
-                complete:
-                    settings.adhkarCards && _taps.isNotEmpty && Iterable<int>.generate(_taps.length).every(_isDone),
-              );
-              return settings.adhkarCards
-                  ? Column(
-                      children: [
-                        Expanded(
-                          child: CardPager(
-                            count: chapter.items.length,
-                            builder: _item,
-                            onIndex: (_) => unawaited(DhikrPlayer.instance.stop()),
+      child: AdhkarLook(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(chapter.title, textDirection: TextDirection.rtl),
+            actions: const [AdhkarViewToggle(), AdhkarSettingsButton(view: false)],
+          ),
+          body: ReadableWidth(
+            child: ListenableBuilder(
+              listenable: settings,
+              builder: (context, _) {
+                // Counters exist only in the one-per-page view; there, finishing the last one goes back.
+                _autoExit.update(
+                  this.context,
+                  complete:
+                      settings.adhkarCards && _taps.isNotEmpty && Iterable<int>.generate(_taps.length).every(_isDone),
+                  celebrate: l.adhkarDoneAll,
+                  onAgain: () => setState(() => _taps.fillRange(0, _taps.length, 0)),
+                );
+                final offline = DhikrOfflineFor(
+                  group: 'hisn-${chapter.index}',
+                  pick: (m) => [for (var i = 0; i < chapter.items.length; i++) m.forHisn(chapter.index, i)],
+                );
+                return settings.adhkarCards
+                    ? Column(
+                        children: [
+                          offline,
+                          Expanded(
+                            child: CardPager(
+                              count: chapter.items.length,
+                              builder: _item,
+                              onIndex: (_) => unawaited(DhikrPlayer.instance.stop()),
+                            ),
                           ),
-                        ),
-                      ],
-                    )
-                  : ListView(
-                      key: const Key('hisnChapter'),
-                      padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-                      children: [for (var i = 0; i < chapter.items.length; i++) _item(context, i)],
-                    );
-            },
+                        ],
+                      )
+                    : ListView(
+                        key: const Key('hisnChapter'),
+                        padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
+                        children: [offline, for (var i = 0; i < chapter.items.length; i++) _item(context, i)],
+                      );
+              },
+            ),
           ),
         ),
       ),

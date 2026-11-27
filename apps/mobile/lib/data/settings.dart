@@ -644,6 +644,28 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// «إعدادات الأذكار» (owner 2026-11-27): background of the adhkar pages ('' = the app's own colours).
+  String get adhkarBg => _prefs.getString('adhkar.bg') ?? '';
+  Future<void> setAdhkarBg(String v) async {
+    await _prefs.setString('adhkar.bg', v);
+    notifyListeners();
+  }
+
+  /// Show the dhikr with its tashkeel (display only: the text itself never changes).
+  bool get adhkarTashkeel => _prefs.getBool('adhkar.tashkeel') ?? true;
+  Future<void> setAdhkarTashkeel(bool v) async {
+    await _prefs.setBool('adhkar.tashkeel', v);
+    notifyListeners();
+  }
+
+  /// Size of the dhikr text, 0.8 to 1.8 times the normal size.
+  static const adhkarScaleMin = 0.8, adhkarScaleMax = 1.8;
+  double get adhkarScale => (_prefs.getDouble('adhkar.scale') ?? 1.0).clamp(adhkarScaleMin, adhkarScaleMax);
+  Future<void> setAdhkarScale(double v) async {
+    await _prefs.setDouble('adhkar.scale', v.clamp(adhkarScaleMin, adhkarScaleMax));
+    notifyListeners();
+  }
+
   /// Days the app was opened, for the one-time "share Rattil" suggestion, and whether it was answered.
   List<String> get sharePromptDays => _prefs.getStringList('sharePrompt.days') ?? const [];
   bool get sharePromptDone => _prefs.getBool('sharePrompt.done') ?? false;

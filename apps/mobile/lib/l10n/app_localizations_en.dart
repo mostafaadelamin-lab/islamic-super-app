@@ -383,6 +383,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhkarBarView => 'View';
 
   @override
+  String get adhkarBgApp => 'Normal';
+
+  @override
+  String get adhkarBgAzure => 'Azure';
+
+  @override
+  String get adhkarBgEmerald => 'Emerald';
+
+  @override
+  String get adhkarBgLavender => 'Lavender';
+
+  @override
+  String get adhkarBgNight => 'Night';
+
+  @override
+  String get adhkarBgSand => 'Sand';
+
+  @override
+  String get adhkarBgSky => 'Sky';
+
+  @override
+  String get adhkarBgSunset => 'Sunset';
+
+  @override
   String get adhkarCards => 'One card at a time';
 
   @override
@@ -396,6 +420,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhkarDone => 'Done';
+
+  @override
+  String get adhkarDoneAgain => 'Start again';
+
+  @override
+  String get adhkarDoneAll => 'You finished all the adhkar';
+
+  @override
+  String get adhkarDoneBack => 'Back';
+
+  @override
+  String get adhkarDoneEvening => 'You finished all the evening adhkar';
+
+  @override
+  String get adhkarDoneMorning => 'You finished all the morning adhkar';
+
+  @override
+  String get adhkarDoneTitle => 'May Allah accept it from you';
 
   @override
   String get adhkarDuas => 'Duas';
@@ -429,7 +471,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adhkarListen => 'Listen (Mishary Alafasy)';
 
   @override
+  String get adhkarListenAll => 'Listen to all the adhkar';
+
+  @override
+  String get adhkarListenAllSub => 'Sheikh Mishary Alafasy';
+
+  @override
+  String get adhkarListenClose => 'Close the player';
+
+  @override
   String get adhkarListenHeader => 'Listen to the adhkar';
+
+  @override
+  String get adhkarListenSaved => 'Saved';
 
   @override
   String get adhkarMine => 'My adhkar';
@@ -552,6 +606,24 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get adhkarReviewNotice =>
       'Pending religious review. Texts: Kazi Shariar adhkar dataset (CC BY 4.0) and Hisn al-Muslim; repetition counts follow Hisn al-Muslim.';
+
+  @override
+  String get adhkarSettingsBg => 'Background';
+
+  @override
+  String get adhkarSettingsSize => 'Text size';
+
+  @override
+  String get adhkarSettingsTashkeel => 'Diacritics';
+
+  @override
+  String get adhkarSettingsTashkeelHint => 'Hiding them is for display only; Quran verses keep theirs.';
+
+  @override
+  String get adhkarSettingsTitle => 'Adhkar settings';
+
+  @override
+  String get adhkarSettingsView => 'View';
 
   @override
   String get adhkarShare => 'Share';
@@ -866,6 +938,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactWhatsapp => 'WhatsApp number (optional)';
 
   @override
+  String get dhikrDeleteSaved => 'Delete the saved copy';
+
+  @override
+  String get dhikrDownload => 'Download this dhikr for listening offline';
+
+  @override
+  String get dhikrDownloadFailed => 'Could not download; check the internet';
+
+  @override
   String get dhikrHadith => 'The hadith';
 
   @override
@@ -885,6 +966,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dhikrListenStop => 'Stop';
+
+  @override
+  String get dhikrOfflineAll => 'Download all';
+
+  @override
+  String dhikrOfflineAllHisn(String n) {
+    return 'Download every dhikr recording ($n clips, about 120 MB)';
+  }
+
+  @override
+  String get dhikrOfflineCancel => 'Cancel';
+
+  @override
+  String dhikrOfflineCount(String n) {
+    return 'Each dhikr\'s own recording: $n clips';
+  }
+
+  @override
+  String get dhikrOfflineDelete => 'Delete';
+
+  @override
+  String get dhikrOfflineDeleteAll => 'Delete all saved';
+
+  @override
+  String get dhikrOfflineDone => 'All saved for listening offline';
+
+  @override
+  String dhikrOfflineProgress(String done, String total) {
+    return 'Downloading: $done of $total';
+  }
+
+  @override
+  String get dhikrOfflineRetry => 'The download stopped; try again';
+
+  @override
+  String dhikrOfflineSaved(String n, String size) {
+    return '$n clips saved · $size MB';
+  }
+
+  @override
+  String get dhikrOfflineSettings => 'Adhkar recordings offline';
+
+  @override
+  String get dhikrOfflineTitle => 'Listen without internet';
+
+  @override
+  String get dhikrSaved => 'Saved';
 
   @override
   String get dhikrRemCancel => 'Cancel';
@@ -1939,6 +2067,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kidsLearnHadithSub => '600 hadith to memorise in four levels';
 
   @override
+  String get kidsLearnIman => 'Pillars of faith';
+
+  @override
+  String get kidsLearnImanSub => 'The six pillars in pictures';
+
+  @override
+  String get kidsLearnIslam => 'Pillars of Islam';
+
+  @override
+  String get kidsLearnIslamSub => 'The five pillars in pictures';
+
+  @override
   String kidsLearnLevel(String n) {
     return 'Level $n';
   }
@@ -1988,18 +2128,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get kidsLearnSalahSub => 'Prayer steps in pictures';
-
-  @override
-  String get kidsLearnIslam => 'Pillars of Islam';
-
-  @override
-  String get kidsLearnIslamSub => 'The five pillars in pictures';
-
-  @override
-  String get kidsLearnIman => 'Pillars of faith';
-
-  @override
-  String get kidsLearnImanSub => 'The six pillars in pictures';
 
   @override
   String get kidsLearnSave => 'Save the book on this device';

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../app_services.dart';
 import '../theme/design_tokens.dart';
 import 'contact_screen.dart';
+import 'adhkar_celebration.dart';
 import 'l10n_ext.dart';
 import 'r_icon.dart';
 
@@ -172,7 +173,10 @@ class AdhkarAutoExit {
   bool? _wasComplete;
 
   /// Call on every rebuild with whether everything in the list is done now.
-  void update(BuildContext context, {required bool complete}) {
+  ///
+  /// [celebrate] (owner 2026-11-27): instead of going straight back, show the celebration screen with this
+  /// line; «من جديد» there calls [onAgain] and stays, «رجوع» goes back.
+  void update(BuildContext context, {required bool complete, String? celebrate, VoidCallback? onAgain}) {
     final was = _wasComplete;
     _wasComplete = complete;
     if (!complete) {
@@ -185,7 +189,19 @@ class AdhkarAutoExit {
         final route = ModalRoute.of(context);
         // Leave only when this screen is on top (not under a sheet or another page).
         if (route != null && !route.isCurrent) return;
-        unawaited(Navigator.of(context).maybePop());
+        if (celebrate == null) {
+          unawaited(Navigator.of(context).maybePop());
+          return;
+        }
+        unawaited(() async {
+          final choice = await showAdhkarCelebration(context, celebrate);
+          if (!context.mounted) return;
+          if (choice == CelebrationChoice.again) {
+            onAgain?.call();
+          } else {
+            unawaited(Navigator.of(context).maybePop());
+          }
+        }());
       });
     }
   }
