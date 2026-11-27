@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { isLocale, t } from "@/lib/i18n";
+import { withBase } from "@/lib/base-path";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
 
 export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
@@ -20,8 +21,18 @@ export default async function AboutPage({ params }: { params: LocaleParams }) {
         <p>{t(locale, "settings.free")}</p>
         <p>{t(locale, "about.privacy")}</p>
       </section>
-      {/* No "content sources" section (owner, 2026-11-15): kept in docs/CONTENT_SOURCES.md. The font
-          licences still ship next to the fonts in /fonts/. */}
+      {/* Owner 2026-11-26: the sources and proof page (sources.html) is reachable from «حول التطبيق». */}
+      <section className="card" aria-labelledby="proof-h">
+        <h2 id="proof-h" style={{ marginTop: 0 }}>
+          {t(locale, "about.proofTitle")}
+        </h2>
+        <p>{t(locale, "about.proofBody")}</p>
+        <p>
+          <a href={withBase("/sources.html#proof")} data-testid="about-proof-link">
+            {t(locale, "about.proofLink")}
+          </a>
+        </p>
+      </section>
     </>
   );
 }

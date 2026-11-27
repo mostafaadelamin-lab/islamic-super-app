@@ -1182,5 +1182,8 @@
   "adhkar.barAdd": "Add",
   "adhkar.barView": "View",
   "adhkar.barAlarm": "Alarm",
-  "adhkar.barReset": "Restart"
+  "adhkar.barReset": "Restart",
+  "about.proofTitle": "Sources and proof",
+  "about.proofBody": "Where the Quran, tafsir, hadith and every recording in the app come from, with the fingerprints that prove they match the source, and how to check it yourself.",
+  "about.proofLink": "Open the sources and proof page"
 }

@@ -6173,7 +6173,7 @@ abstract class AppLocalizations {
   /// shared key "settings.mushafPrintedSaved"
   ///
   /// In en, this message translates to:
-  /// **'All page fonts are saved on this device'**
+  /// **'All page fonts are saved on this device and won\'t be downloaded again'**
   String get settingsMushafPrintedSaved;
 
   /// shared key "settings.mushafSection"
@@ -8275,6 +8275,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Surah info'**
   String get surahInfoShort;
+
+  /// No description provided for @readerPrintedOffer.
+  ///
+  /// In en, this message translates to:
+  /// **'Madina font: download the whole Mushaf once and read offline (about 140 MB)'**
+  String get readerPrintedOffer;
+
+  /// No description provided for @readerPrintedDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get readerPrintedDownload;
+
+  /// No description provided for @readerPrintedResume.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get readerPrintedResume;
+
+  /// No description provided for @readerPrintedLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get readerPrintedLater;
+
+  /// No description provided for @readerPrintedSavedAll.
+  ///
+  /// In en, this message translates to:
+  /// **'The Madina font is saved for the whole Mushaf and won\'t be downloaded again'**
+  String get readerPrintedSavedAll;
+
+  /// No description provided for @aboutProofTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sources and proof'**
+  String get aboutProofTitle;
+
+  /// No description provided for @aboutProofBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Where the Quran, tafsir, hadith and every recording in the app come from, with the fingerprints that prove they match the source, and how to check it yourself.'**
+  String get aboutProofBody;
+
+  /// No description provided for @aboutProofOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the sources and proof page'**
+  String get aboutProofOpen;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

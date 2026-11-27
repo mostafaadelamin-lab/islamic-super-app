@@ -108,16 +108,36 @@ class PrintedMushaf extends ChangeNotifier {
     return layout;
   }();
 
-  Future<File?> _file(int page) async {
+  Future<String?> _base(int page) async {
     final r = _root;
     if (r == null) return null;
-    return File('${(await r()).path}/qcf2/p$page.ttf');
+    return '${(await r()).path}/qcf2/p$page';
+  }
+
+  /// Older builds kept the plain font (`p<page>.ttf`); new saves are gzipped (`p<page>.ttf.gz`, about a third
+  /// smaller). Either one counts as saved, so a font that is on the device is never downloaded again.
+  static bool _has(File f) => f.existsSync() && f.lengthSync() > 0;
+
+  Future<Uint8List?> _readSaved(int page) async {
+    final b = await _base(page);
+    if (b == null) return null;
+    final plain = File('$b.ttf');
+    if (_has(plain)) return plain.readAsBytes();
+    final gz = File('$b.ttf.gz');
+    if (_has(gz)) {
+      try {
+        return Uint8List.fromList(gzip.decode(await gz.readAsBytes()));
+      } catch (_) {
+        await gz.delete().catchError((_) => gz); // broken save: fetch it again
+      }
+    }
+    return null;
   }
 
   /// Whether the font of [page] is saved on the device.
   Future<bool> isSaved(int page) async {
-    final f = await _file(page);
-    return f != null && f.existsSync() && f.lengthSync() > 0;
+    final b = await _base(page);
+    return b != null && (_has(File('$b.ttf')) || _has(File('$b.ttf.gz')));
   }
 
   /// Makes the font of [page] (and the layout) ready; true when the page can be drawn.
@@ -130,13 +150,7 @@ class PrintedMushaf extends ChangeNotifier {
     final l = await loadLayout();
     if (l == null) return false;
     try {
-      final f = await _file(page);
-      Uint8List? bytes;
-      if (f != null && f.existsSync() && f.lengthSync() > 0) {
-        bytes = await f.readAsBytes();
-      } else {
-        bytes = await _download(l, page, f);
-      }
+      final bytes = await _readSaved(page) ?? await _download(l, page);
       if (bytes == null) return false;
       final loader = FontLoader(family(page))..addFont(Future.value(ByteData.sublistView(bytes)));
       await loader.load();
@@ -149,30 +163,43 @@ class PrintedMushaf extends ChangeNotifier {
     }
   }
 
-  Future<Uint8List?> _download(PrintedLayout l, int page, File? f) async {
+  Future<Uint8List?> _download(PrintedLayout l, int page) async {
     final c = _client;
     if (c == null) return null;
     final res = await c.get(Uri.parse(l.fontUrl.replaceAll('{page}', '$page')));
     if (res.statusCode != 200 || res.bodyBytes.isEmpty) return null;
-    if (f != null) {
+    final b = await _base(page);
+    if (b != null) {
+      final f = File('$b.ttf.gz');
       await f.parent.create(recursive: true);
       final part = File('${f.path}.part');
-      await part.writeAsBytes(res.bodyBytes, flush: true);
+      await part.writeAsBytes(gzip.encode(res.bodyBytes), flush: true);
       await part.rename(f.path);
+      if (savedPages != null && savedPages! < pages) savedPages = savedPages! + 1;
     }
     return res.bodyBytes;
   }
 
-  /// How many page fonts are saved on the device.
-  Future<int> savedCount() async {
+  /// Pages whose font is on the device (null until [savedCount] has looked once).
+  int? savedPages;
+
+  /// Whether every page font is on the device (known after [savedCount]).
+  bool get allSaved => savedPages == pages;
+
+  /// How many page fonts are saved on the device (looked up once, then kept up to date).
+  Future<int> savedCount({bool refresh = false}) async {
+    if (savedPages != null && !refresh) return savedPages!;
     var n = 0;
     for (var p = 1; p <= pages; p++) {
       if (await isSaved(p)) n++;
     }
+    savedPages = n;
+    notifyListeners();
     return n;
   }
 
-  /// Saves the fonts of all pages for reading without internet.
+  /// Saves the fonts of all pages for reading without internet, once: pages already saved are skipped, so
+  /// tapping again after a cut connection carries on where it stopped. Four pages at a time.
   Future<void> downloadAll() async {
     if (bulkDone != null) return;
     final l = await loadLayout();
@@ -180,22 +207,41 @@ class PrintedMushaf extends ChangeNotifier {
     bulkFailed = false;
     bulkDone = 0;
     notifyListeners();
-    try {
-      for (var p = 1; p <= pages; p++) {
-        final f = await _file(p);
-        if (!(f != null && f.existsSync() && f.lengthSync() > 0)) {
-          final b = await _download(l, p, f);
-          if (b == null) throw const HttpException('font');
+    var next = 1;
+    var failed = false;
+    Future<void> worker() async {
+      while (!failed && next <= pages) {
+        final p = next++;
+        if (!await isSaved(p)) {
+          Uint8List? b;
+          try {
+            b = await _download(l, p);
+          } catch (_) {}
+          if (b == null) {
+            failed = true;
+            return;
+          }
         }
-        bulkDone = p;
-        if (p % 4 == 0) notifyListeners();
+        bulkDone = bulkDone! + 1;
+        if (bulkDone! % 4 == 0) notifyListeners();
       }
-    } catch (_) {
-      bulkFailed = true;
-    } finally {
-      bulkDone = null;
-      notifyListeners();
     }
+
+    try {
+      await Future.wait([for (var i = 0; i < 4; i++) worker()]);
+    } finally {
+      bulkFailed = failed;
+      bulkDone = null;
+      await savedCount(refresh: true);
+    }
+  }
+
+  @visibleForTesting
+  void debugSetProgress({int? saved, int? done, bool failed = false}) {
+    savedPages = saved;
+    bulkDone = done;
+    bulkFailed = failed;
+    notifyListeners();
   }
 
   @visibleForTesting

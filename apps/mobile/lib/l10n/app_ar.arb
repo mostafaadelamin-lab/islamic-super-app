@@ -1013,7 +1013,7 @@
   "settingsMushafPrintedFailed": "تعذّر التحميل، حاول مرة أخرى",
   "settingsMushafPrintedHint": "اختياري، يتحمّل من الإنترنت: صفحات بشكل المصحف الورقي (خطوط صفحات المجمع عن طريق quran.com). الشكل العادي هو نص مجمع الملك فهد وخطه (الإصدار 2.2) المثبت بالبصمة.",
   "settingsMushafPrintedProgress": "جارٍ التحميل: {done} من {total}",
-  "settingsMushafPrintedSaved": "خطوط كل الصفحات محفوظة على الجهاز",
+  "settingsMushafPrintedSaved": "خطوط كل الصفحات محفوظة على الجهاز ولن تُحمَّل مرة أخرى",
   "settingsMushafSection": "المصحف",
   "settingsOurApps": "تطبيقاتنا",
   "settingsOurAppsSoon": "تطبيقات أخرى قريبًا إن شاء الله",
@@ -1363,5 +1363,13 @@
   "readerFontSmallerShort": "تصغير",
   "readerFontBiggerShort": "تكبير",
   "readerFontSwitchShort": "تغيير الخط",
-  "surahInfoShort": "عن السورة"
+  "surahInfoShort": "عن السورة",
+  "readerPrintedOffer": "خط المدينة: حمّل المصحف كله مرة واحدة واقرأ بدون إنترنت (حوالي ١٤٠ ميجا)",
+  "readerPrintedDownload": "تحميل",
+  "readerPrintedResume": "أكمل التحميل",
+  "readerPrintedLater": "لاحقًا",
+  "readerPrintedSavedAll": "خط المدينة محفوظ على الجهاز للمصحف كله، ولن يُحمَّل مرة أخرى",
+  "aboutProofTitle": "المصادر والإثبات",
+  "aboutProofBody": "من أين أخذنا القرآن والتفسير والحديث وكل صوت في التطبيق، مع البصمات التي تثبت المطابقة مع المصدر، وكيف تتأكد بنفسك.",
+  "aboutProofOpen": "افتح صفحة المصادر والإثبات"
 }

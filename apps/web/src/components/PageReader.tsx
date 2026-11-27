@@ -40,6 +40,7 @@ import {
 } from "@/lib/mushaf";
 import { loadMushafData, type MushafData } from "@/lib/mushaf-data";
 import { printedIfReady, usePrintedPage } from "@/lib/mushaf-printed";
+import { PrintedDownloadBar } from "./PrintedDownloadBar";
 import { FONT_MAX, FONT_MIN, lastReadStore, prefsStore } from "@/lib/settings";
 import { bookmarksStore, isBookmarked, toggleBookmark } from "@/lib/bookmarks";
 import { audioStore, itemPage } from "@/lib/audio";
@@ -1126,6 +1127,8 @@ export function PageReader({ locale, initial }: PageReaderProps) {
           )}
         </div>
       </div>
+
+      {tab === "mushaf" ? <PrintedDownloadBar locale={locale} enabled={prefs.mushafPrinted} /> : null}
 
       <header className="mushaf-head">
         <span className="mh-surah" data-testid="page-surahs">

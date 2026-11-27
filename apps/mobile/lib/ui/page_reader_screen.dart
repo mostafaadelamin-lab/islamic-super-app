@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../app_services.dart';
+import '../data/printed_mushaf.dart';
 import '../data/recitation.dart';
 import '../data/settings.dart';
 import '../domain/audio_queue.dart';
@@ -480,7 +481,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                         child: SingleChildScrollView(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [zoomRow, _controlsStrip(context, wide: false)],
+                            children: [zoomRow, if (_tab == ReaderTab.mushaf) const PrintedDownloadBar(), _controlsStrip(context, wide: false)],
                           ),
                         ),
                       ),
@@ -502,6 +503,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
             if (!full) header,
             // The page + tafsir halves on a phone leave out A− / A+ and «عن السورة» (less crowded).
             if (!compact && !full && !(_pageTafsir(context) && !ayahSidePanel(size))) zoomRow,
+            if (!full && _tab == ReaderTab.mushaf) const PrintedDownloadBar(),
             if (full) const SizedBox.shrink(key: Key('readerFullScreen')),
             Expanded(key: const Key('readerBody'), child: body),
             if (!full)
@@ -1577,6 +1579,107 @@ class ReaderMiniTool extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Owner 2026-11-26: with the Madina font on, offer to download it for the whole Mushaf once, for reading
+/// without internet. Fonts already on the device are never downloaded again (PrintedMushaf skips them), so the
+/// offer disappears for good once every page is saved.
+class PrintedDownloadBar extends StatefulWidget {
+  const PrintedDownloadBar({super.key});
+
+  @override
+  State<PrintedDownloadBar> createState() => _PrintedDownloadBarState();
+}
+
+class _PrintedDownloadBarState extends State<PrintedDownloadBar> {
+  bool _later = false;
+  bool _ran = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.services.settings;
+    final pm = PrintedMushaf.instance;
+    return ListenableBuilder(
+      listenable: Listenable.merge([settings, pm]),
+      builder: (context, _) {
+        if (!settings.mushafPrinted) return const SizedBox.shrink();
+        if (pm.savedPages == null) {
+          unawaited(pm.savedCount());
+          return const SizedBox.shrink();
+        }
+        final l = context.l10n;
+        final scheme = Theme.of(context).colorScheme;
+        final running = pm.bulkDone != null;
+        final done = pm.allSaved;
+        if ((done && !_ran) || (_later && !running)) return const SizedBox.shrink();
+        Widget line(Widget lead, String text, List<Widget> actions) => Material(
+          key: const Key('printedDownloadBar'),
+          color: scheme.primaryContainer,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm, vertical: 4),
+            child: Row(
+              children: [
+                lead,
+                const SizedBox(width: DesignTokens.spaceSm),
+                Expanded(
+                  child: Text(
+                    text,
+                    style: TextStyle(fontSize: 13, color: scheme.onPrimaryContainer, fontWeight: FontWeight.w600),
+                  ),
+                ),
+                ...actions,
+              ],
+            ),
+          ),
+        );
+        if (running) {
+          return line(
+            SizedBox(
+              width: 22,
+              height: 22,
+              child: CircularProgressIndicator(strokeWidth: 3, value: pm.bulkDone! / PrintedMushaf.pages),
+            ),
+            l.settingsMushafPrintedProgress(context.num(pm.bulkDone!), context.num(PrintedMushaf.pages)),
+            const [],
+          );
+        }
+        if (done) {
+          return line(
+            RIcon(RIcons.checkCircle, color: scheme.primary, size: 22),
+            l.readerPrintedSavedAll,
+            [
+              IconButton(
+                key: const Key('printedDownloadClose'),
+                tooltip: l.readerPrintedLater,
+                icon: const Icon(Icons.close, size: 18),
+                onPressed: () => setState(() => _ran = false),
+              ),
+            ],
+          );
+        }
+        return line(
+          RIcon(RIcons.download, color: scheme.primary, size: 22),
+          pm.bulkFailed ? l.settingsMushafPrintedFailed : l.readerPrintedOffer,
+          [
+            TextButton(
+              key: const Key('printedDownloadLater'),
+              onPressed: () => setState(() => _later = true),
+              child: Text(l.readerPrintedLater),
+            ),
+            FilledButton(
+              key: const Key('printedDownloadAll'),
+              style: FilledButton.styleFrom(visualDensity: VisualDensity.compact),
+              onPressed: () {
+                setState(() => _ran = true);
+                unawaited(pm.downloadAll());
+              },
+              child: Text(pm.bulkFailed ? l.readerPrintedResume : l.readerPrintedDownload),
+            ),
+          ],
+        );
+      },
     );
   }
 }

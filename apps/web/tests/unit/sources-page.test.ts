@@ -18,9 +18,11 @@ describe("hidden sources page", () => {
     expect(html).toContain('<meta name="robots" content="noindex, nofollow" />');
   });
 
-  it("is not linked from the site", () => {
+  // Owner 2026-11-26: reachable from «حول التطبيق» only (and the app's «عن التطبيق»).
+  it("is linked only from the About page", () => {
     const src = files(join(__dirname, "../../src")).filter((f) => /\.(tsx?|json|css)$/.test(f));
-    for (const f of src) expect(readFileSync(f, "utf8"), f).not.toMatch(/sources\.html/);
+    const linking = src.filter((f) => /sources\.html/.test(readFileSync(f, "utf8")));
+    expect(linking.map((f) => f.replace(/\\/g, "/").split("/src/")[1])).toEqual(["app/[locale]/about/page.tsx"]);
   });
 
   it("carries the Waqf GPL notice for the mushaf line layout", () => {

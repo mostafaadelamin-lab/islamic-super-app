@@ -89,5 +89,12 @@
   "reader.prevJuz": "Previous juz",
   "reader.pickJuz": "Choose the juz",
   "reader.tafsirBesideSurah": "Tafsir beside the surah",
-  "reader.tafsirBesideJuz": "Tafsir beside the juz"
+  "reader.tafsirBesideJuz": "Tafsir beside the juz",
+  "reader.printedOffer": "Madina font: download the whole Mushaf once and read offline (about 95 MB)",
+  "reader.printedDownload": "Download",
+  "reader.printedResume": "Resume",
+  "reader.printedLater": "Later",
+  "reader.printedProgress": "Downloading: {done} of {total}",
+  "reader.printedFailed": "Download failed, try again",
+  "reader.printedSavedAll": "The Madina font is saved in this browser for the whole Mushaf and won't be downloaded again"
 }

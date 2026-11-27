@@ -3444,7 +3444,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get settingsMushafPrintedSaved => 'All page fonts are saved on this device';
+  String get settingsMushafPrintedSaved => 'All page fonts are saved on this device and won\'t be downloaded again';
 
   @override
   String get settingsMushafSection => 'Mushaf';
@@ -4626,4 +4626,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get surahInfoShort => 'Surah info';
+
+  @override
+  String get readerPrintedOffer => 'Madina font: download the whole Mushaf once and read offline (about 140 MB)';
+
+  @override
+  String get readerPrintedDownload => 'Download';
+
+  @override
+  String get readerPrintedResume => 'Resume';
+
+  @override
+  String get readerPrintedLater => 'Later';
+
+  @override
+  String get readerPrintedSavedAll => 'The Madina font is saved for the whole Mushaf and won\'t be downloaded again';
+
+  @override
+  String get aboutProofTitle => 'Sources and proof';
+
+  @override
+  String get aboutProofBody =>
+      'Where the Quran, tafsir, hadith and every recording in the app come from, with the fingerprints that prove they match the source, and how to check it yourself.';
+
+  @override
+  String get aboutProofOpen => 'Open the sources and proof page';
 }

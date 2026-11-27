@@ -3426,7 +3426,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get settingsMushafPrintedSaved => 'خطوط كل الصفحات محفوظة على الجهاز';
+  String get settingsMushafPrintedSaved => 'خطوط كل الصفحات محفوظة على الجهاز ولن تُحمَّل مرة أخرى';
 
   @override
   String get settingsMushafSection => 'المصحف';
@@ -4600,4 +4600,29 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get surahInfoShort => 'عن السورة';
+
+  @override
+  String get readerPrintedOffer => 'خط المدينة: حمّل المصحف كله مرة واحدة واقرأ بدون إنترنت (حوالي ١٤٠ ميجا)';
+
+  @override
+  String get readerPrintedDownload => 'تحميل';
+
+  @override
+  String get readerPrintedResume => 'أكمل التحميل';
+
+  @override
+  String get readerPrintedLater => 'لاحقًا';
+
+  @override
+  String get readerPrintedSavedAll => 'خط المدينة محفوظ على الجهاز للمصحف كله، ولن يُحمَّل مرة أخرى';
+
+  @override
+  String get aboutProofTitle => 'المصادر والإثبات';
+
+  @override
+  String get aboutProofBody =>
+      'من أين أخذنا القرآن والتفسير والحديث وكل صوت في التطبيق، مع البصمات التي تثبت المطابقة مع المصدر، وكيف تتأكد بنفسك.';
+
+  @override
+  String get aboutProofOpen => 'افتح صفحة المصادر والإثبات';
 }

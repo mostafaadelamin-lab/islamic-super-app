@@ -5075,7 +5075,7 @@
       }
     }
   },
-  "settingsMushafPrintedSaved": "All page fonts are saved on this device",
+  "settingsMushafPrintedSaved": "All page fonts are saved on this device and won't be downloaded again",
   "@settingsMushafPrintedSaved": {
     "description": "shared key \"settings.mushafPrintedSaved\""
   },
@@ -6771,5 +6771,13 @@
   "readerFontSmallerShort": "Smaller",
   "readerFontBiggerShort": "Bigger",
   "readerFontSwitchShort": "Font",
-  "surahInfoShort": "Surah info"
+  "surahInfoShort": "Surah info",
+  "readerPrintedOffer": "Madina font: download the whole Mushaf once and read offline (about 140 MB)",
+  "readerPrintedDownload": "Download",
+  "readerPrintedResume": "Resume",
+  "readerPrintedLater": "Later",
+  "readerPrintedSavedAll": "The Madina font is saved for the whole Mushaf and won't be downloaded again",
+  "aboutProofTitle": "Sources and proof",
+  "aboutProofBody": "Where the Quran, tafsir, hadith and every recording in the app come from, with the fingerprints that prove they match the source, and how to check it yourself.",
+  "aboutProofOpen": "Open the sources and proof page"
 }

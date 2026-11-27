@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'r_icon.dart';
+import '../theme/rattil_icons.dart';
 
 import 'l10n_ext.dart';
 import 'widgets.dart';
@@ -10,6 +14,8 @@ class AboutScreen extends StatelessWidget {
 
   /// The store version; test/unit/app_version_test.dart keeps it equal to pubspec.yaml.
   static const appVersion = '1.2.25';
+
+  static const proofUrl = 'https://rattilwasalli.com/sources.html#proof';
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +38,21 @@ class AboutScreen extends StatelessWidget {
                 Text(l.aboutVersion(context.num(appVersion))),
               ],
             ),
-            // No sources or credits in the app (owner, 2026-11-15 and 2026-11-20: given on request only);
-            // they are kept in docs/CONTENT_SOURCES.md and apps/mobile/assets/audio/ADHAN_AUDIO.md.
+            // Owner 2026-11-26: the sources and proof page of the website, from «عن التطبيق».
+            SectionCard(
+              title: l.aboutProofTitle,
+              children: [
+                ListTile(
+                  key: const Key('aboutProof'),
+                  contentPadding: EdgeInsets.zero,
+                  leading: const RIcon(RIcons.shield),
+                  title: Text(l.aboutProofOpen),
+                  subtitle: Text(l.aboutProofBody),
+                  trailing: const RIcon(RIcons.chevronForward),
+                  onTap: () => launchUrl(Uri.parse(proofUrl), mode: LaunchMode.externalApplication),
+                ),
+              ],
+            ),
           ],
         ),
       ),

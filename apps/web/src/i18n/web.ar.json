@@ -1182,5 +1182,8 @@
   "adhkar.barAdd": "إضافة",
   "adhkar.barView": "العرض",
   "adhkar.barAlarm": "التنبيه",
-  "adhkar.barReset": "من جديد"
+  "adhkar.barReset": "من جديد",
+  "about.proofTitle": "المصادر والإثبات",
+  "about.proofBody": "من أين أخذنا القرآن والتفسير والحديث وكل صوت في التطبيق، مع البصمات التي تثبت المطابقة مع المصدر، وكيف تتأكد بنفسك.",
+  "about.proofLink": "افتح صفحة المصادر والإثبات"
 }
