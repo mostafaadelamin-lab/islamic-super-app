@@ -8,6 +8,8 @@ Owner 2026-11-27 after a per-presenter check (arrest, prison, ban, case, politic
 - The same shows are the topic «بودكاست» inside «افهم دينك»; car screen: «بودكاست» in the first list too.
 - Shows say «حلقة / البرنامج» instead of «درس / السلسلة»; .m4a episodes are saved as .m4a for offline listening.
 - Website lesson list file renamed lessons-6.json (no stale cached copy).
+- Privacy policy «مصادر المحتوى»: «افهم دينك» lessons (archive.org, scholars' podcasts) and the «بودكاست» hosts (Simplecast, Anchor / Spotify for Creators, SoundCloud).
+- Version 1.2.26+46.
 
 ## Adhkar: listening in the page, offline recordings, «إعدادات الأذكار», celebration — 2026-11-27
 Owner 2026-11-27 (approved mockups in project files _sync/adhkar-listen-offline; their screenshot of another app's settings was a layout reference only).
