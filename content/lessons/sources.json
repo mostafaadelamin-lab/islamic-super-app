@@ -65,6 +65,11 @@
       "id": "akhira",
       "ar": "أحداث النهاية والآخرة",
       "en": "End times & the hereafter"
+    },
+    {
+      "id": "podcast",
+      "ar": "بودكاست",
+      "en": "Podcast"
     }
   ],
   "groups": [
@@ -349,6 +354,46 @@
       "en": "Al-Azhar Al-Sharif",
       "groups": [
         "azhar",
+        "egypt"
+      ]
+    },
+    {
+      "id": "amgad",
+      "ar": "الشيخ أمجد سمير",
+      "en": "Sheikh Amgad Samir",
+      "groups": [
+        "egypt"
+      ]
+    },
+    {
+      "id": "waie",
+      "ar": "أحمد عامر وحازم الصديق وشريف علي",
+      "en": "Ahmed Amer, Hazem El-Seddik & Sherif Ali",
+      "groups": [
+        "egypt"
+      ]
+    },
+    {
+      "id": "araby",
+      "ar": "د. أحمد العربي",
+      "en": "Dr. Ahmed El-Araby",
+      "groups": [
+        "egypt"
+      ]
+    },
+    {
+      "id": "sharkawy",
+      "ar": "الشيخ محمد سعد الشرقاوي",
+      "en": "Sheikh Mohamed Saad El-Sharkawy",
+      "groups": [
+        "egypt"
+      ]
+    },
+    {
+      "id": "ayoubi",
+      "ar": "الشيخ أسد الدين الأيوبي",
+      "en": "Sheikh Asad El-Din El-Ayoubi",
+      "groups": [
         "egypt"
       ]
     }
@@ -1282,6 +1327,213 @@
       "en": "The fiqh of family life",
       "items": [
         "007_20211025"
+      ]
+    },
+    {
+      "id": "sahaba-waie",
+      "topic": "podcast",
+      "sheikh": "waie",
+      "ar": "وعي: سلسلة الصحابة",
+      "en": "Waie: the Companions",
+      "items": [
+        "feed:https://feeds.soundcloud.com/users/soundcloud:users:1073536591/sounds.rss"
+      ],
+      "keep": "سلسلة الصح|سلسة الصح|سلسلة الصحبة|ابو هريرة",
+      "reverse": true,
+      "titles": "name",
+      "strip": [
+        "وعي\\s*[\\d٠-٩]+",
+        "سلسلة الصحابة",
+        "سلسة الصحابة",
+        "سلسلة الصحبة",
+        "النسخة الصوتية",
+        "\\|",
+        "^\\s*-\\s*",
+        "^\\s*الصحابة\\s",
+        "^\\s*الصحبة\\s"
+      ]
+    },
+    {
+      "id": "tahrar-amgad",
+      "topic": "podcast",
+      "sheikh": "amgad",
+      "ar": "لازم تتحرر",
+      "en": "You must break free",
+      "items": [
+        "feed:https://feeds.simplecast.com/flyig0Ev"
+      ],
+      "keep": "لازم تتحرر",
+      "reverse": true,
+      "titles": "name",
+      "pre": [
+        "\\s*\\|\\s*مع .*$",
+        "^\\s*فاهم\\s*[\\d٠-٩]+\\s*\\|\\s*"
+      ],
+      "strip": [
+        "سلسلة",
+        "لازم تتحرر",
+        "^\\s*-\\s*",
+        "\\(\\s*[\\d٠-٩]+\\s*\\)",
+        "^\\s*-\\s*"
+      ]
+    },
+    {
+      "id": "muhlikat-amgad",
+      "topic": "podcast",
+      "sheikh": "amgad",
+      "ar": "ربع المهلكات",
+      "en": "The quarter on what destroys the heart",
+      "items": [
+        "feed:https://anchor.fm/s/1176bbc9c/podcast/rss"
+      ],
+      "reverse": true,
+      "titles": "name",
+      "strip": [
+        "\"?ربع المهلكات\"?",
+        "_?ربع المهلكات_?",
+        "مختصر منهاج القاصدين",
+        "\\|",
+        "^[\\s\\d٠-٩\\-‎⁨⁩]+",
+        "[⁨⁩‎]",
+        "_+"
+      ]
+    },
+    {
+      "id": "qudwa-amgad",
+      "topic": "podcast",
+      "sheikh": "amgad",
+      "ar": "قدوتكِ، لكل فتاة",
+      "en": "Your role model, for every girl",
+      "items": [
+        "feed:https://anchor.fm/s/1181c8928/podcast/rss"
+      ],
+      "reverse": true,
+      "titles": "name",
+      "strip": [
+        "قُدوَتُكِ",
+        "قدوتكِ",
+        "\\|",
+        "^[\\s\\d٠-٩\\-‎⁨⁩]+",
+        "[⁨⁩‎]",
+        "_+"
+      ]
+    },
+    {
+      "id": "ibadat-araby",
+      "topic": "podcast",
+      "sheikh": "araby",
+      "ar": "تذوق العبادات",
+      "en": "Tasting the acts of worship",
+      "items": [
+        "feed:https://feeds.simplecast.com/flyig0Ev"
+      ],
+      "keep": "تذوق العبادات",
+      "reverse": true,
+      "titles": "name",
+      "pre": [
+        "\\s*\\|\\s*مع .*$",
+        "^\\s*فاهم\\s*[\\d٠-٩]+\\s*\\|\\s*"
+      ],
+      "strip": [
+        "سلسلة",
+        "تذوق العبادات",
+        "^\\s*-\\s*",
+        "\\(\\s*[\\d٠-٩]+\\s*\\)",
+        "^\\s*-\\s*"
+      ]
+    },
+    {
+      "id": "khulud-araby",
+      "topic": "podcast",
+      "sheikh": "araby",
+      "ar": "رحلة الخلود",
+      "en": "The journey to eternity",
+      "items": [
+        "feed:https://feeds.simplecast.com/flyig0Ev"
+      ],
+      "keep": "رحلة الخلود",
+      "reverse": true,
+      "titles": "name",
+      "pre": [
+        "\\s*\\|\\s*مع .*$",
+        "^\\s*فاهم\\s*[\\d٠-٩]+\\s*\\|\\s*"
+      ],
+      "strip": [
+        "سلسلة",
+        "رحلة الخلود",
+        "^\\s*-\\s*",
+        "\\(\\s*[\\d٠-٩]+\\s*\\)",
+        "^\\s*-\\s*"
+      ]
+    },
+    {
+      "id": "rabbi-sharkawy",
+      "topic": "podcast",
+      "sheikh": "sharkawy",
+      "ar": "حدثني عن ربي",
+      "en": "Tell me about my Lord",
+      "items": [
+        "feed:https://feeds.simplecast.com/flyig0Ev"
+      ],
+      "keep": "مشاهد .*الله.*الشرقاوي",
+      "reverse": true,
+      "titles": "name",
+      "pre": [
+        "\\s*\\|\\s*مع .*$",
+        "^\\s*فاهم\\s*[\\d٠-٩]+\\s*\\|\\s*"
+      ],
+      "strip": [
+        "-\\s*حدثني عن ربي",
+        "-\\s*سلسلة حدثني عن ربي",
+        "سلسلة",
+        "حدثني عن ربي",
+        "^\\s*-\\s*",
+        "\\(\\s*[\\d٠-٩]+\\s*\\)",
+        "^\\s*-\\s*"
+      ]
+    },
+    {
+      "id": "khabaith-ayoubi",
+      "topic": "podcast",
+      "sheikh": "ayoubi",
+      "ar": "أمهات خبائث القلب",
+      "en": "The roots of the heart's ills",
+      "items": [
+        "feed:https://feeds.simplecast.com/flyig0Ev"
+      ],
+      "keep": "خبائث القلب",
+      "reverse": true,
+      "titles": "name",
+      "pre": [
+        "\\s*\\|\\s*مع .*$",
+        "^\\s*فاهم\\s*[\\d٠-٩]+\\s*\\|\\s*"
+      ],
+      "strip": [
+        "سلسلة",
+        "أمهات خبائث القلب",
+        "^\\s*-\\s*",
+        "\\(\\s*[\\d٠-٩]+\\s*\\)",
+        "^\\s*-\\s*"
+      ]
+    },
+    {
+      "id": "sahaba-alaa",
+      "topic": "podcast",
+      "sheikh": "alaa",
+      "ar": "قصص الصحابة",
+      "en": "Stories of the Companions",
+      "items": [
+        "feed:https://anchor.fm/s/1023b27a4/podcast/rss"
+      ],
+      "reverse": true,
+      "titles": "name",
+      "strip": [
+        "الحلقة الأولى من سلسلة \\( قصص الصحابة \\)",
+        "_\\s*[\\d٠-٩]+\\s*$",
+        "\\s[\\d٠-٩]{3}\\s*$",
+        "_",
+        "الحلقة الأولى من",
+        "[\\U0001F300-\\U0001FAFF\\u2600-\\u27BF\\u2764\\uFE0F]"
       ]
     }
   ],

@@ -1,7 +1,7 @@
 /**
  * «سلاسل الدروس»: complete audio lesson series by well-known scholars, grouped by topic and by scholars
  * (Al-Azhar / Egypt / Saudi). List built by tools/lessons_build.py (content/lessons/dist/lessons.v1.json →
- * /data/lessons-5.json); audio is streamed per lesson, or saved per lesson / whole series for offline listening.
+ * /data/lessons-6.json); audio is streamed per lesson, or saved per lesson / whole series for offline listening.
  * Sources are recorded in docs/CONTENT_SOURCES.md, never shown on the site.
  */
 import { AUDIO_CACHE, offlineSupported } from "./audio-offline";
@@ -73,7 +73,7 @@ interface RawFile {
 }
 
 /** Renamed (not overwritten) when the list changes, so no browser or service worker keeps the old one. */
-export const LESSONS_URL = (): string => withBase("/data/lessons-5.json");
+export const LESSONS_URL = (): string => withBase("/data/lessons-6.json");
 
 export function parseLessons(raw: unknown): LessonCatalog {
   const j = raw as RawFile;

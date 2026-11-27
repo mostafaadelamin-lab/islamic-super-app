@@ -785,6 +785,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get carNasheedsSub => 'Munshids';
 
   @override
+  String get carPodcastSub => 'Selected Islamic audio shows';
+
+  @override
   String get carRadio => 'Radio';
 
   @override
@@ -799,7 +802,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get carStories => 'Stories of the Prophets';
 
   @override
-  String get carStoriesSub => 'Sheikh Mohamed Metwally Al-Sha\'rawi';
+  String get carStoriesSub => 'Sheikh Nabil al-Awadi';
 
   @override
   String get carText => 'Dhikr text';
@@ -2195,6 +2198,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moreLessonsSub => 'Complete audio series by major scholars';
 
   @override
+  String get morePodcastSub => 'Selected Islamic audio shows';
+
+  @override
   String get moreSharawiSub => 'Quran tafsir, the Prophet\'s biography, prophets\' stories';
 
   @override
@@ -2479,6 +2485,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get playerTitle => 'Audio player';
+
+  @override
+  String podcastContinue(String series, String n) {
+    return 'Continue: $series · episode $n';
+  }
+
+  @override
+  String podcastContinueBtn(String n) {
+    return 'Continue episode $n';
+  }
+
+  @override
+  String podcastCount(String n) {
+    return '$n episodes';
+  }
+
+  @override
+  String get podcastDownloadAll => 'Download the show';
+
+  @override
+  String get podcastDownloadedAll => 'The whole show is downloaded';
+
+  @override
+  String podcastLesson(String n) {
+    return 'Episode $n';
+  }
+
+  @override
+  String podcastNote(String series, String episodes) {
+    return 'Selected Islamic podcasts: $series shows, $episodes episodes. Listen online or download an episode or a whole show to listen without internet.';
+  }
+
+  @override
+  String get podcastStart => 'Start from the first episode';
+
+  @override
+  String get podcastTitle => 'Podcast';
 
   @override
   String get prayerAdjust => 'Manual adjustment (minutes)';
@@ -3744,7 +3787,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get storiesHowTo => 'Each episode: tap to listen, or the download icon to listen offline.';
+  String get storiesHowTo =>
+      'Each episode: tap to listen, the video icon to watch, or the download icon to listen offline.';
 
   @override
   String get storiesIntro =>
@@ -3837,7 +3881,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get storiesVersesTitle => 'The stories\' verses from the Mushaf';
 
   @override
-  String get storiesVideoBy => 'Sheikh Mohamed Metwally Al-Sha\'rawi';
+  String get storiesVideoBy => 'Sheikh Nabil Al-Awadi';
 
   @override
   String get storiesWatchVideo => 'Watch video';

@@ -190,8 +190,16 @@ class RecitationDownloads extends ChangeNotifier {
   /// Kids videos ("kids-…" series) are kept as .mp4 (the iOS player needs the right extension).
   static String extFor(String series) => series.startsWith('kids-') ? 'mp4' : 'mp3';
 
-  Future<File> _file(String series, String id) async =>
-      File('${(await root()).path}/offline/${_safe(series)}/${_safe(id)}.${extFor(series)}');
+  /// Some podcast episodes are .m4a (AAC): kept with their own extension so the iOS player reads them.
+  static String extForUrl(String series, String url) =>
+      Uri.tryParse(url)?.path.toLowerCase().endsWith('.m4a') ?? false ? 'm4a' : extFor(series);
+
+  Future<File> _file(String series, String id, [String? ext]) async {
+    final base = '${(await root()).path}/offline/${_safe(series)}/${_safe(id)}';
+    if (ext != null) return File('$base.$ext');
+    final m4a = File('$base.m4a');
+    return m4a.existsSync() ? m4a : File('$base.${extFor(series)}');
+  }
 
   /// The saved copy of one audio file, or null when it is not on the phone.
   Future<String?> offlineFile(String series, String id) async {
@@ -205,7 +213,7 @@ class RecitationDownloads extends ChangeNotifier {
   Future<void> downloadFile(String series, String id, String url) async {
     final key = '$series/$id';
     if (fileProgress.containsKey(key)) return;
-    final f = await _file(series, id);
+    final f = await _file(series, id, extForUrl(series, url));
     await f.parent.create(recursive: true);
     final part = File('${f.path}.part');
     fileProgress[key] = 0;

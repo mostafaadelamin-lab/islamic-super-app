@@ -53,6 +53,18 @@ void main() {
     expect(await d.totalBytes(), 0);
   });
 
+  test('a podcast .m4a episode is saved as .m4a (the iOS player needs the right extension)', () async {
+    final content = await loadContent();
+    final client = MockClient((r) async => http.Response.bytes(Uint8List.fromList(List.filled(100, 1)), 200));
+    final d = RecitationDownloads(content: content, httpClient: client, root: () async => tmp);
+    await d.downloadFile('lessons-qudwa-amgad', 'e1', 'https://d3ctxlq1ktw2nl.cloudfront.net/staging/x/a.m4a');
+    expect(await d.offlineFile('lessons-qudwa-amgad', 'e1'), endsWith('e1.m4a'));
+    await d.downloadFile('lessons-qudwa-amgad', 'e2', 'https://feeds.soundcloud.com/stream/123-waiepodcast-x');
+    expect(await d.offlineFile('lessons-qudwa-amgad', 'e2'), endsWith('e2.mp3'));
+    await d.deleteFile('lessons-qudwa-amgad', 'e1');
+    expect(await d.offlineFile('lessons-qudwa-amgad', 'e1'), isNull);
+  });
+
   test('the player uses the downloaded file and the chosen speed', () async {
     final content = await loadContent();
     SharedPreferences.setMockInitialValues({});

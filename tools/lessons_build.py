@@ -41,6 +41,14 @@ def feed_url(u):
     # The host's own file, without listen-counting redirects (dts.podtrac.com/redirect.mp3/<host>/...)
     # or feed-tracking query strings.
     u = re.sub(r'^https?://dts\.podtrac\.com/redirect\.mp3/', 'https://', u)
+    # pscrb.fm/rss/p/ and p.podderapp.com/<id>/ (Fahem podcast) are listen counters in front of the host.
+    u = re.sub(r'^https?://pscrb\.fm/rss/p/', 'https://', u)
+    u = re.sub(r'^https?://p\.podderapp\.com/\d+/', 'https://', u)
+    # anchor.fm/s/<show>/podcast/play/<n>/<encoded host url>: the file itself is the encoded url.
+    m = re.match(r'^https?://anchor\.fm/s/[^/]+/podcast/play/\d+/(https?%3A%2F%2F.+)$', u)
+    if m:
+        from urllib.parse import unquote
+        u = unquote(m.group(1))
     return u.split('?', 1)[0]
 
 
@@ -175,8 +183,12 @@ def build(src, refetch=False):
                 ep = {'u': url, 's': seconds(f.get('length')), 'b': int(f.get('size') or 0)}
                 mode = se.get('titles')
                 t = None
+                name = f['name']
+                for pat in se.get('pre', []):
+                    # Cut before cleaning (e.g. «| مع الشيخ/ ...» whose "/" would cut the title short).
+                    name = re.sub(pat, ' ', name)
                 if mode == 'name':
-                    t = clean(f['name'], words)
+                    t = clean(name, words)
                 elif mode == 'title':
                     t = clean(f.get('title') or '', [])
                 elif mode == 'desc':

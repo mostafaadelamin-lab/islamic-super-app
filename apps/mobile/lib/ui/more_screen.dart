@@ -8,6 +8,7 @@ import 'khatma_screen.dart';
 import 'worship_screen.dart';
 import 'l10n_ext.dart';
 import 'mosques_screen.dart';
+import '../domain/lessons.dart' show podcastTopicId;
 import 'lessons_screen.dart';
 import 'settings_screen.dart';
 import 'sharawi_screen.dart';
@@ -46,6 +47,14 @@ class MoreScreen extends StatelessWidget {
                 tile('tafsir', RIcons.quran, l.tafsirLibTitle, () => const TafsirLibraryScreen()),
                 tile('hadith', RIcons.openBook, l.hadithTitle, () => const HadithScreen()),
                 tile('sharawi', RIcons.book, l.sharawiSection, () => const SharawiScreen(), sub: l.moreSharawiSub),
+                // Owner (2026-11-27): «بودكاست» between al-Sha'rawi's library and the nearby mosques.
+                tile(
+                  'podcast',
+                  RIcons.headphones,
+                  l.podcastTitle,
+                  () => const LessonsScreen(topic: podcastTopicId),
+                  sub: l.morePodcastSub,
+                ),
                 tile('mosques', RIcons.location, l.mosquesTitle, () => const MosquesScreen()),
                 tile('zakat', RIcons.zakat, l.zakatTitle, () => const ZakatScreen()),
                 tile('asma', RIcons.star, l.moreAsma, () => const AsmaScreen()),

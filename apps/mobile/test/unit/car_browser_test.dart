@@ -142,6 +142,7 @@ void main() {
       CarBrowser.libraryId,
       CarBrowser.sharawiId,
       CarBrowser.afhamId,
+      '${CarBrowser.afhamId}/podcast',
       CarBrowser.kidsId,
       CarBrowser.nasheedsId,
     ]);
@@ -152,6 +153,7 @@ void main() {
       'مكتبة التلاوات',
       'مكتبة دروس الشيخ الشعراوي',
       'افهم دينك',
+      'بودكاست',
       'علّم طفلك',
       'الأناشيد',
     ]);
@@ -228,6 +230,16 @@ void main() {
     expect(count, catalog.listed.where((s) => !s.isSharawiTafsir).length);
   });
 
+  test('«بودكاست» (owner 2026-11-27): its shows, then their episodes', () async {
+    final shows = await car.children('${CarBrowser.afhamId}/podcast');
+    expect(shows.map((e) => e.title), contains('لازم تتحرر'));
+    expect(shows.map((e) => e.title), isNot(contains('شرح عقيدة العوام')));
+    final eps = await car.children(shows.firstWhere((e) => e.title == 'لازم تتحرر').id);
+    expect(eps, hasLength(6));
+    expect(eps.first.playable, isTrue);
+    expect(eps.first.artist, contains('الحلقة ١'));
+  });
+
   test('«علّم طفلك»: teaching Mushaf, the audio stories and the ruqyah', () async {
     final list = await car.children(CarBrowser.kidsId);
     expect(list.map((e) => e.title), [
@@ -292,8 +304,8 @@ void main() {
     addTearDown(bridge.dispose);
     await pump();
     final root = (sent['items']!.single['items']! as List).cast<Map<Object?, Object?>>();
-    expect(root, hasLength(8));
-    expect(root.map((e) => e['browsable']), [false, false, true, true, true, true, true, true]);
+    expect(root, hasLength(9));
+    expect(root.map((e) => e['browsable']), [false, false, true, true, true, true, true, true, true]);
     expect(sent['textButton']!.last, {'title': 'نص الذكر', 'on': false});
 
     final radio = (await fromCar('children', CarBrowser.radioId))! as Map;

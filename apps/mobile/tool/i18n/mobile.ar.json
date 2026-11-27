@@ -1215,5 +1215,16 @@
   "adhkar.barDrive": "القيادة",
   "adhkar.barView": "العرض",
   "adhkar.barAlarm": "التنبيه",
-  "adhkar.barReset": "من جديد"
+  "adhkar.barReset": "من جديد",
+  "podcast.title": "بودكاست",
+  "podcast.note": "برامج بودكاست إسلامية مختارة: {series} برنامج و{episodes} حلقة. استمع مباشرة أو حمّل الحلقة أو البرنامج كله لتسمعه بدون إنترنت.",
+  "more.podcastSub": "برامج صوتية دينية مختارة",
+  "car.podcastSub": "برامج صوتية دينية مختارة",
+  "podcast.count": "{n} حلقة",
+  "podcast.lesson": "الحلقة {n}",
+  "podcast.start": "ابدأ من الحلقة الأولى",
+  "podcast.continue": "أكمل: {series} · الحلقة {n}",
+  "podcast.continueBtn": "أكمل الحلقة {n}",
+  "podcast.downloadAll": "تحميل البرنامج",
+  "podcast.downloadedAll": "البرنامج كله محمّل"
 }

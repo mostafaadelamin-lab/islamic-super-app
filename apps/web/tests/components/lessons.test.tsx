@@ -21,7 +21,22 @@ const HTTP_OK = 200;
 /** An https mp3 link from archive.org or an official podcast (Spreaker, Simplecast), no raw spaces:
  *  matches "https://archive.org/download/x/1.mp3", "https://api.spreaker.com/download/episode/1/a.mp3" and
  *  "https://cdn.simplecast.com/audio/x/default_tc.mp3", rejects "http://x/a b.mp3". */
-const AUDIO_MP3 = /^https:\/\/(?:(?:archive\.org|api\.spreaker\.com)\/download|cdn\.simplecast\.com\/audio)\/[^ ]+\.mp3$/i;
+const AUDIO_MP3 =
+  /^https:\/\/(?:(?:archive\.org|api\.spreaker\.com)\/download|cdn\.simplecast\.com\/audio)\/[^ ]+\.mp3$/i;
+/** «بودكاست» (owner 2026-11-27): the shows' own hosts (Simplecast, Anchor's CloudFront, SoundCloud streams). */
+const PODCAST_AUDIO =
+  /^https:\/\/(?:injector\.simplecastaudio\.com\/[^ ]+\.mp3|d3ctxlq1ktw2nl\.cloudfront\.net\/[^ ]+\.(?:mp3|m4a)|feeds\.soundcloud\.com\/stream\/[^ ]+)$/i;
+const PODCAST_IDS = [
+  "sahaba-waie",
+  "tahrar-amgad",
+  "muhlikat-amgad",
+  "qudwa-amgad",
+  "ibadat-araby",
+  "khulud-araby",
+  "rabbi-sharkawy",
+  "khabaith-ayoubi",
+  "sahaba-alaa",
+];
 const MIN_TAYEB = 4;
 
 beforeEach(() => {
@@ -40,7 +55,9 @@ describe("lesson series: data", () => {
     ).toEqual([]);
     expect(data.series.filter((s) => s.sheikh.id === "kafy").length).toBeGreaterThanOrEqual(MIN_KAFY);
     expect(data.series.filter((s) => s.episodes.length === 0)).toEqual([]);
-    const bad = data.series.flatMap((s) => s.episodes).filter((e) => !AUDIO_MP3.test(e.url));
+    const bad = data.series
+      .flatMap((s) => s.episodes.map((e) => ({ e, pod: s.topic.id === "podcast" })))
+      .filter(({ e, pod }) => !(pod ? PODCAST_AUDIO : AUDIO_MP3).test(e.url));
     expect(bad).toEqual([]);
     // Owner 2026-11-23: Sha'rawi has his own section; add the Grand Imam Ahmed al-Tayeb.
     expect(data.series.filter((s) => s.sheikh.id === "shaarawi")).toEqual([]);
@@ -58,9 +75,37 @@ describe("lesson series: data", () => {
   it("is listed under More", () => {
     expect(SECTIONS.some((s) => s.path === "lessons")).toBe(true);
   });
+
+  it("«بودكاست»: only the checked religious shows, its own section right after al-Sha'rawi", () => {
+    expect(filterSeries(data, null, "podcast").map((s) => s.id)).toEqual(PODCAST_IDS);
+    const titles = filterSeries(data, null, "podcast").flatMap((s) => s.episodes.map((e) => e.title ?? ""));
+    expect(titles.filter((x) => /غزة|فاهم|\|/.test(x))).toEqual([]);
+    const paths = SECTIONS.map((s) => s.path);
+    expect(paths.indexOf("podcast")).toBe(paths.indexOf("sharawi") + 1);
+  });
 });
 
 describe("lesson series: page", () => {
+  it("«بودكاست» page lists only the podcasts, no topic chips; «افهم دينك» has a «بودكاست» topic", async () => {
+    const user = userEvent.setup();
+    const { unmount } = render(<LessonsView locale="ar" loader={load} fixedTopic="podcast" />);
+    expect(await screen.findByTestId("lessons-note")).toHaveTextContent("برنامج");
+    expect(screen.getByTestId("lessons-series-tahrar-amgad")).toBeInTheDocument();
+    expect(screen.queryByTestId("lessons-series-nur-yaqin-gabr")).toBeNull();
+    expect(screen.queryByTestId("lessons-topic-all")).toBeNull();
+    await user.click(screen.getByTestId("lessons-series-tahrar-amgad"));
+    expect(await screen.findByTestId("lessons-back")).toHaveTextContent("بودكاست");
+    // Episodes, not lessons.
+    expect(screen.getByTestId("lessons-meta")).toHaveTextContent("٦ حلقة");
+    expect(screen.getByTestId("lessons-episodes")).toHaveTextContent("الحلقة ١");
+    unmount();
+    window.location.hash = "";
+    render(<LessonsView locale="ar" loader={load} />);
+    await user.click(await screen.findByTestId("lessons-topic-podcast"));
+    expect(screen.getByTestId("lessons-series-sahaba-waie")).toBeInTheDocument();
+    expect(screen.queryByTestId("lessons-series-nur-yaqin-gabr")).toBeNull();
+  });
+
   it("shows every topic (no scholars' groups), filters, searches, and opens a series", async () => {
     const user = userEvent.setup();
     render(<LessonsView locale="ar" loader={load} />);
@@ -141,7 +186,16 @@ describe("lesson series: page", () => {
 describe("lesson music is jumped over (owner 2026-11-23)", () => {
   it("skipEnd gives the end of the music stretch the time is in", async () => {
     const { skipEnd } = await import("@/components/RecitationLibrary");
-    const tr = { key: "k", title: "t", url: "u", live: false, skips: [[0, 45], [380, 397]] as const };
+    const tr = {
+      key: "k",
+      title: "t",
+      url: "u",
+      live: false,
+      skips: [
+        [0, 45],
+        [380, 397],
+      ] as const,
+    };
     expect(skipEnd(tr, 0)).toBe(45);
     expect(skipEnd(tr, 44.9)).toBe(45);
     expect(skipEnd(tr, 45)).toBeNull();

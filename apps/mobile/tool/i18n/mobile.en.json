@@ -1215,5 +1215,16 @@
   "adhkar.barDrive": "Drive",
   "adhkar.barView": "View",
   "adhkar.barAlarm": "Alarm",
-  "adhkar.barReset": "Restart"
+  "adhkar.barReset": "Restart",
+  "podcast.title": "Podcast",
+  "podcast.note": "Selected Islamic podcasts: {series} shows, {episodes} episodes. Listen online or download an episode or a whole show to listen without internet.",
+  "more.podcastSub": "Selected Islamic audio shows",
+  "car.podcastSub": "Selected Islamic audio shows",
+  "podcast.count": "{n} episodes",
+  "podcast.lesson": "Episode {n}",
+  "podcast.start": "Start from the first episode",
+  "podcast.continue": "Continue: {series} · episode {n}",
+  "podcast.continueBtn": "Continue episode {n}",
+  "podcast.downloadAll": "Download the show",
+  "podcast.downloadedAll": "The whole show is downloaded"
 }

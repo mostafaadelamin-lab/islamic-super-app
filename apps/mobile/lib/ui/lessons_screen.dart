@@ -44,12 +44,14 @@ const _topicColors = <String, Color>{
   'akhira': Color(0xFF2A1E36),
   'history': Color(0xFF3D2F1C),
   'fikr': Color(0xFF233F4F),
+  'podcast': Color(0xFF5A3A12),
 };
 
 Color lessonTopicColor(String topic) => _topicColors[topic] ?? AppTheme.brand('heroTop');
 
 extension LessonText on BuildContext {
-  String lessonEpisodeTitle(LessonEpisode e) => l10n.lessonsLesson(this.num(e.index));
+  String lessonEpisodeTitle(LessonEpisode e, {bool podcast = false}) =>
+      podcast ? l10n.podcastLesson(this.num(e.index)) : l10n.lessonsLesson(this.num(e.index));
 
   String lessonDuration(int seconds) {
     if (seconds <= 0) return '';
@@ -62,8 +64,9 @@ extension LessonText on BuildContext {
 
 /// Episode for the shared audio player (streams, or plays the offline copy).
 Episode lessonEpisode(BuildContext context, LessonSeries s, LessonEpisode e) {
-  final ar = '${s.ar} · ${s.sheikh.ar.replaceFirst('الشيخ ', '')} · الدرس ${context.num(e.index)}';
-  final en = '${s.en} · ${s.sheikh.en.replaceFirst('Sheikh ', '')} · lesson ${e.index}';
+  final ar =
+      '${s.ar} · ${s.sheikh.ar.replaceFirst('الشيخ ', '')} · ${s.isPodcast ? 'الحلقة' : 'الدرس'} ${context.num(e.index)}';
+  final en = '${s.en} · ${s.sheikh.en.replaceFirst('Sheikh ', '')} · ${s.isPodcast ? 'episode' : 'lesson'} ${e.index}';
   return Episode(
     id: s.episodeId(e),
     titleAr: e.title == null ? ar : '$ar · ${e.title}',
@@ -99,8 +102,12 @@ LessonEpisode? _lastEpisode(BuildContext context, LessonSeries s) {
 /// «افهم دينك» (lesson series): all series as cards, filtered by topic, with a search box.
 /// and topic, with search and a "continue" card for the last series listened to.
 class LessonsScreen extends StatefulWidget {
-  const LessonsScreen({super.key, this.loader = loadLessons});
+  const LessonsScreen({super.key, this.loader = loadLessons, this.topic});
   final Future<LessonCatalog> Function() loader;
+
+  /// Only this topic, with its own title and no topic chips (owner 2026-11-27: «بودكاست» is its own
+  /// section under «المزيد» and also a topic inside «افهم دينك»).
+  final String? topic;
 
   @override
   State<LessonsScreen> createState() => _LessonsScreenState();
@@ -108,7 +115,8 @@ class LessonsScreen extends StatefulWidget {
 
 class _LessonsScreenState extends State<LessonsScreen> {
   late final Future<LessonCatalog> _future = widget.loader();
-  String? _topic;
+  late String? _topic = widget.topic;
+  bool get _fixed => widget.topic != null;
   String _query = '';
 
   void _open(LessonSeries s) => Navigator.of(context).push(
@@ -123,7 +131,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
     final ar = context.isArabic;
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(l.lessonsTitle)),
+      appBar: AppBar(title: Text(_fixed ? l.podcastTitle : l.lessonsTitle)),
       bottomNavigationBar: const Column(mainAxisSize: MainAxisSize.min, children: [NarrationBar(), MiniPlayer()]),
       body: ReadableWidth(
         child: FutureBuilder<LessonCatalog>(
@@ -159,7 +167,8 @@ class _LessonsScreenState extends State<LessonsScreen> {
               listenable: context.services.settings,
               builder: (context, _) {
                 final lastId = context.services.settings.lastLessonSeries;
-                final last = lastId == null ? null : all.byId(lastId);
+                final found = lastId == null ? null : all.byId(lastId);
+                final last = found == null || (_fixed && found.topic.id != _topic) ? null : found;
                 final lastEp = last == null ? null : _lastEpisode(context, last);
                 return ListView(
                   key: const Key('lessonsList'),
@@ -173,34 +182,40 @@ class _LessonsScreenState extends State<LessonsScreen> {
                         DesignTokens.spaceSm,
                       ),
                       child: Text(
-                        l.lessonsNote(context.num(all.listed.length), context.num(all.lessonCount)),
+                        _fixed
+                            ? l.podcastNote(
+                                context.num(all.filter(topic: _topic).length),
+                                context.num(all.filter(topic: _topic).fold<int>(0, (n, s) => n + s.lessonTotal)),
+                              )
+                            : l.lessonsNote(context.num(all.listed.length), context.num(all.lessonCount)),
                         key: const Key('lessonsNote'),
                         style: theme.textTheme.bodyMedium,
                       ),
                     ),
                     // Owner (2026-11-24): every topic visible at once, no groups row.
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg),
-                      child: Wrap(
-                        runSpacing: DesignTokens.spaceXs,
-                        children: [
-                          chip(
-                            'lessonsTopic.all',
-                            l.lessonsAllTopics,
-                            _topic == null,
-                            () => setState(() => _topic = null),
-                          ),
-                          for (final t in all.topics)
-                            if (all.filter(topic: t.id).isNotEmpty)
-                              chip(
-                                'lessonsTopic.${t.id}',
-                                t.of(ar),
-                                _topic == t.id,
-                                () => setState(() => _topic = t.id),
-                              ),
-                        ],
+                    if (!_fixed)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg),
+                        child: Wrap(
+                          runSpacing: DesignTokens.spaceXs,
+                          children: [
+                            chip(
+                              'lessonsTopic.all',
+                              l.lessonsAllTopics,
+                              _topic == null,
+                              () => setState(() => _topic = null),
+                            ),
+                            for (final t in all.topics)
+                              if (all.filter(topic: t.id).isNotEmpty)
+                                chip(
+                                  'lessonsTopic.${t.id}',
+                                  t.of(ar),
+                                  _topic == t.id,
+                                  () => setState(() => _topic = t.id),
+                                ),
+                          ],
+                        ),
                       ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(
                         DesignTokens.spaceLg,
@@ -230,7 +245,12 @@ class _LessonsScreenState extends State<LessonsScreen> {
                           child: ListTile(
                             key: const Key('lessonsContinue'),
                             leading: const Icon(Icons.play_circle),
-                            title: Text(l.lessonsContinue(last.title(ar), context.num(lastEp.index))),
+                            title: Text(
+                              (last.isPodcast ? l.podcastContinue : l.lessonsContinue)(
+                                last.title(ar),
+                                context.num(lastEp.index),
+                              ),
+                            ),
                             subtitle: Text(last.sheikh.of(ar)),
                             trailing: IconButton(
                               key: const Key('lessonsContinueClose'),
@@ -269,7 +289,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
                         padding: const EdgeInsets.all(DesignTokens.spaceLg),
                         child: Text(l.lessonsNoMatch, key: const Key('lessonsEmpty')),
                       ),
-                    ReportErrorLink(page: l.lessonsTitle),
+                    ReportErrorLink(page: _fixed ? l.podcastTitle : l.lessonsTitle),
                   ],
                 );
               },
@@ -350,7 +370,7 @@ class _SeriesCard extends StatelessWidget {
                   ),
                   Text(
                     [
-                          l.lessonsCount(context.num(total)),
+                          (series.isPodcast ? l.podcastCount : l.lessonsCount)(context.num(total)),
                           if (heard > 0) l.lessonsHeard(context.num(heard)),
                         ].join(' · ') +
                         (complete ? ' ✓' : ''),
@@ -512,7 +532,7 @@ class _LessonSeriesScreenState extends State<LessonSeriesScreen> {
           Text(
             [
               s.topic.of(ar),
-              l.lessonsCount(context.num(s.lessonTotal)),
+              (s.isPodcast ? l.podcastCount : l.lessonsCount)(context.num(s.lessonTotal)),
               if (s.seconds > 0) context.lessonDuration(s.seconds),
               if (heard > 0) l.lessonsHeard(context.num(heard)),
               if (_saved.isNotEmpty) l.lessonsSaved(context.num(_saved.length)),
@@ -532,7 +552,12 @@ class _LessonSeriesScreenState extends State<LessonSeriesScreen> {
                   foregroundColor: const Color(0xFF0A1830),
                 ),
                 icon: Icon(open != null ? Icons.menu_book : Icons.play_arrow),
-                label: Text(open ?? (last == null ? l.lessonsStart : l.lessonsContinueBtn(context.num(last.index)))),
+                label: Text(
+                  open ??
+                      (last == null
+                          ? (s.isPodcast ? l.podcastStart : l.lessonsStart)
+                          : (s.isPodcast ? l.podcastContinueBtn : l.lessonsContinueBtn)(context.num(last.index))),
+                ),
                 onPressed: open != null ? widget.onOpen : () => _play(episodes, last == null ? 0 : last.index - 1),
               ),
               if (open == null && widget.heroOnly && widget.onOpen != null)
@@ -563,7 +588,11 @@ class _LessonSeriesScreenState extends State<LessonSeriesScreen> {
                   key: const Key('lessonsDownloadAll'),
                   style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
                   icon: Icon(allSaved ? Icons.download_done : Icons.download_for_offline_outlined),
-                  label: Text(allSaved ? l.lessonsDownloadedAll : l.lessonsDownloadAll),
+                  label: Text(
+                    allSaved
+                        ? (s.isPodcast ? l.podcastDownloadedAll : l.lessonsDownloadedAll)
+                        : (s.isPodcast ? l.podcastDownloadAll : l.lessonsDownloadAll),
+                  ),
                   onPressed: allSaved ? null : _downloadAll,
                 ),
             ],
@@ -631,7 +660,7 @@ class _LessonSeriesScreenState extends State<LessonSeriesScreen> {
                         size: 32,
                       )
                     : Icon(Icons.play_circle, color: scheme.primary, size: 32),
-                title: Text(context.lessonEpisodeTitle(e)),
+                title: Text(context.lessonEpisodeTitle(e, podcast: s.isPodcast)),
                 subtitle: sub.isEmpty ? null : Text(sub),
                 trailing: OfflineButton(
                   key: ValueKey('off-${ep.id}-$_savedVersion'),

@@ -48,6 +48,7 @@ const TOPIC_COLORS: Record<string, string> = {
   muamalat: "#3A3A1A",
   tahara: "#14465A",
   akhira: "#2A1E36",
+  podcast: "#5A3A12",
   history: "#3D2F1C",
   fikr: "#233F4F",
 };
@@ -64,6 +65,18 @@ const SAVE_EVERY_SEC = 5;
 const PERCENT = 100;
 
 const topicColor = (id: string): string => TOPIC_COLORS[id] ?? DEFAULT_COLOR;
+/** «بودكاست» (owner 2026-11-27) says episode / show where the lessons say lesson / series. */
+const EPISODE_KEYS = new Set([
+  "lessons.count",
+  "lessons.lesson",
+  "lessons.start",
+  "lessons.continue",
+  "lessons.continueBtn",
+  "lessons.downloadAll",
+  "lessons.downloadedAll",
+]);
+const ek = (key: string, s: { topic: { id: string } }): string =>
+  s.topic.id === "podcast" && EPISODE_KEYS.has(key) ? key.replace("lessons.", "podcast.") : key;
 const keyOf = (e: LessonEpisode): string => `lessons:${e.id}`;
 
 /** "40 minutes" / "2.5 hours" / "220 hours". */
@@ -112,7 +125,7 @@ export function LessonsHeroCard({
       <p className="lessons-meta small">
         {[
           ar ? s.topic.ar : s.topic.en,
-          t(locale, "lessons.count", { n: n(lessonTotal(s)) }),
+          t(locale, ek("lessons.count", s), { n: n(lessonTotal(s)) }),
           total > 0 ? lessonDuration(locale, total) : "",
           heard > 0 ? t(locale, "lessons.heard", { n: n(heard) }) : "",
         ]
@@ -144,15 +157,18 @@ export function LessonsView({
   locale,
   loader = loadLessons,
   only,
+  fixedTopic,
 }: {
   locale: Locale;
   loader?: () => Promise<LessonCatalog>;
   /** One series only (the Sha'rawi section's seerah / prophets' stories): no list, no back button. */
   only?: string;
+  /** One topic only, as its own section (owner 2026-11-27: «بودكاست»): no topic chips. */
+  fixedTopic?: string;
 }) {
   const [data, setData] = useState<LessonCatalog | null>(null);
   const [failed, setFailed] = useState(false);
-  const [topic, setTopic] = useState<string | null>(null);
+  const [topic, setTopic] = useState<string | null>(fixedTopic ?? null);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState<string | null>(null);
   const [track, setTrack] = useState<Track | null>(null);
@@ -249,6 +265,7 @@ export function LessonsView({
         duration={duration}
         onSlot={setSlot}
         onBack={only ? undefined : () => go(null)}
+        backLabel={t(locale, fixedTopic ? "podcast.title" : "lessons.title")}
         onPlay={(tr) => {
           setTrack(tr);
           rememberPlay(series.id, tr.key.slice("lessons:".length));
@@ -260,10 +277,11 @@ export function LessonsView({
   // The Sha'rawi section asks for one series: never show the whole catalogue in its place.
   if (only) return <p className="alert alert-error">{t(locale, "lessons.loadError")}</p>;
 
-  const last = progress.series
+  const lastAny = progress.series
     ? [...data.series, ...data.sharawi].find((s) => s.id === progress.series)
     : undefined;
-  const shown = listedSeries(data);
+  const last = fixedTopic && lastAny?.topic.id !== fixedTopic ? undefined : lastAny;
+  const shown = fixedTopic ? filterSeries(data, null, fixedTopic) : listedSeries(data);
   const lastEp = last ? last.episodes.find((e) => e.id === progress.last[last.id]) : undefined;
   const chip = (id: string, label: string, on: boolean, tap: () => void) => (
     <button
@@ -281,18 +299,27 @@ export function LessonsView({
     <>
       {player}
       <p className="muted" data-testid="lessons-note">
-        {t(locale, "lessons.note", {
-          series: n(shown.length),
-          lessons: n(shown.reduce((a, s) => a + lessonTotal(s), 0)),
-        })}
+        {fixedTopic
+          ? t(locale, "podcast.note", {
+              series: n(shown.length),
+              episodes: n(shown.reduce((a, s) => a + lessonTotal(s), 0)),
+            })
+          : t(locale, "lessons.note", {
+              series: n(shown.length),
+              lessons: n(shown.reduce((a, s) => a + lessonTotal(s), 0)),
+            })}
       </p>
       {/* Owner (2026-11-24): every topic visible at once, no scholars' groups row. */}
-      <div className="row lessons-chips" role="group">
-        {chip("lessons-topic-all", t(locale, "lessons.allTopics"), topic === null, () => setTopic(null))}
-        {data.topics
-          .filter((x) => filterSeries(data, null, x.id).length > 0)
-          .map((x) => chip(`lessons-topic-${x.id}`, ar ? x.ar : x.en, topic === x.id, () => setTopic(x.id)))}
-      </div>
+      {fixedTopic ? null : (
+        <div className="row lessons-chips" role="group">
+          {chip("lessons-topic-all", t(locale, "lessons.allTopics"), topic === null, () => setTopic(null))}
+          {data.topics
+            .filter((x) => filterSeries(data, null, x.id).length > 0)
+            .map((x) =>
+              chip(`lessons-topic-${x.id}`, ar ? x.ar : x.en, topic === x.id, () => setTopic(x.id)),
+            )}
+        </div>
+      )}
       <input
         type="search"
         className="input"
@@ -313,7 +340,10 @@ export function LessonsView({
             <Icon name="playCircle" />
             <span className="tile-text">
               <strong>
-                {t(locale, "lessons.continue", { series: ar ? last.ar : last.en, n: n(lastEp.index) })}
+                {t(locale, ek("lessons.continue", last), {
+                  series: ar ? last.ar : last.en,
+                  n: n(lastEp.index),
+                })}
               </strong>
               <span className="muted small">{ar ? last.sheikh.ar : last.sheikh.en}</span>
             </span>
@@ -358,7 +388,7 @@ export function LessonsView({
                   <strong className="small">{ar ? s.topic.ar : s.topic.en}</strong>
                   <span className="muted small">
                     {[
-                      t(locale, "lessons.count", { n: n(total) }),
+                      t(locale, ek("lessons.count", s), { n: n(total) }),
                       h > 0 ? t(locale, "lessons.heard", { n: n(h) }) : "",
                     ]
                       .filter(Boolean)
@@ -397,6 +427,7 @@ function SeriesPage({
   duration,
   onSlot,
   onBack,
+  backLabel,
   onPlay,
 }: {
   locale: Locale;
@@ -410,6 +441,7 @@ function SeriesPage({
   duration: (sec: number) => string;
   onSlot: (el: HTMLElement | null) => void;
   onBack?: () => void;
+  backLabel?: string;
   onPlay: (t: Track) => void;
 }) {
   const ar = locale === "ar";
@@ -431,7 +463,7 @@ function SeriesPage({
   s.episodes.forEach((e) =>
     tracks.push({
       key: keyOf(e),
-      title: `${title} · ${t(locale, "lessons.lesson", { n: n(e.index) })}${e.title ? ` · ${e.title}` : ""}`,
+      title: `${title} · ${t(locale, ek("lessons.lesson", s), { n: n(e.index) })}${e.title ? ` · ${e.title}` : ""}`,
       url: e.url,
       live: false,
       playlist: tracks,
@@ -503,7 +535,7 @@ function SeriesPage({
         onClick={() => void saveAll()}
       >
         <Icon name={allSaved ? "check" : "download"} />{" "}
-        {t(locale, allSaved ? "lessons.downloadedAll" : "lessons.downloadAll")}
+        {t(locale, ek(allSaved ? "lessons.downloadedAll" : "lessons.downloadAll", s))}
       </button>
     );
   }
@@ -516,7 +548,7 @@ function SeriesPage({
     <>
       {onBack ? (
         <button type="button" className="btn btn-sm" data-testid="lessons-back" onClick={onBack}>
-          <Icon name="back" /> {t(locale, "lessons.title")}
+          <Icon name="back" /> {backLabel}
         </button>
       ) : null}
       <section
@@ -529,7 +561,7 @@ function SeriesPage({
         <p className="lessons-meta small" data-testid="lessons-meta">
           {[
             ar ? s.topic.ar : s.topic.en,
-            t(locale, "lessons.count", { n: n(s.episodes.length) }),
+            t(locale, ek("lessons.count", s), { n: n(s.episodes.length) }),
             total > 0 ? duration(total) : "",
             heard > 0 ? t(locale, "lessons.heard", { n: n(heard) }) : "",
             savedHere > 0 ? t(locale, "lessons.saved", { n: n(savedHere) }) : "",
@@ -545,7 +577,9 @@ function SeriesPage({
             onClick={() => play(last ?? s.episodes[0]!)}
           >
             <Icon name="play" />{" "}
-            {last ? t(locale, "lessons.continueBtn", { n: n(last.index) }) : t(locale, "lessons.start")}
+            {last
+              ? t(locale, ek("lessons.continueBtn", s), { n: n(last.index) })
+              : t(locale, ek("lessons.start", s))}
           </button>
           {bulkButton}
         </div>
@@ -583,7 +617,7 @@ function SeriesPage({
               >
                 <Icon name={icon} />
                 <span className="tile-text">
-                  <strong>{t(locale, "lessons.lesson", { n: n(e.index) })}</strong>
+                  <strong>{t(locale, ek("lessons.lesson", s), { n: n(e.index) })}</strong>
                   {sub ? <span className="muted small">{sub}</span> : null}
                 </span>
               </button>

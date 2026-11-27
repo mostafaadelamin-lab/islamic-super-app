@@ -1466,6 +1466,12 @@ abstract class AppLocalizations {
   /// **'Munshids'**
   String get carNasheedsSub;
 
+  /// shared key "car.podcastSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Selected Islamic audio shows'**
+  String get carPodcastSub;
+
   /// shared key "car.radio"
   ///
   /// In en, this message translates to:
@@ -1493,7 +1499,7 @@ abstract class AppLocalizations {
   /// shared key "car.storiesSub"
   ///
   /// In en, this message translates to:
-  /// **'Sheikh Mohamed Metwally Al-Sha\'rawi'**
+  /// **'Sheikh Nabil al-Awadi'**
   String get carStoriesSub;
 
   /// shared key "car.text"
@@ -3938,6 +3944,12 @@ abstract class AppLocalizations {
   /// **'Complete audio series by major scholars'**
   String get moreLessonsSub;
 
+  /// shared key "more.podcastSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Selected Islamic audio shows'**
+  String get morePodcastSub;
+
   /// shared key "more.sharawiSub"
   ///
   /// In en, this message translates to:
@@ -4471,6 +4483,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Audio player'**
   String get playerTitle;
+
+  /// shared key "podcast.continue"
+  ///
+  /// In en, this message translates to:
+  /// **'Continue: {series} · episode {n}'**
+  String podcastContinue(String series, String n);
+
+  /// shared key "podcast.continueBtn"
+  ///
+  /// In en, this message translates to:
+  /// **'Continue episode {n}'**
+  String podcastContinueBtn(String n);
+
+  /// shared key "podcast.count"
+  ///
+  /// In en, this message translates to:
+  /// **'{n} episodes'**
+  String podcastCount(String n);
+
+  /// shared key "podcast.downloadAll"
+  ///
+  /// In en, this message translates to:
+  /// **'Download the show'**
+  String get podcastDownloadAll;
+
+  /// shared key "podcast.downloadedAll"
+  ///
+  /// In en, this message translates to:
+  /// **'The whole show is downloaded'**
+  String get podcastDownloadedAll;
+
+  /// shared key "podcast.lesson"
+  ///
+  /// In en, this message translates to:
+  /// **'Episode {n}'**
+  String podcastLesson(String n);
+
+  /// shared key "podcast.note"
+  ///
+  /// In en, this message translates to:
+  /// **'Selected Islamic podcasts: {series} shows, {episodes} episodes. Listen online or download an episode or a whole show to listen without internet.'**
+  String podcastNote(String series, String episodes);
+
+  /// shared key "podcast.start"
+  ///
+  /// In en, this message translates to:
+  /// **'Start from the first episode'**
+  String get podcastStart;
+
+  /// shared key "podcast.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Podcast'**
+  String get podcastTitle;
 
   /// shared key "prayer.adjust"
   ///
@@ -6707,7 +6773,7 @@ abstract class AppLocalizations {
   /// shared key "stories.howTo"
   ///
   /// In en, this message translates to:
-  /// **'Each episode: tap to listen, or the download icon to listen offline.'**
+  /// **'Each episode: tap to listen, the video icon to watch, or the download icon to listen offline.'**
   String get storiesHowTo;
 
   /// shared key "stories.intro"
@@ -6863,7 +6929,7 @@ abstract class AppLocalizations {
   /// shared key "stories.videoBy"
   ///
   /// In en, this message translates to:
-  /// **'Sheikh Mohamed Metwally Al-Sha\'rawi'**
+  /// **'Sheikh Nabil Al-Awadi'**
   String get storiesVideoBy;
 
   /// shared key "stories.watchVideo"

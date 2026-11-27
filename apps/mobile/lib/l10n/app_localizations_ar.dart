@@ -781,6 +781,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get carNasheedsSub => 'المنشدون';
 
   @override
+  String get carPodcastSub => 'برامج صوتية دينية مختارة';
+
+  @override
   String get carRadio => 'الإذاعة';
 
   @override
@@ -795,7 +798,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get carStories => 'قصص الأنبياء';
 
   @override
-  String get carStoriesSub => 'الشيخ محمد متولي الشعراوي';
+  String get carStoriesSub => 'الشيخ نبيل العوضي';
 
   @override
   String get carText => 'نص الذكر';
@@ -2183,6 +2186,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get moreLessonsSub => 'سلاسل صوتية كاملة لكبار العلماء والمشايخ';
 
   @override
+  String get morePodcastSub => 'برامج صوتية دينية مختارة';
+
+  @override
   String get moreSharawiSub => 'تفسير القرآن، السيرة النبوية، قصص الأنبياء';
 
   @override
@@ -2467,6 +2473,43 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get playerTitle => 'مشغّل الصوت';
+
+  @override
+  String podcastContinue(String series, String n) {
+    return 'أكمل: $series · الحلقة $n';
+  }
+
+  @override
+  String podcastContinueBtn(String n) {
+    return 'أكمل الحلقة $n';
+  }
+
+  @override
+  String podcastCount(String n) {
+    return '$n حلقة';
+  }
+
+  @override
+  String get podcastDownloadAll => 'تحميل البرنامج';
+
+  @override
+  String get podcastDownloadedAll => 'البرنامج كله محمّل';
+
+  @override
+  String podcastLesson(String n) {
+    return 'الحلقة $n';
+  }
+
+  @override
+  String podcastNote(String series, String episodes) {
+    return 'برامج بودكاست إسلامية مختارة: $series برنامج و$episodes حلقة. استمع مباشرة أو حمّل الحلقة أو البرنامج كله لتسمعه بدون إنترنت.';
+  }
+
+  @override
+  String get podcastStart => 'ابدأ من الحلقة الأولى';
+
+  @override
+  String get podcastTitle => 'بودكاست';
 
   @override
   String get prayerAdjust => 'تعديل يدوي (بالدقائق)';
@@ -3722,7 +3765,8 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get storiesHowTo => 'لكل حلقة: اضغط للاستماع، أو أيقونة التحميل للسماع بدون إنترنت.';
+  String get storiesHowTo =>
+      'لكل حلقة: اضغط للاستماع، أو أيقونة الفيديو للمشاهدة، أو أيقونة التحميل للسماع بدون إنترنت.';
 
   @override
   String get storiesIntro =>
@@ -3814,7 +3858,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get storiesVersesTitle => 'آيات القصص من المصحف';
 
   @override
-  String get storiesVideoBy => 'الشيخ محمد متولي الشعراوي';
+  String get storiesVideoBy => 'الشيخ نبيل العوضي';
 
   @override
   String get storiesWatchVideo => 'مشاهدة فيديو';
