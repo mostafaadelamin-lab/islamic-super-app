@@ -138,6 +138,7 @@ class CarBrowser implements MediaBrowser {
         if (library != null) _folder(libraryId, l.libraryTitle, l.carLibrarySub, 'person.wave.2'),
         _folder(sharawiId, l.sharawiSection, l.carSharawiSub, 'book.closed'),
         _folder(afhamId, l.lessonsTitle, l.carAfhamSub, 'building.columns'),
+        _folder('$afhamId/$podcastTopicId', l.podcastTitle, l.carPodcastSub, 'mic'),
         _folder(kidsId, l.kidsTitle, l.carKidsSub, 'figure.and.child.holdinghands'),
         _folder(nasheedsId, l.carNasheeds, l.carNasheedsSub, 'music.note'),
       ];
@@ -222,9 +223,9 @@ class CarBrowser implements MediaBrowser {
         for (final e in s.episodes)
           _item(
             '$lessonsId/${s.id}/${e.index}',
-            e.title ?? l.lessonsLesson(_n(e.index)),
+            e.title ?? (s.isPodcast ? l.podcastLesson : l.lessonsLesson)(_n(e.index)),
             [
-              if (e.title != null) l.lessonsLesson(_n(e.index)),
+              if (e.title != null) (s.isPodcast ? l.podcastLesson : l.lessonsLesson)(_n(e.index)),
               if (e.seconds > 0) l.sharawiMinutes(_n((e.seconds / 60).round())),
             ].join(' · '),
             'play.circle',

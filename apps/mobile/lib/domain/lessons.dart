@@ -75,6 +75,9 @@ class LessonSeries {
 
   bool get isSharawiTafsir => id == sharawiTafsirId;
 
+  /// A «بودكاست» show: its parts are episodes, not lessons.
+  bool get isPodcast => topic.id == podcastTopicId;
+
   String title(bool arabic) => arabic ? ar : en;
 
   /// Audio-player series key (resume position, offline folder, "continue" entry).
@@ -87,6 +90,9 @@ class LessonSeries {
 
 /// The card of al-Sha'rawi's Quran tafsir in the lesson list and his section.
 const sharawiTafsirId = 'sharawi-tafsir';
+
+/// The «بودكاست» topic: a topic in «افهم دينك» and its own section under «المزيد».
+const podcastTopicId = 'podcast';
 
 class LessonCatalog {
   const LessonCatalog({

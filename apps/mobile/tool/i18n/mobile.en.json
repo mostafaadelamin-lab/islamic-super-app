@@ -1290,5 +1290,16 @@
   "reader.fontOptSurah": "Download surah {name}",
   "reader.fontOptAll": "Download the whole Mushaf once",
   "reader.fontOptHint": "The Madina font for reading offline, downloaded only once",
-  "reader.fontSaved": "Saved on this device"
+  "reader.fontSaved": "Saved on this device",
+  "podcast.title": "Podcast",
+  "podcast.note": "Selected Islamic podcasts: {series} shows, {episodes} episodes. Listen online or download an episode or a whole show to listen without internet.",
+  "more.podcastSub": "Selected Islamic audio shows",
+  "car.podcastSub": "Selected Islamic audio shows",
+  "podcast.count": "{n} episodes",
+  "podcast.lesson": "Episode {n}",
+  "podcast.start": "Start from the first episode",
+  "podcast.continue": "Continue: {series} · episode {n}",
+  "podcast.continueBtn": "Continue episode {n}",
+  "podcast.downloadAll": "Download the show",
+  "podcast.downloadedAll": "The whole show is downloaded"
 }

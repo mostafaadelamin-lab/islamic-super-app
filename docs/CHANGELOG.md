@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.26] — «بودكاست»: checked Islamic podcasts, its own section and a topic in «افهم دينك» — 2026-11-27
+Owner 2026-11-27 after a per-presenter check (arrest, prison, ban, case, politics in Egypt and the Gulf), report in project files reports/فحص-بودكاستات-افهم-دينك-2026-11-27.md. Released as 1.2.26 (on top of 1.2.25).
+### Phone apps (Android + iPhone + car screen) and website
+- New section «بودكاست» under «المزيد», between al-Sha'rawi's library and «المساجد القريبة» (website: «المكتبة», right after al-Sha'rawi; page /podcast).
+- 9 shows, 65 episodes: «وعي: سلسلة الصحابة» (Ahmed Amer, Hazem El-Seddik, Sherif Ali), «لازم تتحرر», «ربع المهلكات», «قدوتكِ» (Sheikh Amgad Samir), «تذوق العبادات», «رحلة الخلود» (Dr. Ahmed El-Araby), «حدثني عن ربي» (Sheikh Mohamed Saad El-Sharkawy), «أمهات خبائث القلب» (Sheikh Asad El-Din El-Ayoubi), «قصص الصحابة» (Eng. Alaa Hamed). Left out: Dr. Ahmed Abdel Moneim (detained), Ayman Abdelrahim, Haitham Talaat, political and non-religious episodes/shows.
+- The same shows are the topic «بودكاست» inside «افهم دينك»; car screen: «بودكاست» in the first list too.
+- Shows say «حلقة / البرنامج» instead of «درس / السلسلة»; .m4a episodes are saved as .m4a for offline listening.
+- Website lesson list file renamed lessons-6.json (no stale cached copy).
+
 ## Adhkar: listening in the page, offline recordings, «إعدادات الأذكار», celebration — 2026-11-27
 Owner 2026-11-27 (approved mockups in project files _sync/adhkar-listen-offline; their screenshot of another app's settings was a layout reference only).
 ### Phone apps (Android + iPhone) and website

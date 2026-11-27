@@ -1237,6 +1237,10 @@
   "@carNasheedsSub": {
     "description": "shared key \"car.nasheedsSub\""
   },
+  "carPodcastSub": "Selected Islamic audio shows",
+  "@carPodcastSub": {
+    "description": "shared key \"car.podcastSub\""
+  },
   "carRadio": "Radio",
   "@carRadio": {
     "description": "shared key \"car.radio\""
@@ -3504,6 +3508,10 @@
   "@moreLessonsSub": {
     "description": "shared key \"more.lessonsSub\""
   },
+  "morePodcastSub": "Selected Islamic audio shows",
+  "@morePodcastSub": {
+    "description": "shared key \"more.podcastSub\""
+  },
   "moreSharawiSub": "Quran tafsir, the Prophet's biography, prophets' stories",
   "@moreSharawiSub": {
     "description": "shared key \"more.sharawiSub\""
@@ -3905,6 +3913,73 @@
   "playerTitle": "Audio player",
   "@playerTitle": {
     "description": "shared key \"player.title\""
+  },
+  "podcastContinue": "Continue: {series} · episode {n}",
+  "@podcastContinue": {
+    "description": "shared key \"podcast.continue\"",
+    "placeholders": {
+      "series": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "podcastContinueBtn": "Continue episode {n}",
+  "@podcastContinueBtn": {
+    "description": "shared key \"podcast.continueBtn\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "podcastCount": "{n} episodes",
+  "@podcastCount": {
+    "description": "shared key \"podcast.count\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "podcastDownloadAll": "Download the show",
+  "@podcastDownloadAll": {
+    "description": "shared key \"podcast.downloadAll\""
+  },
+  "podcastDownloadedAll": "The whole show is downloaded",
+  "@podcastDownloadedAll": {
+    "description": "shared key \"podcast.downloadedAll\""
+  },
+  "podcastLesson": "Episode {n}",
+  "@podcastLesson": {
+    "description": "shared key \"podcast.lesson\"",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "podcastNote": "Selected Islamic podcasts: {series} shows, {episodes} episodes. Listen online or download an episode or a whole show to listen without internet.",
+  "@podcastNote": {
+    "description": "shared key \"podcast.note\"",
+    "placeholders": {
+      "series": {
+        "type": "String"
+      },
+      "episodes": {
+        "type": "String"
+      }
+    }
+  },
+  "podcastStart": "Start from the first episode",
+  "@podcastStart": {
+    "description": "shared key \"podcast.start\""
+  },
+  "podcastTitle": "Podcast",
+  "@podcastTitle": {
+    "description": "shared key \"podcast.title\""
   },
   "prayerAdjust": "Manual adjustment (minutes)",
   "@prayerAdjust": {

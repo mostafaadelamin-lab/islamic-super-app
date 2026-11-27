@@ -41,10 +41,17 @@ void main() {
             startsWith('https://archive.org/download/'),
             startsWith('https://api.spreaker.com/download/'),
             startsWith('https://cdn.simplecast.com/audio/'),
+            // «بودكاست» (owner 2026-11-27): the shows' own hosts, without listen-counting redirects.
+            startsWith('https://injector.simplecastaudio.com/'),
+            startsWith('https://d3ctxlq1ktw2nl.cloudfront.net/'),
+            startsWith('https://feeds.soundcloud.com/stream/'),
           ),
         );
         expect(e.url, isNot(contains(' ')));
-        expect(e.url.toLowerCase(), endsWith('.mp3'));
+        // SoundCloud streams have no extension; a few podcast episodes are .m4a (saved as .m4a).
+        if (!e.url.startsWith('https://feeds.soundcloud.com/')) {
+          expect(e.url.toLowerCase(), anyOf(endsWith('.mp3'), endsWith('.m4a')));
+        }
         // No source/site names or Latin junk in the titles shown.
         if (e.title != null) expect(RegExp('[A-Za-z]').hasMatch(e.title!), isFalse, reason: e.title);
       }
@@ -58,6 +65,19 @@ void main() {
       expect(c.series.where((s) => s.sheikh.id == sh), isNotEmpty, reason: sh);
     }
     expect(c.series.where((s) => s.sheikh.id == 'ayman'), isEmpty);
+    // Owner 2026-11-27: «بودكاست», only the checked religious shows (no Ahmed Abdel Moneim, no political episodes).
+    final pod = c.filter(topic: podcastTopicId).map((s) => s.id).toList();
+    expect(pod, [
+      'sahaba-waie', 'tahrar-amgad', 'muhlikat-amgad', 'qudwa-amgad', 'ibadat-araby', //
+      'khulud-araby', 'rabbi-sharkawy', 'khabaith-ayoubi', 'sahaba-alaa',
+    ]);
+    expect(c.byId('tahrar-amgad')!.episodes.first.title, 'التحرر من الغفلة');
+    expect(c.byId('rabbi-sharkawy')!.episodes.length, 4);
+    for (final s in c.filter(topic: podcastTopicId)) {
+      for (final e in s.episodes) {
+        expect(e.title, isNot(anyOf(contains('غزة'), contains('فاهم'), contains('|'))), reason: s.id);
+      }
+    }
     final awam = c.byId('awam-gabr')!;
     expect(awam.episodes.length, 7);
     expect(awam.episodes[4].title, 'المجلس الخامس');
@@ -144,6 +164,38 @@ void main() {
     await tester.longPress(find.byKey(Key('lesson-$second')));
     await tester.pumpAndSettle();
     expect(find.byKey(Key('lessonDone-$second')), findsNothing);
+  });
+
+  testWidgets('«بودكاست» is under More between al-Sha\'rawi and the mosques', (tester) async {
+    await pumpApp(tester, size: tallPhone);
+    await goToTab(tester, 5);
+    await tester.scrollUntilVisible(find.byKey(const Key('more.podcast')), 200);
+    double y(String id) => tester.getTopLeft(find.byKey(Key('more.$id'))).dy;
+    expect(y('sharawi') < y('podcast') && y('podcast') < y('mosques'), isTrue);
+    await tester.tap(find.byKey(const Key('more.podcast')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.byType(LessonsScreen), findsOneWidget);
+  });
+
+  testWidgets('«بودكاست» lists only the podcasts; «افهم دينك» has a «بودكاست» topic', (tester) async {
+    await pumpApp(tester, size: tallPhone);
+    final data = _read();
+    await pushScreen(tester, LessonsScreen(loader: () async => data, topic: podcastTopicId));
+    expect(find.text('بودكاست'), findsWidgets);
+    expect(find.byKey(const Key('lessonsTopic.all')), findsNothing);
+    expect(find.byKey(const Key('lessonsSeries.tahrar-amgad')), findsOneWidget);
+    expect(find.byKey(const Key('lessonsSeries.nur-yaqin-gabr')), findsNothing);
+    // A show's parts are episodes, not lessons.
+    await pushScreen(tester, LessonSeriesScreen(series: data.byId('tahrar-amgad')!));
+    expect(find.text('الحلقة ١'), findsOneWidget);
+    expect(find.text('ابدأ من الحلقة الأولى'), findsOneWidget);
+    await pushScreen(tester, LessonsScreen(loader: () async => data));
+    await tester.ensureVisible(find.byKey(const Key('lessonsTopic.podcast')));
+    await tester.tap(find.byKey(const Key('lessonsTopic.podcast')));
+    await tester.pump();
+    expect(find.byKey(const Key('lessonsSeries.sahaba-waie')), findsOneWidget);
+    expect(find.byKey(const Key('lessonsSeries.nur-yaqin-gabr')), findsNothing);
   });
 
   testWidgets('lesson series is its own entry under More', (tester) async {

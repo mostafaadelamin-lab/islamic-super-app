@@ -31,6 +31,7 @@ const HAS_PAGE: ReadonlySet<string> = new Set([
   "more",
   "mosques",
   "nasheeds",
+  "podcast",
   "prayer",
   "qibla",
   "quran",
