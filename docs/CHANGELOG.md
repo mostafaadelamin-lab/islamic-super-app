@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.2.27] — «فيديوهات»: Quran recitation only, Haramain live, reciter groups — 2026-11-27
+Owner 2026-11-27: remove every lesson/admonition channel and keep recitation only; remove anyone jailed or ever in a political current; add Egypt's golden generation, the imams of the Two Holy Mosques and the most famous reciters; add the Haramain live streams. Approved list and mockups in project files _sync/videos-ideas/.
+### Phone apps (Android + iPhone) and website
+- 50 reciter channels in 4 groups (golden generation 10, Makkah Haram imams 11, Prophet's Mosque imams 11, famous reciters 18), each checked by name. Removed: all lesson/admonition channels (incl. Nabulsi, al-Awadi, Omar Abdelkafy, Samir Mostafa) and excluded names (e.g. Bandar Baleela, Abdullah Basfar, Saleh Al Talib).
+- Only recitation videos: titles with lesson, sermon, interview, nasheed or dua words are dropped, also in search and channel search; videos naming an excluded sheikh never show.
+- New videos page: «بث مباشر من الحرمين» (Makkah + Madinah live), chips «الكل · أئمة الحرمين · الجيل الذهبي المصري · أشهر القرّاء · المحفوظة», a row per group with the reciters and their newest recitations.
+- Full-screen player: tabs «الكل · أئمة الحرمين · الجيل الذهبي المصري · بث مباشر من الحرمين»; swiping stays in the tab or reciter; «حفظ» and «مشاركة»; group tag; still one video at a time.
+- «القرّاء» page: every reciter by group with a show/hide switch; add your own channel (recitation channels only).
+- Website feed cache renamed (old lesson videos are not shown again).
+- Version 1.2.27+47.
+
 ## [1.2.26] — «بودكاست»: checked Islamic podcasts, its own section and a topic in «افهم دينك» — 2026-11-27
 Owner 2026-11-27 after a per-presenter check (arrest, prison, ban, case, politics in Egypt and the Gulf), report in project files reports/فحص-بودكاستات-افهم-دينك-2026-11-27.md. Released as 1.2.26 (on top of 1.2.25).
 ### Phone apps (Android + iPhone + car screen) and website

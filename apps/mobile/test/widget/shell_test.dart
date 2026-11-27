@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/ui/adhkar_screen.dart';
 import 'package:rattil/ui/home_screen.dart';
 import 'package:rattil/ui/prayer_screen.dart';
-import 'package:rattil/ui/reels_screen.dart';
+import 'package:rattil/ui/videos_home_screen.dart';
 import 'package:rattil/ui/more_screen.dart';
 import 'package:rattil/ui/surah_list_screen.dart';
 
@@ -12,7 +12,7 @@ import '../helpers.dart';
 void main() {
   setUpAll(loadContent);
 
-  final tabs = <Type>[HomeScreen, SurahListScreen, PrayerScreen, AdhkarScreen, ReelsScreen, MoreScreen];
+  final tabs = <Type>[HomeScreen, SurahListScreen, PrayerScreen, AdhkarScreen, VideosHomeScreen, MoreScreen];
 
   testWidgets('Arabic is the default locale and the layout is RTL', (tester) async {
     await pumpApp(tester, prefs: const {});

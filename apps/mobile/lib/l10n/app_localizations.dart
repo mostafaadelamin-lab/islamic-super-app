@@ -116,6 +116,24 @@ abstract class AppLocalizations {
   /// **'Prayer times are calculated on the device with standard astronomical formulas (Meeus / USNO) and checked against the independent adhan-js library.'**
   String get aboutPrayerAlgo;
 
+  /// shared key "about.proofBody"
+  ///
+  /// In en, this message translates to:
+  /// **'Where the Quran, tafsir, hadith and every recording in the app come from, with the fingerprints that prove they match the source, and how to check it yourself.'**
+  String get aboutProofBody;
+
+  /// shared key "about.proofOpen"
+  ///
+  /// In en, this message translates to:
+  /// **'Open the sources and proof page'**
+  String get aboutProofOpen;
+
+  /// shared key "about.proofTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Sources and proof'**
+  String get aboutProofTitle;
+
   /// shared key "about.quranText"
   ///
   /// In en, this message translates to:
@@ -5726,11 +5744,59 @@ abstract class AppLocalizations {
   /// **'Bigger text'**
   String get readerFontBigger;
 
+  /// shared key "reader.fontBiggerShort"
+  ///
+  /// In en, this message translates to:
+  /// **'Bigger'**
+  String get readerFontBiggerShort;
+
   /// shared key "reader.fontMadina"
   ///
   /// In en, this message translates to:
   /// **'Madina font'**
   String get readerFontMadina;
+
+  /// shared key "reader.fontMenuTitle"
+  ///
+  /// In en, this message translates to:
+  /// **'Mushaf font'**
+  String get readerFontMenuTitle;
+
+  /// shared key "reader.fontNow"
+  ///
+  /// In en, this message translates to:
+  /// **'Font now: {font}'**
+  String readerFontNow(String font);
+
+  /// shared key "reader.fontOptAll"
+  ///
+  /// In en, this message translates to:
+  /// **'Download the whole Mushaf once'**
+  String get readerFontOptAll;
+
+  /// shared key "reader.fontOptHint"
+  ///
+  /// In en, this message translates to:
+  /// **'The Madina font for reading offline, downloaded only once'**
+  String get readerFontOptHint;
+
+  /// shared key "reader.fontOptSurah"
+  ///
+  /// In en, this message translates to:
+  /// **'Download surah {name}'**
+  String readerFontOptSurah(String name);
+
+  /// shared key "reader.fontOptSwitch"
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to {font}'**
+  String readerFontOptSwitch(String font);
+
+  /// shared key "reader.fontSaved"
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this device'**
+  String get readerFontSaved;
 
   /// shared key "reader.fontSize"
   ///
@@ -5743,6 +5809,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Smaller text'**
   String get readerFontSmaller;
+
+  /// shared key "reader.fontSmallerShort"
+  ///
+  /// In en, this message translates to:
+  /// **'Smaller'**
+  String get readerFontSmallerShort;
+
+  /// shared key "reader.fontSwitchShort"
+  ///
+  /// In en, this message translates to:
+  /// **'Font'**
+  String get readerFontSwitchShort;
 
   /// shared key "reader.fontUthmani"
   ///
@@ -5978,6 +6056,18 @@ abstract class AppLocalizations {
   /// **'Previous surah'**
   String get readerPrevSurah;
 
+  /// shared key "reader.printedDownload"
+  ///
+  /// In en, this message translates to:
+  /// **'Download whole Mushaf'**
+  String get readerPrintedDownload;
+
+  /// shared key "reader.printedLater"
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get readerPrintedLater;
+
   /// shared key "reader.printedLook"
   ///
   /// In en, this message translates to:
@@ -5989,6 +6079,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Madina font'**
   String get readerPrintedLookShort;
+
+  /// shared key "reader.printedOffer"
+  ///
+  /// In en, this message translates to:
+  /// **'Madina font: download it once for the whole Mushaf and read offline (about 140 MB)'**
+  String get readerPrintedOffer;
+
+  /// shared key "reader.printedResume"
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get readerPrintedResume;
+
+  /// shared key "reader.printedSavedAll"
+  ///
+  /// In en, this message translates to:
+  /// **'The Madina font is saved for the whole Mushaf and won\'t be downloaded again'**
+  String get readerPrintedSavedAll;
 
   /// shared key "reader.repeatN"
   ///
@@ -6086,6 +6194,12 @@ abstract class AppLocalizations {
   /// **'Add channel'**
   String get reelsAddChannel;
 
+  /// shared key "reels.back"
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get reelsBack;
+
   /// shared key "reels.cat.admonition"
   ///
   /// In en, this message translates to:
@@ -6116,17 +6230,89 @@ abstract class AppLocalizations {
   /// **'reels'**
   String get reelsFeed;
 
+  /// shared key "reels.group.all"
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get reelsGroupAll;
+
+  /// shared key "reels.group.famous"
+  ///
+  /// In en, this message translates to:
+  /// **'Well-known reciters'**
+  String get reelsGroupFamous;
+
+  /// shared key "reels.group.golden"
+  ///
+  /// In en, this message translates to:
+  /// **'Egypt\'s golden generation'**
+  String get reelsGroupGolden;
+
+  /// shared key "reels.group.haramain"
+  ///
+  /// In en, this message translates to:
+  /// **'Haramain imams'**
+  String get reelsGroupHaramain;
+
+  /// shared key "reels.group.madinah"
+  ///
+  /// In en, this message translates to:
+  /// **'Imams of the Prophet\'s Mosque'**
+  String get reelsGroupMadinah;
+
+  /// shared key "reels.group.makkah"
+  ///
+  /// In en, this message translates to:
+  /// **'Imams of Makkah\'s Haram'**
+  String get reelsGroupMakkah;
+
+  /// shared key "reels.groupLoading"
+  ///
+  /// In en, this message translates to:
+  /// **'Loading this group\'s recitations…'**
+  String get reelsGroupLoading;
+
   /// shared key "reels.hidden"
   ///
   /// In en, this message translates to:
   /// **'{name} hidden'**
   String reelsHidden(String name);
 
+  /// shared key "reels.hiddenLabel"
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden'**
+  String get reelsHiddenLabel;
+
   /// shared key "reels.hide"
   ///
   /// In en, this message translates to:
-  /// **'Hide this channel'**
+  /// **'Hide this reciter'**
   String get reelsHide;
+
+  /// shared key "reels.live.badge"
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get reelsLiveBadge;
+
+  /// shared key "reels.live.madinah"
+  ///
+  /// In en, this message translates to:
+  /// **'The Prophet\'s Mosque · Madinah'**
+  String get reelsLiveMadinah;
+
+  /// shared key "reels.live.makkah"
+  ///
+  /// In en, this message translates to:
+  /// **'Al-Masjid Al-Haram · Makkah'**
+  String get reelsLiveMakkah;
+
+  /// shared key "reels.live.title"
+  ///
+  /// In en, this message translates to:
+  /// **'Live from the Two Holy Mosques'**
+  String get reelsLiveTitle;
 
   /// shared key "reels.loading"
   ///
@@ -6149,7 +6335,7 @@ abstract class AppLocalizations {
   /// shared key "reels.note"
   ///
   /// In en, this message translates to:
-  /// **'Reels play from YouTube and Instagram in their official players, and come automatically from trusted Islamic channels the app approved (Quran recitations, religious lessons, advice and admonitions).'**
+  /// **'Recitations play through YouTube\'s official player and come automatically from trusted reciters\' channels approved by the app. This section is for Quran recitation only.'**
   String get reelsNote;
 
   /// shared key "reels.offline"
@@ -6200,6 +6386,18 @@ abstract class AppLocalizations {
   /// **'Previous reel'**
   String get reelsPrev;
 
+  /// shared key "reels.reciters"
+  ///
+  /// In en, this message translates to:
+  /// **'Reciters'**
+  String get reelsReciters;
+
+  /// shared key "reels.recitersHint"
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the reciters whose recitations you see'**
+  String get reelsRecitersHint;
+
   /// shared key "reels.removeChannel"
   ///
   /// In en, this message translates to:
@@ -6230,6 +6428,24 @@ abstract class AppLocalizations {
   /// **'Reviewer mode'**
   String get reelsReviewerMode;
 
+  /// shared key "reels.save"
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get reelsSave;
+
+  /// shared key "reels.saved"
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get reelsSaved;
+
+  /// shared key "reels.savedEmpty"
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing saved yet. Tap “Save” on any recitation to find it here.'**
+  String get reelsSavedEmpty;
+
   /// shared key "reels.search"
   ///
   /// In en, this message translates to:
@@ -6248,16 +6464,40 @@ abstract class AppLocalizations {
   /// **'No results, or no internet connection.'**
   String get reelsSearchNone;
 
+  /// shared key "reels.seeAll"
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get reelsSeeAll;
+
+  /// shared key "reels.share"
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get reelsShare;
+
+  /// shared key "reels.shareCopied"
+  ///
+  /// In en, this message translates to:
+  /// **'Link copied'**
+  String get reelsShareCopied;
+
   /// shared key "reels.showHidden"
   ///
   /// In en, this message translates to:
-  /// **'Show hidden channels'**
+  /// **'Show hidden reciters'**
   String get reelsShowHidden;
+
+  /// shared key "reels.shown"
+  ///
+  /// In en, this message translates to:
+  /// **'Shown'**
+  String get reelsShown;
 
   /// shared key "reels.sub"
   ///
   /// In en, this message translates to:
-  /// **'Recitations, lessons and admonitions from trusted channels'**
+  /// **'Egypt\'s great reciters, the imams of the Two Holy Mosques and well-known reciters'**
   String get reelsSub;
 
   /// shared key "reels.suggested"
@@ -6281,13 +6521,13 @@ abstract class AppLocalizations {
   /// shared key "reels.title"
   ///
   /// In en, this message translates to:
-  /// **'Islamic reels'**
+  /// **'Quran recitations'**
   String get reelsTitle;
 
   /// shared key "reels.trusted"
   ///
   /// In en, this message translates to:
-  /// **'Trusted channel'**
+  /// **'Trusted reciter'**
   String get reelsTrusted;
 
   /// shared key "reels.undo"
@@ -6295,6 +6535,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Undo'**
   String get reelsUndo;
+
+  /// shared key "reels.unsave"
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get reelsUnsave;
 
   /// shared key "report.action"
   ///
@@ -7393,6 +7639,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Revealed in'**
   String get surahInfoPlace;
+
+  /// shared key "surahInfo.short"
+  ///
+  /// In en, this message translates to:
+  /// **'Surah info'**
+  String get surahInfoShort;
 
   /// shared key "surahInfo.title"
   ///
@@ -8581,120 +8833,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A full Hijri year has passed since my wealth reached the nisab'**
   String get zakatYearPassed;
-
-  /// No description provided for @readerFontSmallerShort.
-  ///
-  /// In en, this message translates to:
-  /// **'Smaller'**
-  String get readerFontSmallerShort;
-
-  /// No description provided for @readerFontBiggerShort.
-  ///
-  /// In en, this message translates to:
-  /// **'Bigger'**
-  String get readerFontBiggerShort;
-
-  /// No description provided for @readerFontSwitchShort.
-  ///
-  /// In en, this message translates to:
-  /// **'Font'**
-  String get readerFontSwitchShort;
-
-  /// No description provided for @surahInfoShort.
-  ///
-  /// In en, this message translates to:
-  /// **'Surah info'**
-  String get surahInfoShort;
-
-  /// No description provided for @readerPrintedOffer.
-  ///
-  /// In en, this message translates to:
-  /// **'Madina font: download it once for the whole Mushaf and read offline (about 140 MB)'**
-  String get readerPrintedOffer;
-
-  /// No description provided for @readerPrintedDownload.
-  ///
-  /// In en, this message translates to:
-  /// **'Download whole Mushaf'**
-  String get readerPrintedDownload;
-
-  /// No description provided for @readerPrintedResume.
-  ///
-  /// In en, this message translates to:
-  /// **'Resume'**
-  String get readerPrintedResume;
-
-  /// No description provided for @readerPrintedLater.
-  ///
-  /// In en, this message translates to:
-  /// **'Later'**
-  String get readerPrintedLater;
-
-  /// No description provided for @readerPrintedSavedAll.
-  ///
-  /// In en, this message translates to:
-  /// **'The Madina font is saved for the whole Mushaf and won\'t be downloaded again'**
-  String get readerPrintedSavedAll;
-
-  /// No description provided for @aboutProofTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Sources and proof'**
-  String get aboutProofTitle;
-
-  /// No description provided for @aboutProofBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Where the Quran, tafsir, hadith and every recording in the app come from, with the fingerprints that prove they match the source, and how to check it yourself.'**
-  String get aboutProofBody;
-
-  /// No description provided for @aboutProofOpen.
-  ///
-  /// In en, this message translates to:
-  /// **'Open the sources and proof page'**
-  String get aboutProofOpen;
-
-  /// No description provided for @readerFontMenuTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Mushaf font'**
-  String get readerFontMenuTitle;
-
-  /// No description provided for @readerFontOptSwitch.
-  ///
-  /// In en, this message translates to:
-  /// **'Switch to {font}'**
-  String readerFontOptSwitch(String font);
-
-  /// No description provided for @readerFontNow.
-  ///
-  /// In en, this message translates to:
-  /// **'Font now: {font}'**
-  String readerFontNow(String font);
-
-  /// No description provided for @readerFontOptSurah.
-  ///
-  /// In en, this message translates to:
-  /// **'Download surah {name}'**
-  String readerFontOptSurah(String name);
-
-  /// No description provided for @readerFontOptAll.
-  ///
-  /// In en, this message translates to:
-  /// **'Download the whole Mushaf once'**
-  String get readerFontOptAll;
-
-  /// No description provided for @readerFontOptHint.
-  ///
-  /// In en, this message translates to:
-  /// **'The Madina font for reading offline, downloaded only once'**
-  String get readerFontOptHint;
-
-  /// No description provided for @readerFontSaved.
-  ///
-  /// In en, this message translates to:
-  /// **'Saved on this device'**
-  String get readerFontSaved;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

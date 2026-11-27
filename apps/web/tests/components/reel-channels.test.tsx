@@ -1,7 +1,7 @@
 import { describe, expect, it, beforeEach, afterEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ReelsFeed } from "@/components/ReelsFeed";
+import { VideosHub } from "@/components/VideosHub";
 import { reelsFeedStore, reelsPrefsStore } from "@/lib/reels";
 import { SUGGESTED_CHANNELS, userChannelsStore } from "@/lib/reel-channels";
 import { resetStores } from "./reset";
@@ -12,9 +12,9 @@ const reel = (ref: string) => ({
   platform: "youtube",
   ref,
   url: `https://www.youtube.com/watch?v=${ref}`,
-  title: { ar: "درس", en: "Lesson" },
+  title: { ar: "تلاوة سورة الملك", en: "Recitation" },
   speaker: { ar: "", en: "" },
-  category: "lesson",
+  category: "recitation",
   source: null,
   status: "auto",
   reviewer: null,
@@ -51,25 +51,28 @@ afterEach(() => localStorage.clear());
 describe("your channels (as in the app)", () => {
   it("finds a channel, adds it to the videos, and removes it", async () => {
     const calls: string[] = [];
-    render(<ReelsFeed locale="ar" reels={[]} fetchImpl={api(calls)} />);
+    render(<VideosHub locale="ar" reels={[]} fetchImpl={api(calls)} />);
+    await userEvent.click(screen.getByTestId("videos-reciters"));
     expect(screen.getByTestId("channel-manager").textContent).toContain("قنواتك");
     await userEvent.type(screen.getByTestId("channel-query"), "دروس");
     await userEvent.click(screen.getByTestId("channel-search-btn"));
     await userEvent.click(await screen.findByTestId(`channel-add-${CH}`));
     expect(userChannelsStore.get()).toEqual([{ channelId: CH, name: "قناة الدروس" }]);
-    await waitFor(() => expect(document.querySelectorAll("[data-reel]")).toHaveLength(1));
+    await userEvent.click(screen.getByTestId("reels-back"));
+    await waitFor(() => expect(screen.getByTestId("videos-card-yt-CCCCCCCCCC1")).toBeInTheDocument());
     expect(calls.some((u) => u.includes(`/v1/reels/channel?id=${CH}`))).toBe(true);
-    expect(screen.getAllByText("قناة الدروس").length).toBeGreaterThan(0);
+    expect(screen.getByTestId("videos-section-mine")).toHaveTextContent("قناة الدروس");
+    await userEvent.click(screen.getByTestId("videos-reciters"));
     await userEvent.click(screen.getByTestId(`channel-remove-${CH}`));
     expect(userChannelsStore.get()).toEqual([]);
-    await waitFor(() => expect(document.querySelectorAll("[data-reel]")).toHaveLength(0));
+    await userEvent.click(screen.getByTestId("reels-back"));
+    expect(screen.queryByTestId("videos-section-mine")).toBeNull();
   });
 
-  it("lists the app's suggested Islamic channels with an add button", () => {
-    render(<ReelsFeed locale="ar" reels={[]} fetchImpl={api([])} />);
-    expect(SUGGESTED_CHANNELS.length).toBeGreaterThan(5);
-    const first = SUGGESTED_CHANNELS[0]!;
-    expect(screen.getByTestId("channel-suggested").textContent).toContain(first.name.ar);
-    expect(screen.getByTestId(`channel-add-${first.channelId}`)).toBeInTheDocument();
+  it("suggests no lesson channels any more (owner 2026-11-27: recitation only)", async () => {
+    render(<VideosHub locale="ar" reels={[]} fetchImpl={api([])} />);
+    await userEvent.click(screen.getByTestId("videos-reciters"));
+    expect(SUGGESTED_CHANNELS).toHaveLength(0);
+    expect(screen.queryByTestId("channel-suggested")).toBeNull();
   });
 });

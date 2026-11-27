@@ -2,19 +2,20 @@
 
 A vertical, swipeable feed of short Islamic videos (like Reels / Shorts) in the Android, iOS and web apps.
 
-## Rules (owner decisions, updated 2026-11-09)
+## Rules (owner decisions, updated 2026-11-27)
 - **Source:** YouTube and Instagram. Instagram uses its official `/embed/` page, which needs no Meta app, token or account. Instagram embeds cannot autoplay, so the viewer taps play.
-- **Content:** only three kinds of reels, from Quran recitation pages/channels and trusted teachers:
-  - `recitation` — Quran recitation (تلاوة قرآنية)
-  - `lesson` — a religious lesson in line with the Islamic Sharia and the Sunnah (درس ديني)
-  - `admonition` — advice and admonitions (نصائح ومواعظ)
+- **Content (owner 2026-11-27, supersedes 2026-11-09): Quran recitation only** (`recitation`). Lessons and admonitions were removed. Every channel has a **group**: `golden` (Egypt's golden generation), `makkah` (imams of the Makkah Haram), `madinah` (imams of the Prophet's Mosque), `famous` (other well-known reciters). List and per-name checks: project files `_sync/videos-ideas/قائمة-القراء-الجديدة-2026-11-27.md`.
+- **Excluded people:** anyone jailed or ever in a political current (owner 2026-11-27). Their names are in `EXCLUDED_PEOPLE` (Dart `video_search.dart`, JS `videos-core.mjs`, PHP `videos.php`; keep the three equal). Any new reciter needs a per-name security check with a link first.
+- **Filter:** a video joins the feed only if its title looks like recitation (`RECITATION_WORDS`, or contains «﴿») and has no lesson/sermon/nasheed word (`NON_RECITATION_WORDS`). Surah names such as «القصص» and «الشرح» are not blocked on purpose.
+- **Live:** `live` in `sources.json` = the official KSA Qur'an TV (Makkah) and Sunnah TV (Madinah) channels, played through `youtube-nocookie.com/embed/live_stream?channel=UC…`.
+- **Layout (owner 2026-11-27):** page 1 = live cards, chips (الكل · أئمة الحرمين · الجيل الذهبي المصري · أشهر القرّاء · المحفوظة) and a row per group; page 2 = full-screen player with tabs «الكل · أئمة الحرمين · الجيل الذهبي المصري · بث مباشر من الحرمين», save and share, one video at a time; page 3 = reciters list with show/hide.
 - **Automatic reels (owner decision 2026-11-09 21:31):** the apps pick the videos themselves from trusted Islamic channels. The owner approves a **channel once** (`content/reels/sources.json`); its newest Shorts are shown with **no per-video review**, marked "trusted channel". Viewers can hide a channel ("Hide this channel", with undo).
 - **Hand-picked reels** (`content/reels/reels.json`) still use the review states below. Instagram reels can only be hand-picked: pulling them automatically needs a Meta Business account and app review (owner chose YouTube-automatic for now).
 - **No hosting cost:** videos stay on YouTube/Instagram and are played by their official embeds (`youtube-nocookie.com`, `instagram.com/reel/<code>/embed/`). Nothing is downloaded or re-hosted.
 
 ## Trusted channels (automatic)
 ```
-python tools/reels.py sources-add "https://www.youtube.com/channel/UC…" --name-ar "…" --name-en "…" --category recitation --approved-by "الاسم"
+python tools/reels.py sources-add "https://www.youtube.com/channel/UC…" --name-ar "…" --name-en "…" --group golden|makkah|madinah|famous --approved-by "الاسم"
 python tools/reels.py sources-remove yt-UC…
 python tools/build_content.py && apps/mobile/tool/sync_assets.sh
 ```

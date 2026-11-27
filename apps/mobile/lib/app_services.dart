@@ -328,6 +328,7 @@ class AppServices {
       reelsFeed: ReelsFeedController(
         sources: content.reelSources,
         suggestionPool: content.reelSuggestions,
+        live: content.reelLive,
         httpClient: httpClient,
         prefs: prefs,
         clock: c,

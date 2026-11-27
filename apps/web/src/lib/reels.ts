@@ -1,10 +1,26 @@
 /** Curated Islamic reels: videos stay on YouTube / Instagram and play through the platforms' official embeds. */
 import bundle from "@/generated/reels.json";
+import sourcesBundle from "@/generated/reel-sources.json";
 import { createStore } from "./store";
 
 export type ReelPlatform = "youtube" | "instagram";
-/** Owner policy: Quran recitation, religious lessons, and advice/admonitions in line with the Quran and Sunnah. */
-export const REEL_CATEGORIES = ["recitation", "lesson", "admonition"] as const;
+/** Owner policy (2026-11-27, supersedes 2026-11-09): Quran recitation only; lessons and admonitions were removed. */
+export const REEL_CATEGORIES = ["recitation"] as const;
+/** Reciter groups: Egypt's golden generation, imams of the Makkah Haram, of the Prophet's Mosque, famous reciters. */
+export const REEL_GROUPS = ["golden", "makkah", "madinah", "famous"] as const;
+export type ReelGroup = (typeof REEL_GROUPS)[number];
+/** Tabs of the full-screen player (owner 2026-11-27): «الكل · أئمة الحرمين · الجيل الذهبي المصري · بث مباشر». */
+export const PLAYER_TABS = ["all", "haramain", "golden", "live"] as const;
+/** Chips on the videos page. */
+export const HOME_TABS = ["all", "haramain", "golden", "famous", "saved"] as const;
+export type ReelTab = "all" | "haramain" | "golden" | "famous" | "live" | "saved";
+
+/** Does a reciter of [group] belong to [tab]? Channels the viewer added (no group) show under «الكل» only. */
+export function inTab(group: string | null | undefined, tab: ReelTab): boolean {
+  if (tab === "all") return true;
+  if (tab === "haramain") return group === "makkah" || group === "madinah";
+  return group === tab;
+}
 export interface Reel {
   id: string;
   platform: ReelPlatform;
@@ -20,6 +36,8 @@ export interface Reel {
   /** Trusted channel an automatic reel came from (owner approved the channel once, 2026-11-09). */
   sourceId?: string | null;
   published?: string | null;
+  /** The reciter group of the channel (see REEL_GROUPS). */
+  group?: string | null;
 }
 
 export interface ReelSource {
@@ -29,6 +47,44 @@ export interface ReelSource {
   handle?: string;
   name: { ar: string; en: string };
   category: (typeof REEL_CATEGORIES)[number];
+  group?: string | null;
+}
+
+/** An official live stream from the Haramain. */
+export interface LiveChannel {
+  id: string;
+  channelId: string;
+  place: "makkah" | "madinah";
+  name: { ar: string; en: string };
+}
+
+const CHANNEL_RE = /^UC[A-Za-z0-9_-]{22}$/;
+export const LIVE_CHANNELS: readonly LiveChannel[] = (
+  ((sourcesBundle as { live?: unknown }).live as Partial<LiveChannel>[] | undefined) ?? []
+).filter(
+  (l): l is LiveChannel =>
+    typeof l?.channelId === "string" &&
+    CHANNEL_RE.test(l.channelId) &&
+    (l.place === "makkah" || l.place === "madinah") &&
+    typeof l.name?.ar === "string",
+);
+
+/** The reciters shipped with the site (the feed's sources once loaded take over). */
+export const BUNDLED_SOURCES: readonly ReelSource[] = sanitizeSources(
+  (sourcesBundle as { sources?: unknown }).sources,
+);
+
+export function liveEmbedUrl(l: LiveChannel, origin?: string): string {
+  const q = new URLSearchParams({
+    channel: l.channelId,
+    autoplay: "1",
+    mute: "1",
+    playsinline: "1",
+    rel: "0",
+    modestbranding: "1",
+    ...(origin ? { origin } : {}),
+  });
+  return `https://www.youtube-nocookie.com/embed/live_stream?${q.toString()}`;
 }
 
 const YT_ID = /^[A-Za-z0-9_-]{11}$/;
@@ -123,7 +179,8 @@ export interface ReelsFeedCache {
   sources: ReelSource[];
 }
 export const FEED_MAX_AGE_MS = 3 * 60 * 60 * 1000;
-export const reelsFeedStore = createStore<ReelsFeedCache | null>("rattil.reels.feed", null, (raw) => {
+// ".r": recitation-only feed (owner 2026-11-27); older caches with lessons are dropped.
+export const reelsFeedStore = createStore<ReelsFeedCache | null>("rattil.reels.feed.r", null, (raw) => {
   const r = raw as Partial<ReelsFeedCache> | null;
   if (!r || typeof r.at !== "number" || typeof r.base !== "string") return null;
   return {
@@ -165,4 +222,20 @@ export async function fetchReelsFeed(
     items: sanitizeReels({ items: body.items }).filter((x) => x.status === "auto"),
     sources: sanitizeSources(body.sources),
   };
+}
+
+/** Recitations the viewer saved (this browser only), newest saved first. */
+export const SAVED_MAX = 200;
+export const savedReelsStore = createStore<Reel[]>("rattil.reels.saved", [], (raw) =>
+  sanitizeReels({ items: raw }).slice(0, SAVED_MAX),
+);
+
+export function toggleSaved(r: Reel): boolean {
+  let now = false;
+  savedReelsStore.set((list) => {
+    if (list.some((x) => x.ref === r.ref)) return list.filter((x) => x.ref !== r.ref);
+    now = true;
+    return [r, ...list].slice(0, SAVED_MAX);
+  });
+  return now;
 }

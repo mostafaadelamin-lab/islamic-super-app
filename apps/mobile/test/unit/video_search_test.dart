@@ -33,12 +33,34 @@ void main() {
       expect(isBlockedVideoText('موعظة مؤثرة'), isFalse);
     });
 
-    test('trusted channels pass, other channels only when clearly Islamic, never blocked', () {
+    test('recitation only: trusted reciters pass, others need a recitation title, never lessons', () {
       const trusted = {ch};
       expect(allowedVideo(const VideoHit(ref: 'a', title: 'vlog', channelId: ch), trusted), isTrue);
-      expect(allowedVideo(const VideoHit(ref: 'a', title: 'تفسير سورة الكهف', channelId: other), trusted), isTrue);
+      expect(allowedVideo(const VideoHit(ref: 'a', title: 'تلاوة سورة الكهف', channelId: other), trusted), isTrue);
+      expect(allowedVideo(const VideoHit(ref: 'a', title: 'تفسير سورة الكهف', channelId: other), trusted), isFalse);
+      expect(allowedVideo(const VideoHit(ref: 'a', title: 'درس عن الصبر', channelId: ch), trusted), isFalse);
       expect(allowedVideo(const VideoHit(ref: 'a', title: 'my day vlog', channelId: other), trusted), isFalse);
       expect(allowedVideo(const VideoHit(ref: 'a', title: 'اغنية عن الله', channelId: ch), trusted), isFalse);
+      expect(
+        allowedVideo(
+          const VideoHit(ref: 'a', title: 'تلاوة سورة يس', channel: 'الشيخ محمد حسان', channelId: other),
+          trusted,
+        ),
+        isFalse,
+        reason: 'an excluded sheikh',
+      );
+    });
+
+    test('feed titles: surah names that look like other words still pass', () {
+      expect(allowedFeedTitle('سورة القصص كاملة'), isTrue);
+      expect(allowedFeedTitle('سورة الشرح'), isTrue);
+      expect(allowedFeedTitle('صلاة العشاء من المسجد الحرام'), isTrue);
+      expect(allowedFeedTitle('آيات ﴿وَلَسَوْفَ يُعْطِيكَ رَبُّكَ﴾'), isTrue);
+      expect(allowedFeedTitle('خطبة الجمعة من المسجد النبوي'), isFalse);
+      expect(allowedFeedTitle('نشيد جميل'), isFalse);
+      expect(allowedFeedTitle('لقاء مع القارئ'), isFalse);
+      expect(allowedChannel('تلاوات خاشعة'), isTrue);
+      expect(allowedChannel('دروس ومواعظ'), isFalse);
     });
 
     test('parses the results page', () {

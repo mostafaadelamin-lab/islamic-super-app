@@ -1,4 +1,6 @@
 import {
+  allowedChannel,
+  allowedFeedTitle,
   allowedVideo,
   buildFeed,
   isBlocked,
@@ -40,12 +42,27 @@ describe("videos engine (website function)", () => {
     expect(isBlocked("موعظة مؤثرة")).toBe(false);
   });
 
-  it("keeps trusted channels, clearly Islamic titles, and never blocked ones", () => {
+  it("recitation only: trusted reciters pass, others need a recitation title, never lessons", () => {
     const trusted = new Set([CH]);
     expect(allowedVideo({ title: "vlog", channel: "x", channelId: CH }, trusted)).toBe(true);
-    expect(allowedVideo({ title: "تفسير سورة الكهف", channel: "x", channelId: OTHER }, trusted)).toBe(true);
+    expect(allowedVideo({ title: "تلاوة سورة الكهف", channel: "x", channelId: OTHER }, trusted)).toBe(true);
+    expect(allowedVideo({ title: "تفسير سورة الكهف", channel: "x", channelId: OTHER }, trusted)).toBe(false);
+    expect(allowedVideo({ title: "درس عن الصبر", channel: "x", channelId: CH }, trusted)).toBe(false);
     expect(allowedVideo({ title: "my day vlog", channel: "x", channelId: OTHER }, trusted)).toBe(false);
     expect(allowedVideo({ title: "اغنية عن الله", channel: "x", channelId: CH }, trusted)).toBe(false);
+    expect(
+      allowedVideo({ title: "تلاوة سورة يس", channel: "الشيخ محمد حسان", channelId: OTHER }, trusted),
+    ).toBe(false);
+  });
+
+  it("feed titles and channel names (same rules as the app)", () => {
+    expect(allowedFeedTitle("سورة القصص كاملة")).toBe(true);
+    expect(allowedFeedTitle("سورة الشرح")).toBe(true);
+    expect(allowedFeedTitle("صلاة العشاء من المسجد الحرام")).toBe(true);
+    expect(allowedFeedTitle("خطبة الجمعة من المسجد النبوي")).toBe(false);
+    expect(allowedFeedTitle("نشيد جميل")).toBe(false);
+    expect(allowedChannel("تلاوات خاشعة")).toBe(true);
+    expect(allowedChannel("دروس ومواعظ")).toBe(false);
   });
 
   it("parses YouTube feeds and results pages", () => {

@@ -32,13 +32,15 @@ void main() {
         item({'platform': 'tiktok'}),
         item({'platform': 'instagram', 'ref': 'a/b'}),
         item({'category': 'music'}),
+        item({'category': 'lesson'}), // owner 2026-11-27: recitation only
+        item({'category': 'admonition'}),
         item({'status': 'rejected'}),
         item({
           'title': {'ar': ' ', 'en': 'x'},
         }),
         item({
           'ref': '26dRG7OeL6Q',
-          'category': 'lesson',
+          'category': 'recitation',
           'status': 'pending',
           'reviewer': 'ignored',
           'title': {'ar': 'درس', 'en': ''},
@@ -95,11 +97,11 @@ void main() {
     expect(cat.items.length, (bundled['items'] as List).length, reason: 'every shipped reel is valid');
   });
 
-  test('Instagram reels: official embed page, admonition category, no poster', () {
+  test('Instagram reels: official embed page, recitation category, no poster', () {
     final r = ReelCatalog.fromJson({
       'schema': 'reels.v1',
       'items': [
-        item({'platform': 'instagram', 'ref': 'C1a2B3c4D5e', 'category': 'admonition'}),
+        item({'platform': 'instagram', 'ref': 'C1a2B3c4D5e', 'category': 'recitation'}),
       ],
     }).items.single;
     expect(r.id, 'ig-C1a2B3c4D5e');
@@ -107,7 +109,7 @@ void main() {
     expect(r.url, 'https://www.instagram.com/reel/C1a2B3c4D5e/');
     expect(r.instagramEmbedUri.toString(), 'https://www.instagram.com/reel/C1a2B3c4D5e/embed/');
     expect(r.posterUrl, isNull);
-    expect(r.category, 'admonition');
+    expect(r.category, 'recitation');
   });
 
   test('only official embed pages may load inside the feed', () {

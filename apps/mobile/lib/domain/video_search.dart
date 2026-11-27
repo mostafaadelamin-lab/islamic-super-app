@@ -1,7 +1,7 @@
 /// Islamic videos search: the same rules as the website's function
-/// (apps/web/netlify/lib/videos-core.mjs). Only Quran recitation, religious
-/// lessons and advice/admonitions: trusted channels always, other channels
-/// only when the title is clearly Islamic, and never music/entertainment titles.
+/// (apps/web/netlify/lib/videos-core.mjs and apps/web/bluehost/api/videos.php).
+/// Owner 2026-11-27: videos are Quran recitation only. Lessons, sermons, nasheeds and
+/// anything naming an excluded sheikh are never shown; music/entertainment never.
 library;
 
 import 'dart:convert';
@@ -60,6 +60,42 @@ bool _hasWord(String text, List<String> words) {
 bool isBlockedVideoText(String text) => _hasWord(text, blockedWords);
 bool looksIslamic(String text) => _hasWord(text, islamicWords);
 
+/// Words that show a title is Quran recitation (keep equal to videos-core.mjs RECITATION_WORDS).
+const recitationWords = [
+  'قران', 'سوره', 'سور', 'تلاوه', 'تلاوات', 'ترتيل', 'تجويد', 'مصحف', 'ايات', 'قارئ', 'القارئ', 'مقرئ', //
+  'تراويح', 'تهجد', 'قيام الليل', 'فجريه', 'عشائيه', 'عشائيات', 'صلاه الفجر', 'صلاه العشاء', 'صلاه المغرب',
+  'صلاه الظهر', 'صلاه العصر', 'ختمه', 'رقيه', 'quran', 'koran', 'recitation', 'surah', 'surat', 'sura', 'tilawat',
+  'tilawah', 'tajweed', 'taraweeh', 'tarawih', 'qiyam', 'fajr', 'isha', 'maghrib',
+];
+
+/// Not recitation even on a reciter's channel. No surah names (القصص, الشرح must pass).
+const nonRecitationWords = [
+  'خطبه', 'خطبتي', 'خطبتا', 'درس', 'دروس', 'محاضره', 'محاضرات', 'موعظه', 'مواعظ', 'نصيحه', 'نصائح', 'فتوي', //
+  'فتاوي', 'لقاء', 'حوار', 'برنامج', 'بودكاست', 'نشيد', 'انشوده', 'اناشيد', 'قصيده', 'دعاء', 'ادعيه', 'تكبيرات',
+  'اذان', 'تفسير', 'سؤال', 'اسئله', 'مقابله',
+  'lecture', 'lesson', 'khutbah', 'khutba', 'sermon', 'nasheed', 'anasheed', 'dua', 'podcast', 'interview',
+];
+
+/// Never shown (owner 2026-11-26/27: jailed, or ever in a political current).
+const excludedPeople = [
+  'نبيل العوضي', 'محمد العريفي', 'صالح المنجد', 'محمد حسين يعقوب', 'ايمن عبد الرحيم', 'بدر المشاري', //
+  'عبدالله بصفر', 'عبد الله بصفر', 'صالح ال طالب', 'بندر بليله', 'عمرو خالد', 'محمد حسان', 'عائض القرني',
+  'راتب النابلسي', 'حازم شومان', 'طارق السويدان', 'احمد عبد المنعم', 'ياسر الحزيمي',
+];
+
+bool looksRecitation(String text) => _hasWord(text, recitationWords) || text.contains('﴿');
+bool namesExcluded(String text) => _hasWord(text, excludedPeople);
+
+/// Blocked, not recitation, or naming an excluded sheikh.
+bool notRecitation(String text) =>
+    isBlockedVideoText(text) || _hasWord(text, nonRecitationWords) || namesExcluded(text);
+
+/// A video from a reciter's channel may join the feed.
+bool allowedFeedTitle(String title) => !notRecitation(title) && looksRecitation(title);
+
+/// A channel from the channel search may be added: its name must say recitation/Quran.
+bool allowedChannel(String title) => !notRecitation(title) && looksRecitation(title);
+
 class VideoHit {
   const VideoHit({
     required this.ref,
@@ -83,11 +119,12 @@ class VideoHit {
       VideoHit(ref: ref, title: title, channel: channel, channelId: channelId, duration: duration, trusted: t);
 }
 
-/// May the result be shown? Never a blocked title; trusted channels always; others only clearly Islamic.
+/// May the result be shown? Recitation only; trusted reciters' channels pass without a recitation word.
 bool allowedVideo(VideoHit h, Set<String> trustedChannelIds) {
-  if (isBlockedVideoText(h.title) || isBlockedVideoText(h.channel ?? '')) return false;
+  final channel = h.channel ?? '';
+  if (notRecitation(h.title) || isBlockedVideoText(channel) || namesExcluded(channel)) return false;
   if (h.channelId != null && trustedChannelIds.contains(h.channelId)) return true;
-  return looksIslamic(h.title) || looksIslamic(h.channel ?? '');
+  return looksRecitation(h.title);
 }
 
 /// YouTube's results page for videos only (no API key).

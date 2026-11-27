@@ -72,7 +72,7 @@ def test_api_reels_feed(client):
     r = client.get("/v1/reels/feed")
     assert r.status_code == 200
     body = r.json()
-    assert body["sources"][0]["channelId"] == YASSER
+    assert YASSER in [s.get("channelId") for s in body["sources"]]
     assert body["items"][0]["status"] == "auto"
 
 

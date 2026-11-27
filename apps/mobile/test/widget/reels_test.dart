@@ -7,7 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:rattil/data/content.dart';
 import 'package:rattil/domain/reels.dart';
+import 'package:rattil/ui/reciters_screen.dart';
 import 'package:rattil/ui/reels_screen.dart';
+import 'package:rattil/ui/videos_home_screen.dart';
 import 'package:rattil/ui/video_search_screen.dart';
 
 import '../helpers.dart';
@@ -44,6 +46,9 @@ Map<String, dynamic> reel(String ref, String status, String category, String tit
 Widget fakePlayer(BuildContext context, Reel r) =>
     ColoredBox(key: Key('player.${r.ref}'), color: Colors.teal, child: const SizedBox.expand());
 
+Widget livePlayer(BuildContext context, LiveChannel c) =>
+    ColoredBox(key: Key('live.player.${c.id}'), color: Colors.red, child: const SizedBox.expand());
+
 void main() {
   late AppContent base;
   setUpAll(() async => base = await loadContent());
@@ -55,7 +60,7 @@ void main() {
     expect(app.services.content.reels.items.where((r) => r.isPending), isEmpty);
     expect(find.byKey(const Key('reels.empty')), findsOneWidget);
     expect(find.byKey(const Key('reels.reviewer')), findsNothing);
-    await tester.tap(find.byKey(const Key('reels.searchBar')));
+    await tester.tap(find.byKey(const Key('reels.search')));
     await tester.pumpAndSettle();
     expect(find.byType(VideoSearchScreen), findsOneWidget);
   });
@@ -63,8 +68,9 @@ void main() {
   testWidgets('one live player at a time; swiping up plays the next reel', (tester) async {
     final content = withReels(base, [
       reel('hTtlD-u4_HI', 'approved', 'recitation', 'تلاوة خاشعة أولى'),
-      reel('26dRG7OeL6Q', 'approved', 'lesson', 'درس مختصر'),
-      reel('dQw4w9WgXcQ', 'pending', 'lesson', 'غير مراجع'),
+      reel('26dRG7OeL6Q', 'approved', 'recitation', 'تلاوة ثانية'),
+      reel('dQw4w9WgXcQ', 'pending', 'recitation', 'غير مراجع'),
+      reel('xQw4w9WgXcQ', 'approved', 'lesson', 'درس مختصر'),
     ]);
     await pumpApp(tester, size: tallPhone, content: content);
     await pushScreen(tester, const ReelsScreen(playerBuilder: fakePlayer, showPosters: false));
@@ -80,9 +86,9 @@ void main() {
     expect(find.text('درس ديني'), findsNothing);
   });
 
-  testWidgets('Instagram admonition reel: no labels, Instagram button, poster placeholder off-screen', (tester) async {
+  testWidgets('Instagram reel: no labels, Instagram button, poster placeholder off-screen', (tester) async {
     final content = withReels(base, [
-      reel('C1a2B3c4D5e', 'approved', 'admonition', 'موعظة قصيرة', platform: 'instagram'),
+      reel('C1a2B3c4D5e', 'approved', 'recitation', 'تلاوة قصيرة', platform: 'instagram'),
       reel('hTtlD-u4_HI', 'approved', 'recitation', 'تلاوة'),
     ]);
     await pumpApp(tester, size: tallPhone, content: content);
@@ -160,6 +166,84 @@ void main() {
       await tester.tap(find.byKey(const Key('reels.retry')));
       await tester.pumpAndSettle();
       expect(find.byKey(const Key('player.BBBBBBBBBB2')), findsOneWidget);
+    });
+  });
+
+  group('videos page, tabs, save, live, reciters (owner 2026-11-27)', () {
+    final fixture = File('test/fixtures/youtube-feed.xml').readAsStringSync();
+    http.Response yasserOnly(http.BaseRequest req) => req.url.toString().contains('YuUcfXvsHapABTcPRWCEoQ')
+        ? http.Response.bytes(utf8.encode(fixture), 200)
+        : http.Response('', 404);
+
+    testWidgets('videos page: live cards, group chips, reciter rows; a card opens the player in its tab', (
+      tester,
+    ) async {
+      await pumpApp(tester, size: tallPhone, httpClient: MockClient((req) async => yasserOnly(req)));
+      await pushScreen(
+        tester,
+        const VideosHomeScreen(showThumbnails: false, playerBuilder: fakePlayer, livePlayerBuilder: livePlayer),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('videos.live.live-makkah')), findsOneWidget);
+      expect(find.byKey(const Key('videos.live.live-madinah')), findsOneWidget);
+      for (final t in ['all', 'haramain', 'golden', 'famous', 'saved']) {
+        expect(find.byKey(Key('videos.tab.$t')), findsOneWidget);
+      }
+      expect(find.byKey(const Key('videos.section.haramain')), findsOneWidget);
+      expect(find.byKey(const Key('videos.reciter.yt-UCYuUcfXvsHapABTcPRWCEoQ')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('videos.card.yt-BBBBBBBBBB2')));
+      await tester.pumpAndSettle();
+      expect(find.byType(ReelsScreen), findsOneWidget);
+      expect(find.byKey(const Key('player.BBBBBBBBBB2')), findsOneWidget);
+      expect(find.text('أئمة الحرمين'), findsWidgets);
+      for (final t in ['all', 'haramain', 'golden', 'live']) {
+        expect(find.byKey(Key('reels.tab.$t')), findsOneWidget);
+      }
+      expect(find.byKey(const Key('reel.group.yt-BBBBBBBBBB2')), findsOneWidget);
+    });
+
+    testWidgets('player tabs: golden generation has no Dosari; live plays the Haramain stream', (tester) async {
+      await pumpApp(tester, size: tallPhone, httpClient: MockClient((req) async => yasserOnly(req)));
+      await pushScreen(
+        tester,
+        const ReelsScreen(playerBuilder: fakePlayer, livePlayerBuilder: livePlayer, showPosters: false),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('player.BBBBBBBBBB2')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('reels.tab.golden')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('player.BBBBBBBBBB2')), findsNothing);
+      await tester.ensureVisible(find.byKey(const Key('reels.tab.live')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('reels.tab.live')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('live.player.live-makkah')), findsOneWidget);
+      await tester.fling(find.byKey(const Key('reels.live')), const Offset(0, -600), 2000);
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('live.player.live-madinah')), findsOneWidget);
+      expect(find.byKey(const Key('live.player.live-makkah')), findsNothing);
+    });
+
+    testWidgets('save a recitation; it shows under «المحفوظة»', (tester) async {
+      final app = await pumpApp(tester, size: tallPhone, httpClient: MockClient((req) async => yasserOnly(req)));
+      await pushScreen(tester, const ReelsScreen(playerBuilder: fakePlayer, showPosters: false));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('reel.save.yt-BBBBBBBBBB2')));
+      await tester.pumpAndSettle();
+      expect(app.services.reelsFeed.saved.single.ref, 'BBBBBBBBBB2');
+      expect(find.byKey(const Key('reel.share.yt-BBBBBBBBBB2')), findsOneWidget);
+    });
+
+    testWidgets('reciters list: grouped, a switch hides a reciter', (tester) async {
+      final app = await pumpApp(tester, size: tallPhone, httpClient: MockClient((req) async => yasserOnly(req)));
+      await pushScreen(tester, const RecitersScreen());
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('reciters.group.golden')), findsOneWidget);
+      final key = find.byKey(const Key('reciters.toggle.yt-UCt2q-yViX-xRLjt3Si81EFQ'));
+      expect(key, findsOneWidget);
+      await tester.tap(key);
+      await tester.pumpAndSettle();
+      expect(app.services.reelsFeed.hidden, contains('yt-UCt2q-yViX-xRLjt3Si81EFQ'));
     });
   });
 }

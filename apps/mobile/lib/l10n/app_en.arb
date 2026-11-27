@@ -16,6 +16,18 @@
   "@aboutPrayerAlgo": {
     "description": "shared key \"about.prayerAlgo\""
   },
+  "aboutProofBody": "Where the Quran, tafsir, hadith and every recording in the app come from, with the fingerprints that prove they match the source, and how to check it yourself.",
+  "@aboutProofBody": {
+    "description": "shared key \"about.proofBody\""
+  },
+  "aboutProofOpen": "Open the sources and proof page",
+  "@aboutProofOpen": {
+    "description": "shared key \"about.proofOpen\""
+  },
+  "aboutProofTitle": "Sources and proof",
+  "@aboutProofTitle": {
+    "description": "shared key \"about.proofTitle\""
+  },
   "aboutQuranText": "Quran text: King Fahd Glorious Quran Printing Complex, Hafs Uthmanic Data v18 (hafsData_v18.json), Hafs an Asim. Bundled exactly as published (only the trailing ayah number is removed); verified by SHA-256.",
   "@aboutQuranText": {
     "description": "shared key \"about.quranText\""
@@ -4749,9 +4761,56 @@
   "@readerFontBigger": {
     "description": "shared key \"reader.fontBigger\""
   },
+  "readerFontBiggerShort": "Bigger",
+  "@readerFontBiggerShort": {
+    "description": "shared key \"reader.fontBiggerShort\""
+  },
   "readerFontMadina": "Madina font",
   "@readerFontMadina": {
     "description": "shared key \"reader.fontMadina\""
+  },
+  "readerFontMenuTitle": "Mushaf font",
+  "@readerFontMenuTitle": {
+    "description": "shared key \"reader.fontMenuTitle\""
+  },
+  "readerFontNow": "Font now: {font}",
+  "@readerFontNow": {
+    "description": "shared key \"reader.fontNow\"",
+    "placeholders": {
+      "font": {
+        "type": "String"
+      }
+    }
+  },
+  "readerFontOptAll": "Download the whole Mushaf once",
+  "@readerFontOptAll": {
+    "description": "shared key \"reader.fontOptAll\""
+  },
+  "readerFontOptHint": "The Madina font for reading offline, downloaded only once",
+  "@readerFontOptHint": {
+    "description": "shared key \"reader.fontOptHint\""
+  },
+  "readerFontOptSurah": "Download surah {name}",
+  "@readerFontOptSurah": {
+    "description": "shared key \"reader.fontOptSurah\"",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "readerFontOptSwitch": "Switch to {font}",
+  "@readerFontOptSwitch": {
+    "description": "shared key \"reader.fontOptSwitch\"",
+    "placeholders": {
+      "font": {
+        "type": "String"
+      }
+    }
+  },
+  "readerFontSaved": "Saved on this device",
+  "@readerFontSaved": {
+    "description": "shared key \"reader.fontSaved\""
   },
   "readerFontSize": "Text size: {size} — press to enlarge",
   "@readerFontSize": {
@@ -4765,6 +4824,14 @@
   "readerFontSmaller": "Smaller text",
   "@readerFontSmaller": {
     "description": "shared key \"reader.fontSmaller\""
+  },
+  "readerFontSmallerShort": "Smaller",
+  "@readerFontSmallerShort": {
+    "description": "shared key \"reader.fontSmallerShort\""
+  },
+  "readerFontSwitchShort": "Font",
+  "@readerFontSwitchShort": {
+    "description": "shared key \"reader.fontSwitchShort\""
   },
   "readerFontUthmani": "Uthmani font",
   "@readerFontUthmani": {
@@ -4945,6 +5012,14 @@
   "@readerPrevSurah": {
     "description": "shared key \"reader.prevSurah\""
   },
+  "readerPrintedDownload": "Download whole Mushaf",
+  "@readerPrintedDownload": {
+    "description": "shared key \"reader.printedDownload\""
+  },
+  "readerPrintedLater": "Later",
+  "@readerPrintedLater": {
+    "description": "shared key \"reader.printedLater\""
+  },
   "readerPrintedLook": "Switch between the Uthmani font and the Madina font (the Madina font is optional and downloaded from the internet)",
   "@readerPrintedLook": {
     "description": "shared key \"reader.printedLook\""
@@ -4952,6 +5027,18 @@
   "readerPrintedLookShort": "Madina font",
   "@readerPrintedLookShort": {
     "description": "shared key \"reader.printedLookShort\""
+  },
+  "readerPrintedOffer": "Madina font: download it once for the whole Mushaf and read offline (about 140 MB)",
+  "@readerPrintedOffer": {
+    "description": "shared key \"reader.printedOffer\""
+  },
+  "readerPrintedResume": "Resume",
+  "@readerPrintedResume": {
+    "description": "shared key \"reader.printedResume\""
+  },
+  "readerPrintedSavedAll": "The Madina font is saved for the whole Mushaf and won't be downloaded again",
+  "@readerPrintedSavedAll": {
+    "description": "shared key \"reader.printedSavedAll\""
   },
   "readerRepeatN": "Repeat: {n}",
   "@readerRepeatN": {
@@ -5027,6 +5114,10 @@
   "@reelsAddChannel": {
     "description": "shared key \"reels.addChannel\""
   },
+  "reelsBack": "Back",
+  "@reelsBack": {
+    "description": "shared key \"reels.back\""
+  },
   "reelsCatAdmonition": "Advice & admonition",
   "@reelsCatAdmonition": {
     "description": "shared key \"reels.cat.admonition\""
@@ -5047,6 +5138,34 @@
   "@reelsFeed": {
     "description": "shared key \"reels.feed\""
   },
+  "reelsGroupAll": "All",
+  "@reelsGroupAll": {
+    "description": "shared key \"reels.group.all\""
+  },
+  "reelsGroupFamous": "Well-known reciters",
+  "@reelsGroupFamous": {
+    "description": "shared key \"reels.group.famous\""
+  },
+  "reelsGroupGolden": "Egypt's golden generation",
+  "@reelsGroupGolden": {
+    "description": "shared key \"reels.group.golden\""
+  },
+  "reelsGroupHaramain": "Haramain imams",
+  "@reelsGroupHaramain": {
+    "description": "shared key \"reels.group.haramain\""
+  },
+  "reelsGroupMadinah": "Imams of the Prophet's Mosque",
+  "@reelsGroupMadinah": {
+    "description": "shared key \"reels.group.madinah\""
+  },
+  "reelsGroupMakkah": "Imams of Makkah's Haram",
+  "@reelsGroupMakkah": {
+    "description": "shared key \"reels.group.makkah\""
+  },
+  "reelsGroupLoading": "Loading this group's recitations…",
+  "@reelsGroupLoading": {
+    "description": "shared key \"reels.groupLoading\""
+  },
   "reelsHidden": "{name} hidden",
   "@reelsHidden": {
     "description": "shared key \"reels.hidden\"",
@@ -5056,9 +5175,29 @@
       }
     }
   },
-  "reelsHide": "Hide this channel",
+  "reelsHiddenLabel": "Hidden",
+  "@reelsHiddenLabel": {
+    "description": "shared key \"reels.hiddenLabel\""
+  },
+  "reelsHide": "Hide this reciter",
   "@reelsHide": {
     "description": "shared key \"reels.hide\""
+  },
+  "reelsLiveBadge": "Live",
+  "@reelsLiveBadge": {
+    "description": "shared key \"reels.live.badge\""
+  },
+  "reelsLiveMadinah": "The Prophet's Mosque · Madinah",
+  "@reelsLiveMadinah": {
+    "description": "shared key \"reels.live.madinah\""
+  },
+  "reelsLiveMakkah": "Al-Masjid Al-Haram · Makkah",
+  "@reelsLiveMakkah": {
+    "description": "shared key \"reels.live.makkah\""
+  },
+  "reelsLiveTitle": "Live from the Two Holy Mosques",
+  "@reelsLiveTitle": {
+    "description": "shared key \"reels.live.title\""
   },
   "reelsLoading": "Fetching the newest reels…",
   "@reelsLoading": {
@@ -5072,7 +5211,7 @@
   "@reelsNext": {
     "description": "shared key \"reels.next\""
   },
-  "reelsNote": "Reels play from YouTube and Instagram in their official players, and come automatically from trusted Islamic channels the app approved (Quran recitations, religious lessons, advice and admonitions).",
+  "reelsNote": "Recitations play through YouTube's official player and come automatically from trusted reciters' channels approved by the app. This section is for Quran recitation only.",
   "@reelsNote": {
     "description": "shared key \"reels.note\""
   },
@@ -5116,6 +5255,14 @@
   "@reelsPrev": {
     "description": "shared key \"reels.prev\""
   },
+  "reelsReciters": "Reciters",
+  "@reelsReciters": {
+    "description": "shared key \"reels.reciters\""
+  },
+  "reelsRecitersHint": "Choose the reciters whose recitations you see",
+  "@reelsRecitersHint": {
+    "description": "shared key \"reels.recitersHint\""
+  },
   "reelsRemoveChannel": "Remove channel",
   "@reelsRemoveChannel": {
     "description": "shared key \"reels.removeChannel\""
@@ -5141,6 +5288,18 @@
   "@reelsReviewerMode": {
     "description": "shared key \"reels.reviewerMode\""
   },
+  "reelsSave": "Save",
+  "@reelsSave": {
+    "description": "shared key \"reels.save\""
+  },
+  "reelsSaved": "Saved",
+  "@reelsSaved": {
+    "description": "shared key \"reels.saved\""
+  },
+  "reelsSavedEmpty": "Nothing saved yet. Tap “Save” on any recitation to find it here.",
+  "@reelsSavedEmpty": {
+    "description": "shared key \"reels.savedEmpty\""
+  },
   "reelsSearch": "Find a channel",
   "@reelsSearch": {
     "description": "shared key \"reels.search\""
@@ -5153,11 +5312,27 @@
   "@reelsSearchNone": {
     "description": "shared key \"reels.searchNone\""
   },
-  "reelsShowHidden": "Show hidden channels",
+  "reelsSeeAll": "See all",
+  "@reelsSeeAll": {
+    "description": "shared key \"reels.seeAll\""
+  },
+  "reelsShare": "Share",
+  "@reelsShare": {
+    "description": "shared key \"reels.share\""
+  },
+  "reelsShareCopied": "Link copied",
+  "@reelsShareCopied": {
+    "description": "shared key \"reels.shareCopied\""
+  },
+  "reelsShowHidden": "Show hidden reciters",
   "@reelsShowHidden": {
     "description": "shared key \"reels.showHidden\""
   },
-  "reelsSub": "Recitations, lessons and admonitions from trusted channels",
+  "reelsShown": "Shown",
+  "@reelsShown": {
+    "description": "shared key \"reels.shown\""
+  },
+  "reelsSub": "Egypt's great reciters, the imams of the Two Holy Mosques and well-known reciters",
   "@reelsSub": {
     "description": "shared key \"reels.sub\""
   },
@@ -5173,17 +5348,21 @@
   "@reelsTapToPlay": {
     "description": "shared key \"reels.tapToPlay\""
   },
-  "reelsTitle": "Islamic reels",
+  "reelsTitle": "Quran recitations",
   "@reelsTitle": {
     "description": "shared key \"reels.title\""
   },
-  "reelsTrusted": "Trusted channel",
+  "reelsTrusted": "Trusted reciter",
   "@reelsTrusted": {
     "description": "shared key \"reels.trusted\""
   },
   "reelsUndo": "Undo",
   "@reelsUndo": {
     "description": "shared key \"reels.undo\""
+  },
+  "reelsUnsave": "Saved",
+  "@reelsUnsave": {
+    "description": "shared key \"reels.unsave\""
   },
   "reportAction": "Report a mistake",
   "@reportAction": {
@@ -6087,6 +6266,10 @@
   "surahInfoPlace": "Revealed in",
   "@surahInfoPlace": {
     "description": "shared key \"surahInfo.place\""
+  },
+  "surahInfoShort": "Surah info",
+  "@surahInfoShort": {
+    "description": "shared key \"surahInfo.short\""
   },
   "surahInfoTitle": "About the surah",
   "@surahInfoTitle": {
@@ -7055,27 +7238,5 @@
   "zakatYearPassed": "A full Hijri year has passed since my wealth reached the nisab",
   "@zakatYearPassed": {
     "description": "shared key \"zakat.yearPassed\""
-  },
-  "readerFontSmallerShort": "Smaller",
-  "readerFontBiggerShort": "Bigger",
-  "readerFontSwitchShort": "Font",
-  "surahInfoShort": "Surah info",
-  "readerPrintedOffer": "Madina font: download it once for the whole Mushaf and read offline (about 140 MB)",
-  "readerPrintedDownload": "Download whole Mushaf",
-  "readerPrintedResume": "Resume",
-  "readerPrintedLater": "Later",
-  "readerPrintedSavedAll": "The Madina font is saved for the whole Mushaf and won't be downloaded again",
-  "aboutProofTitle": "Sources and proof",
-  "aboutProofBody": "Where the Quran, tafsir, hadith and every recording in the app come from, with the fingerprints that prove they match the source, and how to check it yourself.",
-  "aboutProofOpen": "Open the sources and proof page",
-  "readerFontMenuTitle": "Mushaf font",
-  "readerFontOptSwitch": "Switch to {font}",
-  "@readerFontOptSwitch": {"placeholders": {"font": {"type": "String"}}},
-  "readerFontNow": "Font now: {font}",
-  "@readerFontNow": {"placeholders": {"font": {"type": "String"}}},
-  "readerFontOptSurah": "Download surah {name}",
-  "@readerFontOptSurah": {"placeholders": {"name": {"type": "String"}}},
-  "readerFontOptAll": "Download the whole Mushaf once",
-  "readerFontOptHint": "The Madina font for reading offline, downloaded only once",
-  "readerFontSaved": "Saved on this device"
+  }
 }

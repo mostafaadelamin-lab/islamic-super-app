@@ -24,6 +24,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'Prayer times are calculated on the device with standard astronomical formulas (Meeus / USNO) and checked against the independent adhan-js library.';
 
   @override
+  String get aboutProofBody =>
+      'Where the Quran, tafsir, hadith and every recording in the app come from, with the fingerprints that prove they match the source, and how to check it yourself.';
+
+  @override
+  String get aboutProofOpen => 'Open the sources and proof page';
+
+  @override
+  String get aboutProofTitle => 'Sources and proof';
+
+  @override
   String get aboutQuranText =>
       'Quran text: King Fahd Glorious Quran Printing Complex, Hafs Uthmanic Data v18 (hafsData_v18.json), Hafs an Asim. Bundled exactly as published (only the trailing ayah number is removed); verified by SHA-256.';
 
@@ -3201,7 +3211,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerFontBigger => 'Bigger text';
 
   @override
+  String get readerFontBiggerShort => 'Bigger';
+
+  @override
   String get readerFontMadina => 'Madina font';
+
+  @override
+  String get readerFontMenuTitle => 'Mushaf font';
+
+  @override
+  String readerFontNow(String font) {
+    return 'Font now: $font';
+  }
+
+  @override
+  String get readerFontOptAll => 'Download the whole Mushaf once';
+
+  @override
+  String get readerFontOptHint => 'The Madina font for reading offline, downloaded only once';
+
+  @override
+  String readerFontOptSurah(String name) {
+    return 'Download surah $name';
+  }
+
+  @override
+  String readerFontOptSwitch(String font) {
+    return 'Switch to $font';
+  }
+
+  @override
+  String get readerFontSaved => 'Saved on this device';
 
   @override
   String readerFontSize(String size) {
@@ -3210,6 +3250,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readerFontSmaller => 'Smaller text';
+
+  @override
+  String get readerFontSmallerShort => 'Smaller';
+
+  @override
+  String get readerFontSwitchShort => 'Font';
 
   @override
   String get readerFontUthmani => 'Uthmani font';
@@ -3341,11 +3387,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerPrevSurah => 'Previous surah';
 
   @override
+  String get readerPrintedDownload => 'Download whole Mushaf';
+
+  @override
+  String get readerPrintedLater => 'Later';
+
+  @override
   String get readerPrintedLook =>
       'Switch between the Uthmani font and the Madina font (the Madina font is optional and downloaded from the internet)';
 
   @override
   String get readerPrintedLookShort => 'Madina font';
+
+  @override
+  String get readerPrintedOffer => 'Madina font: download it once for the whole Mushaf and read offline (about 140 MB)';
+
+  @override
+  String get readerPrintedResume => 'Resume';
+
+  @override
+  String get readerPrintedSavedAll => 'The Madina font is saved for the whole Mushaf and won\'t be downloaded again';
 
   @override
   String readerRepeatN(String n) {
@@ -3400,6 +3461,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reelsAddChannel => 'Add channel';
 
   @override
+  String get reelsBack => 'Back';
+
+  @override
   String get reelsCatAdmonition => 'Advice & admonition';
 
   @override
@@ -3415,12 +3479,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reelsFeed => 'reels';
 
   @override
+  String get reelsGroupAll => 'All';
+
+  @override
+  String get reelsGroupFamous => 'Well-known reciters';
+
+  @override
+  String get reelsGroupGolden => 'Egypt\'s golden generation';
+
+  @override
+  String get reelsGroupHaramain => 'Haramain imams';
+
+  @override
+  String get reelsGroupMadinah => 'Imams of the Prophet\'s Mosque';
+
+  @override
+  String get reelsGroupMakkah => 'Imams of Makkah\'s Haram';
+
+  @override
+  String get reelsGroupLoading => 'Loading this group\'s recitations…';
+
+  @override
   String reelsHidden(String name) {
     return '$name hidden';
   }
 
   @override
-  String get reelsHide => 'Hide this channel';
+  String get reelsHiddenLabel => 'Hidden';
+
+  @override
+  String get reelsHide => 'Hide this reciter';
+
+  @override
+  String get reelsLiveBadge => 'Live';
+
+  @override
+  String get reelsLiveMadinah => 'The Prophet\'s Mosque · Madinah';
+
+  @override
+  String get reelsLiveMakkah => 'Al-Masjid Al-Haram · Makkah';
+
+  @override
+  String get reelsLiveTitle => 'Live from the Two Holy Mosques';
 
   @override
   String get reelsLoading => 'Fetching the newest reels…';
@@ -3433,7 +3533,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reelsNote =>
-      'Reels play from YouTube and Instagram in their official players, and come automatically from trusted Islamic channels the app approved (Quran recitations, religious lessons, advice and admonitions).';
+      'Recitations play through YouTube\'s official player and come automatically from trusted reciters\' channels approved by the app. This section is for Quran recitation only.';
 
   @override
   String get reelsOffline => 'Could not reach YouTube. Check your internet connection and try again.';
@@ -3462,6 +3562,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reelsPrev => 'Previous reel';
 
   @override
+  String get reelsReciters => 'Reciters';
+
+  @override
+  String get reelsRecitersHint => 'Choose the reciters whose recitations you see';
+
+  @override
   String get reelsRemoveChannel => 'Remove channel';
 
   @override
@@ -3479,6 +3585,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reelsReviewerMode => 'Reviewer mode';
 
   @override
+  String get reelsSave => 'Save';
+
+  @override
+  String get reelsSaved => 'Saved';
+
+  @override
+  String get reelsSavedEmpty => 'Nothing saved yet. Tap “Save” on any recitation to find it here.';
+
+  @override
   String get reelsSearch => 'Find a channel';
 
   @override
@@ -3488,10 +3603,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reelsSearchNone => 'No results, or no internet connection.';
 
   @override
-  String get reelsShowHidden => 'Show hidden channels';
+  String get reelsSeeAll => 'See all';
 
   @override
-  String get reelsSub => 'Recitations, lessons and admonitions from trusted channels';
+  String get reelsShare => 'Share';
+
+  @override
+  String get reelsShareCopied => 'Link copied';
+
+  @override
+  String get reelsShowHidden => 'Show hidden reciters';
+
+  @override
+  String get reelsShown => 'Shown';
+
+  @override
+  String get reelsSub => 'Egypt\'s great reciters, the imams of the Two Holy Mosques and well-known reciters';
 
   @override
   String get reelsSuggested => 'Suggested Islamic channels';
@@ -3503,13 +3630,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reelsTapToPlay => 'Tap to play';
 
   @override
-  String get reelsTitle => 'Islamic reels';
+  String get reelsTitle => 'Quran recitations';
 
   @override
-  String get reelsTrusted => 'Trusted channel';
+  String get reelsTrusted => 'Trusted reciter';
 
   @override
   String get reelsUndo => 'Undo';
+
+  @override
+  String get reelsUnsave => 'Saved';
 
   @override
   String get reportAction => 'Report a mistake';
@@ -4133,6 +4263,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get surahInfoPlace => 'Revealed in';
+
+  @override
+  String get surahInfoShort => 'Surah info';
 
   @override
   String get surahInfoTitle => 'About the surah';
@@ -4800,68 +4933,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'A full Hijri year has passed since my wealth reached the nisab';
-
-  @override
-  String get readerFontSmallerShort => 'Smaller';
-
-  @override
-  String get readerFontBiggerShort => 'Bigger';
-
-  @override
-  String get readerFontSwitchShort => 'Font';
-
-  @override
-  String get surahInfoShort => 'Surah info';
-
-  @override
-  String get readerPrintedOffer => 'Madina font: download it once for the whole Mushaf and read offline (about 140 MB)';
-
-  @override
-  String get readerPrintedDownload => 'Download whole Mushaf';
-
-  @override
-  String get readerPrintedResume => 'Resume';
-
-  @override
-  String get readerPrintedLater => 'Later';
-
-  @override
-  String get readerPrintedSavedAll => 'The Madina font is saved for the whole Mushaf and won\'t be downloaded again';
-
-  @override
-  String get aboutProofTitle => 'Sources and proof';
-
-  @override
-  String get aboutProofBody =>
-      'Where the Quran, tafsir, hadith and every recording in the app come from, with the fingerprints that prove they match the source, and how to check it yourself.';
-
-  @override
-  String get aboutProofOpen => 'Open the sources and proof page';
-
-  @override
-  String get readerFontMenuTitle => 'Mushaf font';
-
-  @override
-  String readerFontOptSwitch(String font) {
-    return 'Switch to $font';
-  }
-
-  @override
-  String readerFontNow(String font) {
-    return 'Font now: $font';
-  }
-
-  @override
-  String readerFontOptSurah(String name) {
-    return 'Download surah $name';
-  }
-
-  @override
-  String get readerFontOptAll => 'Download the whole Mushaf once';
-
-  @override
-  String get readerFontOptHint => 'The Madina font for reading offline, downloaded only once';
-
-  @override
-  String get readerFontSaved => 'Saved on this device';
 }

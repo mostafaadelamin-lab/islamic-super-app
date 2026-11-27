@@ -43,7 +43,7 @@ async function handler(req) {
   const feedSources = sources.feed ?? [];
   if (url.pathname.endsWith("/reels/feed")) {
     const body = await cached(
-      "feed",
+      "feed-r",
       FEED_TTL,
       () => buildFeed(feedSources, get),
       (b) => b.items.length > 0,
@@ -53,7 +53,7 @@ async function handler(req) {
   if (url.pathname.endsWith("/reels/channel")) {
     const id = url.searchParams.get("id") ?? "";
     const body = await cached(
-      `ch:${id}`,
+      `ch-r:${id}`,
       FEED_TTL,
       () => channelReels(id, get),
       (b) => b != null && b.items.length > 0,
@@ -64,7 +64,7 @@ async function handler(req) {
   const q = url.searchParams.get("q") ?? "";
   if (url.pathname.endsWith("/channels/search")) {
     try {
-      const body = await cached(`cs:${q.trim().toLowerCase()}`, SEARCH_TTL, () => searchChannels(q, get));
+      const body = await cached(`cs-r:${q.trim().toLowerCase()}`, SEARCH_TTL, () => searchChannels(q, get));
       return json(body, 60 * 60);
     } catch {
       return Response.json({ error: "unreachable" }, { status: 502 });
@@ -74,7 +74,7 @@ async function handler(req) {
     [...feedSources, ...(sources.suggested ?? [])].map((s) => s.channelId).filter(Boolean),
   );
   try {
-    const body = await cached(`q:${q.trim().toLowerCase()}`, SEARCH_TTL, () => searchVideos(q, get, trusted));
+    const body = await cached(`q-r:${q.trim().toLowerCase()}`, SEARCH_TTL, () => searchVideos(q, get, trusted));
     return json(body, 60 * 60);
   } catch {
     return Response.json({ error: "unreachable" }, { status: 502 });

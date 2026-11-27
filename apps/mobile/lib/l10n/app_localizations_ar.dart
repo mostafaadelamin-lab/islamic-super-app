@@ -24,6 +24,16 @@ class AppLocalizationsAr extends AppLocalizations {
       'تُحسب المواقيت على الجهاز بالمعادلات الفلكية المعيارية (ميوس / المرصد البحري الأمريكي) وتُقارن بمكتبة adhan-js المستقلة.';
 
   @override
+  String get aboutProofBody =>
+      'من أين أخذنا القرآن والتفسير والحديث وكل صوت في التطبيق، مع البصمات التي تثبت المطابقة مع المصدر، وكيف تتأكد بنفسك.';
+
+  @override
+  String get aboutProofOpen => 'افتح صفحة المصادر والإثبات';
+
+  @override
+  String get aboutProofTitle => 'المصادر والإثبات';
+
+  @override
   String get aboutQuranText =>
       'نص القرآن: مجمع الملك فهد لطباعة المصحف الشريف، بيانات حفص العثمانية الإصدار ١٨ (hafsData_v18.json)، رواية حفص عن عاصم. مضمَّن كما نشره المجمع حرفيًا (حُذف رقم الآية الملحق فقط)، ويُتحقق منه ببصمة SHA-256.';
 
@@ -3189,7 +3199,37 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerFontBigger => 'تكبير الخط';
 
   @override
+  String get readerFontBiggerShort => 'تكبير';
+
+  @override
   String get readerFontMadina => 'خط المدينة';
+
+  @override
+  String get readerFontMenuTitle => 'خط المصحف';
+
+  @override
+  String readerFontNow(String font) {
+    return 'الخط الآن: $font';
+  }
+
+  @override
+  String get readerFontOptAll => 'تحميل المصحف كامل مرة واحدة';
+
+  @override
+  String get readerFontOptHint => 'خط المدينة للقراءة بدون إنترنت، ولا يتحمّل مرة أخرى';
+
+  @override
+  String readerFontOptSurah(String name) {
+    return 'تحميل سورة $name كاملة';
+  }
+
+  @override
+  String readerFontOptSwitch(String font) {
+    return 'التبديل إلى $font';
+  }
+
+  @override
+  String get readerFontSaved => 'محفوظ على الجهاز';
 
   @override
   String readerFontSize(String size) {
@@ -3198,6 +3238,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get readerFontSmaller => 'تصغير الخط';
+
+  @override
+  String get readerFontSmallerShort => 'تصغير';
+
+  @override
+  String get readerFontSwitchShort => 'تغيير الخط';
 
   @override
   String get readerFontUthmani => 'الخط العثماني';
@@ -3325,10 +3371,25 @@ class AppLocalizationsAr extends AppLocalizations {
   String get readerPrevSurah => 'السورة السابقة';
 
   @override
+  String get readerPrintedDownload => 'تحميل المصحف كامل';
+
+  @override
+  String get readerPrintedLater => 'لاحقًا';
+
+  @override
   String get readerPrintedLook => 'تبديل بين الخط العثماني وخط المدينة (خط المدينة اختياري ويتحمّل من الإنترنت)';
 
   @override
   String get readerPrintedLookShort => 'خط المدينة';
+
+  @override
+  String get readerPrintedOffer => 'خط المدينة: حمّله للمصحف كامل مرة واحدة واقرأ بدون إنترنت (حوالي ١٤٠ ميجا)';
+
+  @override
+  String get readerPrintedResume => 'أكمل التحميل';
+
+  @override
+  String get readerPrintedSavedAll => 'خط المدينة محفوظ على الجهاز للمصحف كله، ولن يُحمَّل مرة أخرى';
 
   @override
   String readerRepeatN(String n) {
@@ -3383,6 +3444,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reelsAddChannel => 'أضف القناة';
 
   @override
+  String get reelsBack => 'رجوع';
+
+  @override
   String get reelsCatAdmonition => 'نصائح ومواعظ';
 
   @override
@@ -3398,12 +3462,48 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reelsFeed => 'مقاطع';
 
   @override
+  String get reelsGroupAll => 'الكل';
+
+  @override
+  String get reelsGroupFamous => 'أشهر القرّاء';
+
+  @override
+  String get reelsGroupGolden => 'الجيل الذهبي المصري';
+
+  @override
+  String get reelsGroupHaramain => 'أئمة الحرمين';
+
+  @override
+  String get reelsGroupMadinah => 'أئمة المسجد النبوي';
+
+  @override
+  String get reelsGroupMakkah => 'أئمة الحرم المكي';
+
+  @override
+  String get reelsGroupLoading => 'جارٍ جلب تلاوات هذه المجموعة…';
+
+  @override
   String reelsHidden(String name) {
     return 'تم إخفاء $name';
   }
 
   @override
-  String get reelsHide => 'إخفاء هذه القناة';
+  String get reelsHiddenLabel => 'مخفي';
+
+  @override
+  String get reelsHide => 'إخفاء هذا القارئ';
+
+  @override
+  String get reelsLiveBadge => 'مباشر';
+
+  @override
+  String get reelsLiveMadinah => 'المسجد النبوي · المدينة المنورة';
+
+  @override
+  String get reelsLiveMakkah => 'المسجد الحرام · مكة المكرمة';
+
+  @override
+  String get reelsLiveTitle => 'بث مباشر من الحرمين';
 
   @override
   String get reelsLoading => 'جارٍ جلب أحدث المقاطع…';
@@ -3416,7 +3516,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get reelsNote =>
-      'المقاطع معروضة من يوتيوب وإنستجرام بمشغّلاتها الرسمية، وتأتي تلقائيًا من قنوات إسلامية موثوقة اعتمدها التطبيق (تلاوات القرآن الكريم والدروس الدينية والنصائح والمواعظ).';
+      'التلاوات معروضة من يوتيوب بمشغّله الرسمي، وتأتي تلقائيًا من قنوات قرّاء موثوقة اعتمدها التطبيق. القسم للتلاوات فقط.';
 
   @override
   String get reelsOffline => 'تعذّر الوصول إلى يوتيوب. تحقّق من الاتصال بالإنترنت ثم أعد المحاولة.';
@@ -3445,6 +3545,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reelsPrev => 'المقطع السابق';
 
   @override
+  String get reelsReciters => 'القرّاء';
+
+  @override
+  String get reelsRecitersHint => 'اختر القرّاء الذين تظهر تلاواتهم لك';
+
+  @override
   String get reelsRemoveChannel => 'احذف القناة';
 
   @override
@@ -3462,6 +3568,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reelsReviewerMode => 'وضع المراجعة';
 
   @override
+  String get reelsSave => 'حفظ';
+
+  @override
+  String get reelsSaved => 'المحفوظة';
+
+  @override
+  String get reelsSavedEmpty => 'لم تحفظ أي تلاوة بعد. اضغط «حفظ» على أي تلاوة لتجدها هنا.';
+
+  @override
   String get reelsSearch => 'ابحث عن قناة';
 
   @override
@@ -3471,10 +3586,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reelsSearchNone => 'لا توجد نتائج، أو لا يوجد اتصال بالإنترنت.';
 
   @override
-  String get reelsShowHidden => 'إظهار القنوات المخفية';
+  String get reelsSeeAll => 'الكل';
 
   @override
-  String get reelsSub => 'تلاوات ودروس ومواعظ من قنوات موثوقة';
+  String get reelsShare => 'مشاركة';
+
+  @override
+  String get reelsShareCopied => 'تم نسخ الرابط';
+
+  @override
+  String get reelsShowHidden => 'إظهار القرّاء المخفيين';
+
+  @override
+  String get reelsShown => 'ظاهر';
+
+  @override
+  String get reelsSub => 'تلاوات قرّاء مصر الكبار وأئمة الحرمين وأشهر القرّاء';
 
   @override
   String get reelsSuggested => 'قنوات إسلامية مقترحة لك';
@@ -3486,13 +3613,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reelsTapToPlay => 'اضغط للتشغيل';
 
   @override
-  String get reelsTitle => 'ريلز إسلامية';
+  String get reelsTitle => 'تلاوات القرآن الكريم';
 
   @override
-  String get reelsTrusted => 'قناة موثوقة';
+  String get reelsTrusted => 'قارئ موثوق';
 
   @override
   String get reelsUndo => 'تراجع';
+
+  @override
+  String get reelsUnsave => 'محفوظة';
 
   @override
   String get reportAction => 'بلّغ عن خطأ';
@@ -4109,6 +4239,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get surahInfoPlace => 'مكان النزول';
+
+  @override
+  String get surahInfoShort => 'عن السورة';
 
   @override
   String get surahInfoTitle => 'عن السورة وأسباب نزولها';
@@ -4774,68 +4907,4 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zakatYearPassed => 'مرّ عام هجري كامل منذ بلغ مالي النصاب';
-
-  @override
-  String get readerFontSmallerShort => 'تصغير';
-
-  @override
-  String get readerFontBiggerShort => 'تكبير';
-
-  @override
-  String get readerFontSwitchShort => 'تغيير الخط';
-
-  @override
-  String get surahInfoShort => 'عن السورة';
-
-  @override
-  String get readerPrintedOffer => 'خط المدينة: حمّله للمصحف كامل مرة واحدة واقرأ بدون إنترنت (حوالي ١٤٠ ميجا)';
-
-  @override
-  String get readerPrintedDownload => 'تحميل المصحف كامل';
-
-  @override
-  String get readerPrintedResume => 'أكمل التحميل';
-
-  @override
-  String get readerPrintedLater => 'لاحقًا';
-
-  @override
-  String get readerPrintedSavedAll => 'خط المدينة محفوظ على الجهاز للمصحف كله، ولن يُحمَّل مرة أخرى';
-
-  @override
-  String get aboutProofTitle => 'المصادر والإثبات';
-
-  @override
-  String get aboutProofBody =>
-      'من أين أخذنا القرآن والتفسير والحديث وكل صوت في التطبيق، مع البصمات التي تثبت المطابقة مع المصدر، وكيف تتأكد بنفسك.';
-
-  @override
-  String get aboutProofOpen => 'افتح صفحة المصادر والإثبات';
-
-  @override
-  String get readerFontMenuTitle => 'خط المصحف';
-
-  @override
-  String readerFontOptSwitch(String font) {
-    return 'التبديل إلى $font';
-  }
-
-  @override
-  String readerFontNow(String font) {
-    return 'الخط الآن: $font';
-  }
-
-  @override
-  String readerFontOptSurah(String name) {
-    return 'تحميل سورة $name كاملة';
-  }
-
-  @override
-  String get readerFontOptAll => 'تحميل المصحف كامل مرة واحدة';
-
-  @override
-  String get readerFontOptHint => 'خط المدينة للقراءة بدون إنترنت، ولا يتحمّل مرة أخرى';
-
-  @override
-  String get readerFontSaved => 'محفوظ على الجهاز';
 }

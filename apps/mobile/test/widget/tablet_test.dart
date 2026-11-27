@@ -7,7 +7,7 @@ import 'package:rattil/ui/more_screen.dart';
 import 'package:rattil/ui/mushaf_page.dart';
 import 'package:rattil/ui/page_reader_screen.dart';
 import 'package:rattil/ui/prayer_screen.dart';
-import 'package:rattil/ui/reels_screen.dart';
+import 'package:rattil/ui/videos_home_screen.dart';
 import 'package:rattil/ui/settings_screen.dart';
 import 'package:rattil/ui/surah_list_screen.dart';
 import 'package:rattil/ui/surah_reader_screen.dart';
@@ -22,7 +22,7 @@ const ipadLarge = Size(1366, 1024);
 void main() {
   setUpAll(loadContent);
 
-  final tabs = <Type>[HomeScreen, SurahListScreen, PrayerScreen, AdhkarScreen, ReelsScreen, MoreScreen];
+  final tabs = <Type>[HomeScreen, SurahListScreen, PrayerScreen, AdhkarScreen, VideosHomeScreen, MoreScreen];
 
   for (final locale in ['ar', 'en']) {
     for (final size in [ipadPortrait, ipadLandscape, ipadLarge]) {

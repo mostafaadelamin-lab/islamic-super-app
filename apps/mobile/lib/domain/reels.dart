@@ -3,10 +3,9 @@
 /// Instagram's plain /embed/ page needs no Meta app, token or account, but it
 /// cannot autoplay (the viewer taps play).
 ///
-/// Owner policy (2026-11-09): only Quran recitations ("recitation"), religious
-/// lessons ("lesson") and advice/admonitions ("admonition") in line with the
-/// Quran and Sunnah, and only reels that passed a religious review
-/// ("approved") are shown to users.
+/// Owner policy (2026-11-27, supersedes 2026-11-09): Quran recitation only
+/// ("recitation"); lessons and admonitions were removed. Only reels that passed
+/// a religious review ("approved") are shown to users.
 /// Pending (unreviewed) reels are never shown; the two samples were removed (owner, 2026-11-13).
 ///
 /// Owner decision (2026-11-09 21:31): besides the curated list, the app pulls
@@ -37,9 +36,14 @@ class Reel {
     this.reviewer,
     this.sourceId,
     this.published,
+    this.group,
   });
 
-  static const categories = ['recitation', 'lesson', 'admonition'];
+  static const categories = ['recitation'];
+
+  /// Reciter groups (owner 2026-11-27): Egypt's golden generation, imams of the Makkah Haram,
+  /// imams of the Prophet's Mosque, and other famous reciters.
+  static const groups = ['golden', 'makkah', 'madinah', 'famous'];
   static final _ytId = RegExp(r'^[A-Za-z0-9_-]{11}$');
   static final _igCode = RegExp(r'^[A-Za-z0-9_-]{5,40}$');
 
@@ -98,6 +102,9 @@ class Reel {
   /// The trusted channel an automatic reel came from (null for curated reels).
   final String? sourceId;
   final DateTime? published;
+
+  /// The reciter group of the channel the reel came from (see [groups]).
+  final String? group;
 
   bool get isAuto => status == ReelStatus.auto;
 
@@ -169,6 +176,7 @@ class ReelSource {
     required this.nameAr,
     required this.nameEn,
     required this.category,
+    this.group,
   });
 
   static final channelPattern = RegExp(r'^UC[A-Za-z0-9_-]{22}$');
@@ -194,10 +202,14 @@ class ReelSource {
       nameAr: ar,
       nameEn: en,
       category: raw['category'] as String,
+      group: Reel.groups.contains(raw['group']) ? raw['group'] as String : null,
     );
   }
 
   final String id;
+
+  /// The reciter group (null for a channel the viewer added; shown under «الكل» only).
+  final String? group;
 
   /// The channel id (UC…), or null when the owner gave an @handle; the
   /// handle is turned into the id at run time from the channel page.
@@ -312,6 +324,7 @@ class ReelSource {
       speakerEn: nameEn,
       sourceId: id,
       published: published,
+      group: group,
     );
   }
 
@@ -338,4 +351,61 @@ List<Reel> mixReels(Iterable<List<Reel>> perSource) {
     }
   }
   return out;
+}
+
+/// An official live stream from the Haramain (owner 2026-11-27): the channel's current live video,
+/// played through YouTube's privacy-enhanced embed (no API key).
+class LiveChannel {
+  const LiveChannel({
+    required this.id,
+    required this.channelId,
+    required this.place,
+    required this.nameAr,
+    required this.nameEn,
+  });
+
+  static const places = ['makkah', 'madinah'];
+
+  static LiveChannel? tryParse(Object? raw) {
+    if (raw is! Map<String, dynamic>) return null;
+    final cid = raw['channelId'];
+    final place = raw['place'];
+    final name = raw['name'];
+    if (cid is! String || !ReelSource.channelPattern.hasMatch(cid) || !places.contains(place)) return null;
+    if (name is! Map<String, dynamic> || name['ar'] is! String || (name['ar'] as String).trim().isEmpty) return null;
+    final ar = name['ar'] as String;
+    final en = name['en'] is String && (name['en'] as String).isNotEmpty ? name['en'] as String : ar;
+    return LiveChannel(id: 'live-$place', channelId: cid, place: place as String, nameAr: ar, nameEn: en);
+  }
+
+  static List<LiveChannel> listFromJson(Map<String, dynamic> j) {
+    if (j['schema'] != 'reel-sources.v1') return const [];
+    final items = j['live'];
+    return List.unmodifiable([if (items is List) ...items.map(tryParse).whereType<LiveChannel>()]);
+  }
+
+  final String id;
+  final String channelId;
+  final String place;
+  final String nameAr;
+  final String nameEn;
+
+  String name(bool arabic) => arabic ? nameAr : nameEn;
+
+  Uri embedUri({String origin = ReelCatalog.embedOrigin}) => Uri.https(
+    'www.youtube-nocookie.com',
+    '/embed/live_stream',
+    {'channel': channelId, 'autoplay': '1', 'playsinline': '1', 'rel': '0', 'modestbranding': '1', 'origin': origin},
+  );
+
+  /// The live page on YouTube (opened when the embed refuses to play).
+  Uri get watchUri => Uri.https('www.youtube.com', '/channel/$channelId/live');
+
+  String embedHtml() =>
+      '<!doctype html><html><head><meta charset="utf-8">'
+      '<meta name="viewport" content="width=device-width,initial-scale=1">'
+      '<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}'
+      'iframe{position:fixed;inset:0;width:100%;height:100%;border:0}</style></head><body>'
+      '<iframe src="${embedUri()}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" '
+      'allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></body></html>';
 }

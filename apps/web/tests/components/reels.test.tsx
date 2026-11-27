@@ -1,7 +1,8 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReelsFeed } from "@/components/ReelsFeed";
-import { reelsFeedStore, reelsPrefsStore, type Reel } from "@/lib/reels";
+import { VideosHub } from "@/components/VideosHub";
+import { reelsFeedStore, reelsPrefsStore, savedReelsStore, type Reel } from "@/lib/reels";
 import { resetStores } from "./reset";
 
 const base: Reel = {
@@ -22,8 +23,7 @@ const pending: Reel = {
   id: "yt-26dRG7OeL6Q",
   ref: "26dRG7OeL6Q",
   url: "https://www.youtube.com/watch?v=26dRG7OeL6Q",
-  category: "lesson",
-  title: { ar: "موعظة", en: "Reminder" },
+  title: { ar: "تلاوة ثانية", en: "Second recitation" },
   status: "pending",
   reviewer: null,
 };
@@ -69,15 +69,13 @@ describe("ReelsFeed", () => {
       platform: "instagram",
       ref: "C1a2B3c4D5e",
       url: "https://www.instagram.com/reel/C1a2B3c4D5e/",
-      category: "admonition",
-      title: { ar: "موعظة", en: "Admonition" },
+      title: { ar: "تلاوة", en: "Recitation clip" },
     };
     render(<ReelsFeed locale="en" reels={[ig, base]} />);
     expect(screen.getByTestId("reel-player").getAttribute("src")).toBe(
       "https://www.instagram.com/reel/C1a2B3c4D5e/embed/",
     );
-    expect(screen.getByText("Advice & admonition")).toBeInTheDocument();
-    expect(screen.getAllByText("Instagram")).toHaveLength(1);
+    expect(screen.queryByText("Advice & admonition")).toBeNull();
     expect(screen.getByRole("link", { name: "Open on Instagram" })).toHaveAttribute("href", ig.url);
     screen.getByTestId("reels-feed").focus();
     await userEvent.keyboard("{ArrowDown}");
@@ -92,7 +90,7 @@ describe("ReelsFeed", () => {
     await userEvent.keyboard("{ArrowDown}");
     expect(screen.getByTestId("reels-position")).toHaveTextContent("2 / 2");
     expect(screen.getByTestId("reel-player").getAttribute("src")).toContain("/embed/26dRG7OeL6Q?");
-    expect(screen.getByText("Religious lesson")).toBeInTheDocument();
+    expect(screen.queryByText("Religious lesson")).toBeNull();
   });
 });
 
@@ -120,6 +118,7 @@ const feedBody = {
       channelId: "UCYuUcfXvsHapABTcPRWCEoQ",
       name: { ar: "الشيخ ياسر الدوسري", en: "Sheikh Yasser Al-Dosari" },
       category: "recitation",
+      group: "makkah",
     },
   ],
   items: [autoReel("AAAAAAAAAA1", "2026-11-08T10:00:00Z"), autoReel("BBBBBBBBBB2", "2026-11-09T10:00:00Z")],
@@ -137,7 +136,7 @@ describe("ReelsFeed: automatic reels from trusted channels", () => {
     await waitFor(() => expect(screen.getByTestId("reels-feed")).toBeInTheDocument());
     expect(calls).toEqual(["/api/v1/reels/feed"]);
     expect(screen.getByTestId("reel-player").getAttribute("src")).toContain("/embed/BBBBBBBBBB2?");
-    expect(screen.getAllByText("Trusted channel")).toHaveLength(2);
+    expect(screen.queryByText("Trusted channel")).toBeNull();
     expect(screen.queryByTestId("reel-pending")).toBeNull();
     // cached: a second mount does not fetch again
     render(<ReelsFeed locale="en" reels={[]} fetchImpl={okFetch(calls)} />);
@@ -167,5 +166,49 @@ describe("ReelsFeed: automatic reels from trusted channels", () => {
     await userEvent.click(screen.getByTestId("reels-retry"));
     await waitFor(() => expect(screen.getByTestId("reels-feed")).toBeInTheDocument());
     expect(reelsFeedStore.get()?.items).toHaveLength(2);
+  });
+});
+
+describe("videos page (owner 2026-11-27): live, chips, groups, player tabs, save, reciters", () => {
+  it("shows the live streams, the chips and the Haramain row; a card opens the player in that tab", async () => {
+    render(<VideosHub locale="ar" reels={[]} fetchImpl={okFetch()} />);
+    expect(screen.getByTestId("videos-live-live-makkah")).toBeInTheDocument();
+    expect(screen.getByTestId("videos-live-live-madinah")).toBeInTheDocument();
+    for (const k of ["all", "haramain", "golden", "famous", "saved"]) {
+      expect(screen.getByTestId(`videos-tab-${k}`)).toBeInTheDocument();
+    }
+    await waitFor(() => expect(screen.getByTestId("videos-card-yt-BBBBBBBBBB2")).toBeInTheDocument());
+    expect(screen.getByTestId("videos-section-haramain")).toHaveTextContent("أئمة الحرمين");
+    await userEvent.click(screen.getByTestId("videos-card-yt-AAAAAAAAAA1"));
+    expect(screen.getByTestId("reel-player").getAttribute("src")).toContain("/embed/AAAAAAAAAA1?");
+    for (const k of ["all", "haramain", "golden", "live"]) {
+      expect(screen.getByTestId(`reels-tab-${k}`)).toBeInTheDocument();
+    }
+    expect(screen.getByTestId("reels-tab-haramain")).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByTestId("reel-group-yt-AAAAAAAAAA1")).toHaveTextContent("أئمة الحرمين");
+    await userEvent.click(screen.getByTestId("reels-tab-golden"));
+    expect(screen.queryByTestId("reel-player")).toBeNull();
+    await userEvent.click(screen.getByTestId("reels-tab-live"));
+    expect(screen.getByTestId("live-player").getAttribute("src")).toContain("/embed/live_stream?channel=");
+    await userEvent.click(screen.getByTestId("reels-back"));
+    expect(screen.getByTestId("videos-home")).toBeInTheDocument();
+  });
+  it("saves a recitation; «المحفوظة» lists it", async () => {
+    savedReelsStore.set([]);
+    render(<VideosHub locale="ar" reels={[]} fetchImpl={okFetch()} />);
+    await waitFor(() => expect(screen.getByTestId("videos-card-yt-BBBBBBBBBB2")).toBeInTheDocument());
+    await userEvent.click(screen.getByTestId("videos-card-yt-BBBBBBBBBB2"));
+    await userEvent.click(screen.getByTestId("reel-save-yt-BBBBBBBBBB2"));
+    expect(savedReelsStore.get().map((r) => r.ref)).toEqual(["BBBBBBBBBB2"]);
+    await userEvent.click(screen.getByTestId("reels-back"));
+    await userEvent.click(screen.getByTestId("videos-tab-saved"));
+    expect(screen.getByTestId("videos-card-yt-BBBBBBBBBB2")).toBeInTheDocument();
+  });
+  it("reciters list: grouped, unchecking hides a reciter", async () => {
+    render(<VideosHub locale="ar" reels={[]} fetchImpl={okFetch()} />);
+    await userEvent.click(screen.getByTestId("videos-reciters"));
+    await waitFor(() => expect(screen.getByTestId("reciters-group-makkah")).toBeInTheDocument());
+    await userEvent.click(screen.getByTestId(`reciter-toggle-${yasser}`));
+    expect(reelsPrefsStore.get().hidden).toEqual([yasser]);
   });
 });

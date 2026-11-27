@@ -9,13 +9,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../domain/reels.dart';
 import '../domain/video_search.dart';
 
-/// Pulls the newest Shorts of the trusted channels from YouTube's public
-/// feeds (no API key, no account), caches them on the device and mixes them.
-/// The viewer can hide a channel they do not want to see.
+/// Pulls the newest recitations of the trusted reciters' channels from YouTube's
+/// public feeds (no API key, no account), caches them on the device and mixes them.
+/// Owner 2026-11-27: recitation only, grouped into tabs (all, Haramain imams,
+/// Egypt's golden generation, famous reciters) plus the Haramain live streams.
+/// The viewer can hide a reciter and save recitations.
 class ReelsFeedController extends ChangeNotifier {
   ReelsFeedController({
     required List<ReelSource> sources,
     this.suggestionPool = const [],
+    this.live = const [],
     required http.Client httpClient,
     required SharedPreferences prefs,
     DateTime Function()? clock,
@@ -31,7 +34,103 @@ class ReelsFeedController extends ChangeNotifier {
 
   /// Extra trusted Islamic channels the app adds by itself as the viewer's interest grows.
   final List<ReelSource> suggestionPool;
+
+  /// Official live streams from the Haramain.
+  final List<LiveChannel> live;
   final http.Client _http;
+
+  /// Tabs (owner 2026-11-27). The reels player shows all, haramain, golden and live;
+  /// the videos home also has famous and saved.
+  static const tabAll = 'all';
+  static const tabHaramain = 'haramain';
+  static const tabGolden = 'golden';
+  static const tabFamous = 'famous';
+  static const tabLive = 'live';
+  static const tabSaved = 'saved';
+
+  /// Does [s] belong to [tab]? A channel the viewer added has no group and shows under «الكل» only.
+  static bool inTab(ReelSource s, String tab) => switch (tab) {
+    tabAll => true,
+    tabHaramain => s.group == 'makkah' || s.group == 'madinah',
+    tabGolden => s.group == 'golden',
+    tabFamous => s.group == 'famous',
+    _ => false,
+  };
+
+  /// Visible reciters of [tab], in the owner's order.
+  List<ReelSource> sourcesIn(String tab) => [
+    for (final s in visibleSources)
+      if (inTab(s, tab)) s,
+  ];
+
+  /// Cached recitations of [tab] (saved ones for [tabSaved]), mixed across its reciters.
+  List<Reel> itemsIn(String tab) {
+    if (tab == tabSaved) return saved;
+    if (tab == tabAll) return items;
+    return mixReels([for (final s in sourcesIn(tab)) _cached(s)?.$2 ?? const <Reel>[]]);
+  }
+
+  /// Cached recitations of one reciter, newest first.
+  List<Reel> itemsOf(String sourceId) {
+    final s = source(sourceId);
+    return s == null ? const [] : mixReels([_cached(s)?.$2 ?? const <Reel>[]]);
+  }
+
+  // --- Saved recitations -------------------------------------------------------
+
+  static const savedKey = 'reels.saved';
+  static const savedMax = 200;
+
+  /// Saved recitations, newest saved first (kept on this device only).
+  List<Reel> get saved => [
+    for (final raw in _prefs.getStringList(savedKey) ?? const <String>[]) ?_savedReel(_decode(raw)),
+  ];
+
+  Reel? _savedReel(Object? raw) {
+    if (raw is! Map) return null;
+    final src = source(raw['sourceId'] as String?);
+    if (src != null) return src.fromCache(raw);
+    final name = raw['speaker'] is String ? raw['speaker'] as String : '';
+    return ReelSource(
+      id: (raw['sourceId'] as String?) ?? 'saved',
+      channelId: null,
+      handle: 'saved',
+      nameAr: name,
+      nameEn: name,
+      category: 'recitation',
+      group: Reel.groups.contains(raw['group']) ? raw['group'] as String : null,
+    ).fromCache(raw);
+  }
+
+  bool isSaved(Reel r) => saved.any((x) => x.ref == r.ref);
+
+  /// Saves [r], or removes it when it is already saved. Returns true when it is now saved.
+  Future<bool> toggleSave(Reel r) async {
+    final list = [...?_prefs.getStringList(savedKey)];
+    final before = list.length;
+    list.removeWhere((raw) {
+      final j = _decode(raw);
+      return j is Map && j['ref'] == r.ref;
+    });
+    final nowSaved = list.length == before;
+    if (nowSaved) {
+      list.insert(
+        0,
+        jsonEncode({
+          'ref': r.ref,
+          'title': r.titleAr,
+          'sourceId': r.sourceId,
+          'speaker': r.speakerAr,
+          'group': r.group,
+          'published': r.published?.toUtc().toIso8601String(),
+        }),
+      );
+      if (list.length > savedMax) list.removeRange(savedMax, list.length);
+    }
+    await _prefs.setStringList(savedKey, list);
+    notifyListeners();
+    return nowSaved;
+  }
 
   static const userKey = 'reels.userSources';
   static const suggestedKey = 'reels.suggested';
@@ -108,7 +207,7 @@ class ReelsFeedController extends ChangeNotifier {
   }
 
   /// Adds a channel the viewer found by searching.
-  Future<void> addUserSource(String channelId, String name, {String category = 'lesson'}) async {
+  Future<void> addUserSource(String channelId, String name, {String category = 'recitation'}) async {
     if (!ReelSource.channelPattern.hasMatch(channelId)) return;
     final list = [...?_prefs.getStringList(userKey)];
     if (sources.any((s) => s.channelId == channelId)) {
@@ -145,7 +244,10 @@ class ReelsFeedController extends ChangeNotifier {
       Uri.https('www.youtube.com', '/results', {'search_query': q, 'sp': 'EgIQAg==', 'hl': 'ar'}),
     );
     if (page == null) return const [];
-    return parseChannelSearch(page);
+    return [
+      for (final c in parseChannelSearch(page))
+        if (allowedChannel(c.title)) c,
+    ];
   }
 
   @visibleForTesting
@@ -216,25 +318,33 @@ class ReelsFeedController extends ChangeNotifier {
     try {
       final j = jsonDecode(raw) as Map<String, dynamic>;
       final at = DateTime.parse(j['at'] as String);
-      final list = [for (final r in j['items'] as List<dynamic>) s.fromCache(r)].whereType<Reel>().toList();
+      final list = [
+        for (final r in j['items'] as List<dynamic>) ?s.fromCache(r),
+      ].where((r) => allowedFeedTitle(r.titleAr)).toList();
       return (at, list);
     } on Object {
       return null;
     }
   }
 
-  /// Fetches every visible channel whose cache is older than [maxAge] (or all
-  /// of them with [force]). Never throws; a channel that fails keeps its cache.
-  Future<void> refresh({bool force = false}) => _inFlight ??= _refresh(force).whenComplete(() => _inFlight = null);
+  /// Fetches every visible channel of [tab] whose cache is older than [maxAge] (or all
+  /// of them with [force]), [batch] channels at a time so the list fills quickly without
+  /// a burst of requests; channels with no cache yet go first. Never throws; a channel
+  /// that fails keeps its cache.
+  Future<void> refresh({bool force = false, String tab = tabAll}) =>
+      _inFlight ??= _refresh(force, tab).whenComplete(() => _inFlight = null);
 
-  Future<void> _refresh(bool force) async {
+  static const batch = 8;
+
+  Future<void> _refresh(bool force, String tab) async {
     final now = _clock();
     bool stale(ReelSource s) {
       final at = _cached(s)?.$1;
       return force || at == null || now.difference(at) >= maxAge;
     }
 
-    final due = visibleSources.where(stale).toList();
+    final due = sourcesIn(tab == tabSaved || tab == tabLive ? tabAll : tab).where(stale).toList()
+      ..sort((a, b) => (_cached(a) == null ? 0 : 1).compareTo(_cached(b) == null ? 0 : 1));
     if (due.isEmpty) {
       _failed = false;
       return;
@@ -242,23 +352,26 @@ class ReelsFeedController extends ChangeNotifier {
     _loading = true;
     notifyListeners();
     var anyOk = false;
-    await Future.wait(
-      due.map((s) async {
-        final list = await _fetch(s);
-        if (list == null) return;
-        anyOk = true;
-        await _prefs.setString(
-          cacheKey(s.id),
-          jsonEncode({
-            'at': now.toUtc().toIso8601String(),
-            'items': [
-              for (final r in list.take(perSource))
-                {'ref': r.ref, 'title': r.titleAr, 'published': r.published?.toUtc().toIso8601String()},
-            ],
-          }),
-        );
-      }),
-    );
+    for (var i = 0; i < due.length; i += batch) {
+      await Future.wait(
+        due.skip(i).take(batch).map((s) async {
+          final list = await _fetch(s);
+          if (list == null) return;
+          anyOk = true;
+          await _prefs.setString(
+            cacheKey(s.id),
+            jsonEncode({
+              'at': now.toUtc().toIso8601String(),
+              'items': [
+                for (final r in list.where((r) => allowedFeedTitle(r.titleAr)).take(perSource))
+                  {'ref': r.ref, 'title': r.titleAr, 'published': r.published?.toUtc().toIso8601String()},
+              ],
+            }),
+          );
+        }),
+      );
+      if (i + batch < due.length) notifyListeners();
+    }
     _loading = false;
     _failed = !anyOk && items.isEmpty;
     notifyListeners();

@@ -1,6 +1,12 @@
 import { readRepoJson } from "../repo";
 import {
+  BUNDLED_SOURCES,
   embedUrl,
+  inTab,
+  LIVE_CHANNELS,
+  liveEmbedUrl,
+  savedReelsStore,
+  toggleSaved,
   fetchReelsFeed,
   mixReels,
   posterUrl,
@@ -24,14 +30,13 @@ const yt: Reel = {
   reviewer: "Reviewer",
   reviewedAt: "2026-11-09",
 };
-const pend: Reel = { ...yt, id: "yt-26dRG7OeL6Q", ref: "26dRG7OeL6Q", category: "lesson", status: "pending" };
+const pend: Reel = { ...yt, id: "yt-26dRG7OeL6Q", ref: "26dRG7OeL6Q", status: "pending" };
 const ig: Reel = {
   ...yt,
   id: "ig-C1a2B3c4D5e",
   platform: "instagram",
   ref: "C1a2B3c4D5e",
   url: "https://www.instagram.com/reel/C1a2B3c4D5e/",
-  category: "admonition",
 };
 
 describe("reels", () => {
@@ -52,6 +57,8 @@ describe("reels", () => {
       { ...pend, ref: "../../evil" },
       { ...ig, ref: "a/b" },
       { ...yt, category: "music" },
+      { ...yt, category: "lesson" }, // owner 2026-11-27: recitation only
+      { ...yt, category: "admonition" },
       null,
     ];
     expect(sanitizeReels({ items: [yt, ...bad, pend, ig] })).toEqual([yt, pend, ig]);
@@ -110,5 +117,31 @@ describe("automatic reels", () => {
     const bad = (async () => new Response("{}", { status: 503 })) as unknown as typeof fetch;
     await expect(fetchReelsFeed("https://api.example", bad, 0)).rejects.toThrow();
     expect(sanitizeSources("x")).toEqual([]);
+  });
+});
+
+describe("recitation only: groups, live, saved (owner 2026-11-27)", () => {
+  it("ships the reciters by group and the two Haramain live streams", () => {
+    expect(BUNDLED_SOURCES.length).toBeGreaterThan(40);
+    expect(BUNDLED_SOURCES.every((s) => s.category === "recitation" && !!s.group)).toBe(true);
+    expect(LIVE_CHANNELS.map((l) => l.place)).toEqual(["makkah", "madinah"]);
+    const u = new URL(liveEmbedUrl(LIVE_CHANNELS[0]!));
+    expect(u.pathname).toBe("/embed/live_stream");
+    expect(u.searchParams.get("channel")).toBe(LIVE_CHANNELS[0]!.channelId);
+  });
+  it("tabs: Haramain = Makkah + Madinah imams; viewer channels only under «الكل»", () => {
+    expect(inTab("makkah", "haramain")).toBe(true);
+    expect(inTab("madinah", "haramain")).toBe(true);
+    expect(inTab("golden", "haramain")).toBe(false);
+    expect(inTab("golden", "golden")).toBe(true);
+    expect(inTab(null, "all")).toBe(true);
+    expect(inTab(null, "golden")).toBe(false);
+  });
+  it("saves and unsaves a recitation", () => {
+    savedReelsStore.set([]);
+    expect(toggleSaved(yt)).toBe(true);
+    expect(savedReelsStore.get().map((r) => r.ref)).toEqual([yt.ref]);
+    expect(toggleSaved(yt)).toBe(false);
+    expect(savedReelsStore.get()).toEqual([]);
   });
 });

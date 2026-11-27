@@ -13,7 +13,7 @@ void main() {
 
   const page =
       'var ytInitialData = {"contents":[{"videoRenderer":{"videoId":"abcdefghijk","thumbnail":{},'
-      '"title":{"runs":[{"text":"تفسير سورة الكهف"}]},"ownerText":{"runs":[{"text":"قناة",'
+      '"title":{"runs":[{"text":"تلاوة سورة الكهف"}]},"ownerText":{"runs":[{"text":"قناة",'
       '"navigationEndpoint":{"browseEndpoint":{"browseId":"UCaaaaaaaaaaaaaaaaaaaaaa"}}}]}}}]};';
 
   testWidgets('search shows Islamic videos and remembers the search; history chips search again', (tester) async {

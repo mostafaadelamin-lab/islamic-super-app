@@ -18,7 +18,7 @@ import 'l10n_ext.dart';
 import 'more_screen.dart';
 import 'parent_gate.dart';
 import 'prayer_screen.dart';
-import 'reels_screen.dart';
+import 'videos_home_screen.dart';
 import 'surah_list_screen.dart';
 import 'tasbih_screen.dart';
 import 'r_icon.dart';
@@ -121,7 +121,7 @@ class HomeShellState extends State<HomeShell> {
       2 => const PrayerScreen(),
       3 => const AdhkarScreen(),
       // Parent lock: children use the app (Google Play Families policy, owner 2026-11-20).
-      4 => const ParentGate(child: ReelsScreen()),
+      4 => const ParentGate(child: VideosHomeScreen()),
       _ => const MoreScreen(),
     };
     // A back arrow on every tab but Home; it and the phone's back button return to the tab opened

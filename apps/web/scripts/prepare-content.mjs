@@ -135,6 +135,8 @@ writeJson(
   join(gen, "reel-suggestions.json"),
   readJson("apps/mobile/assets/content/reel-suggestions.v1.json"),
 );
+// The reciters (by group) and the Haramain live streams for the videos page (owner 2026-11-27).
+writeJson(join(gen, "reel-sources.json"), readJson("content/reels/dist/reel-sources.v1.json"));
 writeJson(join(app, "netlify/lib/reel-sources.json"), {
   feed: readJson("content/reels/dist/reel-sources.v1.json").sources,
   suggested: readJson("apps/mobile/assets/content/reel-suggestions.v1.json").sources,

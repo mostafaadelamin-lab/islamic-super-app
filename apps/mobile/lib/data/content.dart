@@ -76,6 +76,7 @@ class AppContent {
     this.reels = ReelCatalog.empty,
     this.reelSources = const [],
     this.reelSuggestions = const [],
+    this.reelLive = const [],
     this.stories = StoryCatalog.empty,
     this.magneticModel,
     this.links = const AppLinks(),
@@ -138,6 +139,9 @@ class AppContent {
   final List<ReelSource> reelSources;
   final List<ReelSource> reelSuggestions;
 
+  /// Official live streams from the Haramain.
+  final List<LiveChannel> reelLive;
+
   /// Quranic stories (verse ranges) and narrated series (audio only).
   final StoryCatalog stories;
 
@@ -194,6 +198,7 @@ class AppContent {
       versions: await j(versionsAsset),
       reels: ReelCatalog.fromJson(await j(reelsAsset)),
       reelSources: ReelSource.listFromJson(await j(reelSourcesAsset)),
+      reelLive: LiveChannel.listFromJson(await j(reelSourcesAsset)),
       reelSuggestions: ReelSource.listFromJson(await j(reelSuggestionsAsset)),
       stories: StoryCatalog.fromJson(await j(storiesAsset), [for (final s in quran.surahs) s.ayahCount]),
       magneticModel: WorldMagneticModel.fromJson(await j(wmmAsset)),

@@ -2,8 +2,10 @@
  * Islamic videos engine for the website (runs as a Netlify Function: browsers cannot read YouTube directly).
  * Same rules as the mobile app (apps/mobile/lib/domain/video_search.dart):
  *  - the feed = newest videos of the trusted channels the owner approved (content/reels/sources.json);
- *  - search = YouTube video search, keeping only trusted channels or titles that are clearly Quran recitation,
- *    religious lessons or advice/admonitions, and never titles with music/songs/entertainment words.
+ *  - RECITATION ONLY (owner decision 2026-11-27): every video, from the feed or a search, must look like Quran
+ *    recitation (see allowedFeedTitle / allowedVideo); lessons, sermons, nasheeds, duas and the like are left out,
+ *    and so is anything naming a sheikh the owner excluded (EXCLUDED_PEOPLE);
+ *  - never titles with music/songs/entertainment words.
  * No API key and no account: public feeds and the public results page only.
  */
 
@@ -154,6 +156,31 @@ export const BLOCKED_WORDS = [
   "dj ",
 ];
 
+/** Words that show a title is Quran recitation (normalized forms). Prayer names: the Haramain channels title
+ *  their uploads "صلاة العشاء من المسجد الحرام – تلاوة …". */
+export const RECITATION_WORDS = [
+  "قران", "سوره", "سور", "تلاوه", "تلاوات", "ترتيل", "تجويد", "مصحف", "ايات", "قارئ", "القارئ", "مقرئ",
+  "تراويح", "تهجد", "قيام الليل", "فجريه", "عشائيه", "عشائيات", "صلاه الفجر", "صلاه العشاء", "صلاه المغرب",
+  "صلاه الظهر", "صلاه العصر", "ختمه", "رقيه", "quran", "koran", "recitation", "surah", "surat", "sura", "tilawat", "tilawah", "tajweed", "taraweeh",
+  "tarawih", "qiyam", "fajr", "isha", "maghrib",
+];
+
+/** Not recitation even on a reciter's channel (owner 2026-11-27: videos = recitation only). No surah names here:
+ *  "القصص" or "الشرح" must still pass, so قصص/شرح are not listed. */
+export const NON_RECITATION_WORDS = [
+  "خطبه", "خطبتي", "خطبتا", "درس", "دروس", "محاضره", "محاضرات", "موعظه", "مواعظ", "نصيحه", "نصائح", "فتوي",
+  "فتاوي", "لقاء", "حوار", "برنامج", "بودكاست", "نشيد", "انشوده", "اناشيد", "قصيده", "دعاء", "ادعيه", "تكبيرات",
+  "اذان", "تفسير", "سؤال", "اسئله", "مقابله",
+  "lecture", "lesson", "khutbah", "khutba", "sermon", "nasheed", "anasheed", "dua", "podcast", "interview",
+];
+
+/** Never shown (owner 2026-11-26/27: jailed, or ever in a political current). Matched as whole phrases. */
+export const EXCLUDED_PEOPLE = [
+  "نبيل العوضي", "محمد العريفي", "صالح المنجد", "محمد حسين يعقوب", "ايمن عبد الرحيم", "بدر المشاري",
+  "عبدالله بصفر", "عبد الله بصفر", "صالح ال طالب", "بندر بليله", "عمرو خالد", "محمد حسان", "عائض القرني",
+  "راتب النابلسي", "حازم شومان", "طارق السويدان", "احمد عبد المنعم", "ياسر الحزيمي",
+];
+
 /** Arabic words may carry a joined prefix (و، ف، ب، ل، ال، وال، بال، فال، لل). */
 const AR_PREFIX = /^(?:و|ف|ب|ل|ك)?(?:ال|ل)?/;
 const hasWord = (text, words) => {
@@ -173,13 +200,25 @@ const hasWord = (text, words) => {
 
 export const isBlocked = (text) => hasWord(text, BLOCKED_WORDS);
 export const looksIslamic = (text) => hasWord(text, ISLAMIC_WORDS);
+export const looksRecitation = (text) => hasWord(text, RECITATION_WORDS) || String(text).includes("﴿");
+export const namesExcluded = (text) => hasWord(text, EXCLUDED_PEOPLE);
+/** Blocked, not recitation, or naming an excluded sheikh. */
+export const notRecitation = (text) =>
+  isBlocked(text) || hasWord(text, NON_RECITATION_WORDS) || namesExcluded(text);
 
-/** A search result may be shown: never a blocked title; trusted channels always; others only clearly Islamic. */
+/** A video from a reciter's channel may join the feed: it must look like recitation. */
+export const allowedFeedTitle = (title) => !notRecitation(title) && looksRecitation(title);
+
+/** A search result may be shown: recitation only; trusted reciters' channels first. */
 export function allowedVideo(hit, trustedChannelIds) {
-  if (isBlocked(hit.title) || isBlocked(hit.channel ?? "")) return false;
+  const channel = hit.channel ?? "";
+  if (notRecitation(hit.title) || isBlocked(channel) || namesExcluded(channel)) return false;
   if (hit.channelId && trustedChannelIds.has(hit.channelId)) return true;
-  return looksIslamic(hit.title) || looksIslamic(hit.channel ?? "");
+  return looksRecitation(hit.title);
 }
+
+/** A channel from the channel search may be added: its name must say recitation/Quran. */
+export const allowedChannel = (title) => !notRecitation(title) && looksRecitation(title);
 
 export const shortsFeed = (cid) => `https://www.youtube.com/feeds/videos.xml?playlist_id=UUSH${cid.slice(2)}`;
 export const channelFeed = (cid) => `https://www.youtube.com/feeds/videos.xml?channel_id=${cid}`;
@@ -329,6 +368,7 @@ const toReel = (src, r) => ({
   title: { ar: r.title, en: r.title },
   speaker: src.name,
   category: src.category,
+  group: src.group ?? null,
   source: null,
   status: "auto",
   reviewer: null,
@@ -348,17 +388,21 @@ export async function buildFeed(sources, get) {
       }
       if (!cid || !CHANNEL_ID.test(cid)) return [];
       const items = (await fetchSource(cid, get)) ?? [];
-      return items.slice(0, PER_SOURCE).map((r) => toReel(s, r));
+      return items
+        .filter((r) => allowedFeedTitle(r.title))
+        .slice(0, PER_SOURCE)
+        .map((r) => toReel(s, r));
     }),
   );
   return {
     schema: "reels-feed.v1",
-    sources: sources.map(({ id, channelId, handle, name, category }) => ({
+    sources: sources.map(({ id, channelId, handle, name, category, group }) => ({
       id,
       channelId,
       handle,
       name,
       category,
+      group: group ?? null,
     })),
     items: mix(lists),
   };
@@ -410,13 +454,17 @@ export async function searchChannels(query, get) {
   if (!q || isBlocked(q)) return { schema: "channel-search.v1", query: q, items: [] };
   const page = await get(channelSearchPage(q));
   if (page == null) throw new Error("youtube unreachable");
-  return { schema: "channel-search.v1", query: q, items: parseChannelSearch(page) };
+  return {
+    schema: "channel-search.v1",
+    query: q,
+    items: parseChannelSearch(page).filter((c) => allowedChannel(c.title)),
+  };
 }
 
 /** GET /api/v1/reels/channel?id=UC…: one channel the viewer added (same reel shape as the feed). */
 export async function channelReels(cid, get) {
   if (!CHANNEL_ID.test(String(cid ?? ""))) return null;
-  const src = { id: `yt-${cid}`, channelId: cid, name: { ar: "", en: "" }, category: "lesson" };
+  const src = { id: `yt-${cid}`, channelId: cid, name: { ar: "", en: "" }, category: "recitation" };
   const feed = await buildFeed([src], get);
   return { schema: "reels-channel.v1", channelId: cid, items: feed.items };
 }

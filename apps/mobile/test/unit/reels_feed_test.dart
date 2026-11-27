@@ -18,9 +18,10 @@ const yasser = ReelSource(
 const other = ReelSource(
   id: 'yt-UCaaaaaaaaaaaaaaaaaaaaaa',
   channelId: 'UCaaaaaaaaaaaaaaaaaaaaaa',
-  nameAr: 'قناة مواعظ',
-  nameEn: 'Admonitions',
-  category: 'admonition',
+  nameAr: 'الشيخ محمود خليل الحصري',
+  nameEn: 'Sheikh Al-Husary',
+  category: 'recitation',
+  group: 'golden',
 );
 
 String feed(List<(String, String, String)> entries) =>
@@ -52,7 +53,14 @@ void main() {
             'platform': 'youtube',
             'handle': 'إسلاميات123',
             'name': {'ar': 'إسلاميات'},
-            'category': 'admonition',
+            'category': 'recitation',
+            'group': 'famous',
+          },
+          {
+            'platform': 'youtube',
+            'channelId': 'UCbbbbbbbbbbbbbbbbbbbbbb',
+            'name': {'ar': 'دروس'},
+            'category': 'lesson',
           },
           {
             'platform': 'youtube',
@@ -77,6 +85,8 @@ void main() {
       });
       expect(list.map((s) => s.id), ['yt-UCYuUcfXvsHapABTcPRWCEoQ', 'yt-@إسلاميات123']);
       expect(list.first.nameEn, 'ياسر');
+      expect(list.first.group, isNull);
+      expect(list.last.group, 'famous');
       expect(list.last.channelPage.toString(), startsWith('https://www.youtube.com/@'));
       expect(ReelSource.listFromJson({'schema': 'other'}), isEmpty);
     });
@@ -115,7 +125,10 @@ void main() {
   test('mixReels alternates channels, newest first, without duplicates', () {
     final a = yasser.parseFeed(fixture); // A(8th) B(9th) C(7th)
     final b = other.parseFeed(
-      feed([('DDDDDDDDDD4', 'موعظة', '2026-11-01T00:00:00Z'), ('EEEEEEEEEE5', 'نصيحة', '2026-11-02T00:00:00Z')]),
+      feed([
+        ('DDDDDDDDDD4', 'سورة الملك', '2026-11-01T00:00:00Z'),
+        ('EEEEEEEEEE5', 'سورة القصص', '2026-11-02T00:00:00Z'),
+      ]),
     );
     expect(mixReels([a, b, a]).map((r) => r.ref), [
       'BBBBBBBBBB2',
@@ -187,7 +200,7 @@ void main() {
         MockClient((req) async {
           final isYasser = req.url.toString().contains('YuUcfXvsHapABTcPRWCEoQ');
           return http.Response.bytes(
-            utf8.encode(isYasser ? fixture : feed([('DDDDDDDDDD4', 'موعظة', '2026-11-01T00:00:00Z')])),
+            utf8.encode(isYasser ? fixture : feed([('DDDDDDDDDD4', 'تلاوة سورة الملك', '2026-11-01T00:00:00Z')])),
             200,
           );
         }),
@@ -201,6 +214,126 @@ void main() {
       expect(make(MockClient((_) async => http.Response('', 500))).hidden, {yasser.id});
       await c.unhide(yasser.id);
       expect(c.items, hasLength(4));
+    });
+  });
+
+  group('recitation only, tabs, saved, live (owner 2026-11-27)', () {
+    late SharedPreferences prefs;
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
+      prefs = await SharedPreferences.getInstance();
+    });
+
+    const sudais = ReelSource(
+      id: 'yt-UCw9Ua8fLBPCetGwLmccbvtw',
+      channelId: 'UCw9Ua8fLBPCetGwLmccbvtw',
+      nameAr: 'الشيخ عبد الرحمن السديس',
+      nameEn: 'Sheikh Al-Sudais',
+      category: 'recitation',
+      group: 'makkah',
+    );
+
+    ReelsFeedController make() => ReelsFeedController(
+      sources: const [other, sudais],
+      httpClient: MockClient((req) async {
+        final golden = req.url.toString().contains('aaaaaaaa');
+        return http.Response.bytes(
+          utf8.encode(
+            golden
+                ? feed([
+                    ('DDDDDDDDDD4', 'تلاوة سورة القصص', '2026-11-01T00:00:00Z'),
+                    ('FFFFFFFFFF6', 'درس في الصبر', '2026-11-03T00:00:00Z'),
+                    ('GGGGGGGGGG7', 'لقاء مع الشيخ', '2026-11-04T00:00:00Z'),
+                  ])
+                : feed([
+                    ('HHHHHHHHHH8', 'صلاة العشاء من المسجد الحرام', '2026-11-05T00:00:00Z'),
+                    ('IIIIIIIIII9', 'خطبة الجمعة', '2026-11-06T00:00:00Z'),
+                  ]),
+          ),
+          200,
+        );
+      }),
+      prefs: prefs,
+      live: [
+        LiveChannel.tryParse({
+          'channelId': 'UCos52azQNBgW63_9uDJoPDA',
+          'place': 'makkah',
+          'name': {'ar': 'بث مباشر من المسجد الحرام'},
+        })!,
+      ],
+    );
+
+    test('lessons, sermons and interviews never enter the feed', () async {
+      final c = make();
+      await c.refresh();
+      expect(c.items.map((r) => r.ref).toSet(), {'DDDDDDDDDD4', 'HHHHHHHHHH8'});
+    });
+
+    test('tabs: Haramain = Makkah + Madinah imams, golden generation, all', () async {
+      final c = make();
+      await c.refresh();
+      expect(c.itemsIn(ReelsFeedController.tabHaramain).map((r) => r.ref), ['HHHHHHHHHH8']);
+      expect(c.itemsIn(ReelsFeedController.tabGolden).map((r) => r.ref), ['DDDDDDDDDD4']);
+      expect(c.itemsIn(ReelsFeedController.tabGolden).single.group, 'golden');
+      expect(c.sourcesIn(ReelsFeedController.tabHaramain).map((s) => s.id), [sudais.id]);
+      expect(c.itemsOf(sudais.id).map((r) => r.ref), ['HHHHHHHHHH8']);
+      expect(c.itemsIn(ReelsFeedController.tabAll), hasLength(2));
+    });
+
+    test('save and unsave a recitation; saved ones survive a restart', () async {
+      final c = make();
+      await c.refresh();
+      final r = c.itemsIn(ReelsFeedController.tabGolden).single;
+      expect(await c.toggleSave(r), isTrue);
+      expect(c.isSaved(r), isTrue);
+      final again = make();
+      expect(again.saved.single.ref, r.ref);
+      expect(again.saved.single.speakerAr, 'الشيخ محمود خليل الحصري');
+      expect(again.itemsIn(ReelsFeedController.tabSaved).single.ref, r.ref);
+      expect(await again.toggleSave(r), isFalse);
+      expect(again.saved, isEmpty);
+    });
+
+    test('live streams: the Haramain channels through the live_stream embed', () {
+      final c = make();
+      final live = c.live.single;
+      expect(live.id, 'live-makkah');
+      expect(live.embedUri().path, '/embed/live_stream');
+      expect(live.embedUri().queryParameters['channel'], 'UCos52azQNBgW63_9uDJoPDA');
+      expect(
+        LiveChannel.tryParse({
+          'channelId': 'bad',
+          'place': 'makkah',
+          'name': {'ar': 'x'},
+        }),
+        isNull,
+      );
+      expect(
+        LiveChannel.listFromJson({
+          'schema': 'reel-sources.v1',
+          'live': [
+            {
+              'channelId': 'UCROKYPep-UuODNwyipe6JMw',
+              'place': 'madinah',
+              'name': {'ar': 'المدينة'},
+            },
+            {
+              'channelId': 'UCROKYPep-UuODNwyipe6JMw',
+              'place': 'cairo',
+              'name': {'ar': 'x'},
+            },
+          ],
+        }).map((l) => l.id),
+        ['live-madinah'],
+      );
+    });
+
+    test('the bundled sources: recitation only, every one in a group, two live streams', () {
+      final j = jsonDecode(File('assets/content/reel-sources.v1.json').readAsStringSync()) as Map<String, dynamic>;
+      final list = ReelSource.listFromJson(j);
+      expect(list.length, (j['sources'] as List).length);
+      expect(list.every((s) => s.category == 'recitation' && s.group != null), isTrue);
+      expect(LiveChannel.listFromJson(j).map((l) => l.place), ['makkah', 'madinah']);
     });
   });
 
@@ -223,7 +356,7 @@ void main() {
       handle: 'samirmoustafa',
       nameAr: 'الشيخ سمير مصطفى',
       nameEn: 'Sheikh Samir Mostafa',
-      category: 'lesson',
+      category: 'recitation',
     );
     final calls = <Uri>[];
     ReelsFeedController make() => ReelsFeedController(

@@ -47,6 +47,27 @@ const BLOCKED_WORDS = [
     'gaming', 'gameplay', 'lyrics', 'karaoke', 'beat', 'rap', 'concert', 'dj ',
 ];
 
+/** Quran recitation only (owner decision 2026-11-27); same lists as videos-core.mjs. */
+const RECITATION_WORDS = [
+    'قران', 'سوره', 'سور', 'تلاوه', 'تلاوات', 'ترتيل', 'تجويد', 'مصحف', 'ايات', 'قارئ', 'القارئ', 'مقرئ',
+    'تراويح', 'تهجد', 'قيام الليل', 'فجريه', 'عشائيه', 'عشائيات', 'صلاه الفجر', 'صلاه العشاء', 'صلاه المغرب',
+    'صلاه الظهر', 'صلاه العصر', 'ختمه', 'رقيه', 'quran', 'koran', 'recitation', 'surah', 'surat', 'sura', 'tilawat',
+    'tilawah', 'tajweed', 'taraweeh', 'tarawih', 'qiyam', 'fajr', 'isha', 'maghrib',
+];
+
+const NON_RECITATION_WORDS = [
+    'خطبه', 'خطبتي', 'خطبتا', 'درس', 'دروس', 'محاضره', 'محاضرات', 'موعظه', 'مواعظ', 'نصيحه', 'نصائح', 'فتوي',
+    'فتاوي', 'لقاء', 'حوار', 'برنامج', 'بودكاست', 'نشيد', 'انشوده', 'اناشيد', 'قصيده', 'دعاء', 'ادعيه', 'تكبيرات',
+    'اذان', 'تفسير', 'سؤال', 'اسئله', 'مقابله',
+    'lecture', 'lesson', 'khutbah', 'khutba', 'sermon', 'nasheed', 'anasheed', 'dua', 'podcast', 'interview',
+];
+
+const EXCLUDED_PEOPLE = [
+    'نبيل العوضي', 'محمد العريفي', 'صالح المنجد', 'محمد حسين يعقوب', 'ايمن عبد الرحيم', 'بدر المشاري',
+    'عبدالله بصفر', 'عبد الله بصفر', 'صالح ال طالب', 'بندر بليله', 'عمرو خالد', 'محمد حسان', 'عائض القرني',
+    'راتب النابلسي', 'حازم شومان', 'طارق السويدان', 'احمد عبد المنعم', 'ياسر الحزيمي',
+];
+
 /** Arabic words may carry a joined prefix (و، ف، ب، ل، ال، وال، بال، فال، لل). */
 function stripPrefix(string $w): string
 {
@@ -74,14 +95,24 @@ function hasWord(string $text, array $words): bool
 
 function isBlocked(string $text): bool { return hasWord($text, BLOCKED_WORDS); }
 function looksIslamic(string $text): bool { return hasWord($text, ISLAMIC_WORDS); }
+function looksRecitation(string $text): bool { return hasWord($text, RECITATION_WORDS) || str_contains($text, '﴿'); }
+function namesExcluded(string $text): bool { return hasWord($text, EXCLUDED_PEOPLE); }
+function notRecitation(string $text): bool
+{
+    return isBlocked($text) || hasWord($text, NON_RECITATION_WORDS) || namesExcluded($text);
+}
+/** A video from a reciter's channel may join the feed: it must look like recitation. */
+function allowedFeedTitle(string $title): bool { return !notRecitation($title) && looksRecitation($title); }
+/** A channel from the channel search may be added: its name must say recitation/Quran. */
+function allowedChannel(string $title): bool { return !notRecitation($title) && looksRecitation($title); }
 
-/** A search result may be shown: never a blocked title; trusted channels always; others only clearly Islamic. */
+/** A search result may be shown: recitation only; trusted reciters' channels first. */
 function allowedVideo(array $hit, array $trusted): bool
 {
     $channel = $hit['channel'] ?? '';
-    if (isBlocked($hit['title']) || isBlocked($channel)) return false;
+    if (notRecitation($hit['title']) || isBlocked($channel) || namesExcluded($channel)) return false;
     if ($hit['channelId'] && isset($trusted[$hit['channelId']])) return true;
-    return looksIslamic($hit['title']) || looksIslamic($channel);
+    return looksRecitation($hit['title']);
 }
 
 function shortsFeed(string $cid): string { return 'https://www.youtube.com/feeds/videos.xml?playlist_id=UUSH' . substr($cid, 2); }
@@ -260,6 +291,7 @@ function toReel(array $src, array $r): array
         'title' => ['ar' => $r['title'], 'en' => $r['title']],
         'speaker' => $src['name'],
         'category' => $src['category'],
+        'group' => $src['group'] ?? null,
         'source' => null,
         'status' => 'auto',
         'reviewer' => null,
@@ -306,12 +338,13 @@ function buildFeed(array $sources, callable $get): array
 
     $lists = [];
     foreach ($sources as $k => $s) {
-        $lists[] = array_map(fn($r) => toReel($s, $r), array_slice($items[$k] ?? [], 0, PER_SOURCE));
+        $ok = array_values(array_filter($items[$k] ?? [], fn($r) => allowedFeedTitle($r['title'])));
+        $lists[] = array_map(fn($r) => toReel($s, $r), array_slice($ok, 0, PER_SOURCE));
     }
     return [
         'schema' => 'reels-feed.v1',
         'sources' => array_map(
-            fn($s) => array_intersect_key($s, array_flip(['id', 'channelId', 'handle', 'name', 'category'])),
+            fn($s) => array_intersect_key($s, array_flip(['id', 'channelId', 'handle', 'name', 'category'])) + ['group' => $s['group'] ?? null],
             $sources,
         ),
         'items' => mix($lists),
@@ -372,13 +405,14 @@ function searchChannels(string $query, callable $get): array
     if ($q === '' || isBlocked($q)) return ['schema' => 'channel-search.v1', 'query' => $q, 'items' => []];
     $page = $get(['s' => channelSearchPage($q)])['s'] ?? null;
     if ($page === null) throw new RuntimeException('youtube unreachable');
-    return ['schema' => 'channel-search.v1', 'query' => $q, 'items' => parseChannelSearch($page)];
+    $items = array_values(array_filter(parseChannelSearch($page), fn($c) => allowedChannel($c['title'])));
+    return ['schema' => 'channel-search.v1', 'query' => $q, 'items' => $items];
 }
 
 function channelReels(string $cid, callable $get): ?array
 {
     if (!preg_match(CHANNEL_ID, $cid)) return null;
-    $src = ['id' => "yt-$cid", 'channelId' => $cid, 'name' => ['ar' => '', 'en' => ''], 'category' => 'lesson'];
+    $src = ['id' => "yt-$cid", 'channelId' => $cid, 'name' => ['ar' => '', 'en' => ''], 'category' => 'recitation'];
     $feed = buildFeed([$src], $get);
     return ['schema' => 'reels-channel.v1', 'channelId' => $cid, 'items' => $feed['items']];
 }
@@ -433,7 +467,7 @@ if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') === __FILE__) {
     $route = $_GET['route'] ?? '';
     try {
         if ($route === 'feed') {
-            $body = cached('feed', FEED_TTL, fn() => buildFeed($feedSources, 'getMany'), fn($b) => count($b['items']) > 0);
+            $body = cached('feed-r', FEED_TTL, fn() => buildFeed($feedSources, 'getMany'), fn($b) => count($b['items']) > 0);
             send($body, 200, FEED_TTL);
         } elseif ($route === 'search') {
             $q = is_string($_GET['q'] ?? null) ? $_GET['q'] : '';
@@ -441,18 +475,18 @@ if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') === __FILE__) {
             foreach (array_merge($feedSources, $sources['suggested'] ?? []) as $s) {
                 if (!empty($s['channelId'])) $trusted[$s['channelId']] = true;
             }
-            $key = 'q:' . mb_strtolower(trim($q), 'UTF-8');
+            $key = 'q-r:' . mb_strtolower(trim($q), 'UTF-8');
             send(cached($key, SEARCH_TTL, fn() => searchVideos($q, 'getMany', $trusted), fn() => true), 200, SEARCH_TTL);
         } elseif ($route === 'channel') {
             $id = is_string($_GET['id'] ?? null) ? $_GET['id'] : '';
             if (!preg_match(CHANNEL_ID, $id)) {
                 send(['error' => 'bad channel'], 400, 0);
             } else {
-                send(cached("ch:$id", FEED_TTL, fn() => channelReels($id, 'getMany'), fn($b) => count($b['items']) > 0), 200, FEED_TTL);
+                send(cached("ch-r:$id", FEED_TTL, fn() => channelReels($id, 'getMany'), fn($b) => count($b['items']) > 0), 200, FEED_TTL);
             }
         } elseif ($route === 'channels') {
             $q = is_string($_GET['q'] ?? null) ? $_GET['q'] : '';
-            $key = 'cs:' . mb_strtolower(trim($q), 'UTF-8');
+            $key = 'cs-r:' . mb_strtolower(trim($q), 'UTF-8');
             send(cached($key, SEARCH_TTL, fn() => searchChannels($q, 'getMany'), fn() => true), 200, SEARCH_TTL);
         } else {
             send(['error' => 'not found'], 404, 0);

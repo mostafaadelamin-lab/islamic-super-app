@@ -20,13 +20,13 @@ Catalogue: content/reels/reels.json   Output: content/reels/dist/reels.v1.json
 CLI (run from anywhere):
   python tools/reels.py list
   python tools/reels.py add <youtube-or-instagram-url> --title-ar "…" [--title-en "…"]
-                            [--speaker-ar "…"] [--category recitation|lesson|admonition] [--source "channel"]
+                            [--speaker-ar "…"] [--category recitation] [--source "channel"]
   python tools/reels.py approve <id> --reviewer "name" [--notes "…"]
   python tools/reels.py reject <id> --reviewer "name" --notes "reason"
   python tools/reels.py build
 
 Trusted channels for automatic reels (the apps pull each channel's newest Shorts):
-  python tools/reels.py sources-add <youtube.com/@handle, youtube.com/channel/UC… or UC…> --name-ar "…" --category recitation --approved-by "name"
+  python tools/reels.py sources-add <youtube.com/@handle, youtube.com/channel/UC… or UC…> --name-ar "…" --group golden|makkah|madinah|famous --approved-by "name"
   python tools/reels.py sources-remove yt-UC…
 """
 from __future__ import annotations
@@ -53,7 +53,9 @@ def source_id(s: dict) -> str:
     return f"yt-{s['channelId']}" if s.get("channelId") else f"yt-@{s.get('handle', '')}"
 
 PLATFORMS = ("youtube", "instagram")
-CATEGORIES = ("recitation", "lesson", "admonition")
+CATEGORIES = ("recitation",)  # owner 2026-11-27: recitation only
+# Owner decision 2026-11-27: the videos tab shows Quran recitation only, grouped like this.
+GROUPS = ("golden", "makkah", "madinah", "famous")
 STATUSES = ("pending", "approved", "rejected")
 YT_ID = re.compile(r"^[A-Za-z0-9_-]{11}$")
 IG_CODE = re.compile(r"^[A-Za-z0-9_-]{5,40}$")
@@ -205,18 +207,37 @@ def validate_sources(cat: dict) -> list[str]:
         seen.add(s.get("id"))
         if not str((s.get("name") or {}).get("ar", "")).strip():
             problems.append(f"{where}: Arabic name required")
-        if s.get("category") not in CATEGORIES:
-            problems.append(f"{where}: category must be one of {CATEGORIES}")
+        if s.get("category") != "recitation":
+            problems.append(f"{where}: category must be recitation (owner decision 2026-11-27: recitation only)")
+        if s.get("group") not in GROUPS:
+            problems.append(f"{where}: group must be one of {GROUPS}")
         if not str(s.get("approvedBy") or "").strip():
             problems.append(f"{where}: approvedBy required (who approved this channel)")
         if not _date(s.get("addedAt")):
             problems.append(f"{where}: addedAt date")
+    for i, lv in enumerate(cat.get("live", [])):
+        where = f"live {i}"
+        if not YT_CHANNEL.match(str(lv.get("channelId", ""))):
+            problems.append(f"{where}: channelId must look like UC + 22 characters")
+        if lv.get("place") not in ("makkah", "madinah"):
+            problems.append(f"{where}: place must be makkah or madinah")
+        if not str((lv.get("name") or {}).get("ar", "")).strip():
+            problems.append(f"{where}: Arabic name required")
     return problems
 
 
 def build_sources_bundle(cat: dict) -> dict:
     return {
         "schema": "reel-sources.v1",
+        "live": [
+            {
+                "id": f"live-{lv['place']}",
+                "channelId": lv["channelId"],
+                "place": lv["place"],
+                "name": {"ar": lv["name"]["ar"], "en": lv["name"].get("en") or lv["name"]["ar"]},
+            }
+            for lv in cat.get("live", [])
+        ],
         "sources": [
             {
                 "id": s["id"],
@@ -224,6 +245,7 @@ def build_sources_bundle(cat: dict) -> dict:
                 **({"channelId": s["channelId"]} if s.get("channelId") else {"handle": s["handle"]}),
                 "name": {"ar": s["name"]["ar"], "en": s["name"].get("en") or s["name"]["ar"]},
                 "category": s["category"],
+                "group": s["group"],
             }
             for s in cat["sources"]
         ],
@@ -297,7 +319,8 @@ def main(argv: list[str] | None = None) -> int:
     sa.add_argument("channel")
     sa.add_argument("--name-ar", required=True)
     sa.add_argument("--name-en")
-    sa.add_argument("--category", required=True, choices=CATEGORIES)
+    sa.add_argument("--category", default="recitation", choices=("recitation",))
+    sa.add_argument("--group", required=True, choices=GROUPS)
     sa.add_argument("--approved-by", required=True)
     sr = sub.add_parser("sources-remove")
     sr.add_argument("id")
@@ -321,7 +344,7 @@ def main(argv: list[str] | None = None) -> int:
                 srcs["sources"].append({
                     "id": sid, "platform": "youtube", **ch,
                     "name": {"ar": args.name_ar, "en": args.name_en or args.name_ar},
-                    "category": args.category, "addedAt": today, "approvedBy": args.approved_by,
+                    "category": args.category, "group": args.group, "addedAt": today, "approvedBy": args.approved_by,
                 })
             else:
                 before = len(srcs["sources"])

@@ -71,11 +71,12 @@ def test_validate_rejects_bad_ids_and_duplicates():
 
 
 def test_validate_only_allows_owner_categories_and_platforms():
-    assert reels.CATEGORIES == ("recitation", "lesson", "admonition")
+    assert reels.CATEGORIES == ("recitation",)  # owner 2026-11-27: recitation only
+    assert any("category" in p for p in reels.validate({"schema": "reels-catalogue.v1", "items": [_item(category="lesson")]}))
     assert reels.PLATFORMS == ("youtube", "instagram")
     cat = {"schema": "reels-catalogue.v1", "items": [_item(category="music")]}
     assert any("category" in p for p in reels.validate(cat))
-    ig = _item(id="ig-C1a2B3c4D5e", platform="instagram", ref="C1a2B3c4D5e", url="https://www.instagram.com/reel/C1a2B3c4D5e/", category="admonition")
+    ig = _item(id="ig-C1a2B3c4D5e", platform="instagram", ref="C1a2B3c4D5e", url="https://www.instagram.com/reel/C1a2B3c4D5e/", category="recitation")
     assert reels.validate({"schema": "reels-catalogue.v1", "items": [ig]}) == []
     tt = _item(id="tt-1", platform="tiktok", ref="12345")
     assert any("platform" in p for p in reels.validate({"schema": "reels-catalogue.v1", "items": [tt]}))

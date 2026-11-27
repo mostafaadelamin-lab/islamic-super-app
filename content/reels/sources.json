@@ -1,7 +1,189 @@
 {
   "schema": "reel-sources.catalogue.v1",
-  "note": "Trusted channels the apps pull reels from automatically (owner decision 2026-11-09: approve the channel once, no per-video review). Edit with tools/reels.py sources-add / sources-remove. Only YouTube channels can be pulled automatically; Instagram needs a Meta Business account.",
+  "note": "Trusted Quran-recitation channels the apps pull videos from automatically. Owner decisions: approve the channel once, no per-video review (2026-11-09); RECITATION ONLY, grouped golden/makkah/madinah/famous, and never a sheikh who is jailed or ever belonged to a political current (2026-11-27). Every new name needs a per-name security check first. Excluded on purpose: Abdullah Basfar, Saleh Al-Talib, Badr Al-Mishari (jailed), Bandar Baleela (owner: out). Edit with tools/reels.py.",
   "sources": [
+    {
+      "id": "yt-UCt2q-yViX-xRLjt3Si81EFQ",
+      "platform": "youtube",
+      "channelId": "UCt2q-yViX-xRLjt3Si81EFQ",
+      "name": {
+        "ar": "الشيخ عبد الباسط عبد الصمد",
+        "en": "Sheikh Abdul Basit Abdul Samad"
+      },
+      "category": "recitation",
+      "group": "golden",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCSdyoKDGT4Y8p6PFeeoCNnw",
+      "platform": "youtube",
+      "channelId": "UCSdyoKDGT4Y8p6PFeeoCNnw",
+      "name": {
+        "ar": "الشيخ محمد صديق المنشاوي",
+        "en": "Sheikh Muhammad Siddiq Al-Minshawi"
+      },
+      "category": "recitation",
+      "group": "golden",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCfJ6dB1ZitXCWC8RmY9NJrQ",
+      "platform": "youtube",
+      "channelId": "UCfJ6dB1ZitXCWC8RmY9NJrQ",
+      "name": {
+        "ar": "الشيخ محمود خليل الحصري",
+        "en": "Sheikh Mahmoud Khalil Al-Husary"
+      },
+      "category": "recitation",
+      "group": "golden",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCPhpN70wfpItaqQ02gHQdMg",
+      "platform": "youtube",
+      "channelId": "UCPhpN70wfpItaqQ02gHQdMg",
+      "name": {
+        "ar": "الشيخ مصطفى إسماعيل",
+        "en": "Sheikh Mustafa Ismail"
+      },
+      "category": "recitation",
+      "group": "golden",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCmm7J2HrEcOnfcPRpEVzpkw",
+      "platform": "youtube",
+      "channelId": "UCmm7J2HrEcOnfcPRpEVzpkw",
+      "name": {
+        "ar": "الشيخ محمد رفعت",
+        "en": "Sheikh Muhammad Rifaat"
+      },
+      "category": "recitation",
+      "group": "golden",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCykhGceXTKAdaCfc3ST2FqA",
+      "platform": "youtube",
+      "channelId": "UCykhGceXTKAdaCfc3ST2FqA",
+      "name": {
+        "ar": "الشيخ محمود علي البنا",
+        "en": "Sheikh Mahmoud Ali Al-Banna"
+      },
+      "category": "recitation",
+      "group": "golden",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCzS0pqY15LmGexMTKtEqfnQ",
+      "platform": "youtube",
+      "channelId": "UCzS0pqY15LmGexMTKtEqfnQ",
+      "name": {
+        "ar": "الشيخ أبو العينين شعيشع",
+        "en": "Sheikh Abu Al-Ainain Shuaisha"
+      },
+      "category": "recitation",
+      "group": "golden",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCXi7006Kr5ja6BqgdX7P4jw",
+      "platform": "youtube",
+      "channelId": "UCXi7006Kr5ja6BqgdX7P4jw",
+      "name": {
+        "ar": "الشيخ كامل يوسف البهتيمي",
+        "en": "Sheikh Kamel Youssef Al-Bahtimi"
+      },
+      "category": "recitation",
+      "group": "golden",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UC51UomGn2wrCMlaewZ2ouCA",
+      "platform": "youtube",
+      "channelId": "UC51UomGn2wrCMlaewZ2ouCA",
+      "name": {
+        "ar": "الشيخ محمد محمود الطبلاوي",
+        "en": "Sheikh Muhammad Mahmoud Al-Tablawi"
+      },
+      "category": "recitation",
+      "group": "golden",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCEuro-PvKPuHCm0rgc1c5Fw",
+      "platform": "youtube",
+      "channelId": "UCEuro-PvKPuHCm0rgc1c5Fw",
+      "name": {
+        "ar": "الشيخ أحمد نعينع",
+        "en": "Sheikh Ahmed Naina"
+      },
+      "category": "recitation",
+      "group": "golden",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCos52azQNBgW63_9uDJoPDA",
+      "platform": "youtube",
+      "channelId": "UCos52azQNBgW63_9uDJoPDA",
+      "name": {
+        "ar": "قناة القرآن الكريم (المسجد الحرام)",
+        "en": "Saudi Quran TV (Al-Masjid Al-Haram)"
+      },
+      "category": "recitation",
+      "group": "makkah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCw9Ua8fLBPCetGwLmccbvtw",
+      "platform": "youtube",
+      "channelId": "UCw9Ua8fLBPCetGwLmccbvtw",
+      "name": {
+        "ar": "الشيخ عبد الرحمن السديس",
+        "en": "Sheikh Abdul Rahman Al-Sudais"
+      },
+      "category": "recitation",
+      "group": "makkah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCv8e_KRQifDj5HBOLam6g6w",
+      "platform": "youtube",
+      "channelId": "UCv8e_KRQifDj5HBOLam6g6w",
+      "name": {
+        "ar": "الشيخ سعود الشريم",
+        "en": "Sheikh Saud Al-Shuraim"
+      },
+      "category": "recitation",
+      "group": "makkah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCfimgqx1TcWuLkgcrm2Rkdw",
+      "platform": "youtube",
+      "channelId": "UCfimgqx1TcWuLkgcrm2Rkdw",
+      "name": {
+        "ar": "الشيخ ماهر المعيقلي",
+        "en": "Sheikh Maher Al-Muaiqly"
+      },
+      "category": "recitation",
+      "group": "makkah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
     {
       "id": "yt-UCYuUcfXvsHapABTcPRWCEoQ",
       "platform": "youtube",
@@ -13,31 +195,411 @@
       "category": "recitation",
       "addedAt": "2026-11-09",
       "approvedBy": "mostafa amin (named by the owner on 2026-11-09)",
-      "note": "Channel id taken from a public channel listing ('القناة الرسمية للشيخ ياسر الدوسري بث مباشر'); confirm it is the channel the owner means."
+      "note": "Channel id taken from a public channel listing ('القناة الرسمية للشيخ ياسر الدوسري بث مباشر'); confirm it is the channel the owner means.",
+      "group": "makkah"
     },
     {
-      "id": "yt-@samirmoustafa",
+      "id": "yt-UCeLuU2J219WqFPZYJJquhRA",
       "platform": "youtube",
-      "handle": "samirmoustafa",
+      "channelId": "UCeLuU2J219WqFPZYJJquhRA",
       "name": {
-        "ar": "الشيخ سمير مصطفى",
-        "en": "Sheikh Samir Mostafa"
+        "ar": "الشيخ عبد الله الجهني",
+        "en": "Sheikh Abdullah Al-Juhany"
       },
-      "category": "lesson",
-      "addedAt": "2026-11-09",
-      "approvedBy": "mostafa amin (sent by the owner on 2026-11-09)"
+      "category": "recitation",
+      "group": "makkah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
     },
     {
-      "id": "yt-@إسلاميات123",
+      "id": "yt-UCUkKza9XoZC-FOUOGFoTY3A",
       "platform": "youtube",
-      "handle": "إسلاميات123",
+      "channelId": "UCUkKza9XoZC-FOUOGFoTY3A",
       "name": {
-        "ar": "إسلاميات",
-        "en": "Islamiyat"
+        "ar": "الشيخ فيصل غزاوي",
+        "en": "Sheikh Faisal Ghazzawi"
       },
-      "category": "admonition",
-      "addedAt": "2026-11-09",
-      "approvedBy": "mostafa amin (sent by the owner on 2026-11-09)"
+      "category": "recitation",
+      "group": "makkah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCQg0_PBF3jxhqBppVUa_bNw",
+      "platform": "youtube",
+      "channelId": "UCQg0_PBF3jxhqBppVUa_bNw",
+      "name": {
+        "ar": "الشيخ بدر التركي",
+        "en": "Sheikh Badr Al-Turki"
+      },
+      "category": "recitation",
+      "group": "makkah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCOH4JE8wIygkMN5hIU_dGsQ",
+      "platform": "youtube",
+      "channelId": "UCOH4JE8wIygkMN5hIU_dGsQ",
+      "name": {
+        "ar": "الشيخ الوليد الشمسان",
+        "en": "Sheikh Al-Waleed Al-Shamsan"
+      },
+      "category": "recitation",
+      "group": "makkah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCQgWPIRjlGBAyG_QGzndXHQ",
+      "platform": "youtube",
+      "channelId": "UCQgWPIRjlGBAyG_QGzndXHQ",
+      "name": {
+        "ar": "الشيخ خالد الغامدي",
+        "en": "Sheikh Khalid Al-Ghamdi"
+      },
+      "category": "recitation",
+      "group": "makkah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCjZmJu-2FdBaop7AVpOmVYw",
+      "platform": "youtube",
+      "channelId": "UCjZmJu-2FdBaop7AVpOmVYw",
+      "name": {
+        "ar": "الشيخ صالح بن حميد",
+        "en": "Sheikh Saleh bin Humaid"
+      },
+      "category": "recitation",
+      "group": "makkah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCROKYPep-UuODNwyipe6JMw",
+      "platform": "youtube",
+      "channelId": "UCROKYPep-UuODNwyipe6JMw",
+      "name": {
+        "ar": "قناة السنة النبوية (المسجد النبوي)",
+        "en": "Saudi Sunnah TV (Al-Masjid An-Nabawi)"
+      },
+      "category": "recitation",
+      "group": "madinah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCE6O6bVN6oaMDcg501LQjYw",
+      "platform": "youtube",
+      "channelId": "UCE6O6bVN6oaMDcg501LQjYw",
+      "name": {
+        "ar": "الشيخ علي الحذيفي",
+        "en": "Sheikh Ali Al-Hudhaify"
+      },
+      "category": "recitation",
+      "group": "madinah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCXZOCjbGS-srjs4Ou628yIw",
+      "platform": "youtube",
+      "channelId": "UCXZOCjbGS-srjs4Ou628yIw",
+      "name": {
+        "ar": "الشيخ صلاح البدير",
+        "en": "Sheikh Salah Al-Budair"
+      },
+      "category": "recitation",
+      "group": "madinah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCqINxdYoa8BH8wIKkR8q2bA",
+      "platform": "youtube",
+      "channelId": "UCqINxdYoa8BH8wIKkR8q2bA",
+      "name": {
+        "ar": "الشيخ عبد الباري الثبيتي",
+        "en": "Sheikh Abdul Bari Al-Thubaity"
+      },
+      "category": "recitation",
+      "group": "madinah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UC873xLY7tRTGzWcvun2Q_SA",
+      "platform": "youtube",
+      "channelId": "UC873xLY7tRTGzWcvun2Q_SA",
+      "name": {
+        "ar": "الشيخ حسين آل الشيخ",
+        "en": "Sheikh Hussain Al Al-Sheikh"
+      },
+      "category": "recitation",
+      "group": "madinah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UC9l5nIwph5-cHDMw1FkLb_Q",
+      "platform": "youtube",
+      "channelId": "UC9l5nIwph5-cHDMw1FkLb_Q",
+      "name": {
+        "ar": "الشيخ عبد المحسن القاسم",
+        "en": "Sheikh Abdul Mohsen Al-Qasim"
+      },
+      "category": "recitation",
+      "group": "madinah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCnUtiU53PNZ1q9GGcB974sw",
+      "platform": "youtube",
+      "channelId": "UCnUtiU53PNZ1q9GGcB974sw",
+      "name": {
+        "ar": "الشيخ أحمد طالب بن حميد",
+        "en": "Sheikh Ahmed Talib bin Humaid"
+      },
+      "category": "recitation",
+      "group": "madinah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCtcC6L7JS7NceeI9jYy-Tcg",
+      "platform": "youtube",
+      "channelId": "UCtcC6L7JS7NceeI9jYy-Tcg",
+      "name": {
+        "ar": "الشيخ عبد الله البعيجان",
+        "en": "Sheikh Abdullah Al-Buayjan"
+      },
+      "category": "recitation",
+      "group": "madinah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCvM1oTot_wCmj7VXUH7ZOsA",
+      "platform": "youtube",
+      "channelId": "UCvM1oTot_wCmj7VXUH7ZOsA",
+      "name": {
+        "ar": "الشيخ خالد المهنا",
+        "en": "Sheikh Khalid Al-Muhanna"
+      },
+      "category": "recitation",
+      "group": "madinah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UC0ePm0pDEu7AdDGrIldBuAA",
+      "platform": "youtube",
+      "channelId": "UC0ePm0pDEu7AdDGrIldBuAA",
+      "name": {
+        "ar": "الشيخ أحمد الحذيفي",
+        "en": "Sheikh Ahmed Al-Hudhaify"
+      },
+      "category": "recitation",
+      "group": "madinah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UC7-upgjINDwKHQXv34IVoSA",
+      "platform": "youtube",
+      "channelId": "UC7-upgjINDwKHQXv34IVoSA",
+      "name": {
+        "ar": "الشيخ محمد برهجي",
+        "en": "Sheikh Muhammad Barhaji"
+      },
+      "category": "recitation",
+      "group": "madinah",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCmMcOjsVehVlEOteyrhjI2Q",
+      "platform": "youtube",
+      "channelId": "UCmMcOjsVehVlEOteyrhjI2Q",
+      "name": {
+        "ar": "الشيخ مشاري العفاسي",
+        "en": "Sheikh Mishary Alafasy"
+      },
+      "category": "recitation",
+      "group": "famous",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCPOIoIgnoOVoSCH9IwDHhsw",
+      "platform": "youtube",
+      "channelId": "UCPOIoIgnoOVoSCH9IwDHhsw",
+      "name": {
+        "ar": "الشيخ سعد الغامدي",
+        "en": "Sheikh Saad Al-Ghamdi"
+      },
+      "category": "recitation",
+      "group": "famous",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCXwqG3ok8ViTK3MvqkR7Rpw",
+      "platform": "youtube",
+      "channelId": "UCXwqG3ok8ViTK3MvqkR7Rpw",
+      "name": {
+        "ar": "الشيخ أبو بكر الشاطري",
+        "en": "Sheikh Abu Bakr Al-Shatri"
+      },
+      "category": "recitation",
+      "group": "famous",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCAEW5NoDJ_Ex3pqPuSqWqDw",
+      "platform": "youtube",
+      "channelId": "UCAEW5NoDJ_Ex3pqPuSqWqDw",
+      "name": {
+        "ar": "القارئ فارس عباد",
+        "en": "Fares Abbad"
+      },
+      "category": "recitation",
+      "group": "famous",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UC-AuvzIPDgBmvoDMlLhBuFQ",
+      "platform": "youtube",
+      "channelId": "UC-AuvzIPDgBmvoDMlLhBuFQ",
+      "name": {
+        "ar": "الشيخ ناصر القطامي",
+        "en": "Sheikh Nasser Al-Qatami"
+      },
+      "category": "recitation",
+      "group": "famous",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCi8-4FbrwETQ-bBQj1DL0yw",
+      "platform": "youtube",
+      "channelId": "UCi8-4FbrwETQ-bBQj1DL0yw",
+      "name": {
+        "ar": "الشيخ إدريس أبكر",
+        "en": "Sheikh Idris Abkar"
+      },
+      "category": "recitation",
+      "group": "famous",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCIO6o57QTZdP7lhKJuLPzcA",
+      "platform": "youtube",
+      "channelId": "UCIO6o57QTZdP7lhKJuLPzcA",
+      "name": {
+        "ar": "الشيخ هاني الرفاعي",
+        "en": "Sheikh Hani Al-Rifai"
+      },
+      "category": "recitation",
+      "group": "famous",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCqCIJCHk_Bpl-TDaZ7XEgCA",
+      "platform": "youtube",
+      "channelId": "UCqCIJCHk_Bpl-TDaZ7XEgCA",
+      "name": {
+        "ar": "الشيخ أحمد العجمي",
+        "en": "Sheikh Ahmad Al-Ajmi"
+      },
+      "category": "recitation",
+      "group": "famous",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCXjC4G6_ixHS8bs9Elt4rIQ",
+      "platform": "youtube",
+      "channelId": "UCXjC4G6_ixHS8bs9Elt4rIQ",
+      "name": {
+        "ar": "الشيخ محمد اللحيدان",
+        "en": "Sheikh Muhammad Al-Luhaidan"
+      },
+      "category": "recitation",
+      "group": "famous",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCAw55suE6e0-H0vSVAcsaTA",
+      "platform": "youtube",
+      "channelId": "UCAw55suE6e0-H0vSVAcsaTA",
+      "name": {
+        "ar": "الشيخ خالد الجليل",
+        "en": "Sheikh Khalid Al-Jalil"
+      },
+      "category": "recitation",
+      "group": "famous",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCkPAtsloQ50tBmZT5lG9Y7Q",
+      "platform": "youtube",
+      "channelId": "UCkPAtsloQ50tBmZT5lG9Y7Q",
+      "name": {
+        "ar": "الشيخ منصور السالمي",
+        "en": "Sheikh Mansour Al-Salimi"
+      },
+      "category": "recitation",
+      "group": "famous",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCEiEQLs1HFaS4LXmRPdRYgA",
+      "platform": "youtube",
+      "channelId": "UCEiEQLs1HFaS4LXmRPdRYgA",
+      "name": {
+        "ar": "القارئ هزاع البلوشي",
+        "en": "Hazza Al-Balushi"
+      },
+      "category": "recitation",
+      "group": "famous",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCTH6OW7ZlH7LfKJtcWMOGAg",
+      "platform": "youtube",
+      "channelId": "UCTH6OW7ZlH7LfKJtcWMOGAg",
+      "name": {
+        "ar": "القارئ رعد الكردي",
+        "en": "Raad Al-Kurdi"
+      },
+      "category": "recitation",
+      "group": "famous",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
+    },
+    {
+      "id": "yt-UCaT_sepikLcg8q_0Qvdf0Ng",
+      "platform": "youtube",
+      "channelId": "UCaT_sepikLcg8q_0Qvdf0Ng",
+      "name": {
+        "ar": "القارئ عبدالرحمن مسعد",
+        "en": "Abdulrahman Mosad"
+      },
+      "category": "recitation",
+      "group": "famous",
+      "addedAt": "2026-11-27",
+      "approvedBy": "mostafa amin (approved the recitation-only list in the project thread on 2026-11-27)"
     },
     {
       "id": "yt-@Mazamer.For8an",
@@ -49,19 +611,8 @@
       },
       "category": "recitation",
       "addedAt": "2026-11-09",
-      "approvedBy": "mostafa amin (sent by the owner on 2026-11-09)"
-    },
-    {
-      "id": "yt-@Mihraabe",
-      "platform": "youtube",
-      "handle": "Mihraabe",
-      "name": {
-        "ar": "محراب",
-        "en": "Mihraab"
-      },
-      "category": "admonition",
-      "addedAt": "2026-11-09",
-      "approvedBy": "mostafa amin (sent by the owner on 2026-11-09)"
+      "approvedBy": "mostafa amin (sent by the owner on 2026-11-09)",
+      "group": "famous"
     },
     {
       "id": "yt-UCn8lMRYDANs_1yAL3iuw7_g",
@@ -73,7 +624,8 @@
       },
       "category": "recitation",
       "addedAt": "2026-11-09",
-      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)"
+      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)",
+      "group": "famous"
     },
     {
       "id": "yt-@islam_sobhi",
@@ -85,7 +637,8 @@
       },
       "category": "recitation",
       "addedAt": "2026-11-09",
-      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)"
+      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)",
+      "group": "famous"
     },
     {
       "id": "yt-UCRxAvmQLbRORKJTtfhqFY9Q",
@@ -97,43 +650,8 @@
       },
       "category": "recitation",
       "addedAt": "2026-11-09",
-      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)"
-    },
-    {
-      "id": "yt-UCKUOmGXE9Ytlc2EzpGqimtw",
-      "platform": "youtube",
-      "channelId": "UCKUOmGXE9Ytlc2EzpGqimtw",
-      "name": {
-        "ar": "د. عمر عبد الكافي",
-        "en": "Dr. Omar Abdelkafy"
-      },
-      "category": "admonition",
-      "addedAt": "2026-11-09",
-      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)"
-    },
-    {
-      "id": "yt-@nabulsi1",
-      "platform": "youtube",
-      "handle": "nabulsi1",
-      "name": {
-        "ar": "د. محمد راتب النابلسي",
-        "en": "Dr. Mohammed Rateb Al-Nabulsi"
-      },
-      "category": "lesson",
-      "addedAt": "2026-11-09",
-      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)"
-    },
-    {
-      "id": "yt-UCpPZKwayH_pWPF20Ls0hgVw",
-      "platform": "youtube",
-      "channelId": "UCpPZKwayH_pWPF20Ls0hgVw",
-      "name": {
-        "ar": "الشيخ نبيل العوضي",
-        "en": "Sheikh Nabil Al-Awadi"
-      },
-      "category": "admonition",
-      "addedAt": "2026-11-09",
-      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)"
+      "approvedBy": "mostafa amin (asked for channels similar to his examples on 2026-11-09; found via vidiq listings)",
+      "group": "famous"
     }
   ],
   "instagramPages": [
@@ -166,6 +684,26 @@
       "url": "https://www.instagram.com/abdo.bell99/",
       "addedAt": "2026-11-09",
       "note": "Sent by the owner; same Instagram limits as above."
+    }
+  ],
+  "live": [
+    {
+      "place": "makkah",
+      "channelId": "UCos52azQNBgW63_9uDJoPDA",
+      "name": {
+        "ar": "بث مباشر من المسجد الحرام",
+        "en": "Live from Al-Masjid Al-Haram"
+      },
+      "note": "Official KSA Qur'an TV channel (Saudi Broadcasting Authority)."
+    },
+    {
+      "place": "madinah",
+      "channelId": "UCROKYPep-UuODNwyipe6JMw",
+      "name": {
+        "ar": "بث مباشر من المسجد النبوي",
+        "en": "Live from Al-Masjid An-Nabawi"
+      },
+      "note": "Official KSA Sunnah TV channel (Saudi Broadcasting Authority)."
     }
   ]
 }

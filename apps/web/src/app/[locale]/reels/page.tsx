@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { isLocale, t } from "@/lib/i18n";
 import { resolveLocale, type LocaleParams } from "@/lib/page-locale";
-import { ReelsFeed } from "@/components/ReelsFeed";
+import { VideosHub } from "@/components/VideosHub";
 import { VideoSearch } from "@/components/VideoSearch";
 import { ParentGate } from "@/components/ParentGate";
 
@@ -17,7 +17,7 @@ export default async function ReelsPage({ params }: { params: LocaleParams }) {
       <h1>{t(locale, "reels.title")}</h1>
       <ParentGate locale={locale}>
         <VideoSearch locale={locale}>
-          <ReelsFeed locale={locale} />
+          <VideosHub locale={locale} />
         </VideoSearch>
       </ParentGate>
     </>

@@ -22,6 +22,13 @@ export function normalize(s: string): string;
 export function isBlocked(text: string): boolean;
 export function looksIslamic(text: string): boolean;
 export function allowedVideo(hit: CoreHit, trustedChannelIds: Set<string>): boolean;
+export function looksRecitation(text: string): boolean;
+export function notRecitation(text: string): boolean;
+export function allowedFeedTitle(title: string): boolean;
+export function allowedChannel(title: string): boolean;
+export const RECITATION_WORDS: string[];
+export const NON_RECITATION_WORDS: string[];
+export const EXCLUDED_PEOPLE: string[];
 export function parseFeed(
   xml: string,
   shortsOnly?: boolean,
