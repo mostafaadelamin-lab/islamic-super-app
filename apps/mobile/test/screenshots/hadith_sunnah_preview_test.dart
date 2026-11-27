@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart' show Key, TextInputAction;
 import 'package:rattil/ui/hadith_screen.dart';
+import 'package:rattil/domain/hadith.dart';
 
 import '../helpers.dart';
 
@@ -42,7 +43,7 @@ void main() {
   testWidgets('preview: Muslim 1218 and 2186 with sunnah.com numbers', (tester) async {
     tester.view.devicePixelRatio = 1;
     await pumpApp(tester, size: const Size(390, 800), prefs: {'theme': 'light'});
-    await pushScreen(tester, HadithBookScreen(book: content.hadith.book('muslim')!, start: 5644));
+    await pushScreen(tester, HadithBookScreen(book: content.hadith.book('muslim')! as HadithBook, start: 5644));
     await tester.pumpAndSettle();
     await shot(tester, 'muslim-2186');
     await tester.tap(find.byKey(const Key('hadithTools')));

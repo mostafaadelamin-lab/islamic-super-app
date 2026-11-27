@@ -1550,7 +1550,7 @@ class ReaderMiniTool extends StatelessWidget {
             onTap: onPressed,
             borderRadius: BorderRadius.circular(10),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(minWidth: 50, minHeight: 44),
+              constraints: const BoxConstraints(minWidth: 50, minHeight: 48),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                 child: IconTheme.merge(
