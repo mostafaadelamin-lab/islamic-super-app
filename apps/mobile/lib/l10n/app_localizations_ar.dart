@@ -4745,10 +4745,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get surahInfoShort => 'عن السورة';
 
   @override
-  String get readerPrintedOffer => 'خط المدينة: حمّل المصحف كله مرة واحدة واقرأ بدون إنترنت (حوالي ١٤٠ ميجا)';
+  String get readerPrintedOffer => 'خط المدينة: حمّله للمصحف كامل مرة واحدة واقرأ بدون إنترنت (حوالي ١٤٠ ميجا)';
 
   @override
-  String get readerPrintedDownload => 'تحميل';
+  String get readerPrintedDownload => 'تحميل المصحف كامل';
 
   @override
   String get readerPrintedResume => 'أكمل التحميل';
@@ -4768,4 +4768,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get aboutProofOpen => 'افتح صفحة المصادر والإثبات';
+
+  @override
+  String get readerFontMenuTitle => 'خط المصحف';
+
+  @override
+  String readerFontOptSwitch(String font) {
+    return 'التبديل إلى $font';
+  }
+
+  @override
+  String readerFontNow(String font) {
+    return 'الخط الآن: $font';
+  }
+
+  @override
+  String readerFontOptSurah(String name) {
+    return 'تحميل سورة $name كاملة';
+  }
+
+  @override
+  String get readerFontOptAll => 'تحميل المصحف كامل مرة واحدة';
+
+  @override
+  String get readerFontOptHint => 'خط المدينة للقراءة بدون إنترنت، ولا يتحمّل مرة أخرى';
+
+  @override
+  String get readerFontSaved => 'محفوظ على الجهاز';
 }

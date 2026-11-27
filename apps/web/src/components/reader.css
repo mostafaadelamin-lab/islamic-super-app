@@ -1746,3 +1746,10 @@ button.mn-ref {
 .rd-printed-bar progress { flex: 0 0 90px; accent-color: var(--color-primary); }
 .rd-printed-go { background: var(--color-primary); color: var(--color-on-primary, #fff); border: 0; border-radius: 999px; padding: 6px 18px; font: inherit; cursor: pointer; }
 .rd-printed-later, .rd-printed-x { background: none; border: 0; color: var(--color-primary); font: inherit; cursor: pointer; padding: 6px 8px; }
+.rd-font-menu { margin: 4px 0 6px; padding: 8px 12px 10px; border-radius: var(--radius-md); background: var(--color-surface, #fff); border: 1px solid var(--color-border, rgba(0,0,0,.12)); box-shadow: 0 6px 18px rgba(0,0,0,.12); display: flex; flex-direction: column; gap: 4px; }
+.rd-font-menu-head { display: flex; align-items: center; justify-content: space-between; }
+.rd-font-opt { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: start; background: none; border: 0; border-radius: var(--radius-md); padding: 10px 8px; font: inherit; color: var(--color-text); cursor: pointer; min-height: 48px; }
+.rd-font-opt:hover:not(:disabled) { background: color-mix(in srgb, var(--color-primary) 10%, transparent); }
+.rd-font-opt:disabled { opacity: .6; cursor: default; }
+.rd-font-opt > span { font-weight: 700; }
+.rd-font-opt small { color: var(--color-muted, #666); }

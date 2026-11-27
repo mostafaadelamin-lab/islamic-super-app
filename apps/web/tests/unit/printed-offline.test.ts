@@ -1,5 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { downloadAllPrinted, PRINTED_CACHE, PRINTED_PAGES, printedSavedCount } from "@/lib/mushaf-printed";
+import {
+  downloadAllPrinted,
+  PRINTED_CACHE,
+  PRINTED_PAGES,
+  printedJob,
+  printedSavedCount,
+  printedSavedIn,
+  startPrintedDownload,
+} from "@/lib/mushaf-printed";
+import { surahPages } from "@/components/PrintedDownloadBar";
 
 /** Owner 2026-11-26: the Madina font is saved once for the whole Mushaf; saved pages are never fetched again. */
 class FakeCache {
@@ -51,5 +60,16 @@ describe("Madina font offline", () => {
     const before = asked.length;
     expect(await downloadAllPrinted(() => {}, undefined, fetchImpl)).toBe(true);
     expect(asked.length).toBe(before);
+  });
+
+  it("downloads one surah's pages from the font menu and reports the job", async () => {
+    vi.stubGlobal("fetch", async (url: string) => new Response(String(url).endsWith(".json") ? "{}" : "font"));
+    const pages = surahPages(3);
+    expect(pages[0]).toBe(50);
+    expect(pages.at(-1)).toBe(76);
+    await startPrintedDownload(pages);
+    expect(printedJob()).toMatchObject({ running: false, failed: false, finished: true, done: pages.length });
+    expect(await printedSavedIn(pages)).toBe(true);
+    expect(await printedSavedCount()).toBe(pages.length);
   });
 });

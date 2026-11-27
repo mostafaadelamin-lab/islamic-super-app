@@ -40,7 +40,7 @@ import {
 } from "@/lib/mushaf";
 import { loadMushafData, type MushafData } from "@/lib/mushaf-data";
 import { printedIfReady, usePrintedPage } from "@/lib/mushaf-printed";
-import { PrintedDownloadBar } from "./PrintedDownloadBar";
+import { MushafFontMenu, PrintedDownloadBar } from "./PrintedDownloadBar";
 import { FONT_MAX, FONT_MIN, lastReadStore, prefsStore } from "@/lib/settings";
 import { bookmarksStore, isBookmarked, toggleBookmark } from "@/lib/bookmarks";
 import { audioStore, itemPage } from "@/lib/audio";
@@ -347,6 +347,7 @@ export function PageReader({ locale, initial }: PageReaderProps) {
     const v = new URLSearchParams(window.location.search).get("view");
     if (v === "juz" || v === "surah") setTabState(v);
   }, []);
+  const [fontMenu, setFontMenu] = useState(false);
   const [sheet, setSheet] = useState<"help" | "khatma" | "meanings" | "surahInfo" | null>(null);
   // «عن السورة وأسباب نزولها» (as in the app): the selected ayah's surah, else the page's first.
   const [infoSurah, setInfoSurah] = useState<number | null>(null);
@@ -1057,15 +1058,15 @@ export function PageReader({ locale, initial }: PageReaderProps) {
             </button>
           ) : null}
           {tab === "mushaf" ? (
-            // Owner 2026-11-26: switch to the printed look (optional, downloaded) and back while reading.
+            // Owner 2026-11-27: «تغيير الخط» opens three choices: switch the font, download this surah, download the whole Mushaf.
             <button
               type="button"
               className={`rd-icon-btn rd-mini rd-font-tile ${prefs.mushafPrinted ? "on" : ""}`}
               aria-label={t(locale, "reader.printedLook")}
               title={t(locale, "reader.printedLook")}
-              aria-pressed={prefs.mushafPrinted}
               data-testid="reader-printed"
-              onClick={() => prefsStore.set((p) => ({ ...p, mushafPrinted: !p.mushafPrinted, mushafPrintedV: 2 }))}
+              aria-expanded={fontMenu}
+              onClick={() => setFontMenu((v) => !v)}
             >
               <ReaderIcon name="pages" size={20} />
               <span className="rd-mini-label">{t(locale, "reader.fontSwitchShort")}</span>
@@ -1128,7 +1129,15 @@ export function PageReader({ locale, initial }: PageReaderProps) {
         </div>
       </div>
 
-      {tab === "mushaf" ? <PrintedDownloadBar locale={locale} enabled={prefs.mushafPrinted} /> : null}
+      {tab === "mushaf" && fontMenu ? (
+        <MushafFontMenu
+          locale={locale}
+          surah={surahs[0] ?? 1}
+          printed={prefs.mushafPrinted}
+          onClose={() => setFontMenu(false)}
+        />
+      ) : null}
+      {tab === "mushaf" ? <PrintedDownloadBar locale={locale} /> : null}
 
       <header className="mushaf-head">
         <span className="mh-surah" data-testid="page-surahs">

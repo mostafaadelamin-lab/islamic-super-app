@@ -90,11 +90,13 @@
   "reader.pickJuz": "اختر الجزء",
   "reader.tafsirBesideSurah": "التفسير بجانب السورة",
   "reader.tafsirBesideJuz": "التفسير بجانب الجزء",
-  "reader.printedOffer": "خط المدينة: حمّل المصحف كله مرة واحدة واقرأ بدون إنترنت (حوالي ٩٥ ميجا)",
-  "reader.printedDownload": "تحميل",
-  "reader.printedResume": "أكمل التحميل",
-  "reader.printedLater": "لاحقًا",
   "reader.printedProgress": "جارٍ التحميل: {done} من {total}",
   "reader.printedFailed": "تعذّر التحميل، حاول مرة أخرى",
-  "reader.printedSavedAll": "خط المدينة محفوظ في المتصفح للمصحف كله، ولن يُحمَّل مرة أخرى"
+  "reader.fontMenuTitle": "خط المصحف",
+  "reader.fontOptSwitch": "التبديل إلى {font}",
+  "reader.fontNow": "الخط الآن: {font}",
+  "reader.fontOptSurah": "تحميل سورة {name} كاملة",
+  "reader.fontOptAll": "تحميل المصحف كامل مرة واحدة",
+  "reader.fontOptHint": "خط المدينة للقراءة بدون إنترنت، ولا يتحمّل مرة أخرى",
+  "reader.fontSaved": "محفوظ على الجهاز"
 }

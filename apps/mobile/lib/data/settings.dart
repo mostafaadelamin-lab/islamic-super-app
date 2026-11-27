@@ -334,12 +334,12 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// "شكل المصحف المطبوع": Mushaf pages in the QCF page fonts, downloaded on request. Owner 2026-11-26: the
-  /// normal look (the Complex's v2.2 text and font, proven by fingerprint) is the default again and the printed
-  /// look is an optional download; a new key so the old default (true) is not carried over.
-  bool get mushafPrinted => _prefs.getBool('mushaf.printed.v2') ?? false;
+  /// "خط المدينة": Mushaf pages in the QCF page fonts (the printed page). Owner 2026-11-27: the DEFAULT again, for
+  /// everyone (new key, so earlier choices are not carried over); the whole Mushaf's font downloads once from the
+  /// bar at the top of the reader, and «تغيير الخط» switches to the Uthmani font (bundled) at any time.
+  bool get mushafPrinted => _prefs.getBool('mushaf.printed.v3') ?? true;
   Future<void> setMushafPrinted(bool on) async {
-    await _prefs.setBool('mushaf.printed.v2', on);
+    await _prefs.setBool('mushaf.printed.v3', on);
     notifyListeners();
   }
 

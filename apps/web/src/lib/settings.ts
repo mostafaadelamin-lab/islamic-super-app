@@ -34,9 +34,9 @@ export interface Preferences {
   /** 2 = the palette was saved under the 1.2.8 default (see PalettePref). */
   paletteV: 2;
   /** «شكل المصحف المطبوع»: Mushaf pages in the QCF page fonts, downloaded on request. Owner 2026-11-26: off by default (the
-   * normal look = the Complex's v2.2 text and font, proven by fingerprint); only a choice made after that (mushafPrintedV 2) counts. */
+   * normal look = the Complex's v2.2 text and font, proven by fingerprint); only a choice made after that counts; owner 2026-11-27: ON by default again (mushafPrintedV 3), the whole font downloads once from the reader. */
   mushafPrinted: boolean;
-  mushafPrintedV: 2;
+  mushafPrintedV: 3;
 }
 export const DEFAULT_PREFS: Preferences = {
   locale: null,
@@ -48,8 +48,8 @@ export const DEFAULT_PREFS: Preferences = {
   clockV: 2,
   hijriOffset: 0,
   paletteV: 2,
-  mushafPrinted: false,
-  mushafPrintedV: 2,
+  mushafPrinted: true,
+  mushafPrintedV: 3,
 };
 
 export const HIJRI_OFFSET_MAX = 2;
@@ -79,8 +79,8 @@ export function sanitizePrefs(raw: unknown): Preferences {
     clockV: 2,
     hijriOffset: clampHijriOffset(r.hijriOffset ?? 0),
     paletteV: 2,
-    mushafPrinted: r.mushafPrintedV === 2 && r.mushafPrinted === true,
-    mushafPrintedV: 2,
+    mushafPrinted: r.mushafPrintedV === 3 ? r.mushafPrinted !== false : true,
+    mushafPrintedV: 3,
   };
 }
 

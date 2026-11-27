@@ -64,17 +64,18 @@ export async function printedSavedCount(): Promise<number> {
 }
 
 /**
- * Saves the Madina font (and page layout) of every page, four at a time. Pages already saved are skipped,
- * so calling it again after a cut connection carries on where it stopped. Resolves true when all are saved.
+ * Saves the Madina font (and page layout) of [pages], four at a time. Pages already saved are skipped, so
+ * calling it again after a cut connection carries on where it stopped. Resolves true when all are saved.
  */
-export async function downloadAllPrinted(
+export async function downloadPrinted(
+  pages: readonly number[],
   onProgress: (done: number) => void,
   signal?: AbortSignal,
   fetchImpl: typeof fetch = fetch,
 ): Promise<boolean> {
   if (!printedOfflineSupported()) return false;
   const cache = await caches.open(PRINTED_CACHE);
-  let next = 1;
+  let next = 0;
   let done = 0;
   let failed = false;
   const save = async (url: string): Promise<void> => {
@@ -84,8 +85,8 @@ export async function downloadAllPrinted(
     await cache.put(url, r);
   };
   const worker = async (): Promise<void> => {
-    while (!failed && next <= PRINTED_PAGES) {
-      const p = next++;
+    while (!failed && next < pages.length) {
+      const p = pages[next++] as number;
       try {
         await save(layoutUrl(p));
         await save(fontUrl(p));
@@ -98,6 +99,57 @@ export async function downloadAllPrinted(
   };
   await Promise.all([worker(), worker(), worker(), worker()]);
   return !failed;
+}
+
+export const ALL_PAGES: readonly number[] = Array.from({ length: PRINTED_PAGES }, (_, i) => i + 1);
+
+/** Saves the whole Mushaf's Madina font once. */
+export const downloadAllPrinted = (
+  onProgress: (done: number) => void,
+  signal?: AbortSignal,
+  fetchImpl: typeof fetch = fetch,
+): Promise<boolean> => downloadPrinted(ALL_PAGES, onProgress, signal, fetchImpl);
+
+/** Whether every page in [pages] is saved. */
+export async function printedSavedIn(pages: readonly number[]): Promise<boolean> {
+  if (!printedOfflineSupported()) return false;
+  try {
+    const cache = await caches.open(PRINTED_CACHE);
+    for (const p of pages) if (!(await cache.match(layoutUrl(p))) || !(await cache.match(fontUrl(p)))) return false;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** The running download (one at a time), shown by the reader's progress bar. */
+export interface PrintedJob {
+  running: boolean;
+  done: number;
+  total: number;
+  failed: boolean;
+  /** Set when a job has finished in this visit (the bar then shows «محفوظ» / «تعذّر»). */
+  finished: boolean;
+}
+let job: PrintedJob = { running: false, done: 0, total: 0, failed: false, finished: false };
+const jobListeners = new Set<() => void>();
+const setJob = (j: PrintedJob): void => {
+  job = j;
+  jobListeners.forEach((f) => f());
+};
+export const printedJob = (): PrintedJob => job;
+export function subscribePrintedJob(f: () => void): () => void {
+  jobListeners.add(f);
+  return () => jobListeners.delete(f);
+}
+export function dismissPrintedJob(): void {
+  if (!job.running) setJob({ ...job, finished: false });
+}
+export async function startPrintedDownload(pages: readonly number[]): Promise<void> {
+  if (job.running) return;
+  setJob({ running: true, done: 0, total: pages.length, failed: false, finished: false });
+  const ok = await downloadPrinted(pages, (done) => setJob({ ...job, done }));
+  setJob({ ...job, running: false, failed: !ok, finished: true });
 }
 
 export function loadPrintedPage(page: number, fetchImpl: typeof fetch = fetch): Promise<PrintedPage | null> {

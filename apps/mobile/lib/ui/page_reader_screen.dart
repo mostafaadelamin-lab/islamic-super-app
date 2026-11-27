@@ -301,6 +301,14 @@ class PageReaderScreenState extends State<PageReaderScreen> {
   }
 
   /// Tafsir beside the page on / off (off also ends «استماع مع التفسير»).
+  Future<void> _openFontMenu(BuildContext context) {
+    final q = context.services.content.quran;
+    final surah = (_selected ?? q.ayahsOnPage(_page).first).surah;
+    final first = q.pageOf(AyahRef(surah, 1));
+    final last = q.pageOf(AyahRef(surah, q.surah(surah).ayahCount));
+    return showMushafFontMenu(context, surah: surah, surahPages: [for (var p = first; p <= last; p++) p]);
+  }
+
   void _toggleTafsirBeside(BuildContext context) {
     final settings = context.services.settings;
     if (_pageTafsir(context)) {
@@ -361,7 +369,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                   case 4:
                     _toggleTafsirBeside(context);
                   case 5:
-                    unawaited(st.setMushafPrinted(!st.mushafPrinted));
+                    unawaited(_openFontMenu(context));
                   default:
                     showReaderHelp(context, pageCount: _count, onGo: _jump);
                 }
@@ -374,7 +382,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                 PopupMenuItem(
                   value: 5,
                   key: const Key('menuPrinted'),
-                  child: Text('${s.settings.mushafPrinted ? '✓ ' : ''}${l.readerPrintedLook}'),
+                  child: Text(l.readerFontSwitchShort),
                 ),
                 PopupMenuItem(value: 3, child: Text(l.readerHelp)),
               ],
@@ -423,7 +431,7 @@ class PageReaderScreenState extends State<PageReaderScreen> {
                   label: l.readerFontSwitchShort,
                   tooltip: '${l.readerPrintedLook} (${on ? l.readerFontMadina : l.readerFontUthmani})',
                   selected: on,
-                  onPressed: () => unawaited(s.settings.setMushafPrinted(!on)),
+                  onPressed: () => unawaited(_openFontMenu(context)),
                 );
               },
             ),
@@ -1583,9 +1591,77 @@ class ReaderMiniTool extends StatelessWidget {
   }
 }
 
-/// Owner 2026-11-26: with the Madina font on, offer to download it for the whole Mushaf once, for reading
-/// without internet. Fonts already on the device are never downloaded again (PrintedMushaf skips them), so the
-/// offer disappears for good once every page is saved.
+/// Owner 2026-11-27: «تغيير الخط» opens three choices: switch the font, download this surah's Madina font, or
+/// download the whole Mushaf's Madina font once. Pages already saved are never downloaded again; no file size shown.
+Future<void> showMushafFontMenu(BuildContext context, {required int surah, required List<int> surahPages}) {
+  final settings = context.services.settings;
+  final pm = PrintedMushaf.instance;
+  return showModalBottomSheet<void>(
+    context: context,
+    showDragHandle: true,
+    builder: (context) {
+      final l = context.l10n;
+      final name = context.services.content.quran.surah(surah).nameAr;
+      void download(List<int> pages) {
+        Navigator.of(context).pop();
+        if (!settings.mushafPrinted) unawaited(settings.setMushafPrinted(true));
+        unawaited(pm.downloadPages(pages));
+      }
+
+      return SafeArea(
+        child: FutureBuilder<List<bool>>(
+          future: Future.wait([pm.allSavedIn(surahPages), pm.savedCount(refresh: true).then((n) => n == PrintedMushaf.pages)]),
+          builder: (context, snap) {
+            final surahSaved = snap.data?[0] ?? false;
+            final allSaved = snap.data?[1] ?? false;
+            final busy = pm.bulkDone != null;
+            final on = settings.mushafPrinted;
+            return Column(
+              key: const Key('mushafFontMenu'),
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd),
+                  child: Text(l.readerFontMenuTitle, style: Theme.of(context).textTheme.titleMedium),
+                ),
+                ListTile(
+                  key: const Key('fontOptSwitch'),
+                  leading: const RIcon(RIcons.pages),
+                  title: Text(l.readerFontOptSwitch(on ? l.readerFontUthmani : l.readerFontMadina)),
+                  subtitle: Text(l.readerFontNow(on ? l.readerFontMadina : l.readerFontUthmani)),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    unawaited(settings.setMushafPrinted(!on));
+                  },
+                ),
+                ListTile(
+                  key: const Key('fontOptSurah'),
+                  enabled: !busy && !surahSaved,
+                  leading: RIcon(surahSaved ? RIcons.checkCircle : RIcons.download),
+                  title: Text(l.readerFontOptSurah(name)),
+                  subtitle: surahSaved ? Text(l.readerFontSaved) : null,
+                  onTap: () => download(surahPages),
+                ),
+                ListTile(
+                  key: const Key('fontOptAll'),
+                  enabled: !busy && !allSaved,
+                  leading: RIcon(allSaved ? RIcons.checkCircle : RIcons.download),
+                  title: Text(l.readerFontOptAll),
+                  subtitle: Text(allSaved ? l.readerFontSaved : l.readerFontOptHint),
+                  onTap: () => download([for (var p = 1; p <= PrintedMushaf.pages; p++) p]),
+                ),
+                const SizedBox(height: DesignTokens.spaceSm),
+              ],
+            );
+          },
+        ),
+      );
+    },
+  );
+}
+
+/// The running Madina-font download (from «تغيير الخط»): progress, then «محفوظ» or «تعذّر» with ✕.
 class PrintedDownloadBar extends StatefulWidget {
   const PrintedDownloadBar({super.key});
 
@@ -1594,27 +1670,24 @@ class PrintedDownloadBar extends StatefulWidget {
 }
 
 class _PrintedDownloadBarState extends State<PrintedDownloadBar> {
-  bool _later = false;
-  bool _ran = false;
+  bool _seenRun = false;
+  bool _closed = false;
 
   @override
   Widget build(BuildContext context) {
-    final settings = context.services.settings;
     final pm = PrintedMushaf.instance;
     return ListenableBuilder(
-      listenable: Listenable.merge([settings, pm]),
+      listenable: pm,
       builder: (context, _) {
-        if (!settings.mushafPrinted) return const SizedBox.shrink();
-        if (pm.savedPages == null) {
-          unawaited(pm.savedCount());
-          return const SizedBox.shrink();
-        }
         final l = context.l10n;
         final scheme = Theme.of(context).colorScheme;
         final running = pm.bulkDone != null;
-        final done = pm.allSaved;
-        if ((done && !_ran) || (_later && !running)) return const SizedBox.shrink();
-        Widget line(Widget lead, String text, List<Widget> actions) => Material(
+        if (running) {
+          _seenRun = true;
+          _closed = false;
+        }
+        if (!running && (!_seenRun || _closed)) return const SizedBox.shrink();
+        Widget line(Widget lead, String text, {bool close = false}) => Material(
           key: const Key('printedDownloadBar'),
           color: scheme.primaryContainer,
           child: Padding(
@@ -1629,7 +1702,13 @@ class _PrintedDownloadBarState extends State<PrintedDownloadBar> {
                     style: TextStyle(fontSize: 13, color: scheme.onPrimaryContainer, fontWeight: FontWeight.w600),
                   ),
                 ),
-                ...actions,
+                if (close)
+                  IconButton(
+                    key: const Key('printedDownloadClose'),
+                    tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+                    icon: const Icon(Icons.close, size: 18),
+                    onPressed: () => setState(() => _closed = true),
+                  ),
               ],
             ),
           ),
@@ -1639,46 +1718,14 @@ class _PrintedDownloadBarState extends State<PrintedDownloadBar> {
             SizedBox(
               width: 22,
               height: 22,
-              child: CircularProgressIndicator(strokeWidth: 3, value: pm.bulkDone! / PrintedMushaf.pages),
+              child: CircularProgressIndicator(strokeWidth: 3, value: pm.bulkDone! / pm.bulkTotal),
             ),
-            l.settingsMushafPrintedProgress(context.num(pm.bulkDone!), context.num(PrintedMushaf.pages)),
-            const [],
+            l.settingsMushafPrintedProgress(context.num(pm.bulkDone!), context.num(pm.bulkTotal)),
           );
         }
-        if (done) {
-          return line(
-            RIcon(RIcons.checkCircle, color: scheme.primary, size: 22),
-            l.readerPrintedSavedAll,
-            [
-              IconButton(
-                key: const Key('printedDownloadClose'),
-                tooltip: l.readerPrintedLater,
-                icon: const Icon(Icons.close, size: 18),
-                onPressed: () => setState(() => _ran = false),
-              ),
-            ],
-          );
-        }
-        return line(
-          RIcon(RIcons.download, color: scheme.primary, size: 22),
-          pm.bulkFailed ? l.settingsMushafPrintedFailed : l.readerPrintedOffer,
-          [
-            TextButton(
-              key: const Key('printedDownloadLater'),
-              onPressed: () => setState(() => _later = true),
-              child: Text(l.readerPrintedLater),
-            ),
-            FilledButton(
-              key: const Key('printedDownloadAll'),
-              style: FilledButton.styleFrom(visualDensity: VisualDensity.compact),
-              onPressed: () {
-                setState(() => _ran = true);
-                unawaited(pm.downloadAll());
-              },
-              child: Text(pm.bulkFailed ? l.readerPrintedResume : l.readerPrintedDownload),
-            ),
-          ],
-        );
+        return pm.bulkFailed
+            ? line(RIcon(RIcons.download, color: scheme.primary, size: 22), l.settingsMushafPrintedFailed, close: true)
+            : line(RIcon(RIcons.checkCircle, color: scheme.primary, size: 22), l.readerFontSaved, close: true);
       },
     );
   }

@@ -4771,10 +4771,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get surahInfoShort => 'Surah info';
 
   @override
-  String get readerPrintedOffer => 'Madina font: download the whole Mushaf once and read offline (about 140 MB)';
+  String get readerPrintedOffer => 'Madina font: download it once for the whole Mushaf and read offline (about 140 MB)';
 
   @override
-  String get readerPrintedDownload => 'Download';
+  String get readerPrintedDownload => 'Download whole Mushaf';
 
   @override
   String get readerPrintedResume => 'Resume';
@@ -4794,4 +4794,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutProofOpen => 'Open the sources and proof page';
+
+  @override
+  String get readerFontMenuTitle => 'Mushaf font';
+
+  @override
+  String readerFontOptSwitch(String font) {
+    return 'Switch to $font';
+  }
+
+  @override
+  String readerFontNow(String font) {
+    return 'Font now: $font';
+  }
+
+  @override
+  String readerFontOptSurah(String name) {
+    return 'Download surah $name';
+  }
+
+  @override
+  String get readerFontOptAll => 'Download the whole Mushaf once';
+
+  @override
+  String get readerFontOptHint => 'The Madina font for reading offline, downloaded only once';
+
+  @override
+  String get readerFontSaved => 'Saved on this device';
 }

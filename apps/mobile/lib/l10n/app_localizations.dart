@@ -8543,13 +8543,13 @@ abstract class AppLocalizations {
   /// No description provided for @readerPrintedOffer.
   ///
   /// In en, this message translates to:
-  /// **'Madina font: download the whole Mushaf once and read offline (about 140 MB)'**
+  /// **'Madina font: download it once for the whole Mushaf and read offline (about 140 MB)'**
   String get readerPrintedOffer;
 
   /// No description provided for @readerPrintedDownload.
   ///
   /// In en, this message translates to:
-  /// **'Download'**
+  /// **'Download whole Mushaf'**
   String get readerPrintedDownload;
 
   /// No description provided for @readerPrintedResume.
@@ -8587,6 +8587,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open the sources and proof page'**
   String get aboutProofOpen;
+
+  /// No description provided for @readerFontMenuTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mushaf font'**
+  String get readerFontMenuTitle;
+
+  /// No description provided for @readerFontOptSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to {font}'**
+  String readerFontOptSwitch(String font);
+
+  /// No description provided for @readerFontNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Font now: {font}'**
+  String readerFontNow(String font);
+
+  /// No description provided for @readerFontOptSurah.
+  ///
+  /// In en, this message translates to:
+  /// **'Download surah {name}'**
+  String readerFontOptSurah(String name);
+
+  /// No description provided for @readerFontOptAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Download the whole Mushaf once'**
+  String get readerFontOptAll;
+
+  /// No description provided for @readerFontOptHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The Madina font for reading offline, downloaded only once'**
+  String get readerFontOptHint;
+
+  /// No description provided for @readerFontSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this device'**
+  String get readerFontSaved;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

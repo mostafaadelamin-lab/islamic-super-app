@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rattil/data/printed_mushaf.dart';
@@ -45,15 +46,20 @@ void main() {
     await pumpApp(
       tester,
       size: const Size(390, 844),
-      prefs: {'theme': 'light', 'reader.hintShown': 9, 'reader.guideDone': true, 'mushaf.printed.v2': true},
+      prefs: {'theme': 'light', 'reader.hintShown': 9, 'reader.guideDone': true, 'mushaf.printed.v3': true},
       audio: FakeAudioBackend(),
     );
     await pushScreen(tester, const PageReaderScreen(initialPage: 50));
     await tester.pumpAndSettle();
-    await shot(tester, '1-offer');
+    await shot(tester, '1-madina-default');
+    await tester.tap(find.byKey(const Key('readerPrinted')));
+    await tester.pumpAndSettle();
+    await shot(tester, '2-font-menu');
+    Navigator.of(tester.element(find.byKey(const Key('mushafFontMenu')))).pop();
+    await tester.pumpAndSettle();
     pm.debugSetProgress(saved: 0, done: 250);
     await tester.pump();
-    await shot(tester, '2-progress');
+    await shot(tester, '3-progress');
     pm.debugSetProgress();
   });
 }

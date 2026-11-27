@@ -198,20 +198,35 @@ class PrintedMushaf extends ChangeNotifier {
     return n;
   }
 
-  /// Saves the fonts of all pages for reading without internet, once: pages already saved are skipped, so
-  /// tapping again after a cut connection carries on where it stopped. Four pages at a time.
-  Future<void> downloadAll() async {
+  /// How many pages the running download covers (with [bulkDone]).
+  int bulkTotal = pages;
+
+  /// Saves the fonts of all pages for reading without internet, once.
+  Future<void> downloadAll() => downloadPages([for (var p = 1; p <= pages; p++) p]);
+
+  /// Whether every page in [list] is saved.
+  Future<bool> allSavedIn(Iterable<int> list) async {
+    for (final p in list) {
+      if (!await isSaved(p)) return false;
+    }
+    return true;
+  }
+
+  /// Saves the fonts of [list] (a surah, or the whole Mushaf): pages already saved are skipped, so tapping again
+  /// after a cut connection carries on where it stopped. Four pages at a time.
+  Future<void> downloadPages(List<int> list) async {
     if (bulkDone != null) return;
     final l = await loadLayout();
     if (l == null) return;
     bulkFailed = false;
     bulkDone = 0;
+    bulkTotal = list.length;
     notifyListeners();
-    var next = 1;
+    var next = 0;
     var failed = false;
     Future<void> worker() async {
-      while (!failed && next <= pages) {
-        final p = next++;
+      while (!failed && next < list.length) {
+        final p = list[next++];
         if (!await isSaved(p)) {
           Uint8List? b;
           try {
@@ -237,8 +252,9 @@ class PrintedMushaf extends ChangeNotifier {
   }
 
   @visibleForTesting
-  void debugSetProgress({int? saved, int? done, bool failed = false}) {
+  void debugSetProgress({int? saved, int? done, int total = pages, bool failed = false}) {
     savedPages = saved;
+    bulkTotal = total;
     bulkDone = done;
     bulkFailed = failed;
     notifyListeners();

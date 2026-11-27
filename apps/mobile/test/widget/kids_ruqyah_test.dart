@@ -102,18 +102,18 @@ void main() {
     expect(find.byKey(const Key('kidsMushaf.text')), findsOneWidget);
   });
 
-  test('normal look (Complex v2.2 font) is the default; the printed look only when chosen (owner 2026-11-26)', () async {
-    SharedPreferences.setMockInitialValues({'mushaf.printed': true}); // the old default does not carry over
+  test('the Madina font (printed page) is the default for everyone (owner 2026-11-27)', () async {
+    SharedPreferences.setMockInitialValues({'mushaf.printed.v2': false}); // an earlier "off" does not carry over
     final s = SettingsController(await SharedPreferences.getInstance());
-    expect(s.mushafPrinted, isFalse);
-    await s.setMushafPrinted(true);
     expect(s.mushafPrinted, isTrue);
+    await s.setMushafPrinted(false);
+    expect(s.mushafPrinted, isFalse);
   });
 
   testWidgets('printed Mushaf look: the page is drawn line by line from the page-font layout', (tester) async {
     final layout = PrintedLayout.parse(File('assets/content/mushaf-printed.v1.json').readAsStringSync());
     PrintedMushaf.instance.debugMarkReady(layout, [2, 3]);
-    await pumpApp(tester, size: const Size(390, 844), prefs: {'mushaf.printed.v2': true});
+    await pumpApp(tester, size: const Size(390, 844), prefs: {'mushaf.printed.v3': true});
     await pushScreen(tester, const PageReaderScreen(initialPage: 3));
     expect(find.byKey(const Key('mushafPage-3')), findsOneWidget);
     for (var i = 0; i < 15; i++) {
