@@ -28,4 +28,16 @@ describe("SurahInfo (the app's surah card)", () => {
     render(<SurahInfo locale="ar" meta={surahMeta(1)!} info={null} />);
     expect(screen.getByTestId("surah-info").textContent).toContain("المعلومات غير متاحة");
   });
+  it("has no Microsoft Word / HTML / CSS leftovers in any surah card or al-Wahidi entry (app + web share this file)", () => {
+    const junk = /mso-|Mso[A-Z]|Style Definitions|font-family|Calibri|X-NONE|EN-US|AR-SA|<!--|<\/?[a-z][^>]*>|\[if |endif\]|^(Normal|0|false|true)$|جدول عادي/m;
+    const bad: string[] = [];
+    for (const s of all as (SurahInfoData & { wahidi?: { ayah: number; text: string }[] })[]) {
+      for (const k of ["type", "order", "intro", "purposes", "asbab"] as const) {
+        const v = (s as unknown as Record<string, string | undefined>)[k] ?? "";
+        if (junk.test(v)) bad.push(`${s.n}.${k}`);
+      }
+      for (const w of s.wahidi ?? []) if (junk.test(w.text)) bad.push(`${s.n}:${w.ayah}`);
+    }
+    expect(bad).toEqual([]);
+  });
 });

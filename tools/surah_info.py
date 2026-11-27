@@ -10,6 +10,10 @@ root = pathlib.Path(__file__).resolve().parent.parent
 src = json.load(open(sys.argv[1]))
 def text(v):
     if not isinstance(v, str): return ''
+    # Text pasted from Microsoft Word carries <!--[if gte mso 9]><xml>...</xml>--> blocks and
+    # <style> rules ("/* Style Definitions */ table.MsoNormalTable {...}"); they are markup, not text.
+    v = re.sub(r'<!--.*?-->', '', v, flags=re.S)
+    v = re.sub(r'<(style|xml|script)\b[^>]*>.*?</\1\s*>', '', v, flags=re.S | re.I)
     v = re.sub(r'<br\s*/?>|</p>|\r?\n', '\n', v)
     v = re.sub(r'<[^>]+>', '', v)
     v = html.unescape(v).replace('\xa0', ' ')
