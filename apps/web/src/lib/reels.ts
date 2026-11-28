@@ -76,6 +76,17 @@ export const BUNDLED_SOURCES: readonly ReelSource[] = sanitizeSources(
   (sourcesBundle as { sources?: unknown }).sources,
 );
 
+/** "#quran", "#shorts" …: hashtags at any place in a YouTube title. */
+const HASHTAG = /#[^\s#]+/gu;
+/** Runs of white space (collapsed to one space after the hashtags are cut). */
+const SPACES = /\s+/gu;
+
+/** The title to show: hashtags removed (owner 2026-11-28); the original if nothing else is left. */
+export function cleanTitle(title: string): string {
+  const out = title.replace(HASHTAG, " ").replace(SPACES, " ").trim();
+  return out === "" ? title : out;
+}
+
 /** A YouTube video id: 11 characters of letters, digits, "-" and "_". */
 const LIVE_VIDEO_ID = /^[A-Za-z0-9_-]{11}$/;
 

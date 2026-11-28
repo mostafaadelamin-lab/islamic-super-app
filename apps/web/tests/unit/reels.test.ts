@@ -4,6 +4,7 @@ import {
   embedUrl,
   inTab,
   LIVE_CHANNELS,
+  cleanTitle,
   liveEmbedUrl,
   liveWatchUrl,
   savedReelsStore,
@@ -134,6 +135,10 @@ describe("recitation only: groups, live, saved (owner 2026-11-27)", () => {
     const noVideo = { ...LIVE_CHANNELS[1]!, videoId: "bad id" };
     expect(new URL(liveEmbedUrl(noVideo)).pathname).toBe("/embed/live_stream");
     expect(new URL(liveEmbedUrl(noVideo)).searchParams.get("channel")).toBe(noVideo.channelId);
+  });
+  it("titles lose their hashtags (owner 2026-11-28)", () => {
+    expect(cleanTitle("تلاوة خاشعة #quran #shorts  سورة ق")).toBe("تلاوة خاشعة سورة ق");
+    expect(cleanTitle("#quran")).toBe("#quran");
   });
   it("tabs: Haramain = Makkah + Madinah imams; viewer channels only under «الكل»", () => {
     expect(inTab("makkah", "haramain")).toBe(true);

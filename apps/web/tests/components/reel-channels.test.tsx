@@ -61,12 +61,12 @@ describe("your channels (as in the app)", () => {
     await userEvent.click(screen.getByTestId("reels-back"));
     await waitFor(() => expect(screen.getByTestId("videos-card-yt-CCCCCCCCCC1")).toBeInTheDocument());
     expect(calls.some((u) => u.includes(`/v1/reels/channel?id=${CH}`))).toBe(true);
-    expect(screen.getByTestId("videos-section-mine")).toHaveTextContent("قناة الدروس");
+    expect(screen.getByTestId(`videos-reciter-yt-${CH}`)).toHaveTextContent("قناة الدروس");
     await userEvent.click(screen.getByTestId("videos-reciters"));
     await userEvent.click(screen.getByTestId(`channel-remove-${CH}`));
     expect(userChannelsStore.get()).toEqual([]);
     await userEvent.click(screen.getByTestId("reels-back"));
-    expect(screen.queryByTestId("videos-section-mine")).toBeNull();
+    expect(screen.queryByTestId(`videos-reciter-yt-${CH}`)).toBeNull();
   });
 
   it("suggests no lesson channels any more (owner 2026-11-27: recitation only)", async () => {

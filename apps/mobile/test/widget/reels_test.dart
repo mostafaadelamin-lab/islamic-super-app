@@ -189,7 +189,13 @@ void main() {
       for (final t in ['all', 'haramain', 'golden', 'famous', 'saved']) {
         expect(find.byKey(Key('videos.tab.$t')), findsOneWidget);
       }
-      expect(find.byKey(const Key('videos.section.haramain')), findsOneWidget);
+      expect(find.byKey(const Key('videos.section.all')), findsOneWidget);
+      // Owner 2026-11-28 (layout option 2): reciters are circles in the top row, after the live circles.
+      await tester.scrollUntilVisible(
+        find.byKey(const Key('videos.reciter.yt-UCYuUcfXvsHapABTcPRWCEoQ')),
+        200,
+        scrollable: find.descendant(of: find.byKey(const Key('videos.stories')), matching: find.byType(Scrollable)),
+      );
       expect(find.byKey(const Key('videos.reciter.yt-UCYuUcfXvsHapABTcPRWCEoQ')), findsOneWidget);
       await tester.tap(find.byKey(const Key('videos.card.yt-BBBBBBBBBB2')));
       await tester.pumpAndSettle();

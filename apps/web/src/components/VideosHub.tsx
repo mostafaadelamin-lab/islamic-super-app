@@ -3,6 +3,7 @@ import { useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { localizeDigits } from "@/lib/digits";
 import {
+  cleanTitle,
   HOME_TABS,
   inTab,
   LIVE_CHANNELS,
@@ -23,14 +24,11 @@ type View =
   | { kind: "reciters" }
   | { kind: "player"; tab: ReelTab; sourceId: string | null; startId: string | null };
 
-const ROW_MAX = 12;
-/** Sections on the videos page under «الكل». */
-const ALL_SECTIONS: readonly ReelTab[] = ["haramain", "golden", "famous"];
 
 /**
- * The «فيديوهات» page (owner 2026-11-27, mockup): page 1 = the Haramain live streams, group chips and a row per
- * reciter group; any tap opens page 2 = the full-screen player ([ReelsFeed]) on that tab or reciter; page 3 = the
- * reciters list with show/hide.
+ * The «فيديوهات» page: page 1 (owner 2026-11-28, layout option 2) = circles for the Haramain live streams and the
+ * reciters, group chips and a three-column grid of tall video tiles; any tap opens page 2 = the full-screen player
+ * ([ReelsFeed]) on that tab, reciter or video; page 3 = the reciters list with show/hide.
  */
 export function VideosHub({
   locale,
@@ -89,49 +87,19 @@ function VideosHome({
   const data = useReelsData(locale, reels, fetchImpl);
   const [tab, setTab] = useState<ReelTab>("all");
   const name = (n: { ar: string; en: string }): string => (locale === "ar" ? n.ar : n.en);
-  const visible = data.sources.filter((s) => !data.hidden.has(s.id));
-  const sections = tab === "all" ? ALL_SECTIONS : [tab];
-  /** The viewer's own channels (no group): their own row under «الكل». */
-  const mine: ReelSource[] = data.myChannels
-    .map((c) => ({
-      id: `yt-${c.channelId}`,
-      channelId: c.channelId,
-      name: { ar: c.name, en: c.name },
-      category: "recitation" as const,
-      group: null,
-    }))
-    .filter((s) => !data.hidden.has(s.id));
-
-  const section = (g: ReelTab) => {
-    const reciters = visible.filter((s) => inTab(s.group, g));
-    if (reciters.length === 0) return null;
-    const list = data.listFor(g);
-    return (
-      <section key={g} className="videos-section" data-testid={`videos-section-${g}`}>
-        <header className="videos-head">
-          <h2>{tabLabel(locale, g)}</h2>
-          {list.length > 0 ? (
-            <button type="button" className="reels-link" onClick={() => onPlay(g)}>
-              {t(locale, "reels.seeAll")}
-            </button>
-          ) : null}
-        </header>
-        <ReciterRow reciters={reciters} name={name} onPick={(s) => onPlay(g, s.id)} />
-        {list.length === 0 ? (
-          <p className="muted small">
-            {t(locale, data.feedState === "loading" ? "reels.groupLoading" : "reels.empty")}
-          </p>
-        ) : (
-          <VideoStrip
-            reels={tab === "all" ? list.slice(0, ROW_MAX) : list}
-            grid={tab !== "all"}
-            locale={locale}
-            onPick={(r) => onPlay(g, null, r.id)}
-          />
-        )}
-      </section>
-    );
-  };
+  const circlesTab: ReelTab = tab === "saved" ? "all" : tab;
+  /** The viewer's own channels (no group): circles under «الكل» only. */
+  const mine: ReelSource[] = data.myChannels.map((c) => ({
+    id: `yt-${c.channelId}`,
+    channelId: c.channelId,
+    name: { ar: c.name, en: c.name },
+    category: "recitation" as const,
+    group: null,
+  }));
+  const reciters = [...data.sources, ...mine].filter(
+    (s) => !data.hidden.has(s.id) && inTab(s.group, circlesTab),
+  );
+  const list = data.listFor(tab);
 
   return (
     <div className="videos-home" data-testid="videos-home">
@@ -140,16 +108,20 @@ function VideosHome({
           <Icon name="reciter" /> {t(locale, "reels.reciters")}
         </button>
       </div>
-      {LIVE_CHANNELS.length > 0 ? (
-        <section className="videos-section">
-          <h2>{t(locale, "reels.live.title")}</h2>
-          <div className="videos-live">
-            {LIVE_CHANNELS.map((l) => (
-              <LiveCard key={l.id} live={l} locale={locale} onPick={() => onPlay("live", null, l.id)} />
-            ))}
-          </div>
-        </section>
-      ) : null}
+      <div className="videos-stories" data-testid="videos-stories">
+        {LIVE_CHANNELS.map((l) => (
+          <LiveCircle key={l.id} live={l} locale={locale} onPick={() => onPlay("live", null, l.id)} />
+        ))}
+        {reciters.map((s) => (
+          <ReciterCircle
+            key={s.id}
+            source={s}
+            label={shortName(name(s.name))}
+            newest={data.listFor(circlesTab, s.id)[0]}
+            onPick={() => onPlay(circlesTab, s.id)}
+          />
+        ))}
+      </div>
       <div className="reels-tabs videos-tabs" role="tablist">
         {HOME_TABS.map((k) => (
           <button
@@ -165,23 +137,15 @@ function VideosHome({
           </button>
         ))}
       </div>
-      {tab === "saved" ? (
-        <SavedList locale={locale} saved={data.saved} onPick={(r) => onPlay("saved", null, r.id)} />
+      {list.length === 0 ? (
+        <EmptyGrid locale={locale} tab={tab} loading={data.feedState === "loading"} />
       ) : (
-        sections.map(section)
+        <div className="videos-tiles" data-testid={`videos-section-${tab}`}>
+          {list.map((r) => (
+            <VideoTile key={r.id} reel={r} locale={locale} onPick={() => onPlay(tab, null, r.id)} />
+          ))}
+        </div>
       )}
-      {tab === "all" && mine.length > 0 ? (
-        <section className="videos-section" data-testid="videos-section-mine">
-          <h2>{t(locale, "reels.myChannels")}</h2>
-          <ReciterRow reciters={mine} name={name} onPick={(s) => onPlay("all", s.id)} />
-          <VideoStrip
-            reels={mine.flatMap((s) => data.listFor("all", s.id)).slice(0, ROW_MAX)}
-            grid={false}
-            locale={locale}
-            onPick={(r) => onPlay("all", r.sourceId ?? null, r.id)}
-          />
-        </section>
-      ) : null}
       {data.feedState === "failed" && data.listFor("all").length === 0 ? (
         <div className="reels-empty" data-testid="reels-empty">
           <p>{t(locale, "reels.offline")}</p>
@@ -200,104 +164,88 @@ function VideosHome({
   );
 }
 
-function SavedList({ locale, saved, onPick }: { locale: Locale; saved: Reel[]; onPick: (r: Reel) => void }) {
-  if (saved.length === 0) {
+function EmptyGrid({ locale, tab, loading }: { locale: Locale; tab: ReelTab; loading: boolean }) {
+  if (tab === "saved") {
     return (
       <p className="reels-empty" data-testid="videos-saved-empty">
         {t(locale, "reels.savedEmpty")}
       </p>
     );
   }
-  return <VideoStrip reels={saved} grid locale={locale} onPick={onPick} />;
+  return <p className="muted small">{t(locale, loading ? "reels.groupLoading" : "reels.empty")}</p>;
 }
 
 /** A title before the reciter's name: matches "الشيخ عبد الباسط" (strips "الشيخ "), not "عبد الباسط". */
-const TITLE_PREFIX = /^(الشيخ|د\.|Sheikh)\s+/u;
+const TITLE_PREFIX = /^(الشيخ|القارئ|د\.|Sheikh|Dr\.)\s+/u;
 const shortName = (name: string): string => name.replace(TITLE_PREFIX, "").trim();
 
-/** The reciter's initial in a circle (YouTube profile pictures need an API key, so none are shown). */
+/** The reciter's initial (shown until a frame of their newest recitation has loaded). */
 function initial(name: string): string {
-  return [...shortName(name)][0] ?? "؟";
+  return [...name][0] ?? "؟";
 }
 
-function ReciterRow({
-  reciters,
-  name,
-  onPick,
-}: {
-  reciters: ReelSource[];
-  name: (n: { ar: string; en: string }) => string;
-  onPick: (s: ReelSource) => void;
-}) {
-  return (
-    <div className="videos-avatars">
-      {reciters.map((s) => (
-        <button
-          key={s.id}
-          type="button"
-          className="videos-avatar"
-          onClick={() => onPick(s)}
-          data-testid={`videos-reciter-${s.id}`}
-        >
-          <i aria-hidden="true">{initial(name(s.name))}</i>
-          <span>{shortName(name(s.name))}</span>
-        </button>
-      ))}
-    </div>
-  );
-}
+const thumbUrl = (r: Reel, quality: "default" | "hqdefault"): string =>
+  `https://i.ytimg.com/vi/${r.ref}/${quality}.jpg`;
 
-function VideoStrip({
-  reels,
-  grid,
-  locale,
-  onPick,
-}: {
-  reels: Reel[];
-  grid: boolean;
-  locale: Locale;
-  onPick: (r: Reel) => void;
-}) {
-  return (
-    <div className={grid ? "videos-grid" : "videos-strip"}>
-      {reels.map((r) => {
-        const title = locale === "ar" ? r.title.ar : r.title.en;
-        const speaker = r.speaker?.[locale === "ar" ? "ar" : "en"] ?? "";
-        return (
-          <button
-            key={r.id}
-            type="button"
-            className="videos-card"
-            onClick={() => onPick(r)}
-            data-testid={`videos-card-${r.id}`}
-          >
-            <span className="videos-thumb">
-              {r.platform === "youtube" ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={`https://i.ytimg.com/vi/${r.ref}/mqdefault.jpg`} alt="" loading="lazy" />
-              ) : null}
-              <Icon name="play" />
-            </span>
-            <span className="videos-title">{title}</span>
-            {grid && speaker ? <span className="muted small">{speaker}</span> : null}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
-function LiveCard({ live, locale, onPick }: { live: LiveChannel; locale: Locale; onPick: () => void }) {
+/** Owner 2026-11-28 (layout option 2): a Haramain live stream as a circle with a red ring. */
+function LiveCircle({ live, locale, onPick }: { live: LiveChannel; locale: Locale; onPick: () => void }) {
   return (
     <button
       type="button"
-      className={`videos-live-card live-${live.place}`}
+      className={`videos-circle is-live live-${live.place}`}
       onClick={onPick}
       data-testid={`videos-live-${live.id}`}
+      aria-label={t(locale, `reels.live.${live.place}`)}
     >
-      <span className="live-badge">● {t(locale, "reels.live.badge")}</span>
+      <i aria-hidden="true">{t(locale, live.place === "makkah" ? "videos.liveMakkahShort" : "videos.liveMadinahShort")}</i>
+      <span className="live-dot-label">{t(locale, "reels.live.badge")}</span>
+    </button>
+  );
+}
+
+function ReciterCircle({
+  source,
+  label,
+  newest,
+  onPick,
+}: {
+  source: ReelSource;
+  label: string;
+  newest: Reel | undefined;
+  onPick: () => void;
+}) {
+  return (
+    <button type="button" className="videos-circle" onClick={onPick} data-testid={`videos-reciter-${source.id}`}>
+      <i aria-hidden="true">
+        {initial(label)}
+        {newest?.platform === "youtube" ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={thumbUrl(newest, "default")} alt="" loading="lazy" />
+        ) : null}
+      </i>
+      <span>{label}</span>
+    </button>
+  );
+}
+
+/** A tall tile of the grid: the video's frame (cropped to 9:16) and the reciter's short name. */
+function VideoTile({ reel, locale, onPick }: { reel: Reel; locale: Locale; onPick: () => void }) {
+  const title = cleanTitle(locale === "ar" ? reel.title.ar : reel.title.en);
+  const speaker = shortName(reel.speaker?.[locale === "ar" ? "ar" : "en"] ?? "");
+  return (
+    <button
+      type="button"
+      className="videos-tile"
+      onClick={onPick}
+      data-testid={`videos-card-${reel.id}`}
+      aria-label={speaker ? `${title}، ${speaker}` : title}
+    >
+      {reel.platform === "youtube" ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={thumbUrl(reel, "hqdefault")} alt="" loading="lazy" />
+      ) : null}
       <Icon name="play" />
-      <span>{t(locale, `reels.live.${live.place}`)}</span>
+      {speaker ? <span>{speaker}</span> : null}
     </button>
   );
 }

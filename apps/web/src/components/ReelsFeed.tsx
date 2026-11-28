@@ -9,6 +9,7 @@ import {
   fetchReelsFeed,
   inTab,
   LIVE_CHANNELS,
+  cleanTitle,
   liveEmbedUrl,
   liveWatchUrl,
   mixReels,
@@ -300,7 +301,7 @@ export function ReelsFeed({
   const reelPage = (r: Reel, i: number) => {
     const near = i === active;
     const poster = posterUrl(r);
-    const title = locale === "ar" ? r.title.ar : r.title.en;
+    const title = cleanTitle(locale === "ar" ? r.title.ar : r.title.en);
     const speaker = r.speaker ? (locale === "ar" ? r.speaker.ar : r.speaker.en) : null;
     const tag = groupTag(locale, r.group);
     const isSaved = savedRefs.has(r.ref);

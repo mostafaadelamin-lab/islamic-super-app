@@ -6707,6 +6707,14 @@
   "@videosHistory": {
     "description": "shared key \"videos.history\""
   },
+  "videosLiveMadinahShort": "Madinah",
+  "@videosLiveMadinahShort": {
+    "description": "shared key \"videos.liveMadinahShort\""
+  },
+  "videosLiveMakkahShort": "Makkah",
+  "@videosLiveMakkahShort": {
+    "description": "shared key \"videos.liveMakkahShort\""
+  },
   "videosNoResults": "No matching Islamic videos. Try other words.",
   "@videosNoResults": {
     "description": "shared key \"videos.noResults\""
@@ -6728,7 +6736,7 @@
   "@videosSearchFailed": {
     "description": "shared key \"videos.searchFailed\""
   },
-  "videosSearchHint": "Search a recitation, lesson or admonition",
+  "videosSearchHint": "Search a reciter or a surah",
   "@videosSearchHint": {
     "description": "shared key \"videos.searchHint\""
   },

@@ -8216,6 +8216,18 @@ abstract class AppLocalizations {
   /// **'Recent searches'**
   String get videosHistory;
 
+  /// shared key "videos.liveMadinahShort"
+  ///
+  /// In en, this message translates to:
+  /// **'Madinah'**
+  String get videosLiveMadinahShort;
+
+  /// shared key "videos.liveMakkahShort"
+  ///
+  /// In en, this message translates to:
+  /// **'Makkah'**
+  String get videosLiveMakkahShort;
+
   /// shared key "videos.noResults"
   ///
   /// In en, this message translates to:
@@ -8243,7 +8255,7 @@ abstract class AppLocalizations {
   /// shared key "videos.searchHint"
   ///
   /// In en, this message translates to:
-  /// **'Search a recitation, lesson or admonition'**
+  /// **'Search a reciter or a surah'**
   String get videosSearchHint;
 
   /// shared key "videos.searchNote"

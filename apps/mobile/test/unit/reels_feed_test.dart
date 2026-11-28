@@ -294,6 +294,18 @@ void main() {
       expect(again.saved, isEmpty);
     });
 
+    test('titles lose their hashtags (owner 2026-11-28)', () {
+      Reel r(String t) => Reel.tryParse({
+        'platform': 'youtube',
+        'ref': 'AAAAAAAAAA1',
+        'title': {'ar': t, 'en': t},
+        'category': 'recitation',
+        'status': 'approved',
+      })!;
+      expect(r('تلاوة خاشعة #quran #shorts  سورة ق').title(true), 'تلاوة خاشعة سورة ق');
+      expect(r('#quran').title(true), '#quran');
+    });
+
     test('live streams: a known 24/7 video id is embedded directly (Makkah showed "unavailable")', () {
       final l = LiveChannel.tryParse({
         'channelId': 'UCos52azQNBgW63_9uDJoPDA',

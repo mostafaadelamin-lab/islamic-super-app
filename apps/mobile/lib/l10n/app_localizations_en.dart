@@ -4580,6 +4580,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get videosHistory => 'Recent searches';
 
   @override
+  String get videosLiveMadinahShort => 'Madinah';
+
+  @override
+  String get videosLiveMakkahShort => 'Makkah';
+
+  @override
   String get videosNoResults => 'No matching Islamic videos. Try other words.';
 
   @override
@@ -4594,7 +4600,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get videosSearchFailed => 'Search is not available right now. Check your connection and try again.';
 
   @override
-  String get videosSearchHint => 'Search a recitation, lesson or admonition';
+  String get videosSearchHint => 'Search a reciter or a surah';
 
   @override
   String get videosSearchNote =>

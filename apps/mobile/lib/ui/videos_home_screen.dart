@@ -13,9 +13,9 @@ import 'reels_screen.dart';
 import 'shell_back.dart';
 import 'video_search_screen.dart';
 
-/// The «فيديوهات» tab (owner 2026-11-27, mockup page 1): the Haramain live streams on top,
-/// then group chips and a row per reciter group (pictures of the reciters and their newest
-/// recitations). Any tap opens the full-screen player ([ReelsScreen]) on that tab or reciter.
+/// The «فيديوهات» tab (owner 2026-11-28, layout option 2): a row of circles (the Haramain live
+/// streams, then the reciters), the group chips, then a three-column grid of tall video tiles.
+/// Any tap opens the full-screen player ([ReelsScreen]) on that tab, reciter or video.
 class VideosHomeScreen extends StatefulWidget {
   const VideosHomeScreen({super.key, this.showThumbnails = true, this.playerBuilder, this.livePlayerBuilder});
 
@@ -71,14 +71,6 @@ class _VideosHomeScreenState extends State<VideosHomeScreen> {
     return ListenableBuilder(
       listenable: Listenable.merge([context.services.settings, feed]),
       builder: (context, _) {
-        final sections = switch (_tab) {
-          ReelsFeedController.tabAll => const [
-            ReelsFeedController.tabHaramain,
-            ReelsFeedController.tabGolden,
-            ReelsFeedController.tabFamous,
-          ],
-          _ => [_tab],
-        };
         return Scaffold(
           appBar: AppBar(
             leading: shellBackButton(context),
@@ -93,7 +85,7 @@ class _VideosHomeScreenState extends State<VideosHomeScreen> {
               ),
             ],
             bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(52),
+              preferredSize: const Size.fromHeight(60),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(DesignTokens.spaceMd, 0, DesignTokens.spaceMd, DesignTokens.spaceSm),
                 child: Material(
@@ -104,7 +96,8 @@ class _VideosHomeScreenState extends State<VideosHomeScreen> {
                     customBorder: const StadiumBorder(),
                     onTap: () =>
                         Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const VideoSearchScreen())),
-                    child: Padding(
+                    child: Container(
+                      constraints: const BoxConstraints(minHeight: 48),
                       padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd, vertical: 10),
                       child: Row(
                         children: [
@@ -124,73 +117,31 @@ class _VideosHomeScreenState extends State<VideosHomeScreen> {
           body: ReadableWidth(
             child: RefreshIndicator(
               onRefresh: () => feed.refresh(force: true, tab: _tab),
-              child: ListView(
+              child: CustomScrollView(
                 key: const Key('videos.home'),
-                padding: const EdgeInsets.only(bottom: DesignTokens.spaceXl),
-                children: [
-                  if (feed.live.isNotEmpty) ...[
-                    _Header(title: l.reelsLiveTitle),
-                    SizedBox(
-                      height: 112 + MediaQuery.textScalerOf(context).scale(12) - 12,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd),
-                        children: [
-                          for (final c in feed.live)
-                            _LiveCard(
-                              live: c,
-                              onTap: () => _play(tab: ReelsFeedController.tabLive, startId: c.id),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ],
-                  SizedBox(
-                    height: 36 + MediaQuery.textScalerOf(context).scale(16),
-                    child: SingleChildScrollView(
-                      key: const Key('videos.tabs'),
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm),
-                      child: Row(
-                        children: [
-                          for (final t in videosHomeTabs)
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 3),
-                              child: ChoiceChip(
-                                key: Key('videos.tab.$t'),
-                                showCheckmark: false,
-                                selected: _tab == t,
-                                label: Text(reelTabLabel(l, t)),
-                                onSelected: (_) {
-                                  setState(() => _tab = t);
-                                  feed.refresh(tab: t);
-                                },
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  if (_tab == ReelsFeedController.tabSaved)
-                    ..._saved(context, feed)
-                  else
-                    for (final g in sections) ..._section(context, feed, g),
+                slivers: [
+                  SliverToBoxAdapter(child: _stories(context, feed)),
+                  SliverToBoxAdapter(child: _chips(context, feed)),
+                  ..._grid(context, feed),
                   if (feed.failed && feed.items.isEmpty)
-                    Padding(
-                      padding: const EdgeInsets.all(DesignTokens.spaceLg),
-                      child: Column(
-                        children: [
-                          Text(l.reelsOffline, key: const Key('reels.empty'), textAlign: TextAlign.center),
-                          const SizedBox(height: DesignTokens.spaceSm),
-                          FilledButton.icon(
-                            key: const Key('reels.retry'),
-                            onPressed: () => feed.refresh(force: true, tab: _tab),
-                            icon: const RIcon(RIcons.refresh),
-                            label: Text(l.reelsRetry),
-                          ),
-                        ],
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.all(DesignTokens.spaceLg),
+                        child: Column(
+                          children: [
+                            Text(l.reelsOffline, key: const Key('reels.empty'), textAlign: TextAlign.center),
+                            const SizedBox(height: DesignTokens.spaceSm),
+                            FilledButton.icon(
+                              key: const Key('reels.retry'),
+                              onPressed: () => feed.refresh(force: true, tab: _tab),
+                              icon: const RIcon(RIcons.refresh),
+                              label: Text(l.reelsRetry),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                  const SliverToBoxAdapter(child: SizedBox(height: DesignTokens.spaceXl)),
                 ],
               ),
             ),
@@ -200,159 +151,130 @@ class _VideosHomeScreenState extends State<VideosHomeScreen> {
     );
   }
 
-  List<Widget> _section(BuildContext context, ReelsFeedController feed, String tab) {
+  /// Owner 2026-11-28 (layout option 2): circles on top, first the two Haramain live streams (red ring),
+  /// then the reciters of the chosen tab, each with a frame of their newest recitation.
+  Widget _stories(BuildContext context, ReelsFeedController feed) {
     final l = context.l10n;
     final ar = context.isArabic;
+    final tab = _tab == ReelsFeedController.tabSaved ? ReelsFeedController.tabAll : _tab;
     final reciters = feed.sourcesIn(tab);
-    if (reciters.isEmpty) return const [];
-    final reels = feed.itemsIn(tab);
-    final single = _tab != ReelsFeedController.tabAll;
     final scale = MediaQuery.textScalerOf(context);
-    return [
-      _Header(
-        key: Key('videos.section.$tab'),
-        title: reelTabLabel(l, tab),
-        action: reels.isEmpty ? null : l.reelsSeeAll,
-        onAction: () => _play(tab: tab),
-      ),
-      SizedBox(
-        height: 70 + scale.scale(11) * 2.6,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd),
-          children: [
-            for (final s in reciters)
-              _Avatar(
-                key: Key('videos.reciter.${s.id}'),
-                name: s.name(ar),
-                onTap: () => _play(tab: tab, sourceId: s.id),
-              ),
-          ],
-        ),
-      ),
-      if (reels.isEmpty)
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLg, vertical: DesignTokens.spaceSm),
-          child: Text(feed.loading ? l.reelsGroupLoading : l.reelsEmpty),
-        )
-      else if (single)
-        _Grid(
-          reels: reels,
-          thumbs: widget.showThumbnails,
-          onTap: (r) => _play(tab: tab, startId: r.id),
-        )
-      else
-        SizedBox(
-          height: 108 + scale.scale(12) * 2.7,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd),
-            children: [
-              for (final r in reels.take(12))
-                _VideoCard(
-                  reel: r,
-                  thumbs: widget.showThumbnails,
-                  onTap: () => _play(tab: tab, startId: r.id),
-                ),
-            ],
-          ),
-        ),
-    ];
-  }
-
-  List<Widget> _saved(BuildContext context, ReelsFeedController feed) {
-    final l = context.l10n;
-    final reels = feed.saved;
-    if (reels.isEmpty) {
-      return [
-        Padding(
-          padding: const EdgeInsets.all(DesignTokens.spaceLg),
-          child: Text(l.reelsSavedEmpty, key: const Key('videos.savedEmpty'), textAlign: TextAlign.center),
-        ),
-      ];
-    }
-    return [
-      _Grid(
-        reels: reels,
-        thumbs: widget.showThumbnails,
-        onTap: (r) => _play(tab: ReelsFeedController.tabSaved, startId: r.id),
-      ),
-    ];
-  }
-}
-
-class _Header extends StatelessWidget {
-  const _Header({super.key, required this.title, this.action, this.onAction});
-  final String title;
-  final String? action;
-  final VoidCallback? onAction;
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.fromLTRB(DesignTokens.spaceLg, DesignTokens.spaceMd, DesignTokens.spaceSm, 4),
-    child: Row(
-      children: [
-        Expanded(child: Text(title, style: Theme.of(context).textTheme.titleMedium)),
-        if (action != null) TextButton(onPressed: onAction, child: Text(action!)),
-      ],
-    ),
-  );
-}
-
-/// The reciter's initial in a circle (YouTube profile pictures need the API, so none are shown).
-class _Avatar extends StatelessWidget {
-  const _Avatar({super.key, required this.name, required this.onTap});
-  final String name;
-  final VoidCallback onTap;
-
-  static String initial(String name) {
-    final words = name.replaceAll('الشيخ ', '').replaceAll('د. ', '').trim().split(' ');
-    final w = words.isEmpty ? name : words.first;
-    return w.isEmpty ? '؟' : w.characters.first;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final short = name.replaceAll('الشيخ ', '').replaceAll('Sheikh ', '');
     return SizedBox(
-      width: 74,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        onTap: onTap,
-        child: Column(
+      height: 84 + scale.scale(11) * 2.8,
+      child: ListView(
+        key: const Key('videos.stories'),
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm, vertical: 6),
+        children: [
+          for (final c in feed.live)
+            _Circle(
+              key: Key('videos.live.${c.id}'),
+              label: c.place == 'makkah' ? l.videosLiveMakkahShort : l.videosLiveMadinahShort,
+              sub: l.reelsLiveBadge,
+              live: true,
+              colors: c.place == 'makkah'
+                  ? const [Color(0xFF2E4A3C), Color(0xFF122019)]
+                  : const [Color(0xFF2B3550), Color(0xFF10141F)],
+              onTap: () => _play(tab: ReelsFeedController.tabLive, startId: c.id),
+            ),
+          for (final s in reciters)
+            _Circle(
+              key: Key('videos.reciter.${s.id}'),
+              label: shortReciterName(s.name(ar)),
+              image: widget.showThumbnails ? _newestThumb(feed, s.id) : null,
+              onTap: () => _play(tab: tab, sourceId: s.id),
+            ),
+        ],
+      ),
+    );
+  }
+
+  static String? _newestThumb(ReelsFeedController feed, String sourceId) {
+    final items = feed.itemsOf(sourceId);
+    return items.isEmpty ? null : 'https://i.ytimg.com/vi/${items.first.ref}/default.jpg';
+  }
+
+  Widget _chips(BuildContext context, ReelsFeedController feed) {
+    final l = context.l10n;
+    return SizedBox(
+      height: 36 + MediaQuery.textScalerOf(context).scale(16),
+      child: SingleChildScrollView(
+        key: const Key('videos.tabs'),
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceSm),
+        child: Row(
           children: [
-            const SizedBox(height: 4),
-            CircleAvatar(
-              radius: 27,
-              backgroundColor: AppTheme.brand('gold'),
-              child: CircleAvatar(
-                radius: 25,
-                backgroundColor: AppTheme.brand('goldSoft'),
-                child: Text(
-                  initial(name),
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppTheme.brand('heroDeep')),
+            for (final t in videosHomeTabs)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 3),
+                child: ChoiceChip(
+                  key: Key('videos.tab.$t'),
+                  showCheckmark: false,
+                  selected: _tab == t,
+                  label: Text(reelTabLabel(l, t)),
+                  onSelected: (_) {
+                    setState(() => _tab = t);
+                    feed.refresh(tab: t);
+                  },
                 ),
               ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              short,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 11, height: 1.2),
-            ),
           ],
         ),
       ),
     );
   }
+
+  /// Three columns of tall tiles (the video's frame and the reciter's name), newest first, mixed across
+  /// reciters; a tap opens the full-screen player on that video in the same tab.
+  List<Widget> _grid(BuildContext context, ReelsFeedController feed) {
+    final l = context.l10n;
+    final saved = _tab == ReelsFeedController.tabSaved;
+    final reels = saved ? feed.saved : feed.itemsIn(_tab);
+    if (reels.isEmpty) {
+      final text = saved ? l.reelsSavedEmpty : (feed.loading ? l.reelsGroupLoading : l.reelsEmpty);
+      if (!saved && feed.failed) return const [];
+      return [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.all(DesignTokens.spaceLg),
+            child: Text(text, key: Key(saved ? 'videos.savedEmpty' : 'videos.gridEmpty'), textAlign: TextAlign.center),
+          ),
+        ),
+      ];
+    }
+    return [
+      SliverPadding(
+        key: Key('videos.section.$_tab'),
+        padding: const EdgeInsets.fromLTRB(3, DesignTokens.spaceSm, 3, 0),
+        sliver: SliverGrid(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisSpacing: 3,
+            crossAxisSpacing: 3,
+            childAspectRatio: 9 / 16,
+          ),
+          delegate: SliverChildBuilderDelegate(
+            (context, i) => _Tile(
+              reel: reels[i],
+              thumbs: widget.showThumbnails,
+              onTap: () => _play(tab: _tab, startId: reels[i].id),
+            ),
+            childCount: reels.length,
+          ),
+        ),
+      ),
+    ];
+  }
 }
 
+/// "الشيخ عبد الرحمن السديس" -> "عبد الرحمن السديس" (titles dropped so the circle label fits).
+String shortReciterName(String name) => name.replaceFirst(RegExp(r'^(الشيخ|القارئ|د\.|Sheikh|Dr\.)\s+'), '').trim();
+
 class _Thumb extends StatelessWidget {
-  const _Thumb({required this.reel, required this.thumbs});
+  const _Thumb({required this.reel, required this.thumbs, this.quality = 'mqdefault'});
   final Reel reel;
   final bool thumbs;
+  final String quality;
 
   @override
   Widget build(BuildContext context) => Stack(
@@ -369,17 +291,124 @@ class _Thumb extends StatelessWidget {
       ),
       if (thumbs)
         Image.network(
-          'https://i.ytimg.com/vi/${reel.ref}/mqdefault.jpg',
+          'https://i.ytimg.com/vi/${reel.ref}/$quality.jpg',
           fit: BoxFit.cover,
           errorBuilder: (_, _, _) => const SizedBox.shrink(),
         ),
-      const Center(child: RIcon(RIcons.playCircle, color: Colors.white, size: 32)),
     ],
   );
 }
 
-class _VideoCard extends StatelessWidget {
-  const _VideoCard({required this.reel, required this.thumbs, required this.onTap});
+/// One circle of the top row: a Haramain live stream (red ring, "مباشر" under it) or a reciter
+/// (gold ring, a frame of their newest recitation, or their initial while it loads).
+class _Circle extends StatelessWidget {
+  const _Circle({
+    super.key,
+    required this.label,
+    required this.onTap,
+    this.sub,
+    this.image,
+    this.live = false,
+    this.colors,
+  });
+
+  final String label;
+  final String? sub;
+  final String? image;
+  final bool live;
+  final List<Color>? colors;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final ring = live ? const Color(0xFFE53935) : AppTheme.brand('gold');
+    final initial = label.isEmpty ? '؟' : label.characters.first;
+    return SizedBox(
+      width: 78,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: onTap,
+        child: Column(
+          children: [
+            Container(
+              width: 66,
+              height: 66,
+              padding: const EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: ring, width: 2.5),
+              ),
+              child: ClipOval(
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: colors ?? [AppTheme.brand('goldSoft'), AppTheme.brand('gold')],
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        live ? label : initial,
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: live ? 13 : 20,
+                          fontWeight: FontWeight.bold,
+                          color: live ? Colors.white : AppTheme.brand('heroDeep'),
+                        ),
+                      ),
+                    ),
+                    if (image != null)
+                      Image.network(image!, fit: BoxFit.cover, errorBuilder: (_, _, _) => const SizedBox.shrink()),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 4),
+            if (live)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 7,
+                    height: 7,
+                    decoration: const BoxDecoration(color: Color(0xFFD32F2F), shape: BoxShape.circle),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    sub ?? '',
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      height: 1.2,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFD32F2F),
+                    ),
+                  ),
+                ],
+              )
+            else
+              Text(
+                label,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 11, height: 1.2),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A tall tile of the grid: the video's frame (cropped to 9:16) and the reciter's short name.
+class _Tile extends StatelessWidget {
+  const _Tile({required this.reel, required this.thumbs, required this.onTap});
   final Reel reel;
   final bool thumbs;
   final VoidCallback onTap;
@@ -387,149 +416,44 @@ class _VideoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ar = context.isArabic;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
-      child: SizedBox(
-        width: 168,
-        child: InkWell(
-          key: Key('videos.card.${reel.id}'),
-          borderRadius: BorderRadius.circular(10),
-          onTap: onTap,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: SizedBox(
-                  height: 94,
-                  width: 168,
-                  child: _Thumb(reel: reel, thumbs: thumbs),
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                reel.title(ar),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 12, height: 1.25),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _Grid extends StatelessWidget {
-  const _Grid({required this.reels, required this.thumbs, required this.onTap});
-  final List<Reel> reels;
-  final bool thumbs;
-  final void Function(Reel) onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final ar = context.isArabic;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd),
-      child: Wrap(
-        spacing: DesignTokens.spaceSm,
-        runSpacing: DesignTokens.spaceMd,
-        children: [
-          for (final r in reels)
-            LayoutBuilder(
-              builder: (context, _) {
-                final w =
-                    (MediaQuery.sizeOf(context).width.clamp(0, 720) - DesignTokens.spaceMd * 2 - DesignTokens.spaceSm) /
-                    2;
-                return SizedBox(
-                  width: w,
-                  child: InkWell(
-                    key: Key('videos.card.${r.id}'),
-                    borderRadius: BorderRadius.circular(10),
-                    onTap: () => onTap(r),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: AspectRatio(
-                            aspectRatio: 16 / 9,
-                            child: _Thumb(reel: r, thumbs: thumbs),
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          r.title(ar),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 12),
-                        ),
-                        if (r.speaker(ar) != null)
-                          Text(
-                            r.speaker(ar)!,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                      ],
+    final who = reel.speaker(ar);
+    return Semantics(
+      button: true,
+      label: [reel.title(ar), ?who].join('، '),
+      excludeSemantics: true,
+      child: InkWell(
+        key: Key('videos.card.${reel.id}'),
+        onTap: onTap,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            _Thumb(reel: reel, thumbs: thumbs, quality: 'hqdefault'),
+            const PositionedDirectional(top: 6, end: 6, child: RIcon(RIcons.playCircle, color: Colors.white, size: 20)),
+            if (who != null)
+              PositionedDirectional(
+                start: 0,
+                end: 0,
+                bottom: 0,
+                child: DecoratedBox(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Color(0x00000000), Color(0xCC000000)],
                     ),
                   ),
-                );
-              },
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class _LiveCard extends StatelessWidget {
-  const _LiveCard({required this.live, required this.onTap});
-  final LiveChannel live;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final place = live.place == 'makkah' ? l.reelsLiveMakkah : l.reelsLiveMadinah;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-      child: Material(
-        borderRadius: BorderRadius.circular(12),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          key: Key('videos.live.${live.id}'),
-          onTap: onTap,
-          child: Ink(
-            width: 190,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: live.place == 'makkah'
-                    ? const [Color(0xFF2E4A3C), Color(0xFF122019)]
-                    : const [Color(0xFF2B3550), Color(0xFF10141F)],
-              ),
-            ),
-            child: Stack(
-              children: [
-                const PositionedDirectional(top: 8, start: 8, child: LiveBadge()),
-                const Center(child: RIcon(RIcons.playCircle, color: Colors.white, size: 34)),
-                PositionedDirectional(
-                  bottom: 8,
-                  start: 10,
-                  end: 10,
-                  child: Text(
-                    place,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(6, 18, 6, 6),
+                    child: Text(
+                      shortReciterName(who),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(color: Colors.white, fontSize: 11.5, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ),
+              ),
+          ],
         ),
       ),
     );

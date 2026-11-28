@@ -178,7 +178,12 @@ describe("videos page (owner 2026-11-27): live, chips, groups, player tabs, save
       expect(screen.getByTestId(`videos-tab-${k}`)).toBeInTheDocument();
     }
     await waitFor(() => expect(screen.getByTestId("videos-card-yt-BBBBBBBBBB2")).toBeInTheDocument());
-    expect(screen.getByTestId("videos-section-haramain")).toHaveTextContent("أئمة الحرمين");
+    // Owner 2026-11-28 (layout option 2): reciter circles on top, one grid of tiles for the chosen chip.
+    expect(screen.getByTestId("videos-stories")).toBeInTheDocument();
+    await userEvent.click(screen.getByTestId("videos-tab-haramain"));
+    expect(screen.getByTestId("videos-section-haramain")).toContainElement(
+      screen.getByTestId("videos-card-yt-AAAAAAAAAA1"),
+    );
     await userEvent.click(screen.getByTestId("videos-card-yt-AAAAAAAAAA1"));
     expect(screen.getByTestId("reel-player").getAttribute("src")).toContain("/embed/AAAAAAAAAA1?");
     for (const k of ["all", "haramain", "golden", "live"]) {

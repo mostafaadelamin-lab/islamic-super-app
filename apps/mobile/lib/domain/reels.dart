@@ -108,7 +108,13 @@ class Reel {
 
   bool get isAuto => status == ReelStatus.auto;
 
-  String title(bool arabic) => arabic ? titleAr : titleEn;
+  /// The title to show: hashtags (#quran, #shorts …) and repeated spaces removed (owner 2026-11-28).
+  String title(bool arabic) {
+    final t = (arabic ? titleAr : titleEn).replaceAll(_hashtag, ' ').replaceAll(RegExp(r'\s+'), ' ').trim();
+    return t.isEmpty ? (arabic ? titleAr : titleEn) : t;
+  }
+
+  static final _hashtag = RegExp(r'#[^\s#]+');
   String? speaker(bool arabic) => arabic ? speakerAr : speakerEn;
   bool get isPending => status == ReelStatus.pending;
 
