@@ -30,6 +30,17 @@ function codeBuildId(): string {
   return h.digest("hex").slice(0, 20);
 }
 
+/**
+ * RATTIL_PIN_BUILD_ID = the live site's build id (the `<!--id-->` comment at the top of any page). Owner
+ * 2026-11-28: a small code change still re-sent all ~4,350 pages, because every page carries the build id.
+ * With the live id pinned, a page is re-sent only when its own HTML/chunks changed; pages that use a changed
+ * chunk get a new chunk name, so they still differ and go up. Old chunks are never deleted from the server.
+ */
+function pinnedBuildId(): string | null {
+  const id = process.env.RATTIL_PIN_BUILD_ID?.trim();
+  return id && /^[0-9a-f]{20}$/.test(id) ? id : null;
+}
+
 const config: NextConfig = {
   output: "export",
   ...(basePath ? { basePath } : {}),
@@ -37,7 +48,7 @@ const config: NextConfig = {
   images: { unoptimized: true },
   reactStrictMode: true,
   poweredByHeader: false,
-  generateBuildId: async () => codeBuildId(),
+  generateBuildId: async () => pinnedBuildId() ?? codeBuildId(),
 };
 
 export default config;
