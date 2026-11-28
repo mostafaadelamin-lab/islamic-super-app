@@ -5348,7 +5348,7 @@
   "@reelsTapToPlay": {
     "description": "shared key \"reels.tapToPlay\""
   },
-  "reelsTitle": "Quran recitations",
+  "reelsTitle": "Recitation videos and Haramain live",
   "@reelsTitle": {
     "description": "shared key \"reels.title\""
   },

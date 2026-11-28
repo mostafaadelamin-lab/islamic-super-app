@@ -74,7 +74,8 @@ class _VideosHomeScreenState extends State<VideosHomeScreen> {
         return Scaffold(
           appBar: AppBar(
             leading: shellBackButton(context),
-            title: Text(l.reelsTitle),
+            // The full name is long («فيديوهات تلاوات متنوعة وبث الحرمين مباشر»): shrink, never cut.
+            title: FittedBox(fit: BoxFit.scaleDown, child: Text(l.reelsTitle, maxLines: 1)),
             actions: [
               IconButton(
                 key: const Key('videos.reciters'),

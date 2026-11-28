@@ -6521,7 +6521,7 @@ abstract class AppLocalizations {
   /// shared key "reels.title"
   ///
   /// In en, this message translates to:
-  /// **'Quran recitations'**
+  /// **'Recitation videos and Haramain live'**
   String get reelsTitle;
 
   /// shared key "reels.trusted"

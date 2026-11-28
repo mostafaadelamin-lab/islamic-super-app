@@ -3613,7 +3613,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reelsTapToPlay => 'اضغط للتشغيل';
 
   @override
-  String get reelsTitle => 'تلاوات القرآن الكريم';
+  String get reelsTitle => 'فيديوهات تلاوات متنوعة وبث الحرمين مباشر';
 
   @override
   String get reelsTrusted => 'قارئ موثوق';

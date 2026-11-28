@@ -3630,7 +3630,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reelsTapToPlay => 'Tap to play';
 
   @override
-  String get reelsTitle => 'Quran recitations';
+  String get reelsTitle => 'Recitation videos and Haramain live';
 
   @override
   String get reelsTrusted => 'Trusted reciter';
