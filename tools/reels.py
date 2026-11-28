@@ -223,6 +223,8 @@ def validate_sources(cat: dict) -> list[str]:
             problems.append(f"{where}: place must be makkah or madinah")
         if not str((lv.get("name") or {}).get("ar", "")).strip():
             problems.append(f"{where}: Arabic name required")
+        if "videoId" in lv and not re.fullmatch(r"[A-Za-z0-9_-]{11}", str(lv["videoId"])):
+            problems.append(f"{where}: videoId must be an 11-character YouTube id")
     return problems
 
 
@@ -235,6 +237,9 @@ def build_sources_bundle(cat: dict) -> dict:
                 "channelId": lv["channelId"],
                 "place": lv["place"],
                 "name": {"ar": lv["name"]["ar"], "en": lv["name"].get("en") or lv["name"]["ar"]},
+                # The 24/7 live video itself (owner 2026-11-28: the channel's /live_stream embed showed
+                # "This video is unavailable" for Makkah). Without it the channel's live stream is used.
+                **({"videoId": lv["videoId"]} if lv.get("videoId") else {}),
             }
             for lv in cat.get("live", [])
         ],

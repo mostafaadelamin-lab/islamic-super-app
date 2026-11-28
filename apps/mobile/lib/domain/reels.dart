@@ -362,9 +362,11 @@ class LiveChannel {
     required this.place,
     required this.nameAr,
     required this.nameEn,
+    this.videoId,
   });
 
   static const places = ['makkah', 'madinah'];
+  static final _videoIdPattern = RegExp(r'^[A-Za-z0-9_-]{11}$');
 
   static LiveChannel? tryParse(Object? raw) {
     if (raw is! Map<String, dynamic>) return null;
@@ -375,7 +377,15 @@ class LiveChannel {
     if (name is! Map<String, dynamic> || name['ar'] is! String || (name['ar'] as String).trim().isEmpty) return null;
     final ar = name['ar'] as String;
     final en = name['en'] is String && (name['en'] as String).isNotEmpty ? name['en'] as String : ar;
-    return LiveChannel(id: 'live-$place', channelId: cid, place: place as String, nameAr: ar, nameEn: en);
+    final vid = raw['videoId'];
+    return LiveChannel(
+      id: 'live-$place',
+      channelId: cid,
+      place: place as String,
+      nameAr: ar,
+      nameEn: en,
+      videoId: vid is String && _videoIdPattern.hasMatch(vid) ? vid : null,
+    );
   }
 
   static List<LiveChannel> listFromJson(Map<String, dynamic> j) {
@@ -390,16 +400,27 @@ class LiveChannel {
   final String nameAr;
   final String nameEn;
 
+  /// The channel's 24/7 live video (owner 2026-11-28: the channel-level `live_stream` embed showed
+  /// "This video is unavailable" for Makkah, the video id itself plays). Null: the channel's live stream.
+  final String? videoId;
+
   String name(bool arabic) => arabic ? nameAr : nameEn;
 
-  Uri embedUri({String origin = ReelCatalog.embedOrigin}) => Uri.https(
-    'www.youtube-nocookie.com',
-    '/embed/live_stream',
-    {'channel': channelId, 'autoplay': '1', 'playsinline': '1', 'rel': '0', 'modestbranding': '1', 'origin': origin},
-  );
+  Uri embedUri({String origin = ReelCatalog.embedOrigin}) {
+    const q = {'autoplay': '1', 'playsinline': '1', 'rel': '0', 'modestbranding': '1'};
+    final v = videoId;
+    return v != null
+        ? Uri.https('www.youtube-nocookie.com', '/embed/$v', {...q, 'origin': origin})
+        : Uri.https('www.youtube-nocookie.com', '/embed/live_stream', {'channel': channelId, ...q, 'origin': origin});
+  }
 
   /// The live page on YouTube (opened when the embed refuses to play).
-  Uri get watchUri => Uri.https('www.youtube.com', '/channel/$channelId/live');
+  Uri get watchUri {
+    final v = videoId;
+    return v != null
+        ? Uri.https('www.youtube.com', '/watch', {'v': v})
+        : Uri.https('www.youtube.com', '/channel/$channelId/live');
+  }
 
   String embedHtml() =>
       '<!doctype html><html><head><meta charset="utf-8">'

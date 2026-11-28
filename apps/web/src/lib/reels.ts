@@ -56,6 +56,8 @@ export interface LiveChannel {
   channelId: string;
   place: "makkah" | "madinah";
   name: { ar: string; en: string };
+  /** The 24/7 live video (owner 2026-11-28: the channel-level embed showed "unavailable" for Makkah). */
+  videoId?: string;
 }
 
 const CHANNEL_RE = /^UC[A-Za-z0-9_-]{22}$/;
@@ -74,9 +76,20 @@ export const BUNDLED_SOURCES: readonly ReelSource[] = sanitizeSources(
   (sourcesBundle as { sources?: unknown }).sources,
 );
 
+/** A YouTube video id: 11 characters of letters, digits, "-" and "_". */
+const LIVE_VIDEO_ID = /^[A-Za-z0-9_-]{11}$/;
+
+/** The live video's YouTube page (the "open on YouTube" link). */
+export function liveWatchUrl(l: LiveChannel): string {
+  return l.videoId !== undefined && LIVE_VIDEO_ID.test(l.videoId)
+    ? `https://www.youtube.com/watch?v=${l.videoId}`
+    : `https://www.youtube.com/channel/${l.channelId}/live`;
+}
+
 export function liveEmbedUrl(l: LiveChannel, origin?: string): string {
+  const video = l.videoId !== undefined && LIVE_VIDEO_ID.test(l.videoId) ? l.videoId : null;
   const q = new URLSearchParams({
-    channel: l.channelId,
+    ...(video ? {} : { channel: l.channelId }),
     autoplay: "1",
     mute: "1",
     playsinline: "1",
@@ -84,7 +97,7 @@ export function liveEmbedUrl(l: LiveChannel, origin?: string): string {
     modestbranding: "1",
     ...(origin ? { origin } : {}),
   });
-  return `https://www.youtube-nocookie.com/embed/live_stream?${q.toString()}`;
+  return `https://www.youtube-nocookie.com/embed/${video ?? "live_stream"}?${q.toString()}`;
 }
 
 const YT_ID = /^[A-Za-z0-9_-]{11}$/;

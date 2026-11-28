@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.28] — «فيديوهات»: readable player tabs, Makkah live plays — 2026-11-28
+Owner 2026-11-28 (phone screenshots): in the video player the unselected tabs were blank white pills (white text on white), and the Makkah live stream said "This video is unavailable".
+### Phone apps (Android + iPhone) and website
+- App player tabs are drawn by hand (no Material chip): unselected = see-through dark pill with white text and a thin white border, selected = gold with dark text; order «الكل · أئمة الحرمين · الجيل الذهبي المصري · بث مباشر». The website's tabs were already readable.
+- Haramain live: the app and the site embed the 24/7 live video itself (Makkah IsJTAdC3-Jw «Makkah Live» from KSA Qur'an TV, Madinah 10aUPlTW8wQ «Madinah Live HD» from KSA Sunnah TV; both allow embedding) instead of the channel-level `live_stream` embed; "open on YouTube" opens the same video. If a video id is ever missing or malformed, the channel's live stream is used as before. Ids live in content/reels/sources.json (`live[].videoId`).
+- Version 1.2.28 (build 48).
+
 ## [1.2.27] — «فيديوهات»: Quran recitation only, Haramain live, reciter groups — 2026-11-27
 Owner 2026-11-27: remove every lesson/admonition channel and keep recitation only; remove anyone jailed or ever in a political current; add Egypt's golden generation, the imams of the Two Holy Mosques and the most famous reciters; add the Haramain live streams. Approved list and mockups in project files _sync/videos-ideas/.
 ### Phone apps (Android + iPhone) and website

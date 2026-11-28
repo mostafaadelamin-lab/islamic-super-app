@@ -206,23 +206,12 @@ class _ReelsScreenState extends State<ReelsScreen> {
             for (final t in reelPlayerTabs)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 3),
-                child: ChoiceChip(
+                child: _TabPill(
                   key: Key('reels.tab.$t'),
-                  showCheckmark: false,
                   selected: _sourceId == null && _tab == t,
-                  onSelected: (_) => _selectTab(t),
-                  avatar: t == ReelsFeedController.tabLive
-                      ? const Icon(Icons.circle, size: 10, color: Color(0xFFFF5A5A))
-                      : null,
-                  label: Text(reelTabLabel(l, t)),
-                  labelStyle: TextStyle(
-                    color: _sourceId == null && _tab == t ? const Color(0xFF2B1D12) : Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  selectedColor: const Color(0xFFE0B25A),
-                  backgroundColor: Colors.white.withValues(alpha: 0.16),
-                  side: BorderSide.none,
-                  shape: const StadiumBorder(),
+                  live: t == ReelsFeedController.tabLive,
+                  label: reelTabLabel(l, t),
+                  onTap: () => _selectTab(t),
                 ),
               ),
           ],
@@ -860,6 +849,67 @@ class _ChannelSearchSheetState extends State<ChannelSearchSheet> {
               ],
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+/// One tab of the player's top row. Drawn by hand (not a [ChoiceChip]) so the colours are exact on
+/// every platform: the unselected tab is a see-through dark pill with white text over the video, the
+/// selected one is gold with dark text (owner 2026-11-28: unselected tabs showed as blank white pills).
+class _TabPill extends StatelessWidget {
+  const _TabPill({
+    super.key,
+    required this.selected,
+    required this.live,
+    required this.label,
+    required this.onTap,
+  });
+
+  final bool selected;
+  final bool live;
+  final String label;
+  final VoidCallback onTap;
+
+  static const _gold = Color(0xFFE0B25A);
+  static const _ink = Color(0xFF2B1D12);
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      selected: selected,
+      child: Material(
+        color: selected ? _gold : Colors.black.withValues(alpha: 0.35),
+        shape: StadiumBorder(
+          side: BorderSide(color: selected ? _gold : Colors.white.withValues(alpha: 0.55)),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 48),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMd),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (live) ...[
+                    const Icon(Icons.circle, size: 10, color: Color(0xFFFF5A5A)),
+                    const SizedBox(width: 6),
+                  ],
+                  Text(
+                    label,
+                    style: TextStyle(
+                      color: selected ? _ink : Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

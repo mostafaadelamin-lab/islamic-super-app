@@ -189,7 +189,7 @@ describe("videos page (owner 2026-11-27): live, chips, groups, player tabs, save
     await userEvent.click(screen.getByTestId("reels-tab-golden"));
     expect(screen.queryByTestId("reel-player")).toBeNull();
     await userEvent.click(screen.getByTestId("reels-tab-live"));
-    expect(screen.getByTestId("live-player").getAttribute("src")).toContain("/embed/live_stream?channel=");
+    expect(screen.getByTestId("live-player").getAttribute("src")).toContain("/embed/IsJTAdC3-Jw?");
     await userEvent.click(screen.getByTestId("reels-back"));
     expect(screen.getByTestId("videos-home")).toBeInTheDocument();
   });

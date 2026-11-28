@@ -5,6 +5,7 @@ import {
   inTab,
   LIVE_CHANNELS,
   liveEmbedUrl,
+  liveWatchUrl,
   savedReelsStore,
   toggleSaved,
   fetchReelsFeed,
@@ -125,9 +126,14 @@ describe("recitation only: groups, live, saved (owner 2026-11-27)", () => {
     expect(BUNDLED_SOURCES.length).toBeGreaterThan(40);
     expect(BUNDLED_SOURCES.every((s) => s.category === "recitation" && !!s.group)).toBe(true);
     expect(LIVE_CHANNELS.map((l) => l.place)).toEqual(["makkah", "madinah"]);
+    // The 24/7 video itself (owner 2026-11-28: the channel-level embed showed "unavailable" for Makkah).
     const u = new URL(liveEmbedUrl(LIVE_CHANNELS[0]!));
-    expect(u.pathname).toBe("/embed/live_stream");
-    expect(u.searchParams.get("channel")).toBe(LIVE_CHANNELS[0]!.channelId);
+    expect(u.pathname).toBe("/embed/IsJTAdC3-Jw");
+    expect(u.searchParams.get("channel")).toBeNull();
+    expect(liveWatchUrl(LIVE_CHANNELS[0]!)).toBe("https://www.youtube.com/watch?v=IsJTAdC3-Jw");
+    const noVideo = { ...LIVE_CHANNELS[1]!, videoId: "bad id" };
+    expect(new URL(liveEmbedUrl(noVideo)).pathname).toBe("/embed/live_stream");
+    expect(new URL(liveEmbedUrl(noVideo)).searchParams.get("channel")).toBe(noVideo.channelId);
   });
   it("tabs: Haramain = Makkah + Madinah imams; viewer channels only under «الكل»", () => {
     expect(inTab("makkah", "haramain")).toBe(true);

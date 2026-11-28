@@ -10,6 +10,7 @@ import {
   inTab,
   LIVE_CHANNELS,
   liveEmbedUrl,
+  liveWatchUrl,
   mixReels,
   PLAYER_TABS,
   posterUrl,
@@ -284,7 +285,7 @@ export function ReelsFeed({
           <span className="live-badge">● {t(locale, "reels.live.badge")}</span>
           <strong className="reel-title">{name}</strong>
           <a
-            href={`https://www.youtube.com/channel/${l.channelId}/live`}
+            href={liveWatchUrl(l)}
             target="_blank"
             rel="noopener noreferrer"
             className="reel-open"

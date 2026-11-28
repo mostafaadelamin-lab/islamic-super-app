@@ -294,6 +294,26 @@ void main() {
       expect(again.saved, isEmpty);
     });
 
+    test('live streams: a known 24/7 video id is embedded directly (Makkah showed "unavailable")', () {
+      final l = LiveChannel.tryParse({
+        'channelId': 'UCos52azQNBgW63_9uDJoPDA',
+        'videoId': 'IsJTAdC3-Jw',
+        'place': 'makkah',
+        'name': {'ar': 'مكة'},
+      })!;
+      expect(l.embedUri().path, '/embed/IsJTAdC3-Jw');
+      expect(l.embedUri().queryParameters.containsKey('channel'), isFalse);
+      expect(l.watchUri.toString(), 'https://www.youtube.com/watch?v=IsJTAdC3-Jw');
+      final bad = LiveChannel.tryParse({
+        'channelId': 'UCos52azQNBgW63_9uDJoPDA',
+        'videoId': 'x"><script>',
+        'place': 'makkah',
+        'name': {'ar': 'مكة'},
+      })!;
+      expect(bad.videoId, isNull);
+      expect(bad.embedUri().path, '/embed/live_stream');
+    });
+
     test('live streams: the Haramain channels through the live_stream embed', () {
       final c = make();
       final live = c.live.single;
