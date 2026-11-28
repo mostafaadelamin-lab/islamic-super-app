@@ -4667,6 +4667,10 @@
   "@radioAll": {
     "description": "shared key \"radio.all\""
   },
+  "radioAudio": "Audio",
+  "@radioAudio": {
+    "description": "shared key \"radio.audio\""
+  },
   "radioDuration": "Play for",
   "@radioDuration": {
     "description": "shared key \"radio.duration\""
@@ -4679,9 +4683,29 @@
   "@radioLiveNote": {
     "description": "shared key \"radio.liveNote\""
   },
+  "radioLiveVideo": "Live now · video",
+  "@radioLiveVideo": {
+    "description": "shared key \"radio.liveVideo\""
+  },
   "radioLonger": "Longer",
   "@radioLonger": {
     "description": "shared key \"radio.longer\""
+  },
+  "radioMadinah": "The Prophet's Mosque",
+  "@radioMadinah": {
+    "description": "shared key \"radio.madinah\""
+  },
+  "radioMadinahSub": "Madinah",
+  "@radioMadinahSub": {
+    "description": "shared key \"radio.madinahSub\""
+  },
+  "radioMakkah": "Masjid al-Haram",
+  "@radioMakkah": {
+    "description": "shared key \"radio.makkah\""
+  },
+  "radioMakkahSub": "Makkah",
+  "@radioMakkahSub": {
+    "description": "shared key \"radio.makkahSub\""
   },
   "radioMin": "{n} min",
   "@radioMin": {
@@ -4724,6 +4748,14 @@
   "radioUnlimited": "Unlimited",
   "@radioUnlimited": {
     "description": "shared key \"radio.unlimited\""
+  },
+  "radioVideoClose": "Close video",
+  "@radioVideoClose": {
+    "description": "shared key \"radio.videoClose\""
+  },
+  "radioVideoFull": "Full screen",
+  "@radioVideoFull": {
+    "description": "shared key \"radio.videoFull\""
   },
   "radiosFeatured": "Live",
   "@radiosFeatured": {

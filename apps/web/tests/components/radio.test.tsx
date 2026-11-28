@@ -105,7 +105,7 @@ describe("home radio station (owner, 2026-11-14)", () => {
     const select = screen.getByTestId("radio-station") as HTMLSelectElement;
     expect(DEFAULT_STATION).toBe("eg");
     expect(select.value).toBe("eg");
-    expect(select.options[0]!.textContent).toBe("إذاعة القرآن الكريم من القاهرة");
+    expect(select.options[0]!.textContent).toBe("إذاعة القرآن الكريم من القاهرة  ·  🎧 صوتي");
     expect(LIVE_RADIOS.find((r) => r.id === "eg")!.url).toMatch(/^https:/);
     expect(screen.getByTestId("radio-status")).toHaveTextContent("بث مباشر");
   });
@@ -121,6 +121,47 @@ describe("home radio station (owner, 2026-11-14)", () => {
       LIVE_RADIOS.find((r) => r.id === "eg")!.url,
     );
     expect(screen.getByTestId("radio-play")).toHaveAttribute("aria-pressed", "true");
+  });
+});
+
+describe("Haramain live video in the home radio (owner, 2026-11-28)", () => {
+  it("marks every station in the list as audio («صوتي»), the stations and their order unchanged", () => {
+    render(<QuranRadio locale="ar" />);
+    const select = screen.getByTestId("radio-station") as HTMLSelectElement;
+    const texts = [...select.options].map((o) => o.textContent ?? "");
+    expect(texts).toHaveLength(LIVE_RADIOS.length + 1);
+    for (const t of texts) expect(t.endsWith("🎧 صوتي")).toBe(true);
+    expect([...select.options].map((o) => o.value)).toEqual(["eg", "makkah", "madinah", "sa", "mushaf"]);
+  });
+  it("shows two «مباشر الآن فيديو» buttons; a tap opens the live video and stops the audio", async () => {
+    const user = userEvent.setup();
+    const stop = vi.spyOn(player, "stop");
+    render(<QuranRadio locale="ar" />);
+    const makkah = screen.getByTestId("radio-live-makkah");
+    expect(makkah).toHaveTextContent("المسجد الحرام");
+    expect(makkah).toHaveTextContent("مباشر الآن فيديو");
+    expect(screen.getByTestId("radio-live-madinah")).toHaveTextContent("المسجد النبوي");
+    expect(screen.queryByTestId("radio-video")).toBeNull();
+    await user.click(makkah);
+    expect(stop).toHaveBeenCalled();
+    expect(makkah).toHaveAttribute("aria-pressed", "true");
+    const src = screen.getByTestId("radio-video-player").getAttribute("src")!;
+    expect(src).toContain("/embed/IsJTAdC3-Jw?");
+    expect(src).toContain("mute=0");
+    // switch to Madinah, then close
+    await user.click(screen.getByTestId("radio-live-madinah"));
+    expect(screen.getByTestId("radio-video-player").getAttribute("src")).toContain("/embed/10aUPlTW8wQ?");
+    await user.click(screen.getByTestId("radio-video-close"));
+    expect(screen.queryByTestId("radio-video")).toBeNull();
+  });
+  it("closes the video when the audio radio starts", async () => {
+    const user = userEvent.setup();
+    vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
+    render(<QuranRadio locale="ar" />);
+    await user.click(screen.getByTestId("radio-live-makkah"));
+    expect(screen.getByTestId("radio-video")).toBeTruthy();
+    await user.click(screen.getByTestId("radio-play"));
+    expect(screen.queryByTestId("radio-video")).toBeNull();
   });
 });
 

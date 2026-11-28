@@ -145,8 +145,14 @@ class CarBrowser implements MediaBrowser {
     }
     if (parentId == radioId) {
       return [
+        // «صوتي» (owner 2026-11-28): the car plays the radios as sound; live video is phone/website only.
         for (final r in featuredRadios)
-          _item('$radioId/${r.id}', _ar ? r.nameAr : r.nameEn, l.libraryLive, 'dot.radiowaves.left.and.right'),
+          _item(
+            '$radioId/${r.id}',
+            _ar ? r.nameAr : r.nameEn,
+            '${l.libraryLive} · ${l.radioAudio}',
+            'dot.radiowaves.left.and.right',
+          ),
       ];
     }
     if (parentId == libraryId) {

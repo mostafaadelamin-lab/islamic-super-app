@@ -5618,6 +5618,12 @@ abstract class AppLocalizations {
   /// **'All radios'**
   String get radioAll;
 
+  /// shared key "radio.audio"
+  ///
+  /// In en, this message translates to:
+  /// **'Audio'**
+  String get radioAudio;
+
   /// shared key "radio.duration"
   ///
   /// In en, this message translates to:
@@ -5636,11 +5642,41 @@ abstract class AppLocalizations {
   /// **'Live broadcast. Pick another station from the list or from \"All radios\".'**
   String get radioLiveNote;
 
+  /// shared key "radio.liveVideo"
+  ///
+  /// In en, this message translates to:
+  /// **'Live now · video'**
+  String get radioLiveVideo;
+
   /// shared key "radio.longer"
   ///
   /// In en, this message translates to:
   /// **'Longer'**
   String get radioLonger;
+
+  /// shared key "radio.madinah"
+  ///
+  /// In en, this message translates to:
+  /// **'The Prophet\'s Mosque'**
+  String get radioMadinah;
+
+  /// shared key "radio.madinahSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Madinah'**
+  String get radioMadinahSub;
+
+  /// shared key "radio.makkah"
+  ///
+  /// In en, this message translates to:
+  /// **'Masjid al-Haram'**
+  String get radioMakkah;
+
+  /// shared key "radio.makkahSub"
+  ///
+  /// In en, this message translates to:
+  /// **'Makkah'**
+  String get radioMakkahSub;
 
   /// shared key "radio.min"
   ///
@@ -5689,6 +5725,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unlimited'**
   String get radioUnlimited;
+
+  /// shared key "radio.videoClose"
+  ///
+  /// In en, this message translates to:
+  /// **'Close video'**
+  String get radioVideoClose;
+
+  /// shared key "radio.videoFull"
+  ///
+  /// In en, this message translates to:
+  /// **'Full screen'**
+  String get radioVideoFull;
 
   /// shared key "radios.featured"
   ///

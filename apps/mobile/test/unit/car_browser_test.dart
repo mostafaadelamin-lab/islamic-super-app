@@ -164,6 +164,8 @@ void main() {
   test('radio: the live stations, picking one plays it live', () async {
     final list = await car.children(CarBrowser.radioId);
     expect(list.map((e) => e.title), [for (final r in featuredRadios) r.nameAr]);
+    // owner 2026-11-28: every radio says it is sound («صوتي»)
+    expect(list.every((e) => e.artist == 'بث مباشر · صوتي'), isTrue);
     await car.play(list.first.id);
     expect(narration.seriesId, 'radio');
     expect(narration.episode!.id, featuredRadios.first.id);

@@ -97,12 +97,13 @@ export function liveWatchUrl(l: LiveChannel): string {
     : `https://www.youtube.com/channel/${l.channelId}/live`;
 }
 
-export function liveEmbedUrl(l: LiveChannel, origin?: string): string {
+/** The live video's embed. Muted by default (autoplay rules); `sound` after a tap (home radio card). */
+export function liveEmbedUrl(l: LiveChannel, origin?: string, sound = false): string {
   const video = l.videoId !== undefined && LIVE_VIDEO_ID.test(l.videoId) ? l.videoId : null;
   const q = new URLSearchParams({
     ...(video ? {} : { channel: l.channelId }),
     autoplay: "1",
-    mute: "1",
+    mute: sound ? "0" : "1",
     playsinline: "1",
     rel: "0",
     modestbranding: "1",

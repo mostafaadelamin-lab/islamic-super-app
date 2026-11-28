@@ -3132,6 +3132,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get radioAll => 'كل الإذاعات';
 
   @override
+  String get radioAudio => 'صوتي';
+
+  @override
   String get radioDuration => 'مدة التشغيل';
 
   @override
@@ -3141,7 +3144,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get radioLiveNote => 'بث مباشر. اختار إذاعة تانية من القائمة أو من \"كل الإذاعات\".';
 
   @override
+  String get radioLiveVideo => 'مباشر الآن فيديو';
+
+  @override
   String get radioLonger => 'زيادة المدة';
+
+  @override
+  String get radioMadinah => 'المسجد النبوي';
+
+  @override
+  String get radioMadinahSub => 'المدينة المنورة';
+
+  @override
+  String get radioMakkah => 'المسجد الحرام';
+
+  @override
+  String get radioMakkahSub => 'مكة المكرمة';
 
   @override
   String radioMin(String n) {
@@ -3170,6 +3188,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get radioUnlimited => 'غير محدود';
+
+  @override
+  String get radioVideoClose => 'إغلاق الفيديو';
+
+  @override
+  String get radioVideoFull => 'ملء الشاشة';
 
   @override
   String get radiosFeatured => 'بث مباشر';

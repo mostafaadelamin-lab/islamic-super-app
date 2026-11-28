@@ -12,6 +12,9 @@ import 'package:rattil/ui/tasbih_screen.dart';
 
 import 'package:rattil/ui/prayer_calendar_screen.dart';
 
+import 'package:rattil/domain/reels.dart';
+import 'package:rattil/ui/home_screen.dart';
+
 import '../helpers.dart';
 
 String ltr(String s) => '\u2066$s\u2069';
@@ -118,6 +121,65 @@ void main() {
     await s.recitation.stop();
     s.sleepTimer.set(null);
     await tester.pump();
+  });
+
+  testWidgets('Quran radio: «صوتي» on every station + Haramain «مباشر الآن فيديو» buttons (owner 2026-11-28)', (
+    tester,
+  ) async {
+    final audio = FakeAudioBackend();
+    final app = await pumpApp(tester, size: tallPhone, audio: audio);
+    final s = app.services;
+    expect(s.reelsFeed.live.map((c) => c.place), ['makkah', 'madinah']);
+    await pushScreen(
+      tester,
+      Scaffold(
+        body: SingleChildScrollView(
+          child: QuranRadioCard(
+            livePlayerBuilder: (context, LiveChannel c) =>
+                ColoredBox(key: Key('live.player.${c.id}'), color: Colors.red, child: const SizedBox.expand()),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    // the closed station field already says «صوتي»; the open list says it on every station
+    expect(find.byKey(const Key('radio.audioTag')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('radio.station')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('radio.audioTag')), findsNWidgets(1 + 5));
+    expect(find.text('صوتي'), findsNWidgets(1 + 5));
+    await tester.tap(find.text('إذاعة القرآن الكريم من القاهرة').last);
+    await tester.pumpAndSettle();
+    // the two live-video buttons
+    expect(find.text('مباشر الآن فيديو'), findsNWidgets(2));
+    expect(find.text('مكة المكرمة'), findsOneWidget);
+    expect(find.text('المدينة المنورة'), findsOneWidget);
+    expect(find.byKey(const Key('radio.video')), findsNothing);
+    // audio on, then the Makkah video: the audio stops and the video opens in the card
+    await tester.tap(find.byKey(const Key('radio.play')));
+    await tester.pump();
+    expect(s.narration.isActive, isTrue);
+    await tester.tap(find.byKey(const Key('radio.live-makkah')));
+    await tester.pumpAndSettle();
+    expect(s.narration.isActive, isFalse);
+    expect(find.byKey(const Key('live.player.live-makkah')), findsOneWidget);
+    // switch to Madinah
+    await tester.tap(find.byKey(const Key('radio.live-madinah')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('live.player.live-madinah')), findsOneWidget);
+    expect(find.byKey(const Key('live.player.live-makkah')), findsNothing);
+    // the audio play button closes the video
+    await tester.tap(find.byKey(const Key('radio.play')));
+    await tester.pump();
+    expect(find.byKey(const Key('radio.video')), findsNothing);
+    await s.narration.stop();
+    await tester.pump();
+    // ✕ closes it
+    await tester.tap(find.byKey(const Key('radio.live-makkah')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('radio.videoClose')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('radio.video')), findsNothing);
   });
 }
 

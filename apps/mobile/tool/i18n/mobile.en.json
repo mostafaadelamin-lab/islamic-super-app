@@ -1303,5 +1303,13 @@
   "podcast.continue": "Continue: {series} · episode {n}",
   "podcast.continueBtn": "Continue episode {n}",
   "podcast.downloadAll": "Download the show",
-  "podcast.downloadedAll": "The whole show is downloaded"
+  "podcast.downloadedAll": "The whole show is downloaded",
+  "radio.audio": "Audio",
+  "radio.liveVideo": "Live now · video",
+  "radio.makkah": "Masjid al-Haram",
+  "radio.makkahSub": "Makkah",
+  "radio.madinah": "The Prophet's Mosque",
+  "radio.madinahSub": "Madinah",
+  "radio.videoClose": "Close video",
+  "radio.videoFull": "Full screen"
 }

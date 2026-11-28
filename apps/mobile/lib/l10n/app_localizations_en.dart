@@ -3144,6 +3144,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get radioAll => 'All radios';
 
   @override
+  String get radioAudio => 'Audio';
+
+  @override
   String get radioDuration => 'Play for';
 
   @override
@@ -3153,7 +3156,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get radioLiveNote => 'Live broadcast. Pick another station from the list or from \"All radios\".';
 
   @override
+  String get radioLiveVideo => 'Live now · video';
+
+  @override
   String get radioLonger => 'Longer';
+
+  @override
+  String get radioMadinah => 'The Prophet\'s Mosque';
+
+  @override
+  String get radioMadinahSub => 'Madinah';
+
+  @override
+  String get radioMakkah => 'Masjid al-Haram';
+
+  @override
+  String get radioMakkahSub => 'Makkah';
 
   @override
   String radioMin(String n) {
@@ -3182,6 +3200,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get radioUnlimited => 'Unlimited';
+
+  @override
+  String get radioVideoClose => 'Close video';
+
+  @override
+  String get radioVideoFull => 'Full screen';
 
   @override
   String get radiosFeatured => 'Live';

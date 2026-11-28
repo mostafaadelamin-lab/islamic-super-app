@@ -1303,5 +1303,13 @@
   "podcast.continue": "أكمل: {series} · الحلقة {n}",
   "podcast.continueBtn": "أكمل الحلقة {n}",
   "podcast.downloadAll": "تحميل البرنامج",
-  "podcast.downloadedAll": "البرنامج كله محمّل"
+  "podcast.downloadedAll": "البرنامج كله محمّل",
+  "radio.audio": "صوتي",
+  "radio.liveVideo": "مباشر الآن فيديو",
+  "radio.makkah": "المسجد الحرام",
+  "radio.makkahSub": "مكة المكرمة",
+  "radio.madinah": "المسجد النبوي",
+  "radio.madinahSub": "المدينة المنورة",
+  "radio.videoClose": "إغلاق الفيديو",
+  "radio.videoFull": "ملء الشاشة"
 }

@@ -21,6 +21,8 @@ import 'prayer_calendar_screen.dart';
 import 'prayer_model.dart';
 import 'qibla_screen.dart';
 import 'radio_screen.dart';
+import 'reels_screen.dart' show LivePlayer, LivePlayerBuilder;
+import '../domain/reels.dart' show LiveChannel;
 import 'lessons_screen.dart';
 import 'stories_screen.dart';
 import 'locate.dart';
@@ -616,10 +618,13 @@ class _WideRow extends StatelessWidget {
 /// (streamed per ayah), from a random surah, with a play duration that stops it
 /// through the app's sleep timer.
 class QuranRadioCard extends StatefulWidget {
-  const QuranRadioCard({super.key, this.random});
+  const QuranRadioCard({super.key, this.random, this.livePlayerBuilder});
 
   /// Injected in tests to fix the first surah.
   final Random? random;
+
+  /// The Haramain live-video player (tests inject a stand-in for the WebView).
+  final LivePlayerBuilder? livePlayerBuilder;
 
   /// Play-duration steps, in minutes: 0 = unlimited, then the sleep-timer choices.
   static const durations = [0, ...SleepTimerController.choices];
@@ -630,6 +635,44 @@ class QuranRadioCard extends StatefulWidget {
 
 class _QuranRadioCardState extends State<QuranRadioCard> {
   int _chosen = 0;
+
+  /// The Haramain live video open in the card (owner 2026-11-28): two buttons under the audio stations.
+  LiveChannel? _video;
+
+  Widget _player(BuildContext context, LiveChannel c) =>
+      widget.livePlayerBuilder?.call(context, c) ?? LivePlayer(key: ValueKey('radio.video-${c.id}'), live: c);
+
+  Future<void> _openVideo(LiveChannel c) async {
+    final s = context.services;
+    if (_video?.id == c.id) {
+      setState(() => _video = null);
+      return;
+    }
+    if (s.narration.isActive) await s.narration.stop();
+    if (s.recitation.isActive && s.recitation.scope == PlayScope.radio) await s.recitation.stop();
+    if (mounted) setState(() => _video = c);
+  }
+
+  Future<void> _fullScreen(LiveChannel c) async {
+    setState(() => _video = null); // one player at a time
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        fullscreenDialog: true,
+        builder: (ctx) => Scaffold(
+          backgroundColor: Colors.black,
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            foregroundColor: Colors.white,
+            title: Text(c.name(ctx.isArabic)),
+          ),
+          body: Center(
+            child: AspectRatio(aspectRatio: 16 / 9, child: _player(ctx, c)),
+          ),
+        ),
+      ),
+    );
+    if (mounted) setState(() => _video = c);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -653,6 +696,7 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
         final livePlaying = liveOn && n.isPlaying;
 
         Future<void> onPlay() async {
+          if (_video != null) setState(() => _video = null);
           if (live != null) {
             if (livePlaying) {
               await n.pause();
@@ -703,31 +747,45 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
                                     key: const Key('radio.station'),
                                     value: station,
                                     isExpanded: true,
+                                    itemHeight: null,
+                                    selectedItemBuilder: (context) => [
+                                      for (final name in [
+                                        for (final r in featuredRadios) context.isArabic ? r.nameAr : r.nameEn,
+                                        if (!featuredRadios.any((r) => r.id == station) && station != 'mushaf')
+                                          s.settings.radioStationName ?? station,
+                                        l.radioMushaf,
+                                      ])
+                                        Align(
+                                          alignment: AlignmentDirectional.centerStart,
+                                          child: _AudioStation(
+                                            name: name,
+                                            maxLines: 2,
+                                            style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                    ],
                                     icon: const RIcon(RIcons.chevronDown),
                                     items: [
                                       for (final r in featuredRadios)
                                         DropdownMenuItem(
                                           value: r.id,
-                                          child: Text(
-                                            context.isArabic ? r.nameAr : r.nameEn,
-                                            overflow: TextOverflow.ellipsis,
+                                          child: _AudioStation(
+                                            name: context.isArabic ? r.nameAr : r.nameEn,
                                             style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
                                           ),
                                         ),
                                       if (!featuredRadios.any((r) => r.id == station) && station != 'mushaf')
                                         DropdownMenuItem(
                                           value: station,
-                                          child: Text(
-                                            s.settings.radioStationName ?? station,
-                                            overflow: TextOverflow.ellipsis,
+                                          child: _AudioStation(
+                                            name: s.settings.radioStationName ?? station,
                                             style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
                                           ),
                                         ),
                                       DropdownMenuItem(
                                         value: 'mushaf',
-                                        child: Text(
-                                          l.radioMushaf,
-                                          overflow: TextOverflow.ellipsis,
+                                        child: _AudioStation(
+                                          name: l.radioMushaf,
                                           style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
                                         ),
                                       ),
@@ -840,6 +898,58 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
                   ),
                 ],
               ),
+              if (s.reelsFeed.live.isNotEmpty) ...[
+                const SizedBox(height: DesignTokens.spaceXs),
+                Row(
+                  key: const Key('radio.haramain'),
+                  children: [
+                    for (final (i, c) in s.reelsFeed.live.indexed) ...[
+                      if (i > 0) const SizedBox(width: DesignTokens.spaceXs),
+                      Expanded(
+                        child: _HaramainButton(channel: c, selected: _video?.id == c.id, onTap: () => _openVideo(c)),
+                      ),
+                    ],
+                  ],
+                ),
+              ],
+              if (_video != null) ...[
+                const SizedBox(height: DesignTokens.spaceSm),
+                ClipRRect(
+                  key: const Key('radio.video'),
+                  borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: ColoredBox(color: Colors.black, child: _player(context, _video!)),
+                        ),
+                        PositionedDirectional(
+                          top: 6,
+                          end: 6,
+                          child: Row(
+                            children: [
+                              _VideoButton(
+                                key: const Key('radio.videoFull'),
+                                icon: RIcons.expand,
+                                tooltip: l.radioVideoFull,
+                                onTap: () => _fullScreen(_video!),
+                              ),
+                              const SizedBox(width: 6),
+                              _VideoButton(
+                                key: const Key('radio.videoClose'),
+                                icon: RIcons.close,
+                                tooltip: l.radioVideoClose,
+                                onTap: () => setState(() => _video = null),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
               const SizedBox(height: DesignTokens.spaceSm),
               Text(
                 live != null
@@ -857,6 +967,155 @@ class _QuranRadioCardState extends State<QuranRadioCard> {
       },
     );
   }
+}
+
+/// A station name in the audio list with a small «صوتي» tag at its end (owner 2026-11-28), so the
+/// audio radios are told apart from the Haramain live-video buttons.
+class _AudioStation extends StatelessWidget {
+  const _AudioStation({required this.name, this.style, this.maxLines = 1});
+  final String name;
+  final TextStyle? style;
+
+  /// 2 in the closed field, so the whole station name shows beside the tag.
+  final int maxLines;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Row(
+      children: [
+        Flexible(
+          child: Text(name, maxLines: maxLines, overflow: TextOverflow.ellipsis, style: style),
+        ),
+        const SizedBox(width: 6),
+        Container(
+          key: const Key('radio.audioTag'),
+          padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 1),
+          decoration: BoxDecoration(
+            color: scheme.primary.withValues(alpha: 0.08),
+            border: Border.all(color: scheme.primary.withValues(alpha: 0.25)),
+            borderRadius: BorderRadius.circular(999),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RIcon(RIcons.headphones, size: 12, color: scheme.primary),
+              const SizedBox(width: 3),
+              Text(
+                context.l10n.radioAudio,
+                style: Theme.of(
+                  context,
+                ).textTheme.labelSmall?.copyWith(color: scheme.primary, fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// «المسجد الحرام · مباشر الآن فيديو» / «المسجد النبوي · مباشر الآن فيديو» under the audio stations.
+class _HaramainButton extends StatelessWidget {
+  const _HaramainButton({required this.channel, required this.selected, required this.onTap});
+  final LiveChannel channel;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context).textTheme;
+    final makkah = channel.place == 'makkah';
+    return Material(
+      color: selected ? scheme.secondaryContainer : Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+        side: BorderSide(color: selected ? scheme.secondary : scheme.outlineVariant, width: 1.5),
+      ),
+      child: InkWell(
+        key: Key('radio.live-${channel.place}'),
+        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+        onTap: onTap,
+        child: Container(
+          constraints: const BoxConstraints(minHeight: 52),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          child: Row(
+            children: [
+              Container(
+                width: 30,
+                height: 30,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(color: scheme.primary, borderRadius: BorderRadius.circular(9)),
+                child: RIcon(makkah ? RIcons.kaaba : RIcons.prayer, size: 18, color: scheme.onPrimary),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      makkah ? l.radioMakkahSub : l.radioMadinahSub,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+                    ),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 7,
+                            height: 7,
+                            decoration: const BoxDecoration(color: Color(0xFFC62828), shape: BoxShape.circle),
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            l.radioLiveVideo,
+                            style: theme.labelSmall?.copyWith(
+                              color: const Color(0xFFC62828),
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _VideoButton extends StatelessWidget {
+  const _VideoButton({super.key, required this.icon, required this.tooltip, required this.onTap});
+  final RIconData icon;
+  final String tooltip;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Tooltip(
+    message: tooltip,
+    child: Material(
+      color: Colors.black54,
+      shape: const CircleBorder(),
+      child: InkWell(
+        customBorder: const CircleBorder(),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(7),
+          child: RIcon(icon, size: 18, color: Colors.white),
+        ),
+      ),
+    ),
+  );
 }
 
 class _Box extends StatelessWidget {

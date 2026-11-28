@@ -9,7 +9,9 @@ import { surahMeta } from "@/lib/pages";
 import { useStore } from "@/hooks/useStore";
 import { createStore } from "@/lib/store";
 import { LIVE_RADIOS, isHls, type LiveRadio } from "@/lib/live-radios";
+import { LIVE_CHANNELS, liveEmbedUrl, type LiveChannel } from "@/lib/reels";
 import { Icon } from "./Icon";
+import { HARAMAIN_LIVE_CSS, HARAMAIN_LIVE_STRINGS } from "./haramain-live-css";
 
 /** The station the home radio plays (owner, 2026-11-14: Cairo Quran radio by default, as in the app). */
 export const DEFAULT_STATION = "eg";
@@ -54,6 +56,10 @@ export function QuranRadio({ locale }: { locale: Locale }) {
   const hlsRef = useRef<{ destroy: () => void } | null>(null);
   const stopTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [liveState, setLiveState] = useState<"idle" | "loading" | "playing" | "error">("idle");
+  // Haramain live VIDEO (owner 2026-11-28): two buttons under the audio stations open it in the card.
+  const [video, setVideo] = useState<LiveChannel | null>(null);
+  const videoRef = useRef<HTMLDivElement>(null);
+  const hs = HARAMAIN_LIVE_STRINGS[locale === "ar" ? "ar" : "en"];
 
   const stopLive = (): void => {
     if (stopTimer.current) clearTimeout(stopTimer.current);
@@ -76,6 +82,7 @@ export function QuranRadio({ locale }: { locale: Locale }) {
     const el = audioRef.current;
     if (!el) return;
     player.stop(); // one voice at a time
+    setVideo(null);
     setLiveState("loading");
     try {
       if (isHls(r.url) && !el.canPlayType("application/vnd.apple.mpegurl")) {
@@ -100,6 +107,7 @@ export function QuranRadio({ locale }: { locale: Locale }) {
   };
   // The app's recitation player started (e.g. a surah): the live radio gives way.
   useEffect(() => {
+    if (ps.status === "playing") setVideo(null);
     if (ps.status === "playing" && liveState !== "idle") stopLive();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ps.status]);
@@ -131,6 +139,7 @@ export function QuranRadio({ locale }: { locale: Locale }) {
       player.toggle();
       return;
     }
+    setVideo(null);
     player.play({ kind: "quran", from: randomSurah() });
     radioQueue = player.get().queue;
     sleepTimer.set(chosen || null);
@@ -141,6 +150,19 @@ export function QuranRadio({ locale }: { locale: Locale }) {
     stopLive();
     if (isRadio) player.stop();
     radioStationStore.set(id);
+  };
+
+  const openVideo = (c: LiveChannel): void => {
+    if (video?.id === c.id) {
+      setVideo(null);
+      return;
+    }
+    stopLive();
+    player.stop();
+    setVideo(c);
+  };
+  const fullScreen = (): void => {
+    void videoRef.current?.requestFullscreen?.().catch(() => undefined);
   };
 
   const durationLabel =
@@ -169,16 +191,28 @@ export function QuranRadio({ locale }: { locale: Locale }) {
         <h2 id="radio-h" className="radio-label">
           {t(locale, "radio.title")}
         </h2>
-        <label className="radio-select">
+        <label className="radio-select radio-station-field">
           <span className="sr-only">{t(locale, "radio.station")}</span>
           <Icon name="headphones" size={20} />
+          {/* What the closed field shows: the whole name (up to 2 lines) and a «صوتي» tag; the native list
+              opens from the transparent select on top. */}
+          <span className="radio-station-face" aria-hidden="true">
+            <span className="radio-station-name">
+              {live ? (locale === "ar" ? live.ar : live.en) : t(locale, "radio.mushaf")}
+            </span>
+            <span className="radio-audio-tag">
+              <Icon name="headphones" size={12} />
+              {hs.audio}
+            </span>
+            <Icon name="chevronDown" size={16} />
+          </span>
           <select value={station} data-testid="radio-station" onChange={(e) => onStation(e.target.value)}>
             {HOME_STATIONS.map((r) => (
               <option key={r.id} value={r.id}>
-                {locale === "ar" ? r.ar : r.en}
+                {`${locale === "ar" ? r.ar : r.en}  ·  🎧 ${hs.audio}`}
               </option>
             ))}
-            <option value={MUSHAF_STATION}>{t(locale, "radio.mushaf")}</option>
+            <option value={MUSHAF_STATION}>{`${t(locale, "radio.mushaf")}  ·  🎧 ${hs.audio}`}</option>
           </select>
         </label>
       </div>
@@ -245,6 +279,65 @@ export function QuranRadio({ locale }: { locale: Locale }) {
           </select>
         </label>
       )}
+      {LIVE_CHANNELS.length > 0 ? (
+        <div className="radio-haramain" data-testid="radio-haramain">
+          {LIVE_CHANNELS.map((c) => {
+            const makkah = c.place === "makkah";
+            return (
+              <button
+                key={c.id}
+                type="button"
+                className="radio-haramain-btn"
+                aria-pressed={video?.id === c.id}
+                onClick={() => openVideo(c)}
+                data-testid={`radio-live-${c.place}`}
+              >
+                <span className="radio-haramain-ic" aria-hidden="true">
+                  <Icon name={makkah ? "kaaba" : "prayer"} size={20} />
+                </span>
+                <span className="radio-haramain-txt">
+                  <strong>{makkah ? hs.makkah : hs.madinah}</strong>
+                  <small>{makkah ? hs.makkahSub : hs.madinahSub}</small>
+                </span>
+                <span className="radio-haramain-live">
+                  <Icon name="video" size={14} />● {hs.liveVideo}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
+      {video ? (
+        <div className="radio-video" ref={videoRef} data-testid="radio-video">
+          <div className="radio-video-bar">
+            <button type="button" onClick={fullScreen} aria-label={hs.full}>
+              <Icon name="expand" size={18} />
+            </button>
+            <button
+              type="button"
+              onClick={() => setVideo(null)}
+              aria-label={hs.close}
+              data-testid="radio-video-close"
+            >
+              <Icon name="close" size={18} />
+            </button>
+          </div>
+          <iframe
+            key={video.id}
+            src={liveEmbedUrl(
+              video,
+              typeof window !== "undefined" ? window.location.origin : undefined,
+              true,
+            )}
+            title={locale === "ar" ? video.name.ar : video.name.en}
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
+            data-testid="radio-video-player"
+          />
+        </div>
+      ) : null}
+      <style>{HARAMAIN_LIVE_CSS}</style>
       <p className="radio-status muted small" data-testid="radio-status" role="status">
         {status}
       </p>
