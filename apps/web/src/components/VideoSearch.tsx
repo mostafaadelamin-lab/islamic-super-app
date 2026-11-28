@@ -18,6 +18,12 @@ import { useBackLayer } from "@/lib/back-nav";
  * Search box over the videos page: Islamic videos only (trusted channels first; see netlify/lib/videos-core.mjs).
  * The viewer's searches are remembered in this browser; with no search the trusted channels' feed shows.
  */
+/**
+ * Owner 2026-11-28: videos are recitation only, so the hint names a reciter or a surah. Kept here instead of the
+ * shared i18n file: a change there rewrites every page of the site (owner rule: upload changed files only).
+ */
+const SEARCH_HINT = { ar: "ابحث عن قارئ أو سورة", en: "Search a reciter or a surah" } as const;
+
 export function VideoSearch({
   locale,
   children,
@@ -80,8 +86,8 @@ export function VideoSearch({
           className="input"
           value={input}
           enterKeyHint="search"
-          placeholder={t(locale, "videos.searchHint")}
-          aria-label={t(locale, "videos.searchHint")}
+          placeholder={SEARCH_HINT[locale === "ar" ? "ar" : "en"]}
+          aria-label={SEARCH_HINT[locale === "ar" ? "ar" : "en"]}
           data-testid="video-search-input"
           onChange={(e) => setInput(e.target.value)}
           onFocus={() => setFocused(true)}

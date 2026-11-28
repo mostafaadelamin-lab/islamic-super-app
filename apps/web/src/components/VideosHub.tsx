@@ -18,6 +18,7 @@ import {
 import { ChannelManager } from "./ChannelManager";
 import { ReelsFeed, tabLabel, useReelsData } from "./ReelsFeed";
 import { Icon } from "./Icon";
+import { VIDEOS_PAGE_CSS } from "./videos-page-css";
 
 type View =
   | { kind: "home" }
@@ -103,6 +104,7 @@ function VideosHome({
 
   return (
     <div className="videos-home" data-testid="videos-home">
+      <style>{VIDEOS_PAGE_CSS}</style>
       <div className="videos-bar">
         <button type="button" className="btn" onClick={onReciters} data-testid="videos-reciters">
           <Icon name="reciter" /> {t(locale, "reels.reciters")}
@@ -187,6 +189,12 @@ function initial(name: string): string {
 const thumbUrl = (r: Reel, quality: "default" | "hqdefault"): string =>
   `https://i.ytimg.com/vi/${r.ref}/${quality}.jpg`;
 
+/** The live circles' short names (kept on this page, not in the shared i18n file: see VIDEOS_PAGE_CSS). */
+const LIVE_SHORT = {
+  makkah: { ar: "مكة", en: "Makkah" },
+  madinah: { ar: "المدينة", en: "Madinah" },
+} as const;
+
 /** Owner 2026-11-28 (layout option 2): a Haramain live stream as a circle with a red ring. */
 function LiveCircle({ live, locale, onPick }: { live: LiveChannel; locale: Locale; onPick: () => void }) {
   return (
@@ -197,7 +205,7 @@ function LiveCircle({ live, locale, onPick }: { live: LiveChannel; locale: Local
       data-testid={`videos-live-${live.id}`}
       aria-label={t(locale, `reels.live.${live.place}`)}
     >
-      <i aria-hidden="true">{t(locale, live.place === "makkah" ? "videos.liveMakkahShort" : "videos.liveMadinahShort")}</i>
+      <i aria-hidden="true">{LIVE_SHORT[live.place][locale === "ar" ? "ar" : "en"]}</i>
       <span className="live-dot-label">{t(locale, "reels.live.badge")}</span>
     </button>
   );
